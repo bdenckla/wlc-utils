@@ -41,18 +41,27 @@ def _stacks_has_qere(stacks):
     return stacks['qere']
 
 
-def _stacks_push(io_stacks, k_or_q, val):
-    io_stacks[k_or_q].append(val)
+def _stacks_push(io_stacks, k_or_q, velsod):
+    io_stacks[k_or_q].append(velsod)
 
 
 def _stacks_transfer(io_kqvels, io_stacks):
     ketiv_stack = io_stacks['ketiv']
     qere_stack = io_stacks['qere']
     if ketiv_stack and qere_stack:
-        io_kqvels.append({'kq': (ketiv_stack, qere_stack)})
+        kqvel = _make_kqvel(ketiv_stack, qere_stack)
+        io_kqvels.append(kqvel)
         _stacks_clear(io_stacks)
     else:
         assert _stacks_are_clear(io_stacks)
+
+
+def _make_kqvel(ketiv, qere):
+    if qere == ['**qq']:
+        qere = []
+    if ketiv == ['*kk']:
+        ketiv = []
+    return {'kq': (ketiv, qere)}
 
 
 def _word(velsod):
