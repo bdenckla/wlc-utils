@@ -4,6 +4,7 @@ import my_wlc_compare_vyls
 
 
 def _normalize_vel(vel):
+    # I.e. vel to vyl, i.e. velsod to veldic
     if isinstance(vel, str):
         return {'word': vel, 'notes': []}
     return vel

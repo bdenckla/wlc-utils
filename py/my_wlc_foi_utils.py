@@ -1,6 +1,22 @@
-""" Exports ? """
+""" Exports write. """
 
-def init():
+import my_open
+
+
+def write(tdir, wlc_id, parsed):
+    #
+    io_fois = _init()
+    for verse in parsed['body']:
+        bcv = verse['bcv']
+        for velsod in verse['vels']:
+            _collect(io_fois, bcv, velsod)
+    io_fois['notes_foi'] = _sort_notes_foi(io_fois['notes_foi'])
+    #
+    out_path = f'{tdir}/out/{wlc_id}/{wlc_id}_ps.fois.json'
+    my_open.json_dump_to_file_path(io_fois, out_path)
+
+
+def _init():
     return {
         'parasep_foi': {'P': 0, 'S': 0},
         'notes_foi': {
@@ -10,7 +26,7 @@ def init():
     }
 
 
-def sort_notes_foi(notes_foi):
+def _sort_notes_foi(notes_foi):
     nfc = notes_foi['counts']
     nfc_sorted = dict(sorted(nfc.items()))
     notes_foi_out = {
@@ -21,7 +37,8 @@ def sort_notes_foi(notes_foi):
     return notes_foi_out
 
 
-def collect_features_of_interest(io_fois, bcv, veldic):
+def _collect(io_fois, bcv, velsod):
+    veldic = _velsod_to_veldic(velsod)
     if _is_parasep(veldic):
         p_or_s = veldic['parasep']
         parasep_foi = io_fois['parasep_foi']
@@ -41,6 +58,12 @@ def collect_features_of_interest(io_fois, bcv, veldic):
         case = {'note': note, 'bcv': bcv, 'word': word, 'notes_str': notes_str}
         cases.append(case)
     return
+
+
+def _velsod_to_veldic(velsod):
+    if isinstance(velsod, str):
+        return {'word': velsod, 'notes': []}
+    return velsod
 
 
 def _get_counts_and_cases(io_fois, note):

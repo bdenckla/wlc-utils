@@ -1,12 +1,9 @@
 """ Exports read_and_parse. """
 
-import my_wlc_foi_utils as foi_utils
-
 
 def read_and_parse(tdir, wlc_id):
     in_path = f'{tdir}/in/{wlc_id}/{wlc_id}_ps.txt'
     parsed = {'header': [], 'body': []}
-    io_fois = foi_utils.init()
     with open(in_path, encoding='utf-8', newline='') as wlc_in_fp:
         header_or_body = 'header'
         for rawline in wlc_in_fp:
@@ -16,13 +13,12 @@ def read_and_parse(tdir, wlc_id):
                 parsed['header'].append(line)
             else:
                 assert header_or_body == 'header'
-                parsed_body_line = _parse_body_line(io_fois, line)
+                parsed_body_line = _parse_body_line(line)
                 parsed['body'].append(parsed_body_line)
-    io_fois['notes_foi'] = foi_utils.sort_notes_foi(io_fois['notes_foi'])
-    return parsed, io_fois
+    return parsed
 
 
-def _parse_body_line(io_fois, body_line):
+def _parse_body_line(body_line):
     space_sep_strs = body_line.split(' ')
     bcv = space_sep_strs[0]
     word1s = space_sep_strs[1:]
@@ -30,7 +26,6 @@ def _parse_body_line(io_fois, body_line):
     veldics = _sum_of_lists(list_of_lists_of_veldics)
     for veldic in veldics:
         _validate_veldic(veldic)
-        foi_utils.collect_features_of_interest(io_fois, bcv, veldic)
     velsods = list(map(_veldic_to_velsod, veldics))
     return {'bcv': bcv, 'vels': velsods}
 
