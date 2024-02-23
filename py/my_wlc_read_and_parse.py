@@ -1,16 +1,12 @@
 """ Exports read_and_parse. """
 
+import my_wlc_foi_utils as foi_utils
+
 
 def read_and_parse(tdir, wlc_id):
     in_path = f'{tdir}/in/{wlc_id}/{wlc_id}_ps.txt'
     parsed = {'header': [], 'body': []}
-    io_fois = {
-        'parasep_foi': {'P': 0, 'S': 0},
-        'notes_foi': {
-            'counts': {},
-            'cases': []
-        },
-    }
+    io_fois = foi_utils.init()
     with open(in_path, encoding='utf-8', newline='') as wlc_in_fp:
         header_or_body = 'header'
         for rawline in wlc_in_fp:
@@ -22,19 +18,8 @@ def read_and_parse(tdir, wlc_id):
                 assert header_or_body == 'header'
                 parsed_body_line = _parse_body_line(io_fois, line)
                 parsed['body'].append(parsed_body_line)
-    io_fois['notes_foi'] = _sort_notes_foi(io_fois['notes_foi'])
+    io_fois['notes_foi'] = foi_utils.sort_notes_foi(io_fois['notes_foi'])
     return parsed, io_fois
-
-
-def _sort_notes_foi(notes_foi):
-    nfc = notes_foi['counts']
-    nfc_sorted = dict(sorted(nfc.items()))
-    notes_foi_out = {
-        'notes': list(nfc_sorted.keys()),
-        'counts': nfc_sorted,
-        'cases': notes_foi['cases'],
-    }
-    return notes_foi_out
 
 
 def _parse_body_line(io_fois, body_line):
@@ -45,7 +30,7 @@ def _parse_body_line(io_fois, body_line):
     veldics = _sum_of_lists(list_of_lists_of_veldics)
     for veldic in veldics:
         _validate_veldic(veldic)
-        _collect_features_of_interest(io_fois, bcv, veldic)
+        foi_utils.collect_features_of_interest(io_fois, bcv, veldic)
     velsods = list(map(_veldic_to_velsod, veldics))
     return {'bcv': bcv, 'vels': velsods}
 
@@ -78,28 +63,6 @@ def _validate_veldic(veldic):
     assert index_of_dash in (-1, len(word) - 1)
 
 
-def _collect_features_of_interest(io_fois, bcv, veldic):
-    if _is_parasep(veldic):
-        p_or_s = veldic['parasep']
-        parasep_foi = io_fois['parasep_foi']
-        parasep_foi[p_or_s] += 1
-        return
-    wn_dic = veldic
-    word = wn_dic['word']
-    notes = wn_dic['notes']
-    for note in notes:
-        counts, cases = _get_counts_and_cases(io_fois, note)
-        #
-        if note not in counts:
-            counts[note] = 0
-        counts[note] += 1
-        #
-        notes_str = ''.join(notes)
-        case = {'note': note, 'bcv': bcv, 'word': word, 'notes_str': notes_str}
-        cases.append(case)
-    return
-
-
 def _word1_to_veldics(word1):
     # wn_dic: dict with keys "word" and "notes"
     # veldic: verse element dict (parasep or wn_dic)
@@ -128,13 +91,6 @@ def _distinguish_parasep(wn_dic):
         assert not wn_dic['notes']
         return {'parasep': word}
     return wn_dic
-
-
-def _get_counts_and_cases(io_fois, note):
-    notes_foi = io_fois['notes_foi']
-    counts = notes_foi['counts']
-    cases = notes_foi['cases']
-    return counts, cases
 
 
 def _is_parasep(veldic):
