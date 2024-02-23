@@ -15,6 +15,8 @@ def kqparse(parsed):
                 _stacks_push(stacks, 'qere', velsod)
                 continue
             if word and word.startswith('*'):
+                if _stacks_has_qere(stacks):
+                    _stacks_transfer(kqverse['vels'], stacks)
                 _stacks_push(stacks, 'ketiv', velsod)
                 continue
             _stacks_transfer(kqverse['vels'], stacks)
@@ -33,6 +35,10 @@ def _stacks_clear(io_stacks):
 
 def _stacks_are_clear(stacks):
     return not stacks['ketiv'] and not stacks['qere']
+
+
+def _stacks_has_qere(stacks):
+    return stacks['qere']
 
 
 def _stacks_push(io_stacks, k_or_q, val):
