@@ -1,5 +1,7 @@
 """ Exports read_and_parse. """
 
+import my_wlc_utils
+
 
 def read_and_parse(tdir, wlc_id):
     in_path = f'{tdir}/in/{wlc_id}/{wlc_id}_ps.txt'
@@ -26,7 +28,7 @@ def _parse_body_line(body_line):
     veldics = _sum_of_lists(list_of_lists_of_veldics)
     for veldic in veldics:
         _validate_veldic(veldic)
-    velsods = list(map(_veldic_to_velsod, veldics))
+    velsods = list(map(my_wlc_utils.veldic_to_velsod, veldics))
     return {'bcv': bcv, 'vels': velsods}
 
 
@@ -38,18 +40,8 @@ def _sum_of_lists(lists):
     return accum
 
 
-def _veldic_to_velsod(veldic):
-    # vel as dict always (veldic) to vel as a string or a dict (velsod)
-    if _is_parasep(veldic):
-        return veldic
-    wn_dic = veldic
-    if not wn_dic['notes']:
-        return wn_dic['word']
-    return wn_dic
-
-
 def _validate_veldic(veldic):
-    if _is_parasep(veldic):
+    if my_wlc_utils.is_parasep(veldic):
         return
     wn_dic = veldic
     word = wn_dic['word']
@@ -88,13 +80,9 @@ def _distinguish_parasep(wn_dic):
     return wn_dic
 
 
-def _is_parasep(veldic):
-    return list(veldic.keys()) == ['parasep']
-
-
 def _isolate_atoms(veldic):
     # wn_dic: dict with keys "word" and "notes"
-    if _is_parasep(veldic):
+    if my_wlc_utils.is_parasep(veldic):
         return [veldic]
     wn_dic = veldic
     word = wn_dic['word']

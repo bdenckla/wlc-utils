@@ -1,13 +1,7 @@
 """ Exports compare_wlcs """
 
+import my_wlc_utils
 import my_wlc_compare_vyls
-
-
-def _normalize_vel(vel):
-    # I.e. vel to vyl, i.e. velsod to veldic
-    if isinstance(vel, str):
-        return {'word': vel, 'notes': []}
-    return vel
 
 
 def compare_wlcs(wlca, wlcb):
@@ -16,8 +10,8 @@ def compare_wlcs(wlca, wlcb):
 
 
 def _compare_verse_element(io_diff, bcv, vela, velb):
-    vyla = _normalize_vel(vela)
-    vylb = _normalize_vel(velb)
+    vyla = my_wlc_utils.velsod_to_veldic(vela)
+    vylb = my_wlc_utils.velsod_to_veldic(velb)
     return my_wlc_compare_vyls.compare_vyls(io_diff, bcv, vyla, vylb)
 
 

@@ -1,6 +1,7 @@
 """ Exports write. """
 
 import my_open
+import my_wlc_utils
 
 
 def write(tdir, wlc_id, parsed):
@@ -38,8 +39,8 @@ def _sort_notes_foi(notes_foi):
 
 
 def _collect(io_fois, bcv, velsod):
-    veldic = _velsod_to_veldic(velsod)
-    if _is_parasep(veldic):
+    veldic = my_wlc_utils.velsod_to_veldic(velsod)
+    if my_wlc_utils.is_parasep(veldic):
         p_or_s = veldic['parasep']
         parasep_foi = io_fois['parasep_foi']
         parasep_foi[p_or_s] += 1
@@ -60,18 +61,8 @@ def _collect(io_fois, bcv, velsod):
     return
 
 
-def _velsod_to_veldic(velsod):
-    if isinstance(velsod, str):
-        return {'word': velsod, 'notes': []}
-    return velsod
-
-
 def _get_counts_and_cases(io_fois, note):
     notes_foi = io_fois['notes_foi']
     counts = notes_foi['counts']
     cases = notes_foi['cases']
     return counts, cases
-
-
-def _is_parasep(veldic):
-    return list(veldic.keys()) == ['parasep']
