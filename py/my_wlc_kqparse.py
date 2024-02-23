@@ -2,12 +2,13 @@ import my_wlc_utils
 
 
 def kqparse(parsed):
-    for verse in parsed['body']:
+    kqparsed = {'verses': []}
+    for verse in parsed['verses']:
         bcv = verse['bcv']
+        kqverse = {'bcv': bcv, 'kqvels': []}
+        kqparsed['verses'].append(kqverse)
         for velsod in verse['vels']:
-            kqvelsod = _kqvelsod(velsod)
-
-
-def _kqvelsod(velsod):
-    veldic = my_wlc_utils.velsod_to_veldic(velsod)
-    return my_wlc_utils.veldic_to_velsod(veldic)
+            veldic = my_wlc_utils.velsod_to_veldic(velsod)
+            kqvelsod = my_wlc_utils.veldic_to_velsod(veldic)
+            kqverse['kqvels'].append(kqvelsod)
+    return kqparsed

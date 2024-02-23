@@ -7,7 +7,7 @@ import my_wlc_utils
 def write(tdir, wlc_id, parsed):
     #
     io_fois = _init()
-    for verse in parsed['body']:
+    for verse in parsed['verses']:
         bcv = verse['bcv']
         for velsod in verse['vels']:
             _collect(io_fois, bcv, velsod)

@@ -5,23 +5,21 @@ import my_wlc_utils
 
 def read_and_parse(tdir, wlc_id):
     in_path = f'{tdir}/in/{wlc_id}/{wlc_id}_ps.txt'
-    parsed = {'header': [], 'body': []}
+    parsed = {'header': [], 'verses': []}
     with open(in_path, encoding='utf-8', newline='') as wlc_in_fp:
-        header_or_body = 'header'
         for rawline in wlc_in_fp:
             line = rawline.rstrip()
             if line.startswith('#'):
-                assert header_or_body == 'header'
+                assert not parsed['verses']
                 parsed['header'].append(line)
             else:
-                assert header_or_body == 'header'
-                parsed_body_line = _parse_body_line(line)
-                parsed['body'].append(parsed_body_line)
+                parsed_verse_line = _parse_verse_line(line)
+                parsed['verses'].append(parsed_verse_line)
     return parsed
 
 
-def _parse_body_line(body_line):
-    space_sep_strs = body_line.split(' ')
+def _parse_verse_line(verse_line):
+    space_sep_strs = verse_line.split(' ')
     bcv = space_sep_strs[0]
     word1s = space_sep_strs[1:]
     list_of_lists_of_veldics = list(map(_word1_to_veldics, word1s))

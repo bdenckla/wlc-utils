@@ -6,7 +6,7 @@ import my_wlc_compare_vyls
 
 def compare_wlcs(wlca, wlcb):
     """ Compare wlca with wlcb (e.g. WLC 4.20 with WLC 4.22) """
-    return _compare_wlc_bodies(wlca['body'], wlcb['body'])
+    return _compare_wlc_verse_lists(wlca['verses'], wlcb['verses'])
 
 
 def _compare_verse_element(io_diff, bcv, vela, velb):
@@ -60,7 +60,7 @@ def _split_gn1417_word_9(word_9):
     return part1, {'word': part2, 'notes': word_9['notes']}
 
 
-def _compare_wlc_bodies(bodya, bodyb):
+def _compare_wlc_verse_lists(verse_list_a, verse_list_b):
     io_diff = {
         'verses_of_different_length': [],
         'side_a_edits': [],
@@ -68,8 +68,8 @@ def _compare_wlc_bodies(bodya, bodyb):
         'notes differences': [],
         'word differences': [],
     }
-    assert len(bodya) == len(bodyb)
-    for verse_ab in zip(bodya, bodyb):
+    assert len(verse_list_a) == len(verse_list_b)
+    for verse_ab in zip(verse_list_a, verse_list_b):
         verse_a, verse_b = verse_ab
         assert verse_a['bcv'] == verse_b['bcv']
         _compare_verse(
