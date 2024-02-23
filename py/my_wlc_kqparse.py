@@ -2,39 +2,51 @@ import my_wlc_utils
 
 
 def kqparse(parsed):
-    kqparsed = {'verses': []}
-    ketiv_stack = []
-    qere_stack = []
+    kqparsed = {'header': parsed['header'], 'verses': []}
+    stacks = _STACKS_INIT
     for verse in parsed['verses']:
         bcv = verse['bcv']
-        kqverse = {'bcv': bcv, 'kqvels': []}
+        kqverse = {'bcv': bcv, 'vels': []}
         kqparsed['verses'].append(kqverse)
-        assert not ketiv_stack
-        assert not qere_stack
+        assert _stacks_are_clear(stacks)
         for velsod in verse['vels']:
             word = _word(velsod)
             if word and word.startswith('**'):
-                qere_stack.append(word)
+                _stacks_push(stacks, 'qere', velsod)
                 continue
             if word and word.startswith('*'):
-                ketiv_stack.append(word)
+                _stacks_push(stacks, 'ketiv', velsod)
                 continue
-            _complete(kqverse['kqvels'], ketiv_stack, qere_stack)
-            ketiv_stack = []
-            qere_stack = []
-            kqverse['kqvels'].append(velsod)
-        _complete(kqverse['kqvels'], ketiv_stack, qere_stack)
-        ketiv_stack = []
-        qere_stack = []
+            _stacks_transfer(kqverse['vels'], stacks)
+            kqverse['vels'].append(velsod)
+        _stacks_transfer(kqverse['vels'], stacks)
     return kqparsed
 
 
-def _complete(io_kqvels, ketiv_stack, qere_stack):
+_STACKS_INIT = {'ketiv': [], 'qere': []}
+
+
+def _stacks_clear(io_stacks):
+    io_stacks['ketiv'] = []
+    io_stacks['qere'] = []
+
+
+def _stacks_are_clear(stacks):
+    return not stacks['ketiv'] and not stacks['qere']
+
+
+def _stacks_push(io_stacks, k_or_q, val):
+    io_stacks[k_or_q].append(val)
+
+
+def _stacks_transfer(io_kqvels, io_stacks):
+    ketiv_stack = io_stacks['ketiv']
+    qere_stack = io_stacks['qere']
     if ketiv_stack and qere_stack:
         io_kqvels.append({'kq': (ketiv_stack, qere_stack)})
+        _stacks_clear(io_stacks)
     else:
-        assert not ketiv_stack and not qere_stack
-
+        assert _stacks_are_clear(io_stacks)
 
 
 def _word(velsod):
