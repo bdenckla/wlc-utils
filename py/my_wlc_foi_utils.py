@@ -2,6 +2,7 @@
 
 import my_open
 import my_wlc_utils
+import my_uword
 
 
 def write(tdir, wlc_id, parsed):
@@ -27,7 +28,7 @@ def _flexcollect(io_fois, xparsed, xcollect):
 
 
 def _flexdump(fois, tdir, wlc_id, suffix=''):
-    out_path = _flexpath(tdir, wlc_id, '-kq')
+    out_path = _flexpath(tdir, wlc_id, suffix)
     my_open.json_dump_to_file_path(fois, out_path)
 
 
@@ -77,7 +78,13 @@ def _collect(io_fois, bcv, velsod):
             counts[note] += 1
             #
             notes_str = ''.join(notes)
-            case = {'note': note, 'bcv': bcv, 'word': word, 'notes_str': notes_str}
+            case = {
+                'note': note,
+                'bcv': bcv,
+                'uword': my_uword.uword(word),
+                'word': word,
+                'notes_str': notes_str
+            }
             cases.append(case)
 
 
