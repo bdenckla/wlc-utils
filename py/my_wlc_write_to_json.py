@@ -12,4 +12,5 @@ def write(tdir, wlc_id):
     my_wlc_smallish_files.write(tdir, wlc_id, parsed)
     my_wlc_smallish_files.write(tdir, wlc_id, kqparsed, '-kq')
     my_wlc_foi_utils.write(tdir, wlc_id, parsed)
+    my_wlc_foi_utils.kqwrite(tdir, wlc_id, kqparsed)
     return parsed

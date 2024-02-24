@@ -18,3 +18,15 @@ def veldic_to_velsod(veldic):
 
 def is_parasep(veldic):
     return list(veldic.keys()) == ['parasep']
+
+
+def get_parasep(velsod):
+    return isinstance(velsod, dict) and velsod.get('parasep')
+
+
+def get_notes(velsod):
+    return isinstance(velsod, dict) and velsod.get('notes')
+
+
+def get_kq(velsod):
+    return isinstance(velsod, dict) and velsod.get('kq')
