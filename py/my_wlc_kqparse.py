@@ -57,11 +57,35 @@ def _stacks_transfer(io_kqvels, io_stacks):
 
 
 def _make_kqvel(ketiv, qere):
-    if qere == ['**qq']:
-        qere = []
     if ketiv == ['*kk']:
         ketiv = []
-    return {'kq': (ketiv, qere)}
+    if qere == ['**qq']:
+        qere = []
+    new_ketiv = list(map(_strip_leading_star, ketiv))
+    new_qere = list(map(_strip_leading_starstar, qere))
+    return {'kq': (new_ketiv, new_qere)}
+
+
+def _strip_leading_star(velsod):
+    if isinstance(velsod, str):
+        return _strip_leading_star_from_str(velsod)
+    return {**velsod, 'word': _strip_leading_star_from_str(velsod['word'])}
+
+
+def _strip_leading_starstar(velsod):
+    if isinstance(velsod, str):
+        return _strip_leading_starstar_from_str(velsod)
+    return {**velsod, 'word': _strip_leading_starstar_from_str(velsod['word'])}
+
+
+def _strip_leading_star_from_str(string):
+    assert string.startswith('*')
+    return string.removeprefix('*')
+
+
+def _strip_leading_starstar_from_str(string):
+    assert string.startswith('**')
+    return string.removeprefix('**')
 
 
 def _word(velsod):
