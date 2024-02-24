@@ -5,28 +5,34 @@ import my_wlc_utils
 
 
 def write(tdir, wlc_id, parsed):
-    #
     io_fois = _init()
-    for verse in parsed['verses']:
-        bcv = verse['bcv']
-        for velsod in verse['vels']:
-            _collect(io_fois, bcv, velsod)
+    _flexcollect(io_fois, parsed, _collect)
+    #
     io_fois['notes_foi'] = _sort_notes_foi(io_fois['notes_foi'])
     #
-    out_path = f'{tdir}/out/{wlc_id}/{wlc_id}_ps.fois.json'
-    my_open.json_dump_to_file_path(io_fois, out_path)
+    _flexdump(io_fois, tdir, wlc_id)
 
 
 def kqwrite(tdir, wlc_id, kqparsed):
-    #
     io_fois = _kqinit()
-    for verse in kqparsed['verses']:
+    _flexcollect(io_fois, kqparsed, _kqcollect)
+    _flexdump(io_fois, tdir, wlc_id, '-kq')
+
+
+def _flexcollect(io_fois, xparsed, xcollect):
+    for verse in xparsed['verses']:
         bcv = verse['bcv']
         for velsod in verse['vels']:
-            _kqcollect(io_fois, bcv, velsod)
-    #
-    out_path = f'{tdir}/out/{wlc_id}-kq/{wlc_id}_ps.fois.json'
-    my_open.json_dump_to_file_path(io_fois, out_path)
+            xcollect(io_fois, bcv, velsod)
+
+
+def _flexdump(fois, tdir, wlc_id, suffix=''):
+    out_path = _flexpath(tdir, wlc_id, '-kq')
+    my_open.json_dump_to_file_path(fois, out_path)
+
+
+def _flexpath(tdir, wlc_id, suffix=''):
+    return f'{tdir}/out/{wlc_id}{suffix}/{wlc_id}_ps.fois.json'
 
 
 def _init():
