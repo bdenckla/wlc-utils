@@ -56,9 +56,9 @@ _ACCENTS = {
     '11': ha.GER_M,
     '12': ha.GER_2,  # garshayim (preposed)
     '14': ha.TEL_G,  # telisha gedolah
-    '24': ha.TEL_Q,  # stress helper to 04 (4 cases)
-    '33': ha.PASH,  # stress helper to 03
-    '44': ha.TEL_G,  # stress helper to 14
+    '24': ha.TEL_Q,  # 4 uses as stress-helper to acc04 (24\S+04); 1 use as non-stress-helper
+    '33': ha.PASH,  # >3800 uses as stress-helper to acc03 (33\S+03); number of uses as non-stress-helper is unknown (may be 0)
+    '44': ha.TEL_G,  # 1 use as stress-helper to acc14 ([^a-z]14\S+44); 3 non-stress-helper uses
     '52': '\N{HEBREW MARK UPPER DOT}',
     '60': ha.OLE,
     '61': ha.GER,
@@ -68,7 +68,7 @@ _ACCENTS = {
     '65': ha.SHAL,
     '80': ha.ZAQEF_Q,
     '81': ha.REV,
-    '82': ha.ZARQA_SH,  # 2 cases of s.h. use: 2s3:8 & 2c19:2. Also functions as tsinnorit.
+    '82': ha.ZARQA_SH,  # 2 uses as stress-helper to acc02 (82\S+02); many uses as tsinnorit
     '83': ha.PAZER,
     '84': ha.QARNEY,  # aka pazer gadol
     '85': ha.ZAQEF_G,
