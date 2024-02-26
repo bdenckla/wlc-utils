@@ -5,10 +5,10 @@ import my_hebrew_punctuation as hpu
 
 
 def uword(mcword: str):
-    translated = mcword.translate(_TRANSLATION_TABLE)
-    pattern = r'\d\d'
-    subbed = re.sub(pattern, digits_replacement, translated)
-    return subbed
+    stage10 = mcword.replace(':A', 'a').replace(':F', 'f').replace(':E', 'e')
+    stage11 = stage10[:-1] + stage10[-1].translate(_TRANSLATION_TABLE_FOR_FINAL_FORMS)
+    stage20 = stage11.translate(_TRANSLATION_TABLE)
+    return re.sub(r'\d\d', digits_replacement, stage20)
 
 
 def digits_replacement(matchobj):
@@ -16,6 +16,13 @@ def digits_replacement(matchobj):
     return _ACCENTS[digit_pair]
 
 
+_TRANSLATION_TABLE_FOR_FINAL_FORMS = str.maketrans({
+    'K': 'k',
+    'M': 'm',
+    'N': 'n',
+    'P': 'p',
+    'C': 'c',
+})
 _TRANSLATION_TABLE = str.maketrans({
     '/': None,
     ')': 'א',
@@ -42,9 +49,12 @@ _TRANSLATION_TABLE = str.maketrans({
     '&': 'ש'+hpo.SIND,
     '$': 'ש'+hpo.SHIND,
     'T': 'ת',
-    'A': hpo.PATAX,  # ':A': hpo.XPATAX,
-    'F': hpo.QAMATS,  # ':F': hpo.XQAMATS,
-    'E': hpo.SEGOL_V,  # ':E': hpo.XSEGOL,
+    'A': hpo.PATAX,
+    'a': hpo.XPATAX,  # was :A
+    'F': hpo.QAMATS,
+    'f': hpo.XQAMATS,  # was :F
+    'E': hpo.SEGOL_V,
+    'e': hpo.XSEGOL,  # was :E
     '"': hpo.TSERE,
     'I': hpo.XIRIQ,
     'O': hpo.XOLAM,
