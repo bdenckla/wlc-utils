@@ -6,9 +6,32 @@ import my_hebrew_punctuation as hpu
 
 def uword(mcword: str):
     stage10 = mcword.replace(':A', 'a').replace(':F', 'f').replace(':E', 'e')
-    stage11 = stage10[:-1] + stage10[-1].translate(_TRANSLATION_TABLE_FOR_FINAL_FORMS)
-    stage20 = stage11.translate(_TRANSLATION_TABLE)
+    stage11 = re.sub(_FINAL_PATT, final_replacement, stage10)
+    stage12 = re.sub(_XOLAM_PATT, xolam_replacement, stage11)
+    stage13 = re.sub(_EARLY_MTG_PATT, early_mtg_replacement, stage12)
+    stage14 = re.sub(_PREPOS_PATT, prepos_replacement, stage13)
+    stage20 = stage14.translate(_TRANSLATION_TABLE)
     return re.sub(r'\d\d', digits_replacement, stage20)
+
+
+def prepos_replacement(matchobj):
+    groups = matchobj.groups()
+    return groups[1] + groups[0]
+
+
+def early_mtg_replacement(matchobj):
+    groups = matchobj.groups()
+    return '95' + groups[0]
+
+
+def xolam_replacement(matchobj):
+    groups = matchobj.groups()
+    return groups[0] + 'Wo'
+
+
+def final_replacement(matchobj):
+    nonfinal = matchobj.group()
+    return nonfinal.translate(_TRANSLATION_TABLE_FOR_FINAL_FORMS)
 
 
 def digits_replacement(matchobj):
@@ -16,6 +39,29 @@ def digits_replacement(matchobj):
     return _ACCENTS[digit_pair]
 
 
+def _sqbrac(guts):
+    return f'[{guts}]'
+
+
+def _sqbrac_not(guts):
+    return _sqbrac(f'^{guts}')
+
+
+def _paren(guts):
+    return f'({guts})'
+
+
+_LETT_GUTS = ')BGDHWZX+YKLMNS(PCQR#&$T'
+_LETT = _sqbrac(_LETT_GUTS)
+_NON_LETT = _sqbrac_not(_LETT_GUTS)
+_NON_LETT_STAR = _NON_LETT + '*'
+_NON_LETT_STAR_DOLL = _NON_LETT_STAR + '$'
+#
+_FINAL_PATT = r'[KMNPC]'+_NON_LETT_STAR_DOLL
+_XOLAM_PATT = 'O' + _paren(_NON_LETT_STAR) + 'W'
+_EARLY_MTG_PATT = '([AFE"I:U])95'
+_PREPOS_PATT = '^(10|13|14)' + _paren(_LETT + _NON_LETT_STAR)
+#
 _TRANSLATION_TABLE_FOR_FINAL_FORMS = str.maketrans({
     'K': 'k',
     'M': 'm',
@@ -35,29 +81,26 @@ _TRANSLATION_TABLE = str.maketrans({
     'X': 'ח',
     '+': 'ט',
     'Y': 'י',
-    'K': 'כ',
+    'K': 'כ', 'k': 'ך',
     'L': 'ל',
-    'M': 'מ',
-    'N': 'נ',
+    'M': 'מ', 'm': 'ם',
+    'N': 'נ', 'n': 'ן',
     'S': 'ס',
     '(': 'ע',
-    'P': 'פ',
-    'C': 'צ',
+    'P': 'פ', 'p': 'ף',
+    'C': 'צ', 'c': 'ץ',
     'Q': 'ק',
     'R': 'ר',
     '#': 'ש',
     '&': 'ש'+hpo.SIND,
     '$': 'ש'+hpo.SHIND,
     'T': 'ת',
-    'A': hpo.PATAX,
-    'a': hpo.XPATAX,  # was :A
-    'F': hpo.QAMATS,
-    'f': hpo.XQAMATS,  # was :F
-    'E': hpo.SEGOL_V,
-    'e': hpo.XSEGOL,  # was :E
+    'A': hpo.PATAX, 'a': hpo.XPATAX,  # a was :A
+    'F': hpo.QAMATS, 'f': hpo.XQAMATS,  # f was :F
+    'E': hpo.SEGOL_V, 'e': hpo.XSEGOL,  # e was :E
     '"': hpo.TSERE,
     'I': hpo.XIRIQ,
-    'O': hpo.XOLAM,
+    'O': hpo.XOLAM, 'o': hpo.XOLAM,
     'U': hpo.QUBUTS,
     ':': hpo.SHEVA,
     '.': hpo.DAGESH_OM,
