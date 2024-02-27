@@ -1,5 +1,8 @@
 """ Exports compare_vyls """
 
+import my_uword
+
+
 def compare_vyls(io_diff, bcv, vyla, vylb):
     """ Compare vyla and vylb, putting result in io_diff """
     typa = _vyltype(vyla)
@@ -20,8 +23,8 @@ def compare_vyls(io_diff, bcv, vyla, vylb):
 
 
 def _record_word_diff(io_diff, bcv, vyla, vylb):
-    notesa = ''.join(vyla['notes'])
-    notesb = ''.join(vylb['notes'])
+    _new_field(vyla, vylb, 'cnotes', 'notes', lambda x : ''.join(x))
+    _new_field(vyla, vylb, 'uword', 'word', my_uword.uword)
     if vyla['notes'] == vylb['notes']:
         word_diff_type = 'word changed but notes did not'
     else:
@@ -29,11 +32,19 @@ def _record_word_diff(io_diff, bcv, vyla, vylb):
     io_diff['word differences'].append({
         'bcv': bcv,
         'word_diff_type': word_diff_type,
-        'a_word': vyla['word'],
-        'a_notes': notesa,
-        'b_word': vylb['word'],
-        'b_notes': notesb,
+        'ab_word': _newline_sep(vyla, vylb, 'word'),
+        'ab_uword': _newline_sep(vyla, vylb, 'uword'),
+        'ab_notes': _newline_sep(vyla, vylb, 'cnotes'),
     })
+
+
+def _new_field(dica, dicb, newkey, oldkey, fun):
+    dica[newkey] = fun(dica[oldkey])
+    dicb[newkey] = fun(dicb[oldkey])
+
+
+def _newline_sep(dica, dicb, key):
+    return dica[key] + '\n' + dicb[key]
 
 
 def _record_notes_diff(io_diff, bcv, vyla, vylb):
