@@ -18,7 +18,7 @@ def compare(parsed_wlc):
         misc['wlc_bcv'] = wlc_bcv
         for wlc_str, uxlc_str in zip(wlc_comparables, uxlc_verse):
             _compare(misc, wlc_str, uxlc_str)
-    _print_diffs(misc)
+    _print_diffs(misc['diffs'])
 
 
 def _uxlc_verse(uxlc, wlc_bcv):
@@ -51,8 +51,7 @@ def _compare(io_misc, wlc_str, uxlc_str):
         _record_diff(io_misc, wlc_str, wlc_str_u, uxlc_str)
 
 
-def _print_diffs(io_misc):
-    diffs = _get_diffs(io_misc)
+def _print_diffs(diffs):
     num_diffs_to_print = min(len(diffs), 250)
     for diff in diffs[:num_diffs_to_print]:
         bcv, wlc_str, wlc_str_u, uxlc_vel = diff
@@ -66,7 +65,3 @@ def _print_diffs(io_misc):
 
 def _record_diff(io_misc, *rest):
     io_misc['diffs'].append((io_misc['wlc_bcv'], *rest))
-
-
-def _get_diffs(io_misc):
-    return io_misc['diffs']
