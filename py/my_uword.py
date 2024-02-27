@@ -2,6 +2,7 @@ import re
 import my_hebrew_points as hpo
 import my_hebrew_accents as ha
 import my_hebrew_punctuation as hpu
+import my_str_defs as sd
 
 
 def uword(mcword: str):
@@ -149,7 +150,7 @@ _ACCENTS = {
     '83': ha.PAZER,
     '84': ha.QARNEY,  # aka pazer gadol
     '85': ha.ZAQEF_G,
-    '35': hpo.METEG,  # medial
+    '35': sd.ZWJ + hpo.METEG,  # medial
     '53': '\N{HEBREW MARK LOWER DOT}',
     '70': ha.MAHA,
     '71': ha.MER,
