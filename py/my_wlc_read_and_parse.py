@@ -75,6 +75,9 @@ def _distinguish_parasep(wn_dic):
     if word in ('P', 'S'):
         assert not wn_dic['notes']
         return {'parasep': word}
+    if word == 'N':
+        assert wn_dic['notes'] == [']8']
+        return {'parasep': word}
     return wn_dic
 
 

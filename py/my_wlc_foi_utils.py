@@ -38,7 +38,7 @@ def _flexpath(tdir, wlc_id, suffix=''):
 
 def _init():
     return {
-        'parasep_foi': {'P': 0, 'S': 0},
+        'parasep_foi': {'P': 0, 'S': 0, 'N': 0},
         'notes_foi': {'counts': {}, 'cases': []}
     }
 
