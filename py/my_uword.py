@@ -6,7 +6,9 @@ import my_hebrew_punctuation as hpu
 
 def uword(mcword: str):
     stage = mcword.replace(':A', 'a').replace(':F', 'f').replace(':E', 'e')
-    stage = re.sub(_XOLAM_PATT, xolam_replacement, stage)
+    stage = re.sub(_XOLAM_PATT1, xolam_replacement1, stage)
+    stage = re.sub(_XOLAM_PATT2, xolam_replacement2, stage)
+    stage = re.sub(_XOLAM_PATT3, xolam_replacement3, stage)
     stage = re.sub(_EARLY_MTG_PATT, early_mtg_replacement, stage)
     stage = re.sub(_PREPOS_PATT, prepos_replacement, stage)
     stage = re.sub(_FINAL_PATT, final_replacement, stage)
@@ -27,6 +29,7 @@ def _paren(guts):
 
 
 _LETT_GUTS = ')BGDHWZX+YKLMNS(PCQR#&$T'
+_LETT_GUTS_NO_VAV = _LETT_GUTS.replace('W','')
 _LETT = _sqbrac(_LETT_GUTS)
 _NON_LETT = _sqbrac_not(_LETT_GUTS)
 _NON_LETT_STAR = _NON_LETT + '*'
@@ -44,10 +47,22 @@ def early_mtg_replacement(matchobj):
     return '95' + groups[0]
 
 
-_XOLAM_PATT = 'O' + _paren(_NON_LETT_STAR) + 'W'
-def xolam_replacement(matchobj):
+_XOLAM_PATT1 = 'O' + _paren(_NON_LETT_STAR) + _paren(_sqbrac(_LETT_GUTS_NO_VAV)+'|W[AFE"I:U]')
+def xolam_replacement1(matchobj):
     groups = matchobj.groups()
-    return groups[0] + 'Wo'
+    return 'o' + groups[0] + groups[1]
+
+
+_XOLAM_PATT2 = 'O' + _paren(_NON_LETT_STAR) + 'W'
+def xolam_replacement2(matchobj):
+    groups = matchobj.groups()
+    return groups[0] + 'WO'
+
+
+_XOLAM_PATT3 = 'W' + _paren(_NON_LETT_STAR) + 'o'
+def xolam_replacement3(matchobj):
+    groups = matchobj.groups()
+    return 'W'+groups[0]+'ḥ'
 
 
 _FINAL_PATT = r'[KMNPC]'+_NON_LETT_STAR_DOLL
@@ -99,7 +114,7 @@ _TRANSLATION_TABLE = str.maketrans({
     'E': hpo.SEGOL_V, 'e': hpo.XSEGOL,  # e was :E
     '"': hpo.TSERE,
     'I': hpo.XIRIQ,
-    'O': hpo.XOLAM, 'o': hpo.XOLAM,
+    'O': hpo.XOLAM, 'o': hpo.XOLAM, 'ḥ': hpo.XOLAM_XFV,
     'U': hpo.QUBUTS,
     ':': hpo.SHEVA,
     '.': hpo.DAGESH_OM,

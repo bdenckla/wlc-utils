@@ -33,6 +33,7 @@ def compare(parsed_wlc):
                 uxlc_vel_uh = uh.comma_shunnas(uxlc_vel)
                 if diff_count <= max_diff_count:
                     print(wlc_verse['bcv'])
+                    print(f'w: {wlc_str}')
                     print(f'w: {wlc_str_u_uh}')
                     print(f'u: {uxlc_vel_uh}')
                     diff_count += 1
