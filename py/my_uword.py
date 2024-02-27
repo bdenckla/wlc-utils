@@ -5,7 +5,7 @@ import my_hebrew_punctuation as hpu
 import my_str_defs as sd
 
 
-def uword(mcword: str):
+def tword(mcword: str):
     stage = mcword.replace(':A', 'a').replace(':F', 'f').replace(':E', 'e')
     stage = re.sub(_XOLAM_PATT1, xolam_replacement1, stage)
     stage = re.sub(_XOLAM_PATT2, xolam_replacement2, stage)
@@ -13,6 +13,11 @@ def uword(mcword: str):
     stage = re.sub(_EARLY_MTG_PATT, early_mtg_replacement, stage)
     stage = re.sub(_PREPOS_PATT, prepos_replacement, stage)
     stage = re.sub(_FINAL_PATT, final_replacement, stage)
+    return stage
+
+
+def uword(mcword: str):
+    stage = tword(mcword)
     stage = stage.translate(_TRANSLATION_TABLE)
     return re.sub(r'\d\d', digits_replacement, stage)
 

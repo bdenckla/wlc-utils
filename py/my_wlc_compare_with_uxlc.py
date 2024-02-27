@@ -56,14 +56,14 @@ def _for_json(diffs):
 
 
 def _for_json_single(diff):
-    bcv, wlc_str, wlc_str_u, uxlc_str = diff
-    return {
-        'bcv': bcv,
+    return diff
+
+
+def _record_diff(io_misc, wlc_str, wlc_str_u, uxlc_str):
+    diff = {
+        'bcv': io_misc['wlc_bcv'],
         'wlc_str': wlc_str,
-        'wlc_str_u_uh': uh.comma_shunnas(wlc_str_u),
-        'uxlc_str_u_uh': uh.comma_shunnas(uxlc_str),
+        'wlc_str_t': my_uword.tword(wlc_str),
+        'wu': uh.comma_shunnas(wlc_str_u) + '\n' + uh.comma_shunnas(uxlc_str),
     }
-
-
-def _record_diff(io_misc, *rest):
-    io_misc['diffs'].append((io_misc['wlc_bcv'], *rest))
+    io_misc['diffs'].append(diff)
