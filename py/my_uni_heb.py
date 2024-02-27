@@ -11,6 +11,7 @@ import unicodedata
 import my_hebrew_letters as hl
 import my_hebrew_points as hpo
 import my_hebrew_accents as ha
+import my_hebrew_punctuation as hpu
 import my_str_defs as sd
 
 
@@ -122,39 +123,39 @@ _HE_AND_NONHE_ACC_PAIRS = (
     (hpo.METEG, '𝓂'),  # we consider it an accent not a point
     (ha.ATN, '⅄'),
     (ha.SEG_A, '∴'),  # ∴ aka THEREFORE
-    ('\N{HEBREW ACCENT SHALSHELET}', '(sh)'),
-    ('\N{HEBREW ACCENT ZAQEF QATAN}', 'ƶ'),
-    ('\N{HEBREW ACCENT ZAQEF GADOL}', 'Ƶ'),
+    (ha.SHAL, '(sh)'),
+    (ha.ZAQEF_Q, 'ƶ'),
+    (ha.ZAQEF_G, 'Ƶ'),
     (ha.TIP, '(ti)'),
     (ha.REV, '◆'),  # ◆ aka BLACK DIAMOND
     (ha.ZARQA_SH, '≁'),  # See: Note on zinor
     (ha.PASH, '(p)'),
-    ('\N{HEBREW ACCENT YETIV}', '(ye)'),
-    ('\N{HEBREW ACCENT TEVIR}', '⟓'),
+    (ha.YETIV, '(ye)'),
+    (ha.TEVIR, '⟓'),
     (ha.GER, '(ge)'),
     (ha.GER_M, 'γ'),  # Greek small gamma
     (ha.GER_2, '(G)'),
-    ('\N{HEBREW ACCENT QARNEY PARA}', '(qp)'),
+    (ha.QARNEY, '(qp)'),
     (ha.TEL_G, '⌕'),  # aka TELEPHONE RECORDER
-    ('\N{HEBREW ACCENT PAZER}', 'μ'),  # Greek small mu
+    (ha.PAZER, 'μ'),  # Greek small mu
     (ha.ATN_H, '(ah)'),
     (ha.MUN, '⅃'),
-    ('\N{HEBREW ACCENT MAHAPAKH}', '<'),
+    (ha.MAHA, '<'),
     (ha.MER, '(me)'),
-    ('\N{HEBREW ACCENT MERKHA KEFULA}', '(mk)'),
-    ('\N{HEBREW ACCENT DARGA}', '(da)'),
-    ('\N{HEBREW ACCENT QADMA}', '(qa)'),
+    (ha.MER_2, '(mk)'),
+    (ha.DARGA, '(da)'),
+    (ha.QADMA, '(qa)'),
     (ha.TEL_Q, '(tq)'),
     (ha.YBY, '(yy)'),
     (ha.OLE, '(ol)'),
-    ('\N{HEBREW ACCENT ILUY}', '(il)'),
-    ('\N{HEBREW ACCENT DEHI}', '(de)'),
+    (ha.ILUY, '(il)'),
+    (ha.DEXI, '(de)'),
     (ha.ZARQA, '~'),  # See: Note on zinor
 )
 _HE_AND_NONHE_PUNC_PAIRS = (
-    ('\N{HEBREW PUNCTUATION MAQAF}', '-'),
-    ('\N{HEBREW PUNCTUATION PASEQ}', '|'),
-    ('\N{HEBREW PUNCTUATION SOF PASUQ}', '.'),  # ‡ would be another option
+    (hpu.MAQ, '-'),
+    (hpu.PAS, '|'),
+    (hpu.SOPA, '.'),  # ‡ would be another option
 )
 _MISC_UNI_NAME_SHORTENINGS = (
     (sd.CGJ, 'CGJ'),
