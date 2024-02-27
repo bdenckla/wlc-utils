@@ -13,6 +13,7 @@ def tword(mcword: str):
     stage = re.sub(_EARLY_MTG_PATT, early_mtg_replacement, stage)
     stage = re.sub(_PREPOS_PATT, prepos_replacement, stage)
     stage = re.sub(_FINAL_PATT, final_replacement, stage)
+    stage = stage.replace('8111','1181')
     return stage
 
 
