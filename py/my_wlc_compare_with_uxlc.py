@@ -3,6 +3,7 @@ import my_convert_citation_from_wlc_to_uxlc as w2u
 import my_uword
 import my_wlc_utils
 import my_uni_heb as uh
+import unicodedata
 
 
 def compare(parsed_wlc_42x):
@@ -44,9 +45,11 @@ def _comparable(wlc_velsod):
 
 
 def _compare(io_misc, wlc_str, uxlc_str):
-    uxlc_str = uxlc_str.replace('/', '').replace(' ', '')
     wlc_str_u = my_uword.uword(wlc_str)
-    if wlc_str_u != uxlc_str:
+    uxlc_str = uxlc_str.replace('/', '').replace(' ', '')
+    wlc_str_u_n = unicodedata.normalize('NFC', wlc_str_u)
+    uxlc_str_n = unicodedata.normalize('NFC', uxlc_str)
+    if wlc_str_u_n != uxlc_str_n:
         _record_diff(io_misc, wlc_str, wlc_str_u, uxlc_str)
 
 
