@@ -5,12 +5,11 @@ import my_wlc_utils
 import my_uni_heb as uh
 
 
-def compare(parsed_wlc):
+def compare(parsed_wlc_42x):
     books_dir = '../wlc-utils-io/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books'
     uxlc = my_uxlc.read_all_books(books_dir)
-    parsed_wlc_422 = parsed_wlc['wlc420']
     misc = {'diffs': []}
-    for wlc_verse in parsed_wlc_422['verses']:
+    for wlc_verse in parsed_wlc_42x['verses']:
         wlc_bcv = wlc_verse['bcv']
         wlc_comparables = _comparables(wlc_verse)
         uxlc_verse = _uxlc_verse(uxlc, wlc_bcv)
@@ -18,7 +17,7 @@ def compare(parsed_wlc):
         misc['wlc_bcv'] = wlc_bcv
         for wlc_str, uxlc_str in zip(wlc_comparables, uxlc_verse):
             _compare(misc, wlc_str, uxlc_str)
-    _print_diffs(misc['diffs'])
+    return _for_json(misc['diffs'])
 
 
 def _uxlc_verse(uxlc, wlc_bcv):
@@ -51,16 +50,19 @@ def _compare(io_misc, wlc_str, uxlc_str):
         _record_diff(io_misc, wlc_str, wlc_str_u, uxlc_str)
 
 
-def _print_diffs(diffs):
-    num_diffs_to_print = min(len(diffs), 250)
-    for diff in diffs[:num_diffs_to_print]:
-        bcv, wlc_str, wlc_str_u, uxlc_vel = diff
-        wlc_str_u_uh = uh.comma_shunnas(wlc_str_u)
-        uxlc_vel_uh = uh.comma_shunnas(uxlc_vel)
-        print(bcv)
-        print(f'w: {wlc_str}')
-        print(f'w: {wlc_str_u_uh}')
-        print(f'u: {uxlc_vel_uh}')
+def _for_json(diffs):
+    num_diffs_for_json = min(len(diffs), 2500)
+    return list(map(_for_json_single, diffs[:num_diffs_for_json]))
+
+
+def _for_json_single(diff):
+    bcv, wlc_str, wlc_str_u, uxlc_str = diff
+    return {
+        'bcv': bcv,
+        'wlc_str': wlc_str,
+        'wlc_str_u_uh': uh.comma_shunnas(wlc_str_u),
+        'uxlc_str_u_uh': uh.comma_shunnas(uxlc_str),
+    }
 
 
 def _record_diff(io_misc, *rest):

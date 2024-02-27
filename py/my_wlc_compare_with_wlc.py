@@ -4,7 +4,7 @@ import my_wlc_utils
 import my_wlc_compare_vyls
 
 
-def compare_wlcs(wlca, wlcb):
+def compare(wlca, wlcb):
     """ Compare wlca with wlcb (e.g. WLC 4.20 with WLC 4.22) """
     return _compare_wlc_verse_lists(wlca['verses'], wlcb['verses'])
 
