@@ -129,7 +129,7 @@ _ACCENTS = {
     '04': ha.TEL_Q,
     '05': hpu.PAS,
     '10': ha.YETIV,
-    '13': ha.TIP,
+    '13': ha.DEXI,
     '11': ha.GER_M,
     '12': ha.GER_2,  # garshayim (preposed)
     '14': ha.TEL_G,
