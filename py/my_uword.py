@@ -35,7 +35,7 @@ _NON_LETT = _sqbrac_not(_LETT_GUTS)
 _NON_LETT_STAR = _NON_LETT + '*'
 _NON_LETT_STAR_DOLL = _NON_LETT_STAR + '$'
 
-_PREPOS_PATT = '^(10|13|14)' + _paren(_LETT + _NON_LETT_STAR)
+_PREPOS_PATT = '^(10|11|12|13|14)' + _paren(_LETT + _NON_LETT_STAR)
 def prepos_replacement(matchobj):
     groups = matchobj.groups()
     return groups[1] + groups[0]
