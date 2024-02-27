@@ -21,8 +21,11 @@ def compare(parsed_wlc):
                 wlc_str = wlc_velsod['word']
             else:
                 wlc_str = wlc_velsod
-            if wlc_str.startswith('*') and not wlc_str.startswith('**'):
-                continue
+            if wlc_str.startswith('*'):
+                if wlc_str.startswith('**'):
+                    wlc_str = wlc_str.removeprefix('**')
+                else:
+                    continue
             uxlc_vel = uxlc_verse[uxlc_velidx].replace('/', '').replace(' ', '')
             wlc_str_u = my_uword.uword(wlc_str)
             if wlc_str_u != uxlc_vel:

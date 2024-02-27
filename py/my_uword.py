@@ -5,38 +5,13 @@ import my_hebrew_punctuation as hpu
 
 
 def uword(mcword: str):
-    stage10 = mcword.replace(':A', 'a').replace(':F', 'f').replace(':E', 'e')
-    stage11 = re.sub(_FINAL_PATT, final_replacement, stage10)
-    stage12 = re.sub(_XOLAM_PATT, xolam_replacement, stage11)
-    stage13 = re.sub(_EARLY_MTG_PATT, early_mtg_replacement, stage12)
-    stage14 = re.sub(_PREPOS_PATT, prepos_replacement, stage13)
-    stage20 = stage14.translate(_TRANSLATION_TABLE)
-    return re.sub(r'\d\d', digits_replacement, stage20)
-
-
-def prepos_replacement(matchobj):
-    groups = matchobj.groups()
-    return groups[1] + groups[0]
-
-
-def early_mtg_replacement(matchobj):
-    groups = matchobj.groups()
-    return '95' + groups[0]
-
-
-def xolam_replacement(matchobj):
-    groups = matchobj.groups()
-    return groups[0] + 'Wo'
-
-
-def final_replacement(matchobj):
-    nonfinal = matchobj.group()
-    return nonfinal.translate(_TRANSLATION_TABLE_FOR_FINAL_FORMS)
-
-
-def digits_replacement(matchobj):
-    digit_pair = matchobj.group()
-    return _ACCENTS[digit_pair]
+    stage = mcword.replace(':A', 'a').replace(':F', 'f').replace(':E', 'e')
+    stage = re.sub(_XOLAM_PATT, xolam_replacement, stage)
+    stage = re.sub(_EARLY_MTG_PATT, early_mtg_replacement, stage)
+    stage = re.sub(_PREPOS_PATT, prepos_replacement, stage)
+    stage = re.sub(_FINAL_PATT, final_replacement, stage)
+    stage = stage.translate(_TRANSLATION_TABLE)
+    return re.sub(r'\d\d', digits_replacement, stage)
 
 
 def _sqbrac(guts):
@@ -56,12 +31,36 @@ _LETT = _sqbrac(_LETT_GUTS)
 _NON_LETT = _sqbrac_not(_LETT_GUTS)
 _NON_LETT_STAR = _NON_LETT + '*'
 _NON_LETT_STAR_DOLL = _NON_LETT_STAR + '$'
-#
-_FINAL_PATT = r'[KMNPC]'+_NON_LETT_STAR_DOLL
-_XOLAM_PATT = 'O' + _paren(_NON_LETT_STAR) + 'W'
-_EARLY_MTG_PATT = '([AFE"I:U])95'
+
 _PREPOS_PATT = '^(10|13|14)' + _paren(_LETT + _NON_LETT_STAR)
-#
+def prepos_replacement(matchobj):
+    groups = matchobj.groups()
+    return groups[1] + groups[0]
+
+
+_EARLY_MTG_PATT = '([AFE"I:U])95'
+def early_mtg_replacement(matchobj):
+    groups = matchobj.groups()
+    return '95' + groups[0]
+
+
+_XOLAM_PATT = 'O' + _paren(_NON_LETT_STAR) + 'W'
+def xolam_replacement(matchobj):
+    groups = matchobj.groups()
+    return groups[0] + 'Wo'
+
+
+_FINAL_PATT = r'[KMNPC]'+_NON_LETT_STAR_DOLL
+def final_replacement(matchobj):
+    nonfinal = matchobj.group()
+    return nonfinal.translate(_TRANSLATION_TABLE_FOR_FINAL_FORMS)
+
+
+def digits_replacement(matchobj):
+    digit_pair = matchobj.group()
+    return _ACCENTS[digit_pair]
+
+
 _TRANSLATION_TABLE_FOR_FINAL_FORMS = str.maketrans({
     'K': 'k',
     'M': 'm',
