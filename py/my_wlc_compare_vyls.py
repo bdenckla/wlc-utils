@@ -3,7 +3,7 @@
 import my_uword
 
 
-def compare_vyls(io_diff, bcv, vyla, vylb):
+def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
     """ Compare vyla and vylb, putting result in io_diff """
     typa = _vyltype(vyla)
     typb = _vyltype(vylb)
@@ -19,10 +19,10 @@ def compare_vyls(io_diff, bcv, vyla, vylb):
         worda_ns = vyla['word'].replace('/', '')
         wordb_ns = vylb['word'].replace('/', '')
         if worda_ns != wordb_ns:
-            _record_word_diff(io_diff, bcv, vyla, vylb)
+            _record_word_diff(io_diff, bcv, velidx, vyla, vylb)
 
 
-def _record_word_diff(io_diff, bcv, vyla, vylb):
+def _record_word_diff(io_diff, bcv, velidx, vyla, vylb):
     _new_field(vyla, vylb, 'cnotes', 'notes', lambda x : ''.join(x))
     _new_field(vyla, vylb, 'uword', 'word', my_uword.uword)
     if vyla['notes'] == vylb['notes']:
@@ -36,6 +36,10 @@ def _record_word_diff(io_diff, bcv, vyla, vylb):
         'ab_uword': _newline_sep(vyla, vylb, 'uword'),
         'ab_notes': _newline_sep(vyla, vylb, 'cnotes'),
     })
+    wpwd = io_diff['word positions of word differences']
+    key = bcv + '!' + vyla['word']
+    assert key not in wpwd
+    wpwd[key] = velidx + 1
 
 
 def _new_field(dica, dicb, newkey, oldkey, fun):

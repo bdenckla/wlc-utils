@@ -9,10 +9,10 @@ def compare(wlca, wlcb):
     return _compare_wlc_verse_lists(wlca['verses'], wlcb['verses'])
 
 
-def _compare_verse_element(io_diff, bcv, vela, velb):
+def _compare_verse_element(io_diff, bcv, velidx, vela, velb):
     vyla = my_wlc_utils.velsod_to_veldic(vela)
     vylb = my_wlc_utils.velsod_to_veldic(velb)
-    return my_wlc_compare_vyls.compare_vyls(io_diff, bcv, vyla, vylb)
+    return my_wlc_compare_vyls.compare_vyls(io_diff, bcv, velidx, vyla, vylb)
 
 
 def _compare_verse(io_diff, bcv, velsa, velsb):
@@ -47,8 +47,8 @@ def _compare_verse(io_diff, bcv, velsa, velsb):
             'word after null word': velsa[4]}
         io_diff['side_a_edits'].append(side_a_edit_record)
     assert len(velsa_comparable) == len(velsb)
-    for vel_ab in zip(velsa_comparable, velsb):
-        _compare_verse_element(io_diff, bcv, *vel_ab)
+    for velidx, vel_ab in enumerate(zip(velsa_comparable, velsb)):
+        _compare_verse_element(io_diff, bcv, velidx, *vel_ab)
 
 
 def _split_gn1417_word_9(word_9):
@@ -67,6 +67,7 @@ def _compare_wlc_verse_lists(verse_list_a, verse_list_b):
         'type changes': [],
         'notes differences': [],
         'word differences': [],
+        'word positions of word differences': {}
     }
     assert len(verse_list_a) == len(verse_list_b)
     for verse_ab in zip(verse_list_a, verse_list_b):
