@@ -57,13 +57,20 @@ def _stacks_transfer(io_kqvels, io_stacks):
 
 
 def _make_kqvel(ketiv, qere):
-    if ketiv == ['*kk']:
-        ketiv = []
-    if qere == ['**qq']:
-        qere = []
-    new_ketiv = list(map(_strip_leading_star, ketiv))
-    new_qere = list(map(_strip_leading_starstar, qere))
-    return {'kq': (new_ketiv, new_qere)}
+    ketiv_ie = _remove(ketiv, '*kk')  # ie: implicit empties
+    qere_ie = _remove(qere, '**qq')  # ie: implicit empties
+    ketiv_ie_ns = list(map(_strip_leading_star, ketiv_ie))  # ns: no stars
+    qere_ie_ns = list(map(_strip_leading_starstar, qere_ie))  # ns: nostars
+    return {'kq': (ketiv_ie_ns, qere_ie_ns)}
+
+
+def _remove(the_list, unwanted_elem):
+    out = []
+    for elem in the_list:
+        if elem == unwanted_elem:
+            continue
+        out.append(elem)
+    return out
 
 
 def _strip_leading_star(velsod):
