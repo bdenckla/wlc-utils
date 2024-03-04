@@ -12,12 +12,12 @@ def kqparse(parsed):
         for velsod in verse['vels']:
             word = _word(velsod)
             if word and word.startswith('**'):
-                _stacks_push(stacks, 'qere', velsod)
+                _stacks_push_q(stacks, velsod)
                 continue
             if word and word.startswith('*'):
                 if _stacks_has_qere(stacks):
                     _stacks_transfer(kqverse['vels'], stacks)
-                _stacks_push(stacks, 'ketiv', velsod)
+                _stacks_push_k(stacks, velsod)
                 continue
             _stacks_transfer(kqverse['vels'], stacks)
             kqverse['vels'].append(velsod)
@@ -41,8 +41,12 @@ def _stacks_has_qere(stacks):
     return stacks['qere']
 
 
-def _stacks_push(io_stacks, k_or_q, velsod):
-    io_stacks[k_or_q].append(velsod)
+def _stacks_push_k(io_stacks, velsod):
+    io_stacks['ketiv'].append(velsod)
+
+
+def _stacks_push_q(io_stacks, velsod):
+    io_stacks['qere'].append(velsod)
 
 
 def _stacks_transfer(io_kqvels, io_stacks):
