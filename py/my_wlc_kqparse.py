@@ -52,12 +52,22 @@ def _stacks_push_q(io_stacks, velsod):
 def _stacks_transfer(io_kqvels, io_stacks):
     ketiv_stack = io_stacks['ketiv']
     qere_stack = io_stacks['qere']
-    if ketiv_stack and qere_stack:
+    if not ketiv_stack and not qere_stack:
+        return
+    assert ketiv_stack and qere_stack
+    if _two_sam_18_20(ketiv_stack, qere_stack):
+        kqvel0 = _make_kqvel([ketiv_stack[0]], [qere_stack[0]])
+        kqvel1 = _make_kqvel([ketiv_stack[1]], [qere_stack[1]])
+        io_kqvels.extend([kqvel0, kqvel1])
+    else:
         kqvel = _make_kqvel(ketiv_stack, qere_stack)
         io_kqvels.append(kqvel)
-        _stacks_clear(io_stacks)
-    else:
-        assert _stacks_are_clear(io_stacks)
+    _stacks_clear(io_stacks)
+
+
+
+def _two_sam_18_20(ketiv, qere):
+    return len(ketiv) == 2 and ketiv[1] == '*kk'
 
 
 def _make_kqvel(ketiv, qere):
