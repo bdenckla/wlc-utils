@@ -33,7 +33,7 @@ def _flexdump(fois, tdir, wlc_id, suffix=''):
 
 
 def _flexpath(tdir, wlc_id, suffix=''):
-    return f'{tdir}/out/{wlc_id}{suffix}/{wlc_id}_ps.fois.json'
+    return f'{tdir}/out/{wlc_id}{suffix}_ps.fois.json'
 
 
 def _init():
