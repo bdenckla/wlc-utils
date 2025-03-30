@@ -1,14 +1,14 @@
-import py.my_uxlc as my_uxlc
-import py.my_convert_citation_from_wlc_to_uxlc as w2u
-import py.my_uword as my_uword
+import py.uxlc as uxlc
+import py.convert_citation_from_wlc_to_uxlc as w2u
+import py.uword as uword
 import py.wlc_utils as wlc_utils
-import py.my_uni_heb as uh
+import py.uni_heb as uh
 import unicodedata
 
 
 def compare(parsed_wlc_42x):
     books_dir = "../wlc-utils-io/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
-    uxlc = my_uxlc.read_all_books(books_dir)
+    uxlc = uxlc.read_all_books(books_dir)
     misc = {"diffs": []}
     for wlc_verse in parsed_wlc_42x["verses"]:
         wlc_bcv = wlc_verse["bcv"]
@@ -45,7 +45,7 @@ def _comparable(wlc_velsod):
 
 
 def _compare(io_misc, wlc_str, uxlc_str):
-    wlc_str_u = my_uword.uword(wlc_str)
+    wlc_str_u = uword.uword(wlc_str)
     uxlc_str = uxlc_str.replace("/", "").replace(" ", "")
     wlc_str_u_n = unicodedata.normalize("NFC", wlc_str_u)
     uxlc_str_n = unicodedata.normalize("NFC", uxlc_str)
@@ -66,7 +66,7 @@ def _record_diff(io_misc, wlc_str, wlc_str_u, uxlc_str):
     diff = {
         "bcv": io_misc["wlc_bcv"],
         "wlc_str": wlc_str,
-        "wlc_str_t": my_uword.tword(wlc_str),
+        "wlc_str_t": uword.tword(wlc_str),
         "wu": uh.comma_shunnas(wlc_str_u) + "\n" + uh.comma_shunnas(uxlc_str),
     }
     io_misc["diffs"].append(diff)
