@@ -1,8 +1,8 @@
 """ Exports write. """
 
-import my_open
-import my_wlc_utils
-import my_uword
+import py.my_open as my_open
+import py.wlc_utils as wlc_utils
+import py.my_uword as my_uword
 
 
 def write(tdir, wlc_id, parsed):
@@ -71,11 +71,11 @@ def _sort_notes_foi(notes_foi):
 
 
 def _collect(io_fois, bcv, velsod):
-    if p_or_s := my_wlc_utils.get_parasep(velsod):
+    if p_or_s := wlc_utils.get_parasep(velsod):
         parasep_foi = io_fois["parasep_foi"]
         parasep_foi[p_or_s] += 1
         return
-    if notes := my_wlc_utils.get_notes(velsod):
+    if notes := wlc_utils.get_notes(velsod):
         word = velsod["word"]
         counts, cases = _get_counts_and_cases(io_fois["notes_foi"])
         for note in notes:
@@ -96,7 +96,7 @@ def _collect(io_fois, bcv, velsod):
 
 
 def _kqcollect(io_fois, bcv, velsod):
-    if ketiv_and_qere := my_wlc_utils.get_kq(velsod):
+    if ketiv_and_qere := wlc_utils.get_kq(velsod):
         ketiv_and_qere = velsod["kq"]
         lenk = len(ketiv_and_qere[0])
         lenq = len(ketiv_and_qere[1])

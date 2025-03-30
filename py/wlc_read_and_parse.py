@@ -1,6 +1,6 @@
 """ Exports read_and_parse. """
 
-import my_wlc_utils
+import py.wlc_utils as wlc_utils
 
 
 def read_and_parse(tdir, wlc_id):
@@ -26,7 +26,7 @@ def _parse_verse_line(verse_line):
     veldics = _sum_of_lists(list_of_lists_of_veldics)
     for veldic in veldics:
         _validate_veldic(veldic)
-    velsods = list(map(my_wlc_utils.veldic_to_velsod, veldics))
+    velsods = list(map(wlc_utils.veldic_to_velsod, veldics))
     return {"bcv": bcv, "vels": velsods}
 
 
@@ -39,7 +39,7 @@ def _sum_of_lists(lists):
 
 
 def _validate_veldic(veldic):
-    if my_wlc_utils.is_parasep(veldic):
+    if wlc_utils.is_parasep(veldic):
         return
     wn_dic = veldic
     word = wn_dic["word"]
@@ -83,7 +83,7 @@ def _distinguish_parasep(wn_dic):
 
 def _isolate_atoms(veldic):
     # wn_dic: dict with keys "word" and "notes"
-    if my_wlc_utils.is_parasep(veldic):
+    if wlc_utils.is_parasep(veldic):
         return [veldic]
     wn_dic = veldic
     word = wn_dic["word"]

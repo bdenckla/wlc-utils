@@ -1,6 +1,6 @@
 """ Exports write. """
 
-import my_open
+import py.my_open as my_open
 
 
 def write(tdir, wlc_id, parsed, suffix=""):

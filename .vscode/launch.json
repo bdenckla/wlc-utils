@@ -15,7 +15,7 @@
             "name": "WLC misc",
             "type": "debugpy",
             "request": "launch",
-            "program": "py/main_wlc.py",
+            "program": "main_wlc.py",
             "console": "integratedTerminal"
         }
     ]

@@ -1,7 +1,7 @@
 """ Exports compare_wlcs """
 
-import my_wlc_utils
-import my_wlc_compare_vyls
+import py.wlc_utils as wlc_utils
+import py.wlc_compare_vyls as wlc_compare_vyls
 
 
 def compare(wlca, wlcb):
@@ -10,9 +10,9 @@ def compare(wlca, wlcb):
 
 
 def _compare_verse_element(io_diff, bcv, velidx, vela, velb):
-    vyla = my_wlc_utils.velsod_to_veldic(vela)
-    vylb = my_wlc_utils.velsod_to_veldic(velb)
-    return my_wlc_compare_vyls.compare_vyls(io_diff, bcv, velidx, vyla, vylb)
+    vyla = wlc_utils.velsod_to_veldic(vela)
+    vylb = wlc_utils.velsod_to_veldic(velb)
+    return wlc_compare_vyls.compare_vyls(io_diff, bcv, velidx, vyla, vylb)
 
 
 def _compare_verse(io_diff, bcv, velsa, velsb):

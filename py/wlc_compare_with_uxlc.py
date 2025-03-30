@@ -1,8 +1,8 @@
-import my_uxlc
-import my_convert_citation_from_wlc_to_uxlc as w2u
-import my_uword
-import my_wlc_utils
-import my_uni_heb as uh
+import py.my_uxlc as my_uxlc
+import py.my_convert_citation_from_wlc_to_uxlc as w2u
+import py.my_uword as my_uword
+import py.wlc_utils as wlc_utils
+import py.my_uni_heb as uh
 import unicodedata
 
 
@@ -33,7 +33,7 @@ def _comparables(wlc_verse):
 
 def _comparable(wlc_velsod):
     if isinstance(wlc_velsod, dict):
-        if my_wlc_utils.is_parasep(wlc_velsod):
+        if wlc_utils.is_parasep(wlc_velsod):
             return None
         return _comparable(wlc_velsod["word"])
     wlc_str = wlc_velsod

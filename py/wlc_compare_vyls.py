@@ -1,6 +1,6 @@
 """ Exports compare_vyls """
 
-import my_uword
+import py.my_uword as my_uword
 
 
 def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
