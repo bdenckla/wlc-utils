@@ -2,7 +2,7 @@
 
 import py.my_open as my_open
 import py.wlc_utils as wlc_utils
-import py.uword as uword
+import py.wlc_uword as wlc_uword
 
 
 def write(tdir, wlc_id, parsed):
@@ -88,7 +88,7 @@ def _collect(io_fois, bcv, velsod):
             case = {
                 "note": note,
                 "bcv": bcv,
-                "uword": uword.uword(word),
+                "uword": wlc_uword.uword(word),
                 "word": word,
                 "notes_str": notes_str,
             }

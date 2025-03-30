@@ -1,6 +1,6 @@
 """ Exports compare_vyls """
 
-import py.uword as uword
+import py.wlc_uword as wlc_uword
 
 
 def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
@@ -26,7 +26,7 @@ def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
 
 def _record_word_diff(io_diff, bcv, velidx, vyla, vylb):
     _new_field(vyla, vylb, "cnotes", "notes", lambda x: "".join(x))
-    _new_field(vyla, vylb, "uword", "word", uword.uword)
+    _new_field(vyla, vylb, "uword", "word", wlc_uword.uword)
     if vyla["notes"] == vylb["notes"]:
         word_diff_type = "word changed but notes did not"
     else:

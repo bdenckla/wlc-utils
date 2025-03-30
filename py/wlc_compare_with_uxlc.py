@@ -1,6 +1,6 @@
 import py.uxlc as uxlc
 import py.convert_citation_from_wlc_to_uxlc as w2u
-import py.uword as uword
+import py.wlc_uword as wlc_uword
 import py.wlc_utils as wlc_utils
 import py.uni_heb as uh
 import unicodedata
@@ -45,7 +45,7 @@ def _comparable(wlc_velsod):
 
 
 def _compare(io_misc, wlc_str, uxlc_str):
-    wlc_str_u = uword.uword(wlc_str)
+    wlc_str_u = wlc_uword.uword(wlc_str)
     uxlc_str = uxlc_str.replace("/", "").replace(" ", "")
     wlc_str_u_n = unicodedata.normalize("NFC", wlc_str_u)
     uxlc_str_n = unicodedata.normalize("NFC", uxlc_str)
@@ -66,7 +66,7 @@ def _record_diff(io_misc, wlc_str, wlc_str_u, uxlc_str):
     diff = {
         "bcv": io_misc["wlc_bcv"],
         "wlc_str": wlc_str,
-        "wlc_str_t": uword.tword(wlc_str),
+        "wlc_str_t": wlc_uword.tword(wlc_str),
         "wu": uh.comma_shunnas(wlc_str_u) + "\n" + uh.comma_shunnas(uxlc_str),
     }
     io_misc["diffs"].append(diff)
