@@ -1,4 +1,4 @@
-import py.uxlc as uxlc
+import py.uxlc as muxlc  # m for module (to avoid clash with variable named "uxlc")
 import py.convert_citation_from_wlc_to_uxlc as w2u
 import py.wlc_uword as wlc_uword
 import py.wlc_utils as wlc_utils
@@ -8,7 +8,7 @@ import unicodedata
 
 def compare(parsed_wlc_42x):
     books_dir = "../wlc-utils-io/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
-    uxlc = uxlc.read_all_books(books_dir)
+    uxlc = muxlc.read_all_books(books_dir)
     misc = {"diffs": []}
     for wlc_verse in parsed_wlc_42x["verses"]:
         wlc_bcv = wlc_verse["bcv"]
