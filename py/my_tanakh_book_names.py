@@ -21,83 +21,83 @@ the books of the Hebrew Bible and identifying verses within those books.
 
 
 def book_is_of_sec(in_section, bkid):
-    """ Return whether the given book belongs to the given section. """
+    """Return whether the given book belongs to the given section."""
     return section(bkid) == in_section
 
 
 def books_of_sec(in_section):
-    """ Return a tuple of all book names in the given section. """
+    """Return a tuple of all book names in the given section."""
     return tuple(b for b in ALL_BOOK_IDS if book_is_of_sec(in_section, b))
 
 
 def section(bkid):
-    """ Return the section to which the given book belongs. """
+    """Return the section to which the given book belongs."""
     return _bkprop_section(_BOOK_PROPERTIES[bkid])
 
 
 def book_is_of_bk24(in_bk24id, bkid):
-    """ Return whether the given book belongs to the given book24. """
+    """Return whether the given book belongs to the given book24."""
     return _bkprop_bk24id(_BOOK_PROPERTIES[bkid]) == in_bk24id
 
 
 def bkids_of_bk24(in_bk24id):
-    """ Return a tuple of all book names in the given book24. """
+    """Return a tuple of all book names in the given book24."""
     return tuple(b for b in ALL_BOOK_IDS if book_is_of_bk24(in_bk24id, b))
 
 
 def bk24id(bkid):
-    """ Return the book24 to which the given book belongs. """
+    """Return the book24 to which the given book belongs."""
     return _bkprop_bk24id(_BOOK_PROPERTIES[bkid])
 
 
 def ordered_short(bkid):  # E.g. 'A1' for GENESIS, 'FD' for SND_CHRONICLES
     """
-        Returns the ordered short name (2 alphanumerics) corresponding to the
-        given book.
-        E.g. A1 for Genesis, BA for 1Samuel.
-        The 1st alphanumeric is a letter in the range A to F
-        corresponding to the book's section.
-        The 2nd alphanumeric is a capital Latin letter or base-10 digit.
-        This 2nd alphanumeric identifies and orders the book within its
-        section.
-        ASCII ordering, in particular digits-before-letters ordering,
-        is assumed. E.g. B1 (Joshua) comes before BA (1Samuel).
+    Returns the ordered short name (2 alphanumerics) corresponding to the
+    given book.
+    E.g. A1 for Genesis, BA for 1Samuel.
+    The 1st alphanumeric is a letter in the range A to F
+    corresponding to the book's section.
+    The 2nd alphanumeric is a capital Latin letter or base-10 digit.
+    This 2nd alphanumeric identifies and orders the book within its
+    section.
+    ASCII ordering, in particular digits-before-letters ordering,
+    is assumed. E.g. B1 (Joshua) comes before BA (1Samuel).
     """
     return _bkprop_ordered_short(_BOOK_PROPERTIES[bkid])
 
 
 def ordered_short_sena(sena):  # E.g. 'A' for SEC_TORAH, 'B' for SEC_NEV_RISH
     """
-        Returns section code A thru F for section with name sena.
+    Returns section code A thru F for section with name sena.
     """
     dic = {
-        SEC_TORAH: 'A',
-        SEC_NEV_RISH: 'B',
-        SEC_NEV_AX: 'C',
-        SEC_SIF_EM: 'D',
-        SEC_XAM_MEG: 'E',
-        SEC_KET_ACH: 'F'
+        SEC_TORAH: "A",
+        SEC_NEV_RISH: "B",
+        SEC_NEV_AX: "C",
+        SEC_SIF_EM: "D",
+        SEC_XAM_MEG: "E",
+        SEC_KET_ACH: "F",
     }
     return dic[sena]
 
 
 def ordered_short_dash_full(bkid):
-    """ Return, for example, A1-Genesis given Genesis """
-    return f'{ordered_short(bkid)}-{bkid}'
+    """Return, for example, A1-Genesis given Genesis"""
+    return f"{ordered_short(bkid)}-{bkid}"
 
 
 def ordered_short_dash_full_sena(sena):
-    """ Return, for example, A-Torah given Torah """
-    return f'{ordered_short_sena(sena)}-{sena}'
+    """Return, for example, A-Torah given Torah"""
+    return f"{ordered_short_sena(sena)}-{sena}"
 
 
 def short_bcv(bcv):
     """
-       Returns, for example, G2:3 for Genesis chapter 2 verse 3.
-       Note that, to minimize string length, there is no space between the
-       (short) book name and the chapter.
+    Returns, for example, G2:3 for Genesis chapter 2 verse 3.
+    Note that, to minimize string length, there is no space between the
+    (short) book name and the chapter.
     """
-    return short(bcv[0]) + str(bcv[1]) + ':' + str(bcv[2])
+    return short(bcv[0]) + str(bcv[1]) + ":" + str(bcv[2])
 
 
 def ordered_short_bcv(bcv):
@@ -112,33 +112,34 @@ def ordered_short_bcv(bcv):
 
 
 def my_zfill(the_int, width):
-    """ Call str.zfill, asserting that width is adhered to. """
+    """Call str.zfill, asserting that width is adhered to."""
     out = str(the_int).zfill(width)
     assert len(out) == width
     return out
 
 
 def short_bcv_of_bcvt(bcvt):
-    """ Like short_bcv but on a bcvt. """
+    """Like short_bcv but on a bcvt."""
     return short_bcv(bcvt_get_bcv_triple(bcvt))
 
 
 def has_dualcant(bcvtmam):  # bcvt in MAM vtrad
-    """ Return whether locale bcvt has dual cantillation """
+    """Return whether locale bcvt has dual cantillation"""
     assert bcvt_is_tmam(bcvtmam)
     return (
-        bcvtmam == _SAGA_OF_REUBEN_BCV or
-        bcvtmam in _EXDEC_RANGE or
-        bcvtmam in _DEDEC_RANGE)
+        bcvtmam == _SAGA_OF_REUBEN_BCV
+        or bcvtmam in _EXDEC_RANGE
+        or bcvtmam in _DEDEC_RANGE
+    )
 
 
 def bkids_of_books_with_dualcant():
-    """ Return the names of the 3 books having dual cantillation """
+    """Return the names of the 3 books having dual cantillation"""
     return BK_GENESIS, BK_EXODUS, BK_DEUTER
 
 
 def nu10(verse_num, vtrad):
-    """ Return a bcvt in Numbers chapter 10 """
+    """Return a bcvt in Numbers chapter 10"""
     cvt = mk_cvt(10, verse_num, vtrad)
     return mk_bcvt(BK_NUMBERS, cvt)
 
@@ -166,150 +167,151 @@ def part2_bkid(bkid):
 
 
 def mk_bcvtmam(bkid, chnu, vrnu):
-    """ Return a bcvt with t=VT_MAM """
+    """Return a bcvt with t=VT_MAM"""
     return mk_bcvt(bkid, mk_cvtmam(chnu, vrnu))
 
 
 def mk_bcvtsef(bkid, chnu, vrnu):
-    """ Return a bct with t=vtrad Sef """
+    """Return a bct with t=vtrad Sef"""
     return mk_bcvt(bkid, mk_cvtsef(chnu, vrnu))
 
 
 def mk_bcvtbhs(bkid, chnu, vrnu):
-    """ Return a bcvt with t=vtrad BHS """
+    """Return a bcvt with t=vtrad BHS"""
     return mk_bcvt(bkid, mk_cvtbhs(chnu, vrnu))
 
 
 def mk_bcvtxxx(bkid, chnu, vrnu, vtrad):
-    """ Return a bcvt with t=the given vtrad """
+    """Return a bcvt with t=the given vtrad"""
     return mk_bcvt(bkid, mk_cvt(chnu, vrnu, vtrad))
 
 
 def mk_bcvt(bkid, cvt):
-    """ Make a bcvt from a cvt """
-    return '_bcvt', bkid, *cvt
+    """Make a bcvt from a cvt"""
+    return "_bcvt", bkid, *cvt
 
 
 def mk_cvtmam(chnu, vrnu):
-    """ Return a cv qualified with VT_MAM """
+    """Return a cv qualified with VT_MAM"""
     return chnu, vrnu, VT_MAM
 
 
 def mk_cvtsef(chnu, vrnu):
-    """ Return a cv with vtrad Sef """
+    """Return a cv with vtrad Sef"""
     return chnu, vrnu, VT_SEF
 
 
 def mk_cvtbhs(chnu, vrnu):
-    """ Return a cv with vtrad BHS """
+    """Return a cv with vtrad BHS"""
     return chnu, vrnu, VT_BHS
 
 
 def mk_cvt(chnu, vrnu, vtrad):
-    """ Return a cv with the given vtrad """
+    """Return a cv with the given vtrad"""
     return chnu, vrnu, vtrad
 
 
 def bcvt_get_bkid(bcvt):
-    """ Return the book ID part of bcvt """
+    """Return the book ID part of bcvt"""
     assert _is_bcvt(bcvt)
     return bcvt[1]
 
 
 def bcvt_get_cvt(bcvt):
-    """ Strip the book name """
+    """Strip the book name"""
     assert _is_bcvt(bcvt)
     return bcvt[2:]
 
 
 def bcvt_get_chnu(bcvt):
-    """ Return the chapter number part of bcvt """
+    """Return the chapter number part of bcvt"""
     return cvt_get_chnu(bcvt_get_cvt(bcvt))
 
 
 def bcvt_get_vrnu(bcvt):
-    """ Return the verse number part of bcvt """
+    """Return the verse number part of bcvt"""
     return cvt_get_vrnu(bcvt_get_cvt(bcvt))
 
 
 def bcvt_get_vtrad(bcvt):
-    """ Return the vtrad part of bcvt """
+    """Return the vtrad part of bcvt"""
     return cvt_get_vtrad(bcvt_get_cvt(bcvt))
 
 
 def bcvt_get_bcv_triple(bcvt):
-    """ Return the book ID, chapter number, and verse number parts of bcvt """
+    """Return the book ID, chapter number, and verse number parts of bcvt"""
     return bcvt_get_bkid(bcvt), bcvt_get_chnu(bcvt), bcvt_get_vrnu(bcvt)
 
 
 def bcvt_is_tmam(bcvt):
-    """ Return whether the vtrad is VT_MAM """
+    """Return whether the vtrad is VT_MAM"""
     return cvt_is_tmam(bcvt_get_cvt(bcvt))
 
 
 def cvt_get_chnu(cvt):
-    """ Return the chnu part of cvt """
+    """Return the chnu part of cvt"""
     return cvt[0]
 
 
 def cvt_get_vrnu(cvt):
-    """ Return the vrnu part of cvt """
+    """Return the vrnu part of cvt"""
     return cvt[1]
 
 
 def cvt_get_vtrad(cvt):
-    """ Return the vtrad part of cvt """
+    """Return the vtrad part of cvt"""
     return cvt[2]
 
 
 def cvt_get_chnu_vrnu(cvt):
-    """ Return the chnu and vrnu parts of cvt, as a pair """
+    """Return the chnu and vrnu parts of cvt, as a pair"""
     return cvt_get_chnu(cvt), cvt_get_vrnu(cvt)
 
 
 def cvt_is_tmam(cvt):
-    """ Return whether the vtrad is VT_MAM """
+    """Return whether the vtrad is VT_MAM"""
     return cvt_get_vtrad(cvt) == VT_MAM
 
 
 def cvt_is_tsef(cvt):
-    """ Return whether the vtrad is vtrad Sef """
+    """Return whether the vtrad is vtrad Sef"""
     return cvt_get_vtrad(cvt) == VT_SEF
 
 
 def cvt_strip_vtrad(cvt):
-    """ Strip the vtrad """
+    """Strip the vtrad"""
     return cvt[:-1]
 
 
 def eq_mod_vtrad(cvt_a, cvt_b):
-    """ Return whether these cvts are equal modulo their vtrad. """
+    """Return whether these cvts are equal modulo their vtrad."""
     return cvt_strip_vtrad(cvt_a) == cvt_strip_vtrad(cvt_b)
 
 
 def short(bkid):
     """
-        Returns the (unordered) short name (1 or 2 letters) corresponding to
-        the given book. E.g. G for Genesis, Er for Ezra.
+    Returns the (unordered) short name (1 or 2 letters) corresponding to
+    the given book. E.g. G for Genesis, Er for Ezra.
     """
     return _bkprop_short(_BOOK_PROPERTIES[bkid])
 
 
 def std_from_short(short_book_name):
     """
-        Returns the standard book name given the (unordered) short name
-        (1 or 2 letters). E.g. Genesis G, Ezra for Er.
+    Returns the standard book name given the (unordered) short name
+    (1 or 2 letters). E.g. Genesis G, Ezra for Er.
     """
     return _SHORT_TO_STD[short_book_name]
 
 
 def _is_bcvt(obj):
     return (
-        obj[0] == '_bcvt' and
-        obj[1] in ALL_BOOK_IDS and
-        isinstance(obj[2], int) and
-        isinstance(obj[3], int) and
-        obj[4] in ALL_VTRADS)
+        obj[0] == "_bcvt"
+        and obj[1] in ALL_BOOK_IDS
+        and isinstance(obj[2], int)
+        and isinstance(obj[3], int)
+        and obj[4] in ALL_VTRADS
+    )
 
 
 def _max_width_for_chnu(bkid):
@@ -364,45 +366,45 @@ def _cvt_setv(cvt, new_vrnu):
     return mk_cvt(chnu, new_vrnu, vtrad)
 
 
-BK_GENESIS = 'Genesis'
-BK_EXODUS = 'Exodus'
-BK_LEVIT = 'Levit'
-BK_NUMBERS = 'Numbers'
-BK_DEUTER = 'Deuter'
-BK_JOSHUA = 'Joshua'
-BK_JUDGES = 'Judges'
-BK_FST_SAM = '1Samuel'
-BK_SND_SAM = '2Samuel'
-BK_FST_KGS = '1Kings'
-BK_SND_KGS = '2Kings'
-BK_ISAIAH = 'Isaiah'
-BK_JEREM = 'Jeremiah'
-BK_EZEKIEL = 'Ezekiel'  # guts to change it to Ezeqiel?
-BK_HOSHEA = 'Hosea'  # guts to change it to Hoshea?
-BK_JOEL = 'Joel'
-BK_AMOS = 'Amos'
-BK_OVADIAH = 'Obadiah'  # guts to change it to Ovadiah?
-BK_JONAH = 'Jonah'
-BK_MIKHAH = 'Micah'  # guts to change it to Mikhah or Miḳah?
-BK_NAXUM = 'Nahum'  # guts to change it to Naḥum?
-BK_XABA = 'Habakkuk'  # guts to change it to Ḥabakkuk? Ḥabaqquq?
-BK_TSEF = 'Tsefaniah'
-BK_XAGGAI = 'Haggai'  # guts to change it to Ḥaggai?
-BK_ZEKHAR = 'Zechariah'  # guts to change it to Zekhariah or Zeḳariah?
-BK_MALAKHI = 'Malachi'  # guts to change it to Malakhi or Malaḳi?
-BK_PSALMS = 'Psalms'
-BK_PROV = 'Proverbs'
-BK_JOB = 'Job'
-BK_SONG = 'Song of Songs'
-BK_RUTH = 'Ruth'
-BK_LAMENT = 'Lamentations'
-BK_QOHELET = 'Ecclesiastes'
-BK_ESTHER = 'Esther'
-BK_DANIEL = 'Daniel'
-BK_EZRA = 'Ezra'
-BK_NEXEM = 'Nehemiah'  # guts to change it to Neḥemiah?
-BK_FST_CHR = '1Chronicles'
-BK_SND_CHR = '2Chronicles'
+BK_GENESIS = "Genesis"
+BK_EXODUS = "Exodus"
+BK_LEVIT = "Levit"
+BK_NUMBERS = "Numbers"
+BK_DEUTER = "Deuter"
+BK_JOSHUA = "Joshua"
+BK_JUDGES = "Judges"
+BK_FST_SAM = "1Samuel"
+BK_SND_SAM = "2Samuel"
+BK_FST_KGS = "1Kings"
+BK_SND_KGS = "2Kings"
+BK_ISAIAH = "Isaiah"
+BK_JEREM = "Jeremiah"
+BK_EZEKIEL = "Ezekiel"  # guts to change it to Ezeqiel?
+BK_HOSHEA = "Hosea"  # guts to change it to Hoshea?
+BK_JOEL = "Joel"
+BK_AMOS = "Amos"
+BK_OVADIAH = "Obadiah"  # guts to change it to Ovadiah?
+BK_JONAH = "Jonah"
+BK_MIKHAH = "Micah"  # guts to change it to Mikhah or Miḳah?
+BK_NAXUM = "Nahum"  # guts to change it to Naḥum?
+BK_XABA = "Habakkuk"  # guts to change it to Ḥabakkuk? Ḥabaqquq?
+BK_TSEF = "Tsefaniah"
+BK_XAGGAI = "Haggai"  # guts to change it to Ḥaggai?
+BK_ZEKHAR = "Zechariah"  # guts to change it to Zekhariah or Zeḳariah?
+BK_MALAKHI = "Malachi"  # guts to change it to Malakhi or Malaḳi?
+BK_PSALMS = "Psalms"
+BK_PROV = "Proverbs"
+BK_JOB = "Job"
+BK_SONG = "Song of Songs"
+BK_RUTH = "Ruth"
+BK_LAMENT = "Lamentations"
+BK_QOHELET = "Ecclesiastes"
+BK_ESTHER = "Esther"
+BK_DANIEL = "Daniel"
+BK_EZRA = "Ezra"
+BK_NEXEM = "Nehemiah"  # guts to change it to Neḥemiah?
+BK_FST_CHR = "1Chronicles"
+BK_SND_CHR = "2Chronicles"
 
 BK24_GENESIS = BK_GENESIS
 BK24_EXODUS = BK_EXODUS
@@ -411,12 +413,12 @@ BK24_NUMBERS = BK_NUMBERS
 BK24_DEUTER = BK_DEUTER
 BK24_JOSHUA = BK_JOSHUA
 BK24_JUDGES = BK_JUDGES
-BK24_SAMUEL = 'Samuel'
-BK24_KINGS = 'Kings'
+BK24_SAMUEL = "Samuel"
+BK24_KINGS = "Kings"
 BK24_ISAIAH = BK_ISAIAH
 BK24_JEREM = BK_JEREM
 BK24_EZEKIEL = BK_EZEKIEL
-BK24_THE_12 = 'The-12-Minor-Prophets'
+BK24_THE_12 = "The-12-Minor-Prophets"
 BK24_PSALMS = BK_PSALMS
 BK24_PROV = BK_PROV
 BK24_JOB = BK_JOB
@@ -426,60 +428,60 @@ BK24_LAMENT = BK_LAMENT
 BK24_QOHELET = BK_QOHELET
 BK24_ESTHER = BK_ESTHER
 BK24_DANIEL = BK_DANIEL
-BK24_EZ_NE = 'Ezra-Neḥemiah'
-BK24_CHRON = 'Chronicles'
+BK24_EZ_NE = "Ezra-Neḥemiah"
+BK24_CHRON = "Chronicles"
 
-SEC_TORAH = 'Torah'
-SEC_NEV_RISH = 'NevRish'
-SEC_NEV_AX = 'NevAḥ'
-SEC_SIF_EM = 'SifEm'
-SEC_XAM_MEG = 'ḤamMeg'
-SEC_KET_ACH = 'KetAḥ'
+SEC_TORAH = "Torah"
+SEC_NEV_RISH = "NevRish"
+SEC_NEV_AX = "NevAḥ"
+SEC_SIF_EM = "SifEm"
+SEC_XAM_MEG = "ḤamMeg"
+SEC_KET_ACH = "KetAḥ"
 
-VT_MAM = 'vtmam'
-VT_SEF = 'vtsef'
-VT_BHS = 'vtbhs'
+VT_MAM = "vtmam"
+VT_SEF = "vtsef"
+VT_BHS = "vtbhs"
 ALL_VTRADS = VT_MAM, VT_SEF, VT_BHS
 
-_SH_GENESIS = 'G', 'A1'
-_SH_EXODUS = 'E', 'A2'  # E in contrast to Ee, Ec, Es, Er
-_SH_LEVIT = 'L', 'A3'  # L in contrast to La
-_SH_NUMBERS = 'N', 'A4'  # N in contrast to Ne & Na
-_SH_DEUTER = 'D', 'A5'  # D in contrast to Da
-_SH_JOSHUA = 'Js', 'B1'  # Jo.*: JsJlJnJb
-_SH_JUDGES = 'Ju', 'B2'
-_SH_FST_SAM = '1S', 'BA'
-_SH_SND_SAM = '2S', 'BB'
-_SH_FST_KGS = '1K', 'BC'
-_SH_SND_KGS = '2K', 'BD'
-_SH_ISAIAH = 'I', 'C1'
-_SH_JEREM = 'Je', 'C2'
-_SH_EZEKIEL = 'Ee', 'C3'  # Ez.*: EeEr
-_SH_HOSEA = 'Ho', 'CA'
-_SH_JOEL = 'Jl', 'CB'  # Jo.*: JsJlJnJb
-_SH_AMOS = 'A', 'CC'
-_SH_OBADIAH = 'O', 'CD'
-_SH_JONAH = 'Jn', 'CE'  # Jo.*: JsJlJnJb
-_SH_MICAH = 'Mi', 'CF'
-_SH_NAXUM = 'Na', 'CG'
-_SH_XABA = 'Hb', 'CH'  # Ha.*: HbHg
-_SH_TSEF = 'Ts', 'CI'  # was Zp (see note below)
-_SH_XAGGAI = 'Hg', 'CJ'  # Ha.*: HbHg
-_SH_ZEKHAR = 'Zc', 'CK'  # Zc (see note below)
-_SH_MALAKHI = 'Ma', 'CL'
-_SH_PSALMS = 'Ps', 'D1'
-_SH_PROV = 'Pr', 'D2'
-_SH_JOB = 'Jb', 'D3'  # Jo.*: JsJlJnJb
-_SH_SONG = 'S', 'E1'
-_SH_RUTH = 'R', 'E2'
-_SH_LAMENT = 'La', 'E3'
-_SH_QOHELET = 'Ec', 'E4'
-_SH_ESTHER = 'Es', 'E5'
-_SH_DANIEL = 'Da', 'F1'
-_SH_EZRA = 'Er', 'FA'  # Ez.*: EeEr
-_SH_NEXEM = 'Ne', 'FB'
-_SH_FST_CHR = '1C', 'FC'
-_SH_SND_CHR = '2C', 'FD'
+_SH_GENESIS = "G", "A1"
+_SH_EXODUS = "E", "A2"  # E in contrast to Ee, Ec, Es, Er
+_SH_LEVIT = "L", "A3"  # L in contrast to La
+_SH_NUMBERS = "N", "A4"  # N in contrast to Ne & Na
+_SH_DEUTER = "D", "A5"  # D in contrast to Da
+_SH_JOSHUA = "Js", "B1"  # Jo.*: JsJlJnJb
+_SH_JUDGES = "Ju", "B2"
+_SH_FST_SAM = "1S", "BA"
+_SH_SND_SAM = "2S", "BB"
+_SH_FST_KGS = "1K", "BC"
+_SH_SND_KGS = "2K", "BD"
+_SH_ISAIAH = "I", "C1"
+_SH_JEREM = "Je", "C2"
+_SH_EZEKIEL = "Ee", "C3"  # Ez.*: EeEr
+_SH_HOSEA = "Ho", "CA"
+_SH_JOEL = "Jl", "CB"  # Jo.*: JsJlJnJb
+_SH_AMOS = "A", "CC"
+_SH_OBADIAH = "O", "CD"
+_SH_JONAH = "Jn", "CE"  # Jo.*: JsJlJnJb
+_SH_MICAH = "Mi", "CF"
+_SH_NAXUM = "Na", "CG"
+_SH_XABA = "Hb", "CH"  # Ha.*: HbHg
+_SH_TSEF = "Ts", "CI"  # was Zp (see note below)
+_SH_XAGGAI = "Hg", "CJ"  # Ha.*: HbHg
+_SH_ZEKHAR = "Zc", "CK"  # Zc (see note below)
+_SH_MALAKHI = "Ma", "CL"
+_SH_PSALMS = "Ps", "D1"
+_SH_PROV = "Pr", "D2"
+_SH_JOB = "Jb", "D3"  # Jo.*: JsJlJnJb
+_SH_SONG = "S", "E1"
+_SH_RUTH = "R", "E2"
+_SH_LAMENT = "La", "E3"
+_SH_QOHELET = "Ec", "E4"
+_SH_ESTHER = "Es", "E5"
+_SH_DANIEL = "Da", "F1"
+_SH_EZRA = "Er", "FA"  # Ez.*: EeEr
+_SH_NEXEM = "Ne", "FB"
+_SH_FST_CHR = "1C", "FC"
+_SH_SND_CHR = "2C", "FD"
 # Tsefaniah was formerly Zp because (a) it was formerly spelled Zephaniah
 # and (b) with this former spelling, Ze would have been ambiguous with
 # Zechariah.
@@ -547,11 +549,14 @@ ALL_BOOK_IDS = tuple(_BOOK_PROPERTIES.keys())
 _ALL_BK24_IDS = {bk24id(bk39id): True for bk39id in ALL_BOOK_IDS}
 ALL_BK24_IDS = tuple(_ALL_BK24_IDS.keys())
 ALL_SECTION_NAMES = (
-    SEC_TORAH, SEC_NEV_RISH, SEC_NEV_AX,
-    SEC_SIF_EM, SEC_XAM_MEG, SEC_KET_ACH)
-_SHORT_TO_STD = {
-    _bkprop_short(prop): std
-    for std, prop in _BOOK_PROPERTIES.items()}
+    SEC_TORAH,
+    SEC_NEV_RISH,
+    SEC_NEV_AX,
+    SEC_SIF_EM,
+    SEC_XAM_MEG,
+    SEC_KET_ACH,
+)
+_SHORT_TO_STD = {_bkprop_short(prop): std for std, prop in _BOOK_PROPERTIES.items()}
 _SAGA_OF_REUBEN_BCV = mk_bcvtmam(BK_GENESIS, 35, 22)
 _EXDEC_START = mk_bcvtmam(BK_EXODUS, 20, 2)
 _DEDEC_START = mk_bcvtmam(BK_DEUTER, 5, 6)
