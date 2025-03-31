@@ -47,7 +47,8 @@ def _recapture_maqaf_and_pasoleg(atoms):
     out = []
     for atom in atoms:
         if atom in ("", hpu.MAQ, hpu.PAS):
-            # The empty string ("") can result from maqaf followed by space as in 2k23:10
+            # The empty string ("") results from maqaf followed by space.
+            # This only happens in 2k23:10:
             # אאא *בני־ **בֶנ־הִנֹּ֑ם
             # (ignore אאא)
             out[-1] += atom
@@ -57,10 +58,11 @@ def _recapture_maqaf_and_pasoleg(atoms):
 
 
 def _recapture_note(atoms):
-    # For je5:7 אאא *אסלוח[1]־**אֶֽסְלַֽח־[י]לָ֔/ךְ
+    # A note accidentally joins the next atom if the note follows a maqaf.
+    # This only happens in je5:7:
+    # אאא *אסלוח[1]־**אֶֽסְלַֽח־[י]לָ֔/ךְ
     # (ignore אאא)
     # (substitute [y] for [י])
-    # XXX Why no space before **?
     out = []
     for atom in atoms:
         if atom[0] == "[":
