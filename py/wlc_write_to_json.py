@@ -8,9 +8,9 @@ import py.wlc_smallish_files as smallish_files
 import py.wlc_convert_p_mcd_to_p_uni as mu
 
 
-def write(tdir, wlc_id):
-    filename = _FILENAMES[wlc_id]
-    format = _FORMATS[wlc_id]
+def write(tdir, wlc_id, release_info):
+    filename = release_info["ri-filenames"][wlc_id]
+    format = release_info["ri-formats"][wlc_id]
     read_and_parse_fn = _READ_AND_PARSE_FNS[format]
     parsed = read_and_parse_fn(tdir, wlc_id, filename)
     smallish_files.write(tdir, wlc_id, parsed)
@@ -33,18 +33,6 @@ def _write_kq(tdir, wlc_id, parsed):
         smallish_files.write(tdir, wlc_id, ukqparsed, "-kq-u")
 
 
-_FILENAMES = {
-    "wlc420": "wlc420_ps.txt",
-    "wlc422": "wlc422_ps.txt",
-    "2025-03-21-uni": "wlcubs420.txt",
-    "2025-03-21-mcd": "wlcmbs420.txt",
-}
-_FORMATS = {
-    "wlc420": "fmt-M-C",
-    "wlc422": "fmt-M-C",
-    "2025-03-21-uni": "fmt-Uni",
-    "2025-03-21-mcd": "fmt-M-C",
-}
 _READ_AND_PARSE_FNS = {
     "fmt-M-C": rp_mdc.read_and_parse,
     "fmt-Uni": rp_uni.read_and_parse,
