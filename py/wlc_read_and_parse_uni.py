@@ -22,10 +22,14 @@ def read_and_parse(tdir, wlc_id, filename):
 
 def _parse_verse_line(verse_line):
     verse_line_2 = verse_line.translate(_DROP_DIRECTIONAL_MARKS_AND_SLASH)
-    atoms_1 = re.split(_SPLIT_PATT, verse_line_2)
-    atoms_2 = list(filter(_is_not_space, atoms_1))
-    atoms_3 = _recapture_maqaf_and_pasoleg(atoms_2)
-    bcv, atoms_4 = atoms_3[0], atoms_3[1:]
+    #
+    atoms = []
+    atoms.append(re.split(_SPLIT_PATT, verse_line_2))
+    atoms.append(list(filter(_is_not_space, atoms[-1])))
+    atoms.append(_recapture_maqaf_and_pasoleg(atoms[-1]))
+    atoms.append(_recapture_note(atoms[-1]))
+    #
+    bcv, atoms_4 = atoms[-1][0], atoms[-1][1:]
     return _parse_atoms(bcv, atoms_4)
 
 
@@ -39,13 +43,32 @@ def _is_not_space(string):
     return string != " "
 
 
-def _recapture_maqaf_and_pasoleg(atoms_2):
+def _recapture_maqaf_and_pasoleg(atoms):
     out = []
-    for atom_2 in atoms_2:
-        if atom_2 in (hpu.MAQ, hpu.PAS):
-            out[-1] += atom_2
+    for atom in atoms:
+        if atom in ("", hpu.MAQ, hpu.PAS):
+            # The empty string ("") can result from maqaf followed by space as in 2k23:10
+            # אאא *בני־ **בֶנ־הִנֹּ֑ם
+            # (ignore אאא)
+            out[-1] += atom
         else:
-            out.append(atom_2)
+            out.append(atom)
+    return out
+
+
+def _recapture_note(atoms):
+    # For je5:7 אאא *אסלוח[1]־**אֶֽסְלַֽח־[י]לָ֔/ךְ
+    # (ignore אאא)
+    # (substitute [y] for [י])
+    # XXX Why no space before **?
+    out = []
+    for atom in atoms:
+        if atom[0] == "[":
+            assert atom[2] == "]"
+            out[-1] += atom[0:3]
+            out.append(atom[3:])
+        else:
+            out.append(atom)
     return out
 
 
@@ -83,6 +106,7 @@ def _extract_notes(wn_dic):
     word = wn_dic["word"]
     if match := re.fullmatch(r"(.*)\[(.*)\](.*)", word):
         main, raw_notes, post = match.groups()
+        assert post in ("", hpu.MAQ, hpu.PAS)
         new_word = main + post
         notes = _classic_bracketing(raw_notes)
         return {"word": new_word, "notes": notes}
