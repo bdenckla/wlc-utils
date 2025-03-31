@@ -27,7 +27,7 @@ def main():
     ww_diff = wlc_compare_with_wlc.compare(parsed["wlc420"], parsed["wlc422"])
     _write_ww_diff(tdir, wlc_mcd_ids, ww_diff)
     #
-    wlc_write_to_json.write_uni(tdir, "WLCU-2025-03-21")
+    # wlc_write_to_json.write(tdir, "WLCU-2025-03-21")
 
 
 if __name__ == "__main__":

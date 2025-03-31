@@ -9,26 +9,19 @@ import py.wlc_convert_p_mcd_to_p_uni as mu
 
 
 def write(tdir, wlc_id):
-    parsed, _kqparsed = _write(tdir, wlc_id)
-    return parsed
-
-
-def write_uni(tdir, wlc_id):
-    _parsed, kqparsed = _write(tdir, wlc_id)
-    ukqparsed = mu.convert_p_mc_to_p_unicode(kqparsed)
-    smallish_files.write(tdir, wlc_id, ukqparsed, "-kq-u")
-
-
-def _write(tdir, wlc_id):
     filename = _FILENAMES[wlc_id]
-    read_and_parse_fn = _READ_AND_PARSE_FNS[wlc_id]
+    format = _FORMATS[wlc_id]
+    read_and_parse_fn = _READ_AND_PARSE_FNS[format]
     parsed = read_and_parse_fn(tdir, wlc_id, filename)
     kqparsed = kqparse.kqparse(parsed)
     smallish_files.write(tdir, wlc_id, parsed)
     smallish_files.write(tdir, wlc_id, kqparsed, "-kq")
     foi_utils.write(tdir, wlc_id, parsed)
     foi_utils.kqwrite(tdir, wlc_id, kqparsed)
-    return parsed, kqparsed
+    if format == "fmt-M-C":
+        ukqparsed = mu.convert_p_mc_to_p_unicode(kqparsed)
+        smallish_files.write(tdir, wlc_id, ukqparsed, "-kq-u")
+    return parsed
 
 
 _FILENAMES = {
