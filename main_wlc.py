@@ -20,7 +20,7 @@ def _write_ww_diff(tdir, wlc_ids, ww_diff):
 def main():
     """Process WLC 4.20 & WLC 4.22 in various ways."""
     tdir = "../wlc-utils-io"
-    uni_only = True
+    uni_only = False
     wlc_write_to_json.write(tdir, "WLCU-2025-03-21")
     if uni_only:
         return

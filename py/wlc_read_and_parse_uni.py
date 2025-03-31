@@ -21,7 +21,7 @@ def read_and_parse(tdir, wlc_id, filename):
 
 
 def _parse_verse_line(verse_line):
-    verse_line_2 = verse_line.translate(_DROP_DIRECTIONAL_MARKS)
+    verse_line_2 = verse_line.translate(_DROP_DIRECTIONAL_MARKS_AND_SLASH)
     atoms_1 = re.split(_SPLIT_PATT, verse_line_2)
     atoms_2 = list(filter(_is_not_space, atoms_1))
     atoms_3 = _recapture_maqaf_and_pasoleg(atoms_2)
@@ -51,11 +51,12 @@ def _recapture_maqaf_and_pasoleg(atoms_2):
 
 _SPMQ = " " + hpu.MAQ
 _SPLIT_PATT = f"([{_SPMQ}])"  # "([ab])"
-_DROP_DIRECTIONAL_MARKS = str.maketrans(
+_DROP_DIRECTIONAL_MARKS_AND_SLASH = str.maketrans(
     {
         "\N{RIGHT-TO-LEFT MARK}": "",  # U+200F
         "\N{LEFT-TO-RIGHT ISOLATE}": "",  # U+2066
         "\N{POP DIRECTIONAL ISOLATE}": "",  # U+2069
+        "/": "",
     }
 )
 

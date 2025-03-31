@@ -23,6 +23,12 @@ def uword(mcword: str):
     return re.sub(r"\d\d", digits_replacement, stage)
 
 
+def uword_retaining_slash(mcword: str):
+    stage = tword(mcword)
+    stage = stage.translate(_TRANSLATION_TABLE_RETAINING_SLASH)
+    return re.sub(r"\d\d", digits_replacement, stage)
+
+
 def _sqbrac(guts):
     return f"[{guts}]"
 
@@ -106,56 +112,57 @@ _TRANSLATION_TABLE_FOR_FINAL_FORMS = str.maketrans(
         "C": "c",
     }
 )
-_TRANSLATION_TABLE = str.maketrans(
-    {
-        "/": None,
-        ")": "א",
-        "B": "ב",
-        "G": "ג",
-        "D": "ד",
-        "H": "ה",
-        "W": "ו",
-        "Z": "ז",
-        "X": "ח",
-        "+": "ט",
-        "Y": "י",
-        "K": "כ",
-        "k": "ך",
-        "L": "ל",
-        "M": "מ",
-        "m": "ם",
-        "N": "נ",
-        "n": "ן",
-        "S": "ס",
-        "(": "ע",
-        "P": "פ",
-        "p": "ף",
-        "C": "צ",
-        "c": "ץ",
-        "Q": "ק",
-        "R": "ר",
-        "#": "ש",
-        "&": "ש" + hpo.SIND,
-        "$": "ש" + hpo.SHIND,
-        "T": "ת",
-        "A": hpo.PATAX,
-        "a": hpo.XPATAX,  # a was :A
-        "F": hpo.QAMATS,
-        "f": hpo.XQAMATS,  # f was :F
-        "E": hpo.SEGOL_V,
-        "e": hpo.XSEGOL,  # e was :E
-        '"': hpo.TSERE,
-        "I": hpo.XIRIQ,
-        "O": hpo.XOLAM,
-        "o": hpo.XOLAM,
-        "ḥ": hpo.XOLAM_XFV,
-        "U": hpo.QUBUTS,
-        ":": hpo.SHEVA,
-        ".": hpo.DAGESH_OM,
-        ",": hpo.RAFE,
-        "-": hpu.MAQ,
-    }
-)
+_TRANSLATION_DIC_RETAINING_SLASH = {
+    ")": "א",
+    "B": "ב",
+    "G": "ג",
+    "D": "ד",
+    "H": "ה",
+    "W": "ו",
+    "Z": "ז",
+    "X": "ח",
+    "+": "ט",
+    "Y": "י",
+    "K": "כ",
+    "k": "ך",
+    "L": "ל",
+    "M": "מ",
+    "m": "ם",
+    "N": "נ",
+    "n": "ן",
+    "S": "ס",
+    "(": "ע",
+    "P": "פ",
+    "p": "ף",
+    "C": "צ",
+    "c": "ץ",
+    "Q": "ק",
+    "R": "ר",
+    "#": "ש",
+    "&": "ש" + hpo.SIND,
+    "$": "ש" + hpo.SHIND,
+    "T": "ת",
+    "A": hpo.PATAX,
+    "a": hpo.XPATAX,  # a was :A
+    "F": hpo.QAMATS,
+    "f": hpo.XQAMATS,  # f was :F
+    "E": hpo.SEGOL_V,
+    "e": hpo.XSEGOL,  # e was :E
+    '"': hpo.TSERE,
+    "I": hpo.XIRIQ,
+    "O": hpo.XOLAM,
+    "o": hpo.XOLAM,
+    "ḥ": hpo.XOLAM_XFV,
+    "U": hpo.QUBUTS,
+    ":": hpo.SHEVA,
+    ".": hpo.DAGESH_OM,
+    ",": hpo.RAFE,
+    "-": hpu.MAQ,
+}
+_TRANSLATION_DIC = {
+    "/": None,
+    **_TRANSLATION_DIC_RETAINING_SLASH,
+}
 _ACCENTS = {
     "00": hpu.SOPA,
     "01": ha.SEG_A,
@@ -200,3 +207,5 @@ _ACCENTS = {
 }
 # uword('A12C34')
 # uword('A1234')
+_TRANSLATION_TABLE = str.maketrans(_TRANSLATION_DIC)
+_TRANSLATION_TABLE_RETAINING_SLASH = str.maketrans(_TRANSLATION_DIC_RETAINING_SLASH)
