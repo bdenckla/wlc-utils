@@ -20,14 +20,16 @@ def _write_ww_diff(tdir, wlc_ids, ww_diff):
 def main():
     """Process WLC 4.20 & WLC 4.22 in various ways."""
     tdir = "../wlc-utils-io"
+    uni_only = True
+    wlc_write_to_json.write(tdir, "WLCU-2025-03-21")
+    if uni_only:
+        return
     wlc_mcd_ids = "wlc420", "wlc422"
     parsed = {id: wlc_write_to_json.write(tdir, id) for id in wlc_mcd_ids}
     wu_diff = wlc_compare_with_uxlc.compare(parsed["wlc420"])
     _write_wu_diff(tdir, "wlc420", wu_diff)
     ww_diff = wlc_compare_with_wlc.compare(parsed["wlc420"], parsed["wlc422"])
     _write_ww_diff(tdir, wlc_mcd_ids, ww_diff)
-    #
-    # wlc_write_to_json.write(tdir, "WLCU-2025-03-21")
 
 
 if __name__ == "__main__":

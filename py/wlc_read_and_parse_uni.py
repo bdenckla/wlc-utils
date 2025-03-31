@@ -1,6 +1,8 @@
 """ Exports read_and_parse. """
 
+import re
 import py.wlc_utils as wlc_utils
+import py.hebrew_punctuation as hpu
 
 
 def read_and_parse(tdir, wlc_id, filename):
@@ -19,23 +21,43 @@ def read_and_parse(tdir, wlc_id, filename):
 
 
 def _parse_verse_line(verse_line):
-    space_sep_strs = verse_line.split(" ")
-    bcv = space_sep_strs[0]
-    word1s = space_sep_strs[1:]
-    list_of_lists_of_veldics = list(map(_word1_to_veldics, word1s))
-    veldics = _sum_of_lists(list_of_lists_of_veldics)
-    for veldic in veldics:
-        _validate_veldic(veldic)
+    verse_line_2 = verse_line.translate(_DROP_DIRECTIONAL_MARKS)
+    atoms_1 = re.split(_SPLIT_PATT, verse_line_2)
+    atoms_2 = list(filter(_is_not_space, atoms_1))
+    atoms_3 = _recapture_maqaf_and_pasoleg(atoms_2)
+    bcv, atoms_4 = atoms_3[0], atoms_3[1:]
+    return _parse_atoms(bcv, atoms_4)
+
+
+def _parse_atoms(bcv, atoms_4):
+    veldics = list(map(_atom_to_veldic, atoms_4))
     velsods = list(map(wlc_utils.veldic_to_velsod, veldics))
     return {"bcv": bcv, "vels": velsods}
 
 
-def _sum_of_lists(lists):
-    """Return the sum of lists."""
-    accum = []
-    for the_list in lists:
-        accum.extend(the_list)
-    return accum
+def _is_not_space(string):
+    return string != " "
+
+
+def _recapture_maqaf_and_pasoleg(atoms_2):
+    out = []
+    for atom_2 in atoms_2:
+        if atom_2 in (hpu.MAQ, hpu.PAS):
+            out[-1] += atom_2
+        else:
+            out.append(atom_2)
+    return out
+
+
+_SPMQ = " " + hpu.MAQ
+_SPLIT_PATT = f"([{_SPMQ}])"  # "([ab])"
+_DROP_DIRECTIONAL_MARKS = str.maketrans(
+    {
+        "\N{RIGHT-TO-LEFT MARK}": "",  # U+200F
+        "\N{LEFT-TO-RIGHT ISOLATE}": "",  # U+2066
+        "\N{POP DIRECTIONAL ISOLATE}": "",  # U+2069
+    }
+)
 
 
 def _validate_veldic(veldic):
@@ -43,60 +65,42 @@ def _validate_veldic(veldic):
         return
     wn_dic = veldic
     word = wn_dic["word"]
+    assert "[" not in word
     assert "]" not in word
-    index_of_dash = word.find("-")
-    assert index_of_dash in (-1, len(word) - 1)
 
 
-def _word1_to_veldics(word1):
-    # wn_dic: dict with keys "word" and "notes"
-    # veldic: verse element dict (parasep or wn_dic)
-    wn_dic1 = {"word": word1, "notes": []}
-    wn_dic2 = _extract_notes(wn_dic1)
-    veldic = _distinguish_parasep(wn_dic2)
-    veldics = _isolate_atoms(veldic)
-    return veldics
+def _atom_to_veldic(word1):
+    stage1 = {"word": word1, "notes": []}
+    stage2 = _extract_notes(stage1)
+    stage3 = _distinguish_parasep(stage2)
+    _validate_veldic(stage3)
+    return stage3
 
 
 def _extract_notes(wn_dic):
     # wn_dic: dict with keys "word" and "notes"
     word = wn_dic["word"]
-    if len(word) > 2 and word[-2] == "]":
-        notes = wn_dic["notes"]
-        new_notes = [word[-2:], *notes]
-        new_wn_dic = {"word": word[:-2], "notes": new_notes}
-        return _extract_notes(new_wn_dic)  # recurse
+    if match := re.fullmatch(r"(.*)\[(.*)\](.*)", word):
+        main, raw_notes, post = match.groups()
+        new_word = main + post
+        notes = _classic_bracketing(raw_notes)
+        return {"word": new_word, "notes": notes}
     return wn_dic
+
+
+def _classic_bracketing(raw_notes):
+    return list(map(lambda x: f"]{x}", raw_notes))
 
 
 def _distinguish_parasep(wn_dic):
     # wn_dic: dict with keys "word" and "notes"
     word = wn_dic["word"]
-    if word in ("P", "S"):
+    if word in ("פ", "ס"):
         assert not wn_dic["notes"]
-        return {"parasep": word}
-    if word == "N":
+        return {"parasep": _SAMPE_REMAP[word]}
+    if word == hpu.NUN_HAF:
         assert wn_dic["notes"] == ["]8"]
-        return {"parasep": word}
+        return {"parasep": "N"}
     return wn_dic
 
-
-def _isolate_atoms(veldic):
-    # wn_dic: dict with keys "word" and "notes"
-    if wlc_utils.is_parasep(veldic):
-        return [veldic]
-    wn_dic = veldic
-    word = wn_dic["word"]
-    pre, sep, post = word.partition("-")
-    assert pre != ""
-    if post != "":
-        assert sep == "-"
-        assert pre != ""
-        assert "-" not in pre
-        pre_plus_sep = pre + sep
-        wn_dic_for_pps = {"word": pre_plus_sep, "notes": []}
-        wn_dic_for_post = {"word": post, "notes": wn_dic["notes"]}
-        wn_dics_for_post = _isolate_atoms(wn_dic_for_post)  # recurse
-        return [wn_dic_for_pps, *wn_dics_for_post]
-    assert sep in ("", "-")
-    return [wn_dic]
+_SAMPE_REMAP = {"פ": "P", "ס": "S"}
