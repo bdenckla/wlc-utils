@@ -3,8 +3,8 @@
 import py.wlc_utils as wlc_utils
 
 
-def read_and_parse(tdir, wlc_id):
-    in_path = f"{tdir}/in/{wlc_id}/{wlc_id}_ps.txt"
+def read_and_parse(tdir, wlc_id, filename):
+    in_path = f"{tdir}/in/{wlc_id}/{filename}"
     parsed = {"header": [], "verses": []}
     with open(in_path, encoding="utf-8", newline="") as wlc_in_fp:
         for rawline in wlc_in_fp:
