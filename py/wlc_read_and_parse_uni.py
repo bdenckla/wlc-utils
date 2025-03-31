@@ -104,4 +104,5 @@ def _distinguish_parasep(wn_dic):
         return {"parasep": "N"}
     return wn_dic
 
+
 _SAMPE_REMAP = {"פ": "P", "ס": "S"}

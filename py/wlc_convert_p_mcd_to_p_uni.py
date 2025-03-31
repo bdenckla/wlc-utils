@@ -37,11 +37,11 @@ def _convert_kq(ketiv_qere):
 
 _FN_TABLE_TOP = {
     "header": lambda x: x,
-    "verses": lambda x: sl_map(_convert_verse, x)
+    "verses": lambda x: sl_map(_convert_verse, x),
 }
 _FN_TABLE_VERSE = {
     "bcv": lambda x: x,
-    "vels": lambda x: sl_map(_convert_verse_element, x)
+    "vels": lambda x: sl_map(_convert_verse_element, x),
 }
 _FN_TABLE_VERSE_ELEMENT = {
     "string": _convert_string,
