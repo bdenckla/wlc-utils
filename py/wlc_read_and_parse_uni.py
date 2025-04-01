@@ -23,14 +23,14 @@ def read_and_parse(tdir, wlc_id, filename):
 def _parse_verse_line(verse_line):
     verse_line_2 = verse_line.translate(_DROP_DIRECTIONAL_MARKS_AND_SLASH)
     #
-    atoms = []
-    atoms.append(re.split(_SPLIT_PATT, verse_line_2))
-    atoms.append(list(filter(_is_not_space, atoms[-1])))
-    atoms.append(_recapture_maqaf_and_pasoleg(atoms[-1]))
-    atoms.append(_recapture_note(atoms[-1]))
+    stages = []
+    stages.append(re.split(_SPLIT_PATT, verse_line_2))
+    stages.append(list(filter(_is_not_space, stages[-1])))
+    stages.append(_recapture_maqaf_and_pasoleg(stages[-1]))
+    stages.append(_recapture_note(stages[-1]))
     #
-    bcv, atoms_4 = atoms[-1][0], atoms[-1][1:]
-    return _parse_atoms(bcv, atoms_4)
+    bcv, atoms = stages[-1][0], stages[-1][1:]
+    return _parse_atoms(bcv, atoms)
 
 
 def _parse_atoms(bcv, atoms_4):
@@ -124,10 +124,10 @@ def _distinguish_parasep(wn_dic):
     word = wn_dic["word"]
     if word in ("פ", "ס"):
         assert not wn_dic["notes"]
-        return {"parasep": _SAMPE_REMAP[word]}
+        return {"sam_pe_inun": _SAMPE_REMAP[word]}
     if word == hpu.NUN_HAF:
         assert wn_dic["notes"] == ["]8"]
-        return {"parasep": "N"}
+        return {"sam_pe_inun": "N"}
     return wn_dic
 
 

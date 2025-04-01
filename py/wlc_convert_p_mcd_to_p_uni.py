@@ -45,7 +45,7 @@ _FN_TABLE_VERSE = {
 }
 _FN_TABLE_VERSE_ELEMENT = {
     "string": _convert_string,
-    "parasep": lambda x: x,
+    "sam_pe_inun": lambda x: x,
     "word": _convert_string,
     "notes": lambda x: x,
     "kq": _convert_kq,

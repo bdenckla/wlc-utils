@@ -74,10 +74,10 @@ def _distinguish_parasep(wn_dic):
     word = wn_dic["word"]
     if word in ("P", "S"):
         assert not wn_dic["notes"]
-        return {"parasep": word}
+        return {"sam_pe_inun": word}
     if word == "N":
         assert wn_dic["notes"] == ["]8"]
-        return {"parasep": word}
+        return {"sam_pe_inun": word}
     return wn_dic
 
 

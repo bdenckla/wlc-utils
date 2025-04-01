@@ -152,7 +152,7 @@ def _vyl_to_cells(vyl, typlbl, lbl0, lbl1):
     if vyltype == _VYLTYPE_WN:
         datacells = vyl["word"], "".join(vyl["notes"])
     elif vyltype == _VYLTYPE_PS:
-        datacells = vyl["parasep"], ""
+        datacells = vyl["sam_pe_inun"], ""
     elif vyltype == _VYLTYPE_NONE:
         datacells = "", ""
     else:
@@ -172,6 +172,6 @@ def _vyltype(vyl):
     keys = tuple(vyl.keys())
     if keys == ("word", "notes"):
         return _VYLTYPE_WN
-    if keys == ("parasep",):
+    if keys == ("sam_pe_inun",):
         return _VYLTYPE_PS
     assert False

@@ -15,11 +15,11 @@ def veldic_to_velsod(veldic):
 
 
 def is_parasep(veldic):
-    return list(veldic.keys()) == ["parasep"]
+    return list(veldic.keys()) == ["sam_pe_inun"]
 
 
 def get_parasep(velsod):
-    return isinstance(velsod, dict) and velsod.get("parasep")
+    return isinstance(velsod, dict) and velsod.get("sam_pe_inun")
 
 
 def get_notes(velsod):
