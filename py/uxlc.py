@@ -2,7 +2,7 @@
 
 import xml.etree.ElementTree
 
-import py.tanakh_book_names as tbn
+import py.bib_locales as tbn
 
 
 def read_all_books(books_dir="in/UXLC"):

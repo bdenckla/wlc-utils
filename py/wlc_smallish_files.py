@@ -1,12 +1,12 @@
 """ Exports write. """
 
-import py.my_open as my_open
+import py.file_io as file_io
 
 
 def write(tdir, wlc_id, parsed, suffix=""):
     tdir2 = f"{tdir}/out/{wlc_id}{suffix}"
     out_path_for_header = f"{tdir2}/{wlc_id}_ps.0header.json"
-    my_open.json_dump_to_file_path(parsed["header"], out_path_for_header)
+    file_io.json_dump_to_file_path(parsed["header"], out_path_for_header)
     chunks = _chunks_init()
     for verse in parsed["verses"]:
         chunk_str = _CHUNK_STR_FOR_BKID[_bkid_of_verse(verse)]
@@ -19,7 +19,7 @@ def _write_smallish_file(tdir2, wlc_id, chunk_str, chunk_verses):
     chunk_idx = _CHUNK_IDX_FOR_CHUNK_STR[chunk_str]
     idx_and_bkids = f"{chunk_idx:02}_{chunk_str}"
     out_path = f"{tdir2}/{wlc_id}_ps.1verses_{idx_and_bkids}.json"
-    my_open.json_dump_to_file_path(chunk_verses, out_path)
+    file_io.json_dump_to_file_path(chunk_verses, out_path)
 
 
 def _bkid_of_verse(verse):

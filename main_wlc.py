@@ -1,6 +1,6 @@
 """ Exports main """
 
-import py.my_open as my_open
+import py.file_io as file_io
 import py.wlc_compare_with_wlc as wlc_compare_with_wlc
 import py.wlc_write_to_json as wlc_write_to_json
 import py.wlc_compare_with_uxlc as wlc_compare_with_uxlc
@@ -8,13 +8,13 @@ import py.wlc_compare_with_uxlc as wlc_compare_with_uxlc
 
 def _write_wu_diff(tdir, wlc_id, wu_diff):
     out_path = f"{tdir}/out/diff_{wlc_id}_uxlc_ps.json"
-    my_open.json_dump_to_file_path(wu_diff, out_path)
+    file_io.json_dump_to_file_path(wu_diff, out_path)
 
 
 def _write_ww_diff(tdir, wlc_ids, ww_diff):
     wlc_ida, wlc_idb = wlc_ids
     out_path = f"{tdir}/out/diff_{wlc_ida}_{wlc_idb}_ps.json"
-    my_open.json_dump_to_file_path(ww_diff, out_path)
+    file_io.json_dump_to_file_path(ww_diff, out_path)
 
 
 def main():

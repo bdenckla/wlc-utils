@@ -1,9 +1,9 @@
 """ Exports write. """
 
-import py.my_open as my_open
+import py.file_io as file_io
 import py.wlc_utils as wlc_utils
 import py.wlc_uword as wlc_uword
-import py.release_info as ri
+import py.wlc_release_info as ri
 
 
 def write(tdir, wlc_id, parsed):
@@ -30,7 +30,7 @@ def _flexcollect(io_fois, wlc_id, xparsed, xcollect):
 
 def _flexdump(fois, tdir, wlc_id, suffix=""):
     out_path = _flexpath(tdir, wlc_id, suffix)
-    my_open.json_dump_to_file_path(fois, out_path)
+    file_io.json_dump_to_file_path(fois, out_path)
 
 
 def _flexpath(tdir, wlc_id, suffix=""):

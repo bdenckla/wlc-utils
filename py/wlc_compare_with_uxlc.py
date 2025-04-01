@@ -1,5 +1,5 @@
 import py.uxlc as muxlc  # m for module (to avoid clash with variable named "uxlc")
-import py.convert_citation_from_wlc_to_uxlc as w2u
+import py.wlc_convert_citation_to_uxlc as w2u
 import py.wlc_uword as wlc_uword
 import py.wlc_utils as wlc_utils
 import py.uni_heb as uh
