@@ -3,6 +3,7 @@
 import py.my_open as my_open
 import py.wlc_utils as wlc_utils
 import py.wlc_uword as wlc_uword
+import py.release_info as ri
 
 
 def write(tdir, wlc_id, parsed):
@@ -84,15 +85,19 @@ def _collect(io_fois, wlc_id, bcv, velsod):
                 counts[note] = 0
             counts[note] += 1
             #
-            notes_str = "".join(notes)
-            case = {
-                "note": note,
-                "bcv": bcv,
-                "uword": wlc_uword.uword(word),
-                "word": word,
-                "notes_str": notes_str,
-            }
-            cases.append(case)
+            cases.append(_make_case(wlc_id, bcv, notes, note, word))
+
+
+def _make_case(wlc_id, bcv, notes, note, word):
+    notes_str = "".join(notes)
+    case = {}
+    case["note"] = note
+    case["bcv"] = bcv
+    if ri.encoding_is_mdc(wlc_id):
+        case["uword"] = wlc_uword.uword(word)
+    case["word"] = word
+    case["notes_str"] = notes_str
+    return case
 
 
 def _kqcollect(io_fois, wlc_id, bcv, velsod):
