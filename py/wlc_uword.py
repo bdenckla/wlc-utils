@@ -18,14 +18,18 @@ def tword(mcword: str):
 
 
 def uword(mcword: str):
-    stage = tword(mcword)
-    stage = stage.translate(_TRANSLATION_TABLE)
-    return re.sub(r"\d\d", digits_replacement, stage)
+    return uword_x(_TRANSLATION_TABLE, mcword)
 
 
 def uword_retaining_slash(mcword: str):
+    return uword_x(_TRANSLATION_TABLE_RETAINING_SLASH, mcword)
+
+
+def uword_x(ttab, mcword: str):
+    if mcword in _PASS_THRUS:
+        return mcword
     stage = tword(mcword)
-    stage = stage.translate(_TRANSLATION_TABLE_RETAINING_SLASH)
+    stage = stage.translate(ttab)
     return re.sub(r"\d\d", digits_replacement, stage)
 
 
@@ -209,3 +213,4 @@ _ACCENTS = {
 # uword('A1234')
 _TRANSLATION_TABLE = str.maketrans(_TRANSLATION_DIC)
 _TRANSLATION_TABLE_RETAINING_SLASH = str.maketrans(_TRANSLATION_DIC_RETAINING_SLASH)
+_PASS_THRUS = {"*kk", "**qq"}
