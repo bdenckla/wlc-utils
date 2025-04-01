@@ -6,11 +6,12 @@ import py.wlc_kqparse as kqparse
 import py.wlc_foi_utils as foi_utils
 import py.wlc_smallish_files as smallish_files
 import py.wlc_convert_p_mcd_to_p_uni as mu
+import py.release_info as ri
 
 
-def write(tdir, wlc_id, release_info):
-    filename = release_info["ri-filenames"][wlc_id]
-    format = release_info["ri-formats"][wlc_id]
+def write(tdir, wlc_id):
+    filename = ri.RELEASE_INFO["ri-filenames"][wlc_id]
+    format = ri.RELEASE_INFO["ri-formats"][wlc_id]
     read_and_parse_fn = _READ_AND_PARSE_FNS[format]
     parsed = read_and_parse_fn(tdir, wlc_id, filename)
     smallish_files.write(tdir, wlc_id, parsed)
