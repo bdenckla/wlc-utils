@@ -46,7 +46,7 @@ def _is_not_space(string):
 def _recapture_maqaf_and_pasoleg(atoms):
     out = []
     for atom in atoms:
-        if atom in ("", hpu.MAQ, hpu.PAS):
+        if atom in ("", hpu.MAQ, hpu.PASOLEG):
             # The empty string ("") results from maqaf followed by space.
             # This only happens in 2k23:10:
             # אאא *בני־ **בֶנ־הִנֹּ֑ם
@@ -109,7 +109,7 @@ def _extract_notes(wn_dic):
     word = wn_dic["word"]
     if match := re.fullmatch(r"(.*)\[(.*)\](.*)", word):
         main, raw_notes, post = match.groups()
-        assert post in ("", hpu.MAQ, hpu.PAS)
+        assert post in ("", hpu.MAQ, hpu.PASOLEG)
         new_word = main + post
         notes = _classic_bracketing(raw_notes)
         return {"word": new_word, "notes": notes}

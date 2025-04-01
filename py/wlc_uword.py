@@ -159,7 +159,7 @@ _TRANSLATION_DIC_RETAINING_SLASH = {
     "ḥ": hpo.XOLAM_XFV,
     "U": hpo.QUBUTS,
     ":": hpo.SHEVA,
-    ".": hpo.DAGESH_OM,
+    ".": hpo.DAGOMOSD,
     ",": hpo.RAFE,
     "-": hpu.MAQ,
 }
@@ -170,12 +170,12 @@ _TRANSLATION_DIC = {
 _ACCENTS = {
     "00": hpu.SOPA,
     "01": ha.SEG_A,
-    "02": ha.ZARQA,
+    "02": ha.Z_OR_TSOR,
     "03": ha.PASH,
     "04": ha.TEL_Q,
-    "05": hpu.PAS,
-    "10": ha.YETIV,
-    "13": ha.DEXI,
+    "05": hpu.PASOLEG,
+    "10": ha.YET,
+    "13": ha.DEX,
     "11": ha.GER_M,
     "12": ha.GER_2,  # garshayim (preposed)
     "14": ha.TEL_G,
@@ -186,28 +186,28 @@ _ACCENTS = {
     "60": ha.OLE,
     "61": ha.GER,
     "62": ha.GER_2,
-    "63": ha.QADMA,
-    "64": ha.ILUY,
-    "65": ha.SHAL,
-    "80": ha.ZAQEF_Q,
+    "63": ha.QOM,
+    "64": ha.ILU,
+    "65": ha.SHA,
+    "80": ha.ZAQ_Q,
     "81": ha.REV,
-    "82": ha.ZARQA_SH,  # 2 uses as stress-helper to acc02 (82\S+02); >200 uses as tsinnorit
-    "83": ha.PAZER,
-    "84": ha.QARNEY,  # aka pazer gadol
-    "85": ha.ZAQEF_G,
-    "35": sd.ZWJ + hpo.METEG,  # medial
+    "82": ha.ZSH_OR_TSIT,  # 2 uses as stress-helper to acc02 (82\S+02); >200 uses as tsinnorit
+    "83": ha.PAZ,
+    "84": ha.QAR,  # aka pazer gadol
+    "85": ha.ZAQ_G,
+    "35": sd.ZWJ + hpo.MTGOSLQ,  # medial
     "53": "\N{HEBREW MARK LOWER DOT}",
-    "70": ha.MAHA,
+    "70": ha.MAH,
     "71": ha.MER,
     "72": ha.MER_2,
     "73": ha.TIP,
     "74": ha.MUN,
-    "75": hpo.METEG,  # left (normal)
-    "91": ha.TEVIR,
+    "75": hpo.MTGOSLQ,  # left (normal)
+    "91": ha.TEV,
     "92": ha.ATN,
     "93": ha.YBY,  # aka galgal
-    "94": ha.DARGA,
-    "95": hpo.METEG,  # right ("early")
+    "94": ha.DAR,
+    "95": hpo.MTGOSLQ,  # right ("early")
 }
 # uword('A12C34')
 # uword('A1234')
