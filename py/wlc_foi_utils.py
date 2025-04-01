@@ -7,7 +7,7 @@ import py.wlc_uword as wlc_uword
 
 def write(tdir, wlc_id, parsed):
     io_fois = _init()
-    _flexcollect(io_fois, parsed, _collect)
+    _flexcollect(io_fois, wlc_id, parsed, _collect)
     #
     io_fois["notes_foi"] = _sort_notes_foi(io_fois["notes_foi"])
     #
@@ -16,15 +16,15 @@ def write(tdir, wlc_id, parsed):
 
 def kqwrite(tdir, wlc_id, kqparsed):
     io_fois = _kqinit()
-    _flexcollect(io_fois, kqparsed, _kqcollect)
+    _flexcollect(io_fois, wlc_id, kqparsed, _kqcollect)
     _flexdump(io_fois, tdir, wlc_id, "-kq")
 
 
-def _flexcollect(io_fois, xparsed, xcollect):
+def _flexcollect(io_fois, wlc_id, xparsed, xcollect):
     for verse in xparsed["verses"]:
         bcv = verse["bcv"]
         for velsod in verse["vels"]:
-            xcollect(io_fois, bcv, velsod)
+            xcollect(io_fois, wlc_id, bcv, velsod)
 
 
 def _flexdump(fois, tdir, wlc_id, suffix=""):
@@ -70,7 +70,7 @@ def _sort_notes_foi(notes_foi):
     return notes_foi_out
 
 
-def _collect(io_fois, bcv, velsod):
+def _collect(io_fois, wlc_id, bcv, velsod):
     if p_or_s := wlc_utils.get_parasep(velsod):
         parasep_foi = io_fois["parasep_foi"]
         parasep_foi[p_or_s] += 1
@@ -95,7 +95,7 @@ def _collect(io_fois, bcv, velsod):
             cases.append(case)
 
 
-def _kqcollect(io_fois, bcv, velsod):
+def _kqcollect(io_fois, wlc_id, bcv, velsod):
     if ketiv_and_qere := wlc_utils.get_kq(velsod):
         ketiv_and_qere = velsod["kq"]
         lenk = len(ketiv_and_qere[0])
