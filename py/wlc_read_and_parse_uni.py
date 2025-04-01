@@ -96,7 +96,8 @@ def _validate_veldic(veldic):
 
 
 def _atom_to_veldic(word1):
-    stage1 = {"word": word1, "notes": []}
+    word2 = _KK_QQ_REMAPS.get(word1) or word1
+    stage1 = {"word": word2, "notes": []}
     stage2 = _extract_notes(stage1)
     stage3 = _distinguish_sam_pe_inun(stage2)
     _validate_veldic(stage3)
@@ -132,3 +133,4 @@ def _distinguish_sam_pe_inun(wn_dic):
 
 
 _SAMPE_REMAP = {"פ": "P", "ס": "S"}
+_KK_QQ_REMAPS = {"*": "*kk", "**": "**qq"}
