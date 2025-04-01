@@ -39,7 +39,7 @@ def _flexpath(tdir, wlc_id, suffix=""):
 
 def _init():
     return {
-        "parasep_foi": {"P": 0, "S": 0, "N": 0},
+        "sam_pe_inun_foi": {"P": 0, "S": 0, "N": 0},
         "notes_foi": {"counts": {}, "cases": []},
     }
 
@@ -72,9 +72,9 @@ def _sort_notes_foi(notes_foi):
 
 
 def _collect(io_fois, wlc_id, bcv, velsod):
-    if p_or_s := wlc_utils.get_parasep(velsod):
-        parasep_foi = io_fois["parasep_foi"]
-        parasep_foi[p_or_s] += 1
+    if spi := wlc_utils.get_sam_pe_inun(velsod):
+        sam_pe_inun_foi = io_fois["sam_pe_inun_foi"]
+        sam_pe_inun_foi[spi] += 1
         return
     if notes := wlc_utils.get_notes(velsod):
         word = velsod["word"]

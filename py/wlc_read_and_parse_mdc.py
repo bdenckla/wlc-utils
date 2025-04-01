@@ -39,7 +39,7 @@ def _sum_of_lists(lists):
 
 
 def _validate_veldic(veldic):
-    if wlc_utils.is_parasep(veldic):
+    if wlc_utils.is_sam_pe_inun(veldic):
         return
     wn_dic = veldic
     word = wn_dic["word"]
@@ -50,10 +50,10 @@ def _validate_veldic(veldic):
 
 def _word1_to_veldics(word1):
     # wn_dic: dict with keys "word" and "notes"
-    # veldic: verse element dict (parasep or wn_dic)
+    # veldic: verse element dict (sam_pe_inun or wn_dic)
     wn_dic1 = {"word": word1, "notes": []}
     wn_dic2 = _extract_notes(wn_dic1)
-    veldic = _distinguish_parasep(wn_dic2)
+    veldic = _distinguish_sam_pe_inun(wn_dic2)
     veldics = _isolate_atoms(veldic)
     return veldics
 
@@ -69,7 +69,7 @@ def _extract_notes(wn_dic):
     return wn_dic
 
 
-def _distinguish_parasep(wn_dic):
+def _distinguish_sam_pe_inun(wn_dic):
     # wn_dic: dict with keys "word" and "notes"
     word = wn_dic["word"]
     if word in ("P", "S"):
@@ -83,7 +83,7 @@ def _distinguish_parasep(wn_dic):
 
 def _isolate_atoms(veldic):
     # wn_dic: dict with keys "word" and "notes"
-    if wlc_utils.is_parasep(veldic):
+    if wlc_utils.is_sam_pe_inun(veldic):
         return [veldic]
     wn_dic = veldic
     word = wn_dic["word"]

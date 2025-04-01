@@ -33,7 +33,7 @@ def _comparables(wlc_verse):
 
 def _comparable(wlc_velsod):
     if isinstance(wlc_velsod, dict):
-        if wlc_utils.is_parasep(wlc_velsod):
+        if wlc_utils.is_sam_pe_inun(wlc_velsod):
             return None
         return _comparable(wlc_velsod["word"])
     wlc_str = wlc_velsod

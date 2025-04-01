@@ -6,7 +6,7 @@ def velsod_to_veldic(velsod):
 
 def veldic_to_velsod(veldic):
     # vel as dict always (veldic) to vel as a string or a dict (velsod)
-    if is_parasep(veldic):
+    if is_sam_pe_inun(veldic):
         return veldic
     wn_dic = veldic
     if not wn_dic["notes"]:
@@ -14,11 +14,11 @@ def veldic_to_velsod(veldic):
     return wn_dic
 
 
-def is_parasep(veldic):
+def is_sam_pe_inun(veldic):
     return list(veldic.keys()) == ["sam_pe_inun"]
 
 
-def get_parasep(velsod):
+def get_sam_pe_inun(velsod):
     return isinstance(velsod, dict) and velsod.get("sam_pe_inun")
 
 

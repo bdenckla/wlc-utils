@@ -87,7 +87,7 @@ _DROP_DIRECTIONAL_MARKS_AND_SLASH = str.maketrans(
 
 
 def _validate_veldic(veldic):
-    if wlc_utils.is_parasep(veldic):
+    if wlc_utils.is_sam_pe_inun(veldic):
         return
     wn_dic = veldic
     word = wn_dic["word"]
@@ -98,7 +98,7 @@ def _validate_veldic(veldic):
 def _atom_to_veldic(word1):
     stage1 = {"word": word1, "notes": []}
     stage2 = _extract_notes(stage1)
-    stage3 = _distinguish_parasep(stage2)
+    stage3 = _distinguish_sam_pe_inun(stage2)
     _validate_veldic(stage3)
     return stage3
 
@@ -119,7 +119,7 @@ def _classic_bracketing(raw_notes):
     return list(map(lambda x: f"]{x}", raw_notes))
 
 
-def _distinguish_parasep(wn_dic):
+def _distinguish_sam_pe_inun(wn_dic):
     # wn_dic: dict with keys "word" and "notes"
     word = wn_dic["word"]
     if word in ("פ", "ס"):
