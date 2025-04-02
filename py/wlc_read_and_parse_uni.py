@@ -121,14 +121,17 @@ def _atom_to_veldic(word1):
     word2 = _KK_QQ_REMAPS.get(word1) or word1
     stage = {"word": word2, "notes": []}
     stage = _extract_notes(stage)
-    stage = _finalize_nun_before_maqaf(stage)  # XXX shouldn't have to do this!
+    stage = _finalize_some_letters(stage)  # XXX shouldn't have to do this!
     stage = _distinguish_sam_pe_inun(stage)
     _validate_veldic(stage)
     return stage
 
 
-def _finalize_nun_before_maqaf(wn_dic):
-    return {"word": wn_dic["word"].replace("נ־", "ן־"), "notes": wn_dic["notes"]}
+def _finalize_some_letters(wn_dic):
+    stage = wn_dic["word"]
+    stage = stage.replace("נ־", "ן־")
+    stage = re.sub("כְ$", "ךְ", stage)
+    return {"word": stage, "notes": wn_dic["notes"]}
 
 
 def _extract_notes(wn_dic):
