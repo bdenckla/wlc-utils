@@ -14,6 +14,7 @@ def tword(mcword: str):
     stage = re.sub(_PREPOS_PATT, _prepos_replacement, stage)
     stage = re.sub(_FINAL_PATT, _final_replacement, stage)
     stage = re.sub(_LAOY_PATT, _laoy_replacement, stage)
+    stage = re.sub(_DD75_PATT, _dd75_replacement, stage)
     stage = stage.replace("81" + "11", "11" + "81")  # rev-ger_m becomes ger_m-rev
     return stage
 
@@ -98,6 +99,13 @@ def _final_replacement(matchobj):
 def _laoy_replacement(matchobj):
     gra, gro, gry = matchobj.groups()
     return "L" + gra + gry + gro
+
+
+def _dd75_replacement(matchobj):
+    digit_pair = matchobj.group(1)
+    if _ACCENTS[digit_pair] in ha.UNI_OVER_ACCENTS:
+        return "75" + digit_pair
+    return digit_pair + "75"
 
 
 def _digits_replacement(matchobj):
@@ -189,18 +197,18 @@ _ACCENTS = {
     "63": ha.QOM,
     "64": ha.ILU,
     "65": ha.SHA,
-    "80": ha.ZAQ_Q,
-    "81": ha.REV,
-    "82": ha.ZSH_OR_TSIT,  # 2 uses as stress-helper to acc02 (82\S+02); >200 uses as tsinnorit
-    "83": ha.PAZ,
-    "84": ha.QAR,  # aka pazer gadol
-    "85": ha.ZAQ_G,
     "70": ha.MAH,
     "71": ha.MER,
     "72": ha.MER_2,
     "73": ha.TIP,
     "74": ha.MUN,
     "75": hpo.MTGOSLQ,  # left (normal)
+    "80": ha.ZAQ_Q,
+    "81": ha.REV,
+    "82": ha.ZSH_OR_TSIT,  # 2 uses as stress-helper to acc02 (82\S+02); >200 uses as tsinnorit
+    "83": ha.PAZ,
+    "84": ha.QAR,  # aka pazer gadol
+    "85": ha.ZAQ_G,
     "91": ha.TEV,
     "92": ha.ATN,
     "93": ha.YBY,  # aka galgal
@@ -216,3 +224,4 @@ _OVER_ACCENTS = [a for a in _ACCENTS.keys() if _ACCENTS[a] in ha.UNI_OVER_ACCENT
 _OVER_ACCENTS.append("75")  # XXX Normal meteg is treated like an over-accent, i.e. like O in LAYO!
 _OVER_ACCENTS_PATT = _paren("|".join(_OVER_ACCENTS))
 _LAOY_PATT = r"L([AF])" + _OVER_ACCENTS_PATT + "([I:])"
+_DD75_PATT = r"(\d\d)75"
