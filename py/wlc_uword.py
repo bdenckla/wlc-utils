@@ -52,8 +52,8 @@ _LETT = _sqbrac(_LETT_GUTS)
 _NON_LETT = _sqbrac_not(_LETT_GUTS)
 _NON_LETT_STAR = _NON_LETT + "*"
 _NON_LETT_STAR_DOLL = _NON_LETT_STAR + "$"
-_PREPOS_PATT = "^(10|11|12|13|14)" + _paren(_LETT + _NON_LETT_STAR)
-_EARLY_MTG_PATT = '([AFE"I:U])95'
+_PREPOS_PATT = r"^(\*\*|)(10|11|12|13|14)" + _paren(_LETT + _NON_LETT_STAR)
+_EARLY_MTG_PATT = '([afeAFE"I:U])95'
 _XOLAM_PATT1 = (
     "O" + _paren(_NON_LETT_STAR) + _paren(_sqbrac(_LETT_GUTS_NO_VAV) + '|W[AFE"I:U]')
 )
@@ -63,8 +63,11 @@ _FINAL_PATT = r"[KMNPC]" + _NON_LETT_STAR_DOLL
 
 
 def _prepos_replacement(matchobj):
-    groups = matchobj.groups()
-    return groups[1] + groups[0]
+    dsoe, prepos, lpzmnl = matchobj.groups()
+    # dsoe: ds or empty (ds: double-star, i.e. **, i.e. qere marker)
+    # prepos: the two-digit prepositive accent code
+    # lpzmnl: letter plus zmnl (zmnl: zero or more non-letters)
+    return dsoe + lpzmnl + prepos
 
 
 def _early_mtg_replacement(matchobj):
