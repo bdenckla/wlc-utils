@@ -33,9 +33,10 @@ def _parse_verse_line(verse_line):
     return _parse_atoms(bcv, atoms)
 
 
-def _parse_atoms(bcv, atoms_4):
-    veldics = list(map(_atom_to_veldic, atoms_4))
-    velsods = list(map(wlc_utils.veldic_to_velsod, veldics))
+def _parse_atoms(bcv, atoms):
+    veldics_1 = list(map(_atom_to_veldic, atoms))
+    veldics_2 = _reduce_note_resolution(veldics_1)
+    velsods = list(map(wlc_utils.veldic_to_velsod, veldics_2))
     return {"bcv": bcv, "vels": velsods}
 
 
@@ -71,6 +72,27 @@ def _recapture_note(atoms):
             out.append(atom[3:])
         else:
             out.append(atom)
+    return out
+
+
+def _reduce_note_resolution(veldics):
+    # Reduce the note resolution from atom-level to chanted-word-level.
+    # This is to facilitation comparison with M-C sources.
+    out = []
+    accum = []
+    for veldic in veldics:
+        if "sam_pe_inun" in veldic:
+            out.append(veldic)
+            continue
+        word, notelist = veldic["word"], veldic["notes"]
+        is_nfatom = word.endswith(hpu.MAQ)  # nf: non-final
+        if is_nfatom:
+            accum.extend(notelist)
+            out.append({"word": word, "notes": []})
+        else:
+            accum.extend(notelist)
+            out.append({"word": word, "notes": accum})
+            accum = []
     return out
 
 
