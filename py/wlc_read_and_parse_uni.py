@@ -2,7 +2,7 @@
 
 import re
 import py.wlc_utils as wlc_utils
-import py.hebrew_punctuation as hpu
+import pycmn.hebrew_punctuation as hpu
 
 
 def read_and_parse(tdir, wlc_id, filename):

@@ -2,11 +2,11 @@
 
 import xml.etree.ElementTree
 
-import py.bib_locales as tbn
+import pycmn.bib_locales as tbn
 
 
 def read_all_books(books_dir="in/UXLC"):
-    return {bkid: read(bkid, books_dir) for bkid in tbn.ALL_BOOK_IDS}
+    return {bkid: read(bkid, books_dir) for bkid in tbn.ALL_BK39_IDS}
 
 
 def read(book_id, books_dir="in/UXLC"):

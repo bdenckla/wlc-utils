@@ -1,6 +1,6 @@
 """ Exports write. """
 
-import py.file_io as file_io
+import pycmn.file_io as file_io
 
 
 def write(tdir, wlc_id, parsed, suffix=""):

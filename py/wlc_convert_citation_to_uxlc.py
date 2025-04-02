@@ -1,6 +1,6 @@
 """ Exports get_tanach_dot_us_url, get_uxlc_bkid. """
 
-import py.bib_locales as tbn
+import pycmn.bib_locales as tbn
 
 _WLC_BKID_TO_STD_BKID = {
     "gn": tbn.BK_GENESIS,

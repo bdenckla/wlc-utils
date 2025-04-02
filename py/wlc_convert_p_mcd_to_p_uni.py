@@ -1,6 +1,6 @@
 import py.wlc_uword as wlc_uword
-from py.my_utils import dv_dispatch
-from py.my_utils import sl_map
+from pycmn.my_utils import dv_dispatch
+from pycmn.my_utils import sl_map
 
 
 def convert_p_mcd_to_p_uni(p_mcd):

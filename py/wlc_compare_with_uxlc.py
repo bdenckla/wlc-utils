@@ -2,7 +2,7 @@ import py.uxlc as muxlc  # m for module (to avoid clash with variable named "uxl
 import py.wlc_convert_citation_to_uxlc as w2u
 import py.wlc_uword as wlc_uword
 import py.wlc_utils as wlc_utils
-import py.uni_heb as uh
+import pycmn.uni_heb as uh
 import unicodedata
 
 
@@ -67,6 +67,6 @@ def _record_diff(io_misc, wlc_str, wlc_str_u, uxlc_str):
         "bcv": io_misc["wlc_bcv"],
         "wlc_str": wlc_str,
         "wlc_str_t": wlc_uword.tword(wlc_str),
-        "wu": uh.comma_shunnas(wlc_str_u) + "\n" + uh.comma_shunnas(uxlc_str),
+        "wu": uh.join_shunnas(wlc_str_u) + "\n" + uh.join_shunnas(uxlc_str),
     }
     io_misc["diffs"].append(diff)

@@ -1,8 +1,8 @@
 import re
-import py.hebrew_points as hpo
-import py.hebrew_accents as ha
-import py.hebrew_punctuation as hpu
-import py.str_defs as sd
+import pycmn.hebrew_points as hpo
+import pycmn.hebrew_accents as ha
+import pycmn.hebrew_punctuation as hpu
+import pycmn.str_defs as sd
 
 
 def tword(mcword: str):

@@ -1,6 +1,6 @@
 """ Exports main """
 
-import py.file_io as file_io
+import pycmn.file_io as file_io
 import py.wlc_compare_with_wlc as wlc_compare_with_wlc
 import py.wlc_write_to_json as wlc_write_to_json
 import py.wlc_compare_with_uxlc as wlc_compare_with_uxlc

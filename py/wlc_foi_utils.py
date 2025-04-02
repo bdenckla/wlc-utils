@@ -1,6 +1,6 @@
 """ Exports write. """
 
-import py.file_io as file_io
+import pycmn.file_io as file_io
 import py.wlc_utils as wlc_utils
 import py.wlc_uword as wlc_uword
 import py.wlc_release_info as ri
