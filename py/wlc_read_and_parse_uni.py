@@ -119,11 +119,16 @@ def _validate_veldic(veldic):
 
 def _atom_to_veldic(word1):
     word2 = _KK_QQ_REMAPS.get(word1) or word1
-    stage1 = {"word": word2, "notes": []}
-    stage2 = _extract_notes(stage1)
-    stage3 = _distinguish_sam_pe_inun(stage2)
-    _validate_veldic(stage3)
-    return stage3
+    stage = {"word": word2, "notes": []}
+    stage = _extract_notes(stage)
+    stage = _finalize_nun_before_maqaf(stage)  # XXX shouldn't have to do this!
+    stage = _distinguish_sam_pe_inun(stage)
+    _validate_veldic(stage)
+    return stage
+
+
+def _finalize_nun_before_maqaf(wn_dic):
+    return {"word": wn_dic["word"].replace("נ־", "ן־"), "notes": wn_dic["notes"]}
 
 
 def _extract_notes(wn_dic):
