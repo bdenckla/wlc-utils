@@ -87,7 +87,8 @@ def _reduce_note_resolution(veldics):
             continue
         word, notelist = veldic["word"], veldic["notes"]
         is_nfatom = word.endswith(hpu.MAQ)  # nf: non-final
-        if is_nfatom:
+        if is_nfatom and word != "*אסלוח־":
+            # *אסלוח־ is the one nfatom that has a note on it in the M-C source
             accum.extend(notelist)
             out.append({"word": word, "notes": []})
         else:
@@ -131,10 +132,10 @@ def _atom_to_veldic(word1):
 def _fix_misc(wn_dic):
     stage = wn_dic["word"]
     if stage == 'ימין':
-        stage = '*ימין'  # supply missing star in 1s9:1
-    stage = stage.replace("נ־", "ן־")  # use final nun!
-    stage = re.sub("כְ$", "ךְ", stage)  # use final kaf!
-    stage = re.sub(_TELG_PATT, _TELG_REPL, stage)  # tel_g after its letter!
+        stage = '*ימין'  # Supply missing star in 1s9:1!
+    stage = stage.replace("נ־", "ן־")  # Use final nun!
+    stage = re.sub("כְ$", "ךְ", stage)  # Use final kaf!
+    stage = re.sub(_TELG_PATT, _TELG_REPL, stage)  # Put tel_g after its letter!
     return {"word": stage, "notes": wn_dic["notes"]}
 
 
