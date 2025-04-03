@@ -65,6 +65,9 @@ def _record_notes_diff(io_diff, bcv, vyla, vylb):
         notes_diff_type = "notes changed but word did not"
     else:
         notes_diff_type = "notes changed and word changed"
+    nc_cat = _NC_CATEGORIES.get(notes_change)
+    if nc_cat is None:
+        print("Warning: No category for notes change {notes_change}")
     io_diff["notes differences"].append(
         {
             "bcv": bcv,
@@ -74,7 +77,7 @@ def _record_notes_diff(io_diff, bcv, vyla, vylb):
             "b_word": vylb["word"],
             "b_notes": notesb,
             "notes_change": notes_change,
-            "notes_change_category": _NC_CATEGORIES[notes_change],
+            "notes_change_category": nc_cat,
             **_set_differences(vyla["notes"], vylb["notes"]),
         }
     )

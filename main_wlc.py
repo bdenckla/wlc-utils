@@ -21,16 +21,15 @@ def main():
     """Process WLC 4.20 & WLC 4.22 in various ways."""
     tdir = "../wlc-utils-io"
     wlc_write_to_json.write(tdir, "2025-03-21-uni")
-    wlc_write_to_json.write(tdir, "2025-03-21-mcd")
-    uni_only = False
-    if uni_only:
-        return
-    parsed_420 = wlc_write_to_json.write(tdir, "wlc420")
-    parsed_422 = wlc_write_to_json.write(tdir, "wlc422")
-    wu_diff = wlc_compare_with_uxlc.compare(parsed_420)
+    p321mcd = wlc_write_to_json.write(tdir, "2025-03-21-mcd")
+    p420mcd = wlc_write_to_json.write(tdir, "wlc420")
+    p422mcd = wlc_write_to_json.write(tdir, "wlc422")
+    wu_diff = wlc_compare_with_uxlc.compare(p420mcd)
     _write_wu_diff(tdir, "wlc420", wu_diff)
-    ww_diff = wlc_compare_with_wlc.compare(parsed_420, parsed_422)
+    ww_diff = wlc_compare_with_wlc.compare(p420mcd, p422mcd)
     _write_ww_diff(tdir, ("wlc420", "wlc422"), ww_diff)
+    # ww_diff_420_321 = wlc_compare_with_wlc.compare(p420mcd, p321mcd)
+    # _write_ww_diff(tdir, ("wlc420", "321mcd"), ww_diff_420_321)
 
 
 if __name__ == "__main__":
