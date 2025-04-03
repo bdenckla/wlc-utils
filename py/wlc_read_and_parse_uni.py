@@ -3,6 +3,7 @@
 import re
 import py.wlc_utils as wlc_utils
 import pycmn.hebrew_punctuation as hpu
+import pycmn.hebrew_accents as ha
 
 
 def read_and_parse(tdir, wlc_id, filename):
@@ -121,16 +122,17 @@ def _atom_to_veldic(word1):
     word2 = _KK_QQ_REMAPS.get(word1) or word1
     stage = {"word": word2, "notes": []}
     stage = _extract_notes(stage)
-    stage = _finalize_some_letters(stage)  # XXX shouldn't have to do this!
+    stage = _fix_misc(stage)  # XXX shouldn't have to do this!
     stage = _distinguish_sam_pe_inun(stage)
     _validate_veldic(stage)
     return stage
 
 
-def _finalize_some_letters(wn_dic):
+def _fix_misc(wn_dic):
     stage = wn_dic["word"]
-    stage = stage.replace("נ־", "ן־")
-    stage = re.sub("כְ$", "ךְ", stage)
+    stage = stage.replace("נ־", "ן־")  # use final nun!
+    stage = re.sub("כְ$", "ךְ", stage)  # use final kaf!
+    stage = re.sub(_TELG_PATT, _TELG_REPL, stage)
     return {"word": stage, "notes": wn_dic["notes"]}
 
 
@@ -164,3 +166,5 @@ def _distinguish_sam_pe_inun(wn_dic):
 
 _SAMPE_REMAP = {"פ": "P", "ס": "S"}
 _KK_QQ_REMAPS = {"*": "*kk", "**": "**qq"}
+_TELG_PATT = f"^{ha.TEL_G}([א-ת].*?)([א-ת])"
+_TELG_REPL = r"\1"+ha.TEL_G+r"\2"
