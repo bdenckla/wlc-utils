@@ -130,9 +130,11 @@ def _atom_to_veldic(word1):
 
 def _fix_misc(wn_dic):
     stage = wn_dic["word"]
+    if stage == 'ימין':
+        stage = '*ימין'  # supply missing star in 1s9:1
     stage = stage.replace("נ־", "ן־")  # use final nun!
     stage = re.sub("כְ$", "ךְ", stage)  # use final kaf!
-    stage = re.sub(_TELG_PATT, _TELG_REPL, stage)
+    stage = re.sub(_TELG_PATT, _TELG_REPL, stage)  # tel_g after its letter!
     return {"word": stage, "notes": wn_dic["notes"]}
 
 

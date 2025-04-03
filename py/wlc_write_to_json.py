@@ -16,12 +16,10 @@ def write(tdir, wlc_id):
     parsed = read_and_parse_fn(tdir, wlc_id, filename)
     smallish_files.write(tdir, wlc_id, parsed)
     foi_utils.write(tdir, wlc_id, parsed)
+    _write_kq(tdir, wlc_id, parsed)
     if ri.encoding_is_mdc(wlc_id):
         uparsed = mu.convert_p_mcd_to_p_uni(parsed)
         smallish_files.write(tdir, wlc_id, uparsed, "-u")
-    skip_kq = ri.encoding_is_uni(wlc_id)
-    if not skip_kq:
-        _write_kq(tdir, wlc_id, parsed)
     return parsed
 
 
