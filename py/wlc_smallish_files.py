@@ -5,7 +5,7 @@ import pycmn.file_io as file_io
 
 def write(tdir, wlc_id, parsed, suffix=""):
     tdir2 = f"{tdir}/out/{wlc_id}{suffix}"
-    out_path_for_header = f"{tdir2}/{wlc_id}_ps.0header.json"
+    out_path_for_header = f"{tdir2}/{wlc_id}.0header.json"
     file_io.json_dump_to_file_path(parsed["header"], out_path_for_header)
     chunks = _chunks_init()
     for verse in parsed["verses"]:
@@ -18,7 +18,7 @@ def write(tdir, wlc_id, parsed, suffix=""):
 def _write_smallish_file(tdir2, wlc_id, chunk_str, chunk_verses):
     chunk_idx = _CHUNK_IDX_FOR_CHUNK_STR[chunk_str]
     idx_and_bkids = f"{chunk_idx:02}_{chunk_str}"
-    out_path = f"{tdir2}/{wlc_id}_ps.1verses_{idx_and_bkids}.json"
+    out_path = f"{tdir2}/{wlc_id}.1verses_{idx_and_bkids}.json"
     file_io.json_dump_to_file_path(chunk_verses, out_path)
 
 

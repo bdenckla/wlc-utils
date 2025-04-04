@@ -6,12 +6,12 @@ import py.wlc_compare_with_wlc as ww
 
 
 def _wu_out_path(wlc_id):
-    return f"{_TDIR}/out/diff_{wlc_id}_uxlc_ps.json"
+    return f"{_TDIR}/out/diff_{wlc_id}_uxlc.json"
 
 
 def _ww_out_path(ww_diff_ids):
     wlc_ida, wlc_idb = ww_diff_ids
-    return f"{_TDIR}/out/diff_{wlc_ida}_{wlc_idb}_ps.json"
+    return f"{_TDIR}/out/diff_{wlc_ida}_{wlc_idb}.json"
 
 
 def main():
