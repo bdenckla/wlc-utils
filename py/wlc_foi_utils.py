@@ -6,19 +6,19 @@ import py.wlc_uword as wlc_uword
 import py.wlc_release_info as ri
 
 
-def write(tdir, wlc_id, parsed):
+def write(out_path_fn, wlc_id, parsed):
     io_fois = _init()
     _flexcollect(io_fois, wlc_id, parsed, _collect)
     #
     io_fois["notes_foi"] = _sort_notes_foi(io_fois["notes_foi"])
     #
-    _flexdump(io_fois, tdir, wlc_id)
+    file_io.json_dump_to_file_path(io_fois, out_path_fn(wlc_id, ""))
 
 
-def kqwrite(tdir, wlc_id, kqparsed):
+def kqwrite(out_path_fn, wlc_id, kqparsed):
     io_fois = _kqinit()
     _flexcollect(io_fois, wlc_id, kqparsed, _kqcollect)
-    _flexdump(io_fois, tdir, wlc_id, "-kq")
+    file_io.json_dump_to_file_path(io_fois, out_path_fn(wlc_id, "-kq"))
 
 
 def _flexcollect(io_fois, wlc_id, xparsed, xcollect):
@@ -27,14 +27,6 @@ def _flexcollect(io_fois, wlc_id, xparsed, xcollect):
         for velsod in verse["vels"]:
             xcollect(io_fois, wlc_id, bcv, velsod)
 
-
-def _flexdump(fois, tdir, wlc_id, suffix=""):
-    out_path = _flexpath(tdir, wlc_id, suffix)
-    file_io.json_dump_to_file_path(fois, out_path)
-
-
-def _flexpath(tdir, wlc_id, suffix=""):
-    return f"{tdir}/out/{wlc_id}{suffix}.fois.json"
 
 
 def _init():

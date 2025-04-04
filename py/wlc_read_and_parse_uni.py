@@ -6,8 +6,7 @@ import pycmn.hebrew_punctuation as hpu
 import pycmn.hebrew_accents as ha
 
 
-def read_and_parse(tdir, wlc_id, filename):
-    in_path = f"{tdir}/in/{wlc_id}/{filename}"
+def read_and_parse(in_path):
     parsed = {"header": [], "verses": []}
     with open(in_path, encoding="utf-8", newline="") as wlc_in_fp:
         for rawline in wlc_in_fp:
