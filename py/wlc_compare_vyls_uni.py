@@ -1,6 +1,8 @@
 """ Exports compare_vyls """
 
 import py.wlc_uword as wlc_uword
+import pycmn.uni_heb as uh
+import pycmn.my_diffs as my_diffs
 
 
 def compare_vyls(io_diff, bcv, vyla, vylb):
@@ -33,12 +35,43 @@ def _record_word_diff(io_diff, bcv, vyla, vylb):
 
 
 def _word_diff(bcv, vyla, vylb):
+    worda, wordb = vyla["word"], vylb["word"]
+    diffs = my_diffs.get(_ensh(worda), _ensh(wordb))
     return {
         "bcv": bcv,
         "diff_type": _WORD_DIFF_TYPE[vyla["notes"] != vylb["notes"]],
+        "diffs": _slim(diffs),
         "ab_word": _newline_sep(vyla, vylb, "word"),
         "ab_notes": _newline_sep(vyla, vylb, "cnotes"),
     }
+
+
+def _ensh(word):
+    return list(enumerate(uh.t_shunnas(word)))
+
+
+def _slim(diffs):
+    if len(diffs) != 1:
+        return None
+    diffs0 = diffs[0]
+    assert len(diffs0) == 2
+    aside, bside = diffs0[0], diffs0[1]
+    # E.g.
+    # aside == [(5, '(zaq_q)'), (6, 'HMA UPPER DOT')]
+    # bside == [(5, 'HMA UPPER DOT'), (6, '(zaq_q)')]
+    if not len(aside) == len(bside) == 2:
+        return None
+    aside_idxs = aside[0][0], aside[1][0]
+    bside_idxs = bside[0][0], bside[1][0]
+    if not aside_idxs == bside_idxs:
+        return None
+    aside_vals = aside[0][1], aside[1][1]
+    bside_vals = bside[0][1], bside[1][1]
+    if aside_vals[0] != bside_vals[1]:
+        return None
+    if aside_vals[1] != bside_vals[0]:
+        return None
+    return f"swap {aside_vals}"
 
 
 def _wd_new_fields_for_two(vyla, vylb):
