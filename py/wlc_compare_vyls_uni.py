@@ -37,7 +37,6 @@ def _word_diff(bcv, vyla, vylb):
         "bcv": bcv,
         "diff_type": _WORD_DIFF_TYPE[vyla["notes"] != vylb["notes"]],
         "ab_word": _newline_sep(vyla, vylb, "word"),
-        "ab_uword": _newline_sep(vyla, vylb, "uword"),
         "ab_notes": _newline_sep(vyla, vylb, "cnotes"),
     }
 
