@@ -1,6 +1,6 @@
 import pycmn.file_io as file_io
 import py.wlc_utils as wlc_utils
-import py.wlc_compare_vyls as wlc_compare_vyls
+import py.wlc_compare_vyls_mdc as cvm
 
 
 def compare(wlca, wlcb, out_path_fn):
@@ -27,7 +27,7 @@ def compare(wlca, wlcb, out_path_fn):
 def _compare_verse_element(io_diff, bcv, velidx, vela, velb):
     vyla = wlc_utils.velsod_to_veldic(vela)
     vylb = wlc_utils.velsod_to_veldic(velb)
-    return wlc_compare_vyls.compare_vyls(io_diff, bcv, velidx, vyla, vylb)
+    return cvm.compare_vyls(io_diff, bcv, velidx, vyla, vylb)
 
 
 def _compare_verse(io_diff, bcv, velsa, velsb):
