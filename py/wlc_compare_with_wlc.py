@@ -7,10 +7,8 @@ import py.wlc_compare_vyls as wlc_compare_vyls
 def compare(wlca, wlcb):
     """Compare wlca with wlcb (e.g. WLC 4.20 with WLC 4.22)"""
     # Ignore headers in the comparison.
-    id_a, id_b = wlca["id"], wlcb["id"]
-    verse_list_a, verse_list_b = wlca["verses"], wlcb["verses"]
     io_diff = {
-        "ids": [id_a, id_b],
+        "ids": [wlca["id"], wlcb["id"]],
         "verses_of_different_length": [],
         "side_a_edits": [],
         "type changes": [],
@@ -18,6 +16,7 @@ def compare(wlca, wlcb):
         "word differences": [],
         "word positions of word differences": {},
     }
+    verse_list_a, verse_list_b = wlca["verses"], wlcb["verses"]
     assert len(verse_list_a) == len(verse_list_b)
     for verse_ab in zip(verse_list_a, verse_list_b):
         verse_a, verse_b = verse_ab
