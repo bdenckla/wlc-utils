@@ -36,6 +36,7 @@ def _convert_kq(ketiv_qere):
 
 
 _FN_TABLE_TOP = {
+    "id": lambda x: x,
     "header": lambda x: x,
     "verses": lambda x: sl_map(_convert_verse, x),
 }
