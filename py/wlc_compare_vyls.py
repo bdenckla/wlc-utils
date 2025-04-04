@@ -25,16 +25,11 @@ def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
 
 
 def _record_word_diff(io_diff, bcv, velidx, vyla, vylb):
-    _new_field(vyla, vylb, "cnotes", "notes", lambda x: "".join(x))
-    _new_field(vyla, vylb, "uword", "word", wlc_uword.uword)
-    if vyla["notes"] == vylb["notes"]:
-        word_diff_type = "word changed but notes did not"
-    else:
-        word_diff_type = "word changed and notes changed"
+    vyla, vylb = _new_fields_for_two(vyla, vylb)
     io_diff["word differences"].append(
         {
             "bcv": bcv,
-            "word_diff_type": word_diff_type,
+            "word_diff_type": _WORD_DIFF_TYPE[vyla["notes"] != vylb["notes"]],
             "ab_word": _newline_sep(vyla, vylb, "word"),
             "ab_uword": _newline_sep(vyla, vylb, "uword"),
             "ab_notes": _newline_sep(vyla, vylb, "cnotes"),
@@ -46,9 +41,16 @@ def _record_word_diff(io_diff, bcv, velidx, vyla, vylb):
     wpwd[key] = velidx + 1
 
 
-def _new_field(dica, dicb, newkey, oldkey, fun):
-    dica[newkey] = fun(dica[oldkey])
-    dicb[newkey] = fun(dicb[oldkey])
+def _new_fields_for_two(vyla, vylb):
+    return _new_fields_for_one(vyla), _new_fields_for_one(vylb)
+
+
+def _new_fields_for_one(vylx):
+    return {
+        **vylx,
+        "cnotes": "".join(vylx["notes"]),
+        "uword": wlc_uword.uword(vylx["word"]),
+    }
 
 
 def _newline_sep(dica, dicb, key):
@@ -61,17 +63,13 @@ def _record_notes_diff(io_diff, bcv, vyla, vylb):
     notes_change = " → ".join((notesa or "∅", notesb or "∅"))
     worda_ns = vyla["word"].replace("/", "")
     wordb_ns = vylb["word"].replace("/", "")
-    if worda_ns == wordb_ns:
-        notes_diff_type = "notes changed but word did not"
-    else:
-        notes_diff_type = "notes changed and word changed"
     nc_cat = _NC_CATEGORIES.get(notes_change)
     if nc_cat is None:
-        print("Warning: No category for notes change {notes_change}")
+        print(f"Warning: No category for notes change {notes_change}")
     io_diff["notes differences"].append(
         {
             "bcv": bcv,
-            "notes_diff_type": notes_diff_type,
+            "notes_diff_type": _NOTES_DIFF_TYPE[worda_ns != wordb_ns],
             "a_word": vyla["word"],
             "a_notes": notesa,
             "b_word": vylb["word"],
@@ -82,6 +80,55 @@ def _record_notes_diff(io_diff, bcv, vyla, vylb):
         }
     )
 
+
+def _set_differences(notesa, notesb):
+    seta = set(notesa)
+    setb = set(notesb)
+    b_minus_a = setb - seta
+    a_minus_b = seta - setb
+    bma_sorted_list = sorted(list(b_minus_a))
+    amb_sorted_list = sorted(list(a_minus_b))
+    bma_str = "".join(bma_sorted_list)
+    amb_str = "".join(amb_sorted_list)
+    return {"b-a": bma_str, "a-b": amb_str}
+
+
+def _vyla_to_cells(vyla):
+    return _vyl_to_cells(vyla, "vela_type", "vela_0", "vela_1")
+
+
+def _vylb_to_cells(vylb):
+    return _vyl_to_cells(vylb, "velb_type", "velb_0", "velb_1")
+
+
+def _vyl_to_cells(vyl, typlbl, lbl0, lbl1):
+    vyltype = _vyltype(vyl)
+    if vyltype == _VYLTYPE_WN:
+        datacells = vyl["word"], "".join(vyl["notes"])
+    elif vyltype == _VYLTYPE_SPI:
+        datacells = vyl["sam_pe_inun"], ""
+    elif vyltype == _VYLTYPE_NONE:
+        datacells = "", ""
+    else:
+        assert False
+    return {typlbl: vyltype, lbl0: datacells[0], lbl1: datacells[1]}
+
+
+def _vyltype(vyl):
+    if vyl is None:
+        return _VYLTYPE_NONE
+    assert isinstance(vyl, dict)
+    keys = tuple(vyl.keys())
+    if keys == ("word", "notes"):
+        return _VYLTYPE_WN
+    if keys == ("sam_pe_inun",):
+        return _VYLTYPE_SPI
+    assert False
+
+
+_VYLTYPE_NONE = "vyltype-∅"
+_VYLTYPE_WN = "vyltype-wn"
+_VYLTYPE_SPI = "vyltype-sam_pe_inun"
 
 _NC_CATEGORIES = {
     # Below are categories of note changes on unchanged words.
@@ -128,53 +175,11 @@ _NC_CATEGORIES = {
     "]p → ]1": "other ]p → ]1",
     "]P]p]v → ]Q]n]v": "other ]P]p]v → ]Q]n]v",
 }
-
-
-def _set_differences(notesa, notesb):
-    seta = set(notesa)
-    setb = set(notesb)
-    b_minus_a = setb - seta
-    a_minus_b = seta - setb
-    bma_sorted_list = sorted(list(b_minus_a))
-    amb_sorted_list = sorted(list(a_minus_b))
-    bma_str = "".join(bma_sorted_list)
-    amb_str = "".join(amb_sorted_list)
-    return {"b-a": bma_str, "a-b": amb_str}
-
-
-def _vyla_to_cells(vyla):
-    return _vyl_to_cells(vyla, "vela_type", "vela_0", "vela_1")
-
-
-def _vylb_to_cells(vylb):
-    return _vyl_to_cells(vylb, "velb_type", "velb_0", "velb_1")
-
-
-def _vyl_to_cells(vyl, typlbl, lbl0, lbl1):
-    vyltype = _vyltype(vyl)
-    if vyltype == _VYLTYPE_WN:
-        datacells = vyl["word"], "".join(vyl["notes"])
-    elif vyltype == _VYLTYPE_SPI:
-        datacells = vyl["sam_pe_inun"], ""
-    elif vyltype == _VYLTYPE_NONE:
-        datacells = "", ""
-    else:
-        assert False
-    return {typlbl: vyltype, lbl0: datacells[0], lbl1: datacells[1]}
-
-
-_VYLTYPE_NONE = "vyltype-∅"
-_VYLTYPE_WN = "vyltype-wn"
-_VYLTYPE_SPI = "vyltype-sam_pe_inun"
-
-
-def _vyltype(vyl):
-    if vyl is None:
-        return _VYLTYPE_NONE
-    assert isinstance(vyl, dict)
-    keys = tuple(vyl.keys())
-    if keys == ("word", "notes"):
-        return _VYLTYPE_WN
-    if keys == ("sam_pe_inun",):
-        return _VYLTYPE_SPI
-    assert False
+_WORD_DIFF_TYPE = {
+    False: "word changed but notes did not",
+    True: "word changed and notes changed",
+}
+_NOTES_DIFF_TYPE = {
+    False: "notes changed but word did not",
+    True: "notes changed and word changed",
+}

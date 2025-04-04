@@ -28,8 +28,8 @@ def main():
     _write_wu_diff(tdir, "wlc420", wu_diff)
     ww_diff = wlc_compare_with_wlc.compare(p420mcd, p422mcd)
     _write_ww_diff(tdir, ("wlc420", "wlc422"), ww_diff)
-    # ww_diff_420_321 = wlc_compare_with_wlc.compare(p420mcd, p321mcd)
-    # _write_ww_diff(tdir, ("wlc420", "321mcd"), ww_diff_420_321)
+    ww_diff_420_321 = wlc_compare_with_wlc.compare(p420mcd, p321mcd)
+    _write_ww_diff(tdir, ("wlc420", "321mcd"), ww_diff_420_321)
 
 
 if __name__ == "__main__":
