@@ -6,7 +6,24 @@ import py.wlc_compare_vyls as wlc_compare_vyls
 
 def compare(wlca, wlcb):
     """Compare wlca with wlcb (e.g. WLC 4.20 with WLC 4.22)"""
-    return _compare_wlc_verse_lists(wlca["verses"], wlcb["verses"])
+    # Ignore headers in the comparison.
+    id_a, id_b = wlca["id"], wlcb["id"]
+    verse_list_a, verse_list_b = wlca["verses"], wlcb["verses"]
+    io_diff = {
+        "ids": [id_a, id_b],
+        "verses_of_different_length": [],
+        "side_a_edits": [],
+        "type changes": [],
+        "notes differences": [],
+        "word differences": [],
+        "word positions of word differences": {},
+    }
+    assert len(verse_list_a) == len(verse_list_b)
+    for verse_ab in zip(verse_list_a, verse_list_b):
+        verse_a, verse_b = verse_ab
+        assert verse_a["bcv"] == verse_b["bcv"]
+        _compare_verse(io_diff, verse_a["bcv"], verse_a["vels"], verse_b["vels"])
+    return io_diff
 
 
 def _compare_verse_element(io_diff, bcv, velidx, vela, velb):
@@ -28,9 +45,9 @@ def _make_velsa_comparable(io_diff, bcv, velsa, velsb):
     diff_len_record = bcv, len(velsa), len(velsb)
     io_diff["verses_of_different_length"].append(diff_len_record)
     if bcv == "gn14:17":
-        saer, velsa_c = _make_velsa_comparable_gn1417(velsa) 
+        saer, velsa_c = _make_velsa_comparable_gn1417(velsa)
     elif bcv == "da2:39":
-        saer, velsa_c = _make_velsa_comparable_da239(velsa) 
+        saer, velsa_c = _make_velsa_comparable_da239(velsa)
     else:
         assert False, f"unexpected verse of differing length: {bcv}"
     io_diff["side_a_edits"].append({"bcv": bcv, **saer})
@@ -65,20 +82,3 @@ def _split_gn1417_word_9(word_9):
     part1 = part1 + "→"
     part2 = "←" + part2
     return part1, {"word": part2, "notes": word_9["notes"]}
-
-
-def _compare_wlc_verse_lists(verse_list_a, verse_list_b):
-    io_diff = {
-        "verses_of_different_length": [],
-        "side_a_edits": [],
-        "type changes": [],
-        "notes differences": [],
-        "word differences": [],
-        "word positions of word differences": {},
-    }
-    assert len(verse_list_a) == len(verse_list_b)
-    for verse_ab in zip(verse_list_a, verse_list_b):
-        verse_a, verse_b = verse_ab
-        assert verse_a["bcv"] == verse_b["bcv"]
-        _compare_verse(io_diff, verse_a["bcv"], verse_a["vels"], verse_b["vels"])
-    return io_diff

@@ -131,8 +131,8 @@ def _atom_to_veldic(word1):
 
 def _fix_misc(wn_dic):
     stage = wn_dic["word"]
-    if stage == 'ימין':
-        stage = '*ימין'  # Supply missing star in 1s9:1!
+    if stage == "ימין":
+        stage = "*ימין"  # Supply missing star in 1s9:1!
     stage = stage.replace("נ־", "ן־")  # Use final nun!
     stage = re.sub("כְ$", "ךְ", stage)  # Use final kaf!
     stage = re.sub(_TELG_PATT, _TELG_REPL, stage)  # Put tel_g after its letter!
@@ -170,4 +170,4 @@ def _distinguish_sam_pe_inun(wn_dic):
 _SAMPE_REMAP = {"פ": "P", "ס": "S"}
 _KK_QQ_REMAPS = {"*": "*kk", "**": "**qq"}
 _TELG_PATT = f"^{ha.TEL_G}([א-ת].*?)([א-ת])"
-_TELG_REPL = r"\1"+ha.TEL_G+r"\2"
+_TELG_REPL = r"\1" + ha.TEL_G + r"\2"

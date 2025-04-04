@@ -20,7 +20,7 @@ def write(tdir, wlc_id):
     if ri.encoding_is_mdc(wlc_id):
         uparsed = mu.convert_p_mcd_to_p_uni(parsed)
         smallish_files.write(tdir, wlc_id, uparsed, "-u")
-    return parsed
+    return {"id": wlc_id, **parsed}
 
 
 def _write_kq(tdir, wlc_id, parsed):

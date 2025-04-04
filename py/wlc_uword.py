@@ -221,7 +221,8 @@ _TRANSLATION_TABLE = str.maketrans(_TRANSLATION_DIC)
 _TRANSLATION_TABLE_RETAINING_SLASH = str.maketrans(_TRANSLATION_DIC_RETAINING_SLASH)
 _PASS_THRUS = {"*kk", "**qq"}
 _OVER_ACCENTS = [a for a in _ACCENTS.keys() if _ACCENTS[a] in ha.UNI_OVER_ACCENTS]
-_OVER_ACCENTS.append("75")  # XXX Normal meteg is treated like an over-accent, i.e. like O in LAYO!
+_OVER_ACCENTS.append("75")
+# XXX Normal meteg (75) is treated like an over-accent, i.e. like O in LAYO!
 _OVER_ACCENTS_PATT = _paren("|".join(_OVER_ACCENTS))
 _LAOY_PATT = r"L([AF])" + _OVER_ACCENTS_PATT + "([I:])"
 _DD75_PATT = r"(\d\d)75"

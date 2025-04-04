@@ -11,7 +11,8 @@ def _write_wu_diff(tdir, wlc_id, wu_diff):
     file_io.json_dump_to_file_path(wu_diff, out_path)
 
 
-def _write_ww_diff(tdir, wlc_ids, ww_diff):
+def _write_ww_diff(tdir, ww_diff):
+    wlc_ids = ww_diff["ids"]
     wlc_ida, wlc_idb = wlc_ids
     out_path = f"{tdir}/out/diff_{wlc_ida}_{wlc_idb}_ps.json"
     file_io.json_dump_to_file_path(ww_diff, out_path)
@@ -26,10 +27,10 @@ def main():
     p422mcd = wlc_write_to_json.write(tdir, "wlc422")
     wu_diff = wlc_compare_with_uxlc.compare(p420mcd)
     _write_wu_diff(tdir, "wlc420", wu_diff)
-    ww_diff = wlc_compare_with_wlc.compare(p420mcd, p422mcd)
-    _write_ww_diff(tdir, ("wlc420", "wlc422"), ww_diff)
+    ww_diff_420_422 = wlc_compare_with_wlc.compare(p420mcd, p422mcd)
+    _write_ww_diff(tdir, ww_diff_420_422)
     ww_diff_420_321 = wlc_compare_with_wlc.compare(p420mcd, p321mcd)
-    _write_ww_diff(tdir, ("wlc420", "321mcd"), ww_diff_420_321)
+    _write_ww_diff(tdir, ww_diff_420_321)
 
 
 if __name__ == "__main__":
