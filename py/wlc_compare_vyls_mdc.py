@@ -32,8 +32,6 @@ def _record_word_diff(io_diff, bcv, velidx, vyla, vylb):
     io_diff["word differences"].append(_word_diff(bcv, vyla, vylb))
     wpwd = io_diff["word positions of word differences"]
     key = bcv + "!" + vyla["word"]
-    if key in wpwd and bcv == "is36:12":
-        key += "-the-second"
     assert key not in wpwd
     wpwd[key] = velidx + 1
 

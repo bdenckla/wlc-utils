@@ -3,7 +3,7 @@
 import py.wlc_uword as wlc_uword
 
 
-def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
+def compare_vyls(io_diff, bcv, vyla, vylb):
     """Compare vyla and vylb, putting result in io_diff"""
     typa, typb = _vyltype(vyla), _vyltype(vylb)
     if typa != typb:
@@ -21,21 +21,15 @@ def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
         worda_ns = vyla["word"].replace("/", "")
         wordb_ns = vylb["word"].replace("/", "")
         if worda_ns != wordb_ns:
-            _record_word_diff(io_diff, bcv, velidx, vyla, vylb)
+            _record_word_diff(io_diff, bcv, vyla, vylb)
         return
     assert typa == _VYLTYPE_SPI
     assert vyla == vylb
 
 
-def _record_word_diff(io_diff, bcv, velidx, vyla, vylb):
+def _record_word_diff(io_diff, bcv, vyla, vylb):
     vyla, vylb = _wd_new_fields_for_two(vyla, vylb)
     io_diff["word differences"].append(_word_diff(bcv, vyla, vylb))
-    wpwd = io_diff["word positions of word differences"]
-    key = bcv + "!" + vyla["word"]
-    if key in wpwd and bcv == "is36:12":
-        key += "-the-second"
-    assert key not in wpwd
-    wpwd[key] = velidx + 1
 
 
 def _word_diff(bcv, vyla, vylb):

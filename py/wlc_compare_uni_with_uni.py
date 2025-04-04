@@ -11,7 +11,6 @@ def compare(wlca, wlcb, out_path_fn):
         "type changes": [],
         "notes differences": [],
         "word differences": [],
-        "word positions of word differences": {},
     }
     verse_list_a, verse_list_b = wlca["verses"], wlcb["verses"]
     assert len(verse_list_a) == len(verse_list_b)
@@ -22,13 +21,13 @@ def compare(wlca, wlcb, out_path_fn):
     file_io.json_dump_to_file_path(io_diff, out_path_fn(io_diff["ids"]))
 
 
-def _compare_verse_element(io_diff, bcv, velidx, vela, velb):
+def _compare_verse_element(io_diff, bcv, vela, velb):
     vyla = wlc_utils.velsod_to_veldic(vela)
     vylb = wlc_utils.velsod_to_veldic(velb)
-    return cvu.compare_vyls(io_diff, bcv, velidx, vyla, vylb)
+    return cvu.compare_vyls(io_diff, bcv, vyla, vylb)
 
 
 def _compare_verse(io_diff, bcv, velsa, velsb):
     assert len(velsa) == len(velsb)
-    for velidx, vel_ab in enumerate(zip(velsa, velsb)):
-        _compare_verse_element(io_diff, bcv, velidx, *vel_ab)
+    for vel_ab in zip(velsa, velsb):
+        _compare_verse_element(io_diff, bcv, *vel_ab)
