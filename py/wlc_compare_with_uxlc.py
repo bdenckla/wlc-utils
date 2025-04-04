@@ -3,10 +3,11 @@ import py.wlc_convert_citation_to_uxlc as w2u
 import py.wlc_uword as wlc_uword
 import py.wlc_utils as wlc_utils
 import pycmn.uni_heb as uh
+import pycmn.file_io as file_io
 import unicodedata
 
 
-def compare(parsed_wlc_42x, uxlc_books_dir):
+def compare(parsed_wlc_42x, uxlc_books_dir, out_path_fn):
     the_uxlc = uxlc.read_all_books(uxlc_books_dir)
     misc = {"diffs": []}
     for wlc_verse in parsed_wlc_42x["verses"]:
@@ -17,7 +18,8 @@ def compare(parsed_wlc_42x, uxlc_books_dir):
         misc["wlc_bcv"] = wlc_bcv
         for wlc_str, uxlc_str in zip(wlc_comparables, uxlc_verse):
             _compare(misc, wlc_str, uxlc_str)
-    return _for_json(misc["diffs"])
+    for_json = _for_json(misc["diffs"])
+    file_io.json_dump_to_file_path(for_json, out_path_fn(parsed_wlc_42x["id"]))
 
 
 def _uxlc_verse(uxlc, wlc_bcv):

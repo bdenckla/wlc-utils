@@ -1,39 +1,32 @@
 """ Exports main """
 
-import pycmn.file_io as file_io
-import py.wlc_compare_with_wlc as wlc_compare_with_wlc
 import py.wlc_write_to_json as wlc_write_to_json
-import py.wlc_compare_with_uxlc as wlc_compare_with_uxlc
+import py.wlc_compare_with_uxlc as wu
+import py.wlc_compare_with_wlc as ww
 
 
-def _write_wu_diff(tdir, wlc_id, wu_diff):
-    out_path = f"{tdir}/out/diff_{wlc_id}_uxlc_ps.json"
-    file_io.json_dump_to_file_path(wu_diff, out_path)
+def _wu_out_path(wlc_id):
+    return f"{_TDIR}/out/diff_{wlc_id}_uxlc_ps.json"
 
 
-def _write_ww_diff(tdir, ww_diff):
-    wlc_ids = ww_diff["ids"]
-    wlc_ida, wlc_idb = wlc_ids
-    out_path = f"{tdir}/out/diff_{wlc_ida}_{wlc_idb}_ps.json"
-    file_io.json_dump_to_file_path(ww_diff, out_path)
+def _ww_out_path(ww_diff_ids):
+    wlc_ida, wlc_idb = ww_diff_ids
+    return f"{_TDIR}/out/diff_{wlc_ida}_{wlc_idb}_ps.json"
 
 
 def main():
     """Process WLC 4.20 & WLC 4.22 in various ways."""
-    tdir = "../wlc-utils-io"
-    wlc_write_to_json.write(tdir, "2025-03-21-uni")
-    p321mcd = wlc_write_to_json.write(tdir, "2025-03-21-mcd")
-    p420mcd = wlc_write_to_json.write(tdir, "wlc420")
-    p422mcd = wlc_write_to_json.write(tdir, "wlc422")
-    wu_diff = wlc_compare_with_uxlc.compare(p420mcd, _UXLC_BOOKS_DIR)
-    _write_wu_diff(tdir, "wlc420", wu_diff)
-    ww_diff_420_422 = wlc_compare_with_wlc.compare(p420mcd, p422mcd)
-    _write_ww_diff(tdir, ww_diff_420_422)
-    ww_diff_420_321 = wlc_compare_with_wlc.compare(p420mcd, p321mcd)
-    _write_ww_diff(tdir, ww_diff_420_321)
+    wlc_write_to_json.write(_TDIR, "2025-03-21-uni")
+    p321mcd = wlc_write_to_json.write(_TDIR, "2025-03-21-mcd")
+    p420mcd = wlc_write_to_json.write(_TDIR, "wlc420")
+    p422mcd = wlc_write_to_json.write(_TDIR, "wlc422")
+    wu.compare(p420mcd, _UXLC_BOOKS_DIR, _wu_out_path)
+    ww.compare(p420mcd, p422mcd, _ww_out_path)
+    ww.compare(p420mcd, p321mcd, _ww_out_path)
 
 
-_UXLC_BOOKS_DIR = "../wlc-utils-io/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
+_TDIR = "../wlc-utils-io"
+_UXLC_BOOKS_DIR = f"{_TDIR}/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
 
 
 if __name__ == "__main__":

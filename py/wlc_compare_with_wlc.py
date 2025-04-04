@@ -1,8 +1,9 @@
+import pycmn.file_io as file_io
 import py.wlc_utils as wlc_utils
 import py.wlc_compare_vyls as wlc_compare_vyls
 
 
-def compare(wlca, wlcb):
+def compare(wlca, wlcb, out_path_fn):
     """Compare wlca with wlcb (e.g. WLC 4.20 with WLC 4.22)"""
     # Ignore headers in the comparison.
     io_diff = {
@@ -20,7 +21,7 @@ def compare(wlca, wlcb):
         verse_a, verse_b = verse_ab
         assert verse_a["bcv"] == verse_b["bcv"]
         _compare_verse(io_diff, verse_a["bcv"], verse_a["vels"], verse_b["vels"])
-    return io_diff
+    file_io.json_dump_to_file_path(io_diff, out_path_fn(io_diff["ids"]))
 
 
 def _compare_verse_element(io_diff, bcv, velidx, vela, velb):
