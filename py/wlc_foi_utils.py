@@ -28,7 +28,6 @@ def _flexcollect(io_fois, wlc_id, xparsed, xcollect):
             xcollect(io_fois, wlc_id, bcv, velsod)
 
 
-
 def _init():
     return {
         "sam_pe_inun_foi": {"P": 0, "S": 0, "N": 0},
