@@ -5,8 +5,7 @@ import py.wlc_uword as wlc_uword
 
 def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
     """Compare vyla and vylb, putting result in io_diff"""
-    typa = _vyltype(vyla)
-    typb = _vyltype(vylb)
+    typa, typb = _vyltype(vyla), _vyltype(vylb)
     if typa != typb:
         io_diff["type changes"].append(
             {
@@ -15,13 +14,17 @@ def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
                 **_vylb_to_cells(vylb),
             }
         )
-    if typa == typb == _VYLTYPE_WN:
+        return
+    if typa == _VYLTYPE_WN:
         if vyla["notes"] != vylb["notes"]:
             _record_notes_diff(io_diff, bcv, vyla, vylb)
         worda_ns = vyla["word"].replace("/", "")
         wordb_ns = vylb["word"].replace("/", "")
         if worda_ns != wordb_ns:
             _record_word_diff(io_diff, bcv, velidx, vyla, vylb)
+        return
+    assert typa == _VYLTYPE_SPI
+    assert vyla == vylb
 
 
 def _record_word_diff(io_diff, bcv, velidx, vyla, vylb):
