@@ -6,19 +6,19 @@ import py.wlc_uword as wlc_uword
 import py.wlc_release_info as ri
 
 
-def write(out_path_fn, wlc_id, parsed):
+def write(out_path, wlc_id, parsed):
     io_fois = _init()
     _flexcollect(io_fois, wlc_id, parsed, _collect)
     #
     io_fois["notes_foi"] = _sort_notes_foi(io_fois["notes_foi"])
     #
-    file_io.json_dump_to_file_path(io_fois, out_path_fn(wlc_id, ""))
+    file_io.json_dump_to_file_path(io_fois, f"{out_path}/2fois.json")
 
 
-def kqwrite(out_path_fn, wlc_id, kqparsed):
+def kqwrite(out_path, wlc_id, kqparsed):
     io_fois = _kqinit()
     _flexcollect(io_fois, wlc_id, kqparsed, _kqcollect)
-    file_io.json_dump_to_file_path(io_fois, out_path_fn(wlc_id, "-kq"))
+    file_io.json_dump_to_file_path(io_fois, f"{out_path}/2fois.json")
 
 
 def _flexcollect(io_fois, wlc_id, xparsed, xcollect):

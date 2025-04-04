@@ -3,21 +3,21 @@
 import pycmn.file_io as file_io
 
 
-def write(sf_out_path, parsed):
-    out_path_for_header = f"{sf_out_path}/0header.json"
+def write(out_path, parsed):
+    out_path_for_header = f"{out_path}/0header.json"
     file_io.json_dump_to_file_path(parsed["header"], out_path_for_header)
     chunks = _chunks_init()
     for verse in parsed["verses"]:
         chunk_str = _CHUNK_STR_FOR_BKID[_bkid_of_verse(verse)]
         chunks[chunk_str].append(verse)
     for chunk_str, chunk_verses in chunks.items():
-        _write_smallish_file(sf_out_path, chunk_str, chunk_verses)
+        _write_smallish_file(out_path, chunk_str, chunk_verses)
 
 
-def _write_smallish_file(sf_out_path, chunk_str, chunk_verses):
+def _write_smallish_file(out_path, chunk_str, chunk_verses):
     chunk_idx = _CHUNK_IDX_FOR_CHUNK_STR[chunk_str]
     idx_and_bkids = f"{chunk_idx:02}_{chunk_str}"
-    out_path = f"{sf_out_path}/1verses_{idx_and_bkids}.json"
+    out_path = f"{out_path}/1verses_{idx_and_bkids}.json"
     file_io.json_dump_to_file_path(chunk_verses, out_path)
 
 
