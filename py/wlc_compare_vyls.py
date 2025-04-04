@@ -36,7 +36,7 @@ def _record_word_diff(io_diff, bcv, velidx, vyla, vylb):
 def _word_diff(bcv, vyla, vylb):
     return {
         "bcv": bcv,
-        "word_diff_type": _WORD_DIFF_TYPE[vyla["notes"] != vylb["notes"]],
+        "diff_type": _WORD_DIFF_TYPE[vyla["notes"] != vylb["notes"]],
         "ab_word": _newline_sep(vyla, vylb, "word"),
         "ab_uword": _newline_sep(vyla, vylb, "uword"),
         "ab_notes": _newline_sep(vyla, vylb, "cnotes"),
@@ -65,19 +65,17 @@ def _record_notes_diff(io_diff, bcv, vyla, vylb):
 
 def _notes_diff(bcv, vyla, vylb):
     vyla, vylb = _nd_new_fields_for_two(vyla, vylb)
-    notes_change = " → ".join((vyla["cnotes"] or "∅", vylb["cnotes"] or "∅"))
-    nc_cat = _NC_CATEGORIES.get(notes_change)
-    if nc_cat is None:
-        print(f"Warning: No category for notes change {notes_change}")
+    change = " → ".join((vyla["cnotes"] or "∅", vylb["cnotes"] or "∅"))
+    change_cat = _NC_CATEGORIES.get(change)
+    if change_cat is None:
+        print(f"Warning: No category for notes change {change}")
     return {
         "bcv": bcv,
-        "notes_diff_type": _NOTES_DIFF_TYPE[vyla["nsword"] != vylb["nsword"]],
-        "a_word": vyla["word"],
-        "a_notes": vyla["cnotes"],
-        "b_word": vylb["word"],
-        "b_notes": vylb["cnotes"],
-        "notes_change": notes_change,
-        "notes_change_category": nc_cat,
+        "diff_type": _NOTES_DIFF_TYPE[vyla["nsword"] != vylb["nsword"]],
+        "ab_word": _newline_sep(vyla, vylb, "word"),
+        "ab_notes": _newline_sep(vyla, vylb, "cnotes"),
+        "change": change,
+        "change_category": change_cat,
         **_set_differences(vyla["notes"], vylb["notes"]),
     }
 
