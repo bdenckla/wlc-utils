@@ -1,8 +1,9 @@
 """ Exports main """
 
 import py.wlc_write_to_json as wlc_write_to_json
-import py.wlc_compare_with_uxlc as wu
-import py.wlc_compare_with_wlc as ww
+import py.wlc_compare_mdc_with_uxlc as mx
+import py.wlc_compare_mdc_with_mdc as mm
+import py.wlc_compare_uni_with_uni as uu
 
 
 def _wu_out_path(wlc_id):
@@ -25,13 +26,13 @@ def _in_path(wlc_id):
 def main():
     """Process WLC 4.20 & WLC 4.22 in various ways."""
     path_info = _in_path, _out_path
-    wlc_write_to_json.write(path_info, "2025-03-21-uni")
+    p321uni = wlc_write_to_json.write(path_info, "2025-03-21-uni")
     p321mcd = wlc_write_to_json.write(path_info, "2025-03-21-mcd")
     p420mcd = wlc_write_to_json.write(path_info, "wlc420")
     p422mcd = wlc_write_to_json.write(path_info, "wlc422")
-    wu.compare(p420mcd, _UXLC_BOOKS_DIR, _wu_out_path)
-    ww.compare(p420mcd, p422mcd, _ww_out_path)
-    ww.compare(p420mcd, p321mcd, _ww_out_path)
+    mx.compare(p420mcd, _UXLC_BOOKS_DIR, _wu_out_path)
+    mm.compare(p420mcd, p422mcd, _ww_out_path)
+    mm.compare(p420mcd, p321mcd, _ww_out_path)
 
 
 _TDIR = "../wlc-utils-io"
