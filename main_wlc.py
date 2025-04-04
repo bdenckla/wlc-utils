@@ -33,12 +33,12 @@ def main():
     path_info = _in_path, _out_path
     p321uni = wlc_write_to_json.write(path_info, "2025-03-21-uni")
     p321mcd, p321mcdu = wlc_write_to_json.write(path_info, "2025-03-21-mcd")
-    p420mcd, _u = wlc_write_to_json.write(path_info, "wlc420")
-    p422mcd, _u = wlc_write_to_json.write(path_info, "wlc422")
-    # uu.compare(p321mcdu, p321uni, _uu_out_path)
-    mx.compare(p420mcd, _UXLC_BOOKS_DIR, _mx_out_path)
-    mm.compare(p420mcd, p422mcd, _mm_out_path)
-    mm.compare(p420mcd, p321mcd, _mm_out_path)
+    # p420mcd, _u = wlc_write_to_json.write(path_info, "wlc420")
+    # p422mcd, _u = wlc_write_to_json.write(path_info, "wlc422")
+    uu.compare(p321mcdu, p321uni, _uu_out_path)
+    # mx.compare(p420mcd, _UXLC_BOOKS_DIR, _mx_out_path)
+    # mm.compare(p420mcd, p422mcd, _mm_out_path)
+    # mm.compare(p420mcd, p321mcd, _mm_out_path)
 
 
 _TDIR = "../wlc-utils-io"
