@@ -1,5 +1,3 @@
-""" Exports compare_wlcs """
-
 import py.wlc_utils as wlc_utils
 import py.wlc_compare_vyls as wlc_compare_vyls
 

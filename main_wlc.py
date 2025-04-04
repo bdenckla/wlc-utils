@@ -25,12 +25,15 @@ def main():
     p321mcd = wlc_write_to_json.write(tdir, "2025-03-21-mcd")
     p420mcd = wlc_write_to_json.write(tdir, "wlc420")
     p422mcd = wlc_write_to_json.write(tdir, "wlc422")
-    wu_diff = wlc_compare_with_uxlc.compare(p420mcd)
+    wu_diff = wlc_compare_with_uxlc.compare(p420mcd, _UXLC_BOOKS_DIR)
     _write_wu_diff(tdir, "wlc420", wu_diff)
     ww_diff_420_422 = wlc_compare_with_wlc.compare(p420mcd, p422mcd)
     _write_ww_diff(tdir, ww_diff_420_422)
     ww_diff_420_321 = wlc_compare_with_wlc.compare(p420mcd, p321mcd)
     _write_ww_diff(tdir, ww_diff_420_321)
+
+
+_UXLC_BOOKS_DIR = "../wlc-utils-io/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
 
 
 if __name__ == "__main__":

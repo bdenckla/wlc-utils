@@ -1,4 +1,4 @@
-import py.uxlc as muxlc  # m for module (to avoid clash with variable named "uxlc")
+import py.uxlc as uxlc
 import py.wlc_convert_citation_to_uxlc as w2u
 import py.wlc_uword as wlc_uword
 import py.wlc_utils as wlc_utils
@@ -6,14 +6,13 @@ import pycmn.uni_heb as uh
 import unicodedata
 
 
-def compare(parsed_wlc_42x):
-    books_dir = "../wlc-utils-io/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
-    uxlc = muxlc.read_all_books(books_dir)
+def compare(parsed_wlc_42x, uxlc_books_dir):
+    the_uxlc = uxlc.read_all_books(uxlc_books_dir)
     misc = {"diffs": []}
     for wlc_verse in parsed_wlc_42x["verses"]:
         wlc_bcv = wlc_verse["bcv"]
         wlc_comparables = _comparables(wlc_verse)
-        uxlc_verse = _uxlc_verse(uxlc, wlc_bcv)
+        uxlc_verse = _uxlc_verse(the_uxlc, wlc_bcv)
         assert len(wlc_comparables) == len(uxlc_verse)
         misc["wlc_bcv"] = wlc_bcv
         for wlc_str, uxlc_str in zip(wlc_comparables, uxlc_verse):
