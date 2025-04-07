@@ -7,13 +7,13 @@ import pycmn.str_defs as sd
 
 def tword(mcword: str):
     stage = mcword.replace(":A", "a").replace(":F", "f").replace(":E", "e")
-    stage = re.sub(_XOLAM_PATT1, _xolam_replacement1, stage)
-    stage = re.sub(_XOLAM_PATT2, _xolam_replacement2, stage)
-    stage = re.sub(_XOLAM_PATT3, _xolam_replacement3, stage)
-    stage = re.sub(_EARLY_MTG_PATT, _early_mtg_replacement, stage)
-    stage = re.sub(_PREPOS_PATT, _prepos_replacement, stage)
+    stage = re.sub(_XOLAM_PATT1, _XOLAM_REPL1, stage)
+    stage = re.sub(_XOLAM_PATT2, _XOLAM_REPL2, stage)
+    stage = re.sub(_XOLAM_PATT3, _XOLAM_REPL3, stage)
+    stage = re.sub(_EARLY_MTG_PATT, _EARLY_MTG_REPL, stage)
+    stage = re.sub(_PREPOS_PATT, _PREPOS_REPL, stage)
     stage = re.sub(_FINAL_PATT, _final_replacement, stage)
-    stage = re.sub(_LAOY_PATT, _laoy_replacement, stage)
+    stage = re.sub(_LAOY_PATT, _LAOY_REPL, stage)
     stage = re.sub(_DD75_PATT, _dd75_replacement, stage)
     stage = re.sub(_OVER_UNDER_PATT, _OVER_UNDER_REPL, stage)
     stage = stage.replace("81" + "11", "11" + "81")  # rev-ger_m becomes ger_m-rev
@@ -55,51 +55,22 @@ _NON_LETT = _sqbrac_not(_LETT_GUTS)
 _NON_LETT_STAR = _NON_LETT + "*"
 _NON_LETT_STAR_DOLL = _NON_LETT_STAR + "$"
 _PREPOS_PATT = r"^(\*\*|)(10|11|12|13|14)" + _paren(_LETT + _NON_LETT_STAR)
+_PREPOS_REPL = r"\1\3\2"
 _EARLY_MTG_PATT = '([afeAFE"I:U])95'
-_XOLAM_PATT1 = (
-    "O" + _paren(_NON_LETT_STAR) + _paren(_sqbrac(_LETT_GUTS_NO_VAV) + '|W[AFE"I:U]')
-)
+_EARLY_MTG_REPL = r"95\1"
+_XOLAM_PATT1_END = _sqbrac(_LETT_GUTS_NO_VAV) + '|W[AFE"I:U]'
+_XOLAM_PATT1 = "O" + _paren(_NON_LETT_STAR) + _paren(_XOLAM_PATT1_END)
+_XOLAM_REPL1 = r"o\1\2"
 _XOLAM_PATT2 = "O" + _paren(_NON_LETT_STAR) + "W"
+_XOLAM_REPL2 = r"\1WO"
 _XOLAM_PATT3 = "W" + _paren(_NON_LETT_STAR) + "o"
+_XOLAM_REPL3 = r"W\1ḥ"
 _FINAL_PATT = r"[KMNPC]" + _NON_LETT_STAR_DOLL
-
-
-def _prepos_replacement(matchobj):
-    dsoe, prepos, lpzmnl = matchobj.groups()
-    # dsoe: ds or empty (ds: double-star, i.e. **, i.e. qere marker)
-    # prepos: the two-digit prepositive accent code
-    # lpzmnl: letter plus zmnl (zmnl: zero or more non-letters)
-    return dsoe + lpzmnl + prepos
-
-
-def _early_mtg_replacement(matchobj):
-    groups = matchobj.groups()
-    return "95" + groups[0]
-
-
-def _xolam_replacement1(matchobj):
-    groups = matchobj.groups()
-    return "o" + groups[0] + groups[1]
-
-
-def _xolam_replacement2(matchobj):
-    groups = matchobj.groups()
-    return groups[0] + "WO"
-
-
-def _xolam_replacement3(matchobj):
-    groups = matchobj.groups()
-    return "W" + groups[0] + "ḥ"
 
 
 def _final_replacement(matchobj):
     nonfinal = matchobj.group()
     return nonfinal.translate(_TRANSLATION_TABLE_FOR_FINAL_FORMS)
-
-
-def _laoy_replacement(matchobj):
-    gra, gro, gry = matchobj.groups()
-    return "L" + gra + gry + gro
 
 
 def _dd75_replacement(matchobj):
@@ -223,10 +194,11 @@ _TRANSLATION_TABLE_RETAINING_SLASH = str.maketrans(_TRANSLATION_DIC_RETAINING_SL
 _PASS_THRUS = {"*kk", "**qq"}
 _OVER_ACCENTS = [a for a in _ACCENTS.keys() if _ACCENTS[a] in ha.UNI_OVER_ACCENTS]
 _UNDER_ACCENTS = [a for a in _ACCENTS.keys() if _ACCENTS[a] in ha.UNI_UNDER_ACCENTS]
-_OVER_ACCENTS_PLUS_MOS = [*_OVER_ACCENTS, "75"]
+_OA_PM = [*_OVER_ACCENTS, "75"]  # over-accents plus "mos" (meteg or silluq)
 # XXX Normal meteg (75) is treated like an over-accent, i.e. like O in LAYO!
-_OVER_ACCENTS_PLUS_MOS_PATT = _paren("|".join(_OVER_ACCENTS_PLUS_MOS))
-_LAOY_PATT = r"L([AF])" + _OVER_ACCENTS_PLUS_MOS_PATT + "([I:])"
+_OA_PM_PATT = _paren("|".join(_OA_PM))
+_LAOY_PATT = r"L([AF])" + _OA_PM_PATT + r"([I:])"
+_LAOY_REPL = r"L\1\3\2"
 _DD75_PATT = r"(\d\d)75"
 _OACCENTS_PATT = _paren("|".join(_OVER_ACCENTS))
 _UACCENTS_PATT = _paren("|".join(_UNDER_ACCENTS))
