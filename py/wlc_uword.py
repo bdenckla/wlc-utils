@@ -15,6 +15,7 @@ def tword(mcword: str):
     stage = re.sub(_FINAL_PATT, _final_replacement, stage)
     stage = re.sub(_LAOY_PATT, _laoy_replacement, stage)
     stage = re.sub(_DD75_PATT, _dd75_replacement, stage)
+    stage = re.sub(_OVER_UNDER_PATT, _OVER_UNDER_REPL, stage)
     stage = stage.replace("81" + "11", "11" + "81")  # rev-ger_m becomes ger_m-rev
     return stage
 
@@ -221,8 +222,13 @@ _TRANSLATION_TABLE = str.maketrans(_TRANSLATION_DIC)
 _TRANSLATION_TABLE_RETAINING_SLASH = str.maketrans(_TRANSLATION_DIC_RETAINING_SLASH)
 _PASS_THRUS = {"*kk", "**qq"}
 _OVER_ACCENTS = [a for a in _ACCENTS.keys() if _ACCENTS[a] in ha.UNI_OVER_ACCENTS]
-_OVER_ACCENTS.append("75")
+_UNDER_ACCENTS = [a for a in _ACCENTS.keys() if _ACCENTS[a] in ha.UNI_UNDER_ACCENTS]
+_OVER_ACCENTS_PLUS_MOS = [*_OVER_ACCENTS, "75"]
 # XXX Normal meteg (75) is treated like an over-accent, i.e. like O in LAYO!
-_OVER_ACCENTS_PATT = _paren("|".join(_OVER_ACCENTS))
-_LAOY_PATT = r"L([AF])" + _OVER_ACCENTS_PATT + "([I:])"
+_OVER_ACCENTS_PLUS_MOS_PATT = _paren("|".join(_OVER_ACCENTS_PLUS_MOS))
+_LAOY_PATT = r"L([AF])" + _OVER_ACCENTS_PLUS_MOS_PATT + "([I:])"
 _DD75_PATT = r"(\d\d)75"
+_OACCENTS_PATT = _paren("|".join(_OVER_ACCENTS))
+_UACCENTS_PATT = _paren("|".join(_UNDER_ACCENTS))
+_OVER_UNDER_PATT = _OACCENTS_PATT + _UACCENTS_PATT
+_OVER_UNDER_REPL = r"\2\1"
