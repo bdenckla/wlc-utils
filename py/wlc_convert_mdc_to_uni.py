@@ -3,12 +3,12 @@ from pycmn.my_utils import dv_dispatch
 from pycmn.my_utils import sl_map
 
 
-def convert_p_mcd_to_p_uni(p_mcd):
+def convert_p_mdc_to_p_uni(p_mdc):
     """
-    Convert "parsed M-C" (parsed Michigan-Claremont) (p_mcd)
+    Convert "parsed M-C" (parsed Michigan-Claremont) (p_mdc)
     to "parsed Unicode" (p_un)
     """
-    return dv_dispatch(_FN_TABLE_TOP, p_mcd)
+    return dv_dispatch(_FN_TABLE_TOP, p_mdc)
 
 
 def _convert_verse(verse):

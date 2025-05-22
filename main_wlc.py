@@ -32,13 +32,13 @@ def main():
     """Process WLC 4.20 & WLC 4.22 in various ways."""
     path_info = _in_path, _out_path
     p321uni = wlc_write_to_json.write(path_info, "2025-03-21-uni")
-    p321mcd, p321mcdu = wlc_write_to_json.write(path_info, "2025-03-21-mcd")
-    # p420mcd, _u = wlc_write_to_json.write(path_info, "wlc420")
-    # p422mcd, _u = wlc_write_to_json.write(path_info, "wlc422")
-    uu.compare(p321mcdu, p321uni, _uu_out_path)
-    # mx.compare(p420mcd, _UXLC_BOOKS_DIR, _mx_out_path)
-    # mm.compare(p420mcd, p422mcd, _mm_out_path)
-    # mm.compare(p420mcd, p321mcd, _mm_out_path)
+    _p321mdc, p321mdcu = wlc_write_to_json.write(path_info, "2025-03-21-mdc")
+    # p420mdc, _u = wlc_write_to_json.write(path_info, "wlc420")
+    # p422mdc, _u = wlc_write_to_json.write(path_info, "wlc422")
+    uu.compare(p321mdcu, p321uni, _uu_out_path)
+    # mx.compare(p420mdc, _UXLC_BOOKS_DIR, _mx_out_path)
+    # mm.compare(p420mdc, p422mdc, _mm_out_path)
+    # mm.compare(p420mdc, p321mdc, _mm_out_path)
 
 
 _TDIR = "../wlc-utils-io"
