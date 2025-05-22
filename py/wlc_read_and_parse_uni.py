@@ -47,15 +47,22 @@ def _is_not_space(string):
 def _recapture_maqaf_and_pasoleg(atoms):
     out = []
     for atom in atoms:
-        if atom in ("", hpu.MAQ, hpu.PASOLEG):
-            # The empty string ("") results from maqaf followed by space.
-            # This only happens in 2k23:10:
-            # אאא *בני־ **בֶנ־הִנֹּ֑ם
-            # (ignore אאא)
+        if atom in ("", hpu.MAQ, hpu.PASOLEG):  # See note on empty string
             out[-1] += atom
         else:
             out.append(atom)
     return out
+
+
+# Note on empty string
+# ####################
+# The empty string ("") results from maqaf followed by space.
+# This only happens in 2k23:10:
+# אאא *בני־ **בֶנ־הִנֹּ֑ם
+# (ignore אאא)
+# But although this currently only happens in 2k23:10, it sounds like
+# it may become the standard:
+# https://github.com/bdenckla/wlc-issues/issues/7
 
 
 def _recapture_note(atoms):
@@ -138,6 +145,19 @@ def _fix_misc(wn_dic):
     return {"word": stage, "notes": wn_dic["notes"]}
 
 
+# Use final nun!
+# https://github.com/bdenckla/wlc-issues/issues/14
+
+# Use final kaf!
+# https://github.com/bdenckla/wlc-issues/issues/15
+
+# Put tel_g after its letter!
+# https://github.com/bdenckla/wlc-issues/issues/16
+
+# Supply missing star in 1s9:1!
+# https://github.com/bdenckla/wlc-issues/issues/17
+
+
 def _extract_notes(wn_dic):
     # wn_dic: dict with keys "word" and "notes"
     word = wn_dic["word"]
@@ -167,6 +187,6 @@ def _distinguish_sam_pe_inun(wn_dic):
 
 
 _SAMPE_REMAP = {"פ": "P", "ס": "S"}
-_KK_QQ_REMAPS = {"*": "*kk", "**": "**qq"}
+_KK_QQ_REMAPS = {"*": "*kk", "**": "**qq"}  # https://github.com/bdenckla/wlc-issues/issues/8
 _TELG_PATT = f"^{ha.TEL_G}([א-ת].*?)([א-ת])"
 _TELG_REPL = r"\1" + ha.TEL_G + r"\2"
