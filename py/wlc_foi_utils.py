@@ -4,11 +4,15 @@ import pycmn.file_io as file_io
 import py.wlc_utils as wlc_utils
 import py.wlc_uword as wlc_uword
 import py.wlc_release_info as ri
+import py.wlc_foi_utils_uni as fuu
 
 
 def write(out_path, wlc_id, parsed):
     io_fois = _init()
     _flexcollect(io_fois, wlc_id, parsed, _collect)
+    if ri.encoding_is_uni(wlc_id):
+        io_fois["fragile_foi"] = []
+        _flexcollect(io_fois, wlc_id, parsed, fuu.collect_uni)
     #
     io_fois["notes_foi"] = _sort_notes_foi(io_fois["notes_foi"])
     #
