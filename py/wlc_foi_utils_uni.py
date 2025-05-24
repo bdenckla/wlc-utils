@@ -45,13 +45,13 @@ _XIRIQ_OR_SHEVA = f"[{hpo.XIRIQ+hpo.SHEVA}]"
 _LAUY_PATT = hl.LAMED + _QAMATS_OR_PATAX + _UNDER_ACCENT_PATT + _XIRIQ_OR_SHEVA
 _LAYS_PATT = hl.LAMED + _QAMATS_OR_PATAX + _XIRIQ_OR_SHEVA + hpo.MTGOSLQ
 _LAYO_PATT = hl.LAMED + _QAMATS_OR_PATAX + _XIRIQ_OR_SHEVA + _OVER_ACCENT_PATT
-_LAXY_PATT = hl.LAMED + _QAMATS_OR_PATAX + _XIRIQ_OR_SHEVA + hl.FMEM
-_PATTS = {
+_LAY_PATT = hl.LAMED + _QAMATS_OR_PATAX + _XIRIQ_OR_SHEVA + hl.FMEM
+_PATTS = [
     ("patt-lauy", _LAUY_PATT),
     ("patt-lays", _LAYS_PATT),
     ("patt-layo", _LAYO_PATT),
-    ("patt-laxy", _LAXY_PATT),
-}
+    ("patt-lay", _LAY_PATT),
+]
 
 
 def _mk_ffrec(bcv, word, fcomps, pattkey):
