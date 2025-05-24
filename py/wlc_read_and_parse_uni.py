@@ -187,6 +187,7 @@ def _distinguish_sam_pe_inun(wn_dic):
 
 
 _SAMPE_REMAP = {"פ": "P", "ס": "S"}
-_KK_QQ_REMAPS = {"*": "*kk", "**": "**qq"}  # https://github.com/bdenckla/wlc-issues/issues/8
+_KK_QQ_REMAPS = {"*": "*kk", "**": "**qq"}
+# https://github.com/bdenckla/wlc-issues/issues/8
 _TELG_PATT = f"^{ha.TEL_G}([א-ת].*?)([א-ת])"
 _TELG_REPL = r"\1" + ha.TEL_G + r"\2"

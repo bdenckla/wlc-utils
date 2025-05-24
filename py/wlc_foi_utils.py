@@ -72,7 +72,7 @@ def _collect(io_fois, wlc_id, bcv, velsod):
         return
     if notes := wlc_utils.get_notes(velsod):
         word = velsod["word"]
-        counts, cases = _get_counts_and_cases(io_fois["notes_foi"], "nf-counts", "nf-cases")
+        counts, cases = _deref2(io_fois["notes_foi"], "nf-counts", "nf-cases")
         for note in notes:
             if note not in counts:
                 counts[note] = 0
@@ -99,7 +99,7 @@ def _kqcollect(io_fois, wlc_id, bcv, velsod):
         lenq = len(ketiv_and_qere[1])
         knqm = f"k{lenk}q{lenq}"
         #
-        counts, cases = _get_counts_and_cases(io_fois["kq_foi"], "kq-counts", "kq-cases")
+        counts, cases = _deref2(io_fois["kq_foi"], "kq-counts", "kq-cases")
         #
         counts[knqm] += 1
         if knqm != "k1q1":
@@ -124,5 +124,5 @@ def _word(velsod):
     return velsod.get("word")
 
 
-def _get_counts_and_cases(foi, counts_key, cases_key):
+def _deref2(foi, counts_key, cases_key):
     return foi[counts_key], foi[cases_key]

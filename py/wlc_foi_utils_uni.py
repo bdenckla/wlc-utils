@@ -39,7 +39,16 @@ def collect_uni(io_fois, wlc_id, bcv, velsod):
 _PATAX_OR_QAMATS = f"[{hpo.PATAX+hpo.QAMATS}]"
 _UNDER_ACCENTS_STR = "".join(ha.UNI_UNDER_ACCENTS)
 _OVER_ACCENTS_STR = "".join(ha.UNI_OVER_ACCENTS)
-_SOME_VOWELS_STR = hpo.SHEVA + hpo.XIRIQ + hpo.TSERE + hpo.SEGOL_V + hpo.PATAX + hpo.QAMATS
+_SOME_VOWELS_STR = (
+    hpo.SHEVA
+    + hpo.XPATAX
+    + hpo.XIRIQ
+    + hpo.TSERE
+    + hpo.SEGOL_V
+    + hpo.PATAX
+    + hpo.QAMATS
+    + hpo.QUBUTS
+)
 #
 _UNDER_ACCENT_PATT = f"[{_UNDER_ACCENTS_STR}]"
 _OVER_ACCENT_PATT = f"[{_OVER_ACCENTS_STR}]"
@@ -76,4 +85,3 @@ def _get_word(velsod):
         return velsod.get("word")
     assert isinstance(velsod, str)
     return velsod
-
