@@ -11,7 +11,7 @@ def write(out_path, wlc_id, parsed):
     io_fois = _init()
     _flexcollect(io_fois, wlc_id, parsed, _collect)
     if ri.encoding_is_uni(wlc_id):
-        io_fois["fragile_foi"] = []
+        io_fois["fragile_foi"] = fuu.ff_init()
         _flexcollect(io_fois, wlc_id, parsed, fuu.collect_uni)
     #
     io_fois["notes_foi"] = _sort_notes_foi(io_fois["notes_foi"])
@@ -35,14 +35,14 @@ def _flexcollect(io_fois, wlc_id, xparsed, xcollect):
 def _init():
     return {
         "sam_pe_inun_foi": {"P": 0, "S": 0, "N": 0},
-        "notes_foi": {"counts": {}, "cases": []},
+        "notes_foi": {"nf-counts": {}, "nf-cases": []},
     }
 
 
 def _kqinit():
     return {
         "kq_foi": {
-            "counts": {
+            "kq-counts": {
                 "k1q1": 0,
                 "k0q1": 0,
                 "k1q0": 0,
@@ -50,18 +50,17 @@ def _kqinit():
                 "k1q2": 0,
                 "k2q2": 0,
             },
-            "cases": [],
+            "kq-cases": [],
         }
     }
 
 
 def _sort_notes_foi(notes_foi):
-    nfc = notes_foi["counts"]
+    nfc = notes_foi["nf-counts"]
     nfc_sorted = dict(sorted(nfc.items()))
     notes_foi_out = {
-        "notes": list(nfc_sorted.keys()),
-        "counts": nfc_sorted,
-        "cases": notes_foi["cases"],
+        "nf-counts": nfc_sorted,
+        "nf-cases": notes_foi["nf-cases"],
     }
     return notes_foi_out
 
@@ -73,13 +72,11 @@ def _collect(io_fois, wlc_id, bcv, velsod):
         return
     if notes := wlc_utils.get_notes(velsod):
         word = velsod["word"]
-        counts, cases = _get_counts_and_cases(io_fois["notes_foi"])
+        counts, cases = _get_counts_and_cases(io_fois["notes_foi"], "nf-counts", "nf-cases")
         for note in notes:
-            #
             if note not in counts:
                 counts[note] = 0
             counts[note] += 1
-            #
             cases.append(_make_case(wlc_id, bcv, notes, note, word))
 
 
@@ -102,7 +99,7 @@ def _kqcollect(io_fois, wlc_id, bcv, velsod):
         lenq = len(ketiv_and_qere[1])
         knqm = f"k{lenk}q{lenq}"
         #
-        counts, cases = _get_counts_and_cases(io_fois["kq_foi"])
+        counts, cases = _get_counts_and_cases(io_fois["kq_foi"], "kq-counts", "kq-cases")
         #
         counts[knqm] += 1
         if knqm != "k1q1":
@@ -127,5 +124,5 @@ def _word(velsod):
     return velsod.get("word")
 
 
-def _get_counts_and_cases(foi):
-    return foi["counts"], foi["cases"]
+def _get_counts_and_cases(foi, counts_key, cases_key):
+    return foi[counts_key], foi[cases_key]

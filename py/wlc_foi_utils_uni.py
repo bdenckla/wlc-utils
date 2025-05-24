@@ -4,6 +4,18 @@ import pycmn.hebrew_accents as ha
 import pycmn.hebrew_letters as hl
 import pycmn.hebrew_points as hpo
 
+
+def ff_init():
+    fragile_foi = {
+        "ff-counts": {},
+        "ff-cases": [],
+    }
+    fragile_foi["ff-counts"]["misc"] = 0
+    for pattkey, _patt in _PATTS:
+        fragile_foi["ff-counts"][pattkey] = 0
+    return fragile_foi
+
+
 def collect_uni(io_fois, wlc_id, bcv, velsod):
     word = _get_word(velsod)
     if word is None:
@@ -19,11 +31,17 @@ def collect_uni(io_fois, wlc_id, bcv, velsod):
             assert pattkey_found is None
             pattkey_found = pattkey
     ffrec = _mk_ffrec(bcv, word, fcomps, pattkey_found)
-    fragile_foi.append(ffrec)
+    fragile_foi["ff-cases"].append(ffrec)
+    count_key = "misc" if pattkey_found is None else pattkey_found
+    fragile_foi["ff-counts"][count_key] += 1
 
 
+_QAMATS_OR_PATAX = f"[{hpo.QAMATS+hpo.PATAX}]"
+_UNDER_ACCENTS_STR = "".join(ha.UNI_UNDER_ACCENTS)
+_UNDER_ACCENT_PATT = f"[{_UNDER_ACCENTS_STR}]"
+_LAUY_PATT = hl.LAMED + _QAMATS_OR_PATAX + _UNDER_ACCENT_PATT + hpo.XIRIQ
 _PATTS = {
-    ("patt-lauy", hl.LAMED + hpo.QAMATS + ha.ATN + hpo.XIRIQ),
+    ("patt-lauy", _LAUY_PATT),
 }
 
 
