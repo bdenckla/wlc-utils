@@ -38,10 +38,14 @@ def collect_uni(io_fois, wlc_id, bcv, velsod):
 
 _QAMATS_OR_PATAX = f"[{hpo.QAMATS+hpo.PATAX}]"
 _UNDER_ACCENTS_STR = "".join(ha.UNI_UNDER_ACCENTS)
+_OVER_ACCENTS_STR = "".join(ha.UNI_OVER_ACCENTS)
 _UNDER_ACCENT_PATT = f"[{_UNDER_ACCENTS_STR}]"
+_OVER_ACCENT_PATT = f"[{_OVER_ACCENTS_STR}]"
 _LAUY_PATT = hl.LAMED + _QAMATS_OR_PATAX + _UNDER_ACCENT_PATT + hpo.XIRIQ
+_LAYO_PATT = hl.LAMED + _QAMATS_OR_PATAX + hpo.XIRIQ + _OVER_ACCENT_PATT
 _PATTS = {
     ("patt-lauy", _LAUY_PATT),
+    ("patt-layo", _LAYO_PATT),
 }
 
 
