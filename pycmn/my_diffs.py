@@ -1,4 +1,4 @@
-""" Exports get """
+"""Exports get"""
 
 import difflib
 

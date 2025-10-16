@@ -1,4 +1,4 @@
-""" Exports names for Unicode Hebrew vowel points (niqqud) """
+"""Exports names for Unicode Hebrew vowel points (niqqud)"""
 
 import pycmn.str_defs as sd
 
