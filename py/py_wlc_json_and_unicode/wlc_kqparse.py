@@ -1,4 +1,4 @@
-import python_modules.wlc_utils as wlc_utils
+import py_wlc_json_and_unicode.wlc_utils as wlc_utils
 
 
 def kqparse(parsed):

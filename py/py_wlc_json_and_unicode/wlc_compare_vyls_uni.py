@@ -1,9 +1,11 @@
 """ Exports compare_vyls """
 
-import python_modules.wlc_uword as wlc_uword
+import py_wlc_json_and_unicode.wlc_uword as wlc_uword
+import pycmn.uni_heb as uh
+import pycmn.my_diffs as my_diffs
 
 
-def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
+def compare_vyls(io_diff, bcv, vyla, vylb):
     """Compare vyla and vylb, putting result in io_diff"""
     typa, typb = _vyltype(vyla), _vyltype(vylb)
     if typa != typb:
@@ -21,29 +23,55 @@ def compare_vyls(io_diff, bcv, velidx, vyla, vylb):
         worda_ns = vyla["word"].replace("/", "")
         wordb_ns = vylb["word"].replace("/", "")
         if worda_ns != wordb_ns:
-            _record_word_diff(io_diff, bcv, velidx, vyla, vylb)
+            _record_word_diff(io_diff, bcv, vyla, vylb)
         return
     assert typa == _VYLTYPE_SPI
     assert vyla == vylb
 
 
-def _record_word_diff(io_diff, bcv, velidx, vyla, vylb):
+def _record_word_diff(io_diff, bcv, vyla, vylb):
     vyla, vylb = _wd_new_fields_for_two(vyla, vylb)
     io_diff["word differences"].append(_word_diff(bcv, vyla, vylb))
-    wpwd = io_diff["word positions of word differences"]
-    key = bcv + "!" + vyla["word"]
-    assert key not in wpwd
-    wpwd[key] = velidx + 1
 
 
 def _word_diff(bcv, vyla, vylb):
+    worda, wordb = vyla["word"], vylb["word"]
+    diffs = my_diffs.get(_ensh(worda), _ensh(wordb))
     return {
         "bcv": bcv,
         "diff_type": _WORD_DIFF_TYPE[vyla["notes"] != vylb["notes"]],
+        "diffs": _slim(diffs),
         "ab_word": _newline_sep(vyla, vylb, "word"),
-        "ab_uword": _newline_sep(vyla, vylb, "uword"),
         "ab_notes": _newline_sep(vyla, vylb, "cnotes"),
     }
+
+
+def _ensh(word):
+    return list(enumerate(uh.t_shunnas(word)))
+
+
+def _slim(diffs):
+    if len(diffs) != 1:
+        return None
+    diffs0 = diffs[0]
+    assert len(diffs0) == 2
+    aside, bside = diffs0[0], diffs0[1]
+    # E.g.
+    # aside == [(5, '(zaq_q)'), (6, 'HMA UPPER DOT')]
+    # bside == [(5, 'HMA UPPER DOT'), (6, '(zaq_q)')]
+    if not len(aside) == len(bside) == 2:
+        return None
+    aside_idxs = aside[0][0], aside[1][0]
+    bside_idxs = bside[0][0], bside[1][0]
+    if not aside_idxs == bside_idxs:
+        return None
+    aside_vals = aside[0][1], aside[1][1]
+    bside_vals = bside[0][1], bside[1][1]
+    if aside_vals[0] != bside_vals[1]:
+        return None
+    if aside_vals[1] != bside_vals[0]:
+        return None
+    return f"swap {aside_vals}"
 
 
 def _wd_new_fields_for_two(vyla, vylb):

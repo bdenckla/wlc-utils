@@ -1,9 +1,9 @@
 """WLC JSON and Unicode generation entrypoint."""
 
-import python_modules.wlc_write_to_json as wlc_write_to_json
-import python_modules.wlc_compare_mdc_with_uxlc as mx
-import python_modules.wlc_compare_mdc_with_mdc as mm
-import python_modules.wlc_compare_uni_with_uni as uu
+import py_wlc_json_and_unicode.wlc_write_to_json as wlc_write_to_json
+import py_wlc_json_and_unicode.wlc_compare_mdc_with_uxlc as mx
+import py_wlc_json_and_unicode.wlc_compare_mdc_with_mdc as mm
+import py_wlc_json_and_unicode.wlc_compare_uni_with_uni as uu
 
 
 def _mx_out_path(wlc_id):

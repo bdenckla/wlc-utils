@@ -1,7 +1,7 @@
-import python_modules.uxlc as uxlc
-import python_modules.wlc_convert_citation_to_uxlc as w2u
-import python_modules.wlc_uword as wlc_uword
-import python_modules.wlc_utils as wlc_utils
+import py_wlc_json_and_unicode.uxlc as uxlc
+import py_wlc_json_and_unicode.wlc_convert_citation_to_uxlc as w2u
+import py_wlc_json_and_unicode.wlc_uword as wlc_uword
+import py_wlc_json_and_unicode.wlc_utils as wlc_utils
 import pycmn.uni_heb as uh
 import pycmn.file_io as file_io
 import unicodedata

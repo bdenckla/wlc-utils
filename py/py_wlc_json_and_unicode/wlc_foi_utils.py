@@ -1,10 +1,10 @@
 """ Exports write. """
 
 import pycmn.file_io as file_io
-import python_modules.wlc_utils as wlc_utils
-import python_modules.wlc_uword as wlc_uword
-import python_modules.wlc_release_info as ri
-import python_modules.wlc_foi_utils_uni as fuu
+import py_wlc_json_and_unicode.wlc_utils as wlc_utils
+import py_wlc_json_and_unicode.wlc_uword as wlc_uword
+import py_wlc_json_and_unicode.wlc_release_info as ri
+import py_wlc_json_and_unicode.wlc_foi_utils_uni as fuu
 
 
 def write(out_path, wlc_id, parsed):
