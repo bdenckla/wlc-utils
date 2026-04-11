@@ -1,8 +1,8 @@
 """Exports get1 & get2"""
 
 import pycmn.my_diffs as my_diffs
-import py_word_diffs_420422.my_dd_simplify_simple_diffs as ssd
-import py_word_diffs_420422.my_dd_lett_words as hlw
+import py_wlc_diffs_420422.my_dd_simplify_simple_diffs as ssd
+import py_wlc_diffs_420422.my_dd_lett_words as hlw
 import py_hebrew.my_unicode as diff_mm_uni_name
 from py_hebrew import uni_heb_char_classes as uhc
 

@@ -3,7 +3,7 @@
 import py_html.my_html as my_html
 import py_html.my_html_for_img as img
 import py_wlc.my_url_generator as urlg
-import py_word_diffs_420422.my_word_diffs_420422_utils as wd_utils
+import py_wlc_diffs_420422.my_word_diffs_420422_utils as wd_utils
 
 
 def write(io_records):

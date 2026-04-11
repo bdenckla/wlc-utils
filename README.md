@@ -12,7 +12,7 @@ Current top-level Python buckets are:
 - `py/py_uxlc/` for UXLC-specific parsing, location, and metadata helpers
 - `py/py_wlc/` for shared WLC/Tanakh helpers used across multiple WLC-specific packages
 - `py/py_wlc_a_notes/` for the WLC a-notes family
-- `py/py_word_diffs_420422/` for the WLC 4.20/4.22 word-diffs family
+- `py/py_wlc_diffs_420422/` for the WLC 4.20/4.22 word-diffs family
 
 The old transitional `py/py_misc/` compatibility layer has been removed.
 
@@ -26,7 +26,7 @@ Additional WLC-focused entry scripts now live here as well:
 
 ```powershell
 .venv\Scripts\python.exe py\main_wlc_a_notes.py
-.venv\Scripts\python.exe py\main_word_diffs_420422.py
+.venv\Scripts\python.exe py\main_wlc_diffs_420422.py
 ```
 
 ## GitHub Pages

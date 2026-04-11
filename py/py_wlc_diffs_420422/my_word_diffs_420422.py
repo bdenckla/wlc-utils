@@ -1,6 +1,6 @@
 import py_html.my_html as my_html
-import py_word_diffs_420422.my_word_diffs_420422_k2q2 as k2q2
-import py_word_diffs_420422.my_word_diffs_420422_decalogue_rafeh as dr
+import py_wlc_diffs_420422.my_word_diffs_420422_k2q2 as k2q2
+import py_wlc_diffs_420422.my_word_diffs_420422_decalogue_rafeh as dr
 
 
 def _part_n_of_2(partn, from_str, to_str):
