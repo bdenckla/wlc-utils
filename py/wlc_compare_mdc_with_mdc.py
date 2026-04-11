@@ -1,6 +1,6 @@
 import pycmn.file_io as file_io
-import py.wlc_utils as wlc_utils
-import py.wlc_compare_vyls_mdc as cvm
+import wlc_utils
+import wlc_compare_vyls_mdc as cvm
 
 
 def compare(wlca, wlcb, out_path_fn):

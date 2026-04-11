@@ -15,7 +15,7 @@
             "name": "WLC misc",
             "type": "debugpy",
             "request": "launch",
-            "program": "main_wlc.py",
+            "program": "${workspaceFolder}/py/main_wlc.py",
             "console": "integratedTerminal"
         }
     ]

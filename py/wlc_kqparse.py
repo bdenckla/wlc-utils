@@ -1,4 +1,4 @@
-import py.wlc_utils as wlc_utils
+import wlc_utils
 
 
 def kqparse(parsed):

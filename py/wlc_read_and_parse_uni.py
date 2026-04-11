@@ -1,7 +1,7 @@
 """ Exports read_and_parse. """
 
 import re
-import py.wlc_utils as wlc_utils
+import wlc_utils
 import pycmn.hebrew_punctuation as hpu
 import pycmn.hebrew_accents as ha
 
