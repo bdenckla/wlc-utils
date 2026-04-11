@@ -3,10 +3,10 @@
 import xml.etree.ElementTree as ET
 import pycmn.file_io as file_io
 
-# import py_misc.my_uxlc as my_uxlc
-# import py_misc.my_uxlc_book_abbreviations as u_bk_abbr
-import py_misc.my_wlc_bcv_str as my_wlc_bcv_str
+# import py_uxlc.my_uxlc as my_uxlc
+# import py_uxlc.my_uxlc_book_abbreviations as u_bk_abbr
 import py_uxlc.my_uxlc_unicode_names as my_uxlc_unicode_names
+import py_wlc.my_wlc_bcv_str as my_wlc_bcv_str
 import py_wlc_a_notes.my_wlc_a_notes_native as native
 import py_wlc_a_notes.my_wlc_a_notes_etan as etan
 import py_wlc_a_notes.my_wlc_a_notes_utils as my_wlc_a_notes_utils

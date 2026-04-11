@@ -2,7 +2,7 @@
 
 import pycmn.my_utils as my_utils
 import py_html.my_html as my_html
-import py_misc.my_url_generator as urlg
+import py_wlc.my_url_generator as urlg
 import py_word_diffs_420422.my_word_diffs_420422_utils as wd_utils
 
 

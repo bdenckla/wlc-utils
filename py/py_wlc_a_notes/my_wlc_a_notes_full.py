@@ -2,7 +2,7 @@
 
 import py_html.my_html as my_html
 import py_html.my_html_for_img as img
-import py_misc.my_wlc_bcv_str as my_wlc_bcv_str
+import py_wlc.my_wlc_bcv_str as my_wlc_bcv_str
 import py_wlc_a_notes.my_wlc_a_notes_utils as my_wlc_a_notes_utils
 import py_wlc_a_notes.my_wlc_a_notes_full_nav as nav
 

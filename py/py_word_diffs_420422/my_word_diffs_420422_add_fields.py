@@ -5,7 +5,7 @@ import pycmn.my_diffs as my_diffs
 import pycmn.my_utils as my_utils
 import py_uxlc.my_uxlc_book_abbreviations as u_bk_abbr
 import py_uxlc.my_uxlc_location as my_uxlc_location
-import py_misc.my_wlc_bcv_str as my_wlc_bcv_str
+import py_wlc.my_wlc_bcv_str as my_wlc_bcv_str
 import py_word_diffs_420422.my_dd_diffs_description as diffs_desc
 import py_word_diffs_420422.my_word_diffs_420422 as my_word_diffs_420422
 import py_word_diffs_420422.my_word_diffs_420422_utils as wd_utils

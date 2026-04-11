@@ -10,9 +10,11 @@ Current top-level Python buckets are:
 - `py/py_hebrew/` for Hebrew/Unicode helpers built on top of `pycmn`
 - `py/py_html/` for shared HTML/presentation helpers split out of `py_misc`
 - `py/py_uxlc/` for UXLC-specific parsing, location, and metadata helpers
+- `py/py_wlc/` for shared WLC/Tanakh helpers used across multiple WLC-specific packages
 - `py/py_wlc_a_notes/` for the WLC a-notes family
 - `py/py_word_diffs_420422/` for the WLC 4.20/4.22 word-diffs family
-- `py/py_misc/` for remaining modules not yet split into more specific buckets
+
+The old transitional `py/py_misc/` compatibility layer has been removed.
 
 Run the main workflow from the repo root with:
 

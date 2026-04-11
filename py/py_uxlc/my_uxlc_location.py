@@ -5,8 +5,8 @@ import py_uxlc.my_uxlc_lci_augrec as lci_augrec
 import py_uxlc.my_uxlc_lci_rec as lci_rec
 import py_uxlc.my_uxlc_bibdist as bibdist
 import py_uxlc.my_uxlc_page_break_info as page_break_info
-import py_misc.my_tanakh_book_names as tbn
 import py_uxlc.my_uxlc as my_uxlc
+import py_wlc.my_tanakh_book_names as tbn
 
 
 def prep():

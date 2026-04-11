@@ -1,7 +1,7 @@
 import py_html.my_html as my_html
-import py_misc.my_hebrew_points as hpo
-import py_misc.my_hebrew_punctuation as hpu
-import py_misc.my_hebrew_accents as ha
+import pycmn.hebrew_accents as ha
+import pycmn.hebrew_points as hpo
+import pycmn.hebrew_punctuation as hpu
 
 
 def uxlc_change_proposals(record):
@@ -53,7 +53,7 @@ def _example_quad(english, mq1, mq2):
 MQ1 = hpo.SHEVA, hpo.XPATAX, hpo.XQAMATS, hpo.XSEGOL
 MQ2 = "", hpo.PATAX, hpo.QAMATS, hpo.SEGOL_V
 _DMS_EXAMPLE_1 = "וּלְרׇחְבָּ֑הּ"
-_DMS_EXAMPLE_2 = "וּלְרׇחְבָּ֑הּ".replace(hpo.DAGESH_OM, "")
+_DMS_EXAMPLE_2 = "וּלְרׇחְבָּ֑הּ".replace(hpo.DAGOMOSD, "")
 _DMS = "dagesh, mapiq, or shuruq dot"
 _DIFF_TYPES = {
     "-dms": f"remove {_DMS}: {_DMS_EXAMPLE_1} to {_DMS_EXAMPLE_2}",
@@ -61,7 +61,7 @@ _DIFF_TYPES = {
     "-rfh": _example("remove rafeh", hpo.RAFE, ""),
     "-pashta": _example("remove pashta accent", ha.PASH, ""),
     "+rev": _example("add revia accent", "", ha.REV),
-    "+psq": _example("add paseq", "", hpu.PAS),
+    "+psq": _example("add paseq", "", hpu.PASOLEG),
     "+mqf": _example("add maqaf", "", hpu.MAQ),
     "-shoḥ": _example_quad(
         "remove sheva or change ḥataf vowel to full vowel", MQ1, MQ2
