@@ -1,6 +1,6 @@
 """ Exports compare_vyls """
 
-import wlc_uword
+import python_modules.wlc_uword as wlc_uword
 import pycmn.uni_heb as uh
 import pycmn.my_diffs as my_diffs
 

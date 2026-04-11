@@ -1,12 +1,12 @@
 """ Exports write. """
 
-import wlc_read_and_parse_mdc as rp_mdc
-import wlc_read_and_parse_uni as rp_uni
-import wlc_kqparse as kqparse
-import wlc_foi_utils as foi_utils
-import wlc_smallish_files as smallish_files
-import wlc_convert_mdc_to_uni as mu
-import wlc_release_info as ri
+import python_modules.wlc_read_and_parse_mdc as rp_mdc
+import python_modules.wlc_read_and_parse_uni as rp_uni
+import python_modules.wlc_kqparse as kqparse
+import python_modules.wlc_foi_utils as foi_utils
+import python_modules.wlc_smallish_files as smallish_files
+import python_modules.wlc_convert_mdc_to_uni as mu
+import python_modules.wlc_release_info as ri
 
 
 def write(path_info, wlc_id):

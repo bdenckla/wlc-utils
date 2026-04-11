@@ -1,4 +1,4 @@
-import wlc_uword
+import python_modules.wlc_uword as wlc_uword
 from pycmn.my_utils import dv_dispatch
 from pycmn.my_utils import sl_map
 

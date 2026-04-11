@@ -1,9 +1,9 @@
 """ Exports main """
 
-import wlc_write_to_json
-import wlc_compare_mdc_with_uxlc as mx
-import wlc_compare_mdc_with_mdc as mm
-import wlc_compare_uni_with_uni as uu
+import python_modules.wlc_write_to_json as wlc_write_to_json
+import python_modules.wlc_compare_mdc_with_uxlc as mx
+import python_modules.wlc_compare_mdc_with_mdc as mm
+import python_modules.wlc_compare_uni_with_uni as uu
 
 
 def _mx_out_path(wlc_id):

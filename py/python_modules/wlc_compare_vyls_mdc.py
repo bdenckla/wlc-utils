@@ -1,6 +1,6 @@
 """ Exports compare_vyls """
 
-import wlc_uword
+import python_modules.wlc_uword as wlc_uword
 
 
 def compare_vyls(io_diff, bcv, velidx, vyla, vylb):

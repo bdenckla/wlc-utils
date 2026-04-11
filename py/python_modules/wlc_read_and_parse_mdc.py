@@ -1,6 +1,6 @@
 """ Exports read_and_parse. """
 
-import wlc_utils
+import python_modules.wlc_utils as wlc_utils
 
 
 def read_and_parse(in_path):
