@@ -1,4 +1,4 @@
-""" Exports main """
+"""WLC JSON and Unicode generation entrypoint."""
 
 import python_modules.wlc_write_to_json as wlc_write_to_json
 import python_modules.wlc_compare_mdc_with_uxlc as mx
@@ -29,7 +29,7 @@ def _in_path(wlc_id):
 
 
 def main():
-    """Process WLC 4.20 & WLC 4.22 in various ways."""
+    """Generate WLC JSON/Unicode outputs and related Unicode diffs."""
     path_info = _in_path, _out_path
     p321uni = wlc_write_to_json.write(path_info, "2025-03-21-uni")
     _p321mdc, p321mdcu = wlc_write_to_json.write(path_info, "2025-03-21-mdc")

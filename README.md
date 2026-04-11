@@ -16,10 +16,10 @@ Current top-level Python buckets are:
 
 The old transitional `py/py_misc/` compatibility layer has been removed.
 
-Run the main workflow from the repo root with:
+Run the WLC JSON/Unicode workflow from the repo root with:
 
 ```powershell
-.venv\Scripts\python.exe py\main_wlc.py
+.venv\Scripts\python.exe py\main_wlc_json_and_unicode.py
 ```
 
 Additional WLC-focused entry scripts now live here as well:
