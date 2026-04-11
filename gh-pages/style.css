@@ -1,0 +1,26 @@
+body { font-size: 14pt; }
+*[lang="hbo"] {
+    font-family: "Taamey D WOFF2";
+    font-size: 140%;
+}
+@font-face {
+    font-family: "Taamey D WOFF2";
+    src: url("woff2/Taamey_D.woff2");
+}
+span.romanized { font-style: italic; }
+p { max-width: 40em; text-align: justify}
+blockquote { max-width: 40em; }
+td.big-for-amb-early-mtg { font-size: 250%; letter-spacing: 0.1em; text-align: left;}
+td.big { font-size: 250%; }
+table.limited-width { max-width: 40em; }
+table.border-collapse { border-collapse: collapse; }
+th, td {
+    padding-right: 0.4em;
+    padding-left: 0.4em;
+}
+tr:nth-of-type(odd) td {
+    background-color: #eee;
+}
+img {
+    max-width: 100%;
+}
