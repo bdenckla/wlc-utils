@@ -50,4 +50,4 @@ def _url_for_uxlc_change(release_and_id):
     #     a dash
     #     a number that identifies which change within that changeset
     release_str = f"{release_date}%20-%20Changes"
-    return f"https://hcanat.us/Changes/{release_str}/{release_str}.xml?{change_id}"
+    return f"https://tanach.us/Changes/{release_str}/{release_str}.xml?{change_id}"
