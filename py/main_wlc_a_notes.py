@@ -1,6 +1,5 @@
 """Exports main."""
 
-import _repo_path_setup
 import py_wlc_a_notes.my_wlc_a_notes as my_wlc_a_notes
 import py_wlc_a_notes.my_wlc_a_notes_expand as my_wlc_a_notes_expand
 import py_wlc_a_notes.my_wlc_a_notes_summary as my_wlc_a_notes_summary

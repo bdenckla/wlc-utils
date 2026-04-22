@@ -1,6 +1,5 @@
 """Exports main."""
 
-import _repo_path_setup
 import py_html.my_html as my_html
 import py_wlc_diffs_420422.my_word_diffs_420422 as my_word_diffs_420422
 import py_wlc_diffs_420422.my_word_diffs_420422_add_fields as my_word_diffs_420422_add_fields
