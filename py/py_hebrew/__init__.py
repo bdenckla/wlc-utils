@@ -1,1 +1,0 @@
-"""Hebrew and Unicode helper package."""
