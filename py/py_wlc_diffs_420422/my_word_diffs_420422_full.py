@@ -1,6 +1,6 @@
 """Exports write_xml."""
 
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 import py_html.my_html_for_img as img
 import py_wlc.my_url_generator as urlg
 import py_wlc_diffs_420422.my_word_diffs_420422_utils as wd_utils
@@ -16,17 +16,17 @@ _HBO_RTL_BIG = {"lang": "hbo", "dir": "rtl", "class": "big"}
 
 
 def _make_key_value_row(key, value, big_hbo=False):
-    cell_for_key = my_html.table_datum(key)
+    cell_for_key = wlc_utils_html.table_datum(key)
     attr = _HBO_RTL_BIG if big_hbo else None
-    cell_for_value = my_html.table_datum(value, attr)
-    return my_html.table_row([cell_for_key, cell_for_value])
+    cell_for_value = wlc_utils_html.table_datum(value, attr)
+    return wlc_utils_html.table_row([cell_for_key, cell_for_value])
 
 
 def _write_record(record):
     #
     body_contents = []
     #
-    body_contents.append(my_html.para(_navs(record)))
+    body_contents.append(wlc_utils_html.para(_navs(record)))
     #
     if html_for_i := img.html_for_imgs(record):
         body_contents.extend(html_for_i)
@@ -36,7 +36,7 @@ def _write_record(record):
     if folio_row := _folio_row(record):
         rows.append(folio_row)
     #
-    body_contents.append(my_html.table(rows, {"class": "limited-width"}))
+    body_contents.append(wlc_utils_html.table(rows, {"class": "limited-width"}))
     #
     _append_remarks_and_side_notes(body_contents, record)
     #
@@ -44,8 +44,8 @@ def _write_record(record):
     title = f"WLC 4.20 to 4.22 diff {orord}"
     filename = _filename(orord)
     path = f"full-record/{filename}"
-    write_ctx = my_html.WriteCtx(title, f"gh-pages/420422/{path}")
-    my_html.write_html_to_file(body_contents, write_ctx, "../../")
+    write_ctx = wlc_utils_html.WriteCtx(title, f"gh-pages/420422/{path}")
+    wlc_utils_html.write_html_to_file(body_contents, write_ctx, "../../")
     return path
 
 
@@ -65,7 +65,7 @@ def _maybe_append_nav(io_navs, record, key, human_readable):
 
 def _anchor_for_nav(pn_str, record):
     orord = record["original-order"]
-    return my_html.anchor(pn_str, {"href": _filename(orord)})
+    return wlc_utils_html.anchor(pn_str, {"href": _filename(orord)})
 
 
 def _filename(orord):
@@ -75,15 +75,15 @@ def _filename(orord):
 def _append_remarks_and_side_notes(io_body_contents, record):
     if initial_remark := record.get("initial-remark"):
         assert not initial_remark.endswith(" ")
-        io_body_contents.append(my_html.para(initial_remark))
+        io_body_contents.append(wlc_utils_html.para(initial_remark))
     #
     if further_remarks := record.get("further-remarks"):
         for fur in further_remarks:
             if isinstance(fur, str):
                 assert not fur.endswith(" ")
-                io_body_contents.append(my_html.para(fur))
+                io_body_contents.append(wlc_utils_html.para(fur))
             else:
-                assert my_html.is_htel(fur)
+                assert wlc_utils_html.is_htel(fur)
                 io_body_contents.append(fur)
 
 
@@ -120,7 +120,7 @@ def _append_uxlc_change_proposals(rows, record):
 
 def _newline_to_br(nssp):  # nssp newline-separated string-pair
     elem1of2, elem2of2 = nssp.split("\n")
-    return [elem1of2, my_html.line_break(), elem2of2]
+    return [elem1of2, wlc_utils_html.line_break(), elem2of2]
 
 
 def _colx_and_linex(record):
@@ -147,7 +147,7 @@ def _colg_and_lineg(record):
 def _page_with_link_to_img(record):
     page = record["page"]
     href = f"https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F{page}.jpg"
-    return my_html.anchor(page, {"href": href})
+    return wlc_utils_html.anchor(page, {"href": href})
 
 
 def _line_str(record):

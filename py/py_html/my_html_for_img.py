@@ -1,6 +1,6 @@
 """Exports img_html."""
 
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 import mb_cmn.my_utils as my_utils
 
 
@@ -16,10 +16,10 @@ def html_for_imgs(record):
 
 
 def html_for_single_img(img_path):
-    img_element = my_html.img({"src": f"../img/{img_path}"})
-    return my_html.para(img_element)
+    img_element = wlc_utils_html.img({"src": f"../img/{img_path}"})
+    return wlc_utils_html.para(img_element)
 
 
 def _html_for_imgs_item(imgs_item):
     img_label, img_path = imgs_item
-    return [my_html.para(img_label), html_for_single_img(img_path)]
+    return [wlc_utils_html.para(img_label), html_for_single_img(img_path)]

@@ -1,5 +1,5 @@
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 
 
 def rmn(string):
-    return my_html.span(string, {"class": "romanized"})
+    return wlc_utils_html.span(string, {"class": "romanized"})

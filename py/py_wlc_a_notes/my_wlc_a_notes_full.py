@@ -1,6 +1,6 @@
 """Exports write_xml."""
 
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 import py_html.my_html_for_img as img
 import py_wlc.my_wlc_bcv_str as my_wlc_bcv_str
 import py_wlc_a_notes.my_wlc_a_notes_utils as my_wlc_a_notes_utils
@@ -17,17 +17,17 @@ _HBO_RTL = {"lang": "hbo", "dir": "rtl"}
 
 
 def _make_key_value_row(key, value, hbo=False):
-    cell_for_key = my_html.table_datum(key)
+    cell_for_key = wlc_utils_html.table_datum(key)
     attr = _HBO_RTL if hbo else None
-    cell_for_value = my_html.table_datum(value, attr)
-    return my_html.table_row([cell_for_key, cell_for_value])
+    cell_for_value = wlc_utils_html.table_datum(value, attr)
+    return wlc_utils_html.table_row([cell_for_key, cell_for_value])
 
 
 def _write_record(record):
     #
     body_contents = []
     #
-    body_contents.append(my_html.para(nav.navs(record)))
+    body_contents.append(wlc_utils_html.para(nav.navs(record)))
     #
     if html_for_i := img.html_for_imgs(record):
         body_contents.extend(html_for_i)
@@ -40,15 +40,15 @@ def _write_record(record):
     #
     rows.append(_folio_row(record))
     #
-    body_contents.append(my_html.table(rows))
+    body_contents.append(wlc_utils_html.table(rows))
     #
     _append_remarks_and_side_notes(body_contents, record)
     #
     wlc_index = record["wlc-index"]
     title = f"WLC a-note {wlc_index}"
     path = f"full-record/wlc_a_note_{wlc_index:02}.html"
-    write_ctx = my_html.WriteCtx(title, f"gh-pages/wlc-a-notes/{path}")
-    my_html.write_html_to_file(body_contents, write_ctx, "../../")
+    write_ctx = wlc_utils_html.WriteCtx(title, f"gh-pages/wlc-a-notes/{path}")
+    wlc_utils_html.write_html_to_file(body_contents, write_ctx, "../../")
     return path
 
 
@@ -56,7 +56,7 @@ def _append_remarks_and_side_notes(io_body_contents, record):
     remarks = record["remarks"]
     for remark in remarks:
         assert not remark.endswith(" ")
-        io_body_contents.append(my_html.para(remark))
+        io_body_contents.append(wlc_utils_html.para(remark))
     #
     side_notes = record.get("side-notes") or []
     for side_note in side_notes:
@@ -68,8 +68,8 @@ def _side_note_html(side_note):
     assert not sns.endswith(" ")
     hesp = _hebrew_spanify(sns)
     if snt == "sn-blockquote":  # snt: side-note type
-        return my_html.blockquote(hesp)
-    return my_html.para(hesp)
+        return wlc_utils_html.blockquote(hesp)
+    return wlc_utils_html.para(hesp)
 
 
 def _hebrew_spanify(string: str):
@@ -86,7 +86,7 @@ def _hebrew_spanify2(string: str):
     pre, sep, post = string.partition("#")
     assert sep
     assert sep == "#"
-    return [my_html.span(pre, {"lang": "hbo"}), *_hebrew_spanify(post)]
+    return [wlc_utils_html.span(pre, {"lang": "hbo"}), *_hebrew_spanify(post)]
 
 
 def _initial_rows(record):
@@ -111,7 +111,7 @@ def _initial_rows(record):
 def _anchor(record):
     bcv = record["bcv"]
     href = my_wlc_bcv_str.get_tanach_dot_us_url(bcv)
-    return my_html.anchor(bcv, {"href": href})
+    return wlc_utils_html.anchor(bcv, {"href": href})
 
 
 def _line_str(record):

@@ -1,8 +1,8 @@
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 from py_html.my_html_span_romanized import rmn
 
 DECALOGUE_RAFE = [
-    my_html.para(
+    wlc_utils_html.para(
         [
             "In WLC 4.22, all 12 ",
             rmn("rafeh"),
@@ -11,7 +11,7 @@ DECALOGUE_RAFE = [
             " marks were in the Decalogues. This is one of those seven.",
         ]
     ),
-    my_html.para(
+    wlc_utils_html.para(
         [
             "The utility of the other five ",
             rmn("rafeh"),
@@ -25,7 +25,7 @@ DECALOGUE_RAFE = [
             ".”",
         ]
     ),
-    my_html.para(
+    wlc_utils_html.para(
         [
             "In contrast, the utility of these seven ",
             rmn("rafeh"),
@@ -43,7 +43,7 @@ DECALOGUE_RAFE = [
             " below applies to only one of the cantillations.”",
         ]
     ),
-    my_html.para(
+    wlc_utils_html.para(
         [
             "In other words, whereas the five non-Decalogue ",
             rmn("rafeh"),
@@ -56,7 +56,7 @@ DECALOGUE_RAFE = [
             "“this letter is contextually left blank.”",
         ]
     ),
-    my_html.para(
+    wlc_utils_html.para(
         [
             "As documented on page xiv of its Foreword, Dotan’s BHL does not include any ",
             rmn("rafeh"),
@@ -78,7 +78,7 @@ DECALOGUE_RAFE = [
             " marks in WLC’s (two) Decalogues.",
         ]
     ),
-    my_html.para(
+    wlc_utils_html.para(
         [
             "The WLC 4.22 documentation cites not only BHL but also BHQ "
             "in support of its decision to remove all ",
@@ -89,7 +89,7 @@ DECALOGUE_RAFE = [
             "(The Exodus fascicle of BHQ has not yet been released.)",
         ]
     ),
-    my_html.para(
+    wlc_utils_html.para(
         [
             "Yet, I don’t consider BHQ’s lack of Decalogue ",
             rmn("rafeh"),

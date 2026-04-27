@@ -1,4 +1,4 @@
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 import mb_cmn.hebrew_accents as ha
 import mb_cmn.hebrew_points as hpo
 import mb_cmn.hebrew_punctuation as hpu
@@ -16,7 +16,7 @@ def uxlc_change_proposals(record):
 
 def diff_type_span_with_title(record):
     diff_type = record["diff-type"]
-    return my_html.span(diff_type, {"title": diff_type_long(record)})
+    return wlc_utils_html.span(diff_type, {"title": diff_type_long(record)})
 
 
 def diff_type_long(record):
@@ -27,16 +27,16 @@ def diff_type_long(record):
 def diff_type_abbreviation_table():
     rows = list(map(_diff_type_abbreviation_row, _DIFF_TYPES.items()))
     toa_frag_id = "table-of-abbreviations"
-    caption = my_html.caption("Table of abbreviations")
+    caption = wlc_utils_html.caption("Table of abbreviations")
     children = [caption, *rows]
-    return toa_frag_id, my_html.table(children, {"id": toa_frag_id})
+    return toa_frag_id, wlc_utils_html.table(children, {"id": toa_frag_id})
 
 
 def _diff_type_abbreviation_row(ad_pair):
     abbrev, definition = ad_pair
-    datum_for_abbrev = my_html.table_datum(abbrev)
-    datum_for_defn = my_html.table_datum(definition)
-    return my_html.table_row([datum_for_abbrev, datum_for_defn])
+    datum_for_abbrev = wlc_utils_html.table_datum(abbrev)
+    datum_for_defn = wlc_utils_html.table_datum(definition)
+    return wlc_utils_html.table_row([datum_for_abbrev, datum_for_defn])
 
 
 def _example(english, mark1, mark2):

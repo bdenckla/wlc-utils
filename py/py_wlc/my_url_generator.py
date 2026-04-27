@@ -1,4 +1,4 @@
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 import py_uxlc.my_uxlc_book_abbreviations as u_bk_abbr
 import py_wlc.my_tanakh_book_names as tbn
 
@@ -6,18 +6,18 @@ import py_wlc.my_tanakh_book_names as tbn
 def bcv_with_link_to_tdu(record):
     uxlc_bcv_str = _uxlc_bcv_str(record)
     href = _tanach_dot_us_url(record)
-    return my_html.anchor(uxlc_bcv_str, {"href": href})
+    return wlc_utils_html.anchor(uxlc_bcv_str, {"href": href})
 
 
 def bcv_with_link_to_mwd(record):
     uxlc_bcv_str = _uxlc_bcv_str(record)
     href = _mam_with_doc_url(record)
-    return my_html.anchor(uxlc_bcv_str, {"href": href})
+    return wlc_utils_html.anchor(uxlc_bcv_str, {"href": href})
 
 
 def uxlc_change_with_link(release_and_id):
     _release_date, change_id = release_and_id
-    return my_html.anchor(change_id, {"href": _url_for_uxlc_change(release_and_id)})
+    return wlc_utils_html.anchor(change_id, {"href": _url_for_uxlc_change(release_and_id)})
 
 
 def _uxlc_bcv_str(record):

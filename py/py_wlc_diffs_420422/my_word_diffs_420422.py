@@ -1,4 +1,4 @@
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 import py_wlc_diffs_420422.my_word_diffs_420422_k2q2 as k2q2
 import py_wlc_diffs_420422.my_word_diffs_420422_decalogue_rafeh as dr
 
@@ -8,7 +8,7 @@ def _part_n_of_2(partn, from_str, to_str):
 
 
 def rmn(string):
-    return my_html.span(string, {"class": "romanized"})
+    return wlc_utils_html.span(string, {"class": "romanized"})
 
 
 _UXLC_RAFEH_REMOVE_REJECTED = "UXLC rejected all rafeh-removing WLC changes."
@@ -187,7 +187,7 @@ RECORDS = [
             ("2023.07.04", "2023.03.27-1"),
         ],
         "further-remarks": [
-            my_html.para(
+            wlc_utils_html.para(
                 [
                     "Although UXLC agrees with WLC 4.22 with respect to the ",
                     rmn("maqaf"),
@@ -214,7 +214,7 @@ RECORDS = [
         ],
         "initial-remark": "UXLC somehow already had part of this change.",
         "further-remarks": [
-            my_html.para(
+            wlc_utils_html.para(
                 [
                     "Both WLC & UXLC needed to move the ",
                     rmn("pataḥ"),
@@ -237,13 +237,13 @@ RECORDS = [
                     ".",
                 ]
             ),
-            my_html.para(
+            wlc_utils_html.para(
                 [
                     "All UXLC was doing in its 2021.05.19-8 change was making its mark order robust. "
                     "By “robust” I mean robust to Unicode normalization.",
                 ]
             ),
-            my_html.para(
+            wlc_utils_html.para(
                 [
                     "All UXLC was doing in its 2021.10.26-1 change was removing a ZWJ hack "
                     "that became irrelevant once CGJ was added."
@@ -260,7 +260,7 @@ RECORDS = [
         "UXLC-change-proposals": ("2021.10.19", "2021.05.19-7"),
         "initial-remark": "UXLC somehow already had the correct mark order.",
         "further-remarks": [
-            my_html.para(
+            wlc_utils_html.para(
                 [
                     "I.e., UXLC somehow already had QUPO mark order. "
                     "In terms of Michigan-Claremont encoding, we might call this FUAO mark order, "
@@ -273,7 +273,7 @@ RECORDS = [
                     ").",
                 ]
             ),
-            my_html.para(
+            wlc_utils_html.para(
                 [
                     "All UXLC was doing in its 2021.05.19-7 change was making its already-correct mark order robust. "
                     "By “robust” I mean robust to Unicode normalization."
@@ -521,7 +521,7 @@ RECORDS = [
         "UXLC-rejected": True,
         "initial-remark": "UXLC rejected this WLC change, in the end.",
         "further-remarks": [
-            my_html.para(
+            wlc_utils_html.para(
                 [
                     "I advise WLC to follow UXLC and revert this change in a future version "
                     "because the ",

@@ -1,6 +1,6 @@
 """Exports main."""
 
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 import py_wlc_diffs_420422.my_word_diffs_420422 as my_word_diffs_420422
 import py_wlc_diffs_420422.my_word_diffs_420422_add_fields as my_word_diffs_420422_add_fields
 import py_wlc_diffs_420422.my_word_diffs_420422_full as my_word_diffs_420422_full
@@ -57,15 +57,15 @@ def _path_and_title_and_intro_for_main(nrecs, rejects_path):
     )
     link_to_rejects = [
         "Here is a similar ",
-        my_html.anchor(
+        wlc_utils_html.anchor(
             "page listing only those 4.22 changes rejected by UXLC",
             {"href": rejects_path},
         ),
         ".",
     ]
     intro = [
-        my_html.para(para1_contents),
-        my_html.para(link_to_rejects),
+        wlc_utils_html.para(para1_contents),
+        wlc_utils_html.para(link_to_rejects),
     ]
     title = "WLC 4.22 Changes"
     return "index.html", title, intro
@@ -75,7 +75,7 @@ def _path_and_title_and_intro_for_rejects(nrecs):
     para1_contents = (
         f"This page lists the {nrecs} WLC 4.22 changes that were rejected by UXLC."
     )
-    intro = [my_html.para(para1_contents)]
+    intro = [wlc_utils_html.para(para1_contents)]
     title = "WLC 4.22 Changes Rejected by UXLC"
     return "index-rejects.html", title, intro
 

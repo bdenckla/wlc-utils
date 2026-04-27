@@ -1,6 +1,6 @@
 """Exprots INTRO"""
 
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 
 
 _THIS_PAGE = (
@@ -29,7 +29,7 @@ _THIS_PAGE_USES = "This page uses the following abbreviations:"
 
 
 def _initialisms(no_ucp):
-    return my_html.unordered_list(
+    return wlc_utils_html.unordered_list(
         [
             *([] if no_ucp else ["UCP for “UXLC change proposal”"]),
             "MPK for “manuscript’s pointed ketiv”",
@@ -41,8 +41,8 @@ def _initialisms(no_ucp):
 
 def intro(no_ucp):
     return [
-        my_html.para([_THIS_PAGE, my_html.blockquote(_DEFINITION_OF_AN_A_NOTE)]),
-        *([] if no_ucp else [my_html.para([_THIS_PAGE_ALSO])]),
-        my_html.para([_THIS_PAGE_USES]),
+        wlc_utils_html.para([_THIS_PAGE, wlc_utils_html.blockquote(_DEFINITION_OF_AN_A_NOTE)]),
+        *([] if no_ucp else [wlc_utils_html.para([_THIS_PAGE_ALSO])]),
+        wlc_utils_html.para([_THIS_PAGE_USES]),
         _initialisms(no_ucp),
     ]

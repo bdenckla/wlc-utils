@@ -1,6 +1,6 @@
 """Exports navs."""
 
-import py_html.my_html as my_html
+import py_html.wlc_utils_html as wlc_utils_html
 
 
 def navs(record):
@@ -19,7 +19,7 @@ def _maybe_append_nav(io_navs, record, key, human_readable):
 
 def _anchor_for_nav(pn_str, record):
     wlc_index = record["wlc-index"]
-    return my_html.anchor(pn_str, {"href": _filename(wlc_index)})
+    return wlc_utils_html.anchor(pn_str, {"href": _filename(wlc_index)})
 
 
 def _filename(wlc_index):
