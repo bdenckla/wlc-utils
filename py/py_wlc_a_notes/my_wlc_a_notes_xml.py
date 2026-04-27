@@ -1,7 +1,7 @@
 """Exports write_xml."""
 
 import xml.etree.ElementTree as ET
-import pycmn.file_io as file_io
+import mb_cmn.file_io as file_io
 
 # import py_uxlc.my_uxlc as my_uxlc
 # import py_uxlc.my_uxlc_book_abbreviations as u_bk_abbr

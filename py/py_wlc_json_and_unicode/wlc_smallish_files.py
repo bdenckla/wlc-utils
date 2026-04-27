@@ -1,6 +1,6 @@
 """ Exports write. """
 
-import pycmn.file_io as file_io
+import mb_cmn.file_io as file_io
 
 
 def write(out_path, parsed):

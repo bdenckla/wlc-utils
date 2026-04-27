@@ -6,8 +6,8 @@ Exports:
 
 import unicodedata
 
-import pycmn.hebrew_points as hpo
-import pycmn.hebrew_punctuation as hpu
+import mb_cmn.hebrew_points as hpo
+import mb_cmn.hebrew_punctuation as hpu
 
 
 _DROP_TABLE = str.maketrans(

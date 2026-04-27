@@ -1,9 +1,9 @@
 """Exports unicode_names, unicode_name"""
 
 import unicodedata
-from pycmn import hebrew_accents as ha
-from pycmn import hebrew_letters as hl
-from pycmn import hebrew_points as hpo
+from mb_cmn import hebrew_accents as ha
+from mb_cmn import hebrew_letters as hl
+from mb_cmn import hebrew_points as hpo
 
 
 DAGESH_OM = hpo.DAGOMOSD

@@ -1,7 +1,7 @@
 """Exports img_html."""
 
 import py_html.my_html as my_html
-import pycmn.my_utils as my_utils
+import mb_cmn.my_utils as my_utils
 
 
 def html_for_imgs(record):

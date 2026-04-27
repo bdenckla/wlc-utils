@@ -1,8 +1,8 @@
 """Exports add."""
 
 import json
-import pycmn.my_diffs as my_diffs
-import pycmn.my_utils as my_utils
+import mb_cmn.my_diffs as my_diffs
+import mb_cmn.my_utils as my_utils
 import py_uxlc.my_uxlc_book_abbreviations as u_bk_abbr
 import py_uxlc.my_uxlc_location as my_uxlc_location
 import py_wlc.my_wlc_bcv_str as my_wlc_bcv_str

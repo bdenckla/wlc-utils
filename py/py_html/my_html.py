@@ -5,10 +5,10 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from typing import Union
 
-import pycmn.file_io as file_io
-import pycmn.hebrew_punctuation as hpu
-import pycmn.my_utils as my_utils
-import pycmn.str_defs as sd
+import mb_cmn.file_io as file_io
+import mb_cmn.hebrew_punctuation as hpu
+import mb_cmn.my_utils as my_utils
+import mb_cmn.str_defs as sd
 
 
 @dataclass

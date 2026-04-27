@@ -1,6 +1,6 @@
 """Exports write_html."""
 
-import pycmn.my_utils as my_utils
+import mb_cmn.my_utils as my_utils
 import py_html.my_html as my_html
 import py_wlc.my_wlc_bcv_str as my_wlc_bcv_str
 import py_wlc_a_notes.my_wlc_a_notes_intro as my_wlc_a_notes_intro

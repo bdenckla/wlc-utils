@@ -1,8 +1,8 @@
 import re
-import pycmn.uni_norm_fragile as unf
-import pycmn.hebrew_accents as ha
-import pycmn.hebrew_letters as hl
-import pycmn.hebrew_points as hpo
+import mb_cmn.uni_norm_fragile as unf
+import mb_cmn.hebrew_accents as ha
+import mb_cmn.hebrew_letters as hl
+import mb_cmn.hebrew_points as hpo
 
 
 def ff_init():

@@ -1,8 +1,8 @@
 """ Exports compare_vyls """
 
 import py_wlc_json_and_unicode.wlc_uword as wlc_uword
-import pycmn.uni_heb as uh
-import pycmn.my_diffs as my_diffs
+import mb_cmn.uni_heb as uh
+import mb_cmn.my_diffs as my_diffs
 
 
 def compare_vyls(io_diff, bcv, vyla, vylb):

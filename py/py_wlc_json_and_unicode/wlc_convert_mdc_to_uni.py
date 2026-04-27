@@ -1,6 +1,6 @@
 import py_wlc_json_and_unicode.wlc_uword as wlc_uword
-from pycmn.my_utils import dv_dispatch
-from pycmn.my_utils import sl_map
+from mb_cmn.my_utils import dv_dispatch
+from mb_cmn.my_utils import sl_map
 
 
 def convert_p_mdc_to_p_uni(p_mdc):

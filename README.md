@@ -6,8 +6,8 @@ All tracked Python now lives under `py/`.
 Current top-level Python buckets are:
 
 - `py/py_wlc_json_and_unicode/` for the WLC JSON/Unicode processing modules
-- `py/pycmn/` for modules that match or nearly match the shared `pycmn` layer used in sibling repos
-- `py/py_hebrew/` for Hebrew/Unicode helpers built on top of `pycmn`
+- `py/mb_cmn/` for modules that match or nearly match the shared `mb_cmn` layer used in sibling repos
+- `py/py_hebrew/` for Hebrew/Unicode helpers built on top of `mb_cmn`
 - `py/py_html/` for shared HTML/presentation helpers split out of `py_misc`
 - `py/py_uxlc/` for UXLC-specific parsing, location, and metadata helpers
 - `py/py_wlc/` for shared WLC/Tanakh helpers used across multiple WLC-specific packages

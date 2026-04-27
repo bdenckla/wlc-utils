@@ -2,7 +2,7 @@
 
 import xml.etree.ElementTree
 
-import pycmn.bib_locales as tbn
+import mb_cmn.bib_locales as tbn
 
 
 def read_all_books(books_dir="in/UXLC"):

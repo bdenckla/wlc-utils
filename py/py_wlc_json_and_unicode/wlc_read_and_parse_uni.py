@@ -2,8 +2,8 @@
 
 import re
 import py_wlc_json_and_unicode.wlc_utils as wlc_utils
-import pycmn.hebrew_punctuation as hpu
-import pycmn.hebrew_accents as ha
+import mb_cmn.hebrew_punctuation as hpu
+import mb_cmn.hebrew_accents as ha
 
 
 def read_and_parse(in_path):
