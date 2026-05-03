@@ -1,6 +1,7 @@
 import py_html.wlc_utils_html as wlc_utils_html
 import py_uxlc.my_uxlc_book_abbreviations as u_bk_abbr
 import py_wlc.my_tanakh_book_names as tbn
+from mb_cmn.uxlc_change_url import uxlc_change_url
 
 
 def bcv_with_link_to_tdu(record):
@@ -17,7 +18,9 @@ def bcv_with_link_to_mwd(record):
 
 def uxlc_change_with_link(release_and_id):
     _release_date, change_id = release_and_id
-    return wlc_utils_html.anchor(change_id, {"href": _url_for_uxlc_change(release_and_id)})
+    return wlc_utils_html.anchor(
+        change_id, {"href": _url_for_uxlc_change(release_and_id)}
+    )
 
 
 def _uxlc_bcv_str(record):
@@ -45,9 +48,4 @@ def _mam_with_doc_url(record):
 
 def _url_for_uxlc_change(release_and_id):
     release_date, change_id = release_and_id
-    # a change ID consists of
-    #     a changeset date
-    #     a dash
-    #     a number that identifies which change within that changeset
-    release_str = f"{release_date}%20-%20Changes"
-    return f"https://tanach.us/Changes/{release_str}/{release_str}.xml?{change_id}"
+    return uxlc_change_url(release_date, change_id)
