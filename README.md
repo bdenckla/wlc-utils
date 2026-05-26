@@ -25,6 +25,7 @@ Run the WLC JSON/Unicode workflow from the repo root with:
 Additional WLC-focused entry scripts now live here as well:
 
 ```powershell
+.venv\Scripts\python.exe py\main_0_mega.py
 .venv\Scripts\python.exe py\main_wlc_a_notes.py
 .venv\Scripts\python.exe py\main_wlc_diffs_420422.py
 ```
