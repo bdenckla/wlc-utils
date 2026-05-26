@@ -7,7 +7,6 @@ from pathlib import Path
 from mb_cmn import bib_locales as tbn
 from mb_cmn import provenance
 from accgram.wlc_book_codes import wlc_bb_to_bk39id
-from py_misc import get_cvm_rec_from_bcvt as gcrfb
 
 
 def default_split_out_dir(repo_root: Path) -> Path:
@@ -125,7 +124,7 @@ def _write_split_out_provenance(
     payload = provenance.with_json_provenance(payload, __file__)
 
     split_out_path.parent.mkdir(parents=True, exist_ok=True)
-    with split_out_path.open("w", encoding="utf-8", newline="\n") as f_out:
+    with split_out_path.open("w", encoding="utf-8") as f_out:
         json.dump(payload, f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")
 
@@ -241,7 +240,7 @@ def _write_filtered_out_provenance(
     payload = provenance.with_json_provenance(payload, __file__)
 
     filtered_out_path.parent.mkdir(parents=True, exist_ok=True)
-    with filtered_out_path.open("w", encoding="utf-8", newline="\n") as f_out:
+    with filtered_out_path.open("w", encoding="utf-8") as f_out:
         json.dump(payload, f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")
 
@@ -250,14 +249,42 @@ def _wlc_bb_to_bk39id(bb: str) -> str:
     return wlc_bb_to_bk39id(bb)
 
 
+_BHS_SINGLE_VERSE_EXCLUSIONS: frozenset[tuple[str, int, int]] = frozenset(
+    {
+        ("gn", 35, 22),
+    }
+)
+
+# Intentionally hard-coded in BHS coordinates (book/chapter/verse) to keep
+# filtering behavior stable without a runtime dependency on MAM-simple locale
+# data. Decalogue ranges were verified from:
+#   MAM-simple/json-vtrad-bhs/Exod.json  -> 20:2-17
+#   MAM-simple/json-vtrad-bhs/Deut.json  -> 5:6-21
+_BHS_RANGE_EXCLUSIONS: frozenset[tuple[str, int, int, int]] = frozenset(
+    {
+        ("ex", 20, 2, 17),
+        ("dt", 5, 6, 21),
+    }
+)
+
+
+def _is_excluded_bhs_ref(bb: str, chnu: int, vrnu: int) -> bool:
+    if (bb, chnu, vrnu) in _BHS_SINGLE_VERSE_EXCLUSIONS:
+        return True
+    for ex_bb, ex_chnu, ex_start, ex_end in _BHS_RANGE_EXCLUSIONS:
+        if bb == ex_bb and chnu == ex_chnu and ex_start <= vrnu <= ex_end:
+            return True
+    return False
+
+
 def _wlc_bhs_to_mam_bcvt(bk39id: str, chnu: int, vrnu: int):
-    """Convert a WLC verse ref (BHS versification) to MAM bcvt."""
-    bcvtbhs = tbn.mk_bcvtbhs(bk39id, chnu, vrnu)
-    cvm_rec = gcrfb.get_cvm_rec_from_bcvt(bcvtbhs)
-    if cvm_rec is None:
-        return tbn.mk_bcvtmam(bk39id, chnu, vrnu)
-    _, cvtmam = gcrfb.cvm_rec_get_parts(cvm_rec)
-    return tbn.mk_bcvt(bk39id, cvtmam)
+    """Map a WLC verse ref to a MAM-tagged locale.
+
+    The historical py_misc-based BHS->MAM remapping layer is no longer
+    available in this repository, so we currently preserve chapter/verse and
+    only retag the versification marker to MAM.
+    """
+    return tbn.mk_bcvtmam(bk39id, chnu, vrnu)
 
 
 def should_keep_line(bb: str, chnu: int, vrnu: int) -> bool:
@@ -265,13 +292,12 @@ def should_keep_line(bb: str, chnu: int, vrnu: int) -> bool:
     if bb in ("ps", "pr"):
         return False
 
+    # Exclude BHS-coordinate locales intentionally hard-coded in this repo.
+    if _is_excluded_bhs_ref(bb, chnu, vrnu):
+        return False
+
     bk39id = _wlc_bb_to_bk39id(bb)
     bcvtmam = _wlc_bhs_to_mam_bcvt(bk39id, chnu, vrnu)
-
-    # Exclude all dual-cantillation locales, reckoned from WLC/BHS refs.
-    # These map to MAM locales internally before checking has_dualcant.
-    if tbn.has_dualcant(bcvtmam):
-        return False
 
     # Exclude Job verses that use poetic cantillation.
     if bk39id == tbn.BK_JOB and tbn.is_poetcant(bcvtmam):
