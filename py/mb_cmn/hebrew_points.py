@@ -1,6 +1,6 @@
 """Exports names for Unicode Hebrew vowel points (niqqud)"""
 
-import mb_cmn.str_defs as sd
+from mb_cmn import str_defs as sd
 
 MTGOSLQ = "\N{HEBREW POINT METEG}"
 VARIKA = "\N{HEBREW POINT JUDEO-SPANISH VARIKA}"
@@ -21,6 +21,11 @@ QAMATS_Q = "\N{HEBREW POINT QAMATS QATAN}"
 XOLAM_XFV = "\N{HEBREW POINT HOLAM HASER FOR VAV}"
 XOLAM = "\N{HEBREW POINT HOLAM}"
 QUBUTS = "\N{HEBREW POINT QUBUTS}"
+#
+MTGOSLQ_RE = r"\u05bd"
+VARIKA_RE = r"\ufb1e"
+DAGOMOSD_RE = r"\u05bc"
+SHEVA_RE = r"\u05b0"
 
 DROP_VARIKA = str.maketrans({VARIKA: None})
 

@@ -1,13 +1,11 @@
-"""
-Exports:
-    get_fragile_comps
-    is_fragile
-"""
+"""Unicode normalization for fragile characters."""
 
 import unicodedata
 
-import mb_cmn.hebrew_points as hpo
-import mb_cmn.hebrew_punctuation as hpu
+from mb_cmn import hebrew_points as hpo
+from mb_cmn import hebrew_punctuation as hpu
+
+__all__ = ["get_fragile_comps", "is_fragile"]
 
 
 _DROP_TABLE = str.maketrans(
@@ -92,7 +90,7 @@ def is_fragile(string):
 # between two undermarks. Those undermarks are:
 #
 #    1. "A", meaning qamats or patax
-#    2. "I" or "E", meaning hiriq or sheva
+#    2. "I" or "E", meaning xiriq or sheva
 #
 # We prefer LAOI & LAOE for two reasons:
 #

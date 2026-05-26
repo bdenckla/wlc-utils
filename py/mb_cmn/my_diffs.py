@@ -1,6 +1,8 @@
-"""Exports get"""
+"""Diff utilities using SequenceMatcher."""
 
 import difflib
+
+__all__ = ["get"]
 
 
 def get(sidea, sideb, outa=None, outb=None):

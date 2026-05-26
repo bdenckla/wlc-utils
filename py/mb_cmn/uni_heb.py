@@ -1,19 +1,24 @@
-"""
-This module exports:
-    shunna
-    accent_names
-    rm_mtgoslq
-    he_char_name
-    join_shunnas
-    t_shunnas
-"""
+"""Hebrew Unicode utilities."""
 
+import re
 import unicodedata
-import mb_cmn.hebrew_letters as hl
-import mb_cmn.hebrew_points as hpo
-import mb_cmn.hebrew_punctuation as hpu
-import mb_cmn.hebrew_accents as ha
-import mb_cmn.str_defs as sd
+from mb_cmn import hebrew_letters as hl
+from mb_cmn import hebrew_points as hpo
+from mb_cmn import hebrew_punctuation as hpu
+from mb_cmn import hebrew_accents as ha
+from mb_cmn import str_defs as sd
+
+__all__ = [
+    "shunna",
+    "accent_names",
+    "rm_mtgoslq",
+    "he_char_name",
+    "join_shunnas",
+    "t_shunnas",
+    "he_to_ascii_direct",
+    "he_ascii_slug",
+    "he_ascii_identifier",
+]
 
 
 def shunna(string):
@@ -33,11 +38,15 @@ def shunna(string):
 
 
 def accent_names(string):
-    """Return accent names."""
+    """
+    Return accent names including "mos" (MTGOSLQ), which might not be an accent,
+    since "mos" could be either meteg or silluq.
+    """
     return list(filter(None, (_HE_TO_NONHE_ACC_DIC.get(c) for c in string)))
 
 
 def rm_mtgoslq(string):
+    """Remove MTGOSLQ from the given string."""
     return string.replace(hpo.MTGOSLQ, "")
 
 
@@ -58,6 +67,34 @@ def t_shunnas(string: str):
     """Tuple of short unicode names"""
     assert isinstance(string, str)
     return tuple(map(shunna, string))
+
+
+def he_to_ascii_direct(string: str):
+    """Map Hebrew letters to direct ASCII code (ABGDH VZXEY KLMNO 3PCQR JF)."""
+    assert isinstance(string, str)
+    return "".join(_HE_TO_DIRECT_ASCII_LETT_DIC.get(ch, ch) for ch in string)
+
+
+def he_ascii_slug(string: str, digit_prefix=""):
+    """Return a lowercase ASCII slug using the direct Hebrew-letter mapping."""
+    mapped = he_to_ascii_direct(string).lower().translate(_DROP_HEBREW_ABBREV_MARKS)
+    slug = _NON_ALNUM_RE.sub("-", mapped).strip("-")
+    if not slug:
+        return digit_prefix
+    if slug[0].isdigit() and digit_prefix:
+        return f"{digit_prefix}-{slug}"
+    return slug
+
+
+def he_ascii_identifier(string: str, digit_prefix="h_"):
+    """Return a lowercase ASCII identifier using the direct Hebrew-letter mapping."""
+    mapped = he_to_ascii_direct(string).lower().translate(_DROP_HEBREW_ABBREV_MARKS)
+    ident = _NON_IDENT_RE.sub("_", mapped).strip("_")
+    if not ident:
+        return digit_prefix.rstrip("_")
+    if ident[0].isdigit():
+        return digit_prefix + ident
+    return ident
 
 
 def _mk_he_to_nonhe_dic():
@@ -109,6 +146,38 @@ _HE_AND_NONHE_LETT_PAIRS = (
     (hl.SHIN, "$"),  # as in Michigan-Claremont
     (hl.TAV, "τ"),  # Greek tau
 )
+_HE_AND_DIRECT_ASCII_LETT_PAIRS = (
+    # Derived from author.py comment:
+    # אבגדה וזחטי כלמנס עפצקר שת
+    # ABGDH VZXEY KLMNO 3PCQR JF
+    (hl.ALEF, "a"),
+    (hl.BET, "b"),
+    (hl.GIMEL, "g"),
+    (hl.DALET, "d"),
+    (hl.HE, "h"),
+    (hl.VAV, "v"),
+    (hl.ZAYIN, "z"),
+    (hl.XET, "x"),
+    (hl.TET, "e"),  # tet/tav is e/f
+    (hl.YOD, "y"),
+    (hl.FKAF, "k"),
+    (hl.KAF, "k"),
+    (hl.LAMED, "l"),
+    (hl.FMEM, "m"),
+    (hl.MEM, "m"),
+    (hl.FNUN, "n"),
+    (hl.NUN, "n"),
+    (hl.SAMEKH, "o"),  # samekh/shin is o/j
+    (hl.AYIN, "3"),  # as in Arabizi
+    (hl.FPE, "p"),
+    (hl.PE, "p"),
+    (hl.FTSADI, "c"),
+    (hl.TSADI, "c"),  # Michigan-Claremont
+    (hl.QOF, "q"),
+    (hl.RESH, "r"),
+    (hl.SHIN, "j"),  # samekh/shin is o/j
+    (hl.TAV, "f"),  # tet/tav is e/f
+)
 _HE_AND_NONHE_POINT_PAIRS = (
     (hpo.VARIKA, "varika"),
     (hpo.DAGOMOSD, "·"),
@@ -130,9 +199,14 @@ _HE_AND_NONHE_POINT_PAIRS = (
     (hpo.QUBUTS, "u"),
 )
 _HE_AND_NONHE_ACC_PAIRS = (
-    (ha.Z_OR_TSOR, "~"),  # zarqa or tsinnor; see: Note on zinor
-    (ha.ZSH_OR_TSIT, "≁"),  # zarqa stress helper or tsinnorit; see: Note on zinor
-    (hpo.MTGOSLQ, "(mos)"),  # meteg or silluq; we consider it an accent not a point
+    # These first three are the only ones not of the form (ha.X, "(x)")
+    (ha.Z_OR_TSOR, "(zarnor)"),
+    # Above is zarqa or tsinnor; see: Note on zinor
+    (ha.ZSH_OR_TSIT, "(zarshit)"),
+    # Above is zarqa stress helper or tsinnorit; see: Note on zinor
+    (hpo.MTGOSLQ, "(mos)"),
+    # Above is meteg or silluq; here we consider it an accent not a point
+    # The ones below are all of the form (ha.X, "(x)")
     (ha.ATN, "(atn)"),
     (ha.SEG_A, "(seg_a)"),
     (ha.SHA, "(sha)"),
@@ -178,6 +252,10 @@ _HE_AND_NONHE_PAIRS = (
 )
 _HE_TO_NONHE_DIC = _mk_he_to_nonhe_dic()
 _HE_TO_NONHE_ACC_DIC = dict(_HE_AND_NONHE_ACC_PAIRS)
+_HE_TO_DIRECT_ASCII_LETT_DIC = dict(_HE_AND_DIRECT_ASCII_LETT_PAIRS)
+_NON_ALNUM_RE = re.compile(r"[^0-9a-z]+")
+_NON_IDENT_RE = re.compile(r"[^0-9a-z_]+")
+_DROP_HEBREW_ABBREV_MARKS = str.maketrans("", "", "׳״")
 
 #######################################
 # Note on θ (theta)

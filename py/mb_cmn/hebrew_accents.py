@@ -32,6 +32,11 @@ OLE = "\N{HEBREW ACCENT OLE}"
 ILU = "\N{HEBREW ACCENT ILUY}"
 DEX = "\N{HEBREW ACCENT DEHI}"
 Z_OR_TSOR = "\N{HEBREW ACCENT ZINOR}"
+#
+ZSH_OR_TSIT_RE = r"\u0598"
+MER_RE = r"\u05a5"  # For use in regular expressions
+MAH_RE = r"\u05a4"
+TIP_RE = r"\u0596"
 
 # In SEG_A, the A is for "accent", i.e. distinguishing it from the vowel SEGOL_V.
 # In ZSH_OR_TSIT, the ZSH stands for "zarqa stress helper" (!)
@@ -82,24 +87,34 @@ UNI_UNDER_ACCENTS = {
 
 # NU: non-Unicode
 # Both prose and poetic
-NU_SLQ = "nu_slq"
-NU_SHA_LEG = "nu_sha_leg"
-NU_MUN_LEG = "nu_mun_leg"
+NU_SLQ = "üslq"
+NU_MTG = "ümtg"
+NU_SHA_LEG = "üshall"
+NU_MUN_LEG = "ümunl"
 # Prose only
-NU_Z = "nu_z"
+NU_Z = "üz"
+NU_QOM = "üqom"
+NU_TIP = "ütip"
 # Poetic only
-NU_MAH_LEG = "nu_mah_leg"
-NU_AZL_LEG = "nu_azl_leg"
-NU_TSOR = "nu_tsor"
-NU_TSIT = "nu_tsit"
+NU_MAH_LEG = "ümahl"
+NU_AZL_LEG = "üazll"
+NU_AZL = "üazl"
+NU_TSOR = "ütsor"
+NU_TSIT = "ütsit"
+NU_TAR = "ütar"
+#
+NU_REV_IRM = "ürevirm"
+# XXX TODO probably we should also re-code the revia marks that are not part of revia mugrash
 
 NON_UNICODE_ACCENTS = {
     NU_SLQ,
+    # NU_MTG,
     NU_SHA_LEG,
     NU_MUN_LEG,
     NU_Z,
     NU_MAH_LEG,
     NU_AZL_LEG,
+    # NU_AZL,
     NU_TSOR,
     NU_TSIT,
 }
@@ -107,7 +122,7 @@ NON_UNICODE_ACCENTS = {
 G1_TG = GER + TEL_G
 G2_TG = GER_2 + TEL_G
 
-ACCENTS_AND_MTG = "\u0591-\u05ae\u05bd"
+ACCENTS_AND_MTG = r"\u0591-\u05ae\u05bd"
 
 _CONJUNCTIVES_BCC_PROSE = [  # See Yeivin ITM #194 (page 167)
     MUN,  # (but munax legarmeih is disjunctive)
