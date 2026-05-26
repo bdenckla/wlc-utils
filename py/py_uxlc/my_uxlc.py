@@ -2,14 +2,14 @@
 
 import xml.etree.ElementTree
 
-import py_wlc.my_tanakh_book_names as tbn
+import mb_cmn.bib_locales as tbn
 
 
 UXLC_CANONICAL_DIR = "in/UXLC-39"
 
 
 def read_all_books(handlers=None):
-    return {bkid: read(bkid, handlers) for bkid in tbn.ALL_BOOK_IDS}
+    return {bkid: read(bkid, handlers) for bkid in tbn.ALL_BK39_IDS}
 
 
 def read(book_id, handlers=None):

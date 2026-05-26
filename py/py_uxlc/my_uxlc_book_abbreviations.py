@@ -2,7 +2,7 @@
 
 import re
 
-import py_wlc.my_tanakh_book_names as tbn
+import mb_cmn.bib_locales as tbn
 
 
 def expand_citation(citation: str):

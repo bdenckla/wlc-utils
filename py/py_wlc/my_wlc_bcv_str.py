@@ -1,7 +1,7 @@
 """Exports get_tanach_dot_us_url, get_uxlc_bkid."""
 
 import py_uxlc.my_uxlc_book_abbreviations as u_bk_abbr
-import py_wlc.my_tanakh_book_names as tbn
+import mb_cmn.bib_locales as tbn
 
 
 def make_wbs_from_std_bcv_triple(std_bcv_triple):

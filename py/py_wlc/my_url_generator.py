@@ -1,6 +1,6 @@
 import py_html.wlc_utils_html as wlc_utils_html
 import py_uxlc.my_uxlc_book_abbreviations as u_bk_abbr
-import py_wlc.my_tanakh_book_names as tbn
+import mb_cmn.bib_locales as tbn
 from mb_cmn.uxlc_change_url import uxlc_change_url
 
 
@@ -39,7 +39,7 @@ def _tanach_dot_us_url(record):
 def _mam_with_doc_url(record):
     std_bcv_triple = record["std-bcv-triple"]
     std_bkid = std_bcv_triple[0]
-    osdf = tbn.ordered_short_dash_full(std_bkid)  # e.g. A2-Exodus
+    osdf = tbn.ordered_short_dash_full_39(std_bkid)  # e.g. A2-Exodus
     chnu, vrnu = std_bcv_triple[1], std_bcv_triple[2]
     # Above, we're ignoring verse numbering differences
     bcv_part = f"{osdf}.html#c{chnu}v{vrnu}"

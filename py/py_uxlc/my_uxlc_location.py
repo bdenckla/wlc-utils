@@ -6,7 +6,7 @@ import py_uxlc.my_uxlc_lci_rec as lci_rec
 import py_uxlc.my_uxlc_bibdist as bibdist
 import py_uxlc.my_uxlc_page_break_info as page_break_info
 import py_uxlc.my_uxlc as my_uxlc
-import py_wlc.my_tanakh_book_names as tbn
+import mb_cmn.bib_locales as tbn
 
 
 def prep():
@@ -140,7 +140,7 @@ def _flines_fr_p0_to_p1(lciar):
 
 
 def _page_column_count(bkid):
-    if tbn.section(bkid) == tbn.SEC_SIF_EM:
+    if tbn.get_secid(bkid) == tbn.SEC_SIF_EM:
         return 2
     return 3
 

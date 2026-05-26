@@ -1,10 +1,10 @@
 """Exports get1 & get2"""
 
 import mb_cmn.my_diffs as my_diffs
+import mb_cmn.hebrew_points as hpo
 import py_wlc_diffs_420422.my_dd_simplify_simple_diffs as ssd
 import py_wlc_diffs_420422.my_dd_lett_words as hlw
 import py_hebrew.my_unicode as diff_mm_uni_name
-from py_hebrew import uni_heb_char_classes as uhc
 
 
 def get1(str1, str2):
@@ -52,7 +52,7 @@ def _get_refinable_str(mlist):
         return None
     if not isinstance(mlist[0], str):
         return None
-    inter = set(uhc.VOWEL_POINTS).intersection(mlist[0])
+    inter = set(_VOWEL_POINTS).intersection(mlist[0])
     if len(inter) == 0:
         return None
     return mlist[0]
@@ -74,3 +74,20 @@ def _get_unicode_names_for_side_el(side):
         letter and diff_mm_uni_name.name(letter),
         ssd.qcp_get(side, "count"),
     )
+
+
+_VOWEL_POINTS = (
+    hpo.SHEVA,
+    hpo.XSEGOL,
+    hpo.XPATAX,
+    hpo.XQAMATS,
+    hpo.XIRIQ,
+    hpo.TSERE,
+    hpo.SEGOL_V,
+    hpo.PATAX,
+    hpo.QAMATS,
+    hpo.QAMATS_Q,
+    hpo.XOLAM,
+    hpo.XOLAM_XFV,
+    hpo.QUBUTS,
+)
