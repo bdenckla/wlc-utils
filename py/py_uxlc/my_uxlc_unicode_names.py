@@ -1,6 +1,6 @@
 """Exports name, names."""
 
-import py_hebrew.my_unicode as my_unicode
+from mb_cmn import uni_heb
 
 
 def names(string):
@@ -14,7 +14,7 @@ def names(string):
 
 def name(string_len_1):
     """Return the UXLC name for the given Unicode code point."""
-    my_un = my_unicode.name(string_len_1)
+    my_un = uni_heb.legacy_name(string_len_1)
     my_un_ndb = my_un.replace("ḥ", "h")  # ndb: no dot below [h]
     # E.g. etnaḥta becomes just etnahta
     my_un_ndb_fn = my_un_ndb.split("/")[0]  # first name in a slash seq

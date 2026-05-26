@@ -2,9 +2,9 @@
 
 import mb_cmn.my_diffs as my_diffs
 import mb_cmn.hebrew_points as hpo
+from mb_cmn import uni_heb
 import py_wlc_diffs_420422.my_dd_simplify_simple_diffs as ssd
 import py_wlc_diffs_420422.my_dd_lett_words as hlw
-import py_hebrew.my_unicode as diff_mm_uni_name
 
 
 def get1(str1, str2):
@@ -70,8 +70,8 @@ def _get_unicode_names_for_side(side):
 def _get_unicode_names_for_side_el(side):
     letter = ssd.qcp_get(side, "letter")
     return ssd.qcp_make(
-        diff_mm_uni_name.name(ssd.qcp_get(side, "code_point")),
-        letter and diff_mm_uni_name.name(letter),
+        uni_heb.legacy_name(ssd.qcp_get(side, "code_point")),
+        letter and uni_heb.legacy_name(letter),
         ssd.qcp_get(side, "count"),
     )
 
