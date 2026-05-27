@@ -16,8 +16,13 @@ class TestAccgramFilterSplitWlc(unittest.TestCase):
         with TemporaryDirectory() as tmp_dir:
             split_out_dir = Path(tmp_dir) / "raw"
             out_dir = Path(tmp_dir) / "filtered"
+            troublemakers_out = Path(tmp_dir) / "out" / "accgram" / "goerwitz" / "_troublemakers.json"
             input_path = Path(tmp_dir) / "wlc422_ps.txt"
-            input_path.write_text("dummy", encoding="utf-8")
+            input_path.write_text(
+                "ob1:1 Troublemaker verse payload\n"
+                "ob1:2 Normal verse payload\n",
+                encoding="utf-8",
+            )
             calls: list[tuple[Path, Path, object]] = []
 
             def fake_split_wlc_to_books(input_path, out_dir, keep_line_fn):
@@ -34,15 +39,21 @@ class TestAccgramFilterSplitWlc(unittest.TestCase):
                 self.assertFalse(keep_line_fn("ps", 1, 1))
                 self.assertTrue(keep_line_fn("gn", 1, 1))
                 self.assertFalse(keep_line_fn("pr", 1, 1))
+                self.assertFalse(keep_line_fn("ob", 1, 1))
                 return SimpleNamespace(
-                    verses_seen=3,
-                    verses_excluded=2,
+                    verses_seen=4,
+                    verses_excluded=3,
                     books_written=1,
                     verses_written=1,
                     book_order=["gn"],
                 )
 
-            args = SimpleNamespace(input=input_path, split_out_dir=split_out_dir, out_dir=out_dir)
+            args = SimpleNamespace(
+                input=input_path,
+                split_out_dir=split_out_dir,
+                out_dir=out_dir,
+                troublemakers_out=troublemakers_out,
+            )
             filter_split_wlc.run(args, fake_split_wlc_to_books)
 
             self.assertEqual(len(calls), 2)
@@ -80,19 +91,43 @@ class TestAccgramFilterSplitWlc(unittest.TestCase):
                 payload["artifacts_description"],
                 "filtered WLC split outputs and exclusion diagnostics",
             )
-            self.assertEqual(payload["summary"]["verses_seen"], 3)
-            self.assertEqual(payload["summary"]["verses_excluded"], 2)
+            self.assertEqual(payload["summary"]["verses_seen"], 4)
+            self.assertEqual(payload["summary"]["verses_excluded"], 3)
             self.assertIn("ps", payload["books_fully_excluded"])
+
+            self.assertTrue(troublemakers_out.exists())
+            troublemakers_payload = json.loads(troublemakers_out.read_text(encoding="utf-8"))
+            self.assertEqual(
+                troublemakers_payload["artifacts_description"],
+                "hardcoded troublemaker verse exclusions",
+            )
+            self.assertEqual(
+                troublemakers_payload["troublemakers"],
+                [{"ref": "ob 1:1", "content": "Troublemaker verse payload"}],
+            )
+            self.assertFalse(
+                any(item["ref"] == "ps 1:1" for item in troublemakers_payload["troublemakers"])
+            )
 
     def test_run_rejects_same_output_directories(self):
         with TemporaryDirectory() as tmp_dir:
             out_dir = Path(tmp_dir) / "out"
             input_path = Path(tmp_dir) / "wlc422_ps.txt"
             input_path.write_text("dummy", encoding="utf-8")
+            troublemakers_out = Path(tmp_dir) / "_troublemakers.json"
 
-            args = SimpleNamespace(input=input_path, split_out_dir=out_dir, out_dir=out_dir)
+            args = SimpleNamespace(
+                input=input_path,
+                split_out_dir=out_dir,
+                out_dir=out_dir,
+                troublemakers_out=troublemakers_out,
+            )
             with self.assertRaisesRegex(ValueError, "must be different directories"):
                 filter_split_wlc.run(args, lambda input_path, out_dir, keep_line_fn=None: None)
+
+    def test_should_keep_line_filters_only_configured_troublemaker_ref(self):
+        self.assertFalse(filter_split_wlc.should_keep_line("ob", 1, 1))
+        self.assertTrue(filter_split_wlc.should_keep_line("ob", 1, 2))
 
 
 if __name__ == "__main__":

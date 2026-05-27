@@ -7,9 +7,9 @@
   },
   "file_counters": {
     "files_scanned": 37,
-    "files_with_nonempty_stderr": 20,
-    "total_stderr_lines": 565,
-    "total_unique_verse_messages": 96,
+    "files_with_nonempty_stderr": 19,
+    "total_stderr_lines": 559,
+    "total_unique_verse_messages": 94,
     "total_unique_non_verse_messages": 0
   },
   "verse_message_aggregates": [
@@ -200,10 +200,6 @@
     {
       "verse_ref": "Numbers 7:68",
       "standard_sof_pasuq_error_count": 9
-    },
-    {
-      "verse_ref": "Obadiah 1:2",
-      "standard_sof_pasuq_error_count": 5
     }
   ],
   "non_verse_message_aggregates": [],
@@ -408,8 +404,8 @@
     },
     {
       "file": "wlc_422_ps_ob_ag.stderr.txt",
-      "stderr_lines": 6,
-      "unique_verse_messages": 2,
+      "stderr_lines": 0,
+      "unique_verse_messages": 0,
       "unique_non_verse_messages": 0
     },
     {

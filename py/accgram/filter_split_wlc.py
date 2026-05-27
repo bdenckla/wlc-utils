@@ -6,6 +6,7 @@ from pathlib import Path
 
 from mb_cmn import bib_locales as tbn
 from mb_cmn import provenance
+from accgram import troublemakers
 from accgram.wlc_book_codes import wlc_bb_to_bk39id
 
 
@@ -15,6 +16,10 @@ def default_split_out_dir(repo_root: Path) -> Path:
 
 def default_out_dir(repo_root: Path) -> Path:
     return repo_root.parent / "wlc-utils-io" / "out" / "goerwitz" / "wlc_422_psf"
+
+
+def default_troublemakers_out_path(repo_root: Path) -> Path:
+    return troublemakers.default_out_path(repo_root)
 
 
 def add_args(parser: argparse.ArgumentParser, default_input_path: Path, repo_root: Path) -> None:
@@ -35,6 +40,12 @@ def add_args(parser: argparse.ArgumentParser, default_input_path: Path, repo_roo
         type=Path,
         default=default_out_dir(repo_root),
         help="Directory for filtered output files (default: ../wlc-utils-io/out/goerwitz/wlc_422_psf).",
+    )
+    parser.add_argument(
+        "--troublemakers-out",
+        type=Path,
+        default=default_troublemakers_out_path(repo_root),
+        help="JSON file listing excluded hardcoded troublemaker refs.",
     )
 
 
@@ -59,9 +70,12 @@ def run(args: argparse.Namespace, split_wlc_to_books_fn) -> None:
 
     seen_refs: dict[str, set[tuple[int, int]]] = {}
     excluded_refs: dict[str, set[tuple[int, int]]] = {}
+    troublemaker_refs: set[tuple[str, int, int]] = set()
 
     def keep_line_with_logging(bb: str, chnu: int, vrnu: int) -> bool:
         seen_refs.setdefault(bb, set()).add((chnu, vrnu))
+        if troublemakers.is_hardcoded_ref(bb, chnu, vrnu):
+            troublemaker_refs.add((bb, chnu, vrnu))
         keep = should_keep_line(bb, chnu, vrnu)
         if not keep:
             excluded_refs.setdefault(bb, set()).add((chnu, vrnu))
@@ -82,6 +96,11 @@ def run(args: argparse.Namespace, split_wlc_to_books_fn) -> None:
         seen_refs=seen_refs,
         excluded_refs=excluded_refs,
     )
+    troublemakers.write_json(
+        troublemakers_out_path=args.troublemakers_out,
+        troublemaker_refs=troublemaker_refs,
+        source_lines=troublemakers.collect_source_lines(args.input, troublemaker_refs),
+    )
 
     print(f"Input: {args.input}")
     print(f"Raw output directory: {args.split_out_dir}")
@@ -97,6 +116,7 @@ def run(args: argparse.Namespace, split_wlc_to_books_fn) -> None:
     print(f"Filtered verses written: {filtered_result.verses_written}")
     print(f"Filtered book order: {','.join(filtered_result.book_order)}")
     print(f"Exclusion provenance: {filtered_out_path}")
+    print(f"Troublemakers JSON: {args.troublemakers_out}")
 
 
 def _write_split_out_provenance(
@@ -255,6 +275,7 @@ _BHS_SINGLE_VERSE_EXCLUSIONS: frozenset[tuple[str, int, int]] = frozenset(
     }
 )
 
+
 # Intentionally hard-coded in BHS coordinates (book/chapter/verse) to keep
 # filtering behavior stable without a runtime dependency on MAM-simple locale
 # data. Decalogue ranges were verified from:
@@ -290,6 +311,9 @@ def _wlc_bhs_to_mam_bcvt(bk39id: str, chnu: int, vrnu: int):
 def should_keep_line(bb: str, chnu: int, vrnu: int) -> bool:
     # Exclude Psalms and Proverbs wholesale.
     if bb in ("ps", "pr"):
+        return False
+
+    if troublemakers.is_hardcoded_ref(bb, chnu, vrnu):
         return False
 
     # Exclude BHS-coordinate locales intentionally hard-coded in this repo.

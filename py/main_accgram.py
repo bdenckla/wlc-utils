@@ -4,7 +4,8 @@ Subcommands:
     filter-split-wlc
                 Split wlc422_ps.txt twice: once as unfiltered per-book files
                 and once as filtered per-book files (excluding Psalms/Proverbs,
-                poetically-cantillated Job verses, and dual-cantillation verses).
+                poetically-cantillated Job verses, and hardcoded troublemaker
+                verses) and write out/accgram/goerwitz/_troublemakers.json.
     run-goerwitz
                 Run goerwitz (via WSL) on split files and write *_ag outputs.
 
@@ -53,7 +54,7 @@ def main() -> None:
         help=(
             "Split wlc422_ps.txt to both raw and filtered output directories "
             "(filtered excludes Psalms/Proverbs, poetic Job verses, and "
-            "dual-cantillation verses)."
+            "hardcoded troublemaker verses; writes _troublemakers.json)."
         ),
     )
     filter_split_wlc.add_args(
