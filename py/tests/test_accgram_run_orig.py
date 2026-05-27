@@ -7,7 +7,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
-from py.accgram import run_goerwitz
+from accgram import run_goerwitz
 
 
 class TestAccgramRunGoerwitz(unittest.TestCase):

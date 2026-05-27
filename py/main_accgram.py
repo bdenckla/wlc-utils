@@ -19,7 +19,7 @@ import argparse
 from pathlib import Path
 
 from accgram import filter_split_wlc, split_wlc
-from py.accgram import run_goerwitz
+from accgram import run_goerwitz
 
 
 def _repo_root() -> Path:
