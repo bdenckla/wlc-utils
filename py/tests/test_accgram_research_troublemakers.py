@@ -96,12 +96,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             xmlish = row["uxlc_verse_xmlish"]
             self.assertEqual(xmlish[0]["tag"], "w")
+            self.assertEqual(xmlish[0]["text"], "בְּרֵאשִׁ֖ית")
             self.assertEqual(xmlish[1]["tag"], "k")
             self.assertEqual(xmlish[2]["tag"], "q")
             self.assertEqual(xmlish[3]["tag"], "samekh")
             self.assertEqual(xmlish[0]["children"][0]["tag"], "s")
             self.assertEqual(xmlish[0]["children"][0]["attrs"]["t"], "large")
             self.assertEqual(xmlish[0]["children"][1]["tag"], "x")
+            self.assertEqual(xmlish[0]["children"][1]["text"], "5")
 
     def test_run_missing_in_one_source_sets_null_and_increments_counter(self):
         with TemporaryDirectory() as tmp_dir:

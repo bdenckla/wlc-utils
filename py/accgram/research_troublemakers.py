@@ -238,7 +238,8 @@ def _load_uxlc_for_refs(
 def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str:
     node: dict[str, object] = {"tag": element.tag}
 
-    text = "".join(element.itertext()).strip()
+    # Keep only direct element text; inline child text (e.g. <x>) is captured in children.
+    text = (element.text or "").strip()
     if text:
         node["text"] = text
 
