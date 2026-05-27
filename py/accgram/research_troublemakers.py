@@ -235,7 +235,7 @@ def _load_uxlc_for_refs(
     return by_bcv
 
 
-def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object]:
+def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str:
     node: dict[str, object] = {"tag": element.tag}
 
     text = "".join(element.itertext()).strip()
@@ -249,6 +249,10 @@ def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object]:
         children = [_to_xmlish_inline(child) for child in element if child.tag in {"s", "x"}]
         if children:
             node["children"] = children
+
+    # Compact the common simple case to keep uxlc_verse_xmlish readable.
+    if set(node.keys()) == {"tag", "text"} and node["tag"] == "w":
+        return str(node["text"])
 
     return node
 

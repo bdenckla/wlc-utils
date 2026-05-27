@@ -160,7 +160,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             row = payload["troublemakers"][0]
             self.assertIsNone(row["wlc422_kq_u_verse"])
-            self.assertIsNotNone(row["uxlc_verse_xmlish"])
+            self.assertEqual(row["uxlc_verse_xmlish"], ["וְהָאָ֗רֶץ"])
             self.assertIsNotNone(row["uxlc_context"])
 
     def test_run_creates_output_path_and_writes_expected_top_level_fields(self):
