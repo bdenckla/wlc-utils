@@ -6,11 +6,15 @@ Subcommands:
                 and once as filtered per-book files (excluding Psalms/Proverbs,
                 poetically-cantillated Job verses, and hardcoded troublemaker
                 verses) and write out/accgram/goerwitz/_troublemakers.json.
+    fresh-run-goerwitz
+                Run filter-split-wlc, then run goerwitz on the freshly written
+                filtered split files.
     run-goerwitz
                 Run goerwitz (via WSL) on split files and write *_ag outputs.
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py filter-split-wlc
+    .venv/Scripts/python.exe py/main_accgram.py fresh-run-goerwitz
     .venv/Scripts/python.exe py/main_accgram.py run-goerwitz
 """
 
@@ -41,6 +45,18 @@ def _run_goerwitz(args: argparse.Namespace) -> None:
     run_goerwitz.run(args)
 
 
+def _run_fresh_run_goerwitz(args: argparse.Namespace) -> None:
+    filter_split_wlc.run(args, split_wlc.split_wlc_to_books)
+    run_goerwitz.run(
+        argparse.Namespace(
+            in_dir=args.out_dir,
+            out_dir=args.goerwitz_out_dir,
+            stderr_dir=args.stderr_dir,
+            goerwitz_bin=args.goerwitz_bin,
+        )
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__,
@@ -64,11 +80,43 @@ def main() -> None:
     )
     filter_split_wlc_parser.set_defaults(func=_run_filter_split_wlc)
 
+    fresh_run_goerwitz_parser = subparsers.add_parser(
+        "fresh-run-goerwitz",
+        help=(
+            "Run filter-split-wlc, then run goerwitz on the freshly filtered split files "
+            "using that filtered output directory as the goerwitz input."
+        ),
+    )
+    filter_split_wlc.add_args(
+        fresh_run_goerwitz_parser,
+        default_input_path=_default_input_path(),
+        repo_root=_repo_root(),
+    )
+    fresh_run_goerwitz_parser.add_argument(
+        "--goerwitz-out-dir",
+        type=Path,
+        default=run_goerwitz.default_out_dir(_repo_root()),
+        help="Directory for goerwitz outputs named *_ag.txt.",
+    )
+    fresh_run_goerwitz_parser.add_argument(
+        "--stderr-dir",
+        type=Path,
+        default=run_goerwitz.default_stderr_dir(_repo_root()),
+        help="Directory for goerwitz stderr sidecars named *_ag.stderr.txt.",
+    )
+    fresh_run_goerwitz_parser.add_argument(
+        "--goerwitz-bin",
+        type=Path,
+        default=run_goerwitz.default_goerwitz_bin(_repo_root()),
+        help="Path to Linux goerwitz binary (invoked via WSL).",
+    )
+    fresh_run_goerwitz_parser.set_defaults(func=_run_fresh_run_goerwitz)
+
     run_goerwitz_parser = subparsers.add_parser(
         "run-goerwitz",
         help=(
             "Run goerwitz (via WSL) on split input files and write *_ag.txt outputs "
-            "plus stderr sidecars (default: out/accgram/goerwitz-stderr)."
+            "plus stderr sidecars and _missing_verses.json (default: out/accgram/goerwitz-stderr)."
         ),
     )
     run_goerwitz.add_args(run_goerwitz_parser, repo_root=_repo_root())
