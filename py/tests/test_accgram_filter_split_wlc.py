@@ -127,6 +127,7 @@ class TestAccgramFilterSplitWlc(unittest.TestCase):
 
     def test_should_keep_line_filters_only_configured_troublemaker_ref(self):
         self.assertFalse(filter_split_wlc.should_keep_line("ob", 1, 1))
+        self.assertFalse(filter_split_wlc.should_keep_line("je", 9, 11))
         self.assertTrue(filter_split_wlc.should_keep_line("ob", 1, 2))
 
 
