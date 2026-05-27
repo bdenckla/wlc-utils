@@ -5,7 +5,7 @@ Subcommands:
                 Split wlc422_ps.txt twice: once as unfiltered per-book files
                 and once as filtered per-book files (excluding Psalms/Proverbs,
                 poetically-cantillated Job verses, and dual-cantillation verses).
-    run-orig    Run accents (via WSL) on split files and write *_ag outputs.
+    run-orig    Run goerwitz (via WSL) on split files and write *_ag outputs.
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py filter-split-wlc
@@ -64,8 +64,8 @@ def main() -> None:
     run_orig_parser = subparsers.add_parser(
         "run-orig",
         help=(
-            "Run accents (via WSL) on split input files and write *_ag.txt outputs "
-            "plus stderr sidecars (default: out/accgram/orig-stderr)."
+            "Run goerwitz (via WSL) on split input files and write *_ag.txt outputs "
+            "plus stderr sidecars (default: out/accgram/goerwitz-stderr)."
         ),
     )
     run_orig.add_args(run_orig_parser, repo_root=_repo_root())

@@ -20,14 +20,14 @@ def default_in_dir(repo_root: Path) -> Path:
 
 
 def default_out_dir(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "orig"
+    return repo_root / "out" / "accgram" / "goerwitz"
 
 
 def default_stderr_dir(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "orig-stderr"
+    return repo_root / "out" / "accgram" / "goerwitz-stderr"
 
 
-def default_accents_bin(repo_root: Path) -> Path:
+def default_goerwitz_bin(repo_root: Path) -> Path:
     return repo_root / "accents-1.1.4" / "accents"
 
 
@@ -51,10 +51,10 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         help="Directory for stderr sidecars named *_ag.stderr.txt.",
     )
     parser.add_argument(
-        "--accents-bin",
+        "--goerwitz-bin",
         type=Path,
-        default=default_accents_bin(repo_root),
-        help="Path to Linux accents binary (invoked via WSL).",
+        default=default_goerwitz_bin(repo_root),
+        help="Path to Linux goerwitz binary (invoked via WSL).",
     )
 
 
@@ -72,7 +72,7 @@ def run(args: argparse.Namespace) -> None:
         in_dir=args.in_dir,
         out_dir=args.out_dir,
         stderr_dir=args.stderr_dir,
-        accents_bin=args.accents_bin,
+        goerwitz_bin=args.goerwitz_bin,
     )
     print(f"Input directory: {args.in_dir}")
     print(f"Output directory: {args.out_dir}")
@@ -81,19 +81,19 @@ def run(args: argparse.Namespace) -> None:
     print(f"Outputs written: {result.output_count}")
     print(f"Non-empty outputs: {result.nonempty_output_count}")
     print(f"Files with non-empty stderr sidecars: {result.stderr_nonempty_count}")
-    print(f"Nonzero accents exit codes: {result.nonzero_exit_count}")
+    print(f"Nonzero goerwitz exit codes: {result.nonzero_exit_count}")
 
 
 def run_orig(
     in_dir: Path,
     out_dir: Path,
     stderr_dir: Path,
-    accents_bin: Path,
+    goerwitz_bin: Path,
 ) -> RunResult:
     if not in_dir.is_dir():
         raise FileNotFoundError(f"Input directory not found: {in_dir}")
-    if not accents_bin.is_file():
-        raise FileNotFoundError(f"accents binary not found: {accents_bin}")
+    if not goerwitz_bin.is_file():
+        raise FileNotFoundError(f"goerwitz binary not found: {goerwitz_bin}")
 
     out_dir.mkdir(parents=True, exist_ok=True)
     stderr_dir.mkdir(parents=True, exist_ok=True)
@@ -103,7 +103,7 @@ def run_orig(
     stderr_nonempty_count = 0
     nonzero_exit_count = 0
 
-    accents_wsl_path = _to_wsl_path(accents_bin)
+    goerwitz_wsl_path = _to_wsl_path(goerwitz_bin)
     for input_path in input_paths:
         stem = input_path.stem
         output_path = out_dir / f"{stem}_ag.txt"
@@ -112,7 +112,7 @@ def run_orig(
         payload = input_path.read_text(encoding="utf-8")
 
         cp = subprocess.run(
-            ["wsl", accents_wsl_path, "-p"],
+            ["wsl", goerwitz_wsl_path, "-p"],
             input=payload.encode("utf-8"),
             capture_output=True,
             check=False,
@@ -129,7 +129,7 @@ def run_orig(
             nonzero_exit_count += 1
             if not stderr_text:
                 stderr_text = (
-                    f"accents exited with code {cp.returncode} and produced no stderr output.\n"
+                    f"goerwitz exited with code {cp.returncode} and produced no stderr output.\n"
                 )
 
         stderr_path.write_text(stderr_text, encoding="utf-8", newline="\n")

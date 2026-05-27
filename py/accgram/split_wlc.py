@@ -5,7 +5,7 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from pathlib import Path
 
-from accgram.wlc_book_codes import wlc_bb_to_accents_book_name
+from accgram.wlc_book_codes import wlc_bb_to_goerwitz_book_name
 
 
 _BOOK_LINE_RE = re.compile(r"^([0-9a-z]{2})(\d+):(\d+)\b")
@@ -70,7 +70,7 @@ def split_wlc_to_books(
     for bb, lines in per_book.items():
         out_path = out_dir / f"wlc_422_ps_{bb}.txt"
         output_lines = []
-        book_name = wlc_bb_to_accents_book_name(bb)
+        book_name = wlc_bb_to_goerwitz_book_name(bb)
         output_lines.append(f"{book_name}\n")
 
         for raw_line in lines:
@@ -81,7 +81,7 @@ def split_wlc_to_books(
             m = _LINE_REF_RE.match(stripped)
             if m is None:
                 raise ValueError(
-                    "Unexpected verse line format during accents normalization: "
+                    "Unexpected verse line format during goerwitz normalization: "
                     f"bb={bb} line={stripped[:120]}"
                 )
             output_lines.append(f"{m.group(2)}\n")
