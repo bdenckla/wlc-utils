@@ -4885,7 +4885,7 @@ Ezekiel 10:22
         mereka tifcha 
     2 silluq_phrase
       silluq 
-Ezekiel 11:1
+Ezekiel 11:2
 0 silluq_clause
   1 atnach_clause
     2 tifcha_phrase

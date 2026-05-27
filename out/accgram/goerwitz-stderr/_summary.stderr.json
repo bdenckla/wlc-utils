@@ -8,8 +8,8 @@
   "file_counters": {
     "files_scanned": 37,
     "files_with_nonempty_stderr": 19,
-    "total_stderr_lines": 559,
-    "total_unique_verse_messages": 94,
+    "total_stderr_lines": 541,
+    "total_unique_verse_messages": 90,
     "total_unique_non_verse_messages": 0
   },
   "verse_message_aggregates": [
@@ -98,10 +98,6 @@
       "standard_sof_pasuq_error_count": 19
     },
     {
-      "verse_ref": "Ezekiel 11:1",
-      "standard_sof_pasuq_error_count": 3
-    },
-    {
       "verse_ref": "Ezekiel 14:11",
       "standard_sof_pasuq_error_count": 10
     },
@@ -168,10 +164,6 @@
     {
       "verse_ref": "Levit 18:17",
       "standard_sof_pasuq_error_count": 10
-    },
-    {
-      "verse_ref": "Levit 19:1",
-      "standard_sof_pasuq_error_count": 13
     },
     {
       "verse_ref": "Levit 26:7",
@@ -272,8 +264,8 @@
     },
     {
       "file": "wlc_422_ps_ek_ag.stderr.txt",
-      "stderr_lines": 31,
-      "unique_verse_messages": 6,
+      "stderr_lines": 27,
+      "unique_verse_messages": 4,
       "unique_non_verse_messages": 0
     },
     {
@@ -368,8 +360,8 @@
     },
     {
       "file": "wlc_422_ps_lv_ag.stderr.txt",
-      "stderr_lines": 39,
-      "unique_verse_messages": 6,
+      "stderr_lines": 25,
+      "unique_verse_messages": 4,
       "unique_non_verse_messages": 0
     },
     {

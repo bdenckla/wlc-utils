@@ -13,6 +13,8 @@ _SOURCE_VERSE_LINE_RE = re.compile(r"^([0-9a-z]{2})(\d+):(\d+)\s+(.*)$")
 HARDCODED_REFS: frozenset[tuple[str, int, int]] = frozenset(
     {
         ("ob", 1, 1),
+        ("ek", 11, 1),
+        ("lv", 19, 1),
     }
 )
 
