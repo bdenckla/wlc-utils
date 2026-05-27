@@ -8,10 +8,24 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 
+from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram import research_troublemakers
 
 
 class TestAccgramResearchTroublemakers(unittest.TestCase):
+    def test_sanitize_keeps_only_last_meteg_in_last_word(self):
+        wlc422_verse = {
+            "bcv": "gn1:1",
+            "vels": ["אֽב", "גֽדֽה"],
+        }
+        uxlc_nodes = ["אֽב", "גֽדֽה"]
+
+        wlc_clean = sanitize_verse_text_payload(wlc422_verse)
+        uxlc_clean = sanitize_verse_text_payload(uxlc_nodes)
+
+        self.assertEqual(wlc_clean["vels"], ["אב", "גדֽה"])
+        self.assertEqual(uxlc_clean, ["אב", "גדֽה"])
+
     def test_run_happy_path_enriches_both_sources(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
@@ -92,11 +106,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             row = payload["troublemakers"][0]
             self.assertEqual(row["ref"], "gn 1:1")
             self.assertEqual(row["wlc422_kq_u_verse"]["bcv"], "gn1:1")
+            self.assertEqual(row["wlc422_kq_u_verse"]["vels"][0], "בראש֖ית")
+            self.assertEqual(row["wlc422_kq_u_verse"]["vels"][1], "בר֣א")
             self.assertEqual(row["uxlc_context"]["xml_file"], "Genesis.xml")
 
             xmlish = row["uxlc_verse_xmlish"]
             self.assertEqual(xmlish[0]["tag"], "w")
-            self.assertEqual(xmlish[0]["text"], "בְּרֵאשִׁ֖ית")
+            self.assertEqual(xmlish[0]["text"], "בראש֖ית")
             self.assertEqual(xmlish[1]["tag"], "k")
             self.assertEqual(xmlish[2]["tag"], "q")
             self.assertEqual(xmlish[3]["tag"], "samekh")
@@ -162,7 +178,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             row = payload["troublemakers"][0]
             self.assertIsNone(row["wlc422_kq_u_verse"])
-            self.assertEqual(row["uxlc_verse_xmlish"], ["וְהָאָ֗רֶץ"])
+            self.assertEqual(row["uxlc_verse_xmlish"], ["והא֗רץ"])
             self.assertIsNotNone(row["uxlc_context"])
 
     def test_run_creates_output_path_and_writes_expected_top_level_fields(self):

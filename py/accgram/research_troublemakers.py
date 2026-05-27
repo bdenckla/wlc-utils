@@ -6,6 +6,7 @@ import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import provenance
 from py_uxlc import my_uxlc
@@ -91,6 +92,7 @@ def run(args: argparse.Namespace) -> None:
             missing_wlc422 += 1
         else:
             found_wlc422 += 1
+            wlc422_verse = sanitize_verse_text_payload(wlc422_verse)
 
         uxlc_info = uxlc_by_bcv.get(bcv)
         if uxlc_info is None:
@@ -100,6 +102,7 @@ def run(args: argparse.Namespace) -> None:
         else:
             found_uxlc += 1
             uxlc_nodes = uxlc_info["nodes"]
+            uxlc_nodes = sanitize_verse_text_payload(uxlc_nodes)
             uxlc_context = {
                 "xml_file": uxlc_info["xml_file"],
                 "chapter": chnu,
