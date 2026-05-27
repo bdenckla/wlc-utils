@@ -20,9 +20,9 @@ TEST_MODULE_SPECS = (
         help_text="Run accgram filter-split provenance sidecar tests.",
     ),
     TestModuleSpec(
-        flag="accgram-run-orig",
-        module_name="tests.test_accgram_run_orig",
-        help_text="Run accgram run-orig WSL invocation/pass-through tests.",
+        flag="accgram-run-goerwitz",
+        module_name="tests.test_accgram_run_goerwitz",
+        help_text="Run accgram run-goerwitz WSL invocation/pass-through tests.",
     ),
 )
 

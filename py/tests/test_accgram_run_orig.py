@@ -7,11 +7,11 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
-from accgram import run_orig
+from py.accgram import run_goerwitz
 
 
-class TestAccgramRunOrig(unittest.TestCase):
-    def test_run_orig_passes_pre_normalized_input_through(self):
+class TestAccgramRunGoerwitz(unittest.TestCase):
+    def test_run_goerwitz_passes_pre_normalized_input_through(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             in_dir = base / "in"
@@ -39,8 +39,8 @@ class TestAccgramRunOrig(unittest.TestCase):
                 seen_payloads.append(input.decode("utf-8"))
                 return FakeCompletedProcess(stdout=b"", stderr=b"")
 
-            with patch("accgram.run_orig.subprocess.run", side_effect=fake_run):
-                run_orig.run_orig(
+            with patch("accgram.run_goerwitz.subprocess.run", side_effect=fake_run):
+                run_goerwitz.run_goerwitz_binary(
                     in_dir=in_dir,
                     out_dir=out_dir,
                     stderr_dir=stderr_dir,
@@ -49,7 +49,7 @@ class TestAccgramRunOrig(unittest.TestCase):
 
             self.assertEqual(seen_payloads, [payload])
 
-    def test_run_orig_writes_stdout_and_stderr_sidecars(self):
+    def test_run_goerwitz_writes_stdout_and_stderr_sidecars(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             in_dir = base / "in"
@@ -83,8 +83,8 @@ class TestAccgramRunOrig(unittest.TestCase):
                     return FakeCompletedProcess(stdout=b"TREE\n", stderr=b"")
                 return FakeCompletedProcess(stdout=b"", stderr=b"goerwitz warning\n")
 
-            with patch("accgram.run_orig.subprocess.run", side_effect=fake_run):
-                result = run_orig.run_orig(
+            with patch("accgram.run_goerwitz.subprocess.run", side_effect=fake_run):
+                result = run_goerwitz.run_goerwitz_binary(
                     in_dir=in_dir,
                     out_dir=out_dir,
                     stderr_dir=stderr_dir,
@@ -104,7 +104,7 @@ class TestAccgramRunOrig(unittest.TestCase):
                 "goerwitz warning\n",
             )
 
-    def test_run_orig_reports_nonzero_exit_with_empty_stderr(self):
+    def test_run_goerwitz_reports_nonzero_exit_with_empty_stderr(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             in_dir = base / "in"
@@ -122,8 +122,8 @@ class TestAccgramRunOrig(unittest.TestCase):
                     self.stderr = b""
                     self.returncode = 7
 
-            with patch("accgram.run_orig.subprocess.run", return_value=FakeCompletedProcess()):
-                result = run_orig.run_orig(
+            with patch("accgram.run_goerwitz.subprocess.run", return_value=FakeCompletedProcess()):
+                result = run_goerwitz.run_goerwitz_binary(
                     in_dir=in_dir,
                     out_dir=out_dir,
                     stderr_dir=stderr_dir,

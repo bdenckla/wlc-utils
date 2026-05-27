@@ -68,7 +68,7 @@ def _to_wsl_path(path: Path) -> str:
 
 
 def run(args: argparse.Namespace) -> None:
-    result = run_orig(
+    result = run_goerwitz_binary(
         in_dir=args.in_dir,
         out_dir=args.out_dir,
         stderr_dir=args.stderr_dir,
@@ -84,7 +84,7 @@ def run(args: argparse.Namespace) -> None:
     print(f"Nonzero goerwitz exit codes: {result.nonzero_exit_count}")
 
 
-def run_orig(
+def run_goerwitz_binary(
     in_dir: Path,
     out_dir: Path,
     stderr_dir: Path,

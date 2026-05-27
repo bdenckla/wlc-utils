@@ -5,11 +5,12 @@ Subcommands:
                 Split wlc422_ps.txt twice: once as unfiltered per-book files
                 and once as filtered per-book files (excluding Psalms/Proverbs,
                 poetically-cantillated Job verses, and dual-cantillation verses).
-    run-orig    Run goerwitz (via WSL) on split files and write *_ag outputs.
+    run-goerwitz
+                Run goerwitz (via WSL) on split files and write *_ag outputs.
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py filter-split-wlc
-    .venv/Scripts/python.exe py/main_accgram.py run-orig
+    .venv/Scripts/python.exe py/main_accgram.py run-goerwitz
 """
 
 from __future__ import annotations
@@ -17,7 +18,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from accgram import filter_split_wlc, run_orig, split_wlc
+from accgram import filter_split_wlc, split_wlc
+from py.accgram import run_goerwitz
 
 
 def _repo_root() -> Path:
@@ -34,8 +36,8 @@ def _run_filter_split_wlc(args: argparse.Namespace) -> None:
     filter_split_wlc.run(args, split_wlc.split_wlc_to_books)
 
 
-def _run_orig(args: argparse.Namespace) -> None:
-    run_orig.run(args)
+def _run_goerwitz(args: argparse.Namespace) -> None:
+    run_goerwitz.run(args)
 
 
 def main() -> None:
@@ -61,15 +63,15 @@ def main() -> None:
     )
     filter_split_wlc_parser.set_defaults(func=_run_filter_split_wlc)
 
-    run_orig_parser = subparsers.add_parser(
-        "run-orig",
+    run_goerwitz_parser = subparsers.add_parser(
+        "run-goerwitz",
         help=(
             "Run goerwitz (via WSL) on split input files and write *_ag.txt outputs "
             "plus stderr sidecars (default: out/accgram/goerwitz-stderr)."
         ),
     )
-    run_orig.add_args(run_orig_parser, repo_root=_repo_root())
-    run_orig_parser.set_defaults(func=_run_orig)
+    run_goerwitz.add_args(run_goerwitz_parser, repo_root=_repo_root())
+    run_goerwitz_parser.set_defaults(func=_run_goerwitz)
 
     args = parser.parse_args()
     args.func(args)

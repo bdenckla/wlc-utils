@@ -36,8 +36,8 @@ def _steps(repo_root: Path) -> tuple[Step, ...]:
             ),
         ),
         Step(
-            name="accgram_run_orig",
-            argv=(sys.executable, str(py_dir / "main_accgram.py"), "run-orig"),
+            name="accgram_run_goerwitz",
+            argv=(sys.executable, str(py_dir / "main_accgram.py"), "run-goerwitz"),
         ),
         Step(
             name="wlc_json_and_unicode",
