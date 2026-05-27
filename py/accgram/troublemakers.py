@@ -59,6 +59,7 @@ HARDCODED_REFS: frozenset[tuple[str, int, int]] = frozenset(
         ("nu", 7, 40),
         ("nu", 7, 55),
         ("nu", 7, 68),
+        ("nu", 25, 19),
         ("nu", 20, 19),
     }
 )

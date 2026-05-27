@@ -3,7 +3,7 @@
   "artifacts_description": "hardcoded troublemaker verse exclusions",
   "payload_provenance_note": "These verses are excluded by explicit hardcoded rules in this repo to avoid known parser-breaker inputs.",
   "summary": {
-    "troublemakers_excluded": 48,
+    "troublemakers_excluded": 49,
     "books_with_troublemakers": 20
   },
   "troublemakers": [
@@ -194,6 +194,10 @@
     {
       "ref": "nu 20:19",
       "content": "WA/Y.O)M:R63W. )\"LF71Y/W B.:N\"75Y-YI&:RF)\"82L]s B.A75/M:SIL.F74H NA(:ALEH01 W:/)IM-M\"YME70Y/KF NI$:T.EH03 ):ANI74Y W./MIQ:N/A80Y W:/NFTAT.I73Y MIK:R/F92M RA71Q )\"YN-D.FBF73R B.:/RAG:L/A71Y )E75(:EBO75RFH00"
+    },
+    {
+      "ref": "nu 25:19",
+      "content": "WA/Y:HI73Y )AX:AR\"74Y HA/M.AG.\"PF92H]1 P"
     },
     {
       "ref": "ob 1:1",

@@ -3,14 +3,8 @@
   "artifacts_description": "missing verses from goerwitz *_ag.txt outputs",
   "payload_provenance_note": "These verses are present in the split input book files but have no verse label in the corresponding goerwitz *_ag.txt output files.",
   "summary": {
-    "missing_verses": 1,
-    "books_with_missing_verses": 1
+    "missing_verses": 0,
+    "books_with_missing_verses": 0
   },
-  "missing_verses": [
-    {
-      "ref": "nu 26:1",
-      "content": "WA/Y.O70)MER Y:HWFH03 )EL-MO$E80H W:/)E94L )EL:(FZF91R B.EN-)AH:ARO71N HA/K.OH\"73N L\"/)MO75R00",
-      "output_file": "wlc_422_ps_nu_ag.txt"
-    }
-  ]
+  "missing_verses": []
 }
