@@ -316,7 +316,22 @@ Amos 1:13
         tifcha 
       3 silluq_phrase
         mereka silluq 
-Amos 1:14
+Amos 1:15
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 atnach_phrase
+      atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 silluq_phrase
+      mereka silluq 
+Amos 2:1
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause
@@ -1987,7 +2002,22 @@ Amos 6:5
         mereka tifcha 
       3 silluq_phrase
         silluq 
-Amos 6:6
+Amos 6:7
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 atnach_phrase
+      munach atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      tifcha 
+    2 silluq_phrase
+      mereka silluq 
+Amos 6:8
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause
@@ -3013,7 +3043,31 @@ Amos 9:4
         tifcha 
     2 silluq_phrase
       mereka silluq 
-Amos 9:5
+Amos 9:6
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        tifcha 
+      3 atnach_phrase
+        munach atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 revia_phrase
+        munach revia 
+      3 tifcha_clause
+        4 tevir_phrase
+          tevir 
+        4 tifcha_phrase
+          mereka tifcha 
+    2 silluq_phrase
+      mereka silluq 
+Amos 9:7
 0 silluq_clause
   1 atnach_clause
     2 tifcha_clause

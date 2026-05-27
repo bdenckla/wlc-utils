@@ -520,7 +520,7 @@ Micah 2:6
         mereka tifcha 
       3 silluq_phrase
         silluq 
-Micah 2:7
+Micah 2:8
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause

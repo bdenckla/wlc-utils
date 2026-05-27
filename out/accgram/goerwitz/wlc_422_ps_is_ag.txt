@@ -14776,7 +14776,7 @@ Isaiah 36:1
           tifcha 
   1 silluq_phrase
     silluq 
-Isaiah 36:2
+Isaiah 36:3
 0 silluq_clause
   1 atnach_clause
     2 tifcha_clause

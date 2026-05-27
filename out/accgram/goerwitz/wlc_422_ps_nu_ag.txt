@@ -5716,7 +5716,22 @@ Numbers 7:31
           mereka tifcha 
     2 silluq_phrase
       silluq 
-Numbers 7:32
+Numbers 7:33
+0 silluq_clause
+  1 tifcha_clause
+    2 revia_clause
+      3 geresh_phrase
+        munach gershayim 
+      3 revia_phrase
+        revia 
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+  1 silluq_phrase
+    silluq 
+Numbers 7:34
 0 silluq_clause
   1 tifcha_phrase
     mereka tifcha 
@@ -5830,7 +5845,34 @@ Numbers 7:39
         mereka tifcha 
   1 silluq_phrase
     silluq 
-Numbers 7:40
+Numbers 7:41
+0 silluq_clause
+  1 atnach_clause
+    2 segolta_clause
+      3 zarqa_phrase
+        munach zarqa 
+      3 segolta_phrase
+        munach segolta 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          munach zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          mereka tifcha 
+        4 atnach_phrase
+          atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 silluq_phrase
+      silluq 
+Numbers 7:42
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause
@@ -6076,7 +6118,16 @@ Numbers 7:54
       tifcha 
     2 silluq_phrase
       silluq 
-Numbers 7:55
+Numbers 7:56
+0 silluq_clause
+  1 tifcha_clause
+    2 tevir_phrase
+      mereka tevir 
+    2 tifcha_phrase
+      mereka tifcha 
+  1 silluq_phrase
+    mereka silluq 
+Numbers 7:57
 0 silluq_clause
   1 tifcha_clause
     2 revia_clause
@@ -6295,7 +6346,22 @@ Numbers 7:67
           mereka tifcha 
     2 silluq_phrase
       silluq 
-Numbers 7:68
+Numbers 7:69
+0 silluq_clause
+  1 tifcha_clause
+    2 revia_clause
+      3 geresh_phrase
+        munach gershayim 
+      3 revia_phrase
+        revia 
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+  1 silluq_phrase
+    silluq 
+Numbers 7:70
 0 silluq_clause
   1 tifcha_phrase
     mereka tifcha 
@@ -15562,7 +15628,7 @@ Numbers 20:18
       tifcha 
     2 silluq_phrase
       mereka silluq 
-Numbers 20:19
+Numbers 20:20
 0 silluq_clause
   1 atnach_clause
     2 tifcha_phrase

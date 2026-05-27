@@ -1618,7 +1618,7 @@ Daniel 2:40
           mereka tifcha 
       3 silluq_phrase
         mereka silluq 
-Daniel 2:41
+Daniel 2:42
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause

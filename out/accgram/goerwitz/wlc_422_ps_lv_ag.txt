@@ -12019,7 +12019,25 @@ Levit 18:16
       mereka tifcha 
     2 silluq_phrase
       silluq 
-Levit 18:17
+Levit 18:18
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 atnach_phrase
+      munach atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 revia_phrase
+        revia 
+      3 tifcha_clause
+        4 tevir_phrase
+          darga tevir 
+        4 tifcha_phrase
+          tifcha 
+    2 silluq_phrase
+      silluq 
+Levit 18:19
 0 silluq_clause
   1 atnach_clause
     2 tifcha_phrase
@@ -17605,7 +17623,28 @@ Levit 26:6
         tifcha 
       3 silluq_phrase
         mereka silluq 
-Levit 26:7
+Levit 26:8
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        azla mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        munach atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 silluq_phrase
+      silluq 
+Levit 26:9
 0 silluq_clause
   1 atnach_clause
     2 zaqef_phrase

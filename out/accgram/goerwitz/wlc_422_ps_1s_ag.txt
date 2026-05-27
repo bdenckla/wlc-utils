@@ -3631,7 +3631,34 @@
           mereka tifcha 
         4 silluq_phrase
           silluq 
-1Samuel 6:19
+1Samuel 6:20
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          yetiv 
+        4 zaqef_phrase
+          munach zaqef 
+      3 atnach_clause
+        4 tifcha_clause
+          5 tevir_phrase
+            azla darga tevir 
+          5 tifcha_phrase
+            tifcha 
+        4 atnach_phrase
+          atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      tifcha 
+    2 silluq_phrase
+      mereka silluq 
+1Samuel 6:21
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause

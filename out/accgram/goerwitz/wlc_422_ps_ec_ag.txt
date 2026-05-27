@@ -2785,7 +2785,7 @@ Ecclesiastes 7:20
       mereka tifcha 
     2 silluq_phrase
       mereka silluq 
-Ecclesiastes 7:21
+Ecclesiastes 7:22
 0 silluq_clause
   1 atnach_clause
     2 tifcha_clause

@@ -4552,7 +4552,7 @@
       mereka tifcha 
     2 silluq_phrase
       silluq 
-1Kings 6:2
+1Kings 6:3
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause
@@ -15298,7 +15298,7 @@
         mereka tifcha 
       3 silluq_phrase
         silluq 
-1Kings 16:33
+1Kings 16:34
 0 silluq_clause
   1 atnach_clause
     2 tifcha_clause
@@ -17389,7 +17389,7 @@
         mereka tifcha 
       3 silluq_phrase
         silluq 
-1Kings 19:11
+1Kings 19:12
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause
@@ -18445,7 +18445,7 @@
         tifcha 
       3 silluq_phrase
         mereka silluq 
-1Kings 20:29
+1Kings 20:30
 0 silluq_clause
   1 atnach_clause
     2 segolta_clause

@@ -18013,7 +18013,7 @@
         tifcha 
       3 silluq_phrase
         mereka silluq 
-2Kings 23:36
+2Kings 23:37
 0 silluq_clause
   1 atnach_clause
     2 tifcha_phrase

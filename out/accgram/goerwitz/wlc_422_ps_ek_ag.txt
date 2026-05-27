@@ -6925,7 +6925,7 @@ Ezekiel 14:10
         mereka tifcha 
       3 silluq_phrase
         silluq 
-Ezekiel 14:11
+Ezekiel 14:12
 0 silluq_clause
   1 tifcha_phrase
     mereka tifcha 
@@ -20161,7 +20161,31 @@ Ezekiel 33:19
       tifcha 
     2 silluq_phrase
       mereka silluq 
-Ezekiel 33:20
+Ezekiel 33:21
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 revia_clause
+        4 geresh_phrase
+          gershayim 
+        4 revia_phrase
+          darga munach revia 
+      3 tifcha_clause
+        4 tevir_phrase
+          tevir 
+        4 tifcha_phrase
+          mereka tifcha 
+    2 atnach_phrase
+      atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        azla darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 silluq_phrase
+      mereka silluq 
+Ezekiel 33:22
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause

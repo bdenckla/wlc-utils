@@ -3,184 +3,19 @@
   "artifacts_description": "missing verses from goerwitz *_ag.txt outputs",
   "payload_provenance_note": "These verses are present in the split input book files but have no verse label in the corresponding goerwitz *_ag.txt output files.",
   "summary": {
-    "missing_verses": 110,
-    "books_with_missing_verses": 19
+    "missing_verses": 60,
+    "books_with_missing_verses": 7
   },
   "missing_verses": [
-    {
-      "ref": "1k 6:3",
-      "content": "W:/HF/)W.LF81M (AL-P.:N\"Y03 H\"YKA74L HA/B.A80YIT (E&:RI74YM )AM.FH03 )FR:K./O80W (AL-P.:N\"73Y RO74XAB HA/B.F92YIT (E94&ER B.F/)AM.F91H RFX:B./O73W (AL-P.:N\"71Y HA/B.F75YIT00",
-      "output_file": "wlc_422_ps_1k_ag.txt"
-    },
-    {
-      "ref": "1k 16:34",
-      "content": "B.:/YFMF62Y/W B.FNF71H XIY)\"91L B.\"71YT HF):ELI73Y )ET-Y:RIYXO92H B.A/):ABIYRF63M B.:KOR/O61W YIS.:D/F81H. *W/B/#GYB **W./BI/&:G70W.B C:(IYR/OW03 HIC.I74YB D.:LFTE80Y/HF K.I/D:BA74R Y:HWF80H ):A$E74R D.IB.E80R B.:/YA73D Y:HOW$U71(A B.IN-N75W.N00 S",
-      "output_file": "wlc_422_ps_1k_ag.txt"
-    },
-    {
-      "ref": "1k 19:12",
-      "content": "W:/)AXA70R HF/RA33(A$03 )\"80$ LO71) BF/)\"73$ Y:HWF92H W:/)AXA74R HF/)\"80$ QO73WL D.:MFMF71H DAQ.F75H00",
-      "output_file": "wlc_422_ps_1k_ag.txt"
-    },
-    {
-      "ref": "1k 20:30",
-      "content": "WA/Y.FNU63SW. HA/N.OWTFRI71YM05 ):AP\"Q/FH02 )EL-HF/(IYR01 WA/T.IP.OL03 HA/XOWMF80H (AL-(E&:RI63YM W:/$IB:(F71H )E91LEP )I73Y$ HA/N.OWTFRI92YM W./BEN-H:ADA74D NF80S WA/Y.FBO71) )EL-HF/(I73YR XE71DER B.:/XF75DER00 S",
-      "output_file": "wlc_422_ps_1k_ag.txt"
-    },
-    {
-      "ref": "1s 6:20",
-      "content": "WA/Y.O75)M:RW.03 )AN:$\"74Y B\"75YT-$E80ME$ 10MIY YW.KA74L LA/(:AMO80D LI/P:N\"63Y Y:HWF94H HF/):ELOHI91YM HA/Q.FDO73W$ HA/Z.E92H W:/)EL-MI73Y YA(:ALE71H M\"/(FL\"75Y/NW.00 S",
-      "output_file": "wlc_422_ps_1s_ag.txt"
-    },
-    {
-      "ref": "1s 6:21",
-      "content": "WA75/Y.I$:L:XW.03 MAL:)FKI80YM )EL-YOW$:B\"71Y QIR:YAT-Y:(FRI73YM L\"/)MO92R H\"$I70BW. P:LI$:T.IYM03 )ET-):ARO74WN Y:HWF80H R:D85W. HA(:AL71W. )OT/O73W ):AL\"Y/KE75M00",
-      "output_file": "wlc_422_ps_1s_ag.txt"
-    },
     {
       "ref": "2c 23:1",
       "content": "W./BA/$.FNF63H HA/$.:BI(I61YT HIT:XAZ.A74Q Y:HOWYFDF81( WA/Y.IQ.A74X )ET-&FR\"74Y HA/M.\")O83WT LA/(:AZAR:YF74HW. BEN-Y:ROXF83M W./L:/YI$:MF(\"74)L B.EN-14Y:HOWXFNFN W:/LA75/(:AZAR:YF63HW. BEN-(OWB\"61D W:/)ET-MA(:A&\"YF94HW. BEN-(:ADFYF91HW. W:/)ET-):ELIY$FPF71+ B.EN-ZIK:RI73Y (IM./O71W BA/B.:RI75YT00",
       "output_file": "wlc_422_ps_2c_ag.txt"
     },
     {
-      "ref": "2c 26:16",
-      "content": "W./K:/XEZ:QFT/O81W G.FBA70H. LIB./OW03 (AD-L:/HA$:XI80YT WA/Y.IM:(A73L B.A/YHWF74H ):ELOHF92Y/W WA/Y.FBO)03 )EL-H\"YKA74L Y:HWF80H L:/HAQ:+I73YR (AL-MIZ:B.A71X HA/Q.:+O75RET00",
-      "output_file": "wlc_422_ps_2c_ag.txt"
-    },
-    {
-      "ref": "2k 23:37",
-      "content": "WA/Y.A71(A& HF/RA73( B.:/(\"YN\"74Y Y:HWF92H K.:/KO71L ):A$ER-(F&73W. ):ABOTF75Y/W00",
-      "output_file": "wlc_422_ps_2k_ag.txt"
-    },
-    {
-      "ref": "am 1:15",
-      "content": "W:/HFLA71K: MAL:K./F73M B.A/G.OWLF92H H94W.) W:/&FRF91Y/W YAX:D.F73W )FMA71R Y:HWF75H00 P",
-      "output_file": "wlc_422_ps_am_ag.txt"
-    },
-    {
-      "ref": "am 2:1",
-      "content": "10K.OH )FMA74R Y:HWF80H (AL-$:LO$FH03 P.I$:(\"74Y MOW)F80B W:/(AL-)AR:B.F(F73H LO74) ):A$IYB/E92N.W. (AL-&FR:P/O91W (AC:MO71WT ME75LEK:-):EDO73WM LA/&.I75YD00",
-      "output_file": "wlc_422_ps_am_ag.txt"
-    },
-    {
-      "ref": "am 6:7",
-      "content": "LF/K\"91N (AT.F71H YIG:L73W. B.:/RO74)$ G.OLI92YM W:/SF73R MIR:ZA71X S:RW.XI75YM00 P",
-      "output_file": "wlc_422_ps_am_ag.txt"
-    },
-    {
-      "ref": "am 6:8",
-      "content": "NI$:B.A(04 ):ADON/F63Y Y:HWI61H B.:/NAP:$/O81W N:)UM-Y:HWFH03 ):ELOH\"74Y C:BF)O80WT M:TF)\"70B )F75NOKIY03 )ET-G.:)O74WN YA75(:AQO80B W:/)AR:M:NOTF73Y/W &FN\"92)TIY W:/HIS:G.AR:T.I73Y (I71YR W./M:LO)/F75H.00",
-      "output_file": "wlc_422_ps_am_ag.txt"
-    },
-    {
-      "ref": "am 9:6",
-      "content": "HA/B.OWNE70H BA/$.FMA33YIM03 *M(LWT/W **MA(:ALOWTF80Y/W WA/):AGUD.FT/O73W (AL-)E74REC Y:SFD/F92H. HA/Q.OR\"74) L:/M\"75Y-HA/Y.F81M WA75/Y.I$:P.:K/\"91M (AL-P.:N\"71Y HF/)F73REC Y:HWF71H $:M/O75W00",
-      "output_file": "wlc_422_ps_am_ag.txt"
-    },
-    {
-      "ref": "am 9:7",
-      "content": "H:A/LO74W) KI/B:N\"Y04 KU$IY.I63YM )AT.E71M L/I91Y B.:N\"71Y YI&:RF)\"73L N:)UM-Y:HWF92H H:A/LO74W) )ET-YI&:RF)\"81L HE(:EL\"33YTIY03 M\"/)E74REC MIC:RA80YIM W./P:LI$:T.IY.I71YM MI/K.AP:T.O73WR WA/):ARF71M MI/Q.I75YR00",
-      "output_file": "wlc_422_ps_am_ag.txt"
-    },
-    {
-      "ref": "da 2:42",
-      "content": "W:/)EC:B.:(FT03 RAG:LAY./F80) *MN/HWN **MIN./:H\"71YN P.AR:ZE73L *W/MN/HWN **W./MIN./:H\"74YN X:ASA92P MIN-Q:CF70T MAL:KW.T/F)03 T.EH:EW\"74H TAQ.IYPF80H W./MIN./A73H. T.EH:EW\"71H T:BIYRF75H00",
-      "output_file": "wlc_422_ps_da_ag.txt"
-    },
-    {
-      "ref": "dt 9:21",
-      "content": "W:75/)ET-XA+.A)T/:KE62M ):A$ER-(:A&IYTE74M )ET-HF/(\"81GEL LFQAX:T.IY02 WF/)E&:RO74P )OT/O74W05 B.F/)\"$01 WF/)EK.O63T )OT/O70W +FXOWN03 H\"Y+\"80B (A71D ):A$ER-D.A73Q L:/(FPF92R WF75/)A$:LIK:03 )ET-(:APFR/O80W )EL-HA/N.A73XAL HA/Y.OR\"71D MIN-HF/HF75R00",
-      "output_file": "wlc_422_ps_dt_ag.txt"
-    },
-    {
-      "ref": "dt 9:22",
-      "content": "W./B:/TAB:(\"RFH03 W./B:/MAS.F80H W./B:/QIB:RO73T HA75T.A):AWF92H MAQ:CIPI71YM H:EYIYTE73M )ET-Y:HWF75H00",
-      "output_file": "wlc_422_ps_dt_ag.txt"
-    },
-    {
-      "ref": "dt 13:16",
-      "content": "HAK.\"74H TAK.E81H )ET-YO75$:B\"91Y HF/(I71YR *H/HW) **HA/HI73Y) L:/PIY-XF92REB HAX:AR\"63M )OT/F94H. W:/)ET-K.FL-):A$ER-B./F91H. W:/)ET-B.:HEM:T./F73H. L:/PIY-XF75REB00",
-      "output_file": "wlc_422_ps_dt_ag.txt"
-    },
-    {
-      "ref": "dt 25:10",
-      "content": "W:/NIQ:RF71) $:M/O73W B.:/YI&:RF)\"92L B.\"73YT X:AL71W.C HA/N.F75(AL00 S",
-      "output_file": "wlc_422_ps_dt_ag.txt"
-    },
-    {
-      "ref": "dt 25:11",
-      "content": "K.I75Y-YIN.FC63W. ):ANF$I70YM YAX:D.FW03 )I74Y$ W:/)FXI80Y/W W:/QF95R:BFH03 )\"74$ET HF75/)EXF80D L:/HAC.I71YL )ET-)IY$/F73H. MI/Y.A74D MAK./\"92HW. W:/$FL:XF74H YFD/F80H. W:/HEX:EZI73YQFH B.I/M:BU$F75Y/W00",
-      "output_file": "wlc_422_ps_dt_ag.txt"
-    },
-    {
-      "ref": "ec 7:22",
-      "content": "K.I91Y G.AM-P.:(FMI71YM RAB.O73WT YFDA74( LIB./E92KF ):A$E71R G.AM-*)T **)AT.F73H QIL.A71L:T.F ):AX\"RI75YM00",
-      "output_file": "wlc_422_ps_ec_ag.txt"
-    },
-    {
       "ref": "ec 10:1",
       "content": "Z:B74W.B\"Y MF80WET YAB:)I71Y$ YAB.I73Y(A $E74MEN ROWQ\"92XA YFQF91R M\"/XFK:MF71H MI/K.FBO73WD SIK:L71W.T M:(F75+00",
       "output_file": "wlc_422_ps_ec_ag.txt"
-    },
-    {
-      "ref": "ek 14:12",
-      "content": "WA/Y:HI71Y D:BAR-Y:HWF73H )\"L/A71Y L\"/)MO75R00",
-      "output_file": "wlc_422_ps_ek_ag.txt"
-    },
-    {
-      "ref": "ek 33:21",
-      "content": "WA/Y:HI62Y B.I/$:T.\"94Y (E&:R\"74H $FNF81H B.F/(:A&IRI91Y B.A/X:AMI$.F71H LA/XO73DE$ L:/GFLW.T/\"92NW. B.F)-)\"L/A63Y HA/P.FLI94Y+ MI/YRW.$FLA91IM L\"/)MO73R HUK.:TF71H HF/(I75YR00",
-      "output_file": "wlc_422_ps_ek_ag.txt"
-    },
-    {
-      "ref": "ek 33:22",
-      "content": "W:/YAD-Y:HWFH04 HFY:TF63H )\"L/A61Y B.F/(E81REB LI/P:N\"Y03 B.O74W) HA/P.FLI80Y+ WA/Y.IP:T.A74X )ET-P./I80Y (AD-B.O71W) )\"L/A73Y B.A/B.O92QER WA/Y.IP.F74TAX P./I80Y W:/LO71) NE):ELA73M:T.IY (O75WD00 P",
-      "output_file": "wlc_422_ps_ek_ag.txt"
-    },
-    {
-      "ref": "ex 2:6",
-      "content": "WA/T.IP:T.AX03 WA/T.IR:)/\"74HW. )ET-HA/Y.E80LED W:/HIN.\"H-NA73(AR B.OKE92H WA/T.AX:MO74L (FLF80Y/W WA/T.O85)MER MI/Y.AL:D\"71Y HF75/(IB:RI73YM ZE75H00",
-      "output_file": "wlc_422_ps_ex_ag.txt"
-    },
-    {
-      "ref": "ex 2:7",
-      "content": "WA/T.O74)MER ):AXOT/OW02 )EL-B.AT-P.AR:(OH01 HA/)\"L\"81K: W:/QFRF70)TIY L/FK:03 )I$.F74H M\"YNE80QET MI73N HF/(IB:RIY.O92T W:/T\"YNI71Q L/F73K: )ET-HA/Y.F75LED00",
-      "output_file": "wlc_422_ps_ex_ag.txt"
-    },
-    {
-      "ref": "ex 14:26",
-      "content": "WA/Y.O70)MER Y:HWFH03 )EL-MO$E80H N:+\"71H )ET-YFD/:KF73 (AL-HA/Y.F92M W:/YF$U70BW. HA/M.A33YIM03 (AL-MIC:RA80YIM (AL-RIK:B./O73W W:/(AL-P.FRF$F75Y/W00",
-      "output_file": "wlc_422_ps_ex_ag.txt"
-    },
-    {
-      "ref": "ex 14:27",
-      "content": "WA/Y.\"+04 MO$E63H )ET-YFD/O61W (AL-HA/Y.F81M WA/Y.F63$FB HA/Y.F61M LI/P:NO71WT B.O33QER03 L:/)\"74YTFN/O80W W./MIC:RA73YIM NFSI74YM LI/Q:RF)T/O92W WA/Y:NA(\"94R Y:HWF91H )ET-MIC:RA73YIM B.:/TO71WK: HA/Y.F75M00",
-      "output_file": "wlc_422_ps_ex_ag.txt"
-    },
-    {
-      "ref": "ex 14:30",
-      "content": "WA/Y.O63W$A( Y:HWF61H B.A/Y.O71WM HA/H91W.) )ET-YI&:RF)\"73L MI/Y.A74D MIC:RF92YIM WA/Y.A70R:) YI&:RF)\"L03 )ET-MIC:RA80YIM M\"73T (AL-&:PA71T HA/Y.F75M00",
-      "output_file": "wlc_422_ps_ex_ag.txt"
-    },
-    {
-      "ref": "ex 14:31",
-      "content": "WA/Y.A63R:) YI&:RF)\"61L )ET-HA/Y.F74D HA/G.:DOLF81H ):A$E63R (F&F70H Y:HWFH03 B.:/MIC:RA80YIM WA/Y.I75YR:)71W. HF/(F73M )ET-Y:HWF92H WA/Y.A95):AMI33YNW.03 B.A75/YHWF80H W./B:/MO$E73H (AB:D./O75W00 P",
-      "output_file": "wlc_422_ps_ex_ag.txt"
-    },
-    {
-      "ref": "ex 34:7",
-      "content": "NOC\"71R XE33SED03 LF/):ALFPI80YM NO&\"71) (FWO91N WF/PE73$A( W:/XA+.F)F92H W:/NAQ.\"H03 LO74) Y:NAQ.E80H P.OQ\"74D05 (:AWO74N )FBO81WT (AL-B.FNIYM03 W:/(AL-B.:N\"74Y BFNI80YM (AL-$IL.\"$I73YM W:/(AL-RIB.\"(I75YM00",
-      "output_file": "wlc_422_ps_ex_ag.txt"
-    },
-    {
-      "ref": "ex 34:8",
-      "content": "WA/Y:MAH\"73R MO$E92H WA/Y.IQ.O71D )A73R:C/FH WA/Y.I$:T.F75XW.00",
-      "output_file": "wlc_422_ps_ex_ag.txt"
-    },
-    {
-      "ref": "hg 2:13",
-      "content": "WA/Y.O74)MER XAG.A80Y )IM-YIG.A94( +:M\")-NE91PE$ B.:/KFL-)\"73L.EH H:A/YI+:MF92) WA/Y.A(:AN94W. HA/K.OH:ANI91YM WA/Y.O)M:R73W. YI+:MF75)00",
-      "output_file": "wlc_422_ps_hg_ag.txt"
     },
     {
       "ref": "ho 5:1",
@@ -191,21 +26,6 @@
       "ref": "ho 5:2",
       "content": "W:/$AX:A+F71H &\"+I73YM HE(:MI92YQW. WA/):ANI73Y MW.SF71R L:/KUL./F75M00",
       "output_file": "wlc_422_ps_ho_ag.txt"
-    },
-    {
-      "ref": "ho 8:10",
-      "content": "G.A91M K.I75Y-YIT:N71W. BA/G.OWYI73M (AT.F74H ):AQAB.:C/\"92M WA/Y.FX\"74L.W. M.:(F80+ MI/M.A&.F73) ME71LEK: &FRI75YM00",
-      "output_file": "wlc_422_ps_ho_ag.txt"
-    },
-    {
-      "ref": "ho 8:11",
-      "content": "K.I75Y-HIR:B.F71H )EP:RA91YIM MIZ:B.:XO73T LA/X:A+O92) HFYW.-L/O71W MIZ:B.:XO73WT LA/X:A+O75)00",
-      "output_file": "wlc_422_ps_ho_ag.txt"
-    },
-    {
-      "ref": "is 36:3",
-      "content": "WA/Y.\"C\"71) )\"LF91Y/W )EL:YFQI71YM B.EN-XIL:QIY.F73HW. ):A$E74R (AL-HA/B.F92YIT W:/$EB:NF)03 HA/S.OP\"80R W:/YOW)F71X B.EN-)FSF73P HA/M.AZ:K.I75YR00",
-      "output_file": "wlc_422_ps_is_ag.txt"
     },
     {
       "ref": "jb 1:1",
@@ -481,76 +301,6 @@
       "ref": "lm 5:6",
       "content": "MIC:RA33YIM03 NFTA74N.W. YF80D )A$.73W.R LI/&:B.O71(A75 LF75XEM00",
       "output_file": "wlc_422_ps_lm_ag.txt"
-    },
-    {
-      "ref": "lv 18:18",
-      "content": "W:/)I$.F71H )EL-):AXOT/F73H. LO74) TIQ.F92X LI/C:RO81R L:/GAL.O94WT (ER:WFT/F91H. (FLE73Y/HF B.:/XAY.E75Y/HF00",
-      "output_file": "wlc_422_ps_lv_ag.txt"
-    },
-    {
-      "ref": "lv 18:19",
-      "content": "W:/)EL-)I$.F73H B.:/NID.A74T +UM:)FT/F92H. LO74) TIQ:RA80B L:/GAL.O73WT (ER:WFT/F75H.00",
-      "output_file": "wlc_422_ps_lv_ag.txt"
-    },
-    {
-      "ref": "lv 26:8",
-      "content": "W:/RFD:P63W.]c MI/K.E70M X:AMI$.FH03 M\")F80H W./M\")F71H MI/K.E73M R:BFBF74H YIR:D.O92PW. W:/NFP:L94W. )OY:B\"Y/KE91M LI/P:N\"Y/KE73M LE/XF75REB00",
-      "output_file": "wlc_422_ps_lv_ag.txt"
-    },
-    {
-      "ref": "lv 26:9",
-      "content": "W./PFNI74YTIY ):AL\"Y/KE80M W:/HIP:R\"YTI74Y )ET/:KE80M W:/HIR:B.\"YTI73Y )ET/:KE92M WA/H:AQIYMOTI71Y )ET-B.:RIYT/I73Y )IT./:KE75M00",
-      "output_file": "wlc_422_ps_lv_ag.txt"
-    },
-    {
-      "ref": "mi 2:8",
-      "content": "W:/)ET:M81W.L (AM./IY03 L:/)OWY\"74B Y:QOWM\"80M MI/M.74W.L &AL:MF80H )E73DER T.AP:$I+92W./N M\"/(OB:RI74YM B.E80+AX $W.B\"73Y MIL:XFMF75H00",
-      "output_file": "wlc_422_ps_mi_ag.txt"
-    },
-    {
-      "ref": "nu 7:33",
-      "content": "P.A74R )EXF62D B.EN-B.FQF81R )A94YIL )EXF91D K.E75BE&-)EXF71D B.EN-$:NFT/O73W L:/(OLF75H00",
-      "output_file": "wlc_422_ps_nu_ag.txt"
-    },
-    {
-      "ref": "nu 7:34",
-      "content": "&:(IYR-(IZ.I71YM )EXF73D L:/XA+.F75)T00",
-      "output_file": "wlc_422_ps_nu_ag.txt"
-    },
-    {
-      "ref": "nu 7:41",
-      "content": "W./L:/ZE74BAX HA/$.:LFMIYM02 B.FQF74R $:NAYIM01 )\"YLI70M X:AMI$.FH03 (AT.UDI74YM X:AMI$.F80H K.:BF&I71YM B.:N\"Y-$FNF73H X:AMI$.F92H ZE91H QFR:B.A71N $:LUMIY)\"73L B.EN-CW.RI75Y$AD.F75Y00 P",
-      "output_file": "wlc_422_ps_nu_ag.txt"
-    },
-    {
-      "ref": "nu 7:42",
-      "content": "B.A/Y.OWM03 HA/$.I$.I80Y NF&I73Y) LI/B:N\"74Y GF92D )EL:YFSF73P B.EN-D.:(W.)\"75L00",
-      "output_file": "wlc_422_ps_nu_ag.txt"
-    },
-    {
-      "ref": "nu 7:56",
-      "content": "K.A71P )AXA91T (:A&FRF71H ZFHF73B M:L\")F71H Q:+O75RET00",
-      "output_file": "wlc_422_ps_nu_ag.txt"
-    },
-    {
-      "ref": "nu 7:57",
-      "content": "P.A74R )EXF62D B.EN-B.FQF81R )A94YIL )EXF91D K.E75BE&-)EXF71D B.EN-$:NFT/O73W L:/(OLF75H00",
-      "output_file": "wlc_422_ps_nu_ag.txt"
-    },
-    {
-      "ref": "nu 7:69",
-      "content": "P.A74R )EXF62D B.EN-B.FQF81R )A94YIL )EXF91D K.E75BE&-)EXF71D B.EN-$:NFT/O73W L:/(OLF75H00",
-      "output_file": "wlc_422_ps_nu_ag.txt"
-    },
-    {
-      "ref": "nu 7:70",
-      "content": "&:(IYR-(IZ.I71YM )EXF73D L:/XA+.F75)T00",
-      "output_file": "wlc_422_ps_nu_ag.txt"
-    },
-    {
-      "ref": "nu 20:20",
-      "content": "WA/Y.O73)MER LO74) TA(:ABO92R WA/Y.\"C\"70) ):EDOWM03 LI/Q:RF)T/O80W B.:/(A71M K.FB\"73D W./B:/YF71D X:AZFQF75H00",
-      "output_file": "wlc_422_ps_nu_ag.txt"
     },
     {
       "ref": "nu 26:1",

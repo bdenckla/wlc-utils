@@ -607,7 +607,7 @@ Haggai 2:11
         tifcha 
     2 silluq_phrase
       silluq 
-Haggai 2:12
+Haggai 2:13
 0 silluq_clause
   1 atnach_clause
     2 zaqef_phrase
