@@ -173,15 +173,8 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
             verse_rows = summary["verse_message_aggregates"]
             self.assertEqual(len(verse_rows), 1)
             self.assertEqual(verse_rows[0]["verse_ref"], "Obadiah 1:2")
-
-            messages = verse_rows[0]["messages"]
-            self.assertEqual(messages[0]["message"], "accents warning 3 (yyparse): general parsing error")
-            self.assertEqual(messages[0]["count"], 2)
-            self.assertEqual(
-                messages[1]["message"],
-                "accents warning 6 (yyparse): verse is missing sof pasuq",
-            )
-            self.assertEqual(messages[1]["count"], 1)
+            self.assertEqual(verse_rows[0]["standard_sof_pasuq_error_count"], 2)
+            self.assertNotIn("messages", verse_rows[0])
 
             non_verse_rows = summary["non_verse_message_aggregates"]
             self.assertEqual(len(non_verse_rows), 1)

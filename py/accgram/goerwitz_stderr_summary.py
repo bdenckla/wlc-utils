@@ -11,6 +11,8 @@ SUMMARY_FILENAME = "_summary.stderr.json"
 VERSE_REF_RE = re.compile(
     r"(?P<verse>(?:[1-3]\s*)?[A-Z][A-Za-z_]*(?:\s+[A-Z][A-Za-z_]*)*\s+\d+:\d+)\s*$"
 )
+GENERAL_PARSING_ERROR_MESSAGE = "accents warning 3 (yyparse): general parsing error"
+MISSING_SOF_PASUQ_MESSAGE = "accents warning 6 (yyparse): verse is missing sof pasuq"
 
 
 @dataclass(frozen=True)
@@ -43,6 +45,22 @@ def _parse_stderr_line(line: str) -> tuple[str | None, str]:
         # keep the line in the non-verse bucket.
         return (None, normalized)
     return (verse_ref, message_without_ref)
+
+
+def _try_compact_standard_sof_pasuq_case(
+    verse_ref: str,
+    message_counter: Counter[str],
+) -> dict[str, object] | None:
+    if set(message_counter) != {GENERAL_PARSING_ERROR_MESSAGE, MISSING_SOF_PASUQ_MESSAGE}:
+        return None
+
+    if message_counter[MISSING_SOF_PASUQ_MESSAGE] != 1:
+        return None
+
+    return {
+        "verse_ref": verse_ref,
+        "standard_sof_pasuq_error_count": message_counter[GENERAL_PARSING_ERROR_MESSAGE],
+    }
 
 
 def write_stderr_summary(stderr_dir: Path, summary_path: Path) -> StderrSummaryResult:
@@ -94,6 +112,14 @@ def write_stderr_summary(stderr_dir: Path, summary_path: Path) -> StderrSummaryR
     verse_message_aggregates: list[dict[str, object]] = []
     for verse_ref in sorted(verse_counts):
         message_counter = verse_counts[verse_ref]
+        compact_row = _try_compact_standard_sof_pasuq_case(
+            verse_ref=verse_ref,
+            message_counter=message_counter,
+        )
+        if compact_row is not None:
+            verse_message_aggregates.append(compact_row)
+            continue
+
         message_rows = [
             {"message": message, "count": message_counter[message]}
             for message in sorted(message_counter)
@@ -117,7 +143,7 @@ def write_stderr_summary(stderr_dir: Path, summary_path: Path) -> StderrSummaryR
 
     summary_obj = {
         "run_metadata": {
-            "summary_version": 1,
+            "summary_version": 2,
             "stderr_dir": str(stderr_dir),
             "summary_path": str(summary_path),
             "source_glob": "*_ag.stderr.txt",

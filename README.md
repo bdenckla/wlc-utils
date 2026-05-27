@@ -30,6 +30,12 @@ Additional WLC-focused entry scripts now live here as well:
 .venv\Scripts\python.exe py\main_wlc_diffs_420422.py
 ```
 
+Run repository tests from the repo root with:
+
+```powershell
+.venv\Scripts\python.exe py\main_test.py -v
+```
+
 ## GitHub Pages
 
 The static site content for this repository lives under `gh-pages/` and is deployed by the GitHub Actions workflow in `.github/workflows/pages.yml`.

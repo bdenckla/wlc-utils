@@ -1,6 +1,6 @@
 {
   "run_metadata": {
-    "summary_version": 1,
+    "summary_version": 2,
     "stderr_dir": "C:\\Users\\BenDe\\GitRepos\\wlc-utils\\out\\accgram\\goerwitz-stderr",
     "summary_path": "C:\\Users\\BenDe\\GitRepos\\wlc-utils\\out\\accgram\\goerwitz-stderr\\_summary.stderr.json",
     "source_glob": "*_ag.stderr.txt"
@@ -15,723 +15,195 @@
   "verse_message_aggregates": [
     {
       "verse_ref": "1Kings 16:33",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 6
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 7
+      "standard_sof_pasuq_error_count": 6
     },
     {
       "verse_ref": "1Kings 19:11",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 6
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 7
+      "standard_sof_pasuq_error_count": 6
     },
     {
       "verse_ref": "1Kings 20:29",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 17
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 18
+      "standard_sof_pasuq_error_count": 17
     },
     {
       "verse_ref": "1Kings 6:2",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 6
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 7
+      "standard_sof_pasuq_error_count": 6
     },
     {
       "verse_ref": "1Samuel 6:19",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 15
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 16
+      "standard_sof_pasuq_error_count": 15
     },
     {
       "verse_ref": "2Chronicles 22:12",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 5
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 6
+      "standard_sof_pasuq_error_count": 5
     },
     {
       "verse_ref": "2Chronicles 26:15",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 20
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 21
+      "standard_sof_pasuq_error_count": 20
     },
     {
       "verse_ref": "2Kings 23:36",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 14
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 15
+      "standard_sof_pasuq_error_count": 14
     },
     {
       "verse_ref": "Amos 1:14",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 9
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 10
+      "standard_sof_pasuq_error_count": 9
     },
     {
       "verse_ref": "Amos 6:6",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 9
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 10
+      "standard_sof_pasuq_error_count": 9
     },
     {
       "verse_ref": "Amos 9:5",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 14
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 15
+      "standard_sof_pasuq_error_count": 14
     },
     {
       "verse_ref": "Daniel 2:41",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 11
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 12
+      "standard_sof_pasuq_error_count": 11
     },
     {
       "verse_ref": "Deuter 13:15",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 12
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 13
+      "standard_sof_pasuq_error_count": 12
     },
     {
       "verse_ref": "Deuter 25:9",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 8
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 9
+      "standard_sof_pasuq_error_count": 8
     },
     {
       "verse_ref": "Deuter 9:20",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 20
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 21
+      "standard_sof_pasuq_error_count": 20
     },
     {
       "verse_ref": "Ecclesiastes 7:21",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 4
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 5
+      "standard_sof_pasuq_error_count": 4
     },
     {
       "verse_ref": "Ecclesiastes 9:18",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 3
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 4
+      "standard_sof_pasuq_error_count": 3
     },
     {
       "verse_ref": "Exodus 14:25",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 13
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 14
+      "standard_sof_pasuq_error_count": 13
     },
     {
       "verse_ref": "Exodus 14:29",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 15
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 16
+      "standard_sof_pasuq_error_count": 15
     },
     {
       "verse_ref": "Exodus 2:5",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 12
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 13
+      "standard_sof_pasuq_error_count": 12
     },
     {
       "verse_ref": "Exodus 34:6",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 19
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 20
+      "standard_sof_pasuq_error_count": 19
     },
     {
       "verse_ref": "Ezekiel 11:1",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 3
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 4
+      "standard_sof_pasuq_error_count": 3
     },
     {
       "verse_ref": "Ezekiel 14:11",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 10
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 11
+      "standard_sof_pasuq_error_count": 10
     },
     {
       "verse_ref": "Ezekiel 33:20",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 15
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 16
+      "standard_sof_pasuq_error_count": 15
     },
     {
       "verse_ref": "Haggai 2:12",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 17
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 18
+      "standard_sof_pasuq_error_count": 17
     },
     {
       "verse_ref": "Hosea 4:19",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 18
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 19
+      "standard_sof_pasuq_error_count": 18
     },
     {
       "verse_ref": "Hosea 8:9",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 12
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 13
+      "standard_sof_pasuq_error_count": 12
     },
     {
       "verse_ref": "Isaiah 36:2",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 15
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 16
+      "standard_sof_pasuq_error_count": 15
     },
     {
       "verse_ref": "Jeremiah 10:3",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 4
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 5
+      "standard_sof_pasuq_error_count": 4
     },
     {
       "verse_ref": "Jeremiah 31:32",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 10
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 11
+      "standard_sof_pasuq_error_count": 10
     },
     {
       "verse_ref": "Jeremiah 38:11",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 18
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 19
+      "standard_sof_pasuq_error_count": 18
     },
     {
       "verse_ref": "Jeremiah 48:12",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 11
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 12
+      "standard_sof_pasuq_error_count": 11
     },
     {
       "verse_ref": "Jeremiah 49:19",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 16
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 17
+      "standard_sof_pasuq_error_count": 16
     },
     {
       "verse_ref": "Jeremiah 4:19",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 16
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 17
+      "standard_sof_pasuq_error_count": 16
     },
     {
       "verse_ref": "Jeremiah 9:10",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 3
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 4
+      "standard_sof_pasuq_error_count": 3
     },
     {
       "verse_ref": "Jeremiah 9:11",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 3
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 4
+      "standard_sof_pasuq_error_count": 3
     },
     {
       "verse_ref": "Judges 13:19",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 7
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 8
+      "standard_sof_pasuq_error_count": 7
     },
     {
       "verse_ref": "Lamentations 5:5",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 3
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 4
+      "standard_sof_pasuq_error_count": 3
     },
     {
       "verse_ref": "Levit 18:17",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 10
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 11
+      "standard_sof_pasuq_error_count": 10
     },
     {
       "verse_ref": "Levit 19:1",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 13
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 14
+      "standard_sof_pasuq_error_count": 13
     },
     {
       "verse_ref": "Levit 26:7",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 13
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 14
+      "standard_sof_pasuq_error_count": 13
     },
     {
       "verse_ref": "Micah 2:7",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 5
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 6
+      "standard_sof_pasuq_error_count": 5
     },
     {
       "verse_ref": "Numbers 20:19",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 13
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 14
+      "standard_sof_pasuq_error_count": 13
     },
     {
       "verse_ref": "Numbers 7:32",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 9
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 10
+      "standard_sof_pasuq_error_count": 9
     },
     {
       "verse_ref": "Numbers 7:40",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 15
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 16
+      "standard_sof_pasuq_error_count": 15
     },
     {
       "verse_ref": "Numbers 7:55",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 6
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 7
+      "standard_sof_pasuq_error_count": 6
     },
     {
       "verse_ref": "Numbers 7:68",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 9
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 10
+      "standard_sof_pasuq_error_count": 9
     },
     {
       "verse_ref": "Obadiah 1:2",
-      "messages": [
-        {
-          "message": "accents warning 3 (yyparse): general parsing error",
-          "count": 5
-        },
-        {
-          "message": "accents warning 6 (yyparse): verse is missing sof pasuq",
-          "count": 1
-        }
-      ],
-      "unique_messages": 2,
-      "total_count": 6
+      "standard_sof_pasuq_error_count": 5
     }
   ],
   "non_verse_message_aggregates": [],
