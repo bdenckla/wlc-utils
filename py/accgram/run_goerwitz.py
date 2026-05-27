@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from accgram.goerwitz_stderr_summary import SUMMARY_FILENAME, write_stderr_summary
+from accgram.missing_verses import write_missing_verses_json
 
 
 
@@ -17,8 +18,6 @@ class RunResult:
     nonempty_output_count: int
     stderr_nonempty_count: int
     nonzero_exit_count: int
-
-
 def default_in_dir(repo_root: Path) -> Path:
     return repo_root.parent / "wlc-utils-io" / "out" / "goerwitz" / "wlc_422_psf"
 
@@ -86,6 +85,10 @@ def run(args: argparse.Namespace) -> None:
     print(f"Non-empty outputs: {result.nonempty_output_count}")
     print(f"Files with non-empty stderr sidecars: {result.stderr_nonempty_count}")
     print(f"Nonzero goerwitz exit codes: {result.nonzero_exit_count}")
+
+    missing_verses_path = args.out_dir / "_missing_verses.json"
+    write_missing_verses_json(args.in_dir, args.out_dir, missing_verses_path)
+    print(f"Missing verses JSON: {missing_verses_path}")
 
     summary_path = args.stderr_dir / SUMMARY_FILENAME
     try:
