@@ -2,8 +2,12 @@ from __future__ import annotations
 
 import argparse
 import subprocess
+import sys
 from dataclasses import dataclass
 from pathlib import Path
+
+from accgram.goerwitz_stderr_summary import SUMMARY_FILENAME, write_stderr_summary
+
 
 
 @dataclass(frozen=True)
@@ -82,6 +86,21 @@ def run(args: argparse.Namespace) -> None:
     print(f"Non-empty outputs: {result.nonempty_output_count}")
     print(f"Files with non-empty stderr sidecars: {result.stderr_nonempty_count}")
     print(f"Nonzero goerwitz exit codes: {result.nonzero_exit_count}")
+
+    summary_path = args.stderr_dir / SUMMARY_FILENAME
+    try:
+        summary_result = write_stderr_summary(stderr_dir=args.stderr_dir, summary_path=summary_path)
+        print(
+            "Stderr summary: "
+            f"{summary_result.summary_path} "
+            f"(files={summary_result.files_scanned}, "
+            f"non-empty={summary_result.files_with_nonempty_stderr}, "
+            f"lines={summary_result.total_stderr_lines}, "
+            f"unique-verse-messages={summary_result.total_unique_verse_messages}, "
+            f"unique-non-verse-messages={summary_result.total_unique_non_verse_messages})"
+        )
+    except Exception as exc:  # pragma: no cover - preserve primary pipeline success.
+        print(f"Warning: failed to write stderr summary at {summary_path}: {exc}", file=sys.stderr)
 
 
 def run_goerwitz_binary(

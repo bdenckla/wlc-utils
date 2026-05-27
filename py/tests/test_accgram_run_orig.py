@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -133,6 +134,65 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
             self.assertEqual(result.nonzero_exit_count, 1)
             sidecar = (stderr_dir / "wlc_422_ps_ob_ag.stderr.txt").read_text(encoding="utf-8")
             self.assertIn("goerwitz exited with code 7", sidecar)
+
+    def test_write_stderr_summary_aggregates_messages(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            stderr_dir = base / "err"
+            summary_path = stderr_dir / "_summary.stderr.json"
+            stderr_dir.mkdir(parents=True, exist_ok=True)
+
+            (stderr_dir / "b_ag.stderr.txt").write_text(
+                "accents warning 3 (yyparse): general parsing error   Obadiah 1:2\n"
+                "goerwitz exited with code 7 and produced no stderr output.\n",
+                encoding="utf-8",
+            )
+            (stderr_dir / "a_ag.stderr.txt").write_text(
+                "accents warning 3 (yyparse): general parsing error Obadiah 1:2\n"
+                "accents warning 6 (yyparse): verse is missing sof pasuq, Obadiah 1:2\n",
+                encoding="utf-8",
+            )
+            (stderr_dir / "z_ag.stderr.txt").write_text("", encoding="utf-8")
+
+            summary_result = run_goerwitz.write_stderr_summary(
+                stderr_dir=stderr_dir,
+                summary_path=summary_path,
+            )
+
+            self.assertEqual(summary_result.files_scanned, 3)
+            self.assertEqual(summary_result.files_with_nonempty_stderr, 2)
+            self.assertEqual(summary_result.total_stderr_lines, 4)
+            self.assertEqual(summary_result.total_unique_verse_messages, 2)
+            self.assertEqual(summary_result.total_unique_non_verse_messages, 1)
+
+            summary = json.loads(summary_path.read_text(encoding="utf-8"))
+            self.assertEqual(summary["file_counters"]["files_scanned"], 3)
+            self.assertEqual(summary["file_counters"]["files_with_nonempty_stderr"], 2)
+            self.assertEqual(summary["file_counters"]["total_stderr_lines"], 4)
+
+            verse_rows = summary["verse_message_aggregates"]
+            self.assertEqual(len(verse_rows), 1)
+            self.assertEqual(verse_rows[0]["verse_ref"], "Obadiah 1:2")
+
+            messages = verse_rows[0]["messages"]
+            self.assertEqual(messages[0]["message"], "accents warning 3 (yyparse): general parsing error")
+            self.assertEqual(messages[0]["count"], 2)
+            self.assertEqual(
+                messages[1]["message"],
+                "accents warning 6 (yyparse): verse is missing sof pasuq",
+            )
+            self.assertEqual(messages[1]["count"], 1)
+
+            non_verse_rows = summary["non_verse_message_aggregates"]
+            self.assertEqual(len(non_verse_rows), 1)
+            self.assertEqual(
+                non_verse_rows[0]["message"],
+                "goerwitz exited with code 7 and produced no stderr output.",
+            )
+            self.assertEqual(non_verse_rows[0]["count"], 1)
+
+            per_file = summary["per_file_counters"]
+            self.assertEqual([row["file"] for row in per_file], ["a_ag.stderr.txt", "b_ag.stderr.txt", "z_ag.stderr.txt"])
 
 
 if __name__ == "__main__":
