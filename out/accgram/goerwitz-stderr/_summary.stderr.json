@@ -1,6 +1,6 @@
 {
   "run_metadata": {
-    "summary_version": 2,
+    "summary_version": 3,
     "stderr_dir": "C:\\Users\\BenDe\\GitRepos\\wlc-utils\\out\\accgram\\goerwitz-stderr",
     "summary_path": "C:\\Users\\BenDe\\GitRepos\\wlc-utils\\out\\accgram\\goerwitz-stderr\\_summary.stderr.json",
     "source_glob": "*_ag.stderr.txt"
@@ -14,175 +14,175 @@
   },
   "verse_message_aggregates": [
     {
-      "verse_ref": "1Kings 16:33",
+      "verse_ref": "1k 16:33",
       "standard_sof_pasuq_error_count": 6
     },
     {
-      "verse_ref": "1Kings 19:11",
+      "verse_ref": "1k 19:11",
       "standard_sof_pasuq_error_count": 6
     },
     {
-      "verse_ref": "1Kings 20:29",
+      "verse_ref": "1k 20:29",
       "standard_sof_pasuq_error_count": 17
     },
     {
-      "verse_ref": "1Kings 6:2",
+      "verse_ref": "1k 6:2",
       "standard_sof_pasuq_error_count": 6
     },
     {
-      "verse_ref": "1Samuel 6:19",
+      "verse_ref": "1s 6:19",
       "standard_sof_pasuq_error_count": 15
     },
     {
-      "verse_ref": "2Chronicles 22:12",
+      "verse_ref": "2c 22:12",
       "standard_sof_pasuq_error_count": 5
     },
     {
-      "verse_ref": "2Chronicles 26:15",
+      "verse_ref": "2c 26:15",
       "standard_sof_pasuq_error_count": 20
     },
     {
-      "verse_ref": "2Kings 23:36",
+      "verse_ref": "2k 23:36",
       "standard_sof_pasuq_error_count": 14
     },
     {
-      "verse_ref": "Amos 1:14",
+      "verse_ref": "am 1:14",
       "standard_sof_pasuq_error_count": 9
     },
     {
-      "verse_ref": "Amos 6:6",
+      "verse_ref": "am 6:6",
       "standard_sof_pasuq_error_count": 9
     },
     {
-      "verse_ref": "Amos 9:5",
+      "verse_ref": "am 9:5",
       "standard_sof_pasuq_error_count": 14
     },
     {
-      "verse_ref": "Daniel 2:41",
+      "verse_ref": "da 2:41",
       "standard_sof_pasuq_error_count": 11
     },
     {
-      "verse_ref": "Deuter 13:15",
+      "verse_ref": "dt 13:15",
       "standard_sof_pasuq_error_count": 12
     },
     {
-      "verse_ref": "Deuter 25:9",
+      "verse_ref": "dt 25:9",
       "standard_sof_pasuq_error_count": 8
     },
     {
-      "verse_ref": "Deuter 9:20",
+      "verse_ref": "dt 9:20",
       "standard_sof_pasuq_error_count": 20
     },
     {
-      "verse_ref": "Ecclesiastes 7:21",
+      "verse_ref": "ec 7:21",
       "standard_sof_pasuq_error_count": 4
     },
     {
-      "verse_ref": "Ecclesiastes 9:18",
+      "verse_ref": "ec 9:18",
       "standard_sof_pasuq_error_count": 3
     },
     {
-      "verse_ref": "Exodus 14:25",
-      "standard_sof_pasuq_error_count": 13
+      "verse_ref": "ek 14:11",
+      "standard_sof_pasuq_error_count": 10
     },
     {
-      "verse_ref": "Exodus 14:29",
+      "verse_ref": "ek 33:20",
       "standard_sof_pasuq_error_count": 15
     },
     {
-      "verse_ref": "Exodus 2:5",
+      "verse_ref": "ex 14:25",
+      "standard_sof_pasuq_error_count": 13
+    },
+    {
+      "verse_ref": "ex 14:29",
+      "standard_sof_pasuq_error_count": 15
+    },
+    {
+      "verse_ref": "ex 2:5",
       "standard_sof_pasuq_error_count": 12
     },
     {
-      "verse_ref": "Exodus 34:6",
+      "verse_ref": "ex 34:6",
       "standard_sof_pasuq_error_count": 19
     },
     {
-      "verse_ref": "Ezekiel 14:11",
-      "standard_sof_pasuq_error_count": 10
-    },
-    {
-      "verse_ref": "Ezekiel 33:20",
-      "standard_sof_pasuq_error_count": 15
-    },
-    {
-      "verse_ref": "Haggai 2:12",
+      "verse_ref": "hg 2:12",
       "standard_sof_pasuq_error_count": 17
     },
     {
-      "verse_ref": "Hosea 4:19",
+      "verse_ref": "ho 4:19",
       "standard_sof_pasuq_error_count": 18
     },
     {
-      "verse_ref": "Hosea 8:9",
+      "verse_ref": "ho 8:9",
       "standard_sof_pasuq_error_count": 12
     },
     {
-      "verse_ref": "Isaiah 36:2",
+      "verse_ref": "is 36:2",
       "standard_sof_pasuq_error_count": 15
     },
     {
-      "verse_ref": "Jeremiah 10:3",
+      "verse_ref": "je 10:3",
       "standard_sof_pasuq_error_count": 4
     },
     {
-      "verse_ref": "Jeremiah 31:32",
+      "verse_ref": "je 31:32",
       "standard_sof_pasuq_error_count": 10
     },
     {
-      "verse_ref": "Jeremiah 38:11",
+      "verse_ref": "je 38:11",
       "standard_sof_pasuq_error_count": 18
     },
     {
-      "verse_ref": "Jeremiah 48:12",
+      "verse_ref": "je 48:12",
       "standard_sof_pasuq_error_count": 11
     },
     {
-      "verse_ref": "Jeremiah 49:19",
+      "verse_ref": "je 49:19",
       "standard_sof_pasuq_error_count": 16
     },
     {
-      "verse_ref": "Jeremiah 4:19",
+      "verse_ref": "je 4:19",
       "standard_sof_pasuq_error_count": 16
     },
     {
-      "verse_ref": "Jeremiah 9:10",
+      "verse_ref": "je 9:10",
       "standard_sof_pasuq_error_count": 3
     },
     {
-      "verse_ref": "Lamentations 5:5",
+      "verse_ref": "lm 5:5",
       "standard_sof_pasuq_error_count": 3
     },
     {
-      "verse_ref": "Levit 18:17",
+      "verse_ref": "lv 18:17",
       "standard_sof_pasuq_error_count": 10
     },
     {
-      "verse_ref": "Levit 26:7",
+      "verse_ref": "lv 26:7",
       "standard_sof_pasuq_error_count": 13
     },
     {
-      "verse_ref": "Micah 2:7",
+      "verse_ref": "mi 2:7",
       "standard_sof_pasuq_error_count": 5
     },
     {
-      "verse_ref": "Numbers 20:19",
+      "verse_ref": "nu 20:19",
       "standard_sof_pasuq_error_count": 13
     },
     {
-      "verse_ref": "Numbers 7:32",
+      "verse_ref": "nu 7:32",
       "standard_sof_pasuq_error_count": 9
     },
     {
-      "verse_ref": "Numbers 7:40",
+      "verse_ref": "nu 7:40",
       "standard_sof_pasuq_error_count": 15
     },
     {
-      "verse_ref": "Numbers 7:55",
+      "verse_ref": "nu 7:55",
       "standard_sof_pasuq_error_count": 6
     },
     {
-      "verse_ref": "Numbers 7:68",
+      "verse_ref": "nu 7:68",
       "standard_sof_pasuq_error_count": 9
     }
   ],

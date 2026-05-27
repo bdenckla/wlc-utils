@@ -6,10 +6,16 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
+from accgram.wlc_book_codes import goerwitz_book_name_to_wlc_bb
+
 
 SUMMARY_FILENAME = "_summary.stderr.json"
 VERSE_REF_RE = re.compile(
     r"(?P<verse>(?:[1-3]\s*)?[A-Z][A-Za-z_]*(?:\s+[A-Z][A-Za-z_]*)*\s+\d+:\d+)\s*$"
+)
+VERSE_REF_PARTS_RE = re.compile(
+    r"^(?P<book>(?:[1-3]\s*)?[A-Z][A-Za-z_]*(?:\s+[A-Z][A-Za-z_]*)*)\s+"
+    r"(?P<chapter>\d+):(?P<verse>\d+)$"
 )
 GENERAL_PARSING_ERROR_MESSAGE = "accents warning 3 (yyparse): general parsing error"
 MISSING_SOF_PASUQ_MESSAGE = "accents warning 6 (yyparse): verse is missing sof pasuq"
@@ -63,6 +69,22 @@ def _try_compact_standard_sof_pasuq_case(
     }
 
 
+def _to_wlc_ref(verse_ref: str) -> str:
+    match = VERSE_REF_PARTS_RE.match(verse_ref)
+    if match is None:
+        return verse_ref
+
+    book_name = _normalize_ws(match.group("book"))
+    chnu = match.group("chapter")
+    vrnu = match.group("verse")
+
+    try:
+        bb = goerwitz_book_name_to_wlc_bb(book_name)
+    except ValueError:
+        return verse_ref
+    return f"{bb} {chnu}:{vrnu}"
+
+
 def write_stderr_summary(stderr_dir: Path, summary_path: Path) -> StderrSummaryResult:
     sidecar_paths = sorted(stderr_dir.glob("*_ag.stderr.txt"))
 
@@ -91,6 +113,7 @@ def write_stderr_summary(stderr_dir: Path, summary_path: Path) -> StderrSummaryR
                 non_verse_counts[message] += 1
                 file_non_verse_counter[message] += 1
             else:
+                verse_ref = _to_wlc_ref(verse_ref)
                 if verse_ref not in verse_counts:
                     verse_counts[verse_ref] = Counter()
                 verse_counts[verse_ref][message] += 1
@@ -143,7 +166,7 @@ def write_stderr_summary(stderr_dir: Path, summary_path: Path) -> StderrSummaryR
 
     summary_obj = {
         "run_metadata": {
-            "summary_version": 2,
+            "summary_version": 3,
             "stderr_dir": str(stderr_dir),
             "summary_path": str(summary_path),
             "source_glob": "*_ag.stderr.txt",

@@ -242,7 +242,7 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
 
             verse_rows = summary["verse_message_aggregates"]
             self.assertEqual(len(verse_rows), 1)
-            self.assertEqual(verse_rows[0]["verse_ref"], "Obadiah 1:2")
+            self.assertEqual(verse_rows[0]["verse_ref"], "ob 1:2")
             self.assertEqual(verse_rows[0]["standard_sof_pasuq_error_count"], 2)
             self.assertNotIn("messages", verse_rows[0])
 

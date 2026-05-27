@@ -77,3 +77,18 @@ def wlc_bb_to_goerwitz_book_name(bb: str) -> str:
             f"bb={bb} name={book_name}"
         )
     return book_name
+
+
+def _normalize_goerwitz_book_name(book_name: str) -> str:
+    # Normalize whitespace so both "1Kings" and "1 Kings" resolve identically.
+    normalized = " ".join(book_name.split())
+    return re.sub(r"^([1234])\s+", r"\1", normalized)
+
+
+def goerwitz_book_name_to_wlc_bb(book_name: str) -> str:
+    target = _normalize_goerwitz_book_name(book_name)
+    for bb, info in _WLC_BB_INFO.items():
+        candidate_name = info.goerwitz_book_name or info.bk39id
+        if _normalize_goerwitz_book_name(candidate_name) == target:
+            return bb
+    raise ValueError(f"Unknown goerwitz book name: {book_name}")
