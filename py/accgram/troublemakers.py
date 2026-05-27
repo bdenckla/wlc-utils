@@ -15,6 +15,7 @@ HARDCODED_REFS: frozenset[tuple[str, int, int]] = frozenset(
         ("ob", 1, 1),
         ("ek", 11, 1),
         ("je", 9, 11),
+        ("ju", 13, 18),
         ("lv", 19, 1),
     }
 )

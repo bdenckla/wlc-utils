@@ -7,9 +7,9 @@
   },
   "file_counters": {
     "files_scanned": 37,
-    "files_with_nonempty_stderr": 19,
-    "total_stderr_lines": 541,
-    "total_unique_verse_messages": 90,
+    "files_with_nonempty_stderr": 18,
+    "total_stderr_lines": 529,
+    "total_unique_verse_messages": 86,
     "total_unique_non_verse_messages": 0
   },
   "verse_message_aggregates": [
@@ -148,14 +148,6 @@
     {
       "verse_ref": "Jeremiah 9:10",
       "standard_sof_pasuq_error_count": 3
-    },
-    {
-      "verse_ref": "Jeremiah 9:11",
-      "standard_sof_pasuq_error_count": 3
-    },
-    {
-      "verse_ref": "Judges 13:19",
-      "standard_sof_pasuq_error_count": 7
     },
     {
       "verse_ref": "Lamentations 5:5",
@@ -324,8 +316,8 @@
     },
     {
       "file": "wlc_422_ps_je_ag.stderr.txt",
-      "stderr_lines": 89,
-      "unique_verse_messages": 16,
+      "stderr_lines": 85,
+      "unique_verse_messages": 14,
       "unique_non_verse_messages": 0
     },
     {
@@ -348,8 +340,8 @@
     },
     {
       "file": "wlc_422_ps_ju_ag.stderr.txt",
-      "stderr_lines": 8,
-      "unique_verse_messages": 2,
+      "stderr_lines": 0,
+      "unique_verse_messages": 0,
       "unique_non_verse_messages": 0
     },
     {

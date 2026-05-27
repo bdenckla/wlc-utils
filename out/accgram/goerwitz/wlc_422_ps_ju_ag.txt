@@ -9991,6 +9991,30 @@ Judges 13:19
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
+          azla geresh 
+        4 pashta_phrase
+          mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 zaqef_phrase
+      munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 silluq_phrase
+        silluq 
+Judges 13:20
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 geresh_phrase
           telishaqetanna azla geresh 
         4 pashta_phrase
           mahpak pashta 
