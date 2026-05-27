@@ -45,7 +45,9 @@ _WLC_BB_INFO = {
     "ma": WlcBookCodeInfo(bk39id=tbn.BK_MALAKHI),
     "ps": WlcBookCodeInfo(bk39id=tbn.BK_PSALMS),
     "pr": WlcBookCodeInfo(bk39id=tbn.BK_PROV),
-    "jb": WlcBookCodeInfo(bk39id=tbn.BK_JOB),
+    "jb": WlcBookCodeInfo(bk39id=tbn.BK_JOB, goerwitz_book_name="Defeatmatchforjob"),
+    # Above is an attempt to avoid the special treatment of strings starting with "Job"
+    # in accents-1.1.4/tnk2acc.c: strncmp (yytext, "Job", 3)
     "ca": WlcBookCodeInfo(bk39id=tbn.BK_SONG, goerwitz_book_name="Song"),
     "ru": WlcBookCodeInfo(bk39id=tbn.BK_RUTH),
     "lm": WlcBookCodeInfo(bk39id=tbn.BK_LAMENT),
