@@ -20,6 +20,11 @@ TEST_MODULE_SPECS = (
         help_text="Run accgram filter-split provenance sidecar tests.",
     ),
     TestModuleSpec(
+        flag="accgram-research-troublemakers",
+        module_name="tests.test_accgram_research_troublemakers",
+        help_text="Run accgram research-tms enrichment tests.",
+    ),
+    TestModuleSpec(
         flag="accgram-run-goerwitz",
         module_name="tests.test_accgram_run_goerwitz",
         help_text="Run accgram run-goerwitz and stderr-summary tests.",

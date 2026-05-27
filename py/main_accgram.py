@@ -6,6 +6,10 @@ Subcommands:
                 and once as filtered per-book files (excluding Psalms/Proverbs,
                 poetically-cantillated Job verses, and hardcoded troublemaker
                 verses) and write out/accgram/goerwitz/_troublemakers.json.
+    research-tms
+                Enrich out/accgram/goerwitz/_troublemakers.json with matching
+                wlc422-kq-u verse objects and structured XML-ish UXLC verse
+                nodes and write out/accgram/research-troublemakers.json.
     fresh-run-goerwitz
                 Run filter-split-wlc, then run goerwitz on the freshly written
                 filtered split files.
@@ -14,6 +18,7 @@ Subcommands:
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py filter-split-wlc
+    .venv/Scripts/python.exe py/main_accgram.py research-tms
     .venv/Scripts/python.exe py/main_accgram.py fresh-run-goerwitz
     .venv/Scripts/python.exe py/main_accgram.py run-goerwitz
 """
@@ -23,7 +28,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from accgram import filter_split_wlc, split_wlc
+from accgram import filter_split_wlc, research_troublemakers, split_wlc
 from accgram import run_goerwitz
 
 
@@ -43,6 +48,10 @@ def _run_filter_split_wlc(args: argparse.Namespace) -> None:
 
 def _run_goerwitz(args: argparse.Namespace) -> None:
     run_goerwitz.run(args)
+
+
+def _run_research_troublemakers(args: argparse.Namespace) -> None:
+    research_troublemakers.run(args)
 
 
 def _run_fresh_run_goerwitz(args: argparse.Namespace) -> None:
@@ -121,6 +130,16 @@ def main() -> None:
     )
     run_goerwitz.add_args(run_goerwitz_parser, repo_root=_repo_root())
     run_goerwitz_parser.set_defaults(func=_run_goerwitz)
+
+    research_tms_parser = subparsers.add_parser(
+        "research-tms",
+        help=(
+            "Enrich existing _troublemakers.json entries with matching "
+            "wlc422-kq-u verse objects and XML-ish UXLC verse nodes."
+        ),
+    )
+    research_troublemakers.add_args(research_tms_parser, repo_root=_repo_root())
+    research_tms_parser.set_defaults(func=_run_research_troublemakers)
 
     args = parser.parse_args()
     args.func(args)
