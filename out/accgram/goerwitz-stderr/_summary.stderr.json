@@ -8,8 +8,8 @@
   "file_counters": {
     "files_scanned": 37,
     "files_with_nonempty_stderr": 5,
-    "total_stderr_lines": 118,
-    "total_unique_verse_messages": 22,
+    "total_stderr_lines": 114,
+    "total_unique_verse_messages": 20,
     "total_unique_non_verse_messages": 0
   },
   "verse_message_aggregates": [
@@ -48,10 +48,6 @@
     {
       "verse_ref": "je 4:19",
       "standard_sof_pasuq_error_count": 16
-    },
-    {
-      "verse_ref": "je 9:10",
-      "standard_sof_pasuq_error_count": 3
     },
     {
       "verse_ref": "lm 5:5",
@@ -188,8 +184,8 @@
     },
     {
       "file": "wlc_422_ps_je_ag.stderr.txt",
-      "stderr_lines": 85,
-      "unique_verse_messages": 14,
+      "stderr_lines": 81,
+      "unique_verse_messages": 12,
       "unique_non_verse_messages": 0
     },
     {

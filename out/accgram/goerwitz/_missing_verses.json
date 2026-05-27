@@ -3,7 +3,7 @@
   "artifacts_description": "missing verses from goerwitz *_ag.txt outputs",
   "payload_provenance_note": "These verses are present in the split input book files but have no verse label in the corresponding goerwitz *_ag.txt output files.",
   "summary": {
-    "missing_verses": 13,
+    "missing_verses": 12,
     "books_with_missing_verses": 6
   },
   "missing_verses": [
@@ -30,11 +30,6 @@
     {
       "ref": "je 4:20",
       "content": "$E70BER (AL-$E33BER03 NIQ:RF80) K.I71Y $UD.:DF73H K.FL-HF/)F92REC P.IT:)OM03 $UD.:D74W. )OHFL/A80Y RE73GA( Y:RIY(OT/F75Y00",
-      "output_file": "wlc_422_ps_je_ag.txt"
-    },
-    {
-      "ref": "je 9:12",
-      "content": "WA/Y.O74)MER Y:HWF80H (AL-(FZ:B/FM03 )ET-T.O74WRFT/I80Y ):A$E71R NFTA73T.IY LI/P:N\"Y/HE92M W:/LO)-$FM:(71W. B:/QOWL/I73Y W:/LO)-HF71L:KW. B/F75H.00",
       "output_file": "wlc_422_ps_je_ag.txt"
     },
     {

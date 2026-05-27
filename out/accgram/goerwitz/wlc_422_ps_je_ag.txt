@@ -5827,7 +5827,7 @@ Jeremiah 9:9
         tifcha 
       3 silluq_phrase
         silluq 
-Jeremiah 9:10
+Jeremiah 9:12
 0 silluq_clause
   1 atnach_clause
     2 zaqef_phrase
