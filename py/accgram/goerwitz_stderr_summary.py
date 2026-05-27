@@ -185,7 +185,7 @@ def write_stderr_summary(stderr_dir: Path, summary_path: Path) -> StderrSummaryR
 
     summary_path.parent.mkdir(parents=True, exist_ok=True)
     summary_text = json.dumps(summary_obj, ensure_ascii=False, indent=2)
-    summary_path.write_text(f"{summary_text}\n", encoding="utf-8", newline="\n")
+    summary_path.write_text(f"{summary_text}\n", encoding="utf-8")
 
     return StderrSummaryResult(
         summary_path=summary_path,
