@@ -2476,7 +2476,7 @@ Lamentations 5:4
       tifcha 
     2 silluq_phrase
       mereka silluq 
-Lamentations 5:5
+Lamentations 5:6
 0 silluq_clause
   1 zaqef_clause
     2 pashta_phrase

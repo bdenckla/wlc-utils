@@ -3,8 +3,8 @@
   "artifacts_description": "missing verses from goerwitz *_ag.txt outputs",
   "payload_provenance_note": "These verses are present in the split input book files but have no verse label in the corresponding goerwitz *_ag.txt output files.",
   "summary": {
-    "missing_verses": 12,
-    "books_with_missing_verses": 6
+    "missing_verses": 5,
+    "books_with_missing_verses": 4
   },
   "missing_verses": [
     {
@@ -26,41 +26,6 @@
       "ref": "ho 5:2",
       "content": "W:/$AX:A+F71H &\"+I73YM HE(:MI92YQW. WA/):ANI73Y MW.SF71R L:/KUL./F75M00",
       "output_file": "wlc_422_ps_ho_ag.txt"
-    },
-    {
-      "ref": "je 4:20",
-      "content": "$E70BER (AL-$E33BER03 NIQ:RF80) K.I71Y $UD.:DF73H K.FL-HF/)F92REC P.IT:)OM03 $UD.:D74W. )OHFL/A80Y RE73GA( Y:RIY(OT/F75Y00",
-      "output_file": "wlc_422_ps_je_ag.txt"
-    },
-    {
-      "ref": "je 10:4",
-      "content": "B.:/KE71SEP W./B:/ZFHF73B Y:YAP./\"92HW. B.:/MAS:M:RO94WT W./B:/MAQ.FBO91WT Y:XAZ.:Q73W./M W:/LO71W) YFPI75YQ00",
-      "output_file": "wlc_422_ps_je_ag.txt"
-    },
-    {
-      "ref": "je 31:33",
-      "content": "K.I74Y ZO74)T HA/B.:RI83YT ):A$E74R )EK:ROT04 )ET-B.\"63YT YI&:RF)\"61L )AX:AR\"63Y HA/Y.FMI70YM HF/H\"M03 N:)UM-Y:HWF80H NFTA70T.IY )ET-T.O75WRFT/IY03 B.:/QIR:B./F80M W:/(AL-LIB./F73M )EK:T.:AB/E92N.FH W:/HFYI70YTIY L/FHEM03 L\"75/)LOHI80YM W:/H\"73M.FH YI75H:YW.-L/I71Y L:/(F75M00",
-      "output_file": "wlc_422_ps_je_ag.txt"
-    },
-    {
-      "ref": "je 38:12",
-      "content": "WA/Y.O83)MER (EBED-ME63LEK: HA/K.W.$I61Y )E75L-YIR:M:YF81HW. &I74YM 14NF) B.:LOW)\"63Y HA/S.:XFBO70WT W:/HA/M.:LFXIYM03 10T.AXAT )AC.ILO74WT YFDE80Y/KF MI/T.A73XAT LA/X:ABFLI92YM WA/Y.A71(A& YIR:M:YF73HW. K.\"75N00",
-      "output_file": "wlc_422_ps_je_ag.txt"
-    },
-    {
-      "ref": "je 48:13",
-      "content": "W./BO71$ MOW)F73B MI/K.:MO92W$ K.A/):A$ER-B.O33$W.03 B.\"74YT YI&:RF)\"80L MI/B.\"71YT )\"73L MIB:+EX/F75M00",
-      "output_file": "wlc_422_ps_je_ag.txt"
-    },
-    {
-      "ref": "je 49:20",
-      "content": "LF/K\"62N $IM:(74W. (:ACAT-Y:HWF81H ):A$E70R YF(AC03 )EL-):EDO80WM W./MA63X:$:BOWTF80Y/W ):A$E71R XF$A73B )EL-YO$:B\"74Y T\"YMF92N )IM-LO70) YIS:XFBW./M03 C:(IYR\"74Y HA/C.O80)N )IM-LO71) YA$.I91YM (:AL\"Y/HE73M N:W/\"HE75M00",
-      "output_file": "wlc_422_ps_je_ag.txt"
-    },
-    {
-      "ref": "lm 5:6",
-      "content": "MIC:RA33YIM03 NFTA74N.W. YF80D )A$.73W.R LI/&:B.O71(A75 LF75XEM00",
-      "output_file": "wlc_422_ps_lm_ag.txt"
     },
     {
       "ref": "nu 26:1",

@@ -2434,7 +2434,7 @@ Jeremiah 4:18
         mereka tifcha 
       3 silluq_phrase
         silluq 
-Jeremiah 4:19
+Jeremiah 4:20
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause
@@ -6214,7 +6214,7 @@ Jeremiah 10:2
       mereka tifcha 
     2 silluq_phrase
       silluq 
-Jeremiah 10:3
+Jeremiah 10:4
 0 silluq_clause
   1 atnach_clause
     2 tifcha_phrase
@@ -19444,7 +19444,7 @@ Jeremiah 31:31
           mereka tifcha 
     2 silluq_phrase
       mereka silluq 
-Jeremiah 31:32
+Jeremiah 31:33
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause
@@ -24499,7 +24499,7 @@ Jeremiah 38:10
           tifcha 
       3 silluq_phrase
         mereka silluq 
-Jeremiah 38:11
+Jeremiah 38:12
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause
@@ -29665,7 +29665,7 @@ Jeremiah 48:11
         tifcha 
       3 silluq_phrase
         mereka silluq 
-Jeremiah 48:12
+Jeremiah 48:13
 0 silluq_clause
   1 atnach_clause
     2 tifcha_phrase
@@ -30844,7 +30844,7 @@ Jeremiah 49:18
         mereka tifcha 
       3 silluq_phrase
         silluq 
-Jeremiah 49:19
+Jeremiah 49:20
 0 silluq_clause
   1 atnach_clause
     2 zaqef_clause

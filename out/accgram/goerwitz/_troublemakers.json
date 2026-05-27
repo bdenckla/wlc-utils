@@ -3,8 +3,8 @@
   "artifacts_description": "hardcoded troublemaker verse exclusions",
   "payload_provenance_note": "These verses are excluded by explicit hardcoded rules in this repo to avoid known parser-breaker inputs.",
   "summary": {
-    "troublemakers_excluded": 38,
-    "books_with_troublemakers": 19
+    "troublemakers_excluded": 45,
+    "books_with_troublemakers": 20
   },
   "troublemakers": [
     {
@@ -108,6 +108,10 @@
       "content": "WA/Y.I$:LA74X ME75LEK:-)A$.74W.R05 )ET-RAB-$FQ\"63H MI/L.FKI94Y$ Y:RW.$FLA91:M/FH]1 )EL-HA/M.E71LEK: XIZ:QIY.F73HW. B.:/X\"74YL K.FB\"92D WA75/Y.A(:AMO81D B.I/T:(FLAT03 HA/B.:R\"KF74H HF/(EL:YOWNF80H B.I/M:SIL.A73T &:D\"71H KOWB\"75S00"
     },
     {
+      "ref": "je 4:19",
+      "content": "M\"(/A74Y05 M\"(/A63Y05 *)XWLH **)OWXI61YLFH QIYRO71WT LIB./I91Y HO75MEH-L./I71Y LIB./I73Y LO74) )AX:ARI92Y$ K.I74Y QO70WL $OWPFR03 *#M(TY **$FMA74(AT.: NAP:$/I80Y T.:RW.(A73T MIL:XFMF75H00"
+    },
+    {
       "ref": "je 9:10",
       "content": "W:/NFTAT.I94Y )ET-Y:RW.$FLA91IM L:/GAL.I73YM M:(O74WN T.AN.I92YM W:/)ET-(FR\"94Y Y:HW.DF91H )ET.\"71N $:MFMF73H MI/B.:LI73Y YOW$\"75B00 S"
     },
@@ -116,8 +120,32 @@
       "content": "MI75Y-HF/)I70Y$ HE75/XFKFM03 W:/YFB\"74N )ET-ZO80)T WA/):A$E63R D.IB.E94R P.I75Y-Y:HWF91H )\"LF73Y/W W:/YAG.ID/F92H. (AL-MFH03 )FB:DF74H HF/)F80REC NIC.:TF71H KA/M.ID:B.F73R MI/B.:LI73Y (OB\"75R00 S"
     },
     {
+      "ref": "je 10:3",
+      "content": "K.I75Y-XUQ.O71WT HF75/(AM.I73YM HE74BEL H92W.) K.I75Y-(\"C03 MI/Y.A74(AR K.:RFT/O80W MA(:A&\"71H Y:D\"71Y-XFRF73$ B.A75/M.A(:ACF75D00"
+    },
+    {
+      "ref": "je 31:32",
+      "content": "LO74) KA/B.:RI81YT ):A$E70R K.FRA33T.IY03 )ET-):ABOWT/F80M B.:/YOWM03 HEX:EZIYQ/I74Y B:/YFD/F80M L:/HOWCIY)/F73M M\"/)E73REC MIC:RF92YIM ):A$ER-H\"61M.FH H\"P\"74RW. )ET-B.:RIYT/I81Y W:/)FNOKI91Y B.F(A71L:T.IY B/F73M N:)UM-Y:HWF75H00"
+    },
+    {
+      "ref": "je 38:11",
+      "content": "WA/Y.IQ.A74X05 (E75BED-ME63LEK: )ET-HF/):ANF$I61YM B.:/YFD/O81W WA/Y.FBO70) B\"YT-HA/M.E33LEK:03 )EL-T.A74XAT HF/)OWCF80R WA/Y.IQ.A70X MI/$.FM03 B.:LOWY\"74 *H/SXBWT **S:XFBO80WT W./B:LOWY\"73 M:LFXI92YM WA/Y:$AL.:X/\"94M )E75L-YIR:M:YF91HW. )EL-HA/B.O73WR B.A/X:ABFLI75YM00"
+    },
+    {
+      "ref": "je 48:12",
+      "content": "LF/K\"62N HIN.\"73H-YFMI70YM B.F)IYM03 N:)UM-Y:HWF80H W:/$IL.AX:T.IY-L/O71W CO(I73YM W:/C\"(U92/HW. W:/K\"LF74Y/W YFRI80YQW. W:/NIB:L\"Y/HE73M Y:NAP.\"75CW.00"
+    },
+    {
+      "ref": "je 49:19",
+      "content": "14HIN.\"H K.:/)AR:Y\"62H YA(:ALE63H MI/G.:)O74WN HA/Y.AR:D.\"N02 )EL-N:W\"74H )\"YTFN01 K.I75Y-)AR:G.I70Y(FH ):ARIYC/E63N.W. M\"75/(FLE80Y/HF W./MI71Y BFX73W.R )\"LE74Y/HF )EP:QO92D K.I74Y MI70Y KFMO33W/NIY03 W./MI74Y YO(IYD/E80N.IY W./MIY-ZE74H RO(E80H ):A$E71R YA(:AMO73D L:/PFN/F75Y00 S"
+    },
+    {
       "ref": "ju 13:18",
       "content": "WA/Y.O70)MER L./OW03]Q]n]p MAL:)A74K: Y:HWF80H LF71/M.FH Z.E73H T.I$:)A74L LI/$:M/I92Y W:/HW.)-PE91LI)Y00]Q]c]n S"
+    },
+    {
+      "ref": "lm 5:5",
+      "content": "(A70L CAW.F)R/\"33NW.03 NIR:D.F80P:NW. YFGA73(:NW. *L) **W:/LO71) H75W.NA73X]Q]c]p L/F75NW.00"
     },
     {
       "ref": "lv 18:17",
