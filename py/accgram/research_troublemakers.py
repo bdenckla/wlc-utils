@@ -213,8 +213,17 @@ def _interpolate_wlc422_kq_qere(verse_payload: dict[str, object]) -> dict[str, o
         # Inline qere tokens directly into vels in place of the kq wrapper.
         out_vels.extend(kq[1])
 
-    out_verse["vels"] = out_vels
+    out_verse["vels"] = [_strip_sam_pe_inun_token(token) for token in out_vels]
+    out_verse["vels"] = [token for token in out_verse["vels"] if token is not None]
     return out_verse
+
+
+def _strip_sam_pe_inun_token(token: object) -> object | None:
+    if not isinstance(token, dict):
+        return token
+    if set(token.keys()) == {"sam_pe_inun"}:
+        return None
+    return token
 
 
 def _load_uxlc_for_refs(
@@ -265,7 +274,7 @@ def _load_uxlc_for_refs(
 
 
 def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str | None:
-    if element.tag == "k":
+    if element.tag in {"k", "pe", "samekh"}:
         return None
 
     tag = "w" if element.tag == "q" else element.tag

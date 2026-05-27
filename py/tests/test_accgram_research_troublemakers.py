@@ -59,7 +59,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                     [
                         {
                             "bcv": "gn1:1",
-                            "vels": ["בְּרֵאשִׁ֖ית", "בָּרָ֣א"],
+                            "vels": ["בְּרֵאשִׁ֖ית", {"sam_pe_inun": "P"}, "בָּרָ֣א"],
                         }
                     ],
                     ensure_ascii=False,
@@ -108,13 +108,24 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertEqual(row["wlc422_kq_u_verse"]["bcv"], "gn1:1")
             self.assertEqual(row["wlc422_kq_u_verse"]["vels"][0], "בראש֖ית")
             self.assertEqual(row["wlc422_kq_u_verse"]["vels"][1], "בר֣א")
+            self.assertFalse(
+                any(
+                    isinstance(token, dict) and set(token.keys()) == {"sam_pe_inun"}
+                    for token in row["wlc422_kq_u_verse"]["vels"]
+                )
+            )
             self.assertEqual(row["uxlc_context"]["xml_file"], "Genesis.xml")
 
             xmlish = row["uxlc_verse_xmlish"]
             self.assertEqual(xmlish[0]["tag"], "w")
             self.assertEqual(xmlish[0]["text"], "בראש֖ית")
             self.assertEqual(xmlish[1], "קרי")
-            self.assertEqual(xmlish[2]["tag"], "samekh")
+            self.assertFalse(
+                any(
+                    isinstance(node, dict) and node.get("tag") in {"pe", "samekh"}
+                    for node in xmlish
+                )
+            )
             self.assertEqual(xmlish[0]["children"][0]["tag"], "s")
             self.assertEqual(xmlish[0]["children"][0]["attrs"]["t"], "large")
             self.assertEqual(xmlish[0]["children"][1]["tag"], "x")
