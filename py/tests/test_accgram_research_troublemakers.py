@@ -113,9 +113,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             xmlish = row["uxlc_verse_xmlish"]
             self.assertEqual(xmlish[0]["tag"], "w")
             self.assertEqual(xmlish[0]["text"], "בראש֖ית")
-            self.assertEqual(xmlish[1]["tag"], "k")
-            self.assertEqual(xmlish[2]["tag"], "q")
-            self.assertEqual(xmlish[3]["tag"], "samekh")
+            self.assertEqual(xmlish[1], "קרי")
+            self.assertEqual(xmlish[2]["tag"], "samekh")
             self.assertEqual(xmlish[0]["children"][0]["tag"], "s")
             self.assertEqual(xmlish[0]["children"][0]["attrs"]["t"], "large")
             self.assertEqual(xmlish[0]["children"][1]["tag"], "x")

@@ -256,15 +256,20 @@ def _load_uxlc_for_refs(
                 if (chnu, vrnu) not in target_set:
                     continue
                 bcv = _to_compact_bcv(bb, chnu, vrnu)
+                nodes = [_to_xmlish_verse_child(child) for child in verse]
                 by_bcv[bcv] = {
                     "xml_file": xml_name,
-                    "nodes": [_to_xmlish_verse_child(child) for child in verse],
+                    "nodes": [node for node in nodes if node is not None],
                 }
     return by_bcv
 
 
-def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str:
-    node: dict[str, object] = {"tag": element.tag}
+def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str | None:
+    if element.tag == "k":
+        return None
+
+    tag = "w" if element.tag == "q" else element.tag
+    node: dict[str, object] = {"tag": tag}
 
     # Keep only direct element text; inline child text (e.g. <x>) is captured in children.
     text = (element.text or "").strip()
@@ -274,7 +279,7 @@ def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str:
     if element.attrib:
         node["attrs"] = dict(element.attrib)
 
-    if element.tag in {"w", "q"}:
+    if tag == "w":
         children = [_to_xmlish_inline(child) for child in element if child.tag in {"s", "x"}]
         if children:
             node["children"] = children
