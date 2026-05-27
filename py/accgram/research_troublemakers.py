@@ -92,6 +92,7 @@ def run(args: argparse.Namespace) -> None:
             missing_wlc422 += 1
         else:
             found_wlc422 += 1
+            wlc422_verse = _interpolate_wlc422_kq_qere(wlc422_verse)
             wlc422_verse = sanitize_verse_text_payload(wlc422_verse)
 
         uxlc_info = uxlc_by_bcv.get(bcv)
@@ -190,6 +191,30 @@ def _load_wlc422_index(wlc422_kq_u_dir: Path) -> dict[str, dict[str, object]]:
                 raise ValueError(f"Duplicate bcv across verses files: {bcv}")
             by_bcv[bcv] = row
     return by_bcv
+
+
+def _interpolate_wlc422_kq_qere(verse_payload: dict[str, object]) -> dict[str, object]:
+    vels = verse_payload.get("vels")
+    if not isinstance(vels, list):
+        return verse_payload
+
+    out_verse: dict[str, object] = dict(verse_payload)
+    out_vels: list[object] = []
+    for token in vels:
+        if not isinstance(token, dict):
+            out_vels.append(token)
+            continue
+
+        kq = token.get("kq")
+        if not isinstance(kq, list) or len(kq) < 2 or not isinstance(kq[1], list):
+            out_vels.append(token)
+            continue
+
+        # Inline qere tokens directly into vels in place of the kq wrapper.
+        out_vels.extend(kq[1])
+
+    out_verse["vels"] = out_vels
+    return out_verse
 
 
 def _load_uxlc_for_refs(
