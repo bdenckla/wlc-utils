@@ -3,30 +3,10 @@
   "artifacts_description": "missing verses from goerwitz *_ag.txt outputs",
   "payload_provenance_note": "These verses are present in the split input book files but have no verse label in the corresponding goerwitz *_ag.txt output files.",
   "summary": {
-    "missing_verses": 5,
-    "books_with_missing_verses": 4
+    "missing_verses": 1,
+    "books_with_missing_verses": 1
   },
   "missing_verses": [
-    {
-      "ref": "2c 23:1",
-      "content": "W./BA/$.FNF63H HA/$.:BI(I61YT HIT:XAZ.A74Q Y:HOWYFDF81( WA/Y.IQ.A74X )ET-&FR\"74Y HA/M.\")O83WT LA/(:AZAR:YF74HW. BEN-Y:ROXF83M W./L:/YI$:MF(\"74)L B.EN-14Y:HOWXFNFN W:/LA75/(:AZAR:YF63HW. BEN-(OWB\"61D W:/)ET-MA(:A&\"YF94HW. BEN-(:ADFYF91HW. W:/)ET-):ELIY$FPF71+ B.EN-ZIK:RI73Y (IM./O71W BA/B.:RI75YT00",
-      "output_file": "wlc_422_ps_2c_ag.txt"
-    },
-    {
-      "ref": "ec 10:1",
-      "content": "Z:B74W.B\"Y MF80WET YAB:)I71Y$ YAB.I73Y(A $E74MEN ROWQ\"92XA YFQF91R M\"/XFK:MF71H MI/K.FBO73WD SIK:L71W.T M:(F75+00",
-      "output_file": "wlc_422_ps_ec_ag.txt"
-    },
-    {
-      "ref": "ho 5:1",
-      "content": "$IM:(W.-ZO63)T HA/K.OH:ANI61YM W:/HAQ:$I74YBW.05 B.\"74YT YI&:RF)\"81L W./B\"70YT HA/M.E33LEK:03 HA):AZI80YNW. K.I71Y L/FKE73M HA/M.I$:P.F92+ K.I75Y-PAX03 H:EYIYTE74M L:/MIC:P.F80H W:/RE73$ET P.:RW.&F71H (AL-T.FBO75WR00",
-      "output_file": "wlc_422_ps_ho_ag.txt"
-    },
-    {
-      "ref": "ho 5:2",
-      "content": "W:/$AX:A+F71H &\"+I73YM HE(:MI92YQW. WA/):ANI73Y MW.SF71R L:/KUL./F75M00",
-      "output_file": "wlc_422_ps_ho_ag.txt"
-    },
     {
       "ref": "nu 26:1",
       "content": "WA/Y.O70)MER Y:HWFH03 )EL-MO$E80H W:/)E94L )EL:(FZF91R B.EN-)AH:ARO71N HA/K.OH\"73N L\"/)MO75R00",

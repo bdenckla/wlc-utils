@@ -3847,7 +3847,7 @@ Ecclesiastes 9:17
       mereka tifcha 
     2 silluq_phrase
       silluq 
-Ecclesiastes 9:18
+Ecclesiastes 10:1
 0 silluq_clause
   1 atnach_clause
     2 zaqef_phrase

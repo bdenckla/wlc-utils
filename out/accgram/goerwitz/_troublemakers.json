@@ -3,7 +3,7 @@
   "artifacts_description": "hardcoded troublemaker verse exclusions",
   "payload_provenance_note": "These verses are excluded by explicit hardcoded rules in this repo to avoid known parser-breaker inputs.",
   "summary": {
-    "troublemakers_excluded": 45,
+    "troublemakers_excluded": 48,
     "books_with_troublemakers": 20
   },
   "troublemakers": [
@@ -26,6 +26,10 @@
     {
       "ref": "1s 6:19",
       "content": "WA/Y.A62K: B.:/)AN:$\"74Y B\"75YT-$E81ME$ K.I70Y RF)W.03 B.A/):ARO74WN Y:HWF80H WA/Y.A70K: B.F/(FM03 $IB:(I74YM )I80Y$ X:AMI$.I71YM )E73LEP )I92Y$ WA/Y.I75T:)AB.:L74W. HF/(F80M K.I75Y-HIK.F94H Y:HWF91H B.F/(F73M MAK.F71H G:DOWLF75H]1"
+    },
+    {
+      "ref": "2c 22:12",
+      "content": "WA/Y:HI70Y )IT./FM03 B.:/B\"74YT HF75/):ELOHI80YM MIT:XAB.\"73) $\"74$ $FNI73YM WA/(:ATAL:YF73H MOLE71KET (AL-HF/)F75REC00 P"
     },
     {
       "ref": "2c 26:15",
@@ -68,6 +72,10 @@
       "content": "G.A70M L:/KFL-HA/D.:BFRIYM03 ):A$E74R Y:DAB.\"80RW. )AL-T.IT.\"73N LIB./E92KF ):A$E71R LO75)-TI$:MA71( )E75T-(AB:D./:KF73 M:QAL:L/E75KF00"
     },
     {
+      "ref": "ec 9:18",
+      "content": "+OWBF71H XFK:MF73H MI/K.:L\"74Y Q:RF92B W:/XOW+E74) )EXF80D Y:)AB.\"71D +OWBF71H HAR:B.\"75H00"
+    },
+    {
       "ref": "ek 11:1",
       "content": "WA/T.I&.F63) )OT/I61Y R81W.XA WA/T.FB\"74) 14)OT/IY )EL-$A63(AR B.\"YT-Y:HWF70H HA/Q.AD:MOWNIY03 HA/P.OWNE74H QFDI80YM/FH W:/HIN.\"H03 B.:/PE74TAX HA/$.A80(AR (E&:RI71YM WA/X:AMI$.F73H )I92Y$ WF/)ER:)E63H B:/TOWK/F61M )ET-YA):AZAN:YF94H BEN-(AZ.U91R W:/)ET-P.:LA+:YF71HW. BEN-B.:NFYF73HW. &FR\"73Y HF/(F75M00 P"
     },
@@ -98,6 +106,10 @@
     {
       "ref": "hg 2:12",
       "content": "H\"74N05 YI&.F)-)I63Y$ B.:&AR-QO61DE$ B.I/K:NA74P B.IG:D/O81W W:/NFGA74( 14B.I/K:NFP/OW )EL-HA/L.E63XEM W:/)EL-HA/N.FZI61YD W:/)EL-HA/Y.A94YIN W:/)EL-$E91MEN W:/)EL-K.FL-MA):AKF73L H:A/YIQ:D.F92$ WA/Y.A(:AN94W. HA/K.OH:ANI91YM WA/Y.O)M:R73W. LO75)00"
+    },
+    {
+      "ref": "ho 4:19",
+      "content": "CFRA71R R91W.XA )OWT/F73H. B.I/K:NFPE92Y/HF W:/Y\"BO73$W. MI/Z.IB:XOWT/F75M]Q]n]p S"
     },
     {
       "ref": "ho 8:9",

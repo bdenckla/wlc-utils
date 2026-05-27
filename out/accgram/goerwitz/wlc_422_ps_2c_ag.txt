@@ -11926,7 +11926,7 @@
         mereka tifcha 
     2 silluq_phrase
       mereka silluq 
-2Chronicles 22:12
+2Chronicles 23:1
 0 silluq_clause
   1 tifcha_clause
     2 revia_clause

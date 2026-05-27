@@ -7,25 +7,12 @@
   },
   "file_counters": {
     "files_scanned": 37,
-    "files_with_nonempty_stderr": 3,
-    "total_stderr_lines": 29,
-    "total_unique_verse_messages": 6,
+    "files_with_nonempty_stderr": 0,
+    "total_stderr_lines": 0,
+    "total_unique_verse_messages": 0,
     "total_unique_non_verse_messages": 0
   },
-  "verse_message_aggregates": [
-    {
-      "verse_ref": "2c 22:12",
-      "standard_sof_pasuq_error_count": 5
-    },
-    {
-      "verse_ref": "ec 9:18",
-      "standard_sof_pasuq_error_count": 3
-    },
-    {
-      "verse_ref": "ho 4:19",
-      "standard_sof_pasuq_error_count": 18
-    }
-  ],
+  "verse_message_aggregates": [],
   "non_verse_message_aggregates": [],
   "per_file_counters": [
     {
@@ -48,8 +35,8 @@
     },
     {
       "file": "wlc_422_ps_2c_ag.stderr.txt",
-      "stderr_lines": 6,
-      "unique_verse_messages": 2,
+      "stderr_lines": 0,
+      "unique_verse_messages": 0,
       "unique_non_verse_messages": 0
     },
     {
@@ -90,8 +77,8 @@
     },
     {
       "file": "wlc_422_ps_ec_ag.stderr.txt",
-      "stderr_lines": 4,
-      "unique_verse_messages": 2,
+      "stderr_lines": 0,
+      "unique_verse_messages": 0,
       "unique_non_verse_messages": 0
     },
     {
@@ -138,8 +125,8 @@
     },
     {
       "file": "wlc_422_ps_ho_ag.stderr.txt",
-      "stderr_lines": 19,
-      "unique_verse_messages": 2,
+      "stderr_lines": 0,
+      "unique_verse_messages": 0,
       "unique_non_verse_messages": 0
     },
     {
