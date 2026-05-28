@@ -53,4 +53,25 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
             " The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
         ]
     },
+    ("1s", 6, 19): {
+        "wlc_word": "גדולֽה",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    ("2c", 22, 12): {
+        "wlc_word": "שנ֖ים",
+        "assessment": {
+            "manuscript": "etnaxta",
+            "bhs": "tipexa?",
+            "wlc": "tipexa",
+            "uxlc": "etnaxta",
+            "consensus": "etnaxta",
+        },
+        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
+    },
 }
