@@ -11,11 +11,12 @@ from types import SimpleNamespace
 
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram import research_troublemakers
+from accgram import wlc_uxlc_diff
 
 
 class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_diff_wlc_uxlc_reports_token_changes(self):
-        diff = research_troublemakers._diff_wlc_uxlc(
+        diff = wlc_uxlc_diff.diff_wlc_uxlc(
             {"vels": ["a", "b", "c"]},
             ["a", "x", "c"],
         )
