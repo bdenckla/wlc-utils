@@ -64,7 +64,7 @@ def run(args: argparse.Namespace) -> None:
     if not isinstance(troublemakers, list):
         raise ValueError(f"Expected list at troubles payload key 'troublemakers': {args.troubles_in}")
 
-    parsed_rows: list[tuple[dict[str, object], str, str, int, int]] = []
+    parsed_rows: list[tuple[dict[str, object], str, str]] = []
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
     for row in troublemakers:
         if not isinstance(row, dict):
@@ -75,7 +75,7 @@ def run(args: argparse.Namespace) -> None:
         bb, chnu, vrnu = _parse_ref(ref_value)
         bcv = _to_compact_bcv(bb, chnu, vrnu)
         refs_by_book.setdefault(bb, set()).add((chnu, vrnu))
-        parsed_rows.append((row, ref_value, bcv, chnu, vrnu))
+        parsed_rows.append((row, ref_value, bcv))
 
     wlc422_by_bcv = _load_wlc422_index(args.wlc422_kq_u_dir)
     uxlc_by_bcv = _load_uxlc_for_refs(args.uxlc_dir, refs_by_book)
@@ -86,7 +86,7 @@ def run(args: argparse.Namespace) -> None:
     missing_uxlc = 0
 
     enriched_rows: list[dict[str, object]] = []
-    for row, _orig_ref, bcv, chnu, vrnu in parsed_rows:
+    for row, _orig_ref, bcv in parsed_rows:
         wlc422_verse = wlc422_by_bcv.get(bcv)
         if wlc422_verse is None:
             missing_wlc422 += 1
@@ -94,28 +94,23 @@ def run(args: argparse.Namespace) -> None:
             found_wlc422 += 1
             wlc422_verse = _interpolate_wlc422_kq_qere(wlc422_verse)
             wlc422_verse = sanitize_verse_text_payload(wlc422_verse)
+            if isinstance(wlc422_verse, dict):
+                wlc422_verse.pop("bcv", None)
 
         uxlc_info = uxlc_by_bcv.get(bcv)
         if uxlc_info is None:
             missing_uxlc += 1
             uxlc_nodes = None
-            uxlc_context = None
         else:
             found_uxlc += 1
             uxlc_nodes = uxlc_info["nodes"]
             uxlc_nodes = sanitize_verse_text_payload(uxlc_nodes)
-            uxlc_context = {
-                "xml_file": uxlc_info["xml_file"],
-                "chapter": chnu,
-                "verse": vrnu,
-            }
 
         enriched_rows.append(
             {
                 **row,
                 "wlc422_kq_u_verse": wlc422_verse,
                 "uxlc_verse_xmlish": uxlc_nodes,
-                "uxlc_context": uxlc_context,
             }
         )
 
