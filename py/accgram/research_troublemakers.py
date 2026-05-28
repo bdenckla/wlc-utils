@@ -280,8 +280,12 @@ def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str | Non
     tag = "w" if element.tag == "q" else element.tag
     node: dict[str, object] = {"tag": tag}
 
-    # Keep only direct element text; inline child text (e.g. <x>) is captured in children.
-    text = (element.text or "").strip()
+    # Preserve direct text plus tail text after inline children (e.g. <x>...</x>tail).
+    # Do not include inline child text here; it is represented separately in children.
+    text_parts = [(element.text or "")]
+    for child in element:
+        text_parts.append(child.tail or "")
+    text = "".join(text_parts).strip()
     if text:
         node["text"] = text
 

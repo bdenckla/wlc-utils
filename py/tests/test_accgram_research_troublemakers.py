@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
@@ -13,6 +14,17 @@ from accgram import research_troublemakers
 
 
 class TestAccgramResearchTroublemakers(unittest.TestCase):
+    def test_to_xmlish_word_preserves_text_after_inline_x_child(self):
+        element = ET.fromstring("<w>פֶ֛<x>t</x>לִאי׃</w>")
+
+        node = research_troublemakers._to_xmlish_verse_child(element)
+        node = sanitize_verse_text_payload(node)
+
+        self.assertIsInstance(node, dict)
+        self.assertEqual(node["tag"], "w")
+        self.assertEqual(node["text"], "פ֛לאי׃")
+        self.assertEqual(node["children"], [{"tag": "x", "text": "t"}])
+
     def test_sanitize_keeps_only_last_meteg_in_last_word(self):
         wlc422_verse = {
             "bcv": "gn1:1",
