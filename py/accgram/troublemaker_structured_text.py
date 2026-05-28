@@ -11,10 +11,7 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
             "uxlc": "munax",
             "consensus": "munax"
         },
-        "uxlc_change": {
-            "label": "UXLC change 2022.08.31-9",
-            "url": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
-        },
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
     },
     ("1k", 16, 33): {
         "wlc_word": "מכ֨ל",
@@ -25,10 +22,7 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
             "uxlc": "no accent",
             "consensus": "pashta on lamed",
         },
-        "uxlc_change": {
-            "label": "UXLC change 2022.08.31-23",
-            "url": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
-        },
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
     },
     ("1k", 19, 11): {
         "wlc_word": "הר֨וח",
@@ -40,5 +34,23 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
             "consensus": "optional pashta stress helper on resh, required pashta on xet",
         },
         "uxlc_change": None,
+    },
+    ("1k", 20, 29): {
+        "wlc_word": "נ֥כח",
+        "assessment": {
+            "manuscript": "meteg-maqaf",
+            "bhs": "merkha-space?",
+            "wlc": "merkha-space",
+            "uxlc": "meteg-maqaf",
+            "consensus": "meteg-maqaf, though merkha-space and no_meteg-maqaf are also attested (see MAM doc-note)",
+        },
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
+        "free_form_comment": [
+            "I am not sure what, if anything is 'wrong' about merkha-space."
+            " Maybe that is not even what the Goerwitz checker is flaging as wrong."
+            " The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of"
+            " the 'legality' of sequences involving it."
+            " The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
+        ]
     },
 }
