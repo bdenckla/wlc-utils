@@ -59,7 +59,23 @@
             "ועשר֣ים"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "topic": "wlc-vs-uxlc-reading",
+        "summary": "UXLC records this as a textual change; manuscript evidence appears clear here, and WLC is likely in error. The WLC reading may reflect a BHS-side error, but that should be confirmed.",
+        "references": [
+          {
+            "label": "UXLC change 2022.08.31-9",
+            "url": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9"
+          }
+        ],
+        "assessment": {
+          "manuscript": "clear",
+          "wlc": "likely_error",
+          "possible_source": "possible_bhs_error",
+          "verification": "confirm_bhs"
+        }
+      }
     },
     {
       "ref": "1k 16:33",

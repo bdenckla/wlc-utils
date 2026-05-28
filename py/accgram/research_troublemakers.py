@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
+from accgram.troublemaker_structured_text import STRUCTURED_TEXT_BY_REF
 from accgram.wlc_uxlc_diff import diff_wlc_uxlc
 from accgram.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import provenance
@@ -65,7 +66,7 @@ def run(args: argparse.Namespace) -> None:
     if not isinstance(troublemakers, list):
         raise ValueError(f"Expected list at troubles payload key 'troublemakers': {args.troubles_in}")
 
-    parsed_rows: list[tuple[dict[str, object], str, str]] = []
+    parsed_rows: list[tuple[dict[str, object], str, str, tuple[str, int, int]]] = []
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
     for row in troublemakers:
         if not isinstance(row, dict):
@@ -76,7 +77,7 @@ def run(args: argparse.Namespace) -> None:
         bb, chnu, vrnu = _parse_ref(ref_value)
         bcv = _to_compact_bcv(bb, chnu, vrnu)
         refs_by_book.setdefault(bb, set()).add((chnu, vrnu))
-        parsed_rows.append((row, ref_value, bcv))
+        parsed_rows.append((row, ref_value, bcv, (bb, chnu, vrnu)))
 
     wlc422_by_bcv = _load_wlc422_index(args.wlc422_kq_u_dir)
     uxlc_by_bcv = _load_uxlc_for_refs(args.uxlc_dir, refs_by_book)
@@ -87,7 +88,7 @@ def run(args: argparse.Namespace) -> None:
     missing_uxlc = 0
 
     enriched_rows: list[dict[str, object]] = []
-    for row, _orig_ref, bcv in parsed_rows:
+    for row, _orig_ref, bcv, ref_tuple in parsed_rows:
         wlc422_verse = wlc422_by_bcv.get(bcv)
         if wlc422_verse is None:
             missing_wlc422 += 1
@@ -107,14 +108,16 @@ def run(args: argparse.Namespace) -> None:
             uxlc_nodes = uxlc_info["nodes"]
             uxlc_nodes = sanitize_verse_text_payload(uxlc_nodes)
 
-        enriched_rows.append(
-            {
-                **row,
-                "wlc422_kq_u_verse": wlc422_verse,
-                "uxlc_verse_xmlish": uxlc_nodes,
-                "diff_wlc_uxlc": diff_wlc_uxlc(wlc422_verse, uxlc_nodes),
-            }
-        )
+        enriched_row: dict[str, object] = {
+            **row,
+            "wlc422_kq_u_verse": wlc422_verse,
+            "uxlc_verse_xmlish": uxlc_nodes,
+            "diff_wlc_uxlc": diff_wlc_uxlc(wlc422_verse, uxlc_nodes),
+        }
+        structured_text = STRUCTURED_TEXT_BY_REF.get(ref_tuple)
+        if structured_text is not None:
+            enriched_row["structured_text"] = structured_text
+        enriched_rows.append(enriched_row)
 
     payload: dict[str, object] = {
         "artifacts_description": "enriched troublemaker verse research records",
