@@ -15,6 +15,14 @@ from accgram import wlc_uxlc_diff
 
 
 class TestAccgramResearchTroublemakers(unittest.TestCase):
+    def test_diff_wlc_uxlc_simplifies_uxlc_note_only_delta(self):
+        diff = wlc_uxlc_diff.diff_wlc_uxlc(
+            {"vels": ["foo"]},
+            [{"text": "foo", "note": "bar"}],
+        )
+
+        self.assertEqual(diff, [{"uxlc_adds_note": "bar"}])
+
     def test_diff_wlc_uxlc_simplifies_note_only_delta(self):
         diff = wlc_uxlc_diff.diff_wlc_uxlc(
             {"vels": [{"word": "foo", "notes": ["]Q", "]n", "]p"]}]},

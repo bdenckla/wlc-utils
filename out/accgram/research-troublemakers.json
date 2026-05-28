@@ -447,15 +447,7 @@
       ],
       "diff_wlc_uxlc": [
         {
-          "wlc422": [
-            "למ֣רח֔וק"
-          ],
-          "uxlc": [
-            {
-              "text": "למ֣רח֔וק",
-              "note": "t"
-            }
-          ]
+          "uxlc_adds_note": "t"
         }
       ]
     },
@@ -1918,15 +1910,7 @@
       ],
       "diff_wlc_uxlc": [
         {
-          "wlc422": [
-            "וישלח֧ם"
-          ],
-          "uxlc": [
-            {
-              "text": "וישלח֧ם",
-              "note": "t"
-            }
-          ]
+          "uxlc_adds_note": "t"
         }
       ]
     },
