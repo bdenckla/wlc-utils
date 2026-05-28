@@ -30,4 +30,15 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
             "url": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
         },
     },
+    ("1k", 19, 11): {
+        "wlc_word": "הר֨וח",
+        "assessment": {
+            "manuscript": "?",
+            "bhs": "qadma on resh?",
+            "wlc": "qadma on resh (with brac-1 note)",
+            "uxlc": "qadma on resh",
+            "consensus": "optional pashta stress helper on resh, required pashta on xet",
+        },
+        "uxlc_change": None,
+    },
 }
