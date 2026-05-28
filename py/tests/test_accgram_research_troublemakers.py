@@ -21,9 +21,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         node = sanitize_verse_text_payload(node)
 
         self.assertIsInstance(node, dict)
-        self.assertEqual(node["tag"], "w")
-        self.assertEqual(node["text"], "פ֛לאי׃")
-        self.assertEqual(node["children"], [{"tag": "x", "text": "t"}])
+        self.assertEqual(node, {"text": "פ֛לאי׃", "note": "t"})
 
     def test_sanitize_keeps_only_last_meteg_in_last_word(self):
         wlc422_verse = {

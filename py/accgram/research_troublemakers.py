@@ -301,6 +301,18 @@ def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str | Non
     if set(node.keys()) == {"tag", "text"} and node["tag"] == "w":
         return str(node["text"])
 
+    # Flatten the common word+single-note shape.
+    if set(node.keys()) == {"tag", "text", "children"} and node["tag"] == "w":
+        children = node["children"]
+        if (
+            isinstance(children, list)
+            and len(children) == 1
+            and isinstance(children[0], dict)
+            and set(children[0].keys()) == {"tag", "text"}
+            and children[0]["tag"] == "x"
+        ):
+            return {"text": str(node["text"]), "note": str(children[0]["text"])}
+
     return node
 
 
