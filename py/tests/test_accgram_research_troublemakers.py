@@ -14,6 +14,14 @@ from accgram import research_troublemakers
 
 
 class TestAccgramResearchTroublemakers(unittest.TestCase):
+    def test_diff_wlc_uxlc_reports_token_changes(self):
+        diff = research_troublemakers._diff_wlc_uxlc(
+            {"vels": ["a", "b", "c"]},
+            ["a", "x", "c"],
+        )
+
+        self.assertEqual(diff, [{"wlc422": ["b"], "uxlc": ["x"]}])
+
     def test_to_xmlish_word_preserves_text_after_inline_x_child(self):
         element = ET.fromstring("<w>פֶ֛<x>t</x>לִאי׃</w>")
 
@@ -115,16 +123,16 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             row = payload["troublemakers"][0]
             self.assertEqual(row["ref"], "gn 1:1")
-            self.assertEqual(row["wlc422_kq_u_verse"]["bcv"], "gn1:1")
             self.assertEqual(row["wlc422_kq_u_verse"]["vels"][0], "בראש֖ית")
             self.assertEqual(row["wlc422_kq_u_verse"]["vels"][1], "בר֣א")
+            self.assertIsInstance(row["diff_wlc_uxlc"], list)
+            self.assertGreaterEqual(len(row["diff_wlc_uxlc"]), 1)
             self.assertFalse(
                 any(
                     isinstance(token, dict) and set(token.keys()) == {"sam_pe_inun"}
                     for token in row["wlc422_kq_u_verse"]["vels"]
                 )
             )
-            self.assertEqual(row["uxlc_context"]["xml_file"], "Genesis.xml")
 
             xmlish = row["uxlc_verse_xmlish"]
             self.assertEqual(xmlish[0]["tag"], "w")
@@ -199,7 +207,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             row = payload["troublemakers"][0]
             self.assertIsNone(row["wlc422_kq_u_verse"])
             self.assertEqual(row["uxlc_verse_xmlish"], ["והא֗רץ"])
-            self.assertIsNotNone(row["uxlc_context"])
+            self.assertIsNone(row["diff_wlc_uxlc"])
 
     def test_run_creates_output_path_and_writes_expected_top_level_fields(self):
         with TemporaryDirectory() as tmp_dir:
