@@ -180,6 +180,136 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "consensus": "silluq-sof_pasuq",
         },
     },
+    "ek 33:20": {
+        "wlc_word": "ישראֽל",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-p note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "ex 2:5": {
+        "wlc_word": "ותקחֽה",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "ex 14:25": {
+        "wlc_word": "במצרֽים",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "ex 14:29": {
+        "wlc_word": "ומשמאלֽם",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "ho 4:19": {
+        "wlc_word": "מזבחותֽם",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "ho 8:9": {
+        "wlc_word": "אהבֽים",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "lv 18:17": {
+        "wlc_word": "הֽוא",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "lv 19:1": {
+        "wlc_word": "לאמֽר",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "lv 26:7": {
+        "wlc_word": "לחֽרב",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "nu 7:32": {
+        "wlc_word": "קטֽרת",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "nu 7:40": {
+        "wlc_word": "לחטֽאת",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "nu 7:55": {
+        "wlc_word": "למנחֽה",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "nu 7:68": {
+        "wlc_word": "קטֽרת",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
     "ec 7:21": {
         "wlc_word": "אש֥ר",
         "assessment": {
