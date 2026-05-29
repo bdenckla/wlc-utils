@@ -8,7 +8,7 @@ from mb_cmn import my_diffs
 def diff_wlc_uxlc(
     wlc422_verse: object,
     uxlc_nodes: object,
-) -> list[dict[str, object]] | None:
+) -> list[dict[str, object]] | dict[str, object] | None:
     if not isinstance(wlc422_verse, dict) or not isinstance(uxlc_nodes, list):
         return None
 
@@ -19,7 +19,10 @@ def diff_wlc_uxlc(
     wlc_keys = [_diff_key(token) for token in wlc_vels]
     uxlc_keys = [_diff_key(token) for token in uxlc_nodes]
     diff_pairs = my_diffs.get(wlc_keys, uxlc_keys, outa=wlc_vels, outb=uxlc_nodes)
-    return [_render_diff_pair(left, right) for left, right in diff_pairs]
+    rendered = [_render_diff_pair(left, right) for left, right in diff_pairs]
+    if len(rendered) == 1:
+        return rendered[0]
+    return rendered
 
 
 def _render_diff_pair(left: list[object], right: list[object]) -> dict[str, object]:
@@ -31,7 +34,16 @@ def _render_diff_pair(left: list[object], right: list[object]) -> dict[str, obje
     if note is not None:
         return {"uxlc_adds_note": note}
 
-    return {"wlc422": left, "uxlc": right}
+    return {
+        "wlc422": _collapse_singleton_list(left),
+        "uxlc": _collapse_singleton_list(right),
+    }
+
+
+def _collapse_singleton_list(tokens: list[object]) -> object:
+    if len(tokens) == 1:
+        return tokens[0]
+    return tokens
 
 
 def _wlc_notes_only_delta(left: list[object], right: list[object]) -> object | None:

@@ -141,7 +141,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             [{"text": "foo", "note": "bar"}],
         )
 
-        self.assertEqual(diff, [{"uxlc_adds_note": "bar"}])
+        self.assertEqual(diff, {"uxlc_adds_note": "bar"})
 
     def test_diff_wlc_uxlc_simplifies_note_only_delta(self):
         diff = wlc_uxlc_diff.diff_wlc_uxlc(
@@ -149,7 +149,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             ["foo"],
         )
 
-        self.assertEqual(diff, [{"wlc_adds_notes": ["]Q", "]n", "]p"]}])
+        self.assertEqual(diff, {"wlc_adds_notes": ["]Q", "]n", "]p"]})
 
     def test_diff_wlc_uxlc_reports_token_changes(self):
         diff = wlc_uxlc_diff.diff_wlc_uxlc(
@@ -157,7 +157,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             ["a", "x", "c"],
         )
 
-        self.assertEqual(diff, [{"wlc422": ["b"], "uxlc": ["x"]}])
+        self.assertEqual(diff, {"wlc422": "b", "uxlc": "x"})
 
     def test_diff_wlc_mam_normalizes_standalone_paseq_tokenization(self):
         diff = mam_simple_diff.diff_wlc_mam(
@@ -166,6 +166,33 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
 
         self.assertEqual(diff, [])
+
+    def test_diff_wlc_mam_reports_token_changes_as_scalars_for_singletons(self):
+        diff = mam_simple_diff.diff_wlc_mam(
+            {"vels": ["a", "b", "c"]},
+            {"vels": ["a", "x", "c"]},
+        )
+
+        self.assertEqual(diff, {"wlc422": "b", "mam_simple": "x"})
+
+    def test_diff_wlc_uxlc_keeps_list_when_multiple_diffs(self):
+        diff = wlc_uxlc_diff.diff_wlc_uxlc(
+            {"vels": ["a", "b", "c", "d", "e"]},
+            ["a", "x", "c", "y", "e"],
+        )
+
+        self.assertEqual(diff, [{"wlc422": "b", "uxlc": "x"}, {"wlc422": "d", "uxlc": "y"}])
+
+    def test_diff_wlc_mam_keeps_list_when_multiple_diffs(self):
+        diff = mam_simple_diff.diff_wlc_mam(
+            {"vels": ["a", "b", "c", "d", "e"]},
+            {"vels": ["a", "x", "c", "y", "e"]},
+        )
+
+        self.assertEqual(
+            diff,
+            [{"wlc422": "b", "mam_simple": "x"}, {"wlc422": "d", "mam_simple": "y"}],
+        )
 
     def test_to_xmlish_word_preserves_text_after_inline_x_child(self):
         element = ET.fromstring("<w>פֶ֛<x>t</x>לִאי׃</w>")
@@ -334,8 +361,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             row = payload["troublemakers"][0]
             self.assertEqual(row["ref"], "gn 1:1")
             self.assertEqual(row["wlc422_kq_u_verse"]["vels"][0], "בראש֖ית בר֣א")
-            self.assertIsInstance(row["diff_wlc_uxlc"], list)
-            self.assertGreaterEqual(len(row["diff_wlc_uxlc"]), 1)
+            self.assertIn(type(row["diff_wlc_uxlc"]), (dict, list))
+            if isinstance(row["diff_wlc_uxlc"], list):
+                self.assertGreaterEqual(len(row["diff_wlc_uxlc"]), 1)
             self.assertFalse(
                 any(
                     isinstance(token, dict) and set(token.keys()) == {"sam_pe_inun"}
@@ -359,9 +387,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertEqual(xmlish[0]["children"][1]["text"], "5")
 
             self.assertEqual(row["mam_simple_verse"]["vels"], ["אב־גד׀ קרי דה־ו"])
-            self.assertIsInstance(row["diff_wlc_mam"], list)
-            self.assertGreaterEqual(len(row["diff_wlc_mam"]), 1)
-            self.assertIn("mam_simple", row["diff_wlc_mam"][0])
+            self.assertIn(type(row["diff_wlc_mam"]), (dict, list))
+            if isinstance(row["diff_wlc_mam"], list):
+                self.assertGreaterEqual(len(row["diff_wlc_mam"]), 1)
+                first_diff = row["diff_wlc_mam"][0]
+            else:
+                first_diff = row["diff_wlc_mam"]
+            self.assertIn("mam_simple", first_diff)
 
     def test_run_missing_mam_simple_raises_fail_fast(self):
         with TemporaryDirectory() as tmp_dir:

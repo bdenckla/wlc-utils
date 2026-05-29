@@ -11,7 +11,7 @@ _PASEQ = "׀"
 def diff_wlc_mam(
     wlc422_verse: object,
     mam_simple_verse: object,
-) -> list[dict[str, object]] | None:
+) -> list[dict[str, object]] | dict[str, object] | None:
     if not isinstance(wlc422_verse, dict) or not isinstance(mam_simple_verse, dict):
         return None
 
@@ -26,7 +26,10 @@ def diff_wlc_mam(
     wlc_keys = [_diff_key(token) for token in wlc_vels]
     mam_keys = [_diff_key(token) for token in mam_vels]
     diff_pairs = my_diffs.get(wlc_keys, mam_keys, outa=wlc_vels, outb=mam_vels)
-    return [_render_diff_pair(left, right) for left, right in diff_pairs]
+    rendered = [_render_diff_pair(left, right) for left, right in diff_pairs]
+    if len(rendered) == 1:
+        return rendered[0]
+    return rendered
 
 
 def _normalize_paseq_tokenization(vels: list[object]) -> list[object]:
@@ -53,7 +56,16 @@ def _render_diff_pair(left: list[object] | None, right: list[object] | None) -> 
     if notes is not None:
         return {"wlc_adds_notes": notes}
 
-    return {"wlc422": left, "mam_simple": right}
+    return {
+        "wlc422": _collapse_singleton_list(left),
+        "mam_simple": _collapse_singleton_list(right),
+    }
+
+
+def _collapse_singleton_list(tokens: list[object]) -> object:
+    if len(tokens) == 1:
+        return tokens[0]
+    return tokens
 
 
 def _wlc_notes_only_delta(left: list[object], right: list[object]) -> object | None:
