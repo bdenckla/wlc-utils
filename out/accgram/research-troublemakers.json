@@ -576,7 +576,17 @@
             "שנה֙"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "שנ֨ה",
+        "assessment": {
+          "manuscript": "pashta on ה?",
+          "bhs": "qadma on נ?",
+          "wlc": "qadma on נ",
+          "uxlc": "pashta on ה",
+          "consensus": "pashta on ה"
+        }
+      }
     },
     {
       "ref": "am 1:14",
@@ -626,7 +636,17 @@
             "]p"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "סופֽה",
+        "assessment": {
+          "manuscript": "silluq-no_sof_pasuq?",
+          "bhs": "silluq-no_sof_pasuq?",
+          "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+          "uxlc": "silluq-no_sof_pasuq",
+          "consensus": "silluq-sof_pasuq"
+        }
+      }
     },
     {
       "ref": "am 6:6",
@@ -674,7 +694,17 @@
             "]p"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "יוסֽף",
+        "assessment": {
+          "manuscript": "silluq-no_sof_pasuq?",
+          "bhs": "silluq-no_sof_pasuq?",
+          "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+          "uxlc": "silluq-no_sof_pasuq",
+          "consensus": "silluq-sof_pasuq"
+        }
+      }
     },
     {
       "ref": "am 9:5",
@@ -732,7 +762,17 @@
             "]p"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "מצרֽים",
+        "assessment": {
+          "manuscript": "silluq-no_sof_pasuq?",
+          "bhs": "silluq-no_sof_pasuq?",
+          "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+          "uxlc": "silluq-no_sof_pasuq",
+          "consensus": "silluq-sof_pasuq"
+        }
+      }
     },
     {
       "ref": "da 2:41",
@@ -816,7 +856,18 @@
             "די"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "ד֥י",
+        "assessment": {
+          "manuscript": "meteg-no_maqaf",
+          "bhs": "merkha-space?",
+          "wlc": "merkha-space",
+          "uxlc": "meteg-space",
+          "consensus": "meteg-maqaf"
+        },
+        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3"
+      }
     },
     {
       "ref": "dt 9:20",

@@ -119,4 +119,35 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "consensus": "silluq-sof_pasuq",
         },
     },
+    "am 6:6": {
+        "wlc_word": "יוסֽף",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "am 9:5": {
+        "wlc_word": "מצרֽים",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "da 2:41": {
+        "wlc_word": "ד֥י",
+        "assessment": {
+            "manuscript": "meteg-no_maqaf",
+            "bhs": "merkha-space?",
+            "wlc": "merkha-space",
+            "uxlc": "meteg-space",
+            "consensus": "meteg-maqaf",
+        },
+        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
+    },
 }
