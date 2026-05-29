@@ -33,6 +33,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
         self.assertEqual(out, ["אב גד דה"])
 
+    def test_smart_concatenate_string_runs_attaches_paseq_to_previous_word(self):
+        out = verse_json_smart_concat.smart_concatenate_string_runs(["אב", "׀", "גד"])
+
+        self.assertEqual(out, ["אב׀ גד"])
+
     def test_smart_concatenate_string_runs_asserts_on_preexisting_space(self):
         with self.assertRaises(AssertionError):
             verse_json_smart_concat.smart_concatenate_string_runs(["אב ג", "דה"])
@@ -153,6 +158,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
 
         self.assertEqual(diff, [{"wlc422": ["b"], "uxlc": ["x"]}])
+
+    def test_diff_wlc_mam_normalizes_standalone_paseq_tokenization(self):
+        diff = mam_simple_diff.diff_wlc_mam(
+            {"vels": ["אב׀", "גד"]},
+            {"vels": ["אב", "׀", "גד"]},
+        )
+
+        self.assertEqual(diff, [])
 
     def test_to_xmlish_word_preserves_text_after_inline_x_child(self):
         element = ET.fromstring("<w>פֶ֛<x>t</x>לִאי׃</w>")
@@ -333,7 +346,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertEqual(xmlish[0]["children"][1]["tag"], "x")
             self.assertEqual(xmlish[0]["children"][1]["text"], "5")
 
-            self.assertEqual(row["mam_simple_verse"]["vels"], ["אב־גד", "׀", "קְרֵי דה־ו"])
+            self.assertEqual(row["mam_simple_verse"]["vels"], ["אב־גד׀ קרי דה־ו"])
             self.assertIsInstance(row["diff_wlc_mam"], list)
             self.assertGreaterEqual(len(row["diff_wlc_mam"]), 1)
             self.assertIn("mam_simple", row["diff_wlc_mam"][0])

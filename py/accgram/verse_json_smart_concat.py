@@ -38,8 +38,12 @@ def smart_concatenate_string_runs(nodes: list[object]) -> list[object]:
 
     for node in nodes:
         if isinstance(node, str) and node == _PASEQ:
+            if out_nodes and isinstance(out_nodes[-1], str) and out_nodes[-1] != _PASEQ:
+                out_nodes[-1] = f"{out_nodes[-1]}{_PASEQ}"
+                previous_input_string = _PASEQ
+                continue
             out_nodes.append(node)
-            previous_input_string = None
+            previous_input_string = _PASEQ
             continue
 
         if isinstance(node, str) and out_nodes and isinstance(out_nodes[-1], str) and out_nodes[-1] != _PASEQ:

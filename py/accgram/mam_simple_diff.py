@@ -5,6 +5,9 @@ import json
 from mb_cmn import my_diffs
 
 
+_PASEQ = "׀"
+
+
 def diff_wlc_mam(
     wlc422_verse: object,
     mam_simple_verse: object,
@@ -17,10 +20,29 @@ def diff_wlc_mam(
     if not isinstance(wlc_vels, list) or not isinstance(mam_vels, list):
         return None
 
+    wlc_vels = _normalize_paseq_tokenization(wlc_vels)
+    mam_vels = _normalize_paseq_tokenization(mam_vels)
+
     wlc_keys = [_diff_key(token) for token in wlc_vels]
     mam_keys = [_diff_key(token) for token in mam_vels]
     diff_pairs = my_diffs.get(wlc_keys, mam_keys, outa=wlc_vels, outb=mam_vels)
     return [_render_diff_pair(left, right) for left, right in diff_pairs]
+
+
+def _normalize_paseq_tokenization(vels: list[object]) -> list[object]:
+    out_vels: list[object] = []
+    for token in vels:
+        if (
+            isinstance(token, str)
+            and token == _PASEQ
+            and out_vels
+            and isinstance(out_vels[-1], str)
+            and out_vels[-1] != _PASEQ
+        ):
+            out_vels[-1] = f"{out_vels[-1]}{_PASEQ}"
+            continue
+        out_vels.append(token)
+    return out_vels
 
 
 def _render_diff_pair(left: list[object] | None, right: list[object] | None) -> dict[str, object]:
