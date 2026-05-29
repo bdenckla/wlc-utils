@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 _MAQAF = "־"
+_PASEQ = "׀"
 
 
-def smart_concatenate_wlc422_verse(verse_payload: dict[str, object]) -> dict[str, object]:
+def smart_concatenate_vels(verse_payload: dict[str, object]) -> dict[str, object]:
     vels = verse_payload.get("vels")
     if not isinstance(vels, list):
         return verse_payload
@@ -18,7 +19,11 @@ def smart_concatenate_row_for_json(row: dict[str, object]) -> dict[str, object]:
 
     wlc422_verse = out_row.get("wlc422_kq_u_verse")
     if isinstance(wlc422_verse, dict):
-        out_row["wlc422_kq_u_verse"] = smart_concatenate_wlc422_verse(wlc422_verse)
+        out_row["wlc422_kq_u_verse"] = smart_concatenate_vels(wlc422_verse)
+
+    mam_simple_verse = out_row.get("mam_simple_verse")
+    if isinstance(mam_simple_verse, dict):
+        out_row["mam_simple_verse"] = smart_concatenate_vels(mam_simple_verse)
 
     uxlc_verse = out_row.get("uxlc_verse")
     if isinstance(uxlc_verse, list):
@@ -32,7 +37,12 @@ def smart_concatenate_string_runs(nodes: list[object]) -> list[object]:
     previous_input_string: str | None = None
 
     for node in nodes:
-        if isinstance(node, str) and out_nodes and isinstance(out_nodes[-1], str):
+        if isinstance(node, str) and node == _PASEQ:
+            out_nodes.append(node)
+            previous_input_string = None
+            continue
+
+        if isinstance(node, str) and out_nodes and isinstance(out_nodes[-1], str) and out_nodes[-1] != _PASEQ:
             assert previous_input_string is not None
             assert " " not in previous_input_string, (
                 f"Expected no spaces before concatenation: {previous_input_string!r}"

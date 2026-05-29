@@ -11,6 +11,8 @@ _REPO = Path(__file__).resolve().parents[1]
 _SOURCE_REPO = _REPO.parent / "MAM-basics"
 _SOURCE_PYCMN = _SOURCE_REPO / "py" / "mb_cmn"
 _DEST_PYCMN = _REPO / "py" / "mb_cmn"
+_SOURCE_PYMISC = _SOURCE_REPO / "py" / "mb_misc"
+_DEST_PYMISC = _REPO / "py" / "mb_misc"
 _SOURCE_MBDIFF = _SOURCE_REPO / "py" / "mb_diff_mpu"
 _DEST_MBDIFF = _REPO / "py" / "mb_diff_mpu"
 
@@ -22,12 +24,20 @@ def main() -> None:
     _require_dir(_SOURCE_REPO)
     _require_dir(_SOURCE_PYCMN)
     _require_dir(_DEST_PYCMN)
+    _require_dir(_SOURCE_PYMISC)
+    _require_dir(_DEST_PYMISC)
     _require_dir(_SOURCE_MBDIFF)
     _require_dir(_DEST_MBDIFF)
 
     synced_pycmm = vendoring_sync.copy_by_intersection(
         _SOURCE_PYCMN,
         _DEST_PYCMN,
+        include_suffixes=(".py",),
+        strict=True,
+    )
+    synced_pymisc = vendoring_sync.copy_by_intersection(
+        _SOURCE_PYMISC,
+        _DEST_PYMISC,
         include_suffixes=(".py",),
         strict=True,
     )
@@ -49,6 +59,14 @@ def main() -> None:
         date_str=date_str,
     )
     vendoring_sync.write_provenance(
+        _DEST_PYMISC,
+        source_rel="MAM-basics/py/mb_misc",
+        copied_files=synced_pymisc,
+        commit=commit,
+        tag=tag,
+        date_str=date_str,
+    )
+    vendoring_sync.write_provenance(
         _DEST_MBDIFF,
         source_rel="MAM-basics/py/mb_diff_mpu",
         copied_files=synced_mbdiff,
@@ -58,6 +76,7 @@ def main() -> None:
     )
 
     print(f"{_DEST_PYCMN.relative_to(_REPO)}: copied {len(synced_pycmm)} files")
+    print(f"{_DEST_PYMISC.relative_to(_REPO)}: copied {len(synced_pymisc)} files")
     print(f"{_DEST_MBDIFF.relative_to(_REPO)}: copied {len(synced_mbdiff)} files")
     print(f"MAM-basics commit: {commit}")
     if tag:

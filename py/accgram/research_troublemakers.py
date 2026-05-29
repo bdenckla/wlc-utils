@@ -7,6 +7,9 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
+from accgram.mam_simple_diff import diff_wlc_mam
+from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
+from accgram.mam_simple_verse import load_mam_simple_for_refs
 from accgram.troublemaker_structured_text import STRUCTURED_TEXT_BY_REF
 from accgram.verse_json_smart_concat import smart_concatenate_row_for_json
 from accgram.wlc_uxlc_diff import diff_wlc_uxlc
@@ -28,6 +31,10 @@ def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
 
 def default_uxlc_dir(repo_root: Path) -> Path:
     return repo_root / "in" / "UXLC-39"
+
+
+def default_mam_simple_dir(repo_root: Path) -> Path:
+    return _default_mam_simple_dir(repo_root)
 
 
 def default_out_path(repo_root: Path) -> Path:
@@ -52,6 +59,12 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         type=Path,
         default=default_uxlc_dir(repo_root),
         help="Directory containing UXLC XML book files.",
+    )
+    parser.add_argument(
+        "--mam-simple-dir",
+        type=Path,
+        default=default_mam_simple_dir(repo_root),
+        help="Directory containing MAM-simple json-vtrad-bhs book files.",
     )
     parser.add_argument(
         "--out",
@@ -83,38 +96,43 @@ def run(args: argparse.Namespace) -> None:
 
     wlc422_by_bcv = _load_wlc422_index(args.wlc422_kq_u_dir)
     uxlc_by_bcv = _load_uxlc_for_refs(args.uxlc_dir, refs_by_book)
-
-    found_wlc422 = 0
-    missing_wlc422 = 0
-    found_uxlc = 0
-    missing_uxlc = 0
+    mam_simple_by_bcv = load_mam_simple_for_refs(args.mam_simple_dir, refs_by_book)
 
     enriched_rows: list[dict[str, object]] = []
     for row, bcv, ref in parsed_rows:
         wlc422_verse = wlc422_by_bcv.get(bcv)
         if wlc422_verse is None:
-            missing_wlc422 += 1
-        else:
-            found_wlc422 += 1
-            wlc422_verse = _interpolate_wlc422_kq_qere(wlc422_verse)
-            wlc422_verse = sanitize_verse_text_payload(wlc422_verse)
-            if isinstance(wlc422_verse, dict):
-                wlc422_verse.pop("bcv", None)
+            raise ValueError(
+                f"Missing wlc422-kq-u verse for {ref} ({bcv}) in {args.wlc422_kq_u_dir}"
+            )
+
+        wlc422_verse = _interpolate_wlc422_kq_qere(wlc422_verse)
+        wlc422_verse = sanitize_verse_text_payload(wlc422_verse)
+        if isinstance(wlc422_verse, dict):
+            wlc422_verse.pop("bcv", None)
 
         uxlc_info = uxlc_by_bcv.get(bcv)
         if uxlc_info is None:
-            missing_uxlc += 1
-            uxlc_nodes = None
-        else:
-            found_uxlc += 1
-            uxlc_nodes = uxlc_info["nodes"]
-            uxlc_nodes = sanitize_verse_text_payload(uxlc_nodes)
+            raise ValueError(f"Missing UXLC verse for {ref} ({bcv}) in {args.uxlc_dir}")
+
+        uxlc_nodes = uxlc_info["nodes"]
+        uxlc_nodes = sanitize_verse_text_payload(uxlc_nodes)
+
+        mam_simple_info = mam_simple_by_bcv.get(bcv)
+        if mam_simple_info is None:
+            raise ValueError(
+                f"Missing MAM-simple verse for {ref} ({bcv}) in {args.mam_simple_dir}"
+            )
+
+        mam_simple_verse = mam_simple_info["mam_simple_verse"]
 
         enriched_row: dict[str, object] = {
             **row,
             "wlc422_kq_u_verse": wlc422_verse,
             "uxlc_verse": uxlc_nodes,
             "diff_wlc_uxlc": diff_wlc_uxlc(wlc422_verse, uxlc_nodes),
+            "mam_simple_verse": mam_simple_verse,
+            "diff_wlc_mam": diff_wlc_mam(wlc422_verse, mam_simple_verse),
         }
         structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
         if structured_text is not None:
@@ -125,17 +143,14 @@ def run(args: argparse.Namespace) -> None:
         "artifacts_description": "enriched troublemaker verse research records",
         "payload_provenance_note": (
             "This artifact augments existing troublemaker rows with linked verse payloads "
-            "from wlc422-kq-u and XML-ish UXLC verse nodes."
+            "from wlc422-kq-u, XML-ish UXLC verse nodes, and normalized MAM-simple verses."
         ),
         "input": str(args.troubles_in),
         "wlc422_kq_u_dir": str(args.wlc422_kq_u_dir),
         "uxlc_dir": str(args.uxlc_dir),
+        "mam_simple_dir": str(args.mam_simple_dir),
         "summary": {
             "troublemakers": len(enriched_rows),
-            "wlc422_kq_u_found": found_wlc422,
-            "wlc422_kq_u_missing": missing_wlc422,
-            "uxlc_found": found_uxlc,
-            "uxlc_missing": missing_uxlc,
         },
         # Keep diff computation on original tokenized structures, then prettify
         # verse display fields only at serialization time.
@@ -151,10 +166,9 @@ def run(args: argparse.Namespace) -> None:
     print(f"Input troublemakers: {args.troubles_in}")
     print(f"wlc422-kq-u dir: {args.wlc422_kq_u_dir}")
     print(f"UXLC dir: {args.uxlc_dir}")
+    print(f"MAM-simple dir: {args.mam_simple_dir}")
     print(f"Output: {args.out}")
     print(f"Rows: {len(enriched_rows)}")
-    print(f"wlc422-kq-u found/missing: {found_wlc422}/{missing_wlc422}")
-    print(f"UXLC found/missing: {found_uxlc}/{missing_uxlc}")
 
 
 def _read_json(path: Path):

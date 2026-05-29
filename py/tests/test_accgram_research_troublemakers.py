@@ -10,6 +10,8 @@ from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
+from accgram import mam_simple_diff
+from accgram import mam_simple_verse
 from accgram import research_troublemakers
 from accgram import verse_json_smart_concat
 from accgram import wlc_uxlc_diff
@@ -40,13 +42,93 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             "wlc422_kq_u_verse": {"vels": ["אב", "גד"]},
             "uxlc_verse": ["אב", "גד"],
             "diff_wlc_uxlc": [{"wlc422": ["אב"], "uxlc": ["אג"]}],
+            "mam_simple_verse": {"vels": ["אב", "גד"]},
+            "diff_wlc_mam": [{"wlc422": ["אב"], "mam_simple": ["אג"]}],
         }
 
         out = verse_json_smart_concat.smart_concatenate_row_for_json(row)
 
-        self.assertEqual(out["wlc422_kq_u_verse"]["vels"], ["אב גד"])
+        self.assertEqual(out["wlc422_kq_u_verse"], {"vels": ["אב גד"]})
         self.assertEqual(out["uxlc_verse"], ["אב גד"])
         self.assertEqual(out["diff_wlc_uxlc"], row["diff_wlc_uxlc"])
+        self.assertEqual(out["mam_simple_verse"], {"vels": ["אב גד"]})
+        self.assertEqual(out["diff_wlc_mam"], row["diff_wlc_mam"])
+
+    def test_load_mam_simple_for_refs_and_diff_wlc_mam(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            mam_simple_dir = base / "mam-simple"
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.1",
+                                                "contents": [
+                                                    {"type": "text", "text": "אב־"},
+                                                    {"type": "text", "text": "גד"},
+                                                    {"type": "lp-paseq"},
+                                                    {
+                                                        "type": "kq",
+                                                        "contents": [
+                                                            {
+                                                                "type": "kq-k",
+                                                                "contents": [
+                                                                    {"type": "text", "text": "כתיב"}
+                                                                ],
+                                                            },
+                                                            {
+                                                                "type": "kq-q",
+                                                                "contents": [
+                                                                    {"type": "text", "text": "קְרֵי"}
+                                                                ],
+                                                            },
+                                                        ],
+                                                    },
+                                                    {"type": "text", "text": " דה־ו"},
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            loaded = mam_simple_verse.load_mam_simple_for_refs(mam_simple_dir, {"gn": {(1, 1)}})
+
+            self.assertIn("gn1:1", loaded)
+            self.assertEqual(
+                loaded["gn1:1"]["mam_simple_verse"]["vels"],
+                ["אב־", "גד", "׀", "קְרֵי", "דה־", "ו"],
+            )
+
+            diff = mam_simple_diff.diff_wlc_mam(
+                {"vels": ["אב־", "גד", "קְרֵי", "דה־ו"]},
+                loaded["gn1:1"]["mam_simple_verse"],
+            )
+
+            self.assertIsInstance(diff, list)
+            self.assertGreaterEqual(len(diff), 1)
+            self.assertIn("mam_simple", diff[0])
 
     def test_diff_wlc_uxlc_simplifies_uxlc_note_only_delta(self):
         diff = wlc_uxlc_diff.diff_wlc_uxlc(
@@ -100,11 +182,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             troubles_in = base / "in" / "_troublemakers.json"
             wlc422_dir = base / "wlc422-kq-u"
             uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
             out_path = base / "out" / "research-troublemakers.json"
 
             troubles_in.parent.mkdir(parents=True, exist_ok=True)
             wlc422_dir.mkdir(parents=True, exist_ok=True)
             uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
 
             troubles_in.write_text(
                 json.dumps(
@@ -151,12 +235,65 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 """,
                 encoding="utf-8",
             )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.1",
+                                                "contents": [
+                                                    {"type": "text", "text": "אב־"},
+                                                    {"type": "text", "text": "גד"},
+                                                    {"type": "lp-paseq"},
+                                                    {
+                                                        "type": "kq",
+                                                        "contents": [
+                                                            {
+                                                                "type": "kq-k",
+                                                                "contents": [
+                                                                    {"type": "text", "text": "כתיב"}
+                                                                ],
+                                                            },
+                                                            {
+                                                                "type": "kq-q",
+                                                                "contents": [
+                                                                    {"type": "text", "text": "קְרֵי"}
+                                                                ],
+                                                            },
+                                                        ],
+                                                    },
+                                                    {"type": "text", "text": " דה־ו"},
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
 
             research_troublemakers.run(
                 SimpleNamespace(
                     troubles_in=troubles_in,
                     wlc422_kq_u_dir=wlc422_dir,
                     uxlc_dir=uxlc_dir,
+                    mam_simple_dir=mam_simple_dir,
                     out=out_path,
                 )
             )
@@ -168,8 +305,6 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 "This file was generated by wlc-utils/py/accgram/research_troublemakers.py.",
             )
             self.assertEqual(payload["summary"]["troublemakers"], 1)
-            self.assertEqual(payload["summary"]["wlc422_kq_u_found"], 1)
-            self.assertEqual(payload["summary"]["uxlc_found"], 1)
 
             row = payload["troublemakers"][0]
             self.assertEqual(row["ref"], "gn 1:1")
@@ -198,17 +333,99 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertEqual(xmlish[0]["children"][1]["tag"], "x")
             self.assertEqual(xmlish[0]["children"][1]["text"], "5")
 
-    def test_run_missing_in_one_source_sets_null_and_increments_counter(self):
+            self.assertEqual(row["mam_simple_verse"]["vels"], ["אב־גד", "׀", "קְרֵי דה־ו"])
+            self.assertIsInstance(row["diff_wlc_mam"], list)
+            self.assertGreaterEqual(len(row["diff_wlc_mam"]), 1)
+            self.assertIn("mam_simple", row["diff_wlc_mam"][0])
+
+    def test_run_missing_mam_simple_raises_fail_fast(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             troubles_in = base / "in" / "_troublemakers.json"
             wlc422_dir = base / "wlc422-kq-u"
             uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
             out_path = base / "out" / "research-troublemakers.json"
 
             troubles_in.parent.mkdir(parents=True, exist_ok=True)
             wlc422_dir.mkdir(parents=True, exist_ok=True)
             uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps(
+                    {
+                        "troublemakers": [
+                            {
+                                "ref": "gn 1:2",
+                                "content": "payload-2",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "gn1:2",
+                            "vels": ["וְהָאָ֗רֶץ"],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (uxlc_dir / "Genesis.xml").write_text(
+                """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Tanach>
+  <c n=\"1\">
+    <v n=\"2\">
+      <w>וְהָאָ֗רֶץ</w>
+    </v>
+  </c>
+</Tanach>
+""",
+                encoding="utf-8",
+            )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                + "\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, r"Missing MAM-simple verse for gn 1:2"):
+                research_troublemakers.run(
+                    SimpleNamespace(
+                        troubles_in=troubles_in,
+                        wlc422_kq_u_dir=wlc422_dir,
+                        uxlc_dir=uxlc_dir,
+                        mam_simple_dir=mam_simple_dir,
+                        out=out_path,
+                    )
+                )
+
+            self.assertFalse(out_path.exists())
+
+    def test_run_missing_wlc422_raises_fail_fast(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
 
             troubles_in.write_text(
                 json.dumps(
@@ -239,24 +456,149 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 """,
                 encoding="utf-8",
             )
-
-            research_troublemakers.run(
-                SimpleNamespace(
-                    troubles_in=troubles_in,
-                    wlc422_kq_u_dir=wlc422_dir,
-                    uxlc_dir=uxlc_dir,
-                    out=out_path,
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.2",
+                                                "contents": [{"type": "text", "text": "וְהָאָ֗רֶץ"}],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
                 )
+                + "\n",
+                encoding="utf-8",
             )
 
-            payload = json.loads(out_path.read_text(encoding="utf-8"))
-            self.assertEqual(payload["summary"]["wlc422_kq_u_missing"], 1)
-            self.assertEqual(payload["summary"]["uxlc_missing"], 0)
+            with self.assertRaisesRegex(ValueError, r"Missing wlc422-kq-u verse for gn 1:2"):
+                research_troublemakers.run(
+                    SimpleNamespace(
+                        troubles_in=troubles_in,
+                        wlc422_kq_u_dir=wlc422_dir,
+                        uxlc_dir=uxlc_dir,
+                        mam_simple_dir=mam_simple_dir,
+                        out=out_path,
+                    )
+                )
 
-            row = payload["troublemakers"][0]
-            self.assertIsNone(row["wlc422_kq_u_verse"])
-            self.assertEqual(row["uxlc_verse"], ["והא֗רץ"])
-            self.assertIsNone(row["diff_wlc_uxlc"])
+            self.assertFalse(out_path.exists())
+
+    def test_run_missing_uxlc_raises_fail_fast(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps(
+                    {
+                        "troublemakers": [
+                            {
+                                "ref": "gn 1:2",
+                                "content": "payload-2",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "gn1:2",
+                            "vels": ["וְהָאָ֗רֶץ"],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (uxlc_dir / "Genesis.xml").write_text(
+                """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Tanach>
+  <c n=\"1\">
+    <v n=\"1\">
+      <w>בְּרֵאשִׁ֖ית</w>
+    </v>
+  </c>
+</Tanach>
+""",
+                encoding="utf-8",
+            )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.2",
+                                                "contents": [{"type": "text", "text": "וְהָאָ֗רֶץ"}],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, r"Missing UXLC verse for gn 1:2"):
+                research_troublemakers.run(
+                    SimpleNamespace(
+                        troubles_in=troubles_in,
+                        wlc422_kq_u_dir=wlc422_dir,
+                        uxlc_dir=uxlc_dir,
+                        mam_simple_dir=mam_simple_dir,
+                        out=out_path,
+                    )
+                )
+
+            self.assertFalse(out_path.exists())
 
     def test_run_creates_output_path_and_writes_expected_top_level_fields(self):
         with TemporaryDirectory() as tmp_dir:
@@ -264,23 +606,31 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             troubles_in = base / "in" / "_troublemakers.json"
             wlc422_dir = base / "wlc422-kq-u"
             uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
             out_path = base / "nested" / "deep" / "research-troublemakers.json"
 
             troubles_in.parent.mkdir(parents=True, exist_ok=True)
             wlc422_dir.mkdir(parents=True, exist_ok=True)
             uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
 
             troubles_in.write_text(
                 json.dumps({"troublemakers": []}, ensure_ascii=False, indent=2) + "\n",
                 encoding="utf-8",
             )
             (wlc422_dir / "1verses_00_gn.json").write_text("[]\n", encoding="utf-8")
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                + "\n",
+                encoding="utf-8",
+            )
 
             research_troublemakers.run(
                 SimpleNamespace(
                     troubles_in=troubles_in,
                     wlc422_kq_u_dir=wlc422_dir,
                     uxlc_dir=uxlc_dir,
+                    mam_simple_dir=mam_simple_dir,
                     out=out_path,
                 )
             )
