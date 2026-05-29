@@ -1,5 +1,15 @@
 from __future__ import annotations
 
+
+def _foi_non_revia_note(fp_value: str) -> str:
+    return (
+        'A possible reason why the goerwitz accent grammar check deems this verse "ungrammatical" '
+        f'is its phrase that is a member of the FOI category "{fp_value}". '
+        'A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts '
+        'with "⅃-leg...non-revia" and the other 12 are not deemed "ungrammatical" by the checker.'
+    )
+
+
 # Per-troublemaker structured research notes used by research-tms output.
 STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
     ("1k", 6, 2): {
@@ -73,5 +83,20 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
             "consensus": "etnaxta",
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
+    },
+    ("is", 36, 2): {
+        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"),
+    },
+    ("je", 4, 19): {
+        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+    },
+    ("je", 38, 11): {
+        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+    },
+    ("hg", 2, 12): {
+        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+    },
+    ("2c", 26, 15): {
+        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
 }
