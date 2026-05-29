@@ -915,7 +915,17 @@
             "]p"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "ההֽוא",
+        "assessment": {
+          "manuscript": "silluq-no_sof_pasuq?",
+          "bhs": "silluq-no_sof_pasuq?",
+          "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+          "uxlc": "silluq-no_sof_pasuq",
+          "consensus": "silluq-sof_pasuq"
+        }
+      }
     },
     {
       "ref": "dt 13:15",
@@ -961,7 +971,17 @@
             "]U"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "וחקרת֧",
+        "assessment": {
+          "manuscript": "darga?",
+          "bhs": "darga?",
+          "wlc": "darga (with brac-U note)",
+          "uxlc": "darga",
+          "consensus": "tevir"
+        }
+      }
     },
     {
       "ref": "dt 25:9",
@@ -1031,7 +1051,17 @@
             "]p"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "אחֽיו",
+        "assessment": {
+          "manuscript": "silluq-no_sof_pasuq?",
+          "bhs": "silluq-no_sof_pasuq?",
+          "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+          "uxlc": "silluq-no_sof_pasuq",
+          "consensus": "silluq-sof_pasuq"
+        }
+      }
     },
     {
       "ref": "ec 7:21",
@@ -1079,7 +1109,18 @@
             "אש֛ר"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "אש֥ר",
+        "assessment": {
+          "manuscript": "tevir",
+          "bhs": "merkha?",
+          "wlc": "merkha",
+          "uxlc": "tevir",
+          "consensus": "tevir"
+        },
+        "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18"
+      }
     },
     {
       "ref": "ec 9:18",
@@ -1117,7 +1158,18 @@
             "טוב֖ה"
           ]
         }
-      ]
+      ],
+      "structured_text": {
+        "wlc_word": "טוב֥ה",
+        "assessment": {
+          "manuscript": "[merkha] tipexa",
+          "bhs": "[merkha] merkha?",
+          "wlc": "[merkha] merkha",
+          "uxlc": "[merkha] tipexa",
+          "consensus": "[tipexa] merkha"
+        },
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2"
+      }
     },
     {
       "ref": "ek 11:1",

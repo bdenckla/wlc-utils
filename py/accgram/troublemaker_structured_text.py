@@ -150,4 +150,56 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
     },
+    "dt 9:20": {
+        "wlc_word": "ההֽוא",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "dt 13:15": {
+        "wlc_word": "וחקרת֧",
+        "assessment": {
+            "manuscript": "darga?",
+            "bhs": "darga?",
+            "wlc": "darga (with brac-U note)",
+            "uxlc": "darga",
+            "consensus": "tevir",
+        },
+    },
+    "dt 25:9": {
+        "wlc_word": "אחֽיו",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
+    },
+    "ec 7:21": {
+        "wlc_word": "אש֥ר",
+        "assessment": {
+            "manuscript": "tevir",
+            "bhs": "merkha?",
+            "wlc": "merkha",
+            "uxlc": "tevir",
+            "consensus": "tevir",
+        },
+        "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
+    },
+    "ec 9:18": {
+        "wlc_word": "טוב֥ה",
+        "assessment": {
+            "manuscript": "[merkha] tipexa",
+            "bhs": "[merkha] merkha?",
+            "wlc": "[merkha] merkha",
+            "uxlc": "[merkha] tipexa",
+            "consensus": "[tipexa] merkha",
+        },
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+    },
 }
