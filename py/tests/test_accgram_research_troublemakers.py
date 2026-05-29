@@ -151,7 +151,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 )
             )
 
-            xmlish = row["uxlc_verse_xmlish"]
+            xmlish = row["uxlc_verse"]
             self.assertEqual(xmlish[0]["tag"], "w")
             self.assertEqual(xmlish[0]["text"], "בראש֖ית")
             self.assertEqual(xmlish[1], "קרי")
@@ -223,7 +223,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             row = payload["troublemakers"][0]
             self.assertIsNone(row["wlc422_kq_u_verse"])
-            self.assertEqual(row["uxlc_verse_xmlish"], ["והא֗רץ"])
+            self.assertEqual(row["uxlc_verse"], ["והא֗רץ"])
             self.assertIsNone(row["diff_wlc_uxlc"])
 
     def test_run_creates_output_path_and_writes_expected_top_level_fields(self):

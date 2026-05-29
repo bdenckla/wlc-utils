@@ -112,7 +112,7 @@ def run(args: argparse.Namespace) -> None:
         enriched_row: dict[str, object] = {
             **row,
             "wlc422_kq_u_verse": wlc422_verse,
-            "uxlc_verse_xmlish": uxlc_nodes,
+            "uxlc_verse": uxlc_nodes,
             "diff_wlc_uxlc": diff_wlc_uxlc(wlc422_verse, uxlc_nodes),
         }
         structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
@@ -302,7 +302,7 @@ def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str | Non
         if children:
             node["children"] = children
 
-    # Compact the common simple case to keep uxlc_verse_xmlish readable.
+    # Compact the common simple case to keep uxlc_verse readable.
     if set(node.keys()) == {"tag", "text"} and node["tag"] == "w":
         return str(node["text"])
 
