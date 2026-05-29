@@ -66,7 +66,7 @@ def run(args: argparse.Namespace) -> None:
     if not isinstance(troublemakers, list):
         raise ValueError(f"Expected list at troubles payload key 'troublemakers': {args.troubles_in}")
 
-    parsed_rows: list[tuple[dict[str, object], str, str, tuple[str, int, int]]] = []
+    parsed_rows: list[tuple[dict[str, object], str, str]] = []
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
     for row in troublemakers:
         if not isinstance(row, dict):
@@ -76,8 +76,9 @@ def run(args: argparse.Namespace) -> None:
             raise ValueError("Troublemaker row is missing string field 'ref'")
         bb, chnu, vrnu = _parse_ref(ref_value)
         bcv = _to_compact_bcv(bb, chnu, vrnu)
+        ref = _to_ref(bb, chnu, vrnu)
         refs_by_book.setdefault(bb, set()).add((chnu, vrnu))
-        parsed_rows.append((row, ref_value, bcv, (bb, chnu, vrnu)))
+        parsed_rows.append((row, bcv, ref))
 
     wlc422_by_bcv = _load_wlc422_index(args.wlc422_kq_u_dir)
     uxlc_by_bcv = _load_uxlc_for_refs(args.uxlc_dir, refs_by_book)
@@ -88,7 +89,7 @@ def run(args: argparse.Namespace) -> None:
     missing_uxlc = 0
 
     enriched_rows: list[dict[str, object]] = []
-    for row, _orig_ref, bcv, ref_tuple in parsed_rows:
+    for row, bcv, ref in parsed_rows:
         wlc422_verse = wlc422_by_bcv.get(bcv)
         if wlc422_verse is None:
             missing_wlc422 += 1
@@ -114,7 +115,7 @@ def run(args: argparse.Namespace) -> None:
             "uxlc_verse_xmlish": uxlc_nodes,
             "diff_wlc_uxlc": diff_wlc_uxlc(wlc422_verse, uxlc_nodes),
         }
-        structured_text = STRUCTURED_TEXT_BY_REF.get(ref_tuple)
+        structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
         if structured_text is not None:
             enriched_row["structured_text"] = structured_text
         enriched_rows.append(enriched_row)
@@ -170,6 +171,10 @@ def _parse_ref(ref: str) -> tuple[str, int, int]:
 
 def _to_compact_bcv(bb: str, chnu: int, vrnu: int) -> str:
     return f"{bb}{chnu}:{vrnu}"
+
+
+def _to_ref(bb: str, chnu: int, vrnu: int) -> str:
+    return f"{bb} {chnu}:{vrnu}"
 
 
 def _load_wlc422_index(wlc422_kq_u_dir: Path) -> dict[str, dict[str, object]]:

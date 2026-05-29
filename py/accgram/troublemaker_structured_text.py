@@ -11,8 +11,8 @@ def _foi_non_revia_note(fp_value: str) -> str:
 
 
 # Per-troublemaker structured research notes used by research-tms output.
-STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
-    ("1k", 6, 2): {
+STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
+    "1k 6:2": {
         "wlc_word": "ועשר֤ים",
         "assessment": {
             "manuscript": "munax",
@@ -23,7 +23,7 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
     },
-    ("1k", 16, 33): {
+    "1k 16:33": {
         "wlc_word": "מכ֨ל",
         "assessment": {
             "manuscript": "no accent",
@@ -34,7 +34,7 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
     },
-    ("1k", 19, 11): {
+    "1k 19:11": {
         "wlc_word": "הר֨וח",
         "assessment": {
             "manuscript": "?",
@@ -45,7 +45,7 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
         },
         "uxlc_change": None,
     },
-    ("1k", 20, 29): {
+    "1k 20:29": {
         "wlc_word": "נ֥כח",
         "assessment": {
             "manuscript": "meteg-maqaf",
@@ -63,7 +63,7 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
             " The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
         ]
     },
-    ("1s", 6, 19): {
+    "1s 6:19": {
         "wlc_word": "גדולֽה",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
@@ -73,7 +73,7 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
             "consensus": "silluq-sof_pasuq",
         },
     },
-    ("2c", 22, 12): {
+    "2c 22:12": {
         "wlc_word": "שנ֖ים",
         "assessment": {
             "manuscript": "etnaxta",
@@ -84,19 +84,39 @@ STRUCTURED_TEXT_BY_REF: dict[tuple[str, int, int], dict[str, object]] = {
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
     },
-    ("is", 36, 2): {
+    "is 36:2": {
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"),
     },
-    ("je", 4, 19): {
+    "je 4:19": {
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
-    ("je", 38, 11): {
+    "je 38:11": {
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
-    ("hg", 2, 12): {
+    "hg 2:12": {
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
-    ("2c", 26, 15): {
+    "2c 26:15": {
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+    },
+    "2k 23:36": {
+        "wlc_word": "שנ֨ה",
+        "assessment": {
+            "manuscript": "pashta on ה?",
+            "bhs": "qadma on נ?",
+            "wlc": "qadma on נ",
+            "uxlc": "pashta on ה",
+            "consensus": "pashta on ה",
+        },
+    },
+    "am 1:14": {
+        "wlc_word": "סופֽה",
+        "assessment": {
+            "manuscript": "silluq-no_sof_pasuq?",
+            "bhs": "silluq-no_sof_pasuq?",
+            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "uxlc": "silluq-no_sof_pasuq",
+            "consensus": "silluq-sof_pasuq",
+        },
     },
 }
