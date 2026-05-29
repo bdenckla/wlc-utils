@@ -125,7 +125,10 @@ def run(args: argparse.Namespace) -> None:
             )
 
         mam_simple_verse = mam_simple_info["mam_simple_verse"]
-        mam_simple_verse = sanitize_verse_text_payload(mam_simple_verse)
+        mam_simple_verse = sanitize_verse_text_payload(
+            mam_simple_verse,
+            remove_duplicate_telisha_gedola=True,
+        )
 
         enriched_row: dict[str, object] = {
             **row,

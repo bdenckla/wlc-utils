@@ -189,6 +189,18 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertEqual(wlc_clean["vels"], ["אב", "גדֽה"])
         self.assertEqual(uxlc_clean, ["אב", "גדֽה"])
 
+    def test_sanitize_option_removes_duplicate_telisha_gedola(self):
+        node = {"vels": ["א֠ת֠י", "ל֠מ֠ען", "ב֠כנפ֠ו"]}
+
+        default_clean = sanitize_verse_text_payload(node)
+        mam_clean = sanitize_verse_text_payload(
+            node,
+            remove_duplicate_telisha_gedola=True,
+        )
+
+        self.assertEqual(default_clean["vels"], ["א֠ת֠י", "ל֠מ֠ען", "ב֠כנפ֠ו"])
+        self.assertEqual(mam_clean["vels"], ["א֠תי", "ל֠מען", "ב֠כנפו"])
+
     def test_run_happy_path_enriches_both_sources(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)

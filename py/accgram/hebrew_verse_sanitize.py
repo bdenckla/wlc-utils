@@ -9,9 +9,14 @@ _HEBREW_MAQAF = "\u05be"
 _HEBREW_METEG = "\u05bd"
 _HEBREW_PASEQ = "\u05c0"
 _HEBREW_SOF_PASUQ = "\u05c3"
+_HEBREW_TELISHA_GEDOLA = "\u05a0"
 
 
-def sanitize_verse_text_payload(payload: object) -> object:
+def sanitize_verse_text_payload(
+    payload: object,
+    *,
+    remove_duplicate_telisha_gedola: bool = False,
+) -> object:
     mutable = _deep_clone_jsonish(payload)
     slots: list[tuple[list[object] | dict[str, object], int | str]] = []
     _collect_hebrew_string_slots(mutable, slots)
@@ -32,7 +37,11 @@ def sanitize_verse_text_payload(payload: object) -> object:
             and container is last_hebrew_slot[0]
             and key == last_hebrew_slot[1]
         )
-        container[key] = _sanitize_hebrew_token(value, keep_last_meteg=keep_last_meteg)
+        container[key] = _sanitize_hebrew_token(
+            value,
+            keep_last_meteg=keep_last_meteg,
+            remove_duplicate_telisha_gedola=remove_duplicate_telisha_gedola,
+        )
 
     return mutable
 
@@ -75,7 +84,12 @@ def _has_hebrew_letter(text: str) -> bool:
     return any(_HEBREW_LETTER_START <= ord(ch) <= _HEBREW_LETTER_END for ch in text)
 
 
-def _sanitize_hebrew_token(text: str, *, keep_last_meteg: bool) -> str:
+def _sanitize_hebrew_token(
+    text: str,
+    *,
+    keep_last_meteg: bool,
+    remove_duplicate_telisha_gedola: bool,
+) -> str:
     last_meteg_idx = text.rfind(_HEBREW_METEG) if keep_last_meteg else -1
     out_chars: list[str] = []
     for idx, ch in enumerate(text):
@@ -91,4 +105,28 @@ def _sanitize_hebrew_token(text: str, *, keep_last_meteg: bool) -> str:
             continue
         if ch == _HEBREW_METEG and idx == last_meteg_idx:
             out_chars.append(ch)
+    sanitized = "".join(out_chars)
+    if remove_duplicate_telisha_gedola:
+        sanitized = _drop_duplicate_telisha_gedola(sanitized)
+    return sanitized
+
+
+def _drop_duplicate_telisha_gedola(text: str) -> str:
+    out_chars: list[str] = []
+    seen_in_token = False
+    for ch in text:
+        if ch in {_HEBREW_MAQAF, _HEBREW_PASEQ, _HEBREW_SOF_PASUQ}:
+            seen_in_token = False
+            out_chars.append(ch)
+            continue
+        if ch == _HEBREW_TELISHA_GEDOLA:
+            if seen_in_token:
+                continue
+            seen_in_token = True
+            out_chars.append(ch)
+            continue
+        if _HEBREW_LETTER_START <= ord(ch) <= _HEBREW_LETTER_END:
+            out_chars.append(ch)
+            continue
+        out_chars.append(ch)
     return "".join(out_chars)
