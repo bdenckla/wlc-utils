@@ -215,8 +215,28 @@ def _load_wlc422_index(wlc422_kq_u_dir: Path) -> dict[str, dict[str, object]]:
                 raise ValueError(f"Expected string 'bcv' in {in_path}")
             if bcv in by_bcv:
                 raise ValueError(f"Duplicate bcv across verses files: {bcv}")
-            by_bcv[bcv] = row
+            by_bcv[bcv] = _collapse_wlc_notes_to_string(row)
     return by_bcv
+
+
+def _collapse_wlc_notes_to_string(node: object) -> object:
+    if isinstance(node, list):
+        return [_collapse_wlc_notes_to_string(item) for item in node]
+
+    if isinstance(node, dict):
+        out_node: dict[str, object] = {}
+        for key, value in node.items():
+            if (
+                key == "notes"
+                and isinstance(value, list)
+                and all(isinstance(note, str) for note in value)
+            ):
+                out_node[key] = "".join(value)
+            else:
+                out_node[key] = _collapse_wlc_notes_to_string(value)
+        return out_node
+
+    return node
 
 
 def _interpolate_wlc422_kq_qere(verse_payload: dict[str, object]) -> dict[str, object]:

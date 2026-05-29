@@ -59,6 +59,37 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertEqual(out["mam_simple_verse"], {"vels": ["אב גד"]})
         self.assertEqual(out["diff_wlc_mam"], row["diff_wlc_mam"])
 
+    def test_load_wlc422_index_collapses_notes_list_to_string(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            wlc422_dir = base / "wlc422-kq-u"
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+
+            (wlc422_dir / "1verses_00_ex.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "ex34:6",
+                            "vels": [
+                                "ויעבר",
+                                {"word": "ואמת", "notes": ["]c", "]n", "]p"]},
+                            ],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            index = research_troublemakers._load_wlc422_index(wlc422_dir)
+
+            self.assertEqual(
+                index["ex34:6"]["vels"][1],
+                {"word": "ואמת", "notes": "]c]n]p"},
+            )
+
     def test_load_mam_simple_for_refs_and_diff_wlc_mam(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
