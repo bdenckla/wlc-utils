@@ -8,6 +8,7 @@ from pathlib import Path
 
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram.troublemaker_structured_text import STRUCTURED_TEXT_BY_REF
+from accgram.verse_json_smart_concat import smart_concatenate_row_for_json
 from accgram.wlc_uxlc_diff import diff_wlc_uxlc
 from accgram.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import provenance
@@ -136,7 +137,9 @@ def run(args: argparse.Namespace) -> None:
             "uxlc_found": found_uxlc,
             "uxlc_missing": missing_uxlc,
         },
-        "troublemakers": enriched_rows,
+        # Keep diff computation on original tokenized structures, then prettify
+        # verse display fields only at serialization time.
+        "troublemakers": [smart_concatenate_row_for_json(row) for row in enriched_rows],
     }
     payload = provenance.with_json_provenance(payload, __file__)
 

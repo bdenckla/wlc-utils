@@ -11,10 +11,43 @@ from types import SimpleNamespace
 
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram import research_troublemakers
+from accgram import verse_json_smart_concat
 from accgram import wlc_uxlc_diff
 
 
 class TestAccgramResearchTroublemakers(unittest.TestCase):
+    def test_smart_concatenate_string_runs_joins_with_space_without_maqaf(self):
+        out = verse_json_smart_concat.smart_concatenate_string_runs(["אב", "גד", {"x": 1}, "דה", "וז"])
+
+        self.assertEqual(out, ["אב גד", {"x": 1}, "דה וז"])
+
+    def test_smart_concatenate_string_runs_joins_without_space_after_maqaf(self):
+        out = verse_json_smart_concat.smart_concatenate_string_runs(["אב־", "גד", "דה"])
+
+        self.assertEqual(out, ["אב־גד דה"])
+
+    def test_smart_concatenate_string_runs_allows_multi_token_run(self):
+        out = verse_json_smart_concat.smart_concatenate_string_runs(["אב", "גד", "דה"])
+
+        self.assertEqual(out, ["אב גד דה"])
+
+    def test_smart_concatenate_string_runs_asserts_on_preexisting_space(self):
+        with self.assertRaises(AssertionError):
+            verse_json_smart_concat.smart_concatenate_string_runs(["אב ג", "דה"])
+
+    def test_smart_concatenate_row_for_json_does_not_touch_diff(self):
+        row = {
+            "wlc422_kq_u_verse": {"vels": ["אב", "גד"]},
+            "uxlc_verse": ["אב", "גד"],
+            "diff_wlc_uxlc": [{"wlc422": ["אב"], "uxlc": ["אג"]}],
+        }
+
+        out = verse_json_smart_concat.smart_concatenate_row_for_json(row)
+
+        self.assertEqual(out["wlc422_kq_u_verse"]["vels"], ["אב גד"])
+        self.assertEqual(out["uxlc_verse"], ["אב גד"])
+        self.assertEqual(out["diff_wlc_uxlc"], row["diff_wlc_uxlc"])
+
     def test_diff_wlc_uxlc_simplifies_uxlc_note_only_delta(self):
         diff = wlc_uxlc_diff.diff_wlc_uxlc(
             {"vels": ["foo"]},
@@ -140,8 +173,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             row = payload["troublemakers"][0]
             self.assertEqual(row["ref"], "gn 1:1")
-            self.assertEqual(row["wlc422_kq_u_verse"]["vels"][0], "בראש֖ית")
-            self.assertEqual(row["wlc422_kq_u_verse"]["vels"][1], "בר֣א")
+            self.assertEqual(row["wlc422_kq_u_verse"]["vels"][0], "בראש֖ית בר֣א")
             self.assertIsInstance(row["diff_wlc_uxlc"], list)
             self.assertGreaterEqual(len(row["diff_wlc_uxlc"]), 1)
             self.assertFalse(
