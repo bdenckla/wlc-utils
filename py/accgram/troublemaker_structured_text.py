@@ -332,4 +332,18 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
     },
+    "ek 11:1": {
+        "wlc_word": "שר֖י",
+        "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
+        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
+        "free_form_comment": (
+            "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
+            "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
+            "Yet, from context, it is usually clear, and that is the case here with שרי. "
+            "To transcribe the mark on שרי as tipexa is an aggressively uncharitable transcription: "
+            "tipexa is the least likely of the three possible meanings of this mark. "
+            "Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably "
+            "assume that a maqaf is missing."
+        ),
+    },
 }
