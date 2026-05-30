@@ -339,11 +339,60 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "free_form_comment": (
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
-            "Yet, from context, it is usually clear, and that is the case here with שרי. "
+            "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. "
             "To transcribe the mark on שרי as tipexa is an aggressively uncharitable transcription: "
             "tipexa is the least likely of the three possible meanings of this mark. "
             "Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably "
             "assume that a maqaf is missing."
         ),
+    },
+    "ek 14:11": {
+        "wlc_word": "וה֥יו [ל֣י]",
+        "free_form_comment": (
+            "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
+            "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
+            "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. "
+            "Here the most likely intended meaning of the mark on והיו is meteg, even though that implies that "
+            "a maqaf is missing."
+        ),
+    },
+    "ex 34:6": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "je 9:10": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "je 9:11": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "je 10:3": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "je 31:32": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "je 48:12": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "je 49:19": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "ju 13:18": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "lm 5:5": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "mi 2:7": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "nu 20:19": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "nu 25:19": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+    },
+    "ob 1:1": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
     },
 }

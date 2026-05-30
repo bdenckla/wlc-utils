@@ -722,7 +722,7 @@
         "wlc_word": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
-        "free_form_comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, it is usually clear, and that is the case here with שרי. To transcribe the mark on שרי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
+        "free_form_comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. To transcribe the mark on שרי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
       }
     },
     {
@@ -745,6 +745,10 @@
       "diff_wlc_mam": {
         "wlc422": "וה֥יו",
         "mam_simple": "והיו־"
+      },
+      "structured_text": {
+        "wlc_word": "וה֥יו [ל֣י]",
+        "free_form_comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. Here the most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing."
       }
     },
     {
@@ -940,6 +944,9 @@
           "notes": "]c]n]p"
         },
         "mam_simple": "ואמֽת׃"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1138,6 +1145,9 @@
       "diff_wlc_mam": {
         "wlc422": "מבל֖י",
         "mam_simple": "מבל֥י"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1171,6 +1181,9 @@
       "diff_wlc_mam": {
         "wlc422": "מבל֖י",
         "mam_simple": "מבל֥י"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1193,6 +1206,9 @@
       "diff_wlc_mam": {
         "wlc422": "יד֥י־",
         "mam_simple": "ידי־"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1218,6 +1234,9 @@
       "diff_wlc_mam": {
         "wlc422": "מא֖רץ",
         "mam_simple": "מא֣רץ"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1269,6 +1288,9 @@
       "diff_wlc_mam": {
         "wlc422": "הנ֖ה־",
         "mam_simple": "הנה־"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1294,6 +1316,9 @@
       "diff_wlc_mam": {
         "wlc422": "אריצ֨נו",
         "mam_simple": "אריצ֙נו֙"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1351,7 +1376,10 @@
           },
           "mam_simple": "פֽלאי׃"
         }
-      ]
+      ],
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+      }
     },
     {
       "ref": "lm 5:5",
@@ -1383,6 +1411,9 @@
           "notes": "]Q]c]p"
         },
         "mam_simple": "הונח־"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1537,7 +1568,10 @@
           "wlc422": "הולֽך׃",
           "mam_simple": "הלֽך׃"
         }
-      ]
+      ],
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+      }
     },
     {
       "ref": "nu 7:32",
@@ -1737,6 +1771,9 @@
           "notes": "]s"
         },
         "mam_simple": "ישראל֮"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1764,6 +1801,9 @@
       },
       "diff_wlc_mam": {
         "wlc_adds_notes": "]1"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     },
     {
@@ -1808,6 +1848,9 @@
           "notes": "]Q]c]n"
         },
         "mam_simple": "על֖יה"
+      },
+      "structured_text": {
+        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
       }
     }
   ]
