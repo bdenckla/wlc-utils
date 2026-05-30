@@ -348,11 +348,13 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ek 14:11": {
         "wlc_word": "וה֥יו [ל֣י]",
+        "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
+        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F282B.jpg",
         "free_form_comment": (
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
             "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. "
-            "Here the most likely intended meaning of the mark on והיו is meteg, even though that implies that "
+            "The most likely intended meaning of the mark on והיו is meteg, even though that implies that "
             "a maqaf is missing."
         ),
     },
