@@ -359,10 +359,27 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ex 34:6": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "ואמֽת׀",
+        "assessment": {
+          "manuscript": "silluq-vertical_line?",
+          "bhs": "silluq-vertical_line?",
+          "wlc": "silluq-pasoleg (with brac-c, brac-n, and brac-p notes)",
+          "uxlc": "silluq-pasoleg",
+          "consensus": "silluq-sof_pasuq"
+        },
     },
     "je 9:10": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "מבל֖י",
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+        "free_form_comment": (
+            "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
+            "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
+            "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. "
+            "To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: "
+            "tipexa is the least likely of the three possible meanings of this mark. "
+            "Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably "
+            "assume that a maqaf is missing."
+        ),
     },
     "je 9:11": {
         "TODO_placeholder": "FILL_STRUCTURED_TEXT",
