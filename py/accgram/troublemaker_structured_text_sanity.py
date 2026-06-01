@@ -119,7 +119,7 @@ def sanity_check_structured_text(
         )
 
 
-def sanitize_word_for_change_match(text: str, *, require_hebrew: bool = False) -> str:
+def sanitize_word_for_change_match(text: str) -> str:
     out_chars: list[str] = []
     for ch in text:
         cp = ord(ch)
@@ -132,7 +132,7 @@ def sanitize_word_for_change_match(text: str, *, require_hebrew: bool = False) -
         if ch in {_HEBREW_MAQAF, _HEBREW_PASEQ, _HEBREW_SOF_PASUQ}:
             out_chars.append(ch)
     out = "".join(out_chars)
-    if require_hebrew and not out:
+    if not out:
         raise ValueError(f"Expected Hebrew-script text, got: {text!r}")
     return out
 
@@ -163,8 +163,8 @@ def diff_uxlc_matches_changetext(diff_wlc_uxlc: object, changetext: str) -> bool
     if diff_uxlc_text is None:
         return None
 
-    sanitized_diff_uxlc = sanitize_word_for_change_match(diff_uxlc_text, require_hebrew=True)
-    sanitized_changetext = sanitize_word_for_change_match(changetext, require_hebrew=True)
+    sanitized_diff_uxlc = sanitize_word_for_change_match(diff_uxlc_text)
+    sanitized_changetext = sanitize_word_for_change_match(changetext)
     return sanitized_diff_uxlc == sanitized_changetext
 
 
