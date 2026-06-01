@@ -807,44 +807,54 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         expected = troublemaker_structured_text_sanity.sanitize_word_for_change_match("מבל֖י")
         self.assertEqual(actual, expected)
 
-    def test_structured_text_sanity_uses_assessment_uxlc_for_word_compare(self):
-        with TemporaryDirectory() as tmp_dir:
-            all_changes_path = Path(tmp_dir) / "all_changes.json"
-            all_changes_path.write_text(
-                json.dumps(
-                    [
-                        {
-                            "release": "2022.12.07",
-                            "changeset": "2022.08.31",
-                            "n": 9,
-                            "citation": "1Kings 6:2.17",
-                            "changetext": "וְעֶשְׂרִ֣ים",
-                        }
-                    ],
-                    ensure_ascii=False,
-                    indent=2,
-                )
-                + "\n",
-                encoding="utf-8",
+    def test_diff_uxlc_matches_changetext_true_after_sanitization(self):
+        matches = troublemaker_structured_text_sanity.diff_uxlc_matches_changetext(
+            diff_wlc_uxlc={"wlc422": "ועשר֤ים", "uxlc": "וְעֶשְׂרִ֣ים"},
+            changetext="ועשר֣ים",
+        )
+        self.assertTrue(matches)
+
+    def test_diff_uxlc_matches_changetext_false_when_different(self):
+        matches = troublemaker_structured_text_sanity.diff_uxlc_matches_changetext(
+            diff_wlc_uxlc={"wlc422": "ועשר֤ים", "uxlc": "ועשר֣ים"},
+            changetext="ועשרים",
+        )
+        self.assertFalse(matches)
+
+    def test_diff_uxlc_matches_changetext_raises_on_non_hebrew_text(self):
+        with self.assertRaisesRegex(ValueError, r"Expected Hebrew-script text"):
+            troublemaker_structured_text_sanity.diff_uxlc_matches_changetext(
+                diff_wlc_uxlc={"wlc422": "ועשר֤ים", "uxlc": "munax"},
+                changetext="ועשר֣ים",
             )
 
-            with self.assertRaisesRegex(ValueError, r"changetext/assessment\.uxlc mismatch"):
-                troublemaker_structured_text_sanity.sanity_check_structured_text(
-                    refs=["1k 6:2"],
-                    structured_text_by_ref={
-                        "1k 6:2": {
-                            "uxlc_change": (
-                                "https://tanach.us/Changes/2022.12.07%20-%20Changes/"
-                                "2022.12.07%20-%20Changes.xml?2022.08.31-9"
-                            ),
-                            "assessment": {"uxlc": "ועשר֤ים"},
-                            "wlc_word": "ועשר֤ים",
-                        }
-                    },
-                    all_changes_path=all_changes_path,
-                )
+    def test_descriptor_from_hebrew_token_tevir(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("אש֛ר")
+        self.assertEqual(descriptor, "tevir")
 
-    def test_structured_text_sanity_skips_non_hebrew_assessment_uxlc(self):
+    def test_descriptor_from_hebrew_token_etnaxta(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("שנ֑ים")
+        self.assertEqual(descriptor, "etnaxta")
+
+    def test_descriptor_from_hebrew_token_pashta_on_letter(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("שנה֙")
+        self.assertEqual(descriptor, "pashta on ה")
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_true(self):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="tevir",
+            diff_wlc_uxlc={"wlc422": "אש֥ר", "uxlc": "אש֛ר"},
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_none_when_not_convertible(self):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="meteg-maqaf",
+            diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
+        )
+        self.assertIsNone(matches)
+
+    def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(self):
         with TemporaryDirectory() as tmp_dir:
             all_changes_path = Path(tmp_dir) / "all_changes.json"
             all_changes_path.write_text(
@@ -878,6 +888,33 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                     }
                 },
                 all_changes_path=all_changes_path,
+            )
+
+    def test_load_all_changes_by_url_indexes_rows(self):
+        with TemporaryDirectory() as tmp_dir:
+            all_changes_path = Path(tmp_dir) / "all_changes.json"
+            all_changes_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "release": "2022.12.07",
+                            "changeset": "2022.08.31",
+                            "n": 9,
+                            "citation": "1Kings 6:2.17",
+                            "changetext": "וְעֶשְׂרִ֣ים",
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            by_url = troublemaker_structured_text_sanity.load_all_changes_by_url(all_changes_path)
+            self.assertIn(
+                "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
+                by_url,
             )
 
 

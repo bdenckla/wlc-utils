@@ -10,7 +10,13 @@ from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram.mam_simple_diff import diff_wlc_mam
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
 from accgram.mam_simple_verse import load_mam_simple_for_refs
-from accgram.troublemaker_structured_text_sanity import sanity_check_structured_text
+from accgram.troublemaker_structured_text_sanity import (
+    assessment_uxlc_matches_converted_diff_uxlc,
+    canonicalize_uxlc_change_url,
+    diff_uxlc_matches_changetext,
+    load_all_changes_by_url,
+    sanity_check_structured_text,
+)
 from accgram.troublemaker_structured_text import STRUCTURED_TEXT_BY_REF
 from accgram.verse_json_smart_concat import smart_concatenate_row_for_json
 from accgram.wlc_uxlc_diff import diff_wlc_uxlc
@@ -115,6 +121,7 @@ def run(args: argparse.Namespace) -> None:
         structured_text_by_ref=STRUCTURED_TEXT_BY_REF,
         all_changes_path=all_changes_path,
     )
+    all_changes_by_url = load_all_changes_by_url(all_changes_path)
 
     wlc422_by_bcv = _load_wlc422_index(args.wlc422_kq_u_dir)
     uxlc_by_bcv = _load_uxlc_for_refs(args.uxlc_dir, refs_by_book)
@@ -162,6 +169,49 @@ def run(args: argparse.Namespace) -> None:
         }
         structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
         if structured_text is not None:
+            assessment = structured_text.get("assessment")
+            assessment_uxlc = assessment.get("uxlc") if isinstance(assessment, dict) else None
+            if isinstance(assessment_uxlc, str):
+                matches_converted_diff = assessment_uxlc_matches_converted_diff_uxlc(
+                    assessment_uxlc=assessment_uxlc,
+                    diff_wlc_uxlc=enriched_row.get("diff_wlc_uxlc"),
+                )
+                if matches_converted_diff is False:
+                    raise ValueError(
+                        "structured_text assessment.uxlc mismatches converted diff_wlc_uxlc.uxlc "
+                        f"for {ref}: assessment.uxlc={assessment_uxlc} "
+                        f"diff_wlc_uxlc={enriched_row.get('diff_wlc_uxlc')}"
+                    )
+
+            uxlc_change = structured_text.get("uxlc_change")
+            if isinstance(uxlc_change, str) and uxlc_change.strip():
+                canonical_url = canonicalize_uxlc_change_url(uxlc_change)
+                if canonical_url is None:
+                    raise ValueError(f"Malformed structured_text.uxlc_change URL for {ref}: {uxlc_change}")
+
+                change_row = all_changes_by_url.get(canonical_url)
+                if change_row is None:
+                    raise ValueError(
+                        "structured_text.uxlc_change not found in all_changes.json "
+                        f"for {ref}: {uxlc_change}"
+                    )
+
+                changetext = change_row.get("changetext")
+                if not isinstance(changetext, str):
+                    raise ValueError(
+                        f"all_changes.json row is missing string changetext for URL {canonical_url}"
+                    )
+
+                matches_changetext = diff_uxlc_matches_changetext(
+                    diff_wlc_uxlc=enriched_row.get("diff_wlc_uxlc"),
+                    changetext=changetext,
+                )
+                if matches_changetext is False:
+                    raise ValueError(
+                        "diff_wlc_uxlc.uxlc mismatches all_changes changetext after sanitization "
+                        f"for {ref}: changetext={changetext} "
+                        f"diff_wlc_uxlc={enriched_row.get('diff_wlc_uxlc')}"
+                    )
             enriched_row["structured_text"] = structured_text
         enriched_rows.append(enriched_row)
 

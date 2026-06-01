@@ -6,6 +6,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 from accgram.wlc_book_codes import wlc_bb_to_bk39id
+from mb_cmn import hebrew_accents as ha
 from mb_cmn.uxlc_change_url import uxlc_change_url
 from py_uxlc.my_uxlc_book_abbreviations import BKNA_MAP_UXLC_TO_STD
 
@@ -38,6 +39,19 @@ _HEBREW_ACCENT_END = ord("\u05af")
 _HEBREW_MAQAF = "\u05be"
 _HEBREW_PASEQ = "\u05c0"
 _HEBREW_SOF_PASUQ = "\u05c3"
+
+_ACCENT_TO_DESCRIPTOR = {
+    ha.ATN: "etnaxta",
+    ha.MUN: "munax",
+    ha.TEV: "tevir",
+    ha.MAH: "mahapakh",
+    ha.MER: "merkha",
+    ha.DAR: "darga",
+}
+_OVER_ACCENT_TO_PREFIX = {
+    ha.PASH: "pashta on ",
+    ha.QOM: "qadma on ",
+}
 
 
 def sanity_check_structured_text(
@@ -93,24 +107,6 @@ def sanity_check_structured_text(
                 f"for {ref}: citation={citation} url={uxlc_change}"
             )
 
-        assessment = structured.get("assessment")
-        assessment_uxlc = assessment.get("uxlc") if isinstance(assessment, dict) else None
-        if isinstance(assessment_uxlc, str):
-            changetext = change_row.get("changetext")
-            if not isinstance(changetext, str):
-                errors.append(f"all_changes.json row is missing string changetext for URL {canonical_url}")
-                continue
-            sanitized_changetext = sanitize_word_for_change_match(changetext)
-            sanitized_assessment_uxlc = sanitize_word_for_change_match(assessment_uxlc)
-
-            # assessment.uxlc is often a descriptor label (e.g. "munax").
-            # Compare only when it contains Hebrew-script text after sanitization.
-            if sanitized_assessment_uxlc and sanitized_assessment_uxlc != sanitized_changetext:
-                errors.append(
-                    "changetext/assessment.uxlc mismatch after sanitization "
-                    f"for {ref}: changetext={changetext} assessment.uxlc={assessment_uxlc}"
-                )
-
     if errors:
         first_errors = errors[:20]
         remainder_count = len(errors) - len(first_errors)
@@ -123,7 +119,7 @@ def sanity_check_structured_text(
         )
 
 
-def sanitize_word_for_change_match(text: str) -> str:
+def sanitize_word_for_change_match(text: str, *, require_hebrew: bool = False) -> str:
     out_chars: list[str] = []
     for ch in text:
         cp = ord(ch)
@@ -135,7 +131,111 @@ def sanitize_word_for_change_match(text: str) -> str:
             continue
         if ch in {_HEBREW_MAQAF, _HEBREW_PASEQ, _HEBREW_SOF_PASUQ}:
             out_chars.append(ch)
-    return "".join(out_chars)
+    out = "".join(out_chars)
+    if require_hebrew and not out:
+        raise ValueError(f"Expected Hebrew-script text, got: {text!r}")
+    return out
+
+
+def load_all_changes_by_url(all_changes_path: Path) -> dict[str, dict[str, object]]:
+    if not all_changes_path.is_file():
+        raise FileNotFoundError(f"all_changes.json not found: {all_changes_path}")
+
+    all_changes = _read_json(all_changes_path)
+    if not isinstance(all_changes, list):
+        raise ValueError(f"Expected list in all_changes.json: {all_changes_path}")
+
+    by_change_url: dict[str, dict[str, object]] = {}
+    for row in all_changes:
+        if not isinstance(row, dict):
+            continue
+        url = _url_for_all_changes_row(row)
+        by_change_url[url] = row
+    return by_change_url
+
+
+def canonicalize_uxlc_change_url(url: str) -> str | None:
+    return _canonicalize_uxlc_change_url(url)
+
+
+def diff_uxlc_matches_changetext(diff_wlc_uxlc: object, changetext: str) -> bool | None:
+    diff_uxlc_text = _extract_diff_uxlc_text(diff_wlc_uxlc)
+    if diff_uxlc_text is None:
+        return None
+
+    sanitized_diff_uxlc = sanitize_word_for_change_match(diff_uxlc_text, require_hebrew=True)
+    sanitized_changetext = sanitize_word_for_change_match(changetext, require_hebrew=True)
+    return sanitized_diff_uxlc == sanitized_changetext
+
+
+def descriptor_from_hebrew_token(text: str) -> str | None:
+    accent_marks = [ch for ch in text if _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END]
+    if len(accent_marks) != 1:
+        return None
+
+    accent = accent_marks[0]
+    descriptor = _ACCENT_TO_DESCRIPTOR.get(accent)
+    if descriptor is not None:
+        return descriptor
+
+    prefix = _OVER_ACCENT_TO_PREFIX.get(accent)
+    if prefix is None:
+        return None
+
+    accent_idx = text.index(accent)
+    accented_letter = _previous_hebrew_letter(text, accent_idx)
+    if accented_letter is None:
+        return None
+    return f"{prefix}{accented_letter}"
+
+
+def assessment_uxlc_matches_converted_diff_uxlc(
+    assessment_uxlc: str,
+    diff_wlc_uxlc: object,
+) -> bool | None:
+    diff_uxlc_text = _extract_diff_uxlc_text(diff_wlc_uxlc)
+    if diff_uxlc_text is None:
+        return None
+
+    descriptor = descriptor_from_hebrew_token(diff_uxlc_text)
+    if descriptor is None:
+        return None
+
+    return assessment_uxlc == descriptor
+
+
+def _extract_diff_uxlc_text(diff_wlc_uxlc: object) -> str | None:
+    if not isinstance(diff_wlc_uxlc, dict):
+        return None
+
+    uxlc = diff_wlc_uxlc.get("uxlc")
+    if isinstance(uxlc, str):
+        return uxlc
+
+    if isinstance(uxlc, dict):
+        text = uxlc.get("text")
+        if isinstance(text, str):
+            return text
+        return None
+
+    if isinstance(uxlc, list) and len(uxlc) == 1:
+        token = uxlc[0]
+        if isinstance(token, str):
+            return token
+        if isinstance(token, dict):
+            text = token.get("text")
+            if isinstance(text, str):
+                return text
+
+    return None
+
+
+def _previous_hebrew_letter(text: str, end_idx: int) -> str | None:
+    for idx in range(end_idx - 1, -1, -1):
+        ch = text[idx]
+        if _HEBREW_LETTER_START <= ord(ch) <= _HEBREW_LETTER_END:
+            return ch
+    return None
 
 
 def _read_json(path: Path) -> object:
