@@ -838,7 +838,44 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_descriptor_from_hebrew_token_pashta_on_letter(self):
         descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("שנה֙")
-        self.assertEqual(descriptor, "pashta on ה")
+        self.assertEqual(descriptor, "pashta on he")
+
+    def test_descriptor_from_hebrew_token_no_accent(self):
+        self.assertEqual(
+            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("מבלי"),
+            "no_accent",
+        )
+        self.assertEqual(
+            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("עליה"),
+            "no_accent",
+        )
+
+    def test_descriptor_from_hebrew_token_maqaf(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("נכח־")
+        self.assertEqual(descriptor, "maqaf")
+
+    def test_descriptor_from_hebrew_token_two_over_accents(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("אריצ֨נו֙")
+        self.assertEqual(descriptor, "qadma on tsadi, pashta on vav")
+
+    def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
+        self.assertIsNone(
+            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("טוב֖ה")
+        )
+        self.assertIsNone(
+            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("ישראל֘")
+        )
+
+    def test_descriptor_from_hebrew_token_asserts_for_unmapped_non_allowlisted_token(self):
+        with self.assertRaisesRegex(
+            AssertionError,
+            r"No descriptor for accent token unless explicitly allowlisted",
+        ):
+            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("אב֚")
+
+    def test_descriptor_from_hebrew_token_asserts_on_over_accent_without_letter(self):
+        with self.assertRaisesRegex(AssertionError, r"Over-accent must follow a Hebrew letter"):
+            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("֙")
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_true(self):
         matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
@@ -847,12 +884,26 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertTrue(matches)
 
-    def test_assessment_uxlc_matches_converted_diff_uxlc_none_when_not_convertible(self):
+    def test_assessment_uxlc_matches_converted_diff_uxlc_maqaf_alias(self):
         matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-maqaf",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
         )
-        self.assertIsNone(matches)
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_maqaf_exact(self):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="maqaf",
+            diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_hebrew_letter_suffix(self):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="pashta on ה",
+            diff_wlc_uxlc={"wlc422": "שנ֨ה", "uxlc": "שנה֙"},
+        )
+        self.assertTrue(matches)
 
     def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(self):
         with TemporaryDirectory() as tmp_dir:

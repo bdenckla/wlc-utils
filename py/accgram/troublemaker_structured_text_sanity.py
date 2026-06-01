@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
@@ -51,6 +52,10 @@ _ACCENT_TO_DESCRIPTOR = {
 _OVER_ACCENT_TO_PREFIX = {
     ha.PASH: "pashta on ",
     ha.QOM: "qadma on ",
+}
+_NO_DESCRIPTOR_EXCEPTIONS = {
+    "טוב֖ה",
+    "ישראל֘",
 }
 
 
@@ -170,23 +175,37 @@ def diff_uxlc_matches_changetext(diff_wlc_uxlc: object, changetext: str) -> bool
 
 def descriptor_from_hebrew_token(text: str) -> str | None:
     accent_marks = [ch for ch in text if _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END]
-    if len(accent_marks) != 1:
-        return None
+    if len(accent_marks) == 0:
+        return "maqaf" if _HEBREW_MAQAF in text else "no_accent"
 
-    accent = accent_marks[0]
-    descriptor = _ACCENT_TO_DESCRIPTOR.get(accent)
-    if descriptor is not None:
-        return descriptor
+    descriptors: list[str] = []
+    for idx, ch in enumerate(text):
+        if not (_HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END):
+            continue
 
-    prefix = _OVER_ACCENT_TO_PREFIX.get(accent)
-    if prefix is None:
-        return None
+        descriptor = _ACCENT_TO_DESCRIPTOR.get(ch)
+        if descriptor is not None:
+            descriptors.append(descriptor)
+            continue
 
-    accent_idx = text.index(accent)
-    accented_letter = _previous_hebrew_letter(text, accent_idx)
-    if accented_letter is None:
+        prefix = _OVER_ACCENT_TO_PREFIX.get(ch)
+        if prefix is None:
+            assert text in _NO_DESCRIPTOR_EXCEPTIONS, (
+                "No descriptor for accent token unless explicitly allowlisted: "
+                f"token={text!r} accent={ch!r}"
+            )
+            return None
+
+        accented_letter = _previous_hebrew_letter(text, idx)
+        assert accented_letter is not None, (
+            f"Over-accent must follow a Hebrew letter: token={text!r} accent={ch!r}"
+        )
+        letter_name = _hebrew_letter_name(accented_letter)
+        descriptors.append(f"{prefix}{letter_name}")
+
+    if not descriptors:
         return None
-    return f"{prefix}{accented_letter}"
+    return ", ".join(descriptors)
 
 
 def assessment_uxlc_matches_converted_diff_uxlc(
@@ -201,7 +220,22 @@ def assessment_uxlc_matches_converted_diff_uxlc(
     if descriptor is None:
         return None
 
-    return assessment_uxlc == descriptor
+    return _descriptor_matches_assessment(descriptor=descriptor, assessment_uxlc=assessment_uxlc)
+
+
+def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> bool:
+    normalized_assessment = _normalize_assessment_descriptor(assessment_uxlc)
+    if descriptor == "maqaf" and normalized_assessment in {"maqaf", "meteg-maqaf"}:
+        return True
+    return normalized_assessment == descriptor
+
+
+def _normalize_assessment_descriptor(descriptor: str) -> str:
+    match = re.fullmatch(r"(?P<prefix>pashta on |qadma on )(?P<letter>[\u05d0-\u05ea])", descriptor)
+    if match is None:
+        return descriptor
+    letter = match.group("letter")
+    return f"{match.group('prefix')}{_hebrew_letter_name(letter)}"
 
 
 def _extract_diff_uxlc_text(diff_wlc_uxlc: object) -> str | None:
@@ -236,6 +270,13 @@ def _previous_hebrew_letter(text: str, end_idx: int) -> str | None:
         if _HEBREW_LETTER_START <= ord(ch) <= _HEBREW_LETTER_END:
             return ch
     return None
+
+
+def _hebrew_letter_name(letter: str) -> str:
+    name = unicodedata.name(letter, "")
+    if not name.startswith("HEBREW LETTER "):
+        return letter
+    return name.removeprefix("HEBREW LETTER ").lower().replace(" ", "-")
 
 
 def _read_json(path: Path) -> object:
