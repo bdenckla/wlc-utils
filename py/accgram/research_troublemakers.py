@@ -17,6 +17,7 @@ from accgram.troublemaker_structured_text_sanity import (
     load_all_changes_by_url,
     sanity_check_structured_text,
 )
+from accgram import research_troublemakers_report
 from accgram.troublemaker_structured_text import STRUCTURED_TEXT_BY_REF
 from accgram.verse_json_smart_concat import smart_concatenate_row_for_json
 from accgram.wlc_uxlc_diff import diff_wlc_uxlc
@@ -89,13 +90,22 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         default=default_out_path(repo_root),
         help="Output JSON path for enriched research artifact.",
     )
+    parser.add_argument(
+        "--html-out",
+        type=Path,
+        default=research_troublemakers_report.default_html_out_path(repo_root),
+        help="Output HTML path for research-tms report.",
+    )
 
 
 def run(args: argparse.Namespace) -> None:
+    repo_root = Path(__file__).resolve().parent.parent.parent
+
     all_changes_path = getattr(args, "all_changes", None)
     if not isinstance(all_changes_path, Path):
-        repo_root = Path(__file__).resolve().parent.parent.parent
         all_changes_path = default_all_changes_path(repo_root)
+
+    html_out_path = research_troublemakers_report.resolve_html_out_path(args, repo_root)
 
     troubles_payload = _read_json(args.troubles_in)
     troublemakers = troubles_payload.get("troublemakers")
@@ -239,12 +249,17 @@ def run(args: argparse.Namespace) -> None:
         json.dump(payload, f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")
 
+    # Keep this call immediately after JSON write so HTML failures are fail-fast
+    # while preserving the JSON write attempt.
+    research_troublemakers_report.write_goerwitz_tms_html_report(html_out_path, enriched_rows)
+
     print(f"Input troublemakers: {args.troubles_in}")
     print(f"wlc422-kq-u dir: {args.wlc422_kq_u_dir}")
     print(f"UXLC dir: {args.uxlc_dir}")
     print(f"MAM-simple dir: {args.mam_simple_dir}")
     print(f"All changes: {all_changes_path}")
     print(f"Output: {args.out}")
+    print(f"HTML output: {html_out_path}")
     print(f"Rows: {len(enriched_rows)}")
 
 

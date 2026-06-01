@@ -13,6 +13,7 @@ from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram import mam_simple_diff
 from accgram import mam_simple_verse
 from accgram import research_troublemakers
+from accgram import research_troublemakers_report
 from accgram import troublemaker_structured_text_sanity
 from accgram import verse_json_smart_concat
 from accgram import wlc_uxlc_diff
@@ -268,6 +269,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             uxlc_dir = base / "uxlc"
             mam_simple_dir = base / "mam-simple"
             out_path = base / "out" / "research-troublemakers.json"
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
             troubles_in.parent.mkdir(parents=True, exist_ok=True)
             wlc422_dir.mkdir(parents=True, exist_ok=True)
@@ -426,6 +428,72 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             else:
                 first_diff = row["diff_wlc_mam"]
             self.assertIn("mam_simple", first_diff)
+
+            self.assertTrue(html_out.exists())
+            html_text = html_out.read_text(encoding="utf-8")
+            html_text_compact = "".join(html_text.split())
+
+            self.assertIn("<h2>gn1:1</h2>", html_text_compact)
+            self.assertIn(
+                "https://bdenckla.github.io/MAM-with-doc/A1-Genesis.html#c1v1",
+                html_text,
+            )
+            self.assertIn("https://tanach.us/Tanach.xml?Gen1:1", html_text)
+            self.assertIn("structured_text.uxlc_change:none", html_text_compact)
+            self.assertIn("<th>before</th><th>SAT</th><th>after</th>", html_text_compact)
+            self.assertIn("wlc_word</td><td></td>", html_text_compact)
+            self.assertIn("בראש֖יתבר֣א", html_text_compact)
+
+    def test_write_goerwitz_tms_html_report_renders_diff_and_assessment_labels(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_troublemakers_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "gn 1:1",
+                        "wlc422_kq_u_verse": {
+                            "vels": [
+                                "בראשית",
+                                {"word": "אב", "notes": "]1"},
+                                "אחרית",
+                            ]
+                        },
+                        "diff_wlc_uxlc": {"wlc422": "אב", "uxlc": "אג"},
+                        "diff_wlc_mam": [
+                            {"wlc_adds_notes": "]1"},
+                            {"wlc422": "אב", "mam_simple": "אב֙"},
+                        ],
+                        "structured_text": {
+                            "wlc_word": "אב",
+                            "assessment": {
+                                "manuscript": "foo",
+                                "bhs": "bar",
+                                "wlc": "baz",
+                                "uxlc": "qux",
+                                "consensus": "quux",
+                            },
+                            "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
+                            "free_form_comment": ["c1", "c2"],
+                        },
+                    }
+                ],
+            )
+
+            self.assertTrue(html_out.exists())
+            html_text = html_out.read_text(encoding="utf-8")
+            html_text_compact = "".join(html_text.split())
+
+            self.assertIn("<h2>gn1:1</h2>", html_text_compact)
+            self.assertIn("diff_wlc_uxlc", html_text)
+            self.assertIn("diff_wlc_mam[1]", html_text)
+            self.assertIn("assessment.manuscript", html_text)
+            self.assertIn("assessment.wlc", html_text)
+            self.assertIn("free_form_comment[1]", html_text)
+            self.assertIn("bracket_notes", html_text)
+            self.assertIn("structured_text.uxlc_change", html_text)
 
     def test_run_missing_mam_simple_raises_fail_fast(self):
         with TemporaryDirectory() as tmp_dir:
@@ -730,6 +798,130 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("summary", payload)
             self.assertIn("troublemakers", payload)
             self.assertEqual(payload["summary"]["troublemakers"], 0)
+
+    def test_run_derives_default_html_out_from_out_context_when_missing_on_namespace(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+            expected_html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps({"troublemakers": []}, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text("[]\n", encoding="utf-8")
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                + "\n",
+                encoding="utf-8",
+            )
+
+            research_troublemakers.run(
+                SimpleNamespace(
+                    troubles_in=troubles_in,
+                    wlc422_kq_u_dir=wlc422_dir,
+                    uxlc_dir=uxlc_dir,
+                    mam_simple_dir=mam_simple_dir,
+                    out=out_path,
+                )
+            )
+
+            self.assertTrue(out_path.exists())
+            self.assertTrue(expected_html_out.exists())
+
+    def test_run_respects_explicit_html_out_override(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+            html_out = base / "custom" / "goerwitz-tms-phase1.html"
+            default_html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps({"troublemakers": []}, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text("[]\n", encoding="utf-8")
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                + "\n",
+                encoding="utf-8",
+            )
+
+            research_troublemakers.run(
+                SimpleNamespace(
+                    troubles_in=troubles_in,
+                    wlc422_kq_u_dir=wlc422_dir,
+                    uxlc_dir=uxlc_dir,
+                    mam_simple_dir=mam_simple_dir,
+                    out=out_path,
+                    html_out=html_out,
+                )
+            )
+
+            self.assertTrue(out_path.exists())
+            self.assertTrue(html_out.exists())
+            self.assertFalse(default_html_out.exists())
+
+    def test_run_fails_fast_on_html_write_error_after_json_write_attempt(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+
+            non_dir_parent = base / "not-a-dir"
+            non_dir_parent.write_text("occupied", encoding="utf-8")
+            bad_html_out = non_dir_parent / "goerwitz-tms.html"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps({"troublemakers": []}, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text("[]\n", encoding="utf-8")
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                + "\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaises(FileExistsError):
+                research_troublemakers.run(
+                    SimpleNamespace(
+                        troubles_in=troubles_in,
+                        wlc422_kq_u_dir=wlc422_dir,
+                        uxlc_dir=uxlc_dir,
+                        mam_simple_dir=mam_simple_dir,
+                        out=out_path,
+                        html_out=bad_html_out,
+                    )
+                )
+
+            self.assertTrue(out_path.exists())
 
     def test_structured_text_sanity_allows_book_name_and_word_number_mismatch_forms(self):
         with TemporaryDirectory() as tmp_dir:
