@@ -12,10 +12,14 @@ Files copied:
   hebrew_letters.py
   hebrew_points.py
   hebrew_punctuation.py
+  kq_special_templates.py
   my_diffs.py
   my_utils.py
   provenance.py
+  retired_kq_special_templates.py
+  retired_template_names.py
   str_defs.py
+  template_names.py
   uni_heb.py
   uni_norm_fragile.py
   url_percent.py
@@ -24,4 +28,4 @@ Files copied:
 
 Git commit: be6b84c6f97af790101150a5ce8d99928318fee5
 
-Date copied: 2026-05-29
+Date copied: 2026-06-01

@@ -6,7 +6,9 @@ These files were copied from a sibling source repository at:
 
 Files copied:
   describe_diff.py
+  mpplus_flatten.py
+  mpplus_param_access.py
 
 Git commit: be6b84c6f97af790101150a5ce8d99928318fee5
 
-Date copied: 2026-05-29
+Date copied: 2026-06-01
