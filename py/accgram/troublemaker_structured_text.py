@@ -370,8 +370,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "je 9:10": {
         "wlc_word": "מבל֖י",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-15",
         "free_form_comment": (
+            "The same word, מבלי, appears in the next verse (11) with analogous transcription problems."
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
             "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. "
@@ -382,7 +383,18 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 9:11": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "מבל֖י",
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-16",
+        "free_form_comment": (
+            "The same word, מבלי, appears in the previous verse (10) with analogous transcription problems."
+            "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
+            "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
+            "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. "
+            "To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: "
+            "tipexa is the least likely of the three possible meanings of this mark. "
+            "Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably "
+            "assume that a maqaf is missing."
+        ),
     },
     "je 10:3": {
         "TODO_placeholder": "FILL_STRUCTURED_TEXT",

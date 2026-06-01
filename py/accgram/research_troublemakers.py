@@ -10,6 +10,7 @@ from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram.mam_simple_diff import diff_wlc_mam
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
 from accgram.mam_simple_verse import load_mam_simple_for_refs
+from accgram.troublemaker_structured_text_sanity import sanity_check_structured_text
 from accgram.troublemaker_structured_text import STRUCTURED_TEXT_BY_REF
 from accgram.verse_json_smart_concat import smart_concatenate_row_for_json
 from accgram.wlc_uxlc_diff import diff_wlc_uxlc
@@ -35,6 +36,10 @@ def default_uxlc_dir(repo_root: Path) -> Path:
 
 def default_mam_simple_dir(repo_root: Path) -> Path:
     return _default_mam_simple_dir(repo_root)
+
+
+def default_all_changes_path(repo_root: Path) -> Path:
+    return repo_root.parent / "UXLC-utils" / "out" / "UXLC-misc" / "all_changes.json"
 
 
 def default_out_path(repo_root: Path) -> Path:
@@ -67,6 +72,12 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         help="Directory containing MAM-simple json-vtrad-bhs book files.",
     )
     parser.add_argument(
+        "--all-changes",
+        type=Path,
+        default=default_all_changes_path(repo_root),
+        help="Path to UXLC-utils out/UXLC-misc/all_changes.json for sanity checks.",
+    )
+    parser.add_argument(
         "--out",
         type=Path,
         default=default_out_path(repo_root),
@@ -75,6 +86,11 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 
 def run(args: argparse.Namespace) -> None:
+    all_changes_path = getattr(args, "all_changes", None)
+    if not isinstance(all_changes_path, Path):
+        repo_root = Path(__file__).resolve().parent.parent.parent
+        all_changes_path = default_all_changes_path(repo_root)
+
     troubles_payload = _read_json(args.troubles_in)
     troublemakers = troubles_payload.get("troublemakers")
     if not isinstance(troublemakers, list):
@@ -93,6 +109,12 @@ def run(args: argparse.Namespace) -> None:
         ref = _to_ref(bb, chnu, vrnu)
         refs_by_book.setdefault(bb, set()).add((chnu, vrnu))
         parsed_rows.append((row, bcv, ref))
+
+    sanity_check_structured_text(
+        refs=[ref for _row, _bcv, ref in parsed_rows],
+        structured_text_by_ref=STRUCTURED_TEXT_BY_REF,
+        all_changes_path=all_changes_path,
+    )
 
     wlc422_by_bcv = _load_wlc422_index(args.wlc422_kq_u_dir)
     uxlc_by_bcv = _load_uxlc_for_refs(args.uxlc_dir, refs_by_book)
@@ -171,6 +193,7 @@ def run(args: argparse.Namespace) -> None:
     print(f"wlc422-kq-u dir: {args.wlc422_kq_u_dir}")
     print(f"UXLC dir: {args.uxlc_dir}")
     print(f"MAM-simple dir: {args.mam_simple_dir}")
+    print(f"All changes: {all_changes_path}")
     print(f"Output: {args.out}")
     print(f"Rows: {len(enriched_rows)}")
 

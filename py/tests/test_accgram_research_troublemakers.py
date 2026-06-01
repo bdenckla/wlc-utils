@@ -13,6 +13,7 @@ from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram import mam_simple_diff
 from accgram import mam_simple_verse
 from accgram import research_troublemakers
+from accgram import troublemaker_structured_text_sanity
 from accgram import verse_json_smart_concat
 from accgram import wlc_uxlc_diff
 
@@ -729,6 +730,155 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("summary", payload)
             self.assertIn("troublemakers", payload)
             self.assertEqual(payload["summary"]["troublemakers"], 0)
+
+    def test_structured_text_sanity_allows_book_name_and_word_number_mismatch_forms(self):
+        with TemporaryDirectory() as tmp_dir:
+            all_changes_path = Path(tmp_dir) / "all_changes.json"
+            all_changes_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "release": "2023.04.01",
+                            "changeset": "2022.12.10",
+                            "n": 16,
+                            "citation": "Jer 9:11.19",
+                            "changetext": "מבל֖י",
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            troublemaker_structured_text_sanity.sanity_check_structured_text(
+                refs=["je 9:11"],
+                structured_text_by_ref={
+                    "je 9:11": {
+                        "uxlc_change": (
+                            "https://tanach.us/Changes/2023.04.01%20-%20Changes/"
+                            "2023.04.01%20-%20Changes.xml?2022.12.10-16"
+                        ),
+                        "assessment": {"uxlc": "מבל֖י"},
+                    }
+                },
+                all_changes_path=all_changes_path,
+            )
+
+    def test_structured_text_sanity_rejects_citation_ref_mismatch(self):
+        with TemporaryDirectory() as tmp_dir:
+            all_changes_path = Path(tmp_dir) / "all_changes.json"
+            all_changes_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "release": "2023.04.01",
+                            "changeset": "2022.12.10",
+                            "n": 16,
+                            "citation": "Jer 9:10.19",
+                            "changetext": "מבל֖י",
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, r"citation/ref mismatch"):
+                troublemaker_structured_text_sanity.sanity_check_structured_text(
+                    refs=["je 9:11"],
+                    structured_text_by_ref={
+                        "je 9:11": {
+                            "uxlc_change": (
+                                "https://tanach.us/Changes/2023.04.01%20-%20Changes/"
+                                "2023.04.01%20-%20Changes.xml?2022.12.10-16"
+                            ),
+                            "assessment": {"uxlc": "מבל֖י"},
+                        }
+                    },
+                    all_changes_path=all_changes_path,
+                )
+
+    def test_structured_text_sanitize_word_drops_non_target_marks(self):
+        actual = troublemaker_structured_text_sanity.sanitize_word_for_change_match("מְב\u05bdל֖י ")
+        expected = troublemaker_structured_text_sanity.sanitize_word_for_change_match("מבל֖י")
+        self.assertEqual(actual, expected)
+
+    def test_structured_text_sanity_uses_assessment_uxlc_for_word_compare(self):
+        with TemporaryDirectory() as tmp_dir:
+            all_changes_path = Path(tmp_dir) / "all_changes.json"
+            all_changes_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "release": "2022.12.07",
+                            "changeset": "2022.08.31",
+                            "n": 9,
+                            "citation": "1Kings 6:2.17",
+                            "changetext": "וְעֶשְׂרִ֣ים",
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, r"changetext/assessment\.uxlc mismatch"):
+                troublemaker_structured_text_sanity.sanity_check_structured_text(
+                    refs=["1k 6:2"],
+                    structured_text_by_ref={
+                        "1k 6:2": {
+                            "uxlc_change": (
+                                "https://tanach.us/Changes/2022.12.07%20-%20Changes/"
+                                "2022.12.07%20-%20Changes.xml?2022.08.31-9"
+                            ),
+                            "assessment": {"uxlc": "ועשר֤ים"},
+                            "wlc_word": "ועשר֤ים",
+                        }
+                    },
+                    all_changes_path=all_changes_path,
+                )
+
+    def test_structured_text_sanity_skips_non_hebrew_assessment_uxlc(self):
+        with TemporaryDirectory() as tmp_dir:
+            all_changes_path = Path(tmp_dir) / "all_changes.json"
+            all_changes_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "release": "2022.12.07",
+                            "changeset": "2022.08.31",
+                            "n": 9,
+                            "citation": "1Kings 6:2.17",
+                            "changetext": "וְעֶשְׂרִ֣ים",
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            troublemaker_structured_text_sanity.sanity_check_structured_text(
+                refs=["1k 6:2"],
+                structured_text_by_ref={
+                    "1k 6:2": {
+                        "uxlc_change": (
+                            "https://tanach.us/Changes/2022.12.07%20-%20Changes/"
+                            "2022.12.07%20-%20Changes.xml?2022.08.31-9"
+                        ),
+                        "assessment": {"uxlc": "munax"},
+                        "wlc_word": "ועשר֤ים",
+                    }
+                },
+                all_changes_path=all_changes_path,
+            )
 
 
 if __name__ == "__main__":
