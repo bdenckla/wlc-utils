@@ -263,17 +263,62 @@ def _render_sat_value(value: object) -> str:
         return ""
 
     if isinstance(value, list):
-        rendered = ", ".join(_render_sat_value(item) for item in value)
-        return f"[{rendered}]"
+        rendered_items = [_render_sat_value(item) for item in value if item is not None]
+        rendered_items = [item for item in rendered_items if item]
+        if not rendered_items:
+            return "[]"
+        return f"[{' | '.join(rendered_items)}]"
 
     if isinstance(value, dict):
-        parts = [f"{key}: {_render_sat_value(val)}" for key, val in value.items()]
+        token_like = _render_token_like_dict(value)
+        if token_like is not None:
+            return token_like
+
+        parts = []
+        for key, val in value.items():
+            rendered = _render_sat_value(val)
+            parts.append(f"{key}: {rendered}" if rendered else str(key))
         return "; ".join(parts)
 
     try:
         return json.dumps(value, ensure_ascii=False, sort_keys=True)
     except TypeError:
         return str(value)
+
+
+def _render_token_like_dict(value: dict[str, object]) -> str | None:
+    token_text: str | None = None
+    if isinstance(value.get("word"), str):
+        token_text = str(value["word"])
+    elif isinstance(value.get("text"), str):
+        token_text = str(value["text"])
+
+    if token_text is None:
+        return None
+
+    note_key: str | None = None
+    if "notes" in value:
+        note_key = "notes"
+    elif "note" in value:
+        note_key = "note"
+
+    out = token_text
+    if note_key is not None:
+        note_text = _render_sat_value(value.get(note_key))
+        if note_text:
+            out = f"{out} ({note_key}: {note_text})"
+
+    extras: list[str] = []
+    for key, val in value.items():
+        if key in {"word", "text", "notes", "note"}:
+            continue
+        rendered = _render_sat_value(val)
+        extras.append(f"{key}: {rendered}" if rendered else str(key))
+
+    if extras:
+        out = f"{out} ({'; '.join(extras)})"
+
+    return out
 
 
 def _structured_text_value(row: dict[str, object], key: str) -> object:

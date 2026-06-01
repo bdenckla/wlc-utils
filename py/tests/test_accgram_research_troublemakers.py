@@ -495,6 +495,59 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("bracket_notes", html_text)
             self.assertIn("structured_text.uxlc_change", html_text)
 
+    def test_write_goerwitz_tms_html_report_uses_phase3_url_conventions(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_troublemakers_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "1k 6:2",
+                        "wlc422_kq_u_verse": {"vels": ["foo"]},
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            self.assertIn("https://bdenckla.github.io/MAM-with-doc/BC-1Kings.html#c6v2", html_text)
+            self.assertIn("https://tanach.us/Tanach.xml?1Kings6:2", html_text)
+
+    def test_write_goerwitz_tms_html_report_normalizes_mixed_token_payloads(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_troublemakers_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "1k 1:1",
+                        "wlc422_kq_u_verse": {
+                            "vels": ["לפני", {"word": "דבר", "notes": "]Q]n"}, "אחרי"]
+                        },
+                        "diff_wlc_uxlc": {
+                            "wlc422": {"word": "דבר", "notes": "]Q]n"},
+                            "uxlc": {"text": "דבר", "note": "t"},
+                        },
+                        "diff_wlc_mam": {
+                            "wlc422": ["אלף", {"text": "בית", "note": "x"}],
+                            "mam_simple": ["אלף", "בית"],
+                        },
+                        "structured_text": {
+                            "wlc_word": "דבר",
+                        },
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            self.assertIn("bracket_notes", html_text)
+            self.assertIn("דבר: ]Q]n", html_text)
+            self.assertIn("uxlc: דבר (note: t)", html_text)
+            self.assertIn("wlc422: [אלף | בית (note: x)]", html_text)
+
     def test_run_missing_mam_simple_raises_fail_fast(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
