@@ -7,7 +7,7 @@ from pathlib import Path
 from mb_cmn import bib_locales as tbn
 from mb_cmn import provenance
 from accgram import troublemakers
-from accgram.wlc_book_codes import wlc_bb_to_bk39id
+from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 
 def default_split_out_dir(repo_root: Path) -> Path:

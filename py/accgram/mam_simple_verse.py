@@ -6,7 +6,7 @@ from pathlib import Path
 from mb_cmn import bib_locales as tbn
 from mb_misc import osis_book_abbrevs as oba
 
-from accgram.wlc_book_codes import wlc_bb_to_bk39id
+from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 
 _HEBREW_MAQAF = "\u05be"

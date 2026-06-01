@@ -5,7 +5,7 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from pathlib import Path
 
-from accgram.wlc_book_codes import wlc_bb_to_goerwitz_book_name
+from cmn.wlc_book_codes import wlc_bb_to_goerwitz_book_name
 
 
 _BOOK_LINE_RE = re.compile(r"^([0-9a-z]{2})(\d+):(\d+)\b")

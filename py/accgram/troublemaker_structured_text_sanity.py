@@ -2,28 +2,20 @@ from __future__ import annotations
 
 import json
 import re
-import unicodedata
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
-from accgram.wlc_book_codes import wlc_bb_to_bk39id
+from cmn.wlc_book_codes import bk39id_to_wlc_bb
 from mb_cmn import hebrew_accents as ha
+from mb_diff_mpu.describe_diff import LETTER_NAMES
 from mb_cmn.uxlc_change_url import uxlc_change_url
 from py_uxlc.my_uxlc_book_abbreviations import BKNA_MAP_UXLC_TO_STD
-
-
-_WLC_BOOK_CODES = (
-    "gn", "ex", "lv", "nu", "dt", "js", "ju", "1s", "2s", "1k", "2k", "is", "je", "ek",
-    "ho", "jl", "am", "ob", "jn", "mi", "na", "hb", "zp", "hg", "zc", "ma", "ps", "pr",
-    "jb", "ca", "ru", "lm", "ec", "es", "da", "er", "ne", "1c", "2c",
-)
 
 
 def _normalize_book_token(book: str) -> str:
     return re.sub(r"[\s.]", "", book).lower()
 
 
-_STD_BKID_TO_WLC_BB = {wlc_bb_to_bk39id(bb): bb for bb in _WLC_BOOK_CODES}
 _CITATION_BOOK_TO_STD_BKID = {
     _normalize_book_token(book_ua): std_bkid
     for book_ua, std_bkid in BKNA_MAP_UXLC_TO_STD.items()
@@ -273,10 +265,7 @@ def _previous_hebrew_letter(text: str, end_idx: int) -> str | None:
 
 
 def _hebrew_letter_name(letter: str) -> str:
-    name = unicodedata.name(letter, "")
-    if not name.startswith("HEBREW LETTER "):
-        return letter
-    return name.removeprefix("HEBREW LETTER ").lower().replace(" ", "-")
+    return LETTER_NAMES.get(letter, letter)
 
 
 def _read_json(path: Path) -> object:
@@ -337,9 +326,10 @@ def _parse_citation(citation: str) -> tuple[str, int, int]:
     if std_bkid is None:
         raise ValueError(f"Unknown citation book abbreviation: {citation_book}")
 
-    bb = _STD_BKID_TO_WLC_BB.get(std_bkid)
-    if bb is None:
-        raise ValueError(f"Could not map citation book to WLC bb code: {citation_book}")
+    try:
+        bb = bk39id_to_wlc_bb(std_bkid)
+    except ValueError as exc:
+        raise ValueError(f"Could not map citation book to WLC bb code: {citation_book}") from exc
 
     return bb, int(match.group("ch")), int(match.group("vr"))
 

@@ -15,7 +15,7 @@ class WlcBookCodeInfo:
 _GOERWITZ_BOOK_HEADER_RE = re.compile(r"^(?:[1234][ \t]*)?[A-Z][a-z]+[ \t]*$")
 
 
-# Single source of truth for WLC 4.22 2-char book codes used by accgram.
+# Single source of truth for WLC 4.22 2-char book codes.
 _WLC_BB_INFO = {
     "gn": WlcBookCodeInfo(bk39id=tbn.BK_GENESIS),
     "ex": WlcBookCodeInfo(bk39id=tbn.BK_EXODUS),
@@ -60,12 +60,25 @@ _WLC_BB_INFO = {
     "2c": WlcBookCodeInfo(bk39id=tbn.BK_SND_CHR),
 }
 
+_BK39ID_TO_WLC_BB = {info.bk39id: bb for bb, info in _WLC_BB_INFO.items()}
+
 
 def wlc_bb_to_bk39id(bb: str) -> str:
     info = _WLC_BB_INFO.get(bb)
     if info is None:
         raise ValueError(f"Unknown WLC book code in input: {bb}")
     return info.bk39id
+
+
+def bk39id_to_wlc_bb(bk39id: str) -> str:
+    bb = _BK39ID_TO_WLC_BB.get(bk39id)
+    if bb is None:
+        raise ValueError(f"Unknown bk39id in input: {bk39id}")
+    return bb
+
+
+def wlc_bb_codes() -> tuple[str, ...]:
+    return tuple(_WLC_BB_INFO.keys())
 
 
 def wlc_bb_to_goerwitz_book_name(bb: str) -> str:

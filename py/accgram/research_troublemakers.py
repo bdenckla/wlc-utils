@@ -20,7 +20,7 @@ from accgram.troublemaker_structured_text_sanity import (
 from accgram.troublemaker_structured_text import STRUCTURED_TEXT_BY_REF
 from accgram.verse_json_smart_concat import smart_concatenate_row_for_json
 from accgram.wlc_uxlc_diff import diff_wlc_uxlc
-from accgram.wlc_book_codes import wlc_bb_to_bk39id
+from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import provenance
 from py_uxlc import my_uxlc
 

@@ -6,7 +6,7 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
-from accgram.wlc_book_codes import goerwitz_book_name_to_wlc_bb
+from cmn.wlc_book_codes import goerwitz_book_name_to_wlc_bb
 
 
 SUMMARY_FILENAME = "_summary.stderr.json"
