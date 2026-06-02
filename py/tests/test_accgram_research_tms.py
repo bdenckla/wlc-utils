@@ -711,6 +711,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                                 "mam": "quux",
                             },
                             "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
+                            "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
                             "comment": ["c1", "c2"],
                         },
                     }
@@ -758,6 +759,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertNotIn("diff_wlc_uxlc.wlc_adds_notes", html_text)
             self.assertIn("UXLC change", html_text)
+            self.assertIn("UXLC note page", html_text)
 
     def test_write_goerwitz_tms_html_report_simplifies_matching_wlc_word_diff_pairs(self):
         with TemporaryDirectory() as tmp_dir:

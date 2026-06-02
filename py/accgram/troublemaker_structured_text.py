@@ -383,6 +383,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ob 1:1": {
         "wlc_focus": "עליה",
+        "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
     },
 }
 

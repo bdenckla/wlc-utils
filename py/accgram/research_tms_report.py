@@ -166,6 +166,7 @@ def _render_ref_links(
     mam_url = _mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)
     tanach_us_url = my_wlc_bcv_str.get_tanach_dot_us_url(bcv)
     uxlc_change = _structured_text_value(row, "uxlc_change")
+    uxlc_note_page = _structured_text_value(row, "uxlc_note_page")
 
     links: list[object] = [
         wlc_utils_html.anchor(
@@ -189,6 +190,17 @@ def _render_ref_links(
                 wlc_utils_html.anchor(
                     "UXLC change",
                     {"href": uxlc_change.strip()},
+                ),
+            ]
+        )
+
+    if isinstance(uxlc_note_page, str) and uxlc_note_page.strip():
+        links.extend(
+            [
+                " | ",
+                wlc_utils_html.anchor(
+                    "UXLC note page",
+                    {"href": uxlc_note_page.strip()},
                 ),
             ]
         )
