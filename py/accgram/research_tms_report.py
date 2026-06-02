@@ -26,6 +26,7 @@ _SAT_A_KEY_MERGE_TARGETS: dict[str, str] = {
 }
 _SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
     "1k 16:33": {"diff_wlc_uxlc[1]"},
+    "mi 2:7": {"diff_wlc_mam[2]"},
 }
 
 # Internal SAT row shape: (value_cell, middle_description_cell, key_cell).
@@ -229,8 +230,6 @@ def _render_sat_table(row: dict[str, object]) -> object:
     sat_rows.extend(
         _center_sat_rows(
             row,
-            wlc_focus=wlc_focus_str,
-            wlc_focus_notes=wlc_focus_notes,
         )
     )
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows)
@@ -270,19 +269,8 @@ def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
 
 def _center_sat_rows(
     row: dict[str, object],
-    *,
-    wlc_focus: str | None,
-    wlc_focus_notes: list[str],
 ) -> list[SatRow]:
     rows: list[SatRow] = []
-
-    bracket_notes = _collect_bracket_notes(row)
-    if bracket_notes and not research_tms_report_wlc_word_format.is_redundant_wlc_word_bracket_notes_row(
-        bracket_notes,
-        wlc_focus=wlc_focus,
-        wlc_focus_notes=wlc_focus_notes,
-    ):
-        rows.extend(_normalize_repeated_rows("bracket_notes", bracket_notes))
 
     rows.extend(
         [
@@ -340,13 +328,6 @@ def _apply_sat_row_suppressions(ref: str, rows: list[SatRow]) -> list[SatRow]:
         return rows
 
     return [sat_row for sat_row in rows if _sat_row_key(sat_row) not in suppressed_labels]
-
-
-def _normalize_repeated_rows(label: str, values: list[str]) -> list[SatRow]:
-    if len(values) == 1:
-        return [_sat_row(key=label, value=values[0])]
-
-    return [_sat_row(key=f"{label}[{idx}]", value=value) for idx, value in enumerate(values, start=1)]
 
 
 def _sat_row(*, key: str, value: str, middle_description: str = "") -> SatRow:
@@ -450,26 +431,6 @@ def _sat_assessment_value_describes_target_value(*, assessment_value: str, targe
     except (AssertionError, ValueError):
         # Descriptor inference failures are indeterminate for SAT merge purposes.
         return None
-
-
-def _collect_bracket_notes(row: dict[str, object]) -> list[str]:
-    notes: list[str] = []
-
-    for token in _wlc_verse_vels(row):
-        if not isinstance(token, dict):
-            continue
-        token_notes = token.get("notes")
-        if token_notes is None:
-            continue
-        word = token.get("word")
-        rendered_notes = _render_sat_value(token_notes)
-        if isinstance(word, str) and word:
-            notes.append(f"{word}: {rendered_notes}")
-        else:
-            notes.append(rendered_notes)
-
-    # Preserve order while dropping duplicates.
-    return list(dict.fromkeys(notes))
 
 
 def _split_wlc_context(verse_text: str, wlc_focus: str | None) -> tuple[str, str, str]:

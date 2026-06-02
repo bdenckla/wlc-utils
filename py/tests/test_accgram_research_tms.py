@@ -952,7 +952,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("<td>t</td><td></td><td>diff_wlc_uxlc.note</td>", html_text)
             self.assertIn("wlc422: [אלף | בית (note: x)]", html_text)
 
-    def test_write_goerwitz_tms_html_report_keeps_bracket_notes_when_non_wlc_word_notes_exist(self):
+    def test_write_goerwitz_tms_html_report_never_emits_bracket_notes_rows(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
@@ -987,8 +987,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 '</span></td><td></td><td>wlc_focus.notes</td>',
                 html_text,
             )
-            self.assertIn("bracket_notes", html_text)
-            self.assertIn('אחר: <span title="No manual422 definition available for ]N.">]N</span>', html_text)
+            self.assertNotIn("bracket_notes", html_text)
+            self.assertIn("<code>]N</code>", "".join(html_text.split()))
 
     def test_subset_filters_use_silluq_no_sof_pasuq_marker(self):
         rows = [
