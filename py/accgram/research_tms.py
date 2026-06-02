@@ -273,6 +273,8 @@ def run(args: argparse.Namespace) -> None:
     # Keep this call immediately after JSON write so HTML failures are fail-fast
     # while preserving the JSON write attempt.
     research_tms_report.write_goerwitz_tms_html_report(html_out_path, enriched_rows)
+    research_tms_report.write_goerwitz_tms_msp_yes_html_report(html_out_path, enriched_rows)
+    research_tms_report.write_goerwitz_tms_msp_no_html_report(html_out_path, enriched_rows)
 
     print(f"Input troublemakers: {args.troubles_in}")
     print(f"wlc422-kq-u dir: {args.wlc422_kq_u_dir}")

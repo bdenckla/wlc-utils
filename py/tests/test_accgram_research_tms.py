@@ -14,6 +14,7 @@ from accgram import mam_simple_diff
 from accgram import mam_simple_verse
 from accgram import research_tms
 from accgram import research_tms_report
+from accgram import research_tms_report_subsets
 from accgram import troublemaker_structured_text_sanity
 from accgram import verse_json_smart_concat
 from accgram import wlc_uxlc_diff
@@ -430,12 +431,22 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("mam_simple", first_diff)
 
             self.assertTrue(html_out.exists())
+            self.assertTrue((html_out.parent / "goerwitz-tms-msp-y.html").exists())
+            self.assertTrue((html_out.parent / "goerwitz-tms-msp-n.html").exists())
             html_text = html_out.read_text(encoding="utf-8")
             html_text_compact = "".join(html_text.split())
 
             self.assertIn('class="goerwitz-tms-width-limited"', html_text)
             self.assertIn("<h2>Introduction</h2>", html_text_compact)
-            self.assertIn("<p>Rows:1</p>", html_text_compact)
+            self.assertIn("<h2>Subsets</h2>", html_text_compact)
+            self.assertIn(
+                '<li><ahref="goerwitz-tms-msp-y.html">missingsofpasuq:yes</a></li>',
+                html_text_compact,
+            )
+            self.assertIn(
+                '<li><ahref="goerwitz-tms-msp-n.html">missingsofpasuq:no</a></li>',
+                html_text_compact,
+            )
             self.assertIn("These1verseswereflaggedbytheGoerwitzaccentgrammarchecker.", html_text_compact)
             self.assertIn("WLCquirks,LCquirks,andcheckerquirks", html_text_compact)
             self.assertIn("StudiesinAncientOrientalCivilization60", html_text_compact)
@@ -713,6 +724,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("assessment.manuscript", html_text)
             self.assertIn("assessment.wlc", html_text)
             self.assertIn("free_form_comment[1]", html_text)
+            self.assertIn("<h2>Subsets</h2>", html_text_compact)
+            self.assertIn('href="goerwitz-tms-msp-y.html"', html_text_compact)
+            self.assertIn('href="goerwitz-tms-msp-n.html"', html_text_compact)
             self.assertIn("<td lang=\"hbo\" dir=\"rtl\">בראשית</td>", html_text)
             self.assertIn(
                 '<td lang="hbo" dir="rtl">אב</td><td>wlc_focus.hbo</td>',
@@ -917,6 +931,100 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertIn("bracket_notes", html_text)
             self.assertIn("אחר: ]N", html_text)
+
+    def test_subset_filters_use_silluq_no_sof_pasuq_marker(self):
+        rows = [
+            {
+                "ref": "gn 1:1",
+                "structured_text": {
+                    "assessment": {
+                        "wlc": "silluq-no_sof_pasuq?",
+                    }
+                },
+            },
+            {
+                "ref": "gn 1:2",
+                "structured_text": {
+                    "assessment": {
+                        "wlc": "etnahta",
+                    }
+                },
+            },
+        ]
+
+        yes_rows = research_tms_report_subsets.filter_missing_sof_pasuq_yes_rows(rows)
+        no_rows = research_tms_report_subsets.filter_missing_sof_pasuq_no_rows(rows)
+
+        self.assertEqual([row["ref"] for row in yes_rows], ["gn 1:1"])
+        self.assertEqual([row["ref"] for row in no_rows], ["gn 1:2"])
+
+    def test_write_goerwitz_tms_msp_yes_html_report_includes_only_yes_rows_and_related_links(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            main_html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            rows = [
+                {
+                    "ref": "gn 1:1",
+                    "wlc422_kq_u_verse": {"vels": ["א"]},
+                    "structured_text": {"assessment": {"wlc": "silluq-no_sof_pasuq"}},
+                },
+                {
+                    "ref": "gn 1:2",
+                    "wlc422_kq_u_verse": {"vels": ["ב"]},
+                    "structured_text": {"assessment": {"wlc": "etnahta"}},
+                },
+            ]
+
+            research_tms_report.write_goerwitz_tms_msp_yes_html_report(main_html_out, rows)
+
+            yes_html_out = main_html_out.parent / "goerwitz-tms-msp-y.html"
+            self.assertTrue(yes_html_out.exists())
+            html_text = yes_html_out.read_text(encoding="utf-8")
+            html_text_compact = "".join(html_text.split())
+
+            self.assertIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
+            self.assertNotIn('<h2id="tmgn1v2">gn1:2</h2>', html_text_compact)
+            self.assertIn("<h2>Relatedpages</h2>", html_text_compact)
+            self.assertIn('href="goerwitz-tms.html">mainpage</a>', html_text_compact)
+            self.assertIn(
+                'href="goerwitz-tms-msp-n.html">missingsofpasuq:no</a>',
+                html_text_compact,
+            )
+
+    def test_write_goerwitz_tms_msp_no_html_report_includes_only_no_rows_and_related_links(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            main_html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            rows = [
+                {
+                    "ref": "gn 1:1",
+                    "wlc422_kq_u_verse": {"vels": ["א"]},
+                    "structured_text": {"assessment": {"wlc": "silluq-no_sof_pasuq?"}},
+                },
+                {
+                    "ref": "gn 1:2",
+                    "wlc422_kq_u_verse": {"vels": ["ב"]},
+                    "structured_text": {"assessment": {"wlc": "etnahta"}},
+                },
+            ]
+
+            research_tms_report.write_goerwitz_tms_msp_no_html_report(main_html_out, rows)
+
+            no_html_out = main_html_out.parent / "goerwitz-tms-msp-n.html"
+            self.assertTrue(no_html_out.exists())
+            html_text = no_html_out.read_text(encoding="utf-8")
+            html_text_compact = "".join(html_text.split())
+
+            self.assertNotIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
+            self.assertIn('<h2id="tmgn1v2">gn1:2</h2>', html_text_compact)
+            self.assertIn("<h2>Relatedpages</h2>", html_text_compact)
+            self.assertIn('href="goerwitz-tms.html">mainpage</a>', html_text_compact)
+            self.assertIn(
+                'href="goerwitz-tms-msp-y.html">missingsofpasuq:yes</a>',
+                html_text_compact,
+            )
 
     def test_run_missing_mam_simple_raises_fail_fast(self):
         with TemporaryDirectory() as tmp_dir:

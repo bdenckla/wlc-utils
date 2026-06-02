@@ -2,19 +2,19 @@ from __future__ import annotations
 
 from py_html import wlc_utils_html
 
-_GOERWITZ_CITATION_AUTHOR = "Goerwitz, Richard"
-_GOERWITZ_CITATION_TITLE = (
-    "A New Masoretic \"Spell Checker\" or A Fast, Practical Method For Checking "
+_GC_AUTHOR = "Goerwitz, Richard"
+_GC_TITLE = (
+    "A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking "
     "the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts"
 )
-_GOERWITZ_CITATION_BOOK_TITLE = (
-    "Studies in semitic and afroasiatic linguistics presented to Gene B. Gragg"
+_GC_BOOK_TITLE = (
+    "Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg"
 )
-_GOERWITZ_CITATION_SERIES = "Studies in Ancient Oriental Civilization 60"
-_GOERWITZ_CITATION_PAGES = "111-122"
-_GOERWITZ_CITATION_YEAR = "2007"
-_GOERWITZ_CITATION_ISBN = "978-1-885923-41-7"
-_GOERWITZ_CITATION_BOOK_URL = (
+_GC_SERIES = "Studies in Ancient Oriental Civilization 60"
+_GC_PAGES = "111-122"
+_GC_YEAR = "2007"
+_GC_ISBN = "978-1-885923-41-7"
+_GC_BOOK_URL = (
     "https://isac.uchicago.edu/research/publications/saoc/"
     "saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b"
 )
@@ -22,32 +22,19 @@ _GOERWITZ_CITATION_BOOK_URL = (
 
 def build_intro_contents(row_count: int) -> tuple[object, ...]:
     intro_text = (
-        f"These {row_count} verses were flagged by the Goerwitz accent grammar checker. "
-        "Potential causes include WLC quirks, LC quirks, and checker quirks, so each "
-        "entry should be reviewed with context before drawing conclusions."
+        f"These {row_count} verses caused trouble for the Goerwitz accent grammar checker."
+        " Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks."
+        " The checker is described in the following article:"
     )
     citation_text = (
-        f"{_GOERWITZ_CITATION_AUTHOR}. \"{_GOERWITZ_CITATION_TITLE}.\" "
-        f"In {_GOERWITZ_CITATION_BOOK_TITLE} (pp. {_GOERWITZ_CITATION_PAGES}). "
-        f"Ringgold, Chicago, {_GOERWITZ_CITATION_YEAR}. ISBN {_GOERWITZ_CITATION_ISBN}."
+        f"{_GC_AUTHOR}. ‹{_GC_TITLE}.›"
+        f" In {_GC_BOOK_TITLE} (pp. {_GC_PAGES}). (",
+        wlc_utils_html.anchor(_GC_SERIES, {"href": _GC_BOOK_URL}),
+        f"). The Oriental Institute, Chicago, {_GC_YEAR}. ISBN {_GC_ISBN}."
     )
 
     return (
         wlc_utils_html.heading_level_2("Introduction"),
         wlc_utils_html.para(intro_text),
-        wlc_utils_html.blockquote(
-            (
-                wlc_utils_html.para(citation_text),
-                wlc_utils_html.para(
-                    (
-                        f"Series: {_GOERWITZ_CITATION_SERIES}",
-                        wlc_utils_html.line_break2(),
-                        wlc_utils_html.anchor(
-                            _GOERWITZ_CITATION_BOOK_URL,
-                            {"href": _GOERWITZ_CITATION_BOOK_URL},
-                        ),
-                    )
-                ),
-            )
-        ),
+        wlc_utils_html.para(citation_text),
     )

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from accgram import research_tms_report_diff_format
 from accgram import research_tms_report_intro
+from accgram import research_tms_report_subsets
 from accgram import research_tms_report_wlc_word_format
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
@@ -40,9 +41,50 @@ def write_goerwitz_tms_html_report(
     html_out_path: Path,
     enriched_rows: list[dict[str, object]],
 ) -> None:
+    _write_goerwitz_tms_html_report(
+        html_out_path,
+        enriched_rows,
+        top_contents=research_tms_report_subsets.build_main_subsets_top_contents(html_out_path),
+    )
+
+
+def write_goerwitz_tms_msp_yes_html_report(
+    main_html_out_path: Path,
+    enriched_rows: list[dict[str, object]],
+) -> None:
+    html_out_path = research_tms_report_subsets.missing_sof_pasuq_yes_html_out_path(main_html_out_path)
+    _write_goerwitz_tms_html_report(
+        html_out_path,
+        research_tms_report_subsets.filter_missing_sof_pasuq_yes_rows(enriched_rows),
+        top_contents=research_tms_report_subsets.build_msp_yes_related_pages_top_contents(
+            main_html_out_path
+        ),
+    )
+
+
+def write_goerwitz_tms_msp_no_html_report(
+    main_html_out_path: Path,
+    enriched_rows: list[dict[str, object]],
+) -> None:
+    html_out_path = research_tms_report_subsets.missing_sof_pasuq_no_html_out_path(main_html_out_path)
+    _write_goerwitz_tms_html_report(
+        html_out_path,
+        research_tms_report_subsets.filter_missing_sof_pasuq_no_rows(enriched_rows),
+        top_contents=research_tms_report_subsets.build_msp_no_related_pages_top_contents(
+            main_html_out_path
+        ),
+    )
+
+
+def _write_goerwitz_tms_html_report(
+    html_out_path: Path,
+    enriched_rows: list[dict[str, object]],
+    *,
+    top_contents: tuple[object, ...],
+) -> None:
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    body_contents = _build_body_contents(enriched_rows)
+    body_contents = _build_body_contents(enriched_rows, top_contents=top_contents)
     write_ctx = wlc_utils_html.WriteCtx(
         title="Goerwitz TMS",
         path=str(html_out_path),
@@ -54,11 +96,15 @@ def write_goerwitz_tms_html_report(
     )
 
 
-def _build_body_contents(enriched_rows: list[dict[str, object]]) -> tuple[object, ...]:
+def _build_body_contents(
+    enriched_rows: list[dict[str, object]],
+    *,
+    top_contents: tuple[object, ...],
+) -> tuple[object, ...]:
     row_count = len(enriched_rows)
     sections: list[object] = [
         wlc_utils_html.heading_level_1("Goerwitz Troublemakers (research-tms)"),
-        wlc_utils_html.para(f"Rows: {row_count}"),
+        *top_contents,
     ]
     sections.extend(research_tms_report_intro.build_intro_contents(row_count))
 
