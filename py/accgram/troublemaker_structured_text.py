@@ -16,7 +16,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ועשר֤ים",
         "assessment": {
             "manuscript": "munax",
-            "bhs": "mahapakh?",
             "wlc": "mahapakh",
             "uxlc": "munax",
             "consensus": "munax"
@@ -27,7 +26,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "מכ֨ל",
         "assessment": {
             "manuscript": "no accent",
-            "bhs": "qadma on kaf?",
             "wlc": "qadma on kaf",
             "uxlc": "no accent",
             "consensus": "pashta on lamed",
@@ -37,8 +35,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 19:11": {
         "wlc_focus": "הר֨וח",
         "assessment": {
-            "manuscript": "?",
-            "bhs": "qadma on resh?",
             "wlc": "qadma on resh",
             "uxlc": "qadma on resh",
             "consensus": "pashta stress helper on resh, pashta on xet",
@@ -49,7 +45,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "נ֥כח",
         "assessment": {
             "manuscript": "meteg-maqaf",
-            "bhs": "merkha-space?",
             "wlc": "merkha-space",
             "uxlc": "meteg-maqaf",
             "consensus": "meteg-maqaf, though merkha-space and no_meteg-maqaf are also attested (see MAM doc-note)",
@@ -66,8 +61,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1s 6:19": {
         "wlc_focus": "גדולֽה",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -77,7 +70,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "שנ֖ים",
         "assessment": {
             "manuscript": "etnaxta",
-            "bhs": "tipexa?",
             "wlc": "tipexa",
             "uxlc": "etnaxta",
             "consensus": "etnaxta",
@@ -108,7 +100,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "שנ֨ה",
         "assessment": {
             "manuscript": "pashta on ה",
-            "bhs": "qadma on נ?",
             "wlc": "qadma on נ",
             "uxlc": "pashta on ה",
             "consensus": "pashta on ה",
@@ -118,8 +109,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "am 1:14": {
         "wlc_focus": "סופֽה",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -128,8 +117,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "am 6:6": {
         "wlc_focus": "יוסֽף",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -138,8 +125,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "am 9:5": {
         "wlc_focus": "מצרֽים",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -149,7 +134,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ד֥י",
         "assessment": {
             "manuscript": "meteg-no_maqaf",
-            "bhs": "merkha-space?",
             "wlc": "merkha-space",
             "uxlc": "meteg-space",
             "consensus": "meteg-maqaf",
@@ -159,8 +143,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "dt 9:20": {
         "wlc_focus": "ההֽוא",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -169,8 +151,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "dt 13:15": {
         "wlc_focus": "וחקרת֧",
         "assessment": {
-            "manuscript": "darga?",
-            "bhs": "darga?",
             "wlc": "darga",
             "uxlc": "darga",
             "consensus": "tevir",
@@ -179,8 +159,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "dt 25:9": {
         "wlc_focus": "אחֽיו",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -189,8 +167,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ek 33:20": {
         "wlc_focus": "ישראֽל",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -199,8 +175,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ex 2:5": {
         "wlc_focus": "ותקחֽה",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -209,8 +183,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ex 14:25": {
         "wlc_focus": "במצרֽים",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -219,8 +191,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ex 14:29": {
         "wlc_focus": "ומשמאלֽם",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -229,8 +199,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ho 4:19": {
         "wlc_focus": "מזבחותֽם",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -239,8 +207,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ho 8:9": {
         "wlc_focus": "אהבֽים",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -249,8 +215,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "lv 18:17": {
         "wlc_focus": "הֽוא",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -259,8 +223,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "lv 19:1": {
         "wlc_focus": "לאמֽר",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -269,8 +231,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "lv 26:7": {
         "wlc_focus": "לחֽרב",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -279,8 +239,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "nu 7:32": {
         "wlc_focus": "קטֽרת",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -289,8 +247,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "nu 7:40": {
         "wlc_focus": "לחטֽאת",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -299,8 +255,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "nu 7:55": {
         "wlc_focus": "למנחֽה",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -309,8 +263,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "nu 7:68": {
         "wlc_focus": "קטֽרת",
         "assessment": {
-            "manuscript": "silluq-no_sof_pasuq?",
-            "bhs": "silluq-no_sof_pasuq?",
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
@@ -320,7 +272,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "אש֥ר",
         "assessment": {
             "manuscript": "tevir",
-            "bhs": "merkha?",
             "wlc": "merkha",
             "uxlc": "tevir",
             "consensus": "tevir",
@@ -331,7 +282,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "יאב֥ד טוב֥ה",
         "assessment": {
             "manuscript": "[merkha] tipexa",
-            "bhs": "[merkha] merkha?",
             "wlc": "[merkha] merkha",
             "uxlc": "[merkha] tipexa",
             "consensus": "[tipexa] merkha",
@@ -367,8 +317,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ex 34:6": {
         "wlc_focus": "ואמֽת׀",
         "assessment": {
-          "manuscript": "silluq-vertical_line?",
-          "bhs": "silluq-vertical_line?",
           "wlc": "silluq-pasoleg",
           "uxlc": "silluq-pasoleg",
           "consensus": "silluq-sof_pasuq"
