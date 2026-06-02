@@ -85,18 +85,23 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
     },
     "is 36:2": {
+        "wlc_word": "ירושל֛מה",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"),
     },
     "je 4:19": {
+        "wlc_word": "אוח֜ילה",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "je 38:11": {
+        "wlc_word": "את־האנש֜ים",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "hg 2:12": {
+        "wlc_word": "בשר־ק֜דש",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2c 26:15": {
+        "wlc_word": "חשבנ֜ות",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2k 23:36": {

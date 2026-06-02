@@ -289,6 +289,7 @@
       },
       "diff_wlc_mam": [],
       "structured_text": {
+        "wlc_word": "חשבנ֜ות",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -977,6 +978,7 @@
       },
       "diff_wlc_mam": [],
       "structured_text": {
+        "wlc_word": "בשר־ק֜דש",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -1103,6 +1105,7 @@
         }
       ],
       "structured_text": {
+        "wlc_word": "ירושל֛מה",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -1128,6 +1131,7 @@
         "mam_simple": "אחר֑ש"
       },
       "structured_text": {
+        "wlc_word": "אוח֜ילה",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -1278,6 +1282,7 @@
       },
       "diff_wlc_mam": [],
       "structured_text": {
+        "wlc_word": "את־האנש֜ים",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
