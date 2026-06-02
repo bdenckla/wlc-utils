@@ -434,6 +434,21 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             html_text_compact = "".join(html_text.split())
 
             self.assertIn('class="goerwitz-tms-width-limited"', html_text)
+            self.assertIn("<h2>Introduction</h2>", html_text_compact)
+            self.assertIn("<p>Rows:1</p>", html_text_compact)
+            self.assertIn("These1verseswereflaggedbytheGoerwitzaccentgrammarchecker.", html_text_compact)
+            self.assertIn("WLCquirks,LCquirks,andcheckerquirks", html_text_compact)
+            self.assertIn("StudiesinAncientOrientalCivilization60", html_text_compact)
+            self.assertIn(
+                "Series:StudiesinAncientOrientalCivilization60<br><ahref=\""
+                "https://isac.uchicago.edu/research/publications/saoc/"
+                "saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b\""
+                ">"
+                "https://isac.uchicago.edu/research/publications/saoc/"
+                "saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b"
+                "</a>",
+                html_text_compact,
+            )
             self.assertIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
             self.assertIn('href="#tmgn1v1"', html_text)
             self.assertIn("🔗", html_text)
@@ -450,6 +465,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertIn("<td></td><td>wlc_focus</td>", html_text_compact)
             self.assertIn("<td></td><td>wlc_after</td>", html_text_compact)
+            intro_heading_idx = html_text_compact.index("<h2>Introduction</h2>")
+            first_verse_heading_idx = html_text_compact.index('<h2id="tmgn1v1">gn1:1</h2>')
+            self.assertLess(intro_heading_idx, first_verse_heading_idx)
             before_idx = html_text_compact.index(
                 "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>wlc_before</td>"
             )

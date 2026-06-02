@@ -1,0 +1,13 @@
+Author - Goerwitz, Richard
+ChapterTitle - A New Masoretic "Spell Checker" or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts
+ChapterNumber - 7
+ChapterPageRange - 111-122
+BookTitle - Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg
+BookISBN - 978-1-885923-41-7
+Series - Oriental Institute Studies in Ancient Oriental Civilization 60
+Editor - Cynthia Miller
+Publisher - Ringgold
+PublicationCity - Chicago
+PublicationYear - 2007
+BookUrl - https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b
+Abstract - The orthography of biblical Hebrew manuscripts and scholarly printed editions encompasses not only traditional alphanumeric symbols, but also cantillation marks or "accents" that indicate how the text should properly be chanted. These marks are difficult to typeset, and even the best scholarly Bible editions contain various cantillation errors. Cantillation marks follow a grammar of their own that largely mirrors the syntactic structure of the sentences in which they occur. Although this grammar is not strictly context free, it is possible to construct a grammar very close to it that is not only context-free, but also LR-parsable, and that can therefore serve as the basis for real-world computer-based automata that can efficiently locate accentual errors in scholarly Hebrew Bible editions.

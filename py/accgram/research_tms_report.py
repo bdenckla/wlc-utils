@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from accgram import research_tms_report_diff_format
+from accgram import research_tms_report_intro
 from accgram import research_tms_report_wlc_word_format
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
@@ -54,10 +55,12 @@ def write_goerwitz_tms_html_report(
 
 
 def _build_body_contents(enriched_rows: list[dict[str, object]]) -> tuple[object, ...]:
+    row_count = len(enriched_rows)
     sections: list[object] = [
         wlc_utils_html.heading_level_1("Goerwitz Troublemakers (research-tms)"),
-        wlc_utils_html.para(f"Rows: {len(enriched_rows)}"),
+        wlc_utils_html.para(f"Rows: {row_count}"),
     ]
+    sections.extend(research_tms_report_intro.build_intro_contents(row_count))
 
     for index, row in enumerate(enriched_rows):
         sections.extend(_render_row_section(row))
