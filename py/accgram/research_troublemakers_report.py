@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from accgram import research_troublemakers_report_diff_format
+from accgram import research_troublemakers_report_wlc_word_format
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
@@ -11,7 +12,7 @@ from py_wlc import my_wlc_bcv_str
 
 
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "consensus")
-_CONTEXT_HBO_ROW_KEYS = {"before", "wlc_word", "after"}
+_CONTEXT_HBO_ROW_KEYS = {"before", "wlc_word", "wlc_word.hbo", "after"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 
@@ -114,18 +115,35 @@ def _render_ref_links(
 
 def _render_sat_table(row: dict[str, object]) -> object:
     verse_text = _wlc_verse_text(row)
+    wlc_tokens = _wlc_verse_vels(row)
     wlc_word = _structured_text_value(row, "wlc_word")
+    wlc_word_str = wlc_word if isinstance(wlc_word, str) else None
+    wlc_word_notes = research_troublemakers_report_wlc_word_format.collect_wlc_word_bracket_notes(
+        wlc_tokens,
+        wlc_word_str,
+        render_sat_value=_render_sat_value,
+    )
     before_word, woi_placeholder, after_word = _split_wlc_context(
         verse_text=verse_text,
-        wlc_word=wlc_word if isinstance(wlc_word, str) else None,
+        wlc_word=wlc_word_str,
     )
 
-    sat_rows = [
-        ("before", before_word),
-        ("wlc_word", woi_placeholder),
-        ("after", after_word),
-    ]
-    sat_rows.extend(_center_sat_rows(row))
+    sat_rows: list[tuple[str, str]] = [("before", before_word)]
+    sat_rows.extend(
+        research_troublemakers_report_wlc_word_format.build_wlc_word_rows(
+            woi_placeholder,
+            wlc_word_notes,
+        )
+    )
+    sat_rows.append(("after", after_word))
+
+    sat_rows.extend(
+        _center_sat_rows(
+            row,
+            wlc_word=wlc_word_str,
+            wlc_word_notes=wlc_word_notes,
+        )
+    )
 
     table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("value", "key"))]
     table_rows.extend(
@@ -143,6 +161,9 @@ def _render_sat_table(row: dict[str, object]) -> object:
 
 
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
+    if label == research_troublemakers_report_wlc_word_format.WLC_WORD_NOTES_LABEL:
+        return {"style": "text-align: right;"}
+
     if label in _CONTEXT_HBO_ROW_KEYS and research_troublemakers_report_diff_format.contains_hebrew(value):
         return {"lang": "hbo", "dir": "rtl"}
 
@@ -152,11 +173,20 @@ def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
     return None
 
 
-def _center_sat_rows(row: dict[str, object]) -> list[tuple[str, str]]:
+def _center_sat_rows(
+    row: dict[str, object],
+    *,
+    wlc_word: str | None,
+    wlc_word_notes: list[str],
+) -> list[tuple[str, str]]:
     rows: list[tuple[str, str]] = []
 
     bracket_notes = _collect_bracket_notes(row)
-    if bracket_notes:
+    if bracket_notes and not research_troublemakers_report_wlc_word_format.is_redundant_wlc_word_bracket_notes_row(
+        bracket_notes,
+        wlc_word=wlc_word,
+        wlc_word_notes=wlc_word_notes,
+    ):
         rows.extend(_normalize_repeated_rows("bracket_notes", bracket_notes))
 
     rows.extend(

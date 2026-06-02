@@ -617,11 +617,18 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("assessment.manuscript", html_text)
             self.assertIn("assessment.wlc", html_text)
             self.assertIn("free_form_comment[1]", html_text)
-            self.assertIn("bracket_notes", html_text)
-            self.assertIn("אב: ]1", html_text)
             self.assertIn("<td lang=\"hbo\" dir=\"rtl\">בראשית</td>", html_text)
-            self.assertIn("<td lang=\"hbo\" dir=\"rtl\">אב</td>", html_text)
+            self.assertIn(
+                '<td lang="hbo" dir="rtl">אב</td><td>wlc_word.hbo</td>',
+                html_text,
+            )
+            self.assertIn(
+                '<td style="text-align: right;">]1</td><td>wlc_word.notes</td>',
+                html_text,
+            )
             self.assertIn("<td lang=\"hbo\" dir=\"rtl\">אחרית</td>", html_text)
+            self.assertNotIn("bracket_notes", html_text)
+            self.assertNotIn("אב: ]1", html_text)
             self.assertNotIn("diff_wlc_mam.wlc_adds_notes: ]1", html_text)
             self.assertNotIn("diff_wlc_uxlc.wlc_adds_notes", html_text)
             self.assertIn("structured_text.uxlc_change", html_text)
@@ -736,11 +743,49 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text = html_out.read_text(encoding="utf-8")
-            self.assertIn("bracket_notes", html_text)
-            self.assertIn("דבר: ]Q]n", html_text)
+            self.assertNotIn("bracket_notes", html_text)
+            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_word.hbo</td>', html_text)
+            self.assertIn(
+                '<td style="text-align: right;">]Q]n</td><td>wlc_word.notes</td>',
+                html_text,
+            )
             self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>diff_wlc_uxlc.hbo</td>', html_text)
             self.assertIn("<td>t</td><td>diff_wlc_uxlc.note</td>", html_text)
             self.assertIn("wlc422: [אלף | בית (note: x)]", html_text)
+
+    def test_write_goerwitz_tms_html_report_keeps_bracket_notes_when_non_wlc_word_notes_exist(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_troublemakers_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "1k 1:1",
+                        "wlc422_kq_u_verse": {
+                            "vels": [
+                                "לפני",
+                                {"word": "דבר", "notes": "]Q"},
+                                {"word": "אחר", "notes": "]N"},
+                                "אחרי",
+                            ]
+                        },
+                        "structured_text": {
+                            "wlc_word": "דבר",
+                        },
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_word.hbo</td>', html_text)
+            self.assertIn(
+                '<td style="text-align: right;">]Q</td><td>wlc_word.notes</td>',
+                html_text,
+            )
+            self.assertIn("bracket_notes", html_text)
+            self.assertIn("אחר: ]N", html_text)
 
     def test_run_missing_mam_simple_raises_fail_fast(self):
         with TemporaryDirectory() as tmp_dir:
