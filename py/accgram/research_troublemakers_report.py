@@ -11,6 +11,7 @@ from py_wlc import my_wlc_bcv_str
 
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "consensus")
 _CONTEXT_HBO_ROW_KEYS = {"before", "wlc_word", "after"}
+_GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -60,7 +61,11 @@ def _build_body_contents(enriched_rows: list[dict[str, object]]) -> tuple[object
         if index + 1 < len(enriched_rows):
             sections.append(wlc_utils_html.horizontal_rule())
 
-    return tuple(sections)
+    wrapper = wlc_utils_html.div(
+        tuple(sections),
+        {"class": _GOERWITZ_TMS_WIDTH_CLASS},
+    )
+    return (wrapper,)
 
 
 def _render_row_section(row: dict[str, object]) -> tuple[object, ...]:

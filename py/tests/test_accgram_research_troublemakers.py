@@ -433,6 +433,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             html_text = html_out.read_text(encoding="utf-8")
             html_text_compact = "".join(html_text.split())
 
+            self.assertIn('class="goerwitz-tms-width-limited"', html_text)
             self.assertIn("<h2>gn1:1</h2>", html_text_compact)
             self.assertIn(
                 "https://bdenckla.github.io/MAM-with-doc/A1-Genesis.html#c1v1",
