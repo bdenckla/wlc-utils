@@ -208,11 +208,25 @@ def assessment_uxlc_matches_converted_diff_uxlc(
     if diff_uxlc_text is None:
         return None
 
-    descriptor = descriptor_from_hebrew_token(diff_uxlc_text)
+    return assessment_descriptor_matches_hebrew_token(
+        assessment_descriptor=assessment_uxlc,
+        hebrew_token=diff_uxlc_text,
+    )
+
+
+def assessment_descriptor_matches_hebrew_token(
+    *,
+    assessment_descriptor: str,
+    hebrew_token: str,
+) -> bool | None:
+    descriptor = descriptor_from_hebrew_token(hebrew_token)
     if descriptor is None:
         return None
 
-    return _descriptor_matches_assessment(descriptor=descriptor, assessment_uxlc=assessment_uxlc)
+    return _descriptor_matches_assessment(
+        descriptor=descriptor,
+        assessment_uxlc=assessment_descriptor,
+    )
 
 
 def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> bool:

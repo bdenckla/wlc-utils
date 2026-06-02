@@ -8,6 +8,7 @@ from accgram import research_tms_report_diff_format
 from accgram import research_tms_report_intro
 from accgram import research_tms_report_subsets
 from accgram import research_tms_report_wlc_word_format
+from accgram import troublemaker_structured_text_sanity
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
@@ -232,6 +233,7 @@ def _render_sat_table(row: dict[str, object]) -> object:
             wlc_focus_notes=wlc_focus_notes,
         )
     )
+    sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows)
 
     table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("value", "key"))]
     for value, _middle_description, key in sat_rows:
@@ -360,6 +362,75 @@ def _sat_merge_target_key_for_assessment_key(key: str) -> str | None:
 def _sat_row_matches_merge_target(*, row_key: str, merge_target_base_key: str) -> bool:
     # Phase 1 scope: match either base key or base key.hbo.
     return row_key == merge_target_base_key or row_key == f"{merge_target_base_key}.hbo"
+
+
+def _merge_assessment_rows_into_sat_middle_column(rows: list[SatRow]) -> list[SatRow]:
+    merged_rows = list(rows)
+    consumed_indices: set[int] = set()
+
+    for row_idx, sat_row in enumerate(rows):
+        row_key = _sat_row_key(sat_row)
+        merge_target_base_key = _sat_merge_target_key_for_assessment_key(row_key)
+        if merge_target_base_key is None:
+            continue
+
+        target_idx = _find_sat_merge_target_row_index(
+            merged_rows,
+            merge_target_base_key=merge_target_base_key,
+        )
+        if target_idx is None:
+            continue
+
+        assessment_value, _assessment_middle, _assessment_key = sat_row
+        target_value, _target_middle, target_key = merged_rows[target_idx]
+
+        if _sat_assessment_value_describes_target_value(
+            assessment_value=assessment_value,
+            target_value=target_value,
+        ) is not True:
+            continue
+
+        merged_rows[target_idx] = _sat_row(
+            key=target_key,
+            value=target_value,
+            middle_description=assessment_value,
+        )
+        consumed_indices.add(row_idx)
+
+    if not consumed_indices:
+        return merged_rows
+
+    return [sat_row for idx, sat_row in enumerate(merged_rows) if idx not in consumed_indices]
+
+
+def _find_sat_merge_target_row_index(rows: list[SatRow], *, merge_target_base_key: str) -> int | None:
+    preferred_keys = (f"{merge_target_base_key}.hbo", merge_target_base_key)
+
+    for preferred_key in preferred_keys:
+        for idx, sat_row in enumerate(rows):
+            if _sat_row_key(sat_row) == preferred_key:
+                return idx
+
+    return None
+
+
+def _sat_assessment_value_describes_target_value(*, assessment_value: str, target_value: str) -> bool | None:
+    assessment_text = assessment_value.strip()
+    target_text = target_value.strip()
+    if not assessment_text or not target_text:
+        return None
+
+    if not research_tms_report_diff_format.is_plain_hebrew_string(target_text):
+        return None
+
+    try:
+        return troublemaker_structured_text_sanity.assessment_descriptor_matches_hebrew_token(
+            assessment_descriptor=assessment_text,
+            hebrew_token=target_text,
+        )
+    except (AssertionError, ValueError):
+        # Descriptor inference failures are indeterminate for SAT merge purposes.
+        return None
 
 
 def _collect_bracket_notes(row: dict[str, object]) -> list[str]:
