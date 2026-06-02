@@ -131,7 +131,7 @@ def _center_sat_rows(row: dict[str, object], woi_placeholder: str) -> list[tuple
 
     bracket_notes = _collect_bracket_notes(row)
     if bracket_notes:
-        rows.append(("bracket_notes", " | ".join(bracket_notes)))
+        rows.extend(_normalize_repeated_rows("bracket_notes", bracket_notes))
 
     rows.extend(_normalize_diff_rows("diff_wlc_uxlc", row.get("diff_wlc_uxlc")))
     rows.extend(_normalize_diff_rows("diff_wlc_mam", row.get("diff_wlc_mam")))
@@ -161,6 +161,13 @@ def _normalize_diff_rows(label: str, diff_value: object) -> list[tuple[str, str]
         row_label = label if len(entries) == 1 else f"{label}[{idx}]"
         rows.append((row_label, _render_sat_value(entry)))
     return rows
+
+
+def _normalize_repeated_rows(label: str, values: list[str]) -> list[tuple[str, str]]:
+    if len(values) == 1:
+        return [(label, values[0])]
+
+    return [(f"{label}[{idx}]", value) for idx, value in enumerate(values, start=1)]
 
 
 def _as_nonempty_list(value: object) -> list[object]:

@@ -493,7 +493,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("assessment.manuscript", html_text)
             self.assertIn("assessment.wlc", html_text)
             self.assertIn("free_form_comment[1]", html_text)
-            self.assertIn("bracket_notes", html_text)
+            self.assertIn("bracket_notes[1]", html_text)
+            self.assertIn("אב: ]1", html_text)
+            self.assertIn("bracket_notes[2]", html_text)
+            self.assertIn("diff_wlc_mam.wlc_adds_notes: ]1", html_text)
             self.assertIn("structured_text.uxlc_change", html_text)
 
     def test_write_goerwitz_tms_html_report_uses_phase3_url_conventions(self):
