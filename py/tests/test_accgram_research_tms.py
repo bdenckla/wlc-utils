@@ -470,23 +470,23 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertIn("https://tanach.us/Tanach.xml?Gen1:1", html_text)
             self.assertIn("UXLCchange:none", html_text_compact)
-            self.assertIn("<th>value</th><th>key</th>", html_text_compact)
+            self.assertIn("<th>value</th><th></th><th>key</th>", html_text_compact)
             self.assertIn(
-                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>wlc_before</td>",
+                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td></td><td>wlc_before</td>",
                 html_text_compact,
             )
-            self.assertIn("<td></td><td>wlc_focus</td>", html_text_compact)
-            self.assertIn("<td></td><td>wlc_after</td>", html_text_compact)
+            self.assertIn("<td></td><td></td><td>wlc_focus</td>", html_text_compact)
+            self.assertIn("<td></td><td></td><td>wlc_after</td>", html_text_compact)
             intro_heading_idx = html_text_compact.index("<h2>Introduction</h2>")
             bracket_heading_idx = html_text_compact.index("<h2>WLCBracketNotes</h2>")
             first_verse_heading_idx = html_text_compact.index('<h2id="tmgn1v1">gn1:1</h2>')
             self.assertLess(intro_heading_idx, first_verse_heading_idx)
             self.assertLess(bracket_heading_idx, first_verse_heading_idx)
             before_idx = html_text_compact.index(
-                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>wlc_before</td>"
+                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td></td><td>wlc_before</td>"
             )
-            wlc_focus_idx = html_text_compact.index("<td></td><td>wlc_focus</td>")
-            after_idx = html_text_compact.index("<td></td><td>wlc_after</td>")
+            wlc_focus_idx = html_text_compact.index("<td></td><td></td><td>wlc_focus</td>")
+            after_idx = html_text_compact.index("<td></td><td></td><td>wlc_after</td>")
             self.assertLess(before_idx, wlc_focus_idx)
             self.assertLess(wlc_focus_idx, after_idx)
 
@@ -727,7 +727,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("a.manuscript", html_text)
             self.assertIn("a.wlc", html_text)
             self.assertIn(
-                '<td style="text-align: right;">foo</td><td>a.manuscript</td>',
+                '<td style="text-align: right;">foo</td><td></td><td>a.manuscript</td>',
                 html_text,
             )
             self.assertIn("free_form_comment[1]", html_text)
@@ -738,7 +738,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("<code>]1</code>", html_text_compact)
             self.assertIn("<td lang=\"hbo\" dir=\"rtl\">בראשית</td>", html_text)
             self.assertIn(
-                '<td lang="hbo" dir="rtl">אב</td><td>wlc_focus.hbo</td>',
+                '<td lang="hbo" dir="rtl">אב</td><td></td><td>wlc_focus.hbo</td>',
                 html_text,
             )
             self.assertIn(
@@ -746,7 +746,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertIn(
-                '</span></td><td>wlc_focus.notes</td>',
+                '</span></td><td></td><td>wlc_focus.notes</td>',
                 html_text,
             )
             self.assertIn("<td lang=\"hbo\" dir=\"rtl\">אחרית</td>", html_text)
@@ -781,11 +781,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             html_text = html_out.read_text(encoding="utf-8")
             self.assertIn(
-                '<td lang="hbo" dir="rtl">דבר֙</td><td>diff_wlc_uxlc</td>',
+                '<td lang="hbo" dir="rtl">דבר֙</td><td></td><td>diff_wlc_uxlc</td>',
                 html_text,
             )
             self.assertIn(
-                '<td lang="hbo" dir="rtl">דבר֣</td><td>diff_wlc_mam</td>',
+                '<td lang="hbo" dir="rtl">דבר֣</td><td></td><td>diff_wlc_mam</td>',
                 html_text,
             )
             self.assertNotIn("wlc422: דבר; uxlc: דבר֙", html_text)
@@ -835,12 +835,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text_compact = "".join(html_out.read_text(encoding="utf-8").split())
-            before_cell = '<tdlang="hbo"dir="rtl">לפני</td><td>wlc_before</td>'
-            focus_cell = '<tdlang="hbo"dir="rtl">וה֥יול֣י</td><td>wlc_focus</td>'
-            after_cell = '<tdlang="hbo"dir="rtl">אחרי</td><td>wlc_after</td>'
+            before_cell = '<tdlang="hbo"dir="rtl">לפני</td><td></td><td>wlc_before</td>'
+            focus_cell = '<tdlang="hbo"dir="rtl">וה֥יול֣י</td><td></td><td>wlc_focus</td>'
+            after_cell = '<tdlang="hbo"dir="rtl">אחרי</td><td></td><td>wlc_after</td>'
 
             self.assertIn(focus_cell, html_text_compact)
-            self.assertNotIn("<td></td><td>wlc_focus</td>", html_text_compact)
+            self.assertNotIn("<td></td><td></td><td>wlc_focus</td>", html_text_compact)
 
             before_idx = html_text_compact.index(before_cell)
             focus_idx = html_text_compact.index(focus_cell)
@@ -872,11 +872,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             html_text = html_out.read_text(encoding="utf-8")
             self.assertIn(
-                '<td lang="hbo" dir="rtl">דבר</td><td>diff_wlc_uxlc.hbo</td>',
+                '<td lang="hbo" dir="rtl">דבר</td><td></td><td>diff_wlc_uxlc.hbo</td>',
                 html_text,
             )
-            self.assertIn("<td>m</td><td>diff_wlc_uxlc.note</td>", html_text)
-            self.assertNotIn("<td>דבר (note: m)</td><td>diff_wlc_uxlc</td>", html_text)
+            self.assertIn("<td>m</td><td></td><td>diff_wlc_uxlc.note</td>", html_text)
+            self.assertNotIn("<td>דבר (note: m)</td><td></td><td>diff_wlc_uxlc</td>", html_text)
 
     def test_write_goerwitz_tms_html_report_uses_phase3_url_conventions(self):
         with TemporaryDirectory() as tmp_dir:
@@ -935,7 +935,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("<code>]Q</code>", html_text_compact)
             self.assertIn("<code>]n</code>", html_text_compact)
             self.assertNotIn("<code>]1</code>", html_text_compact)
-            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_focus.hbo</td>', html_text)
+            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td></td><td>wlc_focus.hbo</td>', html_text)
             self.assertIn(
                 '<td style="text-align: right;"><span title="Marks a place where we agree with BHQ against BHS in reading ל.',
                 html_text,
@@ -945,11 +945,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertIn(
-                '</span></td><td>wlc_focus.notes</td>',
+                '</span></td><td></td><td>wlc_focus.notes</td>',
                 html_text,
             )
-            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>diff_wlc_uxlc.hbo</td>', html_text)
-            self.assertIn("<td>t</td><td>diff_wlc_uxlc.note</td>", html_text)
+            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td></td><td>diff_wlc_uxlc.hbo</td>', html_text)
+            self.assertIn("<td>t</td><td></td><td>diff_wlc_uxlc.note</td>", html_text)
             self.assertIn("wlc422: [אלף | בית (note: x)]", html_text)
 
     def test_write_goerwitz_tms_html_report_keeps_bracket_notes_when_non_wlc_word_notes_exist(self):
@@ -978,13 +978,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text = html_out.read_text(encoding="utf-8")
-            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_focus.hbo</td>', html_text)
+            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td></td><td>wlc_focus.hbo</td>', html_text)
             self.assertIn(
                 '<td style="text-align: right;"><span title="Marks a place where we agree with BHQ against BHS in reading ל.',
                 html_text,
             )
             self.assertIn(
-                '</span></td><td>wlc_focus.notes</td>',
+                '</span></td><td></td><td>wlc_focus.notes</td>',
                 html_text,
             )
             self.assertIn("bracket_notes", html_text)

@@ -235,12 +235,16 @@ def _render_sat_table(row: dict[str, object]) -> object:
     )
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows)
 
-    table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("value", "key"))]
-    for value, _middle_description, key in sat_rows:
+    table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("value", "", "key"))]
+    for value, middle_description, key in sat_rows:
         table_rows.append(
             wlc_utils_html.table_row_of_data(
-                (research_tms_report_bracket_notes.annotate_bracket_note_tokens(value), key),
-                tdattrs=(_sat_value_cell_attr(key, value), None),
+                (
+                    research_tms_report_bracket_notes.annotate_bracket_note_tokens(value),
+                    middle_description,
+                    key,
+                ),
+                tdattrs=(_sat_value_cell_attr(key, value), None, None),
             )
         )
 
