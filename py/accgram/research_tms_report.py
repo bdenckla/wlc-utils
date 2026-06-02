@@ -15,14 +15,14 @@ from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
 
 
-_ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "consensus")
+_ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "mam")
 _CONTEXT_HBO_ROW_KEYS = {"wlc_before", "wlc_focus", "wlc_focus.hbo", "wlc_after"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _SELF_LINK_SYMBOL = "🔗"
 _SAT_A_KEY_MERGE_TARGETS: dict[str, str] = {
     "a.wlc": "wlc_focus",
     "a.uxlc": "diff_wlc_uxlc",
-    "a.consensus": "diff_wlc_mam",
+    "a.mam": "diff_wlc_mam",
 }
 _SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
     "1k 16:33": {"diff_wlc_uxlc[1]"},

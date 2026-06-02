@@ -40,7 +40,7 @@
           "manuscript": "munax",
           "wlc": "mahapakh",
           "uxlc": "munax",
-          "consensus": "munax"
+          "mam": "munax"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9"
       }
@@ -91,7 +91,7 @@
           "manuscript": "no accent",
           "wlc": "qadma on kaf",
           "uxlc": "no accent",
-          "consensus": "pashta on lamed"
+          "mam": "pashta on lamed"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23"
       }
@@ -127,7 +127,7 @@
         "assessment": {
           "wlc": "qadma on resh",
           "uxlc": "qadma on resh",
-          "consensus": "pashta stress helper on resh, pashta on xet"
+          "mam": "pashta stress helper on resh, pashta on xet"
         },
         "uxlc_change": null
       }
@@ -162,7 +162,7 @@
           "manuscript": "meteg-maqaf",
           "wlc": "merkha-space",
           "uxlc": "meteg-maqaf",
-          "consensus": "meteg-maqaf, though merkha-space and no_meteg-maqaf are also attested (see MAM doc-note)"
+          "mam": "meteg-maqaf, though merkha-space and no_meteg-maqaf are also attested (see MAM doc-note)"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
         "comment": [
@@ -200,7 +200,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -234,7 +234,7 @@
           "manuscript": "etnaxta",
           "wlc": "tipexa",
           "uxlc": "etnaxta",
-          "consensus": "etnaxta"
+          "mam": "etnaxta"
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12"
       }
@@ -297,7 +297,7 @@
           "manuscript": "pashta on ה",
           "wlc": "qadma on נ",
           "uxlc": "pashta on ה",
-          "consensus": "pashta on ה"
+          "mam": "pashta on ה"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24"
       }
@@ -332,7 +332,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -366,7 +366,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -400,7 +400,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -439,7 +439,7 @@
           "manuscript": "meteg-space",
           "wlc": "merkha-space",
           "uxlc": "meteg-space",
-          "consensus": "meteg-maqaf"
+          "mam": "meteg-maqaf"
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3"
       }
@@ -474,7 +474,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -509,7 +509,7 @@
         "assessment": {
           "wlc": "darga",
           "uxlc": "darga",
-          "consensus": "tevir"
+          "mam": "tevir"
         }
       }
     },
@@ -543,7 +543,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -577,7 +577,7 @@
           "manuscript": "tevir",
           "wlc": "merkha",
           "uxlc": "tevir",
-          "consensus": "tevir"
+          "mam": "tevir"
         },
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18"
       }
@@ -612,7 +612,7 @@
           "manuscript": "merkha tipexa",
           "wlc": "merkha merkha",
           "uxlc": "merkha tipexa",
-          "consensus": "tipexa merkha"
+          "mam": "tipexa merkha"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2"
       }
@@ -703,7 +703,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -737,7 +737,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -771,7 +771,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -805,7 +805,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -839,7 +839,7 @@
         "assessment": {
           "wlc": "silluq-pasoleg",
           "uxlc": "silluq-pasoleg",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -896,7 +896,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -930,7 +930,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -1299,7 +1299,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -1333,7 +1333,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -1367,7 +1367,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -1436,7 +1436,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -1470,7 +1470,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -1504,7 +1504,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },
@@ -1538,7 +1538,7 @@
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         }
       }
     },

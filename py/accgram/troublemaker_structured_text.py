@@ -18,7 +18,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "munax",
             "wlc": "mahapakh",
             "uxlc": "munax",
-            "consensus": "munax"
+            "mam": "munax"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
     },
@@ -28,7 +28,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "no accent",
             "wlc": "qadma on kaf",
             "uxlc": "no accent",
-            "consensus": "pashta on lamed",
+            "mam": "pashta on lamed",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
     },
@@ -37,7 +37,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "qadma on resh",
             "uxlc": "qadma on resh",
-            "consensus": "pashta stress helper on resh, pashta on xet",
+            "mam": "pashta stress helper on resh, pashta on xet",
         },
         "uxlc_change": None,
     },
@@ -47,7 +47,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "meteg-maqaf",
             "wlc": "merkha-space",
             "uxlc": "meteg-maqaf",
-            "consensus": "meteg-maqaf, though merkha-space and no_meteg-maqaf are also attested (see MAM doc-note)",
+            "mam": "meteg-maqaf, though merkha-space and no_meteg-maqaf are also attested (see MAM doc-note)",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
         "comment": [
@@ -63,7 +63,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "2c 22:12": {
@@ -72,7 +72,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "etnaxta",
             "wlc": "tipexa",
             "uxlc": "etnaxta",
-            "consensus": "etnaxta",
+            "mam": "etnaxta",
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
     },
@@ -102,7 +102,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "pashta on ה",
             "wlc": "qadma on נ",
             "uxlc": "pashta on ה",
-            "consensus": "pashta on ה",
+            "mam": "pashta on ה",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
     },
@@ -111,7 +111,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "am 6:6": {
@@ -119,7 +119,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "am 9:5": {
@@ -127,7 +127,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "da 2:41": {
@@ -136,7 +136,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "meteg-space",
             "wlc": "merkha-space",
             "uxlc": "meteg-space",
-            "consensus": "meteg-maqaf",
+            "mam": "meteg-maqaf",
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
     },
@@ -145,7 +145,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "dt 13:15": {
@@ -153,7 +153,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "darga",
             "uxlc": "darga",
-            "consensus": "tevir",
+            "mam": "tevir",
         },
     },
     "dt 25:9": {
@@ -161,7 +161,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "ek 33:20": {
@@ -169,7 +169,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "ex 2:5": {
@@ -177,7 +177,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "ex 14:25": {
@@ -185,7 +185,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "ex 14:29": {
@@ -193,7 +193,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "ho 4:19": {
@@ -201,7 +201,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "ho 8:9": {
@@ -209,7 +209,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "lv 18:17": {
@@ -217,7 +217,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "lv 19:1": {
@@ -225,7 +225,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "lv 26:7": {
@@ -233,7 +233,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "nu 7:32": {
@@ -241,7 +241,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "nu 7:40": {
@@ -249,7 +249,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "nu 7:55": {
@@ -257,7 +257,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "nu 7:68": {
@@ -265,7 +265,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
-            "consensus": "silluq-sof_pasuq",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "ec 7:21": {
@@ -274,7 +274,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "tevir",
             "wlc": "merkha",
             "uxlc": "tevir",
-            "consensus": "tevir",
+            "mam": "tevir",
         },
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
     },
@@ -284,7 +284,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "merkha tipexa",
             "wlc": "merkha merkha",
             "uxlc": "merkha tipexa",
-            "consensus": "tipexa merkha",
+            "mam": "tipexa merkha",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
     },
@@ -319,7 +319,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
           "wlc": "silluq-pasoleg",
           "uxlc": "silluq-pasoleg",
-          "consensus": "silluq-sof_pasuq"
+          "mam": "silluq-sof_pasuq"
         },
     },
     "je 9:10": {

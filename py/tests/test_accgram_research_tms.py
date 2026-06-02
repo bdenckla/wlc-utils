@@ -708,7 +708,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                                 "bhs": "bar",
                                 "wlc": "baz",
                                 "uxlc": "qux",
-                                "consensus": "quux",
+                                "mam": "quux",
                             },
                             "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
                             "comment": ["c1", "c2"],
