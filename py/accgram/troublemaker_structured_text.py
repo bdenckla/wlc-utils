@@ -133,7 +133,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "da 2:41": {
         "wlc_focus": "ד֥י",
         "assessment": {
-            "manuscript": "meteg-no_maqaf",
+            "manuscript": "meteg-space",
             "wlc": "merkha-space",
             "uxlc": "meteg-space",
             "consensus": "meteg-maqaf",
