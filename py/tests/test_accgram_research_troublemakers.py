@@ -513,6 +513,68 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("diff_wlc_uxlc.wlc_adds_notes", html_text)
             self.assertIn("structured_text.uxlc_change", html_text)
 
+    def test_write_goerwitz_tms_html_report_simplifies_matching_wlc_word_diff_pairs(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_troublemakers_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "gn 1:1",
+                        "wlc422_kq_u_verse": {"vels": ["לפני", "דבר", "אחרי"]},
+                        "diff_wlc_uxlc": {"wlc422": "דבר", "uxlc": "דבר֙"},
+                        "diff_wlc_mam": {"wlc422": "דבר", "mam_simple": "דבר֣"},
+                        "structured_text": {
+                            "wlc_word": "דבר",
+                        },
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            self.assertIn(
+                '<td lang="hbo" dir="rtl">דבר֙</td><td>diff_wlc_uxlc</td>',
+                html_text,
+            )
+            self.assertIn(
+                '<td lang="hbo" dir="rtl">דבר֣</td><td>diff_wlc_mam</td>',
+                html_text,
+            )
+            self.assertNotIn("wlc422: דבר; uxlc: דבר֙", html_text)
+            self.assertNotIn("wlc422: דבר; mam_simple: דבר֣", html_text)
+
+    def test_write_goerwitz_tms_html_report_splits_diff_wlc_uxlc_note_into_hbo_and_note_rows(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_troublemakers_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "gn 1:1",
+                        "wlc422_kq_u_verse": {"vels": ["לפני", "דבר", "אחרי"]},
+                        "diff_wlc_uxlc": {
+                            "wlc422": "דבר",
+                            "uxlc": {"text": "דבר", "note": "m"},
+                        },
+                        "structured_text": {
+                            "wlc_word": "דבר",
+                        },
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            self.assertIn(
+                '<td lang="hbo" dir="rtl">דבר</td><td>diff_wlc_uxlc.hbo</td>',
+                html_text,
+            )
+            self.assertIn("<td>m</td><td>diff_wlc_uxlc.note</td>", html_text)
+            self.assertNotIn("<td>דבר (note: m)</td><td>diff_wlc_uxlc</td>", html_text)
+
     def test_write_goerwitz_tms_html_report_uses_phase3_url_conventions(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
@@ -563,7 +625,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             html_text = html_out.read_text(encoding="utf-8")
             self.assertIn("bracket_notes", html_text)
             self.assertIn("דבר: ]Q]n", html_text)
-            self.assertIn("uxlc: דבר (note: t)", html_text)
+            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>diff_wlc_uxlc.hbo</td>', html_text)
+            self.assertIn("<td>t</td><td>diff_wlc_uxlc.note</td>", html_text)
             self.assertIn("wlc422: [אלף | בית (note: x)]", html_text)
 
     def test_run_missing_mam_simple_raises_fail_fast(self):

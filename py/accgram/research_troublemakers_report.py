@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from accgram import research_troublemakers_report_diff_format
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
@@ -142,13 +143,13 @@ def _render_sat_table(row: dict[str, object]) -> object:
 
 
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
-    if label in _CONTEXT_HBO_ROW_KEYS and _contains_hebrew(value):
+    if label in _CONTEXT_HBO_ROW_KEYS and research_troublemakers_report_diff_format.contains_hebrew(value):
         return {"lang": "hbo", "dir": "rtl"}
+
+    if label.startswith("diff_wlc_") and research_troublemakers_report_diff_format.is_plain_hebrew_string(value):
+        return {"lang": "hbo", "dir": "rtl"}
+
     return None
-
-
-def _contains_hebrew(text: str) -> bool:
-    return any("\u0590" <= char <= "\u05FF" for char in text)
 
 
 def _center_sat_rows(row: dict[str, object]) -> list[tuple[str, str]]:
@@ -158,8 +159,26 @@ def _center_sat_rows(row: dict[str, object]) -> list[tuple[str, str]]:
     if bracket_notes:
         rows.extend(_normalize_repeated_rows("bracket_notes", bracket_notes))
 
-    rows.extend(_normalize_diff_rows("diff_wlc_uxlc", row.get("diff_wlc_uxlc")))
-    rows.extend(_normalize_diff_rows("diff_wlc_mam", row.get("diff_wlc_mam")))
+    rows.extend(
+        research_troublemakers_report_diff_format.normalize_diff_rows(
+            "diff_wlc_uxlc",
+            row.get("diff_wlc_uxlc"),
+            row=row,
+            rhs_key="uxlc",
+            render_sat_value=_render_sat_value,
+            structured_text_lookup=_structured_text_value,
+        )
+    )
+    rows.extend(
+        research_troublemakers_report_diff_format.normalize_diff_rows(
+            "diff_wlc_mam",
+            row.get("diff_wlc_mam"),
+            row=row,
+            rhs_key="mam_simple",
+            render_sat_value=_render_sat_value,
+            structured_text_lookup=_structured_text_value,
+        )
+    )
 
     assessment = _structured_text_value(row, "assessment")
     if isinstance(assessment, dict):
@@ -179,28 +198,11 @@ def _center_sat_rows(row: dict[str, object]) -> list[tuple[str, str]]:
     return rows
 
 
-def _normalize_diff_rows(label: str, diff_value: object) -> list[tuple[str, str]]:
-    entries = _as_nonempty_list(diff_value)
-    rows: list[tuple[str, str]] = []
-    for idx, entry in enumerate(entries, start=1):
-        row_label = label if len(entries) == 1 else f"{label}[{idx}]"
-        rows.append((row_label, _render_sat_value(entry)))
-    return rows
-
-
 def _normalize_repeated_rows(label: str, values: list[str]) -> list[tuple[str, str]]:
     if len(values) == 1:
         return [(label, values[0])]
 
     return [(f"{label}[{idx}]", value) for idx, value in enumerate(values, start=1)]
-
-
-def _as_nonempty_list(value: object) -> list[object]:
-    if value is None:
-        return []
-    if isinstance(value, list):
-        return [item for item in value if item is not None]
-    return [value]
 
 
 def _collect_bracket_notes(row: dict[str, object]) -> list[str]:
