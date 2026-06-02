@@ -711,7 +711,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                                 "consensus": "quux",
                             },
                             "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
-                            "free_form_comment": ["c1", "c2"],
+                            "comment": ["c1", "c2"],
                         },
                     }
                 ],
@@ -730,7 +730,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 '<td style="text-align: right;">foo</td><td></td><td>a.manuscript</td>',
                 html_text,
             )
-            self.assertIn("free_form_comment[1]", html_text)
+            self.assertIn("comment[1]", html_text)
             self.assertIn("<h2>Subsets</h2>", html_text_compact)
             self.assertIn('href="goerwitz-tms-msp-y.html"', html_text_compact)
             self.assertIn('href="goerwitz-tms-msp-n.html"', html_text_compact)

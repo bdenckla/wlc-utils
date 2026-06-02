@@ -50,7 +50,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "consensus": "meteg-maqaf, though merkha-space and no_meteg-maqaf are also attested (see MAM doc-note)",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
-        "free_form_comment": [
+        "comment": [
             "I am not sure what, if anything is 'wrong' about merkha-space."
             " Maybe that is not even what the Goerwitz checker is flaging as wrong."
             " The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of"
@@ -78,23 +78,23 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "is 36:2": {
         "wlc_focus": "ירושל֛מה",
-        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"),
+        "comment": _foi_non_revia_note("⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"),
     },
     "je 4:19": {
         "wlc_focus": "אוח֜ילה",
-        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "je 38:11": {
         "wlc_focus": "את־האנש֜ים",
-        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "hg 2:12": {
         "wlc_focus": "בשר־ק֜דש",
-        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2c 26:15": {
         "wlc_focus": "חשבנ֜ות",
-        "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2k 23:36": {
         "wlc_focus": "שנ֨ה",
@@ -292,7 +292,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
-        "free_form_comment": (
+        "comment": (
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
             "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. "
@@ -306,7 +306,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F282B.jpg",
-        "free_form_comment": (
+        "comment": (
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
             "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. "
@@ -325,7 +325,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "je 9:10": {
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-15",
-        "free_form_comment": (
+        "comment": (
             "The same word, מבלי, appears in the next verse (11) with analogous transcription problems."
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
@@ -339,7 +339,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "je 9:11": {
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-16",
-        "free_form_comment": (
+        "comment": (
             "The same word, מבלי, appears in the previous verse (10) with analogous transcription problems."
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "

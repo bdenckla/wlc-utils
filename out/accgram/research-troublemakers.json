@@ -165,7 +165,7 @@
           "consensus": "meteg-maqaf, though merkha-space and no_meteg-maqaf are also attested (see MAM doc-note)"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
-        "free_form_comment": [
+        "comment": [
           "I am not sure what, if anything is 'wrong' about merkha-space. Maybe that is not even what the Goerwitz checker is flaging as wrong. The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of the 'legality' of sequences involving it. The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
         ]
       }
@@ -264,7 +264,7 @@
       "diff_wlc_mam": [],
       "structured_text": {
         "wlc_focus": "חשבנ֜ות",
-        "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
+        "comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
     {
@@ -642,7 +642,7 @@
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
-        "free_form_comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. To transcribe the mark on שרי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
+        "comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. To transcribe the mark on שרי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
       }
     },
     {
@@ -670,7 +670,7 @@
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F282B.jpg",
-        "free_form_comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing."
+        "comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing."
       }
     },
     {
@@ -863,7 +863,7 @@
       "diff_wlc_mam": [],
       "structured_text": {
         "wlc_focus": "בשר־ק֜דש",
-        "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
+        "comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
     {
@@ -971,7 +971,7 @@
       ],
       "structured_text": {
         "wlc_focus": "ירושל֛מה",
-        "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
+        "comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
     {
@@ -997,7 +997,7 @@
       },
       "structured_text": {
         "wlc_focus": "אוח֜ילה",
-        "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
+        "comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
     {
@@ -1027,7 +1027,7 @@
       "structured_text": {
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-15",
-        "free_form_comment": "The same word, מבלי, appears in the next verse (11) with analogous transcription problems.In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
+        "comment": "The same word, מבלי, appears in the next verse (11) with analogous transcription problems.In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
       }
     },
     {
@@ -1062,7 +1062,7 @@
       "structured_text": {
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-16",
-        "free_form_comment": "The same word, מבלי, appears in the previous verse (10) with analogous transcription problems.In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
+        "comment": "The same word, מבלי, appears in the previous verse (10) with analogous transcription problems.In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
       }
     },
     {
@@ -1144,7 +1144,7 @@
       "diff_wlc_mam": [],
       "structured_text": {
         "wlc_focus": "את־האנש֜ים",
-        "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
+        "comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
     {

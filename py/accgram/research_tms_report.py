@@ -321,17 +321,17 @@ def _center_sat_rows(
                 continue
             rows.append(_sat_row(key=f"a.{key}", value=_render_sat_value(value)))
 
-    free_form_comment = _structured_text_value(row, "free_form_comment")
-    if isinstance(free_form_comment, list):
-        for idx, comment in enumerate(free_form_comment, start=1):
+    comment = _structured_text_value(row, "comment")
+    if isinstance(comment, list):
+        for idx, comment in enumerate(comment, start=1):
             rows.append(
                 _sat_row(
-                    key=f"free_form_comment[{idx}]",
+                    key=f"comment[{idx}]",
                     value=_render_sat_value(comment),
                 )
             )
-    elif free_form_comment is not None:
-        rows.append(_sat_row(key="free_form_comment", value=_render_sat_value(free_form_comment)))
+    elif comment is not None:
+        rows.append(_sat_row(key="comment", value=_render_sat_value(comment)))
 
     return _apply_sat_row_suppressions(_row_ref(row), rows)
 
