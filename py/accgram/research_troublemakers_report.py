@@ -10,6 +10,7 @@ from py_wlc import my_wlc_bcv_str
 
 
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "consensus")
+_CONTEXT_HBO_ROW_KEYS = {"before", "wlc_word", "after"}
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -121,12 +122,28 @@ def _render_sat_table(row: dict[str, object]) -> object:
     sat_rows.extend(_center_sat_rows(row))
 
     table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("key", "value"))]
-    table_rows.extend(wlc_utils_html.table_row_of_data((label, value)) for label, value in sat_rows)
+    table_rows.extend(
+        wlc_utils_html.table_row_of_data(
+            (label, value),
+            tdattrs=(None, _sat_value_cell_attr(label, value)),
+        )
+        for label, value in sat_rows
+    )
 
     return wlc_utils_html.table(
         tuple(table_rows),
         {"class": "goerwitz-tms-sat"},
     )
+
+
+def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
+    if label in _CONTEXT_HBO_ROW_KEYS and _contains_hebrew(value):
+        return {"lang": "hbo", "dir": "rtl"}
+    return None
+
+
+def _contains_hebrew(text: str) -> bool:
+    return any("\u0590" <= char <= "\u05FF" for char in text)
 
 
 def _center_sat_rows(row: dict[str, object]) -> list[tuple[str, str]]:

@@ -1,7 +1,15 @@
-body { font-size: 14pt; }
+:root {
+    color-scheme: light dark;
+}
+body {
+    font-size: 14pt;
+    color: light-dark(black, white);
+    background-color: light-dark(white, black);
+}
 *[lang="hbo"] {
     font-family: "Taamey D WOFF2";
     font-size: 140%;
+    font-feature-settings: 'ss01'; /* ss01 = xataf qamats qatan */
 }
 @font-face {
     font-family: "Taamey D WOFF2";
@@ -19,7 +27,7 @@ th, td {
     padding-left: 0.4em;
 }
 tr:nth-of-type(odd) td {
-    background-color: #eee;
+    background-color: light-dark(#eee, #2b2b2b);
 }
 img {
     max-width: 100%;

@@ -441,10 +441,15 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("https://tanach.us/Tanach.xml?Gen1:1", html_text)
             self.assertIn("structured_text.uxlc_change:none", html_text_compact)
             self.assertIn("<th>key</th><th>value</th>", html_text_compact)
-            self.assertIn("before</td><td>בראש֖יתבר֣א</td>", html_text_compact)
+            self.assertIn(
+                "before</td><tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td>",
+                html_text_compact,
+            )
             self.assertIn("wlc_word</td><td></td>", html_text_compact)
             self.assertIn("after</td><td></td>", html_text_compact)
-            before_idx = html_text_compact.index("before</td><td>בראש֖יתבר֣א</td>")
+            before_idx = html_text_compact.index(
+                "before</td><tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td>"
+            )
             wlc_word_idx = html_text_compact.index("wlc_word</td><td></td>")
             after_idx = html_text_compact.index("after</td><td></td>")
             self.assertLess(before_idx, wlc_word_idx)
@@ -500,6 +505,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("free_form_comment[1]", html_text)
             self.assertIn("bracket_notes", html_text)
             self.assertIn("אב: ]1", html_text)
+            self.assertIn("<td lang=\"hbo\" dir=\"rtl\">בראשית</td>", html_text)
+            self.assertIn("<td lang=\"hbo\" dir=\"rtl\">אב</td>", html_text)
+            self.assertIn("<td lang=\"hbo\" dir=\"rtl\">אחרית</td>", html_text)
             self.assertNotIn("diff_wlc_mam.wlc_adds_notes: ]1", html_text)
             self.assertNotIn("diff_wlc_uxlc.wlc_adds_notes", html_text)
             self.assertIn("structured_text.uxlc_change", html_text)
