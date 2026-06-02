@@ -39,7 +39,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "?",
             "bhs": "qadma on resh?",
-            "wlc": "qadma on resh (with brac-1 note)",
+            "wlc": "qadma on resh",
             "uxlc": "qadma on resh",
             "consensus": "optional pashta stress helper on resh, required pashta on xet",
         },
@@ -68,7 +68,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -119,7 +119,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -129,7 +129,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -139,7 +139,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -160,7 +160,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -170,7 +170,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "darga?",
             "bhs": "darga?",
-            "wlc": "darga (with brac-U note)",
+            "wlc": "darga",
             "uxlc": "darga",
             "consensus": "tevir",
         },
@@ -180,7 +180,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -190,7 +190,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-p note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -200,7 +200,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -210,7 +210,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -220,7 +220,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -230,7 +230,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -240,7 +240,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-Q, brac-n, and brac-p notes)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -250,7 +250,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -260,7 +260,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -270,7 +270,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -280,7 +280,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -290,7 +290,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -300,7 +300,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -310,7 +310,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
-            "wlc": "silluq-no_sof_pasuq (with brac-1 note)",
+            "wlc": "silluq-no_sof_pasuq",
             "uxlc": "silluq-no_sof_pasuq",
             "consensus": "silluq-sof_pasuq",
         },
@@ -368,7 +368,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
           "manuscript": "silluq-vertical_line?",
           "bhs": "silluq-vertical_line?",
-          "wlc": "silluq-pasoleg (with brac-c, brac-n, and brac-p notes)",
+          "wlc": "silluq-pasoleg",
           "uxlc": "silluq-pasoleg",
           "consensus": "silluq-sof_pasuq"
         },
