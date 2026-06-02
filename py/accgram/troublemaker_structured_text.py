@@ -281,10 +281,10 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ec 9:18": {
         "wlc_focus": "יאב֥ד טוב֥ה",
         "assessment": {
-            "manuscript": "[merkha] tipexa",
-            "wlc": "[merkha] merkha",
-            "uxlc": "[merkha] tipexa",
-            "consensus": "[tipexa] merkha",
+            "manuscript": "merkha tipexa",
+            "wlc": "merkha merkha",
+            "uxlc": "merkha tipexa",
+            "consensus": "tipexa merkha",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
     },
