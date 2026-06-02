@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from accgram import research_tms_report_bracket_notes
 from accgram import research_tms_report_diff_format
 from accgram import research_tms_report_intro
 from accgram import research_tms_report_subsets
@@ -110,6 +111,7 @@ def _build_body_contents(
         *top_contents,
     ]
     sections.extend(research_tms_report_intro.build_intro_contents(row_count))
+    sections.extend(research_tms_report_bracket_notes.build_wlc_bracket_notes_section(enriched_rows))
 
     for index, row in enumerate(enriched_rows):
         sections.extend(_render_row_section(row))
@@ -221,13 +223,13 @@ def _render_sat_table(row: dict[str, object]) -> object:
     )
 
     table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("value", "key"))]
-    table_rows.extend(
-        wlc_utils_html.table_row_of_data(
-            (value, label),
-            tdattrs=(_sat_value_cell_attr(label, value), None),
+    for label, value in sat_rows:
+        table_rows.append(
+            wlc_utils_html.table_row_of_data(
+                (research_tms_report_bracket_notes.annotate_bracket_note_tokens(value), label),
+                tdattrs=(_sat_value_cell_attr(label, value), None),
+            )
         )
-        for label, value in sat_rows
-    )
 
     return wlc_utils_html.table(
         tuple(table_rows),
