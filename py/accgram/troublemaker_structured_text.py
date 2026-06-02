@@ -402,33 +402,33 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 10:3": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "יד֥י־",
     },
     "je 31:32": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "מא֖רץ",
     },
     "je 48:12": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "הנ֖ה־",
     },
     "je 49:19": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "אריצ֨נו",
     },
     "ju 13:18": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "פ֛לאי׃",
     },
     "lm 5:5": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "הונ֖ח",
     },
     "mi 2:7": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "דבר֨י",
     },
     "nu 20:19": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "ישרא֘ל",
     },
     "nu 25:19": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "המגפ֑ה",
     },
     "ob 1:1": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT",
+        "wlc_word": "עליה",
     },
 }

@@ -1225,7 +1225,7 @@
         "mam_simple": "ידי־"
       },
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "יד֥י־"
       }
     },
     {
@@ -1253,7 +1253,7 @@
         "mam_simple": "מא֣רץ"
       },
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "מא֖רץ"
       }
     },
     {
@@ -1308,7 +1308,7 @@
         "mam_simple": "הנה־"
       },
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "הנ֖ה־"
       }
     },
     {
@@ -1336,7 +1336,7 @@
         "mam_simple": "אריצ֙נו֙"
       },
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "אריצ֨נו"
       }
     },
     {
@@ -1396,7 +1396,7 @@
         }
       ],
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "פ֛לאי׃"
       }
     },
     {
@@ -1431,7 +1431,7 @@
         "mam_simple": "הונח־"
       },
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "הונ֖ח"
       }
     },
     {
@@ -1588,7 +1588,7 @@
         }
       ],
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "דבר֨י"
       }
     },
     {
@@ -1791,7 +1791,7 @@
         "mam_simple": "ישראל֮"
       },
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "ישרא֘ל"
       }
     },
     {
@@ -1821,7 +1821,7 @@
         "wlc_adds_notes": "]1"
       },
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "המגפ֑ה"
       }
     },
     {
@@ -1868,7 +1868,7 @@
         "mam_simple": "על֖יה"
       },
       "structured_text": {
-        "TODO_placeholder": "FILL_STRUCTURED_TEXT"
+        "wlc_word": "עליה"
       }
     }
   ]
