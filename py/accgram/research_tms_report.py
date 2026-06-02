@@ -18,9 +18,17 @@ _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "consensus")
 _CONTEXT_HBO_ROW_KEYS = {"wlc_before", "wlc_focus", "wlc_focus.hbo", "wlc_after"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _SELF_LINK_SYMBOL = "🔗"
+_SAT_A_KEY_MERGE_TARGETS: dict[str, str] = {
+    "a.wlc": "wlc_focus",
+    "a.uxlc": "diff_wlc_uxlc",
+    "a.consensus": "diff_wlc_mam",
+}
 _SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
     "1k 16:33": {"diff_wlc_uxlc[1]"},
 }
+
+# Internal SAT row shape: (value_cell, middle_description_cell, key_cell).
+SatRow = tuple[str, str, str]
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -205,14 +213,17 @@ def _render_sat_table(row: dict[str, object]) -> object:
         wlc_focus=wlc_focus_str,
     )
 
-    sat_rows: list[tuple[str, str]] = [("wlc_before", before_focus)]
+    sat_rows: list[SatRow] = [_sat_row(key="wlc_before", value=before_focus)]
     sat_rows.extend(
-        research_tms_report_wlc_word_format.build_wlc_word_rows(
-            focus_placeholder,
-            wlc_focus_notes,
-        )
+        [
+            _sat_row(key=label, value=value)
+            for label, value in research_tms_report_wlc_word_format.build_wlc_word_rows(
+                focus_placeholder,
+                wlc_focus_notes,
+            )
+        ]
     )
-    sat_rows.append(("wlc_after", after_focus))
+    sat_rows.append(_sat_row(key="wlc_after", value=after_focus))
 
     sat_rows.extend(
         _center_sat_rows(
@@ -223,11 +234,11 @@ def _render_sat_table(row: dict[str, object]) -> object:
     )
 
     table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("value", "key"))]
-    for label, value in sat_rows:
+    for value, _middle_description, key in sat_rows:
         table_rows.append(
             wlc_utils_html.table_row_of_data(
-                (research_tms_report_bracket_notes.annotate_bracket_note_tokens(value), label),
-                tdattrs=(_sat_value_cell_attr(label, value), None),
+                (research_tms_report_bracket_notes.annotate_bracket_note_tokens(value), key),
+                tdattrs=(_sat_value_cell_attr(key, value), None),
             )
         )
 
@@ -258,8 +269,8 @@ def _center_sat_rows(
     *,
     wlc_focus: str | None,
     wlc_focus_notes: list[str],
-) -> list[tuple[str, str]]:
-    rows: list[tuple[str, str]] = []
+) -> list[SatRow]:
+    rows: list[SatRow] = []
 
     bracket_notes = _collect_bracket_notes(row)
     if bracket_notes and not research_tms_report_wlc_word_format.is_redundant_wlc_word_bracket_notes_row(
@@ -270,24 +281,30 @@ def _center_sat_rows(
         rows.extend(_normalize_repeated_rows("bracket_notes", bracket_notes))
 
     rows.extend(
-        research_tms_report_diff_format.normalize_diff_rows(
-            "diff_wlc_uxlc",
-            row.get("diff_wlc_uxlc"),
-            row=row,
-            rhs_key="uxlc",
-            render_sat_value=_render_sat_value,
-            structured_text_lookup=_structured_text_value,
-        )
+        [
+            _sat_row(key=label, value=value)
+            for label, value in research_tms_report_diff_format.normalize_diff_rows(
+                "diff_wlc_uxlc",
+                row.get("diff_wlc_uxlc"),
+                row=row,
+                rhs_key="uxlc",
+                render_sat_value=_render_sat_value,
+                structured_text_lookup=_structured_text_value,
+            )
+        ]
     )
     rows.extend(
-        research_tms_report_diff_format.normalize_diff_rows(
-            "diff_wlc_mam",
-            row.get("diff_wlc_mam"),
-            row=row,
-            rhs_key="mam_simple",
-            render_sat_value=_render_sat_value,
-            structured_text_lookup=_structured_text_value,
-        )
+        [
+            _sat_row(key=label, value=value)
+            for label, value in research_tms_report_diff_format.normalize_diff_rows(
+                "diff_wlc_mam",
+                row.get("diff_wlc_mam"),
+                row=row,
+                rhs_key="mam_simple",
+                render_sat_value=_render_sat_value,
+                structured_text_lookup=_structured_text_value,
+            )
+        ]
     )
 
     assessment = _structured_text_value(row, "assessment")
@@ -296,31 +313,53 @@ def _center_sat_rows(
             value = assessment.get(key)
             if value is None:
                 continue
-            rows.append((f"a.{key}", _render_sat_value(value)))
+            rows.append(_sat_row(key=f"a.{key}", value=_render_sat_value(value)))
 
     free_form_comment = _structured_text_value(row, "free_form_comment")
     if isinstance(free_form_comment, list):
         for idx, comment in enumerate(free_form_comment, start=1):
-            rows.append((f"free_form_comment[{idx}]", _render_sat_value(comment)))
+            rows.append(
+                _sat_row(
+                    key=f"free_form_comment[{idx}]",
+                    value=_render_sat_value(comment),
+                )
+            )
     elif free_form_comment is not None:
-        rows.append(("free_form_comment", _render_sat_value(free_form_comment)))
+        rows.append(_sat_row(key="free_form_comment", value=_render_sat_value(free_form_comment)))
 
     return _apply_sat_row_suppressions(_row_ref(row), rows)
 
 
-def _apply_sat_row_suppressions(ref: str, rows: list[tuple[str, str]]) -> list[tuple[str, str]]:
+def _apply_sat_row_suppressions(ref: str, rows: list[SatRow]) -> list[SatRow]:
     suppressed_labels = _SAT_ROW_SUPPRESSIONS_BY_REF.get(ref)
     if not suppressed_labels:
         return rows
 
-    return [sat_row for sat_row in rows if sat_row[0] not in suppressed_labels]
+    return [sat_row for sat_row in rows if _sat_row_key(sat_row) not in suppressed_labels]
 
 
-def _normalize_repeated_rows(label: str, values: list[str]) -> list[tuple[str, str]]:
+def _normalize_repeated_rows(label: str, values: list[str]) -> list[SatRow]:
     if len(values) == 1:
-        return [(label, values[0])]
+        return [_sat_row(key=label, value=values[0])]
 
-    return [(f"{label}[{idx}]", value) for idx, value in enumerate(values, start=1)]
+    return [_sat_row(key=f"{label}[{idx}]", value=value) for idx, value in enumerate(values, start=1)]
+
+
+def _sat_row(*, key: str, value: str, middle_description: str = "") -> SatRow:
+    return (value, middle_description, key)
+
+
+def _sat_row_key(row: SatRow) -> str:
+    return row[2]
+
+
+def _sat_merge_target_key_for_assessment_key(key: str) -> str | None:
+    return _SAT_A_KEY_MERGE_TARGETS.get(key)
+
+
+def _sat_row_matches_merge_target(*, row_key: str, merge_target_base_key: str) -> bool:
+    # Phase 1 scope: match either base key or base key.hbo.
+    return row_key == merge_target_base_key or row_key == f"{merge_target_base_key}.hbo"
 
 
 def _collect_bracket_notes(row: dict[str, object]) -> list[str]:
