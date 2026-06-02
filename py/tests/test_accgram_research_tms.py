@@ -727,7 +727,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("a.manuscript", html_text)
             self.assertIn("a.wlc", html_text)
             self.assertIn(
-                '<td style="text-align: right;">foo</td><td></td><td>a.manuscript</td>',
+                '<td></td><td>foo</td><td>a.manuscript</td>',
                 html_text,
             )
             self.assertIn("comment[1]", html_text)

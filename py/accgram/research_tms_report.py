@@ -234,6 +234,7 @@ def _render_sat_table(row: dict[str, object]) -> object:
         )
     )
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows)
+    sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
 
     table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("value", "", "key"))]
     for value, middle_description, key in sat_rows:
@@ -256,9 +257,6 @@ def _render_sat_table(row: dict[str, object]) -> object:
 
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
     if label == research_tms_report_wlc_word_format.WLC_FOCUS_NOTES_LABEL:
-        return {"style": "text-align: right;"}
-
-    if label.startswith("a."):
         return {"style": "text-align: right;"}
 
     if label in _CONTEXT_HBO_ROW_KEYS and research_tms_report_diff_format.contains_hebrew(value):
@@ -357,6 +355,23 @@ def _sat_row(*, key: str, value: str, middle_description: str = "") -> SatRow:
 
 def _sat_row_key(row: SatRow) -> str:
     return row[2]
+
+
+def _move_assessment_values_to_sat_middle_column(rows: list[SatRow]) -> list[SatRow]:
+    moved_rows: list[SatRow] = []
+    for value, middle_description, key in rows:
+        if key.startswith("a.") and value:
+            moved_rows.append(
+                _sat_row(
+                    key=key,
+                    value="",
+                    middle_description=middle_description or value,
+                )
+            )
+        else:
+            moved_rows.append((value, middle_description, key))
+
+    return moved_rows
 
 
 def _sat_merge_target_key_for_assessment_key(key: str) -> str | None:
