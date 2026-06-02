@@ -6,7 +6,7 @@ from pathlib import Path
 
 from mb_cmn import bib_locales as tbn
 from mb_cmn import provenance
-from accgram import troublemakers
+from accgram import tms
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 

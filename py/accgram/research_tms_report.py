@@ -3,8 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from accgram import research_troublemakers_report_diff_format
-from accgram import research_troublemakers_report_wlc_word_format
+from accgram import research_tms_report_diff_format
+from accgram import research_tms_report_wlc_word_format
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
@@ -118,7 +118,7 @@ def _render_sat_table(row: dict[str, object]) -> object:
     wlc_tokens = _wlc_verse_vels(row)
     wlc_word = _structured_text_value(row, "wlc_word")
     wlc_word_str = wlc_word if isinstance(wlc_word, str) else None
-    wlc_word_notes = research_troublemakers_report_wlc_word_format.collect_wlc_word_bracket_notes(
+    wlc_word_notes = research_tms_report_wlc_word_format.collect_wlc_word_bracket_notes(
         wlc_tokens,
         wlc_word_str,
         render_sat_value=_render_sat_value,
@@ -130,7 +130,7 @@ def _render_sat_table(row: dict[str, object]) -> object:
 
     sat_rows: list[tuple[str, str]] = [("before", before_word)]
     sat_rows.extend(
-        research_troublemakers_report_wlc_word_format.build_wlc_word_rows(
+        research_tms_report_wlc_word_format.build_wlc_word_rows(
             woi_placeholder,
             wlc_word_notes,
         )
@@ -161,13 +161,13 @@ def _render_sat_table(row: dict[str, object]) -> object:
 
 
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
-    if label == research_troublemakers_report_wlc_word_format.WLC_WORD_NOTES_LABEL:
+    if label == research_tms_report_wlc_word_format.WLC_WORD_NOTES_LABEL:
         return {"style": "text-align: right;"}
 
-    if label in _CONTEXT_HBO_ROW_KEYS and research_troublemakers_report_diff_format.contains_hebrew(value):
+    if label in _CONTEXT_HBO_ROW_KEYS and research_tms_report_diff_format.contains_hebrew(value):
         return {"lang": "hbo", "dir": "rtl"}
 
-    if label.startswith("diff_wlc_") and research_troublemakers_report_diff_format.is_plain_hebrew_string(value):
+    if label.startswith("diff_wlc_") and research_tms_report_diff_format.is_plain_hebrew_string(value):
         return {"lang": "hbo", "dir": "rtl"}
 
     return None
@@ -182,7 +182,7 @@ def _center_sat_rows(
     rows: list[tuple[str, str]] = []
 
     bracket_notes = _collect_bracket_notes(row)
-    if bracket_notes and not research_troublemakers_report_wlc_word_format.is_redundant_wlc_word_bracket_notes_row(
+    if bracket_notes and not research_tms_report_wlc_word_format.is_redundant_wlc_word_bracket_notes_row(
         bracket_notes,
         wlc_word=wlc_word,
         wlc_word_notes=wlc_word_notes,
@@ -190,7 +190,7 @@ def _center_sat_rows(
         rows.extend(_normalize_repeated_rows("bracket_notes", bracket_notes))
 
     rows.extend(
-        research_troublemakers_report_diff_format.normalize_diff_rows(
+        research_tms_report_diff_format.normalize_diff_rows(
             "diff_wlc_uxlc",
             row.get("diff_wlc_uxlc"),
             row=row,
@@ -200,7 +200,7 @@ def _center_sat_rows(
         )
     )
     rows.extend(
-        research_troublemakers_report_diff_format.normalize_diff_rows(
+        research_tms_report_diff_format.normalize_diff_rows(
             "diff_wlc_mam",
             row.get("diff_wlc_mam"),
             row=row,
@@ -383,11 +383,11 @@ def _row_ref(row: dict[str, object]) -> str:
 
 
 def _parse_ref_to_wlc_bcv(ref: str) -> tuple[str, int, int, str]:
-    # Reuse the parsing logic from research_troublemakers to avoid drift.
-    from accgram import research_troublemakers
+    # Reuse the parsing logic from research_tms to avoid drift.
+    from accgram import research_tms
 
-    bb, chnu, vrnu = research_troublemakers._parse_ref(ref)
-    bcv = research_troublemakers._to_compact_bcv(bb, chnu, vrnu)
+    bb, chnu, vrnu = research_tms._parse_ref(ref)
+    bcv = research_tms._to_compact_bcv(bb, chnu, vrnu)
     return bb, chnu, vrnu, bcv
 
 

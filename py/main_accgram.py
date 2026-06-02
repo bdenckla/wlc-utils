@@ -28,7 +28,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from accgram import filter_split_wlc, research_troublemakers, split_wlc
+from accgram import filter_split_wlc, research_tms, split_wlc
 from accgram import run_goerwitz
 
 
@@ -50,8 +50,8 @@ def _run_goerwitz(args: argparse.Namespace) -> None:
     run_goerwitz.run(args)
 
 
-def _run_research_troublemakers(args: argparse.Namespace) -> None:
-    research_troublemakers.run(args)
+def _run_research_tms(args: argparse.Namespace) -> None:
+    research_tms.run(args)
 
 
 def _run_fresh_run_goerwitz(args: argparse.Namespace) -> None:
@@ -138,8 +138,8 @@ def main() -> None:
             "wlc422-kq-u verse objects and XML-ish UXLC verse nodes."
         ),
     )
-    research_troublemakers.add_args(research_tms_parser, repo_root=_repo_root())
-    research_tms_parser.set_defaults(func=_run_research_troublemakers)
+    research_tms.add_args(research_tms_parser, repo_root=_repo_root())
+    research_tms_parser.set_defaults(func=_run_research_tms)
 
     args = parser.parse_args()
     args.func(args)
