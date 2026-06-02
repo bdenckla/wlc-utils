@@ -165,34 +165,36 @@ def _render_ref_links(
 ) -> object:
     mam_url = _mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)
     tanach_us_url = my_wlc_bcv_str.get_tanach_dot_us_url(bcv)
-
-    uxlc_change_node: object
     uxlc_change = _structured_text_value(row, "uxlc_change")
+
+    links: list[object] = [
+        wlc_utils_html.anchor(
+            _SELF_LINK_SYMBOL,
+            {
+                "href": f"#{section_anchor_id}",
+                "title": "Permalink to this section",
+                "aria-label": "Permalink to this section",
+            },
+        ),
+        " ",
+        wlc_utils_html.anchor("MAM-with-doc verse", {"href": mam_url}),
+        " | ",
+        wlc_utils_html.anchor("tanach.us verse", {"href": tanach_us_url}),
+    ]
+
     if isinstance(uxlc_change, str) and uxlc_change.strip():
-        uxlc_change_node = wlc_utils_html.anchor(
-            "UXLC change",
-            {"href": uxlc_change.strip()},
+        links.extend(
+            [
+                " | ",
+                wlc_utils_html.anchor(
+                    "UXLC change",
+                    {"href": uxlc_change.strip()},
+                ),
+            ]
         )
-    else:
-        uxlc_change_node = "UXLC change: none"
 
     return wlc_utils_html.para(
-        (
-            wlc_utils_html.anchor(
-                _SELF_LINK_SYMBOL,
-                {
-                    "href": f"#{section_anchor_id}",
-                    "title": "Permalink to this section",
-                    "aria-label": "Permalink to this section",
-                },
-            ),
-            " ",
-            wlc_utils_html.anchor("MAM-with-doc verse", {"href": mam_url}),
-            " | ",
-            wlc_utils_html.anchor("tanach.us verse", {"href": tanach_us_url}),
-            " | ",
-            uxlc_change_node,
-        )
+        tuple(links)
     )
 
 

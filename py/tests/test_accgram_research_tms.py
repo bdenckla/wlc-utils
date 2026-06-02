@@ -469,7 +469,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertIn("https://tanach.us/Tanach.xml?Gen1:1", html_text)
-            self.assertIn("UXLCchange:none", html_text_compact)
+            self.assertNotIn("UXLCchange:none", html_text_compact)
             self.assertIn("<th>value</th><th></th><th>key</th>", html_text_compact)
             self.assertIn(
                 "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td></td><td>wlc_before</td>",
