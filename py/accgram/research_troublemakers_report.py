@@ -197,14 +197,6 @@ def _collect_bracket_notes(row: dict[str, object]) -> list[str]:
         else:
             notes.append(rendered_notes)
 
-    for diff_label in ("diff_wlc_uxlc", "diff_wlc_mam"):
-        for entry in _as_nonempty_list(row.get(diff_label)):
-            if not isinstance(entry, dict):
-                continue
-            for key in ("wlc_adds_notes", "uxlc_adds_note"):
-                if key in entry:
-                    notes.append(f"{diff_label}.{key}: {_render_sat_value(entry[key])}")
-
     # Preserve order while dropping duplicates.
     return list(dict.fromkeys(notes))
 
