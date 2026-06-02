@@ -468,7 +468,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertIn("https://tanach.us/Tanach.xml?Gen1:1", html_text)
-            self.assertIn("structured_text.uxlc_change:none", html_text_compact)
+            self.assertIn("UXLC change:none", html_text_compact)
             self.assertIn("<th>value</th><th>key</th>", html_text_compact)
             self.assertIn(
                 "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>wlc_before</td>",
@@ -721,8 +721,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
             self.assertIn("diff_wlc_uxlc", html_text)
             self.assertIn("diff_wlc_mam[1]", html_text)
-            self.assertIn("assessment.manuscript", html_text)
-            self.assertIn("assessment.wlc", html_text)
+            self.assertIn("a.manuscript", html_text)
+            self.assertIn("a.wlc", html_text)
+            self.assertIn(
+                '<td style="text-align: right;">foo</td><td>a.manuscript</td>',
+                html_text,
+            )
             self.assertIn("free_form_comment[1]", html_text)
             self.assertIn("<h2>Subsets</h2>", html_text_compact)
             self.assertIn('href="goerwitz-tms-msp-y.html"', html_text_compact)
@@ -741,7 +745,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("אב: ]1", html_text)
             self.assertNotIn("diff_wlc_mam.wlc_adds_notes: ]1", html_text)
             self.assertNotIn("diff_wlc_uxlc.wlc_adds_notes", html_text)
-            self.assertIn("structured_text.uxlc_change", html_text)
+            self.assertIn("UXLC change", html_text)
 
     def test_write_goerwitz_tms_html_report_simplifies_matching_wlc_word_diff_pairs(self):
         with TemporaryDirectory() as tmp_dir:

@@ -155,11 +155,11 @@ def _render_ref_links(
     uxlc_change = _structured_text_value(row, "uxlc_change")
     if isinstance(uxlc_change, str) and uxlc_change.strip():
         uxlc_change_node = wlc_utils_html.anchor(
-            "structured_text.uxlc_change",
+            "UXLC change",
             {"href": uxlc_change.strip()},
         )
     else:
-        uxlc_change_node = "structured_text.uxlc_change: none"
+        uxlc_change_node = "UXLC change: none"
 
     return wlc_utils_html.para(
         (
@@ -236,6 +236,9 @@ def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
     if label == research_tms_report_wlc_word_format.WLC_FOCUS_NOTES_LABEL:
         return {"style": "text-align: right;"}
 
+    if label.startswith("a."):
+        return {"style": "text-align: right;"}
+
     if label in _CONTEXT_HBO_ROW_KEYS and research_tms_report_diff_format.contains_hebrew(value):
         return {"lang": "hbo", "dir": "rtl"}
 
@@ -288,7 +291,7 @@ def _center_sat_rows(
             value = assessment.get(key)
             if value is None:
                 continue
-            rows.append((f"assessment.{key}", _render_sat_value(value)))
+            rows.append((f"a.{key}", _render_sat_value(value)))
 
     free_form_comment = _structured_text_value(row, "free_form_comment")
     if isinstance(free_form_comment, list):
