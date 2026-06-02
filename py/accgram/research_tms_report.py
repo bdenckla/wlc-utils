@@ -19,6 +19,10 @@ _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "mam")
 _CONTEXT_HBO_ROW_KEYS = {"wlc_before", "wlc_focus", "wlc_focus.hbo", "wlc_after"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _SELF_LINK_SYMBOL = "🔗"
+_MAIN_REPORT_TITLE = "Goerwitz TMs"
+_MAIN_REPORT_HEADING = "Goerwitz Troublemakers"
+_MSP_Y_FLAVOR = "msp-y"
+_MSP_N_FLAVOR = "msp-n"
 _SAT_A_KEY_MERGE_TARGETS: dict[str, str] = {
     "a.wlc": "wlc_focus",
     "a.uxlc": "diff_wlc_uxlc",
@@ -59,6 +63,8 @@ def write_goerwitz_tms_html_report(
         html_out_path,
         enriched_rows,
         top_contents=research_tms_report_subsets.build_main_subsets_top_contents(html_out_path),
+        title=_MAIN_REPORT_TITLE,
+        heading_level_1_text=_MAIN_REPORT_HEADING,
     )
 
 
@@ -73,6 +79,8 @@ def write_goerwitz_tms_msp_yes_html_report(
         top_contents=research_tms_report_subsets.build_msp_yes_related_pages_top_contents(
             main_html_out_path
         ),
+        title=f"{_MAIN_REPORT_TITLE} ({_MSP_Y_FLAVOR})",
+        heading_level_1_text=f"{_MAIN_REPORT_HEADING} ({_MSP_Y_FLAVOR})",
     )
 
 
@@ -87,6 +95,8 @@ def write_goerwitz_tms_msp_no_html_report(
         top_contents=research_tms_report_subsets.build_msp_no_related_pages_top_contents(
             main_html_out_path
         ),
+        title=f"{_MAIN_REPORT_TITLE} ({_MSP_N_FLAVOR})",
+        heading_level_1_text=f"{_MAIN_REPORT_HEADING} ({_MSP_N_FLAVOR})",
     )
 
 
@@ -95,12 +105,18 @@ def _write_goerwitz_tms_html_report(
     enriched_rows: list[dict[str, object]],
     *,
     top_contents: tuple[object, ...],
+    title: str,
+    heading_level_1_text: str,
 ) -> None:
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    body_contents = _build_body_contents(enriched_rows, top_contents=top_contents)
+    body_contents = _build_body_contents(
+        enriched_rows,
+        top_contents=top_contents,
+        heading_level_1_text=heading_level_1_text,
+    )
     write_ctx = wlc_utils_html.WriteCtx(
-        title="Goerwitz TMS",
+        title=title,
         path=str(html_out_path),
     )
     wlc_utils_html.write_html_to_file(
@@ -114,10 +130,11 @@ def _build_body_contents(
     enriched_rows: list[dict[str, object]],
     *,
     top_contents: tuple[object, ...],
+    heading_level_1_text: str,
 ) -> tuple[object, ...]:
     row_count = len(enriched_rows)
     sections: list[object] = [
-        wlc_utils_html.heading_level_1("Goerwitz Troublemakers (research-tms)"),
+        wlc_utils_html.heading_level_1(heading_level_1_text),
         *top_contents,
     ]
     sections.extend(research_tms_report_intro.build_intro_contents(row_count))

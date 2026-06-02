@@ -722,6 +722,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             html_text = html_out.read_text(encoding="utf-8")
             html_text_compact = "".join(html_text.split())
 
+            self.assertIn("<title>GoerwitzTMs</title>", html_text_compact)
+            self.assertIn("<h1>GoerwitzTroublemakers</h1>", html_text_compact)
+            self.assertNotIn("research-tms", html_text)
             self.assertIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
             self.assertIn("diff_wlc_uxlc", html_text)
             self.assertIn("diff_wlc_mam[1]", html_text)
@@ -1043,6 +1046,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             html_text = yes_html_out.read_text(encoding="utf-8")
             html_text_compact = "".join(html_text.split())
 
+            self.assertIn("<title>GoerwitzTMs(msp-y)</title>", html_text_compact)
+            self.assertIn("<h1>GoerwitzTroublemakers(msp-y)</h1>", html_text_compact)
+            self.assertNotIn("research-tms", html_text)
             self.assertIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
             self.assertNotIn('<h2id="tmgn1v2">gn1:2</h2>', html_text_compact)
             self.assertIn("<h2>Relatedpages</h2>", html_text_compact)
@@ -1077,6 +1083,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             html_text = no_html_out.read_text(encoding="utf-8")
             html_text_compact = "".join(html_text.split())
 
+            self.assertIn("<title>GoerwitzTMs(msp-n)</title>", html_text_compact)
+            self.assertIn("<h1>GoerwitzTroublemakers(msp-n)</h1>", html_text_compact)
+            self.assertNotIn("research-tms", html_text)
             self.assertNotIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
             self.assertIn('<h2id="tmgn1v2">gn1:2</h2>', html_text_compact)
             self.assertIn("<h2>Relatedpages</h2>", html_text_compact)
