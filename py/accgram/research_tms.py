@@ -10,6 +10,7 @@ from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram.mam_simple_diff import diff_wlc_mam
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
 from accgram.mam_simple_verse import load_mam_simple_for_refs
+from accgram import research_tms_focus_diff_expand
 from accgram.troublemaker_structured_text_sanity import (
     assessment_uxlc_matches_converted_diff_uxlc,
     canonicalize_uxlc_change_url,
@@ -175,6 +176,20 @@ def run(args: argparse.Namespace) -> None:
         mam_simple_for_diff = _normalize_payload_for_diff_ignoring_notes(mam_simple_verse)
         diff_wlc_uxlc_for_checks = diff_wlc_uxlc(wlc422_verse, uxlc_nodes)
         diff_wlc_uxlc_for_output = diff_wlc_uxlc(wlc422_for_diff, uxlc_for_diff)
+        diff_wlc_mam_for_output = diff_wlc_mam(wlc422_for_diff, mam_simple_for_diff)
+
+        structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
+        wlc_focus = _structured_wlc_focus(structured_text)
+        diff_wlc_uxlc_for_output = _expand_subset_diff_to_wlc_focus(
+            diff_wlc_uxlc_for_output,
+            wlc_focus=wlc_focus,
+            rhs_key="uxlc",
+        )
+        diff_wlc_mam_for_output = _expand_subset_diff_to_wlc_focus(
+            diff_wlc_mam_for_output,
+            wlc_focus=wlc_focus,
+            rhs_key="mam_simple",
+        )
 
         enriched_row: dict[str, object] = {
             **row,
@@ -182,9 +197,8 @@ def run(args: argparse.Namespace) -> None:
             "uxlc_verse": uxlc_nodes,
             "diff_wlc_uxlc": diff_wlc_uxlc_for_output,
             "mam_simple_verse": mam_simple_verse,
-            "diff_wlc_mam": diff_wlc_mam(wlc422_for_diff, mam_simple_for_diff),
+            "diff_wlc_mam": diff_wlc_mam_for_output,
         }
-        structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
         if structured_text is not None:
             assessment = structured_text.get("assessment")
             assessment_uxlc = assessment.get("uxlc") if isinstance(assessment, dict) else None
@@ -296,6 +310,23 @@ def _normalize_payload_for_diff_ignoring_notes(payload: object) -> object:
         return out_payload
 
     return payload
+
+
+def _structured_wlc_focus(structured_text: object) -> str | None:
+    return research_tms_focus_diff_expand.structured_wlc_focus(structured_text)
+
+
+def _expand_subset_diff_to_wlc_focus(
+    diff_value: object,
+    *,
+    wlc_focus: str | None,
+    rhs_key: str,
+) -> object:
+    return research_tms_focus_diff_expand.expand_subset_diff_to_wlc_focus(
+        diff_value,
+        wlc_focus=wlc_focus,
+        rhs_key=rhs_key,
+    )
 
 
 def _parse_ref(ref: str) -> tuple[str, int, int]:

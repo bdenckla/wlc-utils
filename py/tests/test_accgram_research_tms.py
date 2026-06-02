@@ -445,18 +445,18 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("structured_text.uxlc_change:none", html_text_compact)
             self.assertIn("<th>value</th><th>key</th>", html_text_compact)
             self.assertIn(
-                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>before</td>",
+                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>wlc_before</td>",
                 html_text_compact,
             )
-            self.assertIn("<td></td><td>wlc_word</td>", html_text_compact)
-            self.assertIn("<td></td><td>after</td>", html_text_compact)
+            self.assertIn("<td></td><td>wlc_focus</td>", html_text_compact)
+            self.assertIn("<td></td><td>wlc_after</td>", html_text_compact)
             before_idx = html_text_compact.index(
-                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>before</td>"
+                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>wlc_before</td>"
             )
-            wlc_word_idx = html_text_compact.index("<td></td><td>wlc_word</td>")
-            after_idx = html_text_compact.index("<td></td><td>after</td>")
-            self.assertLess(before_idx, wlc_word_idx)
-            self.assertLess(wlc_word_idx, after_idx)
+            wlc_focus_idx = html_text_compact.index("<td></td><td>wlc_focus</td>")
+            after_idx = html_text_compact.index("<td></td><td>wlc_after</td>")
+            self.assertLess(before_idx, wlc_focus_idx)
+            self.assertLess(wlc_focus_idx, after_idx)
 
     def test_run_ignores_note_only_wlc_uxlc_and_wlc_mam_diffs(self):
         with TemporaryDirectory() as tmp_dir:
@@ -571,6 +571,82 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertEqual(row["diff_wlc_uxlc"], [])
             self.assertEqual(row["diff_wlc_mam"], [])
 
+    def test_expand_subset_diff_to_wlc_focus_expands_single_dict_entry(self):
+        out = research_tms._expand_subset_diff_to_wlc_focus(
+            {"wlc422": "טוב֥ה", "uxlc": "טוֹבָה"},
+            wlc_focus="יאב֥ד טוב֥ה",
+            rhs_key="uxlc",
+        )
+
+        self.assertEqual(
+            out,
+            {
+                "wlc422": "יאב֥ד טוב֥ה",
+                "uxlc": "יאב֥ד טוֹבָה",
+            },
+        )
+
+    def test_expand_subset_diff_to_wlc_focus_expands_list_entries(self):
+        out = research_tms._expand_subset_diff_to_wlc_focus(
+            [
+                {"wlc422": "טוב֥ה", "mam_simple": "טוֹבָה"},
+                {"wlc422": "יאב֥ד", "mam_simple": "יֹאבַד"},
+            ],
+            wlc_focus="יאב֥ד טוב֥ה",
+            rhs_key="mam_simple",
+        )
+
+        self.assertEqual(
+            out,
+            [
+                {"wlc422": "יאב֥ד טוב֥ה", "mam_simple": "יאב֥ד טוֹבָה"},
+                {"wlc422": "יאב֥ד טוב֥ה", "mam_simple": "יֹאבַד טוב֥ה"},
+            ],
+        )
+
+    def test_expand_subset_diff_to_wlc_focus_keeps_non_applicable_entries_unchanged(self):
+        out_non_subset = research_tms._expand_subset_diff_to_wlc_focus(
+            {"wlc422": "אחר", "uxlc": "אַחֵר"},
+            wlc_focus="יאב֥ד טוב֥ה",
+            rhs_key="uxlc",
+        )
+        out_note_only = research_tms._expand_subset_diff_to_wlc_focus(
+            {"wlc_adds_notes": "]Q"},
+            wlc_focus="יאב֥ד טוב֥ה",
+            rhs_key="uxlc",
+        )
+        out_non_string_rhs = research_tms._expand_subset_diff_to_wlc_focus(
+            {"wlc422": "טוב֥ה", "uxlc": {"text": "טוב֥ה", "note": "m"}},
+            wlc_focus="יאב֥ד טוב֥ה",
+            rhs_key="uxlc",
+        )
+
+        self.assertEqual(out_non_subset, {"wlc422": "אחר", "uxlc": "אַחֵר"})
+        self.assertEqual(out_note_only, {"wlc_adds_notes": "]Q"})
+        self.assertEqual(
+            out_non_string_rhs,
+            {"wlc422": "טוב֥ה", "uxlc": {"text": "טוב֥ה", "note": "m"}},
+        )
+
+    def test_expand_subset_diff_to_wlc_focus_uses_ec_9_18_fixture_focus(self):
+        structured_text = research_tms.STRUCTURED_TEXT_BY_REF["ec 9:18"]
+        focus = structured_text["wlc_focus"]
+
+        self.assertEqual(focus, "יאב֥ד טוב֥ה")
+
+        out = research_tms._expand_subset_diff_to_wlc_focus(
+            {"wlc422": "טוב֥ה", "uxlc": "ט֖ובָה"},
+            wlc_focus=focus,
+            rhs_key="uxlc",
+        )
+        self.assertEqual(
+            out,
+            {
+                "wlc422": "יאב֥ד טוב֥ה",
+                "uxlc": "יאב֥ד ט֖ובָה",
+            },
+        )
+
     def test_write_goerwitz_tms_html_report_renders_diff_and_assessment_labels(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
@@ -594,7 +670,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                             {"wlc422": "אב", "mam_simple": "אב֙"},
                         ],
                         "structured_text": {
-                            "wlc_word": "אב",
+                            "wlc_focus": "אב",
                             "assessment": {
                                 "manuscript": "foo",
                                 "bhs": "bar",
@@ -621,11 +697,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("free_form_comment[1]", html_text)
             self.assertIn("<td lang=\"hbo\" dir=\"rtl\">בראשית</td>", html_text)
             self.assertIn(
-                '<td lang="hbo" dir="rtl">אב</td><td>wlc_word.hbo</td>',
+                '<td lang="hbo" dir="rtl">אב</td><td>wlc_focus.hbo</td>',
                 html_text,
             )
             self.assertIn(
-                '<td style="text-align: right;">]1</td><td>wlc_word.notes</td>',
+                '<td style="text-align: right;">]1</td><td>wlc_focus.notes</td>',
                 html_text,
             )
             self.assertIn("<td lang=\"hbo\" dir=\"rtl\">אחרית</td>", html_text)
@@ -649,7 +725,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                         "diff_wlc_uxlc": {"wlc422": "דבר", "uxlc": "דבר֙"},
                         "diff_wlc_mam": {"wlc422": "דבר", "mam_simple": "דבר֣"},
                         "structured_text": {
-                            "wlc_word": "דבר",
+                            "wlc_focus": "דבר",
                         },
                     }
                 ],
@@ -683,7 +759,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                             "uxlc": {"text": "דבר", "note": "m"},
                         },
                         "structured_text": {
-                            "wlc_word": "דבר",
+                            "wlc_focus": "דבר",
                         },
                     }
                 ],
@@ -741,7 +817,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                             "mam_simple": ["אלף", "בית"],
                         },
                         "structured_text": {
-                            "wlc_word": "דבר",
+                            "wlc_focus": "דבר",
                         },
                     }
                 ],
@@ -749,9 +825,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             html_text = html_out.read_text(encoding="utf-8")
             self.assertNotIn("bracket_notes", html_text)
-            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_word.hbo</td>', html_text)
+            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_focus.hbo</td>', html_text)
             self.assertIn(
-                '<td style="text-align: right;">]Q]n</td><td>wlc_word.notes</td>',
+                '<td style="text-align: right;">]Q]n</td><td>wlc_focus.notes</td>',
                 html_text,
             )
             self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>diff_wlc_uxlc.hbo</td>', html_text)
@@ -777,16 +853,16 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                             ]
                         },
                         "structured_text": {
-                            "wlc_word": "דבר",
+                            "wlc_focus": "דבר",
                         },
                     }
                 ],
             )
 
             html_text = html_out.read_text(encoding="utf-8")
-            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_word.hbo</td>', html_text)
+            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_focus.hbo</td>', html_text)
             self.assertIn(
-                '<td style="text-align: right;">]Q</td><td>wlc_word.notes</td>',
+                '<td style="text-align: right;">]Q</td><td>wlc_focus.notes</td>',
                 html_text,
             )
             self.assertIn("bracket_notes", html_text)
@@ -1424,7 +1500,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                             "2022.12.07%20-%20Changes.xml?2022.08.31-9"
                         ),
                         "assessment": {"uxlc": "munax"},
-                        "wlc_word": "ועשר֤ים",
+                        "wlc_focus": "ועשר֤ים",
                     }
                 },
                 all_changes_path=all_changes_path,

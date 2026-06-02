@@ -35,7 +35,7 @@
         "mam_simple": "ועשר֣ים"
       },
       "structured_text": {
-        "wlc_word": "ועשר֤ים",
+        "wlc_focus": "ועשר֤ים",
         "assessment": {
           "manuscript": "munax",
           "bhs": "mahapakh?",
@@ -87,7 +87,7 @@
         "mam_simple": "מכל֙"
       },
       "structured_text": {
-        "wlc_word": "מכ֨ל",
+        "wlc_focus": "מכ֨ל",
         "assessment": {
           "manuscript": "no accent",
           "bhs": "qadma on kaf?",
@@ -125,7 +125,7 @@
         "mam_simple": "הר֙וח֙"
       },
       "structured_text": {
-        "wlc_word": "הר֨וח",
+        "wlc_focus": "הר֨וח",
         "assessment": {
           "manuscript": "?",
           "bhs": "qadma on resh?",
@@ -161,7 +161,7 @@
         "mam_simple": "נכח־"
       },
       "structured_text": {
-        "wlc_word": "נ֥כח",
+        "wlc_focus": "נ֥כח",
         "assessment": {
           "manuscript": "meteg-maqaf",
           "bhs": "merkha-space?",
@@ -201,7 +201,7 @@
         "mam_simple": "גדולֽה׃"
       },
       "structured_text": {
-        "wlc_word": "גדולֽה",
+        "wlc_focus": "גדולֽה",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -236,7 +236,7 @@
         "mam_simple": "שנ֑ים"
       },
       "structured_text": {
-        "wlc_word": "שנ֖ים",
+        "wlc_focus": "שנ֖ים",
         "assessment": {
           "manuscript": "etnaxta",
           "bhs": "tipexa?",
@@ -271,7 +271,7 @@
       },
       "diff_wlc_mam": [],
       "structured_text": {
-        "wlc_word": "חשבנ֜ות",
+        "wlc_focus": "חשבנ֜ות",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -300,7 +300,7 @@
         "mam_simple": "שנה֙"
       },
       "structured_text": {
-        "wlc_word": "שנ֨ה",
+        "wlc_focus": "שנ֨ה",
         "assessment": {
           "manuscript": "pashta on ה?",
           "bhs": "qadma on נ?",
@@ -336,7 +336,7 @@
         "mam_simple": "סופֽה׃"
       },
       "structured_text": {
-        "wlc_word": "סופֽה",
+        "wlc_focus": "סופֽה",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -372,7 +372,7 @@
         "mam_simple": "יוסֽף׃"
       },
       "structured_text": {
-        "wlc_word": "יוסֽף",
+        "wlc_focus": "יוסֽף",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -408,7 +408,7 @@
         "mam_simple": "מצרֽים׃"
       },
       "structured_text": {
-        "wlc_word": "מצרֽים",
+        "wlc_focus": "מצרֽים",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -448,7 +448,7 @@
         "mam_simple": "די־"
       },
       "structured_text": {
-        "wlc_word": "ד֥י",
+        "wlc_focus": "ד֥י",
         "assessment": {
           "manuscript": "meteg-no_maqaf",
           "bhs": "merkha-space?",
@@ -485,7 +485,7 @@
         "mam_simple": "ההֽוא׃"
       },
       "structured_text": {
-        "wlc_word": "ההֽוא",
+        "wlc_focus": "ההֽוא",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -522,7 +522,7 @@
         "mam_simple": "וחקרת֛"
       },
       "structured_text": {
-        "wlc_word": "וחקרת֧",
+        "wlc_focus": "וחקרת֧",
         "assessment": {
           "manuscript": "darga?",
           "bhs": "darga?",
@@ -558,7 +558,7 @@
         "mam_simple": "אחֽיו׃"
       },
       "structured_text": {
-        "wlc_word": "אחֽיו",
+        "wlc_focus": "אחֽיו",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -593,7 +593,7 @@
         "mam_simple": "אש֛ר"
       },
       "structured_text": {
-        "wlc_word": "אש֥ר",
+        "wlc_focus": "אש֥ר",
         "assessment": {
           "manuscript": "tevir",
           "bhs": "merkha?",
@@ -616,8 +616,8 @@
         "טוב֥ה חכמ֖ה מכל֣י קר֑ב וחוט֣א אח֔ד יאב֥ד טוב֖ה הרבֽה׃"
       ],
       "diff_wlc_uxlc": {
-        "wlc422": "טוב֥ה",
-        "uxlc": "טוב֖ה"
+        "wlc422": "יאב֥ד טוב֥ה",
+        "uxlc": "יאב֥ד טוב֖ה"
       },
       "mam_simple_verse": {
         "vels": [
@@ -625,11 +625,11 @@
         ]
       },
       "diff_wlc_mam": {
-        "wlc422": "יאב֥ד",
-        "mam_simple": "יאב֖ד"
+        "wlc422": "יאב֥ד טוב֥ה",
+        "mam_simple": "יאב֖ד טוב֥ה"
       },
       "structured_text": {
-        "wlc_word": "טוב֥ה",
+        "wlc_focus": "יאב֥ד טוב֥ה",
         "assessment": {
           "manuscript": "[merkha] tipexa",
           "bhs": "[merkha] merkha?",
@@ -662,7 +662,7 @@
         "mam_simple": "שר֥י"
       },
       "structured_text": {
-        "wlc_word": "שר֖י",
+        "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
         "free_form_comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. To transcribe the mark on שרי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
@@ -686,11 +686,11 @@
         ]
       },
       "diff_wlc_mam": {
-        "wlc422": "וה֥יו",
-        "mam_simple": "והיו־"
+        "wlc422": "וה֥יו [ל֣י]",
+        "mam_simple": "והיו־ [ל֣י]"
       },
       "structured_text": {
-        "wlc_word": "וה֥יו [ל֣י]",
+        "wlc_focus": "וה֥יו [ל֣י]",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F282B.jpg",
         "free_form_comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing."
@@ -722,7 +722,7 @@
         "mam_simple": "ישראֽל׃"
       },
       "structured_text": {
-        "wlc_word": "ישראֽל",
+        "wlc_focus": "ישראֽל",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -758,7 +758,7 @@
         "mam_simple": "ותקחֽה׃"
       },
       "structured_text": {
-        "wlc_word": "ותקחֽה",
+        "wlc_focus": "ותקחֽה",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -794,7 +794,7 @@
         "mam_simple": "במצרֽים׃"
       },
       "structured_text": {
-        "wlc_word": "במצרֽים",
+        "wlc_focus": "במצרֽים",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -830,7 +830,7 @@
         "mam_simple": "ומשמאלֽם׃"
       },
       "structured_text": {
-        "wlc_word": "ומשמאלֽם",
+        "wlc_focus": "ומשמאלֽם",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -866,7 +866,7 @@
         "mam_simple": "ואמֽת׃"
       },
       "structured_text": {
-        "wlc_word": "ואמֽת׀",
+        "wlc_focus": "ואמֽת׀",
         "assessment": {
           "manuscript": "silluq-vertical_line?",
           "bhs": "silluq-vertical_line?",
@@ -895,7 +895,7 @@
       },
       "diff_wlc_mam": [],
       "structured_text": {
-        "wlc_word": "בשר־ק֜דש",
+        "wlc_focus": "בשר־ק֜דש",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -925,7 +925,7 @@
         "mam_simple": "מזבחותֽם׃"
       },
       "structured_text": {
-        "wlc_word": "מזבחותֽם",
+        "wlc_focus": "מזבחותֽם",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -961,7 +961,7 @@
         "mam_simple": "אהבֽים׃"
       },
       "structured_text": {
-        "wlc_word": "אהבֽים",
+        "wlc_focus": "אהבֽים",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -1007,7 +1007,7 @@
         }
       ],
       "structured_text": {
-        "wlc_word": "ירושל֛מה",
+        "wlc_focus": "ירושל֛מה",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -1033,7 +1033,7 @@
         "mam_simple": "אחר֑ש"
       },
       "structured_text": {
-        "wlc_word": "אוח֜ילה",
+        "wlc_focus": "אוח֜ילה",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -1062,7 +1062,7 @@
         "mam_simple": "מבל֥י"
       },
       "structured_text": {
-        "wlc_word": "מבל֖י",
+        "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-15",
         "free_form_comment": "The same word, מבלי, appears in the next verse (11) with analogous transcription problems.In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
       }
@@ -1097,7 +1097,7 @@
         "mam_simple": "מבל֥י"
       },
       "structured_text": {
-        "wlc_word": "מבל֖י",
+        "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-16",
         "free_form_comment": "The same word, מבלי, appears in the previous verse (10) with analogous transcription problems.In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
       }
@@ -1124,7 +1124,7 @@
         "mam_simple": "ידי־"
       },
       "structured_text": {
-        "wlc_word": "יד֥י־"
+        "wlc_focus": "יד֥י־"
       }
     },
     {
@@ -1152,7 +1152,7 @@
         "mam_simple": "מא֣רץ"
       },
       "structured_text": {
-        "wlc_word": "מא֖רץ"
+        "wlc_focus": "מא֖רץ"
       }
     },
     {
@@ -1179,7 +1179,7 @@
       },
       "diff_wlc_mam": [],
       "structured_text": {
-        "wlc_word": "את־האנש֜ים",
+        "wlc_focus": "את־האנש֜ים",
         "free_form_comment": "A possible reason why the goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -1205,7 +1205,7 @@
         "mam_simple": "הנה־"
       },
       "structured_text": {
-        "wlc_word": "הנ֖ה־"
+        "wlc_focus": "הנ֖ה־"
       }
     },
     {
@@ -1233,7 +1233,7 @@
         "mam_simple": "אריצ֙נו֙"
       },
       "structured_text": {
-        "wlc_word": "אריצ֨נו"
+        "wlc_focus": "אריצ֨נו"
       }
     },
     {
@@ -1271,7 +1271,7 @@
         "mam_simple": "פֽלאי׃"
       },
       "structured_text": {
-        "wlc_word": "פ֛לאי׃"
+        "wlc_focus": "פ֛לאי׃"
       }
     },
     {
@@ -1301,7 +1301,7 @@
         "mam_simple": "הונח־"
       },
       "structured_text": {
-        "wlc_word": "הונ֖ח"
+        "wlc_focus": "הונ֖ח"
       }
     },
     {
@@ -1330,7 +1330,7 @@
         "mam_simple": "הֽוא׃"
       },
       "structured_text": {
-        "wlc_word": "הֽוא",
+        "wlc_focus": "הֽוא",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -1366,7 +1366,7 @@
         "mam_simple": "לאמֽר׃"
       },
       "structured_text": {
-        "wlc_word": "לאמֽר",
+        "wlc_focus": "לאמֽר",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -1402,7 +1402,7 @@
         "mam_simple": "לחֽרב׃"
       },
       "structured_text": {
-        "wlc_word": "לחֽרב",
+        "wlc_focus": "לחֽרב",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -1443,7 +1443,7 @@
         }
       ],
       "structured_text": {
-        "wlc_word": "דבר֨י"
+        "wlc_focus": "דבר֨י"
       }
     },
     {
@@ -1472,7 +1472,7 @@
         "mam_simple": "קטֽרת׃"
       },
       "structured_text": {
-        "wlc_word": "קטֽרת",
+        "wlc_focus": "קטֽרת",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -1508,7 +1508,7 @@
         "mam_simple": "לחטֽאת׃"
       },
       "structured_text": {
-        "wlc_word": "לחטֽאת",
+        "wlc_focus": "לחטֽאת",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -1544,7 +1544,7 @@
         "mam_simple": "למנחֽה׃"
       },
       "structured_text": {
-        "wlc_word": "למנחֽה",
+        "wlc_focus": "למנחֽה",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -1580,7 +1580,7 @@
         "mam_simple": "קטֽרת׃"
       },
       "structured_text": {
-        "wlc_word": "קטֽרת",
+        "wlc_focus": "קטֽרת",
         "assessment": {
           "manuscript": "silluq-no_sof_pasuq?",
           "bhs": "silluq-no_sof_pasuq?",
@@ -1620,7 +1620,7 @@
         "mam_simple": "ישראל֮"
       },
       "structured_text": {
-        "wlc_word": "ישרא֘ל"
+        "wlc_focus": "ישרא֘ל"
       }
     },
     {
@@ -1646,7 +1646,7 @@
       },
       "diff_wlc_mam": [],
       "structured_text": {
-        "wlc_word": "המגפ֑ה"
+        "wlc_focus": "המגפ֑ה"
       }
     },
     {
@@ -1681,7 +1681,7 @@
         "mam_simple": "על֖יה"
       },
       "structured_text": {
-        "wlc_word": "עליה"
+        "wlc_focus": "עליה"
       }
     }
   ]

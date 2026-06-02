@@ -13,7 +13,7 @@ def _foi_non_revia_note(fp_value: str) -> str:
 # Per-troublemaker structured research notes used by research-tms output.
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
-        "wlc_word": "ועשר֤ים",
+        "wlc_focus": "ועשר֤ים",
         "assessment": {
             "manuscript": "munax",
             "bhs": "mahapakh?",
@@ -24,7 +24,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
     },
     "1k 16:33": {
-        "wlc_word": "מכ֨ל",
+        "wlc_focus": "מכ֨ל",
         "assessment": {
             "manuscript": "no accent",
             "bhs": "qadma on kaf?",
@@ -35,7 +35,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
     },
     "1k 19:11": {
-        "wlc_word": "הר֨וח",
+        "wlc_focus": "הר֨וח",
         "assessment": {
             "manuscript": "?",
             "bhs": "qadma on resh?",
@@ -46,7 +46,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": None,
     },
     "1k 20:29": {
-        "wlc_word": "נ֥כח",
+        "wlc_focus": "נ֥כח",
         "assessment": {
             "manuscript": "meteg-maqaf",
             "bhs": "merkha-space?",
@@ -64,7 +64,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ]
     },
     "1s 6:19": {
-        "wlc_word": "גדולֽה",
+        "wlc_focus": "גדולֽה",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -74,7 +74,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "2c 22:12": {
-        "wlc_word": "שנ֖ים",
+        "wlc_focus": "שנ֖ים",
         "assessment": {
             "manuscript": "etnaxta",
             "bhs": "tipexa?",
@@ -85,27 +85,27 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
     },
     "is 36:2": {
-        "wlc_word": "ירושל֛מה",
+        "wlc_focus": "ירושל֛מה",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"),
     },
     "je 4:19": {
-        "wlc_word": "אוח֜ילה",
+        "wlc_focus": "אוח֜ילה",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "je 38:11": {
-        "wlc_word": "את־האנש֜ים",
+        "wlc_focus": "את־האנש֜ים",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "hg 2:12": {
-        "wlc_word": "בשר־ק֜דש",
+        "wlc_focus": "בשר־ק֜דש",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2c 26:15": {
-        "wlc_word": "חשבנ֜ות",
+        "wlc_focus": "חשבנ֜ות",
         "free_form_comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2k 23:36": {
-        "wlc_word": "שנ֨ה",
+        "wlc_focus": "שנ֨ה",
         "assessment": {
             "manuscript": "pashta on ה?",
             "bhs": "qadma on נ?",
@@ -115,7 +115,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "am 1:14": {
-        "wlc_word": "סופֽה",
+        "wlc_focus": "סופֽה",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -125,7 +125,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "am 6:6": {
-        "wlc_word": "יוסֽף",
+        "wlc_focus": "יוסֽף",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -135,7 +135,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "am 9:5": {
-        "wlc_word": "מצרֽים",
+        "wlc_focus": "מצרֽים",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -145,7 +145,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "da 2:41": {
-        "wlc_word": "ד֥י",
+        "wlc_focus": "ד֥י",
         "assessment": {
             "manuscript": "meteg-no_maqaf",
             "bhs": "merkha-space?",
@@ -156,7 +156,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
     },
     "dt 9:20": {
-        "wlc_word": "ההֽוא",
+        "wlc_focus": "ההֽוא",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -166,7 +166,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "dt 13:15": {
-        "wlc_word": "וחקרת֧",
+        "wlc_focus": "וחקרת֧",
         "assessment": {
             "manuscript": "darga?",
             "bhs": "darga?",
@@ -176,7 +176,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "dt 25:9": {
-        "wlc_word": "אחֽיו",
+        "wlc_focus": "אחֽיו",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -186,7 +186,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "ek 33:20": {
-        "wlc_word": "ישראֽל",
+        "wlc_focus": "ישראֽל",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -196,7 +196,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "ex 2:5": {
-        "wlc_word": "ותקחֽה",
+        "wlc_focus": "ותקחֽה",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -206,7 +206,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "ex 14:25": {
-        "wlc_word": "במצרֽים",
+        "wlc_focus": "במצרֽים",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -216,7 +216,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "ex 14:29": {
-        "wlc_word": "ומשמאלֽם",
+        "wlc_focus": "ומשמאלֽם",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -226,7 +226,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "ho 4:19": {
-        "wlc_word": "מזבחותֽם",
+        "wlc_focus": "מזבחותֽם",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -236,7 +236,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "ho 8:9": {
-        "wlc_word": "אהבֽים",
+        "wlc_focus": "אהבֽים",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -246,7 +246,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "lv 18:17": {
-        "wlc_word": "הֽוא",
+        "wlc_focus": "הֽוא",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -256,7 +256,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "lv 19:1": {
-        "wlc_word": "לאמֽר",
+        "wlc_focus": "לאמֽר",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -266,7 +266,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "lv 26:7": {
-        "wlc_word": "לחֽרב",
+        "wlc_focus": "לחֽרב",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -276,7 +276,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "nu 7:32": {
-        "wlc_word": "קטֽרת",
+        "wlc_focus": "קטֽרת",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -286,7 +286,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "nu 7:40": {
-        "wlc_word": "לחטֽאת",
+        "wlc_focus": "לחטֽאת",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -296,7 +296,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "nu 7:55": {
-        "wlc_word": "למנחֽה",
+        "wlc_focus": "למנחֽה",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -306,7 +306,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "nu 7:68": {
-        "wlc_word": "קטֽרת",
+        "wlc_focus": "קטֽרת",
         "assessment": {
             "manuscript": "silluq-no_sof_pasuq?",
             "bhs": "silluq-no_sof_pasuq?",
@@ -316,7 +316,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "ec 7:21": {
-        "wlc_word": "אש֥ר",
+        "wlc_focus": "אש֥ר",
         "assessment": {
             "manuscript": "tevir",
             "bhs": "merkha?",
@@ -327,7 +327,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
     },
     "ec 9:18": {
-        "wlc_word": "טוב֥ה",
+        "wlc_focus": "יאב֥ד טוב֥ה",
         "assessment": {
             "manuscript": "[merkha] tipexa",
             "bhs": "[merkha] merkha?",
@@ -338,7 +338,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
     },
     "ek 11:1": {
-        "wlc_word": "שר֖י",
+        "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
         "free_form_comment": (
@@ -352,7 +352,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ek 14:11": {
-        "wlc_word": "וה֥יו [ל֣י]",
+        "wlc_focus": "וה֥יו [ל֣י]",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F282B.jpg",
         "free_form_comment": (
@@ -364,7 +364,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ex 34:6": {
-        "wlc_word": "ואמֽת׀",
+        "wlc_focus": "ואמֽת׀",
         "assessment": {
           "manuscript": "silluq-vertical_line?",
           "bhs": "silluq-vertical_line?",
@@ -374,7 +374,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "je 9:10": {
-        "wlc_word": "מבל֖י",
+        "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-15",
         "free_form_comment": (
             "The same word, מבלי, appears in the next verse (11) with analogous transcription problems."
@@ -388,7 +388,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 9:11": {
-        "wlc_word": "מבל֖י",
+        "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-16",
         "free_form_comment": (
             "The same word, מבלי, appears in the previous verse (10) with analogous transcription problems."
@@ -402,33 +402,34 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 10:3": {
-        "wlc_word": "יד֥י־",
+        "wlc_focus": "יד֥י־",
     },
     "je 31:32": {
-        "wlc_word": "מא֖רץ",
+        "wlc_focus": "מא֖רץ",
     },
     "je 48:12": {
-        "wlc_word": "הנ֖ה־",
+        "wlc_focus": "הנ֖ה־",
     },
     "je 49:19": {
-        "wlc_word": "אריצ֨נו",
+        "wlc_focus": "אריצ֨נו",
     },
     "ju 13:18": {
-        "wlc_word": "פ֛לאי׃",
+        "wlc_focus": "פ֛לאי׃",
     },
     "lm 5:5": {
-        "wlc_word": "הונ֖ח",
+        "wlc_focus": "הונ֖ח",
     },
     "mi 2:7": {
-        "wlc_word": "דבר֨י",
+        "wlc_focus": "דבר֨י",
     },
     "nu 20:19": {
-        "wlc_word": "ישרא֘ל",
+        "wlc_focus": "ישרא֘ל",
     },
     "nu 25:19": {
-        "wlc_word": "המגפ֑ה",
+        "wlc_focus": "המגפ֑ה",
     },
     "ob 1:1": {
-        "wlc_word": "עליה",
+        "wlc_focus": "עליה",
     },
 }
+

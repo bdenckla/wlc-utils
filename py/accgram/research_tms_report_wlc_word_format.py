@@ -3,33 +3,33 @@ from __future__ import annotations
 from typing import Callable
 
 
-WLC_WORD_NOTES_LABEL = "wlc_word.notes"
+WLC_FOCUS_NOTES_LABEL = "wlc_focus.notes"
 
 
-def build_wlc_word_rows(wlc_word_text: str, wlc_word_notes: list[str]) -> list[tuple[str, str]]:
-    if wlc_word_notes:
+def build_wlc_word_rows(wlc_focus_text: str, wlc_focus_notes: list[str]) -> list[tuple[str, str]]:
+    if wlc_focus_notes:
         return [
-            ("wlc_word.hbo", wlc_word_text),
-            (WLC_WORD_NOTES_LABEL, render_note_values(wlc_word_notes)),
+            ("wlc_focus.hbo", wlc_focus_text),
+            (WLC_FOCUS_NOTES_LABEL, render_note_values(wlc_focus_notes)),
         ]
 
-    return [("wlc_word", wlc_word_text)]
+    return [("wlc_focus", wlc_focus_text)]
 
 
 def collect_wlc_word_bracket_notes(
     tokens: list[object],
-    wlc_word: str | None,
+    wlc_focus: str | None,
     *,
     render_sat_value: Callable[[object], str],
 ) -> list[str]:
-    if not wlc_word:
+    if not wlc_focus:
         return []
 
     notes: list[str] = []
     for token in tokens:
         if not isinstance(token, dict):
             continue
-        if token.get("word") != wlc_word:
+        if token.get("word") != wlc_focus:
             continue
         token_notes = token.get("notes")
         if token_notes is None:
@@ -53,11 +53,11 @@ def render_note_values(values: list[str]) -> str:
 def is_redundant_wlc_word_bracket_notes_row(
     bracket_notes: list[str],
     *,
-    wlc_word: str | None,
-    wlc_word_notes: list[str],
+    wlc_focus: str | None,
+    wlc_focus_notes: list[str],
 ) -> bool:
-    if not wlc_word or not wlc_word_notes:
+    if not wlc_focus or not wlc_focus_notes:
         return False
 
-    wlc_word_bracket_notes = {f"{wlc_word}: {note}" for note in wlc_word_notes}
-    return bool(bracket_notes) and set(bracket_notes).issubset(wlc_word_bracket_notes)
+    wlc_focus_bracket_notes = {f"{wlc_focus}: {note}" for note in wlc_focus_notes}
+    return bool(bracket_notes) and set(bracket_notes).issubset(wlc_focus_bracket_notes)

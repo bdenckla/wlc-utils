@@ -125,13 +125,13 @@ def _render_diff_entry_value(
     if "wlc422" not in entry or rhs_key not in entry:
         return render_sat_value(entry)
 
-    wlc_word = structured_text_lookup(row, "wlc_word")
-    if not isinstance(wlc_word, str):
+    wlc_focus = structured_text_lookup(row, "wlc_focus")
+    if not isinstance(wlc_focus, str):
         return render_sat_value(entry)
 
     wlc_side = render_sat_value(entry.get("wlc422"))
     rhs_side = render_sat_value(entry.get(rhs_key))
-    if wlc_side == wlc_word:
+    if wlc_side == wlc_focus:
         return rhs_side
 
     return render_sat_value(entry)

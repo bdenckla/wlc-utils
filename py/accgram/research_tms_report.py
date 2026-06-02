@@ -12,7 +12,7 @@ from py_wlc import my_wlc_bcv_str
 
 
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "consensus")
-_CONTEXT_HBO_ROW_KEYS = {"before", "wlc_word", "wlc_word.hbo", "after"}
+_CONTEXT_HBO_ROW_KEYS = {"wlc_before", "wlc_focus", "wlc_focus.hbo", "wlc_after"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _SELF_LINK_SYMBOL = "🔗"
 
@@ -139,32 +139,32 @@ def _troublemaker_anchor_id(bcv: str) -> str:
 def _render_sat_table(row: dict[str, object]) -> object:
     verse_text = _wlc_verse_text(row)
     wlc_tokens = _wlc_verse_vels(row)
-    wlc_word = _structured_text_value(row, "wlc_word")
-    wlc_word_str = wlc_word if isinstance(wlc_word, str) else None
-    wlc_word_notes = research_tms_report_wlc_word_format.collect_wlc_word_bracket_notes(
+    wlc_focus = _structured_text_value(row, "wlc_focus")
+    wlc_focus_str = wlc_focus if isinstance(wlc_focus, str) else None
+    wlc_focus_notes = research_tms_report_wlc_word_format.collect_wlc_word_bracket_notes(
         wlc_tokens,
-        wlc_word_str,
+        wlc_focus_str,
         render_sat_value=_render_sat_value,
     )
-    before_word, woi_placeholder, after_word = _split_wlc_context(
+    before_focus, focus_placeholder, after_focus = _split_wlc_context(
         verse_text=verse_text,
-        wlc_word=wlc_word_str,
+        wlc_focus=wlc_focus_str,
     )
 
-    sat_rows: list[tuple[str, str]] = [("before", before_word)]
+    sat_rows: list[tuple[str, str]] = [("wlc_before", before_focus)]
     sat_rows.extend(
         research_tms_report_wlc_word_format.build_wlc_word_rows(
-            woi_placeholder,
-            wlc_word_notes,
+            focus_placeholder,
+            wlc_focus_notes,
         )
     )
-    sat_rows.append(("after", after_word))
+    sat_rows.append(("wlc_after", after_focus))
 
     sat_rows.extend(
         _center_sat_rows(
             row,
-            wlc_word=wlc_word_str,
-            wlc_word_notes=wlc_word_notes,
+            wlc_focus=wlc_focus_str,
+            wlc_focus_notes=wlc_focus_notes,
         )
     )
 
@@ -184,7 +184,7 @@ def _render_sat_table(row: dict[str, object]) -> object:
 
 
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
-    if label == research_tms_report_wlc_word_format.WLC_WORD_NOTES_LABEL:
+    if label == research_tms_report_wlc_word_format.WLC_FOCUS_NOTES_LABEL:
         return {"style": "text-align: right;"}
 
     if label in _CONTEXT_HBO_ROW_KEYS and research_tms_report_diff_format.contains_hebrew(value):
@@ -199,16 +199,16 @@ def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
 def _center_sat_rows(
     row: dict[str, object],
     *,
-    wlc_word: str | None,
-    wlc_word_notes: list[str],
+    wlc_focus: str | None,
+    wlc_focus_notes: list[str],
 ) -> list[tuple[str, str]]:
     rows: list[tuple[str, str]] = []
 
     bracket_notes = _collect_bracket_notes(row)
     if bracket_notes and not research_tms_report_wlc_word_format.is_redundant_wlc_word_bracket_notes_row(
         bracket_notes,
-        wlc_word=wlc_word,
-        wlc_word_notes=wlc_word_notes,
+        wlc_focus=wlc_focus,
+        wlc_focus_notes=wlc_focus_notes,
     ):
         rows.extend(_normalize_repeated_rows("bracket_notes", bracket_notes))
 
@@ -278,18 +278,18 @@ def _collect_bracket_notes(row: dict[str, object]) -> list[str]:
     return list(dict.fromkeys(notes))
 
 
-def _split_wlc_context(verse_text: str, wlc_word: str | None) -> tuple[str, str, str]:
-    if not wlc_word:
+def _split_wlc_context(verse_text: str, wlc_focus: str | None) -> tuple[str, str, str]:
+    if not wlc_focus:
         return verse_text, "", ""
 
-    match_start = verse_text.find(wlc_word)
+    match_start = verse_text.find(wlc_focus)
     if match_start < 0:
         return verse_text, "", ""
 
-    match_end = match_start + len(wlc_word)
-    before_word = verse_text[:match_start].strip()
-    after_word = verse_text[match_end:].strip()
-    return before_word, wlc_word, after_word
+    match_end = match_start + len(wlc_focus)
+    before_focus = verse_text[:match_start].strip()
+    after_focus = verse_text[match_end:].strip()
+    return before_focus, wlc_focus, after_focus
 
 
 def _wlc_verse_text(row: dict[str, object]) -> str:
