@@ -743,6 +743,38 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("wlc422: דבר; uxlc: דבר֙", html_text)
             self.assertNotIn("wlc422: דבר; mam_simple: דבר֣", html_text)
 
+    def test_write_goerwitz_tms_html_report_renders_non_empty_multiword_wlc_focus_in_context(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_tms_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "ek 14:11",
+                        "wlc422_kq_u_verse": {"vels": ["לפני", "וה֥יו", "ל֣י", "אחרי"]},
+                        "structured_text": {
+                            "wlc_focus": "וה֥יו ל֣י",
+                        },
+                    }
+                ],
+            )
+
+            html_text_compact = "".join(html_out.read_text(encoding="utf-8").split())
+            before_cell = '<tdlang="hbo"dir="rtl">לפני</td><td>wlc_before</td>'
+            focus_cell = '<tdlang="hbo"dir="rtl">וה֥יול֣י</td><td>wlc_focus</td>'
+            after_cell = '<tdlang="hbo"dir="rtl">אחרי</td><td>wlc_after</td>'
+
+            self.assertIn(focus_cell, html_text_compact)
+            self.assertNotIn("<td></td><td>wlc_focus</td>", html_text_compact)
+
+            before_idx = html_text_compact.index(before_cell)
+            focus_idx = html_text_compact.index(focus_cell)
+            after_idx = html_text_compact.index(after_cell)
+            self.assertLess(before_idx, focus_idx)
+            self.assertLess(focus_idx, after_idx)
+
     def test_write_goerwitz_tms_html_report_splits_diff_wlc_uxlc_note_into_hbo_and_note_rows(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
