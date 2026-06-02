@@ -447,19 +447,20 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 '<li><ahref="goerwitz-tms-msp-n.html">missingsofpasuq:no</a></li>',
                 html_text_compact,
             )
-            self.assertIn("These1verseswereflaggedbytheGoerwitzaccentgrammarchecker.", html_text_compact)
+            self.assertIn("These1versescausedtroublefortheGoerwitzaccentgrammarchecker.", html_text_compact)
             self.assertIn("WLCquirks,LCquirks,andcheckerquirks", html_text_compact)
             self.assertIn("StudiesinAncientOrientalCivilization60", html_text_compact)
             self.assertIn(
-                "Series:StudiesinAncientOrientalCivilization60<br><ahref=\""
+                "<ahref=\""
                 "https://isac.uchicago.edu/research/publications/saoc/"
                 "saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b\""
                 ">"
-                "https://isac.uchicago.edu/research/publications/saoc/"
-                "saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b"
+                "StudiesinAncientOrientalCivilization60"
                 "</a>",
                 html_text_compact,
             )
+            self.assertIn("<h2>WLCBracketNotes</h2>", html_text_compact)
+            self.assertIn("Nobracket-notetokensdetectedonthispage.", html_text_compact)
             self.assertIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
             self.assertIn('href="#tmgn1v1"', html_text)
             self.assertIn("🔗", html_text)
@@ -468,7 +469,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertIn("https://tanach.us/Tanach.xml?Gen1:1", html_text)
-            self.assertIn("UXLC change:none", html_text_compact)
+            self.assertIn("UXLCchange:none", html_text_compact)
             self.assertIn("<th>value</th><th>key</th>", html_text_compact)
             self.assertIn(
                 "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>wlc_before</td>",
@@ -477,8 +478,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("<td></td><td>wlc_focus</td>", html_text_compact)
             self.assertIn("<td></td><td>wlc_after</td>", html_text_compact)
             intro_heading_idx = html_text_compact.index("<h2>Introduction</h2>")
+            bracket_heading_idx = html_text_compact.index("<h2>WLCBracketNotes</h2>")
             first_verse_heading_idx = html_text_compact.index('<h2id="tmgn1v1">gn1:1</h2>')
             self.assertLess(intro_heading_idx, first_verse_heading_idx)
+            self.assertLess(bracket_heading_idx, first_verse_heading_idx)
             before_idx = html_text_compact.index(
                 "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>wlc_before</td>"
             )
@@ -731,19 +734,28 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("<h2>Subsets</h2>", html_text_compact)
             self.assertIn('href="goerwitz-tms-msp-y.html"', html_text_compact)
             self.assertIn('href="goerwitz-tms-msp-n.html"', html_text_compact)
+            self.assertIn("<h2>WLCBracketNotes</h2>", html_text_compact)
+            self.assertIn("<code>]1</code>", html_text_compact)
             self.assertIn("<td lang=\"hbo\" dir=\"rtl\">בראשית</td>", html_text)
             self.assertIn(
                 '<td lang="hbo" dir="rtl">אב</td><td>wlc_focus.hbo</td>',
                 html_text,
             )
             self.assertIn(
-                '<td style="text-align: right;">]1</td><td>wlc_focus.notes</td>',
+                '<td style="text-align: right;"><span title="BHS has been faithful to ל',
+                html_text,
+            )
+            self.assertIn(
+                '</span></td><td>wlc_focus.notes</td>',
                 html_text,
             )
             self.assertIn("<td lang=\"hbo\" dir=\"rtl\">אחרית</td>", html_text)
             self.assertNotIn("bracket_notes", html_text)
             self.assertNotIn("אב: ]1", html_text)
-            self.assertNotIn("diff_wlc_mam.wlc_adds_notes: ]1", html_text)
+            self.assertIn(
+                'wlc_adds_notes: <span title="BHS has been faithful to ל',
+                html_text,
+            )
             self.assertNotIn("diff_wlc_uxlc.wlc_adds_notes", html_text)
             self.assertIn("UXLC change", html_text)
 
@@ -917,10 +929,23 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text = html_out.read_text(encoding="utf-8")
+            html_text_compact = "".join(html_text.split())
             self.assertNotIn("bracket_notes", html_text)
+            self.assertIn("<h2>WLCBracketNotes</h2>", html_text_compact)
+            self.assertIn("<code>]Q</code>", html_text_compact)
+            self.assertIn("<code>]n</code>", html_text_compact)
+            self.assertNotIn("<code>]1</code>", html_text_compact)
             self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_focus.hbo</td>', html_text)
             self.assertIn(
-                '<td style="text-align: right;">]Q]n</td><td>wlc_focus.notes</td>',
+                '<td style="text-align: right;"><span title="Marks a place where we agree with BHQ against BHS in reading ל.',
+                html_text,
+            )
+            self.assertIn(
+                '>]Q</span><span title="An anomalous form in the text of ל.',
+                html_text,
+            )
+            self.assertIn(
+                '</span></td><td>wlc_focus.notes</td>',
                 html_text,
             )
             self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>diff_wlc_uxlc.hbo</td>', html_text)
@@ -955,11 +980,15 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             html_text = html_out.read_text(encoding="utf-8")
             self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td>wlc_focus.hbo</td>', html_text)
             self.assertIn(
-                '<td style="text-align: right;">]Q</td><td>wlc_focus.notes</td>',
+                '<td style="text-align: right;"><span title="Marks a place where we agree with BHQ against BHS in reading ל.',
+                html_text,
+            )
+            self.assertIn(
+                '</span></td><td>wlc_focus.notes</td>',
                 html_text,
             )
             self.assertIn("bracket_notes", html_text)
-            self.assertIn("אחר: ]N", html_text)
+            self.assertIn('אחר: <span title="No manual422 definition available for ]N.">]N</span>', html_text)
 
     def test_subset_filters_use_silluq_no_sof_pasuq_marker(self):
         rows = [
