@@ -456,6 +456,119 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertLess(before_idx, wlc_word_idx)
             self.assertLess(wlc_word_idx, after_idx)
 
+    def test_run_ignores_note_only_wlc_uxlc_and_wlc_mam_diffs(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps(
+                    {
+                        "troublemakers": [
+                            {
+                                "ref": "gn 1:1",
+                                "content": "payload",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "gn1:1",
+                            "vels": [
+                                {
+                                    "word": "אב",
+                                    "notes": ["]Q"],
+                                }
+                            ],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (uxlc_dir / "Genesis.xml").write_text(
+                """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Tanach>
+  <c n=\"1\">
+    <v n=\"1\">
+      <w>אב<x>m</x></w>
+    </v>
+  </c>
+</Tanach>
+""",
+                encoding="utf-8",
+            )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.1",
+                                                "contents": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": "אב",
+                                                    }
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            research_troublemakers.run(
+                SimpleNamespace(
+                    troubles_in=troubles_in,
+                    wlc422_kq_u_dir=wlc422_dir,
+                    uxlc_dir=uxlc_dir,
+                    mam_simple_dir=mam_simple_dir,
+                    out=out_path,
+                )
+            )
+
+            payload = json.loads(out_path.read_text(encoding="utf-8"))
+            row = payload["troublemakers"][0]
+
+            self.assertEqual(row["diff_wlc_uxlc"], [])
+            self.assertEqual(row["diff_wlc_mam"], [])
+
     def test_write_goerwitz_tms_html_report_renders_diff_and_assessment_labels(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)

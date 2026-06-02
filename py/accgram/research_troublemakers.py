@@ -27,6 +27,7 @@ from py_uxlc import my_uxlc
 
 
 _TROUBLEMAKER_REF_RE = re.compile(r"^(?P<bb>[0-9a-z]{2})\s+(?P<ch>\d+):(?P<vr>\d+)$")
+_DIFF_NOTE_KEYS = {"note", "notes"}
 
 
 def default_troubles_in(repo_root: Path) -> Path:
@@ -169,13 +170,19 @@ def run(args: argparse.Namespace) -> None:
             remove_duplicate_telisha_gedola=True,
         )
 
+        wlc422_for_diff = _normalize_payload_for_diff_ignoring_notes(wlc422_verse)
+        uxlc_for_diff = _normalize_payload_for_diff_ignoring_notes(uxlc_nodes)
+        mam_simple_for_diff = _normalize_payload_for_diff_ignoring_notes(mam_simple_verse)
+        diff_wlc_uxlc_for_checks = diff_wlc_uxlc(wlc422_verse, uxlc_nodes)
+        diff_wlc_uxlc_for_output = diff_wlc_uxlc(wlc422_for_diff, uxlc_for_diff)
+
         enriched_row: dict[str, object] = {
             **row,
             "wlc422_kq_u_verse": wlc422_verse,
             "uxlc_verse": uxlc_nodes,
-            "diff_wlc_uxlc": diff_wlc_uxlc(wlc422_verse, uxlc_nodes),
+            "diff_wlc_uxlc": diff_wlc_uxlc_for_output,
             "mam_simple_verse": mam_simple_verse,
-            "diff_wlc_mam": diff_wlc_mam(wlc422_verse, mam_simple_verse),
+            "diff_wlc_mam": diff_wlc_mam(wlc422_for_diff, mam_simple_for_diff),
         }
         structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
         if structured_text is not None:
@@ -184,13 +191,13 @@ def run(args: argparse.Namespace) -> None:
             if isinstance(assessment_uxlc, str):
                 matches_converted_diff = assessment_uxlc_matches_converted_diff_uxlc(
                     assessment_uxlc=assessment_uxlc,
-                    diff_wlc_uxlc=enriched_row.get("diff_wlc_uxlc"),
+                    diff_wlc_uxlc=diff_wlc_uxlc_for_checks,
                 )
                 if matches_converted_diff is False:
                     raise ValueError(
                         "structured_text assessment.uxlc mismatches converted diff_wlc_uxlc.uxlc "
                         f"for {ref}: assessment.uxlc={assessment_uxlc} "
-                        f"diff_wlc_uxlc={enriched_row.get('diff_wlc_uxlc')}"
+                        f"diff_wlc_uxlc={diff_wlc_uxlc_for_checks}"
                     )
 
             uxlc_change = structured_text.get("uxlc_change")
@@ -213,14 +220,14 @@ def run(args: argparse.Namespace) -> None:
                     )
 
                 matches_changetext = diff_uxlc_matches_changetext(
-                    diff_wlc_uxlc=enriched_row.get("diff_wlc_uxlc"),
+                    diff_wlc_uxlc=diff_wlc_uxlc_for_checks,
                     changetext=changetext,
                 )
                 if matches_changetext is False:
                     raise ValueError(
                         "diff_wlc_uxlc.uxlc mismatches all_changes changetext after sanitization "
                         f"for {ref}: changetext={changetext} "
-                        f"diff_wlc_uxlc={enriched_row.get('diff_wlc_uxlc')}"
+                        f"diff_wlc_uxlc={diff_wlc_uxlc_for_checks}"
                     )
             enriched_row["structured_text"] = structured_text
         enriched_rows.append(enriched_row)
@@ -266,6 +273,29 @@ def run(args: argparse.Namespace) -> None:
 def _read_json(path: Path):
     with path.open("r", encoding="utf-8") as f_in:
         return json.load(f_in)
+
+
+def _normalize_payload_for_diff_ignoring_notes(payload: object) -> object:
+    if isinstance(payload, list):
+        return [_normalize_payload_for_diff_ignoring_notes(item) for item in payload]
+
+    if isinstance(payload, dict):
+        had_note_key = any(key in _DIFF_NOTE_KEYS for key in payload.keys())
+        out_payload: dict[str, object] = {}
+        for key, value in payload.items():
+            if key in _DIFF_NOTE_KEYS:
+                continue
+            out_payload[key] = _normalize_payload_for_diff_ignoring_notes(value)
+
+        # Collapse only dicts that were explicitly note-bearing wrappers.
+        if had_note_key and set(out_payload.keys()) == {"word"} and isinstance(out_payload.get("word"), str):
+            return out_payload["word"]
+        if had_note_key and set(out_payload.keys()) == {"text"} and isinstance(out_payload.get("text"), str):
+            return out_payload["text"]
+
+        return out_payload
+
+    return payload
 
 
 def _parse_ref(ref: str) -> tuple[str, int, int]:
