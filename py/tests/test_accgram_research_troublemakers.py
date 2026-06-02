@@ -441,18 +441,18 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertIn("https://tanach.us/Tanach.xml?Gen1:1", html_text)
             self.assertIn("structured_text.uxlc_change:none", html_text_compact)
-            self.assertIn("<th>key</th><th>value</th>", html_text_compact)
+            self.assertIn("<th>value</th><th>key</th>", html_text_compact)
             self.assertIn(
-                "before</td><tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td>",
+                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>before</td>",
                 html_text_compact,
             )
-            self.assertIn("wlc_word</td><td></td>", html_text_compact)
-            self.assertIn("after</td><td></td>", html_text_compact)
+            self.assertIn("<td></td><td>wlc_word</td>", html_text_compact)
+            self.assertIn("<td></td><td>after</td>", html_text_compact)
             before_idx = html_text_compact.index(
-                "before</td><tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td>"
+                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td>before</td>"
             )
-            wlc_word_idx = html_text_compact.index("wlc_word</td><td></td>")
-            after_idx = html_text_compact.index("after</td><td></td>")
+            wlc_word_idx = html_text_compact.index("<td></td><td>wlc_word</td>")
+            after_idx = html_text_compact.index("<td></td><td>after</td>")
             self.assertLess(before_idx, wlc_word_idx)
             self.assertLess(wlc_word_idx, after_idx)
 

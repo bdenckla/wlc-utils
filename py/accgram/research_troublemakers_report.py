@@ -126,11 +126,11 @@ def _render_sat_table(row: dict[str, object]) -> object:
     ]
     sat_rows.extend(_center_sat_rows(row))
 
-    table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("key", "value"))]
+    table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("value", "key"))]
     table_rows.extend(
         wlc_utils_html.table_row_of_data(
-            (label, value),
-            tdattrs=(None, _sat_value_cell_attr(label, value)),
+            (value, label),
+            tdattrs=(_sat_value_cell_attr(label, value), None),
         )
         for label, value in sat_rows
     )
