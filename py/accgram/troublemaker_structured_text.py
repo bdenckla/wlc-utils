@@ -107,12 +107,13 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "2k 23:36": {
         "wlc_focus": "שנ֨ה",
         "assessment": {
-            "manuscript": "pashta on ה?",
+            "manuscript": "pashta on ה",
             "bhs": "qadma on נ?",
             "wlc": "qadma on נ",
             "uxlc": "pashta on ה",
             "consensus": "pashta on ה",
         },
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
     },
     "am 1:14": {
         "wlc_focus": "סופֽה",
@@ -406,12 +407,14 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "je 31:32": {
         "wlc_focus": "מא֖רץ",
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
     },
     "je 48:12": {
         "wlc_focus": "הנ֖ה־",
     },
     "je 49:19": {
         "wlc_focus": "אריצ֨נו",
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60",
     },
     "ju 13:18": {
         "wlc_focus": "פ֛לאי׃",
@@ -421,9 +424,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "mi 2:7": {
         "wlc_focus": "דבר֨י",
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
     },
     "nu 20:19": {
         "wlc_focus": "ישרא֘ל",
+        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
     },
     "nu 25:19": {
         "wlc_focus": "המגפ֑ה",

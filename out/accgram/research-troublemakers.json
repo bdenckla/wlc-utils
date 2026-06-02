@@ -307,7 +307,8 @@
           "wlc": "qadma on נ",
           "uxlc": "pashta on ה",
           "consensus": "pashta on ה"
-        }
+        },
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24"
       }
     },
     {
@@ -1152,7 +1153,8 @@
         "mam_simple": "מא֣רץ"
       },
       "structured_text": {
-        "wlc_focus": "מא֖רץ"
+        "wlc_focus": "מא֖רץ",
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41"
       }
     },
     {
@@ -1233,7 +1235,8 @@
         "mam_simple": "אריצ֙נו֙"
       },
       "structured_text": {
-        "wlc_focus": "אריצ֨נו"
+        "wlc_focus": "אריצ֨נו",
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60"
       }
     },
     {
@@ -1443,7 +1446,8 @@
         }
       ],
       "structured_text": {
-        "wlc_focus": "דבר֨י"
+        "wlc_focus": "דבר֨י",
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10"
       }
     },
     {
@@ -1620,7 +1624,8 @@
         "mam_simple": "ישראל֮"
       },
       "structured_text": {
-        "wlc_focus": "ישרא֘ל"
+        "wlc_focus": "ישרא֘ל",
+        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7"
       }
     },
     {
