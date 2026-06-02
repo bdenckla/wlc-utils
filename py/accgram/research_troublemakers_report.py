@@ -113,9 +113,12 @@ def _render_sat_table(row: dict[str, object]) -> object:
         wlc_word=wlc_word if isinstance(wlc_word, str) else None,
     )
 
-    sat_rows = [("before", before_word)]
-    sat_rows.extend(_center_sat_rows(row, woi_placeholder))
-    sat_rows.append(("after", after_word))
+    sat_rows = [
+        ("before", before_word),
+        ("wlc_word", woi_placeholder),
+        ("after", after_word),
+    ]
+    sat_rows.extend(_center_sat_rows(row))
 
     table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("key", "value"))]
     table_rows.extend(wlc_utils_html.table_row_of_data((label, value)) for label, value in sat_rows)
@@ -126,8 +129,8 @@ def _render_sat_table(row: dict[str, object]) -> object:
     )
 
 
-def _center_sat_rows(row: dict[str, object], woi_placeholder: str) -> list[tuple[str, str]]:
-    rows: list[tuple[str, str]] = [("wlc_word", woi_placeholder)]
+def _center_sat_rows(row: dict[str, object]) -> list[tuple[str, str]]:
+    rows: list[tuple[str, str]] = []
 
     bracket_notes = _collect_bracket_notes(row)
     if bracket_notes:

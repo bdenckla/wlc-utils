@@ -444,6 +444,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("before</td><td>בראש֖יתבר֣א</td>", html_text_compact)
             self.assertIn("wlc_word</td><td></td>", html_text_compact)
             self.assertIn("after</td><td></td>", html_text_compact)
+            before_idx = html_text_compact.index("before</td><td>בראש֖יתבר֣א</td>")
+            wlc_word_idx = html_text_compact.index("wlc_word</td><td></td>")
+            after_idx = html_text_compact.index("after</td><td></td>")
+            self.assertLess(before_idx, wlc_word_idx)
+            self.assertLess(wlc_word_idx, after_idx)
 
     def test_write_goerwitz_tms_html_report_renders_diff_and_assessment_labels(self):
         with TemporaryDirectory() as tmp_dir:
