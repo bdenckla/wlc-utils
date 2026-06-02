@@ -440,9 +440,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertIn("https://tanach.us/Tanach.xml?Gen1:1", html_text)
             self.assertIn("structured_text.uxlc_change:none", html_text_compact)
-            self.assertIn("<th>before</th><th>SAT</th><th>after</th>", html_text_compact)
+            self.assertIn("<th>key</th><th>value</th>", html_text_compact)
+            self.assertIn("before</td><td>בראש֖יתבר֣א</td>", html_text_compact)
             self.assertIn("wlc_word</td><td></td>", html_text_compact)
-            self.assertIn("בראש֖יתבר֣א", html_text_compact)
+            self.assertIn("after</td><td></td>", html_text_compact)
 
     def test_write_goerwitz_tms_html_report_renders_diff_and_assessment_labels(self):
         with TemporaryDirectory() as tmp_dir:

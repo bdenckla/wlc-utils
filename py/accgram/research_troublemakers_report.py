@@ -113,24 +113,15 @@ def _render_sat_table(row: dict[str, object]) -> object:
         wlc_word=wlc_word if isinstance(wlc_word, str) else None,
     )
 
-    center_rows = _center_sat_rows(row, woi_placeholder)
-    inner_rows: list[object] = [wlc_utils_html.table_row_of_headers(("key", "value"))]
-    inner_rows.extend(
-        wlc_utils_html.table_row_of_data((label, value)) for label, value in center_rows
-    )
-    inner_table = wlc_utils_html.table(tuple(inner_rows), {"class": "goerwitz-tms-center"})
+    sat_rows = [("before", before_word)]
+    sat_rows.extend(_center_sat_rows(row, woi_placeholder))
+    sat_rows.append(("after", after_word))
+
+    table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("key", "value"))]
+    table_rows.extend(wlc_utils_html.table_row_of_data((label, value)) for label, value in sat_rows)
 
     return wlc_utils_html.table(
-        (
-            wlc_utils_html.table_row_of_headers(("before", "SAT", "after")),
-            wlc_utils_html.table_row(
-                (
-                    wlc_utils_html.table_datum(before_word),
-                    wlc_utils_html.table_datum(inner_table),
-                    wlc_utils_html.table_datum(after_word),
-                )
-            ),
-        ),
+        tuple(table_rows),
         {"class": "goerwitz-tms-sat"},
     )
 
