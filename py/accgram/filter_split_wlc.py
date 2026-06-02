@@ -19,7 +19,7 @@ def default_out_dir(repo_root: Path) -> Path:
 
 
 def default_troublemakers_out_path(repo_root: Path) -> Path:
-    return troublemakers.default_out_path(repo_root)
+    return tms.default_out_path(repo_root)
 
 
 def add_args(parser: argparse.ArgumentParser, default_input_path: Path, repo_root: Path) -> None:
@@ -74,7 +74,7 @@ def run(args: argparse.Namespace, split_wlc_to_books_fn) -> None:
 
     def keep_line_with_logging(bb: str, chnu: int, vrnu: int) -> bool:
         seen_refs.setdefault(bb, set()).add((chnu, vrnu))
-        if troublemakers.is_hardcoded_ref(bb, chnu, vrnu):
+        if tms.is_hardcoded_ref(bb, chnu, vrnu):
             troublemaker_refs.add((bb, chnu, vrnu))
         keep = should_keep_line(bb, chnu, vrnu)
         if not keep:
@@ -96,10 +96,10 @@ def run(args: argparse.Namespace, split_wlc_to_books_fn) -> None:
         seen_refs=seen_refs,
         excluded_refs=excluded_refs,
     )
-    troublemakers.write_json(
+    tms.write_json(
         troublemakers_out_path=args.troublemakers_out,
         troublemaker_refs=troublemaker_refs,
-        source_lines=troublemakers.collect_source_lines(args.input, troublemaker_refs),
+        source_lines=tms.collect_source_lines(args.input, troublemaker_refs),
     )
 
     print(f"Input: {args.input}")
@@ -313,7 +313,7 @@ def should_keep_line(bb: str, chnu: int, vrnu: int) -> bool:
     if bb in ("ps", "pr"):
         return False
 
-    if troublemakers.is_hardcoded_ref(bb, chnu, vrnu):
+    if tms.is_hardcoded_ref(bb, chnu, vrnu):
         return False
 
     # Exclude BHS-coordinate locales intentionally hard-coded in this repo.
