@@ -41,7 +41,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "bhs": "qadma on resh?",
             "wlc": "qadma on resh",
             "uxlc": "qadma on resh",
-            "consensus": "optional pashta stress helper on resh, required pashta on xet",
+            "consensus": "pashta stress helper on resh, pashta on xet",
         },
         "uxlc_change": None,
     },

@@ -779,6 +779,31 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("wlc422: דבר; uxlc: דבר֙", html_text)
             self.assertNotIn("wlc422: דבר; mam_simple: דבר֣", html_text)
 
+    def test_write_goerwitz_tms_html_report_suppresses_targeted_diff_row_for_1k_16_33(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_tms_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "1k 16:33",
+                        "wlc422_kq_u_verse": {"vels": ["לפני", "מכ֨ל", "אחרי"]},
+                        "diff_wlc_uxlc": [
+                            {"wlc422": "אלה֣י", "uxlc": "אלהי"},
+                            {"wlc422": "מכ֨ל", "uxlc": "מכל"},
+                        ],
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            self.assertNotIn("wlc422: אלה֣י; uxlc: אלהי", html_text)
+            self.assertNotIn("diff_wlc_uxlc[1]", html_text)
+            self.assertIn("wlc422: מכ֨ל; uxlc: מכל", html_text)
+            self.assertIn("diff_wlc_uxlc[2]", html_text)
+
     def test_write_goerwitz_tms_html_report_renders_non_empty_multiword_wlc_focus_in_context(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)

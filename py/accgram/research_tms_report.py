@@ -17,6 +17,9 @@ _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "consensus")
 _CONTEXT_HBO_ROW_KEYS = {"wlc_before", "wlc_focus", "wlc_focus.hbo", "wlc_after"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _SELF_LINK_SYMBOL = "🔗"
+_SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
+    "1k 16:33": {"diff_wlc_uxlc[1]"},
+}
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -300,7 +303,15 @@ def _center_sat_rows(
     elif free_form_comment is not None:
         rows.append(("free_form_comment", _render_sat_value(free_form_comment)))
 
-    return rows
+    return _apply_sat_row_suppressions(_row_ref(row), rows)
+
+
+def _apply_sat_row_suppressions(ref: str, rows: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    suppressed_labels = _SAT_ROW_SUPPRESSIONS_BY_REF.get(ref)
+    if not suppressed_labels:
+        return rows
+
+    return [sat_row for sat_row in rows if sat_row[0] not in suppressed_labels]
 
 
 def _normalize_repeated_rows(label: str, values: list[str]) -> list[tuple[str, str]]:
