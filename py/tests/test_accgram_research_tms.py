@@ -434,7 +434,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             html_text_compact = "".join(html_text.split())
 
             self.assertIn('class="goerwitz-tms-width-limited"', html_text)
-            self.assertIn("<h2>gn1:1</h2>", html_text_compact)
+            self.assertIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
+            self.assertIn('href="#tmgn1v1"', html_text)
+            self.assertIn("🔗", html_text)
             self.assertIn(
                 "https://bdenckla.github.io/MAM-with-doc/A1-Genesis.html#c1v1",
                 html_text,
@@ -611,7 +613,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             html_text = html_out.read_text(encoding="utf-8")
             html_text_compact = "".join(html_text.split())
 
-            self.assertIn("<h2>gn1:1</h2>", html_text_compact)
+            self.assertIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
             self.assertIn("diff_wlc_uxlc", html_text)
             self.assertIn("diff_wlc_mam[1]", html_text)
             self.assertIn("assessment.manuscript", html_text)
@@ -711,8 +713,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text = html_out.read_text(encoding="utf-8")
+            html_text_compact = "".join(html_text.split())
             self.assertIn("https://bdenckla.github.io/MAM-with-doc/BC-1Kings.html#c6v2", html_text)
             self.assertIn("https://tanach.us/Tanach.xml?1Kings6:2", html_text)
+            self.assertIn('<h2id="tm1k6v2">1k6:2</h2>', html_text_compact)
+            self.assertIn('href="#tm1k6v2"', html_text)
 
     def test_write_goerwitz_tms_html_report_normalizes_mixed_token_payloads(self):
         with TemporaryDirectory() as tmp_dir:

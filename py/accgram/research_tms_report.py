@@ -14,6 +14,7 @@ from py_wlc import my_wlc_bcv_str
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "consensus")
 _CONTEXT_HBO_ROW_KEYS = {"before", "wlc_word", "wlc_word.hbo", "after"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
+_SELF_LINK_SYMBOL = "🔗"
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -73,10 +74,18 @@ def _build_body_contents(enriched_rows: list[dict[str, object]]) -> tuple[object
 def _render_row_section(row: dict[str, object]) -> tuple[object, ...]:
     ref = _row_ref(row)
     bb, chnu, vrnu, bcv = _parse_ref_to_wlc_bcv(ref)
+    section_anchor_id = _troublemaker_anchor_id(bcv)
 
     section_items: list[object] = [
-        wlc_utils_html.heading_level_2(ref),
-        _render_ref_links(bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, row=row),
+        wlc_utils_html.heading_level_2(ref, {"id": section_anchor_id}),
+        _render_ref_links(
+            bb=bb,
+            chnu=chnu,
+            vrnu=vrnu,
+            bcv=bcv,
+            row=row,
+            section_anchor_id=section_anchor_id,
+        ),
         _render_sat_table(row),
     ]
     return tuple(section_items)
@@ -88,6 +97,7 @@ def _render_ref_links(
     vrnu: int,
     bcv: str,
     row: dict[str, object],
+    section_anchor_id: str,
 ) -> object:
     mam_url = _mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)
     tanach_us_url = my_wlc_bcv_str.get_tanach_dot_us_url(bcv)
@@ -104,6 +114,15 @@ def _render_ref_links(
 
     return wlc_utils_html.para(
         (
+            wlc_utils_html.anchor(
+                _SELF_LINK_SYMBOL,
+                {
+                    "href": f"#{section_anchor_id}",
+                    "title": "Permalink to this section",
+                    "aria-label": "Permalink to this section",
+                },
+            ),
+            " ",
             wlc_utils_html.anchor("MAM-with-doc verse", {"href": mam_url}),
             " | ",
             wlc_utils_html.anchor("tanach.us verse", {"href": tanach_us_url}),
@@ -111,6 +130,10 @@ def _render_ref_links(
             uxlc_change_node,
         )
     )
+
+
+def _troublemaker_anchor_id(bcv: str) -> str:
+    return f"tm{bcv.replace(':', 'v')}"
 
 
 def _render_sat_table(row: dict[str, object]) -> object:
