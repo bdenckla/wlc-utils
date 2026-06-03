@@ -1247,7 +1247,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("bracket_notes", html_text)
             self.assertIn("<code>]N</code>", "".join(html_text.split()))
 
-    def test_subset_filters_use_silluq_no_sof_pasuq_marker(self):
+    def test_subset_filters_use_missing_sof_pasuq_markers(self):
         rows = [
             {
                 "ref": "gn 1:1",
@@ -1265,12 +1265,20 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                     }
                 },
             },
+            {
+                "ref": "gn 1:3",
+                "structured_text": {
+                    "assessment": {
+                        "wlc": "silluq-pasoleg",
+                    }
+                },
+            },
         ]
 
         yes_rows = research_tms_report_subsets.filter_missing_sof_pasuq_yes_rows(rows)
         no_rows = research_tms_report_subsets.filter_missing_sof_pasuq_no_rows(rows)
 
-        self.assertEqual([row["ref"] for row in yes_rows], ["gn 1:1"])
+        self.assertEqual([row["ref"] for row in yes_rows], ["gn 1:1", "gn 1:3"])
         self.assertEqual([row["ref"] for row in no_rows], ["gn 1:2"])
 
     def test_write_goerwitz_tms_msp_yes_html_report_includes_only_yes_rows_and_related_links(

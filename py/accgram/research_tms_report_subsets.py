@@ -4,7 +4,10 @@ from pathlib import Path
 
 from py_html import wlc_utils_html
 
-_MISSING_SOF_PASUQ_TOKEN = "silluq-no_sof_pasuq"
+_MISSING_SOF_PASUQ_TOKENS = (
+    "silluq-no_sof_pasuq",
+    "silluq-pasoleg",
+)
 _MISSING_SOF_PASUQ_YES_LABEL = "missing sof pasuq: yes"
 _MISSING_SOF_PASUQ_NO_LABEL = "missing sof pasuq: no"
 
@@ -95,7 +98,7 @@ def _row_is_missing_sof_pasuq_yes(row: dict[str, object]) -> bool:
 
 def _assessment_value_contains_missing_sof_pasuq_marker(value: object) -> bool:
     if isinstance(value, str):
-        return _MISSING_SOF_PASUQ_TOKEN in value
+        return any(token in value for token in _MISSING_SOF_PASUQ_TOKENS)
 
     if isinstance(value, list):
         return any(
