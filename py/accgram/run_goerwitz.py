@@ -8,6 +8,7 @@ from pathlib import Path
 
 from accgram.goerwitz_stderr_summary import SUMMARY_FILENAME, write_stderr_summary
 from accgram.missing_verses import write_missing_verses_json
+from accgram.oddballs import write_oddballs_json
 
 
 @dataclass(frozen=True)
@@ -90,6 +91,10 @@ def run(args: argparse.Namespace) -> None:
     missing_verses_path = args.out_dir / "_missing_verses.json"
     write_missing_verses_json(args.in_dir, args.out_dir, missing_verses_path)
     print(f"Missing verses JSON: {missing_verses_path}")
+
+    oddballs_path = args.out_dir / "_oddballs.json"
+    write_oddballs_json(args.in_dir, args.out_dir, oddballs_path)
+    print(f"Oddballs JSON: {oddballs_path}")
 
     summary_path = args.stderr_dir / SUMMARY_FILENAME
     try:

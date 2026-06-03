@@ -235,6 +235,99 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
                 ],
             )
 
+            oddballs_path = out_dir / "_oddballs.json"
+            oddballs_payload = json.loads(oddballs_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                oddballs_payload["artifacts_description"],
+                "oddball verses with ERROR nodes in goerwitz *_ag.txt outputs",
+            )
+            self.assertEqual(oddballs_payload["summary"]["oddballs"], 0)
+            self.assertEqual(oddballs_payload["summary"]["books_with_oddballs"], 0)
+            self.assertEqual(oddballs_payload["oddballs"], [])
+
+    def test_run_goerwitz_writes_oddballs_json(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            in_dir = base / "in"
+            out_dir = base / "out"
+            stderr_dir = base / "err"
+            goerwitz_bin = base / "accents"
+
+            in_dir.mkdir(parents=True, exist_ok=True)
+            goerwitz_bin.write_text("fake-binary", encoding="utf-8")
+
+            (in_dir / "wlc_422_ps_ob.txt").write_text(
+                "Obadiah\n1:1 Oddball verse payload\n1:2 Non-oddball verse payload\n",
+                encoding="utf-8",
+            )
+
+            class FakeCompletedProcess:
+                def __init__(self, stdout: bytes, stderr: bytes, returncode: int = 0):
+                    self.stdout = stdout
+                    self.stderr = stderr
+                    self.returncode = returncode
+
+            def fake_run(cmd, input, capture_output, check):
+                self.assertEqual(cmd[0], "wsl")
+                self.assertTrue(capture_output)
+                self.assertFalse(check)
+                self.assertIn("Obadiah", input.decode("utf-8"))
+                return FakeCompletedProcess(
+                    stdout=(
+                        b"Obadiah 1:1\n"
+                        b"0 silluq_clause\n"
+                        b"  1 atnach_phrase\n"
+                        b"    ERROR \n"
+                        b"Obadiah 1:2\n"
+                        b"0 silluq_clause\n"
+                        b"  1 atnach_phrase\n"
+                        b"    atnach \n"
+                    ),
+                    stderr=b"",
+                )
+
+            def fake_write_stderr_summary(stderr_dir, summary_path):
+                summary_path.parent.mkdir(parents=True, exist_ok=True)
+                summary_path.write_text("{}\n", encoding="utf-8")
+                return SimpleNamespace(
+                    summary_path=summary_path,
+                    files_scanned=1,
+                    files_with_nonempty_stderr=0,
+                    total_stderr_lines=0,
+                    total_unique_verse_messages=0,
+                    total_unique_non_verse_messages=0,
+                )
+
+            with patch(
+                "accgram.run_goerwitz.subprocess.run", side_effect=fake_run
+            ), patch(
+                "accgram.run_goerwitz.write_stderr_summary",
+                side_effect=fake_write_stderr_summary,
+            ):
+                run_goerwitz.run(
+                    SimpleNamespace(
+                        in_dir=in_dir,
+                        out_dir=out_dir,
+                        stderr_dir=stderr_dir,
+                        goerwitz_bin=goerwitz_bin,
+                    )
+                )
+
+            oddballs_path = out_dir / "_oddballs.json"
+            oddballs_payload = json.loads(oddballs_path.read_text(encoding="utf-8"))
+            self.assertEqual(oddballs_payload["summary"]["oddballs"], 1)
+            self.assertEqual(oddballs_payload["summary"]["books_with_oddballs"], 1)
+            self.assertEqual(
+                oddballs_payload["oddballs"],
+                [
+                    {
+                        "ref": "ob 1:1",
+                        "content": "Oddball verse payload",
+                        "output_file": "wlc_422_ps_ob_ag.txt",
+                    }
+                ],
+            )
+
     def test_write_stderr_summary_aggregates_messages(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)

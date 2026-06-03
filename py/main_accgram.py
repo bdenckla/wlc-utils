@@ -15,6 +15,7 @@ Subcommands:
                 filtered split files.
     run-goerwitz
                 Run goerwitz (via WSL) on split files and write *_ag outputs.
+                Also writes out/accgram/goerwitz/_oddballs.json.
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py filter-split-wlc
@@ -125,7 +126,8 @@ def main() -> None:
         "run-goerwitz",
         help=(
             "Run goerwitz (via WSL) on split input files and write *_ag.txt outputs "
-            "plus stderr sidecars and _missing_verses.json (default: out/accgram/goerwitz-stderr)."
+            "plus stderr sidecars, _missing_verses.json, and _oddballs.json "
+            "(default: out/accgram/goerwitz-stderr)."
         ),
     )
     run_goerwitz.add_args(run_goerwitz_parser, repo_root=_repo_root())
