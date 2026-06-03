@@ -679,6 +679,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             },
         )
 
+    def test_structured_text_fixture_has_ob_1_1_summary(self):
+        structured_text = research_tms.STRUCTURED_TEXT_BY_REF["ob 1:1"]
+        self.assertEqual(
+            structured_text.get("summary"),
+            "Quirk in LC: עליה lacks an accent.",
+        )
+
     def test_write_goerwitz_tms_html_report_renders_diff_and_assessment_labels(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
@@ -703,6 +710,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                         ],
                         "structured_text": {
                             "wlc_focus": "אב",
+                            "summary": "Link summary.",
                             "assessment": {
                                 "manuscript": "foo",
                                 "bhs": "bar",
@@ -761,6 +769,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertNotIn("diff_wlc_uxlc.wlc_adds_notes", html_text)
+            self.assertIn("Summary: Link summary.", html_text)
+            self.assertIn("🔗</a>Summary:Linksummary.</p><p><a", html_text_compact)
             self.assertIn("UXLC change", html_text)
             self.assertIn("UXLC note page", html_text)
 

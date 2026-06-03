@@ -159,7 +159,7 @@ def _render_row_section(row: dict[str, object]) -> tuple[object, ...]:
 
     section_items: list[object] = [
         wlc_utils_html.heading_level_2(ref, {"id": section_anchor_id}),
-        _render_ref_links(
+        *_render_ref_links(
             bb=bb,
             chnu=chnu,
             vrnu=vrnu,
@@ -179,13 +179,14 @@ def _render_ref_links(
     bcv: str,
     row: dict[str, object],
     section_anchor_id: str,
-) -> object:
+) -> tuple[object, ...]:
     mam_url = _mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)
     tanach_us_url = my_wlc_bcv_str.get_tanach_dot_us_url(bcv)
+    summary = _structured_text_value(row, "summary")
     uxlc_change = _structured_text_value(row, "uxlc_change")
     uxlc_note_page = _structured_text_value(row, "uxlc_note_page")
 
-    links: list[object] = [
+    permalink_summary: list[object] = [
         wlc_utils_html.anchor(
             _SELF_LINK_SYMBOL,
             {
@@ -194,7 +195,11 @@ def _render_ref_links(
                 "aria-label": "Permalink to this section",
             },
         ),
-        " ",
+    ]
+    if isinstance(summary, str) and summary.strip():
+        permalink_summary.extend([" ", f"Summary: {summary.strip()}"])
+
+    links: list[object] = [
         wlc_utils_html.anchor("MAM-with-doc verse", {"href": mam_url}),
         " | ",
         wlc_utils_html.anchor("tanach.us verse", {"href": tanach_us_url}),
@@ -222,8 +227,9 @@ def _render_ref_links(
             ]
         )
 
-    return wlc_utils_html.para(
-        tuple(links)
+    return (
+        wlc_utils_html.para(tuple(permalink_summary)),
+        wlc_utils_html.para(tuple(links)),
     )
 
 
