@@ -805,9 +805,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("🔗</a>Summary:Linksummary.</p><p><a", html_text_compact)
             self.assertIn("UXLC change", html_text)
             self.assertIn("UXLC note page", html_text)
+            self.assertIn('class="goerwitz-tms-image"', html_text)
+            self.assertIn('class="goerwitz-tms-figure"', html_text)
+            self.assertIn('class="goerwitz-tms-image-caption"', html_text)
             self.assertIn('src="../img/LC-280B-col-3-line-2-Ezek-11v1.png"', html_text)
             self.assertIn(
-                'Image source: <a href="https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg">280B</a> column 3 line 2',
+                '<figcaption class="goerwitz-tms-image-caption">Image source: <a href="https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg">280B</a> column 3 line 2</figcaption>',
                 html_text,
             )
             self.assertIn(

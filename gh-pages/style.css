@@ -30,6 +30,16 @@ div.goerwitz-tms-width-limited {
 p.goerwitz-tms-comment {
     margin-top: 0.4em;
 }
+p.goerwitz-tms-image {
+    text-align: center;
+}
+figure.goerwitz-tms-figure {
+    margin: 0;
+}
+figcaption.goerwitz-tms-image-caption {
+    text-align: center;
+    font-size: 90%;
+}
 table.border-collapse { border-collapse: collapse; }
 th, td {
     padding-right: 0.4em;

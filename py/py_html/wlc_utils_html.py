@@ -125,6 +125,16 @@ def blockquote(contents, attr=None):
     return htel_mk_nlb1("blockquote", attr, contents)
 
 
+def figure(contents, attr=None):
+    """Make a <figure> element."""
+    return htel_mk_nlb1("figure", attr, contents)
+
+
+def figcaption(contents, attr=None):
+    """Make a <figcaption> element."""
+    return htel_mk_nlb1("figcaption", attr, contents)
+
+
 def img(attr=None):
     """Make an <img> element."""
     return htel_mk_nlb1("img", attr)

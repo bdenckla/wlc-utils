@@ -20,6 +20,9 @@ from py_wlc import my_wlc_bcv_str
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "mam")
 _CONTEXT_HBO_ROW_KEYS = {"wlc_before", "wlc_focus", "wlc_focus.hbo", "wlc_after"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
+_GOERWITZ_TMS_IMAGE_CLASS = "goerwitz-tms-image"
+_GOERWITZ_TMS_FIGURE_CLASS = "goerwitz-tms-figure"
+_GOERWITZ_TMS_IMAGE_CAPTION_CLASS = "goerwitz-tms-image-caption"
 _SELF_LINK_SYMBOL = "🔗"
 _MAIN_REPORT_TITLE = "Goerwitz TMs"
 _MAIN_REPORT_HEADING = "Goerwitz Troublemakers"
@@ -398,7 +401,12 @@ def _render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
     if not isinstance(structured_text, dict):
         return ()
 
-    image_paragraphs = list(my_html_for_img.html_for_imgs(structured_text))
+    image_paragraphs = list(
+        my_html_for_img.html_for_imgs(
+            structured_text,
+            img_para_attr={"class": _GOERWITZ_TMS_IMAGE_CLASS},
+        )
+    )
     if not image_paragraphs:
         return ()
 
@@ -416,7 +424,14 @@ def _render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
         ]
         if location_suffix:
             source_contents.append(location_suffix)
-        image_paragraphs.append(wlc_utils_html.para(tuple(source_contents)))
+        source_caption = wlc_utils_html.figcaption(
+            tuple(source_contents),
+            {"class": _GOERWITZ_TMS_IMAGE_CAPTION_CLASS},
+        )
+        image_paragraphs[-1] = wlc_utils_html.figure(
+            (image_paragraphs[-1], source_caption),
+            {"class": _GOERWITZ_TMS_FIGURE_CLASS},
+        )
 
     return tuple(image_paragraphs)
 
