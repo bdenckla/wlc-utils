@@ -1240,15 +1240,9 @@
         "wlc_focus": "פ֛לאי׃",
         "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
         "comment": [
-          [
-            "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink. See the image in the UXLC note to which we link above."
-          ],
-          [
-            "Even if the editors of BHQ Judges (2011) lacked access to color images, this was an overly-literal, aggressively uncharitable transcription. Even without color, they should have been aware that this could be a non-ink speck on the LC vellum or a non-intentional ink dot. They should have found one of these possibilities more likely than a verse-final tevir. A verse-final tevir is rather far-fetched."
-          ],
-          [
-            "Are they attempting to use typography to create a pseudo-photographic image of the LC, or are they trying to transcribe the LC “meaningfully,” using some degree of interpretation to determine the most likely intended meaning of each mark?"
-          ]
+          "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink. See the image in the UXLC note to which we link above.",
+          "Even if the editors of BHQ Judges (2011) lacked access to color images, this was an overly-literal, aggressively uncharitable transcription. Even without color, they should have been aware that this could be a non-ink speck on the LC vellum or a non-intentional ink dot. They should have found one of these possibilities more likely than a verse-final tevir. A verse-final tevir is rather far-fetched.",
+          "Are they attempting to use typography to create a pseudo-photographic image of the LC, or are they trying to transcribe the LC “meaningfully,” using some degree of interpretation to determine the most likely intended meaning of each mark? (Sometimes, as is the case here, the most likely intended meaning of a mark is no meaning at all!)"
         ]
       }
     },
@@ -1427,7 +1421,7 @@
         }
       ],
       "structured_text": {
-        "st-summary": "BHS accents a syllable with qadma rather than pashta.",
+        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
         "comment": "See the image in the UXLC change to which we link above."

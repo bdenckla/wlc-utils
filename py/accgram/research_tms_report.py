@@ -156,7 +156,9 @@ def _build_body_contents(
         wlc_utils_html.heading_level_1(heading_level_1_text),
         *top_contents,
     ]
-    sections.extend(research_tms_report_intro.build_intro_contents(row_count, total_count))
+    sections.extend(
+        research_tms_report_intro.build_intro_contents(row_count, total_count)
+    )
     sections.extend(research_tms_report_open_issues.build_open_issues_section())
     sections.extend(
         research_tms_report_bracket_notes.build_wlc_bracket_notes_section(enriched_rows)
@@ -388,10 +390,7 @@ def _render_comment_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
         return ()
     if not isinstance(comment, (list, tuple)):
         comment = [comment]
-    return tuple(
-        _render_comment_paragraph(comment_item)
-        for comment_item in comment
-    )
+    return tuple(_render_comment_paragraph(comment_item) for comment_item in comment)
 
 
 def _render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
@@ -417,17 +416,13 @@ def _render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
         ]
         if location_suffix:
             source_contents.append(location_suffix)
-        image_paragraphs.append(
-            wlc_utils_html.para(
-                tuple(source_contents)
-            )
-        )
+        image_paragraphs.append(wlc_utils_html.para(tuple(source_contents)))
 
     return tuple(image_paragraphs)
 
 
 def _image_source_link_label_and_location_suffix(
-    structured_text: dict[str, object]
+    structured_text: dict[str, object],
 ) -> tuple[str, str]:
     img_name = structured_text.get("img")
     if not isinstance(img_name, str):
@@ -452,9 +447,7 @@ def _parse_lc_image_name(img_name: str) -> tuple[str, int, int] | None:
     return page_id, column, line
 
 
-def _render_comment_paragraph(
-    comment: object
-) -> object:
+def _render_comment_paragraph(comment: object) -> object:
     return wlc_utils_html.para(
         _comment_contents_with_hbo_spans(comment),
         {"class": "goerwitz-tms-comment"},

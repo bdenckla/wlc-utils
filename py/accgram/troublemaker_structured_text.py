@@ -1,3 +1,5 @@
+"""Per-troublemaker structured research notes used by research-tms output."""
+
 from __future__ import annotations
 
 
@@ -87,9 +89,25 @@ _NU_2019_06 = (
     "They are consistently placed in a location that would be more appropriate for a tsinnorit or a zarqa stress helper,"
     " namely, on the first letter of the syllable ending in lamed, rather than on the lamed itself."
 )
+_JU_1318_01 = (
+    "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink."
+    " See the image in the UXLC note to which we link above."
+)
+_JU_1318_02 = (
+    "Even if the editors of BHQ Judges (2011) lacked access to color images,"
+    " this was an overly-literal, aggressively uncharitable transcription."
+    " Even without color, they should have been aware that this could be"
+    " a non-ink speck on the LC vellum or a non-intentional ink dot."
+    " They should have found one of these possibilities more likely than a verse-final tevir."
+    " A verse-final tevir is rather far-fetched."
+)
+_JU_1318_03 = (
+    "Are they attempting to use typography to create a pseudo-photographic image of the LC,"
+    " or are they trying to transcribe the LC “meaningfully,”"
+    " using some degree of interpretation to determine the most likely intended meaning of each mark?"
+    " (Sometimes, as is the case here, the most likely intended meaning of a mark is no meaning at all!)"
+)
 
-
-# Per-troublemaker structured research notes used by research-tms output.
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
         "wlc_focus": "ועשר֤ים",
@@ -450,23 +468,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "פ֛לאי׃",
         "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
         "comment": (
-            [
-                "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink."
-                " See the image in the UXLC note to which we link above."
-            ],
-            [
-                "Even if the editors of BHQ Judges (2011) lacked access to color images,"
-                " this was an overly-literal, aggressively uncharitable transcription."
-                " Even without color, they should have been aware that this could be"
-                " a non-ink speck on the LC vellum or a non-intentional ink dot."
-                " They should have found one of these possibilities more likely than a verse-final tevir."
-                " A verse-final tevir is rather far-fetched."
-            ],
-            [
-                "Are they attempting to use typography to create a pseudo-photographic image of the LC,"
-                " or are they trying to transcribe the LC “meaningfully,”"
-                " using some degree of interpretation to determine the most likely intended meaning of each mark?"
-            ],
+            _JU_1318_01,
+            _JU_1318_02,
+            _JU_1318_03,
         ),
     },
     "lm 5:5": {
@@ -485,12 +489,10 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "mi 2:7": {
-        "st-summary": "BHS accents a syllable with qadma rather than pashta.",
+        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
-        "comment": (
-            "See the image in the UXLC change to which we link above."
-        ),
+        "comment": ("See the image in the UXLC change to which we link above."),
     },
     "nu 20:19": {
         "st-summary": "WLC turns a scribal zarqa whim into something far worse.",
@@ -519,8 +521,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "LC has no visible accent on עליה.",
         "wlc_focus": "עליה",
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
-        "comment": (
-            "See the image in the UXLC note to which we link above."
-        ),
+        "comment": ("See the image in the UXLC note to which we link above."),
     },
 }
