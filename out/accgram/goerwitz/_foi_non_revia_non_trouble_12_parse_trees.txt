@@ -1,0 +1,512 @@
+FOI non-revia investigation: parse trees for the 12 NON-trouble verses
+
+Source FOI file: c:\Users\BenDe\GitRepos\MAM-with-doc\gh-pages\foi\foi-pasoleg-1.json
+Source troublemakers file: c:\Users\BenDe\GitRepos\wlc-utils\out\accgram\goerwitz\_troublemakers.json
+
+Total FOI non-revia rows: 17
+Trouble rows (in _troublemakers): 5
+Non-trouble rows: 12
+
+Trouble refs (excluded by checker pipeline):
+- 2c 26:15 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- hg 2:12 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- is 36:2 :: ⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening
+- je 4:19 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- je 38:11 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+
+Non-trouble refs (captured below):
+- 1s 14:3 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- 1s 14:47 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- 2k 18:17 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- 2s 13:32 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- da 3:2 :: ⅃-leg...non-revia ((paz)) with 0 intervening
+- ec 9:2 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- gn 28:9 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- je 40:11 :: ⅃-leg...non-revia (ge) with 1 qa intervening
+- lv 10:6 :: ⅃-leg...non-revia (p) with 1 (mah) intervening
+- lv 21:10 :: ⅃-leg...non-revia (p) with 1 (mah) intervening
+- ne 8:7 :: ⅃-leg...non-revia ((paz)) with 0 intervening
+- ru 1:2 :: ⅃-leg...non-revia (p) with 1 (mah) intervening
+
+================================================================================
+REF: 1s 14:3  (bcv_short=1S14:3)
+FP:  ⅃-leg...non-revia (ge) with 1 qa intervening
+R:   אִיכָב֣וֹד׀ בֶּן־פִּֽינְחָ֨ס בֶּן־עֵלִ֜י
+FILE: out/accgram/goerwitz/wlc_422_ps_1s_ag.txt
+--------------------------------------------------------------------------------
+1Samuel 14:3
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 tevir_clause
+        4 pazer_phrase
+          munach pazer 
+        4 tevir_clause
+          5 pazer_phrase
+            pazer 
+          5 tevir_clause
+            6 geresh_phrase
+              ERROR 
+            6 tevir_phrase
+              darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 atnach_phrase
+      munach atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 silluq_phrase
+        silluq
+
+================================================================================
+REF: 1s 14:47  (bcv_short=1S14:47)
+FP:  ⅃-leg...non-revia (ge) with 1 qa intervening
+R:   בְּמוֹאָ֣ב׀ וּבִבְנֵֽי־עַמּ֨וֹן וּבֶאֱד֜וֹם
+FILE: out/accgram/goerwitz/wlc_422_ps_1s_ag.txt
+--------------------------------------------------------------------------------
+1Samuel 14:47
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 atnach_phrase
+      atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 pazer_phrase
+          munach munach pazer 
+        4 pashta_clause
+          5 geresh_phrase
+            ERROR 
+          5 pashta_phrase
+            mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 silluq_phrase
+        silluq
+
+================================================================================
+REF: 2k 18:17  (bcv_short=2K18:17)
+FP:  ⅃-leg...non-revia (ge) with 1 qa intervening
+R:   וְאֶת־רַב־סָרִ֣יס׀ וְאֶת־רַבְשָׁקֵ֨ה מִן־לָכִ֜ישׁ
+FILE: out/accgram/goerwitz/wlc_422_ps_2k_ag.txt
+--------------------------------------------------------------------------------
+2Kings 18:17
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 tevir_clause
+        4 pazer_phrase
+          munach pazer 
+        4 tevir_clause
+          5 geresh_phrase
+            ERROR 
+          5 tevir_phrase
+            darga tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 atnach_phrase
+      atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 zaqef_clause
+        4 revia_phrase
+          munach revia 
+        4 zaqef_clause
+          5 pashta_phrase
+            pashta 
+          5 zaqef_clause
+            6 pashta_phrase
+              pashta 
+            6 zaqef_phrase
+              munach zaqef 
+      3 silluq_clause
+        4 zaqef_phrase
+          zaqefgadol 
+        4 silluq_clause
+          5 tifcha_phrase
+            tifcha 
+          5 silluq_phrase
+            mereka silluq
+
+================================================================================
+REF: 2s 13:32  (bcv_short=2S13:32)
+FP:  ⅃-leg...non-revia (ge) with 1 qa intervening
+R:   יוֹנָדָ֣ב׀ בֶּן־שִׁמְעָ֨ה אֲחִי־דָוִ֜ד
+FILE: out/accgram/goerwitz/wlc_422_ps_2s_ag.txt
+--------------------------------------------------------------------------------
+2Samuel 13:32
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 pazer_phrase
+          pazer 
+        4 revia_clause
+          5 geresh_phrase
+            ERROR 
+          5 revia_phrase
+            revia 
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_clause
+          5 pashta_phrase
+            munach mahpak pashta 
+          5 zaqef_phrase
+            zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        mahpak pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_phrase
+          zaqef 
+      3 silluq_clause
+        4 tifcha_phrase
+          tifcha 
+        4 silluq_phrase
+          mereka silluq
+
+================================================================================
+REF: da 3:2  (bcv_short=Da3:2)
+FP:  ⅃-leg...non-revia ((paz)) with 0 intervening
+R:   לְמִכְנַ֣שׁ׀ לַֽאֲחַשְׁדַּרְפְּנַיָּ֡א
+FILE: out/accgram/goerwitz/wlc_422_ps_da_ag.txt
+--------------------------------------------------------------------------------
+Daniel 3:2
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 pazer_phrase
+          munach pazer 
+        4 pashta_clause
+          5 pazer_phrase
+            pazer 
+          5 pashta_clause
+            6 pazer_phrase
+              munach pazer 
+            6 pashta_clause
+              7 pazer_phrase
+                munach pazer 
+              7 pashta_phrase
+                telishaqetanna azla mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        tifcha 
+      3 atnach_phrase
+        munach atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 silluq_phrase
+        mereka silluq
+
+================================================================================
+REF: ec 9:2  (bcv_short=Ee9:2)
+FP:  ⅃-leg...non-revia (ge) with 1 qa intervening
+R:   בָּאִ֣ים׀ מִדֶּרֶךְ־שַׁ֨עַר הָעֶלְי֜וֹן
+FILE: out/accgram/goerwitz/wlc_422_ps_ec_ag.txt
+--------------------------------------------------------------------------------
+Ecclesiastes 9:2
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 geresh_phrase
+          gershayim 
+        4 revia_phrase
+          munach revia 
+      3 zaqef_clause
+        4 pashta_clause
+          5 geresh_phrase
+            azla geresh 
+          5 pashta_phrase
+            mahpak pashta 
+        4 zaqef_clause
+          5 pashta_phrase
+            pashta 
+          5 zaqef_phrase
+            munach zaqef 
+    2 atnach_clause
+      3 zaqef_phrase
+        zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          munach atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 silluq_clause
+      3 zaqef_phrase
+        zaqefgadol 
+      3 silluq_clause
+        4 tifcha_phrase
+          tifcha 
+        4 silluq_phrase
+          mereka silluq
+
+================================================================================
+REF: gn 28:9  (bcv_short=G28:9)
+FP:  ⅃-leg...non-revia (ge) with 1 qa intervening
+R:   אֶֽת־מָחֲלַ֣ת׀ בַּת־יִשְׁמָעֵ֨אל בֶּן־אַבְרָהָ֜ם
+FILE: out/accgram/goerwitz/wlc_422_ps_gn_ag.txt
+--------------------------------------------------------------------------------
+Genesis 28:9
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 atnach_phrase
+      atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_clause
+        4 pazer_phrase
+          pazer 
+        4 tevir_clause
+          5 geresh_phrase
+            ERROR 
+          5 tevir_phrase
+            darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 silluq_phrase
+      mereka silluq
+
+================================================================================
+REF: je 40:11  (bcv_short=Je40:11)
+FP:  ⅃-leg...non-revia (ge) with 1 qa intervening
+R:   אֲשֶׁר־בְּמוֹאָ֣ב׀ וּבִבְנֵֽי־עַמּ֨וֹן וּבֶאֱד֜וֹם
+FILE: out/accgram/goerwitz/wlc_422_ps_je_ag.txt
+--------------------------------------------------------------------------------
+Jeremiah 40:11
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 pazer_phrase
+          munach pazer 
+        4 pashta_clause
+          5 geresh_phrase
+            ERROR 
+          5 pashta_phrase
+            mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 atnach_clause
+      3 tifcha_clause
+        4 tevir_phrase
+          darga tevir 
+        4 tifcha_phrase
+          tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        mereka silluq
+
+================================================================================
+REF: lv 10:6  (bcv_short=L10:6)
+FP:  ⅃-leg...non-revia (p) with 1 (mah) intervening
+R:   אַל־תִּפְרָ֣עוּ׀ וּבִגְדֵיכֶ֤ם לֹֽא־תִפְרֹ֙מוּ֙
+FILE: out/accgram/goerwitz/wlc_422_ps_lv_ag.txt
+--------------------------------------------------------------------------------
+Levit 10:6
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 pazer_phrase
+          munach munach pazer 
+        4 pashta_clause
+          5 geresh_phrase
+            telishaqetanna azla geresh 
+          5 pashta_phrase
+            ERROR 
+      3 zaqef_phrase
+        munach zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_phrase
+          zaqef 
+      3 silluq_clause
+        4 tifcha_phrase
+          tifcha 
+        4 silluq_phrase
+          mereka silluq
+
+================================================================================
+REF: lv 21:10  (bcv_short=L21:10)
+FP:  ⅃-leg...non-revia (p) with 1 (mah) intervening
+R:   עַל־רֹאשׁ֣וֹ׀ שֶׁ֤מֶן הַמִּשְׁחָה֙
+FILE: out/accgram/goerwitz/wlc_422_ps_lv_ag.txt
+--------------------------------------------------------------------------------
+Levit 21:10
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 geresh_phrase
+          telishaqetanna azla geresh 
+        4 pashta_phrase
+          ERROR 
+      3 zaqef_phrase
+        munach zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        mereka silluq
+
+================================================================================
+REF: ne 8:7  (bcv_short=Ne8:7)
+FP:  ⅃-leg...non-revia ((paz)) with 0 intervening
+R:   וְשֵׁרֵ֥בְיָ֣ה׀ יָמִ֡ין
+FILE: out/accgram/goerwitz/wlc_422_ps_ne_ag.txt
+--------------------------------------------------------------------------------
+Nehemiah 8:7
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 pazer_phrase
+          pazer 
+        4 pashta_clause
+          5 pazer_phrase
+            pazer 
+          5 pashta_clause
+            6 pazer_phrase
+              ERROR 
+            6 pashta_clause
+              7 pazer_phrase
+                pazer 
+              7 pashta_clause
+                8 pazer_phrase
+                  munach pazer 
+                8 pashta_clause
+                  9 pazer_phrase
+                    pazer 
+                  9 pashta_phrase
+                    munach telishaqetanna azla mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      tifcha 
+    2 silluq_phrase
+      silluq
+
+================================================================================
+REF: ru 1:2  (bcv_short=R1:2)
+FP:  ⅃-leg...non-revia (p) with 1 (mah) intervening
+R:   שְׁנֵֽי־בָנָ֣יו׀ מַחְל֤וֹן וְכִלְיוֹן֙
+FILE: out/accgram/goerwitz/wlc_422_ps_ru_ag.txt
+--------------------------------------------------------------------------------
+Ruth 1:2
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 pazer_phrase
+          munach munach pazer 
+        4 pashta_clause
+          5 geresh_phrase
+            telishaqetanna azla geresh 
+          5 pashta_clause
+            6 legarmeh_phrase
+              mereka legarmeh 
+            6 pashta_phrase
+              mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 silluq_phrase
+      silluq
