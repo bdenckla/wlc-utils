@@ -34,6 +34,10 @@ def default_troubles_in(repo_root: Path) -> Path:
     return repo_root / "out" / "accgram" / "goerwitz" / "_troublemakers.json"
 
 
+def default_oddballs_in(repo_root: Path) -> Path:
+    return repo_root / "out" / "accgram" / "goerwitz" / "_oddballs.json"
+
+
 def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
     return repo_root.parent / "wlc-utils-io" / "out" / "wlc422-kq-u"
 
@@ -52,6 +56,10 @@ def default_all_changes_path(repo_root: Path) -> Path:
 
 def default_out_path(repo_root: Path) -> Path:
     return repo_root / "out" / "accgram" / "research-troublemakers.json"
+
+
+def default_oddballs_out_path(repo_root: Path) -> Path:
+    return repo_root / "out" / "accgram" / "research-oddballs.json"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
@@ -86,16 +94,28 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         help="Path to UXLC-utils out/UXLC-misc/all_changes.json for sanity checks.",
     )
     parser.add_argument(
+        "--oddballs-in",
+        type=Path,
+        default=default_oddballs_in(repo_root),
+        help="Path to _oddballs.json input.",
+    )
+    parser.add_argument(
         "--out",
         type=Path,
         default=default_out_path(repo_root),
         help="Output JSON path for enriched research artifact.",
     )
     parser.add_argument(
+        "--oddballs-out",
+        type=Path,
+        default=default_oddballs_out_path(repo_root),
+        help="Output JSON path for enriched oddball research artifact.",
+    )
+    parser.add_argument(
         "--html-out",
         type=Path,
         default=research_tms_report.default_html_out_path(repo_root),
-        help="Output HTML path for research-tms report.",
+        help="Output HTML path for research-tms-and-oddballs report.",
     )
 
 
@@ -123,11 +143,36 @@ def run(args: argparse.Namespace) -> None:
         ref_value = row.get("ref")
         if not isinstance(ref_value, str):
             raise ValueError("Troublemaker row is missing string field 'ref'")
-        bb, chnu, vrnu = _parse_ref(ref_value)
+        bb, chnu, vrnu = _parse_ref(ref_value, row_kind="troublemaker")
         bcv = _to_compact_bcv(bb, chnu, vrnu)
         ref = _to_ref(bb, chnu, vrnu)
         refs_by_book.setdefault(bb, set()).add((chnu, vrnu))
         parsed_rows.append((row, bcv, ref))
+
+    oddballs_in_path = getattr(args, "oddballs_in", None)
+    oddballs_out_path = getattr(args, "oddballs_out", None)
+    parsed_oddball_rows: list[tuple[dict[str, object], str, str]] = []
+    if isinstance(oddballs_in_path, Path) and isinstance(oddballs_out_path, Path):
+        oddballs_payload = _read_json(oddballs_in_path)
+        oddballs = oddballs_payload.get("oddballs")
+        if not isinstance(oddballs, list):
+            raise ValueError(
+                f"Expected list at oddballs payload key 'oddballs': {oddballs_in_path}"
+            )
+
+        for row in oddballs:
+            if not isinstance(row, dict):
+                raise ValueError("Oddball rows must be JSON objects")
+            ref_value = row.get("ref")
+            if not isinstance(ref_value, str):
+                raise ValueError("Oddball row is missing string field 'ref'")
+            bb, chnu, vrnu = _parse_ref(ref_value, row_kind="oddball")
+            bcv = _to_compact_bcv(bb, chnu, vrnu)
+            ref = _to_ref(bb, chnu, vrnu)
+            refs_by_book.setdefault(bb, set()).add((chnu, vrnu))
+            parsed_oddball_rows.append((row, bcv, ref))
+    elif oddballs_in_path is not None or oddballs_out_path is not None:
+        raise ValueError("Expected both oddballs_in and oddballs_out, or neither")
 
     sanity_check_structured_text(
         refs=[ref for _row, _bcv, ref in parsed_rows],
@@ -142,66 +187,20 @@ def run(args: argparse.Namespace) -> None:
 
     enriched_rows: list[dict[str, object]] = []
     for row, bcv, ref in parsed_rows:
-        wlc422_verse = wlc422_by_bcv.get(bcv)
-        if wlc422_verse is None:
-            raise ValueError(
-                f"Missing wlc422-kq-u verse for {ref} ({bcv}) in {args.wlc422_kq_u_dir}"
-            )
-
-        wlc422_verse = _interpolate_wlc422_kq_qere(wlc422_verse)
-        wlc422_verse = sanitize_verse_text_payload(wlc422_verse)
-        if isinstance(wlc422_verse, dict):
-            wlc422_verse.pop("bcv", None)
-
-        uxlc_info = uxlc_by_bcv.get(bcv)
-        if uxlc_info is None:
-            raise ValueError(f"Missing UXLC verse for {ref} ({bcv}) in {args.uxlc_dir}")
-
-        uxlc_nodes = uxlc_info["nodes"]
-        uxlc_nodes = sanitize_verse_text_payload(uxlc_nodes)
-
-        mam_simple_info = mam_simple_by_bcv.get(bcv)
-        if mam_simple_info is None:
-            raise ValueError(
-                f"Missing MAM-simple verse for {ref} ({bcv}) in {args.mam_simple_dir}"
-            )
-
-        mam_simple_verse = mam_simple_info["mam_simple_verse"]
-        mam_simple_verse = sanitize_verse_text_payload(
-            mam_simple_verse,
-            remove_duplicate_telisha_gedola=True,
-        )
-
-        wlc422_for_diff = _normalize_payload_for_diff_ignoring_notes(wlc422_verse)
-        uxlc_for_diff = _normalize_payload_for_diff_ignoring_notes(uxlc_nodes)
-        mam_simple_for_diff = _normalize_payload_for_diff_ignoring_notes(
-            mam_simple_verse
-        )
-        diff_wlc_uxlc_for_checks = diff_wlc_uxlc(wlc422_verse, uxlc_nodes)
-        diff_wlc_uxlc_for_output = diff_wlc_uxlc(wlc422_for_diff, uxlc_for_diff)
-        diff_wlc_mam_for_output = diff_wlc_mam(wlc422_for_diff, mam_simple_for_diff)
-
         structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
-        wlc_focus = _structured_wlc_focus(structured_text)
-        diff_wlc_uxlc_for_output = _expand_subset_diff_to_wlc_focus(
-            diff_wlc_uxlc_for_output,
-            wlc_focus=wlc_focus,
-            rhs_key="uxlc",
-        )
-        diff_wlc_mam_for_output = _expand_subset_diff_to_wlc_focus(
-            diff_wlc_mam_for_output,
-            wlc_focus=wlc_focus,
-            rhs_key="mam_simple",
+        enriched_row, diff_wlc_uxlc_for_checks = _build_enriched_row(
+            row=row,
+            bcv=bcv,
+            ref=ref,
+            wlc422_by_bcv=wlc422_by_bcv,
+            uxlc_by_bcv=uxlc_by_bcv,
+            mam_simple_by_bcv=mam_simple_by_bcv,
+            wlc422_kq_u_dir=args.wlc422_kq_u_dir,
+            uxlc_dir=args.uxlc_dir,
+            mam_simple_dir=args.mam_simple_dir,
+            wlc_focus=_structured_wlc_focus(structured_text),
         )
 
-        enriched_row: dict[str, object] = {
-            **row,
-            "wlc422_kq_u_verse": wlc422_verse,
-            "uxlc_verse": uxlc_nodes,
-            "diff_wlc_uxlc": diff_wlc_uxlc_for_output,
-            "mam_simple_verse": mam_simple_verse,
-            "diff_wlc_mam": diff_wlc_mam_for_output,
-        }
         if structured_text is not None:
             assessment = structured_text.get("assessment")
             assessment_uxlc = (
@@ -253,6 +252,22 @@ def run(args: argparse.Namespace) -> None:
             enriched_row["structured_text"] = structured_text
         enriched_rows.append(enriched_row)
 
+    enriched_oddball_rows: list[dict[str, object]] = []
+    for row, bcv, ref in parsed_oddball_rows:
+        enriched_row, _ = _build_enriched_row(
+            row=row,
+            bcv=bcv,
+            ref=ref,
+            wlc422_by_bcv=wlc422_by_bcv,
+            uxlc_by_bcv=uxlc_by_bcv,
+            mam_simple_by_bcv=mam_simple_by_bcv,
+            wlc422_kq_u_dir=args.wlc422_kq_u_dir,
+            uxlc_dir=args.uxlc_dir,
+            mam_simple_dir=args.mam_simple_dir,
+            wlc_focus=None,
+        )
+        enriched_oddball_rows.append(enriched_row)
+
     payload: dict[str, object] = {
         "artifacts_description": "enriched troublemaker verse research records",
         "payload_provenance_note": (
@@ -277,6 +292,33 @@ def run(args: argparse.Namespace) -> None:
         json.dump(payload, f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")
 
+    if isinstance(oddballs_out_path, Path):
+        oddballs_payload: dict[str, object] = {
+            "artifacts_description": "enriched oddball verse research records",
+            "payload_provenance_note": (
+                "This artifact augments existing oddball rows with linked verse payloads "
+                "from wlc422-kq-u, XML-ish UXLC verse nodes, and normalized MAM-simple verses."
+            ),
+            "input": str(oddballs_in_path),
+            "wlc422_kq_u_dir": str(args.wlc422_kq_u_dir),
+            "uxlc_dir": str(args.uxlc_dir),
+            "mam_simple_dir": str(args.mam_simple_dir),
+            "summary": {
+                "oddballs": len(enriched_oddball_rows),
+            },
+            # Keep diff computation on original tokenized structures, then prettify
+            # verse display fields only at serialization time.
+            "oddballs": [
+                smart_concatenate_row_for_json(row) for row in enriched_oddball_rows
+            ],
+        }
+        oddballs_payload = provenance.with_json_provenance(oddballs_payload, __file__)
+
+        oddballs_out_path.parent.mkdir(parents=True, exist_ok=True)
+        with oddballs_out_path.open("w", encoding="utf-8") as f_out:
+            json.dump(oddballs_payload, f_out, ensure_ascii=False, indent=2)
+            f_out.write("\n")
+
     # Keep this call immediately after JSON write so HTML failures are fail-fast
     # while preserving the JSON write attempt.
     research_tms_report.write_goerwitz_tms_html_report(html_out_path, enriched_rows)
@@ -293,6 +335,10 @@ def run(args: argparse.Namespace) -> None:
     print(f"MAM-simple dir: {args.mam_simple_dir}")
     print(f"All changes: {all_changes_path}")
     print(f"Output: {args.out}")
+    if isinstance(oddballs_out_path, Path):
+        print(f"Input oddballs: {oddballs_in_path}")
+        print(f"Oddballs output: {oddballs_out_path}")
+        print(f"Oddball rows: {len(enriched_oddball_rows)}")
     print(f"HTML output: {html_out_path}")
     print(f"Rows: {len(enriched_rows)}")
 
@@ -300,6 +346,76 @@ def run(args: argparse.Namespace) -> None:
 def _read_json(path: Path):
     with path.open("r", encoding="utf-8") as f_in:
         return json.load(f_in)
+
+
+def _build_enriched_row(
+    *,
+    row: dict[str, object],
+    bcv: str,
+    ref: str,
+    wlc422_by_bcv: dict[str, dict[str, object]],
+    uxlc_by_bcv: dict[str, dict[str, object]],
+    mam_simple_by_bcv: dict[str, dict[str, object]],
+    wlc422_kq_u_dir: Path,
+    uxlc_dir: Path,
+    mam_simple_dir: Path,
+    wlc_focus: str | None,
+) -> tuple[dict[str, object], object]:
+    wlc422_verse = wlc422_by_bcv.get(bcv)
+    if wlc422_verse is None:
+        raise ValueError(
+            f"Missing wlc422-kq-u verse for {ref} ({bcv}) in {wlc422_kq_u_dir}"
+        )
+
+    wlc422_verse = _interpolate_wlc422_kq_qere(wlc422_verse)
+    wlc422_verse = sanitize_verse_text_payload(wlc422_verse)
+    if isinstance(wlc422_verse, dict):
+        wlc422_verse.pop("bcv", None)
+
+    uxlc_info = uxlc_by_bcv.get(bcv)
+    if uxlc_info is None:
+        raise ValueError(f"Missing UXLC verse for {ref} ({bcv}) in {uxlc_dir}")
+
+    uxlc_nodes = uxlc_info["nodes"]
+    uxlc_nodes = sanitize_verse_text_payload(uxlc_nodes)
+
+    mam_simple_info = mam_simple_by_bcv.get(bcv)
+    if mam_simple_info is None:
+        raise ValueError(f"Missing MAM-simple verse for {ref} ({bcv}) in {mam_simple_dir}")
+
+    mam_simple_verse = mam_simple_info["mam_simple_verse"]
+    mam_simple_verse = sanitize_verse_text_payload(
+        mam_simple_verse,
+        remove_duplicate_telisha_gedola=True,
+    )
+
+    wlc422_for_diff = _normalize_payload_for_diff_ignoring_notes(wlc422_verse)
+    uxlc_for_diff = _normalize_payload_for_diff_ignoring_notes(uxlc_nodes)
+    mam_simple_for_diff = _normalize_payload_for_diff_ignoring_notes(mam_simple_verse)
+    diff_wlc_uxlc_for_checks = diff_wlc_uxlc(wlc422_verse, uxlc_nodes)
+    diff_wlc_uxlc_for_output = diff_wlc_uxlc(wlc422_for_diff, uxlc_for_diff)
+    diff_wlc_mam_for_output = diff_wlc_mam(wlc422_for_diff, mam_simple_for_diff)
+
+    diff_wlc_uxlc_for_output = _expand_subset_diff_to_wlc_focus(
+        diff_wlc_uxlc_for_output,
+        wlc_focus=wlc_focus,
+        rhs_key="uxlc",
+    )
+    diff_wlc_mam_for_output = _expand_subset_diff_to_wlc_focus(
+        diff_wlc_mam_for_output,
+        wlc_focus=wlc_focus,
+        rhs_key="mam_simple",
+    )
+
+    enriched_row: dict[str, object] = {
+        **row,
+        "wlc422_kq_u_verse": wlc422_verse,
+        "uxlc_verse": uxlc_nodes,
+        "diff_wlc_uxlc": diff_wlc_uxlc_for_output,
+        "mam_simple_verse": mam_simple_verse,
+        "diff_wlc_mam": diff_wlc_mam_for_output,
+    }
+    return enriched_row, diff_wlc_uxlc_for_checks
 
 
 def _normalize_payload_for_diff_ignoring_notes(payload: object) -> object:
@@ -350,10 +466,10 @@ def _expand_subset_diff_to_wlc_focus(
     )
 
 
-def _parse_ref(ref: str) -> tuple[str, int, int]:
+def _parse_ref(ref: str, *, row_kind: str = "troublemaker") -> tuple[str, int, int]:
     match = _TROUBLEMAKER_REF_RE.match(ref.strip())
     if match is None:
-        raise ValueError(f"Malformed troublemaker ref: {ref}")
+        raise ValueError(f"Malformed {row_kind} ref: {ref}")
     bb = match.group("bb")
     chnu = int(match.group("ch"))
     vrnu = int(match.group("vr"))

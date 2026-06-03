@@ -515,6 +515,144 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertLess(before_idx, wlc_focus_idx)
             self.assertLess(wlc_focus_idx, after_idx)
 
+    def test_run_writes_enriched_research_oddballs_json(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            oddballs_in = base / "in" / "_oddballs.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+            oddballs_out = base / "out" / "research-oddballs.json"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps({"troublemakers": []}, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            oddballs_in.write_text(
+                json.dumps(
+                    {
+                        "oddballs": [
+                            {
+                                "ref": "gn 1:1",
+                                "content": "oddball payload",
+                                "output_file": "wlc_422_ps_gn_ag.txt",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "gn1:1",
+                            "vels": ["בְּרֵאשִׁ֖ית", "בָּרָ֣א"],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (uxlc_dir / "Genesis.xml").write_text(
+                """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Tanach>
+  <c n=\"1\">
+    <v n=\"1\">
+      <w>בְּרֵאשִׁ֖ית</w>
+      <w>בָּרָ֣א</w>
+    </v>
+  </c>
+</Tanach>
+""",
+                encoding="utf-8",
+            )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.1",
+                                                "contents": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": "בְּרֵאשִׁ֖ית",
+                                                    },
+                                                    {
+                                                        "type": "text",
+                                                        "text": "בָּרָ֣א",
+                                                    },
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            research_tms.run(
+                SimpleNamespace(
+                    troubles_in=troubles_in,
+                    oddballs_in=oddballs_in,
+                    wlc422_kq_u_dir=wlc422_dir,
+                    uxlc_dir=uxlc_dir,
+                    mam_simple_dir=mam_simple_dir,
+                    out=out_path,
+                    oddballs_out=oddballs_out,
+                )
+            )
+
+            self.assertTrue(out_path.exists())
+            self.assertTrue(oddballs_out.exists())
+
+            troubles_payload = json.loads(out_path.read_text(encoding="utf-8"))
+            self.assertEqual(troubles_payload["summary"]["troublemakers"], 0)
+
+            oddballs_payload = json.loads(oddballs_out.read_text(encoding="utf-8"))
+            self.assertEqual(
+                oddballs_payload["artifacts_description"],
+                "enriched oddball verse research records",
+            )
+            self.assertEqual(oddballs_payload["summary"]["oddballs"], 1)
+            oddball_row = oddballs_payload["oddballs"][0]
+            self.assertEqual(oddball_row["ref"], "gn 1:1")
+            self.assertEqual(oddball_row["content"], "oddball payload")
+            self.assertIn("wlc422_kq_u_verse", oddball_row)
+            self.assertIn("uxlc_verse", oddball_row)
+            self.assertIn("diff_wlc_uxlc", oddball_row)
+            self.assertIn("mam_simple_verse", oddball_row)
+            self.assertIn("diff_wlc_mam", oddball_row)
+            self.assertNotIn("structured_text", oddball_row)
+
     def test_run_ignores_note_only_wlc_uxlc_and_wlc_mam_diffs(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)

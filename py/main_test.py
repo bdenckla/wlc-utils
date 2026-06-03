@@ -22,7 +22,7 @@ TEST_MODULE_SPECS = (
     TestModuleSpec(
         flag="accgram-research-troublemakers",
         module_name="tests.test_accgram_research_tms",
-        help_text="Run accgram research-tms enrichment tests.",
+        help_text="Run accgram research-tms-and-oddballs enrichment tests.",
     ),
     TestModuleSpec(
         flag="accgram-run-goerwitz",

@@ -6,10 +6,12 @@ Subcommands:
                 and once as filtered per-book files (excluding Psalms/Proverbs,
                 poetically-cantillated Job verses, and hardcoded troublemaker
                 verses) and write out/accgram/goerwitz/_troublemakers.json.
-    research-tms
+    research-tms-and-oddballs
                 Enrich out/accgram/goerwitz/_troublemakers.json with matching
                 wlc422-kq-u verse objects and structured XML-ish UXLC verse
                 nodes and write out/accgram/research-troublemakers.json.
+                Also enrich out/accgram/goerwitz/_oddballs.json and write
+                out/accgram/research-oddballs.json.
     fresh-run-goerwitz
                 Run filter-split-wlc, then run goerwitz on the freshly written
                 filtered split files.
@@ -19,7 +21,7 @@ Subcommands:
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py filter-split-wlc
-    .venv/Scripts/python.exe py/main_accgram.py research-tms
+    .venv/Scripts/python.exe py/main_accgram.py research-tms-and-oddballs
     .venv/Scripts/python.exe py/main_accgram.py fresh-run-goerwitz
     .venv/Scripts/python.exe py/main_accgram.py run-goerwitz
 """
@@ -134,10 +136,10 @@ def main() -> None:
     run_goerwitz_parser.set_defaults(func=_run_goerwitz)
 
     research_tms_parser = subparsers.add_parser(
-        "research-tms",
+        "research-tms-and-oddballs",
         help=(
-            "Enrich existing _troublemakers.json entries with matching "
-            "wlc422-kq-u verse objects and XML-ish UXLC verse nodes."
+            "Enrich existing _troublemakers.json entries (plus _oddballs.json) "
+            "with matching wlc422-kq-u verse objects and XML-ish UXLC verse nodes."
         ),
     )
     research_tms.add_args(research_tms_parser, repo_root=_repo_root())
