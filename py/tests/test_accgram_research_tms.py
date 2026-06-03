@@ -904,6 +904,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                     {
                         "ref": "1k 6:2",
                         "wlc422_kq_u_verse": {"vels": ["foo"]},
+                    },
+                    {
+                        "ref": "nu 25:19",
+                        "wlc422_kq_u_verse": {"vels": ["bar"]},
                     }
                 ],
             )
@@ -914,6 +918,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("https://tanach.us/Tanach.xml?1Kings6:2", html_text)
             self.assertIn('<h2id="tm1k6v2">1k6:2</h2>', html_text_compact)
             self.assertIn('href="#tm1k6v2"', html_text)
+            self.assertIn("https://bdenckla.github.io/MAM-with-doc/A4-Numbers.html#c26v1", html_text)
+            self.assertIn("https://tanach.us/Tanach.xml?Num25:19", html_text)
+            self.assertIn('<h2id="tmnu25v19">nu25:19</h2>', html_text_compact)
+            self.assertIn('href="#tmnu25v19"', html_text)
 
     def test_write_goerwitz_tms_html_report_normalizes_mixed_token_payloads(self):
         with TemporaryDirectory() as tmp_dir:

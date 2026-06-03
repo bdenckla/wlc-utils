@@ -606,10 +606,18 @@ def _parse_ref_to_wlc_bcv(ref: str) -> tuple[str, int, int, str]:
     return bb, chnu, vrnu, bcv
 
 
+def _remap_mam_with_doc_chapter_verse(bb: str, chnu: int, vrnu: int) -> tuple[int, int]:
+    # One-time remap: Numbers 25:19 aligns to MAM-with-doc at 26:1.
+    if bb == "nu" and chnu == 25 and vrnu == 19:
+        return 26, 1
+    return chnu, vrnu
+
+
 def _mam_with_doc_url(bb: str, chnu: int, vrnu: int) -> str:
     bk39id = wlc_bb_to_bk39id(bb)
     osdf = tbn.ordered_short_dash_full_39(bk39id)
-    return f"https://bdenckla.github.io/MAM-with-doc/{osdf}.html#c{chnu}v{vrnu}"
+    mam_chnu, mam_vrnu = _remap_mam_with_doc_chapter_verse(bb, chnu, vrnu)
+    return f"https://bdenckla.github.io/MAM-with-doc/{osdf}.html#c{mam_chnu}v{mam_vrnu}"
 
 
 def _derive_html_out_from_out_path(out_path: Path) -> Path | None:
