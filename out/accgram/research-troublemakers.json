@@ -1169,7 +1169,11 @@
         "mam_simple": "הנה־"
       },
       "structured_text": {
-        "wlc_focus": "הנ֖ה־"
+        "st-summary": "BHS transcribes a meteg as a tipexa.",
+        "wlc_focus": "הנ֖ה־",
+        "img": "LC-272A-col-3-line-3-Je-48v12.png",
+        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F272A.jpg",
+        "comment": "Yet another aggressively uncharitable, overly-literal transcription by BHS. The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
       }
     },
     {
@@ -1197,8 +1201,10 @@
         "mam_simple": "אריצ֙נו֙"
       },
       "structured_text": {
+        "st-summary": "BHS misses a pashta that is hard to see in the LC.",
         "wlc_focus": "אריצ֨נו",
-        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60"
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60",
+        "comment": "See the image in the UXLC note to which we link above. BHS transcribes only the pashta stress helper, not the pashta itself. So, understandably, WLC transcribes this mark as a qadma."
       }
     },
     {
@@ -1236,7 +1242,7 @@
         "mam_simple": "פֽלאי׃"
       },
       "structured_text": {
-        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck on the LC vellum",
+        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck on the LC vellum.",
         "wlc_focus": "פ֛לאי׃",
         "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
         "comment": [
@@ -1283,7 +1289,7 @@
           "Nonetheless, BHQ opts to make הונח “locally legal” by giving it an accent. It gives it an accent by transcribing the second mark as a second tipexa rather than as a meteg. WLC follows BHQ in this, as it explicitly notes with a bracket-Q note. (Hover over the letters of the bracket notes above to decode them.)",
           "This makes the word הונח locally legal while rendering the second half of the verse illegal by giving the silluq segment two words accented with tipexa. (This (short) verse has no etnaxta segment.)",
           "It is uncharitable to transcribe this mark as a tipexa. Most likely what happened here is that the scribe forgot to add a maqaf. It is far less likely that the scribe intended to add a second tipexa,  and a second merkha seems equally implausible.",
-          " The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive.",
+          "The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive.",
           "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh. BHQ claims that manuscripts L34 and Y (in its sigil vocabulary) have this dagesh. Breuer (in Da-at Miqra) claims that Minxat Shai asserts this dagesh."
         ]
       }

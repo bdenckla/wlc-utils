@@ -55,7 +55,8 @@ _LM_0505_05 = (
     " It is far less likely that the scribe intended to add a second tipexa, "
     " and a second merkha seems equally implausible."
 )
-_LM_0505_06 = " The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
+_TIP_LIKE_INCL = "The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
+_LM_0505_06 = _TIP_LIKE_INCL
 _LM_0505_07 = (
     "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh."
     " BHQ claims that manuscripts L34 and Y (in its sigil vocabulary) have this dagesh."
@@ -457,14 +458,28 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
     },
     "je 48:12": {
+        "st-summary": "BHS transcribes a meteg as a tipexa.",
         "wlc_focus": "הנ֖ה־",
+        "img": "LC-272A-col-3-line-3-Je-48v12.png",
+        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F272A.jpg",
+        "comment": (
+            "Yet another aggressively uncharitable, overly-literal transcription by BHS."
+            + " "
+            + _TIP_LIKE_INCL
+        ),
     },
     "je 49:19": {
+        "st-summary": "BHS misses a pashta that is hard to see in the LC.",
         "wlc_focus": "אריצ֨נו",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60",
+        "comment": (
+            "See the image in the UXLC note to which we link above."
+            " BHS transcribes only the pashta stress helper, not the pashta itself."
+            " So, understandably, WLC transcribes this mark as a qadma."
+        ),
     },
     "ju 13:18": {
-        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck on the LC vellum",
+        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck on the LC vellum.",
         "wlc_focus": "פ֛לאי׃",
         "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
         "comment": (
