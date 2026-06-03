@@ -738,6 +738,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                         "structured_text": {
                             "wlc_focus": "אב",
                             "st-summary": "Link summary.",
+                            "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
+                            "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
                             "assessment": {
                                 "manuscript": "foo",
                                 "bhs": "bar",
@@ -803,6 +805,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("🔗</a>Summary:Linksummary.</p><p><a", html_text_compact)
             self.assertIn("UXLC change", html_text)
             self.assertIn("UXLC note page", html_text)
+            self.assertIn('src="../img/LC-280B-col-3-line-2-Ezek-11v1.png"', html_text)
+            self.assertIn("Image source", html_text)
+            self.assertIn(
+                "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
+                html_text,
+            )
 
     def test_write_goerwitz_tms_html_report_simplifies_matching_wlc_word_diff_pairs(
         self,

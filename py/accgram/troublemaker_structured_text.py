@@ -35,6 +35,11 @@ _LM_0505_05 = (
     " to add a second tipexa."
     " The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
 )
+_LM_0505_06 = (
+    "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh."
+    " BHQ claims that manuscripts L34 and Y (in its sigil vocabulary) have this dagesh."
+    " Breuer (in Da-at Miqra) claims that Minxat Shai asserts this dagesh."
+)
 _NU_2019_01 = (
     "This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors."
     " I would have expected all 12 cases to cause trouble for the Goerwitz checker, but this one is the only one that does."
@@ -434,6 +439,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             _LM_0505_03,
             _LM_0505_04,
             _LM_0505_05,
+            _LM_0505_06,
         ),
     },
     "mi 2:7": {

@@ -12,6 +12,7 @@ from accgram import research_tms_report_wlc_word_format
 from accgram import troublemaker_structured_text_sanity
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
+from py_html import my_html_for_img
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
 
@@ -179,6 +180,7 @@ def _render_row_section(row: dict[str, object]) -> tuple[object, ...]:
             section_anchor_id=section_anchor_id,
         ),
         _render_sat_table(row),
+        *_render_image_paragraphs(row),
         *_render_comment_paragraphs(row),
     ]
     return tuple(section_items)
@@ -380,6 +382,32 @@ def _render_comment_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
         _render_comment_paragraph(comment_item)
         for comment_item in comment
     )
+
+
+def _render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
+    structured_text = row.get("structured_text")
+    if not isinstance(structured_text, dict):
+        return ()
+
+    image_paragraphs = list(my_html_for_img.html_for_imgs(structured_text))
+    if not image_paragraphs:
+        return ()
+
+    img_src_url = structured_text.get("img_src_url")
+    if isinstance(img_src_url, str) and img_src_url.strip():
+        image_paragraphs.append(
+            wlc_utils_html.para(
+                (
+                    "Image source: ",
+                    wlc_utils_html.anchor(
+                        "full page",
+                        {"href": img_src_url.strip()},
+                    ),
+                )
+            )
+        )
+
+    return tuple(image_paragraphs)
 
 
 def _render_comment_paragraph(
