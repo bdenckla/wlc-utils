@@ -13,6 +13,7 @@ _WLC_BRACKET_NOTES_SECTION_INTRO = (
     " but you can also hover over their use further below to see these definitions."
 )
 
+
 def build_wlc_bracket_notes_section(
     enriched_rows: list[dict[str, object]],
 ) -> tuple[object, ...]:

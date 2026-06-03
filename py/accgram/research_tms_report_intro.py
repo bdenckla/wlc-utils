@@ -20,10 +20,20 @@ _GC_BOOK_URL = (
 )
 
 
-def build_intro_contents(row_count: int) -> tuple[object, ...]:
+def build_intro_contents(
+    row_count: int,
+    total_count: int | None = None,
+) -> tuple[object, ...]:
+    n_of_m = (
+        f" These are {row_count} of the {total_count} such verses;"
+        " see \u201cRelated pages\u201d above."
+        if total_count is not None
+        else ""
+    )
     intro_text = (
         f"These {row_count} verses caused trouble for the Goerwitz accent grammar checker."
-        " Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks."
+        + n_of_m
+        + " Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks."
         " The checker is described in the following article:"
     )
     citation_text = (

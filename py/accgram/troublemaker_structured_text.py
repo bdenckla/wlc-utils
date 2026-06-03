@@ -15,9 +15,7 @@ _NU_2509_01 = (
     " It only starts chapter 26 after the etnaxta of what MAM calls 26:1."
     " It labels the first part of what MAM calls 26:1 as 25:19, a verse number that does not exist in MAM."
 )
-_NU_2509_02 = (
-    " In other words, the accent grammar is unexceptional here if we ignore where BHS happens to put its verse labels."
-)
+_NU_2509_02 = " In other words, the accent grammar is unexceptional here if we ignore where BHS happens to put its verse labels."
 _NU_2509_03 = (
     " MAM is not exceptional in its more cantillation-aware versification here;"
     " above I might have said “many editions” instead of “MAM” but I wanted to be specific."
@@ -55,9 +53,7 @@ _LM_0505_05 = (
     " It is far less likely that the scribe intended to add a second tipexa, "
     " and a second merkha seems equally implausible."
 )
-_LM_0505_06 = (
-    " The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
-)
+_LM_0505_06 = " The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
 _LM_0505_07 = (
     "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh."
     " BHQ claims that manuscripts L34 and Y (in its sigil vocabulary) have this dagesh."
@@ -70,6 +66,7 @@ _NU_2019_01 = (
 _NU_2019_02 = (
     "WLC’s first poor decision was to attempt to encode a meaningless scribal whim:"
     " the placement of a zarqa before the lamed ascender rather than after it."
+    " See the image in the UXLC change to which we link above."
 )
 _NU_2019_03 = (
     "WLC’s second poor decision was to characterize this as the correction of a typesetting error in BHS/BHQ."
@@ -449,7 +446,28 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60",
     },
     "ju 13:18": {
+        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck on the LC vellum",
         "wlc_focus": "פ֛לאי׃",
+        "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
+        "comment": (
+            [
+                "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink."
+                " See the image in the UXLC note to which we link above."
+            ],
+            [
+                "Even if the editors of BHQ Judges (2011) lacked access to color images,"
+                " this was an overly-literal, aggressively uncharitable transcription."
+                " Even without color, they should have been aware that this could be"
+                " a non-ink speck on the LC vellum or a non-intentional ink dot."
+                " They should have found one of these possibilities more likely than a verse-final tevir."
+                " A verse-final tevir is rather far-fetched."
+            ],
+            [
+                "Are they attempting to use typography to create a pseudo-photographic image of the LC,"
+                " or are they trying to transcribe the LC “meaningfully,”"
+                " using some degree of interpretation to determine the most likely intended meaning of each mark?"
+            ],
+        ),
     },
     "lm 5:5": {
         "st-summary": "LC’s missing maqaf causes BHQ to make things worse.",
@@ -470,6 +488,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
+        "comment": (
+            "See the image in the UXLC change to which we link above."
+        ),
     },
     "nu 20:19": {
         "st-summary": "WLC turns a scribal zarqa whim into something far worse.",
@@ -498,5 +519,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "LC has no visible accent on עליה.",
         "wlc_focus": "עליה",
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
+        "comment": (
+            "See the image in the UXLC note to which we link above."
+        ),
     },
 }
