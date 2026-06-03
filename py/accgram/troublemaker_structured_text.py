@@ -3,7 +3,7 @@ from __future__ import annotations
 
 def _foi_non_revia_note(fp_value: str) -> str:
     return (
-        'A possible reason why the goerwitz accent grammar check deems this verse "ungrammatical" '
+        'A possible reason why the Goerwitz accent grammar check deems this verse "ungrammatical" '
         f'is its phrase that is a member of the FOI category "{fp_value}". '
         "A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts "
         'with "⅃-leg...non-revia" and the other 12 are not deemed "ungrammatical" by the checker.'

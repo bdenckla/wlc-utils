@@ -80,6 +80,7 @@ def write_goerwitz_tms_msp_yes_html_report(
     main_html_out_path: Path,
     enriched_rows: list[dict[str, object]],
 ) -> None:
+    total_count = len(enriched_rows)
     html_out_path = research_tms_report_subsets.missing_sof_pasuq_yes_html_out_path(
         main_html_out_path
     )
@@ -91,6 +92,7 @@ def write_goerwitz_tms_msp_yes_html_report(
         ),
         title=f"{_MAIN_REPORT_TITLE} ({_MSP_Y_FLAVOR})",
         heading_level_1_text=f"{_MAIN_REPORT_HEADING} ({_MSP_Y_FLAVOR})",
+        total_count=total_count,
     )
 
 
@@ -98,6 +100,7 @@ def write_goerwitz_tms_msp_no_html_report(
     main_html_out_path: Path,
     enriched_rows: list[dict[str, object]],
 ) -> None:
+    total_count = len(enriched_rows)
     html_out_path = research_tms_report_subsets.missing_sof_pasuq_no_html_out_path(
         main_html_out_path
     )
@@ -109,6 +112,7 @@ def write_goerwitz_tms_msp_no_html_report(
         ),
         title=f"{_MAIN_REPORT_TITLE} ({_MSP_N_FLAVOR})",
         heading_level_1_text=f"{_MAIN_REPORT_HEADING} ({_MSP_N_FLAVOR})",
+        total_count=total_count,
     )
 
 
@@ -119,6 +123,7 @@ def _write_goerwitz_tms_html_report(
     top_contents: tuple[object, ...],
     title: str,
     heading_level_1_text: str,
+    total_count: int | None = None,
 ) -> None:
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -126,6 +131,7 @@ def _write_goerwitz_tms_html_report(
         enriched_rows,
         top_contents=top_contents,
         heading_level_1_text=heading_level_1_text,
+        total_count=total_count,
     )
     write_ctx = wlc_utils_html.WriteCtx(
         title=title,
@@ -143,13 +149,14 @@ def _build_body_contents(
     *,
     top_contents: tuple[object, ...],
     heading_level_1_text: str,
+    total_count: int | None = None,
 ) -> tuple[object, ...]:
     row_count = len(enriched_rows)
     sections: list[object] = [
         wlc_utils_html.heading_level_1(heading_level_1_text),
         *top_contents,
     ]
-    sections.extend(research_tms_report_intro.build_intro_contents(row_count))
+    sections.extend(research_tms_report_intro.build_intro_contents(row_count, total_count))
     sections.extend(research_tms_report_open_issues.build_open_issues_section())
     sections.extend(
         research_tms_report_bracket_notes.build_wlc_bracket_notes_section(enriched_rows)
