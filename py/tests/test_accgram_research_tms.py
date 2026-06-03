@@ -806,7 +806,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("UXLC change", html_text)
             self.assertIn("UXLC note page", html_text)
             self.assertIn('src="../img/LC-280B-col-3-line-2-Ezek-11v1.png"', html_text)
-            self.assertIn("Image source", html_text)
+            self.assertIn(
+                'Image source: <a href="https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg">280B</a> column 3 line 2',
+                html_text,
+            )
             self.assertIn(
                 "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
                 html_text,

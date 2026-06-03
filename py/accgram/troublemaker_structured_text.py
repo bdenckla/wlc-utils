@@ -10,32 +10,55 @@ def _foi_non_revia_note(fp_value: str) -> str:
     )
 
 
+_NU_2509_01 = (
+    "Compared to MAM, BHS starts chapter 26 “late”."
+    " It only starts chapter 26 after the etnaxta of what MAM calls 26:1."
+    " It labels the first part of what MAM calls 26:1 as 25:19, a verse number that does not exist in MAM."
+)
+_NU_2509_02 = (
+    " In other words, the accent grammar is unexceptional here if we ignore where BHS happens to put its verse labels."
+)
+_NU_2509_03 = (
+    " MAM is not exceptional in its more cantillation-aware versification here;"
+    " above I might have said “many editions” instead of “MAM” but I wanted to be specific."
+)
+_NU_2509_04 = (
+    " As to where BHS got this versification, I suspect it is not original to BHS."
+    " This versification’s rather extraordinary mid-chanted-verse verse number does correspond to"
+    " a rather extraordinary mid-chanted-verse parashah petuxah break."
+    " So, while this verse number is not at the boundary of a chanted verse,"
+    " it is at a boundary deemed quite significant in the layout of both cantillated and letter-only Hebrew texts."
+)
 _LM_0505_01 = (
     "The consensus pointing of the last two atoms in this verse is הֽוּנַֽח־לָֽנוּ׃."
     " I.e. ignoring vowel marks, the consensus for the atom in question is הֽונֽח־, i.e. two meteg marks and a maqaf."
 )
 _LM_0505_02 = (
-    "Given this consensus, the most charitable interpretation of the LC here is that it is missing the maqaf,"
+    "Given this consensus, the most charitable transcription of the LC here is that it is missing the maqaf,"
     " leaving הונח with no accent, only two meteg marks."
+    " Even ignoring the consensus, i.e. transcribing “blind,” this is the most charitable transcription."
 )
 _LM_0505_03 = (
-    "Nonetheless, BHQ opts to make הונח “locally legal” by giving it an accent by interpreting the second mark"
+    "Nonetheless, BHQ opts to make הונח “locally legal” by giving it an accent."
+    " It gives it an accent by transcribing the second mark"
     " as a second tipexa rather than as a meteg. WLC follows BHQ in this, as it explicitly notes with a bracket-Q note."
     " (Hover over the letters of the bracket notes above to decode them.)"
 )
 _LM_0505_04 = (
-    "This makes the word הונח locally legal while rendering the second half of the verse wildly illegal"
+    "This makes the word הונח locally legal while rendering the second half of the verse illegal"
     " by giving the silluq segment two words accented with tipexa."
     " (This (short) verse has no etnaxta segment.)"
 )
 _LM_0505_05 = (
-    "I consider this transcription uncharitable, as it rejects the charitable option of a missing maqaf"
-    " in favor of an aggressively uncharitable superfluous tipexa."
-    " It is far easier to believe that the scribe forgot to add a maqaf than to believe that that scribe intended"
-    " to add a second tipexa."
-    " The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
+    "It is uncharitable to transcribe this mark as a tipexa."
+    " Most likely what happened here is that the scribe forgot to add a maqaf."
+    " It is far less likely that the scribe intended to add a second tipexa, "
+    " and a second merkha seems equally implausible."
 )
 _LM_0505_06 = (
+    " The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
+)
+_LM_0505_07 = (
     "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh."
     " BHQ claims that manuscripts L34 and Y (in its sigil vocabulary) have this dagesh."
     " Breuer (in Da-at Miqra) claims that Minxat Shai asserts this dagesh."
@@ -357,9 +380,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
             "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. "
-            "To transcribe the mark on שרי as tipexa is an aggressively uncharitable transcription: "
+            "It is aggressively uncharitable to transcribe the mark on שרי as tipexa: "
             "tipexa is the least likely of the three possible meanings of this mark. "
-            "Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably "
+            "Merkha is by far the most likely. If the mark were meteg, we would have to "
             "assume that a maqaf is missing."
         ),
     },
@@ -391,7 +414,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
             "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. "
-            "To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: "
+            "It is aggressively uncharitable to transcribe the mark on מבלי as tipexa: "
             "tipexa is the least likely of the three possible meanings of this mark. "
             "Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably "
             "assume that a maqaf is missing."
@@ -405,7 +428,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
             "Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי. "
-            "To transcribe the mark on מבלי as tipexa is an aggressively uncharitable transcription: "
+            "It is aggressively uncharitable to transcribe the mark on מבלי as tipexa: "
             "tipexa is the least likely of the three possible meanings of this mark. "
             "Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably "
             "assume that a maqaf is missing."
@@ -429,7 +452,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "פ֛לאי׃",
     },
     "lm 5:5": {
-        "st-summary": "Quirk in LC (no maqaf) causing BHQ to add a second tipexa.",
+        "st-summary": "LC’s missing maqaf causes BHQ to make things worse.",
         "wlc_focus": "הונ֖ח",
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F432A.jpg",
@@ -440,15 +463,16 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             _LM_0505_04,
             _LM_0505_05,
             _LM_0505_06,
+            _LM_0505_07,
         ),
     },
     "mi 2:7": {
-        "st-summary": "Error in BHS.",
+        "st-summary": "BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
     },
     "nu 20:19": {
-        "st-summary": "Error in WLC.",
+        "st-summary": "WLC turns a scribal zarqa whim into something far worse.",
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
         "comment": (
@@ -461,16 +485,17 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "nu 25:19": {
-        "st-summary": "Quirk in versification not cantillation.",
+        "st-summary": "BHS puts a verse number in the middle of a chanted verse.",
         "wlc_focus": "המגפ֑ה",
         "comment": (
-            "Compared to MAM, BHS starts chapter 26 “late”."
-            " It only starts chapter 26 after the etnaxta of what MAM calls 26:1."
-            " In other words, the accent grammar is unexceptional here if we ignore where BHS happens to put its verse labels."
+            _NU_2509_01,
+            _NU_2509_02,
+            _NU_2509_03,
+            _NU_2509_04,
         ),
     },
     "ob 1:1": {
-        "st-summary": "Quirk in LC: עליה lacks an accent.",
+        "st-summary": "LC has no visible accent on עליה.",
         "wlc_focus": "עליה",
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
     },

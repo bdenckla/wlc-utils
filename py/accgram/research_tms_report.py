@@ -7,6 +7,7 @@ from pathlib import Path
 from accgram import research_tms_report_bracket_notes
 from accgram import research_tms_report_diff_format
 from accgram import research_tms_report_intro
+from accgram import research_tms_report_open_issues
 from accgram import research_tms_report_subsets
 from accgram import research_tms_report_wlc_word_format
 from accgram import troublemaker_structured_text_sanity
@@ -36,6 +37,7 @@ _SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
 _POINTED_HEBREW_SEGMENT_RE = re.compile(r"[\u0590-\u05FF]+")
 _HEBREW_POINTING_MARK_RE = re.compile(r"[\u0591-\u05C7]")
 _HEBREW_LETTER_RE = re.compile(r"[\u05D0-\u05EA]")
+_LC_IMAGE_NAME_RE = re.compile(r"LC-([0-9]+[A-Za-z])-col-([0-9]+)-line-([0-9]+)")
 
 # Internal SAT row shape: (value_cell, middle_description_cell, key_cell).
 SatRow = tuple[str, str, str]
@@ -148,6 +150,7 @@ def _build_body_contents(
         *top_contents,
     ]
     sections.extend(research_tms_report_intro.build_intro_contents(row_count))
+    sections.extend(research_tms_report_open_issues.build_open_issues_section())
     sections.extend(
         research_tms_report_bracket_notes.build_wlc_bracket_notes_section(enriched_rows)
     )
@@ -395,19 +398,51 @@ def _render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
 
     img_src_url = structured_text.get("img_src_url")
     if isinstance(img_src_url, str) and img_src_url.strip():
+        link_label, location_suffix = _image_source_link_label_and_location_suffix(
+            structured_text
+        )
+        source_contents: list[object] = [
+            "Image source: ",
+            wlc_utils_html.anchor(
+                link_label,
+                {"href": img_src_url.strip()},
+            ),
+        ]
+        if location_suffix:
+            source_contents.append(location_suffix)
         image_paragraphs.append(
             wlc_utils_html.para(
-                (
-                    "Image source: ",
-                    wlc_utils_html.anchor(
-                        "full page",
-                        {"href": img_src_url.strip()},
-                    ),
-                )
+                tuple(source_contents)
             )
         )
 
     return tuple(image_paragraphs)
+
+
+def _image_source_link_label_and_location_suffix(
+    structured_text: dict[str, object]
+) -> tuple[str, str]:
+    img_name = structured_text.get("img")
+    if not isinstance(img_name, str):
+        return "source", ""
+
+    parsed = _parse_lc_image_name(img_name)
+    if parsed is None:
+        return "source", ""
+
+    page_id, column, line = parsed
+    return page_id, f" column {column} line {line}"
+
+
+def _parse_lc_image_name(img_name: str) -> tuple[str, int, int] | None:
+    match = _LC_IMAGE_NAME_RE.search(img_name)
+    if match is None:
+        return None
+
+    page_id = match.group(1).upper()
+    column = int(match.group(2))
+    line = int(match.group(3))
+    return page_id, column, line
 
 
 def _render_comment_paragraph(
