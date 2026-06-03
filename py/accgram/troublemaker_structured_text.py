@@ -10,27 +10,54 @@ def _foi_non_revia_note(fp_value: str) -> str:
     )
 
 
-NU_2019_01 = "This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors."
-NU_2019_02 = (
+_LM_0505_01 = (
+    "The consensus pointing of the last two atoms in this verse is הֽוּנַֽח־לָֽנוּ׃."
+    " I.e. ignoring vowel marks, the consensus for the atom in question is הֽונֽח־, i.e. two meteg marks and a maqaf."
+)
+_LM_0505_02 = (
+    "Given this consensus, the most charitable interpretation of the LC here is that it is missing the maqaf,"
+    " leaving הונח with no accent, only two meteg marks."
+)
+_LM_0505_03 = (
+    "Nonetheless, BHQ opts to make הונח “locally legal” by giving it an accent by interpreting the second mark"
+    " as a second tipexa rather than as a meteg."
+)
+_LM_0505_04 = (
+    "This makes the word הונח locally legal while rendering the second half of the verse wildly illegal"
+    " by giving the silluq segment two words accented with tipexa."
+    " (This (short) verse has no etnaxta segment.)"
+)
+_LM_0505_05 = (
+    "I would consider this transcription uncharitable, as it rejects the charitable option of a missing maqaf"
+    " in favor of an aggressively uncharitable superfluous tipexa."
+    " It is far easier to believe that the scribe forgot to add a maqaf than to believe that that scribe intended"
+    " to add a second tipexa."
+    " The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
+)
+_NU_2019_01 = (
+    "This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors."
+    " I would have expected all 12 cases to cause trouble for the Goerwitz checker, but this one is the only one that does."
+)
+_NU_2019_02 = (
     "WLC’s first poor decision was to attempt to encode a meaningless scribal whim:"
     " the placement of a zarqa before the lamed ascender rather than after it."
 )
-NU_2019_03 = (
+_NU_2019_03 = (
     "WLC’s second poor decision was to characterize this as the correction of a typesetting error in BHS/BHQ."
     " While I am as great a critic of BHS/BHQ as anyone, this is unfair."
     " The treatment of these words in BHS/BHQ is almost certainly an editorial decision,"
     " not an oddly-systematic set of typesetting errors."
 )
-NU_2019_04 = (
+_NU_2019_04 = (
     "WLC’s third poor decision was to encode this by further overloading the meaning of accent 82,"
     " which is already used as tsinnorit and, rarely, as a stress-helper to accent 02 (zarqa/tsinnor)."
 )
-NU_2019_05 = (
+_NU_2019_05 = (
     "Finally, WLC greatly compounded these poor decisions by making an outright error in implementation:"
     " the 82 codes are consistently placed preceding rather than following the L (lamed) in question,"
     " in one case by even more than one letter too far back."
 )
-NU_2019_06 = (
+_NU_2019_06 = (
     "They are consistently placed in a location that would be more appropriate for a tsinnorit or a zarqa stress helper,"
     " namely, on the first letter of the syllable ending in lamed, rather than on the lamed itself."
 )
@@ -396,9 +423,20 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "פ֛לאי׃",
     },
     "lm 5:5": {
+        "st-summary": "Quirk in LC (no maqaf) causing BHQ to add a second tipexa.",
         "wlc_focus": "הונ֖ח",
+        "img": "LC-432A-col-3-line-17-Lam-5v5.png",
+        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F432A.jpg",
+        "comment": (
+            _LM_0505_01,
+            _LM_0505_02,
+            _LM_0505_03,
+            _LM_0505_04,
+            _LM_0505_05,
+        ),
     },
     "mi 2:7": {
+        "st-summary": "Error in BHS.",
         "wlc_focus": "דבר֨י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
     },
@@ -407,12 +445,12 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
         "comment": (
-            NU_2019_01,
-            NU_2019_02,
-            NU_2019_03,
-            NU_2019_04,
-            NU_2019_05,
-            NU_2019_06,
+            _NU_2019_01,
+            _NU_2019_02,
+            _NU_2019_03,
+            _NU_2019_04,
+            _NU_2019_05,
+            _NU_2019_06,
         ),
     },
     "nu 25:19": {
