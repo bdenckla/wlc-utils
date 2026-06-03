@@ -19,7 +19,9 @@ def _html_for_pcl(pcl):
 
 
 def _html_for_bcv_str_wlt_tdu(bcv_str):  # wlt_tdu: with link to tanach.us
-    return wlc_utils_html.anchor(bcv_str, {"href": f"https://tanach.us/Tanach.xml?{bcv_str}"})
+    return wlc_utils_html.anchor(
+        bcv_str, {"href": f"https://tanach.us/Tanach.xml?{bcv_str}"}
+    )
 
 
 def _html_for_kq(kq):
@@ -153,7 +155,11 @@ _K2Q2REC_FST_KGS = {
     "kq-strs": ("הוא־והיא", "הִיא־וָה֛וּא"),
     "pcl": ("197B", 3, 24),
     "img": "1Kings17v15.png",
-    "manuscript": ["supports k1q1×2", wlc_utils_html.line_break(), "rather than WLC’s k2q2"],
+    "manuscript": [
+        "supports k1q1×2",
+        wlc_utils_html.line_break(),
+        "rather than WLC’s k2q2",
+    ],
     "intro": [
         "In the case of 1 Kings 17:15, we find that the manuscript does not support WLC’s k2q2 grouping"
     ],
@@ -198,7 +204,11 @@ _K2Q2REC_JOB_38V01 = {
     "img": "Job38v1.png",
     "kq-strs": ("מנ הסערה", "מִ֥ן ׀ הַסְּעָרָ֗ה"),
     "pcl": ("408A", 2, 5),
-    "manuscript": ["supports k1q2", wlc_utils_html.line_break(), "rather than WLC’s k2q2"],
+    "manuscript": [
+        "supports k1q2",
+        wlc_utils_html.line_break(),
+        "rather than WLC’s k2q2",
+    ],
     "intro": _JOB_38_1_and_40_6_INTRO,
 }
 _K2Q2REC_JOB_40 = {
@@ -206,7 +216,11 @@ _K2Q2REC_JOB_40 = {
     "img": "Job40v6.png",
     "kq-strs": ("מנ סערה", "מִ֥ן ׀ סְעָרָ֗ה"),
     "pcl": ("408B", 2, 13),
-    "manuscript": ["supports k1q2", wlc_utils_html.line_break(), "rather than WLC’s k2q2"],
+    "manuscript": [
+        "supports k1q2",
+        wlc_utils_html.line_break(),
+        "rather than WLC’s k2q2",
+    ],
     "intro": ["Here is the manuscript image for Job 40:6"],
 }
 _BKM_REC_SND_SAM_5_2 = {
@@ -232,7 +246,11 @@ _BKM_REC_PROV_21_29 = {
     "img": "Prov21v29.png",
     "kq-strs": ("יכין דרכיו", "יָבִ֬ין דַּרְכּֽוֹ׃"),
     "pcl": ("417A", 1, 14),
-    "manuscript": ["supports k2q2", wlc_utils_html.line_break(), "rather than WLC’s k1q1×2"],
+    "manuscript": [
+        "supports k2q2",
+        wlc_utils_html.line_break(),
+        "rather than WLC’s k1q1×2",
+    ],
     "intro": ["Here is the image for Proverbs 21:29"],
 }
 EZRA_4_12 = [

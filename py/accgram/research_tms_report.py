@@ -14,7 +14,6 @@ from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
 
-
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "mam")
 _CONTEXT_HBO_ROW_KEYS = {"wlc_before", "wlc_focus", "wlc_focus.hbo", "wlc_after"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
@@ -62,7 +61,9 @@ def write_goerwitz_tms_html_report(
     _write_goerwitz_tms_html_report(
         html_out_path,
         enriched_rows,
-        top_contents=research_tms_report_subsets.build_main_subsets_top_contents(html_out_path),
+        top_contents=research_tms_report_subsets.build_main_subsets_top_contents(
+            html_out_path
+        ),
         title=_MAIN_REPORT_TITLE,
         heading_level_1_text=_MAIN_REPORT_HEADING,
     )
@@ -72,7 +73,9 @@ def write_goerwitz_tms_msp_yes_html_report(
     main_html_out_path: Path,
     enriched_rows: list[dict[str, object]],
 ) -> None:
-    html_out_path = research_tms_report_subsets.missing_sof_pasuq_yes_html_out_path(main_html_out_path)
+    html_out_path = research_tms_report_subsets.missing_sof_pasuq_yes_html_out_path(
+        main_html_out_path
+    )
     _write_goerwitz_tms_html_report(
         html_out_path,
         research_tms_report_subsets.filter_missing_sof_pasuq_yes_rows(enriched_rows),
@@ -88,7 +91,9 @@ def write_goerwitz_tms_msp_no_html_report(
     main_html_out_path: Path,
     enriched_rows: list[dict[str, object]],
 ) -> None:
-    html_out_path = research_tms_report_subsets.missing_sof_pasuq_no_html_out_path(main_html_out_path)
+    html_out_path = research_tms_report_subsets.missing_sof_pasuq_no_html_out_path(
+        main_html_out_path
+    )
     _write_goerwitz_tms_html_report(
         html_out_path,
         research_tms_report_subsets.filter_missing_sof_pasuq_no_rows(enriched_rows),
@@ -138,7 +143,9 @@ def _build_body_contents(
         *top_contents,
     ]
     sections.extend(research_tms_report_intro.build_intro_contents(row_count))
-    sections.extend(research_tms_report_bracket_notes.build_wlc_bracket_notes_section(enriched_rows))
+    sections.extend(
+        research_tms_report_bracket_notes.build_wlc_bracket_notes_section(enriched_rows)
+    )
 
     for index, row in enumerate(enriched_rows):
         sections.extend(_render_row_section(row))
@@ -168,6 +175,7 @@ def _render_row_section(row: dict[str, object]) -> tuple[object, ...]:
             section_anchor_id=section_anchor_id,
         ),
         _render_sat_table(row),
+        *_render_comment_paragraphs(row),
     ]
     return tuple(section_items)
 
@@ -182,7 +190,7 @@ def _render_ref_links(
 ) -> tuple[object, ...]:
     mam_url = _mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)
     tanach_us_url = my_wlc_bcv_str.get_tanach_dot_us_url(bcv)
-    summary = _structured_text_value(row, "summary")
+    summary = _structured_text_value(row, "st-summary")
     uxlc_change = _structured_text_value(row, "uxlc_change")
     uxlc_note_page = _structured_text_value(row, "uxlc_note_page")
 
@@ -242,10 +250,12 @@ def _render_sat_table(row: dict[str, object]) -> object:
     wlc_tokens = _wlc_verse_vels(row)
     wlc_focus = _structured_text_value(row, "wlc_focus")
     wlc_focus_str = wlc_focus if isinstance(wlc_focus, str) else None
-    wlc_focus_notes = research_tms_report_wlc_word_format.collect_wlc_word_bracket_notes(
-        wlc_tokens,
-        wlc_focus_str,
-        render_sat_value=_render_sat_value,
+    wlc_focus_notes = (
+        research_tms_report_wlc_word_format.collect_wlc_word_bracket_notes(
+            wlc_tokens,
+            wlc_focus_str,
+            render_sat_value=_render_sat_value,
+        )
     )
     before_focus, focus_placeholder, after_focus = _split_wlc_context(
         verse_text=verse_text,
@@ -272,12 +282,16 @@ def _render_sat_table(row: dict[str, object]) -> object:
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows)
     sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
 
-    table_rows: list[object] = [wlc_utils_html.table_row_of_headers(("value", "", "key"))]
+    table_rows: list[object] = [
+        wlc_utils_html.table_row_of_headers(("value", "", "key"))
+    ]
     for value, middle_description, key in sat_rows:
         table_rows.append(
             wlc_utils_html.table_row_of_data(
                 (
-                    research_tms_report_bracket_notes.annotate_bracket_note_tokens(value),
+                    research_tms_report_bracket_notes.annotate_bracket_note_tokens(
+                        value
+                    ),
                     middle_description,
                     key,
                 ),
@@ -295,10 +309,15 @@ def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
     if label == research_tms_report_wlc_word_format.WLC_FOCUS_NOTES_LABEL:
         return {"style": "text-align: right;"}
 
-    if label in _CONTEXT_HBO_ROW_KEYS and research_tms_report_diff_format.contains_hebrew(value):
+    if (
+        label in _CONTEXT_HBO_ROW_KEYS
+        and research_tms_report_diff_format.contains_hebrew(value)
+    ):
         return {"lang": "hbo", "dir": "rtl"}
 
-    if label.startswith("diff_wlc_") and research_tms_report_diff_format.is_plain_hebrew_string(value):
+    if label.startswith(
+        "diff_wlc_"
+    ) and research_tms_report_diff_format.is_plain_hebrew_string(value):
         return {"lang": "hbo", "dir": "rtl"}
 
     return None
@@ -344,19 +363,25 @@ def _center_sat_rows(
                 continue
             rows.append(_sat_row(key=f"a.{key}", value=_render_sat_value(value)))
 
-    comment = _structured_text_value(row, "comment")
-    if isinstance(comment, list):
-        for idx, comment in enumerate(comment, start=1):
-            rows.append(
-                _sat_row(
-                    key=f"comment[{idx}]",
-                    value=_render_sat_value(comment),
-                )
-            )
-    elif comment is not None:
-        rows.append(_sat_row(key="comment", value=_render_sat_value(comment)))
-
     return _apply_sat_row_suppressions(_row_ref(row), rows)
+
+
+def _render_comment_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
+    comment = _structured_text_value(row, "comment")
+    if comment is None:
+        return ()
+    if not isinstance(comment, (list, tuple)):
+        comment = [comment]
+    return tuple(
+        _render_comment_paragraph(comment_item)
+        for comment_item in comment
+    )
+
+
+def _render_comment_paragraph(
+    comment: object
+) -> object:
+    return wlc_utils_html.para(comment, {"class": "goerwitz-tms-comment"})
 
 
 def _apply_sat_row_suppressions(ref: str, rows: list[SatRow]) -> list[SatRow]:
@@ -364,7 +389,9 @@ def _apply_sat_row_suppressions(ref: str, rows: list[SatRow]) -> list[SatRow]:
     if not suppressed_labels:
         return rows
 
-    return [sat_row for sat_row in rows if _sat_row_key(sat_row) not in suppressed_labels]
+    return [
+        sat_row for sat_row in rows if _sat_row_key(sat_row) not in suppressed_labels
+    ]
 
 
 def _sat_row(*, key: str, value: str, middle_description: str = "") -> SatRow:
@@ -421,10 +448,13 @@ def _merge_assessment_rows_into_sat_middle_column(rows: list[SatRow]) -> list[Sa
         assessment_value, _assessment_middle, _assessment_key = sat_row
         target_value, _target_middle, target_key = merged_rows[target_idx]
 
-        if _sat_assessment_value_describes_target_value(
-            assessment_value=assessment_value,
-            target_value=target_value,
-        ) is not True:
+        if (
+            _sat_assessment_value_describes_target_value(
+                assessment_value=assessment_value,
+                target_value=target_value,
+            )
+            is not True
+        ):
             continue
 
         merged_rows[target_idx] = _sat_row(
@@ -437,10 +467,16 @@ def _merge_assessment_rows_into_sat_middle_column(rows: list[SatRow]) -> list[Sa
     if not consumed_indices:
         return merged_rows
 
-    return [sat_row for idx, sat_row in enumerate(merged_rows) if idx not in consumed_indices]
+    return [
+        sat_row
+        for idx, sat_row in enumerate(merged_rows)
+        if idx not in consumed_indices
+    ]
 
 
-def _find_sat_merge_target_row_index(rows: list[SatRow], *, merge_target_base_key: str) -> int | None:
+def _find_sat_merge_target_row_index(
+    rows: list[SatRow], *, merge_target_base_key: str
+) -> int | None:
     preferred_keys = (f"{merge_target_base_key}.hbo", merge_target_base_key)
 
     for preferred_key in preferred_keys:
@@ -451,7 +487,9 @@ def _find_sat_merge_target_row_index(rows: list[SatRow], *, merge_target_base_ke
     return None
 
 
-def _sat_assessment_value_describes_target_value(*, assessment_value: str, target_value: str) -> bool | None:
+def _sat_assessment_value_describes_target_value(
+    *, assessment_value: str, target_value: str
+) -> bool | None:
     assessment_text = assessment_value.strip()
     target_text = target_value.strip()
     if not assessment_text or not target_text:

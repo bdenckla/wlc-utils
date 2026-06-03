@@ -46,11 +46,16 @@ def smart_concatenate_string_runs(nodes: list[object]) -> list[object]:
             previous_input_string = _PASEQ
             continue
 
-        if isinstance(node, str) and out_nodes and isinstance(out_nodes[-1], str) and out_nodes[-1] != _PASEQ:
+        if (
+            isinstance(node, str)
+            and out_nodes
+            and isinstance(out_nodes[-1], str)
+            and out_nodes[-1] != _PASEQ
+        ):
             assert previous_input_string is not None
-            assert " " not in previous_input_string, (
-                f"Expected no spaces before concatenation: {previous_input_string!r}"
-            )
+            assert (
+                " " not in previous_input_string
+            ), f"Expected no spaces before concatenation: {previous_input_string!r}"
             assert " " not in node, f"Expected no spaces before concatenation: {node!r}"
 
             prev = out_nodes[-1]

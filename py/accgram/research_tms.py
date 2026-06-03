@@ -26,7 +26,6 @@ from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import provenance
 from py_uxlc import my_uxlc
 
-
 _TROUBLEMAKER_REF_RE = re.compile(r"^(?P<bb>[0-9a-z]{2})\s+(?P<ch>\d+):(?P<vr>\d+)$")
 _DIFF_NOTE_KEYS = {"note", "notes"}
 
@@ -112,7 +111,9 @@ def run(args: argparse.Namespace) -> None:
     troubles_payload = _read_json(args.troubles_in)
     troublemakers = troubles_payload.get("troublemakers")
     if not isinstance(troublemakers, list):
-        raise ValueError(f"Expected list at troubles payload key 'troublemakers': {args.troubles_in}")
+        raise ValueError(
+            f"Expected list at troubles payload key 'troublemakers': {args.troubles_in}"
+        )
 
     parsed_rows: list[tuple[dict[str, object], str, str]] = []
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
@@ -173,7 +174,9 @@ def run(args: argparse.Namespace) -> None:
 
         wlc422_for_diff = _normalize_payload_for_diff_ignoring_notes(wlc422_verse)
         uxlc_for_diff = _normalize_payload_for_diff_ignoring_notes(uxlc_nodes)
-        mam_simple_for_diff = _normalize_payload_for_diff_ignoring_notes(mam_simple_verse)
+        mam_simple_for_diff = _normalize_payload_for_diff_ignoring_notes(
+            mam_simple_verse
+        )
         diff_wlc_uxlc_for_checks = diff_wlc_uxlc(wlc422_verse, uxlc_nodes)
         diff_wlc_uxlc_for_output = diff_wlc_uxlc(wlc422_for_diff, uxlc_for_diff)
         diff_wlc_mam_for_output = diff_wlc_mam(wlc422_for_diff, mam_simple_for_diff)
@@ -201,7 +204,9 @@ def run(args: argparse.Namespace) -> None:
         }
         if structured_text is not None:
             assessment = structured_text.get("assessment")
-            assessment_uxlc = assessment.get("uxlc") if isinstance(assessment, dict) else None
+            assessment_uxlc = (
+                assessment.get("uxlc") if isinstance(assessment, dict) else None
+            )
             if isinstance(assessment_uxlc, str):
                 matches_converted_diff = assessment_uxlc_matches_converted_diff_uxlc(
                     assessment_uxlc=assessment_uxlc,
@@ -218,7 +223,9 @@ def run(args: argparse.Namespace) -> None:
             if isinstance(uxlc_change, str) and uxlc_change.strip():
                 canonical_url = canonicalize_uxlc_change_url(uxlc_change)
                 if canonical_url is None:
-                    raise ValueError(f"Malformed structured_text.uxlc_change URL for {ref}: {uxlc_change}")
+                    raise ValueError(
+                        f"Malformed structured_text.uxlc_change URL for {ref}: {uxlc_change}"
+                    )
 
                 change_row = all_changes_by_url.get(canonical_url)
                 if change_row is None:
@@ -273,8 +280,12 @@ def run(args: argparse.Namespace) -> None:
     # Keep this call immediately after JSON write so HTML failures are fail-fast
     # while preserving the JSON write attempt.
     research_tms_report.write_goerwitz_tms_html_report(html_out_path, enriched_rows)
-    research_tms_report.write_goerwitz_tms_msp_yes_html_report(html_out_path, enriched_rows)
-    research_tms_report.write_goerwitz_tms_msp_no_html_report(html_out_path, enriched_rows)
+    research_tms_report.write_goerwitz_tms_msp_yes_html_report(
+        html_out_path, enriched_rows
+    )
+    research_tms_report.write_goerwitz_tms_msp_no_html_report(
+        html_out_path, enriched_rows
+    )
 
     print(f"Input troublemakers: {args.troubles_in}")
     print(f"wlc422-kq-u dir: {args.wlc422_kq_u_dir}")
@@ -304,9 +315,17 @@ def _normalize_payload_for_diff_ignoring_notes(payload: object) -> object:
             out_payload[key] = _normalize_payload_for_diff_ignoring_notes(value)
 
         # Collapse only dicts that were explicitly note-bearing wrappers.
-        if had_note_key and set(out_payload.keys()) == {"word"} and isinstance(out_payload.get("word"), str):
+        if (
+            had_note_key
+            and set(out_payload.keys()) == {"word"}
+            and isinstance(out_payload.get("word"), str)
+        ):
             return out_payload["word"]
-        if had_note_key and set(out_payload.keys()) == {"text"} and isinstance(out_payload.get("text"), str):
+        if (
+            had_note_key
+            and set(out_payload.keys()) == {"text"}
+            and isinstance(out_payload.get("text"), str)
+        ):
             return out_payload["text"]
 
         return out_payload
@@ -479,7 +498,7 @@ def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str | Non
 
     # Preserve direct text plus tail text after inline children (e.g. <x>...</x>tail).
     # Do not include inline child text here; it is represented separately in children.
-    text_parts = [(element.text or "")]
+    text_parts = [element.text or ""]
     for child in element:
         text_parts.append(child.tail or "")
     text = "".join(text_parts).strip()
@@ -490,7 +509,9 @@ def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str | Non
         node["attrs"] = dict(element.attrib)
 
     if tag == "w":
-        children = [_to_xmlish_inline(child) for child in element if child.tag in {"s", "x"}]
+        children = [
+            _to_xmlish_inline(child) for child in element if child.tag in {"s", "x"}
+        ]
         if children:
             node["children"] = children
 

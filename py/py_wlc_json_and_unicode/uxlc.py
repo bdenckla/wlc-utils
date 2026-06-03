@@ -1,4 +1,4 @@
-""" Exports read_all_books, read. """
+"""Exports read_all_books, read."""
 
 import xml.etree.ElementTree
 

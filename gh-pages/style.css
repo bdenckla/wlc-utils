@@ -27,6 +27,9 @@ div.goerwitz-tms-width-limited {
     margin-left: auto;
     margin-right: auto;
 }
+p.goerwitz-tms-comment {
+    margin-top: 0.4em;
+}
 table.border-collapse { border-collapse: collapse; }
 th, td {
     padding-right: 0.4em;

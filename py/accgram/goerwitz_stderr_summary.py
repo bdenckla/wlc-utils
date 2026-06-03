@@ -8,7 +8,6 @@ from pathlib import Path
 
 from cmn.wlc_book_codes import goerwitz_book_name_to_wlc_bb
 
-
 SUMMARY_FILENAME = "_summary.stderr.json"
 VERSE_REF_RE = re.compile(
     r"(?P<verse>(?:[1-3]\s*)?[A-Z][A-Za-z_]*(?:\s+[A-Z][A-Za-z_]*)*\s+\d+:\d+)\s*$"
@@ -57,7 +56,10 @@ def _try_compact_standard_sof_pasuq_case(
     verse_ref: str,
     message_counter: Counter[str],
 ) -> dict[str, object] | None:
-    if set(message_counter) != {GENERAL_PARSING_ERROR_MESSAGE, MISSING_SOF_PASUQ_MESSAGE}:
+    if set(message_counter) != {
+        GENERAL_PARSING_ERROR_MESSAGE,
+        MISSING_SOF_PASUQ_MESSAGE,
+    }:
         return None
 
     if message_counter[MISSING_SOF_PASUQ_MESSAGE] != 1:
@@ -65,7 +67,9 @@ def _try_compact_standard_sof_pasuq_case(
 
     return {
         "verse_ref": verse_ref,
-        "standard_sof_pasuq_error_count": message_counter[GENERAL_PARSING_ERROR_MESSAGE],
+        "standard_sof_pasuq_error_count": message_counter[
+            GENERAL_PARSING_ERROR_MESSAGE
+        ],
     }
 
 

@@ -82,7 +82,9 @@ def sanity_check_structured_text(
 
         canonical_url = _canonicalize_uxlc_change_url(uxlc_change)
         if canonical_url is None:
-            errors.append(f"Malformed structured_text.uxlc_change URL for {ref}: {uxlc_change}")
+            errors.append(
+                f"Malformed structured_text.uxlc_change URL for {ref}: {uxlc_change}"
+            )
             continue
 
         change_row = by_change_url.get(canonical_url)
@@ -95,7 +97,9 @@ def sanity_check_structured_text(
 
         citation = change_row.get("citation")
         if not isinstance(citation, str):
-            errors.append(f"all_changes.json row is missing string citation for URL {canonical_url}")
+            errors.append(
+                f"all_changes.json row is missing string citation for URL {canonical_url}"
+            )
             continue
 
         if not _citation_matches_ref(citation, ref):
@@ -166,7 +170,9 @@ def diff_uxlc_matches_changetext(diff_wlc_uxlc: object, changetext: str) -> bool
 
 
 def descriptor_from_hebrew_token(text: str) -> str | None:
-    accent_marks = [ch for ch in text if _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END]
+    accent_marks = [
+        ch for ch in text if _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END
+    ]
     if len(accent_marks) == 0:
         return "maqaf" if _HEBREW_MAQAF in text else "no_accent"
 
@@ -189,9 +195,9 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
             return None
 
         accented_letter = _previous_hebrew_letter(text, idx)
-        assert accented_letter is not None, (
-            f"Over-accent must follow a Hebrew letter: token={text!r} accent={ch!r}"
-        )
+        assert (
+            accented_letter is not None
+        ), f"Over-accent must follow a Hebrew letter: token={text!r} accent={ch!r}"
         letter_name = _hebrew_letter_name(accented_letter)
         descriptors.append(f"{prefix}{letter_name}")
 
@@ -237,7 +243,9 @@ def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> boo
 
 
 def _normalize_assessment_descriptor(descriptor: str) -> str:
-    match = re.fullmatch(r"(?P<prefix>pashta on |qadma on )(?P<letter>[\u05d0-\u05ea])", descriptor)
+    match = re.fullmatch(
+        r"(?P<prefix>pashta on |qadma on )(?P<letter>[\u05d0-\u05ea])", descriptor
+    )
     if match is None:
         return descriptor
     letter = match.group("letter")
@@ -291,7 +299,11 @@ def _url_for_all_changes_row(row: dict[str, object]) -> str:
     release = row.get("release")
     changeset = row.get("changeset")
     n = row.get("n")
-    if not isinstance(release, str) or not isinstance(changeset, str) or not isinstance(n, int):
+    if (
+        not isinstance(release, str)
+        or not isinstance(changeset, str)
+        or not isinstance(n, int)
+    ):
         raise ValueError("Malformed all_changes.json row: missing release/changeset/n")
     return uxlc_change_url(release, f"{changeset}-{n}")
 
@@ -343,7 +355,8 @@ def _parse_citation(citation: str) -> tuple[str, int, int]:
     try:
         bb = bk39id_to_wlc_bb(std_bkid)
     except ValueError as exc:
-        raise ValueError(f"Could not map citation book to WLC bb code: {citation_book}") from exc
+        raise ValueError(
+            f"Could not map citation book to WLC bb code: {citation_book}"
+        ) from exc
 
     return bb, int(match.group("ch")), int(match.group("vr"))
-

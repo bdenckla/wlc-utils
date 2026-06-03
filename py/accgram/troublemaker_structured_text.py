@@ -5,9 +5,35 @@ def _foi_non_revia_note(fp_value: str) -> str:
     return (
         'A possible reason why the goerwitz accent grammar check deems this verse "ungrammatical" '
         f'is its phrase that is a member of the FOI category "{fp_value}". '
-        'A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts '
+        "A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts "
         'with "⅃-leg...non-revia" and the other 12 are not deemed "ungrammatical" by the checker.'
     )
+
+
+NU_2019_01 = "This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors."
+NU_2019_02 = (
+    "WLC’s first poor decision was to attempt to encode a meaningless scribal whim:"
+    " the placement of a zarqa before the lamed ascender rather than after it."
+)
+NU_2019_03 = (
+    "WLC’s second poor decision was to characterize this as the correction of a typesetting error in BHS/BHQ."
+    " While I am as great a critic of BHS/BHQ as anyone, this is unfair."
+    " The treatment of these words in BHS/BHQ is almost certainly an editorial decision,"
+    " not an oddly-systematic set of typesetting errors."
+)
+NU_2019_04 = (
+    "WLC’s third poor decision was to encode this by further overloading the meaning of accent 82,"
+    " which is already used as tsinnorit and, rarely, as a stress-helper to accent 02 (zarqa/tsinnor)."
+)
+NU_2019_05 = (
+    "Finally, WLC greatly compounded these poor decisions by making an outright error in implementation:"
+    " the 82 codes are consistently placed preceding rather than following the L (lamed) in question,"
+    " in one case by even more than one letter too far back."
+)
+NU_2019_06 = (
+    "They are consistently placed in a location that would be more appropriate for a tsinnorit or a zarqa stress helper,"
+    " namely, on the first letter of the syllable ending in lamed, rather than on the lamed itself."
+)
 
 
 # Per-troublemaker structured research notes used by research-tms output.
@@ -18,7 +44,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "munax",
             "wlc": "mahapakh",
             "uxlc": "munax",
-            "mam": "munax"
+            "mam": "munax",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
     },
@@ -56,7 +82,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             " The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of"
             " the 'legality' of sequences involving it."
             " The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
-        ]
+        ],
     },
     "1s 6:19": {
         "wlc_focus": "גדולֽה",
@@ -78,7 +104,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "is 36:2": {
         "wlc_focus": "ירושל֛מה",
-        "comment": _foi_non_revia_note("⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"),
+        "comment": _foi_non_revia_note(
+            "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"
+        ),
     },
     "je 4:19": {
         "wlc_focus": "אוח֜ילה",
@@ -317,9 +345,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ex 34:6": {
         "wlc_focus": "ואמֽת׀",
         "assessment": {
-          "wlc": "silluq-pasoleg",
-          "uxlc": "silluq-pasoleg",
-          "mam": "silluq-sof_pasuq"
+            "wlc": "silluq-pasoleg",
+            "uxlc": "silluq-pasoleg",
+            "mam": "silluq-sof_pasuq",
         },
     },
     "je 9:10": {
@@ -375,16 +403,30 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
     },
     "nu 20:19": {
+        "st-summary": "Error in WLC.",
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
+        "comment": (
+            NU_2019_01,
+            NU_2019_02,
+            NU_2019_03,
+            NU_2019_04,
+            NU_2019_05,
+            NU_2019_06,
+        ),
     },
     "nu 25:19": {
+        "st-summary": "Quirk in versification not cantillation.",
         "wlc_focus": "המגפ֑ה",
+        "comment": (
+            "Compared to MAM, BHS starts chapter 26 “late”."
+            " It only starts chapter 26 after the etnaxta of what MAM calls 26:1."
+            " In other words, the accent grammar is unexceptional here if we ignore where BHS happens to put its verse labels."
+        ),
     },
     "ob 1:1": {
+        "st-summary": "Quirk in LC: עליה lacks an accent.",
         "wlc_focus": "עליה",
-        "summary": "Quirk in LC: עליה lacks an accent.",
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
     },
 }
-

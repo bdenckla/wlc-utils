@@ -1,4 +1,4 @@
-""" Exports write. """
+"""Exports write."""
 
 import mb_cmn.file_io as file_io
 

@@ -22,7 +22,9 @@ def default_troublemakers_out_path(repo_root: Path) -> Path:
     return tms.default_out_path(repo_root)
 
 
-def add_args(parser: argparse.ArgumentParser, default_input_path: Path, repo_root: Path) -> None:
+def add_args(
+    parser: argparse.ArgumentParser, default_input_path: Path, repo_root: Path
+) -> None:
     parser.add_argument(
         "--input",
         type=Path,
@@ -215,7 +217,9 @@ def _build_filtered_out_payload(
         if seen_book_refs and excluded_book_refs == seen_book_refs:
             books_fully_excluded.append(bb)
             continue
-        books_partially_excluded[bb] = _summarize_partial_book(seen_book_refs, excluded_book_refs)
+        books_partially_excluded[bb] = _summarize_partial_book(
+            seen_book_refs, excluded_book_refs
+        )
 
     return {
         "input": str(input_path),

@@ -177,7 +177,7 @@ _ACCENTS = {
     "75": hpo.MTGOSLQ,  # left (normal)
     "80": ha.ZAQ_Q,
     "81": ha.REV,
-    "82": ha.ZSH_OR_TSIT,  # 2 uses as stress-helper to acc02 (82\S+02); >200 uses as tsinnorit
+    "82": ha.ZSH_OR_TSIT,  # 2 uses as stress-helper to acc02 (82\S+02); >200 uses as tsinnorit; 12 wrong-headed uses as pre-lamed-ascender zarqa
     "83": ha.PAZ,
     "84": ha.QAR,  # aka pazer gadol
     "85": ha.ZAQ_G,

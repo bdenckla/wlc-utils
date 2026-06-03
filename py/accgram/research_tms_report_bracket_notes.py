@@ -6,11 +6,12 @@ from cmn.wlc_bracket_note_definitions import SOURCE_MANUAL422
 from cmn.wlc_bracket_note_definitions import bracket_note_definition
 from py_html import wlc_utils_html
 
-
 _BRACKET_NOTE_CODE_RE = re.compile(r"\][0-9A-Za-z]")
 
 
-def build_wlc_bracket_notes_section(enriched_rows: list[dict[str, object]]) -> tuple[object, ...]:
+def build_wlc_bracket_notes_section(
+    enriched_rows: list[dict[str, object]],
+) -> tuple[object, ...]:
     codes = sorted(_collect_page_bracket_note_codes(enriched_rows))
     if not codes:
         return (
@@ -64,7 +65,9 @@ def annotate_bracket_note_tokens(value_text: str) -> object:
 
 
 def parse_bracket_note_codes(note_text: str) -> list[str]:
-    compact_codes = [match.group(0) for match in _BRACKET_NOTE_CODE_RE.finditer(note_text)]
+    compact_codes = [
+        match.group(0) for match in _BRACKET_NOTE_CODE_RE.finditer(note_text)
+    ]
     return list(dict.fromkeys(compact_codes))
 
 
@@ -75,7 +78,9 @@ def manual422_definition_for_code(code: str) -> str:
     return f"No manual422 definition available for {code}."
 
 
-def _collect_page_bracket_note_codes(enriched_rows: list[dict[str, object]]) -> list[str]:
+def _collect_page_bracket_note_codes(
+    enriched_rows: list[dict[str, object]],
+) -> list[str]:
     page_codes: list[str] = []
     for row in enriched_rows:
         _append_bracket_note_codes_from_value(row, out_codes=page_codes)
@@ -84,7 +89,9 @@ def _collect_page_bracket_note_codes(enriched_rows: list[dict[str, object]]) -> 
     return list(dict.fromkeys(page_codes))
 
 
-def _append_bracket_note_codes_from_value(value: object, *, out_codes: list[str]) -> None:
+def _append_bracket_note_codes_from_value(
+    value: object, *, out_codes: list[str]
+) -> None:
     if isinstance(value, str):
         out_codes.extend(parse_bracket_note_codes(value))
         return

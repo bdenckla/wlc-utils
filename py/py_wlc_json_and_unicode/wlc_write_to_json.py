@@ -1,4 +1,4 @@
-""" Exports write. """
+"""Exports write."""
 
 import py_wlc_json_and_unicode.wlc_read_and_parse_mdc as rp_mdc
 import py_wlc_json_and_unicode.wlc_read_and_parse_uni as rp_uni

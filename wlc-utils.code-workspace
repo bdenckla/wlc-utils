@@ -7,5 +7,12 @@
 			"path": "../wlc-utils-io"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"chat.tools.terminal.autoApprove": {
+			"/^\\.\\\\\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_test\\.py --accgram-research-troublemakers -v$/": {
+				"approve": true,
+				"matchCommandLine": true
+			}
+		}
+	}
 }

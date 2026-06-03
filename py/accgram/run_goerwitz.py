@@ -10,7 +10,6 @@ from accgram.goerwitz_stderr_summary import SUMMARY_FILENAME, write_stderr_summa
 from accgram.missing_verses import write_missing_verses_json
 
 
-
 @dataclass(frozen=True)
 class RunResult:
     input_count: int
@@ -18,6 +17,8 @@ class RunResult:
     nonempty_output_count: int
     stderr_nonempty_count: int
     nonzero_exit_count: int
+
+
 def default_in_dir(repo_root: Path) -> Path:
     return repo_root.parent / "wlc-utils-io" / "out" / "goerwitz" / "wlc_422_psf"
 
@@ -92,7 +93,9 @@ def run(args: argparse.Namespace) -> None:
 
     summary_path = args.stderr_dir / SUMMARY_FILENAME
     try:
-        summary_result = write_stderr_summary(stderr_dir=args.stderr_dir, summary_path=summary_path)
+        summary_result = write_stderr_summary(
+            stderr_dir=args.stderr_dir, summary_path=summary_path
+        )
         print(
             "Stderr summary: "
             f"{summary_result.summary_path} "
@@ -103,7 +106,10 @@ def run(args: argparse.Namespace) -> None:
             f"unique-non-verse-messages={summary_result.total_unique_non_verse_messages})"
         )
     except Exception as exc:  # pragma: no cover - preserve primary pipeline success.
-        print(f"Warning: failed to write stderr summary at {summary_path}: {exc}", file=sys.stderr)
+        print(
+            f"Warning: failed to write stderr summary at {summary_path}: {exc}",
+            file=sys.stderr,
+        )
 
 
 def run_goerwitz_binary(
@@ -120,7 +126,9 @@ def run_goerwitz_binary(
     out_dir.mkdir(parents=True, exist_ok=True)
     stderr_dir.mkdir(parents=True, exist_ok=True)
 
-    input_paths = sorted(p for p in in_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt")
+    input_paths = sorted(
+        p for p in in_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt"
+    )
     nonempty_output_count = 0
     stderr_nonempty_count = 0
     nonzero_exit_count = 0
@@ -150,9 +158,7 @@ def run_goerwitz_binary(
         if cp.returncode != 0:
             nonzero_exit_count += 1
             if not stderr_text:
-                stderr_text = (
-                    f"goerwitz exited with code {cp.returncode} and produced no stderr output.\n"
-                )
+                stderr_text = f"goerwitz exited with code {cp.returncode} and produced no stderr output.\n"
 
         stderr_path.write_text(stderr_text, encoding="utf-8", newline="\n")
         if stderr_text:

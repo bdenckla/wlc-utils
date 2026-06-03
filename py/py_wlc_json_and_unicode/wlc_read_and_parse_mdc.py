@@ -1,4 +1,4 @@
-""" Exports read_and_parse. """
+"""Exports read_and_parse."""
 
 import py_wlc_json_and_unicode.wlc_utils as wlc_utils
 

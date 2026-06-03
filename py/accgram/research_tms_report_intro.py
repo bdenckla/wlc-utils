@@ -27,10 +27,9 @@ def build_intro_contents(row_count: int) -> tuple[object, ...]:
         " The checker is described in the following article:"
     )
     citation_text = (
-        f"{_GC_AUTHOR}. ‹{_GC_TITLE}.›"
-        f" In {_GC_BOOK_TITLE} (pp. {_GC_PAGES}). (",
+        f"{_GC_AUTHOR}. ‹{_GC_TITLE}.›" f" In {_GC_BOOK_TITLE} (pp. {_GC_PAGES}). (",
         wlc_utils_html.anchor(_GC_SERIES, {"href": _GC_BOOK_URL}),
-        f"). The Oriental Institute, Chicago, {_GC_YEAR}. ISBN {_GC_ISBN}."
+        f"). The Oriental Institute, Chicago, {_GC_YEAR}. ISBN {_GC_ISBN}.",
     )
 
     return (

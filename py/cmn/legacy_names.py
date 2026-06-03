@@ -9,7 +9,7 @@ from mb_diff_mpu.describe_diff import POINT_NAMES
 
 def legacy_name(string_len_1):
     """Return the legacy human-readable Unicode name for a code point."""
-    if (name := _VENDORED_NAME_SHORTS.get(string_len_1)):
+    if name := _VENDORED_NAME_SHORTS.get(string_len_1):
         return name
     return _LEGACY_NAME_SHORTS.get(string_len_1) or unicodedata.name(string_len_1)
 

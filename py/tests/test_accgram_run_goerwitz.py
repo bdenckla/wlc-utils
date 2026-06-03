@@ -62,8 +62,12 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
             in_dir.mkdir(parents=True, exist_ok=True)
             goerwitz_bin.write_text("fake-binary", encoding="utf-8")
 
-            (in_dir / "wlc_422_ps_ob.txt").write_text("Obadiah\n1:1 X\n", encoding="utf-8")
-            (in_dir / "wlc_422_ps_gn.txt").write_text("Genesis\n1:1 Y\n", encoding="utf-8")
+            (in_dir / "wlc_422_ps_ob.txt").write_text(
+                "Obadiah\n1:1 X\n", encoding="utf-8"
+            )
+            (in_dir / "wlc_422_ps_gn.txt").write_text(
+                "Genesis\n1:1 Y\n", encoding="utf-8"
+            )
 
             calls: list[list[str]] = []
 
@@ -75,7 +79,9 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
                 calls.append(cmd)
 
                 class FakeCompletedProcess:
-                    def __init__(self, stdout: bytes, stderr: bytes, returncode: int = 0):
+                    def __init__(
+                        self, stdout: bytes, stderr: bytes, returncode: int = 0
+                    ):
                         self.stdout = stdout
                         self.stderr = stderr
                         self.returncode = returncode
@@ -100,9 +106,13 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
             self.assertEqual(result.nonzero_exit_count, 0)
             self.assertEqual(len(calls), 2)
 
-            self.assertEqual((out_dir / "wlc_422_ps_ob_ag.txt").read_text(encoding="utf-8"), "TREE\n")
             self.assertEqual(
-                (stderr_dir / "wlc_422_ps_gn_ag.stderr.txt").read_text(encoding="utf-8"),
+                (out_dir / "wlc_422_ps_ob_ag.txt").read_text(encoding="utf-8"), "TREE\n"
+            )
+            self.assertEqual(
+                (stderr_dir / "wlc_422_ps_gn_ag.stderr.txt").read_text(
+                    encoding="utf-8"
+                ),
                 "goerwitz warning\n",
             )
 
@@ -116,7 +126,9 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
 
             in_dir.mkdir(parents=True, exist_ok=True)
             goerwitz_bin.write_text("fake-binary", encoding="utf-8")
-            (in_dir / "wlc_422_ps_ob.txt").write_text("Obadiah\n1:1 X\n", encoding="utf-8")
+            (in_dir / "wlc_422_ps_ob.txt").write_text(
+                "Obadiah\n1:1 X\n", encoding="utf-8"
+            )
 
             class FakeCompletedProcess:
                 def __init__(self):
@@ -124,7 +136,10 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
                     self.stderr = b""
                     self.returncode = 7
 
-            with patch("accgram.run_goerwitz.subprocess.run", return_value=FakeCompletedProcess()):
+            with patch(
+                "accgram.run_goerwitz.subprocess.run",
+                return_value=FakeCompletedProcess(),
+            ):
                 result = run_goerwitz.run_goerwitz_binary(
                     in_dir=in_dir,
                     out_dir=out_dir,
@@ -133,7 +148,9 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
                 )
 
             self.assertEqual(result.nonzero_exit_count, 1)
-            sidecar = (stderr_dir / "wlc_422_ps_ob_ag.stderr.txt").read_text(encoding="utf-8")
+            sidecar = (stderr_dir / "wlc_422_ps_ob_ag.stderr.txt").read_text(
+                encoding="utf-8"
+            )
             self.assertIn("goerwitz exited with code 7", sidecar)
 
     def test_run_goerwitz_writes_missing_verses_json(self):
@@ -147,8 +164,13 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
             in_dir.mkdir(parents=True, exist_ok=True)
             goerwitz_bin.write_text("fake-binary", encoding="utf-8")
 
-            (in_dir / "wlc_422_ps_ob.txt").write_text("Obadiah\n1:1 Missing verse payload\n1:2 Present verse payload\n", encoding="utf-8")
-            (in_dir / "wlc_422_ps_gn.txt").write_text("Genesis\n1:1 Present verse payload\n", encoding="utf-8")
+            (in_dir / "wlc_422_ps_ob.txt").write_text(
+                "Obadiah\n1:1 Missing verse payload\n1:2 Present verse payload\n",
+                encoding="utf-8",
+            )
+            (in_dir / "wlc_422_ps_gn.txt").write_text(
+                "Genesis\n1:1 Present verse payload\n", encoding="utf-8"
+            )
 
             class FakeCompletedProcess:
                 def __init__(self, stdout: bytes, stderr: bytes, returncode: int = 0):
@@ -162,7 +184,9 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
                 self.assertFalse(check)
                 payload = input.decode("utf-8")
                 if payload.startswith("Obadiah"):
-                    return FakeCompletedProcess(stdout=b"Obadiah 1:2\n0 tree\n", stderr=b"")
+                    return FakeCompletedProcess(
+                        stdout=b"Obadiah 1:2\n0 tree\n", stderr=b""
+                    )
                 return FakeCompletedProcess(stdout=b"Genesis 1:1\n0 tree\n", stderr=b"")
 
             def fake_write_stderr_summary(stderr_dir, summary_path):
@@ -177,8 +201,11 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
                     total_unique_non_verse_messages=0,
                 )
 
-            with patch("accgram.run_goerwitz.subprocess.run", side_effect=fake_run), patch(
-                "accgram.run_goerwitz.write_stderr_summary", side_effect=fake_write_stderr_summary
+            with patch(
+                "accgram.run_goerwitz.subprocess.run", side_effect=fake_run
+            ), patch(
+                "accgram.run_goerwitz.write_stderr_summary",
+                side_effect=fake_write_stderr_summary,
             ):
                 run_goerwitz.run(
                     SimpleNamespace(
@@ -191,7 +218,10 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
 
             missing_path = out_dir / "_missing_verses.json"
             payload = json.loads(missing_path.read_text(encoding="utf-8"))
-            self.assertEqual(payload["artifacts_description"], "missing verses from goerwitz *_ag.txt outputs")
+            self.assertEqual(
+                payload["artifacts_description"],
+                "missing verses from goerwitz *_ag.txt outputs",
+            )
             self.assertEqual(payload["summary"]["missing_verses"], 1)
             self.assertEqual(payload["summary"]["books_with_missing_verses"], 1)
             self.assertEqual(
@@ -255,7 +285,10 @@ class TestAccgramRunGoerwitz(unittest.TestCase):
             self.assertEqual(non_verse_rows[0]["count"], 1)
 
             per_file = summary["per_file_counters"]
-            self.assertEqual([row["file"] for row in per_file], ["a_ag.stderr.txt", "b_ag.stderr.txt", "z_ag.stderr.txt"])
+            self.assertEqual(
+                [row["file"] for row in per_file],
+                ["a_ag.stderr.txt", "b_ag.stderr.txt", "z_ag.stderr.txt"],
+            )
 
 
 if __name__ == "__main__":

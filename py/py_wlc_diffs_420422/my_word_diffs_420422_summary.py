@@ -22,7 +22,9 @@ def write(records, path, title, intro=None):
 
 
 def _link_to_toa(toa_frag_id):
-    anchor = wlc_utils_html.anchor("Abbreviations used below.", {"href": f"#{toa_frag_id}"})
+    anchor = wlc_utils_html.anchor(
+        "Abbreviations used below.", {"href": f"#{toa_frag_id}"}
+    )
     return wlc_utils_html.para(anchor)
 
 
@@ -71,7 +73,9 @@ def _rec_to_row(record):
 
 
 def _row_for_header():
-    cells_for_header = list(map(wlc_utils_html.table_header, _STRS_FOR_CELLS_FOR_HEADER))
+    cells_for_header = list(
+        map(wlc_utils_html.table_header, _STRS_FOR_CELLS_FOR_HEADER)
+    )
     return wlc_utils_html.table_row(cells_for_header)
 
 

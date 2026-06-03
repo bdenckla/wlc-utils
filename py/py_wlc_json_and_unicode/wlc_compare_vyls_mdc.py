@@ -1,4 +1,4 @@
-""" Exports compare_vyls """
+"""Exports compare_vyls"""
 
 import py_wlc_json_and_unicode.wlc_uword as wlc_uword
 

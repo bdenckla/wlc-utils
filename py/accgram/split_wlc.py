@@ -7,7 +7,6 @@ from pathlib import Path
 
 from cmn.wlc_book_codes import wlc_bb_to_goerwitz_book_name
 
-
 _BOOK_LINE_RE = re.compile(r"^([0-9a-z]{2})(\d+):(\d+)\b")
 _LINE_REF_RE = re.compile(r"^([0-9a-z]{2})(\d+:\d+\s+.*)$")
 

@@ -6,7 +6,6 @@ from pathlib import Path
 
 from mb_cmn import provenance
 
-
 _SOURCE_VERSE_LINE_RE = re.compile(r"^([0-9a-z]{2})(\d+):(\d+)\s+(.*)$")
 
 

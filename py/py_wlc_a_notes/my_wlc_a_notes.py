@@ -733,7 +733,9 @@ RECORD_32 = {
     "column": 2,
     "line": 13,
     "qere": "דָּנִיֵּ֣אל",
-    "MPK": ("דָּנִ" "\N{DOTTED CIRCLE}\N{HEBREW POINT TSERE}\N{HEBREW ACCENT MUNAH}" "אל"),
+    "MPK": (
+        "דָּנִ" "\N{DOTTED CIRCLE}\N{HEBREW POINT TSERE}\N{HEBREW ACCENT MUNAH}" "אל"
+    ),
     "at issue": "יּ",
     "summary": "+dg",
     "remarks": [_has_no_letter_to_carry("yod")],
@@ -747,7 +749,9 @@ RECORD_33 = {
     "column": 3,
     "line": 6,
     "qere": "דָּנִיֵּ֣אל",
-    "MPK": ("דָּנִ" "\N{DOTTED CIRCLE}\N{HEBREW POINT TSERE}\N{HEBREW ACCENT MUNAH}" "אל"),
+    "MPK": (
+        "דָּנִ" "\N{DOTTED CIRCLE}\N{HEBREW POINT TSERE}\N{HEBREW ACCENT MUNAH}" "אל"
+    ),
     "at issue": "יּ",
     "summary": "+dg",
     "remarks": [_has_no_letter_to_carry("yod")],
@@ -762,7 +766,9 @@ RECORD_34 = {
     "line": 11,
     "qere": "מִדָּֽנִיֵּ֑אל",
     "MPK": (
-        "מִדָּֽנִ" "\N{DOTTED CIRCLE}\N{HEBREW POINT TSERE}\N{HEBREW ACCENT ETNAHTA}" "אֿל"
+        "מִדָּֽנִ"
+        "\N{DOTTED CIRCLE}\N{HEBREW POINT TSERE}\N{HEBREW ACCENT ETNAHTA}"
+        "אֿל"
     ),
     "at issue": "יּ",
     "summary": "+dg",

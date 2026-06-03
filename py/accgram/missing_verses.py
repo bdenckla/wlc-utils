@@ -6,9 +6,10 @@ from pathlib import Path
 
 from mb_cmn import provenance
 
-
 _INPUT_VERSE_LINE_RE = re.compile(r"^(\d+):(\d+)\s+(.*)$")
-_OUTPUT_VERSE_LABEL_RE = re.compile(r"^(?:[1-3]\s*)?[A-Z][A-Za-z_]*(?:\s+[A-Z][A-Za-z_]*)*\s+(\d+):(\d+)\b")
+_OUTPUT_VERSE_LABEL_RE = re.compile(
+    r"^(?:[1-3]\s*)?[A-Z][A-Za-z_]*(?:\s+[A-Z][A-Za-z_]*)*\s+(\d+):(\d+)\b"
+)
 
 
 def _collect_input_verses(input_path: Path) -> dict[tuple[int, int], str]:
@@ -46,11 +47,15 @@ def _collect_output_refs(output_path: Path) -> set[tuple[int, int]]:
     return verse_refs
 
 
-def write_missing_verses_json(in_dir: Path, out_dir: Path, missing_verses_out_path: Path) -> None:
+def write_missing_verses_json(
+    in_dir: Path, out_dir: Path, missing_verses_out_path: Path
+) -> None:
     missing_rows: list[dict[str, object]] = []
     books_with_missing_verses: set[str] = set()
 
-    input_paths = sorted(p for p in in_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt")
+    input_paths = sorted(
+        p for p in in_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt"
+    )
     for input_path in input_paths:
         stem = input_path.stem
         if not stem.startswith("wlc_422_ps_"):

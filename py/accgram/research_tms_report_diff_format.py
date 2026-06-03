@@ -4,7 +4,7 @@ from typing import Callable
 
 
 def contains_hebrew(text: str) -> bool:
-    return any("\u0590" <= char <= "\u05FF" for char in text)
+    return any("\u0590" <= char <= "\u05ff" for char in text)
 
 
 def is_plain_hebrew_string(text: str) -> bool:
@@ -15,7 +15,7 @@ def is_plain_hebrew_string(text: str) -> bool:
     for char in stripped:
         if char.isspace():
             continue
-        if "\u0590" <= char <= "\u05FF":
+        if "\u0590" <= char <= "\u05ff":
             continue
         return False
 
@@ -74,7 +74,9 @@ def _split_note_bearing_diff_rows(
         return None
 
     uxlc_side = entry.get("uxlc")
-    hbo_text, note_text = _extract_token_text_and_note(uxlc_side, render_sat_value=render_sat_value)
+    hbo_text, note_text = _extract_token_text_and_note(
+        uxlc_side, render_sat_value=render_sat_value
+    )
     if not hbo_text or not note_text:
         return None
     if not contains_hebrew(hbo_text):

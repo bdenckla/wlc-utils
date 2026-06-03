@@ -2,7 +2,6 @@
 
 import py_html.wlc_utils_html as wlc_utils_html
 
-
 _THIS_PAGE = (
     "This page describes the 39 words having bracket-a notes "
     + "in WLC. Here is how bracket-a notes are defined in "
@@ -41,7 +40,9 @@ def _initialisms(no_ucp):
 
 def intro(no_ucp):
     return [
-        wlc_utils_html.para([_THIS_PAGE, wlc_utils_html.blockquote(_DEFINITION_OF_AN_A_NOTE)]),
+        wlc_utils_html.para(
+            [_THIS_PAGE, wlc_utils_html.blockquote(_DEFINITION_OF_AN_A_NOTE)]
+        ),
         *([] if no_ucp else [wlc_utils_html.para([_THIS_PAGE_ALSO])]),
         wlc_utils_html.para([_THIS_PAGE_USES]),
         _initialisms(no_ucp),

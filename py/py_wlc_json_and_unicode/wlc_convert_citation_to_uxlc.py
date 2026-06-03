@@ -1,4 +1,4 @@
-""" Exports get_tanach_dot_us_url, get_uxlc_bkid. """
+"""Exports get_tanach_dot_us_url, get_uxlc_bkid."""
 
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 

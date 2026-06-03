@@ -1572,8 +1572,17 @@
         "mam_simple": "ישראל֮"
       },
       "structured_text": {
+        "st-summary": "Error in WLC.",
         "wlc_focus": "ישרא֘ל",
-        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7"
+        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
+        "comment": [
+          "This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors.",
+          "WLC’s first poor decision was to attempt to encode a meaningless scribal whim: the placement of a zarqa before the lamed ascender rather than after it.",
+          "WLC’s second poor decision was to characterize this as the correction of a typesetting error in BHS/BHQ. While I am as great a critic of BHS/BHQ as anyone, this is unfair. The treatment of these words in BHS/BHQ is almost certainly an editorial decision, not an oddly-systematic set of typesetting errors.",
+          "WLC’s third poor decision was to encode this by further overloading the meaning of accent 82, which is already used as tsinnorit and, rarely, as a stress-helper to accent 02 (zarqa/tsinnor).",
+          "Finally, WLC greatly compounded these poor decisions by making an outright error in implementation: the 82 codes are consistently placed preceding rather than following the L (lamed) in question, in one case by even more than one letter too far back.",
+          "They are consistently placed in a location that would be more appropriate for a tsinnorit or a zarqa stress helper, namely, on the first letter of the syllable ending in lamed, rather than on the lamed itself."
+        ]
       }
     },
     {
@@ -1599,7 +1608,9 @@
       },
       "diff_wlc_mam": [],
       "structured_text": {
-        "wlc_focus": "המגפ֑ה"
+        "st-summary": "Quirk in versification not cantillation.",
+        "wlc_focus": "המגפ֑ה",
+        "comment": "Compared to MAM, BHS starts chapter 26 “late”. It only starts chapter 26 after the etnaxta of what MAM calls 26:1. In other words, the accent grammar is unexceptional here if we ignore where BHS happens to put its verse labels."
       }
     },
     {
@@ -1634,8 +1645,8 @@
         "mam_simple": "על֖יה"
       },
       "structured_text": {
+        "st-summary": "Quirk in LC: עליה lacks an accent.",
         "wlc_focus": "עליה",
-        "summary": "Quirk in LC: עליה lacks an accent.",
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html"
       }
     }

@@ -1,4 +1,4 @@
-""" Exports write. """
+"""Exports write."""
 
 import mb_cmn.file_io as file_io
 import py_wlc_json_and_unicode.wlc_utils as wlc_utils

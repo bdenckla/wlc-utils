@@ -4,7 +4,6 @@ import json
 
 from mb_cmn import my_diffs
 
-
 _PASEQ = "׀"
 
 
@@ -48,7 +47,9 @@ def _normalize_paseq_tokenization(vels: list[object]) -> list[object]:
     return out_vels
 
 
-def _render_diff_pair(left: list[object] | None, right: list[object] | None) -> dict[str, object]:
+def _render_diff_pair(
+    left: list[object] | None, right: list[object] | None
+) -> dict[str, object]:
     left = [] if left is None else left
     right = [] if right is None else right
 

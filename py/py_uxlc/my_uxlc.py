@@ -4,7 +4,6 @@ import xml.etree.ElementTree
 
 import mb_cmn.bib_locales as tbn
 
-
 UXLC_CANONICAL_DIR = "in/UXLC-39"
 
 

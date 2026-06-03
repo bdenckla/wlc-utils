@@ -86,7 +86,7 @@ def _replace_subset_words_in_focus(
     match_len = len(subset_wlc_tokens)
     last_start = len(focus_tokens) - match_len
     for start in range(last_start + 1):
-        if focus_tokens[start:start + match_len] == subset_wlc_tokens:
+        if focus_tokens[start : start + match_len] == subset_wlc_tokens:
             match_starts.append(start)
 
     if len(match_starts) != 1:

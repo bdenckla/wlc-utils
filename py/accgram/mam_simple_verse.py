@@ -8,9 +8,9 @@ from mb_misc import osis_book_abbrevs as oba
 
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
-
 _HEBREW_MAQAF = "\u05be"
 _HEBREW_PASEQ = "\u05c0"
+
 
 def default_mam_simple_dir(repo_root: Path) -> Path:
     return repo_root.parent / "MAM-simple" / "json-vtrad-bhs"
@@ -41,7 +41,11 @@ def load_mam_simple_for_refs(
 
             osis_id = verse_node.get("osisID")
             osis_prefix = oba.BOOK_ABBREVS.get(bk39id)
-            if not isinstance(osis_id, str) or osis_prefix is None or not osis_id.startswith(f"{osis_prefix}."):
+            if (
+                not isinstance(osis_id, str)
+                or osis_prefix is None
+                or not osis_id.startswith(f"{osis_prefix}.")
+            ):
                 continue
 
             chnu, vrnu = _parse_osis_id(osis_id)
@@ -124,7 +128,13 @@ def _normalize_mam_simple_node(node: object) -> list[object]:
 
     node_type = node.get("type")
     if isinstance(node_type, str):
-        if node_type in {"spi-pe2", "spi-pe3", "spi-samekh2", "spi-samekh3", "spi-invnun"}:
+        if node_type in {
+            "spi-pe2",
+            "spi-pe3",
+            "spi-samekh2",
+            "spi-samekh3",
+            "spi-invnun",
+        }:
             return []
         if node_type in {"lp-paseq", "lp-legarmeih"}:
             return [_HEBREW_PASEQ]
@@ -157,7 +167,9 @@ def _normalize_mam_simple_kq_qere(node: dict[str, object]) -> list[object]:
             return _split_mam_simple_text(text)
         return []
 
-    qere_nodes = [child for child in contents if isinstance(child, dict) and _is_qere_node(child)]
+    qere_nodes = [
+        child for child in contents if isinstance(child, dict) and _is_qere_node(child)
+    ]
     if qere_nodes:
         out_tokens: list[object] = []
         for qere_node in qere_nodes:
@@ -174,7 +186,12 @@ def _normalize_mam_simple_kq_qere(node: dict[str, object]) -> list[object]:
 
 def _is_qere_node(node: dict[str, object]) -> bool:
     node_type = node.get("type")
-    return isinstance(node_type, str) and node_type in {"qere", "kq-q", "kq-trivial", "kq-q-velo-k"}
+    return isinstance(node_type, str) and node_type in {
+        "qere",
+        "kq-q",
+        "kq-trivial",
+        "kq-q-velo-k",
+    }
 
 
 def _is_ketiv_node(node: dict[str, object]) -> bool:

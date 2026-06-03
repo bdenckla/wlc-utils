@@ -22,7 +22,9 @@ from accgram import wlc_uxlc_diff
 
 class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_smart_concatenate_string_runs_joins_with_space_without_maqaf(self):
-        out = verse_json_smart_concat.smart_concatenate_string_runs(["אב", "גד", {"x": 1}, "דה", "וז"])
+        out = verse_json_smart_concat.smart_concatenate_string_runs(
+            ["אב", "גד", {"x": 1}, "דה", "וז"]
+        )
 
         self.assertEqual(out, ["אב גד", {"x": 1}, "דה וז"])
 
@@ -125,13 +127,19 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                                                             {
                                                                 "type": "kq-k",
                                                                 "contents": [
-                                                                    {"type": "text", "text": "כתיב"}
+                                                                    {
+                                                                        "type": "text",
+                                                                        "text": "כתיב",
+                                                                    }
                                                                 ],
                                                             },
                                                             {
                                                                 "type": "kq-q",
                                                                 "contents": [
-                                                                    {"type": "text", "text": "קְרֵי"}
+                                                                    {
+                                                                        "type": "text",
+                                                                        "text": "קְרֵי",
+                                                                    }
                                                                 ],
                                                             },
                                                         ],
@@ -152,7 +160,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            loaded = mam_simple_verse.load_mam_simple_for_refs(mam_simple_dir, {"gn": {(1, 1)}})
+            loaded = mam_simple_verse.load_mam_simple_for_refs(
+                mam_simple_dir, {"gn": {(1, 1)}}
+            )
 
             self.assertIn("gn1:1", loaded)
             self.assertEqual(
@@ -215,7 +225,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             ["a", "x", "c", "y", "e"],
         )
 
-        self.assertEqual(diff, [{"wlc422": "b", "uxlc": "x"}, {"wlc422": "d", "uxlc": "y"}])
+        self.assertEqual(
+            diff, [{"wlc422": "b", "uxlc": "x"}, {"wlc422": "d", "uxlc": "y"}]
+        )
 
     def test_diff_wlc_mam_keeps_list_when_multiple_diffs(self):
         diff = mam_simple_diff.diff_wlc_mam(
@@ -348,13 +360,19 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                                                             {
                                                                 "type": "kq-k",
                                                                 "contents": [
-                                                                    {"type": "text", "text": "כתיב"}
+                                                                    {
+                                                                        "type": "text",
+                                                                        "text": "כתיב",
+                                                                    }
                                                                 ],
                                                             },
                                                             {
                                                                 "type": "kq-q",
                                                                 "contents": [
-                                                                    {"type": "text", "text": "קְרֵי"}
+                                                                    {
+                                                                        "type": "text",
+                                                                        "text": "קְרֵי",
+                                                                    }
                                                                 ],
                                                             },
                                                         ],
@@ -447,13 +465,16 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 '<li><ahref="goerwitz-tms-msp-n.html">missingsofpasuq:no</a></li>',
                 html_text_compact,
             )
-            self.assertIn("These1versescausedtroublefortheGoerwitzaccentgrammarchecker.", html_text_compact)
+            self.assertIn(
+                "These1versescausedtroublefortheGoerwitzaccentgrammarchecker.",
+                html_text_compact,
+            )
             self.assertIn("WLCquirks,LCquirks,andcheckerquirks", html_text_compact)
             self.assertIn("StudiesinAncientOrientalCivilization60", html_text_compact)
             self.assertIn(
-                "<ahref=\""
+                '<ahref="'
                 "https://isac.uchicago.edu/research/publications/saoc/"
-                "saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b\""
+                'saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b"'
                 ">"
                 "StudiesinAncientOrientalCivilization60"
                 "</a>",
@@ -472,20 +493,24 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("UXLCchange:none", html_text_compact)
             self.assertIn("<th>value</th><th></th><th>key</th>", html_text_compact)
             self.assertIn(
-                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td></td><td>wlc_before</td>",
+                '<tdlang="hbo"dir="rtl">בראש֖יתבר֣א</td><td></td><td>wlc_before</td>',
                 html_text_compact,
             )
             self.assertIn("<td></td><td></td><td>wlc_focus</td>", html_text_compact)
             self.assertIn("<td></td><td></td><td>wlc_after</td>", html_text_compact)
             intro_heading_idx = html_text_compact.index("<h2>Introduction</h2>")
             bracket_heading_idx = html_text_compact.index("<h2>WLCBracketNotes</h2>")
-            first_verse_heading_idx = html_text_compact.index('<h2id="tmgn1v1">gn1:1</h2>')
+            first_verse_heading_idx = html_text_compact.index(
+                '<h2id="tmgn1v1">gn1:1</h2>'
+            )
             self.assertLess(intro_heading_idx, first_verse_heading_idx)
             self.assertLess(bracket_heading_idx, first_verse_heading_idx)
             before_idx = html_text_compact.index(
-                "<tdlang=\"hbo\"dir=\"rtl\">בראש֖יתבר֣א</td><td></td><td>wlc_before</td>"
+                '<tdlang="hbo"dir="rtl">בראש֖יתבר֣א</td><td></td><td>wlc_before</td>'
             )
-            wlc_focus_idx = html_text_compact.index("<td></td><td></td><td>wlc_focus</td>")
+            wlc_focus_idx = html_text_compact.index(
+                "<td></td><td></td><td>wlc_focus</td>"
+            )
             after_idx = html_text_compact.index("<td></td><td></td><td>wlc_after</td>")
             self.assertLess(before_idx, wlc_focus_idx)
             self.assertLess(wlc_focus_idx, after_idx)
@@ -636,7 +661,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             ],
         )
 
-    def test_expand_subset_diff_to_wlc_focus_keeps_non_applicable_entries_unchanged(self):
+    def test_expand_subset_diff_to_wlc_focus_keeps_non_applicable_entries_unchanged(
+        self,
+    ):
         out_non_subset = research_tms._expand_subset_diff_to_wlc_focus(
             {"wlc422": "אחר", "uxlc": "אַחֵר"},
             wlc_focus="יאב֥ד טוב֥ה",
@@ -682,7 +709,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_structured_text_fixture_has_ob_1_1_summary(self):
         structured_text = research_tms.STRUCTURED_TEXT_BY_REF["ob 1:1"]
         self.assertEqual(
-            structured_text.get("summary"),
+            structured_text.get("st-summary"),
             "Quirk in LC: עליה lacks an accent.",
         )
 
@@ -710,7 +737,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                         ],
                         "structured_text": {
                             "wlc_focus": "אב",
-                            "summary": "Link summary.",
+                            "st-summary": "Link summary.",
                             "assessment": {
                                 "manuscript": "foo",
                                 "bhs": "bar",
@@ -739,16 +766,19 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("a.manuscript", html_text)
             self.assertIn("a.wlc", html_text)
             self.assertIn(
-                '<td></td><td>foo</td><td>a.manuscript</td>',
+                "<td></td><td>foo</td><td>a.manuscript</td>",
                 html_text,
             )
-            self.assertIn("comment[1]", html_text)
+            self.assertNotIn("comment[1]", html_text)
+            self.assertNotIn("comment[2]", html_text)
+            self.assertIn('<pclass="goerwitz-tms-comment">c1</p>', html_text_compact)
+            self.assertIn('<pclass="goerwitz-tms-comment">c2</p>', html_text_compact)
             self.assertIn("<h2>Subsets</h2>", html_text_compact)
             self.assertIn('href="goerwitz-tms-msp-y.html"', html_text_compact)
             self.assertIn('href="goerwitz-tms-msp-n.html"', html_text_compact)
             self.assertIn("<h2>WLCBracketNotes</h2>", html_text_compact)
             self.assertIn("<code>]1</code>", html_text_compact)
-            self.assertIn("<td lang=\"hbo\" dir=\"rtl\">בראשית</td>", html_text)
+            self.assertIn('<td lang="hbo" dir="rtl">בראשית</td>', html_text)
             self.assertIn(
                 '<td lang="hbo" dir="rtl">אב</td><td></td><td>wlc_focus.hbo</td>',
                 html_text,
@@ -758,10 +788,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertIn(
-                '</span></td><td></td><td>wlc_focus.notes</td>',
+                "</span></td><td></td><td>wlc_focus.notes</td>",
                 html_text,
             )
-            self.assertIn("<td lang=\"hbo\" dir=\"rtl\">אחרית</td>", html_text)
+            self.assertIn('<td lang="hbo" dir="rtl">אחרית</td>', html_text)
             self.assertNotIn("bracket_notes", html_text)
             self.assertNotIn("אב: ]1", html_text)
             self.assertIn(
@@ -774,7 +804,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("UXLC change", html_text)
             self.assertIn("UXLC note page", html_text)
 
-    def test_write_goerwitz_tms_html_report_simplifies_matching_wlc_word_diff_pairs(self):
+    def test_write_goerwitz_tms_html_report_simplifies_matching_wlc_word_diff_pairs(
+        self,
+    ):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
@@ -806,7 +838,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("wlc422: דבר; uxlc: דבר֙", html_text)
             self.assertNotIn("wlc422: דבר; mam_simple: דבר֣", html_text)
 
-    def test_write_goerwitz_tms_html_report_suppresses_targeted_diff_row_for_1k_16_33(self):
+    def test_write_goerwitz_tms_html_report_suppresses_targeted_diff_row_for_1k_16_33(
+        self,
+    ):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
@@ -831,7 +865,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("wlc422: מכ֨ל; uxlc: מכל", html_text)
             self.assertIn("diff_wlc_uxlc[2]", html_text)
 
-    def test_write_goerwitz_tms_html_report_renders_non_empty_multiword_wlc_focus_in_context(self):
+    def test_write_goerwitz_tms_html_report_renders_non_empty_multiword_wlc_focus_in_context(
+        self,
+    ):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
@@ -851,7 +887,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             html_text_compact = "".join(html_out.read_text(encoding="utf-8").split())
             before_cell = '<tdlang="hbo"dir="rtl">לפני</td><td></td><td>wlc_before</td>'
-            focus_cell = '<tdlang="hbo"dir="rtl">וה֥יול֣י</td><td></td><td>wlc_focus</td>'
+            focus_cell = (
+                '<tdlang="hbo"dir="rtl">וה֥יול֣י</td><td></td><td>wlc_focus</td>'
+            )
             after_cell = '<tdlang="hbo"dir="rtl">אחרי</td><td></td><td>wlc_after</td>'
 
             self.assertIn(focus_cell, html_text_compact)
@@ -863,7 +901,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertLess(before_idx, focus_idx)
             self.assertLess(focus_idx, after_idx)
 
-    def test_write_goerwitz_tms_html_report_splits_diff_wlc_uxlc_note_into_hbo_and_note_rows(self):
+    def test_write_goerwitz_tms_html_report_splits_diff_wlc_uxlc_note_into_hbo_and_note_rows(
+        self,
+    ):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
@@ -891,7 +931,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertIn("<td>m</td><td></td><td>diff_wlc_uxlc.note</td>", html_text)
-            self.assertNotIn("<td>דבר (note: m)</td><td></td><td>diff_wlc_uxlc</td>", html_text)
+            self.assertNotIn(
+                "<td>דבר (note: m)</td><td></td><td>diff_wlc_uxlc</td>", html_text
+            )
 
     def test_write_goerwitz_tms_html_report_uses_phase3_url_conventions(self):
         with TemporaryDirectory() as tmp_dir:
@@ -908,17 +950,22 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                     {
                         "ref": "nu 25:19",
                         "wlc422_kq_u_verse": {"vels": ["bar"]},
-                    }
+                    },
                 ],
             )
 
             html_text = html_out.read_text(encoding="utf-8")
             html_text_compact = "".join(html_text.split())
-            self.assertIn("https://bdenckla.github.io/MAM-with-doc/BC-1Kings.html#c6v2", html_text)
+            self.assertIn(
+                "https://bdenckla.github.io/MAM-with-doc/BC-1Kings.html#c6v2", html_text
+            )
             self.assertIn("https://tanach.us/Tanach.xml?1Kings6:2", html_text)
             self.assertIn('<h2id="tm1k6v2">1k6:2</h2>', html_text_compact)
             self.assertIn('href="#tm1k6v2"', html_text)
-            self.assertIn("https://bdenckla.github.io/MAM-with-doc/A4-Numbers.html#c26v1", html_text)
+            self.assertIn(
+                "https://bdenckla.github.io/MAM-with-doc/A4-Numbers.html#c26v1",
+                html_text,
+            )
             self.assertIn("https://tanach.us/Tanach.xml?Num25:19", html_text)
             self.assertIn('<h2id="tmnu25v19">nu25:19</h2>', html_text_compact)
             self.assertIn('href="#tmnu25v19"', html_text)
@@ -958,7 +1005,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("<code>]Q</code>", html_text_compact)
             self.assertIn("<code>]n</code>", html_text_compact)
             self.assertNotIn("<code>]1</code>", html_text_compact)
-            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td></td><td>wlc_focus.hbo</td>', html_text)
+            self.assertIn(
+                '<td lang="hbo" dir="rtl">דבר</td><td></td><td>wlc_focus.hbo</td>',
+                html_text,
+            )
             self.assertIn(
                 '<td style="text-align: right;"><span title="Marks a place where we agree with BHQ against BHS in reading ל.',
                 html_text,
@@ -968,10 +1018,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertIn(
-                '</span></td><td></td><td>wlc_focus.notes</td>',
+                "</span></td><td></td><td>wlc_focus.notes</td>",
                 html_text,
             )
-            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td></td><td>diff_wlc_uxlc.hbo</td>', html_text)
+            self.assertIn(
+                '<td lang="hbo" dir="rtl">דבר</td><td></td><td>diff_wlc_uxlc.hbo</td>',
+                html_text,
+            )
             self.assertIn("<td>t</td><td></td><td>diff_wlc_uxlc.note</td>", html_text)
             self.assertIn("wlc422: [אלף | בית (note: x)]", html_text)
 
@@ -1001,13 +1054,16 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text = html_out.read_text(encoding="utf-8")
-            self.assertIn('<td lang="hbo" dir="rtl">דבר</td><td></td><td>wlc_focus.hbo</td>', html_text)
+            self.assertIn(
+                '<td lang="hbo" dir="rtl">דבר</td><td></td><td>wlc_focus.hbo</td>',
+                html_text,
+            )
             self.assertIn(
                 '<td style="text-align: right;"><span title="Marks a place where we agree with BHQ against BHS in reading ל.',
                 html_text,
             )
             self.assertIn(
-                '</span></td><td></td><td>wlc_focus.notes</td>',
+                "</span></td><td></td><td>wlc_focus.notes</td>",
                 html_text,
             )
             self.assertNotIn("bracket_notes", html_text)
@@ -1039,7 +1095,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertEqual([row["ref"] for row in yes_rows], ["gn 1:1"])
         self.assertEqual([row["ref"] for row in no_rows], ["gn 1:2"])
 
-    def test_write_goerwitz_tms_msp_yes_html_report_includes_only_yes_rows_and_related_links(self):
+    def test_write_goerwitz_tms_msp_yes_html_report_includes_only_yes_rows_and_related_links(
+        self,
+    ):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             main_html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
@@ -1057,7 +1115,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 },
             ]
 
-            research_tms_report.write_goerwitz_tms_msp_yes_html_report(main_html_out, rows)
+            research_tms_report.write_goerwitz_tms_msp_yes_html_report(
+                main_html_out, rows
+            )
 
             yes_html_out = main_html_out.parent / "goerwitz-tms-msp-y.html"
             self.assertTrue(yes_html_out.exists())
@@ -1076,7 +1136,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text_compact,
             )
 
-    def test_write_goerwitz_tms_msp_no_html_report_includes_only_no_rows_and_related_links(self):
+    def test_write_goerwitz_tms_msp_no_html_report_includes_only_no_rows_and_related_links(
+        self,
+    ):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             main_html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
@@ -1094,7 +1156,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 },
             ]
 
-            research_tms_report.write_goerwitz_tms_msp_no_html_report(main_html_out, rows)
+            research_tms_report.write_goerwitz_tms_msp_no_html_report(
+                main_html_out, rows
+            )
 
             no_html_out = main_html_out.parent / "goerwitz-tms-msp-n.html"
             self.assertTrue(no_html_out.exists())
@@ -1170,12 +1234,18 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 encoding="utf-8",
             )
             (mam_simple_dir / "Gen.json").write_text(
-                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                json.dumps(
+                    {"versification-tradition": "vtbhs", "contents": []},
+                    ensure_ascii=False,
+                    indent=2,
+                )
                 + "\n",
                 encoding="utf-8",
             )
 
-            with self.assertRaisesRegex(ValueError, r"Missing MAM-simple verse for gn 1:2"):
+            with self.assertRaisesRegex(
+                ValueError, r"Missing MAM-simple verse for gn 1:2"
+            ):
                 research_tms.run(
                     SimpleNamespace(
                         troubles_in=troubles_in,
@@ -1247,7 +1317,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                                             {
                                                 "type": "verse",
                                                 "osisID": "Gen.1.2",
-                                                "contents": [{"type": "text", "text": "וְהָאָ֗רֶץ"}],
+                                                "contents": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": "וְהָאָ֗רֶץ",
+                                                    }
+                                                ],
                                             }
                                         ],
                                     }
@@ -1262,7 +1337,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            with self.assertRaisesRegex(ValueError, r"Missing wlc422-kq-u verse for gn 1:2"):
+            with self.assertRaisesRegex(
+                ValueError, r"Missing wlc422-kq-u verse for gn 1:2"
+            ):
                 research_tms.run(
                     SimpleNamespace(
                         troubles_in=troubles_in,
@@ -1347,7 +1424,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                                             {
                                                 "type": "verse",
                                                 "osisID": "Gen.1.2",
-                                                "contents": [{"type": "text", "text": "וְהָאָ֗רֶץ"}],
+                                                "contents": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": "וְהָאָ֗רֶץ",
+                                                    }
+                                                ],
                                             }
                                         ],
                                     }
@@ -1395,7 +1477,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             (wlc422_dir / "1verses_00_gn.json").write_text("[]\n", encoding="utf-8")
             (mam_simple_dir / "Gen.json").write_text(
-                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                json.dumps(
+                    {"versification-tradition": "vtbhs", "contents": []},
+                    ensure_ascii=False,
+                    indent=2,
+                )
                 + "\n",
                 encoding="utf-8",
             )
@@ -1417,7 +1503,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("troublemakers", payload)
             self.assertEqual(payload["summary"]["troublemakers"], 0)
 
-    def test_run_derives_default_html_out_from_out_context_when_missing_on_namespace(self):
+    def test_run_derives_default_html_out_from_out_context_when_missing_on_namespace(
+        self,
+    ):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
             troubles_in = base / "in" / "_troublemakers.json"
@@ -1438,7 +1526,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             (wlc422_dir / "1verses_00_gn.json").write_text("[]\n", encoding="utf-8")
             (mam_simple_dir / "Gen.json").write_text(
-                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                json.dumps(
+                    {"versification-tradition": "vtbhs", "contents": []},
+                    ensure_ascii=False,
+                    indent=2,
+                )
                 + "\n",
                 encoding="utf-8",
             )
@@ -1478,7 +1570,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             (wlc422_dir / "1verses_00_gn.json").write_text("[]\n", encoding="utf-8")
             (mam_simple_dir / "Gen.json").write_text(
-                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                json.dumps(
+                    {"versification-tradition": "vtbhs", "contents": []},
+                    ensure_ascii=False,
+                    indent=2,
+                )
                 + "\n",
                 encoding="utf-8",
             )
@@ -1522,7 +1618,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             (wlc422_dir / "1verses_00_gn.json").write_text("[]\n", encoding="utf-8")
             (mam_simple_dir / "Gen.json").write_text(
-                json.dumps({"versification-tradition": "vtbhs", "contents": []}, ensure_ascii=False, indent=2)
+                json.dumps(
+                    {"versification-tradition": "vtbhs", "contents": []},
+                    ensure_ascii=False,
+                    indent=2,
+                )
                 + "\n",
                 encoding="utf-8",
             )
@@ -1541,7 +1641,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             self.assertTrue(out_path.exists())
 
-    def test_structured_text_sanity_allows_book_name_and_word_number_mismatch_forms(self):
+    def test_structured_text_sanity_allows_book_name_and_word_number_mismatch_forms(
+        self,
+    ):
         with TemporaryDirectory() as tmp_dir:
             all_changes_path = Path(tmp_dir) / "all_changes.json"
             all_changes_path.write_text(
@@ -1613,8 +1715,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 )
 
     def test_structured_text_sanitize_word_drops_non_target_marks(self):
-        actual = troublemaker_structured_text_sanity.sanitize_word_for_change_match("מְב\u05bdל֖י ")
-        expected = troublemaker_structured_text_sanity.sanitize_word_for_change_match("מבל֖י")
+        actual = troublemaker_structured_text_sanity.sanitize_word_for_change_match(
+            "מְב\u05bdל֖י "
+        )
+        expected = troublemaker_structured_text_sanity.sanitize_word_for_change_match(
+            "מבל֖י"
+        )
         self.assertEqual(actual, expected)
 
     def test_diff_uxlc_matches_changetext_true_after_sanitization(self):
@@ -1639,15 +1745,21 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
     def test_descriptor_from_hebrew_token_tevir(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("אש֛ר")
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "אש֛ר"
+        )
         self.assertEqual(descriptor, "tevir")
 
     def test_descriptor_from_hebrew_token_etnaxta(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("שנ֑ים")
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "שנ֑ים"
+        )
         self.assertEqual(descriptor, "etnaxta")
 
     def test_descriptor_from_hebrew_token_pashta_on_letter(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("שנה֙")
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "שנה֙"
+        )
         self.assertEqual(descriptor, "pashta on he")
 
     def test_descriptor_from_hebrew_token_no_accent(self):
@@ -1661,11 +1773,15 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
 
     def test_descriptor_from_hebrew_token_maqaf(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("נכח־")
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "נכח־"
+        )
         self.assertEqual(descriptor, "maqaf")
 
     def test_descriptor_from_hebrew_token_two_over_accents(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token("אריצ֨נו֙")
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "אריצ֨נו֙"
+        )
         self.assertEqual(descriptor, "qadma on tsadi, pashta on vav")
 
     def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
@@ -1676,7 +1792,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             troublemaker_structured_text_sanity.descriptor_from_hebrew_token("ישראל֘")
         )
 
-    def test_descriptor_from_hebrew_token_asserts_for_unmapped_non_allowlisted_token(self):
+    def test_descriptor_from_hebrew_token_asserts_for_unmapped_non_allowlisted_token(
+        self,
+    ):
         with self.assertRaisesRegex(
             AssertionError,
             r"No descriptor for accent token unless explicitly allowlisted",
@@ -1684,7 +1802,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             troublemaker_structured_text_sanity.descriptor_from_hebrew_token("אב֚")
 
     def test_descriptor_from_hebrew_token_asserts_on_over_accent_without_letter(self):
-        with self.assertRaisesRegex(AssertionError, r"Over-accent must follow a Hebrew letter"):
+        with self.assertRaisesRegex(
+            AssertionError, r"Over-accent must follow a Hebrew letter"
+        ):
             troublemaker_structured_text_sanity.descriptor_from_hebrew_token("֙")
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_true(self):
@@ -1715,7 +1835,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertTrue(matches)
 
-    def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(self):
+    def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(
+        self,
+    ):
         with TemporaryDirectory() as tmp_dir:
             all_changes_path = Path(tmp_dir) / "all_changes.json"
             all_changes_path.write_text(
@@ -1772,7 +1894,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            by_url = troublemaker_structured_text_sanity.load_all_changes_by_url(all_changes_path)
+            by_url = troublemaker_structured_text_sanity.load_all_changes_by_url(
+                all_changes_path
+            )
             self.assertIn(
                 "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
                 by_url,
