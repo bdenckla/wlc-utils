@@ -66,12 +66,14 @@ def write_goerwitz_tms_msp_yes_html_report(
     enriched_rows: list[dict[str, object]],
 ) -> None:
     html_out_path = research_tms_report_subsets.missing_sof_pasuq_yes_html_out_path(main_html_out_path)
+    filtered_rows = research_tms_report_subsets.filter_missing_sof_pasuq_yes_rows(enriched_rows)
     _write_goerwitz_tms_html_report(
         html_out_path,
-        research_tms_report_subsets.filter_missing_sof_pasuq_yes_rows(enriched_rows),
+        filtered_rows,
         top_contents=research_tms_report_subsets.build_msp_yes_related_pages_top_contents(
             main_html_out_path
         ),
+        total_count=len(enriched_rows),
     )
 
 
@@ -80,12 +82,14 @@ def write_goerwitz_tms_msp_no_html_report(
     enriched_rows: list[dict[str, object]],
 ) -> None:
     html_out_path = research_tms_report_subsets.missing_sof_pasuq_no_html_out_path(main_html_out_path)
+    filtered_rows = research_tms_report_subsets.filter_missing_sof_pasuq_no_rows(enriched_rows)
     _write_goerwitz_tms_html_report(
         html_out_path,
-        research_tms_report_subsets.filter_missing_sof_pasuq_no_rows(enriched_rows),
+        filtered_rows,
         top_contents=research_tms_report_subsets.build_msp_no_related_pages_top_contents(
             main_html_out_path
         ),
+        total_count=len(enriched_rows),
     )
 
 
@@ -94,10 +98,11 @@ def _write_goerwitz_tms_html_report(
     enriched_rows: list[dict[str, object]],
     *,
     top_contents: tuple[object, ...],
+    total_count: int | None = None,
 ) -> None:
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    body_contents = _build_body_contents(enriched_rows, top_contents=top_contents)
+    body_contents = _build_body_contents(enriched_rows, top_contents=top_contents, total_count=total_count)
     write_ctx = wlc_utils_html.WriteCtx(
         title="Goerwitz TMS",
         path=str(html_out_path),
@@ -113,13 +118,14 @@ def _build_body_contents(
     enriched_rows: list[dict[str, object]],
     *,
     top_contents: tuple[object, ...],
+    total_count: int | None = None,
 ) -> tuple[object, ...]:
     row_count = len(enriched_rows)
     sections: list[object] = [
         wlc_utils_html.heading_level_1("Goerwitz Troublemakers (research-tms)"),
         *top_contents,
     ]
-    sections.extend(research_tms_report_intro.build_intro_contents(row_count))
+    sections.extend(research_tms_report_intro.build_intro_contents(row_count, total_count))
     sections.extend(research_tms_report_bracket_notes.build_wlc_bracket_notes_section(enriched_rows))
 
     for index, row in enumerate(enriched_rows):
