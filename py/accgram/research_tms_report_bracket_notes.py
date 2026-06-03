@@ -7,7 +7,11 @@ from cmn.wlc_bracket_note_definitions import bracket_note_definition
 from py_html import wlc_utils_html
 
 _BRACKET_NOTE_CODE_RE = re.compile(r"\][0-9A-Za-z]")
-
+_WLC_BRACKET_NOTES_SECTION_INTRO = (
+    "The following bracket-note codes are used on this page."
+    " We define them in the bulleted list immediately below,"
+    " but you can also hover over their use further below to see these definitions."
+)
 
 def build_wlc_bracket_notes_section(
     enriched_rows: list[dict[str, object]],
@@ -31,6 +35,7 @@ def build_wlc_bracket_notes_section(
 
     return (
         wlc_utils_html.heading_level_2("WLC Bracket Notes"),
+        wlc_utils_html.para(_WLC_BRACKET_NOTES_SECTION_INTRO),
         wlc_utils_html.unordered_list(tuple(list_items)),
     )
 

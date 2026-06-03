@@ -20,7 +20,8 @@ _LM_0505_02 = (
 )
 _LM_0505_03 = (
     "Nonetheless, BHQ opts to make הונח “locally legal” by giving it an accent by interpreting the second mark"
-    " as a second tipexa rather than as a meteg."
+    " as a second tipexa rather than as a meteg. WLC follows BHQ in this, as it explicitly notes with a bracket-Q note."
+    " (Hover over the letters of the bracket notes above to decode them.)"
 )
 _LM_0505_04 = (
     "This makes the word הונח locally legal while rendering the second half of the verse wildly illegal"
@@ -28,7 +29,7 @@ _LM_0505_04 = (
     " (This (short) verse has no etnaxta segment.)"
 )
 _LM_0505_05 = (
-    "I would consider this transcription uncharitable, as it rejects the charitable option of a missing maqaf"
+    "I consider this transcription uncharitable, as it rejects the charitable option of a missing maqaf"
     " in favor of an aggressively uncharitable superfluous tipexa."
     " It is far easier to believe that the scribe forgot to add a maqaf than to believe that that scribe intended"
     " to add a second tipexa."

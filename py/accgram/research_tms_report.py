@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from accgram import research_tms_report_bracket_notes
@@ -31,6 +32,9 @@ _SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
     "1k 16:33": {"diff_wlc_uxlc[1]"},
     "mi 2:7": {"diff_wlc_mam[2]"},
 }
+_POINTED_HEBREW_SEGMENT_RE = re.compile(r"[\u0590-\u05FF]+")
+_HEBREW_POINTING_MARK_RE = re.compile(r"[\u0591-\u05C7]")
+_HEBREW_LETTER_RE = re.compile(r"[\u05D0-\u05EA]")
 
 # Internal SAT row shape: (value_cell, middle_description_cell, key_cell).
 SatRow = tuple[str, str, str]
@@ -381,7 +385,52 @@ def _render_comment_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
 def _render_comment_paragraph(
     comment: object
 ) -> object:
-    return wlc_utils_html.para(comment, {"class": "goerwitz-tms-comment"})
+    return wlc_utils_html.para(
+        _comment_contents_with_hbo_spans(comment),
+        {"class": "goerwitz-tms-comment"},
+    )
+
+
+def _comment_contents_with_hbo_spans(comment: object) -> object:
+    if not isinstance(comment, str):
+        return comment
+
+    return _wrap_pointed_hebrew_substrings(comment)
+
+
+def _wrap_pointed_hebrew_substrings(text: str) -> object:
+    pieces: list[object] = []
+    cursor = 0
+    wrapped_any = False
+
+    for match in _POINTED_HEBREW_SEGMENT_RE.finditer(text):
+        start, end = match.span()
+        if start > cursor:
+            pieces.append(text[cursor:start])
+
+        segment = match.group(0)
+        if _is_pointed_hebrew_segment(segment):
+            pieces.append(wlc_utils_html.span(segment, {"lang": "hbo"}))
+            wrapped_any = True
+        else:
+            pieces.append(segment)
+
+        cursor = end
+
+    if cursor < len(text):
+        pieces.append(text[cursor:])
+
+    if not wrapped_any:
+        return text
+    if len(pieces) == 1:
+        return pieces[0]
+    return tuple(pieces)
+
+
+def _is_pointed_hebrew_segment(text: str) -> bool:
+    return bool(
+        _HEBREW_LETTER_RE.search(text) and _HEBREW_POINTING_MARK_RE.search(text)
+    )
 
 
 def _apply_sat_row_suppressions(ref: str, rows: list[SatRow]) -> list[SatRow]:

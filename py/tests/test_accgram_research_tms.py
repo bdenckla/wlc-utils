@@ -838,6 +838,32 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("wlc422: דבר; uxlc: דבר֙", html_text)
             self.assertNotIn("wlc422: דבר; mam_simple: דבר֣", html_text)
 
+    def test_write_goerwitz_tms_html_report_wraps_pointed_hebrew_in_comments(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_tms_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "gn 1:1",
+                        "structured_text": {
+                            "comment": "before אָב middle אב after",
+                        },
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            html_text_compact = "".join(html_text.split())
+
+            self.assertIn(
+                '<pclass="goerwitz-tms-comment">before<spanlang="hbo">אָב</span>middleאבafter</p>',
+                html_text_compact,
+            )
+            self.assertNotIn('<spanlang="hbo">אב</span>', html_text_compact)
+
     def test_write_goerwitz_tms_html_report_suppresses_targeted_diff_row_for_1k_16_33(
         self,
     ):
