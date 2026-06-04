@@ -2728,6 +2728,33 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertIsNone(descriptor)
 
+    def test_try_auto_assessment_descriptor_uses_tevir_sof_pasuq_without_meteg(
+        self,
+    ):
+        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="wlc",
+            enriched_row={},
+            wlc_focus="פ֛לאי׃",
+        )
+        self.assertEqual(descriptor, "tevir-sof_pasuq")
+
+    def test_assessment_descriptor_matches_hebrew_token_tevir_sof_pasuq(self):
+        matches = troublemaker_structured_text_sanity.assessment_descriptor_matches_hebrew_token(
+            assessment_descriptor="tevir-sof_pasuq",
+            hebrew_token="פ֛לאי׃",
+        )
+        self.assertTrue(matches)
+
+    def test_try_auto_assessment_descriptor_keeps_silluq_sof_pasuq_when_meteg_present(
+        self,
+    ):
+        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="wlc",
+            enriched_row={},
+            wlc_focus="פֽלאי׃",
+        )
+        self.assertEqual(descriptor, "silluq-sof_pasuq")
+
     def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(
         self,
     ):

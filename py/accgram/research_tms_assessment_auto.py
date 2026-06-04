@@ -203,11 +203,12 @@ def _infer_assessment_descriptor_from_hebrew_token(
     if token == "\u05d3\u05d9":
         return "meteg-space"
 
-    # Silluq is represented with meteg (U+05BD) and can include trailing
-    # punctuation markers that determine the emitted descriptor flavor.
-    if _HEBREW_SOF_PASUQ in token:
+    # Silluq heuristics apply only when meteg (U+05BD) is present. A trailing
+    # sof pasuq/paseq punctuation mark alone must not override the token's
+    # accent descriptor.
+    if _HEBREW_METEG in token and _HEBREW_SOF_PASUQ in token:
         return "silluq-sof_pasuq"
-    if _HEBREW_PASEQ in token:
+    if _HEBREW_METEG in token and _HEBREW_PASEQ in token:
         return "silluq-pasoleg"
     if _HEBREW_METEG in token and _HEBREW_MAQAF in token:
         return "meteg-maqaf"
@@ -224,6 +225,8 @@ def _infer_assessment_descriptor_from_hebrew_token(
     if descriptor == "maqaf":
         return "meteg-maqaf"
     if isinstance(descriptor, str) and descriptor:
+        if _HEBREW_SOF_PASUQ in token:
+            return f"{descriptor}-sof_pasuq"
         return descriptor
     # Do not force a maqaf fallback when other accent marks are present but
     # unmapped; in those cases the descriptor is ambiguous for SAT rendering.

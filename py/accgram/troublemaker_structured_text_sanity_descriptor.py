@@ -154,6 +154,13 @@ def assessment_descriptor_matches_hebrew_token(
     normalized_descriptor = _normalize_assessment_descriptor(descriptor)
     normalized_assessment = _normalize_assessment_descriptor(assessment_descriptor)
 
+    normalized_assessment, punctuation_match = _normalize_assessment_with_punctuation_suffix(
+        normalized_assessment,
+        hebrew_token,
+    )
+    if punctuation_match is False:
+        return False
+
     if normalized_assessment == "meteg-space" and hebrew_token == "די":
         return True
 
@@ -173,6 +180,23 @@ def assessment_descriptor_matches_hebrew_token(
         descriptor=normalized_descriptor,
         assessment_uxlc=normalized_assessment,
     )
+
+
+def _normalize_assessment_with_punctuation_suffix(
+    normalized_assessment: str,
+    hebrew_token: str,
+) -> tuple[str, bool | None]:
+    if normalized_assessment.endswith("-sof_pasuq"):
+        if _HEBREW_SOF_PASUQ not in hebrew_token:
+            return normalized_assessment, False
+        return normalized_assessment[: -len("-sof_pasuq")], True
+
+    if normalized_assessment.endswith("-pasoleg"):
+        if _HEBREW_PASEQ not in hebrew_token:
+            return normalized_assessment, False
+        return normalized_assessment[: -len("-pasoleg")], True
+
+    return normalized_assessment, None
 
 
 def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> bool:
