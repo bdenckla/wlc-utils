@@ -229,14 +229,15 @@
         "mam_simple": "שנ֑ים"
       },
       "structured_text": {
+        "st-summary": "Defying the LC, BHS has tipexa rather than etnaxta.",
         "wlc_focus": "שנ֖ים",
         "assessment": {
-          "manuscript": "etnaxta",
           "wlc": "tipexa",
           "uxlc": "etnaxta",
           "mam": "etnaxta"
         },
-        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12"
+        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -293,14 +294,15 @@
         "mam_simple": "שנה֙"
       },
       "structured_text": {
+        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
         "assessment": {
-          "manuscript": "pashta on ה",
           "wlc": "qadma on נ",
           "uxlc": "pashta on ה",
           "mam": "pashta on ה"
         },
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24"
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -442,7 +444,8 @@
           "uxlc": "meteg-space",
           "mam": "meteg-maqaf"
         },
-        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3"
+        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -579,7 +582,8 @@
           "uxlc": "tevir",
           "mam": "tevir"
         },
-        "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18"
+        "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -614,7 +618,8 @@
           "uxlc": "merkha tipexa",
           "mam": "tipexa merkha"
         },
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2"
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -1119,7 +1124,8 @@
       },
       "structured_text": {
         "wlc_focus": "מא֖רץ",
-        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41"
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -1208,7 +1214,7 @@
         "st-summary": "BHS misses a pashta that is hard to see in the LC.",
         "wlc_focus": "אריצ֨נו",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60",
-        "comment": "See the image in the UXLC note to which we link above. BHS transcribes only the pashta stress helper, not the pashta itself. So, understandably, WLC transcribes this mark as a qadma."
+        "comment": "See the image in the UXLC change to which we link above. BHS transcribes only the pashta stress helper, not the pashta itself. So, understandably, WLC transcribes this mark as a qadma."
       }
     },
     {

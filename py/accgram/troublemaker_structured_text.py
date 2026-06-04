@@ -169,14 +169,15 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         },
     },
     "2c 22:12": {
+        "st-summary": "Defying the LC, BHS has tipexa rather than etnaxta.",
         "wlc_focus": "שנ֖ים",
         "assessment": {
-            "manuscript": "etnaxta",
             "wlc": "tipexa",
             "uxlc": "etnaxta",
             "mam": "etnaxta",
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
+        "comment": "See the image in the UXLC change to which we link above."
     },
     "is 36:2": {
         "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving tevir.",
@@ -206,14 +207,15 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2k 23:36": {
+        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
         "assessment": {
-            "manuscript": "pashta on ה",
             "wlc": "qadma on נ",
             "uxlc": "pashta on ה",
             "mam": "pashta on ה",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
+        "comment": "See the image in the UXLC change to which we link above."
     },
     "am 1:14": {
         "wlc_focus": "סופֽה",
@@ -248,6 +250,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "mam": "meteg-maqaf",
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
+        "comment": "See the image in the UXLC change to which we link above."
     },
     "dt 9:20": {
         "wlc_focus": "ההֽוא",
@@ -385,6 +388,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "mam": "tevir",
         },
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
+        "comment": "See the image in the UXLC change to which we link above."
     },
     "ec 9:18": {
         "wlc_focus": "יאב֥ד טוב֥ה",
@@ -395,6 +399,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "mam": "tipexa merkha",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+        "comment": "See the image in the UXLC change to which we link above."
     },
     "ek 11:1": {
         "wlc_focus": "שר֖י",
@@ -464,6 +469,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "je 31:32": {
         "wlc_focus": "מא֖רץ",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
+        "comment": "See the image in the UXLC change to which we link above."
     },
     "je 48:12": {
         "st-summary": "BHS transcribes a meteg as a tipexa.",
@@ -481,7 +487,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "אריצ֨נו",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60",
         "comment": (
-            "See the image in the UXLC note to which we link above."
+            "See the image in the UXLC change to which we link above."
             " BHS transcribes only the pashta stress helper, not the pashta itself."
             " So, understandably, WLC transcribes this mark as a qadma."
         ),
