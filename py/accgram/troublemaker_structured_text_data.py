@@ -16,15 +16,22 @@ def _non_revia_summary(accent: str) -> str:
     return f"The checker probably doesn’t like munax legarmeih serving {accent}."
 
 
+def _ambiguous_mark_context_comment(marked_word: str) -> str:
+    return (
+        f"In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
+        " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
+        " Yet, from context, we can usually determine the most likely intended meaning,"
+        f" and that is the case here with {marked_word}."
+    )
+
+
 def _je_0910_and_11_comment(adjacent_verse_phrase: str):
     return (
         [
             f"The same word, מבלי, appears in the {adjacent_verse_phrase} with analogous transcription problems."
         ],
         [
-            " In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
-            " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
-            " Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
+            _ambiguous_mark_context_comment("מבלי")
         ],
         [
             " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa:"
@@ -362,24 +369,20 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "comment": (
-            "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
-            " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
-            " Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי."
-            " It is aggressively uncharitable to transcribe the mark on שרי as tipexa:"
-            " tipexa is the least likely of the three possible meanings of this mark."
-            " Merkha is by far the most likely. If the mark were meteg, we would have to"
-            " assume that a maqaf is missing."
+            _ambiguous_mark_context_comment("שרי")
+            + " It is aggressively uncharitable to transcribe the mark on שרי as tipexa:"
+            + " tipexa is the least likely of the three possible meanings of this mark."
+            + " Merkha is by far the most likely. If the mark were meteg, we would have to"
+            + " assume that a maqaf is missing."
         ),
     },
     "ek 14:11": {
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "comment": (
-            "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
-            " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
-            " Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו."
-            " The most likely intended meaning of the mark on והיו is meteg, even though that implies that"
-            " a maqaf is missing."
+            _ambiguous_mark_context_comment("והיו")
+            + " The most likely intended meaning of the mark on והיו is meteg, even though that implies that"
+            + " a maqaf is missing."
         ),
     },
     "ex 34:6": {
@@ -399,9 +402,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "je 10:3": {
         "st-summary": "BHS transcribes a meteg as a merkha.",
         "wlc_focus": "יד֥י־",
-        "assessment": {
-            "mam": "meteg-maqaf",
-        },
         "img": "LC-251A-col-3-line-11-Je-10v3.png",
         "comment": (
             _JE_1003_01,
