@@ -231,7 +231,7 @@ def _render_ref_links(
     links: list[object] = [
         wlc_utils_html.anchor("MAM-with-doc verse", {"href": mam_url}),
         " | ",
-        wlc_utils_html.anchor("tanach.us verse", {"href": tanach_us_url}),
+        wlc_utils_html.anchor("UXLC verse", {"href": tanach_us_url}),
     ]
 
     if isinstance(uxlc_change, str) and uxlc_change.strip():

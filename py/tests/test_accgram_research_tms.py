@@ -1970,6 +1970,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertEqual(descriptor, "qadma on tsadi, pashta on vav")
 
+    def test_descriptor_from_hebrew_token_repeated_accent_names(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "יאב֥ד טוב֥ה"
+        )
+        self.assertEqual(descriptor, "merkha merkha")
+
     def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
         self.assertIsNone(
             troublemaker_structured_text_sanity.descriptor_from_hebrew_token("טוב֖ה")
@@ -2018,6 +2024,24 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="pashta on ה",
             diff_wlc_uxlc={"wlc422": "שנ֨ה", "uxlc": "שנה֙"},
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_repeated_descriptor_with_spaces(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="merkha merkha",
+            diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֥ה"},
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_repeated_descriptor_with_comma(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="merkha, merkha",
+            diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֥ה"},
         )
         self.assertTrue(matches)
 

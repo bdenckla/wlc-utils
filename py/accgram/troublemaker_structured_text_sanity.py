@@ -203,6 +203,10 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
 
     if not descriptors:
         return None
+
+    if len(descriptors) > 1 and len(set(descriptors)) == 1:
+        return " ".join(descriptors)
+
     return ", ".join(descriptors)
 
 
@@ -236,20 +240,27 @@ def assessment_descriptor_matches_hebrew_token(
 
 
 def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> bool:
+    normalized_descriptor = _normalize_assessment_descriptor(descriptor)
     normalized_assessment = _normalize_assessment_descriptor(assessment_uxlc)
-    if descriptor == "maqaf" and normalized_assessment in {"maqaf", "meteg-maqaf"}:
+    if normalized_descriptor == "maqaf" and normalized_assessment in {
+        "maqaf",
+        "meteg-maqaf",
+    }:
         return True
-    return normalized_assessment == descriptor
+    return normalized_assessment == normalized_descriptor
 
 
 def _normalize_assessment_descriptor(descriptor: str) -> str:
-    match = re.fullmatch(
-        r"(?P<prefix>pashta on |qadma on )(?P<letter>[\u05d0-\u05ea])", descriptor
+    normalized = re.sub(r"\s*,\s*", " ", descriptor.strip())
+    normalized = re.sub(r"\s+", " ", normalized)
+
+    return re.sub(
+        r"(?P<prefix>pashta on |qadma on )(?P<letter>[\u05d0-\u05ea])",
+        lambda match: (
+            f"{match.group('prefix')}{_hebrew_letter_name(match.group('letter'))}"
+        ),
+        normalized,
     )
-    if match is None:
-        return descriptor
-    letter = match.group("letter")
-    return f"{match.group('prefix')}{_hebrew_letter_name(letter)}"
 
 
 def _extract_diff_uxlc_text(diff_wlc_uxlc: object) -> str | None:

@@ -175,24 +175,29 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
     },
     "is 36:2": {
+        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving tevir.",
         "wlc_focus": "ירושל֛מה",
         "comment": _foi_non_revia_note(
             "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"
         ),
     },
     "je 4:19": {
+        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
         "wlc_focus": "אוח֜ילה",
         "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "je 38:11": {
+        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
         "wlc_focus": "את־האנש֜ים",
         "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "hg 2:12": {
+        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
         "wlc_focus": "בשר־ק֜דש",
         "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2c 26:15": {
+        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
         "wlc_focus": "חשבנ֜ות",
         "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
