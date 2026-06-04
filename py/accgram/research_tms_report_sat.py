@@ -7,6 +7,7 @@ from collections.abc import Callable
 from accgram import research_tms_report_bracket_notes
 from accgram import research_tms_report_diff_format
 from accgram import research_tms_report_wlc_word_format
+from accgram.research_tms_assessment_auto import try_auto_assessment_descriptor
 from accgram import troublemaker_structured_text_sanity
 from py_html import wlc_utils_html
 
@@ -77,7 +78,14 @@ def render_sat_table(
         ]
     )
 
-    sat_rows.extend(_assessment_sat_rows(row, structured_text_lookup=structured_text_lookup))
+    sat_rows.extend(
+        _assessment_sat_rows(
+            row,
+            structured_text_lookup=structured_text_lookup,
+            existing_sat_rows=sat_rows,
+            wlc_focus=wlc_focus_str or None,
+        )
+    )
     sat_rows = _apply_sat_row_suppressions(row_ref, sat_rows)
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows)
     sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
@@ -157,20 +165,50 @@ def _assessment_sat_rows(
     row: dict[str, object],
     *,
     structured_text_lookup: StructuredTextLookup,
+    existing_sat_rows: list[SatRow],
+    wlc_focus: str | None,
 ) -> list[SatRow]:
     rows: list[SatRow] = []
 
+    assessment_values: dict[str, object] = {}
     assessment = structured_text_lookup(row, "assessment")
-    if not isinstance(assessment, dict):
-        return rows
+    if isinstance(assessment, dict):
+        assessment_values.update(assessment)
+
+    for key in ("wlc", "uxlc", "mam"):
+        if key in assessment_values:
+            continue
+        if not _sat_html_wants_assessment_key(existing_sat_rows, assessment_key=key):
+            continue
+        descriptor = try_auto_assessment_descriptor(
+            assessment_key=key,
+            enriched_row=row,
+            wlc_focus=wlc_focus,
+        )
+        if isinstance(descriptor, str) and descriptor.strip():
+            assessment_values[key] = descriptor
 
     for key in _ASSESSMENT_KEYS:
-        value = assessment.get(key)
+        value = assessment_values.get(key)
         if value is None:
             continue
         rows.append(_sat_row(key=f"a.{key}", value=render_sat_value(value)))
 
     return rows
+
+
+def _sat_html_wants_assessment_key(
+    existing_sat_rows: list[SatRow], *, assessment_key: str
+) -> bool:
+    merge_target_key = _sat_merge_target_key_for_assessment_key(f"a.{assessment_key}")
+    if merge_target_key is None:
+        return False
+    return bool(
+        _find_sat_merge_target_row_indices(
+            existing_sat_rows,
+            merge_target_base_key=merge_target_key,
+        )
+    )
 
 
 def _apply_sat_row_suppressions(ref: str, rows: list[SatRow]) -> list[SatRow]:

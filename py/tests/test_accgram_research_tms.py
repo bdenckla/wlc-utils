@@ -2434,6 +2434,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertEqual(descriptor, "tipexa merkha")
 
+    def test_descriptor_from_hebrew_token_maqaf_munax(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "והיו־ ל֣י"
+        )
+        self.assertEqual(descriptor, "maqaf munax")
+
     def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
         self.assertIsNone(
             troublemaker_structured_text_sanity.descriptor_from_hebrew_token("ישראל֘")

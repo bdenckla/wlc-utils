@@ -97,6 +97,9 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
     if not descriptors:
         return None
 
+    if _HEBREW_MAQAF in text:
+        descriptors.insert(0, "maqaf")
+
     if len(descriptors) > 1 and all(" " not in descriptor for descriptor in descriptors):
         return " ".join(descriptors)
 

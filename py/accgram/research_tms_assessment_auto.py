@@ -62,6 +62,25 @@ def materialize_auto_assessment_descriptors(
     return out_structured_text
 
 
+def try_auto_assessment_descriptor(
+    *,
+    assessment_key: str,
+    enriched_row: dict[str, object],
+    wlc_focus: str | None,
+) -> str | None:
+    if assessment_key == "manuscript":
+        return None
+
+    descriptor = _auto_assessment_descriptor_for_key(
+        assessment_key=assessment_key,
+        enriched_row=enriched_row,
+        wlc_focus=wlc_focus,
+    )
+    if not isinstance(descriptor, str) or not descriptor.strip():
+        return None
+    return descriptor
+
+
 def _auto_assessment_descriptor_for_key(
     *,
     assessment_key: str,
