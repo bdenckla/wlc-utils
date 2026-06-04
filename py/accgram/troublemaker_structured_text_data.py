@@ -114,9 +114,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "Defying the LC, BHS has mahapakh rather than munax.",
         "wlc_focus": "ועשר֤ים",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
         "comment": "See the image in the UXLC change to which we link above."
@@ -126,8 +123,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "מכ֨ל",
         "assessment": {
             "wlc": "qadma on kaf",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
         "comment": (
@@ -138,7 +133,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 19:11": {
         "wlc_focus": "הר֨וח",
         "assessment": {
-            "wlc": "%auto%",
             "mam": "pashta stress helper on resh, pashta on xet",
         },
     },
@@ -147,8 +141,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "meteg-maqaf",
             "wlc": "merkha-space",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
         "comment": [
@@ -163,18 +155,12 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1s 6:19": {
         "wlc_focus": "גדולֽה",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "2c 22:12": {
         "st-summary": "Defying the LC, BHS has tipexa rather than etnaxta.",
         "wlc_focus": "שנ֖ים",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
         "comment": "See the image in the UXLC change to which we link above."
@@ -220,25 +206,16 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "am 1:14": {
         "wlc_focus": "סופֽה",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "am 6:6": {
         "wlc_focus": "יוסֽף",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "am 9:5": {
         "wlc_focus": "מצרֽים",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "da 2:41": {
@@ -246,8 +223,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "meteg-space",
             "wlc": "merkha-space",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
         "comment": "See the image in the UXLC change to which we link above."
@@ -255,137 +230,87 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "dt 9:20": {
         "wlc_focus": "ההֽוא",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "dt 13:15": {
         "wlc_focus": "וחקרת֧",
         "assessment": {
-            "wlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "dt 25:9": {
         "wlc_focus": "אחֽיו",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "ek 33:20": {
         "wlc_focus": "ישראֽל",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "ex 2:5": {
         "wlc_focus": "ותקחֽה",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "ex 14:25": {
         "wlc_focus": "במצרֽים",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "ex 14:29": {
         "wlc_focus": "ומשמאלֽם",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "ho 4:19": {
         "wlc_focus": "מזבחותֽם",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "ho 8:9": {
         "wlc_focus": "אהבֽים",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "lv 18:17": {
         "wlc_focus": "הֽוא",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "lv 19:1": {
         "wlc_focus": "לאמֽר",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "lv 26:7": {
         "wlc_focus": "לחֽרב",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "nu 7:32": {
         "wlc_focus": "קטֽרת",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "nu 7:40": {
         "wlc_focus": "לחטֽאת",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "nu 7:55": {
         "wlc_focus": "למנחֽה",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "nu 7:68": {
         "wlc_focus": "קטֽרת",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "ec 7:21": {
         "wlc_focus": "אש֥ר",
         "assessment": {
             "manuscript": "tevir",
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
         "comment": "See the image in the UXLC change to which we link above."
@@ -394,9 +319,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "יאב֥ד טוב֥ה",
         "assessment": {
             "manuscript": "merkha tipexa",
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
         "comment": "See the image in the UXLC change to which we link above."
@@ -430,9 +352,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ex 34:6": {
         "wlc_focus": "ואמֽת׀",
         "assessment": {
-            "wlc": "%auto%",
-            "uxlc": "%auto%",
-            "mam": "%auto%",
         },
     },
     "je 9:10": {

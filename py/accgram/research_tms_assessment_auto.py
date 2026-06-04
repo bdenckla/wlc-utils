@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from accgram.research_tms_assessment_materialize import (
+    order_assessment_dict,
+    should_materialize_missing_assessment_key,
+)
 from accgram.troublemaker_structured_text_sanity import descriptor_from_hebrew_token
 
 _ASSESSMENT_AUTO_METEG_FALLBACK_BY_KEY = {
@@ -56,8 +60,37 @@ def materialize_auto_assessment_descriptors(
         out_assessment[key] = descriptor
         changed = True
 
+    # Backward-compatible behavior after removing explicit "%auto%" entries
+    # from structured_text data: if an assessment key is absent but its
+    # corresponding diff side is present, infer the descriptor implicitly.
+    for key in ("wlc", "uxlc", "mam"):
+        if key in out_assessment:
+            continue
+        if not should_materialize_missing_assessment_key(
+            assessment_key=key,
+            enriched_row=enriched_row,
+            wlc_focus=wlc_focus,
+            diff_rhs_tokens=_diff_rhs_tokens_for_materialization,
+            infer_assessment_descriptor=_infer_assessment_descriptor_for_materialization,
+            meteg_fallback_by_key=_ASSESSMENT_AUTO_METEG_FALLBACK_BY_KEY,
+        ):
+            continue
+
+        descriptor = _auto_assessment_descriptor_for_key(
+            assessment_key=key,
+            enriched_row=enriched_row,
+            wlc_focus=wlc_focus,
+        )
+        if not isinstance(descriptor, str) or not descriptor.strip():
+            continue
+
+        out_assessment[key] = descriptor
+        changed = True
+
     if not changed:
         return structured_text
+
+    out_assessment = order_assessment_dict(out_assessment)
 
     out_structured_text = dict(structured_text)
     out_structured_text["assessment"] = out_assessment
@@ -136,6 +169,20 @@ def _candidate_tokens_for_auto_assessment(
             tokens.append(wlc_focus)
 
     return _unique_nonempty_strings(tokens)
+
+
+def _diff_rhs_tokens_for_materialization(diff_value: object, rhs_key: str) -> list[str]:
+    return _diff_rhs_tokens(diff_value, rhs_key=rhs_key)
+
+
+def _infer_assessment_descriptor_for_materialization(
+    hebrew_token: str,
+    meteg_fallback: str,
+) -> str | None:
+    return _infer_assessment_descriptor_from_hebrew_token(
+        hebrew_token,
+        meteg_fallback=meteg_fallback,
+    )
 
 
 def _diff_rhs_tokens(diff_value: object, *, rhs_key: str) -> list[str]:
