@@ -1311,10 +1311,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                             ]
                         },
                         "diff_wlc_uxlc": {"wlc422": "אב", "uxlc": "אג"},
-                        "diff_wlc_mam": [
-                            {"wlc_adds_notes": "]1"},
-                            {"wlc422": "אב", "mam_simple": "אב֙"},
-                        ],
+                        "diff_wlc_mam": {"wlc422": "אב", "mam_simple": "אב֙"},
                         "structured_text": {
                             "wlc_focus": "אב",
                             "st-summary": "Link summary.",
@@ -1344,7 +1341,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("research-tms", html_text)
             self.assertIn('<h2id="tmgn1v1">gn1:1</h2>', html_text_compact)
             self.assertIn("diff_wlc_uxlc", html_text)
-            self.assertIn("diff_wlc_mam[1]", html_text)
+            self.assertIn("diff_wlc_mam", html_text)
             self.assertIn("a.manuscript", html_text)
             self.assertIn("a.wlc", html_text)
             self.assertIn(
@@ -1379,10 +1376,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertNotIn("bracket_notes", html_text)
             self.assertNotIn("אב: ]1", html_text)
-            self.assertIn(
-                'wlc_adds_notes: <span title="BHS has been faithful to ל',
-                html_text,
-            )
+            self.assertNotIn("wlc_adds_notes", html_text)
             self.assertNotIn("diff_wlc_uxlc.wlc_adds_notes", html_text)
             self.assertIn("Summary: Link summary.", html_text)
             self.assertIn("🔗</a>Summary:Linksummary.</p><p><a", html_text_compact)
