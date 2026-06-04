@@ -391,7 +391,9 @@ def _apply_witness_to_normalized_descriptor(
         return normalized_descriptor
 
     witness_token = witness_hebrew_token.strip()
-    if not witness_token or not research_tms_meteg_witness.token_has_meteg(witness_token):
+    if not witness_token or not research_tms_meteg_witness.token_has_meteg(
+        witness_token
+    ):
         return normalized_descriptor
 
     if research_tms_meteg_witness.token_has_maqaf(witness_token):

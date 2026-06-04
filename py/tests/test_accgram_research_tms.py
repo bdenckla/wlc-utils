@@ -3099,10 +3099,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertEqual(descriptor, "meteg-maqaf")
 
     def test_try_auto_assessment_descriptor_keeps_plain_labels_without_witness(self):
-        no_accent_descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
-            assessment_key="uxlc",
-            enriched_row={"diff_wlc_uxlc": {"uxlc": "מבלי"}},
-            wlc_focus=None,
+        no_accent_descriptor = (
+            research_tms_assessment_auto.try_auto_assessment_descriptor(
+                assessment_key="uxlc",
+                enriched_row={"diff_wlc_uxlc": {"uxlc": "מבלי"}},
+                wlc_focus=None,
+            )
         )
         maqaf_descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="mam",
@@ -3181,7 +3183,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             for key, expected_value in expected_assessment.items():
                 self.assertEqual(assessment.get(key), expected_value, f"{ref} {key}")
 
-        je_1003 = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get("je 10:3")
+        je_1003 = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get(
+            "je 10:3"
+        )
         self.assertIsInstance(je_1003, dict)
         je_1003_assessment = je_1003.get("assessment")
         if isinstance(je_1003_assessment, dict):
@@ -3217,12 +3221,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             "da 2:41": {
                 "diff_wlc_uxlc": {"uxlc": "די"},
                 "diff_wlc_mam": {"mam_simple": "די־"},
-                research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
-                    "vels": ["דֽי"]
-                },
-                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
-                    "vels": ["דֽי־"]
-                },
+                research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {"vels": ["דֽי"]},
+                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {"vels": ["דֽי־"]},
             },
             "je 48:12": {
                 "diff_wlc_mam": {"mam_simple": "הנה־"},
@@ -3246,14 +3246,18 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 ref=ref,
                 structured_text=structured,
                 enriched_row=enriched_row_by_ref[ref],
-                wlc_focus=structured.get("wlc_focus")
-                if isinstance(structured, dict)
-                else None,
+                wlc_focus=(
+                    structured.get("wlc_focus")
+                    if isinstance(structured, dict)
+                    else None
+                ),
             )
             out_assessment = out.get("assessment") if isinstance(out, dict) else None
             self.assertIsInstance(out_assessment, dict, ref)
             for key, expected_value in expected_assessment.items():
-                self.assertEqual(out_assessment.get(key), expected_value, f"{ref} {key}")
+                self.assertEqual(
+                    out_assessment.get(key), expected_value, f"{ref} {key}"
+                )
 
     def test_assessment_sat_rows_uses_explicit_meteg_assessment_from_structured_text(
         self,

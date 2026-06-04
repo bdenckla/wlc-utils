@@ -29,9 +29,7 @@ def _je_0910_and_11_comment(adjacent_verse_phrase: str):
         [
             f"The same word, מבלי, appears in the {adjacent_verse_phrase} with analogous transcription problems."
         ],
-        [
-            _ambiguous_mark_context_comment("מבלי")
-        ],
+        [_ambiguous_mark_context_comment("מבלי")],
         [
             " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa:"
             " tipexa is the least likely of the three possible meanings of this mark."
@@ -158,7 +156,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
         "st-summary": "Defying the LC, BHS has mahapakh rather than munax.",
         "wlc_focus": "ועשר֤ים",
-        "assessment": {},
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
         "comment": "See the image in the UXLC change to which we link above.",
     },
@@ -198,12 +195,10 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "1s 6:19": {
         "wlc_focus": "גדולֽה",
-        "assessment": {},
     },
     "2c 22:12": {
         "st-summary": "Defying the LC, BHS has tipexa rather than etnaxta.",
         "wlc_focus": "שנ֖ים",
-        "assessment": {},
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
         "comment": "See the image in the UXLC change to which we link above.",
     },
@@ -249,17 +244,14 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "am 1:14": {
         "wlc_focus": "סופֽה",
         "BHQ": "?",
-        "assessment": {},
     },
     "am 6:6": {
         "wlc_focus": "יוסֽף",
         "BHQ": "?",
-        "assessment": {},
     },
     "am 9:5": {
         "wlc_focus": "מצרֽים",
         "BHQ": "?",
-        "assessment": {},
     },
     "da 2:41": {
         "wlc_focus": "ד֥י",
@@ -273,74 +265,58 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "dt 9:20": {
         "wlc_focus": "ההֽוא",
         "BHQ": "?",
-        "assessment": {},
     },
     "dt 13:15": {
         "wlc_focus": "וחקרת֧",
         "BHQ": "?",
-        "assessment": {},
     },
     "dt 25:9": {
         "wlc_focus": "אחֽיו",
         "BHQ": "?",
-        "assessment": {},
     },
     "ek 33:20": {
         "wlc_focus": "ישראֽל",
-        "assessment": {},
     },
     "ex 2:5": {
         "wlc_focus": "ותקחֽה",
-        "assessment": {},
     },
     "ex 14:25": {
         "wlc_focus": "במצרֽים",
-        "assessment": {},
     },
     "ex 14:29": {
         "wlc_focus": "ומשמאלֽם",
-        "assessment": {},
     },
     "ho 4:19": {
         "wlc_focus": "מזבחותֽם",
         "BHQ": "?",
-        "assessment": {},
     },
     "ho 8:9": {
         "wlc_focus": "אהבֽים",
         "BHQ": "?",
-        "assessment": {},
     },
     "lv 18:17": {
         "wlc_focus": "הֽוא",
         "BHQ": "?",
-        "assessment": {},
     },
     "lv 19:1": {
         "wlc_focus": "לאמֽר",
         "BHQ": "?",
-        "assessment": {},
     },
     "lv 26:7": {
         "wlc_focus": "לחֽרב",
         "BHQ": "?",
-        "assessment": {},
     },
     "nu 7:32": {
         "wlc_focus": "קטֽרת",
-        "assessment": {},
     },
     "nu 7:40": {
         "wlc_focus": "לחטֽאת",
-        "assessment": {},
     },
     "nu 7:55": {
         "wlc_focus": "למנחֽה",
-        "assessment": {},
     },
     "nu 7:68": {
         "wlc_focus": "קטֽרת",
-        "assessment": {},
     },
     "ec 7:21": {
         "wlc_focus": "אש֥ר",
@@ -382,7 +358,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 34:6": {
         "wlc_focus": "ואמֽת׀",
-        "assessment": {},
     },
     "je 9:10": {
         "wlc_focus": "מבל֖י",
@@ -413,7 +388,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "je 48:12": {
         "st-summary": "BHS transcribes a meteg as a tipexa.",
         "wlc_focus": "הנ֖ה־",
-        "assessment": {},
         "img": "LC-272A-col-3-line-3-Je-48v12.png",
         "comment": (
             "Yet another aggressively uncharitable, overly-literal transcription by BHS."

@@ -76,7 +76,9 @@ def match_unique_witness_token(
 
     candidate_tokens: list[str] = []
     for token in texts_from_token_like_payload(source_witness_payload):
-        candidate_sanitized = _normalize_token_for_compare(_default_sanitized_token(token))
+        candidate_sanitized = _normalize_token_for_compare(
+            _default_sanitized_token(token)
+        )
         if not candidate_sanitized:
             continue
         candidate_variants = _sanitized_compare_variants(candidate_sanitized)
@@ -105,7 +107,9 @@ def token_has_maqaf(token: str) -> bool:
 def _default_sanitized_token(token: str) -> str:
     payload = {"word": token}
     sanitized_payload = sanitize_verse_text_payload(payload)
-    if isinstance(sanitized_payload, dict) and isinstance(sanitized_payload.get("word"), str):
+    if isinstance(sanitized_payload, dict) and isinstance(
+        sanitized_payload.get("word"), str
+    ):
         return sanitized_payload["word"]
     return ""
 

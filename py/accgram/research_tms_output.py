@@ -18,8 +18,10 @@ def write_troublemakers_payload(
     enriched_rows: list[dict[str, object]],
     source_file: str,
 ) -> None:
-    serializable_rows = research_tms_meteg_witness.strip_internal_witness_fields_from_rows(
-        enriched_rows
+    serializable_rows = (
+        research_tms_meteg_witness.strip_internal_witness_fields_from_rows(
+            enriched_rows
+        )
     )
     payload: dict[str, object] = {
         "artifacts_description": "enriched troublemaker verse research records",
@@ -50,8 +52,10 @@ def write_oddballs_payload(
     enriched_oddball_rows: list[dict[str, object]],
     source_file: str,
 ) -> None:
-    serializable_rows = research_tms_meteg_witness.strip_internal_witness_fields_from_rows(
-        enriched_oddball_rows
+    serializable_rows = (
+        research_tms_meteg_witness.strip_internal_witness_fields_from_rows(
+            enriched_oddball_rows
+        )
     )
     oddballs_payload: dict[str, object] = {
         "artifacts_description": "enriched oddball verse research records",
