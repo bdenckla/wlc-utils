@@ -256,7 +256,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "וחקרת֧",
         "assessment": {
             "wlc": "darga",
-            "uxlc": "darga",
             "mam": "tevir",
         },
     },

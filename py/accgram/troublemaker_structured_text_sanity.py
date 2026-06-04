@@ -291,6 +291,13 @@ def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> boo
 def _normalize_assessment_descriptor(descriptor: str) -> str:
     normalized = re.sub(r"\s*,\s*", " ", descriptor.strip())
     normalized = re.sub(r"\s+", " ", normalized)
+    normalized = re.sub(
+        r"\bpashta stress helper on\b",
+        "pashta on",
+        normalized,
+        flags=re.IGNORECASE,
+    )
+    normalized = re.sub(r"\bxet\b", "het", normalized, flags=re.IGNORECASE)
     if normalized == "no accent":
         normalized = "no_accent"
 
