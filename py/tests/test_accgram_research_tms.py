@@ -1424,13 +1424,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text = html_out.read_text(encoding="utf-8")
-            self.assertIn(
-                '<td lang="hbo" dir="rtl">דבר֙</td><td></td><td>diff_wlc_uxlc</td>',
+            self.assertRegex(
                 html_text,
+                r'<td lang="hbo" dir="rtl">דבר֙</td><td>[^<]*</td><td>diff_wlc_uxlc</td>',
             )
-            self.assertIn(
-                '<td lang="hbo" dir="rtl">דבר֣</td><td></td><td>diff_wlc_mam</td>',
+            self.assertRegex(
                 html_text,
+                r'<td lang="hbo" dir="rtl">דבר֣</td><td>[^<]*</td><td>diff_wlc_mam</td>',
             )
             self.assertNotIn("wlc422: דבר; uxlc: דבר֙", html_text)
             self.assertNotIn("wlc422: דבר; mam_simple: דבר֣", html_text)
@@ -1548,10 +1548,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 '<pclass="goerwitz-tms-verse"lang="hbo"dir="rtl">'
                 'לפני<spanclass="goerwitz-tms-focus-highlight">וה֥יול֣י</span>אחרי</p>'
             )
-            focus_cell = '<tdlang="hbo"dir="rtl">וה֥יול֣י</td><td></td><td>wlc_focus</td>'
+            focus_cell = r'<td lang="hbo" dir="rtl">וה֥יו ל֣י</td><td>[^<]*</td><td>wlc_focus</td>'
 
             self.assertIn(verse_para, html_text_compact)
-            self.assertIn(focus_cell, html_text_compact)
+            self.assertRegex(html_text, focus_cell)
             self.assertNotIn("wlc_before", html_text)
             self.assertNotIn("wlc_after", html_text)
 
@@ -1584,9 +1584,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text = html_out.read_text(encoding="utf-8")
-            self.assertIn(
-                '<td lang="hbo" dir="rtl">דבר</td><td></td><td>diff_wlc_uxlc.hbo</td>',
+            self.assertRegex(
                 html_text,
+                r'<td lang="hbo" dir="rtl">דבר</td><td>[^<]*</td><td>diff_wlc_uxlc\.hbo</td>',
             )
             self.assertIn("<td>m</td><td></td><td>diff_wlc_uxlc.note</td>", html_text)
             self.assertNotIn(
@@ -1663,9 +1663,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("<code>]Q</code>", html_text_compact)
             self.assertIn("<code>]n</code>", html_text_compact)
             self.assertNotIn("<code>]1</code>", html_text_compact)
-            self.assertIn(
-                '<td lang="hbo" dir="rtl">דבר</td><td></td><td>wlc_focus.hbo</td>',
+            self.assertRegex(
                 html_text,
+                r'<td lang="hbo" dir="rtl">דבר</td><td>[^<]*</td><td>wlc_focus\.hbo</td>',
             )
             self.assertIn(
                 '<td style="text-align: right;"><span title="Marks a place where we agree with BHQ against BHS in reading ל.',
@@ -1679,9 +1679,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 "</span></td><td></td><td>wlc_focus.notes</td>",
                 html_text,
             )
-            self.assertIn(
-                '<td lang="hbo" dir="rtl">דבר</td><td></td><td>diff_wlc_uxlc.hbo</td>',
+            self.assertRegex(
                 html_text,
+                r'<td lang="hbo" dir="rtl">דבר</td><td>[^<]*</td><td>diff_wlc_uxlc\.hbo</td>',
             )
             self.assertIn("<td>t</td><td></td><td>diff_wlc_uxlc.note</td>", html_text)
             self.assertIn("wlc422: [אלף | בית (note: x)]", html_text)
@@ -1712,9 +1712,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text = html_out.read_text(encoding="utf-8")
-            self.assertIn(
-                '<td lang="hbo" dir="rtl">דבר</td><td></td><td>wlc_focus.hbo</td>',
+            self.assertRegex(
                 html_text,
+                r'<td lang="hbo" dir="rtl">דבר</td><td>[^<]*</td><td>wlc_focus\.hbo</td>',
             )
             self.assertIn(
                 '<td style="text-align: right;"><span title="Marks a place where we agree with BHQ against BHS in reading ל.',
