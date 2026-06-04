@@ -551,8 +551,23 @@ def _sat_merge_target_key_for_assessment_key(key: str) -> str | None:
 
 
 def _sat_row_matches_merge_target(*, row_key: str, merge_target_base_key: str) -> bool:
-    # Phase 1 scope: match either base key or base key.hbo.
-    return row_key == merge_target_base_key or row_key == f"{merge_target_base_key}.hbo"
+    return _sat_row_merge_target_priority(
+        row_key=row_key,
+        merge_target_base_key=merge_target_base_key,
+    ) is not None
+
+
+def _sat_row_merge_target_priority(*, row_key: str, merge_target_base_key: str) -> int | None:
+    # Prefer Hebrew-only split rows, then indexed Hebrew rows, then unsplit rows.
+    if row_key == f"{merge_target_base_key}.hbo":
+        return 0
+    if re.fullmatch(rf"{re.escape(merge_target_base_key)}\[\d+\]\.hbo", row_key):
+        return 1
+    if row_key == merge_target_base_key:
+        return 2
+    if re.fullmatch(rf"{re.escape(merge_target_base_key)}\[\d+\]", row_key):
+        return 3
+    return None
 
 
 def _merge_assessment_rows_into_sat_middle_column(rows: list[SatRow]) -> list[SatRow]:
@@ -565,26 +580,33 @@ def _merge_assessment_rows_into_sat_middle_column(rows: list[SatRow]) -> list[Sa
         if merge_target_base_key is None:
             continue
 
-        target_idx = _find_sat_merge_target_row_index(
+        target_indices = _find_sat_merge_target_row_indices(
             merged_rows,
             merge_target_base_key=merge_target_base_key,
         )
-        if target_idx is None:
+        if not target_indices:
             continue
 
         assessment_value, _assessment_middle, _assessment_key = sat_row
-        target_value, _target_middle, target_key = merged_rows[target_idx]
+        merge_target_idx: int | None = None
+        for target_idx in target_indices:
+            target_value, _target_middle, _target_key = merged_rows[target_idx]
+            if (
+                _sat_assessment_value_describes_target_value(
+                    assessment_value=assessment_value,
+                    target_value=target_value,
+                )
+                is True
+            ):
+                merge_target_idx = target_idx
+                break
 
-        if (
-            _sat_assessment_value_describes_target_value(
-                assessment_value=assessment_value,
-                target_value=target_value,
-            )
-            is not True
-        ):
+        if merge_target_idx is None:
             continue
 
-        merged_rows[target_idx] = _sat_row(
+        target_value, _target_middle, target_key = merged_rows[merge_target_idx]
+
+        merged_rows[merge_target_idx] = _sat_row(
             key=target_key,
             value=target_value,
             middle_description=assessment_value,
@@ -601,17 +623,21 @@ def _merge_assessment_rows_into_sat_middle_column(rows: list[SatRow]) -> list[Sa
     ]
 
 
-def _find_sat_merge_target_row_index(
+def _find_sat_merge_target_row_indices(
     rows: list[SatRow], *, merge_target_base_key: str
-) -> int | None:
-    preferred_keys = (f"{merge_target_base_key}.hbo", merge_target_base_key)
+) -> list[int]:
+    prioritized_indices: list[tuple[int, int]] = []
+    for idx, sat_row in enumerate(rows):
+        priority = _sat_row_merge_target_priority(
+            row_key=_sat_row_key(sat_row),
+            merge_target_base_key=merge_target_base_key,
+        )
+        if priority is None:
+            continue
+        prioritized_indices.append((priority, idx))
 
-    for preferred_key in preferred_keys:
-        for idx, sat_row in enumerate(rows):
-            if _sat_row_key(sat_row) == preferred_key:
-                return idx
-
-    return None
+    prioritized_indices.sort()
+    return [idx for _priority, idx in prioritized_indices]
 
 
 def _sat_assessment_value_describes_target_value(

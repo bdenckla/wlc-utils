@@ -126,10 +126,8 @@
         "wlc_focus": "הר֨וח",
         "assessment": {
           "wlc": "qadma on resh",
-          "uxlc": "qadma on resh",
           "mam": "pashta stress helper on resh, pashta on xet"
-        },
-        "uxlc_change": null
+        }
       }
     },
     {
@@ -162,11 +160,11 @@
           "manuscript": "meteg-maqaf",
           "wlc": "merkha-space",
           "uxlc": "meteg-maqaf",
-          "mam": "meteg-maqaf, though merkha-space and no_meteg-maqaf are also attested (see MAM doc-note)"
+          "mam": "meteg-maqaf"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
         "comment": [
-          "I am not sure what, if anything is 'wrong' about merkha-space. Maybe that is not even what the Goerwitz checker is flaging as wrong. The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of the 'legality' of sequences involving it. The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
+          "I am not sure what, if anything is 'wrong' about merkha-space. Indeed see the MAM doc-note for a list of some of the sources that have merkha-space. Maybe that is not even what the Goerwitz checker is flagging as wrong. The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of the 'legality' of sequences involving it. The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
         ]
       }
     },

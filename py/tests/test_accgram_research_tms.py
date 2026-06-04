@@ -1043,6 +1043,40 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("wlc422: מכ֨ל; uxlc: מכל", html_text)
             self.assertIn("diff_wlc_uxlc[2]", html_text)
 
+    def test_write_goerwitz_tms_html_report_merges_no_accent_assessment_into_indexed_diff_row(
+        self,
+    ):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_tms_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "1k 16:33",
+                        "wlc422_kq_u_verse": {"vels": ["לפני", "מכ֨ל", "אחרי"]},
+                        "diff_wlc_uxlc": [
+                            {"wlc422": "אלה֣י", "uxlc": "אלהי"},
+                            {"wlc422": "מכ֨ל", "uxlc": "מכל"},
+                        ],
+                        "structured_text": {
+                            "wlc_focus": "מכ֨ל",
+                            "assessment": {
+                                "uxlc": "no accent",
+                            },
+                        },
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            self.assertIn(
+                '<td lang="hbo" dir="rtl">מכל</td><td>no accent</td><td>diff_wlc_uxlc[2]</td>',
+                html_text,
+            )
+            self.assertNotIn("<td></td><td>no accent</td><td>a.uxlc</td>", html_text)
+
     def test_write_goerwitz_tms_html_report_renders_non_empty_multiword_wlc_focus_in_context(
         self,
     ):
