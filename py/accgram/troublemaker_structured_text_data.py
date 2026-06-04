@@ -185,6 +185,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "hg 2:12": {
         "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
         "wlc_focus": "בשר־ק֜דש",
+        "BHQ": "?",
         "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2c 26:15": {
@@ -205,16 +206,19 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "am 1:14": {
         "wlc_focus": "סופֽה",
+        "BHQ": "?",
         "assessment": {
         },
     },
     "am 6:6": {
         "wlc_focus": "יוסֽף",
+        "BHQ": "?",
         "assessment": {
         },
     },
     "am 9:5": {
         "wlc_focus": "מצרֽים",
+        "BHQ": "?",
         "assessment": {
         },
     },
@@ -229,16 +233,19 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "dt 9:20": {
         "wlc_focus": "ההֽוא",
+        "BHQ": "?",
         "assessment": {
         },
     },
     "dt 13:15": {
         "wlc_focus": "וחקרת֧",
+        "BHQ": "?",
         "assessment": {
         },
     },
     "dt 25:9": {
         "wlc_focus": "אחֽיו",
+        "BHQ": "?",
         "assessment": {
         },
     },
@@ -264,26 +271,31 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ho 4:19": {
         "wlc_focus": "מזבחותֽם",
+        "BHQ": "?",
         "assessment": {
         },
     },
     "ho 8:9": {
         "wlc_focus": "אהבֽים",
+        "BHQ": "?",
         "assessment": {
         },
     },
     "lv 18:17": {
         "wlc_focus": "הֽוא",
+        "BHQ": "?",
         "assessment": {
         },
     },
     "lv 19:1": {
         "wlc_focus": "לאמֽר",
+        "BHQ": "?",
         "assessment": {
         },
     },
     "lv 26:7": {
         "wlc_focus": "לחֽרב",
+        "BHQ": "?",
         "assessment": {
         },
     },
@@ -309,6 +321,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ec 7:21": {
         "wlc_focus": "אש֥ר",
+        "BHQ": "?",
         "assessment": {
             "manuscript": "tevir",
         },
@@ -317,6 +330,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ec 9:18": {
         "wlc_focus": "יאב֥ד טוב֥ה",
+        "BHQ": "?",
         "assessment": {
             "manuscript": "merkha tipexa",
         },
@@ -440,6 +454,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "mi 2:7": {
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
+        "BHQ": "?",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
         "comment": "See the image in the UXLC change to which we link above.",
     },
@@ -469,6 +484,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ob 1:1": {
         "st-summary": "The LC has no visible accent on עליה.",
         "wlc_focus": "עליה",
+        "BHQ": "?",
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
         "comment": "See the image in the UXLC note to which we link above.",
     },
