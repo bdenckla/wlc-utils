@@ -126,13 +126,19 @@ def _candidate_tokens_for_auto_assessment(
     tokens: list[str] = []
 
     if assessment_key in {"wlc", "bhs"}:
-        tokens.extend(_diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), rhs_key="wlc422"))
-        tokens.extend(_diff_rhs_tokens(enriched_row.get("diff_wlc_mam"), rhs_key="wlc422"))
+        tokens.extend(
+            _diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), rhs_key="wlc422")
+        )
+        tokens.extend(
+            _diff_rhs_tokens(enriched_row.get("diff_wlc_mam"), rhs_key="wlc422")
+        )
         if isinstance(wlc_focus, str):
             tokens.append(wlc_focus)
 
     if assessment_key == "uxlc":
-        tokens.extend(_diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), rhs_key="uxlc"))
+        tokens.extend(
+            _diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), rhs_key="uxlc")
+        )
         if isinstance(wlc_focus, str):
             tokens.append(wlc_focus)
 

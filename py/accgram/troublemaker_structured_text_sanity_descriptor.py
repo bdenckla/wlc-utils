@@ -105,7 +105,9 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
     if _HEBREW_MAQAF in text:
         descriptors.insert(0, "maqaf")
 
-    if len(descriptors) > 1 and all(" " not in descriptor for descriptor in descriptors):
+    if len(descriptors) > 1 and all(
+        " " not in descriptor for descriptor in descriptors
+    ):
         return " ".join(descriptors)
 
     return ", ".join(descriptors)
@@ -154,9 +156,11 @@ def assessment_descriptor_matches_hebrew_token(
     normalized_descriptor = _normalize_assessment_descriptor(descriptor)
     normalized_assessment = _normalize_assessment_descriptor(assessment_descriptor)
 
-    normalized_assessment, punctuation_match = _normalize_assessment_with_punctuation_suffix(
-        normalized_assessment,
-        hebrew_token,
+    normalized_assessment, punctuation_match = (
+        _normalize_assessment_with_punctuation_suffix(
+            normalized_assessment,
+            hebrew_token,
+        )
     )
     if punctuation_match is False:
         return False

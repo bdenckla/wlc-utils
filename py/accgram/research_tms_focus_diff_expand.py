@@ -4,7 +4,6 @@ import re
 
 from accgram import research_tms_focus_highlight
 
-
 _MAQAF = "־"
 
 

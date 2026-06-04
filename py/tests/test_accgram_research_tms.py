@@ -42,7 +42,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def _assert_generated_goerwitz_contracts(
         self, page_path: Path
     ) -> list[research_tms_report_contracts.GoerwitzTroublemakerSection]:
-        self.assertTrue(page_path.exists(), f"Missing generated report page: {page_path}")
+        self.assertTrue(
+            page_path.exists(), f"Missing generated report page: {page_path}"
+        )
 
         sections = research_tms_report_contracts.inspect_goerwitz_tms_html_contracts(
             page_path.read_text(encoding="utf-8")
@@ -1258,9 +1260,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             prior_structured_text = research_tms.STRUCTURED_TEXT_BY_REF.get("gn 1:1")
-            research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = {
-                "wlc_focus": "בשר־ק֜דש"
-            }
+            research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = {"wlc_focus": "בשר־ק֜דש"}
             try:
                 with self.assertRaisesRegex(
                     ValueError,
@@ -1284,25 +1284,31 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                     )
 
     def test_count_focus_occurrences_matches_across_maqaf_whitespace(self):
-        occurrences = research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
-            verse_text="הן ישא איש בשר־ ק֜דש בכנף בגדו",
-            wlc_focus="בשר־ק֜דש",
+        occurrences = (
+            research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+                verse_text="הן ישא איש בשר־ ק֜דש בכנף בגדו",
+                wlc_focus="בשר־ק֜דש",
+            )
         )
 
         self.assertEqual(occurrences, 1)
 
     def test_count_focus_occurrences_supports_focus_ending_with_maqaf(self):
-        occurrences = research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
-            verse_text="יד֥י־ מא֖רץ",
-            wlc_focus="יד֥י־",
+        occurrences = (
+            research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+                verse_text="יד֥י־ מא֖רץ",
+                wlc_focus="יד֥י־",
+            )
         )
 
         self.assertEqual(occurrences, 1)
 
     def test_count_focus_occurrences_is_word_boundary_safe(self):
-        occurrences = research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
-            verse_text="אבג אב",
-            wlc_focus="אב",
+        occurrences = (
+            research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+                verse_text="אבג אב",
+                wlc_focus="אב",
+            )
         )
 
         self.assertEqual(occurrences, 1)
@@ -1444,7 +1450,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("a.wlc", html_text)
             self.assertRegex(
                 html_text,
-                r'<td></td><td[^>]*></td><td>foo</td><td>a\.manuscript</td>',
+                r"<td></td><td[^>]*></td><td>foo</td><td>a\.manuscript</td>",
             )
             self.assertNotIn("comment[1]", html_text)
             self.assertNotIn("comment[2]", html_text)
@@ -1677,7 +1683,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("wlc_after", html_text)
 
             verse_idx = html_text_compact.index(verse_para)
-            table_idx = html_text_compact.index("<tableclass=\"goerwitz-tms-sat\">")
+            table_idx = html_text_compact.index('<tableclass="goerwitz-tms-sat">')
             self.assertLess(verse_idx, table_idx)
 
     def test_write_goerwitz_tms_html_report_keeps_diff_wlc_uxlc_note_payload_unsplit(
@@ -2934,7 +2940,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         }
 
         for ref, expected_assessment in expected_by_ref.items():
-            structured = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get(ref)
+            structured = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get(
+                ref
+            )
             self.assertIsInstance(structured, dict, ref)
             assessment = structured.get("assessment")
             self.assertIsInstance(assessment, dict, ref)
@@ -2954,7 +2962,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
         sat_rows = research_tms_report_sat._assessment_sat_rows(
             row,
-            structured_text_lookup=lambda in_row, key: in_row["structured_text"].get(key),
+            structured_text_lookup=lambda in_row, key: in_row["structured_text"].get(
+                key
+            ),
             existing_sat_rows=[
                 ("הנ֖ה־", "", "wlc_focus"),
                 ("הנה־", "", "diff_wlc_mam"),

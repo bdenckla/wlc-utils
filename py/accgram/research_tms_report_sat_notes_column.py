@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-
 # Base SAT row shape before notes-column expansion: (value, middle_description, key).
 SatRow = tuple[str, str, str]
 
@@ -24,10 +23,14 @@ def build_sat_notes_column_plan(
 ) -> SatNotesColumnPlan:
     notes_lookup = notes_by_key or {}
     include_notes_column = _should_include_notes_column(rows, notes_lookup)
-    header_cells = ("value", "", "", "key") if include_notes_column else (
-        "value",
-        "",
-        "key",
+    header_cells = (
+        ("value", "", "", "key")
+        if include_notes_column
+        else (
+            "value",
+            "",
+            "key",
+        )
     )
 
     render_rows: list[SatRenderRow] = []
@@ -48,7 +51,9 @@ def notes_cell_attr(include_notes_column: bool) -> dict[str, str] | None:
     return {"style": "text-align: right;"}
 
 
-def _should_include_notes_column(rows: list[SatRow], notes_by_key: dict[str, str]) -> bool:
+def _should_include_notes_column(
+    rows: list[SatRow], notes_by_key: dict[str, str]
+) -> bool:
     if not notes_by_key:
         return False
 

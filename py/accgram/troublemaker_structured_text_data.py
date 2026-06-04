@@ -16,16 +16,22 @@ def _non_revia_summary(accent: str) -> str:
     return f"The checker probably doesn’t like munax legarmeih serving {accent}."
 
 
-def _je_0910_and_11_comment(adjacent_verse_phrase: str) -> str:
+def _je_0910_and_11_comment(adjacent_verse_phrase: str):
     return (
-        f"The same word, מבלי, appears in the {adjacent_verse_phrase} with analogous transcription problems."
-        " In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
-        " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
-        " Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
-        " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa:"
-        " tipexa is the least likely of the three possible meanings of this mark."
-        " Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably"
-        " assume that a maqaf is missing."
+        [
+            f"The same word, מבלי, appears in the {adjacent_verse_phrase} with analogous transcription problems."
+        ],
+        [
+            " In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
+            " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
+            " Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
+        ],
+        [
+            " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa:"
+            " tipexa is the least likely of the three possible meanings of this mark."
+            " Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably"
+            " assume that a maqaf is missing."
+        ],
     )
 
 
@@ -125,11 +131,13 @@ _JU_1318_03 = (
     " using some degree of interpretation to determine the most likely intended meaning of each mark?"
     " (Sometimes, as is the case here, the most likely intended meaning of a mark is no meaning at all!)"
 )
-_JE_1003_01 = ("As in many other cases we see in this document,"
+_JE_1003_01 = (
+    "As in many other cases we see in this document,"
     " BHS seems to be aggresively uncharitable in its transcription of this somewhat-ambiguous vertical line,"
     " avoiding the most likely intended meaning (here meteg)"
     " in favor of a less likely, indeed “illegal” alternative (here merkha)."
-    " In this case the mark even lacks any inclination that would suggest merkha.")
+    " In this case the mark even lacks any inclination that would suggest merkha."
+)
 _JE_1003_02 = (
     "As usual, when we say an accent is “illegal” we mean that it does not conform to the consensus grammar of accents,"
     " given the surrounding accent-context."
@@ -139,17 +147,14 @@ _JE_1003_02 = (
     " for example due to ambiguity between merkha and tipexa."
     " I don’t think that is the case here, but I thought I would bring up the general point anyway."
 )
-_JE_1003_03 = (
-    "Finally, it should be noted that the mark preceding this word’s yod is assumed to be a spacer."
-)
+_JE_1003_03 = "Finally, it should be noted that the mark preceding this word’s yod is assumed to be a spacer."
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
         "st-summary": "Defying the LC, BHS has mahapakh rather than munax.",
         "wlc_focus": "ועשר֤ים",
-        "assessment": {
-        },
+        "assessment": {},
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
-        "comment": "See the image in the UXLC change to which we link above."
+        "comment": "See the image in the UXLC change to which we link above.",
     },
     "1k 16:33": {
         "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
@@ -161,7 +166,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": (
             "The LC has no visible accent on מכל. See the image in the UXLC change to which we link above."
             " The consensus accents the final syllable with pashta rather than qadma."
-        )
+        ),
     },
     "1k 19:11": {
         "wlc_focus": "הר֨וח",
@@ -189,16 +194,14 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "1s 6:19": {
         "wlc_focus": "גדולֽה",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "2c 22:12": {
         "st-summary": "Defying the LC, BHS has tipexa rather than etnaxta.",
         "wlc_focus": "שנ֖ים",
-        "assessment": {
-        },
+        "assessment": {},
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
-        "comment": "See the image in the UXLC change to which we link above."
+        "comment": "See the image in the UXLC change to which we link above.",
     },
     "is 36:2": {
         "st-summary": _non_revia_summary("tevir"),
@@ -237,25 +240,22 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "mam": "pashta on ה",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
-        "comment": "See the image in the UXLC change to which we link above."
+        "comment": "See the image in the UXLC change to which we link above.",
     },
     "am 1:14": {
         "wlc_focus": "סופֽה",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "am 6:6": {
         "wlc_focus": "יוסֽף",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "am 9:5": {
         "wlc_focus": "מצרֽים",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "da 2:41": {
         "wlc_focus": "ד֥י",
@@ -266,95 +266,79 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "mam": "meteg-maqaf",
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
-        "comment": "See the image in the UXLC change to which we link above."
+        "comment": "See the image in the UXLC change to which we link above.",
     },
     "dt 9:20": {
         "wlc_focus": "ההֽוא",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "dt 13:15": {
         "wlc_focus": "וחקרת֧",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "dt 25:9": {
         "wlc_focus": "אחֽיו",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "ek 33:20": {
         "wlc_focus": "ישראֽל",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "ex 2:5": {
         "wlc_focus": "ותקחֽה",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "ex 14:25": {
         "wlc_focus": "במצרֽים",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "ex 14:29": {
         "wlc_focus": "ומשמאלֽם",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "ho 4:19": {
         "wlc_focus": "מזבחותֽם",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "ho 8:9": {
         "wlc_focus": "אהבֽים",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "lv 18:17": {
         "wlc_focus": "הֽוא",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "lv 19:1": {
         "wlc_focus": "לאמֽר",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "lv 26:7": {
         "wlc_focus": "לחֽרב",
         "BHQ": "?",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "nu 7:32": {
         "wlc_focus": "קטֽרת",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "nu 7:40": {
         "wlc_focus": "לחטֽאת",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "nu 7:55": {
         "wlc_focus": "למנחֽה",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "nu 7:68": {
         "wlc_focus": "קטֽרת",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "ec 7:21": {
         "wlc_focus": "אש֥ר",
@@ -363,7 +347,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "tevir",
         },
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
-        "comment": "See the image in the UXLC change to which we link above."
+        "comment": "See the image in the UXLC change to which we link above.",
     },
     "ec 9:18": {
         "wlc_focus": "יאב֥ד טוב֥ה",
@@ -372,7 +356,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "manuscript": "merkha tipexa",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
-        "comment": "See the image in the UXLC change to which we link above."
+        "comment": "See the image in the UXLC change to which we link above.",
     },
     "ek 11:1": {
         "wlc_focus": "שר֖י",
@@ -400,8 +384,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 34:6": {
         "wlc_focus": "ואמֽת׀",
-        "assessment": {
-        },
+        "assessment": {},
     },
     "je 9:10": {
         "wlc_focus": "מבל֖י",
@@ -430,7 +413,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "Defying the LC, BHS has tipexa rather than munax.",
         "wlc_focus": "מא֖רץ",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
-        "comment": "See the image in the UXLC change to which we link above."
+        "comment": "See the image in the UXLC change to which we link above.",
     },
     "je 48:12": {
         "st-summary": "BHS transcribes a meteg as a tipexa.",

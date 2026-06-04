@@ -71,8 +71,10 @@ def sanity_check_structured_text(
 
 
 def sanitize_word_for_change_match(text: str) -> str:
-    return troublemaker_structured_text_sanity_descriptor.sanitize_word_for_change_match(
-        text
+    return (
+        troublemaker_structured_text_sanity_descriptor.sanitize_word_for_change_match(
+            text
+        )
     )
 
 
@@ -83,17 +85,13 @@ def load_all_changes_by_url(all_changes_path: Path) -> dict[str, dict[str, objec
 
 
 def canonicalize_uxlc_change_url(url: str) -> str | None:
-    return troublemaker_structured_text_sanity_changes.canonicalize_uxlc_change_url(
-        url
-    )
+    return troublemaker_structured_text_sanity_changes.canonicalize_uxlc_change_url(url)
 
 
 def diff_uxlc_matches_changetext(diff_wlc_uxlc: object, changetext: str) -> bool | None:
-    return (
-        troublemaker_structured_text_sanity_descriptor.diff_uxlc_matches_changetext(
-            diff_wlc_uxlc,
-            changetext,
-        )
+    return troublemaker_structured_text_sanity_descriptor.diff_uxlc_matches_changetext(
+        diff_wlc_uxlc,
+        changetext,
     )
 
 

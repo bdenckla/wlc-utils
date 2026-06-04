@@ -76,7 +76,9 @@ def build_enriched_row(
 
     mam_simple_info = mam_simple_by_bcv.get(bcv)
     if mam_simple_info is None:
-        raise ValueError(f"Missing MAM-simple verse for {ref} ({bcv}) in {mam_simple_dir}")
+        raise ValueError(
+            f"Missing MAM-simple verse for {ref} ({bcv}) in {mam_simple_dir}"
+        )
 
     mam_simple_verse = mam_simple_info["mam_simple_verse"]
     mam_simple_verse = sanitize_verse_text_payload(
@@ -348,7 +350,9 @@ def _to_xmlish_verse_child(element: ET.Element) -> dict[str, object] | str | Non
         node["attrs"] = dict(element.attrib)
 
     if tag == "w":
-        children = [_to_xmlish_inline(child) for child in element if child.tag in {"s", "x"}]
+        children = [
+            _to_xmlish_inline(child) for child in element if child.tag in {"s", "x"}
+        ]
         if children:
             node["children"] = children
 

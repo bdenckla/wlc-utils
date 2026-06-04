@@ -24,7 +24,9 @@ def inspect_goerwitz_tms_html_contracts(
     for idx, match in enumerate(matches):
         ref = _normalize_space(_strip_tags(match.group("ref")))
         section_start = match.end()
-        section_end = matches[idx + 1].start() if idx + 1 < len(matches) else len(html_text)
+        section_end = (
+            matches[idx + 1].start() if idx + 1 < len(matches) else len(html_text)
+        )
         section_html = html_text[section_start:section_end]
         sections.append(_inspect_single_section(ref, section_html))
     return sections
@@ -68,7 +70,9 @@ def _inspect_single_section(ref: str, section_html: str) -> GoerwitzTroublemaker
     )
 
 
-def _extract_sat_keys_and_focus_values(sat_table_html: str) -> tuple[list[str], list[str]]:
+def _extract_sat_keys_and_focus_values(
+    sat_table_html: str,
+) -> tuple[list[str], list[str]]:
     sat_keys: list[str] = []
     wlc_focus_values: list[str] = []
     for row_html in _TABLE_ROW_RE.findall(sat_table_html):

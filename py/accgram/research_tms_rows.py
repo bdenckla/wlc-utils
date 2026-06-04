@@ -5,7 +5,6 @@ from pathlib import Path
 
 from accgram import research_tms_ref
 
-
 ParsedRow = tuple[dict[str, object], str, str]
 
 

@@ -37,7 +37,9 @@ def render_sat_table(
     wlc_tokens: list[object],
 ) -> object:
     wlc_focus = structured_text_lookup(row, "wlc_focus")
-    wlc_focus_str = _normalize_whitespace(wlc_focus) if isinstance(wlc_focus, str) else ""
+    wlc_focus_str = (
+        _normalize_whitespace(wlc_focus) if isinstance(wlc_focus, str) else ""
+    )
     wlc_focus_notes = (
         research_tms_report_wlc_word_format.collect_wlc_word_bracket_notes(
             wlc_tokens,
@@ -178,8 +180,9 @@ def render_sat_value(value: object) -> str:
 
 
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
-    if label in _WLC_FOCUS_ROW_KEYS and research_tms_report_diff_format.contains_hebrew(
-        value
+    if (
+        label in _WLC_FOCUS_ROW_KEYS
+        and research_tms_report_diff_format.contains_hebrew(value)
     ):
         return {"lang": "hbo", "dir": "rtl"}
 
@@ -280,7 +283,9 @@ def _sat_merge_target_key_for_assessment_key(key: str) -> str | None:
     return _SAT_A_KEY_MERGE_TARGETS.get(key)
 
 
-def _sat_row_merge_target_priority(*, row_key: str, merge_target_base_key: str) -> int | None:
+def _sat_row_merge_target_priority(
+    *, row_key: str, merge_target_base_key: str
+) -> int | None:
     # Prefer the direct key match, then indexed keys.
     if row_key == merge_target_base_key:
         return 0
