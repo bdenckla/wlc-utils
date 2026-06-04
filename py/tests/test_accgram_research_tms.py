@@ -1976,10 +1976,19 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertEqual(descriptor, "merkha merkha")
 
-    def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
-        self.assertIsNone(
-            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("טוב֖ה")
+    def test_descriptor_from_hebrew_token_merkha_tipexa(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "יאב֥ד טוב֖ה"
         )
+        self.assertEqual(descriptor, "merkha tipexa")
+
+    def test_descriptor_from_hebrew_token_tipexa_merkha(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "אב֖ גד֥"
+        )
+        self.assertEqual(descriptor, "tipexa merkha")
+
+    def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
         self.assertIsNone(
             troublemaker_structured_text_sanity.descriptor_from_hebrew_token("ישראל֘")
         )
@@ -2044,6 +2053,69 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֥ה"},
         )
         self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_tipexa_with_spaces(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="merkha tipexa",
+            diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֖ה", "uxlc": "יאב֥ד טוב֖ה"},
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_tipexa_merkha_with_spaces(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="tipexa merkha",
+            diff_wlc_uxlc={"wlc422": "אב֖ גד֥", "uxlc": "אב֖ גד֥"},
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_multiword_assessment_single_token_is_indeterminate(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="merkha tipexa",
+            diff_wlc_uxlc={"wlc422": "טוב֥ה", "uxlc": "טוב֖ה"},
+        )
+        self.assertIsNone(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_list_matches_any_expanded_entry(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="merkha tipexa",
+            diff_wlc_uxlc=[
+                {"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֖ה"},
+                {"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֖ד טוב֥ה"},
+            ],
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_list_matches_reversed_expanded_entry(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="tipexa merkha",
+            diff_wlc_uxlc=[
+                {"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֖ה"},
+                {"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֖ד טוב֥ה"},
+            ],
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_list_without_match_is_indeterminate(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="meteg-space",
+            diff_wlc_uxlc=[
+                {"wlc_adds_notes": "]k"},
+                {"wlc422": "ד֥י", "uxlc": "די"},
+            ],
+        )
+        self.assertIsNone(matches)
 
     def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(
         self,

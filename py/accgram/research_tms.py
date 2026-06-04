@@ -188,6 +188,7 @@ def run(args: argparse.Namespace) -> None:
     enriched_rows: list[dict[str, object]] = []
     for row, bcv, ref in parsed_rows:
         structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
+        wlc_focus = _structured_wlc_focus(structured_text)
         enriched_row, diff_wlc_uxlc_for_checks = _build_enriched_row(
             row=row,
             bcv=bcv,
@@ -198,7 +199,7 @@ def run(args: argparse.Namespace) -> None:
             wlc422_kq_u_dir=args.wlc422_kq_u_dir,
             uxlc_dir=args.uxlc_dir,
             mam_simple_dir=args.mam_simple_dir,
-            wlc_focus=_structured_wlc_focus(structured_text),
+            wlc_focus=wlc_focus,
         )
 
         if structured_text is not None:
@@ -207,15 +208,20 @@ def run(args: argparse.Namespace) -> None:
                 assessment.get("uxlc") if isinstance(assessment, dict) else None
             )
             if isinstance(assessment_uxlc, str):
+                diff_wlc_uxlc_for_assessment = _expand_subset_diff_to_wlc_focus(
+                    diff_wlc_uxlc_for_checks,
+                    wlc_focus=wlc_focus,
+                    rhs_key="uxlc",
+                )
                 matches_converted_diff = assessment_uxlc_matches_converted_diff_uxlc(
                     assessment_uxlc=assessment_uxlc,
-                    diff_wlc_uxlc=diff_wlc_uxlc_for_checks,
+                    diff_wlc_uxlc=diff_wlc_uxlc_for_assessment,
                 )
                 if matches_converted_diff is False:
                     raise ValueError(
                         "structured_text assessment.uxlc mismatches converted diff_wlc_uxlc.uxlc "
                         f"for {ref}: assessment.uxlc={assessment_uxlc} "
-                        f"diff_wlc_uxlc={diff_wlc_uxlc_for_checks}"
+                        f"diff_wlc_uxlc={diff_wlc_uxlc_for_assessment}"
                     )
 
             uxlc_change = structured_text.get("uxlc_change")
