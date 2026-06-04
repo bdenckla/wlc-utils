@@ -6,6 +6,7 @@ from pathlib import Path
 from accgram import research_tms_data
 from accgram import research_tms_focus_diff_expand
 from accgram import research_tms_output
+from accgram import research_tms_ref
 from accgram import research_tms_report
 from accgram import research_tms_rows
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
@@ -426,15 +427,15 @@ def _validate_unique_wlc_focus_in_wlc_verse(
 
 
 def _parse_ref(ref: str, *, row_kind: str = "troublemaker") -> tuple[str, int, int]:
-    return research_tms_rows.parse_ref(ref, row_kind=row_kind)
+    return research_tms_ref.parse_ref(ref, row_kind=row_kind)
 
 
 def _to_compact_bcv(bb: str, chnu: int, vrnu: int) -> str:
-    return research_tms_rows.to_compact_bcv(bb, chnu, vrnu)
+    return research_tms_ref.to_compact_bcv(bb, chnu, vrnu)
 
 
 def _to_ref(bb: str, chnu: int, vrnu: int) -> str:
-    return research_tms_rows.to_ref(bb, chnu, vrnu)
+    return research_tms_ref.to_ref(bb, chnu, vrnu)
 
 
 def _load_wlc422_index(wlc422_kq_u_dir: Path) -> dict[str, dict[str, object]]:

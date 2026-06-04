@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
 
-_TROUBLEMAKER_REF_RE = re.compile(r"^(?P<bb>[0-9a-z]{2})\s+(?P<ch>\d+):(?P<vr>\d+)$")
+from accgram import research_tms_ref
 
 
 ParsedRow = tuple[dict[str, object], str, str]
@@ -16,21 +15,15 @@ def read_json(path: Path) -> object:
 
 
 def parse_ref(ref: str, *, row_kind: str = "troublemaker") -> tuple[str, int, int]:
-    match = _TROUBLEMAKER_REF_RE.match(ref.strip())
-    if match is None:
-        raise ValueError(f"Malformed {row_kind} ref: {ref}")
-    bb = match.group("bb")
-    chnu = int(match.group("ch"))
-    vrnu = int(match.group("vr"))
-    return bb, chnu, vrnu
+    return research_tms_ref.parse_ref(ref, row_kind=row_kind)
 
 
 def to_compact_bcv(bb: str, chnu: int, vrnu: int) -> str:
-    return f"{bb}{chnu}:{vrnu}"
+    return research_tms_ref.to_compact_bcv(bb, chnu, vrnu)
 
 
 def to_ref(bb: str, chnu: int, vrnu: int) -> str:
-    return f"{bb} {chnu}:{vrnu}"
+    return research_tms_ref.to_ref(bb, chnu, vrnu)
 
 
 def parse_troublemaker_rows(

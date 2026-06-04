@@ -9,6 +9,7 @@ from accgram import research_tms_report_open_issues
 from accgram import research_tms_report_sat
 from accgram import research_tms_report_subsets
 from accgram import research_tms_report_verse
+from accgram import research_tms_ref
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
@@ -285,11 +286,8 @@ def _row_ref(row: dict[str, object]) -> str:
 
 
 def _parse_ref_to_wlc_bcv(ref: str) -> tuple[str, int, int, str]:
-    # Reuse the parsing logic from research_tms to avoid drift.
-    from accgram import research_tms
-
-    bb, chnu, vrnu = research_tms._parse_ref(ref)
-    bcv = research_tms._to_compact_bcv(bb, chnu, vrnu)
+    bb, chnu, vrnu = research_tms_ref.parse_ref(ref)
+    bcv = research_tms_ref.to_compact_bcv(bb, chnu, vrnu)
     return bb, chnu, vrnu, bcv
 
 
