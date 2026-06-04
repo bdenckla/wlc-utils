@@ -108,7 +108,23 @@ _JU_1318_03 = (
     " using some degree of interpretation to determine the most likely intended meaning of each mark?"
     " (Sometimes, as is the case here, the most likely intended meaning of a mark is no meaning at all!)"
 )
-
+_JE_1003_01 = ("As in many other cases we see in this document,"
+    " BHS seems to be aggresively uncharitable in its transcription of this somewhat-ambiguous vertical line,"
+    " avoiding the most likely intended meaning (here meteg)"
+    " in favor of a less likely, indeed “illegal” alternative (here merkha)."
+    " In this case the mark even lacks any inclination that would suggest merkha.")
+_JE_1003_02 = (
+    "As usual, when we say an accent is “illegal” we mean that it does not conform to the consensus grammar of accents,"
+    " given the surrounding accent-context."
+    " Thus our degree of certainty that an accent is “illegal”"
+    " depends on our degree of certainty about the surrounding accent-context."
+    " At times, our degree of certainty about the context is not high,"
+    " for example due to ambiguity between merkha and tipexa."
+    " I don’t think that is the case here, but I thought I would bring up the general point anyway."
+)
+_JE_1003_03 = (
+    "Finally, it should be noted that the mark preceding this word’s yod is assumed to be a spacer."
+)
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
         "st-summary": "Defying the LC, BHS has mahapakh rather than munax.",
@@ -397,9 +413,15 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 10:3": {
+        "st-summary": "BHS chooses merkha over meteg.",
         "wlc_focus": "יד֥י־",
         "img": "LC-251A-col-3-line-11-Je-10v3.png",
         "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F251A.jpg",
+        "comment": (
+            _JE_1003_01,
+            _JE_1003_02,
+            _JE_1003_03,
+        ),
     },
     "je 31:32": {
         "st-summary": "Defying the LC, BHS has tipexa rather than munax.",

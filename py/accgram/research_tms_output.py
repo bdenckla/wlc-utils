@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 
 from accgram import research_tms_report
-from accgram.verse_json_smart_concat import smart_concatenate_row_for_json
 from mb_cmn import provenance
 
 
@@ -31,9 +30,7 @@ def write_troublemakers_payload(
         "summary": {
             "troublemakers": len(enriched_rows),
         },
-        # Keep diff computation on original tokenized structures, then prettify
-        # verse display fields only at serialization time.
-        "troublemakers": [smart_concatenate_row_for_json(row) for row in enriched_rows],
+        "troublemakers": enriched_rows,
     }
     payload = provenance.with_json_provenance(payload, source_file)
     _write_json(out_path, payload)
@@ -62,11 +59,7 @@ def write_oddballs_payload(
         "summary": {
             "oddballs": len(enriched_oddball_rows),
         },
-        # Keep diff computation on original tokenized structures, then prettify
-        # verse display fields only at serialization time.
-        "oddballs": [
-            smart_concatenate_row_for_json(row) for row in enriched_oddball_rows
-        ],
+        "oddballs": enriched_oddball_rows,
     }
     oddballs_payload = provenance.with_json_provenance(oddballs_payload, source_file)
     _write_json(oddballs_out_path, oddballs_payload)

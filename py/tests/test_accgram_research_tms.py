@@ -20,7 +20,6 @@ from accgram import research_tms_report
 from accgram import research_tms_report_contracts
 from accgram import research_tms_report_subsets
 from accgram import troublemaker_structured_text_sanity
-from accgram import verse_json_smart_concat
 from accgram import wlc_uxlc_diff
 
 
@@ -95,49 +94,6 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 )
 
         return sections
-
-    def test_smart_concatenate_string_runs_joins_with_space_without_maqaf(self):
-        out = verse_json_smart_concat.smart_concatenate_string_runs(
-            ["אב", "גד", {"x": 1}, "דה", "וז"]
-        )
-
-        self.assertEqual(out, ["אב גד", {"x": 1}, "דה וז"])
-
-    def test_smart_concatenate_string_runs_joins_without_space_after_maqaf(self):
-        out = verse_json_smart_concat.smart_concatenate_string_runs(["אב־", "גד", "דה"])
-
-        self.assertEqual(out, ["אב־גד דה"])
-
-    def test_smart_concatenate_string_runs_allows_multi_token_run(self):
-        out = verse_json_smart_concat.smart_concatenate_string_runs(["אב", "גד", "דה"])
-
-        self.assertEqual(out, ["אב גד דה"])
-
-    def test_smart_concatenate_string_runs_attaches_paseq_to_previous_word(self):
-        out = verse_json_smart_concat.smart_concatenate_string_runs(["אב", "׀", "גד"])
-
-        self.assertEqual(out, ["אב׀ גד"])
-
-    def test_smart_concatenate_string_runs_asserts_on_preexisting_space(self):
-        with self.assertRaises(AssertionError):
-            verse_json_smart_concat.smart_concatenate_string_runs(["אב ג", "דה"])
-
-    def test_smart_concatenate_row_for_json_does_not_touch_diff(self):
-        row = {
-            "wlc422_kq_u_verse": {"vels": ["אב", "גד"]},
-            "uxlc_verse": ["אב", "גד"],
-            "diff_wlc_uxlc": [{"wlc422": ["אב"], "uxlc": ["אג"]}],
-            "mam_simple_verse": {"vels": ["אב", "גד"]},
-            "diff_wlc_mam": [{"wlc422": ["אב"], "mam_simple": ["אג"]}],
-        }
-
-        out = verse_json_smart_concat.smart_concatenate_row_for_json(row)
-
-        self.assertEqual(out["wlc422_kq_u_verse"], {"vels": ["אב גד"]})
-        self.assertEqual(out["uxlc_verse"], ["אב גד"])
-        self.assertEqual(out["diff_wlc_uxlc"], row["diff_wlc_uxlc"])
-        self.assertEqual(out["mam_simple_verse"], {"vels": ["אב גד"]})
-        self.assertEqual(out["diff_wlc_mam"], row["diff_wlc_mam"])
 
     def test_load_wlc422_index_collapses_notes_list_to_string(self):
         with TemporaryDirectory() as tmp_dir:
@@ -488,7 +444,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             row = payload["troublemakers"][0]
             self.assertEqual(row["ref"], "gn 1:1")
-            self.assertEqual(row["wlc422_kq_u_verse"]["vels"][0], "בראש֖ית בר֣א")
+            self.assertEqual(
+                row["wlc422_kq_u_verse"]["vels"][:2],
+                ["בראש֖ית", "בר֣א"],
+            )
             self.assertIn(type(row["diff_wlc_uxlc"]), (dict, list))
             if isinstance(row["diff_wlc_uxlc"], list):
                 self.assertGreaterEqual(len(row["diff_wlc_uxlc"]), 1)
@@ -514,7 +473,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertEqual(xmlish[0]["children"][1]["tag"], "x")
             self.assertEqual(xmlish[0]["children"][1]["text"], "5")
 
-            self.assertEqual(row["mam_simple_verse"]["vels"], ["אב־גד׀ קרי דה־ו"])
+            self.assertEqual(
+                row["mam_simple_verse"]["vels"],
+                ["אב־", "גד", "׀", "קרי", "דה־", "ו"],
+            )
             self.assertIn(type(row["diff_wlc_mam"]), (dict, list))
             if isinstance(row["diff_wlc_mam"], list):
                 self.assertGreaterEqual(len(row["diff_wlc_mam"]), 1)
