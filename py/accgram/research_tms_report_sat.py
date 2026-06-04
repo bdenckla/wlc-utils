@@ -251,15 +251,14 @@ def _sat_merge_target_key_for_assessment_key(key: str) -> str | None:
 
 
 def _sat_row_merge_target_priority(*, row_key: str, merge_target_base_key: str) -> int | None:
-    # Prefer Hebrew-only split rows, then indexed Hebrew rows, then unsplit rows.
+    # Prefer Hebrew-only split rows, then unsplit rows.
+    # The only expected *.hbo key is wlc_focus.hbo.
     if row_key == f"{merge_target_base_key}.hbo":
         return 0
-    if re.fullmatch(rf"{re.escape(merge_target_base_key)}\[\d+\]\.hbo", row_key):
-        return 1
     if row_key == merge_target_base_key:
-        return 2
+        return 1
     if re.fullmatch(rf"{re.escape(merge_target_base_key)}\[\d+\]", row_key):
-        return 3
+        return 2
     return None
 
 
