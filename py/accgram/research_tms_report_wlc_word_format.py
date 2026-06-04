@@ -2,20 +2,6 @@ from __future__ import annotations
 
 from typing import Callable
 
-WLC_FOCUS_NOTES_LABEL = "wlc_focus.notes"
-
-
-def build_wlc_word_rows(
-    wlc_focus_text: str, wlc_focus_notes: list[str]
-) -> list[tuple[str, str]]:
-    if wlc_focus_notes:
-        return [
-            ("wlc_focus.hbo", wlc_focus_text),
-            (WLC_FOCUS_NOTES_LABEL, render_note_values(wlc_focus_notes)),
-        ]
-
-    return [("wlc_focus", wlc_focus_text)]
-
 
 def collect_wlc_word_bracket_notes(
     tokens: list[object],

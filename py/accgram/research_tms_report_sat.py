@@ -6,13 +6,14 @@ from collections.abc import Callable
 
 from accgram import research_tms_report_bracket_notes
 from accgram import research_tms_report_diff_format
+from accgram import research_tms_report_sat_notes_column
 from accgram import research_tms_report_wlc_word_format
 from accgram.research_tms_assessment_auto import try_auto_assessment_descriptor
 from accgram import troublemaker_structured_text_sanity
 from py_html import wlc_utils_html
 
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "mam")
-_WLC_FOCUS_HBO_ROW_KEYS = {"wlc_focus", "wlc_focus.hbo"}
+_WLC_FOCUS_ROW_KEYS = {"wlc_focus"}
 _SAT_A_KEY_MERGE_TARGETS: dict[str, str] = {
     "a.wlc": "wlc_focus",
     "a.uxlc": "diff_wlc_uxlc",
@@ -44,13 +45,14 @@ def render_sat_table(
             render_sat_value=render_sat_value,
         )
     )
-    sat_rows: list[SatRow] = [
-        _sat_row(key=label, value=value)
-        for label, value in research_tms_report_wlc_word_format.build_wlc_word_rows(
-            wlc_focus_str,
-            wlc_focus_notes,
-        )
-    ]
+    sat_notes_by_key: dict[str, str] = {}
+    rendered_wlc_focus_notes = research_tms_report_wlc_word_format.render_note_values(
+        wlc_focus_notes
+    )
+    if rendered_wlc_focus_notes:
+        sat_notes_by_key["wlc_focus"] = rendered_wlc_focus_notes
+
+    sat_rows: list[SatRow] = [_sat_row(key="wlc_focus", value=wlc_focus_str)]
     sat_rows.extend(
         [
             _sat_row(key=label, value=value)
@@ -89,11 +91,42 @@ def render_sat_table(
     sat_rows = _apply_sat_row_suppressions(row_ref, sat_rows)
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows)
     sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
+    notes_column_plan = (
+        research_tms_report_sat_notes_column.build_sat_notes_column_plan(
+            sat_rows,
+            notes_by_key=sat_notes_by_key,
+        )
+    )
 
     table_rows: list[object] = [
-        wlc_utils_html.table_row_of_headers(("value", "", "key"))
+        wlc_utils_html.table_row_of_headers(notes_column_plan.header_cells)
     ]
-    for value, middle_description, key in sat_rows:
+    for value, notes_value, middle_description, key in notes_column_plan.render_rows:
+        if notes_column_plan.include_notes_column:
+            table_rows.append(
+                wlc_utils_html.table_row_of_data(
+                    (
+                        research_tms_report_bracket_notes.annotate_bracket_note_tokens(
+                            value
+                        ),
+                        research_tms_report_bracket_notes.annotate_bracket_note_tokens(
+                            notes_value
+                        ),
+                        middle_description,
+                        key,
+                    ),
+                    tdattrs=(
+                        _sat_value_cell_attr(key, value),
+                        research_tms_report_sat_notes_column.notes_cell_attr(
+                            notes_column_plan.include_notes_column
+                        ),
+                        None,
+                        None,
+                    ),
+                )
+            )
+            continue
+
         table_rows.append(
             wlc_utils_html.table_row_of_data(
                 (
@@ -145,10 +178,7 @@ def render_sat_value(value: object) -> str:
 
 
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
-    if label == research_tms_report_wlc_word_format.WLC_FOCUS_NOTES_LABEL:
-        return {"style": "text-align: right;"}
-
-    if label in _WLC_FOCUS_HBO_ROW_KEYS and research_tms_report_diff_format.contains_hebrew(
+    if label in _WLC_FOCUS_ROW_KEYS and research_tms_report_diff_format.contains_hebrew(
         value
     ):
         return {"lang": "hbo", "dir": "rtl"}
@@ -251,14 +281,11 @@ def _sat_merge_target_key_for_assessment_key(key: str) -> str | None:
 
 
 def _sat_row_merge_target_priority(*, row_key: str, merge_target_base_key: str) -> int | None:
-    # Prefer Hebrew-only split rows, then unsplit rows.
-    # The only expected *.hbo key is wlc_focus.hbo.
-    if row_key == f"{merge_target_base_key}.hbo":
-        return 0
+    # Prefer the direct key match, then indexed keys.
     if row_key == merge_target_base_key:
-        return 1
+        return 0
     if re.fullmatch(rf"{re.escape(merge_target_base_key)}\[\d+\]", row_key):
-        return 2
+        return 1
     return None
 
 

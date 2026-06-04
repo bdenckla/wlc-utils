@@ -76,11 +76,11 @@ def _extract_sat_keys_and_focus_values(sat_table_html: str) -> tuple[list[str], 
         if len(td_cells) < 3:
             continue
         value = _normalize_space(_strip_tags(td_cells[0]))
-        key = _normalize_space(_strip_tags(td_cells[2]))
+        key = _normalize_space(_strip_tags(td_cells[-1]))
         if not key:
             continue
         sat_keys.append(key)
-        if key == "wlc_focus" or key == "wlc_focus.hbo":
+        if key == "wlc_focus":
             wlc_focus_values.append(value)
     return sat_keys, wlc_focus_values
 
