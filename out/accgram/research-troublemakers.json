@@ -2600,7 +2600,7 @@
         "mam_simple": "ידי־"
       },
       "structured_text": {
-        "st-summary": "BHS chooses merkha over meteg.",
+        "st-summary": "BHS transcribes a meteg as a merkha.",
         "wlc_focus": "יד֥י־",
         "assessment": {
           "wlc": "merkha-maqaf",
@@ -3043,7 +3043,7 @@
         "mam_simple": "פֽלאי׃"
       },
       "structured_text": {
-        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck on the LC vellum.",
+        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck.",
         "wlc_focus": "פ֛לאי׃",
         "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
         "comment": [
@@ -3096,7 +3096,7 @@
         "mam_simple": "הונח־"
       },
       "structured_text": {
-        "st-summary": "LC’s missing maqaf causes BHQ to make things worse.",
+        "st-summary": "BHQ turns a missing maqaf into something worse.",
         "wlc_focus": "הונ֖ח",
         "assessment": {
           "wlc": "tipexa",
@@ -3685,7 +3685,7 @@
         "mam_simple": "ישראל֮"
       },
       "structured_text": {
-        "st-summary": "WLC turns a scribal zarqa whim into something far worse.",
+        "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
         "comment": [

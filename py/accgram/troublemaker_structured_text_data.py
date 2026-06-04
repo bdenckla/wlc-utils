@@ -419,7 +419,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 10:3": {
-        "st-summary": "BHS chooses merkha over meteg.",
+        "st-summary": "BHS transcribes a meteg as a merkha.",
         "wlc_focus": "יד֥י־",
         "assessment": {
             "mam": "meteg-maqaf",
@@ -461,7 +461,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ju 13:18": {
-        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck on the LC vellum.",
+        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck.",
         "wlc_focus": "פ֛לאי׃",
         "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
         "comment": (
@@ -471,7 +471,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "lm 5:5": {
-        "st-summary": "LC’s missing maqaf causes BHQ to make things worse.",
+        "st-summary": "BHQ turns a missing maqaf into something worse.",
         "wlc_focus": "הונ֖ח",
         "assessment": {
             "mam": "meteg-maqaf",
@@ -495,7 +495,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "nu 20:19": {
-        "st-summary": "WLC turns a scribal zarqa whim into something far worse.",
+        "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
         "comment": (
