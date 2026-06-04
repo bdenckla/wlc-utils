@@ -332,6 +332,7 @@
       },
       "structured_text": {
         "wlc_focus": "סופֽה",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -366,6 +367,7 @@
       },
       "structured_text": {
         "wlc_focus": "יוסֽף",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -400,6 +402,7 @@
       },
       "structured_text": {
         "wlc_focus": "מצרֽים",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -475,6 +478,7 @@
       },
       "structured_text": {
         "wlc_focus": "ההֽוא",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -510,6 +514,7 @@
       },
       "structured_text": {
         "wlc_focus": "וחקרת֧",
+        "BHQ": "?",
         "assessment": {
           "wlc": "darga",
           "mam": "tevir"
@@ -543,6 +548,7 @@
       },
       "structured_text": {
         "wlc_focus": "אחֽיו",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -576,6 +582,7 @@
       },
       "structured_text": {
         "wlc_focus": "אש֥ר",
+        "BHQ": "?",
         "assessment": {
           "manuscript": "tevir",
           "wlc": "merkha",
@@ -612,6 +619,7 @@
       },
       "structured_text": {
         "wlc_focus": "יאב֥ד טוב֥ה",
+        "BHQ": "?",
         "assessment": {
           "manuscript": "merkha tipexa",
           "wlc": "merkha merkha",
@@ -868,7 +876,8 @@
       "diff_wlc_mam": [],
       "structured_text": {
         "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
-        "wlc_focus": "בשר־ק֜דש",
+        "wlc_focus": "בשר־ ק֜דש",
+        "BHQ": "?",
         "comment": "A possible reason why the Goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -899,6 +908,7 @@
       },
       "structured_text": {
         "wlc_focus": "מזבחותֽם",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -933,6 +943,7 @@
       },
       "structured_text": {
         "wlc_focus": "אהבֽים",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -1092,7 +1103,9 @@
         "mam_simple": "ידי־"
       },
       "structured_text": {
-        "wlc_focus": "יד֥י־"
+        "wlc_focus": "יד֥י־",
+        "img": "LC-251A-col-3-line-11-Je-10v3.png",
+        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F251A.jpg"
       }
     },
     {
@@ -1151,7 +1164,7 @@
       "diff_wlc_mam": [],
       "structured_text": {
         "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
-        "wlc_focus": "את־האנש֜ים",
+        "wlc_focus": "את־ האנש֜ים",
         "comment": "A possible reason why the Goerwitz accent grammar check deems this verse \"ungrammatical\" is its phrase that is a member of the FOI category \"⅃-leg...non-revia (ge) with 1 qa intervening\". A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts with \"⅃-leg...non-revia\" and the other 12 are not deemed \"ungrammatical\" by the checker."
       }
     },
@@ -1329,6 +1342,7 @@
       },
       "structured_text": {
         "wlc_focus": "הֽוא",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -1363,6 +1377,7 @@
       },
       "structured_text": {
         "wlc_focus": "לאמֽר",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -1397,6 +1412,7 @@
       },
       "structured_text": {
         "wlc_focus": "לחֽרב",
+        "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
           "uxlc": "silluq-no_sof_pasuq",
@@ -1437,6 +1453,7 @@
       "structured_text": {
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
+        "BHQ": "?",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
         "comment": "See the image in the UXLC change to which we link above."
       }
@@ -1687,6 +1704,7 @@
       "structured_text": {
         "st-summary": "The LC has no visible accent on עליה.",
         "wlc_focus": "עליה",
+        "BHQ": "?",
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
         "comment": "See the image in the UXLC note to which we link above."
       }

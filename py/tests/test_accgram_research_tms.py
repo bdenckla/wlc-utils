@@ -15,6 +15,7 @@ from accgram import mam_simple_verse
 from accgram import research_tms
 from accgram import research_tms_assessment_auto
 from accgram import research_tms_focus_diff_expand
+from accgram import research_tms_focus_highlight
 from accgram import research_tms_report
 from accgram import research_tms_report_contracts
 from accgram import research_tms_report_subsets
@@ -1166,6 +1167,140 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 with self.assertRaisesRegex(
                     ValueError,
                     r"gn 1:1.*Found 0 occurrences.*Expand wlc_focus with neighboring token\(s\)",
+                ):
+                    research_tms.run(
+                        SimpleNamespace(
+                            troubles_in=troubles_in,
+                            wlc422_kq_u_dir=wlc422_dir,
+                            uxlc_dir=uxlc_dir,
+                            mam_simple_dir=mam_simple_dir,
+                            out=out_path,
+                        )
+                    )
+            finally:
+                if prior_structured_text is None:
+                    research_tms.STRUCTURED_TEXT_BY_REF.pop("gn 1:1", None)
+                else:
+                    research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = (
+                        prior_structured_text
+                    )
+
+    def test_validate_focus_highlightable_raises_for_maqaf_spacing_mismatch(self):
+        with self.assertRaisesRegex(
+            ValueError,
+            r"hg 2:12.*Could not render highlight.*wlc_focus='בשר־ק֜דש'",
+        ):
+            research_tms_focus_highlight.validate_focus_highlightable(
+                ref="hg 2:12",
+                wlc422_kq_u_verse={"vels": ["הן", "ישא", "איש", "בשר־", "ק֜דש"]},
+                wlc_focus="בשר־ק֜דש",
+            )
+
+    def test_run_raises_when_wlc_focus_is_not_token_highlightable(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps(
+                    {
+                        "troublemakers": [
+                            {
+                                "ref": "gn 1:1",
+                                "content": "payload",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "gn1:1",
+                            "vels": ["הן", "ישא", "איש", "בשר־", "ק֜דש"],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (uxlc_dir / "Genesis.xml").write_text(
+                """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Tanach>
+  <c n=\"1\"> 
+    <v n=\"1\"> 
+      <w>הן</w>
+      <w>ישא</w>
+      <w>איש</w>
+      <w>בשר־</w>
+      <w>ק֜דש</w>
+    </v>
+  </c>
+</Tanach>
+""",
+                encoding="utf-8",
+            )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.1",
+                                                "contents": [
+                                                    {"type": "text", "text": "הן"},
+                                                    {"type": "text", "text": "ישא"},
+                                                    {"type": "text", "text": "איש"},
+                                                    {"type": "text", "text": "בשר־"},
+                                                    {"type": "text", "text": "ק֜דש"},
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            prior_structured_text = research_tms.STRUCTURED_TEXT_BY_REF.get("gn 1:1")
+            research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = {
+                "wlc_focus": "בשר־ק֜דש"
+            }
+            try:
+                with self.assertRaisesRegex(
+                    ValueError,
+                    r"gn 1:1.*Could not render highlight.*wlc_focus='בשר־ק֜דש'",
                 ):
                     research_tms.run(
                         SimpleNamespace(

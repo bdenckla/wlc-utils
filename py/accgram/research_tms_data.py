@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from accgram import research_tms_focus_diff_expand
+from accgram import research_tms_focus_highlight
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram.mam_simple_diff import diff_wlc_mam
 from accgram.mam_simple_verse import load_mam_simple_for_refs
@@ -195,6 +196,11 @@ def _validate_unique_wlc_focus_in_wlc_verse(
     wlc_focus: str | None,
 ) -> None:
     research_tms_focus_diff_expand.validate_unique_focus_occurrence(
+        ref=ref,
+        wlc422_kq_u_verse=wlc422_kq_u_verse,
+        wlc_focus=wlc_focus,
+    )
+    research_tms_focus_highlight.validate_focus_highlightable(
         ref=ref,
         wlc422_kq_u_verse=wlc422_kq_u_verse,
         wlc_focus=wlc_focus,

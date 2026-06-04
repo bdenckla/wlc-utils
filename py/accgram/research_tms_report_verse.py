@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
+from accgram import research_tms_focus_highlight
 from accgram import research_tms_report_sat
 from py_html import wlc_utils_html
 
@@ -77,28 +78,10 @@ def _wlc_verse_contents_with_highlight(
 def _split_unique_focus_by_tokens(
     *, verse_text: str, wlc_focus: str
 ) -> tuple[str, str | None, str]:
-    verse_tokens = verse_text.split()
-    focus_tokens = wlc_focus.split()
-    if not verse_tokens or not focus_tokens:
-        return verse_text, None, ""
-
-    if len(focus_tokens) > len(verse_tokens):
-        return verse_text, None, ""
-
-    match_indexes = [
-        start
-        for start in range(len(verse_tokens) - len(focus_tokens) + 1)
-        if verse_tokens[start : start + len(focus_tokens)] == focus_tokens
-    ]
-    if len(match_indexes) != 1:
-        return verse_text, None, ""
-
-    start = match_indexes[0]
-    end = start + len(focus_tokens)
-    before_focus = " ".join(verse_tokens[:start])
-    focus_text = " ".join(verse_tokens[start:end])
-    after_focus = " ".join(verse_tokens[end:])
-    return before_focus, focus_text, after_focus
+    return research_tms_focus_highlight.split_unique_focus_by_tokens(
+        verse_text=verse_text,
+        wlc_focus=wlc_focus,
+    )
 
 
 def _normalize_whitespace(value: str | None) -> str:

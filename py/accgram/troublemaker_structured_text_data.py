@@ -179,12 +179,12 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "je 38:11": {
         "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
-        "wlc_focus": "את־האנש֜ים",
+        "wlc_focus": "את־ האנש֜ים",
         "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "hg 2:12": {
         "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
-        "wlc_focus": "בשר־ק֜דש",
+        "wlc_focus": "בשר־ ק֜דש",
         "BHQ": "?",
         "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
