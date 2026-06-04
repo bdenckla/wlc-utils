@@ -16,6 +16,19 @@ def _non_revia_summary(accent: str) -> str:
     return f"The checker probably doesn’t like munax legarmeih serving {accent}."
 
 
+def _je_0910_and_11_comment(adjacent_verse_phrase: str) -> str:
+    return (
+        f"The same word, מבלי, appears in the {adjacent_verse_phrase} with analogous transcription problems."
+        " In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
+        " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
+        " Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
+        " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa:"
+        " tipexa is the least likely of the three possible meanings of this mark."
+        " Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably"
+        " assume that a maqaf is missing."
+    )
+
+
 _NU_2509_01 = (
     "Compared to MAM, BHS starts chapter 26 “late”."
     " It only starts chapter 26 after the etnaxta of what MAM calls 26:1."
@@ -393,30 +406,12 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "je 9:10": {
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-15",
-        "comment": (
-            "The same word, מבלי, appears in the next verse (11) with analogous transcription problems."
-            " In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
-            " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
-            " Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
-            " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa:"
-            " tipexa is the least likely of the three possible meanings of this mark."
-            " Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably"
-            " assume that a maqaf is missing."
-        ),
+        "comment": _je_0910_and_11_comment("next verse (11)"),
     },
     "je 9:11": {
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-16",
-        "comment": (
-            "The same word, מבלי, appears in the previous verse (10) with analogous transcription problems."
-            " In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
-            " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
-            " Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
-            " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa:"
-            " tipexa is the least likely of the three possible meanings of this mark."
-            " Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably"
-            " assume that a maqaf is missing."
-        ),
+        "comment": _je_0910_and_11_comment("previous verse (10)"),
     },
     "je 10:3": {
         "st-summary": "BHS transcribes a meteg as a merkha.",

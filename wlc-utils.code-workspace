@@ -20,6 +20,10 @@
 			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_test\\.py -v --accgram-research-troublemakers$/": {
 				"approve": true,
 				"matchCommandLine": true
+			},
+			"/^python -m py_compile py/accgram/troublemaker_structured_text_data\\.py$/": {
+				"approve": true,
+				"matchCommandLine": true
 			}
 		}
 	}
