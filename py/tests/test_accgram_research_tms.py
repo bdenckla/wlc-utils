@@ -2750,6 +2750,51 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertEqual(descriptor, "silluq-sof_pasuq")
 
+    def test_materialize_auto_assessment_descriptors_keeps_literal_percent_auto_value(
+        self,
+    ):
+        structured_text = {"assessment": {"wlc": "%auto%"}}
+
+        out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+            ref="am 1:14",
+            structured_text=structured_text,
+            enriched_row={},
+            wlc_focus=None,
+        )
+
+        self.assertIs(out, structured_text)
+        self.assertEqual(out["assessment"]["wlc"], "%auto%")
+
+    def test_materialize_auto_assessment_descriptors_keeps_literal_percent_auto_for_manuscript(
+        self,
+    ):
+        structured_text = {"assessment": {"manuscript": "%auto%"}}
+
+        out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+            ref="da 2:41",
+            structured_text=structured_text,
+            enriched_row={},
+            wlc_focus=None,
+        )
+
+        self.assertIs(out, structured_text)
+        self.assertEqual(out["assessment"]["manuscript"], "%auto%")
+
+    def test_materialize_auto_assessment_descriptors_still_infers_missing_wlc(
+        self,
+    ):
+        structured_text = {"assessment": {}}
+
+        out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+            ref="ju 13:18",
+            structured_text=structured_text,
+            enriched_row={"diff_wlc_uxlc": {"wlc422": "פֽלאי׃"}},
+            wlc_focus=None,
+        )
+
+        self.assertIsNot(out, structured_text)
+        self.assertEqual(out["assessment"]["wlc"], "silluq-sof_pasuq")
+
     def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(
         self,
     ):

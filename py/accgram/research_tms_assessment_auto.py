@@ -36,33 +36,8 @@ def materialize_auto_assessment_descriptors(
     out_assessment = dict(assessment)
     changed = False
 
-    for key, value in assessment.items():
-        if not value == "%auto%":
-            continue
-
-        if key == "manuscript":
-            raise ValueError(
-                "structured_text assessment.manuscript must be explicit "
-                f"for {ref}; %auto% is not allowed"
-            )
-
-        descriptor = _auto_assessment_descriptor_for_key(
-            assessment_key=key,
-            enriched_row=enriched_row,
-            wlc_focus=wlc_focus,
-        )
-        if not isinstance(descriptor, str) or not descriptor.strip():
-            raise ValueError(
-                "Could not auto-generate structured_text assessment descriptor "
-                f"for {ref}: assessment.{key}"
-            )
-
-        out_assessment[key] = descriptor
-        changed = True
-
-    # Backward-compatible behavior after removing explicit "%auto%" entries
-    # from structured_text data: if an assessment key is absent but its
-    # corresponding diff side is present, infer the descriptor implicitly.
+    # If an assessment key is absent but its corresponding diff side is
+    # present, infer the descriptor implicitly.
     for key in ("wlc", "uxlc", "mam"):
         if key in out_assessment:
             continue
