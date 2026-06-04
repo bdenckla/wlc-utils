@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from accgram import research_tms_meteg_witness
 from accgram.research_tms_assessment_materialize import (
     order_assessment_dict,
     should_materialize_missing_assessment_key,
 )
+from accgram.research_tms_token_like import texts_from_token_like_payload
 from accgram.troublemaker_structured_text_sanity import descriptor_from_hebrew_token
 
 _ASSESSMENT_AUTO_METEG_FALLBACK_BY_KEY = {
@@ -102,7 +104,7 @@ def _auto_assessment_descriptor_for_key(
         "silluq-no_sof_pasuq",
     )
 
-    for hebrew_token in _candidate_tokens_for_auto_assessment(
+    for hebrew_token, witness_token in _candidate_tokens_for_auto_assessment(
         assessment_key=assessment_key,
         enriched_row=enriched_row,
         wlc_focus=wlc_focus,
@@ -110,6 +112,7 @@ def _auto_assessment_descriptor_for_key(
         descriptor = _infer_assessment_descriptor_from_hebrew_token(
             hebrew_token,
             meteg_fallback=meteg_fallback,
+            witness_hebrew_token=witness_token,
         )
         if isinstance(descriptor, str) and descriptor.strip():
             return descriptor
@@ -122,34 +125,154 @@ def _candidate_tokens_for_auto_assessment(
     assessment_key: str,
     enriched_row: dict[str, object],
     wlc_focus: str | None,
-) -> list[str]:
-    tokens: list[str] = []
+) -> list[tuple[str, str | None]]:
+    candidates: list[tuple[str, str | None]] = []
+
+    wlc_witness_payload = research_tms_meteg_witness.witness_payload_for_side(
+        enriched_row,
+        side_key="wlc422",
+    )
 
     if assessment_key in {"wlc", "bhs"}:
-        tokens.extend(
-            _diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), rhs_key="wlc422")
+        candidates.extend(
+            _candidate_tokens_from_diff_side(
+                diff_value=enriched_row.get("diff_wlc_uxlc"),
+                rhs_key="wlc422",
+                source_witness_payload=wlc_witness_payload,
+            )
         )
-        tokens.extend(
-            _diff_rhs_tokens(enriched_row.get("diff_wlc_mam"), rhs_key="wlc422")
+        candidates.extend(
+            _candidate_tokens_from_diff_side(
+                diff_value=enriched_row.get("diff_wlc_mam"),
+                rhs_key="wlc422",
+                source_witness_payload=wlc_witness_payload,
+            )
         )
         if isinstance(wlc_focus, str):
-            tokens.append(wlc_focus)
+            candidates.append(
+                _candidate_with_optional_witness(
+                    hebrew_token=wlc_focus,
+                    source_witness_payload=wlc_witness_payload,
+                )
+            )
 
     if assessment_key == "uxlc":
-        tokens.extend(
-            _diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), rhs_key="uxlc")
+        uxlc_witness_payload = research_tms_meteg_witness.witness_payload_for_side(
+            enriched_row,
+            side_key="uxlc",
+        )
+        candidates.extend(
+            _candidate_tokens_from_diff_side(
+                diff_value=enriched_row.get("diff_wlc_uxlc"),
+                rhs_key="uxlc",
+                source_witness_payload=uxlc_witness_payload,
+            )
         )
         if isinstance(wlc_focus, str):
-            tokens.append(wlc_focus)
+            candidates.append(
+                _candidate_with_optional_witness(
+                    hebrew_token=wlc_focus,
+                    source_witness_payload=wlc_witness_payload,
+                )
+            )
 
     if assessment_key == "mam":
-        tokens.extend(
-            _diff_rhs_tokens(enriched_row.get("diff_wlc_mam"), rhs_key="mam_simple")
+        mam_witness_payload = research_tms_meteg_witness.witness_payload_for_side(
+            enriched_row,
+            side_key="mam_simple",
+        )
+        candidates.extend(
+            _candidate_tokens_from_diff_side(
+                diff_value=enriched_row.get("diff_wlc_mam"),
+                rhs_key="mam_simple",
+                source_witness_payload=mam_witness_payload,
+            )
         )
         if isinstance(wlc_focus, str):
-            tokens.append(wlc_focus)
+            candidates.append(
+                _candidate_with_optional_witness(
+                    hebrew_token=wlc_focus,
+                    source_witness_payload=wlc_witness_payload,
+                )
+            )
 
-    return _unique_nonempty_strings(tokens)
+    return _unique_candidate_tokens(candidates)
+
+
+def _candidate_tokens_from_diff_side(
+    *,
+    diff_value: object,
+    rhs_key: str,
+    source_witness_payload: object,
+) -> list[tuple[str, str | None]]:
+    return [
+        _candidate_with_optional_witness(
+            hebrew_token=token,
+            source_witness_payload=source_witness_payload,
+        )
+        for token in _diff_rhs_tokens(diff_value, rhs_key=rhs_key)
+    ]
+
+
+def _candidate_with_optional_witness(
+    *,
+    hebrew_token: str,
+    source_witness_payload: object,
+) -> tuple[str, str | None]:
+    collapsed_token = " ".join(hebrew_token.split())
+    if not collapsed_token:
+        return "", None
+
+    witness_token: str | None = None
+    if source_witness_payload is not None:
+        witness_token = research_tms_meteg_witness.match_unique_witness_token(
+            sanitized_token=collapsed_token,
+            source_witness_payload=source_witness_payload,
+        )
+    return collapsed_token, witness_token
+
+
+def _unique_candidate_tokens(
+    values: list[tuple[str, str | None]],
+) -> list[tuple[str, str | None]]:
+    out: list[tuple[str, str | None]] = []
+    seen_idx_by_token: dict[str, int] = {}
+
+    for token, witness in values:
+        collapsed_token = " ".join(token.split())
+        if not collapsed_token:
+            continue
+
+        collapsed_witness = None
+        if isinstance(witness, str):
+            maybe_witness = " ".join(witness.split())
+            if maybe_witness:
+                collapsed_witness = maybe_witness
+
+        existing_idx = seen_idx_by_token.get(collapsed_token)
+        if existing_idx is None:
+            seen_idx_by_token[collapsed_token] = len(out)
+            out.append((collapsed_token, collapsed_witness))
+            continue
+
+        existing_token, existing_witness = out[existing_idx]
+        merged_witness = _merge_candidate_witness(existing_witness, collapsed_witness)
+        out[existing_idx] = (existing_token, merged_witness)
+
+    return out
+
+
+def _merge_candidate_witness(
+    existing_witness: str | None,
+    incoming_witness: str | None,
+) -> str | None:
+    if existing_witness is None:
+        return incoming_witness
+    if incoming_witness is None:
+        return existing_witness
+    if existing_witness == incoming_witness:
+        return existing_witness
+    return None
 
 
 def _diff_rhs_tokens_for_materialization(diff_value: object, rhs_key: str) -> list[str]:
@@ -183,25 +306,7 @@ def _diff_rhs_tokens(diff_value: object, *, rhs_key: str) -> list[str]:
 
 
 def _texts_from_token_like_payload(payload: object) -> list[str]:
-    if isinstance(payload, str):
-        return [payload]
-
-    if isinstance(payload, list):
-        out: list[str] = []
-        for item in payload:
-            out.extend(_texts_from_token_like_payload(item))
-        return out
-
-    if isinstance(payload, dict):
-        text = payload.get("text")
-        if isinstance(text, str):
-            return [text]
-
-        word = payload.get("word")
-        if isinstance(word, str):
-            return [word]
-
-    return []
+    return texts_from_token_like_payload(payload)
 
 
 def _unique_nonempty_strings(values: list[str]) -> list[str]:
@@ -222,6 +327,7 @@ def _infer_assessment_descriptor_from_hebrew_token(
     hebrew_token: str,
     *,
     meteg_fallback: str = "silluq-no_sof_pasuq",
+    witness_hebrew_token: str | None = None,
 ) -> str | None:
     token = hebrew_token.strip()
     if not token:
@@ -245,9 +351,17 @@ def _infer_assessment_descriptor_from_hebrew_token(
         descriptor = None
 
     if descriptor == "no_accent":
-        return "no accent"
+        normalized_descriptor = "no accent"
+        return _apply_witness_to_normalized_descriptor(
+            normalized_descriptor=normalized_descriptor,
+            witness_hebrew_token=witness_hebrew_token,
+        )
     if descriptor == "maqaf":
-        return "maqaf"
+        normalized_descriptor = "maqaf"
+        return _apply_witness_to_normalized_descriptor(
+            normalized_descriptor=normalized_descriptor,
+            witness_hebrew_token=witness_hebrew_token,
+        )
     if isinstance(descriptor, str) and descriptor:
         if _HEBREW_SOF_PASUQ in token:
             return f"{descriptor}-sof_pasuq"
@@ -257,6 +371,29 @@ def _infer_assessment_descriptor_from_hebrew_token(
     if _HEBREW_MAQAF in token and not any(
         _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END for ch in token
     ):
-        return "maqaf"
+        return _apply_witness_to_normalized_descriptor(
+            normalized_descriptor="maqaf",
+            witness_hebrew_token=witness_hebrew_token,
+        )
 
     return None
+
+
+def _apply_witness_to_normalized_descriptor(
+    *,
+    normalized_descriptor: str,
+    witness_hebrew_token: str | None,
+) -> str:
+    if normalized_descriptor not in {"no accent", "maqaf"}:
+        return normalized_descriptor
+
+    if not isinstance(witness_hebrew_token, str):
+        return normalized_descriptor
+
+    witness_token = witness_hebrew_token.strip()
+    if not witness_token or not research_tms_meteg_witness.token_has_meteg(witness_token):
+        return normalized_descriptor
+
+    if research_tms_meteg_witness.token_has_maqaf(witness_token):
+        return "meteg-maqaf"
+    return "meteg-space"

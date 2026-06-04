@@ -1544,7 +1544,7 @@
       "structured_text": {
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
-        "comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. It is aggressively uncharitable to transcribe the mark on שרי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to assume that a maqaf is missing."
+        "comment": "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. It is aggressively uncharitable to transcribe the mark on שרי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to assume that a maqaf is missing."
       }
     },
     {
@@ -1634,7 +1634,7 @@
       "structured_text": {
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
-        "comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing."
+        "comment": "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing."
       }
     },
     {
@@ -2454,7 +2454,7 @@
             "The same word, מבלי, appears in the next verse (11) with analogous transcription problems."
           ],
           [
-            " In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
+            "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
           ],
           [
             " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
@@ -2554,7 +2554,7 @@
             "The same word, מבלי, appears in the previous verse (10) with analogous transcription problems."
           ],
           [
-            " In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
+            "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with מבלי."
           ],
           [
             " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
@@ -2622,10 +2622,6 @@
       "structured_text": {
         "st-summary": "BHS transcribes a meteg as a merkha.",
         "wlc_focus": "יד֥י־",
-        "assessment": {
-          "wlc": "merkha-maqaf",
-          "mam": "meteg-maqaf"
-        },
         "img": "LC-251A-col-3-line-11-Je-10v3.png",
         "comment": [
           "As in many other cases we see in this document, BHS seems to be aggresively uncharitable in its transcription of this somewhat-ambiguous vertical line, avoiding the most likely intended meaning (here meteg) in favor of a less likely, indeed “illegal” alternative (here merkha). In this case the mark even lacks any inclination that would suggest merkha.",

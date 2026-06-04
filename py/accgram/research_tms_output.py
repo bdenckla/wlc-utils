@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from accgram import research_tms_meteg_witness
 from accgram import research_tms_report
 from mb_cmn import provenance
 
@@ -17,6 +18,9 @@ def write_troublemakers_payload(
     enriched_rows: list[dict[str, object]],
     source_file: str,
 ) -> None:
+    serializable_rows = research_tms_meteg_witness.strip_internal_witness_fields_from_rows(
+        enriched_rows
+    )
     payload: dict[str, object] = {
         "artifacts_description": "enriched troublemaker verse research records",
         "payload_provenance_note": (
@@ -28,9 +32,9 @@ def write_troublemakers_payload(
         "uxlc_dir": str(uxlc_dir),
         "mam_simple_dir": str(mam_simple_dir),
         "summary": {
-            "troublemakers": len(enriched_rows),
+            "troublemakers": len(serializable_rows),
         },
-        "troublemakers": enriched_rows,
+        "troublemakers": serializable_rows,
     }
     payload = provenance.with_json_provenance(payload, source_file)
     _write_json(out_path, payload)
@@ -46,6 +50,9 @@ def write_oddballs_payload(
     enriched_oddball_rows: list[dict[str, object]],
     source_file: str,
 ) -> None:
+    serializable_rows = research_tms_meteg_witness.strip_internal_witness_fields_from_rows(
+        enriched_oddball_rows
+    )
     oddballs_payload: dict[str, object] = {
         "artifacts_description": "enriched oddball verse research records",
         "payload_provenance_note": (
@@ -57,9 +64,9 @@ def write_oddballs_payload(
         "uxlc_dir": str(uxlc_dir),
         "mam_simple_dir": str(mam_simple_dir),
         "summary": {
-            "oddballs": len(enriched_oddball_rows),
+            "oddballs": len(serializable_rows),
         },
-        "oddballs": enriched_oddball_rows,
+        "oddballs": serializable_rows,
     }
     oddballs_payload = provenance.with_json_provenance(oddballs_payload, source_file)
     _write_json(oddballs_out_path, oddballs_payload)

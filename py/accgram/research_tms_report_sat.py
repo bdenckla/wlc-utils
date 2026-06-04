@@ -4,6 +4,7 @@ import json
 import re
 from collections.abc import Callable
 
+from accgram import research_tms_meteg_witness
 from accgram import research_tms_report_bracket_notes
 from accgram import research_tms_report_diff_format
 from accgram import research_tms_report_sat_notes_column
@@ -91,7 +92,7 @@ def render_sat_table(
         )
     )
     sat_rows = _apply_sat_row_suppressions(row_ref, sat_rows)
-    sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows)
+    sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows, row=row)
     sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
     notes_column_plan = (
         research_tms_report_sat_notes_column.build_sat_notes_column_plan(
@@ -294,7 +295,11 @@ def _sat_row_merge_target_priority(
     return None
 
 
-def _merge_assessment_rows_into_sat_middle_column(rows: list[SatRow]) -> list[SatRow]:
+def _merge_assessment_rows_into_sat_middle_column(
+    rows: list[SatRow],
+    *,
+    row: dict[str, object],
+) -> list[SatRow]:
     merged_rows = list(rows)
     consumed_indices: set[int] = set()
 
@@ -329,6 +334,12 @@ def _merge_assessment_rows_into_sat_middle_column(rows: list[SatRow]) -> list[Sa
             continue
 
         target_value, _target_middle, target_key = merged_rows[merge_target_idx]
+        target_value = _maybe_restore_value_from_witness(
+            row=row,
+            target_key=target_key,
+            target_value=target_value,
+            assessment_value=assessment_value,
+        )
 
         merged_rows[merge_target_idx] = _sat_row(
             key=target_key,
@@ -383,6 +394,63 @@ def _sat_assessment_value_describes_target_value(
     except (AssertionError, ValueError):
         # Descriptor inference failures are indeterminate for SAT merge purposes.
         return None
+
+
+def _maybe_restore_value_from_witness(
+    *,
+    row: dict[str, object],
+    target_key: str,
+    target_value: str,
+    assessment_value: str,
+) -> str:
+    normalized_assessment = assessment_value.strip()
+    if normalized_assessment not in {"meteg-space", "meteg-maqaf"}:
+        return target_value
+
+    if not research_tms_report_diff_format.is_plain_hebrew_string(target_value):
+        return target_value
+
+    side_key = _witness_side_key_for_sat_row_key(target_key)
+    if side_key is None:
+        return target_value
+
+    source_witness_payload = research_tms_meteg_witness.witness_payload_for_side(
+        row,
+        side_key=side_key,
+    )
+    if source_witness_payload is None:
+        return target_value
+
+    witness_token = research_tms_meteg_witness.match_unique_witness_token(
+        sanitized_token=target_value,
+        source_witness_payload=source_witness_payload,
+    )
+    if not isinstance(witness_token, str) or not witness_token.strip():
+        return target_value
+
+    if not research_tms_meteg_witness.token_has_meteg(witness_token):
+        return target_value
+
+    has_maqaf = research_tms_meteg_witness.token_has_maqaf(witness_token)
+    if normalized_assessment == "meteg-space" and has_maqaf:
+        return target_value
+    if normalized_assessment == "meteg-maqaf" and not has_maqaf:
+        return target_value
+
+    return witness_token
+
+
+def _witness_side_key_for_sat_row_key(row_key: str) -> str | None:
+    base_key = row_key
+    bracket_idx = base_key.find("[")
+    if bracket_idx >= 0:
+        base_key = base_key[:bracket_idx]
+
+    if base_key == "diff_wlc_uxlc":
+        return "uxlc"
+    if base_key == "diff_wlc_mam":
+        return "mam_simple"
+    return None
 
 
 def _render_token_like_dict(value: dict[str, object]) -> str | None:

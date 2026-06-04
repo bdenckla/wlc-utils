@@ -6,6 +6,7 @@ from pathlib import Path
 from accgram import research_tms_focus_diff_expand
 from accgram import research_tms_focus_highlight
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
+from accgram import research_tms_meteg_witness
 from accgram.mam_simple_diff import diff_wlc_mam
 from accgram.mam_simple_verse import load_mam_simple_for_refs
 from accgram.wlc_uxlc_diff import diff_wlc_uxlc
@@ -57,6 +58,10 @@ def build_enriched_row(
         )
 
     wlc422_verse = _interpolate_wlc422_kq_qere(wlc422_verse)
+    wlc422_verse_meteg_witness = sanitize_verse_text_payload(
+        wlc422_verse,
+        preserve_all_meteg=True,
+    )
     wlc422_verse = sanitize_verse_text_payload(wlc422_verse)
     if isinstance(wlc422_verse, dict):
         wlc422_verse.pop("bcv", None)
@@ -72,6 +77,10 @@ def build_enriched_row(
         raise ValueError(f"Missing UXLC verse for {ref} ({bcv}) in {uxlc_dir}")
 
     uxlc_nodes = uxlc_info["nodes"]
+    uxlc_nodes_meteg_witness = sanitize_verse_text_payload(
+        uxlc_nodes,
+        preserve_all_meteg=True,
+    )
     uxlc_nodes = sanitize_verse_text_payload(uxlc_nodes)
 
     mam_simple_info = mam_simple_by_bcv.get(bcv)
@@ -81,6 +90,11 @@ def build_enriched_row(
         )
 
     mam_simple_verse = mam_simple_info["mam_simple_verse"]
+    mam_simple_verse_meteg_witness = sanitize_verse_text_payload(
+        mam_simple_verse,
+        remove_duplicate_telisha_gedola=True,
+        preserve_all_meteg=True,
+    )
     mam_simple_verse = sanitize_verse_text_payload(
         mam_simple_verse,
         remove_duplicate_telisha_gedola=True,
@@ -113,6 +127,12 @@ def build_enriched_row(
         "mam_simple_verse": mam_simple_verse,
         "diff_wlc_mam": diff_wlc_mam_for_output,
     }
+    research_tms_meteg_witness.attach_internal_meteg_witnesses(
+        enriched_row,
+        wlc422_witness=wlc422_verse_meteg_witness,
+        uxlc_witness=uxlc_nodes_meteg_witness,
+        mam_simple_witness=mam_simple_verse_meteg_witness,
+    )
     return enriched_row, diff_wlc_uxlc_for_checks
 
 

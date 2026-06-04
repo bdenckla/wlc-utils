@@ -14,6 +14,7 @@ from accgram import mam_simple_diff
 from accgram import mam_simple_verse
 from accgram import research_tms
 from accgram import research_tms_assessment_auto
+from accgram import research_tms_meteg_witness
 from accgram import research_tms_focus_diff_expand
 from accgram import research_tms_focus_highlight
 from accgram import research_tms_report
@@ -309,6 +310,15 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertEqual(default_clean["vels"], ["א֠ת֠י", "ל֠מ֠ען", "ב֠כנפ֠ו"])
         self.assertEqual(mam_clean["vels"], ["א֠תי", "ל֠מען", "ב֠כנפו"])
 
+    def test_sanitize_option_preserve_all_meteg_keeps_interior_meteg(self):
+        node = {"vels": ["מֽבלֽי", "ידֽי־"]}
+
+        default_clean = sanitize_verse_text_payload(node)
+        witness_clean = sanitize_verse_text_payload(node, preserve_all_meteg=True)
+
+        self.assertEqual(default_clean["vels"], ["מבלי", "ידֽי־"])
+        self.assertEqual(witness_clean["vels"], ["מֽבלֽי", "ידֽי־"])
+
     def test_run_happy_path_enriches_both_sources(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
@@ -555,6 +565,155 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 '<tableclass="goerwitz-tms-sat"><tr><th>value</th><th></th><th>key</th></tr>'
             )
             self.assertLess(verse_para_idx, sat_table_idx)
+
+    def test_run_materializes_meteg_descriptors_from_internal_witnesses(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps(
+                    {
+                        "troublemakers": [
+                            {
+                                "ref": "gn 1:1",
+                                "content": "payload",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "gn1:1",
+                            "vels": ["מבל֖י", "ידי", "אחר"],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (uxlc_dir / "Genesis.xml").write_text(
+                """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Tanach>
+  <c n=\"1\">
+    <v n=\"1\">
+      <w>מבלֽי<x>m</x></w>
+      <w>ידי</w>
+      <w>אחר</w>
+    </v>
+  </c>
+</Tanach>
+""",
+                encoding="utf-8",
+            )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.1",
+                                                "contents": [
+                                                    {"type": "text", "text": "מבל֖י"},
+                                                    {"type": "text", "text": "ידֽי־"},
+                                                    {"type": "text", "text": "אחר"},
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            prior_structured_text = research_tms.STRUCTURED_TEXT_BY_REF.get("gn 1:1")
+            research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = {
+                "wlc_focus": "מבל֖י",
+                "assessment": {},
+            }
+            try:
+                research_tms.run(
+                    SimpleNamespace(
+                        troubles_in=troubles_in,
+                        wlc422_kq_u_dir=wlc422_dir,
+                        uxlc_dir=uxlc_dir,
+                        mam_simple_dir=mam_simple_dir,
+                        out=out_path,
+                    )
+                )
+            finally:
+                if prior_structured_text is None:
+                    research_tms.STRUCTURED_TEXT_BY_REF.pop("gn 1:1", None)
+                else:
+                    research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = (
+                        prior_structured_text
+                    )
+
+            payload = json.loads(out_path.read_text(encoding="utf-8"))
+            row = payload["troublemakers"][0]
+
+            self.assertEqual(row["uxlc_verse"][0]["text"], "מבלי")
+            self.assertEqual(
+                row["mam_simple_verse"]["vels"],
+                ["מבל֖י", "ידי־", "אחר"],
+            )
+
+            self.assertEqual(
+                row["structured_text"]["assessment"].get("uxlc"),
+                "meteg-space",
+            )
+            self.assertEqual(
+                row["structured_text"]["assessment"].get("mam"),
+                "meteg-maqaf",
+            )
+
+            def _contains_meteg(value: object) -> bool:
+                if isinstance(value, str):
+                    return "\u05bd" in value
+                if isinstance(value, list):
+                    return any(_contains_meteg(item) for item in value)
+                if isinstance(value, dict):
+                    return any(_contains_meteg(item) for item in value.values())
+                return False
+
+            self.assertFalse(_contains_meteg(row["diff_wlc_uxlc"]))
+            self.assertFalse(_contains_meteg(row["diff_wlc_mam"]))
+
+            for internal_key in research_tms_meteg_witness.INTERNAL_WITNESS_KEYS:
+                self.assertNotIn(internal_key, row)
 
     def test_run_writes_enriched_research_oddballs_json(self):
         with TemporaryDirectory() as tmp_dir:
@@ -1648,6 +1807,39 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 html_text,
             )
             self.assertNotIn("<td></td><td>no accent</td><td>a.uxlc</td>", html_text)
+
+    def test_write_goerwitz_tms_html_report_restores_meteg_space_value_from_witness(
+        self,
+    ):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_tms_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "je 9:11",
+                        "wlc422_kq_u_verse": {"vels": ["מבל֖י"]},
+                        "diff_wlc_uxlc": {"wlc422": "מבל֖י", "uxlc": "מבלי"},
+                        research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
+                            "vels": ["מבלֽי"]
+                        },
+                        "structured_text": {
+                            "wlc_focus": "מבל֖י",
+                            "assessment": {
+                                "uxlc": "meteg-space",
+                            },
+                        },
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            self.assertIn(
+                '<td lang="hbo" dir="rtl">מבלֽי</td><td>meteg-space</td><td>diff_wlc_uxlc</td>',
+                html_text,
+            )
 
     def test_write_goerwitz_tms_html_report_renders_non_empty_multiword_wlc_focus_in_context(
         self,
@@ -2871,6 +3063,47 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertEqual(descriptor, "no accent")
 
+    def test_try_auto_assessment_descriptor_uses_meteg_space_with_witness(self):
+        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="uxlc",
+            enriched_row={
+                "diff_wlc_uxlc": {"uxlc": "מבלי"},
+                research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
+                    "vels": ["מבלֽי"]
+                },
+            },
+            wlc_focus=None,
+        )
+        self.assertEqual(descriptor, "meteg-space")
+
+    def test_try_auto_assessment_descriptor_uses_meteg_maqaf_with_witness(self):
+        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="mam",
+            enriched_row={
+                "diff_wlc_mam": {"mam_simple": "ידי־"},
+                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
+                    "vels": ["ידֽי־"]
+                },
+            },
+            wlc_focus=None,
+        )
+        self.assertEqual(descriptor, "meteg-maqaf")
+
+    def test_try_auto_assessment_descriptor_keeps_plain_labels_without_witness(self):
+        no_accent_descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="uxlc",
+            enriched_row={"diff_wlc_uxlc": {"uxlc": "מבלי"}},
+            wlc_focus=None,
+        )
+        maqaf_descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="mam",
+            enriched_row={"diff_wlc_mam": {"mam_simple": "ידי־"}},
+            wlc_focus=None,
+        )
+
+        self.assertEqual(no_accent_descriptor, "no accent")
+        self.assertEqual(maqaf_descriptor, "maqaf")
+
     def test_try_auto_assessment_descriptor_does_not_emit_meteg_labels(self):
         descriptors = [
             research_tms_assessment_auto.try_auto_assessment_descriptor(
@@ -2916,7 +3149,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertEqual(descriptor, "silluq-sof_pasuq")
 
-    def test_structured_text_data_has_explicit_meteg_assessments_for_target_refs(self):
+    def test_structured_text_data_explicit_meteg_assessments_match_expected_refs(self):
         expected_by_ref = {
             "1k 20:29": {
                 "manuscript": "meteg-maqaf",
@@ -2926,9 +3159,6 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             "da 2:41": {
                 "manuscript": "meteg-space",
                 "uxlc": "meteg-space",
-                "mam": "meteg-maqaf",
-            },
-            "je 10:3": {
                 "mam": "meteg-maqaf",
             },
             "je 48:12": {
@@ -2948,6 +3178,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIsInstance(assessment, dict, ref)
             for key, expected_value in expected_assessment.items():
                 self.assertEqual(assessment.get(key), expected_value, f"{ref} {key}")
+
+        je_1003 = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get("je 10:3")
+        self.assertIsInstance(je_1003, dict)
+        je_1003_assessment = je_1003.get("assessment")
+        if isinstance(je_1003_assessment, dict):
+            self.assertNotIn("mam", je_1003_assessment)
 
     def test_assessment_sat_rows_uses_explicit_meteg_assessment_from_structured_text(
         self,

@@ -18,8 +18,7 @@ def _non_revia_summary(accent: str) -> str:
 
 def _ambiguous_mark_context_comment(marked_word: str) -> str:
     return (
-        f"In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg"
-        " because merkha and tipexa often lack an inclination that would distinguish them from meteg."
+        "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg."
         " Yet, from context, we can usually determine the most likely intended meaning,"
         f" and that is the case here with {marked_word}."
     )

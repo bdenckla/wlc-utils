@@ -15,6 +15,7 @@ def sanitize_verse_text_payload(
     payload: object,
     *,
     remove_duplicate_telisha_gedola: bool = False,
+    preserve_all_meteg: bool = False,
 ) -> object:
     mutable = _deep_clone_jsonish(payload)
     slots: list[tuple[list[object] | dict[str, object], int | str]] = []
@@ -36,9 +37,11 @@ def sanitize_verse_text_payload(
             and container is last_hebrew_slot[0]
             and key == last_hebrew_slot[1]
         )
+        keep_all_meteg = preserve_all_meteg and _has_hebrew_letter(value)
         container[key] = _sanitize_hebrew_token(
             value,
             keep_last_meteg=keep_last_meteg,
+            keep_all_meteg=keep_all_meteg,
             remove_duplicate_telisha_gedola=remove_duplicate_telisha_gedola,
         )
 
@@ -87,6 +90,7 @@ def _sanitize_hebrew_token(
     text: str,
     *,
     keep_last_meteg: bool,
+    keep_all_meteg: bool,
     remove_duplicate_telisha_gedola: bool,
 ) -> str:
     last_meteg_idx = text.rfind(_HEBREW_METEG) if keep_last_meteg else -1
@@ -102,7 +106,7 @@ def _sanitize_hebrew_token(
         if ch in {_HEBREW_MAQAF, _HEBREW_PASEQ, _HEBREW_SOF_PASUQ}:
             out_chars.append(ch)
             continue
-        if ch == _HEBREW_METEG and idx == last_meteg_idx:
+        if ch == _HEBREW_METEG and (keep_all_meteg or idx == last_meteg_idx):
             out_chars.append(ch)
     sanitized = "".join(out_chars)
     if remove_duplicate_telisha_gedola:

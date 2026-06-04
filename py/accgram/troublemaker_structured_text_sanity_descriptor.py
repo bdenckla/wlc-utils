@@ -204,6 +204,11 @@ def _normalize_assessment_with_punctuation_suffix(
 
 
 def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> bool:
+    if descriptor == "no_accent" and assessment_uxlc in {
+        "no_accent",
+        "meteg-space",
+    }:
+        return True
     if descriptor == "merkha" and assessment_uxlc in {
         "merkha",
         "merkha-space",
