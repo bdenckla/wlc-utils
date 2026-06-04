@@ -12,6 +12,14 @@
 			"/^\\.\\\\\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_test\\.py --accgram-research-troublemakers -v$/": {
 				"approve": true,
 				"matchCommandLine": true
+			},
+			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_test\\.py -v py/tests/test_accgram_research_tms\\.py$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_test\\.py -v --accgram-research-troublemakers$/": {
+				"approve": true,
+				"matchCommandLine": true
 			}
 		}
 	}

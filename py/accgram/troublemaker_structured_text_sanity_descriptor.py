@@ -97,6 +97,11 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
     if not descriptors:
         return None
 
+    if _HEBREW_MAQAF in text and len(descriptors) == 1:
+        simple_descriptor = descriptors[0]
+        if simple_descriptor in _SIMPLE_ACCENT_DESCRIPTORS:
+            return f"{simple_descriptor}-maqaf"
+
     if _HEBREW_MAQAF in text:
         descriptors.insert(0, "maqaf")
 

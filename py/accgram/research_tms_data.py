@@ -14,6 +14,9 @@ from py_uxlc import my_uxlc
 from accgram import research_tms_rows
 
 _DIFF_NOTE_KEYS = {"note", "notes"}
+_IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS: set[tuple[str, str]] = {
+    ("אחר֑יש", "אחר֑ש"),
+}
 
 
 def load_source_indexes(
@@ -97,6 +100,7 @@ def build_enriched_row(
         wlc_focus=wlc_focus,
         rhs_key="mam_simple",
     )
+    diff_wlc_mam_for_output = _ignore_targeted_wlc_mam_diffs(diff_wlc_mam_for_output)
 
     enriched_row: dict[str, object] = {
         **row,
@@ -151,6 +155,37 @@ def _expand_subset_diff_to_wlc_focus(
         wlc_focus=wlc_focus,
         rhs_key=rhs_key,
     )
+
+
+def _ignore_targeted_wlc_mam_diffs(diff_value: object) -> object:
+    entries: list[object]
+    if isinstance(diff_value, list):
+        entries = [entry for entry in diff_value if entry is not None]
+    elif diff_value is None:
+        entries = []
+    else:
+        entries = [diff_value]
+
+    kept_entries = [
+        entry for entry in entries if not _is_ignored_wlc_mam_diff_entry(entry)
+    ]
+    if not kept_entries:
+        return []
+    if len(kept_entries) == 1:
+        return kept_entries[0]
+    return kept_entries
+
+
+def _is_ignored_wlc_mam_diff_entry(entry: object) -> bool:
+    if not isinstance(entry, dict):
+        return False
+
+    wlc_value = entry.get("wlc422")
+    mam_value = entry.get("mam_simple")
+    if not isinstance(wlc_value, str) or not isinstance(mam_value, str):
+        return False
+
+    return (wlc_value, mam_value) in _IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS
 
 
 def _validate_unique_wlc_focus_in_wlc_verse(

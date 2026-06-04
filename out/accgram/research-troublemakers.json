@@ -998,10 +998,7 @@
           "מע֣י׀ מע֨י׀ אוח֜ילה קיר֥ות לב֛י המה־ל֥י לב֖י ל֣א אחר֑ש כ֣י ק֤ול שופר֙ שמ֣עת נפש֔י תרוע֖ת מלחמֽה׃"
         ]
       },
-      "diff_wlc_mam": {
-        "wlc422": "אחר֑יש",
-        "mam_simple": "אחר֑ש"
-      },
+      "diff_wlc_mam": [],
       "structured_text": {
         "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
         "wlc_focus": "אוח֜ילה",

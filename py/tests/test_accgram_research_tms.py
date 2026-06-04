@@ -840,6 +840,114 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertEqual(row["diff_wlc_uxlc"], [])
             self.assertEqual(row["diff_wlc_mam"], [])
 
+    def test_run_ignores_targeted_wlc_mam_diff_pair(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps(
+                    {
+                        "troublemakers": [
+                            {
+                                "ref": "gn 1:1",
+                                "content": "payload",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "gn1:1",
+                            "vels": ["אחר֑יש"],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (uxlc_dir / "Genesis.xml").write_text(
+                """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Tanach>
+  <c n=\"1\">
+    <v n=\"1\">
+      <w>אחר֑יש</w>
+    </v>
+  </c>
+</Tanach>
+""",
+                encoding="utf-8",
+            )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.1",
+                                                "contents": [
+                                                    {
+                                                        "type": "text",
+                                                        "text": "אחר֑ש",
+                                                    }
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            research_tms.run(
+                SimpleNamespace(
+                    troubles_in=troubles_in,
+                    wlc422_kq_u_dir=wlc422_dir,
+                    uxlc_dir=uxlc_dir,
+                    mam_simple_dir=mam_simple_dir,
+                    out=out_path,
+                )
+            )
+
+            payload = json.loads(out_path.read_text(encoding="utf-8"))
+            row = payload["troublemakers"][0]
+
+            self.assertEqual(row["diff_wlc_uxlc"], [])
+            self.assertEqual(row["diff_wlc_mam"], [])
+
     def test_run_raises_when_wlc_focus_occurs_multiple_times(self):
         with TemporaryDirectory() as tmp_dir:
             base = Path(tmp_dir)
@@ -2439,7 +2547,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
             "והיו־ ל֣י"
         )
-        self.assertEqual(descriptor, "maqaf munax")
+        self.assertEqual(descriptor, "munax-maqaf")
+
+    def test_descriptor_from_hebrew_token_merkha_maqaf(self):
+        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+            "יד֥י־"
+        )
+        self.assertEqual(descriptor, "merkha-maqaf")
 
     def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
         self.assertIsNone(
@@ -2481,6 +2595,15 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
         )
         self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_rejects_legacy_maqaf_munax(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="maqaf munax",
+            diff_wlc_uxlc={"wlc422": "והיו־ ל֣י", "uxlc": "והיו־ ל֣י"},
+        )
+        self.assertFalse(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_space_alias(self):
         matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
