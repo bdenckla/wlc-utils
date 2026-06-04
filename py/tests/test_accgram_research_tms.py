@@ -15,6 +15,7 @@ from accgram import mam_simple_verse
 from accgram import research_tms
 from accgram import research_tms_focus_diff_expand
 from accgram import research_tms_report
+from accgram import research_tms_report_contracts
 from accgram import research_tms_report_subsets
 from accgram import troublemaker_structured_text_sanity
 from accgram import verse_json_smart_concat
@@ -22,6 +23,77 @@ from accgram import wlc_uxlc_diff
 
 
 class TestAccgramResearchTroublemakers(unittest.TestCase):
+    @staticmethod
+    def _repo_root() -> Path:
+        return Path(__file__).resolve().parents[2]
+
+    @classmethod
+    def _goerwitz_generated_html_paths(cls) -> tuple[Path, Path, Path]:
+        report_dir = cls._repo_root() / "gh-pages" / "accgram"
+        return (
+            report_dir / "goerwitz-tms.html",
+            report_dir / "goerwitz-tms-msp-y.html",
+            report_dir / "goerwitz-tms-msp-n.html",
+        )
+
+    def _assert_generated_goerwitz_contracts(
+        self, page_path: Path
+    ) -> list[research_tms_report_contracts.GoerwitzTroublemakerSection]:
+        self.assertTrue(page_path.exists(), f"Missing generated report page: {page_path}")
+
+        sections = research_tms_report_contracts.inspect_goerwitz_tms_html_contracts(
+            page_path.read_text(encoding="utf-8")
+        )
+        self.assertGreater(
+            len(sections),
+            0,
+            f"Expected at least one troublemaker section in {page_path.name}",
+        )
+
+        for section in sections:
+            msg_prefix = f"{page_path.name} [{section.ref}]"
+            self.assertTrue(
+                section.has_verse_paragraph,
+                f"{msg_prefix}: missing goerwitz verse paragraph",
+            )
+            self.assertTrue(
+                section.has_sat_table,
+                f"{msg_prefix}: missing goerwitz SAT table",
+            )
+            self.assertTrue(
+                section.verse_before_sat,
+                f"{msg_prefix}: verse paragraph must appear before SAT table",
+            )
+            self.assertNotIn(
+                "wlc_before",
+                section.sat_keys,
+                f"{msg_prefix}: SAT key wlc_before must not be rendered",
+            )
+            self.assertNotIn(
+                "wlc_after",
+                section.sat_keys,
+                f"{msg_prefix}: SAT key wlc_after must not be rendered",
+            )
+
+            non_empty_focus_values = {
+                value for value in section.wlc_focus_values if value
+            }
+            if section.focus_highlights:
+                self.assertEqual(
+                    len(section.focus_highlights),
+                    1,
+                    f"{msg_prefix}: expected at most one focus highlight span",
+                )
+
+            if non_empty_focus_values and section.focus_highlights:
+                self.assertIn(
+                    section.focus_highlights[0],
+                    non_empty_focus_values,
+                    f"{msg_prefix}: highlighted focus does not match SAT wlc_focus value",
+                )
+
+        return sections
+
     def test_smart_concatenate_string_runs_joins_with_space_without_maqaf(self):
         out = verse_json_smart_concat.smart_concatenate_string_runs(
             ["אב", "גד", {"x": 1}, "דה", "וז"]
@@ -1019,6 +1091,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
         self.assertEqual(occurrences, 1)
 
+    def test_count_focus_occurrences_is_word_boundary_safe(self):
+        occurrences = research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+            verse_text="אבג אב",
+            wlc_focus="אב",
+        )
+
+        self.assertEqual(occurrences, 1)
+
     def test_expand_subset_diff_to_wlc_focus_expands_single_dict_entry(self):
         out = research_tms._expand_subset_diff_to_wlc_focus(
             {"wlc422": "טוב֥ה", "uxlc": "טוֹבָה"},
@@ -1653,6 +1733,81 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 'href="goerwitz-tms-msp-y.html">missingsofpasuq:yes</a>',
                 html_text_compact,
             )
+
+    def test_generated_goerwitz_pages_meet_phase4_row_contracts(self):
+        for page_path in self._goerwitz_generated_html_paths():
+            self._assert_generated_goerwitz_contracts(page_path)
+
+    def test_generated_goerwitz_pages_cover_single_and_multi_token_focus_highlights(
+        self,
+    ):
+        has_multi_token_focus = False
+        for page_path in self._goerwitz_generated_html_paths():
+            sections = self._assert_generated_goerwitz_contracts(page_path)
+            highlight_texts = [
+                text
+                for section in sections
+                for text in section.focus_highlights
+                if text
+            ]
+            self.assertGreater(
+                len(highlight_texts),
+                0,
+                f"Expected highlighted focus text in {page_path.name}",
+            )
+            self.assertTrue(
+                any(len(text.split()) == 1 for text in highlight_texts),
+                f"Expected at least one single-token highlighted focus in {page_path.name}",
+            )
+            if any(len(text.split()) > 1 for text in highlight_texts):
+                has_multi_token_focus = True
+
+        self.assertTrue(
+            has_multi_token_focus,
+            "Expected at least one multi-token highlighted focus across generated goerwitz pages",
+        )
+
+    def test_generated_goerwitz_pages_preserve_known_focus_highlight_examples(self):
+        expected_by_page: dict[str, dict[str, str]] = {
+            "goerwitz-tms.html": {
+                "1k 6:2": "ועשר֤ים",
+                "1s 6:19": "גדולֽה",
+                "ec 9:18": "יאב֥ד טוב֥ה",
+            },
+            "goerwitz-tms-msp-y.html": {
+                "1s 6:19": "גדולֽה",
+            },
+            "goerwitz-tms-msp-n.html": {
+                "1k 6:2": "ועשר֤ים",
+                "ec 9:18": "יאב֥ד טוב֥ה",
+            },
+        }
+
+        for page_path in self._goerwitz_generated_html_paths():
+            sections = self._assert_generated_goerwitz_contracts(page_path)
+            section_by_ref = {section.ref: section for section in sections}
+            expected_by_ref = expected_by_page[page_path.name]
+            for ref, expected_highlight in expected_by_ref.items():
+                self.assertIn(
+                    ref,
+                    section_by_ref,
+                    f"Expected fixture ref {ref} in {page_path.name}",
+                )
+                self.assertEqual(
+                    section_by_ref[ref].focus_highlights,
+                    (expected_highlight,),
+                    f"Expected highlight {expected_highlight!r} for {ref} in {page_path.name}",
+                )
+
+    def test_goerwitz_tms_style_hooks_remain_class_based(self):
+        style_path = self._repo_root() / "gh-pages" / "style.css"
+        self.assertTrue(style_path.exists(), "Expected gh-pages/style.css to exist")
+
+        style_text = style_path.read_text(encoding="utf-8")
+        self.assertIn("p.goerwitz-tms-verse", style_text)
+        self.assertIn("span.goerwitz-tms-focus-highlight", style_text)
+        self.assertNotIn("#goerwitz-tms-verse", style_text)
+        self.assertNotIn("#goerwitz-tms-focus-highlight", style_text)
 
     def test_run_missing_mam_simple_raises_fail_fast(self):
         with TemporaryDirectory() as tmp_dir:
