@@ -10,6 +10,7 @@ from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram.mam_simple_diff import diff_wlc_mam
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
 from accgram.mam_simple_verse import load_mam_simple_for_refs
+from accgram.research_tms_assessment_auto import materialize_auto_assessment_descriptors
 from accgram import research_tms_focus_diff_expand
 from accgram.troublemaker_structured_text_sanity import (
     assessment_uxlc_matches_converted_diff_uxlc,
@@ -203,6 +204,12 @@ def run(args: argparse.Namespace) -> None:
         )
 
         if structured_text is not None:
+            structured_text = materialize_auto_assessment_descriptors(
+                ref=ref,
+                structured_text=structured_text,
+                enriched_row=enriched_row,
+                wlc_focus=wlc_focus,
+            )
             assessment = structured_text.get("assessment")
             assessment_uxlc = (
                 assessment.get("uxlc") if isinstance(assessment, dict) else None
