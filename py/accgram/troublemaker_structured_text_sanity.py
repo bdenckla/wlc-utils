@@ -275,6 +275,11 @@ def assessment_descriptor_matches_hebrew_token(
 
 
 def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> bool:
+    if descriptor == "merkha" and assessment_uxlc in {
+        "merkha",
+        "merkha-space",
+    }:
+        return True
     if descriptor == "maqaf" and assessment_uxlc in {
         "maqaf",
         "meteg-maqaf",

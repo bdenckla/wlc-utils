@@ -2063,6 +2063,22 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertTrue(matches)
 
+    def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_space_alias(self):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="merkha-space",
+            diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נ֥כח"},
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_rejects_meteg_space(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="meteg-space",
+            diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נ֥כח"},
+        )
+        self.assertFalse(matches)
+
     def test_assessment_uxlc_matches_converted_diff_uxlc_hebrew_letter_suffix(self):
         matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="pashta on ה",
