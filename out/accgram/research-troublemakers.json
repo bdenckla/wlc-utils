@@ -2602,6 +2602,10 @@
       "structured_text": {
         "st-summary": "BHS chooses merkha over meteg.",
         "wlc_focus": "יד֥י־",
+        "assessment": {
+          "wlc": "merkha-maqaf",
+          "mam": "meteg-maqaf"
+        },
         "img": "LC-251A-col-3-line-11-Je-10v3.png",
         "comment": [
           "As in many other cases we see in this document, BHS seems to be aggresively uncharitable in its transcription of this somewhat-ambiguous vertical line, avoiding the most likely intended meaning (here meteg) in favor of a less likely, indeed “illegal” alternative (here merkha). In this case the mark even lacks any inclination that would suggest merkha.",
@@ -2864,6 +2868,10 @@
       "structured_text": {
         "st-summary": "BHS transcribes a meteg as a tipexa.",
         "wlc_focus": "הנ֖ה־",
+        "assessment": {
+          "wlc": "tipexa-maqaf",
+          "mam": "meteg-maqaf"
+        },
         "img": "LC-272A-col-3-line-3-Je-48v12.png",
         "comment": "Yet another aggressively uncharitable, overly-literal transcription by BHS. The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
       }
@@ -3090,6 +3098,10 @@
       "structured_text": {
         "st-summary": "LC’s missing maqaf causes BHQ to make things worse.",
         "wlc_focus": "הונ֖ח",
+        "assessment": {
+          "wlc": "tipexa",
+          "mam": "meteg-maqaf"
+        },
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
         "comment": [
           "The consensus pointing of the last two atoms in this verse is הֽוּנַֽח־לָֽנוּ׃. I.e. ignoring vowel marks, the consensus for the atom in question is הֽונֽח־, i.e. two meteg marks and a maqaf.",

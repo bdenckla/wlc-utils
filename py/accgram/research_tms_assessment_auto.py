@@ -10,7 +10,7 @@ _ASSESSMENT_AUTO_METEG_FALLBACK_BY_KEY = {
     "wlc": "silluq-no_sof_pasuq",
     "uxlc": "silluq-no_sof_pasuq",
     "mam": "silluq-sof_pasuq",
-    "manuscript": "meteg-space",
+    "manuscript": "silluq-no_sof_pasuq",
     "bhs": "silluq-no_sof_pasuq",
 }
 
@@ -221,10 +221,6 @@ def _infer_assessment_descriptor_from_hebrew_token(
     if not token:
         return None
 
-    # Preserve the existing project convention for this well-known edge case.
-    if token == "\u05d3\u05d9":
-        return "meteg-space"
-
     # Silluq heuristics apply only when meteg (U+05BD) is present. A trailing
     # sof pasuq/paseq punctuation mark alone must not override the token's
     # accent descriptor.
@@ -233,7 +229,7 @@ def _infer_assessment_descriptor_from_hebrew_token(
     if _HEBREW_METEG in token and _HEBREW_PASEQ in token:
         return "silluq-pasoleg"
     if _HEBREW_METEG in token and _HEBREW_MAQAF in token:
-        return "meteg-maqaf"
+        return "maqaf"
     if _HEBREW_METEG in token:
         return meteg_fallback
 
@@ -245,7 +241,7 @@ def _infer_assessment_descriptor_from_hebrew_token(
     if descriptor == "no_accent":
         return "no accent"
     if descriptor == "maqaf":
-        return "meteg-maqaf"
+        return "maqaf"
     if isinstance(descriptor, str) and descriptor:
         if _HEBREW_SOF_PASUQ in token:
             return f"{descriptor}-sof_pasuq"
@@ -255,6 +251,6 @@ def _infer_assessment_descriptor_from_hebrew_token(
     if _HEBREW_MAQAF in token and not any(
         _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END for ch in token
     ):
-        return "meteg-maqaf"
+        return "maqaf"
 
     return None

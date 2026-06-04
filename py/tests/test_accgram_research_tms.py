@@ -17,8 +17,10 @@ from accgram import research_tms_assessment_auto
 from accgram import research_tms_focus_diff_expand
 from accgram import research_tms_focus_highlight
 from accgram import research_tms_report
+from accgram import research_tms_report_sat
 from accgram import research_tms_report_contracts
 from accgram import research_tms_report_subsets
+from accgram import troublemaker_structured_text_data
 from accgram import troublemaker_structured_text_sanity
 from accgram import wlc_uxlc_diff
 
@@ -2845,6 +2847,42 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertIsNone(descriptor)
 
+    def test_try_auto_assessment_descriptor_uses_maqaf_for_plain_maqaf_token(self):
+        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="mam",
+            enriched_row={"diff_wlc_mam": {"mam_simple": "הנה־"}},
+            wlc_focus=None,
+        )
+        self.assertEqual(descriptor, "maqaf")
+
+    def test_try_auto_assessment_descriptor_uses_no_accent_for_di_without_meteg(
+        self,
+    ):
+        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="uxlc",
+            enriched_row={"diff_wlc_uxlc": {"uxlc": "די"}},
+            wlc_focus=None,
+        )
+        self.assertEqual(descriptor, "no accent")
+
+    def test_try_auto_assessment_descriptor_does_not_emit_meteg_labels(self):
+        descriptors = [
+            research_tms_assessment_auto.try_auto_assessment_descriptor(
+                assessment_key="uxlc",
+                enriched_row={"diff_wlc_uxlc": {"uxlc": "די"}},
+                wlc_focus=None,
+            ),
+            research_tms_assessment_auto.try_auto_assessment_descriptor(
+                assessment_key="mam",
+                enriched_row={"diff_wlc_mam": {"mam_simple": "הונח־"}},
+                wlc_focus=None,
+            ),
+        ]
+
+        for descriptor in descriptors:
+            self.assertIsInstance(descriptor, str)
+            self.assertNotIn("meteg", descriptor)
+
     def test_try_auto_assessment_descriptor_uses_tevir_sof_pasuq_without_meteg(
         self,
     ):
@@ -2871,6 +2909,60 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             wlc_focus="פֽלאי׃",
         )
         self.assertEqual(descriptor, "silluq-sof_pasuq")
+
+    def test_structured_text_data_has_explicit_meteg_assessments_for_target_refs(self):
+        expected_by_ref = {
+            "1k 20:29": {
+                "manuscript": "meteg-maqaf",
+                "uxlc": "meteg-maqaf",
+                "mam": "meteg-maqaf",
+            },
+            "da 2:41": {
+                "manuscript": "meteg-space",
+                "uxlc": "meteg-space",
+                "mam": "meteg-maqaf",
+            },
+            "je 10:3": {
+                "mam": "meteg-maqaf",
+            },
+            "je 48:12": {
+                "mam": "meteg-maqaf",
+            },
+            "lm 5:5": {
+                "mam": "meteg-maqaf",
+            },
+        }
+
+        for ref, expected_assessment in expected_by_ref.items():
+            structured = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get(ref)
+            self.assertIsInstance(structured, dict, ref)
+            assessment = structured.get("assessment")
+            self.assertIsInstance(assessment, dict, ref)
+            for key, expected_value in expected_assessment.items():
+                self.assertEqual(assessment.get(key), expected_value, f"{ref} {key}")
+
+    def test_assessment_sat_rows_uses_explicit_meteg_assessment_from_structured_text(
+        self,
+    ):
+        row = {
+            "structured_text": {
+                "assessment": {
+                    "mam": "meteg-maqaf",
+                }
+            }
+        }
+
+        sat_rows = research_tms_report_sat._assessment_sat_rows(
+            row,
+            structured_text_lookup=lambda in_row, key: in_row["structured_text"].get(key),
+            existing_sat_rows=[
+                ("הנ֖ה־", "", "wlc_focus"),
+                ("הנה־", "", "diff_wlc_mam"),
+            ],
+            wlc_focus="הנ֖ה־",
+        )
+
+        self.assertIn(("meteg-maqaf", "", "a.mam"), sat_rows)
 
     def test_materialize_auto_assessment_descriptors_keeps_literal_percent_auto_value(
         self,
