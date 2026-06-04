@@ -1559,7 +1559,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             table_idx = html_text_compact.index("<tableclass=\"goerwitz-tms-sat\">")
             self.assertLess(verse_idx, table_idx)
 
-    def test_write_goerwitz_tms_html_report_splits_diff_wlc_uxlc_note_into_hbo_and_note_rows(
+    def test_write_goerwitz_tms_html_report_keeps_diff_wlc_uxlc_note_payload_unsplit(
         self,
     ):
         with TemporaryDirectory() as tmp_dir:
@@ -1584,14 +1584,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             html_text = html_out.read_text(encoding="utf-8")
-            self.assertRegex(
-                html_text,
-                r'<td lang="hbo" dir="rtl">דבר</td><td>[^<]*</td><td>diff_wlc_uxlc\.hbo</td>',
-            )
-            self.assertIn("<td>m</td><td></td><td>diff_wlc_uxlc.note</td>", html_text)
-            self.assertNotIn(
-                "<td>דבר (note: m)</td><td></td><td>diff_wlc_uxlc</td>", html_text
-            )
+            self.assertIn("<td>diff_wlc_uxlc</td>", html_text)
+            self.assertIn("note: m", html_text)
+            self.assertNotIn("diff_wlc_uxlc.hbo", html_text)
+            self.assertNotIn("diff_wlc_uxlc.note", html_text)
 
     def test_write_goerwitz_tms_html_report_uses_phase3_url_conventions(self):
         with TemporaryDirectory() as tmp_dir:
@@ -1679,11 +1675,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 "</span></td><td></td><td>wlc_focus.notes</td>",
                 html_text,
             )
-            self.assertRegex(
-                html_text,
-                r'<td lang="hbo" dir="rtl">דבר</td><td>[^<]*</td><td>diff_wlc_uxlc\.hbo</td>',
-            )
-            self.assertIn("<td>t</td><td></td><td>diff_wlc_uxlc.note</td>", html_text)
+            self.assertIn("<td>diff_wlc_uxlc</td>", html_text)
+            self.assertIn("note: t", html_text)
+            self.assertNotIn("diff_wlc_uxlc.hbo", html_text)
+            self.assertNotIn("diff_wlc_uxlc.note", html_text)
             self.assertIn("wlc422: [אלף | בית (note: x)]", html_text)
 
     def test_write_goerwitz_tms_html_report_never_emits_bracket_notes_rows(self):

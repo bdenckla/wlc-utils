@@ -36,16 +36,6 @@ def normalize_diff_rows(
     for idx, entry in enumerate(entries, start=1):
         row_label = label if len(entries) == 1 else f"{label}[{idx}]"
 
-        split_rows = _split_note_bearing_diff_rows(
-            row_label,
-            label=label,
-            entry=entry,
-            render_sat_value=render_sat_value,
-        )
-        if split_rows is not None:
-            rows.extend(split_rows)
-            continue
-
         rows.append(
             (
                 row_label,
@@ -59,58 +49,6 @@ def normalize_diff_rows(
             )
         )
     return rows
-
-
-def _split_note_bearing_diff_rows(
-    row_label: str,
-    *,
-    label: str,
-    entry: object,
-    render_sat_value: Callable[[object], str],
-) -> list[tuple[str, str]] | None:
-    if label != "diff_wlc_uxlc":
-        return None
-    if not isinstance(entry, dict):
-        return None
-
-    uxlc_side = entry.get("uxlc")
-    hbo_text, note_text = _extract_token_text_and_note(
-        uxlc_side, render_sat_value=render_sat_value
-    )
-    if not hbo_text or not note_text:
-        return None
-    if not contains_hebrew(hbo_text):
-        return None
-
-    return [
-        (f"{row_label}.hbo", hbo_text),
-        (f"{row_label}.note", note_text),
-    ]
-
-
-def _extract_token_text_and_note(
-    value: object,
-    *,
-    render_sat_value: Callable[[object], str],
-) -> tuple[str | None, str | None]:
-    if not isinstance(value, dict):
-        return None, None
-
-    token_text: str | None = None
-    if isinstance(value.get("text"), str):
-        token_text = value["text"].strip()
-    elif isinstance(value.get("word"), str):
-        token_text = value["word"].strip()
-
-    note_payload = value.get("note")
-    if note_payload is None:
-        note_payload = value.get("notes")
-
-    note_text = render_sat_value(note_payload).strip()
-    if not token_text or not note_text:
-        return None, None
-
-    return token_text, note_text
 
 
 def _render_diff_entry_value(
