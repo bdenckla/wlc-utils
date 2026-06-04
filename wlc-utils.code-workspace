@@ -24,6 +24,10 @@
 			"/^python -m py_compile py/accgram/troublemaker_structured_text_data\\.py$/": {
 				"approve": true,
 				"matchCommandLine": true
+			},
+			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_accgram\\.py --help$/": {
+				"approve": true,
+				"matchCommandLine": true
 			}
 		}
 	}

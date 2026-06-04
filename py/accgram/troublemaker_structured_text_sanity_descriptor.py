@@ -217,6 +217,7 @@ def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> boo
     if descriptor == "maqaf" and assessment_uxlc in {
         "maqaf",
         "meteg-maqaf",
+        "meteg-meteg-maqaf",
     }:
         return True
     return assessment_uxlc == descriptor

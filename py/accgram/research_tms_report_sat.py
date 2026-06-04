@@ -404,7 +404,11 @@ def _maybe_restore_value_from_witness(
     assessment_value: str,
 ) -> str:
     normalized_assessment = assessment_value.strip()
-    if normalized_assessment not in {"meteg-space", "meteg-maqaf"}:
+    if normalized_assessment not in {
+        "meteg-space",
+        "meteg-maqaf",
+        "meteg-meteg-maqaf",
+    }:
         return target_value
 
     if not research_tms_report_diff_format.is_plain_hebrew_string(target_value):
@@ -434,7 +438,7 @@ def _maybe_restore_value_from_witness(
     has_maqaf = research_tms_meteg_witness.token_has_maqaf(witness_token)
     if normalized_assessment == "meteg-space" and has_maqaf:
         return target_value
-    if normalized_assessment == "meteg-maqaf" and not has_maqaf:
+    if normalized_assessment in {"meteg-maqaf", "meteg-meteg-maqaf"} and not has_maqaf:
         return target_value
 
     return witness_token

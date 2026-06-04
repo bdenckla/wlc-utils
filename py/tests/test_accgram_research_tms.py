@@ -2901,6 +2901,15 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertTrue(matches)
 
+    def test_assessment_uxlc_matches_converted_diff_uxlc_double_meteg_maqaf_alias(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="meteg-meteg-maqaf",
+            diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
+        )
+        self.assertTrue(matches)
+
     def test_assessment_uxlc_matches_converted_diff_uxlc_maqaf_exact(self):
         matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="maqaf",
@@ -3165,7 +3174,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 "mam": "meteg-maqaf",
             },
             "lm 5:5": {
-                "mam": "meteg-maqaf",
+                "mam": "meteg-meteg-maqaf",
             },
         }
 
@@ -3191,7 +3200,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         row = {
             "structured_text": {
                 "assessment": {
-                    "mam": "meteg-maqaf",
+                    "mam": "meteg-meteg-maqaf",
                 }
             }
         }
@@ -3208,7 +3217,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             wlc_focus="הנ֖ה־",
         )
 
-        self.assertIn(("meteg-maqaf", "", "a.mam"), sat_rows)
+        self.assertIn(("meteg-meteg-maqaf", "", "a.mam"), sat_rows)
 
     def test_materialize_auto_assessment_descriptors_keeps_literal_percent_auto_value(
         self,
