@@ -13,6 +13,7 @@ from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram import mam_simple_diff
 from accgram import mam_simple_verse
 from accgram import research_tms
+from accgram import research_tms_assessment_auto
 from accgram import research_tms_focus_diff_expand
 from accgram import research_tms_report
 from accgram import research_tms_report_contracts
@@ -2598,6 +2599,16 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             ],
         )
         self.assertTrue(matches)
+
+    def test_try_auto_assessment_descriptor_returns_none_for_maqaf_with_non_meteg_accent(
+        self,
+    ):
+        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="wlc",
+            enriched_row={},
+            wlc_focus="בשר־ק֜דש",
+        )
+        self.assertIsNone(descriptor)
 
     def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(
         self,

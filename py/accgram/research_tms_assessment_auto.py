@@ -14,6 +14,8 @@ _HEBREW_MAQAF = "\u05be"
 _HEBREW_PASEQ = "\u05c0"
 _HEBREW_SOF_PASUQ = "\u05c3"
 _HEBREW_METEG = "\u05bd"
+_HEBREW_ACCENT_START = ord("\u0591")
+_HEBREW_ACCENT_END = ord("\u05af")
 
 
 def materialize_auto_assessment_descriptors(
@@ -223,7 +225,11 @@ def _infer_assessment_descriptor_from_hebrew_token(
         return "meteg-maqaf"
     if isinstance(descriptor, str) and descriptor:
         return descriptor
-    if _HEBREW_MAQAF in token:
+    # Do not force a maqaf fallback when other accent marks are present but
+    # unmapped; in those cases the descriptor is ambiguous for SAT rendering.
+    if _HEBREW_MAQAF in token and not any(
+        _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END for ch in token
+    ):
         return "meteg-maqaf"
 
     return None
