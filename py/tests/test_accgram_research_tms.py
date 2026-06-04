@@ -2169,7 +2169,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertTrue(matches)
 
-    def test_assessment_uxlc_matches_converted_diff_uxlc_list_without_match_is_indeterminate(
+    def test_assessment_uxlc_matches_converted_diff_uxlc_list_accepts_meteg_space_for_di(
         self,
     ):
         matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
@@ -2179,7 +2179,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 {"wlc422": "ד֥י", "uxlc": "די"},
             ],
         )
-        self.assertIsNone(matches)
+        self.assertTrue(matches)
 
     def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(
         self,

@@ -256,6 +256,9 @@ def assessment_descriptor_matches_hebrew_token(
     normalized_descriptor = _normalize_assessment_descriptor(descriptor)
     normalized_assessment = _normalize_assessment_descriptor(assessment_descriptor)
 
+    if normalized_assessment == "meteg-space" and hebrew_token == "די":
+        return True
+
     descriptor_simple_count = _simple_descriptor_accent_count(normalized_descriptor)
     assessment_simple_count = _simple_descriptor_accent_count(normalized_assessment)
     if (
