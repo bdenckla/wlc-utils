@@ -386,6 +386,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "יד֥י־",
     },
     "je 31:32": {
+        "st-summary": "Defying the LC, BHS has tipexa rather than munax.",
         "wlc_focus": "מא֖רץ",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
         "comment": "See the image in the UXLC change to which we link above."
