@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 
-def _foi_non_revia_note(fp_value: str) -> str:
+def _non_revia_comment(fp_value: str) -> str:
     return (
         'A possible reason why the Goerwitz accent grammar check deems this verse "ungrammatical" '
         f'is its phrase that is a member of the FOI category "{fp_value}". '
         "A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts "
         'with "⅃-leg...non-revia" and the other 12 are not deemed "ungrammatical" by the checker.'
     )
+
+
+def _non_revia_summary(accent: str) -> str:
+    return f"The checker probably doesn’t like munax legarmeih serving {accent}."
 
 
 _NU_2509_01 = (
@@ -184,32 +188,32 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above."
     },
     "is 36:2": {
-        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving tevir.",
+        "st-summary": _non_revia_summary("tevir"),
         "wlc_focus": "ירושל֛מה",
-        "comment": _foi_non_revia_note(
+        "comment": _non_revia_comment(
             "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"
         ),
     },
     "je 4:19": {
-        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
+        "st-summary": _non_revia_summary("geresh"),
         "wlc_focus": "אוח֜ילה",
-        "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": _non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "je 38:11": {
-        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
+        "st-summary": _non_revia_summary("geresh"),
         "wlc_focus": "את־ האנש֜ים",
-        "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": _non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "hg 2:12": {
-        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
+        "st-summary": _non_revia_summary("geresh"),
         "wlc_focus": "בשר־ ק֜דש",
         "BHQ": "?",
-        "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": _non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2c 26:15": {
-        "st-summary": "The Goerwitz checker likely does not like munax legarmeih serving geresh.",
+        "st-summary": _non_revia_summary("geresh"),
         "wlc_focus": "חשבנ֜ות",
-        "comment": _foi_non_revia_note("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": _non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2k 23:36": {
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
