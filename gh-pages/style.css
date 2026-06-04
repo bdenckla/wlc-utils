@@ -49,6 +49,10 @@ figcaption.goerwitz-tms-image-caption {
     font-size: 90%;
 }
 table.border-collapse { border-collapse: collapse; }
+table.goerwitz-tms-sat {
+    margin-left: auto;
+    margin-right: auto;
+}
 th, td {
     padding-right: 0.4em;
     padding-left: 0.4em;
