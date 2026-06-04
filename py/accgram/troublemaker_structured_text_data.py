@@ -356,7 +356,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ek 11:1": {
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
         "comment": (
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
@@ -370,7 +369,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ek 14:11": {
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F282B.jpg",
         "comment": (
             "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg "
             "because merkha and tipexa often lack an inclination that would distinguish them from meteg. "
@@ -416,7 +414,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS chooses merkha over meteg.",
         "wlc_focus": "יד֥י־",
         "img": "LC-251A-col-3-line-11-Je-10v3.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F251A.jpg",
         "comment": (
             _JE_1003_01,
             _JE_1003_02,
@@ -433,7 +430,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS transcribes a meteg as a tipexa.",
         "wlc_focus": "הנ֖ה־",
         "img": "LC-272A-col-3-line-3-Je-48v12.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F272A.jpg",
         "comment": (
             "Yet another aggressively uncharitable, overly-literal transcription by BHS."
             + " "
@@ -464,7 +460,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "LC’s missing maqaf causes BHQ to make things worse.",
         "wlc_focus": "הונ֖ח",
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F432A.jpg",
         "comment": (
             _LM_0505_01,
             _LM_0505_02,

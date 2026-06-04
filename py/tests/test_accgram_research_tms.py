@@ -1413,7 +1413,6 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                             "wlc_focus": "אב",
                             "st-summary": "Link summary.",
                             "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
-                            "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
                             "assessment": {
                                 "manuscript": "foo",
                                 "bhs": "bar",
@@ -1494,6 +1493,32 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
                 html_text,
             )
+
+    def test_write_goerwitz_tms_html_report_skips_image_source_caption_for_unparseable_img_name(
+        self,
+    ):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            research_tms_report.write_goerwitz_tms_html_report(
+                html_out,
+                [
+                    {
+                        "ref": "gn 1:1",
+                        "structured_text": {
+                            "img": "not-an-lc-image-name.png",
+                        },
+                    }
+                ],
+            )
+
+            html_text = html_out.read_text(encoding="utf-8")
+            self.assertIn('class="goerwitz-tms-image"', html_text)
+            self.assertIn('src="../img/not-an-lc-image-name.png"', html_text)
+            self.assertNotIn('class="goerwitz-tms-figure"', html_text)
+            self.assertNotIn('class="goerwitz-tms-image-caption"', html_text)
+            self.assertNotIn("Image source:", html_text)
 
     def test_write_goerwitz_tms_html_report_simplifies_matching_wlc_word_diff_pairs(
         self,

@@ -1544,7 +1544,6 @@
       "structured_text": {
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F280B.jpg",
         "comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. It is aggressively uncharitable to transcribe the mark on שרי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to assume that a maqaf is missing."
       }
     },
@@ -1635,7 +1634,6 @@
       "structured_text": {
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F282B.jpg",
         "comment": "In the LC it is often difficult to tell whether a mark is a merkha, a tipexa, or meteg because merkha and tipexa often lack an inclination that would distinguish them from meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing."
       }
     },
@@ -2605,7 +2603,6 @@
         "st-summary": "BHS chooses merkha over meteg.",
         "wlc_focus": "יד֥י־",
         "img": "LC-251A-col-3-line-11-Je-10v3.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F251A.jpg",
         "comment": [
           "As in many other cases we see in this document, BHS seems to be aggresively uncharitable in its transcription of this somewhat-ambiguous vertical line, avoiding the most likely intended meaning (here meteg) in favor of a less likely, indeed “illegal” alternative (here merkha). In this case the mark even lacks any inclination that would suggest merkha.",
           "As usual, when we say an accent is “illegal” we mean that it does not conform to the consensus grammar of accents, given the surrounding accent-context. Thus our degree of certainty that an accent is “illegal” depends on our degree of certainty about the surrounding accent-context. At times, our degree of certainty about the context is not high, for example due to ambiguity between merkha and tipexa. I don’t think that is the case here, but I thought I would bring up the general point anyway.",
@@ -2868,7 +2865,6 @@
         "st-summary": "BHS transcribes a meteg as a tipexa.",
         "wlc_focus": "הנ֖ה־",
         "img": "LC-272A-col-3-line-3-Je-48v12.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F272A.jpg",
         "comment": "Yet another aggressively uncharitable, overly-literal transcription by BHS. The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
       }
     },
@@ -3095,7 +3091,6 @@
         "st-summary": "LC’s missing maqaf causes BHQ to make things worse.",
         "wlc_focus": "הונ֖ח",
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
-        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F432A.jpg",
         "comment": [
           "The consensus pointing of the last two atoms in this verse is הֽוּנַֽח־לָֽנוּ׃. I.e. ignoring vowel marks, the consensus for the atom in question is הֽונֽח־, i.e. two meteg marks and a maqaf.",
           "Given this consensus, the most charitable transcription of the LC here is that it is missing the maqaf, leaving הונח with no accent, only two meteg marks. Even ignoring the consensus, i.e. transcribing “blind,” this is the most charitable transcription.",

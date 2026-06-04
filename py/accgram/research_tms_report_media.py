@@ -45,8 +45,8 @@ def render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
     if not image_paragraphs:
         return ()
 
-    img_src_url = structured_text.get("img_src_url")
-    if isinstance(img_src_url, str) and img_src_url.strip():
+    img_src_url = _image_source_url(structured_text)
+    if img_src_url is not None:
         link_label, location_suffix = _image_source_link_label_and_location_suffix(
             structured_text
         )
@@ -54,7 +54,7 @@ def render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
             "Image source: ",
             wlc_utils_html.anchor(
                 link_label,
-                {"href": img_src_url.strip()},
+                {"href": img_src_url},
             ),
         ]
         if location_suffix:
@@ -69,6 +69,25 @@ def render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
         )
 
     return tuple(image_paragraphs)
+
+
+def _image_source_url(structured_text: dict[str, object]) -> str | None:
+    img_src_url = structured_text.get("img_src_url")
+    if isinstance(img_src_url, str):
+        stripped = img_src_url.strip()
+        if stripped:
+            return stripped
+
+    img_name = structured_text.get("img")
+    if not isinstance(img_name, str):
+        return None
+
+    parsed = _parse_lc_image_name(img_name)
+    if parsed is None:
+        return None
+
+    page_id, _, _ = parsed
+    return f"https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F{page_id}.jpg"
 
 
 def _image_source_link_label_and_location_suffix(
