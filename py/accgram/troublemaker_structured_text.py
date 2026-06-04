@@ -111,24 +111,29 @@ _JU_1318_03 = (
 
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
+        "st-summary": "Defying the LC, BHS has mahapakh rather than munax.",
         "wlc_focus": "ועשר֤ים",
         "assessment": {
-            "manuscript": "munax",
             "wlc": "mahapakh",
             "uxlc": "munax",
             "mam": "munax",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
+        "comment": "See the image in the UXLC change to which we link above."
     },
     "1k 16:33": {
+        "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
         "wlc_focus": "מכ֨ל",
         "assessment": {
-            "manuscript": "no accent",
             "wlc": "qadma on kaf",
             "uxlc": "no accent",
             "mam": "pashta on lamed",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
+        "comment": (
+            "The LC has no visible accent on מכל. See the image in the UXLC change to which we link above."
+            " The consensus accents the final syllable with pashta rather than qadma."
+        )
     },
     "1k 19:11": {
         "wlc_focus": "הר֨וח",
@@ -510,7 +515,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
-        "comment": ("See the image in the UXLC change to which we link above."),
+        "comment": "See the image in the UXLC change to which we link above.",
     },
     "nu 20:19": {
         "st-summary": "WLC turns a scribal zarqa whim into something far worse.",
@@ -536,9 +541,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ob 1:1": {
-        "st-summary": "LC has no visible accent on עליה.",
+        "st-summary": "The LC has no visible accent on עליה.",
         "wlc_focus": "עליה",
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
-        "comment": ("See the image in the UXLC note to which we link above."),
+        "comment": "See the image in the UXLC note to which we link above.",
     },
 }
