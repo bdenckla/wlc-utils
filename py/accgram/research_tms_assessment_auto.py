@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from accgram.troublemaker_structured_text_sanity import descriptor_from_hebrew_token
 
-_AUTO_ASSESSMENT_MARKERS = frozenset({"auto", "%auto%"})
 _ASSESSMENT_AUTO_METEG_FALLBACK_BY_KEY = {
     "wlc": "silluq-no_sof_pasuq",
     "uxlc": "silluq-no_sof_pasuq",
@@ -32,8 +31,14 @@ def materialize_auto_assessment_descriptors(
     changed = False
 
     for key, value in assessment.items():
-        if not _is_auto_assessment_descriptor(value):
+        if not value == "%auto%":
             continue
+
+        if key == "manuscript":
+            raise ValueError(
+                "structured_text assessment.manuscript must be explicit "
+                f"for {ref}; %auto% is not allowed"
+            )
 
         descriptor = _auto_assessment_descriptor_for_key(
             assessment_key=key,
@@ -55,10 +60,6 @@ def materialize_auto_assessment_descriptors(
     out_structured_text = dict(structured_text)
     out_structured_text["assessment"] = out_assessment
     return out_structured_text
-
-
-def _is_auto_assessment_descriptor(value: object) -> bool:
-    return isinstance(value, str) and value.strip().lower() in _AUTO_ASSESSMENT_MARKERS
 
 
 def _auto_assessment_descriptor_for_key(
@@ -101,7 +102,7 @@ def _candidate_tokens_for_auto_assessment(
         if isinstance(wlc_focus, str):
             tokens.append(wlc_focus)
 
-    if assessment_key in {"uxlc", "manuscript"}:
+    if assessment_key == "uxlc":
         tokens.extend(_diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), rhs_key="uxlc"))
         if isinstance(wlc_focus, str):
             tokens.append(wlc_focus)

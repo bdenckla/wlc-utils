@@ -145,7 +145,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 20:29": {
         "wlc_focus": "נ֥כח",
         "assessment": {
-            "manuscript": "%auto%",
+            "manuscript": "meteg-maqaf",
             "wlc": "merkha-space",
             "uxlc": "%auto%",
             "mam": "%auto%",
@@ -244,7 +244,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "da 2:41": {
         "wlc_focus": "ד֥י",
         "assessment": {
-            "manuscript": "%auto%",
+            "manuscript": "meteg-space",
             "wlc": "merkha-space",
             "uxlc": "%auto%",
             "mam": "%auto%",
@@ -382,7 +382,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ec 7:21": {
         "wlc_focus": "אש֥ר",
         "assessment": {
-            "manuscript": "%auto%",
+            "manuscript": "tevir",
             "wlc": "%auto%",
             "uxlc": "%auto%",
             "mam": "%auto%",
@@ -393,7 +393,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ec 9:18": {
         "wlc_focus": "יאב֥ד טוב֥ה",
         "assessment": {
-            "manuscript": "%auto%",
+            "manuscript": "merkha tipexa",
             "wlc": "%auto%",
             "uxlc": "%auto%",
             "mam": "%auto%",
