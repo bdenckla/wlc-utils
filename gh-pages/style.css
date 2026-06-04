@@ -30,6 +30,14 @@ div.goerwitz-tms-width-limited {
 p.goerwitz-tms-comment {
     margin-top: 0.4em;
 }
+p.goerwitz-tms-verse {
+    margin-top: 0.4em;
+    margin-bottom: 0.6em;
+    text-align: right;
+}
+span.goerwitz-tms-focus-highlight {
+    color: light-dark(#0b57d0, #7bb4ff);
+}
 p.goerwitz-tms-image {
     text-align: center;
 }

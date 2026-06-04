@@ -378,6 +378,12 @@ def _build_enriched_row(
     if isinstance(wlc422_verse, dict):
         wlc422_verse.pop("bcv", None)
 
+    _validate_unique_wlc_focus_in_wlc_verse(
+        ref=ref,
+        wlc422_kq_u_verse=wlc422_verse,
+        wlc_focus=wlc_focus,
+    )
+
     uxlc_info = uxlc_by_bcv.get(bcv)
     if uxlc_info is None:
         raise ValueError(f"Missing UXLC verse for {ref} ({bcv}) in {uxlc_dir}")
@@ -469,6 +475,19 @@ def _expand_subset_diff_to_wlc_focus(
         diff_value,
         wlc_focus=wlc_focus,
         rhs_key=rhs_key,
+    )
+
+
+def _validate_unique_wlc_focus_in_wlc_verse(
+    *,
+    ref: str,
+    wlc422_kq_u_verse: object,
+    wlc_focus: str | None,
+) -> None:
+    research_tms_focus_diff_expand.validate_unique_focus_occurrence(
+        ref=ref,
+        wlc422_kq_u_verse=wlc422_kq_u_verse,
+        wlc_focus=wlc_focus,
     )
 
 

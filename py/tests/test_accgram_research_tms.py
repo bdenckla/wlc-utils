@@ -13,6 +13,7 @@ from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram import mam_simple_diff
 from accgram import mam_simple_verse
 from accgram import research_tms
+from accgram import research_tms_focus_diff_expand
 from accgram import research_tms_report
 from accgram import research_tms_report_subsets
 from accgram import troublemaker_structured_text_sanity
@@ -493,11 +494,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertNotIn("UXLCchange:none", html_text_compact)
             self.assertIn("<th>value</th><th></th><th>key</th>", html_text_compact)
             self.assertIn(
-                '<tdlang="hbo"dir="rtl">בראש֖יתבר֣א</td><td></td><td>wlc_before</td>',
+                '<pclass="goerwitz-tms-verse"lang="hbo"dir="rtl">בראש֖יתבר֣א</p>',
                 html_text_compact,
             )
+            self.assertIn('class="goerwitz-tms-verse"', html_text)
             self.assertIn("<td></td><td></td><td>wlc_focus</td>", html_text_compact)
-            self.assertIn("<td></td><td></td><td>wlc_after</td>", html_text_compact)
+            self.assertNotIn("<td></td><td></td><td>wlc_before</td>", html_text_compact)
+            self.assertNotIn("<td></td><td></td><td>wlc_after</td>", html_text_compact)
             intro_heading_idx = html_text_compact.index("<h2>Introduction</h2>")
             bracket_heading_idx = html_text_compact.index("<h2>WLCBracketNotes</h2>")
             first_verse_heading_idx = html_text_compact.index(
@@ -505,15 +508,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertLess(intro_heading_idx, first_verse_heading_idx)
             self.assertLess(bracket_heading_idx, first_verse_heading_idx)
-            before_idx = html_text_compact.index(
-                '<tdlang="hbo"dir="rtl">בראש֖יתבר֣א</td><td></td><td>wlc_before</td>'
+            verse_para_idx = html_text_compact.index(
+                '<pclass="goerwitz-tms-verse"lang="hbo"dir="rtl">בראש֖יתבר֣א</p>'
             )
-            wlc_focus_idx = html_text_compact.index(
-                "<td></td><td></td><td>wlc_focus</td>"
+            sat_table_idx = html_text_compact.index(
+                '<tableclass="goerwitz-tms-sat"><tr><th>value</th><th></th><th>key</th></tr>'
             )
-            after_idx = html_text_compact.index("<td></td><td></td><td>wlc_after</td>")
-            self.assertLess(before_idx, wlc_focus_idx)
-            self.assertLess(wlc_focus_idx, after_idx)
+            self.assertLess(verse_para_idx, sat_table_idx)
 
     def test_run_writes_enriched_research_oddballs_json(self):
         with TemporaryDirectory() as tmp_dir:
@@ -766,6 +767,258 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertEqual(row["diff_wlc_uxlc"], [])
             self.assertEqual(row["diff_wlc_mam"], [])
 
+    def test_run_raises_when_wlc_focus_occurs_multiple_times(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps(
+                    {
+                        "troublemakers": [
+                            {
+                                "ref": "gn 1:1",
+                                "content": "payload",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "gn1:1",
+                            "vels": ["foo", "bar", "foo"],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (uxlc_dir / "Genesis.xml").write_text(
+                """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Tanach>
+  <c n=\"1\"> 
+    <v n=\"1\"> 
+      <w>foo</w>
+      <w>bar</w>
+      <w>foo</w>
+    </v>
+  </c>
+</Tanach>
+""",
+                encoding="utf-8",
+            )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.1",
+                                                "contents": [
+                                                    {"type": "text", "text": "foo"},
+                                                    {"type": "text", "text": "bar"},
+                                                    {"type": "text", "text": "foo"},
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            prior_structured_text = research_tms.STRUCTURED_TEXT_BY_REF.get("gn 1:1")
+            research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = {"wlc_focus": "foo"}
+            try:
+                with self.assertRaisesRegex(
+                    ValueError,
+                    r"gn 1:1.*Found 2 occurrences.*Expand wlc_focus with neighboring token\(s\)",
+                ):
+                    research_tms.run(
+                        SimpleNamespace(
+                            troubles_in=troubles_in,
+                            wlc422_kq_u_dir=wlc422_dir,
+                            uxlc_dir=uxlc_dir,
+                            mam_simple_dir=mam_simple_dir,
+                            out=out_path,
+                        )
+                    )
+            finally:
+                if prior_structured_text is None:
+                    research_tms.STRUCTURED_TEXT_BY_REF.pop("gn 1:1", None)
+                else:
+                    research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = (
+                        prior_structured_text
+                    )
+
+    def test_run_raises_when_wlc_focus_is_missing_from_verse(self):
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            troubles_in = base / "in" / "_troublemakers.json"
+            wlc422_dir = base / "wlc422-kq-u"
+            uxlc_dir = base / "uxlc"
+            mam_simple_dir = base / "mam-simple"
+            out_path = base / "out" / "research-troublemakers.json"
+
+            troubles_in.parent.mkdir(parents=True, exist_ok=True)
+            wlc422_dir.mkdir(parents=True, exist_ok=True)
+            uxlc_dir.mkdir(parents=True, exist_ok=True)
+            mam_simple_dir.mkdir(parents=True, exist_ok=True)
+
+            troubles_in.write_text(
+                json.dumps(
+                    {
+                        "troublemakers": [
+                            {
+                                "ref": "gn 1:1",
+                                "content": "payload",
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (wlc422_dir / "1verses_00_gn.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "bcv": "gn1:1",
+                            "vels": ["foo", "bar", "baz"],
+                        }
+                    ],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (uxlc_dir / "Genesis.xml").write_text(
+                """<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<Tanach>
+  <c n=\"1\"> 
+    <v n=\"1\"> 
+      <w>foo</w>
+      <w>bar</w>
+      <w>baz</w>
+    </v>
+  </c>
+</Tanach>
+""",
+                encoding="utf-8",
+            )
+            (mam_simple_dir / "Gen.json").write_text(
+                json.dumps(
+                    {
+                        "versification-tradition": "vtbhs",
+                        "contents": [
+                            {
+                                "type": "book39",
+                                "osisID": "Gen",
+                                "contents": [
+                                    {
+                                        "type": "chapter",
+                                        "osisID": "Gen.1",
+                                        "contents": [
+                                            {
+                                                "type": "verse",
+                                                "osisID": "Gen.1.1",
+                                                "contents": [
+                                                    {"type": "text", "text": "foo"},
+                                                    {"type": "text", "text": "bar"},
+                                                    {"type": "text", "text": "baz"},
+                                                ],
+                                            }
+                                        ],
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            prior_structured_text = research_tms.STRUCTURED_TEXT_BY_REF.get("gn 1:1")
+            research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = {
+                "wlc_focus": "not-in-verse"
+            }
+            try:
+                with self.assertRaisesRegex(
+                    ValueError,
+                    r"gn 1:1.*Found 0 occurrences.*Expand wlc_focus with neighboring token\(s\)",
+                ):
+                    research_tms.run(
+                        SimpleNamespace(
+                            troubles_in=troubles_in,
+                            wlc422_kq_u_dir=wlc422_dir,
+                            uxlc_dir=uxlc_dir,
+                            mam_simple_dir=mam_simple_dir,
+                            out=out_path,
+                        )
+                    )
+            finally:
+                if prior_structured_text is None:
+                    research_tms.STRUCTURED_TEXT_BY_REF.pop("gn 1:1", None)
+                else:
+                    research_tms.STRUCTURED_TEXT_BY_REF["gn 1:1"] = (
+                        prior_structured_text
+                    )
+
+    def test_count_focus_occurrences_matches_across_maqaf_whitespace(self):
+        occurrences = research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+            verse_text="הן ישא איש בשר־ ק֜דש בכנף בגדו",
+            wlc_focus="בשר־ק֜דש",
+        )
+
+        self.assertEqual(occurrences, 1)
+
+    def test_count_focus_occurrences_supports_focus_ending_with_maqaf(self):
+        occurrences = research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+            verse_text="יד֥י־ מא֖רץ",
+            wlc_focus="יד֥י־",
+        )
+
+        self.assertEqual(occurrences, 1)
+
     def test_expand_subset_diff_to_wlc_focus_expands_single_dict_entry(self):
         out = research_tms._expand_subset_diff_to_wlc_focus(
             {"wlc422": "טוב֥ה", "uxlc": "טוֹבָה"},
@@ -848,7 +1101,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         structured_text = research_tms.STRUCTURED_TEXT_BY_REF["ob 1:1"]
         self.assertEqual(
             structured_text.get("st-summary"),
-            "Quirk in LC: עליה lacks an accent.",
+            "The LC has no visible accent on עליה.",
         )
 
     def test_write_goerwitz_tms_html_report_renders_diff_and_assessment_labels(self):
@@ -918,7 +1171,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn('href="goerwitz-tms-msp-n.html"', html_text_compact)
             self.assertIn("<h2>WLCBracketNotes</h2>", html_text_compact)
             self.assertIn("<code>]1</code>", html_text_compact)
-            self.assertIn('<td lang="hbo" dir="rtl">בראשית</td>', html_text)
+            self.assertIn('class="goerwitz-tms-verse"', html_text)
+            self.assertIn(
+                '<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">בראשית <span class="goerwitz-tms-focus-highlight">אב</span> אחרית</p>',
+                html_text,
+            )
             self.assertIn(
                 '<td lang="hbo" dir="rtl">אב</td><td></td><td>wlc_focus.hbo</td>',
                 html_text,
@@ -931,7 +1188,6 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 "</span></td><td></td><td>wlc_focus.notes</td>",
                 html_text,
             )
-            self.assertIn('<td lang="hbo" dir="rtl">אחרית</td>', html_text)
             self.assertNotIn("bracket_notes", html_text)
             self.assertNotIn("אב: ]1", html_text)
             self.assertIn(
@@ -1097,21 +1353,22 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 ],
             )
 
-            html_text_compact = "".join(html_out.read_text(encoding="utf-8").split())
-            before_cell = '<tdlang="hbo"dir="rtl">לפני</td><td></td><td>wlc_before</td>'
-            focus_cell = (
-                '<tdlang="hbo"dir="rtl">וה֥יול֣י</td><td></td><td>wlc_focus</td>'
+            html_text = html_out.read_text(encoding="utf-8")
+            html_text_compact = "".join(html_text.split())
+            verse_para = (
+                '<pclass="goerwitz-tms-verse"lang="hbo"dir="rtl">'
+                'לפני<spanclass="goerwitz-tms-focus-highlight">וה֥יול֣י</span>אחרי</p>'
             )
-            after_cell = '<tdlang="hbo"dir="rtl">אחרי</td><td></td><td>wlc_after</td>'
+            focus_cell = '<tdlang="hbo"dir="rtl">וה֥יול֣י</td><td></td><td>wlc_focus</td>'
 
+            self.assertIn(verse_para, html_text_compact)
             self.assertIn(focus_cell, html_text_compact)
-            self.assertNotIn("<td></td><td></td><td>wlc_focus</td>", html_text_compact)
+            self.assertNotIn("wlc_before", html_text)
+            self.assertNotIn("wlc_after", html_text)
 
-            before_idx = html_text_compact.index(before_cell)
-            focus_idx = html_text_compact.index(focus_cell)
-            after_idx = html_text_compact.index(after_cell)
-            self.assertLess(before_idx, focus_idx)
-            self.assertLess(focus_idx, after_idx)
+            verse_idx = html_text_compact.index(verse_para)
+            table_idx = html_text_compact.index("<tableclass=\"goerwitz-tms-sat\">")
+            self.assertLess(verse_idx, table_idx)
 
     def test_write_goerwitz_tms_html_report_splits_diff_wlc_uxlc_note_into_hbo_and_note_rows(
         self,

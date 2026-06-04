@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import re
+
+
+_MAQAF = "־"
+
 
 def structured_wlc_focus(structured_text: object) -> str | None:
     if not isinstance(structured_text, dict):
@@ -10,6 +15,58 @@ def structured_wlc_focus(structured_text: object) -> str | None:
         return None
 
     return wlc_focus.strip() or None
+
+
+def normalized_wlc_verse_text_from_payload(wlc422_kq_u_verse: object) -> str:
+    if not isinstance(wlc422_kq_u_verse, dict):
+        return ""
+
+    vels = wlc422_kq_u_verse.get("vels")
+    if not isinstance(vels, list):
+        return ""
+
+    text_parts = [_token_text(token) for token in vels]
+    compact = " ".join(part for part in text_parts if part)
+    return " ".join(compact.split())
+
+
+def count_focus_occurrences_in_verse_text(*, verse_text: str, wlc_focus: str) -> int:
+    normalized_focus = _normalize_focus_for_match(wlc_focus)
+    if not normalized_focus:
+        return 0
+
+    normalized_verse = " ".join(verse_text.split())
+    if not normalized_verse:
+        return 0
+
+    pattern = _focus_occurrence_pattern(normalized_focus)
+    return len(list(pattern.finditer(normalized_verse)))
+
+
+def validate_unique_focus_occurrence(
+    *,
+    ref: str,
+    wlc422_kq_u_verse: object,
+    wlc_focus: str | None,
+) -> None:
+    if not wlc_focus:
+        return
+
+    verse_text = normalized_wlc_verse_text_from_payload(wlc422_kq_u_verse)
+    occurrences = count_focus_occurrences_in_verse_text(
+        verse_text=verse_text,
+        wlc_focus=wlc_focus,
+    )
+    if occurrences == 1:
+        return
+
+    normalized_focus = _normalize_focus_for_match(wlc_focus)
+    raise ValueError(
+        "wlc_focus must occur exactly once in WLC verse text "
+        f"for {ref}. Found {occurrences} occurrences for wlc_focus={normalized_focus!r} "
+        f"in verse_text={verse_text!r}. Expand wlc_focus with neighboring token(s) "
+        "to make it unique."
+    )
 
 
 def expand_subset_diff_to_wlc_focus(
@@ -96,3 +153,31 @@ def _replace_subset_words_in_focus(
     end = start + match_len
     expanded_tokens = focus_tokens[:start] + subset_rhs_tokens + focus_tokens[end:]
     return " ".join(expanded_tokens)
+
+
+def _token_text(token: object) -> str:
+    if isinstance(token, str):
+        return token
+
+    if isinstance(token, dict):
+        word = token.get("word")
+        if isinstance(word, str):
+            return word
+
+        text = token.get("text")
+        if isinstance(text, str):
+            return text
+
+    return ""
+
+
+def _normalize_focus_for_match(wlc_focus: str) -> str:
+    # Canonicalize whitespace while allowing optional spaces after maqaf in matching.
+    return " ".join(wlc_focus.split())
+
+
+def _focus_occurrence_pattern(normalized_focus: str) -> re.Pattern[str]:
+    escaped_focus = re.escape(normalized_focus)
+    escaped_focus = escaped_focus.replace(re.escape(_MAQAF), f"{_MAQAF}\\s*")
+    escaped_focus = escaped_focus.replace(r"\ ", r"\s+")
+    return re.compile(rf"(?<!\S){escaped_focus}(?!\S)")

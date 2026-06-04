@@ -18,11 +18,13 @@ from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
 
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "mam")
-_CONTEXT_HBO_ROW_KEYS = {"wlc_before", "wlc_focus", "wlc_focus.hbo", "wlc_after"}
+_WLC_FOCUS_HBO_ROW_KEYS = {"wlc_focus", "wlc_focus.hbo"}
 _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _GOERWITZ_TMS_IMAGE_CLASS = "goerwitz-tms-image"
 _GOERWITZ_TMS_FIGURE_CLASS = "goerwitz-tms-figure"
 _GOERWITZ_TMS_IMAGE_CAPTION_CLASS = "goerwitz-tms-image-caption"
+_GOERWITZ_TMS_VERSE_CLASS = "goerwitz-tms-verse"
+_GOERWITZ_TMS_FOCUS_HIGHLIGHT_CLASS = "goerwitz-tms-focus-highlight"
 _SELF_LINK_SYMBOL = "🔗"
 _MAIN_REPORT_TITLE = "Goerwitz TMs"
 _MAIN_REPORT_HEADING = "Goerwitz Troublemakers"
@@ -194,6 +196,7 @@ def _render_row_section(row: dict[str, object]) -> tuple[object, ...]:
             row=row,
             section_anchor_id=section_anchor_id,
         ),
+        _render_wlc_verse_paragraph(row),
         _render_sat_table(row),
         *_render_image_paragraphs(row),
         *_render_comment_paragraphs(row),
@@ -267,39 +270,54 @@ def _troublemaker_anchor_id(bcv: str) -> str:
 
 
 def _render_sat_table(row: dict[str, object]) -> object:
-    verse_text = _wlc_verse_text(row)
     wlc_tokens = _wlc_verse_vels(row)
     wlc_focus = _structured_text_value(row, "wlc_focus")
-    wlc_focus_str = wlc_focus if isinstance(wlc_focus, str) else None
+    wlc_focus_str = _normalize_whitespace(wlc_focus) if isinstance(wlc_focus, str) else ""
     wlc_focus_notes = (
         research_tms_report_wlc_word_format.collect_wlc_word_bracket_notes(
             wlc_tokens,
-            wlc_focus_str,
+            wlc_focus_str or None,
             render_sat_value=_render_sat_value,
         )
     )
-    before_focus, focus_placeholder, after_focus = _split_wlc_context(
-        verse_text=verse_text,
-        wlc_focus=wlc_focus_str,
-    )
-
-    sat_rows: list[SatRow] = [_sat_row(key="wlc_before", value=before_focus)]
+    sat_rows: list[SatRow] = [
+        _sat_row(key=label, value=value)
+        for label, value in research_tms_report_wlc_word_format.build_wlc_word_rows(
+            wlc_focus_str,
+            wlc_focus_notes,
+        )
+    ]
     sat_rows.extend(
         [
             _sat_row(key=label, value=value)
-            for label, value in research_tms_report_wlc_word_format.build_wlc_word_rows(
-                focus_placeholder,
-                wlc_focus_notes,
+            for label, value in research_tms_report_diff_format.normalize_diff_rows(
+                "diff_wlc_uxlc",
+                row.get("diff_wlc_uxlc"),
+                row=row,
+                rhs_key="uxlc",
+                render_sat_value=_render_sat_value,
+                structured_text_lookup=_structured_text_value,
             )
         ]
     )
-    sat_rows.append(_sat_row(key="wlc_after", value=after_focus))
+    sat_rows.extend(
+        [
+            _sat_row(key=label, value=value)
+            for label, value in research_tms_report_diff_format.normalize_diff_rows(
+                "diff_wlc_mam",
+                row.get("diff_wlc_mam"),
+                row=row,
+                rhs_key="mam_simple",
+                render_sat_value=_render_sat_value,
+                structured_text_lookup=_structured_text_value,
+            )
+        ]
+    )
 
     sat_rows.extend(
-        _center_sat_rows(
-            row,
-        )
+        _assessment_sat_rows(row)
     )
+    sat_rows = _apply_sat_row_suppressions(_row_ref(row), sat_rows)
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows)
     sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
 
@@ -330,9 +348,8 @@ def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
     if label == research_tms_report_wlc_word_format.WLC_FOCUS_NOTES_LABEL:
         return {"style": "text-align: right;"}
 
-    if (
-        label in _CONTEXT_HBO_ROW_KEYS
-        and research_tms_report_diff_format.contains_hebrew(value)
+    if label in _WLC_FOCUS_HBO_ROW_KEYS and research_tms_report_diff_format.contains_hebrew(
+        value
     ):
         return {"lang": "hbo", "dir": "rtl"}
 
@@ -385,6 +402,22 @@ def _center_sat_rows(
             rows.append(_sat_row(key=f"a.{key}", value=_render_sat_value(value)))
 
     return _apply_sat_row_suppressions(_row_ref(row), rows)
+
+
+def _assessment_sat_rows(row: dict[str, object]) -> list[SatRow]:
+    rows: list[SatRow] = []
+
+    assessment = _structured_text_value(row, "assessment")
+    if not isinstance(assessment, dict):
+        return rows
+
+    for key in _ASSESSMENT_KEYS:
+        value = assessment.get(key)
+        if value is None:
+            continue
+        rows.append(_sat_row(key=f"a.{key}", value=_render_sat_value(value)))
+
+    return rows
 
 
 def _render_comment_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
@@ -661,18 +694,86 @@ def _sat_assessment_value_describes_target_value(
         return None
 
 
-def _split_wlc_context(verse_text: str, wlc_focus: str | None) -> tuple[str, str, str]:
-    if not wlc_focus:
-        return verse_text, "", ""
+def _render_wlc_verse_paragraph(row: dict[str, object]) -> object:
+    verse_text = _wlc_verse_text(row)
+    wlc_focus = _structured_text_value(row, "wlc_focus")
+    wlc_focus_str = wlc_focus if isinstance(wlc_focus, str) else None
+    contents = _wlc_verse_contents_with_highlight(
+        verse_text=verse_text,
+        wlc_focus=wlc_focus_str,
+    )
+    return wlc_utils_html.para(
+        contents,
+        {
+            "class": _GOERWITZ_TMS_VERSE_CLASS,
+            "lang": "hbo",
+            "dir": "rtl",
+        },
+    )
 
-    match_start = verse_text.find(wlc_focus)
-    if match_start < 0:
-        return verse_text, "", ""
 
-    match_end = match_start + len(wlc_focus)
-    before_focus = verse_text[:match_start].strip()
-    after_focus = verse_text[match_end:].strip()
-    return before_focus, wlc_focus, after_focus
+def _wlc_verse_contents_with_highlight(
+    *, verse_text: str, wlc_focus: str | None
+) -> object:
+    normalized_focus = _normalize_whitespace(wlc_focus)
+    if not normalized_focus:
+        return verse_text
+
+    before_focus, focus_text, after_focus = _split_unique_focus_by_tokens(
+        verse_text=verse_text,
+        wlc_focus=normalized_focus,
+    )
+    if focus_text is None:
+        return verse_text
+
+    contents: list[object] = []
+    if before_focus:
+        contents.append(f"{before_focus} ")
+    contents.append(
+        wlc_utils_html.span(
+            focus_text,
+            {"class": _GOERWITZ_TMS_FOCUS_HIGHLIGHT_CLASS},
+        )
+    )
+    if after_focus:
+        contents.append(f" {after_focus}")
+
+    if len(contents) == 1:
+        return contents[0]
+    return tuple(contents)
+
+
+def _split_unique_focus_by_tokens(
+    *, verse_text: str, wlc_focus: str
+) -> tuple[str, str | None, str]:
+    verse_tokens = verse_text.split()
+    focus_tokens = wlc_focus.split()
+    if not verse_tokens or not focus_tokens:
+        return verse_text, None, ""
+
+    if len(focus_tokens) > len(verse_tokens):
+        return verse_text, None, ""
+
+    match_indexes = [
+        start
+        for start in range(len(verse_tokens) - len(focus_tokens) + 1)
+        if verse_tokens[start : start + len(focus_tokens)] == focus_tokens
+    ]
+    if len(match_indexes) != 1:
+        return verse_text, None, ""
+
+    start = match_indexes[0]
+    end = start + len(focus_tokens)
+    before_focus = " ".join(verse_tokens[:start])
+    focus_text = " ".join(verse_tokens[start:end])
+    after_focus = " ".join(verse_tokens[end:])
+    return before_focus, focus_text, after_focus
+
+
+def _normalize_whitespace(value: str | None) -> str:
+    if not isinstance(value, str):
+        return ""
+    return " ".join(value.split())
 
 
 def _wlc_verse_text(row: dict[str, object]) -> str:
