@@ -185,8 +185,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "meteg-maqaf",
             "wlc": "merkha-space",
-            "uxlc": "meteg-maqaf",
-            "mam": "meteg-maqaf",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
         "comment": [
@@ -268,8 +266,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "meteg-space",
             "wlc": "merkha-space",
-            "uxlc": "meteg-space",
-            "mam": "meteg-maqaf",
         },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
         "comment": "See the image in the UXLC change to which we link above.",
@@ -417,9 +413,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "je 48:12": {
         "st-summary": "BHS transcribes a meteg as a tipexa.",
         "wlc_focus": "הנ֖ה־",
-        "assessment": {
-            "mam": "meteg-maqaf",
-        },
+        "assessment": {},
         "img": "LC-272A-col-3-line-3-Je-48v12.png",
         "comment": (
             "Yet another aggressively uncharitable, overly-literal transcription by BHS."

@@ -3162,16 +3162,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         expected_by_ref = {
             "1k 20:29": {
                 "manuscript": "meteg-maqaf",
-                "uxlc": "meteg-maqaf",
-                "mam": "meteg-maqaf",
             },
             "da 2:41": {
                 "manuscript": "meteg-space",
-                "uxlc": "meteg-space",
-                "mam": "meteg-maqaf",
-            },
-            "je 48:12": {
-                "mam": "meteg-maqaf",
             },
             "lm 5:5": {
                 "mam": "meteg-meteg-maqaf",
@@ -3193,6 +3186,74 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         je_1003_assessment = je_1003.get("assessment")
         if isinstance(je_1003_assessment, dict):
             self.assertNotIn("mam", je_1003_assessment)
+
+    def test_structured_text_data_auto_generates_meteg_assessments_for_selected_refs(
+        self,
+    ):
+        expected_auto_by_ref = {
+            "1k 20:29": {
+                "uxlc": "meteg-maqaf",
+                "mam": "meteg-maqaf",
+            },
+            "da 2:41": {
+                "uxlc": "meteg-space",
+                "mam": "meteg-maqaf",
+            },
+            "je 48:12": {
+                "mam": "meteg-maqaf",
+            },
+        }
+        enriched_row_by_ref = {
+            "1k 20:29": {
+                "diff_wlc_uxlc": {"uxlc": "נכח־"},
+                "diff_wlc_mam": {"mam_simple": "נכח־"},
+                research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
+                    "vels": ["נֽכח־"]
+                },
+                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
+                    "vels": ["נֽכח־"]
+                },
+            },
+            "da 2:41": {
+                "diff_wlc_uxlc": {"uxlc": "די"},
+                "diff_wlc_mam": {"mam_simple": "די־"},
+                research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
+                    "vels": ["דֽי"]
+                },
+                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
+                    "vels": ["דֽי־"]
+                },
+            },
+            "je 48:12": {
+                "diff_wlc_mam": {"mam_simple": "הנה־"},
+                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
+                    "vels": ["הֽנה־"]
+                },
+            },
+        }
+
+        for ref, expected_assessment in expected_auto_by_ref.items():
+            structured = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get(
+                ref
+            )
+            self.assertIsInstance(structured, dict, ref)
+            assessment = structured.get("assessment")
+            self.assertIsInstance(assessment, dict, ref)
+            for key in expected_assessment:
+                self.assertNotIn(key, assessment, f"{ref} {key} should be auto")
+
+            out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+                ref=ref,
+                structured_text=structured,
+                enriched_row=enriched_row_by_ref[ref],
+                wlc_focus=structured.get("wlc_focus")
+                if isinstance(structured, dict)
+                else None,
+            )
+            out_assessment = out.get("assessment") if isinstance(out, dict) else None
+            self.assertIsInstance(out_assessment, dict, ref)
+            for key, expected_value in expected_assessment.items():
+                self.assertEqual(out_assessment.get(key), expected_value, f"{ref} {key}")
 
     def test_assessment_sat_rows_uses_explicit_meteg_assessment_from_structured_text(
         self,
