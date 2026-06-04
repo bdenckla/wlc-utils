@@ -398,6 +398,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "je 10:3": {
         "wlc_focus": "יד֥י־",
+        "img": "LC-251A-col-3-line-11-Je-10v3.png",
+        "img_src_url": "https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F251A.jpg",
     },
     "je 31:32": {
         "st-summary": "Defying the LC, BHS has tipexa rather than munax.",
