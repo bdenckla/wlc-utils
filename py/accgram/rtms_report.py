@@ -199,9 +199,9 @@ def _render_ref_links(
         permalink_summary.extend([" ", f"Summary: {summary.strip()}"])
 
     links: list[object] = [
-        wlc_utils_html.anchor("MAM-with-doc verse", {"href": mam_url}),
+        wlc_utils_html.anchor("Mwd", {"href": mam_url}),
         " | ",
-        wlc_utils_html.anchor("UXLC verse", {"href": tanach_us_url}),
+        wlc_utils_html.anchor("UXLC", {"href": tanach_us_url}),
     ]
 
     if isinstance(uxlc_change, str) and uxlc_change.strip():
