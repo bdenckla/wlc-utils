@@ -4,6 +4,7 @@ from pathlib import Path
 
 from accgram import ob_data
 from accgram import ob_error_context
+from accgram import ob_tree_table
 from accgram import rtms_ref
 from accgram import rtms_report
 from accgram import rtmsr_sat
@@ -27,14 +28,14 @@ def write_goerwitz_obs_html_report(
     html_out_path = oddball_html_out_path(main_html_out_path)
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    error_paths_by_ref = ob_error_context.collect_error_paths_by_ref(
+    error_trees_by_ref = ob_error_context.collect_error_trees_by_ref(
         enriched_oddball_rows,
         goerwitz_out_dir,
     )
 
     body_contents = _build_body_contents(
         enriched_oddball_rows,
-        error_paths_by_ref=error_paths_by_ref,
+        error_trees_by_ref=error_trees_by_ref,
         main_html_out_path=main_html_out_path,
     )
     wlc_utils_html.write_html_to_file(
@@ -51,7 +52,7 @@ def write_goerwitz_obs_html_report(
 def _build_body_contents(
     enriched_oddball_rows: list[dict[str, object]],
     *,
-    error_paths_by_ref: dict[str, list[ob_error_context.ErrorPath]],
+    error_trees_by_ref: dict[str, ob_error_context.ErrorTree | None],
     main_html_out_path: Path,
 ) -> tuple[object, ...]:
     sections: list[object] = [
@@ -61,7 +62,7 @@ def _build_body_contents(
         wlc_utils_html.para(
             (
                 f"These {len(enriched_oddball_rows)} verses are oddballs from Goerwitz output. ",
-                "Each section below includes links, WLC verse, SAT rows, and a compact ERROR hierarchy table.",
+                "Each section below includes links, WLC verse, SAT rows, and a complete parse tree table.",
             )
         ),
     ]
@@ -81,7 +82,7 @@ def _build_body_contents(
         sections.extend(
             _render_error_context_section(
                 row,
-                error_paths=error_paths_by_ref.get(ref, []),
+                error_tree=error_trees_by_ref.get(ref),
             )
         )
 
@@ -113,40 +114,18 @@ def _related_pages_contents(main_html_out_path: Path) -> tuple[object, ...]:
 def _render_error_context_section(
     row: dict[str, object],
     *,
-    error_paths: list[ob_error_context.ErrorPath],
+    error_tree: ob_error_context.ErrorTree | None,
 ) -> tuple[object, ...]:
-    if not error_paths:
+    if error_tree is None:
         raise ValueError(
-            "Oddball row is missing ERROR leaf paths; oddballs must include at least "
-            f"one ERROR leaf (ref={_row_ref(row)!r})."
-        )
-
-    max_depth = ob_error_context.max_error_path_depth(error_paths)
-    headers = tuple([*(f"Depth {i}" for i in range(max_depth)), "Leaf"])
-
-    rows: list[object] = [wlc_utils_html.table_row_of_headers(headers)]
-    for error_path in error_paths:
-        labels = error_path["path_labels"]
-        leaf = error_path["leaf"]
-        row_values = [labels[i] if i < len(labels) else "" for i in range(max_depth)]
-        row_values.append(leaf)
-
-        tdattrs: list[dict[str, str] | None] = [None] * max_depth
-        tdattrs.append(
-            {"class": "goerwitz-obs-error-cell"} if "ERROR" in leaf else None
-        )
-        rows.append(
-            wlc_utils_html.table_row_of_data(
-                tuple(row_values),
-                tdattrs=tuple(tdattrs),
-            )
+            "Oddball row is missing a parsed ERROR tree; oddballs must include at "
+            f"least one ERROR leaf (ref={_row_ref(row)!r})."
         )
 
     details: list[object] = [
-        wlc_utils_html.heading_level_3("ERROR hierarchy"),
-        wlc_utils_html.table(
-            tuple(rows),
-            {"class": "goerwitz-obs-error-table"},
+        wlc_utils_html.div(
+            (ob_tree_table.render_error_tree_table(error_tree),),
+            {"class": "goerwitz-obs-tree-wrap"},
         ),
     ]
     return tuple(details)

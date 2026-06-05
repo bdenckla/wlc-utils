@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import TypedDict
 
 from accgram import oddballs
+from accgram import ob_tree_parse
 
 _OUTPUT_FILE_BB_RE = re.compile(r"^wlc_422_ps_([A-Za-z0-9]+)_ag\.txt$")
 _NODE_LINE_RE = re.compile(r"^\s*(\d+)\s+(\S(?:.*\S)?)\s*$")
@@ -14,6 +15,58 @@ _ERROR_TOKEN_RE = re.compile(r"\bERROR\b")
 class ErrorPath(TypedDict):
     path_labels: list[str]
     leaf: str
+
+
+ErrorTree = ob_tree_parse.ErrorTree
+
+
+def collect_error_trees_by_ref(
+    rows: list[dict[str, object]],
+    goerwitz_out_dir: Path,
+) -> dict[str, ErrorTree | None]:
+    refs_by_output_file: dict[str, set[str]] = {}
+    for row in rows:
+        ref = _row_ref(row)
+        output_file = _row_output_file(row)
+        refs_by_output_file.setdefault(output_file, set()).add(ref)
+
+    out: dict[str, ErrorTree | None] = {}
+    for output_file, refs in refs_by_output_file.items():
+        output_path = goerwitz_out_dir / output_file
+        bb = _bb_from_output_file(output_file)
+        if bb is None:
+            for ref in refs:
+                out[ref] = None
+            continue
+
+        verse_lines_by_ref = _collect_verse_lines_by_ref(
+            output_path=output_path,
+            bb=bb,
+            requested_refs=refs,
+        )
+        for ref in refs:
+            out[ref] = _extract_error_tree(verse_lines_by_ref.get(ref, []))
+
+    return out
+
+
+def collect_error_tree_for_ref(
+    *,
+    ref: str,
+    output_file: str,
+    goerwitz_out_dir: Path,
+) -> ErrorTree | None:
+    output_path = goerwitz_out_dir / output_file
+    bb = _bb_from_output_file(output_file)
+    if bb is None:
+        return None
+
+    verse_lines_by_ref = _collect_verse_lines_by_ref(
+        output_path=output_path,
+        bb=bb,
+        requested_refs={ref},
+    )
+    return _extract_error_tree(verse_lines_by_ref.get(ref, []))
 
 
 def collect_error_paths_by_ref(
@@ -133,6 +186,20 @@ def _extract_error_paths(verse_lines: list[str]) -> list[ErrorPath]:
         )
 
     return error_paths
+
+
+def _extract_error_tree(verse_lines: list[str]) -> ErrorTree | None:
+    if not verse_lines:
+        return None
+
+    tree = ob_tree_parse.parse_verse_tree(
+        verse_lines=verse_lines,
+        node_line_re=_NODE_LINE_RE,
+        error_token_re=_ERROR_TOKEN_RE,
+    )
+    if not tree.has_error_leaf:
+        return None
+    return tree
 
 
 def _bb_from_output_file(output_file: str) -> str | None:

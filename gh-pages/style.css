@@ -54,16 +54,18 @@ table.goerwitz-tms-sat {
     margin-right: auto;
 }
 table.goerwitz-obs-error-table {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+    border-collapse: collapse;
     table-layout: auto;
-}
-table.goerwitz-obs-error-table th {
-    text-align: left;
     white-space: nowrap;
+    font-size: 90%;
 }
+div.goerwitz-obs-tree-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+table.goerwitz-obs-error-table th,
 table.goerwitz-obs-error-table td {
+    text-align: right;
     vertical-align: top;
 }
 td.goerwitz-obs-error-cell {
