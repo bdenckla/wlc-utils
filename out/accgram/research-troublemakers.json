@@ -177,7 +177,7 @@
         "wlc_focus": "מכ֨ל",
         "assessment": {
           "wlc": "qadma on kaf",
-          "uxlc": "no accent",
+          "uxlc": "no_accent",
           "mam": "pashta on lamed"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
@@ -1433,8 +1433,8 @@
           "uxlc": "merkha tipexa",
           "mam": "tipexa merkha"
         },
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
-        "comment": "See the image in the UXLC change to which we link above."
+        "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2"
       }
     },
     {
@@ -1546,6 +1546,7 @@
         "mam_simple": "שר֥י"
       },
       "structured_text": {
+        "st-summary": "BHS transcribes a merkha as a tipexa.",
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "comment": "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. It is aggressively uncharitable to transcribe the mark on שרי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to assume that a maqaf is missing.",
@@ -1640,12 +1641,13 @@
         "mam_simple": "והיו־ ל֣י"
       },
       "structured_text": {
+        "st-summary": "BHS turns a missing maqaf into something worse.",
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "comment": "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing.",
         "assessment": {
           "wlc": "merkha munax",
-          "mam": "munax-maqaf"
+          "mam": "maqaf munax"
         }
       }
     },
@@ -3046,8 +3048,8 @@
         "comment": "See the image in the UXLC change to which we link above. BHS transcribes only the pashta stress helper, not the pashta itself. So, understandably, WLC transcribes this mark as a qadma.",
         "assessment": {
           "wlc": "qadma on tsadi",
-          "uxlc": "qadma on tsadi, pashta on vav",
-          "mam": "pashta on tsadi, pashta on vav"
+          "uxlc": "qadma on tsadi-pashta on vav",
+          "mam": "pashta on tsadi-pashta on vav"
         }
       }
     },
@@ -3896,7 +3898,7 @@
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
         "comment": "See the image in the UXLC note to which we link above.",
         "assessment": {
-          "wlc": "no accent",
+          "wlc": "no_accent",
           "mam": "tipexa"
         }
       }

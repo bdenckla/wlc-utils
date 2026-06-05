@@ -1903,7 +1903,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                         "structured_text": {
                             "wlc_focus": "מכ֨ל",
                             "assessment": {
-                                "uxlc": "no accent",
+                                "uxlc": "no_accent",
                             },
                         },
                     }
@@ -1912,10 +1912,10 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
             html_text = html_out.read_text(encoding="utf-8")
             self.assertIn(
-                '<td lang="hbo" dir="rtl">מכל</td><td>no accent</td><td>diff_wlc_uxlc[2]</td>',
+                '<td lang="hbo" dir="rtl">מכל</td><td>no_accent</td><td>diff_wlc_uxlc[2]</td>',
                 html_text,
             )
-            self.assertNotIn("<td></td><td>no accent</td><td>a.uxlc</td>", html_text)
+            self.assertNotIn("<td></td><td>no_accent</td><td>a.uxlc</td>", html_text)
 
     def test_write_goerwitz_tms_html_report_restores_meteg_space_value_from_witness(
         self,
@@ -2944,7 +2944,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
             "אריצ֨נו֙"
         )
-        self.assertEqual(descriptor, "qadma on tsadi, pashta on vav")
+        self.assertEqual(descriptor, "qadma on tsadi-pashta on vav")
 
     def test_descriptor_from_hebrew_token_repeated_accent_names(self):
         descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
@@ -2968,7 +2968,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
             "והיו־ ל֣י"
         )
-        self.assertEqual(descriptor, "munax-maqaf")
+        self.assertEqual(descriptor, "maqaf munax")
 
     def test_descriptor_from_hebrew_token_merkha_maqaf(self):
         descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
@@ -3026,11 +3026,20 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertTrue(matches)
 
-    def test_assessment_uxlc_matches_converted_diff_uxlc_rejects_legacy_maqaf_munax(
+    def test_assessment_uxlc_matches_converted_diff_uxlc_accepts_maqaf_munax(
         self,
     ):
         matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="maqaf munax",
+            diff_wlc_uxlc={"wlc422": "והיו־ ל֣י", "uxlc": "והיו־ ל֣י"},
+        )
+        self.assertTrue(matches)
+
+    def test_assessment_uxlc_matches_converted_diff_uxlc_rejects_legacy_munax_maqaf(
+        self,
+    ):
+        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="munax-maqaf",
             diff_wlc_uxlc={"wlc422": "והיו־ ל֣י", "uxlc": "והיו־ ל֣י"},
         )
         self.assertFalse(matches)
@@ -3081,14 +3090,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertTrue(matches)
 
-    def test_assessment_uxlc_matches_converted_diff_uxlc_repeated_descriptor_with_comma(
+    def test_assessment_uxlc_matches_converted_diff_uxlc_rejects_repeated_descriptor_with_comma(
         self,
     ):
         matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha, merkha",
             diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֥ה"},
         )
-        self.assertTrue(matches)
+        self.assertFalse(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_tipexa_with_spaces(
         self,
@@ -3179,7 +3188,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             enriched_row={"diff_wlc_uxlc": {"uxlc": "די"}},
             wlc_focus=None,
         )
-        self.assertEqual(descriptor, "no accent")
+        self.assertEqual(descriptor, "no_accent")
 
     def test_try_auto_assessment_descriptor_uses_meteg_space_with_witness(self):
         descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
@@ -3221,7 +3230,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             wlc_focus=None,
         )
 
-        self.assertEqual(no_accent_descriptor, "no accent")
+        self.assertEqual(no_accent_descriptor, "no_accent")
         self.assertEqual(maqaf_descriptor, "maqaf")
 
     def test_try_auto_assessment_descriptor_does_not_emit_meteg_labels(self):

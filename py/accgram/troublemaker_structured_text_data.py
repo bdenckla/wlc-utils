@@ -345,10 +345,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "assessment": {
             "manuscript": "merkha tipexa",
         },
+        "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
-        "comment": "See the image in the UXLC change to which we link above.",
     },
     "ek 11:1": {
+        "st-summary": "BHS transcribes a merkha as a tipexa.",
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "comment": (
@@ -360,6 +361,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ek 14:11": {
+        "st-summary": "BHS turns a missing maqaf into something worse.",
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "comment": (

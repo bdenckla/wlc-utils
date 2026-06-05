@@ -69,14 +69,29 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
     if len(accent_marks) == 0:
         return "maqaf" if _HEBREW_MAQAF in text else "no_accent"
 
-    descriptors: list[str] = []
+    atoms_with_descriptors: list[list[str]] = []
+    current_atom_descriptors: list[str] = []
+
+    def _flush_current_atom_descriptors() -> None:
+        if current_atom_descriptors:
+            atoms_with_descriptors.append(list(current_atom_descriptors))
+            current_atom_descriptors.clear()
+
     for idx, ch in enumerate(text):
+        if ch.isspace():
+            _flush_current_atom_descriptors()
+            continue
+
+        if ch == _HEBREW_MAQAF:
+            current_atom_descriptors.append("maqaf")
+            continue
+
         if not (_HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END):
             continue
 
         descriptor = _ACCENT_TO_DESCRIPTOR.get(ch)
         if descriptor is not None:
-            descriptors.append(descriptor)
+            current_atom_descriptors.append(descriptor)
             continue
 
         prefix = _OVER_ACCENT_TO_PREFIX.get(ch)
@@ -92,25 +107,15 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
             accented_letter is not None
         ), f"Over-accent must follow a Hebrew letter: token={text!r} accent={ch!r}"
         letter_name = _hebrew_letter_name(accented_letter)
-        descriptors.append(f"{prefix}{letter_name}")
+        current_atom_descriptors.append(f"{prefix}{letter_name}")
 
-    if not descriptors:
+    _flush_current_atom_descriptors()
+
+    if not atoms_with_descriptors:
         return None
 
-    if _HEBREW_MAQAF in text and len(descriptors) == 1:
-        simple_descriptor = descriptors[0]
-        if simple_descriptor in _SIMPLE_ACCENT_DESCRIPTORS:
-            return f"{simple_descriptor}-maqaf"
-
-    if _HEBREW_MAQAF in text:
-        descriptors.insert(0, "maqaf")
-
-    if len(descriptors) > 1 and all(
-        " " not in descriptor for descriptor in descriptors
-    ):
-        return " ".join(descriptors)
-
-    return ", ".join(descriptors)
+    atom_descriptions = ["-".join(atom_descriptors) for atom_descriptors in atoms_with_descriptors]
+    return " ".join(atom_descriptions)
 
 
 def assessment_uxlc_matches_converted_diff_uxlc(
@@ -224,7 +229,8 @@ def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> boo
 
 
 def _normalize_assessment_descriptor(descriptor: str) -> str:
-    normalized = re.sub(r"\s*,\s*", " ", descriptor.strip())
+    normalized = re.sub(r"\s*,\s*", "-", descriptor.strip())
+    normalized = re.sub(r"\s*-\s*", "-", normalized)
     normalized = re.sub(r"\s+", " ", normalized)
     normalized = re.sub(
         r"\bpashta stress helper on\b",

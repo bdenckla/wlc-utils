@@ -349,7 +349,7 @@ def _infer_assessment_descriptor_from_hebrew_token(
         descriptor = None
 
     if descriptor == "no_accent":
-        normalized_descriptor = "no accent"
+        normalized_descriptor = "no_accent"
         return _apply_witness_to_normalized_descriptor(
             normalized_descriptor=normalized_descriptor,
             witness_hebrew_token=witness_hebrew_token,
@@ -382,7 +382,7 @@ def _apply_witness_to_normalized_descriptor(
     normalized_descriptor: str,
     witness_hebrew_token: str | None,
 ) -> str:
-    if normalized_descriptor not in {"no accent", "maqaf"}:
+    if normalized_descriptor not in {"no_accent", "maqaf"}:
         return normalized_descriptor
 
     if not isinstance(witness_hebrew_token, str):
