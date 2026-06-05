@@ -10,6 +10,7 @@ from accgram import rtmsr_sat
 from accgram import rtmsr_subsets
 from accgram import rtmsr_verse
 from accgram import rtms_ref
+from accgram.tm_structured_text import get_structured_text_by_ref
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
@@ -253,7 +254,10 @@ def _render_comment_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
 
 
 def _render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
-    return rtmsr_media.render_image_paragraphs(row)
+    return rtmsr_media.render_image_paragraphs(
+        row,
+        structured_text_lookup=_structured_text_value,
+    )
 
 
 def _render_wlc_verse_paragraph(row: dict[str, object]) -> object:
@@ -264,7 +268,8 @@ def _render_wlc_verse_paragraph(row: dict[str, object]) -> object:
 
 
 def _structured_text_value(row: dict[str, object], key: str) -> object:
-    structured_text = row.get("structured_text")
+    ref = _row_ref(row)
+    structured_text = get_structured_text_by_ref().get(ref)
     if not isinstance(structured_text, dict):
         return None
     return structured_text.get(key)

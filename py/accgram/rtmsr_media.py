@@ -31,8 +31,15 @@ def render_comment_paragraphs(
     return tuple(_render_comment_paragraph(comment_item) for comment_item in comment)
 
 
-def render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
-    structured_text = row.get("structured_text")
+def render_image_paragraphs(
+    row: dict[str, object],
+    *,
+    structured_text_lookup: StructuredTextLookup,
+) -> tuple[object, ...]:
+    structured_text = _structured_text_for_media(
+        row,
+        structured_text_lookup=structured_text_lookup,
+    )
     if not isinstance(structured_text, dict):
         return ()
 
@@ -69,6 +76,22 @@ def render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
         )
 
     return tuple(image_paragraphs)
+
+
+def _structured_text_for_media(
+    row: dict[str, object],
+    *,
+    structured_text_lookup: StructuredTextLookup,
+) -> dict[str, object] | None:
+    structured_text: dict[str, object] = {}
+    for key in ("img", "imgs", "img_src_url"):
+        value = structured_text_lookup(row, key)
+        if value is not None:
+            structured_text[key] = value
+
+    if not structured_text:
+        return None
+    return structured_text
 
 
 def _image_source_url(structured_text: dict[str, object]) -> str | None:

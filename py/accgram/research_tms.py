@@ -12,7 +12,7 @@ from accgram import rtms_rows
 from accgram import tm_changes
 from accgram import tm_descriptor
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
-from accgram.tm_structured_text import STRUCTURED_TEXT_BY_REF
+from accgram.tm_structured_text import get_structured_text_by_ref
 from accgram.tm_sanity import sanity_check_structured_text
 
 
@@ -113,6 +113,7 @@ def run(args: argparse.Namespace) -> None:
         all_changes_path = default_all_changes_path(repo_root)
 
     html_out_path = rtms_report.resolve_html_out_path(args, repo_root)
+    structured_text_by_ref = get_structured_text_by_ref()
 
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
     parsed_rows = rtms_rows.parse_troublemaker_rows(args.troubles_in, refs_by_book)
@@ -130,9 +131,10 @@ def run(args: argparse.Namespace) -> None:
 
     sanity_check_structured_text(
         refs=[ref for _row, _bcv, ref in parsed_rows],
-        structured_text_by_ref=STRUCTURED_TEXT_BY_REF,
+        structured_text_by_ref=structured_text_by_ref,
         all_changes_path=all_changes_path,
     )
+    wlc_focus_by_ref = _wlc_focus_by_ref(structured_text_by_ref)
     all_changes_by_url = tm_changes.load_all_changes_by_url(all_changes_path)
 
     wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = rtms_data.load_source_indexes(
@@ -142,14 +144,22 @@ def run(args: argparse.Namespace) -> None:
         refs_by_book=refs_by_book,
     )
 
-    enriched_rows = _enrich_troublemaker_rows(
+    enriched_rows, diff_wlc_uxlc_for_checks_by_ref = _enrich_troublemaker_rows(
         parsed_rows=parsed_rows,
+        wlc_focus_by_ref=wlc_focus_by_ref,
         wlc422_by_bcv=wlc422_by_bcv,
         uxlc_by_bcv=uxlc_by_bcv,
         mam_simple_by_bcv=mam_simple_by_bcv,
         wlc422_kq_u_dir=args.wlc422_kq_u_dir,
         uxlc_dir=args.uxlc_dir,
         mam_simple_dir=args.mam_simple_dir,
+    )
+
+    _validate_structured_text_high_level(
+        parsed_rows=parsed_rows,
+        structured_text_by_ref=structured_text_by_ref,
+        wlc_focus_by_ref=wlc_focus_by_ref,
+        diff_wlc_uxlc_for_checks_by_ref=diff_wlc_uxlc_for_checks_by_ref,
         all_changes_by_url=all_changes_by_url,
     )
 
@@ -208,18 +218,18 @@ def run(args: argparse.Namespace) -> None:
 def _enrich_troublemaker_rows(
     *,
     parsed_rows: list[tuple[dict[str, object], str, str]],
+    wlc_focus_by_ref: dict[str, str | None],
     wlc422_by_bcv: dict[str, dict[str, object]],
     uxlc_by_bcv: dict[str, dict[str, object]],
     mam_simple_by_bcv: dict[str, dict[str, object]],
     wlc422_kq_u_dir: Path,
     uxlc_dir: Path,
     mam_simple_dir: Path,
-    all_changes_by_url: dict[str, dict[str, object]],
-) -> list[dict[str, object]]:
+)-> tuple[list[dict[str, object]], dict[str, object]]:
     enriched_rows: list[dict[str, object]] = []
+    diff_wlc_uxlc_for_checks_by_ref: dict[str, object] = {}
     for row, bcv, ref in parsed_rows:
-        structured_text = STRUCTURED_TEXT_BY_REF.get(ref)
-        wlc_focus = _structured_wlc_focus(structured_text)
+        wlc_focus = wlc_focus_by_ref.get(ref)
 
         enriched_row, diff_wlc_uxlc_for_checks = _build_enriched_row(
             row=row,
@@ -233,25 +243,50 @@ def _enrich_troublemaker_rows(
             mam_simple_dir=mam_simple_dir,
             wlc_focus=wlc_focus,
         )
-
-        if structured_text is not None:
-            _validate_structured_text_uxlc_match(
-                ref=ref,
-                structured_text=structured_text,
-                diff_wlc_uxlc_for_checks=diff_wlc_uxlc_for_checks,
-                wlc_focus=wlc_focus,
-            )
-            _validate_structured_text_changetext_match(
-                ref=ref,
-                structured_text=structured_text,
-                diff_wlc_uxlc_for_checks=diff_wlc_uxlc_for_checks,
-                all_changes_by_url=all_changes_by_url,
-            )
-            enriched_row["structured_text"] = structured_text
-
+        diff_wlc_uxlc_for_checks_by_ref[ref] = diff_wlc_uxlc_for_checks
         enriched_rows.append(enriched_row)
 
-    return enriched_rows
+    return enriched_rows, diff_wlc_uxlc_for_checks_by_ref
+
+
+def _wlc_focus_by_ref(
+    structured_text_by_ref: dict[str, dict[str, object]],
+) -> dict[str, str | None]:
+    out: dict[str, str | None] = {}
+    for ref, structured_text in structured_text_by_ref.items():
+        out[ref] = _structured_wlc_focus(structured_text)
+    return out
+
+
+def _validate_structured_text_high_level(
+    *,
+    parsed_rows: list[tuple[dict[str, object], str, str]],
+    structured_text_by_ref: dict[str, dict[str, object]],
+    wlc_focus_by_ref: dict[str, str | None],
+    diff_wlc_uxlc_for_checks_by_ref: dict[str, object],
+    all_changes_by_url: dict[str, dict[str, object]],
+) -> None:
+    for _row, _bcv, ref in parsed_rows:
+        structured_text = structured_text_by_ref.get(ref)
+        if structured_text is None:
+            continue
+
+        if ref not in diff_wlc_uxlc_for_checks_by_ref:
+            raise ValueError(f"Missing diff_wlc_uxlc_for_checks for {ref}")
+
+        diff_wlc_uxlc_for_checks = diff_wlc_uxlc_for_checks_by_ref[ref]
+        _validate_structured_text_uxlc_match(
+            ref=ref,
+            structured_text=structured_text,
+            diff_wlc_uxlc_for_checks=diff_wlc_uxlc_for_checks,
+            wlc_focus=wlc_focus_by_ref.get(ref),
+        )
+        _validate_structured_text_changetext_match(
+            ref=ref,
+            structured_text=structured_text,
+            diff_wlc_uxlc_for_checks=diff_wlc_uxlc_for_checks,
+            all_changes_by_url=all_changes_by_url,
+        )
 
 
 def _enrich_rows_without_structured_text(

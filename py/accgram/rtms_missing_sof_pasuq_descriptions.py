@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_generated_descriptions
+from accgram.tm_structured_text import get_structured_text_by_ref
 
 _MISSING_SOF_PASUQ_TOKENS = {
     "silluq-no_sof_pasuq",
@@ -10,7 +11,11 @@ _MISSING_SOF_PASUQ_TOKENS = {
 
 
 def row_is_missing_sof_pasuq_yes(row: dict[str, object]) -> bool:
-    wlc_focus = rtms_focus_diff_expand.structured_wlc_focus(row.get("structured_text"))
+    ref = row.get("ref")
+    structured_text = (
+        get_structured_text_by_ref().get(ref) if isinstance(ref, str) else None
+    )
+    wlc_focus = rtms_focus_diff_expand.structured_wlc_focus(structured_text)
     for description_key in ("wlc", "uxlc", "mam"):
         description = rtms_generated_descriptions.try_generated_description(
             description_key=description_key,
