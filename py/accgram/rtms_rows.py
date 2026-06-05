@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from accgram import research_tms_ref
+from accgram import rtms_ref
 
 ParsedRow = tuple[dict[str, object], str, str]
 
@@ -14,15 +14,15 @@ def read_json(path: Path) -> object:
 
 
 def parse_ref(ref: str, *, row_kind: str = "troublemaker") -> tuple[str, int, int]:
-    return research_tms_ref.parse_ref(ref, row_kind=row_kind)
+    return rtms_ref.parse_ref(ref, row_kind=row_kind)
 
 
 def to_compact_bcv(bb: str, chnu: int, vrnu: int) -> str:
-    return research_tms_ref.to_compact_bcv(bb, chnu, vrnu)
+    return rtms_ref.to_compact_bcv(bb, chnu, vrnu)
 
 
 def to_ref(bb: str, chnu: int, vrnu: int) -> str:
-    return research_tms_ref.to_ref(bb, chnu, vrnu)
+    return rtms_ref.to_ref(bb, chnu, vrnu)
 
 
 def parse_troublemaker_rows(

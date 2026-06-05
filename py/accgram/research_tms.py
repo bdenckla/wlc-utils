@@ -3,16 +3,16 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from accgram import research_tms_data
-from accgram import research_tms_focus_diff_expand
-from accgram import research_tms_output
-from accgram import research_tms_ref
-from accgram import research_tms_report
-from accgram import research_tms_rows
+from accgram import rtms_data
+from accgram import rtms_focus_diff_expand
+from accgram import rtms_output
+from accgram import rtms_ref
+from accgram import rtms_report
+from accgram import rtms_rows
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
-from accgram.research_tms_assessment_auto import materialize_auto_assessment_descriptors
-from accgram.troublemaker_structured_text import STRUCTURED_TEXT_BY_REF
-from accgram.troublemaker_structured_text_sanity import (
+from accgram.rtms_assessment_auto import materialize_auto_assessment_descriptors
+from accgram.tm_structured_text import STRUCTURED_TEXT_BY_REF
+from accgram.tm_sanity import (
     assessment_uxlc_matches_converted_diff_uxlc,
     canonicalize_uxlc_change_url,
     diff_uxlc_matches_changetext,
@@ -105,7 +105,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
     parser.add_argument(
         "--html-out",
         type=Path,
-        default=research_tms_report.default_html_out_path(repo_root),
+        default=rtms_report.default_html_out_path(repo_root),
         help="Output HTML path for research-tms-and-oddballs report.",
     )
 
@@ -117,10 +117,10 @@ def run(args: argparse.Namespace) -> None:
     if not isinstance(all_changes_path, Path):
         all_changes_path = default_all_changes_path(repo_root)
 
-    html_out_path = research_tms_report.resolve_html_out_path(args, repo_root)
+    html_out_path = rtms_report.resolve_html_out_path(args, repo_root)
 
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
-    parsed_rows = research_tms_rows.parse_troublemaker_rows(
+    parsed_rows = rtms_rows.parse_troublemaker_rows(
         args.troubles_in, refs_by_book
     )
 
@@ -128,7 +128,7 @@ def run(args: argparse.Namespace) -> None:
     oddballs_out_path = getattr(args, "oddballs_out", None)
     parsed_oddball_rows: list[tuple[dict[str, object], str, str]] = []
     if isinstance(oddballs_in_path, Path) and isinstance(oddballs_out_path, Path):
-        parsed_oddball_rows = research_tms_rows.parse_oddball_rows(
+        parsed_oddball_rows = rtms_rows.parse_oddball_rows(
             oddballs_in_path,
             refs_by_book,
         )
@@ -143,7 +143,7 @@ def run(args: argparse.Namespace) -> None:
     all_changes_by_url = load_all_changes_by_url(all_changes_path)
 
     wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = (
-        research_tms_data.load_source_indexes(
+        rtms_data.load_source_indexes(
             wlc422_kq_u_dir=args.wlc422_kq_u_dir,
             uxlc_dir=args.uxlc_dir,
             mam_simple_dir=args.mam_simple_dir,
@@ -172,7 +172,7 @@ def run(args: argparse.Namespace) -> None:
         mam_simple_dir=args.mam_simple_dir,
     )
 
-    research_tms_output.write_troublemakers_payload(
+    rtms_output.write_troublemakers_payload(
         out_path=args.out,
         troubles_in_path=args.troubles_in,
         wlc422_kq_u_dir=args.wlc422_kq_u_dir,
@@ -183,7 +183,7 @@ def run(args: argparse.Namespace) -> None:
     )
 
     if isinstance(oddballs_out_path, Path) and isinstance(oddballs_in_path, Path):
-        research_tms_output.write_oddballs_payload(
+        rtms_output.write_oddballs_payload(
             oddballs_out_path=oddballs_out_path,
             oddballs_in_path=oddballs_in_path,
             wlc422_kq_u_dir=args.wlc422_kq_u_dir,
@@ -193,9 +193,9 @@ def run(args: argparse.Namespace) -> None:
             source_file=__file__,
         )
 
-    research_tms_output.write_html_reports(html_out_path, enriched_rows)
+    rtms_output.write_html_reports(html_out_path, enriched_rows)
 
-    research_tms_output.print_run_summary(
+    rtms_output.print_run_summary(
         troubles_in_path=args.troubles_in,
         wlc422_kq_u_dir=args.wlc422_kq_u_dir,
         uxlc_dir=args.uxlc_dir,
@@ -369,7 +369,7 @@ def _validate_structured_text_changetext_match(
 
 # Compatibility wrappers retained for tests and report helpers.
 def _read_json(path: Path):
-    return research_tms_rows.read_json(path)
+    return rtms_rows.read_json(path)
 
 
 def _build_enriched_row(
@@ -385,7 +385,7 @@ def _build_enriched_row(
     mam_simple_dir: Path,
     wlc_focus: str | None,
 ) -> tuple[dict[str, object], object]:
-    return research_tms_data.build_enriched_row(
+    return rtms_data.build_enriched_row(
         row=row,
         bcv=bcv,
         ref=ref,
@@ -400,11 +400,11 @@ def _build_enriched_row(
 
 
 def _normalize_payload_for_diff_ignoring_notes(payload: object) -> object:
-    return research_tms_data._normalize_payload_for_diff_ignoring_notes(payload)
+    return rtms_data._normalize_payload_for_diff_ignoring_notes(payload)
 
 
 def _structured_wlc_focus(structured_text: object) -> str | None:
-    return research_tms_focus_diff_expand.structured_wlc_focus(structured_text)
+    return rtms_focus_diff_expand.structured_wlc_focus(structured_text)
 
 
 def _expand_subset_diff_to_wlc_focus(
@@ -413,7 +413,7 @@ def _expand_subset_diff_to_wlc_focus(
     wlc_focus: str | None,
     rhs_key: str,
 ) -> object:
-    return research_tms_focus_diff_expand.expand_subset_diff_to_wlc_focus(
+    return rtms_focus_diff_expand.expand_subset_diff_to_wlc_focus(
         diff_value,
         wlc_focus=wlc_focus,
         rhs_key=rhs_key,
@@ -426,7 +426,7 @@ def _validate_unique_wlc_focus_in_wlc_verse(
     wlc422_kq_u_verse: object,
     wlc_focus: str | None,
 ) -> None:
-    research_tms_focus_diff_expand.validate_unique_focus_occurrence(
+    rtms_focus_diff_expand.validate_unique_focus_occurrence(
         ref=ref,
         wlc422_kq_u_verse=wlc422_kq_u_verse,
         wlc_focus=wlc_focus,
@@ -434,43 +434,43 @@ def _validate_unique_wlc_focus_in_wlc_verse(
 
 
 def _parse_ref(ref: str, *, row_kind: str = "troublemaker") -> tuple[str, int, int]:
-    return research_tms_ref.parse_ref(ref, row_kind=row_kind)
+    return rtms_ref.parse_ref(ref, row_kind=row_kind)
 
 
 def _to_compact_bcv(bb: str, chnu: int, vrnu: int) -> str:
-    return research_tms_ref.to_compact_bcv(bb, chnu, vrnu)
+    return rtms_ref.to_compact_bcv(bb, chnu, vrnu)
 
 
 def _to_ref(bb: str, chnu: int, vrnu: int) -> str:
-    return research_tms_ref.to_ref(bb, chnu, vrnu)
+    return rtms_ref.to_ref(bb, chnu, vrnu)
 
 
 def _load_wlc422_index(wlc422_kq_u_dir: Path) -> dict[str, dict[str, object]]:
-    return research_tms_data._load_wlc422_index(wlc422_kq_u_dir)
+    return rtms_data._load_wlc422_index(wlc422_kq_u_dir)
 
 
 def _collapse_wlc_notes_to_string(node: object) -> object:
-    return research_tms_data._collapse_wlc_notes_to_string(node)
+    return rtms_data._collapse_wlc_notes_to_string(node)
 
 
 def _interpolate_wlc422_kq_qere(verse_payload: dict[str, object]) -> dict[str, object]:
-    return research_tms_data._interpolate_wlc422_kq_qere(verse_payload)
+    return rtms_data._interpolate_wlc422_kq_qere(verse_payload)
 
 
 def _strip_sam_pe_inun_token(token: object) -> object | None:
-    return research_tms_data._strip_sam_pe_inun_token(token)
+    return rtms_data._strip_sam_pe_inun_token(token)
 
 
 def _load_uxlc_for_refs(
     uxlc_dir: Path,
     refs_by_book: dict[str, set[tuple[int, int]]],
 ) -> dict[str, dict[str, object]]:
-    return research_tms_data._load_uxlc_for_refs(uxlc_dir, refs_by_book)
+    return rtms_data._load_uxlc_for_refs(uxlc_dir, refs_by_book)
 
 
 def _to_xmlish_verse_child(element):
-    return research_tms_data._to_xmlish_verse_child(element)
+    return rtms_data._to_xmlish_verse_child(element)
 
 
 def _to_xmlish_inline(element):
-    return research_tms_data._to_xmlish_inline(element)
+    return rtms_data._to_xmlish_inline(element)

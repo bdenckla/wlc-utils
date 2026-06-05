@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from accgram import research_tms_focus_highlight
-from accgram import research_tms_report_sat
+from accgram import rtms_focus_highlight
+from accgram import rtms_report_sat
 from py_html import wlc_utils_html
 
 _GOERWITZ_TMS_VERSE_CLASS = "goerwitz-tms-verse"
@@ -78,7 +78,7 @@ def _wlc_verse_contents_with_highlight(
 def _split_unique_focus_by_tokens(
     *, verse_text: str, wlc_focus: str
 ) -> tuple[str, str | None, str]:
-    return research_tms_focus_highlight.split_unique_focus_by_tokens(
+    return rtms_focus_highlight.split_unique_focus_by_tokens(
         verse_text=verse_text,
         wlc_focus=wlc_focus,
     )
@@ -110,4 +110,4 @@ def _token_text(token: object) -> str:
         if isinstance(text, str):
             return text
 
-    return research_tms_report_sat.render_sat_value(token)
+    return rtms_report_sat.render_sat_value(token)

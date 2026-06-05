@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
-from accgram.research_tms_token_like import texts_from_token_like_payload
+from accgram.rtms_token_like import texts_from_token_like_payload
 
 _HEBREW_MAQAF = "\u05be"
 _HEBREW_METEG = "\u05bd"

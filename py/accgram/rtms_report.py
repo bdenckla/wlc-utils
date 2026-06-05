@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from accgram import research_tms_report_bracket_notes
-from accgram import research_tms_report_intro
-from accgram import research_tms_report_media
-from accgram import research_tms_report_open_issues
-from accgram import research_tms_report_sat
-from accgram import research_tms_report_subsets
-from accgram import research_tms_report_verse
-from accgram import research_tms_ref
+from accgram import rtms_report_bracket_notes
+from accgram import rtms_report_intro
+from accgram import rtms_report_media
+from accgram import rtms_report_open_issues
+from accgram import rtms_report_sat
+from accgram import rtms_report_subsets
+from accgram import rtms_report_verse
+from accgram import rtms_ref
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
@@ -48,7 +48,7 @@ def write_goerwitz_tms_html_report(
     _write_goerwitz_tms_html_report(
         html_out_path,
         enriched_rows,
-        top_contents=research_tms_report_subsets.build_main_subsets_top_contents(
+        top_contents=rtms_report_subsets.build_main_subsets_top_contents(
             html_out_path
         ),
         title=_MAIN_REPORT_TITLE,
@@ -61,13 +61,13 @@ def write_goerwitz_tms_msp_yes_html_report(
     enriched_rows: list[dict[str, object]],
 ) -> None:
     total_count = len(enriched_rows)
-    html_out_path = research_tms_report_subsets.missing_sof_pasuq_yes_html_out_path(
+    html_out_path = rtms_report_subsets.missing_sof_pasuq_yes_html_out_path(
         main_html_out_path
     )
     _write_goerwitz_tms_html_report(
         html_out_path,
-        research_tms_report_subsets.filter_missing_sof_pasuq_yes_rows(enriched_rows),
-        top_contents=research_tms_report_subsets.build_msp_yes_related_pages_top_contents(
+        rtms_report_subsets.filter_missing_sof_pasuq_yes_rows(enriched_rows),
+        top_contents=rtms_report_subsets.build_msp_yes_related_pages_top_contents(
             main_html_out_path
         ),
         title=f"{_MAIN_REPORT_TITLE} ({_MSP_Y_FLAVOR})",
@@ -81,13 +81,13 @@ def write_goerwitz_tms_msp_no_html_report(
     enriched_rows: list[dict[str, object]],
 ) -> None:
     total_count = len(enriched_rows)
-    html_out_path = research_tms_report_subsets.missing_sof_pasuq_no_html_out_path(
+    html_out_path = rtms_report_subsets.missing_sof_pasuq_no_html_out_path(
         main_html_out_path
     )
     _write_goerwitz_tms_html_report(
         html_out_path,
-        research_tms_report_subsets.filter_missing_sof_pasuq_no_rows(enriched_rows),
-        top_contents=research_tms_report_subsets.build_msp_no_related_pages_top_contents(
+        rtms_report_subsets.filter_missing_sof_pasuq_no_rows(enriched_rows),
+        top_contents=rtms_report_subsets.build_msp_no_related_pages_top_contents(
             main_html_out_path
         ),
         title=f"{_MAIN_REPORT_TITLE} ({_MSP_N_FLAVOR})",
@@ -137,11 +137,11 @@ def _build_body_contents(
         *top_contents,
     ]
     sections.extend(
-        research_tms_report_intro.build_intro_contents(row_count, total_count)
+        rtms_report_intro.build_intro_contents(row_count, total_count)
     )
-    sections.extend(research_tms_report_open_issues.build_open_issues_section())
+    sections.extend(rtms_report_open_issues.build_open_issues_section())
     sections.extend(
-        research_tms_report_bracket_notes.build_wlc_bracket_notes_section(enriched_rows)
+        rtms_report_bracket_notes.build_wlc_bracket_notes_section(enriched_rows)
     )
 
     for index, row in enumerate(enriched_rows):
@@ -245,27 +245,27 @@ def _troublemaker_anchor_id(bcv: str) -> str:
 
 
 def _render_sat_table(row: dict[str, object]) -> object:
-    return research_tms_report_sat.render_sat_table(
+    return rtms_report_sat.render_sat_table(
         row,
         row_ref=_row_ref(row),
         structured_text_lookup=_structured_text_value,
-        wlc_tokens=research_tms_report_verse.wlc_verse_vels(row),
+        wlc_tokens=rtms_report_verse.wlc_verse_vels(row),
     )
 
 
 def _render_comment_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
-    return research_tms_report_media.render_comment_paragraphs(
+    return rtms_report_media.render_comment_paragraphs(
         row,
         structured_text_lookup=_structured_text_value,
     )
 
 
 def _render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
-    return research_tms_report_media.render_image_paragraphs(row)
+    return rtms_report_media.render_image_paragraphs(row)
 
 
 def _render_wlc_verse_paragraph(row: dict[str, object]) -> object:
-    return research_tms_report_verse.render_wlc_verse_paragraph(
+    return rtms_report_verse.render_wlc_verse_paragraph(
         row,
         structured_text_lookup=_structured_text_value,
     )
@@ -286,8 +286,8 @@ def _row_ref(row: dict[str, object]) -> str:
 
 
 def _parse_ref_to_wlc_bcv(ref: str) -> tuple[str, int, int, str]:
-    bb, chnu, vrnu = research_tms_ref.parse_ref(ref)
-    bcv = research_tms_ref.to_compact_bcv(bb, chnu, vrnu)
+    bb, chnu, vrnu = rtms_ref.parse_ref(ref)
+    bcv = rtms_ref.to_compact_bcv(bb, chnu, vrnu)
     return bb, chnu, vrnu, bcv
 
 

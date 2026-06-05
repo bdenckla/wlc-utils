@@ -3,8 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from accgram import research_tms_meteg_witness
-from accgram import research_tms_report
+from accgram import rtms_meteg_witness
+from accgram import rtms_report
 from mb_cmn import provenance
 
 
@@ -19,7 +19,7 @@ def write_troublemakers_payload(
     source_file: str,
 ) -> None:
     serializable_rows = (
-        research_tms_meteg_witness.strip_internal_witness_fields_from_rows(
+        rtms_meteg_witness.strip_internal_witness_fields_from_rows(
             enriched_rows
         )
     )
@@ -53,7 +53,7 @@ def write_oddballs_payload(
     source_file: str,
 ) -> None:
     serializable_rows = (
-        research_tms_meteg_witness.strip_internal_witness_fields_from_rows(
+        rtms_meteg_witness.strip_internal_witness_fields_from_rows(
             enriched_oddball_rows
         )
     )
@@ -82,11 +82,11 @@ def write_html_reports(
 ) -> None:
     # Keep this call sequence immediately after JSON write so HTML failures are
     # fail-fast while preserving the JSON write attempt.
-    research_tms_report.write_goerwitz_tms_html_report(html_out_path, enriched_rows)
-    research_tms_report.write_goerwitz_tms_msp_yes_html_report(
+    rtms_report.write_goerwitz_tms_html_report(html_out_path, enriched_rows)
+    rtms_report.write_goerwitz_tms_msp_yes_html_report(
         html_out_path, enriched_rows
     )
-    research_tms_report.write_goerwitz_tms_msp_no_html_report(
+    rtms_report.write_goerwitz_tms_msp_no_html_report(
         html_out_path, enriched_rows
     )
 

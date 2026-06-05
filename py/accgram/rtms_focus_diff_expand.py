@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 
-from accgram import research_tms_focus_highlight
+from accgram import rtms_focus_highlight
 
 _MAQAF = "־"
 
@@ -47,7 +47,7 @@ def count_focus_occurrences_in_verse_text(*, verse_text: str, wlc_focus: str) ->
 def split_unique_focus_by_tokens(
     *, verse_text: str, wlc_focus: str
 ) -> tuple[str, str | None, str]:
-    return research_tms_focus_highlight.split_unique_focus_by_tokens(
+    return rtms_focus_highlight.split_unique_focus_by_tokens(
         verse_text=verse_text,
         wlc_focus=wlc_focus,
     )
@@ -85,7 +85,7 @@ def validate_focus_highlightable(
     wlc422_kq_u_verse: object,
     wlc_focus: str | None,
 ) -> None:
-    return research_tms_focus_highlight.validate_focus_highlightable(
+    return rtms_focus_highlight.validate_focus_highlightable(
         ref=ref,
         wlc422_kq_u_verse=wlc422_kq_u_verse,
         wlc_focus=wlc_focus,

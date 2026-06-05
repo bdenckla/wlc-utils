@@ -3,17 +3,17 @@ from __future__ import annotations
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from accgram import research_tms_focus_diff_expand
-from accgram import research_tms_focus_highlight
+from accgram import rtms_focus_diff_expand
+from accgram import rtms_focus_highlight
 from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
-from accgram import research_tms_meteg_witness
+from accgram import rtms_meteg_witness
 from accgram.mam_simple_diff import diff_wlc_mam
 from accgram.mam_simple_verse import load_mam_simple_for_refs
 from accgram.wlc_uxlc_diff import diff_wlc_uxlc
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from py_uxlc import my_uxlc
 
-from accgram import research_tms_rows
+from accgram import rtms_rows
 
 _DIFF_NOTE_KEYS = {"note", "notes"}
 _IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS: set[
@@ -130,7 +130,7 @@ def build_enriched_row(
         "mam_simple_verse": mam_simple_verse,
         "diff_wlc_mam": diff_wlc_mam_for_output,
     }
-    research_tms_meteg_witness.attach_internal_meteg_witnesses(
+    rtms_meteg_witness.attach_internal_meteg_witnesses(
         enriched_row,
         wlc422_witness=wlc422_verse_meteg_witness,
         uxlc_witness=uxlc_nodes_meteg_witness,
@@ -176,7 +176,7 @@ def _expand_subset_diff_to_wlc_focus(
     wlc_focus: str | None,
     rhs_key: str,
 ) -> object:
-    return research_tms_focus_diff_expand.expand_subset_diff_to_wlc_focus(
+    return rtms_focus_diff_expand.expand_subset_diff_to_wlc_focus(
         diff_value,
         wlc_focus=wlc_focus,
         rhs_key=rhs_key,
@@ -230,12 +230,12 @@ def _validate_unique_wlc_focus_in_wlc_verse(
     wlc422_kq_u_verse: object,
     wlc_focus: str | None,
 ) -> None:
-    research_tms_focus_diff_expand.validate_unique_focus_occurrence(
+    rtms_focus_diff_expand.validate_unique_focus_occurrence(
         ref=ref,
         wlc422_kq_u_verse=wlc422_kq_u_verse,
         wlc_focus=wlc_focus,
     )
-    research_tms_focus_highlight.validate_focus_highlightable(
+    rtms_focus_highlight.validate_focus_highlightable(
         ref=ref,
         wlc422_kq_u_verse=wlc422_kq_u_verse,
         wlc_focus=wlc_focus,
@@ -248,7 +248,7 @@ def _load_wlc422_index(wlc422_kq_u_dir: Path) -> dict[str, dict[str, object]]:
 
     by_bcv: dict[str, dict[str, object]] = {}
     for in_path in sorted(wlc422_kq_u_dir.glob("1verses_*.json")):
-        rows = research_tms_rows.read_json(in_path)
+        rows = rtms_rows.read_json(in_path)
         if not isinstance(rows, list):
             raise ValueError(f"Expected list in verses file: {in_path}")
         for row in rows:
@@ -354,7 +354,7 @@ def _load_uxlc_for_refs(
                     continue
                 if (chnu, vrnu) not in target_set:
                     continue
-                bcv = research_tms_rows.to_compact_bcv(bb, chnu, vrnu)
+                bcv = rtms_rows.to_compact_bcv(bb, chnu, vrnu)
                 nodes = [_to_xmlish_verse_child(child) for child in verse]
                 by_bcv[bcv] = {
                     "xml_file": xml_name,

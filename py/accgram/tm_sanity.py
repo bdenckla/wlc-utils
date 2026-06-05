@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
-from accgram import troublemaker_structured_text_sanity_changes
-from accgram import troublemaker_structured_text_sanity_descriptor
+from accgram import tm_changes
+from accgram import tm_descriptor
 
 
 def sanity_check_structured_text(
@@ -10,7 +10,7 @@ def sanity_check_structured_text(
     structured_text_by_ref: dict[str, dict[str, object]],
     all_changes_path: Path,
 ) -> None:
-    by_change_url = troublemaker_structured_text_sanity_changes.load_all_changes_by_url(
+    by_change_url = tm_changes.load_all_changes_by_url(
         all_changes_path
     )
 
@@ -25,7 +25,7 @@ def sanity_check_structured_text(
             continue
 
         canonical_url = (
-            troublemaker_structured_text_sanity_changes.canonicalize_uxlc_change_url(
+            tm_changes.canonicalize_uxlc_change_url(
                 uxlc_change
             )
         )
@@ -50,7 +50,7 @@ def sanity_check_structured_text(
             )
             continue
 
-        if not troublemaker_structured_text_sanity_changes.citation_matches_ref(
+        if not tm_changes.citation_matches_ref(
             citation, ref
         ):
             errors.append(
@@ -72,31 +72,31 @@ def sanity_check_structured_text(
 
 def sanitize_word_for_change_match(text: str) -> str:
     return (
-        troublemaker_structured_text_sanity_descriptor.sanitize_word_for_change_match(
+        tm_descriptor.sanitize_word_for_change_match(
             text
         )
     )
 
 
 def load_all_changes_by_url(all_changes_path: Path) -> dict[str, dict[str, object]]:
-    return troublemaker_structured_text_sanity_changes.load_all_changes_by_url(
+    return tm_changes.load_all_changes_by_url(
         all_changes_path
     )
 
 
 def canonicalize_uxlc_change_url(url: str) -> str | None:
-    return troublemaker_structured_text_sanity_changes.canonicalize_uxlc_change_url(url)
+    return tm_changes.canonicalize_uxlc_change_url(url)
 
 
 def diff_uxlc_matches_changetext(diff_wlc_uxlc: object, changetext: str) -> bool | None:
-    return troublemaker_structured_text_sanity_descriptor.diff_uxlc_matches_changetext(
+    return tm_descriptor.diff_uxlc_matches_changetext(
         diff_wlc_uxlc,
         changetext,
     )
 
 
 def descriptor_from_hebrew_token(text: str) -> str | None:
-    return troublemaker_structured_text_sanity_descriptor.descriptor_from_hebrew_token(
+    return tm_descriptor.descriptor_from_hebrew_token(
         text
     )
 
@@ -105,7 +105,7 @@ def assessment_uxlc_matches_converted_diff_uxlc(
     assessment_uxlc: str,
     diff_wlc_uxlc: object,
 ) -> bool | None:
-    return troublemaker_structured_text_sanity_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
+    return tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
         assessment_uxlc,
         diff_wlc_uxlc,
     )
@@ -116,7 +116,7 @@ def assessment_descriptor_matches_hebrew_token(
     assessment_descriptor: str,
     hebrew_token: str,
 ) -> bool | None:
-    return troublemaker_structured_text_sanity_descriptor.assessment_descriptor_matches_hebrew_token(
+    return tm_descriptor.assessment_descriptor_matches_hebrew_token(
         assessment_descriptor=assessment_descriptor,
         hebrew_token=hebrew_token,
     )

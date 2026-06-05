@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from accgram import research_tms_meteg_witness
-from accgram.research_tms_assessment_materialize import (
+from accgram import rtms_meteg_witness
+from accgram.rtms_assessment_materialize import (
     order_assessment_dict,
     should_materialize_missing_assessment_key,
 )
-from accgram.research_tms_token_like import texts_from_token_like_payload
-from accgram.troublemaker_structured_text_sanity import descriptor_from_hebrew_token
+from accgram.rtms_token_like import texts_from_token_like_payload
+from accgram.tm_sanity import descriptor_from_hebrew_token
 
 _ASSESSMENT_AUTO_METEG_FALLBACK_BY_KEY = {
     "wlc": "silluq-no_sof_pasuq",
@@ -126,7 +126,7 @@ def _candidate_tokens_for_auto_assessment(
 ) -> list[tuple[str, str | None]]:
     candidates: list[tuple[str, str | None]] = []
 
-    wlc_witness_payload = research_tms_meteg_witness.witness_payload_for_side(
+    wlc_witness_payload = rtms_meteg_witness.witness_payload_for_side(
         enriched_row,
         side_key="wlc422",
     )
@@ -155,7 +155,7 @@ def _candidate_tokens_for_auto_assessment(
             )
 
     if assessment_key == "uxlc":
-        uxlc_witness_payload = research_tms_meteg_witness.witness_payload_for_side(
+        uxlc_witness_payload = rtms_meteg_witness.witness_payload_for_side(
             enriched_row,
             side_key="uxlc",
         )
@@ -175,7 +175,7 @@ def _candidate_tokens_for_auto_assessment(
             )
 
     if assessment_key == "mam":
-        mam_witness_payload = research_tms_meteg_witness.witness_payload_for_side(
+        mam_witness_payload = rtms_meteg_witness.witness_payload_for_side(
             enriched_row,
             side_key="mam_simple",
         )
@@ -223,7 +223,7 @@ def _candidate_with_optional_witness(
 
     witness_token: str | None = None
     if source_witness_payload is not None:
-        witness_token = research_tms_meteg_witness.match_unique_witness_token(
+        witness_token = rtms_meteg_witness.match_unique_witness_token(
             sanitized_token=collapsed_token,
             source_witness_payload=source_witness_payload,
         )
@@ -389,11 +389,11 @@ def _apply_witness_to_normalized_descriptor(
         return normalized_descriptor
 
     witness_token = witness_hebrew_token.strip()
-    if not witness_token or not research_tms_meteg_witness.token_has_meteg(
+    if not witness_token or not rtms_meteg_witness.token_has_meteg(
         witness_token
     ):
         return normalized_descriptor
 
-    if research_tms_meteg_witness.token_has_maqaf(witness_token):
+    if rtms_meteg_witness.token_has_maqaf(witness_token):
         return "meteg-maqaf"
     return "meteg-space"

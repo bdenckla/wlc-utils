@@ -8,10 +8,10 @@ _STRUCTURED_TEXT_BY_REF_CACHE: dict[str, dict[str, object]] | None = None
 def _load_structured_text_by_ref() -> dict[str, dict[str, object]]:
     global _STRUCTURED_TEXT_BY_REF_CACHE
     if _STRUCTURED_TEXT_BY_REF_CACHE is None:
-        from accgram import troublemaker_structured_text_data
+        from accgram import tm_data
 
         _STRUCTURED_TEXT_BY_REF_CACHE = (
-            troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF
+            tm_data.STRUCTURED_TEXT_BY_REF
         )
     return _STRUCTURED_TEXT_BY_REF_CACHE
 

@@ -4,13 +4,13 @@ import json
 import re
 from collections.abc import Callable
 
-from accgram import research_tms_meteg_witness
-from accgram import research_tms_report_bracket_notes
-from accgram import research_tms_report_diff_format
-from accgram import research_tms_report_sat_notes_column
-from accgram import research_tms_report_wlc_word_format
-from accgram.research_tms_assessment_auto import try_auto_assessment_descriptor
-from accgram import troublemaker_structured_text_sanity
+from accgram import rtms_meteg_witness
+from accgram import rtms_report_bracket_notes
+from accgram import rtms_report_diff_format
+from accgram import rtms_report_sat_notes_column
+from accgram import rtms_report_wlc_word_format
+from accgram.rtms_assessment_auto import try_auto_assessment_descriptor
+from accgram import tm_sanity
 from py_html import wlc_utils_html
 
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "mam")
@@ -42,14 +42,14 @@ def render_sat_table(
         _normalize_whitespace(wlc_focus) if isinstance(wlc_focus, str) else ""
     )
     wlc_focus_notes = (
-        research_tms_report_wlc_word_format.collect_wlc_word_bracket_notes(
+        rtms_report_wlc_word_format.collect_wlc_word_bracket_notes(
             wlc_tokens,
             wlc_focus_str or None,
             render_sat_value=render_sat_value,
         )
     )
     sat_notes_by_key: dict[str, str] = {}
-    rendered_wlc_focus_notes = research_tms_report_wlc_word_format.render_note_values(
+    rendered_wlc_focus_notes = rtms_report_wlc_word_format.render_note_values(
         wlc_focus_notes
     )
     if rendered_wlc_focus_notes:
@@ -59,7 +59,7 @@ def render_sat_table(
     sat_rows.extend(
         [
             _sat_row(key=label, value=value)
-            for label, value in research_tms_report_diff_format.normalize_diff_rows(
+            for label, value in rtms_report_diff_format.normalize_diff_rows(
                 "diff_wlc_uxlc",
                 row.get("diff_wlc_uxlc"),
                 row=row,
@@ -72,7 +72,7 @@ def render_sat_table(
     sat_rows.extend(
         [
             _sat_row(key=label, value=value)
-            for label, value in research_tms_report_diff_format.normalize_diff_rows(
+            for label, value in rtms_report_diff_format.normalize_diff_rows(
                 "diff_wlc_mam",
                 row.get("diff_wlc_mam"),
                 row=row,
@@ -95,7 +95,7 @@ def render_sat_table(
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows, row=row)
     sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
     notes_column_plan = (
-        research_tms_report_sat_notes_column.build_sat_notes_column_plan(
+        rtms_report_sat_notes_column.build_sat_notes_column_plan(
             sat_rows,
             notes_by_key=sat_notes_by_key,
         )
@@ -107,10 +107,10 @@ def render_sat_table(
             table_rows.append(
                 wlc_utils_html.table_row_of_data(
                     (
-                        research_tms_report_bracket_notes.annotate_bracket_note_tokens(
+                        rtms_report_bracket_notes.annotate_bracket_note_tokens(
                             value
                         ),
-                        research_tms_report_bracket_notes.annotate_bracket_note_tokens(
+                        rtms_report_bracket_notes.annotate_bracket_note_tokens(
                             notes_value
                         ),
                         middle_description,
@@ -118,7 +118,7 @@ def render_sat_table(
                     ),
                     tdattrs=(
                         _sat_value_cell_attr(key, value),
-                        research_tms_report_sat_notes_column.notes_cell_attr(
+                        rtms_report_sat_notes_column.notes_cell_attr(
                             notes_column_plan.include_notes_column
                         ),
                         None,
@@ -131,7 +131,7 @@ def render_sat_table(
         table_rows.append(
             wlc_utils_html.table_row_of_data(
                 (
-                    research_tms_report_bracket_notes.annotate_bracket_note_tokens(
+                    rtms_report_bracket_notes.annotate_bracket_note_tokens(
                         value
                     ),
                     middle_description,
@@ -181,13 +181,13 @@ def render_sat_value(value: object) -> str:
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
     if (
         label in _WLC_FOCUS_ROW_KEYS
-        and research_tms_report_diff_format.contains_hebrew(value)
+        and rtms_report_diff_format.contains_hebrew(value)
     ):
         return {"lang": "hbo", "dir": "rtl"}
 
     if label.startswith(
         "diff_wlc_"
-    ) and research_tms_report_diff_format.is_plain_hebrew_string(value):
+    ) and rtms_report_diff_format.is_plain_hebrew_string(value):
         return {"lang": "hbo", "dir": "rtl"}
 
     return None
@@ -381,11 +381,11 @@ def _sat_assessment_value_describes_target_value(
     if not assessment_text or not target_text:
         return None
 
-    if not research_tms_report_diff_format.is_plain_hebrew_string(target_text):
+    if not rtms_report_diff_format.is_plain_hebrew_string(target_text):
         return None
 
     try:
-        return troublemaker_structured_text_sanity.assessment_descriptor_matches_hebrew_token(
+        return tm_sanity.assessment_descriptor_matches_hebrew_token(
             assessment_descriptor=assessment_text,
             hebrew_token=target_text,
         )
@@ -409,31 +409,31 @@ def _maybe_restore_value_from_witness(
     }:
         return target_value
 
-    if not research_tms_report_diff_format.is_plain_hebrew_string(target_value):
+    if not rtms_report_diff_format.is_plain_hebrew_string(target_value):
         return target_value
 
     side_key = _witness_side_key_for_sat_row_key(target_key)
     if side_key is None:
         return target_value
 
-    source_witness_payload = research_tms_meteg_witness.witness_payload_for_side(
+    source_witness_payload = rtms_meteg_witness.witness_payload_for_side(
         row,
         side_key=side_key,
     )
     if source_witness_payload is None:
         return target_value
 
-    witness_token = research_tms_meteg_witness.match_unique_witness_token(
+    witness_token = rtms_meteg_witness.match_unique_witness_token(
         sanitized_token=target_value,
         source_witness_payload=source_witness_payload,
     )
     if not isinstance(witness_token, str) or not witness_token.strip():
         return target_value
 
-    if not research_tms_meteg_witness.token_has_meteg(witness_token):
+    if not rtms_meteg_witness.token_has_meteg(witness_token):
         return target_value
 
-    has_maqaf = research_tms_meteg_witness.token_has_maqaf(witness_token)
+    has_maqaf = rtms_meteg_witness.token_has_maqaf(witness_token)
     if normalized_assessment == "meteg-space" and has_maqaf:
         return target_value
     if normalized_assessment in {"meteg-maqaf", "meteg-meteg-maqaf"} and not has_maqaf:

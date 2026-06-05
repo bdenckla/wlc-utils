@@ -13,16 +13,16 @@ from accgram.hebrew_verse_sanitize import sanitize_verse_text_payload
 from accgram import mam_simple_diff
 from accgram import mam_simple_verse
 from accgram import research_tms
-from accgram import research_tms_assessment_auto
-from accgram import research_tms_meteg_witness
-from accgram import research_tms_focus_diff_expand
-from accgram import research_tms_focus_highlight
-from accgram import research_tms_report
-from accgram import research_tms_report_sat
-from accgram import research_tms_report_contracts
-from accgram import research_tms_report_subsets
-from accgram import troublemaker_structured_text_data
-from accgram import troublemaker_structured_text_sanity
+from accgram import rtms_assessment_auto
+from accgram import rtms_meteg_witness
+from accgram import rtms_focus_diff_expand
+from accgram import rtms_focus_highlight
+from accgram import rtms_report
+from accgram import rtms_report_sat
+from accgram import rtms_report_contracts
+from accgram import rtms_report_subsets
+from accgram import tm_data
+from accgram import tm_sanity
 from accgram import wlc_uxlc_diff
 
 
@@ -42,12 +42,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def _assert_generated_goerwitz_contracts(
         self, page_path: Path
-    ) -> list[research_tms_report_contracts.GoerwitzTroublemakerSection]:
+    ) -> list[rtms_report_contracts.GoerwitzTroublemakerSection]:
         self.assertTrue(
             page_path.exists(), f"Missing generated report page: {page_path}"
         )
 
-        sections = research_tms_report_contracts.inspect_goerwitz_tms_html_contracts(
+        sections = rtms_report_contracts.inspect_goerwitz_tms_html_contracts(
             page_path.read_text(encoding="utf-8")
         )
         self.assertGreater(
@@ -712,7 +712,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertFalse(_contains_meteg(row["diff_wlc_uxlc"]))
             self.assertFalse(_contains_meteg(row["diff_wlc_mam"]))
 
-            for internal_key in research_tms_meteg_witness.INTERNAL_WITNESS_KEYS:
+            for internal_key in rtms_meteg_witness.INTERNAL_WITNESS_KEYS:
                 self.assertNotIn(internal_key, row)
 
     def test_run_writes_enriched_research_oddballs_json(self):
@@ -1424,7 +1424,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             ValueError,
             r"hg 2:12.*Could not render highlight.*wlc_focus='בשר־ק֜דש'",
         ):
-            research_tms_focus_highlight.validate_focus_highlightable(
+            rtms_focus_highlight.validate_focus_highlightable(
                 ref="hg 2:12",
                 wlc422_kq_u_verse={"vels": ["הן", "ישא", "איש", "בשר־", "ק֜דש"]},
                 wlc_focus="בשר־ק֜דש",
@@ -1553,7 +1553,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_count_focus_occurrences_matches_across_maqaf_whitespace(self):
         occurrences = (
-            research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+            rtms_focus_diff_expand.count_focus_occurrences_in_verse_text(
                 verse_text="הן ישא איש בשר־ ק֜דש בכנף בגדו",
                 wlc_focus="בשר־ק֜דש",
             )
@@ -1563,7 +1563,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_count_focus_occurrences_supports_focus_ending_with_maqaf(self):
         occurrences = (
-            research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+            rtms_focus_diff_expand.count_focus_occurrences_in_verse_text(
                 verse_text="יד֥י־ מא֖רץ",
                 wlc_focus="יד֥י־",
             )
@@ -1573,7 +1573,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_count_focus_occurrences_is_word_boundary_safe(self):
         occurrences = (
-            research_tms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+            rtms_focus_diff_expand.count_focus_occurrences_in_verse_text(
                 verse_text="אבג אב",
                 wlc_focus="אב",
             )
@@ -1671,7 +1671,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -1777,7 +1777,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -1803,7 +1803,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -1835,7 +1835,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -1863,7 +1863,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -1890,7 +1890,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -1924,14 +1924,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
                         "ref": "je 9:11",
                         "wlc422_kq_u_verse": {"vels": ["מבל֖י"]},
                         "diff_wlc_uxlc": {"wlc422": "מבל֖י", "uxlc": "מבלי"},
-                        research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
+                        rtms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
                             "vels": ["מבלֽי"]
                         },
                         "structured_text": {
@@ -1957,7 +1957,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -1994,7 +1994,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -2022,7 +2022,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -2057,7 +2057,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -2113,7 +2113,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             base = Path(tmp_dir)
             html_out = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
 
-            research_tms_report.write_goerwitz_tms_html_report(
+            rtms_report.write_goerwitz_tms_html_report(
                 html_out,
                 [
                     {
@@ -2176,8 +2176,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             },
         ]
 
-        yes_rows = research_tms_report_subsets.filter_missing_sof_pasuq_yes_rows(rows)
-        no_rows = research_tms_report_subsets.filter_missing_sof_pasuq_no_rows(rows)
+        yes_rows = rtms_report_subsets.filter_missing_sof_pasuq_yes_rows(rows)
+        no_rows = rtms_report_subsets.filter_missing_sof_pasuq_no_rows(rows)
 
         self.assertEqual([row["ref"] for row in yes_rows], ["gn 1:1", "gn 1:3"])
         self.assertEqual([row["ref"] for row in no_rows], ["gn 1:2"])
@@ -2202,7 +2202,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 },
             ]
 
-            research_tms_report.write_goerwitz_tms_msp_yes_html_report(
+            rtms_report.write_goerwitz_tms_msp_yes_html_report(
                 main_html_out, rows
             )
 
@@ -2243,7 +2243,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 },
             ]
 
-            research_tms_report.write_goerwitz_tms_msp_no_html_report(
+            rtms_report.write_goerwitz_tms_msp_no_html_report(
                 main_html_out, rows
             )
 
@@ -2826,7 +2826,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            troublemaker_structured_text_sanity.sanity_check_structured_text(
+            tm_sanity.sanity_check_structured_text(
                 refs=["je 9:11"],
                 structured_text_by_ref={
                     "je 9:11": {
@@ -2862,7 +2862,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
             with self.assertRaisesRegex(ValueError, r"citation/ref mismatch"):
-                troublemaker_structured_text_sanity.sanity_check_structured_text(
+                tm_sanity.sanity_check_structured_text(
                     refs=["je 9:11"],
                     structured_text_by_ref={
                         "je 9:11": {
@@ -2877,23 +2877,23 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 )
 
     def test_structured_text_sanitize_word_drops_non_target_marks(self):
-        actual = troublemaker_structured_text_sanity.sanitize_word_for_change_match(
+        actual = tm_sanity.sanitize_word_for_change_match(
             "מְב\u05bdל֖י "
         )
-        expected = troublemaker_structured_text_sanity.sanitize_word_for_change_match(
+        expected = tm_sanity.sanitize_word_for_change_match(
             "מבל֖י"
         )
         self.assertEqual(actual, expected)
 
     def test_diff_uxlc_matches_changetext_true_after_sanitization(self):
-        matches = troublemaker_structured_text_sanity.diff_uxlc_matches_changetext(
+        matches = tm_sanity.diff_uxlc_matches_changetext(
             diff_wlc_uxlc={"wlc422": "ועשר֤ים", "uxlc": "וְעֶשְׂרִ֣ים"},
             changetext="ועשר֣ים",
         )
         self.assertTrue(matches)
 
     def test_diff_uxlc_matches_changetext_false_when_different(self):
-        matches = troublemaker_structured_text_sanity.diff_uxlc_matches_changetext(
+        matches = tm_sanity.diff_uxlc_matches_changetext(
             diff_wlc_uxlc={"wlc422": "ועשר֤ים", "uxlc": "ועשר֣ים"},
             changetext="ועשרים",
         )
@@ -2901,84 +2901,84 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_diff_uxlc_matches_changetext_raises_on_non_hebrew_text(self):
         with self.assertRaisesRegex(ValueError, r"Expected Hebrew-script text"):
-            troublemaker_structured_text_sanity.diff_uxlc_matches_changetext(
+            tm_sanity.diff_uxlc_matches_changetext(
                 diff_wlc_uxlc={"wlc422": "ועשר֤ים", "uxlc": "munax"},
                 changetext="ועשר֣ים",
             )
 
     def test_descriptor_from_hebrew_token_tevir(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "אש֛ר"
         )
         self.assertEqual(descriptor, "tevir")
 
     def test_descriptor_from_hebrew_token_etnaxta(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "שנ֑ים"
         )
         self.assertEqual(descriptor, "etnaxta")
 
     def test_descriptor_from_hebrew_token_pashta_on_letter(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "שנה֙"
         )
         self.assertEqual(descriptor, "pashta on he")
 
     def test_descriptor_from_hebrew_token_no_accent(self):
         self.assertEqual(
-            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("מבלי"),
+            tm_sanity.descriptor_from_hebrew_token("מבלי"),
             "no_accent",
         )
         self.assertEqual(
-            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("עליה"),
+            tm_sanity.descriptor_from_hebrew_token("עליה"),
             "no_accent",
         )
 
     def test_descriptor_from_hebrew_token_maqaf(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "נכח־"
         )
         self.assertEqual(descriptor, "maqaf")
 
     def test_descriptor_from_hebrew_token_two_over_accents(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "אריצ֨נו֙"
         )
         self.assertEqual(descriptor, "qadma on tsadi-pashta on vav")
 
     def test_descriptor_from_hebrew_token_repeated_accent_names(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "יאב֥ד טוב֥ה"
         )
         self.assertEqual(descriptor, "merkha merkha")
 
     def test_descriptor_from_hebrew_token_merkha_tipexa(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "יאב֥ד טוב֖ה"
         )
         self.assertEqual(descriptor, "merkha tipexa")
 
     def test_descriptor_from_hebrew_token_tipexa_merkha(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "אב֖ גד֥"
         )
         self.assertEqual(descriptor, "tipexa merkha")
 
     def test_descriptor_from_hebrew_token_maqaf_munax(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "והיו־ ל֣י"
         )
         self.assertEqual(descriptor, "maqaf munax")
 
     def test_descriptor_from_hebrew_token_merkha_maqaf(self):
-        descriptor = troublemaker_structured_text_sanity.descriptor_from_hebrew_token(
+        descriptor = tm_sanity.descriptor_from_hebrew_token(
             "יד֥י־"
         )
         self.assertEqual(descriptor, "merkha-maqaf")
 
     def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
         self.assertIsNone(
-            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("ישראל֘")
+            tm_sanity.descriptor_from_hebrew_token("ישראל֘")
         )
 
     def test_descriptor_from_hebrew_token_asserts_for_unmapped_non_allowlisted_token(
@@ -2988,23 +2988,23 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             AssertionError,
             r"No descriptor for accent token unless explicitly allowlisted",
         ):
-            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("אב֚")
+            tm_sanity.descriptor_from_hebrew_token("אב֚")
 
     def test_descriptor_from_hebrew_token_asserts_on_over_accent_without_letter(self):
         with self.assertRaisesRegex(
             AssertionError, r"Over-accent must follow a Hebrew letter"
         ):
-            troublemaker_structured_text_sanity.descriptor_from_hebrew_token("֙")
+            tm_sanity.descriptor_from_hebrew_token("֙")
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_true(self):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="tevir",
             diff_wlc_uxlc={"wlc422": "אש֥ר", "uxlc": "אש֛ר"},
         )
         self.assertTrue(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_maqaf_alias(self):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-maqaf",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
         )
@@ -3013,14 +3013,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_double_meteg_maqaf_alias(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-meteg-maqaf",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
         )
         self.assertTrue(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_maqaf_exact(self):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="maqaf",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
         )
@@ -3029,7 +3029,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_accepts_maqaf_munax(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="maqaf munax",
             diff_wlc_uxlc={"wlc422": "והיו־ ל֣י", "uxlc": "והיו־ ל֣י"},
         )
@@ -3038,14 +3038,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_rejects_legacy_munax_maqaf(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="munax-maqaf",
             diff_wlc_uxlc={"wlc422": "והיו־ ל֣י", "uxlc": "והיו־ ל֣י"},
         )
         self.assertFalse(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_space_alias(self):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha-space",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נ֥כח"},
         )
@@ -3054,28 +3054,28 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_rejects_meteg_space(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-space",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נ֥כח"},
         )
         self.assertFalse(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_hebrew_letter_suffix(self):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="pashta on ה",
             diff_wlc_uxlc={"wlc422": "שנ֨ה", "uxlc": "שנה֙"},
         )
         self.assertTrue(matches)
 
     def test_assessment_descriptor_matches_hebrew_token_pashta_stress_helper(self):
-        matches = troublemaker_structured_text_sanity.assessment_descriptor_matches_hebrew_token(
+        matches = tm_sanity.assessment_descriptor_matches_hebrew_token(
             assessment_descriptor="pashta stress helper on resh, pashta on xet",
             hebrew_token="הר֙וח֙",
         )
         self.assertTrue(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_pashta_stress_helper(self):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="pashta stress helper on resh, pashta on xet",
             diff_wlc_uxlc={"wlc422": "הר֨וח", "uxlc": "הר֙וח֙"},
         )
@@ -3084,7 +3084,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_repeated_descriptor_with_spaces(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha merkha",
             diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֥ה"},
         )
@@ -3093,7 +3093,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_rejects_repeated_descriptor_with_comma(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha, merkha",
             diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֥ה"},
         )
@@ -3102,7 +3102,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_tipexa_with_spaces(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha tipexa",
             diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֖ה", "uxlc": "יאב֥ד טוב֖ה"},
         )
@@ -3111,7 +3111,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_tipexa_merkha_with_spaces(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="tipexa merkha",
             diff_wlc_uxlc={"wlc422": "אב֖ גד֥", "uxlc": "אב֖ גד֥"},
         )
@@ -3120,7 +3120,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_multiword_assessment_single_token_is_indeterminate(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha tipexa",
             diff_wlc_uxlc={"wlc422": "טוב֥ה", "uxlc": "טוב֖ה"},
         )
@@ -3129,7 +3129,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_list_matches_any_expanded_entry(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha tipexa",
             diff_wlc_uxlc=[
                 {"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֖ה"},
@@ -3141,7 +3141,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_list_matches_reversed_expanded_entry(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="tipexa merkha",
             diff_wlc_uxlc=[
                 {"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֖ה"},
@@ -3153,7 +3153,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_list_accepts_meteg_space_for_di(
         self,
     ):
-        matches = troublemaker_structured_text_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-space",
             diff_wlc_uxlc=[
                 {"wlc_adds_notes": "]k"},
@@ -3165,7 +3165,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_try_auto_assessment_descriptor_returns_none_for_maqaf_with_non_meteg_accent(
         self,
     ):
-        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+        descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="wlc",
             enriched_row={},
             wlc_focus="בשר־ק֜דש",
@@ -3173,7 +3173,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertIsNone(descriptor)
 
     def test_try_auto_assessment_descriptor_uses_maqaf_for_plain_maqaf_token(self):
-        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+        descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="mam",
             enriched_row={"diff_wlc_mam": {"mam_simple": "הנה־"}},
             wlc_focus=None,
@@ -3183,7 +3183,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_try_auto_assessment_descriptor_uses_no_accent_for_di_without_meteg(
         self,
     ):
-        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+        descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="uxlc",
             enriched_row={"diff_wlc_uxlc": {"uxlc": "די"}},
             wlc_focus=None,
@@ -3191,11 +3191,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertEqual(descriptor, "no_accent")
 
     def test_try_auto_assessment_descriptor_uses_meteg_space_with_witness(self):
-        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+        descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="uxlc",
             enriched_row={
                 "diff_wlc_uxlc": {"uxlc": "מבלי"},
-                research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
+                rtms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
                     "vels": ["מבלֽי"]
                 },
             },
@@ -3204,11 +3204,11 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertEqual(descriptor, "meteg-space")
 
     def test_try_auto_assessment_descriptor_uses_meteg_maqaf_with_witness(self):
-        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+        descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="mam",
             enriched_row={
                 "diff_wlc_mam": {"mam_simple": "ידי־"},
-                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
+                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
                     "vels": ["ידֽי־"]
                 },
             },
@@ -3218,13 +3218,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_try_auto_assessment_descriptor_keeps_plain_labels_without_witness(self):
         no_accent_descriptor = (
-            research_tms_assessment_auto.try_auto_assessment_descriptor(
+            rtms_assessment_auto.try_auto_assessment_descriptor(
                 assessment_key="uxlc",
                 enriched_row={"diff_wlc_uxlc": {"uxlc": "מבלי"}},
                 wlc_focus=None,
             )
         )
-        maqaf_descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+        maqaf_descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="mam",
             enriched_row={"diff_wlc_mam": {"mam_simple": "ידי־"}},
             wlc_focus=None,
@@ -3235,12 +3235,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_try_auto_assessment_descriptor_does_not_emit_meteg_labels(self):
         descriptors = [
-            research_tms_assessment_auto.try_auto_assessment_descriptor(
+            rtms_assessment_auto.try_auto_assessment_descriptor(
                 assessment_key="uxlc",
                 enriched_row={"diff_wlc_uxlc": {"uxlc": "די"}},
                 wlc_focus=None,
             ),
-            research_tms_assessment_auto.try_auto_assessment_descriptor(
+            rtms_assessment_auto.try_auto_assessment_descriptor(
                 assessment_key="mam",
                 enriched_row={"diff_wlc_mam": {"mam_simple": "הונח־"}},
                 wlc_focus=None,
@@ -3254,7 +3254,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_try_auto_assessment_descriptor_uses_tevir_sof_pasuq_without_meteg(
         self,
     ):
-        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+        descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="wlc",
             enriched_row={},
             wlc_focus="פ֛לאי׃",
@@ -3262,7 +3262,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertEqual(descriptor, "tevir-sof_pasuq")
 
     def test_assessment_descriptor_matches_hebrew_token_tevir_sof_pasuq(self):
-        matches = troublemaker_structured_text_sanity.assessment_descriptor_matches_hebrew_token(
+        matches = tm_sanity.assessment_descriptor_matches_hebrew_token(
             assessment_descriptor="tevir-sof_pasuq",
             hebrew_token="פ֛לאי׃",
         )
@@ -3271,7 +3271,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_try_auto_assessment_descriptor_keeps_silluq_sof_pasuq_when_meteg_present(
         self,
     ):
-        descriptor = research_tms_assessment_auto.try_auto_assessment_descriptor(
+        descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="wlc",
             enriched_row={},
             wlc_focus="פֽלאי׃",
@@ -3292,7 +3292,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         }
 
         for ref, expected_assessment in expected_by_ref.items():
-            structured = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get(
+            structured = tm_data.STRUCTURED_TEXT_BY_REF.get(
                 ref
             )
             self.assertIsInstance(structured, dict, ref)
@@ -3301,7 +3301,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             for key, expected_value in expected_assessment.items():
                 self.assertEqual(assessment.get(key), expected_value, f"{ref} {key}")
 
-        je_1003 = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get(
+        je_1003 = tm_data.STRUCTURED_TEXT_BY_REF.get(
             "je 10:3"
         )
         self.assertIsInstance(je_1003, dict)
@@ -3329,29 +3329,29 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             "1k 20:29": {
                 "diff_wlc_uxlc": {"uxlc": "נכח־"},
                 "diff_wlc_mam": {"mam_simple": "נכח־"},
-                research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
+                rtms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
                     "vels": ["נֽכח־"]
                 },
-                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
+                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
                     "vels": ["נֽכח־"]
                 },
             },
             "da 2:41": {
                 "diff_wlc_uxlc": {"uxlc": "די"},
                 "diff_wlc_mam": {"mam_simple": "די־"},
-                research_tms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {"vels": ["דֽי"]},
-                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {"vels": ["דֽי־"]},
+                rtms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {"vels": ["דֽי"]},
+                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {"vels": ["דֽי־"]},
             },
             "je 48:12": {
                 "diff_wlc_mam": {"mam_simple": "הנה־"},
-                research_tms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
+                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
                     "vels": ["הֽנה־"]
                 },
             },
         }
 
         for ref, expected_assessment in expected_auto_by_ref.items():
-            structured = troublemaker_structured_text_data.STRUCTURED_TEXT_BY_REF.get(
+            structured = tm_data.STRUCTURED_TEXT_BY_REF.get(
                 ref
             )
             self.assertIsInstance(structured, dict, ref)
@@ -3361,7 +3361,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             for key in expected_assessment:
                 self.assertNotIn(key, assessment_dict, f"{ref} {key} should be auto")
 
-            out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+            out = rtms_assessment_auto.materialize_auto_assessment_descriptors(
                 structured_text=structured,
                 enriched_row=enriched_row_by_ref[ref],
                 wlc_focus=(
@@ -3388,7 +3388,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             }
         }
 
-        sat_rows = research_tms_report_sat._assessment_sat_rows(
+        sat_rows = rtms_report_sat._assessment_sat_rows(
             row,
             structured_text_lookup=lambda in_row, key: in_row["structured_text"].get(
                 key
@@ -3407,7 +3407,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     ):
         structured_text = {"assessment": {"wlc": "%auto%"}}
 
-        out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+        out = rtms_assessment_auto.materialize_auto_assessment_descriptors(
             structured_text=structured_text,
             enriched_row={},
             wlc_focus=None,
@@ -3421,7 +3421,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     ):
         structured_text = {"assessment": {"manuscript": "%auto%"}}
 
-        out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+        out = rtms_assessment_auto.materialize_auto_assessment_descriptors(
             structured_text=structured_text,
             enriched_row={},
             wlc_focus=None,
@@ -3436,7 +3436,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         structured_text = {"assessment": "meteg-space"}
 
         with self.assertRaises(TypeError):
-            research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+            rtms_assessment_auto.materialize_auto_assessment_descriptors(
                 structured_text=structured_text,
                 enriched_row={},
                 wlc_focus=None,
@@ -3447,7 +3447,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     ):
         structured_text = {"assessment": {}}
 
-        out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+        out = rtms_assessment_auto.materialize_auto_assessment_descriptors(
             structured_text=structured_text,
             enriched_row={"diff_wlc_uxlc": {"wlc422": "פֽלאי׃"}},
             wlc_focus=None,
@@ -3479,7 +3479,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            troublemaker_structured_text_sanity.sanity_check_structured_text(
+            tm_sanity.sanity_check_structured_text(
                 refs=["1k 6:2"],
                 structured_text_by_ref={
                     "1k 6:2": {
@@ -3515,7 +3515,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            by_url = troublemaker_structured_text_sanity.load_all_changes_by_url(
+            by_url = tm_sanity.load_all_changes_by_url(
                 all_changes_path
             )
             self.assertIn(
