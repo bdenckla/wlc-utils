@@ -328,9 +328,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "Defying the LC, BHS transcribes a tevir as a merkha.",
         "wlc_focus": "אש֥ר",
         "BHQ": "?",
-        "assessment": {
-            "manuscript": "tevir",
-        },
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
         "comment": "See the image in the UXLC change to which we link above.",
     },
