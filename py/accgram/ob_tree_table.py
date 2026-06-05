@@ -27,27 +27,35 @@ def render_error_tree_table(tree: ob_tree_parse.ErrorTree) -> object:
     if total_cols <= 0:
         raise ValueError("Parse tree has no terminal leaves")
 
+    max_branch_depth = max(_max_branch_depth(root) for root in tree.roots)
+    leaf_row_index = max_branch_depth + 1
+
     rows_by_index: dict[int, list[_Cell]] = {}
-    max_row_index = 0
 
     current_col = 0
     for root in tree.roots:
-        root_max_row = _emit_branch_cells(
+        _emit_branch_cells(
             branch=root,
             start_col=current_col,
+            leaf_row_index=leaf_row_index,
             spans_by_branch=spans_by_branch,
             rows_by_index=rows_by_index,
         )
-        max_row_index = max(max_row_index, root_max_row)
         current_col += spans_by_branch[id(root)]
 
+    rendered_row_indexes = sorted(rows_by_index)
+    if not rendered_row_indexes:
+        raise ValueError("Parse tree produced no renderable rows")
+
     table_rows: list[object] = []
-    for row_index in range(max_row_index + 1):
+    for row_index in rendered_row_indexes:
         row_cells = sorted(rows_by_index.get(row_index, []), key=lambda cell: cell.start_col)
+        depth_cell_text = "" if row_index == leaf_row_index else str(row_index)
         table_rows.append(
             _render_row(
                 row_cells=row_cells,
                 total_cols=total_cols,
+                depth_cell_text=depth_cell_text,
             )
         )
 
@@ -75,13 +83,22 @@ def _compute_leaf_span(
     return span
 
 
+def _max_branch_depth(branch: ob_tree_parse.TreeBranch) -> int:
+    max_depth = branch.depth
+    for child in branch.children:
+        if isinstance(child, ob_tree_parse.TreeBranch):
+            max_depth = max(max_depth, _max_branch_depth(child))
+    return max_depth
+
+
 def _emit_branch_cells(
     *,
     branch: ob_tree_parse.TreeBranch,
     start_col: int,
+    leaf_row_index: int,
     spans_by_branch: dict[int, int],
     rows_by_index: dict[int, list[_Cell]],
-) -> int:
+) -> None:
     branch_span = spans_by_branch[id(branch)]
     _append_cell(
         rows_by_index,
@@ -89,15 +106,13 @@ def _emit_branch_cells(
         cell=_Cell(
             start_col=start_col,
             colspan=branch_span,
-            text=ob_tree_abbrev.abbreviate_branch_label(branch.depth, branch.label),
+            text=ob_tree_abbrev.abbreviate_branch_label(branch.label),
         ),
     )
 
-    max_row_index = branch.depth
     child_col = start_col
     for child in branch.children:
         if isinstance(child, ob_tree_parse.TreeLeaf):
-            leaf_row_index = branch.depth + 1
             _append_cell(
                 rows_by_index,
                 row_index=leaf_row_index,
@@ -108,20 +123,17 @@ def _emit_branch_cells(
                     class_name="goerwitz-obs-error-cell" if child.has_error else None,
                 ),
             )
-            max_row_index = max(max_row_index, leaf_row_index)
             child_col += 1
             continue
 
-        child_max_row = _emit_branch_cells(
+        _emit_branch_cells(
             branch=child,
             start_col=child_col,
+            leaf_row_index=leaf_row_index,
             spans_by_branch=spans_by_branch,
             rows_by_index=rows_by_index,
         )
-        max_row_index = max(max_row_index, child_max_row)
         child_col += spans_by_branch[id(child)]
-
-    return max_row_index
 
 
 def _append_cell(
@@ -133,8 +145,13 @@ def _append_cell(
     rows_by_index.setdefault(row_index, []).append(cell)
 
 
-def _render_row(*, row_cells: list[_Cell], total_cols: int) -> object:
-    td_cells: list[object] = []
+def _render_row(*, row_cells: list[_Cell], total_cols: int, depth_cell_text: str) -> object:
+    td_cells: list[object] = [
+        wlc_utils_html.table_datum(
+            depth_cell_text,
+            {"class": "goerwitz-obs-depth-cell"},
+        )
+    ]
     cursor = 0
     for cell in row_cells:
         if cell.start_col > cursor:

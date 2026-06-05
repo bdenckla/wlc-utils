@@ -17,7 +17,7 @@ _TOKEN_ABBREV: dict[str, str] = {
 }
 
 
-def abbreviate_branch_label(depth: int, label: str) -> str:
+def abbreviate_branch_label(label: str) -> str:
     base_label = label.strip()
     suffix = ""
     if base_label.endswith("_clause"):
@@ -35,7 +35,7 @@ def abbreviate_branch_label(depth: int, label: str) -> str:
     else:
         short_base = base_label
 
-    return f"{depth}-{short_base}{suffix}"
+    return f"{short_base}{suffix}"
 
 
 def abbreviate_leaf_text(text: str) -> str:
