@@ -77,12 +77,7 @@
         "st-summary": "Defying the LC, BHS has mahapakh rather than munax.",
         "wlc_focus": "ועשר֤ים",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
-        "comment": "See the image in the UXLC change to which we link above.",
-        "assessment": {
-          "wlc": "mahapakh",
-          "uxlc": "munax",
-          "mam": "munax"
-        }
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -176,12 +171,7 @@
         "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
         "wlc_focus": "מכ֨ל",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
-        "comment": "The LC has no visible accent on מכל. See the image in the UXLC change to which we link above. The consensus accents the final syllable with pashta rather than qadma.",
-        "assessment": {
-          "wlc": "qadma_on_כ",
-          "uxlc": "no_accent",
-          "mam": "pashta_on_ל"
-        }
+        "comment": "The LC has no visible accent on מכל. See the image in the UXLC change to which we link above. The consensus accents the final syllable with pashta rather than qadma."
       }
     },
     {
@@ -287,11 +277,7 @@
         "mam_simple": "הר֙וח֙"
       },
       "structured_text": {
-        "wlc_focus": "הר֨וח",
-        "assessment": {
-          "wlc": "qadma_on_ר",
-          "mam": "pashta_on_ר-pashta_on_ח"
-        }
+        "wlc_focus": "הר֨וח"
       }
     },
     {
@@ -386,12 +372,7 @@
         "comment": [
           "See the image in the UXLC change to which we link above.",
           "Aside: I am not sure what, if anything is grammatically “wrong” about a merkha here. Indeed see the MAM doc-note for a list of some of the sources that have merkha. Maybe this merkha is not even what the Goerwitz checker is flagging as wrong. The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of the “legality” of sequences involving it. The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
-        ],
-        "assessment": {
-          "wlc": "merkha",
-          "uxlc": "meteg-maqaf",
-          "mam": "meteg-maqaf"
-        }
+        ]
       }
     },
     {
@@ -485,11 +466,7 @@
         "mam_simple": "גדולֽה׃"
       },
       "structured_text": {
-        "wlc_focus": "גדולֽה",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "גדולֽה"
       }
     },
     {
@@ -550,12 +527,7 @@
         "st-summary": "Defying the LC, BHS has tipexa rather than etnaxta.",
         "wlc_focus": "שנ֖ים",
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
-        "comment": "See the image in the UXLC change to which we link above.",
-        "assessment": {
-          "wlc": "tipexa",
-          "uxlc": "etnaxta",
-          "mam": "etnaxta"
-        }
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -738,12 +710,7 @@
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
-        "comment": "See the image in the UXLC change to which we link above.",
-        "assessment": {
-          "wlc": "qadma_on_נ",
-          "uxlc": "pashta_on_ה",
-          "mam": "pashta_on_ה"
-        }
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -805,11 +772,7 @@
       },
       "structured_text": {
         "wlc_focus": "סופֽה",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -868,11 +831,7 @@
       },
       "structured_text": {
         "wlc_focus": "יוסֽף",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -946,11 +905,7 @@
       },
       "structured_text": {
         "wlc_focus": "מצרֽים",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -1062,12 +1017,7 @@
         "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "ד֥י",
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
-        "comment": "See the image in the UXLC change to which we link above.",
-        "assessment": {
-          "wlc": "merkha",
-          "uxlc": "meteg-space",
-          "mam": "meteg-maqaf"
-        }
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -1126,11 +1076,7 @@
       },
       "structured_text": {
         "wlc_focus": "ההֽוא",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -1193,11 +1139,7 @@
       "structured_text": {
         "st-summary": "The LC has darga where it should have tevir.",
         "wlc_focus": "וחקרת֧",
-        "img": "LC-107B-col-3-line-18-dt-13v15.png",
-        "assessment": {
-          "wlc": "darga",
-          "mam": "tevir"
-        }
+        "img": "LC-107B-col-3-line-18-dt-13v15.png"
       }
     },
     {
@@ -1289,11 +1231,7 @@
       },
       "structured_text": {
         "wlc_focus": "אחֽיו",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -1364,12 +1302,7 @@
         "wlc_focus": "אש֥ר",
         "BHQ": "?",
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
-        "comment": "See the image in the UXLC change to which we link above.",
-        "assessment": {
-          "wlc": "merkha",
-          "uxlc": "tevir",
-          "mam": "tevir"
-        }
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -1429,12 +1362,7 @@
         "comment": [
           "It is very rare for WLC to diverge from BHS like this, without a bracket note. Perhaps WLC agrees with an older BHS? I have only checked the 1984 and 1997 editions of BHS.",
           "The LC diverges from consensus here by having merkha tipexa rather than tipexa merkha, but that is still accent-grammatical, so that divergence is not relevant here."
-        ],
-        "assessment": {
-          "wlc": "merkha merkha",
-          "uxlc": "merkha tipexa",
-          "mam": "tipexa merkha"
-        }
+        ]
       }
     },
     {
@@ -1549,11 +1477,7 @@
         "st-summary": "BHS transcribes a merkha as a tipexa.",
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
-        "comment": "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. It is aggressively uncharitable to transcribe the mark on שרי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to assume that a maqaf is missing.",
-        "assessment": {
-          "wlc": "tipexa",
-          "mam": "merkha"
-        }
+        "comment": "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with שרי. It is aggressively uncharitable to transcribe the mark on שרי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to assume that a maqaf is missing."
       }
     },
     {
@@ -1644,11 +1568,7 @@
         "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
-        "comment": "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing.",
-        "assessment": {
-          "wlc": "merkha munax",
-          "mam": "maqaf munax"
-        }
+        "comment": "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing."
       }
     },
     {
@@ -1706,11 +1626,7 @@
         "mam_simple": "ישראֽל׃"
       },
       "structured_text": {
-        "wlc_focus": "ישראֽל",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "ישראֽל"
       }
     },
     {
@@ -1795,11 +1711,7 @@
         "mam_simple": "ותקחֽה׃"
       },
       "structured_text": {
-        "wlc_focus": "ותקחֽה",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "ותקחֽה"
       }
     },
     {
@@ -1872,11 +1784,7 @@
         "mam_simple": "במצרֽים׃"
       },
       "structured_text": {
-        "wlc_focus": "במצרֽים",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "במצרֽים"
       }
     },
     {
@@ -1934,11 +1842,7 @@
         "mam_simple": "ומשמאלֽם׃"
       },
       "structured_text": {
-        "wlc_focus": "ומשמאלֽם",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "ומשמאלֽם"
       }
     },
     {
@@ -2010,11 +1914,7 @@
         "mam_simple": "ואמֽת׃"
       },
       "structured_text": {
-        "wlc_focus": "ואמֽת׀",
-        "assessment": {
-          "wlc": "silluq-pasoleg",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "ואמֽת׀"
       }
     },
     {
@@ -2160,11 +2060,7 @@
       },
       "structured_text": {
         "wlc_focus": "מזבחותֽם",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -2220,11 +2116,7 @@
       },
       "structured_text": {
         "wlc_focus": "אהבֽים",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -2316,11 +2208,7 @@
           "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble.",
           " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”.",
           "This verse has a munax vs merkha issue that may be significant."
-        ],
-        "assessment": {
-          "wlc": "tevir",
-          "mam": "merkha"
-        }
+        ]
       }
     },
     {
@@ -2475,12 +2363,7 @@
           [
             " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
           ]
-        ],
-        "assessment": {
-          "wlc": "tipexa",
-          "uxlc": "merkha",
-          "mam": "merkha"
-        }
+        ]
       }
     },
     {
@@ -2581,12 +2464,7 @@
           [
             " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa: tipexa is the least likely of the three possible meanings of this mark. Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably assume that a maqaf is missing."
           ]
-        ],
-        "assessment": {
-          "wlc": "tipexa",
-          "uxlc": "meteg-space",
-          "mam": "merkha"
-        }
+        ]
       }
     },
     {
@@ -2654,11 +2532,7 @@
           "As in many other cases we see in this document, BHS seems to be aggresively uncharitable in its transcription of this somewhat-ambiguous vertical line, avoiding the most likely intended meaning (here meteg) in favor of a less likely, indeed “illegal” alternative (here merkha). In this case the mark even lacks any inclination that would suggest merkha.",
           "As usual, when we say an accent is “illegal” we mean that it does not conform to the consensus grammar of accents, given the surrounding accent-context. Thus our degree of certainty that an accent is “illegal” depends on our degree of certainty about the surrounding accent-context. At times, our degree of certainty about the context is not high, for example due to ambiguity between merkha and tipexa. I don’t think that is the case here, but I thought I would bring up the general point anyway.",
           "Finally, it should be noted that the mark preceding this word’s yod is assumed to be a spacer."
-        ],
-        "assessment": {
-          "wlc": "merkha-maqaf",
-          "mam": "maqaf"
-        }
+        ]
       }
     },
     {
@@ -2752,12 +2626,7 @@
         "st-summary": "Defying the LC, BHS has tipexa rather than munax.",
         "wlc_focus": "מא֖רץ",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
-        "comment": "See the image in the UXLC change to which we link above.",
-        "assessment": {
-          "wlc": "tipexa",
-          "uxlc": "munax",
-          "mam": "munax"
-        }
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -2925,11 +2794,7 @@
         "st-summary": "BHS transcribes a meteg as a tipexa.",
         "wlc_focus": "הנ֖ה־",
         "img": "LC-272A-col-3-line-3-Je-48v12.png",
-        "comment": "Yet another aggressively uncharitable, overly-literal transcription by BHS. The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive.",
-        "assessment": {
-          "wlc": "tipexa-maqaf",
-          "mam": "meteg-maqaf"
-        }
+        "comment": "Yet another aggressively uncharitable, overly-literal transcription by BHS. The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
       }
     },
     {
@@ -3038,12 +2903,7 @@
         "st-summary": "BHS misses a pashta that is hard to see in the LC.",
         "wlc_focus": "אריצ֨נו",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60",
-        "comment": "See the image in the UXLC change to which we link above. BHS transcribes only the pashta stress helper, not the pashta itself. So, understandably, WLC transcribes this mark as a qadma.",
-        "assessment": {
-          "wlc": "qadma_on_צ",
-          "uxlc": "qadma_on_צ-pashta_on_ו",
-          "mam": "pashta_on_צ-pashta_on_ו"
-        }
+        "comment": "See the image in the UXLC change to which we link above. BHS transcribes only the pashta stress helper, not the pashta itself. So, understandably, WLC transcribes this mark as a qadma."
       }
     },
     {
@@ -3111,11 +2971,7 @@
           "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink. See the image in the UXLC note to which we link above.",
           "Even if the editors of BHQ Judges (2011) lacked access to color images, this was an overly-literal, aggressively uncharitable transcription. Even without color, they should have been aware that this could be a non-ink speck on the LC vellum or a non-intentional ink dot. They should have found one of these possibilities more likely than a verse-final tevir. A verse-final tevir is rather far-fetched.",
           "Are they attempting to use typography to create a pseudo-photographic image of the LC, or are they trying to transcribe the LC “meaningfully,” using some degree of interpretation to determine the most likely intended meaning of each mark? (Sometimes, as is the case here, the most likely intended meaning of a mark is no meaning at all!)"
-        ],
-        "assessment": {
-          "wlc": "tevir-sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        ]
       }
     },
     {
@@ -3172,11 +3028,7 @@
           "It is uncharitable to transcribe this mark as a tipexa. Most likely what happened here is that the scribe forgot to add a maqaf. It is far less likely that the scribe intended to add a second tipexa, and a second merkha seems equally implausible.",
           "The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive.",
           "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh. BHQ claims that manuscripts L34 and Y (in its sigil vocabulary) have this dagesh. Breuer (in Da-at Miqra) claims that Minxat Shai asserts this dagesh."
-        ],
-        "assessment": {
-          "wlc": "meteg-tipexa",
-          "mam": "meteg-meteg-maqaf"
-        }
+        ]
       }
     },
     {
@@ -3259,11 +3111,7 @@
       },
       "structured_text": {
         "wlc_focus": "הֽוא",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -3304,11 +3152,7 @@
       },
       "structured_text": {
         "wlc_focus": "לאמֽר",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -3352,11 +3196,7 @@
       },
       "structured_text": {
         "wlc_focus": "לחֽרב",
-        "BHQ": "?",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "BHQ": "?"
       }
     },
     {
@@ -3436,12 +3276,7 @@
         "wlc_focus": "דבר֨י",
         "BHQ": "?",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
-        "comment": "See the image in the UXLC change to which we link above.",
-        "assessment": {
-          "wlc": "qadma_on_ר",
-          "uxlc": "pashta_on_י",
-          "mam": "pashta_on_י"
-        }
+        "comment": "See the image in the UXLC change to which we link above."
       }
     },
     {
@@ -3484,11 +3319,7 @@
         "mam_simple": "קטֽרת׃"
       },
       "structured_text": {
-        "wlc_focus": "קטֽרת",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "קטֽרת"
       }
     },
     {
@@ -3525,11 +3356,7 @@
         "mam_simple": "לחטֽאת׃"
       },
       "structured_text": {
-        "wlc_focus": "לחטֽאת",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "לחטֽאת"
       }
     },
     {
@@ -3615,11 +3442,7 @@
         "mam_simple": "למנחֽה׃"
       },
       "structured_text": {
-        "wlc_focus": "למנחֽה",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "למנחֽה"
       }
     },
     {
@@ -3662,11 +3485,7 @@
         "mam_simple": "קטֽרת׃"
       },
       "structured_text": {
-        "wlc_focus": "קטֽרת",
-        "assessment": {
-          "wlc": "silluq-no_sof_pasuq",
-          "mam": "silluq-sof_pasuq"
-        }
+        "wlc_focus": "קטֽרת"
       }
     },
     {
@@ -3882,11 +3701,7 @@
         "wlc_focus": "עליה",
         "BHQ": "?",
         "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
-        "comment": "See the image in the UXLC note to which we link above.",
-        "assessment": {
-          "wlc": "no_accent",
-          "mam": "tipexa"
-        }
+        "comment": "See the image in the UXLC note to which we link above."
       }
     }
   ]

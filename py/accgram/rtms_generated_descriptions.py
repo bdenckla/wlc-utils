@@ -1,88 +1,21 @@
 from __future__ import annotations
 
 from accgram import rtms_meteg_witness
-from accgram.rtms_assessment_materialize import (
-    order_assessment_dict,
-    should_materialize_missing_assessment_key,
-)
 from accgram.rtms_token_like import texts_from_token_like_payload
 from accgram.tm_descriptor import infer_descriptor
 
 
-def materialize_auto_assessment_descriptors(
+def try_generated_description(
     *,
-    structured_text: dict[str, object],
-    enriched_row: dict[str, object],
-    wlc_focus: str | None,
-) -> dict[str, object]:
-    assessment = structured_text.get("assessment", {})
-    assert isinstance(assessment, dict)
-
-    out_assessment = dict(assessment)
-    changed = False
-
-    # If an assessment key is absent but its corresponding diff side is
-    # present, infer the descriptor implicitly.
-    for key in ("wlc", "uxlc", "mam"):
-        if key in out_assessment:
-            continue
-        if not should_materialize_missing_assessment_key(
-            assessment_key=key,
-            enriched_row=enriched_row,
-            wlc_focus=wlc_focus,
-            diff_rhs_tokens=_diff_rhs_tokens_for_materialization,
-            infer_assessment_descriptor=_infer_assessment_descriptor_for_materialization,
-        ):
-            continue
-
-        descriptor = _auto_assessment_descriptor_for_key(
-            assessment_key=key,
-            enriched_row=enriched_row,
-            wlc_focus=wlc_focus,
-        )
-        if not isinstance(descriptor, str) or not descriptor.strip():
-            continue
-
-        out_assessment[key] = descriptor
-        changed = True
-
-    if not changed:
-        return structured_text
-
-    out_assessment = order_assessment_dict(out_assessment)
-
-    out_structured_text = dict(structured_text)
-    out_structured_text["assessment"] = out_assessment
-    return out_structured_text
-
-
-def try_auto_assessment_descriptor(
-    *,
-    assessment_key: str,
+    description_key: str,
     enriched_row: dict[str, object],
     wlc_focus: str | None,
 ) -> str | None:
-    if assessment_key == "manuscript":
+    if description_key == "manuscript":
         return None
 
-    descriptor = _auto_assessment_descriptor_for_key(
-        assessment_key=assessment_key,
-        enriched_row=enriched_row,
-        wlc_focus=wlc_focus,
-    )
-    if not isinstance(descriptor, str) or not descriptor.strip():
-        return None
-    return descriptor
-
-
-def _auto_assessment_descriptor_for_key(
-    *,
-    assessment_key: str,
-    enriched_row: dict[str, object],
-    wlc_focus: str | None,
-) -> str | None:
-    for hebrew_token, witness_token, is_last_word in _candidate_tokens_for_auto_assessment(
-        assessment_key=assessment_key,
+    for hebrew_token, witness_token, is_last_word in _candidate_tokens_for_generated_description(
+        description_key=description_key,
         enriched_row=enriched_row,
         wlc_focus=wlc_focus,
     ):
@@ -97,9 +30,31 @@ def _auto_assessment_descriptor_for_key(
     return None
 
 
-def _candidate_tokens_for_auto_assessment(
+def diff_rhs_tokens(diff_value: object, *, rhs_key: str) -> list[str]:
+    if isinstance(diff_value, list):
+        out_tokens: list[str] = []
+        for item in diff_value:
+            out_tokens.extend(diff_rhs_tokens(item, rhs_key=rhs_key))
+        return out_tokens
+
+    if not isinstance(diff_value, dict):
+        return []
+
+    if rhs_key not in diff_value:
+        return []
+
+    return texts_from_token_like_payload(diff_value.get(rhs_key))
+
+
+def infer_generated_description_for_token(hebrew_token: str) -> str | None:
+    return _infer_descriptor(
+        hebrew_token,
+    )
+
+
+def _candidate_tokens_for_generated_description(
     *,
-    assessment_key: str,
+    description_key: str,
     enriched_row: dict[str, object],
     wlc_focus: str | None,
 ) -> list[tuple[str, str | None, bool | None]]:
@@ -110,7 +65,7 @@ def _candidate_tokens_for_auto_assessment(
         side_key="wlc422",
     )
 
-    if assessment_key == "wlc":
+    if description_key == "wlc":
         if isinstance(wlc_focus, str):
             candidates.append(
                 _candidate_with_optional_witness(
@@ -119,7 +74,7 @@ def _candidate_tokens_for_auto_assessment(
                 )
             )
 
-    if assessment_key == "bhs":
+    if description_key == "bhs":
         candidates.extend(
             _candidate_tokens_from_diff_side(
                 diff_value=enriched_row.get("diff_wlc_uxlc"),
@@ -135,7 +90,7 @@ def _candidate_tokens_for_auto_assessment(
             )
         )
 
-    if assessment_key == "uxlc":
+    if description_key == "uxlc":
         uxlc_witness_payload = rtms_meteg_witness.witness_payload_for_side(
             enriched_row,
             side_key="uxlc",
@@ -155,7 +110,7 @@ def _candidate_tokens_for_auto_assessment(
                 )
             )
 
-    if assessment_key == "mam":
+    if description_key == "mam":
         mam_witness_payload = rtms_meteg_witness.witness_payload_for_side(
             enriched_row,
             side_key="mam_simple",
@@ -189,7 +144,7 @@ def _candidate_tokens_from_diff_side(
             hebrew_token=token,
             source_witness_payload=source_witness_payload,
         )
-        for token in _diff_rhs_tokens(diff_value, rhs_key=rhs_key)
+        for token in diff_rhs_tokens(diff_value, rhs_key=rhs_key)
     ]
 
 
@@ -274,52 +229,6 @@ def _merge_candidate_is_last_word(
     if existing_is_last == incoming_is_last:
         return existing_is_last
     return None
-
-
-def _diff_rhs_tokens_for_materialization(diff_value: object, rhs_key: str) -> list[str]:
-    return _diff_rhs_tokens(diff_value, rhs_key=rhs_key)
-
-
-def _infer_assessment_descriptor_for_materialization(
-    hebrew_token: str,
-) -> str | None:
-    return _infer_descriptor(
-        hebrew_token,
-    )
-
-
-def _diff_rhs_tokens(diff_value: object, *, rhs_key: str) -> list[str]:
-    if isinstance(diff_value, list):
-        out_tokens: list[str] = []
-        for item in diff_value:
-            out_tokens.extend(_diff_rhs_tokens(item, rhs_key=rhs_key))
-        return out_tokens
-
-    if not isinstance(diff_value, dict):
-        return []
-
-    if rhs_key not in diff_value:
-        return []
-
-    return _texts_from_token_like_payload(diff_value.get(rhs_key))
-
-
-def _texts_from_token_like_payload(payload: object) -> list[str]:
-    return texts_from_token_like_payload(payload)
-
-
-def _unique_nonempty_strings(values: list[str]) -> list[str]:
-    out: list[str] = []
-    seen: set[str] = set()
-
-    for value in values:
-        collapsed = " ".join(value.split())
-        if not collapsed or collapsed in seen:
-            continue
-        seen.add(collapsed)
-        out.append(collapsed)
-
-    return out
 
 
 def _infer_descriptor(

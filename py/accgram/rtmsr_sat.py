@@ -1,25 +1,18 @@
 from __future__ import annotations
 
 import json
-import re
 from collections.abc import Callable
 
-from accgram import rtms_meteg_witness
+from accgram import rtms_sat_descriptions
+from accgram import rtms_sat_source_rows
 from accgram import rtmsr_bracket_notes
 from accgram import rtmsr_diff_format
 from accgram import rtmsr_sat_notes_column
 from accgram import rtmsr_wlc_word_format
-from accgram.rtms_assessment_auto import try_auto_assessment_descriptor
-from accgram import tm_descriptor
+from accgram.rtms_sat_source_rows import SatSourceRow
 from py_html import wlc_utils_html
 
-_ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "mam")
 _WLC_FOCUS_ROW_KEYS = {"wlc_focus"}
-_SAT_A_KEY_MERGE_TARGETS: dict[str, str] = {
-    "a.wlc": "wlc_focus",
-    "a.uxlc": "diff_wlc_uxlc",
-    "a.mam": "diff_wlc_mam",
-}
 _SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
     "1k 16:33": {"diff_wlc_uxlc[1]"},
     "mi 2:7": {"diff_wlc_mam[2]"},
@@ -37,10 +30,11 @@ def render_sat_table(
     structured_text_lookup: StructuredTextLookup,
     wlc_tokens: list[object],
 ) -> object:
-    wlc_focus = structured_text_lookup(row, "wlc_focus")
-    wlc_focus_str = (
-        _normalize_whitespace(wlc_focus) if isinstance(wlc_focus, str) else ""
+    wlc_focus_source_row = rtms_sat_source_rows.build_wlc_focus_source_row(
+        structured_text_lookup(row, "wlc_focus")
     )
+    wlc_focus_str = wlc_focus_source_row.value
+
     wlc_focus_notes = rtmsr_wlc_word_format.collect_wlc_word_bracket_notes(
         wlc_tokens,
         wlc_focus_str or None,
@@ -51,45 +45,41 @@ def render_sat_table(
     if rendered_wlc_focus_notes:
         sat_notes_by_key["wlc_focus"] = rendered_wlc_focus_notes
 
-    sat_rows: list[SatRow] = [_sat_row(key="wlc_focus", value=wlc_focus_str)]
-    sat_rows.extend(
-        [
-            _sat_row(key=label, value=value)
-            for label, value in rtmsr_diff_format.normalize_diff_rows(
-                "diff_wlc_uxlc",
-                row.get("diff_wlc_uxlc"),
-                row=row,
-                rhs_key="uxlc",
-                render_sat_value=render_sat_value,
-                structured_text_lookup=structured_text_lookup,
-            )
-        ]
-    )
-    sat_rows.extend(
-        [
-            _sat_row(key=label, value=value)
-            for label, value in rtmsr_diff_format.normalize_diff_rows(
-                "diff_wlc_mam",
-                row.get("diff_wlc_mam"),
-                row=row,
-                rhs_key="mam_simple",
-                render_sat_value=render_sat_value,
-                structured_text_lookup=structured_text_lookup,
-            )
-        ]
-    )
-
-    sat_rows.extend(
-        _assessment_sat_rows(
-            row,
+    source_rows: list[SatSourceRow] = [wlc_focus_source_row]
+    source_rows.extend(
+        rtms_sat_source_rows.normalize_diff_source_rows(
+            "diff_wlc_uxlc",
+            row.get("diff_wlc_uxlc"),
+            row=row,
+            rhs_key="uxlc",
+            description_key="uxlc",
+            render_sat_value=render_sat_value,
             structured_text_lookup=structured_text_lookup,
-            existing_sat_rows=sat_rows,
-            wlc_focus=wlc_focus_str or None,
         )
     )
+    source_rows.extend(
+        rtms_sat_source_rows.normalize_diff_source_rows(
+            "diff_wlc_mam",
+            row.get("diff_wlc_mam"),
+            row=row,
+            rhs_key="mam_simple",
+            description_key="mam",
+            render_sat_value=render_sat_value,
+            structured_text_lookup=structured_text_lookup,
+        )
+    )
+
+    sat_rows = [
+        _sat_row_from_source(
+            source_row=source_row,
+            row=row,
+            row_ref=row_ref,
+            wlc_focus=wlc_focus_str or None,
+        )
+        for source_row in source_rows
+    ]
+
     sat_rows = _apply_sat_row_suppressions(row_ref, sat_rows)
-    sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows, row=row)
-    sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
     notes_column_plan = rtmsr_sat_notes_column.build_sat_notes_column_plan(
         sat_rows,
         notes_by_key=sat_notes_by_key,
@@ -166,6 +156,26 @@ def render_sat_value(value: object) -> str:
         return str(value)
 
 
+def _sat_row_from_source(
+    *,
+    source_row: SatSourceRow,
+    row: dict[str, object],
+    row_ref: str,
+    wlc_focus: str | None,
+) -> SatRow:
+    value, middle_description = rtms_sat_descriptions.build_sat_value_and_description(
+        source_row=source_row,
+        enriched_row=row,
+        row_ref=row_ref,
+        wlc_focus=wlc_focus,
+    )
+    return _sat_row(
+        key=source_row.key,
+        value=value,
+        middle_description=middle_description,
+    )
+
+
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
     if label in _WLC_FOCUS_ROW_KEYS and rtmsr_diff_format.contains_hebrew(value):
         return {"lang": "hbo", "dir": "rtl"}
@@ -176,111 +186,6 @@ def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
         return {"lang": "hbo", "dir": "rtl"}
 
     return None
-
-
-def _assessment_sat_rows(
-    row: dict[str, object],
-    *,
-    structured_text_lookup: StructuredTextLookup,
-    existing_sat_rows: list[SatRow],
-    wlc_focus: str | None,
-) -> list[SatRow]:
-    rows: list[SatRow] = []
-
-    assessment_values: dict[str, object] = {}
-    assessment = structured_text_lookup(row, "assessment")
-    if isinstance(assessment, dict):
-        assessment_values.update(assessment)
-
-    for key in ("wlc", "uxlc", "mam"):
-        if key in assessment_values:
-            continue
-        if not _sat_html_wants_assessment_key(existing_sat_rows, assessment_key=key):
-            continue
-        descriptor = try_auto_assessment_descriptor(
-            assessment_key=key,
-            enriched_row=row,
-            wlc_focus=wlc_focus,
-        )
-        if isinstance(descriptor, str) and descriptor.strip():
-            if not _auto_assessment_has_merge_target(
-                existing_sat_rows,
-                row=row,
-                assessment_key=key,
-                assessment_value=descriptor,
-            ):
-                continue
-            assessment_values[key] = descriptor
-
-    for key in _ASSESSMENT_KEYS:
-        value = assessment_values.get(key)
-        if value is None:
-            continue
-
-        sat_assessment_key = f"a.{key}"
-        rendered_value = render_sat_value(value)
-        if _sat_merge_target_key_for_assessment_key(sat_assessment_key) is not None:
-            if not _auto_assessment_has_merge_target(
-                existing_sat_rows,
-                row=row,
-                assessment_key=key,
-                assessment_value=rendered_value,
-            ):
-                continue
-
-        rows.append(_sat_row(key=sat_assessment_key, value=rendered_value))
-
-    return rows
-
-
-def _sat_html_wants_assessment_key(
-    existing_sat_rows: list[SatRow], *, assessment_key: str
-) -> bool:
-    merge_target_key = _sat_merge_target_key_for_assessment_key(f"a.{assessment_key}")
-    if merge_target_key is None:
-        return False
-    target_indices = _find_sat_merge_target_row_indices(
-        existing_sat_rows,
-        merge_target_base_key=merge_target_key,
-    )
-    if not target_indices:
-        return False
-
-    for target_idx in target_indices:
-        target_value = existing_sat_rows[target_idx][0]
-        if rtmsr_diff_format.is_plain_hebrew_string(target_value.strip()):
-            return True
-    return False
-
-
-def _auto_assessment_has_merge_target(
-    existing_sat_rows: list[SatRow],
-    *,
-    row: dict[str, object],
-    assessment_key: str,
-    assessment_value: str,
-) -> bool:
-    merge_target_key = _sat_merge_target_key_for_assessment_key(f"a.{assessment_key}")
-    if merge_target_key is None:
-        return False
-
-    target_indices = _find_sat_merge_target_row_indices(
-        existing_sat_rows,
-        merge_target_base_key=merge_target_key,
-    )
-    for target_idx in target_indices:
-        target_value, _middle, target_key = existing_sat_rows[target_idx]
-        if (
-            _sat_assessment_value_describes_target_value(
-                assessment_value=assessment_value,
-                target_value=target_value,
-                row=row,
-                target_key=target_key,
-            )
-            is True
-        ):
-            return True
-    return False
 
 
 def _apply_sat_row_suppressions(ref: str, rows: list[SatRow]) -> list[SatRow]:
@@ -299,238 +204,6 @@ def _sat_row(*, key: str, value: str, middle_description: str = "") -> SatRow:
 
 def _sat_row_key(row: SatRow) -> str:
     return row[2]
-
-
-def _move_assessment_values_to_sat_middle_column(rows: list[SatRow]) -> list[SatRow]:
-    moved_rows: list[SatRow] = []
-    for value, middle_description, key in rows:
-        if key.startswith("a.") and value:
-            moved_rows.append(
-                _sat_row(
-                    key=key,
-                    value="",
-                    middle_description=middle_description or value,
-                )
-            )
-        else:
-            moved_rows.append((value, middle_description, key))
-
-    return moved_rows
-
-
-def _sat_merge_target_key_for_assessment_key(key: str) -> str | None:
-    return _SAT_A_KEY_MERGE_TARGETS.get(key)
-
-
-def _sat_row_merge_target_priority(
-    *, row_key: str, merge_target_base_key: str
-) -> int | None:
-    # Prefer the direct key match, then indexed keys.
-    if row_key == merge_target_base_key:
-        return 0
-    if re.fullmatch(rf"{re.escape(merge_target_base_key)}\[\d+\]", row_key):
-        return 1
-    return None
-
-
-def _merge_assessment_rows_into_sat_middle_column(
-    rows: list[SatRow],
-    *,
-    row: dict[str, object],
-) -> list[SatRow]:
-    merged_rows = list(rows)
-    consumed_indices: set[int] = set()
-
-    for row_idx, sat_row in enumerate(rows):
-        row_key = _sat_row_key(sat_row)
-        merge_target_base_key = _sat_merge_target_key_for_assessment_key(row_key)
-        if merge_target_base_key is None:
-            continue
-
-        target_indices = _find_sat_merge_target_row_indices(
-            merged_rows,
-            merge_target_base_key=merge_target_base_key,
-        )
-        if not target_indices:
-            raise ValueError(
-                "SAT assessment merge failed: "
-                f"ref={row.get('ref')!r} assessment_key={row_key!r} "
-                f"assessment_value={sat_row[0]!r} missing_target={merge_target_base_key!r}"
-            )
-
-        assessment_value, _assessment_middle, _assessment_key = sat_row
-        merge_target_idx: int | None = None
-        for target_idx in target_indices:
-            target_value, _target_middle, _target_key = merged_rows[target_idx]
-            if (
-                _sat_assessment_value_describes_target_value(
-                    assessment_value=assessment_value,
-                    target_value=target_value,
-                    row=row,
-                    target_key=_target_key,
-                )
-                is True
-            ):
-                merge_target_idx = target_idx
-                break
-
-        if merge_target_idx is None:
-            candidate_targets = [
-                merged_rows[target_idx][0] for target_idx in target_indices
-            ]
-            raise ValueError(
-                "SAT assessment merge failed: "
-                f"ref={row.get('ref')!r} assessment_key={row_key!r} "
-                f"assessment_value={assessment_value!r} target_key={merge_target_base_key!r} "
-                f"candidate_targets={candidate_targets!r}"
-            )
-
-        target_value, _target_middle, target_key = merged_rows[merge_target_idx]
-        target_value = _maybe_restore_value_from_witness(
-            row=row,
-            target_key=target_key,
-            target_value=target_value,
-            assessment_value=assessment_value,
-        )
-
-        merged_rows[merge_target_idx] = _sat_row(
-            key=target_key,
-            value=target_value,
-            middle_description=assessment_value,
-        )
-        consumed_indices.add(row_idx)
-
-    if not consumed_indices:
-        return merged_rows
-
-    return [
-        sat_row
-        for idx, sat_row in enumerate(merged_rows)
-        if idx not in consumed_indices
-    ]
-
-
-def _find_sat_merge_target_row_indices(
-    rows: list[SatRow], *, merge_target_base_key: str
-) -> list[int]:
-    prioritized_indices: list[tuple[int, int]] = []
-    for idx, sat_row in enumerate(rows):
-        priority = _sat_row_merge_target_priority(
-            row_key=_sat_row_key(sat_row),
-            merge_target_base_key=merge_target_base_key,
-        )
-        if priority is None:
-            continue
-        prioritized_indices.append((priority, idx))
-
-    prioritized_indices.sort()
-    return [idx for _priority, idx in prioritized_indices]
-
-
-def _sat_assessment_value_describes_target_value(
-    *,
-    assessment_value: str,
-    target_value: str,
-    row: dict[str, object],
-    target_key: str,
-) -> bool | None:
-    assessment_text = assessment_value.strip()
-    target_text = target_value.strip()
-    if not assessment_text or not target_text:
-        return None
-
-    if not rtmsr_diff_format.is_plain_hebrew_string(target_text):
-        return None
-
-    side_key = _witness_side_key_for_sat_row_key(target_key)
-    source_witness_payload = None
-    witness_token = None
-    is_last_word = None
-    if side_key is not None:
-        source_witness_payload = rtms_meteg_witness.witness_payload_for_side(
-            row,
-            side_key=side_key,
-        )
-
-    if source_witness_payload is not None:
-        witness_token = rtms_meteg_witness.match_unique_witness_token(
-            sanitized_token=target_text,
-            source_witness_payload=source_witness_payload,
-        )
-        is_last_word = rtms_meteg_witness.is_last_word_in_witness(
-            sanitized_token=target_text,
-            source_witness_payload=source_witness_payload,
-        )
-
-    return tm_descriptor.assessment_descriptor_matches_hebrew_token(
-        assessment_descriptor=assessment_text,
-        hebrew_token=target_text,
-        hebrew_token_w=witness_token,
-        is_last_word=is_last_word,
-    )
-
-
-def _maybe_restore_value_from_witness(
-    *,
-    row: dict[str, object],
-    target_key: str,
-    target_value: str,
-    assessment_value: str,
-) -> str:
-    normalized_assessment = assessment_value.strip()
-    if normalized_assessment not in {
-        "meteg-space",
-        "meteg-maqaf",
-        "meteg-meteg-maqaf",
-    }:
-        return target_value
-
-    if not rtmsr_diff_format.is_plain_hebrew_string(target_value):
-        return target_value
-
-    side_key = _witness_side_key_for_sat_row_key(target_key)
-    if side_key is None:
-        return target_value
-
-    source_witness_payload = rtms_meteg_witness.witness_payload_for_side(
-        row,
-        side_key=side_key,
-    )
-    if source_witness_payload is None:
-        return target_value
-
-    witness_token = rtms_meteg_witness.match_unique_witness_token(
-        sanitized_token=target_value,
-        source_witness_payload=source_witness_payload,
-    )
-    if not isinstance(witness_token, str) or not witness_token.strip():
-        return target_value
-
-    if not rtms_meteg_witness.token_has_meteg(witness_token):
-        return target_value
-
-    has_maqaf = rtms_meteg_witness.token_has_maqaf(witness_token)
-    if normalized_assessment == "meteg-space" and has_maqaf:
-        return target_value
-    if normalized_assessment in {"meteg-maqaf", "meteg-meteg-maqaf"} and not has_maqaf:
-        return target_value
-
-    return witness_token
-
-
-def _witness_side_key_for_sat_row_key(row_key: str) -> str | None:
-    base_key = row_key
-    bracket_idx = base_key.find("[")
-    if bracket_idx >= 0:
-        base_key = base_key[:bracket_idx]
-
-    if base_key == "wlc_focus":
-        return "wlc422"
-    if base_key == "diff_wlc_uxlc":
-        return "uxlc"
-    if base_key == "diff_wlc_mam":
-        return "mam_simple"
-    return None
 
 
 def _render_token_like_dict(value: dict[str, object]) -> str | None:
@@ -566,9 +239,3 @@ def _render_token_like_dict(value: dict[str, object]) -> str | None:
         out = f"{out} ({'; '.join(extras)})"
 
     return out
-
-
-def _normalize_whitespace(value: str | None) -> str:
-    if not isinstance(value, str):
-        return ""
-    return " ".join(value.split())

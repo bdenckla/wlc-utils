@@ -12,7 +12,6 @@ from accgram import rtms_rows
 from accgram import tm_changes
 from accgram import tm_descriptor
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
-from accgram.rtms_assessment_auto import materialize_auto_assessment_descriptors
 from accgram.tm_structured_text import STRUCTURED_TEXT_BY_REF
 from accgram.tm_sanity import sanity_check_structured_text
 
@@ -236,11 +235,6 @@ def _enrich_troublemaker_rows(
         )
 
         if structured_text is not None:
-            structured_text = materialize_auto_assessment_descriptors(
-                structured_text=structured_text,
-                enriched_row=enriched_row,
-                wlc_focus=wlc_focus,
-            )
             _validate_structured_text_uxlc_match(
                 ref=ref,
                 structured_text=structured_text,

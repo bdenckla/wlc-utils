@@ -2,12 +2,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from accgram import rtms_missing_sof_pasuq_descriptions
 from py_html import wlc_utils_html
 
-_MISSING_SOF_PASUQ_TOKENS = (
-    "silluq-no_sof_pasuq",
-    "silluq-pasoleg",
-)
 _MISSING_SOF_PASUQ_YES_LABEL = "missing sof pasuq: yes"
 _MISSING_SOF_PASUQ_NO_LABEL = "missing sof pasuq: no"
 
@@ -82,33 +79,4 @@ def build_msp_no_related_pages_top_contents(
 
 
 def _row_is_missing_sof_pasuq_yes(row: dict[str, object]) -> bool:
-    structured_text = row.get("structured_text")
-    if not isinstance(structured_text, dict):
-        return False
-
-    assessment = structured_text.get("assessment")
-    if not isinstance(assessment, dict):
-        return False
-
-    return any(
-        _assessment_value_contains_missing_sof_pasuq_marker(value)
-        for value in assessment.values()
-    )
-
-
-def _assessment_value_contains_missing_sof_pasuq_marker(value: object) -> bool:
-    if isinstance(value, str):
-        return any(token in value for token in _MISSING_SOF_PASUQ_TOKENS)
-
-    if isinstance(value, list):
-        return any(
-            _assessment_value_contains_missing_sof_pasuq_marker(item) for item in value
-        )
-
-    if isinstance(value, dict):
-        return any(
-            _assessment_value_contains_missing_sof_pasuq_marker(item)
-            for item in value.values()
-        )
-
-    return False
+    return rtms_missing_sof_pasuq_descriptions.row_is_missing_sof_pasuq_yes(row)
