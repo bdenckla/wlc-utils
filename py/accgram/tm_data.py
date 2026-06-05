@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+def get_structured_text() -> dict[str, dict[str, object]]:
+    return STRUCTURED_TEXT_BY_REF
 
 def _non_revia_comment(fp_value: str, extra=()):
     return (

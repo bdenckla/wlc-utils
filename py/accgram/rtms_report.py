@@ -10,7 +10,7 @@ from accgram import rtmsr_sat
 from accgram import rtmsr_subsets
 from accgram import rtmsr_verse
 from accgram import rtms_ref
-from accgram.tm_structured_text import get_structured_text
+from accgram.tm_data import get_structured_text
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html

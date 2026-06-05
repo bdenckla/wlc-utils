@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_generated_descriptions
-from accgram.tm_structured_text import get_structured_text
+from accgram.tm_data import get_structured_text
 
 _MISSING_SOF_PASUQ_TOKENS = {
     "silluq-no_sof_pasuq",

@@ -12,7 +12,7 @@ from accgram import rtms_rows
 from accgram import tm_changes
 from accgram import tm_descriptor
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
-from accgram.tm_structured_text import get_structured_text
+from accgram.tm_data import get_structured_text
 from accgram.tm_sanity import sanity_check_structured_text
 
 
