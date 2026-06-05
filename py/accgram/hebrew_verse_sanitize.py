@@ -1,13 +1,12 @@
 from __future__ import annotations
 
+from mb_cmn import hebrew_points as hp
+from mb_cmn import hebrew_punctuation as hpunc
+
 _HEBREW_LETTER_START = ord("\u05d0")
 _HEBREW_LETTER_END = ord("\u05ea")
 _HEBREW_ACCENT_START = ord("\u0591")
 _HEBREW_ACCENT_END = ord("\u05af")
-_HEBREW_MAQAF = "\u05be"
-_HEBREW_METEG = "\u05bd"
-_HEBREW_PASEQ = "\u05c0"
-_HEBREW_SOF_PASUQ = "\u05c3"
 _HEBREW_TELISHA_GEDOLA = "\u05a0"
 
 
@@ -93,7 +92,7 @@ def _sanitize_hebrew_token(
     keep_all_meteg: bool,
     remove_duplicate_telisha_gedola: bool,
 ) -> str:
-    last_meteg_idx = text.rfind(_HEBREW_METEG) if keep_last_meteg else -1
+    last_meteg_idx = text.rfind(hp.MTGOSLQ) if keep_last_meteg else -1
     out_chars: list[str] = []
     for idx, ch in enumerate(text):
         codepoint = ord(ch)
@@ -103,10 +102,10 @@ def _sanitize_hebrew_token(
         if _HEBREW_ACCENT_START <= codepoint <= _HEBREW_ACCENT_END:
             out_chars.append(ch)
             continue
-        if ch in {_HEBREW_MAQAF, _HEBREW_PASEQ, _HEBREW_SOF_PASUQ}:
+        if ch in {hpunc.MAQ, hpunc.PASOLEG, hpunc.SOPA}:
             out_chars.append(ch)
             continue
-        if ch == _HEBREW_METEG and (keep_all_meteg or idx == last_meteg_idx):
+        if ch == hp.MTGOSLQ and (keep_all_meteg or idx == last_meteg_idx):
             out_chars.append(ch)
     sanitized = "".join(out_chars)
     if remove_duplicate_telisha_gedola:
@@ -118,7 +117,7 @@ def _drop_duplicate_telisha_gedola(text: str) -> str:
     out_chars: list[str] = []
     seen_in_token = False
     for ch in text:
-        if ch in {_HEBREW_MAQAF, _HEBREW_PASEQ, _HEBREW_SOF_PASUQ}:
+        if ch in {hpunc.MAQ, hpunc.PASOLEG, hpunc.SOPA}:
             seen_in_token = False
             out_chars.append(ch)
             continue

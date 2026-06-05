@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 from accgram import tm_changes
-from accgram import tm_descriptor
 
 
 def sanity_check_structured_text(
@@ -60,47 +59,3 @@ def sanity_check_structured_text(
             "structured_text sanity checks failed against all_changes.json:\n"
             f"{details}"
         )
-
-
-def sanitize_word_for_change_match(text: str) -> str:
-    return tm_descriptor.sanitize_word_for_change_match(text)
-
-
-def load_all_changes_by_url(all_changes_path: Path) -> dict[str, dict[str, object]]:
-    return tm_changes.load_all_changes_by_url(all_changes_path)
-
-
-def canonicalize_uxlc_change_url(url: str) -> str | None:
-    return tm_changes.canonicalize_uxlc_change_url(url)
-
-
-def diff_uxlc_matches_changetext(diff_wlc_uxlc: object, changetext: str) -> bool | None:
-    return tm_descriptor.diff_uxlc_matches_changetext(
-        diff_wlc_uxlc,
-        changetext,
-    )
-
-
-def descriptor_from_hebrew_token(text: str) -> str | None:
-    return tm_descriptor.descriptor_from_hebrew_token(text)
-
-
-def assessment_uxlc_matches_converted_diff_uxlc(
-    assessment_uxlc: str,
-    diff_wlc_uxlc: object,
-) -> bool | None:
-    return tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
-        assessment_uxlc,
-        diff_wlc_uxlc,
-    )
-
-
-def assessment_descriptor_matches_hebrew_token(
-    *,
-    assessment_descriptor: str,
-    hebrew_token: str,
-) -> bool | None:
-    return tm_descriptor.assessment_descriptor_matches_hebrew_token(
-        assessment_descriptor=assessment_descriptor,
-        hebrew_token=hebrew_token,
-    )

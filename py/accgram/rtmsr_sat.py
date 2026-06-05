@@ -10,7 +10,7 @@ from accgram import rtmsr_diff_format
 from accgram import rtmsr_sat_notes_column
 from accgram import rtmsr_wlc_word_format
 from accgram.rtms_assessment_auto import try_auto_assessment_descriptor
-from accgram import tm_sanity
+from accgram import tm_descriptor
 from py_html import wlc_utils_html
 
 _ASSESSMENT_KEYS = ("manuscript", "bhs", "wlc", "uxlc", "mam")
@@ -203,6 +203,13 @@ def _assessment_sat_rows(
             wlc_focus=wlc_focus,
         )
         if isinstance(descriptor, str) and descriptor.strip():
+            if not _auto_assessment_has_merge_target(
+                existing_sat_rows,
+                row=row,
+                assessment_key=key,
+                assessment_value=descriptor,
+            ):
+                continue
             assessment_values[key] = descriptor
 
     for key in _ASSESSMENT_KEYS:
@@ -220,12 +227,48 @@ def _sat_html_wants_assessment_key(
     merge_target_key = _sat_merge_target_key_for_assessment_key(f"a.{assessment_key}")
     if merge_target_key is None:
         return False
-    return bool(
-        _find_sat_merge_target_row_indices(
-            existing_sat_rows,
-            merge_target_base_key=merge_target_key,
-        )
+    target_indices = _find_sat_merge_target_row_indices(
+        existing_sat_rows,
+        merge_target_base_key=merge_target_key,
     )
+    if not target_indices:
+        return False
+
+    for target_idx in target_indices:
+        target_value = existing_sat_rows[target_idx][0]
+        if rtmsr_diff_format.is_plain_hebrew_string(target_value.strip()):
+            return True
+    return False
+
+
+def _auto_assessment_has_merge_target(
+    existing_sat_rows: list[SatRow],
+    *,
+    row: dict[str, object],
+    assessment_key: str,
+    assessment_value: str,
+) -> bool:
+    merge_target_key = _sat_merge_target_key_for_assessment_key(f"a.{assessment_key}")
+    if merge_target_key is None:
+        return False
+
+    target_indices = _find_sat_merge_target_row_indices(
+        existing_sat_rows,
+        merge_target_base_key=merge_target_key,
+    )
+    for target_idx in target_indices:
+        target_value, _middle, target_key = existing_sat_rows[target_idx]
+        if (
+            _sat_assessment_value_describes_target_value(
+                assessment_value=assessment_value,
+                target_value=target_value,
+                row=row,
+                target_key=target_key,
+            )
+            is True
+        ):
+            return True
+    return False
 
 
 def _apply_sat_row_suppressions(ref: str, rows: list[SatRow]) -> list[SatRow]:
@@ -297,7 +340,11 @@ def _merge_assessment_rows_into_sat_middle_column(
             merge_target_base_key=merge_target_base_key,
         )
         if not target_indices:
-            continue
+            raise ValueError(
+                "SAT assessment merge failed: "
+                f"ref={row.get('ref')!r} assessment_key={row_key!r} "
+                f"assessment_value={sat_row[0]!r} missing_target={merge_target_base_key!r}"
+            )
 
         assessment_value, _assessment_middle, _assessment_key = sat_row
         merge_target_idx: int | None = None
@@ -307,6 +354,8 @@ def _merge_assessment_rows_into_sat_middle_column(
                 _sat_assessment_value_describes_target_value(
                     assessment_value=assessment_value,
                     target_value=target_value,
+                    row=row,
+                    target_key=_target_key,
                 )
                 is True
             ):
@@ -314,7 +363,15 @@ def _merge_assessment_rows_into_sat_middle_column(
                 break
 
         if merge_target_idx is None:
-            continue
+            candidate_targets = [
+                merged_rows[target_idx][0] for target_idx in target_indices
+            ]
+            raise ValueError(
+                "SAT assessment merge failed: "
+                f"ref={row.get('ref')!r} assessment_key={row_key!r} "
+                f"assessment_value={assessment_value!r} target_key={merge_target_base_key!r} "
+                f"candidate_targets={candidate_targets!r}"
+            )
 
         target_value, _target_middle, target_key = merged_rows[merge_target_idx]
         target_value = _maybe_restore_value_from_witness(
@@ -359,7 +416,11 @@ def _find_sat_merge_target_row_indices(
 
 
 def _sat_assessment_value_describes_target_value(
-    *, assessment_value: str, target_value: str
+    *,
+    assessment_value: str,
+    target_value: str,
+    row: dict[str, object],
+    target_key: str,
 ) -> bool | None:
     assessment_text = assessment_value.strip()
     target_text = target_value.strip()
@@ -369,14 +430,32 @@ def _sat_assessment_value_describes_target_value(
     if not rtmsr_diff_format.is_plain_hebrew_string(target_text):
         return None
 
-    try:
-        return tm_sanity.assessment_descriptor_matches_hebrew_token(
-            assessment_descriptor=assessment_text,
-            hebrew_token=target_text,
+    side_key = _witness_side_key_for_sat_row_key(target_key)
+    source_witness_payload = None
+    witness_token = None
+    is_last_word = None
+    if side_key is not None:
+        source_witness_payload = rtms_meteg_witness.witness_payload_for_side(
+            row,
+            side_key=side_key,
         )
-    except (AssertionError, ValueError):
-        # Descriptor inference failures are indeterminate for SAT merge purposes.
-        return None
+
+    if source_witness_payload is not None:
+        witness_token = rtms_meteg_witness.match_unique_witness_token(
+            sanitized_token=target_text,
+            source_witness_payload=source_witness_payload,
+        )
+        is_last_word = rtms_meteg_witness.is_last_word_in_witness(
+            sanitized_token=target_text,
+            source_witness_payload=source_witness_payload,
+        )
+
+    return tm_descriptor.assessment_descriptor_matches_hebrew_token(
+        assessment_descriptor=assessment_text,
+        hebrew_token=target_text,
+        hebrew_token_w=witness_token,
+        is_last_word=is_last_word,
+    )
 
 
 def _maybe_restore_value_from_witness(
@@ -433,6 +512,8 @@ def _witness_side_key_for_sat_row_key(row_key: str) -> str | None:
     if bracket_idx >= 0:
         base_key = base_key[:bracket_idx]
 
+    if base_key == "wlc_focus":
+        return "wlc422"
     if base_key == "diff_wlc_uxlc":
         return "uxlc"
     if base_key == "diff_wlc_mam":

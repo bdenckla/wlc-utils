@@ -1,14 +1,14 @@
 from __future__ import annotations
 
+from accgram import meteg_silluq_context
 from mb_cmn import hebrew_accents as ha
+from mb_cmn import hebrew_points as hp
+from mb_cmn import hebrew_punctuation as hpunc
 
 _HEBREW_LETTER_START = ord("\u05d0")
 _HEBREW_LETTER_END = ord("\u05ea")
 _HEBREW_ACCENT_START = ord("\u0591")
 _HEBREW_ACCENT_END = ord("\u05af")
-_HEBREW_MAQAF = "\u05be"
-_HEBREW_PASEQ = "\u05c0"
-_HEBREW_SOF_PASUQ = "\u05c3"
 
 _ACCENT_TO_DESCRIPTOR = {
     ha.ATN: "etnaxta",
@@ -40,7 +40,7 @@ def sanitize_word_for_change_match(text: str) -> str:
         if _HEBREW_ACCENT_START <= cp <= _HEBREW_ACCENT_END:
             out_chars.append(ch)
             continue
-        if ch in {_HEBREW_MAQAF, _HEBREW_PASEQ, _HEBREW_SOF_PASUQ}:
+        if ch in {hpunc.MAQ, hpunc.PASOLEG, hpunc.SOPA}:
             out_chars.append(ch)
     out = "".join(out_chars)
     if not out:
@@ -64,7 +64,7 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
         ch for ch in text if _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END
     ]
     if len(accent_marks) == 0:
-        return "maqaf" if _HEBREW_MAQAF in text else "no_accent"
+        return "maqaf" if hpunc.MAQ in text else "no_accent"
 
     atoms_with_descriptors: list[list[str]] = []
     current_atom_descriptors: list[str] = []
@@ -79,7 +79,7 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
             _flush_current_atom_descriptors()
             continue
 
-        if ch == _HEBREW_MAQAF:
+        if ch == hpunc.MAQ:
             current_atom_descriptors.append("maqaf")
             continue
 
@@ -114,6 +114,86 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
         "-".join(atom_descriptors) for atom_descriptors in atoms_with_descriptors
     ]
     return " ".join(atom_descriptions)
+
+
+def infer_descriptor(
+    hebrew_token: str,
+    *,
+    hebrew_token_w: str | None = None,
+    is_last_word: bool | None = None,
+) -> str | None:
+    token = hebrew_token.strip()
+    if not token:
+        return None
+
+    mi_token = _token_for_deep_meteg_inspection(
+        token,
+        hebrew_token_w=hebrew_token_w,
+    )
+    base_descriptor_without_meteg = _descriptor_from_token_sans_meteg(
+        mi_token
+    )
+
+    u05bd_is_silluq = meteg_silluq_context.u05bd_is_silluq(
+        token=token,
+        verse_hebrew_tokens=None,
+        hebrew_token_w=(
+            mi_token if hp.MTGOSLQ in mi_token else None
+        ),
+    )
+    if is_last_word is not None:
+        u05bd_is_silluq = is_last_word if hp.MTGOSLQ in mi_token else None
+
+    if hp.MTGOSLQ in mi_token and u05bd_is_silluq is True:
+        if hpunc.SOPA in mi_token:
+            return "silluq-sof_pasuq"
+        if hpunc.PASOLEG in mi_token:
+            return "silluq-pasoleg"
+        return "silluq-no_sof_pasuq"
+
+    if hp.MTGOSLQ in mi_token and hpunc.MAQ in mi_token:
+        if base_descriptor_without_meteg not in {None, "no_accent", "maqaf"}:
+            return f"meteg-{base_descriptor_without_meteg}"
+
+        meteg_count = mi_token.count(hp.MTGOSLQ)
+        if meteg_count >= 2:
+            return "meteg-meteg-maqaf"
+        return "meteg-maqaf"
+
+    if hp.MTGOSLQ in mi_token:
+        if base_descriptor_without_meteg not in {None, "no_accent", "maqaf"}:
+            return f"meteg-{base_descriptor_without_meteg}"
+
+        if hp.MTGOSLQ not in token:
+            return "meteg-space"
+
+        return "silluq-no_sof_pasuq"
+
+    try:
+        descriptor = descriptor_from_hebrew_token(token)
+    except (AssertionError, ValueError):
+        descriptor = None
+
+    if descriptor in ("no_accent", "maqaf"):
+        return _apply_witness_to_normalized_descriptor(
+            normalized_descriptor=descriptor,
+            hebrew_token_w=hebrew_token_w,
+        )
+    if isinstance(descriptor, str) and descriptor:
+        punctuation_suffix = _punctuation_suffix_for_token(token)
+        if punctuation_suffix:
+            return f"{descriptor}{punctuation_suffix}"
+        return descriptor
+
+    if hpunc.MAQ in token and not any(
+        _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END for ch in token
+    ):
+        return _apply_witness_to_normalized_descriptor(
+            normalized_descriptor="maqaf",
+            hebrew_token_w=hebrew_token_w,
+        )
+
+    return None
 
 
 def assessment_uxlc_matches_converted_diff_uxlc(
@@ -151,22 +231,19 @@ def assessment_descriptor_matches_hebrew_token(
     *,
     assessment_descriptor: str,
     hebrew_token: str,
+    hebrew_token_w: str | None = None,
+    is_last_word: bool | None = None,
 ) -> bool | None:
-    descriptor = descriptor_from_hebrew_token(hebrew_token)
+    descriptor = infer_descriptor(
+        hebrew_token,
+        hebrew_token_w=hebrew_token_w,
+        is_last_word=is_last_word,
+    )
     if descriptor is None:
         return None
 
     normalized_descriptor = _normalize_assessment_descriptor(descriptor)
     normalized_assessment = _normalize_assessment_descriptor(assessment_descriptor)
-
-    normalized_assessment, punctuation_match = (
-        _normalize_assessment_with_punctuation_suffix(
-            normalized_assessment,
-            hebrew_token,
-        )
-    )
-    if punctuation_match is False:
-        return False
 
     if normalized_assessment == "meteg-space" and hebrew_token == "די":
         return True
@@ -187,23 +264,6 @@ def assessment_descriptor_matches_hebrew_token(
         descriptor=normalized_descriptor,
         assessment_uxlc=normalized_assessment,
     )
-
-
-def _normalize_assessment_with_punctuation_suffix(
-    normalized_assessment: str,
-    hebrew_token: str,
-) -> tuple[str, bool | None]:
-    if normalized_assessment.endswith("-sof_pasuq"):
-        if _HEBREW_SOF_PASUQ not in hebrew_token:
-            return normalized_assessment, False
-        return normalized_assessment[: -len("-sof_pasuq")], True
-
-    if normalized_assessment.endswith("-pasoleg"):
-        if _HEBREW_PASEQ not in hebrew_token:
-            return normalized_assessment, False
-        return normalized_assessment[: -len("-pasoleg")], True
-
-    return normalized_assessment, None
 
 
 def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> bool:
@@ -233,6 +293,63 @@ def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> boo
 
 def _normalize_assessment_descriptor(descriptor: str) -> str:
     return descriptor
+
+
+def _punctuation_suffix_for_token(token: str) -> str:
+    if hpunc.SOPA in token:
+        return "-sof_pasuq"
+    if hpunc.PASOLEG in token:
+        return "-pasoleg"
+    return ""
+
+
+def _apply_witness_to_normalized_descriptor(
+    *,
+    normalized_descriptor: str,
+    hebrew_token_w: str | None,
+) -> str:
+    if normalized_descriptor not in {"no_accent", "maqaf"}:
+        return normalized_descriptor
+
+    if not isinstance(hebrew_token_w, str):
+        return normalized_descriptor
+
+    witness_token = hebrew_token_w.strip()
+    if not witness_token or hp.MTGOSLQ not in witness_token:
+        return normalized_descriptor
+
+    if hpunc.MAQ in witness_token:
+        return "meteg-maqaf"
+    return "meteg-space"
+
+
+def _token_for_deep_meteg_inspection(
+    token: str,
+    *,
+    hebrew_token_w: str | None,
+) -> str:
+    if not isinstance(hebrew_token_w, str):
+        return token
+
+    witness_token = hebrew_token_w.strip()
+    if not witness_token:
+        return token
+
+    if hp.MTGOSLQ not in witness_token:
+        return token
+
+    return witness_token
+
+
+def _descriptor_from_token_sans_meteg(hebrew_token: str) -> str | None:
+    token_without_meteg = hebrew_token.replace(hp.MTGOSLQ, "")
+    if not token_without_meteg.strip():
+        return None
+
+    try:
+        return descriptor_from_hebrew_token(token_without_meteg)
+    except (AssertionError, ValueError):
+        return None
 
 
 def _simple_descriptor_accent_count(descriptor: str) -> int | None:

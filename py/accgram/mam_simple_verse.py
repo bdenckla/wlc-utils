@@ -4,12 +4,10 @@ import json
 from pathlib import Path
 
 from mb_cmn import bib_locales as tbn
+from mb_cmn import hebrew_punctuation as hpunc
 from mb_misc import osis_book_abbrevs as oba
 
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
-
-_HEBREW_MAQAF = "\u05be"
-_HEBREW_PASEQ = "\u05c0"
 
 
 def default_mam_simple_dir(repo_root: Path) -> Path:
@@ -137,9 +135,9 @@ def _normalize_mam_simple_node(node: object) -> list[object]:
         }:
             return []
         if node_type in {"lp-paseq", "lp-legarmeih"}:
-            return [_HEBREW_PASEQ]
+            return [hpunc.PASOLEG]
         if node_type == "implicit-maqaf":
-            return [_HEBREW_MAQAF]
+            return [hpunc.MAQ]
         if node_type in {"kq", "kq-trivial", "kq-q-velo-k"}:
             return _normalize_mam_simple_kq_qere(node)
         if node_type in {"kq-k", "ketiv", "kq-k-velo-q"}:
@@ -210,7 +208,7 @@ def _split_mam_simple_text(text: str) -> list[object]:
             continue
 
         current.append(ch)
-        if ch == _HEBREW_MAQAF:
+        if ch == hpunc.MAQ:
             out_tokens.append("".join(current))
             current = []
 

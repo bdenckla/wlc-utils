@@ -5,6 +5,8 @@ from accgram.rtms_token_like import texts_from_token_like_payload
 
 _HEBREW_MAQAF = "\u05be"
 _HEBREW_METEG = "\u05bd"
+_HEBREW_LETTER_START = ord("\u05d0")
+_HEBREW_LETTER_END = ord("\u05ea")
 
 INTERNAL_WLC422_WITNESS_KEY = "_wlc422_verse_meteg_witness"
 INTERNAL_UXLC_WITNESS_KEY = "_uxlc_verse_meteg_witness"
@@ -104,6 +106,31 @@ def token_has_maqaf(token: str) -> bool:
     return _HEBREW_MAQAF in token
 
 
+def is_last_word_in_witness(
+    *,
+    sanitized_token: str,
+    source_witness_payload: object,
+) -> bool | None:
+    hebrew_tokens = _hebrew_tokens_in_payload(source_witness_payload)
+    if len(hebrew_tokens) <= 1:
+        return None
+
+    matched_token = match_unique_witness_token(
+        sanitized_token=sanitized_token,
+        source_witness_payload=source_witness_payload,
+    )
+    if not isinstance(matched_token, str) or not matched_token.strip():
+        return None
+
+    last_hebrew_token = _last_hebrew_token_in_payload(source_witness_payload)
+    if not isinstance(last_hebrew_token, str) or not last_hebrew_token.strip():
+        return None
+
+    return _normalize_token_for_compare(matched_token) == _normalize_token_for_compare(
+        last_hebrew_token
+    )
+
+
 def _default_sanitized_token(token: str) -> str:
     payload = {"word": token}
     sanitized_payload = sanitize_verse_text_payload(payload)
@@ -128,6 +155,25 @@ def _sanitized_compare_variants(token: str) -> set[str]:
     if without_meteg:
         out.add(without_meteg)
     return out
+
+
+def _last_hebrew_token_in_payload(payload: object) -> str | None:
+    hebrew_tokens = _hebrew_tokens_in_payload(payload)
+    if not hebrew_tokens:
+        return None
+    return hebrew_tokens[-1]
+
+
+def _hebrew_tokens_in_payload(payload: object) -> list[str]:
+    out: list[str] = []
+    for token in texts_from_token_like_payload(payload):
+        if _has_hebrew_letter(token):
+            out.append(token)
+    return out
+
+
+def _has_hebrew_letter(text: str) -> bool:
+    return any(_HEBREW_LETTER_START <= ord(ch) <= _HEBREW_LETTER_END for ch in text)
 
 
 def _unique_nonempty_tokens(tokens: list[str]) -> list[str]:

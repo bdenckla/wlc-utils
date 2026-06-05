@@ -9,16 +9,12 @@ from accgram import rtms_output
 from accgram import rtms_ref
 from accgram import rtms_report
 from accgram import rtms_rows
+from accgram import tm_changes
+from accgram import tm_descriptor
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
 from accgram.rtms_assessment_auto import materialize_auto_assessment_descriptors
 from accgram.tm_structured_text import STRUCTURED_TEXT_BY_REF
-from accgram.tm_sanity import (
-    assessment_uxlc_matches_converted_diff_uxlc,
-    canonicalize_uxlc_change_url,
-    diff_uxlc_matches_changetext,
-    load_all_changes_by_url,
-    sanity_check_structured_text,
-)
+from accgram.tm_sanity import sanity_check_structured_text
 
 
 def default_troubles_in(repo_root: Path) -> Path:
@@ -138,7 +134,7 @@ def run(args: argparse.Namespace) -> None:
         structured_text_by_ref=STRUCTURED_TEXT_BY_REF,
         all_changes_path=all_changes_path,
     )
-    all_changes_by_url = load_all_changes_by_url(all_changes_path)
+    all_changes_by_url = tm_changes.load_all_changes_by_url(all_changes_path)
 
     wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = rtms_data.load_source_indexes(
         wlc422_kq_u_dir=args.wlc422_kq_u_dir,
@@ -309,7 +305,7 @@ def _validate_structured_text_uxlc_match(
         wlc_focus=wlc_focus,
         rhs_key="uxlc",
     )
-    matches_converted_diff = assessment_uxlc_matches_converted_diff_uxlc(
+    matches_converted_diff = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
         assessment_uxlc=assessment_uxlc,
         diff_wlc_uxlc=diff_wlc_uxlc_for_assessment,
     )
@@ -332,7 +328,7 @@ def _validate_structured_text_changetext_match(
     if not isinstance(uxlc_change, str) or not uxlc_change.strip():
         return
 
-    canonical_url = canonicalize_uxlc_change_url(uxlc_change)
+    canonical_url = tm_changes.canonicalize_uxlc_change_url(uxlc_change)
     if canonical_url is None:
         raise ValueError(
             f"Malformed structured_text.uxlc_change URL for {ref}: {uxlc_change}"
@@ -351,7 +347,7 @@ def _validate_structured_text_changetext_match(
             f"all_changes.json row is missing string changetext for URL {canonical_url}"
         )
 
-    matches_changetext = diff_uxlc_matches_changetext(
+    matches_changetext = tm_descriptor.diff_uxlc_matches_changetext(
         diff_wlc_uxlc=diff_wlc_uxlc_for_checks,
         changetext=changetext,
     )

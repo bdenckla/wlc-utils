@@ -22,6 +22,8 @@ from accgram import rtmsr_sat
 from accgram import rtmsr_contracts
 from accgram import rtmsr_subsets
 from accgram import tm_data
+from accgram import tm_changes
+from accgram import tm_descriptor
 from accgram import tm_sanity
 from accgram import wlc_uxlc_diff
 
@@ -641,8 +643,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                                                 "type": "verse",
                                                 "osisID": "Gen.1.1",
                                                 "contents": [
-                                                    {"type": "text", "text": "מבל֖י"},
-                                                    {"type": "text", "text": "ידֽי־"},
+                                                    {"type": "text", "text": "מבלֽי־"},
+                                                    {"type": "text", "text": "ידי"},
                                                     {"type": "text", "text": "אחר"},
                                                 ],
                                             }
@@ -688,7 +690,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertEqual(row["uxlc_verse"][0]["text"], "מבלי")
             self.assertEqual(
                 row["mam_simple_verse"]["vels"],
-                ["מבל֖י", "ידי־", "אחר"],
+                ["מבלי־", "ידי", "אחר"],
             )
 
             self.assertEqual(
@@ -1686,9 +1688,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                             "assessment": {
                                 "manuscript": "foo",
                                 "bhs": "bar",
-                                "wlc": "baz",
-                                "uxlc": "qux",
-                                "mam": "quux",
+                                "wlc": "no_accent",
+                                "uxlc": "no_accent",
+                                "mam": "pashta_on_ב",
                             },
                             "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
                             "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
@@ -1709,7 +1711,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn("diff_wlc_uxlc", html_text)
             self.assertIn("diff_wlc_mam", html_text)
             self.assertIn("a.manuscript", html_text)
-            self.assertIn("a.wlc", html_text)
+            self.assertNotIn("a.wlc", html_text)
+            self.assertNotIn("a.uxlc", html_text)
+            self.assertNotIn("a.mam", html_text)
             self.assertRegex(
                 html_text,
                 r"<td></td><td[^>]*></td><td>foo</td><td>a\.manuscript</td>",
@@ -2183,13 +2187,19 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             rows = [
                 {
                     "ref": "gn 1:1",
-                    "wlc422_kq_u_verse": {"vels": ["א"]},
-                    "structured_text": {"assessment": {"wlc": "silluq-no_sof_pasuq"}},
+                    "wlc422_kq_u_verse": {"vels": ["אֽ"]},
+                    "structured_text": {
+                        "wlc_focus": "אֽ",
+                        "assessment": {"wlc": "silluq-no_sof_pasuq"},
+                    },
                 },
                 {
                     "ref": "gn 1:2",
                     "wlc422_kq_u_verse": {"vels": ["ב"]},
-                    "structured_text": {"assessment": {"wlc": "etnahta"}},
+                    "structured_text": {
+                        "wlc_focus": "ב",
+                        "assessment": {"wlc": "no_accent"},
+                    },
                 },
             ]
 
@@ -2222,13 +2232,19 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             rows = [
                 {
                     "ref": "gn 1:1",
-                    "wlc422_kq_u_verse": {"vels": ["א"]},
-                    "structured_text": {"assessment": {"wlc": "silluq-no_sof_pasuq?"}},
+                    "wlc422_kq_u_verse": {"vels": ["אֽ"]},
+                    "structured_text": {
+                        "wlc_focus": "אֽ",
+                        "assessment": {"wlc": "silluq-no_sof_pasuq?"},
+                    },
                 },
                 {
                     "ref": "gn 1:2",
                     "wlc422_kq_u_verse": {"vels": ["ב"]},
-                    "structured_text": {"assessment": {"wlc": "etnahta"}},
+                    "structured_text": {
+                        "wlc_focus": "ב",
+                        "assessment": {"wlc": "no_accent"},
+                    },
                 },
             ]
 
@@ -2864,19 +2880,19 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 )
 
     def test_structured_text_sanitize_word_drops_non_target_marks(self):
-        actual = tm_sanity.sanitize_word_for_change_match("מְב\u05bdל֖י ")
-        expected = tm_sanity.sanitize_word_for_change_match("מבל֖י")
+        actual = tm_descriptor.sanitize_word_for_change_match("מְב\u05bdל֖י ")
+        expected = tm_descriptor.sanitize_word_for_change_match("מבל֖י")
         self.assertEqual(actual, expected)
 
     def test_diff_uxlc_matches_changetext_true_after_sanitization(self):
-        matches = tm_sanity.diff_uxlc_matches_changetext(
+        matches = tm_descriptor.diff_uxlc_matches_changetext(
             diff_wlc_uxlc={"wlc422": "ועשר֤ים", "uxlc": "וְעֶשְׂרִ֣ים"},
             changetext="ועשר֣ים",
         )
         self.assertTrue(matches)
 
     def test_diff_uxlc_matches_changetext_false_when_different(self):
-        matches = tm_sanity.diff_uxlc_matches_changetext(
+        matches = tm_descriptor.diff_uxlc_matches_changetext(
             diff_wlc_uxlc={"wlc422": "ועשר֤ים", "uxlc": "ועשר֣ים"},
             changetext="ועשרים",
         )
@@ -2884,63 +2900,63 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_diff_uxlc_matches_changetext_raises_on_non_hebrew_text(self):
         with self.assertRaisesRegex(ValueError, r"Expected Hebrew-script text"):
-            tm_sanity.diff_uxlc_matches_changetext(
+            tm_descriptor.diff_uxlc_matches_changetext(
                 diff_wlc_uxlc={"wlc422": "ועשר֤ים", "uxlc": "munax"},
                 changetext="ועשר֣ים",
             )
 
     def test_descriptor_from_hebrew_token_tevir(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("אש֛ר")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("אש֛ר")
         self.assertEqual(descriptor, "tevir")
 
     def test_descriptor_from_hebrew_token_etnaxta(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("שנ֑ים")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("שנ֑ים")
         self.assertEqual(descriptor, "etnaxta")
 
     def test_descriptor_from_hebrew_token_pashta_on_letter(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("שנה֙")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("שנה֙")
         self.assertEqual(descriptor, "pashta_on_ה")
 
     def test_descriptor_from_hebrew_token_no_accent(self):
         self.assertEqual(
-            tm_sanity.descriptor_from_hebrew_token("מבלי"),
+            tm_descriptor.descriptor_from_hebrew_token("מבלי"),
             "no_accent",
         )
         self.assertEqual(
-            tm_sanity.descriptor_from_hebrew_token("עליה"),
+            tm_descriptor.descriptor_from_hebrew_token("עליה"),
             "no_accent",
         )
 
     def test_descriptor_from_hebrew_token_maqaf(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("נכח־")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("נכח־")
         self.assertEqual(descriptor, "maqaf")
 
     def test_descriptor_from_hebrew_token_two_over_accents(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("אריצ֨נו֙")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("אריצ֨נו֙")
         self.assertEqual(descriptor, "qadma_on_צ-pashta_on_ו")
 
     def test_descriptor_from_hebrew_token_repeated_accent_names(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("יאב֥ד טוב֥ה")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("יאב֥ד טוב֥ה")
         self.assertEqual(descriptor, "merkha merkha")
 
     def test_descriptor_from_hebrew_token_merkha_tipexa(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("יאב֥ד טוב֖ה")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("יאב֥ד טוב֖ה")
         self.assertEqual(descriptor, "merkha tipexa")
 
     def test_descriptor_from_hebrew_token_tipexa_merkha(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("אב֖ גד֥")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("אב֖ גד֥")
         self.assertEqual(descriptor, "tipexa merkha")
 
     def test_descriptor_from_hebrew_token_maqaf_munax(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("והיו־ ל֣י")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("והיו־ ל֣י")
         self.assertEqual(descriptor, "maqaf munax")
 
     def test_descriptor_from_hebrew_token_merkha_maqaf(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token("יד֥י־")
+        descriptor = tm_descriptor.descriptor_from_hebrew_token("יד֥י־")
         self.assertEqual(descriptor, "merkha-maqaf")
 
     def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
-        self.assertIsNone(tm_sanity.descriptor_from_hebrew_token("ישראל֘"))
+        self.assertIsNone(tm_descriptor.descriptor_from_hebrew_token("ישראל֘"))
 
     def test_descriptor_from_hebrew_token_asserts_for_unmapped_non_allowlisted_token(
         self,
@@ -2949,23 +2965,23 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             AssertionError,
             r"No descriptor for accent token unless explicitly allowlisted",
         ):
-            tm_sanity.descriptor_from_hebrew_token("אב֚")
+            tm_descriptor.descriptor_from_hebrew_token("אב֚")
 
     def test_descriptor_from_hebrew_token_asserts_on_over_accent_without_letter(self):
         with self.assertRaisesRegex(
             AssertionError, r"Over-accent must follow a Hebrew letter"
         ):
-            tm_sanity.descriptor_from_hebrew_token("֙")
+            tm_descriptor.descriptor_from_hebrew_token("֙")
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_true(self):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="tevir",
             diff_wlc_uxlc={"wlc422": "אש֥ר", "uxlc": "אש֛ר"},
         )
         self.assertTrue(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_maqaf_alias(self):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-maqaf",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
         )
@@ -2974,14 +2990,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_double_meteg_maqaf_alias(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-meteg-maqaf",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
         )
         self.assertTrue(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_maqaf_exact(self):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="maqaf",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נכח־"},
         )
@@ -2990,7 +3006,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_accepts_maqaf_munax(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="maqaf munax",
             diff_wlc_uxlc={"wlc422": "והיו־ ל֣י", "uxlc": "והיו־ ל֣י"},
         )
@@ -2999,21 +3015,21 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_rejects_legacy_munax_maqaf(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="munax-maqaf",
             diff_wlc_uxlc={"wlc422": "והיו־ ל֣י", "uxlc": "והיו־ ל֣י"},
         )
         self.assertFalse(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_space_alias(self):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha-space",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נ֥כח"},
         )
         self.assertTrue(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_meteg_tipexa_alias(self):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-tipexa",
             diff_wlc_uxlc={"wlc422": "הונ֖ח", "uxlc": "הונ֖ח"},
         )
@@ -3022,28 +3038,28 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_rejects_meteg_space(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-space",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נ֥כח"},
         )
         self.assertFalse(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_hebrew_letter_suffix(self):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="pashta_on_ה",
             diff_wlc_uxlc={"wlc422": "שנ֨ה", "uxlc": "שנה֙"},
         )
         self.assertTrue(matches)
 
     def test_assessment_descriptor_matches_hebrew_token_pashta_stress_helper(self):
-        matches = tm_sanity.assessment_descriptor_matches_hebrew_token(
+        matches = tm_descriptor.assessment_descriptor_matches_hebrew_token(
             assessment_descriptor="pashta_on_ר-pashta_on_ח",
             hebrew_token="הר֙וח֙",
         )
         self.assertTrue(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_pashta_stress_helper(self):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="pashta_on_ר-pashta_on_ח",
             diff_wlc_uxlc={"wlc422": "הר֨וח", "uxlc": "הר֙וח֙"},
         )
@@ -3052,7 +3068,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_repeated_descriptor_with_spaces(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha merkha",
             diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֥ה"},
         )
@@ -3061,7 +3077,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_rejects_repeated_descriptor_with_comma(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha, merkha",
             diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֥ה"},
         )
@@ -3070,7 +3086,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_tipexa_with_spaces(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha tipexa",
             diff_wlc_uxlc={"wlc422": "יאב֥ד טוב֖ה", "uxlc": "יאב֥ד טוב֖ה"},
         )
@@ -3079,7 +3095,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_tipexa_merkha_with_spaces(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="tipexa merkha",
             diff_wlc_uxlc={"wlc422": "אב֖ גד֥", "uxlc": "אב֖ גד֥"},
         )
@@ -3088,7 +3104,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_multiword_assessment_single_token_is_indeterminate(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha tipexa",
             diff_wlc_uxlc={"wlc422": "טוב֥ה", "uxlc": "טוב֖ה"},
         )
@@ -3097,7 +3113,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_list_matches_any_expanded_entry(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="merkha tipexa",
             diff_wlc_uxlc=[
                 {"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֖ה"},
@@ -3109,7 +3125,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_list_matches_reversed_expanded_entry(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="tipexa merkha",
             diff_wlc_uxlc=[
                 {"wlc422": "יאב֥ד טוב֥ה", "uxlc": "יאב֥ד טוב֖ה"},
@@ -3121,7 +3137,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     def test_assessment_uxlc_matches_converted_diff_uxlc_list_accepts_meteg_space_for_di(
         self,
     ):
-        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+        matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
             assessment_uxlc="meteg-space",
             diff_wlc_uxlc=[
                 {"wlc_adds_notes": "]k"},
@@ -3239,11 +3255,37 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertEqual(descriptor, "tevir-sof_pasuq")
 
     def test_assessment_descriptor_matches_hebrew_token_tevir_sof_pasuq(self):
-        matches = tm_sanity.assessment_descriptor_matches_hebrew_token(
+        matches = tm_descriptor.assessment_descriptor_matches_hebrew_token(
             assessment_descriptor="tevir-sof_pasuq",
             hebrew_token="פ֛לאי׃",
         )
         self.assertTrue(matches)
+
+    def test_assessment_descriptor_matches_hebrew_token_tevir_sof_pasuq_rejects_missing_punctuation(
+        self,
+    ):
+        matches = tm_descriptor.assessment_descriptor_matches_hebrew_token(
+            assessment_descriptor="tevir-sof_pasuq",
+            hebrew_token="פ֛לאי",
+        )
+        self.assertFalse(matches)
+
+    def test_assessment_descriptor_matches_hebrew_token_silluq_sof_pasuq_requires_last_word_context(
+        self,
+    ):
+        matches = tm_descriptor.assessment_descriptor_matches_hebrew_token(
+            assessment_descriptor="silluq-sof_pasuq",
+            hebrew_token="פֽלאי׃",
+            is_last_word=False,
+        )
+        self.assertFalse(matches)
+
+        matches_last = tm_descriptor.assessment_descriptor_matches_hebrew_token(
+            assessment_descriptor="silluq-sof_pasuq",
+            hebrew_token="פֽלאי׃",
+            is_last_word=True,
+        )
+        self.assertTrue(matches_last)
 
     def test_try_auto_assessment_descriptor_keeps_silluq_sof_pasuq_when_meteg_present(
         self,
@@ -3391,6 +3433,48 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertIn(("הונ֖ח", "meteg-tipexa", "wlc_focus"), merged)
         self.assertNotIn(("meteg-tipexa", "", "a.wlc"), merged)
 
+    def test_assessment_sat_rows_raises_when_assessment_cannot_merge(self):
+        with self.assertRaisesRegex(ValueError, r"SAT assessment merge failed"):
+            rtmsr_sat._merge_assessment_rows_into_sat_middle_column(
+                [
+                    ("הונ֖ח", "", "wlc_focus"),
+                    ("tevir", "", "a.wlc"),
+                ],
+                row={"ref": "lm 5:5"},
+            )
+
+    def test_assessment_sat_rows_rejects_silluq_sof_pasuq_when_token_not_last_word(self):
+        with self.assertRaisesRegex(ValueError, r"SAT assessment merge failed"):
+            rtmsr_sat._merge_assessment_rows_into_sat_middle_column(
+                [
+                    ("פֽלאי׃", "", "diff_wlc_mam"),
+                    ("silluq-sof_pasuq", "", "a.mam"),
+                ],
+                row={
+                    "ref": "ju 13:18",
+                    rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
+                        "vels": ["פֽלאי׃", "אחר"]
+                    },
+                },
+            )
+
+    def test_assessment_sat_rows_merges_silluq_sof_pasuq_when_token_is_last_word(self):
+        merged = rtmsr_sat._merge_assessment_rows_into_sat_middle_column(
+            [
+                ("פֽלאי׃", "", "diff_wlc_mam"),
+                ("silluq-sof_pasuq", "", "a.mam"),
+            ],
+            row={
+                "ref": "ju 13:18",
+                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
+                    "vels": ["דבר", "פֽלאי׃"]
+                },
+            },
+        )
+
+        self.assertIn(("פֽלאי׃", "silluq-sof_pasuq", "diff_wlc_mam"), merged)
+        self.assertNotIn(("silluq-sof_pasuq", "", "a.mam"), merged)
+
     def test_materialize_auto_assessment_descriptors_keeps_literal_percent_auto_value(
         self,
     ):
@@ -3504,7 +3588,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            by_url = tm_sanity.load_all_changes_by_url(all_changes_path)
+            by_url = tm_changes.load_all_changes_by_url(all_changes_path)
             self.assertIn(
                 "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
                 by_url,
@@ -3513,3 +3597,4 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

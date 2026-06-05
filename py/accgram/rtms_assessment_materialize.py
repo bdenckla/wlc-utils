@@ -11,8 +11,7 @@ def should_materialize_missing_assessment_key(
     enriched_row: dict[str, object],
     wlc_focus: str | None,
     diff_rhs_tokens: Callable[[object, str], list[str]],
-    infer_assessment_descriptor: Callable[[str, str], str | None],
-    meteg_fallback_by_key: dict[str, str],
+    infer_assessment_descriptor: Callable[[str], str | None],
 ) -> bool:
     if assessment_key in {"wlc", "bhs"}:
         return bool(
@@ -29,7 +28,6 @@ def should_materialize_missing_assessment_key(
 
         focus_descriptor = infer_assessment_descriptor(
             wlc_focus,
-            meteg_fallback_by_key.get("uxlc", "silluq-no_sof_pasuq"),
         )
         return focus_descriptor in {"silluq-no_sof_pasuq", "silluq-pasoleg"}
 

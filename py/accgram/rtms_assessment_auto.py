@@ -6,22 +6,7 @@ from accgram.rtms_assessment_materialize import (
     should_materialize_missing_assessment_key,
 )
 from accgram.rtms_token_like import texts_from_token_like_payload
-from accgram.tm_sanity import descriptor_from_hebrew_token
-
-_ASSESSMENT_AUTO_METEG_FALLBACK_BY_KEY = {
-    "wlc": "silluq-no_sof_pasuq",
-    "uxlc": "silluq-no_sof_pasuq",
-    "mam": "silluq-sof_pasuq",
-    "manuscript": "silluq-no_sof_pasuq",
-    "bhs": "silluq-no_sof_pasuq",
-}
-
-_HEBREW_MAQAF = "\u05be"
-_HEBREW_PASEQ = "\u05c0"
-_HEBREW_SOF_PASUQ = "\u05c3"
-_HEBREW_METEG = "\u05bd"
-_HEBREW_ACCENT_START = ord("\u0591")
-_HEBREW_ACCENT_END = ord("\u05af")
+from accgram.tm_descriptor import infer_descriptor
 
 
 def materialize_auto_assessment_descriptors(
@@ -47,7 +32,6 @@ def materialize_auto_assessment_descriptors(
             wlc_focus=wlc_focus,
             diff_rhs_tokens=_diff_rhs_tokens_for_materialization,
             infer_assessment_descriptor=_infer_assessment_descriptor_for_materialization,
-            meteg_fallback_by_key=_ASSESSMENT_AUTO_METEG_FALLBACK_BY_KEY,
         ):
             continue
 
@@ -97,20 +81,15 @@ def _auto_assessment_descriptor_for_key(
     enriched_row: dict[str, object],
     wlc_focus: str | None,
 ) -> str | None:
-    meteg_fallback = _ASSESSMENT_AUTO_METEG_FALLBACK_BY_KEY.get(
-        assessment_key,
-        "silluq-no_sof_pasuq",
-    )
-
-    for hebrew_token, witness_token in _candidate_tokens_for_auto_assessment(
+    for hebrew_token, witness_token, is_last_word in _candidate_tokens_for_auto_assessment(
         assessment_key=assessment_key,
         enriched_row=enriched_row,
         wlc_focus=wlc_focus,
     ):
-        descriptor = _infer_assessment_descriptor_from_hebrew_token(
+        descriptor = _infer_descriptor(
             hebrew_token,
-            meteg_fallback=meteg_fallback,
-            witness_hebrew_token=witness_token,
+            hebrew_token_w=witness_token,
+            is_last_word=is_last_word,
         )
         if isinstance(descriptor, str) and descriptor.strip():
             return descriptor
@@ -123,8 +102,8 @@ def _candidate_tokens_for_auto_assessment(
     assessment_key: str,
     enriched_row: dict[str, object],
     wlc_focus: str | None,
-) -> list[tuple[str, str | None]]:
-    candidates: list[tuple[str, str | None]] = []
+) -> list[tuple[str, str | None, bool | None]]:
+    candidates: list[tuple[str, str | None, bool | None]] = []
 
     wlc_witness_payload = rtms_meteg_witness.witness_payload_for_side(
         enriched_row,
@@ -202,7 +181,7 @@ def _candidate_tokens_from_diff_side(
     diff_value: object,
     rhs_key: str,
     source_witness_payload: object,
-) -> list[tuple[str, str | None]]:
+) -> list[tuple[str, str | None, bool | None]]:
     return [
         _candidate_with_optional_witness(
             hebrew_token=token,
@@ -216,27 +195,32 @@ def _candidate_with_optional_witness(
     *,
     hebrew_token: str,
     source_witness_payload: object,
-) -> tuple[str, str | None]:
+) -> tuple[str, str | None, bool | None]:
     collapsed_token = " ".join(hebrew_token.split())
     if not collapsed_token:
-        return "", None
+        return "", None, None
 
     witness_token: str | None = None
+    is_last_word: bool | None = None
     if source_witness_payload is not None:
         witness_token = rtms_meteg_witness.match_unique_witness_token(
             sanitized_token=collapsed_token,
             source_witness_payload=source_witness_payload,
         )
-    return collapsed_token, witness_token
+        is_last_word = rtms_meteg_witness.is_last_word_in_witness(
+            sanitized_token=collapsed_token,
+            source_witness_payload=source_witness_payload,
+        )
+    return collapsed_token, witness_token, is_last_word
 
 
 def _unique_candidate_tokens(
-    values: list[tuple[str, str | None]],
-) -> list[tuple[str, str | None]]:
-    out: list[tuple[str, str | None]] = []
+    values: list[tuple[str, str | None, bool | None]],
+) -> list[tuple[str, str | None, bool | None]]:
+    out: list[tuple[str, str | None, bool | None]] = []
     seen_idx_by_token: dict[str, int] = {}
 
-    for token, witness in values:
+    for token, witness, is_last_word in values:
         collapsed_token = " ".join(token.split())
         if not collapsed_token:
             continue
@@ -250,12 +234,16 @@ def _unique_candidate_tokens(
         existing_idx = seen_idx_by_token.get(collapsed_token)
         if existing_idx is None:
             seen_idx_by_token[collapsed_token] = len(out)
-            out.append((collapsed_token, collapsed_witness))
+            out.append((collapsed_token, collapsed_witness, is_last_word))
             continue
 
-        existing_token, existing_witness = out[existing_idx]
+        existing_token, existing_witness, existing_is_last = out[existing_idx]
         merged_witness = _merge_candidate_witness(existing_witness, collapsed_witness)
-        out[existing_idx] = (existing_token, merged_witness)
+        merged_is_last = _merge_candidate_is_last_word(
+            existing_is_last,
+            is_last_word,
+        )
+        out[existing_idx] = (existing_token, merged_witness, merged_is_last)
 
     return out
 
@@ -273,17 +261,28 @@ def _merge_candidate_witness(
     return None
 
 
+def _merge_candidate_is_last_word(
+    existing_is_last: bool | None,
+    incoming_is_last: bool | None,
+) -> bool | None:
+    if existing_is_last is None:
+        return incoming_is_last
+    if incoming_is_last is None:
+        return existing_is_last
+    if existing_is_last == incoming_is_last:
+        return existing_is_last
+    return None
+
+
 def _diff_rhs_tokens_for_materialization(diff_value: object, rhs_key: str) -> list[str]:
     return _diff_rhs_tokens(diff_value, rhs_key=rhs_key)
 
 
 def _infer_assessment_descriptor_for_materialization(
     hebrew_token: str,
-    meteg_fallback: str,
 ) -> str | None:
-    return _infer_assessment_descriptor_from_hebrew_token(
+    return _infer_descriptor(
         hebrew_token,
-        meteg_fallback=meteg_fallback,
     )
 
 
@@ -321,130 +320,14 @@ def _unique_nonempty_strings(values: list[str]) -> list[str]:
     return out
 
 
-def _infer_assessment_descriptor_from_hebrew_token(
+def _infer_descriptor(
     hebrew_token: str,
     *,
-    meteg_fallback: str = "silluq-no_sof_pasuq",
-    witness_hebrew_token: str | None = None,
+    hebrew_token_w: str | None = None,
+    is_last_word: bool | None = None,
 ) -> str | None:
-    token = hebrew_token.strip()
-    if not token:
-        return None
-
-    meteg_inspection_token = _token_for_deep_meteg_inspection(
-        token,
-        witness_hebrew_token=witness_hebrew_token,
+    return infer_descriptor(
+        hebrew_token,
+        hebrew_token_w=hebrew_token_w,
+        is_last_word=is_last_word,
     )
-    meteg_visible_in_token = _HEBREW_METEG in token
-    base_descriptor_without_meteg = _descriptor_from_hebrew_token_without_meteg(
-        meteg_inspection_token
-    )
-
-    # Silluq heuristics apply only when meteg (U+05BD) is present. A trailing
-    # sof pasuq/paseq punctuation mark alone must not override the token's
-    # accent descriptor.
-    if (
-        _HEBREW_METEG in meteg_inspection_token
-        and _HEBREW_SOF_PASUQ in meteg_inspection_token
-    ):
-        return "silluq-sof_pasuq"
-    if (
-        _HEBREW_METEG in meteg_inspection_token
-        and _HEBREW_PASEQ in meteg_inspection_token
-    ):
-        return "silluq-pasoleg"
-    if (
-        _HEBREW_METEG in meteg_inspection_token
-        and _HEBREW_MAQAF in meteg_inspection_token
-    ):
-        if base_descriptor_without_meteg not in {None, "no_accent", "maqaf"}:
-            return f"meteg-{base_descriptor_without_meteg}"
-
-        meteg_count = meteg_inspection_token.count(_HEBREW_METEG)
-        if meteg_count >= 2:
-            return "meteg-meteg-maqaf"
-        return "meteg-maqaf"
-
-    if _HEBREW_METEG in meteg_inspection_token:
-        if base_descriptor_without_meteg not in {None, "no_accent", "maqaf"}:
-            return f"meteg-{base_descriptor_without_meteg}"
-
-        if not meteg_visible_in_token:
-            return "meteg-space"
-
-        return meteg_fallback
-
-    try:
-        descriptor = descriptor_from_hebrew_token(token)
-    except (AssertionError, ValueError):
-        descriptor = None
-
-    if descriptor in ("no_accent", "maqaf"):
-        return _apply_witness_to_normalized_descriptor(
-            normalized_descriptor=descriptor,
-            witness_hebrew_token=witness_hebrew_token,
-        )
-    if isinstance(descriptor, str) and descriptor:
-        if _HEBREW_SOF_PASUQ in token:
-            return f"{descriptor}-sof_pasuq"
-        return descriptor
-    # Do not force a maqaf fallback when other accent marks are present but
-    # unmapped; in those cases the descriptor is ambiguous for SAT rendering.
-    if _HEBREW_MAQAF in token and not any(
-        _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END for ch in token
-    ):
-        return _apply_witness_to_normalized_descriptor(
-            normalized_descriptor="maqaf",
-            witness_hebrew_token=witness_hebrew_token,
-        )
-
-    return None
-
-
-def _apply_witness_to_normalized_descriptor(
-    *,
-    normalized_descriptor: str,
-    witness_hebrew_token: str | None,
-) -> str:
-    if normalized_descriptor not in {"no_accent", "maqaf"}:
-        return normalized_descriptor
-
-    if not isinstance(witness_hebrew_token, str):
-        return normalized_descriptor
-
-    witness_token = witness_hebrew_token.strip()
-    if not witness_token or not rtms_meteg_witness.token_has_meteg(witness_token):
-        return normalized_descriptor
-
-    if rtms_meteg_witness.token_has_maqaf(witness_token):
-        return "meteg-maqaf"
-    return "meteg-space"
-
-
-def _token_for_deep_meteg_inspection(
-    token: str,
-    *,
-    witness_hebrew_token: str | None,
-) -> str:
-    if not isinstance(witness_hebrew_token, str):
-        return token
-
-    witness_token = witness_hebrew_token.strip()
-    if not witness_token:
-        return token
-
-    if _HEBREW_METEG not in witness_token:
-        return token
-
-    return witness_token
-
-
-def _descriptor_from_hebrew_token_without_meteg(hebrew_token: str) -> str | None:
-    token_without_meteg = hebrew_token.replace(_HEBREW_METEG, "")
-    if not token_without_meteg.strip():
-        return None
-
-    try:
-        return descriptor_from_hebrew_token(token_without_meteg)
-    except (AssertionError, ValueError):
-        return None
