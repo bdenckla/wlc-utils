@@ -41,17 +41,13 @@ def render_sat_table(
     wlc_focus_str = (
         _normalize_whitespace(wlc_focus) if isinstance(wlc_focus, str) else ""
     )
-    wlc_focus_notes = (
-        rtmsr_wlc_word_format.collect_wlc_word_bracket_notes(
-            wlc_tokens,
-            wlc_focus_str or None,
-            render_sat_value=render_sat_value,
-        )
+    wlc_focus_notes = rtmsr_wlc_word_format.collect_wlc_word_bracket_notes(
+        wlc_tokens,
+        wlc_focus_str or None,
+        render_sat_value=render_sat_value,
     )
     sat_notes_by_key: dict[str, str] = {}
-    rendered_wlc_focus_notes = rtmsr_wlc_word_format.render_note_values(
-        wlc_focus_notes
-    )
+    rendered_wlc_focus_notes = rtmsr_wlc_word_format.render_note_values(wlc_focus_notes)
     if rendered_wlc_focus_notes:
         sat_notes_by_key["wlc_focus"] = rendered_wlc_focus_notes
 
@@ -94,11 +90,9 @@ def render_sat_table(
     sat_rows = _apply_sat_row_suppressions(row_ref, sat_rows)
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows, row=row)
     sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
-    notes_column_plan = (
-        rtmsr_sat_notes_column.build_sat_notes_column_plan(
-            sat_rows,
-            notes_by_key=sat_notes_by_key,
-        )
+    notes_column_plan = rtmsr_sat_notes_column.build_sat_notes_column_plan(
+        sat_rows,
+        notes_by_key=sat_notes_by_key,
     )
 
     table_rows: list[object] = []
@@ -107,12 +101,8 @@ def render_sat_table(
             table_rows.append(
                 wlc_utils_html.table_row_of_data(
                     (
-                        rtmsr_bracket_notes.annotate_bracket_note_tokens(
-                            value
-                        ),
-                        rtmsr_bracket_notes.annotate_bracket_note_tokens(
-                            notes_value
-                        ),
+                        rtmsr_bracket_notes.annotate_bracket_note_tokens(value),
+                        rtmsr_bracket_notes.annotate_bracket_note_tokens(notes_value),
                         middle_description,
                         key,
                     ),
@@ -131,9 +121,7 @@ def render_sat_table(
         table_rows.append(
             wlc_utils_html.table_row_of_data(
                 (
-                    rtmsr_bracket_notes.annotate_bracket_note_tokens(
-                        value
-                    ),
+                    rtmsr_bracket_notes.annotate_bracket_note_tokens(value),
                     middle_description,
                     key,
                 ),
@@ -179,15 +167,12 @@ def render_sat_value(value: object) -> str:
 
 
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
-    if (
-        label in _WLC_FOCUS_ROW_KEYS
-        and rtmsr_diff_format.contains_hebrew(value)
-    ):
+    if label in _WLC_FOCUS_ROW_KEYS and rtmsr_diff_format.contains_hebrew(value):
         return {"lang": "hbo", "dir": "rtl"}
 
-    if label.startswith(
-        "diff_wlc_"
-    ) and rtmsr_diff_format.is_plain_hebrew_string(value):
+    if label.startswith("diff_wlc_") and rtmsr_diff_format.is_plain_hebrew_string(
+        value
+    ):
         return {"lang": "hbo", "dir": "rtl"}
 
     return None

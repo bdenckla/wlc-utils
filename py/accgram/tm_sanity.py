@@ -10,9 +10,7 @@ def sanity_check_structured_text(
     structured_text_by_ref: dict[str, dict[str, object]],
     all_changes_path: Path,
 ) -> None:
-    by_change_url = tm_changes.load_all_changes_by_url(
-        all_changes_path
-    )
+    by_change_url = tm_changes.load_all_changes_by_url(all_changes_path)
 
     errors: list[str] = []
     for ref in refs:
@@ -24,11 +22,7 @@ def sanity_check_structured_text(
         if not isinstance(uxlc_change, str) or not uxlc_change.strip():
             continue
 
-        canonical_url = (
-            tm_changes.canonicalize_uxlc_change_url(
-                uxlc_change
-            )
-        )
+        canonical_url = tm_changes.canonicalize_uxlc_change_url(uxlc_change)
         if canonical_url is None:
             errors.append(
                 f"Malformed structured_text.uxlc_change URL for {ref}: {uxlc_change}"
@@ -50,9 +44,7 @@ def sanity_check_structured_text(
             )
             continue
 
-        if not tm_changes.citation_matches_ref(
-            citation, ref
-        ):
+        if not tm_changes.citation_matches_ref(citation, ref):
             errors.append(
                 "citation/ref mismatch for structured_text.uxlc_change "
                 f"for {ref}: citation={citation} url={uxlc_change}"
@@ -71,17 +63,11 @@ def sanity_check_structured_text(
 
 
 def sanitize_word_for_change_match(text: str) -> str:
-    return (
-        tm_descriptor.sanitize_word_for_change_match(
-            text
-        )
-    )
+    return tm_descriptor.sanitize_word_for_change_match(text)
 
 
 def load_all_changes_by_url(all_changes_path: Path) -> dict[str, dict[str, object]]:
-    return tm_changes.load_all_changes_by_url(
-        all_changes_path
-    )
+    return tm_changes.load_all_changes_by_url(all_changes_path)
 
 
 def canonicalize_uxlc_change_url(url: str) -> str | None:
@@ -96,9 +82,7 @@ def diff_uxlc_matches_changetext(diff_wlc_uxlc: object, changetext: str) -> bool
 
 
 def descriptor_from_hebrew_token(text: str) -> str | None:
-    return tm_descriptor.descriptor_from_hebrew_token(
-        text
-    )
+    return tm_descriptor.descriptor_from_hebrew_token(text)
 
 
 def assessment_uxlc_matches_converted_diff_uxlc(

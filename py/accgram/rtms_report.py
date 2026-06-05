@@ -48,9 +48,7 @@ def write_goerwitz_tms_html_report(
     _write_goerwitz_tms_html_report(
         html_out_path,
         enriched_rows,
-        top_contents=rtmsr_subsets.build_main_subsets_top_contents(
-            html_out_path
-        ),
+        top_contents=rtmsr_subsets.build_main_subsets_top_contents(html_out_path),
         title=_MAIN_REPORT_TITLE,
         heading_level_1_text=_MAIN_REPORT_HEADING,
     )
@@ -81,9 +79,7 @@ def write_goerwitz_tms_msp_no_html_report(
     enriched_rows: list[dict[str, object]],
 ) -> None:
     total_count = len(enriched_rows)
-    html_out_path = rtmsr_subsets.missing_sof_pasuq_no_html_out_path(
-        main_html_out_path
-    )
+    html_out_path = rtmsr_subsets.missing_sof_pasuq_no_html_out_path(main_html_out_path)
     _write_goerwitz_tms_html_report(
         html_out_path,
         rtmsr_subsets.filter_missing_sof_pasuq_no_rows(enriched_rows),
@@ -136,13 +132,9 @@ def _build_body_contents(
         wlc_utils_html.heading_level_1(heading_level_1_text),
         *top_contents,
     ]
-    sections.extend(
-        rtmsr_intro.build_intro_contents(row_count, total_count)
-    )
+    sections.extend(rtmsr_intro.build_intro_contents(row_count, total_count))
     sections.extend(rtmsr_open_issues.build_open_issues_section())
-    sections.extend(
-        rtmsr_bracket_notes.build_wlc_bracket_notes_section(enriched_rows)
-    )
+    sections.extend(rtmsr_bracket_notes.build_wlc_bracket_notes_section(enriched_rows))
 
     for index, row in enumerate(enriched_rows):
         sections.extend(_render_row_section(row))

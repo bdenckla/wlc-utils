@@ -16,9 +16,7 @@ from py_uxlc import my_uxlc
 from accgram import rtms_rows
 
 _DIFF_NOTE_KEYS = {"note", "notes"}
-_IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS: set[
-    tuple[tuple[str, ...], tuple[str, ...]]
-] = {
+_IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS: set[tuple[tuple[str, ...], tuple[str, ...]]] = {
     (("אחר֑יש",), ("אחר֑ש",)),
     (("רב־", "שק֨ה"), ("רבשק֨ה",)),
 }

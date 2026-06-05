@@ -18,10 +18,8 @@ def write_troublemakers_payload(
     enriched_rows: list[dict[str, object]],
     source_file: str,
 ) -> None:
-    serializable_rows = (
-        rtms_meteg_witness.strip_internal_witness_fields_from_rows(
-            enriched_rows
-        )
+    serializable_rows = rtms_meteg_witness.strip_internal_witness_fields_from_rows(
+        enriched_rows
     )
     payload: dict[str, object] = {
         "artifacts_description": "enriched troublemaker verse research records",
@@ -52,10 +50,8 @@ def write_oddballs_payload(
     enriched_oddball_rows: list[dict[str, object]],
     source_file: str,
 ) -> None:
-    serializable_rows = (
-        rtms_meteg_witness.strip_internal_witness_fields_from_rows(
-            enriched_oddball_rows
-        )
+    serializable_rows = rtms_meteg_witness.strip_internal_witness_fields_from_rows(
+        enriched_oddball_rows
     )
     oddballs_payload: dict[str, object] = {
         "artifacts_description": "enriched oddball verse research records",
@@ -83,12 +79,8 @@ def write_html_reports(
     # Keep this call sequence immediately after JSON write so HTML failures are
     # fail-fast while preserving the JSON write attempt.
     rtms_report.write_goerwitz_tms_html_report(html_out_path, enriched_rows)
-    rtms_report.write_goerwitz_tms_msp_yes_html_report(
-        html_out_path, enriched_rows
-    )
-    rtms_report.write_goerwitz_tms_msp_no_html_report(
-        html_out_path, enriched_rows
-    )
+    rtms_report.write_goerwitz_tms_msp_yes_html_report(html_out_path, enriched_rows)
+    rtms_report.write_goerwitz_tms_msp_no_html_report(html_out_path, enriched_rows)
 
 
 def print_run_summary(

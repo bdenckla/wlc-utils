@@ -120,9 +120,7 @@ def run(args: argparse.Namespace) -> None:
     html_out_path = rtms_report.resolve_html_out_path(args, repo_root)
 
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
-    parsed_rows = rtms_rows.parse_troublemaker_rows(
-        args.troubles_in, refs_by_book
-    )
+    parsed_rows = rtms_rows.parse_troublemaker_rows(args.troubles_in, refs_by_book)
 
     oddballs_in_path = getattr(args, "oddballs_in", None)
     oddballs_out_path = getattr(args, "oddballs_out", None)
@@ -142,13 +140,11 @@ def run(args: argparse.Namespace) -> None:
     )
     all_changes_by_url = load_all_changes_by_url(all_changes_path)
 
-    wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = (
-        rtms_data.load_source_indexes(
-            wlc422_kq_u_dir=args.wlc422_kq_u_dir,
-            uxlc_dir=args.uxlc_dir,
-            mam_simple_dir=args.mam_simple_dir,
-            refs_by_book=refs_by_book,
-        )
+    wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = rtms_data.load_source_indexes(
+        wlc422_kq_u_dir=args.wlc422_kq_u_dir,
+        uxlc_dir=args.uxlc_dir,
+        mam_simple_dir=args.mam_simple_dir,
+        refs_by_book=refs_by_book,
     )
 
     enriched_rows = _enrich_troublemaker_rows(

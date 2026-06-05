@@ -1552,31 +1552,25 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                     )
 
     def test_count_focus_occurrences_matches_across_maqaf_whitespace(self):
-        occurrences = (
-            rtms_focus_diff_expand.count_focus_occurrences_in_verse_text(
-                verse_text="הן ישא איש בשר־ ק֜דש בכנף בגדו",
-                wlc_focus="בשר־ק֜דש",
-            )
+        occurrences = rtms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+            verse_text="הן ישא איש בשר־ ק֜דש בכנף בגדו",
+            wlc_focus="בשר־ק֜דש",
         )
 
         self.assertEqual(occurrences, 1)
 
     def test_count_focus_occurrences_supports_focus_ending_with_maqaf(self):
-        occurrences = (
-            rtms_focus_diff_expand.count_focus_occurrences_in_verse_text(
-                verse_text="יד֥י־ מא֖רץ",
-                wlc_focus="יד֥י־",
-            )
+        occurrences = rtms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+            verse_text="יד֥י־ מא֖רץ",
+            wlc_focus="יד֥י־",
         )
 
         self.assertEqual(occurrences, 1)
 
     def test_count_focus_occurrences_is_word_boundary_safe(self):
-        occurrences = (
-            rtms_focus_diff_expand.count_focus_occurrences_in_verse_text(
-                verse_text="אבג אב",
-                wlc_focus="אב",
-            )
+        occurrences = rtms_focus_diff_expand.count_focus_occurrences_in_verse_text(
+            verse_text="אבג אב",
+            wlc_focus="אב",
         )
 
         self.assertEqual(occurrences, 1)
@@ -2202,9 +2196,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 },
             ]
 
-            rtms_report.write_goerwitz_tms_msp_yes_html_report(
-                main_html_out, rows
-            )
+            rtms_report.write_goerwitz_tms_msp_yes_html_report(main_html_out, rows)
 
             yes_html_out = main_html_out.parent / "goerwitz-tms-msp-y.html"
             self.assertTrue(yes_html_out.exists())
@@ -2243,9 +2235,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 },
             ]
 
-            rtms_report.write_goerwitz_tms_msp_no_html_report(
-                main_html_out, rows
-            )
+            rtms_report.write_goerwitz_tms_msp_no_html_report(main_html_out, rows)
 
             no_html_out = main_html_out.parent / "goerwitz-tms-msp-n.html"
             self.assertTrue(no_html_out.exists())
@@ -2877,12 +2867,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 )
 
     def test_structured_text_sanitize_word_drops_non_target_marks(self):
-        actual = tm_sanity.sanitize_word_for_change_match(
-            "מְב\u05bdל֖י "
-        )
-        expected = tm_sanity.sanitize_word_for_change_match(
-            "מבל֖י"
-        )
+        actual = tm_sanity.sanitize_word_for_change_match("מְב\u05bdל֖י ")
+        expected = tm_sanity.sanitize_word_for_change_match("מבל֖י")
         self.assertEqual(actual, expected)
 
     def test_diff_uxlc_matches_changetext_true_after_sanitization(self):
@@ -2907,21 +2893,15 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
 
     def test_descriptor_from_hebrew_token_tevir(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "אש֛ר"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("אש֛ר")
         self.assertEqual(descriptor, "tevir")
 
     def test_descriptor_from_hebrew_token_etnaxta(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "שנ֑ים"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("שנ֑ים")
         self.assertEqual(descriptor, "etnaxta")
 
     def test_descriptor_from_hebrew_token_pashta_on_letter(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "שנה֙"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("שנה֙")
         self.assertEqual(descriptor, "pashta_on_ה")
 
     def test_descriptor_from_hebrew_token_no_accent(self):
@@ -2935,51 +2915,35 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
 
     def test_descriptor_from_hebrew_token_maqaf(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "נכח־"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("נכח־")
         self.assertEqual(descriptor, "maqaf")
 
     def test_descriptor_from_hebrew_token_two_over_accents(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "אריצ֨נו֙"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("אריצ֨נו֙")
         self.assertEqual(descriptor, "qadma_on_צ-pashta_on_ו")
 
     def test_descriptor_from_hebrew_token_repeated_accent_names(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "יאב֥ד טוב֥ה"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("יאב֥ד טוב֥ה")
         self.assertEqual(descriptor, "merkha merkha")
 
     def test_descriptor_from_hebrew_token_merkha_tipexa(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "יאב֥ד טוב֖ה"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("יאב֥ד טוב֖ה")
         self.assertEqual(descriptor, "merkha tipexa")
 
     def test_descriptor_from_hebrew_token_tipexa_merkha(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "אב֖ גד֥"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("אב֖ גד֥")
         self.assertEqual(descriptor, "tipexa merkha")
 
     def test_descriptor_from_hebrew_token_maqaf_munax(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "והיו־ ל֣י"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("והיו־ ל֣י")
         self.assertEqual(descriptor, "maqaf munax")
 
     def test_descriptor_from_hebrew_token_merkha_maqaf(self):
-        descriptor = tm_sanity.descriptor_from_hebrew_token(
-            "יד֥י־"
-        )
+        descriptor = tm_sanity.descriptor_from_hebrew_token("יד֥י־")
         self.assertEqual(descriptor, "merkha-maqaf")
 
     def test_descriptor_from_hebrew_token_returns_none_for_allowlisted_exceptions(self):
-        self.assertIsNone(
-            tm_sanity.descriptor_from_hebrew_token("ישראל֘")
-        )
+        self.assertIsNone(tm_sanity.descriptor_from_hebrew_token("ישראל֘"))
 
     def test_descriptor_from_hebrew_token_asserts_for_unmapped_non_allowlisted_token(
         self,
@@ -3195,9 +3159,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             assessment_key="uxlc",
             enriched_row={
                 "diff_wlc_uxlc": {"uxlc": "מבלי"},
-                rtms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
-                    "vels": ["מבלֽי"]
-                },
+                rtms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {"vels": ["מבלֽי"]},
             },
             wlc_focus=None,
         )
@@ -3208,21 +3170,17 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             assessment_key="mam",
             enriched_row={
                 "diff_wlc_mam": {"mam_simple": "ידי־"},
-                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
-                    "vels": ["ידֽי־"]
-                },
+                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {"vels": ["ידֽי־"]},
             },
             wlc_focus=None,
         )
         self.assertEqual(descriptor, "meteg-maqaf")
 
     def test_try_auto_assessment_descriptor_keeps_plain_labels_without_witness(self):
-        no_accent_descriptor = (
-            rtms_assessment_auto.try_auto_assessment_descriptor(
-                assessment_key="uxlc",
-                enriched_row={"diff_wlc_uxlc": {"uxlc": "מבלי"}},
-                wlc_focus=None,
-            )
+        no_accent_descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="uxlc",
+            enriched_row={"diff_wlc_uxlc": {"uxlc": "מבלי"}},
+            wlc_focus=None,
         )
         maqaf_descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="mam",
@@ -3292,18 +3250,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         }
 
         for ref, expected_assessment in expected_by_ref.items():
-            structured = tm_data.STRUCTURED_TEXT_BY_REF.get(
-                ref
-            )
+            structured = tm_data.STRUCTURED_TEXT_BY_REF.get(ref)
             self.assertIsInstance(structured, dict, ref)
             assessment = structured.get("assessment")
             self.assertIsInstance(assessment, dict, ref)
             for key, expected_value in expected_assessment.items():
                 self.assertEqual(assessment.get(key), expected_value, f"{ref} {key}")
 
-        je_1003 = tm_data.STRUCTURED_TEXT_BY_REF.get(
-            "je 10:3"
-        )
+        je_1003 = tm_data.STRUCTURED_TEXT_BY_REF.get("je 10:3")
         self.assertIsInstance(je_1003, dict)
         je_1003_assessment = je_1003.get("assessment")
         if isinstance(je_1003_assessment, dict):
@@ -3329,12 +3283,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             "1k 20:29": {
                 "diff_wlc_uxlc": {"uxlc": "נכח־"},
                 "diff_wlc_mam": {"mam_simple": "נכח־"},
-                rtms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {
-                    "vels": ["נֽכח־"]
-                },
-                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
-                    "vels": ["נֽכח־"]
-                },
+                rtms_meteg_witness.INTERNAL_UXLC_WITNESS_KEY: {"vels": ["נֽכח־"]},
+                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {"vels": ["נֽכח־"]},
             },
             "da 2:41": {
                 "diff_wlc_uxlc": {"uxlc": "די"},
@@ -3344,16 +3294,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             },
             "je 48:12": {
                 "diff_wlc_mam": {"mam_simple": "הנה־"},
-                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {
-                    "vels": ["הֽנה־"]
-                },
+                rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {"vels": ["הֽנה־"]},
             },
         }
 
         for ref, expected_assessment in expected_auto_by_ref.items():
-            structured = tm_data.STRUCTURED_TEXT_BY_REF.get(
-                ref
-            )
+            structured = tm_data.STRUCTURED_TEXT_BY_REF.get(ref)
             self.assertIsInstance(structured, dict, ref)
             assessment = structured.get("assessment")
             self.assertTrue(assessment is None or isinstance(assessment, dict), ref)
@@ -3515,9 +3461,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            by_url = tm_sanity.load_all_changes_by_url(
-                all_changes_path
-            )
+            by_url = tm_sanity.load_all_changes_by_url(all_changes_path)
             self.assertIn(
                 "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
                 by_url,

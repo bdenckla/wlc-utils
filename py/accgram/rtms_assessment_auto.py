@@ -348,7 +348,7 @@ def _infer_assessment_descriptor_from_hebrew_token(
     except (AssertionError, ValueError):
         descriptor = None
 
-    if descriptor in ("no_accent","maqaf"):
+    if descriptor in ("no_accent", "maqaf"):
         return _apply_witness_to_normalized_descriptor(
             normalized_descriptor=descriptor,
             witness_hebrew_token=witness_hebrew_token,
@@ -382,9 +382,7 @@ def _apply_witness_to_normalized_descriptor(
         return normalized_descriptor
 
     witness_token = witness_hebrew_token.strip()
-    if not witness_token or not rtms_meteg_witness.token_has_meteg(
-        witness_token
-    ):
+    if not witness_token or not rtms_meteg_witness.token_has_meteg(witness_token):
         return normalized_descriptor
 
     if rtms_meteg_witness.token_has_maqaf(witness_token):

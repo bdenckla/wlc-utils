@@ -110,7 +110,9 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
     if not atoms_with_descriptors:
         return None
 
-    atom_descriptions = ["-".join(atom_descriptors) for atom_descriptors in atoms_with_descriptors]
+    atom_descriptions = [
+        "-".join(atom_descriptors) for atom_descriptors in atoms_with_descriptors
+    ]
     return " ".join(atom_descriptions)
 
 

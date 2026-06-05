@@ -10,9 +10,7 @@ def _load_structured_text_by_ref() -> dict[str, dict[str, object]]:
     if _STRUCTURED_TEXT_BY_REF_CACHE is None:
         from accgram import tm_data
 
-        _STRUCTURED_TEXT_BY_REF_CACHE = (
-            tm_data.STRUCTURED_TEXT_BY_REF
-        )
+        _STRUCTURED_TEXT_BY_REF_CACHE = tm_data.STRUCTURED_TEXT_BY_REF
     return _STRUCTURED_TEXT_BY_REF_CACHE
 
 
