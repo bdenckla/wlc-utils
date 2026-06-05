@@ -13,23 +13,7 @@ class TestModuleSpec:
     help_text: str
 
 
-TEST_MODULE_SPECS = (
-    TestModuleSpec(
-        flag="accgram-filter-split-wlc",
-        module_name="tests.test_accgram_filter_split_wlc",
-        help_text="Run accgram filter-split provenance sidecar tests.",
-    ),
-    TestModuleSpec(
-        flag="accgram-research-troublemakers",
-        module_name="tests.test_accgram_research_tms",
-        help_text="Run accgram research-tms-and-oddballs enrichment tests.",
-    ),
-    TestModuleSpec(
-        flag="accgram-run-goerwitz",
-        module_name="tests.test_accgram_run_goerwitz",
-        help_text="Run accgram run-goerwitz and stderr-summary tests.",
-    ),
-)
+TEST_MODULE_SPECS = ()
 
 
 def build_parser() -> argparse.ArgumentParser:

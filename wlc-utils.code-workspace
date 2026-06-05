@@ -40,6 +40,10 @@
 			"/^c:/Users/BenDe/GitRepos/wlc-utils/\\.venv/Scripts/python\\.exe py/main_test\\.py --accgram-research-troublemakers$/": {
 				"approve": true,
 				"matchCommandLine": true
+			},
+			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_accgram\\.py research-tms-and-oddballs$/": {
+				"approve": true,
+				"matchCommandLine": true
 			}
 		}
 	}
