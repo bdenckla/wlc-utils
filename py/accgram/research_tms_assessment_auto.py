@@ -26,14 +26,12 @@ _HEBREW_ACCENT_END = ord("\u05af")
 
 def materialize_auto_assessment_descriptors(
     *,
-    ref: str,
     structured_text: dict[str, object],
     enriched_row: dict[str, object],
     wlc_focus: str | None,
 ) -> dict[str, object]:
-    assessment = structured_text.get("assessment")
-    if not isinstance(assessment, dict):
-        return structured_text
+    assessment = structured_text.get("assessment", {})
+    assert isinstance(assessment, dict)
 
     out_assessment = dict(assessment)
     changed = False

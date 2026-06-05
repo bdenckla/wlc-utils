@@ -245,7 +245,6 @@ def _enrich_troublemaker_rows(
 
         if structured_text is not None:
             structured_text = materialize_auto_assessment_descriptors(
-                ref=ref,
                 structured_text=structured_text,
                 enriched_row=enriched_row,
                 wlc_focus=wlc_focus,

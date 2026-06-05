@@ -3238,12 +3238,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertIsInstance(structured, dict, ref)
             assessment = structured.get("assessment")
-            self.assertIsInstance(assessment, dict, ref)
+            self.assertTrue(assessment is None or isinstance(assessment, dict), ref)
+            assessment_dict = assessment if isinstance(assessment, dict) else {}
             for key in expected_assessment:
-                self.assertNotIn(key, assessment, f"{ref} {key} should be auto")
+                self.assertNotIn(key, assessment_dict, f"{ref} {key} should be auto")
 
             out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
-                ref=ref,
                 structured_text=structured,
                 enriched_row=enriched_row_by_ref[ref],
                 wlc_focus=(
@@ -3290,7 +3290,6 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         structured_text = {"assessment": {"wlc": "%auto%"}}
 
         out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
-            ref="am 1:14",
             structured_text=structured_text,
             enriched_row={},
             wlc_focus=None,
@@ -3305,7 +3304,6 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         structured_text = {"assessment": {"manuscript": "%auto%"}}
 
         out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
-            ref="da 2:41",
             structured_text=structured_text,
             enriched_row={},
             wlc_focus=None,
@@ -3314,13 +3312,24 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         self.assertIs(out, structured_text)
         self.assertEqual(out["assessment"]["manuscript"], "%auto%")
 
+    def test_materialize_auto_assessment_descriptors_rejects_non_dict_assessment(
+        self,
+    ):
+        structured_text = {"assessment": "meteg-space"}
+
+        with self.assertRaises(TypeError):
+            research_tms_assessment_auto.materialize_auto_assessment_descriptors(
+                structured_text=structured_text,
+                enriched_row={},
+                wlc_focus=None,
+            )
+
     def test_materialize_auto_assessment_descriptors_still_infers_missing_wlc(
         self,
     ):
         structured_text = {"assessment": {}}
 
         out = research_tms_assessment_auto.materialize_auto_assessment_descriptors(
-            ref="ju 13:18",
             structured_text=structured_text,
             enriched_row={"diff_wlc_uxlc": {"wlc422": "פֽלאי׃"}},
             wlc_focus=None,
