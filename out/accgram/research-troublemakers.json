@@ -653,15 +653,9 @@
         "st-summary": "The checker probably doesn’t like munax legarmeih serving geresh.",
         "wlc_focus": "חשבנ֜ות",
         "comment": [
-          [
-            "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. "
-          ],
-          [
-            "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble."
-          ],
-          [
-            " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”."
-          ]
+          "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. ",
+          "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble.",
+          " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”."
         ]
       }
     },
@@ -2122,15 +2116,9 @@
         "wlc_focus": "בשר־ ק֜דש",
         "BHQ": "?",
         "comment": [
-          [
-            "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. "
-          ],
-          [
-            "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble."
-          ],
-          [
-            " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”."
-          ]
+          "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. ",
+          "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble.",
+          " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”."
         ]
       }
     },
@@ -2329,15 +2317,10 @@
         "st-summary": "The checker probably doesn’t like munax legarmeih serving tevir.",
         "wlc_focus": "ירושל֛מה",
         "comment": [
-          [
-            "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening”. "
-          ],
-          [
-            "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble."
-          ],
-          [
-            " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”."
-          ]
+          "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening”. ",
+          "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble.",
+          " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”.",
+          "This verse has a munax vs merkha issue that may be significant."
         ],
         "assessment": {
           "wlc": "munax",
@@ -2417,15 +2400,9 @@
         "st-summary": "The checker probably doesn’t like munax legarmeih serving geresh.",
         "wlc_focus": "אוח֜ילה",
         "comment": [
-          [
-            "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. "
-          ],
-          [
-            "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble."
-          ],
-          [
-            " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”."
-          ]
+          "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. ",
+          "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble.",
+          " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”."
         ]
       }
     },
@@ -2883,15 +2860,9 @@
         "st-summary": "The checker probably doesn’t like munax legarmeih serving geresh.",
         "wlc_focus": "את־ האנש֜ים",
         "comment": [
-          [
-            "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. "
-          ],
-          [
-            "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble."
-          ],
-          [
-            " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”."
-          ]
+          "This verse probably causes trouble for the Goerwitz accent grammar because is has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. ",
+          "This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble.",
+          " It remains to be investigated whether those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”."
         ]
       }
     },

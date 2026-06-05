@@ -3,22 +3,23 @@
 from __future__ import annotations
 
 
-def _non_revia_comment(fp_value: str):
+def _non_revia_comment(fp_value: str, extra=()):
     return (
-        [
+        (
             "This verse probably causes trouble for the Goerwitz accent grammar because "
             f"is has a phrase that is a member of the FOI category “{fp_value}”. "
-        ],
-        [
+        ),
+        (
             "This verse is one of 5 troublemakers whose FOI category starts "
             "with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble."
-        ],
-        [
+        ),
+        (
             " It remains to be investigated whether those other 12,"
             " despite not causing trouble,"
             " are considered ungrammatical,"
             " i.e. report the string “ERROR”."
-        ],
+        ),
+        *extra,
     )
 
 
@@ -216,7 +217,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": _non_revia_summary("tevir"),
         "wlc_focus": "ירושל֛מה",
         "comment": _non_revia_comment(
-            "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"
+            "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening",
+            ["This verse has a munax vs merkha issue that may be significant."]
         ),
     },
     "je 4:19": {
