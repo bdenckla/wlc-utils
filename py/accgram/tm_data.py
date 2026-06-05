@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+
 def get_structured_text() -> dict[str, dict[str, object]]:
     return STRUCTURED_TEXT_BY_REF
+
 
 def _non_revia_comment(fp_value: str, extra=()):
     return (
@@ -166,8 +168,12 @@ _JE_1003_02 = (
 )
 _JE_1003_03 = "Finally, it should be noted that the mark preceding this word’s yod is assumed to be a spacer."
 _BAR_INSTEAD_OF_SOF_PASUQ_SUMMARY = "In the place where one would expect a sof pasuq, the LC has a vertical bar somewhat like a paseq or legarmeh."
-_MISSING_SOF_PASUQ_SUMMARY = "A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline."
-_MISSING_SOF_PASUQ_COMMENT = "Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC."
+_MISSING_SOF_PASUQ_SUMMARY = (
+    "A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline."
+)
+_MISSING_SOF_PASUQ_COMMENT = (
+    "Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC."
+)
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
         "st-summary": "Defying the LC, BHS has mahapakh rather than munax.",
@@ -195,9 +201,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "נ֥כח",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
         "comment": (
-            (
-                "See the image in the UXLC change to which we link above."
-            ),
+            ("See the image in the UXLC change to which we link above."),
             (
                 "Aside: I am not sure what, if anything is grammatically “wrong” about a merkha here."
                 " Indeed see the MAM doc-note for a list of some of the sources that have merkha."
@@ -207,7 +211,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
                 " the “legality” of sequences involving it."
                 " The sequence in question is"
                 " darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
-            )
+            ),
         ),
     },
     "1s 6:19": {

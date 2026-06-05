@@ -17,7 +17,9 @@ RenderSatValue = Callable[[object], str]
 
 
 def build_wlc_focus_source_row(wlc_focus: object) -> SatSourceRow:
-    normalized_value = _normalize_whitespace(wlc_focus) if isinstance(wlc_focus, str) else ""
+    normalized_value = (
+        _normalize_whitespace(wlc_focus) if isinstance(wlc_focus, str) else ""
+    )
     return SatSourceRow(
         key="wlc_focus",
         value=normalized_value,

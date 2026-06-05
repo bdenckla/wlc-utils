@@ -100,7 +100,9 @@ def maybe_restore_value_from_witness(
     return witness_token
 
 
-def _origin_value_is_describable(*, row_ref: str, row_key: str, origin_value: object) -> bool:
+def _origin_value_is_describable(
+    *, row_ref: str, row_key: str, origin_value: object
+) -> bool:
     if isinstance(origin_value, str):
         return rtmsr_diff_format.is_plain_hebrew_string(origin_value)
 

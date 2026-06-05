@@ -130,16 +130,12 @@ def infer_descriptor(
         token,
         hebrew_token_w=hebrew_token_w,
     )
-    base_descriptor_without_meteg = _descriptor_from_token_sans_meteg(
-        mi_token
-    )
+    base_descriptor_without_meteg = _descriptor_from_token_sans_meteg(mi_token)
 
     u05bd_is_silluq = meteg_silluq_context.u05bd_is_silluq(
         token=token,
         verse_hebrew_tokens=None,
-        hebrew_token_w=(
-            mi_token if hp.MTGOSLQ in mi_token else None
-        ),
+        hebrew_token_w=(mi_token if hp.MTGOSLQ in mi_token else None),
     )
     if is_last_word is not None:
         u05bd_is_silluq = is_last_word if hp.MTGOSLQ in mi_token else None

@@ -12,9 +12,7 @@ _MISSING_SOF_PASUQ_TOKENS = {
 
 def row_is_missing_sof_pasuq_yes(row: dict[str, object]) -> bool:
     ref = row.get("ref")
-    structured_text = (
-        get_structured_text().get(ref) if isinstance(ref, str) else None
-    )
+    structured_text = get_structured_text().get(ref) if isinstance(ref, str) else None
     wlc_focus = rtms_focus_diff_expand.structured_wlc_focus(structured_text)
     for description_key in ("wlc", "uxlc", "mam"):
         description = rtms_generated_descriptions.try_generated_description(

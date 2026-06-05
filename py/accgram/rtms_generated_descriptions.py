@@ -14,7 +14,11 @@ def try_generated_description(
     if description_key == "manuscript":
         return None
 
-    for hebrew_token, witness_token, is_last_word in _candidate_tokens_for_generated_description(
+    for (
+        hebrew_token,
+        witness_token,
+        is_last_word,
+    ) in _candidate_tokens_for_generated_description(
         description_key=description_key,
         enriched_row=enriched_row,
         wlc_focus=wlc_focus,
