@@ -1,20 +1,53 @@
 from __future__ import annotations
 
-_TOKEN_ABBREV: dict[str, str] = {
-    "silluq": "slq",
-    "atnach": "atn",
-    "zaqef": "zqf",
-    "pashta": "psh",
-    "revia": "rv",
-    "tifcha": "tf",
-    "tevir": "tvr",
-    "geresh": "gr",
-    "munach": "mun",
-    "mereka": "mr",
-    "mahpak": "mhp",
-    "darga": "dar",
-    "yetiv": "ytv",
+from mb_cmn import hebrew_accents as ha
+from mb_cmn import hebrew_points as hpo
+from mb_cmn import uni_heb
+
+
+def _strip_outer_parens(text: str) -> str:
+    if text.startswith("(") and text.endswith(")") and len(text) >= 2:
+        return text[1:-1]
+    return text
+
+
+_ACC_ABBREV_BY_CHAR: dict[str, str] = {
+    char: _strip_outer_parens(abbrev)
+    for char, abbrev in uni_heb._HE_AND_NONHE_ACC_PAIRS
 }
+
+_TOKEN_TO_ACC_CHAR: dict[str, str] = {
+    "silluq": hpo.MTGOSLQ,
+    "atnach": ha.ATN,
+    "segolta": ha.SEG_A,
+    "zaqef": ha.ZAQ_Q,
+    "zaqefgadol": ha.ZAQ_G,
+    "tifcha": ha.TIP,
+    "revia": ha.REV,
+    "pashta": ha.PASH,
+    "yetiv": ha.YET,
+    "tevir": ha.TEV,
+    "geresh": ha.GER,
+    "gershayim": ha.GER_2,
+    "munach": ha.MUN,
+    "mereka": ha.MER,
+    "merkha": ha.MER,
+    "mahpak": ha.MAH,
+    "darga": ha.DAR,
+    "azla": ha.QOM,
+    "telishagedola": ha.TEL_G,
+    "big_telisha": ha.TEL_G,
+    "pazer": ha.PAZ,
+    "telishaqetanna": ha.TEL_Q,
+    "zarqa": ha.Z_OR_TSOR,
+}
+
+_TOKEN_ABBREV: dict[str, str] = {
+    token: _ACC_ABBREV_BY_CHAR[accent_char]
+    for token, accent_char in _TOKEN_TO_ACC_CHAR.items()
+}
+# This appears in parse output but is not a standalone Unicode accent name.
+_TOKEN_ABBREV["legarmeh"] = "lgm"
 
 
 def abbreviate_branch_label(label: str) -> str:
