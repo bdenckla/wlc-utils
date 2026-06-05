@@ -3069,14 +3069,14 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_assessment_descriptor_matches_hebrew_token_pashta_stress_helper(self):
         matches = tm_sanity.assessment_descriptor_matches_hebrew_token(
-            assessment_descriptor="pashta stress helper on resh, pashta on xet",
+            assessment_descriptor="pashta stress helper on resh, pashta on ḥet",
             hebrew_token="הר֙וח֙",
         )
         self.assertTrue(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_pashta_stress_helper(self):
         matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
-            assessment_uxlc="pashta stress helper on resh, pashta on xet",
+            assessment_uxlc="pashta stress helper on resh, pashta on ḥet",
             diff_wlc_uxlc={"wlc422": "הר֨וח", "uxlc": "הר֙וח֙"},
         )
         self.assertTrue(matches)

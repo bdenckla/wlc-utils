@@ -236,9 +236,6 @@ def _normalize_assessment_descriptor(descriptor: str) -> str:
         normalized,
         flags=re.IGNORECASE,
     )
-    normalized = re.sub(r"\bxet\b", "het", normalized, flags=re.IGNORECASE)
-    if normalized == "no accent":
-        normalized = "no_accent"
 
     return re.sub(
         r"(?P<prefix>pashta on |qadma on )(?P<letter>[\u05d0-\u05ea])",
