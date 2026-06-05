@@ -2321,19 +2321,10 @@
           "כובֽס׃"
         ]
       },
-      "diff_wlc_mam": [
-        {
-          "wlc422": "וישל֣ח",
-          "mam_simple": "וישל֥ח"
-        },
-        {
-          "wlc422": [
-            "רב־",
-            "שק֨ה"
-          ],
-          "mam_simple": "רבשק֨ה"
-        }
-      ],
+      "diff_wlc_mam": {
+        "wlc422": "וישל֣ח",
+        "mam_simple": "וישל֥ח"
+      },
       "structured_text": {
         "st-summary": "The checker probably doesn’t like munax legarmeih serving tevir.",
         "wlc_focus": "ירושל֛מה",

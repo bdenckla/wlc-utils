@@ -16,8 +16,11 @@ from py_uxlc import my_uxlc
 from accgram import research_tms_rows
 
 _DIFF_NOTE_KEYS = {"note", "notes"}
-_IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS: set[tuple[str, str]] = {
-    ("אחר֑יש", "אחר֑ש"),
+_IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS: set[
+    tuple[tuple[str, ...], tuple[str, ...]]
+] = {
+    (("אחר֑יש",), ("אחר֑ש",)),
+    (("רב־", "שק֨ה"), ("רבשק֨ה",)),
 }
 
 
@@ -203,12 +206,22 @@ def _is_ignored_wlc_mam_diff_entry(entry: object) -> bool:
     if not isinstance(entry, dict):
         return False
 
-    wlc_value = entry.get("wlc422")
-    mam_value = entry.get("mam_simple")
-    if not isinstance(wlc_value, str) or not isinstance(mam_value, str):
+    wlc_tokens = _diff_side_tokens(entry.get("wlc422"))
+    mam_tokens = _diff_side_tokens(entry.get("mam_simple"))
+    if wlc_tokens is None or mam_tokens is None:
         return False
 
-    return (wlc_value, mam_value) in _IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS
+    return (wlc_tokens, mam_tokens) in _IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS
+
+
+def _diff_side_tokens(side_value: object) -> tuple[str, ...] | None:
+    if isinstance(side_value, str):
+        return (side_value,)
+    if isinstance(side_value, list) and all(
+        isinstance(token, str) for token in side_value
+    ):
+        return tuple(side_value)
+    return None
 
 
 def _validate_unique_wlc_focus_in_wlc_verse(
