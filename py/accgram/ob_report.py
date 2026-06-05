@@ -7,8 +7,10 @@ from accgram import ob_error_context
 from accgram import ob_tree_table
 from accgram import rtms_ref
 from accgram import rtms_report
+from accgram import rtmsr_subsets
 from accgram import rtmsr_sat
 from accgram import rtmsr_verse
+from mb_cmn import provenance
 from py_html import wlc_utils_html
 
 _GOERWITZ_OBS_WIDTH_CLASS = "goerwitz-tms-width-limited"
@@ -43,6 +45,7 @@ def write_goerwitz_obs_html_report(
         write_ctx=wlc_utils_html.WriteCtx(
             title=_REPORT_TITLE,
             path=str(html_out_path),
+            html_comment=provenance.generated_html_comment(__file__),
         ),
         path_to_style=rtms_report.path_to_gh_pages_style(html_out_path),
     )
@@ -57,14 +60,15 @@ def _build_body_contents(
 ) -> tuple[object, ...]:
     sections: list[object] = [
         wlc_utils_html.heading_level_1(_REPORT_HEADING),
-        *_related_pages_contents(main_html_out_path),
         wlc_utils_html.heading_level_2("Introduction"),
         wlc_utils_html.para(
             (
-                f"These {len(enriched_oddball_rows)} verses are oddballs from Goerwitz output. ",
+                f"These {len(enriched_oddball_rows)} verses did not cause trouble for the Goerwitz accent grammar checker,",
+                " but did contain the string “ERROR” in their parse trees."
                 "Each section below includes links, WLC verse, SAT rows, and a complete parse tree table.",
             )
         ),
+        *_related_pages_contents(main_html_out_path),
     ]
 
     for index, row in enumerate(enriched_oddball_rows):
@@ -98,10 +102,15 @@ def _build_body_contents(
 
 
 def _related_pages_contents(main_html_out_path: Path) -> tuple[object, ...]:
+    overview_name = rtmsr_subsets.overview_html_out_path(main_html_out_path).name
     return (
         wlc_utils_html.heading_level_2("Related pages"),
         wlc_utils_html.unordered_list(
             (
+                wlc_utils_html.anchor(
+                    "Goerwitz run on WLC",
+                    {"href": overview_name},
+                ),
                 wlc_utils_html.anchor(
                     "Goerwitz troublemakers",
                     {"href": main_html_out_path.name},

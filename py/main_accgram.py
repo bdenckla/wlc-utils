@@ -12,7 +12,8 @@ Subcommands:
                 nodes and write out/accgram/research-troublemakers.json.
                 Also enrich out/accgram/goerwitz/_oddballs.json and write
                 out/accgram/research-oddballs.json, plus HTML reports
-                including gh-pages/accgram/goerwitz-obs.html.
+                including gh-pages/accgram/goerwitz.html and
+                gh-pages/accgram/goerwitz-obs.html.
     fresh-run-goerwitz
                 Run filter-split-wlc, then run goerwitz on the freshly written
                 filtered split files.
@@ -142,7 +143,8 @@ def main() -> None:
         help=(
             "Enrich existing _troublemakers.json entries (plus _oddballs.json) "
             "with matching wlc422-kq-u verse objects and XML-ish UXLC verse nodes, "
-            "and write goerwitz-obs.html alongside existing troublemaker pages."
+            "and write goerwitz.html and goerwitz-obs.html alongside existing "
+            "troublemaker pages."
         ),
     )
     research_tao.add_args(research_tao_parser, repo_root=_repo_root())

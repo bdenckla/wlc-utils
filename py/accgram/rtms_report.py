@@ -13,6 +13,7 @@ from accgram import rtmsr_verse
 from accgram import rtms_ref
 from accgram.tm_data import get_structured_text
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
+from mb_cmn import provenance
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
@@ -144,6 +145,7 @@ def _write_goerwitz_tms_html_report(
     write_ctx = wlc_utils_html.WriteCtx(
         title=title,
         path=str(html_out_path),
+        html_comment=provenance.generated_html_comment(__file__),
     )
     wlc_utils_html.write_html_to_file(
         body_contents=body_contents,
@@ -162,13 +164,13 @@ def _build_body_contents(
     anchor_id_builder: AnchorIdBuilder,
 ) -> tuple[object, ...]:
     row_count = len(enriched_rows)
-    sections: list[object] = [
+    sections = [
         wlc_utils_html.heading_level_1(heading_level_1_text),
+        *rtmsr_intro.build_intro_contents(row_count, total_count),
         *top_contents,
+        *rtmsr_open_issues.build_open_issues_section(),
+        *rtmsr_bracket_notes.build_wlc_bracket_notes_section(enriched_rows),
     ]
-    sections.extend(rtmsr_intro.build_intro_contents(row_count, total_count))
-    sections.extend(rtmsr_open_issues.build_open_issues_section())
-    sections.extend(rtmsr_bracket_notes.build_wlc_bracket_notes_section(enriched_rows))
 
     for index, row in enumerate(enriched_rows):
         sections.extend(

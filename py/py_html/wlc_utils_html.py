@@ -19,6 +19,7 @@ class WriteCtx:
     path: str
     style: Union[str, None] = None
     add_wbr: bool = False
+    html_comment: Union[str, None] = None
 
 
 def write_html_to_file(body_contents, write_ctx: WriteCtx, path_to_style):
@@ -31,7 +32,12 @@ def write_html_to_file(body_contents, write_ctx: WriteCtx, path_to_style):
     """
     html_el = html_el2(write_ctx.title, body_contents, f"{path_to_style}style.css")
     file_io.with_tmp_openw(
-        write_ctx.path, {}, _write_callback, html_el, write_ctx.add_wbr
+        write_ctx.path,
+        {},
+        _write_callback,
+        html_el,
+        write_ctx.add_wbr,
+        write_ctx.html_comment,
     )
 
 
@@ -348,8 +354,10 @@ def _is_str_or_htel(obj):
     return isinstance(obj, str) or is_htel(obj)
 
 
-def _write_callback(html_el, add_wbr, out_fp):
+def _write_callback(html_el, add_wbr, html_comment, out_fp):
     out_fp.write("<!doctype html>\n")
+    if html_comment:
+        out_fp.write(f"<!-- {html_comment} -->\n")
     out_fp.write(el_to_str(add_wbr, html_el))
 
 

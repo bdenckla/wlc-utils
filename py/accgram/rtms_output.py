@@ -6,6 +6,7 @@ from pathlib import Path
 from accgram import ob_report
 from accgram import rtms_meteg_witness
 from accgram import rtms_report
+from accgram import rtmsr_overview
 from mb_cmn import provenance
 
 
@@ -79,21 +80,25 @@ def write_html_reports(
     *,
     enriched_oddball_rows: list[dict[str, object]] | None = None,
     goerwitz_out_dir: Path | None = None,
-) -> Path | None:
+) -> tuple[Path, Path | None]:
     # Keep this call sequence immediately after JSON write so HTML failures are
     # fail-fast while preserving the JSON write attempt.
+    overview_html_out_path = rtmsr_overview.write_goerwitz_overview_html_report(
+        html_out_path
+    )
     rtms_report.write_goerwitz_tms_html_report(html_out_path, enriched_rows)
     rtms_report.write_goerwitz_tms_msp_yes_html_report(html_out_path, enriched_rows)
     rtms_report.write_goerwitz_tms_msp_no_html_report(html_out_path, enriched_rows)
 
+    oddballs_html_out_path: Path | None = None
     if enriched_oddball_rows and isinstance(goerwitz_out_dir, Path):
-        return ob_report.write_goerwitz_obs_html_report(
+        oddballs_html_out_path = ob_report.write_goerwitz_obs_html_report(
             main_html_out_path=html_out_path,
             enriched_oddball_rows=enriched_oddball_rows,
             goerwitz_out_dir=goerwitz_out_dir,
         )
 
-    return None
+    return overview_html_out_path, oddballs_html_out_path
 
 
 def print_run_summary(
@@ -105,6 +110,7 @@ def print_run_summary(
     all_changes_path: Path,
     out_path: Path,
     html_out_path: Path,
+    overview_html_out_path: Path,
     enriched_rows_count: int,
     oddballs_in_path: Path | None,
     oddballs_out_path: Path | None,
@@ -117,6 +123,7 @@ def print_run_summary(
     print(f"MAM-simple dir: {mam_simple_dir}")
     print(f"All changes: {all_changes_path}")
     print(f"Output: {out_path}")
+    print(f"Overview HTML output: {overview_html_out_path}")
     if isinstance(oddballs_out_path, Path):
         print(f"Input oddballs: {oddballs_in_path}")
         print(f"Oddballs output: {oddballs_out_path}")

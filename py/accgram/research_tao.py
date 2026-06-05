@@ -194,7 +194,7 @@ def run(args: argparse.Namespace) -> None:
     oddballs_goerwitz_out_dir = (
         oddballs_in_path.parent if isinstance(oddballs_in_path, Path) else None
     )
-    oddballs_html_out_path = rtms_output.write_html_reports(
+    overview_html_out_path, oddballs_html_out_path = rtms_output.write_html_reports(
         html_out_path,
         enriched_rows,
         enriched_oddball_rows=enriched_oddball_rows,
@@ -209,6 +209,7 @@ def run(args: argparse.Namespace) -> None:
         all_changes_path=all_changes_path,
         out_path=args.out,
         html_out_path=html_out_path,
+        overview_html_out_path=overview_html_out_path,
         enriched_rows_count=len(enriched_rows),
         oddballs_in_path=(
             oddballs_in_path if isinstance(oddballs_in_path, Path) else None

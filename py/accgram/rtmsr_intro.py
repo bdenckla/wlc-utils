@@ -34,16 +34,21 @@ def build_intro_contents(
         f"These {row_count} verses caused trouble for the Goerwitz accent grammar checker."
         + n_of_m
         + " Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks."
-        " The checker is described in the following article:"
-    )
-    citation_text = (
-        f"{_GC_AUTHOR}. ‹{_GC_TITLE}.›" f" In {_GC_BOOK_TITLE} (pp. {_GC_PAGES}). (",
-        wlc_utils_html.anchor(_GC_SERIES, {"href": _GC_BOOK_URL}),
-        f"). The Oriental Institute, Chicago, {_GC_YEAR}. ISBN {_GC_ISBN}.",
     )
 
     return (
         wlc_utils_html.heading_level_2("Introduction"),
         wlc_utils_html.para(intro_text),
+    )
+
+
+def checker_article_citation_contents() -> tuple[object, ...]:
+    citation_text = (
+        f"{_GC_AUTHOR}. ‹{_GC_TITLE}.›" f" In {_GC_BOOK_TITLE} (pp. {_GC_PAGES}). (",
+        wlc_utils_html.anchor(_GC_SERIES, {"href": _GC_BOOK_URL}),
+        f"). The Oriental Institute, Chicago, {_GC_YEAR}. ISBN {_GC_ISBN}.",
+    )
+    return (
+        wlc_utils_html.para("The Goerwitz accent grammar checker is described in the following article:"),
         wlc_utils_html.para(citation_text),
     )

@@ -7,9 +7,15 @@ from py_html import wlc_utils_html
 
 _MISSING_SOF_PASUQ_YES_LABEL = "missing sof pasuq: yes"
 _MISSING_SOF_PASUQ_NO_LABEL = "missing sof pasuq: no"
+_OVERVIEW_LABEL = "Goerwitz run on WLC"
 
 _MSP_Y_HTML_NAME = "goerwitz-tms-msp-y.html"
 _MSP_N_HTML_NAME = "goerwitz-tms-msp-n.html"
+_OVERVIEW_HTML_NAME = "goerwitz.html"
+
+
+def overview_html_out_path(main_html_out_path: Path) -> Path:
+    return main_html_out_path.parent / _OVERVIEW_HTML_NAME
 
 
 def missing_sof_pasuq_yes_html_out_path(main_html_out_path: Path) -> Path:
@@ -33,9 +39,16 @@ def filter_missing_sof_pasuq_no_rows(
 
 
 def build_main_subsets_top_contents(main_html_out_path: Path) -> tuple[object, ...]:
+    overview_name = overview_html_out_path(main_html_out_path).name
     yes_name = missing_sof_pasuq_yes_html_out_path(main_html_out_path).name
     no_name = missing_sof_pasuq_no_html_out_path(main_html_out_path).name
     return (
+        wlc_utils_html.heading_level_2("Related pages"),
+        wlc_utils_html.unordered_list(
+            (
+                wlc_utils_html.anchor(_OVERVIEW_LABEL, {"href": overview_name}),
+            )
+        ),
         wlc_utils_html.heading_level_2("Subsets"),
         wlc_utils_html.unordered_list(
             (
@@ -49,12 +62,14 @@ def build_main_subsets_top_contents(main_html_out_path: Path) -> tuple[object, .
 def build_msp_yes_related_pages_top_contents(
     main_html_out_path: Path,
 ) -> tuple[object, ...]:
+    overview_name = overview_html_out_path(main_html_out_path).name
     main_name = main_html_out_path.name
     no_name = missing_sof_pasuq_no_html_out_path(main_html_out_path).name
     return (
         wlc_utils_html.heading_level_2("Related pages"),
         wlc_utils_html.unordered_list(
             (
+                wlc_utils_html.anchor(_OVERVIEW_LABEL, {"href": overview_name}),
                 wlc_utils_html.anchor("main page", {"href": main_name}),
                 wlc_utils_html.anchor(_MISSING_SOF_PASUQ_NO_LABEL, {"href": no_name}),
             )
@@ -65,12 +80,14 @@ def build_msp_yes_related_pages_top_contents(
 def build_msp_no_related_pages_top_contents(
     main_html_out_path: Path,
 ) -> tuple[object, ...]:
+    overview_name = overview_html_out_path(main_html_out_path).name
     main_name = main_html_out_path.name
     yes_name = missing_sof_pasuq_yes_html_out_path(main_html_out_path).name
     return (
         wlc_utils_html.heading_level_2("Related pages"),
         wlc_utils_html.unordered_list(
             (
+                wlc_utils_html.anchor(_OVERVIEW_LABEL, {"href": overview_name}),
                 wlc_utils_html.anchor("main page", {"href": main_name}),
                 wlc_utils_html.anchor(_MISSING_SOF_PASUQ_YES_LABEL, {"href": yes_name}),
             )
