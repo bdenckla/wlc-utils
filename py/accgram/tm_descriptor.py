@@ -4,28 +4,32 @@ from accgram import meteg_silluq_context
 from mb_cmn import hebrew_accents as ha
 from mb_cmn import hebrew_points as hp
 from mb_cmn import hebrew_punctuation as hpunc
+from mb_diff_mpu.describe_diff import ACCENT_NAMES
 
 _HEBREW_LETTER_START = ord("\u05d0")
 _HEBREW_LETTER_END = ord("\u05ea")
 _HEBREW_ACCENT_START = ord("\u0591")
 _HEBREW_ACCENT_END = ord("\u05af")
 
+_ACCENTS_WITH_DESCRIPTORS = (
+    ha.ATN,
+    ha.SEG_A,
+    ha.ZAQ_Q,
+    ha.ZAQ_G,
+    ha.MUN,
+    ha.TEV,
+    ha.TIP,
+    ha.REV,
+    ha.ZSH_OR_TSIT,
+    ha.Z_OR_TSOR,
+    ha.GER,
+    ha.MAH,
+    ha.MER,
+    ha.DAR,
+    ha.GER_2,
+)
 _ACCENT_TO_DESCRIPTOR = {
-    ha.ATN: "etnaxta",
-    ha.SEG_A: "segol",
-    ha.ZAQ_Q: "zaqef-qatan",
-    ha.ZAQ_G: "zaqef-gadol",
-    ha.MUN: "munax",
-    ha.TEV: "tevir",
-    ha.TIP: "tipexa",
-    ha.REV: "revia",
-    ha.ZSH_OR_TSIT: "zarqa",
-    ha.Z_OR_TSOR: "zinor",
-    ha.GER: "geresh",
-    ha.MAH: "mahapakh",
-    ha.MER: "merkha",
-    ha.DAR: "darga",
-    ha.GER_2: "gershayim",
+    accent: ACCENT_NAMES[accent] for accent in _ACCENTS_WITH_DESCRIPTORS
 }
 _SIMPLE_ACCENT_DESCRIPTORS = frozenset(_ACCENT_TO_DESCRIPTOR.values())
 _OVER_ACCENT_TO_PREFIX = {

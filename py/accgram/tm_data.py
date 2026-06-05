@@ -28,12 +28,12 @@ def _non_revia_comment(fp_value: str, extra=()):
 
 
 def _non_revia_summary(accent: str) -> str:
-    return f"The checker probably doesn’t like munax legarmeih serving {accent}."
+    return f"The checker probably doesn’t like munaḥ legarmeih serving {accent}."
 
 
 def _ambiguous_mark_context_comment(marked_word: str) -> str:
     return (
-        "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg."
+        "In the LC, inclination does not reliably identify a mark as a merkha, a tipeḥa, or a meteg."
         " Yet, from context, we can usually determine the most likely intended meaning,"
         f" and that is the case here with {marked_word}."
     )
@@ -46,8 +46,8 @@ def _je_0910_and_11_comment(adjacent_verse_phrase: str):
         ],
         [_ambiguous_mark_context_comment("מבלי")],
         [
-            " It is aggressively uncharitable to transcribe the mark on מבלי as tipexa:"
-            " tipexa is the least likely of the three possible meanings of this mark."
+            " It is aggressively uncharitable to transcribe the mark on מבלי as tipeḥa:"
+            " tipeḥa is the least likely of the three possible meanings of this mark."
             " Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably"
             " assume that a maqaf is missing."
         ],
@@ -56,7 +56,7 @@ def _je_0910_and_11_comment(adjacent_verse_phrase: str):
 
 _NU_2509_01 = (
     "Compared to MAM, BHS starts chapter 26 “late”."
-    " It only starts chapter 26 after the etnaxta of what MAM calls 26:1."
+    " It only starts chapter 26 after the etnaḥta of what MAM calls 26:1."
     " It labels the first part of what MAM calls 26:1 as 25:19, a verse number that does not exist in MAM."
 )
 _NU_2509_02 = " In other words, the accent grammar is unexceptional here if we ignore where BHS happens to put its verse labels."
@@ -83,21 +83,21 @@ _LM_0505_02 = (
 _LM_0505_03 = (
     "Nonetheless, BHQ opts to make הונח “locally legal” by giving it an accent."
     " It gives it an accent by transcribing the second mark"
-    " as a second tipexa rather than as a meteg. WLC follows BHQ in this, as it explicitly notes with a bracket-Q note."
+    " as a second tipeḥa rather than as a meteg. WLC follows BHQ in this, as it explicitly notes with a bracket-Q note."
     " (Hover over the letters of the bracket notes above to decode them.)"
 )
 _LM_0505_04 = (
     "This makes the word הונח locally legal while rendering the second half of the verse illegal"
-    " by giving the silluq segment two words accented with tipexa."
-    " (This (short) verse has no etnaxta segment.)"
+    " by giving the silluq segment two words accented with tipeḥa."
+    " (This (short) verse has no etnaḥta segment.)"
 )
 _LM_0505_05 = (
-    "It is uncharitable to transcribe this mark as a tipexa."
+    "It is uncharitable to transcribe this mark as a tipeḥa."
     " Most likely what happened here is that the scribe forgot to add a maqaf."
-    " It is far less likely that the scribe intended to add a second tipexa,"
+    " It is far less likely that the scribe intended to add a second tipeḥa,"
     " and a second merkha seems equally implausible."
 )
-_TIP_LIKE_INCL = "The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
+_TIP_LIKE_INCL = "The slightly northwest-to-southeast (tipeḥa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
 _LM_0505_06 = _TIP_LIKE_INCL
 _LM_0505_07 = (
     "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh."
@@ -163,7 +163,7 @@ _JE_1003_02 = (
     " Thus our degree of certainty that an accent is “illegal”"
     " depends on our degree of certainty about the surrounding accent-context."
     " At times, our degree of certainty about the context is not high,"
-    " for example due to ambiguity between merkha and tipexa."
+    " for example due to ambiguity between merkha and tipeḥa."
     " I don’t think that is the case here, but I thought I would bring up the general point anyway."
 )
 _JE_1003_03 = "Finally, it should be noted that the mark preceding this word’s yod is assumed to be a spacer."
@@ -176,7 +176,7 @@ _MISSING_SOF_PASUQ_COMMENT = (
 )
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
-        "st-summary": "Defying the LC, BHS has mahapakh rather than munax.",
+        "st-summary": "Defying the LC, BHS has mahapakh rather than munaḥ.",
         "wlc_focus": "ועשר֤ים",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
         "comment": "See the image in the UXLC change to which we link above.",
@@ -210,7 +210,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
                 " I wonder whether, because it is so rare, we lack a good sense of"
                 " the “legality” of sequences involving it."
                 " The sequence in question is"
-                " darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
+                " darga, merkha kefula, something on נכח (the atom in question), and then tipeḥa."
             ),
         ),
     },
@@ -220,7 +220,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "2c 22:12": {
-        "st-summary": "Defying the LC, BHS has tipexa rather than etnaxta.",
+        "st-summary": "Defying the LC, BHS has tipeḥa rather than etnaḥta.",
         "wlc_focus": "שנ֖ים",
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
         "comment": "See the image in the UXLC change to which we link above.",
@@ -230,7 +230,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ירושל֛מה",
         "comment": _non_revia_comment(
             "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening",
-            ["This verse has a munax vs merkha issue that may be significant."],
+            ["This verse has a munaḥ vs merkha issue that may be significant."],
         ),
     },
     "je 4:19": {
@@ -379,7 +379,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ec 9:18": {
-        "st-summary": "Defying both BHS and the LC, WLC transcribes a merkha as a tipexa.",
+        "st-summary": "Defying both BHS and the LC, WLC transcribes a merkha as a tipeḥa.",
         "wlc_focus": "יאב֥ד טוב֥ה",
         "BHQ": "?",
         "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
@@ -390,19 +390,19 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
                 " Perhaps WLC agrees with an older BHS? I have only checked the 1984 and 1997 editions of BHS."
             ),
             (
-                "The LC diverges from consensus here by having merkha tipexa rather than tipexa merkha,"
+                "The LC diverges from consensus here by having merkha tipeḥa rather than tipeḥa merkha,"
                 " but that is still accent-grammatical, so that divergence is not relevant here."
             ),
         ),
     },
     "ek 11:1": {
-        "st-summary": "BHS transcribes a merkha as a tipexa.",
+        "st-summary": "BHS transcribes a merkha as a tipeḥa.",
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "comment": (
             _ambiguous_mark_context_comment("שרי")
-            + " It is aggressively uncharitable to transcribe the mark on שרי as tipexa:"
-            + " tipexa is the least likely of the three possible meanings of this mark."
+            + " It is aggressively uncharitable to transcribe the mark on שרי as tipeḥa:"
+            + " tipeḥa is the least likely of the three possible meanings of this mark."
             + " Merkha is by far the most likely. If the mark were meteg, we would have to"
             + " assume that a maqaf is missing."
         ),
@@ -423,13 +423,13 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "img": "LC-052A-col-2-line-1-Ex-34v6.png",
     },
     "je 9:10": {
-        "st-summary": "BHS transcribes a merkha as a tipexa.",
+        "st-summary": "BHS transcribes a merkha as a tipeḥa.",
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-15",
         "comment": _je_0910_and_11_comment("next verse (11)"),
     },
     "je 9:11": {
-        "st-summary": "BHS transcribes a merkha as a tipexa.",
+        "st-summary": "BHS transcribes a merkha as a tipeḥa.",
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-16",
         "comment": _je_0910_and_11_comment("previous verse (10)"),
@@ -445,13 +445,13 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 31:32": {
-        "st-summary": "Defying the LC, BHS has tipexa rather than munax.",
+        "st-summary": "Defying the LC, BHS has tipeḥa rather than munaḥ.",
         "wlc_focus": "מא֖רץ",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "je 48:12": {
-        "st-summary": "BHS transcribes a meteg as a tipexa.",
+        "st-summary": "BHS transcribes a meteg as a tipeḥa.",
         "wlc_focus": "הנ֖ה־",
         "img": "LC-272A-col-3-line-3-Je-48v12.png",
         "comment": (
@@ -481,7 +481,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "lm 5:5": {
-        "st-summary": "BHQ transcribes a meteg as a tipexa due to a missing maqaf.",
+        "st-summary": "BHQ transcribes a meteg as a tipeḥa due to a missing maqaf.",
         "wlc_focus": "הונ֖ח",
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
         "comment": (
