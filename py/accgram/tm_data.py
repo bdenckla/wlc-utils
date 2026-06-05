@@ -185,7 +185,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 19:11": {
         "wlc_focus": "הר֨וח",
         "assessment": {
-            "mam": "pashta stress helper on resh, pashta on xet",
+            "mam": "pashta stress helper on resh-pashta on xet",
         },
     },
     "1k 20:29": {

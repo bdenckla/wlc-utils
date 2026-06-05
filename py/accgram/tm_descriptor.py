@@ -229,9 +229,7 @@ def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> boo
 
 
 def _normalize_assessment_descriptor(descriptor: str) -> str:
-    normalized = re.sub(r"\s*,\s*", "-", descriptor.strip())
-    normalized = re.sub(r"\s*-\s*", "-", normalized)
-    normalized = re.sub(r"\s+", " ", normalized)
+    normalized = descriptor
     normalized = re.sub(
         r"\bpashta stress helper on\b",
         "pashta on",

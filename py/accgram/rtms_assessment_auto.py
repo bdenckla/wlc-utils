@@ -348,16 +348,9 @@ def _infer_assessment_descriptor_from_hebrew_token(
     except (AssertionError, ValueError):
         descriptor = None
 
-    if descriptor == "no_accent":
-        normalized_descriptor = "no_accent"
+    if descriptor in ("no_accent","maqaf"):
         return _apply_witness_to_normalized_descriptor(
-            normalized_descriptor=normalized_descriptor,
-            witness_hebrew_token=witness_hebrew_token,
-        )
-    if descriptor == "maqaf":
-        normalized_descriptor = "maqaf"
-        return _apply_witness_to_normalized_descriptor(
-            normalized_descriptor=normalized_descriptor,
+            normalized_descriptor=descriptor,
             witness_hebrew_token=witness_hebrew_token,
         )
     if isinstance(descriptor, str) and descriptor:
