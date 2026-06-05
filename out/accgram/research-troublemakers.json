@@ -176,9 +176,9 @@
         "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
         "wlc_focus": "מכ֨ל",
         "assessment": {
-          "wlc": "qadma on kaf",
+          "wlc": "qadma_on_כ",
           "uxlc": "no_accent",
-          "mam": "pashta on lamed"
+          "mam": "pashta_on_ל"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
         "comment": "The LC has no visible accent on מכל. See the image in the UXLC change to which we link above. The consensus accents the final syllable with pashta rather than qadma."
@@ -289,8 +289,8 @@
       "structured_text": {
         "wlc_focus": "הר֨וח",
         "assessment": {
-          "wlc": "qadma on resh",
-          "mam": "pashta stress helper on resh-pashta on ḥet"
+          "wlc": "qadma_on_ר",
+          "mam": "pashta_on_ר-pashta_on_ח"
         }
       }
     },
@@ -738,9 +738,9 @@
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
         "assessment": {
-          "wlc": "qadma on נ",
-          "uxlc": "pashta on ה",
-          "mam": "pashta on ה"
+          "wlc": "qadma_on_נ",
+          "uxlc": "pashta_on_ה",
+          "mam": "pashta_on_ה"
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
         "comment": "See the image in the UXLC change to which we link above."
@@ -3047,9 +3047,9 @@
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-60",
         "comment": "See the image in the UXLC change to which we link above. BHS transcribes only the pashta stress helper, not the pashta itself. So, understandably, WLC transcribes this mark as a qadma.",
         "assessment": {
-          "wlc": "qadma on tsadi",
-          "uxlc": "qadma on tsadi-pashta on vav",
-          "mam": "pashta on tsadi-pashta on vav"
+          "wlc": "qadma_on_צ",
+          "uxlc": "qadma_on_צ-pashta_on_ו",
+          "mam": "pashta_on_צ-pashta_on_ו"
         }
       }
     },
@@ -3448,9 +3448,9 @@
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
         "comment": "See the image in the UXLC change to which we link above.",
         "assessment": {
-          "wlc": "qadma on resh",
-          "uxlc": "pashta on yod",
-          "mam": "pashta on yod"
+          "wlc": "qadma_on_ר",
+          "uxlc": "pashta_on_י",
+          "mam": "pashta_on_י"
         }
       }
     },

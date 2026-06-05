@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-import re
-
 from mb_cmn import hebrew_accents as ha
-from mb_diff_mpu.describe_diff import LETTER_NAMES
 
 _HEBREW_LETTER_START = ord("\u05d0")
 _HEBREW_LETTER_END = ord("\u05ea")
@@ -106,8 +103,7 @@ def descriptor_from_hebrew_token(text: str) -> str | None:
         assert (
             accented_letter is not None
         ), f"Over-accent must follow a Hebrew letter: token={text!r} accent={ch!r}"
-        letter_name = _hebrew_letter_name(accented_letter)
-        current_atom_descriptors.append(f"{prefix}{letter_name}")
+        current_atom_descriptors.append(f"{prefix}{accented_letter}")
 
     _flush_current_atom_descriptors()
 
@@ -279,7 +275,3 @@ def _previous_hebrew_letter(text: str, end_idx: int) -> str | None:
         if _HEBREW_LETTER_START <= ord(ch) <= _HEBREW_LETTER_END:
             return ch
     return None
-
-
-def _hebrew_letter_name(letter: str) -> str:
-    return LETTER_NAMES[letter]
