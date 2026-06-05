@@ -331,6 +331,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "קטֽרת",
     },
     "ec 7:21": {
+        "st-summary": "Defying the LC, BHS transcribes a tevir as a merkha.",
         "wlc_focus": "אש֥ר",
         "BHQ": "?",
         "assessment": {
@@ -340,7 +341,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ec 9:18": {
-        "st-summary": "Defying BHS, WLC transcribes a merkha as a tipexa.",
+        "st-summary": "Defying both BHS and the LC, WLC transcribes a merkha as a tipexa.",
         "wlc_focus": "יאב֥ד טוב֥ה",
         "BHQ": "?",
         "img": "LC-429A-col-1-line-23-Eccl-9v18.png",

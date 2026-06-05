@@ -542,7 +542,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             )
             self.assertIn("https://tanach.us/Tanach.xml?Gen1:1", html_text)
             self.assertNotIn("UXLCchange:none", html_text_compact)
-            self.assertIn("<th>value</th><th></th><th>key</th>", html_text_compact)
+            self.assertIn('<tableclass="goerwitz-tms-sat"><tr><td', html_text_compact)
             self.assertIn(
                 '<pclass="goerwitz-tms-verse"lang="hbo"dir="rtl">בראש֖יתבר֣א</p>',
                 html_text_compact,
@@ -562,7 +562,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 '<pclass="goerwitz-tms-verse"lang="hbo"dir="rtl">בראש֖יתבר֣א</p>'
             )
             sat_table_idx = html_text_compact.index(
-                '<tableclass="goerwitz-tms-sat"><tr><th>value</th><th></th><th>key</th></tr>'
+                '<tableclass="goerwitz-tms-sat"><tr><td'
             )
             self.assertLess(verse_para_idx, sat_table_idx)
 
@@ -1723,10 +1723,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             self.assertIn('href="goerwitz-tms-msp-n.html"', html_text_compact)
             self.assertIn("<h2>WLCBracketNotes</h2>", html_text_compact)
             self.assertIn("<code>]1</code>", html_text_compact)
-            self.assertIn(
-                "<th>value</th><th></th><th></th><th>key</th>",
-                html_text_compact,
-            )
+            self.assertIn('<tableclass="goerwitz-tms-sat"><tr><td', html_text_compact)
             self.assertIn('class="goerwitz-tms-verse"', html_text)
             self.assertIn(
                 '<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">בראשית <span class="goerwitz-tms-focus-highlight">אב</span> אחרית</p>',
@@ -3040,7 +3037,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_pashta_stress_helper(self):
         matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
-            assessment_uxlc="pashta_on_ר, pashta_on_ח",
+            assessment_uxlc="pashta_on_ר-pashta_on_ח",
             diff_wlc_uxlc={"wlc422": "הר֨וח", "uxlc": "הר֙וח֙"},
         )
         self.assertTrue(matches)
@@ -3381,7 +3378,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
     ):
         structured_text = {"assessment": "meteg-space"}
 
-        with self.assertRaises(TypeError):
+        with self.assertRaises(AssertionError):
             rtms_assessment_auto.materialize_auto_assessment_descriptors(
                 structured_text=structured_text,
                 enriched_row={},
