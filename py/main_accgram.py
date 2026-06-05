@@ -34,7 +34,7 @@ from pathlib import Path
 
 from accgram import filter_split_wlc, split_wlc
 from accgram import run_goerwitz
-from py.accgram import research_tao
+from accgram import research_tao
 
 
 def _repo_root() -> Path:
