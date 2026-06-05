@@ -3252,7 +3252,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertEqual(descriptor, "meteg-maqaf")
 
-    def test_try_auto_assessment_descriptor_uses_meteg_tipexa_for_accented_token_with_witness(
+    def test_try_auto_assessment_descriptor_uses_meteg_tipexa_for_wlc_focus_with_witness(
         self,
     ):
         descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
@@ -3263,9 +3263,22 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                     "vels": ["הֽונ֖ח"]
                 },
             },
-            wlc_focus=None,
+            wlc_focus="הונ֖ח",
         )
         self.assertEqual(descriptor, "meteg-tipexa")
+
+    def test_try_auto_assessment_descriptor_uses_wlc_focus_only_for_wlc(self):
+        descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="wlc",
+            enriched_row={
+                "diff_wlc_uxlc": [
+                    {"wlc422": "אלה֣י", "uxlc": "אלהי"},
+                    {"wlc422": "מכ֨ל", "uxlc": "מכל"},
+                ]
+            },
+            wlc_focus="מכ֨ל",
+        )
+        self.assertEqual(descriptor, "qadma_on_כ")
 
     def test_try_auto_assessment_descriptor_keeps_plain_labels_without_witness(self):
         no_accent_descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
@@ -3568,7 +3581,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
                 wlc_focus=None,
             )
 
-    def test_materialize_auto_assessment_descriptors_still_infers_missing_wlc(
+    def test_materialize_auto_assessment_descriptors_does_not_infer_missing_wlc_without_focus(
         self,
     ):
         structured_text = {"assessment": {}}
@@ -3579,8 +3592,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             wlc_focus=None,
         )
 
-        self.assertIsNot(out, structured_text)
-        self.assertEqual(out["assessment"]["wlc"], "silluq-sof_pasuq")
+        self.assertIs(out, structured_text)
+        self.assertNotIn("wlc", out["assessment"])
 
     def test_structured_text_sanity_does_not_compare_assessment_uxlc_to_changetext(
         self,

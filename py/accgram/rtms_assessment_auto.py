@@ -110,7 +110,16 @@ def _candidate_tokens_for_auto_assessment(
         side_key="wlc422",
     )
 
-    if assessment_key in {"wlc", "bhs"}:
+    if assessment_key == "wlc":
+        if isinstance(wlc_focus, str):
+            candidates.append(
+                _candidate_with_optional_witness(
+                    hebrew_token=wlc_focus,
+                    source_witness_payload=wlc_witness_payload,
+                )
+            )
+
+    if assessment_key == "bhs":
         candidates.extend(
             _candidate_tokens_from_diff_side(
                 diff_value=enriched_row.get("diff_wlc_uxlc"),
@@ -125,13 +134,6 @@ def _candidate_tokens_for_auto_assessment(
                 source_witness_payload=wlc_witness_payload,
             )
         )
-        if isinstance(wlc_focus, str):
-            candidates.append(
-                _candidate_with_optional_witness(
-                    hebrew_token=wlc_focus,
-                    source_witness_payload=wlc_witness_payload,
-                )
-            )
 
     if assessment_key == "uxlc":
         uxlc_witness_payload = rtms_meteg_witness.witness_payload_for_side(

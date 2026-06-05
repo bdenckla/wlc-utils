@@ -173,9 +173,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 16:33": {
         "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
         "wlc_focus": "מכ֨ל",
-        "assessment": {
-            "wlc": "qadma_on_כ",
-        },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
         "comment": (
             "The LC has no visible accent on מכל. See the image in the UXLC change to which we link above."
