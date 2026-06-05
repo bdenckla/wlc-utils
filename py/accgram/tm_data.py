@@ -165,6 +165,9 @@ _JE_1003_02 = (
     " I don’t think that is the case here, but I thought I would bring up the general point anyway."
 )
 _JE_1003_03 = "Finally, it should be noted that the mark preceding this word’s yod is assumed to be a spacer."
+_BAR_INSTEAD_OF_SOF_PASUQ_SUMMARY = "In the place where one would expect a sof pasuq, the LC has a vertical bar somewhat like a paseq or legarmeh."
+_MISSING_SOF_PASUQ_SUMMARY = "A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline."
+_MISSING_SOF_PASUQ_COMMENT = "Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC."
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
         "st-summary": "Defying the LC, BHS has mahapakh rather than munax.",
@@ -208,7 +211,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "1s 6:19": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "גדולֽה",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "2c 22:12": {
         "st-summary": "Defying the LC, BHS has tipexa rather than etnaxta.",
@@ -252,15 +257,21 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "am 1:14": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "סופֽה",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
         "BHQ": "?",
     },
     "am 6:6": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "יוסֽף",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
         "BHQ": "?",
     },
     "am 9:5": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "מצרֽים",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
         "BHQ": "?",
     },
     "da 2:41": {
@@ -270,7 +281,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "dt 9:20": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ההֽוא",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
         "BHQ": "?",
     },
     "dt 13:15": {
@@ -279,52 +292,80 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "img": "LC-107B-col-3-line-18-dt-13v15.png",
     },
     "dt 25:9": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "אחֽיו",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
         "BHQ": "?",
     },
     "ek 33:20": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ישראֽל",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "ex 2:5": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ותקחֽה",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "ex 14:25": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "במצרֽים",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "ex 14:29": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ומשמאלֽם",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "ho 4:19": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "מזבחותֽם",
         "BHQ": "?",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "ho 8:9": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "אהבֽים",
         "BHQ": "?",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "lv 18:17": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "הֽוא",
         "BHQ": "?",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "lv 19:1": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "לאמֽר",
         "BHQ": "?",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "lv 26:7": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "לחֽרב",
         "BHQ": "?",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:32": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "קטֽרת",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:40": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "לחטֽאת",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:55": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "למנחֽה",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:68": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "קטֽרת",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "ec 7:21": {
         "st-summary": "Defying the LC, BHS transcribes a tevir as a merkha.",
@@ -373,7 +414,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ex 34:6": {
+        "st-summary": _BAR_INSTEAD_OF_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ואמֽת׀",
+        "img": "LC-052A-col-2-line-1-Ex-34v6.png",
     },
     "je 9:10": {
         "st-summary": "BHS transcribes a merkha as a tipexa.",
