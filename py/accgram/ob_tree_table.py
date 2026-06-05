@@ -12,6 +12,7 @@ class _Cell:
     start_col: int
     colspan: int
     text: str
+    title_text: str | None = None
     class_name: str | None = None
 
 
@@ -107,6 +108,7 @@ def _emit_branch_cells(
             start_col=start_col,
             colspan=branch_span,
             text=ob_tree_abbrev.abbreviate_branch_label(branch.label),
+            title_text=branch.label,
         ),
     )
 
@@ -120,6 +122,7 @@ def _emit_branch_cells(
                     start_col=child_col,
                     colspan=1,
                     text=ob_tree_abbrev.abbreviate_leaf_text(child.text),
+                    title_text=child.text,
                     class_name="goerwitz-obs-error-cell" if child.has_error else None,
                 ),
             )
@@ -166,6 +169,8 @@ def _render_row(*, row_cells: list[_Cell], total_cols: int, depth_cell_text: str
         attrs: dict[str, str] = {}
         if cell.colspan > 1:
             attrs["colspan"] = str(cell.colspan)
+        if cell.title_text is not None:
+            attrs["title"] = cell.title_text
         if cell.class_name is not None:
             attrs["class"] = cell.class_name
 
