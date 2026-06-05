@@ -174,7 +174,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
         "wlc_focus": "מכ֨ל",
         "assessment": {
-            "wlc": "qadma on kaf",
+            "wlc": "qadma_on_כ",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
         "comment": (
@@ -185,7 +185,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1k 19:11": {
         "wlc_focus": "הר֨וח",
         "assessment": {
-            "mam": "pashta stress helper on resh-pashta on ḥet",
+            "mam": "pashta_on_ר-pashta_on_ח",
         },
     },
     "1k 20:29": {
@@ -246,9 +246,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
         "assessment": {
-            "wlc": "qadma on נ",
-            "uxlc": "pashta on ה",
-            "mam": "pashta on ה",
+            "wlc": "qadma_on_נ",
+            "uxlc": "pashta_on_ה",
+            "mam": "pashta_on_ה",
         },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
         "comment": "See the image in the UXLC change to which we link above.",

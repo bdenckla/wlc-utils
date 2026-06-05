@@ -24,8 +24,8 @@ _ACCENT_TO_DESCRIPTOR = {
 }
 _SIMPLE_ACCENT_DESCRIPTORS = frozenset(_ACCENT_TO_DESCRIPTOR.values())
 _OVER_ACCENT_TO_PREFIX = {
-    ha.PASH: "pashta on ",
-    ha.QOM: "qadma on ",
+    ha.PASH: "pashta_on_",
+    ha.QOM: "qadma_on_",
 }
 _NO_DESCRIPTOR_EXCEPTIONS = {
     "טוב֖ה",
@@ -229,21 +229,7 @@ def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> boo
 
 
 def _normalize_assessment_descriptor(descriptor: str) -> str:
-    normalized = descriptor
-    normalized = re.sub(
-        r"\bpashta stress helper on\b",
-        "pashta on",
-        normalized,
-        flags=re.IGNORECASE,
-    )
-
-    return re.sub(
-        r"(?P<prefix>pashta on |qadma on )(?P<letter>[\u05d0-\u05ea])",
-        lambda match: (
-            f"{match.group('prefix')}{_hebrew_letter_name(match.group('letter'))}"
-        ),
-        normalized,
-    )
+    return descriptor
 
 
 def _simple_descriptor_accent_count(descriptor: str) -> int | None:
@@ -296,4 +282,4 @@ def _previous_hebrew_letter(text: str, end_idx: int) -> str | None:
 
 
 def _hebrew_letter_name(letter: str) -> str:
-    return LETTER_NAMES.get(letter, letter)
+    return LETTER_NAMES[letter]

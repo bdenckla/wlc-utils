@@ -2922,7 +2922,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         descriptor = tm_sanity.descriptor_from_hebrew_token(
             "שנה֙"
         )
-        self.assertEqual(descriptor, "pashta on he")
+        self.assertEqual(descriptor, "pashta_on_ה")
 
     def test_descriptor_from_hebrew_token_no_accent(self):
         self.assertEqual(
@@ -2944,7 +2944,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         descriptor = tm_sanity.descriptor_from_hebrew_token(
             "אריצ֨נו֙"
         )
-        self.assertEqual(descriptor, "qadma on tsadi-pashta on vav")
+        self.assertEqual(descriptor, "qadma_on_צ-pashta_on_ו")
 
     def test_descriptor_from_hebrew_token_repeated_accent_names(self):
         descriptor = tm_sanity.descriptor_from_hebrew_token(
@@ -3062,21 +3062,21 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_hebrew_letter_suffix(self):
         matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
-            assessment_uxlc="pashta on ה",
+            assessment_uxlc="pashta_on_ה",
             diff_wlc_uxlc={"wlc422": "שנ֨ה", "uxlc": "שנה֙"},
         )
         self.assertTrue(matches)
 
     def test_assessment_descriptor_matches_hebrew_token_pashta_stress_helper(self):
         matches = tm_sanity.assessment_descriptor_matches_hebrew_token(
-            assessment_descriptor="pashta stress helper on resh, pashta on ḥet",
+            assessment_descriptor="pashta_on_ר-pashta_on_ח",
             hebrew_token="הר֙וח֙",
         )
         self.assertTrue(matches)
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_pashta_stress_helper(self):
         matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
-            assessment_uxlc="pashta stress helper on resh, pashta on ḥet",
+            assessment_uxlc="pashta_on_ר, pashta_on_ח",
             diff_wlc_uxlc={"wlc422": "הר֨וח", "uxlc": "הר֙וח֙"},
         )
         self.assertTrue(matches)
