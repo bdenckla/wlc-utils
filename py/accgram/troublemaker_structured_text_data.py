@@ -3,12 +3,22 @@
 from __future__ import annotations
 
 
-def _non_revia_comment(fp_value: str) -> str:
+def _non_revia_comment(fp_value: str):
     return (
-        'A possible reason why the Goerwitz accent grammar check deems this verse "ungrammatical" '
-        f'is its phrase that is a member of the FOI category "{fp_value}". '
-        "A problem with this theory is this verse is one of only 5 of the 17 whose FOI category starts "
-        'with "⅃-leg...non-revia" and the other 12 are not deemed "ungrammatical" by the checker.'
+        [
+            "This verse probably causes trouble for the Goerwitz accent grammar because "
+            f"is has a phrase that is a member of the FOI category “{fp_value}”. "
+        ],
+        [
+            "This verse is one of 5 troublemakers whose FOI category starts "
+            "with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble."
+        ],
+        [
+            " It remains to be investigated whether those other 12,"
+            " despite not causing trouble,"
+            " are considered ungrammatical,"
+            " i.e. report the string “ERROR”."
+        ],
     )
 
 
@@ -360,11 +370,13 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ואמֽת׀",
     },
     "je 9:10": {
+        "st-summary": "BHS transcribes a merkha as a tipexa.",
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-15",
         "comment": _je_0910_and_11_comment("next verse (11)"),
     },
     "je 9:11": {
+        "st-summary": "BHS transcribes a merkha as a tipexa.",
         "wlc_focus": "מבל֖י",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-16",
         "comment": _je_0910_and_11_comment("previous verse (10)"),
