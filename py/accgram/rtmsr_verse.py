@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Callable
 
 from accgram import rtms_focus_highlight
-from accgram import rtms_report_sat
+from accgram import rtmsr_sat
 from py_html import wlc_utils_html
 
 _GOERWITZ_TMS_VERSE_CLASS = "goerwitz-tms-verse"
@@ -110,4 +110,4 @@ def _token_text(token: object) -> str:
         if isinstance(text, str):
             return text
 
-    return rtms_report_sat.render_sat_value(token)
+    return rtmsr_sat.render_sat_value(token)

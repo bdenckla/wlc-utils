@@ -5,10 +5,10 @@ import re
 from collections.abc import Callable
 
 from accgram import rtms_meteg_witness
-from accgram import rtms_report_bracket_notes
-from accgram import rtms_report_diff_format
-from accgram import rtms_report_sat_notes_column
-from accgram import rtms_report_wlc_word_format
+from accgram import rtmsr_bracket_notes
+from accgram import rtmsr_diff_format
+from accgram import rtmsr_sat_notes_column
+from accgram import rtmsr_wlc_word_format
 from accgram.rtms_assessment_auto import try_auto_assessment_descriptor
 from accgram import tm_sanity
 from py_html import wlc_utils_html
@@ -42,14 +42,14 @@ def render_sat_table(
         _normalize_whitespace(wlc_focus) if isinstance(wlc_focus, str) else ""
     )
     wlc_focus_notes = (
-        rtms_report_wlc_word_format.collect_wlc_word_bracket_notes(
+        rtmsr_wlc_word_format.collect_wlc_word_bracket_notes(
             wlc_tokens,
             wlc_focus_str or None,
             render_sat_value=render_sat_value,
         )
     )
     sat_notes_by_key: dict[str, str] = {}
-    rendered_wlc_focus_notes = rtms_report_wlc_word_format.render_note_values(
+    rendered_wlc_focus_notes = rtmsr_wlc_word_format.render_note_values(
         wlc_focus_notes
     )
     if rendered_wlc_focus_notes:
@@ -59,7 +59,7 @@ def render_sat_table(
     sat_rows.extend(
         [
             _sat_row(key=label, value=value)
-            for label, value in rtms_report_diff_format.normalize_diff_rows(
+            for label, value in rtmsr_diff_format.normalize_diff_rows(
                 "diff_wlc_uxlc",
                 row.get("diff_wlc_uxlc"),
                 row=row,
@@ -72,7 +72,7 @@ def render_sat_table(
     sat_rows.extend(
         [
             _sat_row(key=label, value=value)
-            for label, value in rtms_report_diff_format.normalize_diff_rows(
+            for label, value in rtmsr_diff_format.normalize_diff_rows(
                 "diff_wlc_mam",
                 row.get("diff_wlc_mam"),
                 row=row,
@@ -95,7 +95,7 @@ def render_sat_table(
     sat_rows = _merge_assessment_rows_into_sat_middle_column(sat_rows, row=row)
     sat_rows = _move_assessment_values_to_sat_middle_column(sat_rows)
     notes_column_plan = (
-        rtms_report_sat_notes_column.build_sat_notes_column_plan(
+        rtmsr_sat_notes_column.build_sat_notes_column_plan(
             sat_rows,
             notes_by_key=sat_notes_by_key,
         )
@@ -107,10 +107,10 @@ def render_sat_table(
             table_rows.append(
                 wlc_utils_html.table_row_of_data(
                     (
-                        rtms_report_bracket_notes.annotate_bracket_note_tokens(
+                        rtmsr_bracket_notes.annotate_bracket_note_tokens(
                             value
                         ),
-                        rtms_report_bracket_notes.annotate_bracket_note_tokens(
+                        rtmsr_bracket_notes.annotate_bracket_note_tokens(
                             notes_value
                         ),
                         middle_description,
@@ -118,7 +118,7 @@ def render_sat_table(
                     ),
                     tdattrs=(
                         _sat_value_cell_attr(key, value),
-                        rtms_report_sat_notes_column.notes_cell_attr(
+                        rtmsr_sat_notes_column.notes_cell_attr(
                             notes_column_plan.include_notes_column
                         ),
                         None,
@@ -131,7 +131,7 @@ def render_sat_table(
         table_rows.append(
             wlc_utils_html.table_row_of_data(
                 (
-                    rtms_report_bracket_notes.annotate_bracket_note_tokens(
+                    rtmsr_bracket_notes.annotate_bracket_note_tokens(
                         value
                     ),
                     middle_description,
@@ -181,13 +181,13 @@ def render_sat_value(value: object) -> str:
 def _sat_value_cell_attr(label: str, value: str) -> dict[str, str] | None:
     if (
         label in _WLC_FOCUS_ROW_KEYS
-        and rtms_report_diff_format.contains_hebrew(value)
+        and rtmsr_diff_format.contains_hebrew(value)
     ):
         return {"lang": "hbo", "dir": "rtl"}
 
     if label.startswith(
         "diff_wlc_"
-    ) and rtms_report_diff_format.is_plain_hebrew_string(value):
+    ) and rtmsr_diff_format.is_plain_hebrew_string(value):
         return {"lang": "hbo", "dir": "rtl"}
 
     return None
@@ -381,7 +381,7 @@ def _sat_assessment_value_describes_target_value(
     if not assessment_text or not target_text:
         return None
 
-    if not rtms_report_diff_format.is_plain_hebrew_string(target_text):
+    if not rtmsr_diff_format.is_plain_hebrew_string(target_text):
         return None
 
     try:
@@ -409,7 +409,7 @@ def _maybe_restore_value_from_witness(
     }:
         return target_value
 
-    if not rtms_report_diff_format.is_plain_hebrew_string(target_value):
+    if not rtmsr_diff_format.is_plain_hebrew_string(target_value):
         return target_value
 
     side_key = _witness_side_key_for_sat_row_key(target_key)

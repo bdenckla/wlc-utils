@@ -18,9 +18,9 @@ from accgram import rtms_meteg_witness
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_focus_highlight
 from accgram import rtms_report
-from accgram import rtms_report_sat
-from accgram import rtms_report_contracts
-from accgram import rtms_report_subsets
+from accgram import rtmsr_sat
+from accgram import rtmsr_contracts
+from accgram import rtmsr_subsets
 from accgram import tm_data
 from accgram import tm_sanity
 from accgram import wlc_uxlc_diff
@@ -42,12 +42,12 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def _assert_generated_goerwitz_contracts(
         self, page_path: Path
-    ) -> list[rtms_report_contracts.GoerwitzTroublemakerSection]:
+    ) -> list[rtmsr_contracts.GoerwitzTroublemakerSection]:
         self.assertTrue(
             page_path.exists(), f"Missing generated report page: {page_path}"
         )
 
-        sections = rtms_report_contracts.inspect_goerwitz_tms_html_contracts(
+        sections = rtmsr_contracts.inspect_goerwitz_tms_html_contracts(
             page_path.read_text(encoding="utf-8")
         )
         self.assertGreater(
@@ -2176,8 +2176,8 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             },
         ]
 
-        yes_rows = rtms_report_subsets.filter_missing_sof_pasuq_yes_rows(rows)
-        no_rows = rtms_report_subsets.filter_missing_sof_pasuq_no_rows(rows)
+        yes_rows = rtmsr_subsets.filter_missing_sof_pasuq_yes_rows(rows)
+        no_rows = rtmsr_subsets.filter_missing_sof_pasuq_no_rows(rows)
 
         self.assertEqual([row["ref"] for row in yes_rows], ["gn 1:1", "gn 1:3"])
         self.assertEqual([row["ref"] for row in no_rows], ["gn 1:2"])
@@ -3388,7 +3388,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             }
         }
 
-        sat_rows = rtms_report_sat._assessment_sat_rows(
+        sat_rows = rtmsr_sat._assessment_sat_rows(
             row,
             structured_text_lookup=lambda in_row, key: in_row["structured_text"].get(
                 key
