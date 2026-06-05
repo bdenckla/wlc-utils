@@ -279,8 +279,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "BHQ": "?",
     },
     "dt 13:15": {
+        "st-summary": "The LC has darga where it should have tevir.",
         "wlc_focus": "וחקרת֧",
-        "BHQ": "?",
+        "img": "LC-107B-col-3-line-18-dt-13v15.png",
     },
     "dt 25:9": {
         "wlc_focus": "אחֽיו",
@@ -370,7 +371,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ek 14:11": {
-        "st-summary": "BHS turns a missing maqaf into something worse.",
+        "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "comment": (
@@ -441,7 +442,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "lm 5:5": {
-        "st-summary": "BHQ turns a missing maqaf into something worse.",
+        "st-summary": "BHQ transcribes a meteg as a tipexa due to a missing maqaf.",
         "wlc_focus": "הונ֖ח",
         "assessment": {
             "mam": "meteg-meteg-maqaf",

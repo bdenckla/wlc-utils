@@ -1195,8 +1195,9 @@
         "mam_simple": "וחקרת֛"
       },
       "structured_text": {
+        "st-summary": "The LC has darga where it should have tevir.",
         "wlc_focus": "וחקרת֧",
-        "BHQ": "?",
+        "img": "LC-107B-col-3-line-18-dt-13v15.png",
         "assessment": {
           "wlc": "darga",
           "mam": "tevir"
@@ -1646,7 +1647,7 @@
         "mam_simple": "והיו־ ל֣י"
       },
       "structured_text": {
-        "st-summary": "BHS turns a missing maqaf into something worse.",
+        "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "comment": "In the LC, inclination does not reliably identify a mark as a merkha, a tipexa, or a meteg. Yet, from context, we can usually determine the most likely intended meaning, and that is the case here with והיו. The most likely intended meaning of the mark on והיו is meteg, even though that implies that a maqaf is missing.",
@@ -3173,7 +3174,7 @@
         "mam_simple": "הונח־"
       },
       "structured_text": {
-        "st-summary": "BHQ turns a missing maqaf into something worse.",
+        "st-summary": "BHQ transcribes a meteg as a tipexa due to a missing maqaf.",
         "wlc_focus": "הונ֖ח",
         "assessment": {
           "wlc": "tipexa",
