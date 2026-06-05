@@ -42,10 +42,18 @@ _TOKEN_TO_ACC_CHAR: dict[str, str] = {
     "zarqa": ha.Z_OR_TSOR,
 }
 
+# Keep vendored mb_cmn mappings untouched; accgram display abbreviations that
+# are repo-specific belong here as explicit overrides.
+_TOKEN_ABBREV_OVERRIDES: dict[str, str] = {
+    "silluq": "slq",
+    "zarqa": "zar",
+}
+
 _TOKEN_ABBREV: dict[str, str] = {
     token: _ACC_ABBREV_BY_CHAR[accent_char]
     for token, accent_char in _TOKEN_TO_ACC_CHAR.items()
 }
+_TOKEN_ABBREV.update(_TOKEN_ABBREV_OVERRIDES)
 # This appears in parse output but is not a standalone Unicode accent name.
 _TOKEN_ABBREV["legarmeh"] = "lgm"
 
