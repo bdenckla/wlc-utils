@@ -3012,6 +3012,13 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertTrue(matches)
 
+    def test_assessment_uxlc_matches_converted_diff_uxlc_meteg_tipexa_alias(self):
+        matches = tm_sanity.assessment_uxlc_matches_converted_diff_uxlc(
+            assessment_uxlc="meteg-tipexa",
+            diff_wlc_uxlc={"wlc422": "הונ֖ח", "uxlc": "הונ֖ח"},
+        )
+        self.assertTrue(matches)
+
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_rejects_meteg_space(
         self,
     ):
@@ -3173,6 +3180,21 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
         self.assertEqual(descriptor, "meteg-maqaf")
 
+    def test_try_auto_assessment_descriptor_uses_meteg_tipexa_for_accented_token_with_witness(
+        self,
+    ):
+        descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
+            assessment_key="wlc",
+            enriched_row={
+                "diff_wlc_mam": {"wlc422": "הונ֖ח"},
+                rtms_meteg_witness.INTERNAL_WLC422_WITNESS_KEY: {
+                    "vels": ["הֽונ֖ח"]
+                },
+            },
+            wlc_focus=None,
+        )
+        self.assertEqual(descriptor, "meteg-tipexa")
+
     def test_try_auto_assessment_descriptor_keeps_plain_labels_without_witness(self):
         no_accent_descriptor = rtms_assessment_auto.try_auto_assessment_descriptor(
             assessment_key="uxlc",
@@ -3275,6 +3297,9 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             "je 48:12": {
                 "mam": "meteg-maqaf",
             },
+            "lm 5:5": {
+                "wlc": "meteg-tipexa",
+            },
         }
         enriched_row_by_ref = {
             "1k 20:29": {
@@ -3292,6 +3317,15 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             "je 48:12": {
                 "diff_wlc_mam": {"mam_simple": "הנה־"},
                 rtms_meteg_witness.INTERNAL_MAM_WITNESS_KEY: {"vels": ["הֽנה־"]},
+            },
+            "lm 5:5": {
+                "diff_wlc_mam": {
+                    "wlc422": "הונ֖ח",
+                    "mam_simple": "הונח־",
+                },
+                rtms_meteg_witness.INTERNAL_WLC422_WITNESS_KEY: {
+                    "vels": ["הֽונ֖ח"]
+                },
             },
         }
 
@@ -3344,6 +3378,18 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
         )
 
         self.assertIn(("meteg-meteg-maqaf", "", "a.mam"), sat_rows)
+
+    def test_assessment_sat_rows_merges_meteg_tipexa_into_wlc_focus(self):
+        merged = rtmsr_sat._merge_assessment_rows_into_sat_middle_column(
+            [
+                ("הונ֖ח", "", "wlc_focus"),
+                ("meteg-tipexa", "", "a.wlc"),
+            ],
+            row={},
+        )
+
+        self.assertIn(("הונ֖ח", "meteg-tipexa", "wlc_focus"), merged)
+        self.assertNotIn(("meteg-tipexa", "", "a.wlc"), merged)
 
     def test_materialize_auto_assessment_descriptors_keeps_literal_percent_auto_value(
         self,

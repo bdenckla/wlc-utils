@@ -331,16 +331,47 @@ def _infer_assessment_descriptor_from_hebrew_token(
     if not token:
         return None
 
+    meteg_inspection_token = _token_for_deep_meteg_inspection(
+        token,
+        witness_hebrew_token=witness_hebrew_token,
+    )
+    meteg_visible_in_token = _HEBREW_METEG in token
+    base_descriptor_without_meteg = _descriptor_from_hebrew_token_without_meteg(
+        meteg_inspection_token
+    )
+
     # Silluq heuristics apply only when meteg (U+05BD) is present. A trailing
     # sof pasuq/paseq punctuation mark alone must not override the token's
     # accent descriptor.
-    if _HEBREW_METEG in token and _HEBREW_SOF_PASUQ in token:
+    if (
+        _HEBREW_METEG in meteg_inspection_token
+        and _HEBREW_SOF_PASUQ in meteg_inspection_token
+    ):
         return "silluq-sof_pasuq"
-    if _HEBREW_METEG in token and _HEBREW_PASEQ in token:
+    if (
+        _HEBREW_METEG in meteg_inspection_token
+        and _HEBREW_PASEQ in meteg_inspection_token
+    ):
         return "silluq-pasoleg"
-    if _HEBREW_METEG in token and _HEBREW_MAQAF in token:
-        return "maqaf"
-    if _HEBREW_METEG in token:
+    if (
+        _HEBREW_METEG in meteg_inspection_token
+        and _HEBREW_MAQAF in meteg_inspection_token
+    ):
+        if base_descriptor_without_meteg not in {None, "no_accent", "maqaf"}:
+            return f"meteg-{base_descriptor_without_meteg}"
+
+        meteg_count = meteg_inspection_token.count(_HEBREW_METEG)
+        if meteg_count >= 2:
+            return "meteg-meteg-maqaf"
+        return "meteg-maqaf"
+
+    if _HEBREW_METEG in meteg_inspection_token:
+        if base_descriptor_without_meteg not in {None, "no_accent", "maqaf"}:
+            return f"meteg-{base_descriptor_without_meteg}"
+
+        if not meteg_visible_in_token:
+            return "meteg-space"
+
         return meteg_fallback
 
     try:
@@ -388,3 +419,32 @@ def _apply_witness_to_normalized_descriptor(
     if rtms_meteg_witness.token_has_maqaf(witness_token):
         return "meteg-maqaf"
     return "meteg-space"
+
+
+def _token_for_deep_meteg_inspection(
+    token: str,
+    *,
+    witness_hebrew_token: str | None,
+) -> str:
+    if not isinstance(witness_hebrew_token, str):
+        return token
+
+    witness_token = witness_hebrew_token.strip()
+    if not witness_token:
+        return token
+
+    if _HEBREW_METEG not in witness_token:
+        return token
+
+    return witness_token
+
+
+def _descriptor_from_hebrew_token_without_meteg(hebrew_token: str) -> str | None:
+    token_without_meteg = hebrew_token.replace(_HEBREW_METEG, "")
+    if not token_without_meteg.strip():
+        return None
+
+    try:
+        return descriptor_from_hebrew_token(token_without_meteg)
+    except (AssertionError, ValueError):
+        return None

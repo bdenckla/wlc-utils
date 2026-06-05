@@ -207,6 +207,11 @@ def _normalize_assessment_with_punctuation_suffix(
 
 
 def _descriptor_matches_assessment(descriptor: str, assessment_uxlc: str) -> bool:
+    if assessment_uxlc.startswith("meteg-"):
+        meteg_prefixed_descriptor = assessment_uxlc[len("meteg-") :]
+        if descriptor == meteg_prefixed_descriptor:
+            return True
+
     if descriptor == "no_accent" and assessment_uxlc in {
         "no_accent",
         "meteg-space",
