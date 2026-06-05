@@ -1,0 +1,45 @@
+Transform Goerwitz output like this:
+
+```
+1Kings 6:3
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_phrase
+        revia 
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_phrase
+          munach zaqef 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          ERROR 
+        4 zaqef_phrase
+          zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          munach atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 silluq_phrase
+      mereka silluq 
+```
+
+To a table like this:
+
+                                                                                     0-slqc
+                                                 1-atnc                              1-slqc
+                2-zqfc                           2-atnc                   2-tfc      2-slqp
+3-rvp           3-zqfc        3-zqfc             3-atnc      3-tvrp       3-tfp      mr slq
+   rv  4-pshp   4-zqfp 4-pshp 4-zqfp 4-tfp       4-atnp     dar tvr          tf
+          psh  mun zqf  ERROR    zqf    tf      mun atn
+
+Approximately, this is just transposing the table.

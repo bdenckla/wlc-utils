@@ -12,12 +12,20 @@ _HEBREW_ACCENT_END = ord("\u05af")
 
 _ACCENT_TO_DESCRIPTOR = {
     ha.ATN: "etnaxta",
+    ha.SEG_A: "segol",
+    ha.ZAQ_Q: "zaqef-qatan",
+    ha.ZAQ_G: "zaqef-gadol",
     ha.MUN: "munax",
     ha.TEV: "tevir",
     ha.TIP: "tipexa",
+    ha.REV: "revia",
+    ha.ZSH_OR_TSIT: "zarqa",
+    ha.Z_OR_TSOR: "zinor",
+    ha.GER: "geresh",
     ha.MAH: "mahapakh",
     ha.MER: "merkha",
     ha.DAR: "darga",
+    ha.GER_2: "gershayim",
 }
 _SIMPLE_ACCENT_DESCRIPTORS = frozenset(_ACCENT_TO_DESCRIPTOR.values())
 _OVER_ACCENT_TO_PREFIX = {

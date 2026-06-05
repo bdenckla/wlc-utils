@@ -6,6 +6,8 @@ from accgram import ob_data
 from accgram import ob_error_context
 from accgram import rtms_ref
 from accgram import rtms_report
+from accgram import rtmsr_sat
+from accgram import rtmsr_verse
 from py_html import wlc_utils_html
 
 _GOERWITZ_OBS_WIDTH_CLASS = "goerwitz-tms-width-limited"
@@ -113,16 +115,10 @@ def _render_error_context_section(
     *,
     error_paths: list[ob_error_context.ErrorPath],
 ) -> tuple[object, ...]:
-    output_file = row.get("output_file")
-    output_file_text = output_file if isinstance(output_file, str) else ""
-
     if not error_paths:
-        return (
-            wlc_utils_html.heading_level_3("ERROR hierarchy"),
-            wlc_utils_html.para(
-                "No ERROR leaf was found for this ref in the parsed Goerwitz output file.",
-                {"class": "goerwitz-obs-error-note"},
-            ),
+        raise ValueError(
+            "Oddball row is missing ERROR leaf paths; oddballs must include at least "
+            f"one ERROR leaf (ref={_row_ref(row)!r})."
         )
 
     max_depth = ob_error_context.max_error_path_depth(error_paths)
@@ -148,13 +144,6 @@ def _render_error_context_section(
 
     details: list[object] = [
         wlc_utils_html.heading_level_3("ERROR hierarchy"),
-        wlc_utils_html.para(
-            (
-                "Goerwitz output file: ",
-                wlc_utils_html.code(output_file_text),
-            ),
-            {"class": "goerwitz-obs-error-note"},
-        ),
         wlc_utils_html.table(
             tuple(rows),
             {"class": "goerwitz-obs-error-table"},
@@ -164,6 +153,15 @@ def _render_error_context_section(
 
 
 def _structured_text_value(row: dict[str, object], key: str) -> object:
+    if key == "st-summary":
+        derived_summary = rtmsr_sat.derive_summary_from_sat_descriptors(
+            row,
+            row_ref=_row_ref(row),
+            structured_text_lookup=_structured_text_value,
+            wlc_tokens=rtmsr_verse.wlc_verse_vels(row),
+        )
+        return derived_summary or ""
+
     structured_text = ob_data.get_structured_text().get(_row_ref(row))
     if not isinstance(structured_text, dict):
         return None

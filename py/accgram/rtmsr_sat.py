@@ -30,59 +30,20 @@ def render_sat_table(
     structured_text_lookup: StructuredTextLookup,
     wlc_tokens: list[object],
 ) -> object:
-    wlc_focus_source_row = rtms_sat_source_rows.build_wlc_focus_source_row(
-        structured_text_lookup(row, "wlc_focus")
-    )
-    wlc_focus_str = wlc_focus_source_row.value
-
-    wlc_focus_notes = rtmsr_wlc_word_format.collect_wlc_word_bracket_notes(
-        wlc_tokens,
-        wlc_focus_str or None,
-        render_sat_value=render_sat_value,
-    )
-    sat_notes_by_key: dict[str, str] = {}
-    rendered_wlc_focus_notes = rtmsr_wlc_word_format.render_note_values(wlc_focus_notes)
-    if rendered_wlc_focus_notes:
-        sat_notes_by_key["wlc_focus"] = rendered_wlc_focus_notes
-
-    source_rows: list[SatSourceRow] = [wlc_focus_source_row]
-    source_rows.extend(
-        rtms_sat_source_rows.normalize_diff_source_rows(
-            "diff_wlc_uxlc",
-            row.get("diff_wlc_uxlc"),
-            row=row,
-            rhs_key="uxlc",
-            description_key="uxlc",
-            render_sat_value=render_sat_value,
-            structured_text_lookup=structured_text_lookup,
-        )
-    )
-    source_rows.extend(
-        rtms_sat_source_rows.normalize_diff_source_rows(
-            "diff_wlc_mam",
-            row.get("diff_wlc_mam"),
-            row=row,
-            rhs_key="mam_simple",
-            description_key="mam",
-            render_sat_value=render_sat_value,
-            structured_text_lookup=structured_text_lookup,
-        )
+    sat_rows = _build_sat_rows(
+        row,
+        row_ref=row_ref,
+        structured_text_lookup=structured_text_lookup,
+        wlc_tokens=wlc_tokens,
     )
 
-    sat_rows = [
-        _sat_row_from_source(
-            source_row=source_row,
-            row=row,
-            row_ref=row_ref,
-            wlc_focus=wlc_focus_str or None,
-        )
-        for source_row in source_rows
-    ]
-
-    sat_rows = _apply_sat_row_suppressions(row_ref, sat_rows)
     notes_column_plan = rtmsr_sat_notes_column.build_sat_notes_column_plan(
         sat_rows,
-        notes_by_key=sat_notes_by_key,
+        notes_by_key=_sat_notes_by_key(
+            row,
+            structured_text_lookup=structured_text_lookup,
+            wlc_tokens=wlc_tokens,
+        ),
     )
 
     table_rows: list[object] = []
@@ -123,6 +84,120 @@ def render_sat_table(
         tuple(table_rows),
         {"class": "goerwitz-tms-sat"},
     )
+
+
+def derive_summary_from_sat_descriptors(
+    row: dict[str, object],
+    *,
+    row_ref: str,
+    structured_text_lookup: StructuredTextLookup,
+    wlc_tokens: list[object],
+) -> str | None:
+    sat_rows = _build_sat_rows(
+        row,
+        row_ref=row_ref,
+        structured_text_lookup=structured_text_lookup,
+        wlc_tokens=wlc_tokens,
+    )
+
+    observed_desc = _first_sat_row_description(sat_rows, key_equals="wlc_focus")
+    expected_desc = _first_sat_row_description(sat_rows, key_prefix="diff_wlc_")
+    if not observed_desc or not expected_desc:
+        return None
+
+    return (
+        "Somewhere in the LC-BHS-WLC pipeline, "
+        f"{observed_desc} appears rather than {expected_desc}."
+    )
+
+
+def _build_sat_rows(
+    row: dict[str, object],
+    *,
+    row_ref: str,
+    structured_text_lookup: StructuredTextLookup,
+    wlc_tokens: list[object],
+) -> list[SatRow]:
+    wlc_focus_source_row = rtms_sat_source_rows.build_wlc_focus_source_row(
+        structured_text_lookup(row, "wlc_focus")
+    )
+    wlc_focus_str = wlc_focus_source_row.value or None
+
+    source_rows: list[SatSourceRow] = [wlc_focus_source_row]
+    source_rows.extend(
+        rtms_sat_source_rows.normalize_diff_source_rows(
+            "diff_wlc_uxlc",
+            row.get("diff_wlc_uxlc"),
+            row=row,
+            rhs_key="uxlc",
+            description_key="uxlc",
+            render_sat_value=render_sat_value,
+            structured_text_lookup=structured_text_lookup,
+        )
+    )
+    source_rows.extend(
+        rtms_sat_source_rows.normalize_diff_source_rows(
+            "diff_wlc_mam",
+            row.get("diff_wlc_mam"),
+            row=row,
+            rhs_key="mam_simple",
+            description_key="mam",
+            render_sat_value=render_sat_value,
+            structured_text_lookup=structured_text_lookup,
+        )
+    )
+
+    sat_rows = [
+        _sat_row_from_source(
+            source_row=source_row,
+            row=row,
+            row_ref=row_ref,
+            wlc_focus=wlc_focus_str,
+        )
+        for source_row in source_rows
+    ]
+
+    return _apply_sat_row_suppressions(row_ref, sat_rows)
+
+
+def _sat_notes_by_key(
+    row: dict[str, object],
+    *,
+    structured_text_lookup: StructuredTextLookup,
+    wlc_tokens: list[object],
+) -> dict[str, str]:
+    wlc_focus_source_row = rtms_sat_source_rows.build_wlc_focus_source_row(
+        structured_text_lookup(row, "wlc_focus")
+    )
+    wlc_focus_str = wlc_focus_source_row.value
+
+    wlc_focus_notes = rtmsr_wlc_word_format.collect_wlc_word_bracket_notes(
+        wlc_tokens,
+        wlc_focus_str or None,
+        render_sat_value=render_sat_value,
+    )
+    sat_notes_by_key: dict[str, str] = {}
+    rendered_wlc_focus_notes = rtmsr_wlc_word_format.render_note_values(wlc_focus_notes)
+    if rendered_wlc_focus_notes:
+        sat_notes_by_key["wlc_focus"] = rendered_wlc_focus_notes
+    return sat_notes_by_key
+
+
+def _first_sat_row_description(
+    sat_rows: list[SatRow],
+    *,
+    key_equals: str | None = None,
+    key_prefix: str | None = None,
+) -> str | None:
+    for _value, middle_description, key in sat_rows:
+        if key_equals is not None and key != key_equals:
+            continue
+        if key_prefix is not None and not key.startswith(key_prefix):
+            continue
+        normalized = middle_description.strip()
+        if normalized:
+            return normalized
+    return None
 
 
 def render_sat_value(value: object) -> str:
