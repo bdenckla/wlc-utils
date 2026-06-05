@@ -182,7 +182,10 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "1k 19:11": {
+        "st-summary": "The LC is missing a pashta.",
         "wlc_focus": "הר֨וח",
+        "img": "LC-199A-col-3-line-21-1K-19v11.png",
+        "comment": "Arguably, WLC and UXLC should code the mark on the resh as a pashta rather than a qadma.",
     },
     "1k 20:29": {
         "st-summary": "Defying the LC, BHS has merkha rather than meteg-maqaf.",
