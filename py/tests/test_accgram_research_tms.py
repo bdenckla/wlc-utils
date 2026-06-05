@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -41,6 +43,60 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             report_dir / "goerwitz-tms-msp-y.html",
             report_dir / "goerwitz-tms-msp-n.html",
         )
+
+    def test_cli_research_tms_and_oddballs_smoke(self):
+        repo_root = self._repo_root()
+        main_script = repo_root / "py" / "main_accgram.py"
+        troubles_in = repo_root / "out" / "accgram" / "goerwitz" / "_troublemakers.json"
+
+        self.assertTrue(main_script.exists(), f"Missing entrypoint: {main_script}")
+        self.assertTrue(
+            troubles_in.exists(),
+            "Expected goerwitz troublemakers input to exist before smoke run.",
+        )
+
+        with TemporaryDirectory() as tmp_dir:
+            base = Path(tmp_dir)
+            out_path = base / "out" / "research-troublemakers.json"
+            oddballs_out_path = base / "out" / "research-oddballs.json"
+            html_out_path = base / "gh-pages" / "accgram" / "goerwitz-tms.html"
+
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(main_script),
+                    "research-tms-and-oddballs",
+                    "--out",
+                    str(out_path),
+                    "--oddballs-out",
+                    str(oddballs_out_path),
+                    "--html-out",
+                    str(html_out_path),
+                ],
+                cwd=repo_root,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+
+            self.assertEqual(
+                completed.returncode,
+                0,
+                "research-tms-and-oddballs CLI failed"
+                f"\nstdout:\n{completed.stdout}\n"
+                f"stderr:\n{completed.stderr}",
+            )
+            self.assertTrue(out_path.exists(), f"Missing output JSON: {out_path}")
+            self.assertTrue(
+                oddballs_out_path.exists(), f"Missing oddballs output JSON: {oddballs_out_path}"
+            )
+            self.assertTrue(html_out_path.exists(), f"Missing HTML report: {html_out_path}")
+
+            payload = json.loads(out_path.read_text(encoding="utf-8"))
+            self.assertIn("troublemakers", payload)
+            self.assertGreaterEqual(len(payload["troublemakers"]), 1)
 
     def _assert_generated_goerwitz_contracts(
         self, page_path: Path
@@ -3023,7 +3079,7 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
 
     def test_assessment_uxlc_matches_converted_diff_uxlc_merkha_space_alias(self):
         matches = tm_descriptor.assessment_uxlc_matches_converted_diff_uxlc(
-            assessment_uxlc="merkha-space",
+            assessment_uxlc="merkha",
             diff_wlc_uxlc={"wlc422": "נ֥כח", "uxlc": "נ֥כח"},
         )
         self.assertTrue(matches)
@@ -3304,9 +3360,6 @@ class TestAccgramResearchTroublemakers(unittest.TestCase):
             },
             "da 2:41": {
                 "manuscript": "meteg-space",
-            },
-            "lm 5:5": {
-                "mam": "meteg-meteg-maqaf",
             },
         }
 

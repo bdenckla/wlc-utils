@@ -380,17 +380,18 @@
         "mam_simple": "נכח־"
       },
       "structured_text": {
+        "st-summary": "Defying the LC, BHS has merkha rather than meteg-maqaf.",
         "wlc_focus": "נ֥כח",
-        "assessment": {
-          "manuscript": "meteg-maqaf",
-          "wlc": "merkha-space",
-          "uxlc": "meteg-maqaf",
-          "mam": "meteg-maqaf"
-        },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
         "comment": [
-          "I am not sure what, if anything is “wrong” about merkha-space. Indeed see the MAM doc-note for a list of some of the sources that have merkha-space. Maybe that is not even what the Goerwitz checker is flagging as wrong. The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of the “legality” of sequences involving it. The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
-        ]
+          "See the image in the UXLC change to which we link above.",
+          "Aside: I am not sure what, if anything is grammatically “wrong” about a merkha here. Indeed see the MAM doc-note for a list of some of the sources that have merkha. Maybe this merkha is not even what the Goerwitz checker is flagging as wrong. The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of the “legality” of sequences involving it. The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
+        ],
+        "assessment": {
+          "wlc": "merkha",
+          "uxlc": "meteg-maqaf",
+          "mam": "meteg-maqaf"
+        }
       }
     },
     {
@@ -487,7 +488,6 @@
         "wlc_focus": "גדולֽה",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -737,13 +737,13 @@
       "structured_text": {
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
+        "comment": "See the image in the UXLC change to which we link above.",
         "assessment": {
           "wlc": "qadma_on_נ",
           "uxlc": "pashta_on_ה",
           "mam": "pashta_on_ה"
-        },
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
-        "comment": "See the image in the UXLC change to which we link above."
+        }
       }
     },
     {
@@ -808,7 +808,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -872,7 +871,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -951,7 +949,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -1064,14 +1061,13 @@
       "structured_text": {
         "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "ד֥י",
+        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
+        "comment": "See the image in the UXLC change to which we link above.",
         "assessment": {
-          "manuscript": "meteg-space",
-          "wlc": "merkha-space",
+          "wlc": "merkha",
           "uxlc": "meteg-space",
           "mam": "meteg-maqaf"
-        },
-        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
-        "comment": "See the image in the UXLC change to which we link above."
+        }
       }
     },
     {
@@ -1133,7 +1129,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -1297,7 +1292,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -1716,7 +1710,6 @@
         "wlc_focus": "ישראֽל",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -1806,7 +1799,6 @@
         "wlc_focus": "ותקחֽה",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -1884,7 +1876,6 @@
         "wlc_focus": "במצרֽים",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -1947,7 +1938,6 @@
         "wlc_focus": "ומשמאלֽם",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -2024,7 +2014,6 @@
         "wlc_focus": "ואמֽת׀",
         "assessment": {
           "wlc": "silluq-pasoleg",
-          "uxlc": "silluq-pasoleg",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -2175,7 +2164,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -2236,7 +2224,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -3177,10 +3164,6 @@
       "structured_text": {
         "st-summary": "BHQ transcribes a meteg as a tipexa due to a missing maqaf.",
         "wlc_focus": "הונ֖ח",
-        "assessment": {
-          "wlc": "meteg-tipexa",
-          "mam": "meteg-meteg-maqaf"
-        },
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
         "comment": [
           "The consensus pointing of the last two atoms in this verse is הֽוּנַֽח־לָֽנוּ׃. I.e. ignoring vowel marks, the consensus for the atom in question is הֽונֽח־, i.e. two meteg marks and a maqaf.",
@@ -3190,7 +3173,11 @@
           "It is uncharitable to transcribe this mark as a tipexa. Most likely what happened here is that the scribe forgot to add a maqaf. It is far less likely that the scribe intended to add a second tipexa, and a second merkha seems equally implausible.",
           "The slightly northwest-to-southeast (tipexa-like) inclination of the mark in question is, while not irrelevant, hardly definitive.",
           "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh. BHQ claims that manuscripts L34 and Y (in its sigil vocabulary) have this dagesh. Breuer (in Da-at Miqra) claims that Minxat Shai asserts this dagesh."
-        ]
+        ],
+        "assessment": {
+          "wlc": "meteg-tipexa",
+          "mam": "meteg-meteg-maqaf"
+        }
       }
     },
     {
@@ -3276,7 +3263,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -3322,7 +3308,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -3371,7 +3356,6 @@
         "BHQ": "?",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -3504,7 +3488,6 @@
         "wlc_focus": "קטֽרת",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -3546,7 +3529,6 @@
         "wlc_focus": "לחטֽאת",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -3637,7 +3619,6 @@
         "wlc_focus": "למנחֽה",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }
@@ -3685,7 +3666,6 @@
         "wlc_focus": "קטֽרת",
         "assessment": {
           "wlc": "silluq-no_sof_pasuq",
-          "uxlc": "silluq-no_sof_pasuq",
           "mam": "silluq-sof_pasuq"
         }
       }

@@ -14,22 +14,26 @@ def should_materialize_missing_assessment_key(
     infer_assessment_descriptor: Callable[[str], str | None],
 ) -> bool:
     if assessment_key in {"wlc", "bhs"}:
-        return bool(
+        has_wlc_diff = bool(
             diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), "wlc422")
             or diff_rhs_tokens(enriched_row.get("diff_wlc_mam"), "wlc422")
         )
-
-    if assessment_key == "uxlc":
-        if diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), "uxlc"):
+        if has_wlc_diff:
             return True
 
-        if not isinstance(wlc_focus, str) or not wlc_focus.strip():
-            return False
+        if assessment_key == "wlc":
+            if not isinstance(wlc_focus, str) or not wlc_focus.strip():
+                return False
 
-        focus_descriptor = infer_assessment_descriptor(
-            wlc_focus,
-        )
-        return focus_descriptor in {"silluq-no_sof_pasuq", "silluq-pasoleg"}
+            focus_descriptor = infer_assessment_descriptor(
+                wlc_focus,
+            )
+            return focus_descriptor in {"silluq-no_sof_pasuq", "silluq-pasoleg"}
+
+        return False
+
+    if assessment_key == "uxlc":
+        return bool(diff_rhs_tokens(enriched_row.get("diff_wlc_uxlc"), "uxlc"))
 
     if assessment_key == "mam":
         return bool(diff_rhs_tokens(enriched_row.get("diff_wlc_mam"), "mam_simple"))

@@ -184,25 +184,26 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "1k 19:11": {
         "wlc_focus": "הר֨וח",
-        "assessment": {
-            "mam": "pashta_on_ר-pashta_on_ח",
-        },
     },
     "1k 20:29": {
+        "st-summary": "Defying the LC, BHS has merkha rather than meteg-maqaf.",
         "wlc_focus": "נ֥כח",
-        "assessment": {
-            "manuscript": "meteg-maqaf",
-            "wlc": "merkha-space",
-        },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
-        "comment": [
-            "I am not sure what, if anything is “wrong” about merkha-space."
-            " Indeed see the MAM doc-note for a list of some of the sources that have merkha-space."
-            " Maybe that is not even what the Goerwitz checker is flagging as wrong."
-            " The overall sequence involves merkha kefula; I wonder whether, because it is so rare, we lack a good sense of"
-            " the “legality” of sequences involving it."
-            " The sequence in question is darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
-        ],
+        "comment": (
+            (
+                "See the image in the UXLC change to which we link above."
+            ),
+            (
+                "Aside: I am not sure what, if anything is grammatically “wrong” about a merkha here."
+                " Indeed see the MAM doc-note for a list of some of the sources that have merkha."
+                " Maybe this merkha is not even what the Goerwitz checker is flagging as wrong."
+                " The overall sequence involves merkha kefula;"
+                " I wonder whether, because it is so rare, we lack a good sense of"
+                " the “legality” of sequences involving it."
+                " The sequence in question is"
+                " darga, merkha kefula, something on נכח (the atom in question), and then tipexa."
+            )
+        ),
     },
     "1s 6:19": {
         "wlc_focus": "גדולֽה",
@@ -245,11 +246,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "2k 23:36": {
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
-        "assessment": {
-            "wlc": "qadma_on_נ",
-            "uxlc": "pashta_on_ה",
-            "mam": "pashta_on_ה",
-        },
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
         "comment": "See the image in the UXLC change to which we link above.",
     },
@@ -268,10 +264,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "da 2:41": {
         "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "ד֥י",
-        "assessment": {
-            "manuscript": "meteg-space",
-            "wlc": "merkha-space",
-        },
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
         "comment": "See the image in the UXLC change to which we link above.",
     },
@@ -445,9 +437,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "lm 5:5": {
         "st-summary": "BHQ transcribes a meteg as a tipexa due to a missing maqaf.",
         "wlc_focus": "הונ֖ח",
-        "assessment": {
-            "mam": "meteg-meteg-maqaf",
-        },
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
         "comment": (
             _LM_0505_01,

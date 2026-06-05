@@ -216,7 +216,19 @@ def _assessment_sat_rows(
         value = assessment_values.get(key)
         if value is None:
             continue
-        rows.append(_sat_row(key=f"a.{key}", value=render_sat_value(value)))
+
+        sat_assessment_key = f"a.{key}"
+        rendered_value = render_sat_value(value)
+        if _sat_merge_target_key_for_assessment_key(sat_assessment_key) is not None:
+            if not _auto_assessment_has_merge_target(
+                existing_sat_rows,
+                row=row,
+                assessment_key=key,
+                assessment_value=rendered_value,
+            ):
+                continue
+
+        rows.append(_sat_row(key=sat_assessment_key, value=rendered_value))
 
     return rows
 
