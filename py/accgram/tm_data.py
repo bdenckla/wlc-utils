@@ -266,6 +266,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "BHQ": "?",
     },
     "da 2:41": {
+        "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "ד֥י",
         "assessment": {
             "manuscript": "meteg-space",
