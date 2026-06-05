@@ -12,7 +12,6 @@ SatRenderRow = tuple[str, str, str, str]
 @dataclass(frozen=True)
 class SatNotesColumnPlan:
     include_notes_column: bool
-    header_cells: tuple[str, ...]
     render_rows: tuple[SatRenderRow, ...]
 
 
@@ -23,15 +22,6 @@ def build_sat_notes_column_plan(
 ) -> SatNotesColumnPlan:
     notes_lookup = notes_by_key or {}
     include_notes_column = _should_include_notes_column(rows, notes_lookup)
-    header_cells = (
-        ("value", "", "", "key")
-        if include_notes_column
-        else (
-            "value",
-            "",
-            "key",
-        )
-    )
 
     render_rows: list[SatRenderRow] = []
     for value, middle_description, key in rows:
@@ -40,7 +30,6 @@ def build_sat_notes_column_plan(
 
     return SatNotesColumnPlan(
         include_notes_column=include_notes_column,
-        header_cells=header_cells,
         render_rows=tuple(render_rows),
     )
 

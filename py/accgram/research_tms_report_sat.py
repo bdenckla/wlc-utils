@@ -101,9 +101,7 @@ def render_sat_table(
         )
     )
 
-    table_rows: list[object] = [
-        wlc_utils_html.table_row_of_headers(notes_column_plan.header_cells)
-    ]
+    table_rows: list[object] = []
     for value, notes_value, middle_description, key in notes_column_plan.render_rows:
         if notes_column_plan.include_notes_column:
             table_rows.append(
