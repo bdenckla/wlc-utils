@@ -1425,16 +1425,20 @@
         "mam_simple": "יאב֖ד טוב֥ה"
       },
       "structured_text": {
+        "st-summary": "Defying BHS, WLC transcribes a merkha as a tipexa.",
         "wlc_focus": "יאב֥ד טוב֥ה",
         "BHQ": "?",
+        "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+        "comment": [
+          "It is very rare for WLC to diverge from BHS like this, without a bracket note. Perhaps WLC agrees with an older BHS? I have only checked the 1984 and 1997 editions of BHS.",
+          "The LC diverges from consensus here by having merkha tipexa rather than tipexa merkha, but that is still accent-grammatical, so that divergence is not relevant here."
+        ],
         "assessment": {
-          "manuscript": "merkha tipexa",
           "wlc": "merkha merkha",
           "uxlc": "merkha tipexa",
           "mam": "tipexa merkha"
-        },
-        "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2"
+        }
       }
     },
     {

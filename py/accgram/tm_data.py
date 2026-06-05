@@ -218,7 +218,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ירושל֛מה",
         "comment": _non_revia_comment(
             "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening",
-            ["This verse has a munax vs merkha issue that may be significant."]
+            ["This verse has a munax vs merkha issue that may be significant."],
         ),
     },
     "je 4:19": {
@@ -340,13 +340,21 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ec 9:18": {
+        "st-summary": "Defying BHS, WLC transcribes a merkha as a tipexa.",
         "wlc_focus": "יאב֥ד טוב֥ה",
         "BHQ": "?",
-        "assessment": {
-            "manuscript": "merkha tipexa",
-        },
         "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+        "comment": (
+            (
+                "It is very rare for WLC to diverge from BHS like this, without a bracket note."
+                " Perhaps WLC agrees with an older BHS? I have only checked the 1984 and 1997 editions of BHS."
+            ),
+            (
+                "The LC diverges from consensus here by having merkha tipexa rather than tipexa merkha,"
+                " but that is still accent-grammatical, so that divergence is not relevant here."
+            ),
+        ),
     },
     "ek 11:1": {
         "st-summary": "BHS transcribes a merkha as a tipexa.",
