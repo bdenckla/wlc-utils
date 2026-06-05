@@ -12,7 +12,7 @@ from accgram import rtms_rows
 from accgram import tm_changes
 from accgram import tm_descriptor
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
-from accgram.tm_structured_text import get_structured_text_by_ref
+from accgram.tm_structured_text import get_structured_text
 from accgram.tm_sanity import sanity_check_structured_text
 
 
@@ -113,7 +113,6 @@ def run(args: argparse.Namespace) -> None:
         all_changes_path = default_all_changes_path(repo_root)
 
     html_out_path = rtms_report.resolve_html_out_path(args, repo_root)
-    structured_text_by_ref = get_structured_text_by_ref()
 
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
     parsed_rows = rtms_rows.parse_troublemaker_rows(args.troubles_in, refs_by_book)
@@ -131,10 +130,9 @@ def run(args: argparse.Namespace) -> None:
 
     sanity_check_structured_text(
         refs=[ref for _row, _bcv, ref in parsed_rows],
-        structured_text_by_ref=structured_text_by_ref,
         all_changes_path=all_changes_path,
     )
-    wlc_focus_by_ref = _wlc_focus_by_ref(structured_text_by_ref)
+    wlc_focus_by_ref = _wlc_focus_by_ref()
     all_changes_by_url = tm_changes.load_all_changes_by_url(all_changes_path)
 
     wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = rtms_data.load_source_indexes(
@@ -157,7 +155,6 @@ def run(args: argparse.Namespace) -> None:
 
     _validate_structured_text_high_level(
         parsed_rows=parsed_rows,
-        structured_text_by_ref=structured_text_by_ref,
         wlc_focus_by_ref=wlc_focus_by_ref,
         diff_wlc_uxlc_for_checks_by_ref=diff_wlc_uxlc_for_checks_by_ref,
         all_changes_by_url=all_changes_by_url,
@@ -249,11 +246,10 @@ def _enrich_troublemaker_rows(
     return enriched_rows, diff_wlc_uxlc_for_checks_by_ref
 
 
-def _wlc_focus_by_ref(
-    structured_text_by_ref: dict[str, dict[str, object]],
-) -> dict[str, str | None]:
+def _wlc_focus_by_ref() -> dict[str, str | None]:
     out: dict[str, str | None] = {}
-    for ref, structured_text in structured_text_by_ref.items():
+    stext = get_structured_text()
+    for ref, structured_text in stext.items():
         out[ref] = _structured_wlc_focus(structured_text)
     return out
 
@@ -261,13 +257,13 @@ def _wlc_focus_by_ref(
 def _validate_structured_text_high_level(
     *,
     parsed_rows: list[tuple[dict[str, object], str, str]],
-    structured_text_by_ref: dict[str, dict[str, object]],
     wlc_focus_by_ref: dict[str, str | None],
     diff_wlc_uxlc_for_checks_by_ref: dict[str, object],
     all_changes_by_url: dict[str, dict[str, object]],
 ) -> None:
+    stext = get_structured_text()
     for _row, _bcv, ref in parsed_rows:
-        structured_text = structured_text_by_ref.get(ref)
+        structured_text = stext.get(ref)
         if structured_text is None:
             continue
 

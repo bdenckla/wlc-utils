@@ -2,18 +2,19 @@ from __future__ import annotations
 
 from pathlib import Path
 from accgram import tm_changes
+from accgram.tm_structured_text import get_structured_text
 
 
 def sanity_check_structured_text(
     refs: list[str],
-    structured_text_by_ref: dict[str, dict[str, object]],
     all_changes_path: Path,
 ) -> None:
     by_change_url = tm_changes.load_all_changes_by_url(all_changes_path)
+    stext = get_structured_text()
 
     errors: list[str] = []
     for ref in refs:
-        structured = structured_text_by_ref.get(ref)
+        structured = stext.get(ref)
         if structured is None:
             continue
 

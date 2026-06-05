@@ -14,7 +14,7 @@ def _load_structured_text_by_ref() -> dict[str, dict[str, object]]:
     return _STRUCTURED_TEXT_BY_REF_CACHE
 
 
-def get_structured_text_by_ref() -> dict[str, dict[str, object]]:
+def get_structured_text() -> dict[str, dict[str, object]]:
     return _load_structured_text_by_ref()
 
 
