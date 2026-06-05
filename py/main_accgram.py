@@ -11,7 +11,8 @@ Subcommands:
                 wlc422-kq-u verse objects and structured XML-ish UXLC verse
                 nodes and write out/accgram/research-troublemakers.json.
                 Also enrich out/accgram/goerwitz/_oddballs.json and write
-                out/accgram/research-oddballs.json.
+                out/accgram/research-oddballs.json, plus HTML reports
+                including gh-pages/accgram/goerwitz-obs.html.
     fresh-run-goerwitz
                 Run filter-split-wlc, then run goerwitz on the freshly written
                 filtered split files.
@@ -31,8 +32,9 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from accgram import filter_split_wlc, research_tms, split_wlc
+from accgram import filter_split_wlc, split_wlc
 from accgram import run_goerwitz
+from py.accgram import research_tao
 
 
 def _repo_root() -> Path:
@@ -53,8 +55,8 @@ def _run_goerwitz(args: argparse.Namespace) -> None:
     run_goerwitz.run(args)
 
 
-def _run_research_tms(args: argparse.Namespace) -> None:
-    research_tms.run(args)
+def _run_research_tao(args: argparse.Namespace) -> None:
+    research_tao.run(args)
 
 
 def _run_fresh_run_goerwitz(args: argparse.Namespace) -> None:
@@ -135,15 +137,16 @@ def main() -> None:
     run_goerwitz.add_args(run_goerwitz_parser, repo_root=_repo_root())
     run_goerwitz_parser.set_defaults(func=_run_goerwitz)
 
-    research_tms_parser = subparsers.add_parser(
+    research_tao_parser = subparsers.add_parser(
         "research-tms-and-oddballs",
         help=(
             "Enrich existing _troublemakers.json entries (plus _oddballs.json) "
-            "with matching wlc422-kq-u verse objects and XML-ish UXLC verse nodes."
+            "with matching wlc422-kq-u verse objects and XML-ish UXLC verse nodes, "
+            "and write goerwitz-obs.html alongside existing troublemaker pages."
         ),
     )
-    research_tms.add_args(research_tms_parser, repo_root=_repo_root())
-    research_tms_parser.set_defaults(func=_run_research_tms)
+    research_tao.add_args(research_tao_parser, repo_root=_repo_root())
+    research_tao_parser.set_defaults(func=_run_research_tao)
 
     args = parser.parse_args()
     args.func(args)

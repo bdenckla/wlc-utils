@@ -53,6 +53,27 @@ table.goerwitz-tms-sat {
     margin-left: auto;
     margin-right: auto;
 }
+table.goerwitz-obs-error-table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    table-layout: auto;
+}
+table.goerwitz-obs-error-table th {
+    text-align: left;
+    white-space: nowrap;
+}
+table.goerwitz-obs-error-table td {
+    vertical-align: top;
+}
+td.goerwitz-obs-error-cell {
+    font-weight: 700;
+    color: light-dark(#8b0000, #ff9b9b);
+}
+p.goerwitz-obs-error-note {
+    margin-top: 0.35em;
+    margin-bottom: 0.35em;
+}
 th, td {
     padding-right: 0.4em;
     padding-left: 0.4em;

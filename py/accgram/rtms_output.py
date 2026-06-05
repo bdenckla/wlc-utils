@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from accgram import ob_report
 from accgram import rtms_meteg_witness
 from accgram import rtms_report
 from mb_cmn import provenance
@@ -75,12 +76,24 @@ def write_oddballs_payload(
 def write_html_reports(
     html_out_path: Path,
     enriched_rows: list[dict[str, object]],
-) -> None:
+    *,
+    enriched_oddball_rows: list[dict[str, object]] | None = None,
+    goerwitz_out_dir: Path | None = None,
+) -> Path | None:
     # Keep this call sequence immediately after JSON write so HTML failures are
     # fail-fast while preserving the JSON write attempt.
     rtms_report.write_goerwitz_tms_html_report(html_out_path, enriched_rows)
     rtms_report.write_goerwitz_tms_msp_yes_html_report(html_out_path, enriched_rows)
     rtms_report.write_goerwitz_tms_msp_no_html_report(html_out_path, enriched_rows)
+
+    if enriched_oddball_rows and isinstance(goerwitz_out_dir, Path):
+        return ob_report.write_goerwitz_obs_html_report(
+            main_html_out_path=html_out_path,
+            enriched_oddball_rows=enriched_oddball_rows,
+            goerwitz_out_dir=goerwitz_out_dir,
+        )
+
+    return None
 
 
 def print_run_summary(
@@ -96,6 +109,7 @@ def print_run_summary(
     oddballs_in_path: Path | None,
     oddballs_out_path: Path | None,
     oddball_rows_count: int,
+    oddballs_html_out_path: Path | None,
 ) -> None:
     print(f"Input troublemakers: {troubles_in_path}")
     print(f"wlc422-kq-u dir: {wlc422_kq_u_dir}")
@@ -107,6 +121,8 @@ def print_run_summary(
         print(f"Input oddballs: {oddballs_in_path}")
         print(f"Oddballs output: {oddballs_out_path}")
         print(f"Oddball rows: {oddball_rows_count}")
+    if isinstance(oddballs_html_out_path, Path):
+        print(f"Oddballs HTML output: {oddballs_html_out_path}")
     print(f"HTML output: {html_out_path}")
     print(f"Rows: {enriched_rows_count}")
 

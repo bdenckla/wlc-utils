@@ -191,7 +191,15 @@ def run(args: argparse.Namespace) -> None:
             source_file=__file__,
         )
 
-    rtms_output.write_html_reports(html_out_path, enriched_rows)
+    oddballs_goerwitz_out_dir = (
+        oddballs_in_path.parent if isinstance(oddballs_in_path, Path) else None
+    )
+    oddballs_html_out_path = rtms_output.write_html_reports(
+        html_out_path,
+        enriched_rows,
+        enriched_oddball_rows=enriched_oddball_rows,
+        goerwitz_out_dir=oddballs_goerwitz_out_dir,
+    )
 
     rtms_output.print_run_summary(
         troubles_in_path=args.troubles_in,
@@ -209,6 +217,7 @@ def run(args: argparse.Namespace) -> None:
             oddballs_out_path if isinstance(oddballs_out_path, Path) else None
         ),
         oddball_rows_count=len(enriched_oddball_rows),
+        oddballs_html_out_path=oddballs_html_out_path,
     )
 
 
@@ -222,7 +231,7 @@ def _enrich_troublemaker_rows(
     wlc422_kq_u_dir: Path,
     uxlc_dir: Path,
     mam_simple_dir: Path,
-)-> tuple[list[dict[str, object]], dict[str, object]]:
+) -> tuple[list[dict[str, object]], dict[str, object]]:
     enriched_rows: list[dict[str, object]] = []
     diff_wlc_uxlc_for_checks_by_ref: dict[str, object] = {}
     for row, bcv, ref in parsed_rows:

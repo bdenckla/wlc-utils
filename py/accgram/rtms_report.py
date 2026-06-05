@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from collections.abc import Callable
 
 from accgram import rtmsr_bracket_notes
 from accgram import rtmsr_intro
@@ -22,6 +23,9 @@ _MAIN_REPORT_TITLE = "Goerwitz TMs"
 _MAIN_REPORT_HEADING = "Goerwitz Troublemakers"
 _MSP_Y_FLAVOR = "msp-y"
 _MSP_N_FLAVOR = "msp-n"
+
+StructuredTextLookup = Callable[[dict[str, object], str], object]
+AnchorIdBuilder = Callable[[str], str]
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -52,6 +56,25 @@ def write_goerwitz_tms_html_report(
         top_contents=rtmsr_subsets.build_main_subsets_top_contents(html_out_path),
         title=_MAIN_REPORT_TITLE,
         heading_level_1_text=_MAIN_REPORT_HEADING,
+        structured_text_lookup=_structured_text_value,
+        anchor_id_builder=_troublemaker_anchor_id,
+    )
+
+
+def path_to_gh_pages_style(html_out_path: Path) -> str:
+    return _path_to_gh_pages_style(html_out_path)
+
+
+def render_row_section_with_anchor_id(
+    row: dict[str, object],
+    *,
+    section_anchor_id: str,
+    structured_text_lookup: StructuredTextLookup,
+) -> tuple[object, ...]:
+    return _render_row_section_with_anchor_id(
+        row,
+        section_anchor_id=section_anchor_id,
+        structured_text_lookup=structured_text_lookup,
     )
 
 
@@ -72,6 +95,8 @@ def write_goerwitz_tms_msp_yes_html_report(
         title=f"{_MAIN_REPORT_TITLE} ({_MSP_Y_FLAVOR})",
         heading_level_1_text=f"{_MAIN_REPORT_HEADING} ({_MSP_Y_FLAVOR})",
         total_count=total_count,
+        structured_text_lookup=_structured_text_value,
+        anchor_id_builder=_troublemaker_anchor_id,
     )
 
 
@@ -90,6 +115,8 @@ def write_goerwitz_tms_msp_no_html_report(
         title=f"{_MAIN_REPORT_TITLE} ({_MSP_N_FLAVOR})",
         heading_level_1_text=f"{_MAIN_REPORT_HEADING} ({_MSP_N_FLAVOR})",
         total_count=total_count,
+        structured_text_lookup=_structured_text_value,
+        anchor_id_builder=_troublemaker_anchor_id,
     )
 
 
@@ -101,6 +128,8 @@ def _write_goerwitz_tms_html_report(
     title: str,
     heading_level_1_text: str,
     total_count: int | None = None,
+    structured_text_lookup: StructuredTextLookup,
+    anchor_id_builder: AnchorIdBuilder,
 ) -> None:
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -109,6 +138,8 @@ def _write_goerwitz_tms_html_report(
         top_contents=top_contents,
         heading_level_1_text=heading_level_1_text,
         total_count=total_count,
+        structured_text_lookup=structured_text_lookup,
+        anchor_id_builder=anchor_id_builder,
     )
     write_ctx = wlc_utils_html.WriteCtx(
         title=title,
@@ -127,6 +158,8 @@ def _build_body_contents(
     top_contents: tuple[object, ...],
     heading_level_1_text: str,
     total_count: int | None = None,
+    structured_text_lookup: StructuredTextLookup,
+    anchor_id_builder: AnchorIdBuilder,
 ) -> tuple[object, ...]:
     row_count = len(enriched_rows)
     sections: list[object] = [
@@ -138,7 +171,13 @@ def _build_body_contents(
     sections.extend(rtmsr_bracket_notes.build_wlc_bracket_notes_section(enriched_rows))
 
     for index, row in enumerate(enriched_rows):
-        sections.extend(_render_row_section(row))
+        sections.extend(
+            _render_row_section(
+                row,
+                structured_text_lookup=structured_text_lookup,
+                anchor_id_builder=anchor_id_builder,
+            )
+        )
         if index + 1 < len(enriched_rows):
             sections.append(wlc_utils_html.horizontal_rule())
 
@@ -149,10 +188,31 @@ def _build_body_contents(
     return (wrapper,)
 
 
-def _render_row_section(row: dict[str, object]) -> tuple[object, ...]:
+def _render_row_section(
+    row: dict[str, object],
+    *,
+    structured_text_lookup: StructuredTextLookup,
+    anchor_id_builder: AnchorIdBuilder,
+) -> tuple[object, ...]:
     ref = _row_ref(row)
     bb, chnu, vrnu, bcv = _parse_ref_to_wlc_bcv(ref)
-    section_anchor_id = _troublemaker_anchor_id(bcv)
+    section_anchor_id = anchor_id_builder(bcv)
+
+    return _render_row_section_with_anchor_id(
+        row,
+        section_anchor_id=section_anchor_id,
+        structured_text_lookup=structured_text_lookup,
+    )
+
+
+def _render_row_section_with_anchor_id(
+    row: dict[str, object],
+    *,
+    section_anchor_id: str,
+    structured_text_lookup: StructuredTextLookup,
+) -> tuple[object, ...]:
+    ref = _row_ref(row)
+    bb, chnu, vrnu, bcv = _parse_ref_to_wlc_bcv(ref)
 
     section_items: list[object] = [
         wlc_utils_html.heading_level_2(ref, {"id": section_anchor_id}),
@@ -163,11 +223,15 @@ def _render_row_section(row: dict[str, object]) -> tuple[object, ...]:
             bcv=bcv,
             row=row,
             section_anchor_id=section_anchor_id,
+            structured_text_lookup=structured_text_lookup,
         ),
-        _render_wlc_verse_paragraph(row),
-        _render_sat_table(row),
-        *_render_image_paragraphs(row),
-        *_render_comment_paragraphs(row),
+        _render_wlc_verse_paragraph(row, structured_text_lookup=structured_text_lookup),
+        _render_sat_table(row, structured_text_lookup=structured_text_lookup),
+        *_render_image_paragraphs(row, structured_text_lookup=structured_text_lookup),
+        *_render_comment_paragraphs(
+            row,
+            structured_text_lookup=structured_text_lookup,
+        ),
     ]
     return tuple(section_items)
 
@@ -179,12 +243,13 @@ def _render_ref_links(
     bcv: str,
     row: dict[str, object],
     section_anchor_id: str,
+    structured_text_lookup: StructuredTextLookup,
 ) -> tuple[object, ...]:
     mam_url = _mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)
     tanach_us_url = my_wlc_bcv_str.get_tanach_dot_us_url(bcv)
-    summary = _structured_text_value(row, "st-summary")
-    uxlc_change = _structured_text_value(row, "uxlc_change")
-    uxlc_note_page = _structured_text_value(row, "uxlc_note_page")
+    summary = structured_text_lookup(row, "st-summary")
+    uxlc_change = structured_text_lookup(row, "uxlc_change")
+    uxlc_note_page = structured_text_lookup(row, "uxlc_note_page")
 
     permalink_summary: list[object] = [
         wlc_utils_html.anchor(
@@ -237,33 +302,49 @@ def _troublemaker_anchor_id(bcv: str) -> str:
     return f"tm{bcv.replace(':', 'v')}"
 
 
-def _render_sat_table(row: dict[str, object]) -> object:
+def _render_sat_table(
+    row: dict[str, object],
+    *,
+    structured_text_lookup: StructuredTextLookup,
+) -> object:
     return rtmsr_sat.render_sat_table(
         row,
         row_ref=_row_ref(row),
-        structured_text_lookup=_structured_text_value,
+        structured_text_lookup=structured_text_lookup,
         wlc_tokens=rtmsr_verse.wlc_verse_vels(row),
     )
 
 
-def _render_comment_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
+def _render_comment_paragraphs(
+    row: dict[str, object],
+    *,
+    structured_text_lookup: StructuredTextLookup,
+) -> tuple[object, ...]:
     return rtmsr_media.render_comment_paragraphs(
         row,
-        structured_text_lookup=_structured_text_value,
+        structured_text_lookup=structured_text_lookup,
     )
 
 
-def _render_image_paragraphs(row: dict[str, object]) -> tuple[object, ...]:
+def _render_image_paragraphs(
+    row: dict[str, object],
+    *,
+    structured_text_lookup: StructuredTextLookup,
+) -> tuple[object, ...]:
     return rtmsr_media.render_image_paragraphs(
         row,
-        structured_text_lookup=_structured_text_value,
+        structured_text_lookup=structured_text_lookup,
     )
 
 
-def _render_wlc_verse_paragraph(row: dict[str, object]) -> object:
+def _render_wlc_verse_paragraph(
+    row: dict[str, object],
+    *,
+    structured_text_lookup: StructuredTextLookup,
+) -> object:
     return rtmsr_verse.render_wlc_verse_paragraph(
         row,
-        structured_text_lookup=_structured_text_value,
+        structured_text_lookup=structured_text_lookup,
     )
 
 
