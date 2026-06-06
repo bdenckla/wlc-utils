@@ -16,6 +16,10 @@ from py_html import wlc_utils_html
 _WLC_FOCUS_ROW_KEYS = {"wlc_focus"}
 _SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
     "1k 16:33": {"diff_wlc_uxlc[1]"},
+    "1k 20:25": {"diff_wlc_mam[1]"},
+    "2k 18:17": {"diff_wlc_mam[2]"},
+    "2s 23:9": {"diff_wlc_mam[1]"},
+    "ex 28:1": {"diff_wlc_mam[1]"},
     "mi 2:7": {"diff_wlc_mam[2]"},
 }
 
