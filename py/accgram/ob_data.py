@@ -221,8 +221,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": xx_data.non_revia_summary("pashta"),
     },
     "lv 21:10": {
-        "wlc_focus": "",
-        "st-summary": "",
+        "wlc_focus": "המשחה֙",
+        "st-summary": xx_data.non_revia_summary("pashta"),
     },
     "lv 25:20": {
         "wlc_focus": "נאכ֤֖ל",
