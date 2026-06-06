@@ -132,6 +132,11 @@ _NU_2019_06 = (
     "They are consistently placed in a location that would be more appropriate for a tsinnorit or a zarqa stress helper,"
     " namely, on the first letter of the syllable ending in lamed, rather than on the lamed itself."
 )
+_NU_2019_07 = (
+    "Although this is the only item of this type in the “troublemakers” set,"
+    " there are 5 such items in the “oddballs” set."
+    " See, for example, the “Other Goerwitz item” link regarding a similar issue in Lv 4:2 in the “oddballs” set."
+)
 _JU_1318_01 = (
     "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink."
     " See the image in the UXLC note to which we link above."
@@ -505,6 +510,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
+        "other-goerwitz-item": "goerwitz-obs.html#oblv4v2",
         "comment": (
             _NU_2019_01,
             _NU_2019_02,
@@ -512,6 +518,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             _NU_2019_04,
             _NU_2019_05,
             _NU_2019_06,
+            _NU_2019_07,
         ),
     },
     "nu 25:19": {

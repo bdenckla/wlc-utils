@@ -185,7 +185,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
         "other-goerwitz-item": "goerwitz-tms-msp-n.html#tmnu20v19",
         "comment": (
-            "See the “Other Goerwtiz item” link regarding a similar issue in Nu 20:19."
+            "See the “Other Goerwitz item” link regarding a similar issue in Nu 20:19 in the “troublemakers” set."
         )
     },
     "lv 10:6": {
