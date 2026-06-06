@@ -10,13 +10,13 @@ def non_revia_comment(fp_value: str, extra=()):
         ),
         (
             "This verse is one of 5 troublemakers whose FOI category starts "
-            "with “⅃-leg...non-revia”. Mysteriously, there are 12 other such verses that do not cause trouble."
+            "with “⅃-leg...non-revia”. There are 12 other such verses that do not cause trouble."
         ),
         (
-            "It remains to be investigated whether those other 12,"
+            "It remains to be investigated whether all of those other 12,"
             " despite not causing trouble,"
             " are considered ungrammatical,"
-            " i.e. report the string “ERROR”."
+            " i.e. report the string “ERROR”. Certainly many of them report “ERROR” (see oddballs)."
         ),
         *extra,
     )

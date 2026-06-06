@@ -20,6 +20,8 @@ _SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
     "2k 18:17": {"diff_wlc_mam[2]"},
     "2s 23:9": {"diff_wlc_mam[1]"},
     "ex 28:1": {"diff_wlc_mam[1]"},
+    "gn 32:24": {"diff_wlc_mam[1]"},
+    "js 4:8": {"diff_wlc_mam[2]"},
     "mi 2:7": {"diff_wlc_mam[2]"},
 }
 

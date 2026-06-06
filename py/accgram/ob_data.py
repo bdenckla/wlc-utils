@@ -140,8 +140,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": xx_data.non_revia_summary("geresh"),
     },
     "gn 32:24": {
-        "wlc_focus": "",
-        "st-summary": "",
+        "wlc_focus": "לו׃",
+        "st-summary": _SOMEWHERE,
+        "comment": (
+            "There is also a question of ויקח֔ם vs וי֨קח֔ם (metigah) in this verse, but either option is grammatical."
+        )
     },
     "ho 11:7": {
         "wlc_focus": "ירומם׃",
@@ -152,8 +155,9 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": _SOMEWHERE,
     },
     "is 45:1": {
-        "wlc_focus": "",
-        "st-summary": "",
+        "wlc_focus": "לכ֣ורש",
+        "st-summary": "I think the checker wants לכ֣ורש to have a segol.",
+        "comment": "There is a question of whether לכ֣ורש should have a legarmeih; see MAM’s doc-note."
     },
     "je 26:5": {
         "wlc_focus": "דבר֨י",
@@ -166,8 +170,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-35",
     },
     "je 40:11": {
-        "wlc_focus": "",
-        "st-summary": "",
+        "wlc_focus": "ובאד֜ום",
+        "st-summary": xx_data.non_revia_summary("geresh"),
     },
     "je 46:4": {
         "wlc_focus": "בכ֥ובע֑ים",
@@ -178,8 +182,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": _SOMEWHERE,
     },
     "js 4:8": {
-        "wlc_focus": "",
-        "st-summary": "",
+        "wlc_focus": "ישרא֘ל",
+        "st-summary": _SOMEWHERE,
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-10",
     },
     "js 10:30": {
@@ -213,8 +217,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         )
     },
     "lv 10:6": {
-        "wlc_focus": "",
-        "st-summary": "",
+        "wlc_focus": "תפר֙מו֙ ",
+        "st-summary": xx_data.non_revia_summary("pashta"),
     },
     "lv 21:10": {
         "wlc_focus": "",
