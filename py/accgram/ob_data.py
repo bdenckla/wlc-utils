@@ -207,6 +207,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "ne 8:7": {
         "wlc_focus": "",
         "st-summary": "",
+        "github-issue": "https://github.com/bdenckla/MAM-basics/issues/185",
+        "img": "LC458B-col-3-line-4-Ne-8v7.png",
     },
     "nu 27:9": {
         "wlc_focus": "לאחיו׃",
