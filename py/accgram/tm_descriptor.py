@@ -1,45 +1,16 @@
 from __future__ import annotations
 
 from accgram import meteg_silluq_context
-from mb_cmn import hebrew_accents as ha
+from accgram import tm_mark_descriptor
 from mb_cmn import hebrew_points as hp
 from mb_cmn import hebrew_punctuation as hpunc
-from mb_diff_mpu.describe_diff import ACCENT_NAMES
 
 _HEBREW_LETTER_START = ord("\u05d0")
 _HEBREW_LETTER_END = ord("\u05ea")
 _HEBREW_ACCENT_START = ord("\u0591")
 _HEBREW_ACCENT_END = ord("\u05af")
 
-_ACCENTS_WITH_DESCRIPTORS = (
-    ha.ATN,
-    ha.SEG_A,
-    ha.ZAQ_Q,
-    ha.ZAQ_G,
-    ha.MUN,
-    ha.TEV,
-    ha.TIP,
-    ha.REV,
-    ha.ZSH_OR_TSIT,
-    ha.Z_OR_TSOR,
-    ha.GER,
-    ha.MAH,
-    ha.MER,
-    ha.DAR,
-    ha.GER_2,
-)
-_ACCENT_TO_DESCRIPTOR = {
-    accent: ACCENT_NAMES[accent] for accent in _ACCENTS_WITH_DESCRIPTORS
-}
-_SIMPLE_ACCENT_DESCRIPTORS = frozenset(_ACCENT_TO_DESCRIPTOR.values())
-_OVER_ACCENT_TO_PREFIX = {
-    ha.PASH: "pashta_on_",
-    ha.QOM: "qadma_on_",
-}
-_NO_DESCRIPTOR_EXCEPTIONS = {
-    "טוב֖ה",
-    "ישראל֘",
-}
+_SIMPLE_ACCENT_DESCRIPTORS = tm_mark_descriptor.SIMPLE_ACCENT_DESCRIPTORS
 
 
 def sanitize_word_for_change_match(text: str) -> str:
@@ -72,60 +43,10 @@ def diff_uxlc_matches_changetext(diff_wlc_uxlc: object, changetext: str) -> bool
 
 
 def descriptor_from_hebrew_token(text: str) -> str | None:
-    accent_marks = [
-        ch for ch in text if _HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END
-    ]
-    if len(accent_marks) == 0:
-        return "maqaf" if hpunc.MAQ in text else "no_accent"
-
-    atoms_with_descriptors: list[list[str]] = []
-    current_atom_descriptors: list[str] = []
-
-    def _flush_current_atom_descriptors() -> None:
-        if current_atom_descriptors:
-            atoms_with_descriptors.append(list(current_atom_descriptors))
-            current_atom_descriptors.clear()
-
-    for idx, ch in enumerate(text):
-        if ch.isspace():
-            _flush_current_atom_descriptors()
-            continue
-
-        if ch == hpunc.MAQ:
-            current_atom_descriptors.append("maqaf")
-            continue
-
-        if not (_HEBREW_ACCENT_START <= ord(ch) <= _HEBREW_ACCENT_END):
-            continue
-
-        descriptor = _ACCENT_TO_DESCRIPTOR.get(ch)
-        if descriptor is not None:
-            current_atom_descriptors.append(descriptor)
-            continue
-
-        prefix = _OVER_ACCENT_TO_PREFIX.get(ch)
-        if prefix is None:
-            assert text in _NO_DESCRIPTOR_EXCEPTIONS, (
-                "No descriptor for accent token unless explicitly allowlisted: "
-                f"token={text!r} accent={ch!r}"
-            )
-            return None
-
-        accented_letter = _previous_hebrew_letter(text, idx)
-        assert (
-            accented_letter is not None
-        ), f"Over-accent must follow a Hebrew letter: token={text!r} accent={ch!r}"
-        current_atom_descriptors.append(f"{prefix}{accented_letter}")
-
-    _flush_current_atom_descriptors()
-
-    if not atoms_with_descriptors:
-        return None
-
-    atom_descriptions = [
-        "-".join(atom_descriptors) for atom_descriptors in atoms_with_descriptors
-    ]
-    return " ".join(atom_descriptions)
+    return tm_mark_descriptor.infer_mark_descriptor(
+        text,
+        u05bd_is_silluq=None,
+    )
 
 
 def infer_descriptor(
@@ -142,8 +63,6 @@ def infer_descriptor(
         token,
         hebrew_token_w=hebrew_token_w,
     )
-    base_descriptor_without_meteg = _descriptor_from_token_sans_meteg(mi_token)
-
     u05bd_is_silluq = meteg_silluq_context.u05bd_is_silluq(
         token=token,
         verse_hebrew_tokens=None,
@@ -152,35 +71,40 @@ def infer_descriptor(
     if is_last_word is not None:
         u05bd_is_silluq = is_last_word if hp.MTGOSLQ in mi_token else None
 
-    if hp.MTGOSLQ in mi_token and u05bd_is_silluq is True:
-        if hpunc.SOPA in mi_token:
-            return "silluq-sof_pasuq"
-        if hpunc.PASOLEG in mi_token:
-            return "silluq-pasoleg"
-        return "silluq-no_sof_pasuq"
-
-    if hp.MTGOSLQ in mi_token and hpunc.MAQ in mi_token:
-        if base_descriptor_without_meteg not in {None, "no_accent", "maqaf"}:
-            return f"meteg-{base_descriptor_without_meteg}"
-
-        meteg_count = mi_token.count(hp.MTGOSLQ)
-        if meteg_count >= 2:
-            return "meteg-meteg-maqaf"
-        return "meteg-maqaf"
+    try:
+        descriptor = tm_mark_descriptor.infer_mark_descriptor(
+            mi_token,
+            u05bd_is_silluq=u05bd_is_silluq,
+        )
+    except (AssertionError, ValueError):
+        descriptor = None
 
     if hp.MTGOSLQ in mi_token:
+        base_descriptor_without_meteg = _descriptor_from_token_sans_meteg(mi_token)
+
+        if u05bd_is_silluq is True:
+            if isinstance(descriptor, str) and "sof_pasuq" in descriptor:
+                return "silluq-sof_pasuq"
+            if isinstance(descriptor, str) and "pasoleg" in descriptor:
+                return "silluq-pasoleg"
+            return "silluq-no_sof_pasuq"
+
         if base_descriptor_without_meteg not in {None, "no_accent", "maqaf"}:
             return f"meteg-{base_descriptor_without_meteg}"
+
+        if isinstance(descriptor, str) and "maqaf" in descriptor:
+            meteg_count = mi_token.count(hp.MTGOSLQ)
+            if meteg_count >= 2:
+                return "meteg-meteg-maqaf"
+            return "meteg-maqaf"
 
         if hp.MTGOSLQ not in token:
             return "meteg-space"
 
         return "silluq-no_sof_pasuq"
 
-    try:
-        descriptor = descriptor_from_hebrew_token(token)
-    except (AssertionError, ValueError):
-        descriptor = None
+    if descriptor is None:
+        return None
 
     if descriptor in ("no_accent", "maqaf"):
         return _apply_witness_to_normalized_descriptor(
@@ -188,9 +112,6 @@ def infer_descriptor(
             hebrew_token_w=hebrew_token_w,
         )
     if isinstance(descriptor, str) and descriptor:
-        punctuation_suffix = _punctuation_suffix_for_token(token)
-        if punctuation_suffix:
-            return f"{descriptor}{punctuation_suffix}"
         return descriptor
 
     if hpunc.MAQ in token and not any(
@@ -303,14 +224,6 @@ def _normalize_assessment_descriptor(descriptor: str) -> str:
     return descriptor
 
 
-def _punctuation_suffix_for_token(token: str) -> str:
-    if hpunc.SOPA in token:
-        return "-sof_pasuq"
-    if hpunc.PASOLEG in token:
-        return "-pasoleg"
-    return ""
-
-
 def _apply_witness_to_normalized_descriptor(
     *,
     normalized_descriptor: str,
@@ -355,9 +268,25 @@ def _descriptor_from_token_sans_meteg(hebrew_token: str) -> str | None:
         return None
 
     try:
-        return descriptor_from_hebrew_token(token_without_meteg)
+        descriptor = descriptor_from_hebrew_token(token_without_meteg)
     except (AssertionError, ValueError):
         return None
+    if descriptor is None:
+        return None
+    return _strip_descriptor_punctuation_suffixes(descriptor)
+
+
+def _strip_descriptor_punctuation_suffixes(descriptor: str) -> str:
+    stripped_atoms: list[str] = []
+    for atom in descriptor.split():
+        parts = [part for part in atom.split("-") if part]
+        while parts and parts[-1] in {"sof_pasuq", "pasoleg"}:
+            parts.pop()
+        if parts:
+            stripped_atoms.append("-".join(parts))
+    if not stripped_atoms:
+        return "no_accent"
+    return " ".join(stripped_atoms)
 
 
 def _simple_descriptor_accent_count(descriptor: str) -> int | None:
@@ -401,9 +330,3 @@ def _extract_diff_uxlc_texts(diff_wlc_uxlc: object) -> list[str]:
     return []
 
 
-def _previous_hebrew_letter(text: str, end_idx: int) -> str | None:
-    for idx in range(end_idx - 1, -1, -1):
-        ch = text[idx]
-        if _HEBREW_LETTER_START <= ord(ch) <= _HEBREW_LETTER_END:
-            return ch
-    return None

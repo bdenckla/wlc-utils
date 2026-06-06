@@ -205,10 +205,16 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ne 8:7": {
-        "wlc_focus": "",
-        "st-summary": "",
+        "wlc_focus": "ושר֥בי֣ה׀",
+        "st-summary": "WLC transcribes a meteg as a merkha.",
         "github-issue": "https://github.com/bdenckla/MAM-basics/issues/185",
         "img": "LC458B-col-3-line-4-Ne-8v7.png",
+        "comment": (
+            "In the LC, the disputed mark looks strange."
+            " It may be two separate marks, one of which may be unintentional."
+            " The upper part of this mark (if we view it as one mark) has a merkha-like inclination"
+            " but the lower part does not."
+        )
     },
     "nu 27:9": {
         "wlc_focus": "לאחיו׃",
