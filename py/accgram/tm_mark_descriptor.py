@@ -19,7 +19,6 @@ _ACCENTS_WITH_DESCRIPTORS = (
     ha.TEV,
     ha.TIP,
     ha.REV,
-    ha.ZSH_OR_TSIT,
     ha.Z_OR_TSOR,
     ha.GER,
     ha.MAH,
@@ -27,9 +26,13 @@ _ACCENTS_WITH_DESCRIPTORS = (
     ha.DAR,
     ha.GER_2,
 )
-ACCENT_TO_DESCRIPTOR = {accent: ACCENT_NAMES[accent] for accent in _ACCENTS_WITH_DESCRIPTORS}
+ACCENT_TO_DESCRIPTOR = {
+    accent: ACCENT_NAMES[accent].replace("-", "_")
+    for accent in _ACCENTS_WITH_DESCRIPTORS
+}
 SIMPLE_ACCENT_DESCRIPTORS = frozenset(ACCENT_TO_DESCRIPTOR.values())
 _OVER_ACCENT_TO_PREFIX = {
+    ha.ZSH_OR_TSIT: "zarqa-sh_on_",
     ha.PASH: "pashta_on_",
     ha.QOM: "qadma_on_",
 }
