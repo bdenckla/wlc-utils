@@ -5,8 +5,8 @@ from pathlib import Path
 from accgram import rtms_missing_sof_pasuq_descriptions
 from py_html import wlc_utils_html
 
-_MISSING_SOF_PASUQ_YES_LABEL = "missing sof pasuq: yes"
-_MISSING_SOF_PASUQ_NO_LABEL = "missing sof pasuq: no"
+_MISSING_SOF_PASUQ_YES_LABEL = "troublemakers missing sof pasuq (msp-y)"
+_MISSING_SOF_PASUQ_NO_LABEL = "troublemakers not missing sof pasuq (msp-n)"
 _OVERVIEW_LABEL = "Goerwitz run on WLC 4.22"
 
 _MSP_Y_HTML_NAME = "goerwitz-tms-msp-y.html"
@@ -70,7 +70,7 @@ def build_msp_yes_related_pages_top_contents(
         wlc_utils_html.unordered_list(
             (
                 wlc_utils_html.anchor(_OVERVIEW_LABEL, {"href": overview_name}),
-                wlc_utils_html.anchor("main page", {"href": main_name}),
+                wlc_utils_html.anchor("main troublemakers page", {"href": main_name}),
                 wlc_utils_html.anchor(_MISSING_SOF_PASUQ_NO_LABEL, {"href": no_name}),
             )
         ),
@@ -88,7 +88,7 @@ def build_msp_no_related_pages_top_contents(
         wlc_utils_html.unordered_list(
             (
                 wlc_utils_html.anchor(_OVERVIEW_LABEL, {"href": overview_name}),
-                wlc_utils_html.anchor("main page", {"href": main_name}),
+                wlc_utils_html.anchor("main troublemakers page", {"href": main_name}),
                 wlc_utils_html.anchor(_MISSING_SOF_PASUQ_YES_LABEL, {"href": yes_name}),
             )
         ),

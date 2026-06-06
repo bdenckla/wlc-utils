@@ -22,6 +22,7 @@ _GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _SELF_LINK_SYMBOL = "🔗"
 _MAIN_REPORT_TITLE = "Goerwitz TMs"
 _MAIN_REPORT_HEADING = "Goerwitz Troublemakers"
+_SUB_REPORT_HEADING = "Troublemakers"
 _MSP_Y_FLAVOR = "msp-y"
 _MSP_N_FLAVOR = "msp-n"
 
@@ -94,7 +95,7 @@ def write_goerwitz_tms_msp_yes_html_report(
             main_html_out_path
         ),
         title=f"{_MAIN_REPORT_TITLE} ({_MSP_Y_FLAVOR})",
-        heading_level_1_text=f"{_MAIN_REPORT_HEADING} ({_MSP_Y_FLAVOR})",
+        heading_level_1_text=f"{_SUB_REPORT_HEADING} missing sof pasuq ({_MSP_Y_FLAVOR})",
         total_count=total_count,
         structured_text_lookup=_structured_text_value,
         anchor_id_builder=_troublemaker_anchor_id,
@@ -114,7 +115,7 @@ def write_goerwitz_tms_msp_no_html_report(
             main_html_out_path
         ),
         title=f"{_MAIN_REPORT_TITLE} ({_MSP_N_FLAVOR})",
-        heading_level_1_text=f"{_MAIN_REPORT_HEADING} ({_MSP_N_FLAVOR})",
+        heading_level_1_text=f"{_SUB_REPORT_HEADING} not missing sof pasuq ({_MSP_N_FLAVOR})",
         total_count=total_count,
         structured_text_lookup=_structured_text_value,
         anchor_id_builder=_troublemaker_anchor_id,
