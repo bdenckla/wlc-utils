@@ -2,33 +2,11 @@
 
 from __future__ import annotations
 
+from accgram import xx_data
+
 
 def get_structured_text() -> dict[str, dict[str, object]]:
     return STRUCTURED_TEXT_BY_REF
-
-
-def _non_revia_comment(fp_value: str, extra=()):
-    return (
-        (
-            "This verse probably causes trouble for the Goerwitz accent grammar because "
-            f"it has a phrase that is a member of the FOI category “{fp_value}”. "
-        ),
-        (
-            "This verse is one of 5 troublemakers whose FOI category starts "
-            "with “⅃-leg...non-revia”. Mysteriously, there are 12 other such verses that do not cause trouble."
-        ),
-        (
-            "It remains to be investigated whether those other 12,"
-            " despite not causing trouble,"
-            " are considered ungrammatical,"
-            " i.e. report the string “ERROR”."
-        ),
-        *extra,
-    )
-
-
-def _non_revia_summary(accent: str) -> str:
-    return f"The checker probably doesn’t like munaḥ legarmeih serving {accent}."
 
 
 def _ambiguous_mark_context_comment(marked_word: str) -> str:
@@ -231,33 +209,33 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "is 36:2": {
-        "st-summary": _non_revia_summary("tevir"),
+        "st-summary": xx_data.non_revia_summary("tevir"),
         "wlc_focus": "ירושל֛מה",
-        "comment": _non_revia_comment(
+        "comment": xx_data.non_revia_comment(
             "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening",
             ["This verse has a munaḥ vs merkha issue that may be significant."],
         ),
     },
     "je 4:19": {
-        "st-summary": _non_revia_summary("geresh"),
+        "st-summary": xx_data.non_revia_summary("geresh"),
         "wlc_focus": "אוח֜ילה",
-        "comment": _non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": xx_data.non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "je 38:11": {
-        "st-summary": _non_revia_summary("geresh"),
+        "st-summary": xx_data.non_revia_summary("geresh"),
         "wlc_focus": "את־ האנש֜ים",
-        "comment": _non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": xx_data.non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "hg 2:12": {
-        "st-summary": _non_revia_summary("geresh"),
+        "st-summary": xx_data.non_revia_summary("geresh"),
         "wlc_focus": "בשר־ ק֜דש",
         "BHQ": "?",
-        "comment": _non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": xx_data.non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2c 26:15": {
-        "st-summary": _non_revia_summary("geresh"),
+        "st-summary": xx_data.non_revia_summary("geresh"),
         "wlc_focus": "חשבנ֜ות",
-        "comment": _non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": xx_data.non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
     },
     "2k 23:36": {
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
