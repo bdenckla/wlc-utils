@@ -5,6 +5,7 @@ from pathlib import Path
 
 from accgram import ob_report
 from accgram import rtms_meteg_witness
+from accgram import rtms_ref
 from accgram import rtms_report
 from accgram import rtmsr_overview
 from mb_cmn import provenance
@@ -81,6 +82,12 @@ def write_html_reports(
     enriched_oddball_rows: list[dict[str, object]] | None = None,
     goerwitz_out_dir: Path | None = None,
 ) -> tuple[Path, Path | None]:
+    # Present HTML entries in standard reading order (MAM book, chapter, verse),
+    # independent of the order they appear in the input/JSON payloads.
+    enriched_rows = _rows_in_reading_order(enriched_rows)
+    if enriched_oddball_rows:
+        enriched_oddball_rows = _rows_in_reading_order(enriched_oddball_rows)
+
     # Keep this call sequence immediately after JSON write so HTML failures are
     # fail-fast while preserving the JSON write attempt.
     overview_html_out_path = rtmsr_overview.write_goerwitz_overview_html_report(
@@ -132,6 +139,19 @@ def print_run_summary(
         print(f"Oddballs HTML output: {oddballs_html_out_path}")
     print(f"HTML output: {html_out_path}")
     print(f"Rows: {enriched_rows_count}")
+
+
+def _rows_in_reading_order(
+    rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    return sorted(rows, key=_row_reading_order_key)
+
+
+def _row_reading_order_key(row: dict[str, object]) -> tuple[int, int, int]:
+    ref = row.get("ref")
+    if not isinstance(ref, str) or not ref.strip():
+        raise ValueError("Row is missing non-empty string field 'ref' for reading-order sort")
+    return rtms_ref.reading_order_key(ref.strip())
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:
