@@ -10,6 +10,7 @@ def try_generated_description(
     description_key: str,
     enriched_row: dict[str, object],
     wlc_focus: str | None,
+    specific_origin_value: str | None = None,
 ) -> str | None:
     if description_key == "manuscript":
         return None
@@ -22,6 +23,7 @@ def try_generated_description(
         description_key=description_key,
         enriched_row=enriched_row,
         wlc_focus=wlc_focus,
+        specific_origin_value=specific_origin_value,
     ):
         descriptor = _infer_descriptor(
             hebrew_token,
@@ -61,6 +63,7 @@ def _candidate_tokens_for_generated_description(
     description_key: str,
     enriched_row: dict[str, object],
     wlc_focus: str | None,
+    specific_origin_value: str | None = None,
 ) -> list[tuple[str, str | None, bool | None]]:
     candidates: list[tuple[str, str | None, bool | None]] = []
 
@@ -78,61 +81,61 @@ def _candidate_tokens_for_generated_description(
                 )
             )
 
-    if description_key == "bhs":
-        candidates.extend(
-            _candidate_tokens_from_diff_side(
-                diff_value=enriched_row.get("diff_wlc_uxlc"),
-                rhs_key="wlc422",
-                source_witness_payload=wlc_witness_payload,
-            )
-        )
-        candidates.extend(
-            _candidate_tokens_from_diff_side(
-                diff_value=enriched_row.get("diff_wlc_mam"),
-                rhs_key="wlc422",
-                source_witness_payload=wlc_witness_payload,
-            )
-        )
-
     if description_key == "uxlc":
         uxlc_witness_payload = rtms_meteg_witness.witness_payload_for_side(
             enriched_row,
             side_key="uxlc",
         )
-        candidates.extend(
-            _candidate_tokens_from_diff_side(
-                diff_value=enriched_row.get("diff_wlc_uxlc"),
-                rhs_key="uxlc",
-                source_witness_payload=uxlc_witness_payload,
-            )
-        )
-        if isinstance(wlc_focus, str):
+        if isinstance(specific_origin_value, str):
             candidates.append(
                 _candidate_with_optional_witness(
-                    hebrew_token=wlc_focus,
-                    source_witness_payload=wlc_witness_payload,
+                    hebrew_token=specific_origin_value,
+                    source_witness_payload=uxlc_witness_payload,
                 )
             )
+        else:
+            candidates.extend(
+                _candidate_tokens_from_diff_side(
+                    diff_value=enriched_row.get("diff_wlc_uxlc"),
+                    rhs_key="uxlc",
+                    source_witness_payload=uxlc_witness_payload,
+                )
+            )
+            if isinstance(wlc_focus, str):
+                candidates.append(
+                    _candidate_with_optional_witness(
+                        hebrew_token=wlc_focus,
+                        source_witness_payload=wlc_witness_payload,
+                    )
+                )
 
     if description_key == "mam":
         mam_witness_payload = rtms_meteg_witness.witness_payload_for_side(
             enriched_row,
             side_key="mam_simple",
         )
-        candidates.extend(
-            _candidate_tokens_from_diff_side(
-                diff_value=enriched_row.get("diff_wlc_mam"),
-                rhs_key="mam_simple",
-                source_witness_payload=mam_witness_payload,
-            )
-        )
-        if isinstance(wlc_focus, str):
+        if isinstance(specific_origin_value, str):
             candidates.append(
                 _candidate_with_optional_witness(
-                    hebrew_token=wlc_focus,
-                    source_witness_payload=wlc_witness_payload,
+                    hebrew_token=specific_origin_value,
+                    source_witness_payload=mam_witness_payload,
                 )
             )
+        else:
+            candidates.extend(
+                _candidate_tokens_from_diff_side(
+                    diff_value=enriched_row.get("diff_wlc_mam"),
+                    rhs_key="mam_simple",
+                    source_witness_payload=mam_witness_payload,
+                )
+            )
+            if isinstance(wlc_focus, str):
+                candidates.append(
+                    _candidate_with_optional_witness(
+                        hebrew_token=wlc_focus,
+                        source_witness_payload=wlc_witness_payload,
+                    )
+                )
 
     return _unique_candidate_tokens(candidates)
 

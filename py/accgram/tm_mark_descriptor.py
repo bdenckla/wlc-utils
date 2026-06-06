@@ -17,6 +17,7 @@ _ACCENTS_WITH_DESCRIPTORS = (
     ha.ZAQ_G,
     ha.MUN,
     ha.TEV,
+    ha.YET,
     ha.TIP,
     ha.REV,
     ha.Z_OR_TSOR,

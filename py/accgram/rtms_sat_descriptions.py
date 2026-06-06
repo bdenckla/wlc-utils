@@ -35,10 +35,12 @@ def build_sat_value_and_description(
     ):
         return value, ""
 
+    origin_value = source_row.origin_value
     description = rtms_generated_descriptions.try_generated_description(
         description_key=description_key,
         enriched_row=enriched_row,
         wlc_focus=wlc_focus,
+        specific_origin_value=origin_value if isinstance(origin_value, str) else None,
     )
     if not isinstance(description, str) or not description.strip():
         return value, ""
