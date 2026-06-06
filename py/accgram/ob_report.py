@@ -65,7 +65,7 @@ def _build_body_contents(
             (
                 f"These {len(enriched_oddball_rows)} verses did not cause trouble for the Goerwitz accent grammar checker,",
                 " but did contain the string “ERROR” in their parse trees."
-                "Each section below includes links, WLC verse, SAT rows, and a complete parse tree table.",
+                " Each section below includes links, WLC verse, SAT rows, and a complete parse tree table.",
             )
         ),
         *_related_pages_contents(main_html_out_path),
