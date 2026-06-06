@@ -108,7 +108,7 @@ def _related_pages_contents(main_html_out_path: Path) -> tuple[object, ...]:
         wlc_utils_html.unordered_list(
             (
                 wlc_utils_html.anchor(
-                    "Goerwitz run on WLC",
+                    "Goerwitz run on WLC 4.22",
                     {"href": overview_name},
                 ),
                 wlc_utils_html.anchor(
@@ -141,19 +141,27 @@ def _render_error_context_section(
 
 
 def _structured_text_value(row: dict[str, object], key: str) -> object:
-    if key == "st-summary":
-        derived_summary = rtmsr_sat.derive_summary_from_sat_descriptors(
-            row,
-            row_ref=_row_ref(row),
-            structured_text_lookup=_structured_text_value,
-            wlc_tokens=rtmsr_verse.wlc_verse_vels(row),
-        )
-        return derived_summary or ""
-
-    structured_text = ob_data.get_structured_text().get(_row_ref(row))
+    row_ref = _row_ref(row)
+    structured_text = ob_data.get_structured_text().get(row_ref)
     if not isinstance(structured_text, dict):
         return None
-    return structured_text.get(key)
+
+    value = structured_text.get(key)
+    if key != "st-summary":
+        return value
+
+    if not isinstance(value, str):
+        return value
+    if "$" not in value:
+        return value
+
+    return rtmsr_sat.render_summary_template_from_sat_descriptors(
+        row,
+        row_ref=row_ref,
+        summary_template=value,
+        structured_text_lookup=_structured_text_value,
+        wlc_tokens=rtmsr_verse.wlc_verse_vels(row),
+    )
 
 
 def _row_ref(row: dict[str, object]) -> str:

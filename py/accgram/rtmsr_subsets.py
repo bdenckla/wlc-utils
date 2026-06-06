@@ -7,7 +7,7 @@ from py_html import wlc_utils_html
 
 _MISSING_SOF_PASUQ_YES_LABEL = "missing sof pasuq: yes"
 _MISSING_SOF_PASUQ_NO_LABEL = "missing sof pasuq: no"
-_OVERVIEW_LABEL = "Goerwitz run on WLC"
+_OVERVIEW_LABEL = "Goerwitz run on WLC 4.22"
 
 _MSP_Y_HTML_NAME = "goerwitz-tms-msp-y.html"
 _MSP_N_HTML_NAME = "goerwitz-tms-msp-n.html"

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import string
 from collections.abc import Callable
 
 from accgram import rtms_sat_descriptions
@@ -111,6 +112,39 @@ def derive_summary_from_sat_descriptors(
     )
 
 
+def render_summary_template_from_sat_descriptors(
+    row: dict[str, object],
+    *,
+    row_ref: str,
+    summary_template: str,
+    structured_text_lookup: StructuredTextLookup,
+    wlc_tokens: list[object],
+) -> str:
+    sat_rows = _build_sat_rows(
+        row,
+        row_ref=row_ref,
+        structured_text_lookup=structured_text_lookup,
+        wlc_tokens=wlc_tokens,
+    )
+
+    placeholders = _summary_template_placeholders(sat_rows)
+    template = string.Template(summary_template)
+    try:
+        return template.substitute(placeholders)
+    except KeyError as exc:
+        missing_name = exc.args[0] if exc.args else str(exc)
+        if not isinstance(missing_name, str):
+            missing_name = str(missing_name)
+        raise ValueError(
+            "Oddball st-summary template has unresolved placeholder "
+            f"${missing_name} (ref={row_ref!r})."
+        ) from exc
+    except ValueError as exc:
+        raise ValueError(
+            f"Oddball st-summary template is invalid (ref={row_ref!r}): {exc}"
+        ) from exc
+
+
 def _build_sat_rows(
     row: dict[str, object],
     *,
@@ -198,6 +232,34 @@ def _first_sat_row_description(
         if normalized:
             return normalized
     return None
+
+
+def _summary_template_placeholders(sat_rows: list[SatRow]) -> dict[str, str]:
+    placeholders: dict[str, str] = {}
+
+    wlc_focus_desc = _first_sat_row_description(sat_rows, key_equals="wlc_focus")
+    if wlc_focus_desc:
+        placeholders["wlc_focus_desc"] = wlc_focus_desc
+
+    diff_wlc_mam_desc = _first_sat_row_description(
+        sat_rows,
+        key_prefix="diff_wlc_mam",
+    )
+    if diff_wlc_mam_desc:
+        placeholders["diff_wlc_mam_desc"] = diff_wlc_mam_desc
+
+    diff_wlc_uxlc_desc = _first_sat_row_description(
+        sat_rows,
+        key_prefix="diff_wlc_uxlc",
+    )
+    if diff_wlc_uxlc_desc:
+        placeholders["diff_wlc_uxlc_desc"] = diff_wlc_uxlc_desc
+
+    diff_wlc_desc = _first_sat_row_description(sat_rows, key_prefix="diff_wlc_")
+    if diff_wlc_desc:
+        placeholders["diff_wlc_desc"] = diff_wlc_desc
+
+    return placeholders
 
 
 def render_sat_value(value: object) -> str:

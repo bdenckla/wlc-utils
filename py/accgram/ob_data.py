@@ -10,15 +10,15 @@ def get_structured_text() -> dict[str, dict[str, object]]:
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1c 1:53": {
         "wlc_focus": "אל֣וף",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, אל֣וף appears rather than אל֥וף.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "1k 6:3": {
         "wlc_focus": "עשר֣ים",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, עשר֣ים appears rather than עשר֤ים.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "1k 8:11": {
         "wlc_focus": "מפנ֥י",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, מפנ֥י appears rather than מפנ֣י.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "1k 20:25": {
         "wlc_focus": "",
@@ -34,19 +34,19 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "2c 7:5": {
         "wlc_focus": "הבק֗ר",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, הבק֗ר appears rather than הבקר֒.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "2c 8:10": {
         "wlc_focus": "שר֤י",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, שר֤י appears rather than שר֧י.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "2c 24:27": {
         "wlc_focus": "י֧ר֞ב",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, י֧ר֞ב appears rather than י֧רב.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "2c 25:1": {
         "wlc_focus": "ועשר֣ים",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ועשר֣ים appears rather than ועשר֤ים.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "2k 18:17": {
         "wlc_focus": "",
@@ -54,11 +54,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "2s 6:20": {
         "wlc_focus": "לעינ֨י",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, לעינ֨י appears rather than לעיני֙.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "2s 11:11": {
         "wlc_focus": "אדנ֨י",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, אדנ֨י appears rather than אדני֙.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "2s 13:32": {
         "wlc_focus": "",
@@ -70,23 +70,23 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "dt 10:15": {
         "wlc_focus": "הזה׃",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, הזה׃ appears rather than הזֽה׃.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "dt 12:2": {
         "wlc_focus": "רענן׃",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, רענן׃ appears rather than רענֽן׃.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "dt 23:18": {
         "wlc_focus": "ישראל׃",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ישראל׃ appears rather than ישראֽל׃.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "dt 24:10": {
         "wlc_focus": "ברעך",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ברעך appears rather than ברעך֖.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "dt 31:7": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ישרא֘ל appears rather than ישראל֮.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ec 12:14": {
         "wlc_focus": "",
@@ -98,11 +98,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 4:10": {
         "wlc_focus": "דברך",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, דברך appears rather than דברך֖.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ex 6:6": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ישרא֘ל appears rather than ישראל֮.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ex 28:1": {
         "wlc_focus": "",
@@ -110,11 +110,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 30:12": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ישרא֘ל appears rather than ישראל֮.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ex 38:12": {
         "wlc_focus": "עמודיה֥ם",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, עמודיה֥ם appears rather than עמודיה֣ם.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "gn 28:9": {
         "wlc_focus": "",
@@ -126,11 +126,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ho 11:7": {
         "wlc_focus": "ירומם׃",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ירומם׃ appears rather than ירומֽם׃.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "is 13:7": {
         "wlc_focus": "ימס׃",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ימס׃ appears rather than ימֽס׃.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "is 45:1": {
         "wlc_focus": "",
@@ -138,11 +138,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "je 26:5": {
         "wlc_focus": "דבר֨י",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, דבר֨י appears rather than דברי֙.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "je 28:2": {
         "wlc_focus": "שב֞רתי",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, שב֞רתי appears rather than שב֕רתי.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "je 40:11": {
         "wlc_focus": "",
@@ -150,11 +150,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "je 46:4": {
         "wlc_focus": "בכ֥ובע֑ים",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, בכ֥ובע֑ים appears rather than בכובע֑ים.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "je 51:9": {
         "wlc_focus": "רפ֣ינו",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, רפ֣ינו appears rather than רפ֤אנו.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "js 4:8": {
         "wlc_focus": "",
@@ -162,27 +162,27 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "js 10:30": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ישרא֘ל appears rather than ישראל֮.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "js 15:47": {
         "wlc_focus": "עז֥ה",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, עז֥ה appears rather than עז֛ה.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ju 1:2": {
         "wlc_focus": "וי֣אמר",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, וי֣אמר appears rather than וי֥אמר.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ju 11:24": {
         "wlc_focus": "אות֥ו",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, אות֥ו appears rather than אות֣ו.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ju 21:16": {
         "wlc_focus": "ויאמר֨ו",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ויאמר֨ו appears rather than ויאמרו֙.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "lv 4:2": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ישרא֘ל appears rather than ישראל֮.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "lv 10:6": {
         "wlc_focus": "",
@@ -194,15 +194,15 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "lv 25:20": {
         "wlc_focus": "נאכ֤֖ל",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, נאכ֤֖ל appears rather than נאכ֖ל.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "lv 26:28": {
         "wlc_focus": "חטאתיכם׃",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, חטאתיכם׃ appears rather than חטאתיכֽם׃.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ne 2:10": {
         "wlc_focus": "ב֥א",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, ב֥א appears rather than ב֣א.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
     "ne 8:7": {
         "wlc_focus": "",
@@ -210,6 +210,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "nu 27:9": {
         "wlc_focus": "לאחיו׃",
-        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, לאחיו׃ appears rather than לאחֽיו׃.",
+        "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
     },
 }

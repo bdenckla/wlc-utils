@@ -24,7 +24,7 @@ def write_goerwitz_overview_html_report(main_html_out_path: Path) -> Path:
                 wlc_utils_html.heading_level_1(_REPORT_HEADING),
                 wlc_utils_html.para(
                     (
-                        "My analysis of the output of the Goerwitz accent grammar checker run on WLC is divided into two parts:"
+                        "My analysis of the output of the Goerwitz accent grammar checker run on WLC 4.22 is divided into two parts:"
                     )
                 ),
                 wlc_utils_html.unordered_list(
