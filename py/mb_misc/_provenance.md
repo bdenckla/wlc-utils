@@ -7,6 +7,6 @@ These files were copied from a sibling source repository at:
 Files copied:
   osis_book_abbrevs.py
 
-Git commit: 117ca7104c4ff71f9e48258ca253233b50b44736
+Git commit: 8d5abc4c719363643eb8626673666066df52a5b3
 
-Date copied: 2026-06-05
+Date copied: 2026-06-06

@@ -10,6 +10,7 @@ def get_structured_text() -> dict[str, dict[str, object]]:
 
 
 _SOMEWHERE = "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
+_BHS_TRANSCRIBES = "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1c 1:53": {
         "wlc_focus": "אל֣וף",
@@ -53,8 +54,11 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "2c 25:1": {
         "wlc_focus": "ועשר֣ים",
-        "st-summary": _SOMEWHERE,
+        "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-13",
+        "comment": (
+            "See the UXLC change image. UXLC corrects WLC but places the mahapakh under the yod, an aggresively uncharitable location for it."
+        ),
     },
     "2k 18:17": {
         "wlc_focus": "תרת֥ן",
