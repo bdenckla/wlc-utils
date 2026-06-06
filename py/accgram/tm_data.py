@@ -11,14 +11,14 @@ def _non_revia_comment(fp_value: str, extra=()):
     return (
         (
             "This verse probably causes trouble for the Goerwitz accent grammar because "
-            f"is has a phrase that is a member of the FOI category “{fp_value}”. "
+            f"it has a phrase that is a member of the FOI category “{fp_value}”. "
         ),
         (
             "This verse is one of 5 troublemakers whose FOI category starts "
-            "with “⅃-leg...non-revia”. Mysteriously, there are 12 abother such verses that do not cause trouble."
+            "with “⅃-leg...non-revia”. Mysteriously, there are 12 other such verses that do not cause trouble."
         ),
         (
-            " It remains to be investigated whether those other 12,"
+            "It remains to be investigated whether those other 12,"
             " despite not causing trouble,"
             " are considered ungrammatical,"
             " i.e. report the string “ERROR”."
@@ -152,7 +152,7 @@ _JU_1318_03 = (
 )
 _JE_1003_01 = (
     "As in many other cases we see in this document,"
-    " BHS seems to be aggresively uncharitable in its transcription of this somewhat-ambiguous vertical line,"
+    " BHS seems to be aggressively uncharitable in its transcription of this somewhat-ambiguous vertical line,"
     " avoiding the most likely intended meaning (here meteg)"
     " in favor of a less likely, indeed “illegal” alternative (here merkha)."
     " In this case the mark even lacks any inclination that would suggest merkha."
@@ -203,7 +203,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": (
             ("See the image in the UXLC change to which we link above."),
             (
-                "Aside: I am not sure what, if anything is grammatically “wrong” about a merkha here."
+                "Aside: I am not sure what, if anything, is grammatically “wrong” about a merkha here."
                 " Indeed see the MAM doc-note for a list of some of the sources that have merkha."
                 " Maybe this merkha is not even what the Goerwitz checker is flagging as wrong."
                 " The overall sequence involves merkha kefula;"
