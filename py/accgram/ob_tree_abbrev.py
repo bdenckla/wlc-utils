@@ -5,14 +5,12 @@ from mb_cmn import hebrew_points as hpo
 from mb_cmn import uni_heb
 
 
-def _strip_outer_parens(text: str) -> str:
-    if text.startswith("(") and text.endswith(")") and len(text) >= 2:
-        return text[1:-1]
-    return text
+def _rm_parens_and_underscore(text: str) -> str:
+    return text.translate({ord(ch): None for ch in "()_"})
 
 
 _ACC_ABBREV_BY_CHAR: dict[str, str] = {
-    char: _strip_outer_parens(abbrev)
+    char: _rm_parens_and_underscore(abbrev)
     for char, abbrev in uni_heb._HE_AND_NONHE_ACC_PAIRS
 }
 
