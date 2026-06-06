@@ -27,6 +27,7 @@ def _steps(repo_root: Path) -> tuple[Step, ...]:
             name="update_vendored_files",
             argv=(sys.executable, str(py_dir / "main_update_vendored_files.py")),
         ),
+        # fresh-run-goerwitz is omitted: it combines filter-split-wlc + run-goerwitz
         Step(
             name="accgram_filter_split_wlc",
             argv=(
@@ -38,6 +39,14 @@ def _steps(repo_root: Path) -> tuple[Step, ...]:
         Step(
             name="accgram_run_goerwitz",
             argv=(sys.executable, str(py_dir / "main_accgram.py"), "run-goerwitz"),
+        ),
+        Step(
+            name="accgram_research_tms_and_oddballs",
+            argv=(
+                sys.executable,
+                str(py_dir / "main_accgram.py"),
+                "research-tms-and-oddballs",
+            ),
         ),
         Step(
             name="wlc_json_and_unicode",
