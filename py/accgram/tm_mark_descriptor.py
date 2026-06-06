@@ -32,7 +32,7 @@ ACCENT_TO_DESCRIPTOR = {
 }
 SIMPLE_ACCENT_DESCRIPTORS = frozenset(ACCENT_TO_DESCRIPTOR.values())
 _OVER_ACCENT_TO_PREFIX = {
-    ha.ZSH_OR_TSIT: "zarqa-sh_on_",
+    ha.ZSH_OR_TSIT: "zarqa_sh_on_",
     ha.PASH: "pashta_on_",
     ha.QOM: "qadma_on_",
 }
