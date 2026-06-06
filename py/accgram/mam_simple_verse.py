@@ -127,6 +127,7 @@ def _normalize_mam_simple_node(node: object) -> list[object]:
     node_type = node.get("type")
     if isinstance(node_type, str):
         if node_type in {
+            "good-ending",
             "spi-pe2",
             "spi-pe3",
             "spi-samekh2",
