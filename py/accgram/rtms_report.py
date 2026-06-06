@@ -253,6 +253,8 @@ def _render_ref_links(
     summary = structured_text_lookup(row, "st-summary")
     uxlc_change = structured_text_lookup(row, "uxlc_change")
     uxlc_note_page = structured_text_lookup(row, "uxlc_note_page")
+    github_issue = structured_text_lookup(row, "github-issue")
+    other_goerwitz_item = structured_text_lookup(row, "other-goerwitz-item")
 
     permalink_summary: list[object] = [
         wlc_utils_html.anchor(
@@ -291,6 +293,28 @@ def _render_ref_links(
                 wlc_utils_html.anchor(
                     "UXLC note page",
                     {"href": uxlc_note_page.strip()},
+                ),
+            ]
+        )
+
+    if isinstance(github_issue, str) and github_issue.strip():
+        links.extend(
+            [
+                " | ",
+                wlc_utils_html.anchor(
+                    "GitHub issue",
+                    {"href": github_issue.strip()},
+                ),
+            ]
+        )
+
+    if isinstance(other_goerwitz_item, str) and other_goerwitz_item.strip():
+        links.extend(
+            [
+                " | ",
+                wlc_utils_html.anchor(
+                    "Other Goerwitz item",
+                    {"href": other_goerwitz_item.strip()},
                 ),
             ]
         )

@@ -183,6 +183,10 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "lv 4:2": {
         "wlc_focus": "ישרא֘ל",
         "st-summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc.",
+        "other-goerwitz-item": "goerwitz-tms-msp-n.html#tmnu20v19",
+        "comment": (
+            "See the “Other Goerwtiz item” link regarding a similar issue in Nu 20:19."
+        )
     },
     "lv 10:6": {
         "wlc_focus": "",
