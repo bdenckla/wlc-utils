@@ -328,5 +328,3 @@ def _extract_diff_uxlc_texts(diff_wlc_uxlc: object) -> list[str]:
                 return [text]
 
     return []
-
-

@@ -1,4 +1,4 @@
-def non_revia_summary(accent: str, intro = None) -> str:
+def non_revia_summary(accent: str, intro=None) -> str:
     return f"{intro or 'The'} checker probably doesn’t like munaḥ legarmeih serving {accent}."
 
 

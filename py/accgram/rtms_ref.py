@@ -28,7 +28,9 @@ def to_ref(bb: str, chnu: int, vrnu: int) -> str:
     return f"{bb} {chnu}:{vrnu}"
 
 
-def reading_order_key(ref: str, *, row_kind: str = "troublemaker") -> tuple[int, int, int]:
+def reading_order_key(
+    ref: str, *, row_kind: str = "troublemaker"
+) -> tuple[int, int, int]:
     """Sort key putting refs in standard reading order: MAM book, chapter, verse."""
     bb, chnu, vrnu = parse_ref(ref, row_kind=row_kind)
     book_index = _WLC_BB_READING_ORDER.get(bb)

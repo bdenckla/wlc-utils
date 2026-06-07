@@ -49,6 +49,8 @@ def checker_article_citation_contents() -> tuple[object, ...]:
         f"). The Oriental Institute, Chicago, {_GC_YEAR}. ISBN {_GC_ISBN}.",
     )
     return (
-        wlc_utils_html.para("The Goerwitz accent grammar checker is described in the following article:"),
+        wlc_utils_html.para(
+            "The Goerwitz accent grammar checker is described in the following article:"
+        ),
         wlc_utils_html.para(citation_text),
     )

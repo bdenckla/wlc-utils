@@ -50,7 +50,9 @@ def render_error_tree_table(tree: ob_tree_parse.ErrorTree) -> object:
 
     table_rows: list[object] = []
     for row_index in rendered_row_indexes:
-        row_cells = sorted(rows_by_index.get(row_index, []), key=lambda cell: cell.start_col)
+        row_cells = sorted(
+            rows_by_index.get(row_index, []), key=lambda cell: cell.start_col
+        )
         depth_cell_text = "" if row_index == leaf_row_index else str(row_index)
         table_rows.append(
             _render_row(
@@ -78,7 +80,9 @@ def _compute_leaf_span(
             span += _compute_leaf_span(child, spans_by_branch)
 
     if span <= 0:
-        raise ValueError(f"Branch has no leaves: depth={branch.depth}, label={branch.label!r}")
+        raise ValueError(
+            f"Branch has no leaves: depth={branch.depth}, label={branch.label!r}"
+        )
 
     spans_by_branch[id(branch)] = span
     return span
@@ -148,7 +152,9 @@ def _append_cell(
     rows_by_index.setdefault(row_index, []).append(cell)
 
 
-def _render_row(*, row_cells: list[_Cell], total_cols: int, depth_cell_text: str) -> object:
+def _render_row(
+    *, row_cells: list[_Cell], total_cols: int, depth_cell_text: str
+) -> object:
     td_cells: list[object] = [
         wlc_utils_html.table_datum(
             depth_cell_text,

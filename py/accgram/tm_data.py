@@ -219,23 +219,31 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "je 4:19": {
         "st-summary": xx_data.non_revia_summary("geresh"),
         "wlc_focus": "אוח֜ילה",
-        "comment": xx_data.non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": xx_data.non_revia_comment(
+            "⅃-leg...non-revia (ge) with 1 qa intervening"
+        ),
     },
     "je 38:11": {
         "st-summary": xx_data.non_revia_summary("geresh"),
         "wlc_focus": "את־ האנש֜ים",
-        "comment": xx_data.non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": xx_data.non_revia_comment(
+            "⅃-leg...non-revia (ge) with 1 qa intervening"
+        ),
     },
     "hg 2:12": {
         "st-summary": xx_data.non_revia_summary("geresh"),
         "wlc_focus": "בשר־ ק֜דש",
         "BHQ": "?",
-        "comment": xx_data.non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": xx_data.non_revia_comment(
+            "⅃-leg...non-revia (ge) with 1 qa intervening"
+        ),
     },
     "2c 26:15": {
         "st-summary": xx_data.non_revia_summary("geresh"),
         "wlc_focus": "חשבנ֜ות",
-        "comment": xx_data.non_revia_comment("⅃-leg...non-revia (ge) with 1 qa intervening"),
+        "comment": xx_data.non_revia_comment(
+            "⅃-leg...non-revia (ge) with 1 qa intervening"
+        ),
     },
     "2k 23:36": {
         "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",

@@ -45,9 +45,7 @@ def build_main_subsets_top_contents(main_html_out_path: Path) -> tuple[object, .
     return (
         wlc_utils_html.heading_level_2("Related pages"),
         wlc_utils_html.unordered_list(
-            (
-                wlc_utils_html.anchor(_OVERVIEW_LABEL, {"href": overview_name}),
-            )
+            (wlc_utils_html.anchor(_OVERVIEW_LABEL, {"href": overview_name}),)
         ),
         wlc_utils_html.heading_level_2("Subsets"),
         wlc_utils_html.unordered_list(

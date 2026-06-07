@@ -150,7 +150,9 @@ def _rows_in_reading_order(
 def _row_reading_order_key(row: dict[str, object]) -> tuple[int, int, int]:
     ref = row.get("ref")
     if not isinstance(ref, str) or not ref.strip():
-        raise ValueError("Row is missing non-empty string field 'ref' for reading-order sort")
+        raise ValueError(
+            "Row is missing non-empty string field 'ref' for reading-order sort"
+        )
     return rtms_ref.reading_order_key(ref.strip())
 
 
