@@ -29,7 +29,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "1k 20:25": {
         "wlc_focus": "וס֣וס",
-        "st-summary": "",
+        "st-summary": "The checker may prefer merkha to LC’s munaḥ. Or it may not like either.",
+        "img": "LC-200A-col-2-line-19-1K-20v25.png",
     },
     "1s 14:3": {
         "wlc_focus": "על֜י",
@@ -66,7 +67,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "2k 18:17": {
         "wlc_focus": "תרת֥ן",
         "st-summary": (
-            "The LC has merkha where munaḥ would be expected. "
+            "The checker may prefer munaḥ to LC’s merkha. Or it may not like either."
+            " "
             + xx_data.non_revia_summary("geresh", "Also, the")
         ),
         "img": "LC-215A-col-1-line-24-2K-18v17.png",
@@ -76,14 +78,14 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             [
                 "In the LC image, there is some evidence that the merkha was the result of a correction."
                 " If it was the result of a correction, that makes it hard to argue that it was a scribal error."
-                " If there was a correction here, one wonders if what was originally there was the expected munaḥ!"
+                " If there was a correction here, one wonders if what was originally there was a munaḥ!"
             ],
             [
                 "In Da-at Miqra (see image above), Breuer observes that not only the LC (ל)"
                 " but also ק (Cairo Codex of The Prophets)"
-                " have this unexpected merkha."
+                " has this merkha."
                 " He also observes that the Aleppo Codex (א) and the Second Venice Miqraot Gedolot (ד)"
-                " have the expected munaḥ."
+                " have, instead, a munaḥ."
             ],
         ),
     },
