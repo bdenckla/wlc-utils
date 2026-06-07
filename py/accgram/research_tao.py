@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from accgram import ob_data
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_output
@@ -162,6 +163,7 @@ def run(args: argparse.Namespace) -> None:
 
     enriched_oddball_rows = _enrich_rows_without_structured_text(
         parsed_rows=parsed_oddball_rows,
+        wlc_focus_by_ref=_ob_wlc_focus_by_ref(),
         wlc422_by_bcv=wlc422_by_bcv,
         uxlc_by_bcv=uxlc_by_bcv,
         mam_simple_by_bcv=mam_simple_by_bcv,
@@ -264,6 +266,13 @@ def _wlc_focus_by_ref() -> dict[str, str | None]:
     return out
 
 
+def _ob_wlc_focus_by_ref() -> dict[str, str | None]:
+    out: dict[str, str | None] = {}
+    for ref, structured_text in ob_data.get_structured_text().items():
+        out[ref] = _structured_wlc_focus(structured_text)
+    return out
+
+
 def _validate_structured_text_high_level(
     *,
     parsed_rows: list[tuple[dict[str, object], str, str]],
@@ -298,6 +307,7 @@ def _validate_structured_text_high_level(
 def _enrich_rows_without_structured_text(
     *,
     parsed_rows: list[tuple[dict[str, object], str, str]],
+    wlc_focus_by_ref: dict[str, str | None],
     wlc422_by_bcv: dict[str, dict[str, object]],
     uxlc_by_bcv: dict[str, dict[str, object]],
     mam_simple_by_bcv: dict[str, dict[str, object]],
@@ -317,7 +327,7 @@ def _enrich_rows_without_structured_text(
             wlc422_kq_u_dir=wlc422_kq_u_dir,
             uxlc_dir=uxlc_dir,
             mam_simple_dir=mam_simple_dir,
-            wlc_focus=None,
+            wlc_focus=wlc_focus_by_ref.get(ref),
         )
         enriched_rows.append(enriched_row)
     return enriched_rows

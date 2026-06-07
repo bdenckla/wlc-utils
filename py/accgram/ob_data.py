@@ -207,7 +207,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": _SOMEWHERE,
     },
     "ju 11:24": {
-        "wlc_focus": "אות֥ו",
+        "wlc_focus": "אות֥ו תיר֑ש",
         "st-summary": _SOMEWHERE,
     },
     "ju 21:16": {
