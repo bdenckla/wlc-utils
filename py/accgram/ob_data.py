@@ -69,7 +69,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             "The LC has merkha where munaḥ would be expected. "
             + xx_data.non_revia_summary("geresh", "Also, the")
         ),
-        "img": "LC-215A-col1-line-24-2K-18v17.png",
+        "img": "LC-215A-col-1-line-24-2K-18v17.png",
+        "Aleppo img": "AC-2K-18v17.png",
         "Da-at Miqra img": "Da-at-Miqra-2K-18v17.png",
         "comment": (
             [

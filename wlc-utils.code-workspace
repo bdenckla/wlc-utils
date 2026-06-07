@@ -44,6 +44,10 @@
 			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_accgram\\.py research-tms-and-oddballs$/": {
 				"approve": true,
 				"matchCommandLine": true
+			},
+			"/^\\.venv/Scripts/python\\.exe py/main_accgram\\.py research-tms-and-oddballs 2>&1 \\| tail -20$/": {
+				"approve": true,
+				"matchCommandLine": true
 			}
 		}
 	}
