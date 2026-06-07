@@ -75,6 +75,15 @@ def render_image_paragraphs(
             {"class": _GOERWITZ_TMS_FIGURE_CLASS},
         )
 
+    da_at_miqra_img = structured_text_lookup(row, "Da-at Miqra img")
+    if isinstance(da_at_miqra_img, str):
+        image_paragraphs.append(
+            my_html_for_img.html_for_single_img(
+                da_at_miqra_img,
+                img_para_attr={"class": _GOERWITZ_TMS_IMAGE_CLASS},
+            )
+        )
+
     return tuple(image_paragraphs)
 
 

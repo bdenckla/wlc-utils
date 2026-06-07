@@ -53,7 +53,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "י֧ר֞ב",
         "st-summary": "BHS adds a darga out of nowhere.",
         "img": "LC-357B-col-2-line-6-2C-24v27.png",
-        "comment": "Perhaps the darga was accidentally repeated from the previous word, which legitimately has a darga."
+        "comment": "Perhaps the darga was accidentally repeated from the previous word, which legitimately has a darga.",
     },
     "2c 25:1": {
         "wlc_focus": "ועשר֣ים",
@@ -65,7 +65,26 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "2k 18:17": {
         "wlc_focus": "תרת֥ן",
-        "st-summary": _SOMEWHERE + " " + xx_data.non_revia_summary("geresh", "Also, the"),
+        "st-summary": (
+            "The LC has merkha where munaḥ would be expected. "
+            + xx_data.non_revia_summary("geresh", "Also, the")
+        ),
+        "img": "LC-215A-col1-line-24-2K-18v17.png",
+        "Da-at Miqra img": "Da-at-Miqra-2K-18v17.png",
+        "comment": (
+            [
+                "In the LC image, there is some evidence that the merkha was the result of a correction."
+                " If it was the result of a correction, that makes it hard to argue that it was a scribal error."
+                " If there was a correction here, one wonders if what was originally there was the expected munaḥ!"
+            ],
+            [
+                "In Da-at Miqra (see image above), Breuer observes that not only the LC (ל)"
+                " but also ק (Cairo Codex of The Prophets)"
+                " have this unexpected merkha."
+                " He also observes that the Aleppo Codex (א) and the Second Venice Miqraot Gedolot (ד)"
+                " have the expected munaḥ."
+            ],
+        ),
     },
     "2s 6:20": {
         "wlc_focus": "לעינ֨י",
@@ -135,9 +154,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "את֔ו",
         "st-summary": "",
         "uxlc_change": "https://tanach.us/Changes/2022.04.01%20-%20Changes/2022.04.01%20-%20Changes.xml?2021.11.28-2",
-        "comment": (
-            "This is the example given in Goerwitz’s article."
-        ),
+        "comment": ("This is the example given in Goerwitz’s article."),
     },
     "ex 30:12": {
         "wlc_focus": "ישרא֘ל",
@@ -157,7 +174,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": _SOMEWHERE,
         "comment": (
             "There is also a question of ויקח֔ם vs וי֨קח֔ם (metigah) in this verse, but either option is grammatical."
-        )
+        ),
     },
     "ho 11:7": {
         "wlc_focus": "ירומם׃",
@@ -170,16 +187,43 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "is 45:1": {
         "wlc_focus": "לכ֣ורש",
         "st-summary": "I think the checker wants לכ֣ורש to have a segol.",
-        "comment": "There is a question of whether לכ֣ורש should have a legarmeih; see MAM’s doc-note."
+        "comment": "There is a question of whether לכ֣ורש should have a legarmeih; see MAM’s doc-note.",
     },
     "je 26:5": {
         "wlc_focus": "דבר֨י",
-        "st-summary": _SOMEWHERE,
+        "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-28",
+        "comment": (
+            [
+                "In BHS, the mark is “late” on the ר, i.e. it is on the left of the ר rather than in its center."
+                " If it were really a qadma, we would expect it to be centered on the ר."
+            ],
+            [
+                " Instead, it looks like a stranded pashta stress helper."
+                " (Some typography centers a pashta stress helper,"
+                " making it indistinguishable from a qadma, but BHS aligns them distinctly.)"
+                " I.e. in BHS, the mark looks like a pashta stress helper with no real (end-of-word) pashta to accompany it."
+                " (Note that that adding a real pashta to this word would not fix it, since a stress helper on a final syllable makes no sense.)"
+            ],
+            [
+                "So, though above I said “BHS transcribes a pashta on י as a qadma on ר”,"
+                " a more detailed account would be "
+                "“BHS transcribes a pashta on י as a stranded pashta stress helper on ר,"
+                " and WLC transcribes BHS’s stranded stress helper as a qadma.”"
+            ],
+            [
+                "Note that originally WLC had no distinction between a qadma and a pashta stress helper,"
+                " using code 63 for both,"
+                " but later WLC added a separate code for the pashta stress helper, code 33."
+                " So WLC may have had no choice but to transcribe BHS’s stranded stress helper as a qadma,"
+                " since it may have had no code for a pashta stress helper at the time."
+                " In any case, the serious error is BHS’s transcription, not WLC’s transcription of BHS."
+            ],
+        ),
     },
     "je 28:2": {
         "wlc_focus": "שב֞רתי",
-        "st-summary": _SOMEWHERE,
+        "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-35",
     },
     "je 40:11": {
@@ -188,12 +232,13 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "je 46:4": {
         "wlc_focus": "בכ֥ובע֑ים",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "BHS transcribes a meteg as a merkha.",
+        "img": "LC-271B-col-1-line-5-Je-46v4.png",
     },
     "je 51:9": {
         "wlc_focus": "רפ֣ינו",
         "st-summary": _BHS_TRANSCRIBES,
-        "pending_uxlc_change": "https://tanach.us/Changes/2026.10.19%20-%20Changes/2026.10.19%20-%20Changes.xml",
+        "pending_uxlc_change": "https://tanach.us/Changes/2026.10.19%20-%20Changes/2026.10.19%20-%20Changes.xml?2026.04.10-2",
     },
     "js 4:8": {
         "wlc_focus": "ישרא֘ל",
@@ -228,7 +273,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "other-goerwitz-item": "goerwitz-tms-msp-n.html#tmnu20v19",
         "comment": (
             "See the “Other Goerwitz item” link regarding a similar issue in Nu 20:19 in the “troublemakers” set."
-        )
+        ),
     },
     "lv 10:6": {
         "wlc_focus": "תפר֙מו֙ ",
@@ -262,7 +307,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             " It may be two separate marks, one of which may be unintentional."
             " The upper part of this mark (if we view it as one mark) has a merkha-like inclination"
             " but the lower part does not."
-        )
+        ),
     },
     "nu 27:9": {
         "wlc_focus": "לאחיו׃",
