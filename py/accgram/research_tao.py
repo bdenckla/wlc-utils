@@ -370,8 +370,9 @@ def _validate_structured_text_changetext_match(
     all_changes_by_url: dict[str, dict[str, object]],
 ) -> None:
     uxlc_change = structured_text.get("uxlc_change")
-    if not isinstance(uxlc_change, str) or not uxlc_change.strip():
+    if uxlc_change is None:
         return
+    assert isinstance(uxlc_change, str), f"structured_text.uxlc_change must be a string URL for {ref}"
 
     canonical_url = tm_changes.canonicalize_uxlc_change_url(uxlc_change)
     if canonical_url is None:

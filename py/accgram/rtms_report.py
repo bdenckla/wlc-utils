@@ -252,6 +252,7 @@ def _render_ref_links(
     tanach_us_url = my_wlc_bcv_str.get_tanach_dot_us_url(bcv)
     summary = structured_text_lookup(row, "st-summary")
     uxlc_change = structured_text_lookup(row, "uxlc_change")
+    pending_uxlc_change = structured_text_lookup(row, "pending_uxlc_change")
     uxlc_note_page = structured_text_lookup(row, "uxlc_note_page")
     github_issue = structured_text_lookup(row, "github-issue")
     other_goerwitz_item = structured_text_lookup(row, "other-goerwitz-item")
@@ -275,49 +276,15 @@ def _render_ref_links(
         wlc_utils_html.anchor("UXLC", {"href": tanach_us_url}),
     ]
 
-    if isinstance(uxlc_change, str) and uxlc_change.strip():
-        links.extend(
-            [
-                " | ",
-                wlc_utils_html.anchor(
-                    "UXLC change",
-                    {"href": uxlc_change.strip()},
-                ),
-            ]
-        )
-
-    if isinstance(uxlc_note_page, str) and uxlc_note_page.strip():
-        links.extend(
-            [
-                " | ",
-                wlc_utils_html.anchor(
-                    "UXLC note page",
-                    {"href": uxlc_note_page.strip()},
-                ),
-            ]
-        )
-
-    if isinstance(github_issue, str) and github_issue.strip():
-        links.extend(
-            [
-                " | ",
-                wlc_utils_html.anchor(
-                    "GitHub issue",
-                    {"href": github_issue.strip()},
-                ),
-            ]
-        )
-
-    if isinstance(other_goerwitz_item, str) and other_goerwitz_item.strip():
-        links.extend(
-            [
-                " | ",
-                wlc_utils_html.anchor(
-                    "Other Goerwitz item",
-                    {"href": other_goerwitz_item.strip()},
-                ),
-            ]
-        )
+    for label, url in [
+        ("UXLC change", uxlc_change),
+        ("Pending UXLC change", pending_uxlc_change),
+        ("UXLC note page", uxlc_note_page),
+        ("GitHub issue", github_issue),
+        ("Other Goerwitz item", other_goerwitz_item),
+    ]:
+        if isinstance(url, str) and url.strip():
+            links.extend([" | ", wlc_utils_html.anchor(label, {"href": url.strip()})])
 
     return (
         wlc_utils_html.para(tuple(permalink_summary)),

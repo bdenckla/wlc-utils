@@ -108,8 +108,14 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ec 12:14": {
         "wlc_focus": "כ֤י",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "Defying both BHS and the LC, WLC transcribes a yetiv as a mahapakh.",
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-25",
+        "comment": (
+            (
+                "It is very rare for WLC to diverge from BHS like this, without a bracket note."
+                " Perhaps WLC agrees with an older BHS? I have only checked the 1984 and 1997 editions of BHS."
+            ),
+        ),
     },
     "ek 9:2": {
         "wlc_focus": "העלי֜ון",
@@ -186,7 +192,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "je 51:9": {
         "wlc_focus": "רפ֣ינו",
-        "st-summary": _SOMEWHERE,
+        "st-summary": _BHS_TRANSCRIBES,
+        "pending_uxlc_change": "https://tanach.us/Changes/2026.10.19%20-%20Changes/2026.10.19%20-%20Changes.xml",
     },
     "js 4:8": {
         "wlc_focus": "ישרא֘ל",
