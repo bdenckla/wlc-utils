@@ -14,7 +14,8 @@ _BHS_TRANSCRIBES = "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "1c 1:53": {
         "wlc_focus": "אל֣וף",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "The LC has a munaḥ where we would expect merkha.",
+        "img": "LC-328A-col-1-line-27-1C-1v53.png",
     },
     "1k 6:3": {
         "wlc_focus": "עשר֣ים",
@@ -39,13 +40,13 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": xx_data.non_revia_summary("geresh"),
     },
     "2c 7:5": {
-        "wlc_focus": "הבק֗ר",
-        "st-summary": _SOMEWHERE,
+        "wlc_focus": "ז֣בח הבק֗ר",
+        "st-summary": "BHS accents a word with munaḥ rather than segol.",
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-3",
     },
     "2c 8:10": {
         "wlc_focus": "שר֤י",
-        "st-summary": _SOMEWHERE,
+        "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-4",
     },
     "2c 24:27": {
