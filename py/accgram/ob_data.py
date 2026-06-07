@@ -242,7 +242,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ne 2:10": {
         "wlc_focus": "ב֥א",
-        "st-summary": _SOMEWHERE,
+        "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.14-3",
     },
     "ne 8:7": {
