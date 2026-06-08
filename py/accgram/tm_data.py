@@ -112,7 +112,7 @@ _NU_2019_06 = (
 )
 _NU_2019_07 = (
     "Although this is the only item of this type in the “troublemakers” set,"
-    " there are 5 such items in the “oddballs” set."
+    " there are six such items in the “oddballs” set."
     " See, for example, the “Other Goerwitz item” link regarding a similar issue in Lv 4:2 in the “oddballs” set."
 )
 _JU_1318_01 = (

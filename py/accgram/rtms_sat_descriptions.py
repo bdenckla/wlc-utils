@@ -62,11 +62,7 @@ def maybe_restore_value_from_witness(
     description: str,
 ) -> str:
     normalized_description = description.strip()
-    if normalized_description not in {
-        "meteg-space",
-        "meteg-maqaf",
-        "meteg-meteg-maqaf",
-    }:
+    if not normalized_description.startswith("meteg-"):
         return target_value
 
     if not rtmsr_diff_format.is_plain_hebrew_string(target_value):

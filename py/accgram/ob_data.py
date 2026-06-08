@@ -11,6 +11,15 @@ def get_structured_text() -> dict[str, dict[str, object]]:
 
 _SOMEWHERE = "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
 _BHS_TRANSCRIBES = "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
+_ZARQA_WHIM = {
+        "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
+        "other-goerwitz-item": "goerwitz-tms.html#tmn20v19",
+        "comment": (
+            "This is one of six items of this type in the “oddballs” set."
+            " There is only one such item in the “troublemakers” set."
+            " See, the “Other Goerwitz item” link regarding that item."
+        )
+}
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "gn 28:9": {
         "wlc_focus": "אברה֜ם",
@@ -30,8 +39,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 6:6": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": _SOMEWHERE,
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-2",
+        **_ZARQA_WHIM,
     },
     "ex 28:1": {
         "wlc_focus": "את֔ו",
@@ -41,8 +50,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 30:12": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": _SOMEWHERE,
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-3",
+        **_ZARQA_WHIM,
     },
     "ex 38:12": {
         "wlc_focus": "עמודיה֥ם",
@@ -50,12 +59,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "lv 4:2": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": _SOMEWHERE,
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-5",
-        "other-goerwitz-item": "goerwitz-tms-msp-n.html#tmnu20v19",
-        "comment": (
-            "See the “Other Goerwitz item” link regarding a similar issue in Nu 20:19 in the “troublemakers” set."
-        ),
+        **_ZARQA_WHIM,
     },
     "lv 10:6": {
         "wlc_focus": "תפר֙מו֙ ",
@@ -96,18 +101,18 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "dt 31:7": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": _SOMEWHERE,
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-9",
+        **_ZARQA_WHIM,
     },
     "js 4:8": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": _SOMEWHERE,
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-10",
+        **_ZARQA_WHIM,
     },
     "js 10:30": {
         "wlc_focus": "ישרא֘ל",
-        "st-summary": _SOMEWHERE,
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-11",
+        **_ZARQA_WHIM,
     },
     "js 15:47": {
         "wlc_focus": "עז֥ה",
