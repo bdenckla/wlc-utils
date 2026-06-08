@@ -13,7 +13,7 @@ _SOMEWHERE = "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rath
 _BHS_TRANSCRIBES = "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
 _ZARQA_WHIM = {
         "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
-        "other-goerwitz-item": "goerwitz-tms.html#tmn20v19",
+        "other-goerwitz-item": "goerwitz-tms.html#tmnu20v19",
         "comment": (
             "This is one of six items of this type in the “oddballs” set."
             " There is only one such item in the “troublemakers” set."
@@ -44,7 +44,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 28:1": {
         "wlc_focus": "את֔ו",
-        "st-summary": "",
+        "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2022.04.01%20-%20Changes/2022.04.01%20-%20Changes.xml?2021.11.28-2",
         "comment": ("This is the example given in Goerwitz’s article."),
     },
