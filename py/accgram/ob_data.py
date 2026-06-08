@@ -141,6 +141,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "2s 11:11": {
         "wlc_focus": "אדנ֨י",
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
+        "img": "LC-174A-col-1-line-7-2S-11v11.png",
     },
     "2s 13:32": {
         "wlc_focus": "דו֜ד",
