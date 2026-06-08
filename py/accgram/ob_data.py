@@ -147,7 +147,37 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ju 11:24": {
         "wlc_focus": "אות֥ו תיר֑ש",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "BHS transcribes a faded, ambiguous mark merkha rather than munaḥ.",
+        "img": "LC-144A-col-1-line-17-Ju-11v24.png",
+        "edited img": "LC-144A-col-1-line-17-Ju-11v24-edited.png",
+        "comment": (
+            [
+                "Ignoring the grammar of accents, the faded remains of the mark in question are slightly more plausibly"
+                " interpreted as a munaḥ than a merkha."
+                " But the “upright” part of the munaḥ is very faint, if it is even there are all and I am not kidding myself,"
+                " seeing what I want to see rather than what is actually there."
+            ],
+            [
+                "Note that a geresh from הוריש on the line below complicates the colliding with the elbow of the proposed munaḥ."
+            ],
+            [
+                "In an image above, I have outlined the proposed munaḥ and the colliding geresh."
+            ],
+            [
+                "One of the most extraordinary things about BHS (continued by BHQ) is that, to my knowledge, it never acknowledges"
+                " any uncertainty in its transcription of the LC."
+                " Yet of course any transcription of the LC is surely fraught with hundreds of serious uncertainties."
+                " Although space constraints are extreme in any single-volume Tanakh like BHS,"
+                " really the only responsible thing to do for a word like this is to acknowledge the uncertainty somehow,"
+                " and either transcribe no accent at all or use context (grammar) combined with the (faint) evidence"
+                " to make a good guess, which in this case would be munaḥ."
+            ],
+            [
+                "To transcribe this word as (illegally) accented with merkha"
+                " without any acknowledgment of either illegality or uncertainty is,"
+                " to me, bordering on irresponsible."
+            ]
+        )
     },
     "ju 21:16": {
         "wlc_focus": "ויאמר֨ו",

@@ -62,6 +62,7 @@ def render_image_paragraphs(
         )
 
     for extra_img_key, extra_source_label in (
+        ("edited img", "Edited LC image"),
         ("Aleppo img", "Aleppo Codex"),
         ("Da-at Miqra img", "Da'at Miqra"),
     ):
