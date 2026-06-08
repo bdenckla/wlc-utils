@@ -123,7 +123,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ju 21:16": {
         "wlc_focus": "ויאמר֨ו",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
+        "img": "LC-150A-col-1-line-22-Ju-21v16.png",
     },
     "1s 14:3": {
         "wlc_focus": "על֜י",
@@ -135,7 +136,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "2s 6:20": {
         "wlc_focus": "לעינ֨י",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.30-17",
     },
     "2s 11:11": {
