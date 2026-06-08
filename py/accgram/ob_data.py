@@ -204,7 +204,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "je 26:5": {
         "wlc_focus": "דבר֨י",
-        "st-summary": _BHS_TRANSCRIBES,
+        "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-28",
         "comment": (
             [
@@ -219,9 +219,10 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
                 " (Note that that adding a real pashta to this word would not fix it, since a stress helper on a final syllable makes no sense.)"
             ],
             [
-                "So, though above I said “BHS transcribes a pashta on י as a qadma on ר”,"
+                "So, though above I said “BHS transcribes a syllable as having qadma rather than pashta”,"
                 " a more detailed account would be "
-                "“BHS transcribes a pashta on י as a stranded pashta stress helper on ר,"
+                "“BHS transcribes a syllable as having"
+                " a stranded pashta stress helper on its first letter rather than a pashta on its last letter,"
                 " and WLC transcribes BHS’s stranded stress helper as a qadma.”"
             ],
             [
