@@ -140,7 +140,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "2s 11:11": {
         "wlc_focus": "אדנ֨י",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
     },
     "2s 13:32": {
         "wlc_focus": "דו֜ד",
@@ -148,23 +148,24 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "2s 23:9": {
         "wlc_focus": "בפלשתים",
-        "st-summary": "",
+        "st-summary": "BHS does not transcribe a pashta, leaving the word without accent.",
         "uxlc_change": "https://tanach.us/Changes/2021.10.19%20-%20Changes/2021.10.19%20-%20Changes.xml?2021.08.07-3",
     },
     "1k 6:3": {
         "wlc_focus": "עשר֣ים",
-        "st-summary": _SOMEWHERE,
+        "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-10",
     },
     "1k 8:11": {
         "wlc_focus": "מפנ֥י",
-        "st-summary": _SOMEWHERE,
+        "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2022.04.01%20-%20Changes/2022.04.01%20-%20Changes.xml?2021.11.21-1",
     },
     "1k 20:25": {
         "wlc_focus": "וס֣וס",
         "st-summary": "The checker may prefer merkha to LC’s munaḥ. Or it may not like either.",
         "img": "LC-200A-col-2-line-19-1K-20v25.png",
+        "Aleppo img": "AC-1K-20v25.png",
     },
     "2k 18:17": {
         "wlc_focus": "תרת֥ן",

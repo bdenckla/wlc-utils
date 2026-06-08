@@ -274,7 +274,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "1k 6:2": {
-        "st-summary": "Defying the LC, BHS has mahapakh rather than munaḥ.",
+        "st-summary": "BHS transcribes a munaḥ as a mahapakh.",
         "wlc_focus": "ועשר֤ים",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
         "comment": "See the image in the UXLC change to which we link above.",
@@ -295,7 +295,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "Arguably, WLC and UXLC should code the mark on the resh as a pashta rather than a qadma.",
     },
     "1k 20:29": {
-        "st-summary": "Defying the LC, BHS has merkha rather than meteg-maqaf.",
+        "st-summary": "BHS transcribes a meteg as a merkha and ignores a maqaf.",
         "wlc_focus": "נ֥כח",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
         "comment": (
@@ -313,7 +313,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "2k 23:36": {
-        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
+        "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
         "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
         "comment": "See the image in the UXLC change to which we link above.",
@@ -356,7 +356,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 31:32": {
-        "st-summary": "Defying the LC, BHS has tipeḥa rather than munaḥ.",
+        "st-summary": "BHS transcribes a munaḥ as a tipeḥa.",
         "wlc_focus": "מא֖רץ",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
         "comment": "See the image in the UXLC change to which we link above.",
@@ -453,7 +453,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC note to which we link above.",
     },
     "mi 2:7": {
-        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
+        "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
         "BHQ": "?",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
@@ -482,14 +482,14 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ec 7:21": {
-        "st-summary": "Defying the LC, BHS transcribes a tevir as a merkha.",
+        "st-summary": "BHS transcribes a tevir as a merkha.",
         "wlc_focus": "אש֥ר",
         "BHQ": "?",
         "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ec 9:18": {
-        "st-summary": "Defying both BHS and the LC, WLC transcribes a merkha as a tipeḥa.",
+        "st-summary": "WLC transcribes a tipeḥa as a merkha.",
         "wlc_focus": "יאב֥ד טוב֥ה",
         "BHQ": "?",
         "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
@@ -512,7 +512,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "2c 22:12": {
-        "st-summary": "Defying the LC, BHS has tipeḥa rather than etnaḥta.",
+        "st-summary": "BHS transcribes an etnaḥta as a tipeḥa.",
         "wlc_focus": "שנ֖ים",
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
         "comment": "See the image in the UXLC change to which we link above.",
