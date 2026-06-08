@@ -12,13 +12,13 @@ def get_structured_text() -> dict[str, dict[str, object]]:
 _SOMEWHERE = "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
 _BHS_TRANSCRIBES = "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
 _ZARQA_WHIM = {
-        "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
-        "other-goerwitz-item": "goerwitz-tms.html#tmnu20v19",
-        "comment": (
-            "This is one of six items of this type in the “oddballs” set."
-            " There is only one such item in the “troublemakers” set."
-            " See, the “Other Goerwitz item” link regarding that item."
-        )
+    "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
+    "other-goerwitz-item": "goerwitz-tms.html#tmnu20v19",
+    "comment": (
+        "This is one of six items of this type in the “oddballs” set."
+        " There is only one such item in the “troublemakers” set."
+        " See, the “Other Goerwitz item” link regarding that item."
+    ),
 }
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "gn 28:9": {
@@ -55,7 +55,8 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 38:12": {
         "wlc_focus": "עמודיה֥ם",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "The LC has something like a merkha where a munaḥ is expected.",
+        "img": "LC-055A-col-1-line-3-Ex-38v12.png",
     },
     "lv 4:2": {
         "wlc_focus": "ישרא֘ל",
@@ -72,7 +73,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "lv 25:20": {
         "wlc_focus": "נאכ֤֖ל",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "The LC has a mahapakh in addition to the expected tipeḥa.",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.22-2",
     },
     "lv 26:28": {
@@ -97,7 +98,27 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "dt 24:10": {
         "wlc_focus": "ברעך",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "The LC has only meteg where meteg-tipeḥa is expected.",
+        "img": "LC-113A-col-3-line-27-Dt-24v10.png",
+        "comment": (
+            [
+                "We could also interpret the LC’s mark under the resh as a tipeḥa that comes unexpectedly early in the word."
+            ],
+            [
+                "We could also speculate that what seems to be the long descender of the final kaf"
+                " includes a tipeḥa placed too early relative to the kaf."
+            ],
+            [
+                "Yet, just as I have criticized some transcriptions as aggresively uncharitable,"
+                " there is no doubt such a thing as a transcription that is too aggressively charitable,"
+                " and these suggestions above,"
+                " i.e. these ways of saving the word from violating the accent grammar,"
+                " may be examples of that."
+            ],
+            [
+                "The most likely explanation is that the LC simply does not have the expected tipeḥa anywhere in the word."
+            ]
+        ),
     },
     "dt 31:7": {
         "wlc_focus": "ישרא֘ל",
@@ -116,11 +137,13 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "js 15:47": {
         "wlc_focus": "עז֥ה",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "The LC has merkha where tevir is expected.",
+        "img": "LC-130B-col-1-line-16-Jo-15v47.png",
     },
     "ju 1:2": {
         "wlc_focus": "וי֣אמר",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "The LC has munaḥ where a merkha is expected.",
+        "img": "LC-136A-col-1-line-7-Ju-1v2.png",
     },
     "ju 11:24": {
         "wlc_focus": "אות֥ו תיר֑ש",
@@ -178,8 +201,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "תרת֥ן",
         "st-summary": (
             "The checker may prefer munaḥ to LC’s merkha. Or it may not like either."
-            " "
-            + xx_data.non_revia_summary("geresh", "Also, the")
+            " " + xx_data.non_revia_summary("geresh", "Also, the")
         ),
         "img": "LC-215A-col-1-line-24-2K-18v17.png",
         "Aleppo img": "AC-2K-18v17.png",
@@ -298,7 +320,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "1c 1:53": {
         "wlc_focus": "אל֣וף",
-        "st-summary": "The LC has a munaḥ where we would expect merkha.",
+        "st-summary": "The LC has a munaḥ where a merkha is expected.",
         "img": "LC-328A-col-1-line-27-1C-1v53.png",
     },
     "2c 7:5": {
