@@ -158,145 +158,6 @@ _MISSING_SOF_PASUQ_COMMENT = (
     "Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC."
 )
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
-    "1k 6:2": {
-        "st-summary": "Defying the LC, BHS has mahapakh rather than munaḥ.",
-        "wlc_focus": "ועשר֤ים",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
-        "comment": "See the image in the UXLC change to which we link above.",
-    },
-    "1k 16:33": {
-        "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
-        "wlc_focus": "מכ֨ל",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
-        "comment": (
-            "The LC has no visible accent on מכל. See the image in the UXLC change to which we link above."
-            " The consensus accents the final syllable with pashta rather than qadma."
-        ),
-    },
-    "1k 19:11": {
-        "st-summary": "The LC is missing a pashta.",
-        "wlc_focus": "הר֨וח",
-        "img": "LC-199A-col-3-line-21-1K-19v11.png",
-        "comment": "Arguably, WLC and UXLC should code the mark on the resh as a pashta rather than a qadma.",
-    },
-    "1k 20:29": {
-        "st-summary": "Defying the LC, BHS has merkha rather than meteg-maqaf.",
-        "wlc_focus": "נ֥כח",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
-        "comment": (
-            ("See the image in the UXLC change to which we link above."),
-            (
-                "Aside: I am not sure what, if anything, is grammatically “wrong” about a merkha here."
-                " Indeed see the MAM doc-note for a list of some of the sources that have merkha."
-                " Maybe this merkha is not even what the Goerwitz checker is flagging as wrong."
-                " The overall sequence involves merkha kefula;"
-                " I wonder whether, because it is so rare, we lack a good sense of"
-                " the “legality” of sequences involving it."
-                " The sequence in question is"
-                " darga, merkha kefula, something on נכח (the atom in question), and then tipeḥa."
-            ),
-        ),
-    },
-    "1s 6:19": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "גדולֽה",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
-    },
-    "2c 22:12": {
-        "st-summary": "Defying the LC, BHS has tipeḥa rather than etnaḥta.",
-        "wlc_focus": "שנ֖ים",
-        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
-        "comment": "See the image in the UXLC change to which we link above.",
-    },
-    "is 36:2": {
-        "st-summary": xx_data.non_revia_summary("tevir"),
-        "wlc_focus": "ירושל֛מה",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening",
-            ["This verse has a munaḥ vs merkha issue that may be significant."],
-        ),
-    },
-    "je 4:19": {
-        "st-summary": xx_data.non_revia_summary("geresh"),
-        "wlc_focus": "אוח֜ילה",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia (ge) with 1 qa intervening"
-        ),
-    },
-    "je 38:11": {
-        "st-summary": xx_data.non_revia_summary("geresh"),
-        "wlc_focus": "את־ האנש֜ים",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia (ge) with 1 qa intervening"
-        ),
-    },
-    "hg 2:12": {
-        "st-summary": xx_data.non_revia_summary("geresh"),
-        "wlc_focus": "בשר־ ק֜דש",
-        "BHQ": "?",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia (ge) with 1 qa intervening"
-        ),
-    },
-    "2c 26:15": {
-        "st-summary": xx_data.non_revia_summary("geresh"),
-        "wlc_focus": "חשבנ֜ות",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia (ge) with 1 qa intervening"
-        ),
-    },
-    "2k 23:36": {
-        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
-        "wlc_focus": "שנ֨ה",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
-        "comment": "See the image in the UXLC change to which we link above.",
-    },
-    "am 1:14": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "סופֽה",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
-        "BHQ": "?",
-    },
-    "am 6:6": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "יוסֽף",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
-        "BHQ": "?",
-    },
-    "am 9:5": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "מצרֽים",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
-        "BHQ": "?",
-    },
-    "da 2:41": {
-        "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
-        "wlc_focus": "ד֥י",
-        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
-        "comment": "See the image in the UXLC change to which we link above.",
-    },
-    "dt 9:20": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "ההֽוא",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
-        "BHQ": "?",
-    },
-    "dt 13:15": {
-        "st-summary": "The LC has darga where it should have tevir.",
-        "wlc_focus": "וחקרת֧",
-        "img": "LC-107B-col-3-line-18-dt-13v15.png",
-    },
-    "dt 25:9": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "אחֽיו",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
-        "BHQ": "?",
-    },
-    "ek 33:20": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "ישראֽל",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
-    },
     "ex 2:5": {
         "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ותקחֽה",
@@ -312,17 +173,10 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ומשמאלֽם",
         "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
-    "ho 4:19": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "מזבחותֽם",
-        "BHQ": "?",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
-    },
-    "ho 8:9": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "אהבֽים",
-        "BHQ": "?",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+    "ex 34:6": {
+        "st-summary": _BAR_INSTEAD_OF_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "ואמֽת׀",
+        "img": "LC-052A-col-2-line-1-Ex-34v6.png",
     },
     "lv 18:17": {
         "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
@@ -362,56 +216,122 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "קטֽרת",
         "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
-    "ec 7:21": {
-        "st-summary": "Defying the LC, BHS transcribes a tevir as a merkha.",
-        "wlc_focus": "אש֥ר",
+    "nu 20:19": {
+        "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
+        "wlc_focus": "ישרא֘ל",
+        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
+        "other-goerwitz-item": "goerwitz-obs.html#oblv4v2",
+        "comment": (
+            _NU_2019_01,
+            _NU_2019_02,
+            _NU_2019_03,
+            _NU_2019_04,
+            _NU_2019_05,
+            _NU_2019_06,
+            _NU_2019_07,
+        ),
+    },
+    "nu 25:19": {
+        "st-summary": "BHS puts a verse number in the middle of a chanted verse.",
+        "wlc_focus": "המגפ֑ה",
+        "comment": (
+            _NU_2509_01,
+            _NU_2509_02,
+            _NU_2509_03,
+            _NU_2509_04,
+        ),
+    },
+    "dt 9:20": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "ההֽוא",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
         "BHQ": "?",
-        "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
+    },
+    "dt 13:15": {
+        "st-summary": "The LC has darga where it should have tevir.",
+        "wlc_focus": "וחקרת֧",
+        "img": "LC-107B-col-3-line-18-dt-13v15.png",
+    },
+    "dt 25:9": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "אחֽיו",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "BHQ": "?",
+    },
+    "ju 13:18": {
+        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck.",
+        "wlc_focus": "פ֛לאי׃",
+        "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
+        "comment": (
+            _JU_1318_01,
+            _JU_1318_02,
+            _JU_1318_03,
+        ),
+    },
+    "1s 6:19": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "גדולֽה",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
+    },
+    "1k 6:2": {
+        "st-summary": "Defying the LC, BHS has mahapakh rather than munaḥ.",
+        "wlc_focus": "ועשר֤ים",
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
         "comment": "See the image in the UXLC change to which we link above.",
     },
-    "ec 9:18": {
-        "st-summary": "Defying both BHS and the LC, WLC transcribes a merkha as a tipeḥa.",
-        "wlc_focus": "יאב֥ד טוב֥ה",
-        "BHQ": "?",
-        "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+    "1k 16:33": {
+        "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
+        "wlc_focus": "מכ֨ל",
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
         "comment": (
+            "The LC has no visible accent on מכל. See the image in the UXLC change to which we link above."
+            " The consensus accents the final syllable with pashta rather than qadma."
+        ),
+    },
+    "1k 19:11": {
+        "st-summary": "The LC is missing a pashta.",
+        "wlc_focus": "הר֨וח",
+        "img": "LC-199A-col-3-line-21-1K-19v11.png",
+        "comment": "Arguably, WLC and UXLC should code the mark on the resh as a pashta rather than a qadma.",
+    },
+    "1k 20:29": {
+        "st-summary": "Defying the LC, BHS has merkha rather than meteg-maqaf.",
+        "wlc_focus": "נ֥כח",
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
+        "comment": (
+            ("See the image in the UXLC change to which we link above."),
             (
-                "It is very rare for WLC to diverge from BHS like this, without a bracket note."
-                " Perhaps WLC agrees with an older BHS? I have only checked the 1984 and 1997 editions of BHS."
+                "Aside: I am not sure what, if anything, is grammatically “wrong” about a merkha here."
+                " Indeed see the MAM doc-note for a list of some of the sources that have merkha."
+                " Maybe this merkha is not even what the Goerwitz checker is flagging as wrong."
+                " The overall sequence involves merkha kefula;"
+                " I wonder whether, because it is so rare, we lack a good sense of"
+                " the “legality” of sequences involving it."
+                " The sequence in question is"
+                " darga, merkha kefula, something on נכח (the atom in question), and then tipeḥa."
             ),
-            (
-                "The LC diverges from consensus here by having merkha tipeḥa rather than tipeḥa merkha,"
-                " but that is still accent-grammatical, so that divergence is not relevant here."
-            ),
         ),
     },
-    "ek 11:1": {
-        "st-summary": "BHS transcribes a merkha as a tipeḥa.",
-        "wlc_focus": "שר֖י",
-        "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
-        "comment": (
-            _ambiguous_mark_context_comment("שרי")
-            + " It is aggressively uncharitable to transcribe the mark on שרי as tipeḥa:"
-            + " tipeḥa is the least likely of the three possible meanings of this mark."
-            + " Merkha is by far the most likely. If the mark were meteg, we would have to"
-            + " assume that a maqaf is missing."
+    "2k 23:36": {
+        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
+        "wlc_focus": "שנ֨ה",
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
+        "comment": "See the image in the UXLC change to which we link above.",
+    },
+    "is 36:2": {
+        "st-summary": xx_data.non_revia_summary("tevir"),
+        "wlc_focus": "ירושל֛מה",
+        "comment": xx_data.non_revia_comment(
+            "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening",
+            ["This verse has a munaḥ vs merkha issue that may be significant."],
         ),
     },
-    "ek 14:11": {
-        "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
-        "wlc_focus": "וה֥יו ל֣י",
-        "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
-        "comment": (
-            _ambiguous_mark_context_comment("והיו")
-            + " The most likely intended meaning of the mark on והיו is meteg, even though that implies that"
-            + " a maqaf is missing."
+    "je 4:19": {
+        "st-summary": xx_data.non_revia_summary("geresh"),
+        "wlc_focus": "אוח֜ילה",
+        "comment": xx_data.non_revia_comment(
+            "⅃-leg...non-revia (ge) with 1 qa intervening"
         ),
-    },
-    "ex 34:6": {
-        "st-summary": _BAR_INSTEAD_OF_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "ואמֽת׀",
-        "img": "LC-052A-col-2-line-1-Ex-34v6.png",
     },
     "je 9:10": {
         "st-summary": "BHS transcribes a merkha as a tipeḥa.",
@@ -441,6 +361,13 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
         "comment": "See the image in the UXLC change to which we link above.",
     },
+    "je 38:11": {
+        "st-summary": xx_data.non_revia_summary("geresh"),
+        "wlc_focus": "את־ האנש֜ים",
+        "comment": xx_data.non_revia_comment(
+            "⅃-leg...non-revia (ge) with 1 qa intervening"
+        ),
+    },
     "je 48:12": {
         "st-summary": "BHS transcribes a meteg as a tipeḥa.",
         "wlc_focus": "הנ֖ה־",
@@ -461,14 +388,83 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             " So, understandably, WLC transcribes this mark as a qadma."
         ),
     },
-    "ju 13:18": {
-        "st-summary": "BHQ transcribes a silluq as a tevir due to a speck.",
-        "wlc_focus": "פ֛לאי׃",
-        "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
+    "ek 11:1": {
+        "st-summary": "BHS transcribes a merkha as a tipeḥa.",
+        "wlc_focus": "שר֖י",
+        "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "comment": (
-            _JU_1318_01,
-            _JU_1318_02,
-            _JU_1318_03,
+            _ambiguous_mark_context_comment("שרי")
+            + " It is aggressively uncharitable to transcribe the mark on שרי as tipeḥa:"
+            + " tipeḥa is the least likely of the three possible meanings of this mark."
+            + " Merkha is by far the most likely. If the mark were meteg, we would have to"
+            + " assume that a maqaf is missing."
+        ),
+    },
+    "ek 14:11": {
+        "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
+        "wlc_focus": "וה֥יו ל֣י",
+        "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
+        "comment": (
+            _ambiguous_mark_context_comment("והיו")
+            + " The most likely intended meaning of the mark on והיו is meteg, even though that implies that"
+            + " a maqaf is missing."
+        ),
+    },
+    "ek 33:20": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "ישראֽל",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
+    },
+    "ho 4:19": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "מזבחותֽם",
+        "BHQ": "?",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
+    },
+    "ho 8:9": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "אהבֽים",
+        "BHQ": "?",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
+    },
+    "am 1:14": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "סופֽה",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "BHQ": "?",
+    },
+    "am 6:6": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "יוסֽף",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "BHQ": "?",
+    },
+    "am 9:5": {
+        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "מצרֽים",
+        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "BHQ": "?",
+    },
+    "ob 1:1": {
+        "st-summary": "The LC has no visible accent on עליה.",
+        "wlc_focus": "עליה",
+        "BHQ": "?",
+        "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
+        "comment": "See the image in the UXLC note to which we link above.",
+    },
+    "mi 2:7": {
+        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
+        "wlc_focus": "דבר֨י",
+        "BHQ": "?",
+        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
+        "comment": "See the image in the UXLC change to which we link above.",
+    },
+    "hg 2:12": {
+        "st-summary": xx_data.non_revia_summary("geresh"),
+        "wlc_focus": "בשר־ ק֜דש",
+        "BHQ": "?",
+        "comment": xx_data.non_revia_comment(
+            "⅃-leg...non-revia (ge) with 1 qa intervening"
         ),
     },
     "lm 5:5": {
@@ -485,43 +481,47 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             _LM_0505_07,
         ),
     },
-    "mi 2:7": {
-        "st-summary": "Defying the LC, BHS accents a syllable with qadma rather than pashta.",
-        "wlc_focus": "דבר֨י",
+    "ec 7:21": {
+        "st-summary": "Defying the LC, BHS transcribes a tevir as a merkha.",
+        "wlc_focus": "אש֥ר",
         "BHQ": "?",
-        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
+        "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
         "comment": "See the image in the UXLC change to which we link above.",
     },
-    "nu 20:19": {
-        "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
-        "wlc_focus": "ישרא֘ל",
-        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
-        "other-goerwitz-item": "goerwitz-obs.html#oblv4v2",
-        "comment": (
-            _NU_2019_01,
-            _NU_2019_02,
-            _NU_2019_03,
-            _NU_2019_04,
-            _NU_2019_05,
-            _NU_2019_06,
-            _NU_2019_07,
-        ),
-    },
-    "nu 25:19": {
-        "st-summary": "BHS puts a verse number in the middle of a chanted verse.",
-        "wlc_focus": "המגפ֑ה",
-        "comment": (
-            _NU_2509_01,
-            _NU_2509_02,
-            _NU_2509_03,
-            _NU_2509_04,
-        ),
-    },
-    "ob 1:1": {
-        "st-summary": "The LC has no visible accent on עליה.",
-        "wlc_focus": "עליה",
+    "ec 9:18": {
+        "st-summary": "Defying both BHS and the LC, WLC transcribes a merkha as a tipeḥa.",
+        "wlc_focus": "יאב֥ד טוב֥ה",
         "BHQ": "?",
-        "uxlc_note_page": "https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html",
-        "comment": "See the image in the UXLC note to which we link above.",
+        "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
+        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+        "comment": (
+            (
+                "It is very rare for WLC to diverge from BHS like this, without a bracket note."
+                " Perhaps WLC agrees with an older BHS? I have only checked the 1984 and 1997 editions of BHS."
+            ),
+            (
+                "The LC diverges from consensus here by having merkha tipeḥa rather than tipeḥa merkha,"
+                " but that is still accent-grammatical, so that divergence is not relevant here."
+            ),
+        ),
+    },
+    "da 2:41": {
+        "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
+        "wlc_focus": "ד֥י",
+        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
+        "comment": "See the image in the UXLC change to which we link above.",
+    },
+    "2c 22:12": {
+        "st-summary": "Defying the LC, BHS has tipeḥa rather than etnaḥta.",
+        "wlc_focus": "שנ֖ים",
+        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
+        "comment": "See the image in the UXLC change to which we link above.",
+    },
+    "2c 26:15": {
+        "st-summary": xx_data.non_revia_summary("geresh"),
+        "wlc_focus": "חשבנ֜ות",
+        "comment": xx_data.non_revia_comment(
+            "⅃-leg...non-revia (ge) with 1 qa intervening"
+        ),
     },
 }
