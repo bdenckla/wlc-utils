@@ -34,7 +34,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 4:10": {
         "wlc_focus": "דברך",
-        "st-summary": _SOMEWHERE,
+        "st-summary": "The LC lacks an accent on this word.",
         "uxlc_change": "https://tanach.us/Changes/2021.10.19%20-%20Changes/2021.10.19%20-%20Changes.xml?2021.08.07-4",
     },
     "ex 6:6": {
