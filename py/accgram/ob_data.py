@@ -147,7 +147,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "ju 11:24": {
         "wlc_focus": "אות֥ו תיר֑ש",
-        "st-summary": "BHS transcribes a faded, ambiguous mark merkha rather than munaḥ.",
+        "st-summary": "BHS transcribes a faded, ambiguous mark as merkha rather than munaḥ.",
         "img": "LC-144A-col-1-line-17-Ju-11v24.png",
         "edited img": "LC-144A-col-1-line-17-Ju-11v24-edited.png",
         "comment": (
