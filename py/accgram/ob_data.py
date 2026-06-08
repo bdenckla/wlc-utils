@@ -365,7 +365,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     },
     "2c 24:27": {
         "wlc_focus": "י֧ר֞ב",
-        "st-summary": "BHS adds a darga out of nowhere.",
+        "st-summary": "BHS adds a gershayim out of nowhere.",
         "img": "LC-357B-col-2-line-6-2C-24v27.png",
         "comment": "Perhaps the darga was accidentally repeated from the previous word, which legitimately has a darga.",
     },
