@@ -204,13 +204,111 @@ single divergent verse is pinpointed rather than failing a whole book.
    - One regression test per resolved mismatch class.
    - Document how to run the parity check; list any accepted residual diffs.
 
+## Execution phasing & model assignment
+The Work Breakdown above is organized by **component** (for understanding). This
+section re-slices the same work for **execution**: vertical slices that each end
+in a runnable parity number, ordered to put the feedback loop first and to
+isolate the one genuinely hard component.
+
+### Where the difficulty actually sits
+Difficulty is uneven. ~80% is comfortably medium-model (Sonnet) work; the
+concentrated risk is the **scanner** and the **divergence-debugging** loop, where
+a subtle flex-semantics error produces plausible-but-wrong output that cascades
+across thousands of verses.
+
+| Work item | Nature | Model fit |
+|---|---|---|
+| 2. Token model | Data-table transcription from the lexer | Sonnet, trivial |
+| 3. Scanner | flex longest-match + 4 trailing-context lookaheads + `has_legarmeh` state | **Opus, or decompose hard** |
+| 4. Grammar (PLY yacc) | ~hundreds of productions, one-to-one and regular | Sonnet (slice by accent family) |
+| 5. Tree layer | Small, fully specified by the output contract | Sonnet, easy |
+| 6. CLI wrapper | Follows existing subcommand patterns | Sonnet, easy |
+| 7. Comparator | Per-verse diff, clean/oddball buckets | Sonnet, easy |
+| 7. Debug loop | Diagnosing divergences (esp. scanner-caused) | Opus-leaning |
+| 8. Hardening | Mechanical test-writing | Sonnet, easy |
+
+### Two enablers that keep the bulk Sonnet-safe
+1. **Build the parity harness first, before the parser exists.** The frozen
+   oracle plus an automated per-verse comparator converts "reason about
+   correctness" into "iterate against ground truth empirically" — which is what
+   lets a medium model work safely. Cheap to build, highest leverage.
+2. **Keep each task tightly scoped** — one accent family of productions, one
+   lookahead rule — so it fits in context with room to reason instead of holding
+   the whole ~1000-line grammar at once.
+
+### Phases (walking skeleton, then widen)
+- **Phase A — Harness + contract.** *(Sonnet.)* Install PLY. Write the comparator
+  (`out/accgram/ply/` vs `out/accgram/goerwitz/`, per-verse, clean/oddball
+  buckets). Pin the output contract with a golden test on a hand-built Obadiah
+  tree. *Exit: comparator runs and reports 0% parity, and the handoff contract is
+  satisfied.*
+- **Phase B — Walking skeleton on Obadiah.** *(Opus for scanner core; Sonnet for
+  the rest.)* Minimal scanner (just the codes Obadiah uses) + tree layer + CLI +
+  a subset of the grammar, enough to make a handful of Obadiah verses
+  byte-identical. *Exit: ≥1 verse passes end-to-end, and the handoff contract is
+  satisfied.*
+- **Phase C — Full grammar.** *(Sonnet, sliced by accent family.)* Translate
+  `acc2tre.y` family-by-family until all of Obadiah passes. Voluminous but
+  mechanical once Phase B sets the pattern. *Exit: Obadiah at 100% parity, and the
+  handoff contract is satisfied.*
+- **Phase D — Full scanner incl. lookaheads.** *(Opus, or decomposed Sonnet.)*
+  The four trailing-context rules (silluq, mayela, legarmeh, chapter) plus
+  `has_legarmeh`, each as a unit-tested function. *Exit: a prose book such as
+  Genesis at high parity, and the handoff contract is satisfied.*
+- **Phase E — Drive to 100% across 37 books.** *(Mixed.)* Comparator prioritizes;
+  Sonnet fixes mechanical diffs, Opus handles scanner-level cascades and the 51
+  oddballs' error-recovery trees. *Exit: byte-identical across all 37 books, and
+  the handoff contract is satisfied.*
+- **Phase F — Hardening.** *(Sonnet.)* One regression test per resolved mismatch
+  class; document how to run the parity check; list any accepted residual diffs.
+  *Exit: regression suite green, parity check documented, and the handoff contract
+  is satisfied.*
+
+The key inversion vs. the Work Breakdown: **verification (item 7) moves to the
+front**, and the scanner (item 3) is **split** — a minimal slice early (Phase B)
+and the hard lookaheads late (Phase D) — instead of one monolithic task.
+
+### Phase handoff contract
+Each phase is designed to be handed off to a **fresh session with zero
+conversation memory**. A phase is not "done" until its `Exit` state is reached
+*and* this contract is satisfied. The contract exists so the next session can
+confirm the claimed state in one step and resume cold, rather than trusting prose
+or re-deriving discoveries.
+
+At every phase exit, the landing session MUST:
+
+1. **Progress Log entry.** Append a dated entry recording: what landed; the
+   **exact command(s) to reproduce** the result; the **parity numbers**
+   (clean / oddball buckets, per the comparator); and the **next task plus the
+   first files the next session should read**.
+2. **Status Board updated.** Flip the affected items/phases to their true state.
+3. **Durable artifacts written to named paths and committed.** At minimum: the
+   parity report, any new golden/regression tests, and the `out/accgram/ply/`
+   outputs for whatever books the phase covered. Described-but-uncommitted state
+   does not count as handed off.
+4. **Quirks/decisions recorded.** Any reverse-engineered behavior (e.g. a flex
+   longest-match or trailing-context subtlety) or design decision made mid-phase
+   is written into this plan (or a linked note) so it is not re-derived.
+5. **"Resume here" pointer.** Keep a single one-line `Resume here:` pointer at the
+   top of the Progress Log, naming the next concrete task and its entry point.
+
+A fresh session should be able to: read the `Resume here:` pointer → run the
+reproduce command from the latest log entry → see the same parity numbers → open
+the named files → continue.
+
+### Begin here
+Phase A: install PLY, write the comparator, lock the output contract with one
+golden test. That establishes the feedback loop before any parser code exists,
+which is what makes delegating the bulk to a medium model low-risk.
+
 ## Progress Tracking
 Use this file as the canonical progress record for Stage 1.
 
 Status labels: Not started · In progress · Blocked · Done
 
-Cadence: update on each meaningful landing; entries stay factual and short
-(date, change, evidence, next step).
+Cadence: update on each meaningful landing, and **always at a phase exit** as
+required by the Phase handoff contract; entries stay factual and short (date,
+change, evidence, next step).
 
 ### Stage 1 Status Board
 - 1. Baseline and fixtures: **Done** (oracle frozen: 37 books / 18,666 verses;
@@ -224,6 +322,10 @@ Cadence: update on each meaningful landing; entries stay factual and short
 - 8. Hardening: **Not started**
 
 ### Progress Log
+- **Resume here:** Phase A — install PLY, write the per-verse comparator
+  (`out/accgram/ply/` vs `out/accgram/goerwitz/`), and lock the output contract
+  with one golden test. First files to read: `accgram/run_goerwitz.py`,
+  `accgram/oddballs.py`, `accents-1.1.4/accutil.c`.
 - 2026-06-08: Revised the whole plan against the actual C source and repo state.
   Findings: (a) only the *new* input dialect and the `-p`/display_tree path are in
   scope; betacode (`parsebc.c`) is out. (b) PLY's lexer cannot express lex
