@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_oracle": 18666,
-    "total_match": 0,
+    "total_match": 14,
     "clean_oracle": 18615,
-    "clean_match": 0,
+    "clean_match": 14,
     "oddball_oracle": 51,
     "oddball_match": 0
   },
@@ -407,10 +407,10 @@
     {
       "bb": "ob",
       "oracle_count": 20,
-      "ply_count": 0,
-      "clean_match": 0,
+      "ply_count": 14,
+      "clean_match": 14,
       "clean_mismatch": 0,
-      "clean_missing": 20,
+      "clean_missing": 6,
       "oddball_match": 0,
       "oddball_mismatch": 0,
       "oddball_missing": 0,

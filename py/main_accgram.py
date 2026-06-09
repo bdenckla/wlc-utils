@@ -25,6 +25,10 @@ Subcommands:
                 oracle (out/accgram/goerwitz/) on a per-verse basis, split into
                 clean and oddball buckets.  Prints a parity summary; optionally
                 writes a JSON report with --report.
+    run-ply
+                Run the Python PLY port over new-format input files and write
+                out/accgram/ply/*_ag.txt (mirrors `accents -p`).  Use --book to
+                restrict to specific books (e.g. --book ob).
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py filter-split-wlc
@@ -33,6 +37,7 @@ Examples:
     .venv/Scripts/python.exe py/main_accgram.py run-goerwitz
     .venv/Scripts/python.exe py/main_accgram.py compare-ply
     .venv/Scripts/python.exe py/main_accgram.py compare-ply --report out/accgram/ply/_parity_report.json
+    .venv/Scripts/python.exe py/main_accgram.py run-ply --book ob
 """
 
 from __future__ import annotations
@@ -44,6 +49,7 @@ from accgram import filter_split_wlc, split_wlc
 from accgram import run_goerwitz
 from accgram import research_tao
 from accgram import compare_ply
+from accgram import run_ply
 
 
 def _repo_root() -> Path:
@@ -70,6 +76,10 @@ def _run_research_tao(args: argparse.Namespace) -> None:
 
 def _run_compare_ply(args: argparse.Namespace) -> None:
     compare_ply.run(args)
+
+
+def _run_run_ply(args: argparse.Namespace) -> None:
+    run_ply.run(args)
 
 
 def _run_fresh_run_goerwitz(args: argparse.Namespace) -> None:
@@ -171,6 +181,17 @@ def main() -> None:
     )
     compare_ply.add_args(compare_ply_parser, repo_root=_repo_root())
     compare_ply_parser.set_defaults(func=_run_compare_ply)
+
+    run_ply_parser = subparsers.add_parser(
+        "run-ply",
+        help=(
+            "Run the Python PLY port over new-format input files and write "
+            "out/accgram/ply/*_ag.txt (mirrors `accents -p`). Use --book to "
+            "restrict (e.g. --book ob)."
+        ),
+    )
+    run_ply.add_args(run_ply_parser, repo_root=_repo_root())
+    run_ply_parser.set_defaults(func=_run_run_ply)
 
     args = parser.parse_args()
     args.func(args)

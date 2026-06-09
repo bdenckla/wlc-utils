@@ -313,21 +313,67 @@ change, evidence, next step).
 ### Stage 1 Status Board
 - 1. Baseline and fixtures: **Done** (oracle frozen: 37 books / 18,666 verses;
   49 troublemakers excluded; 51 oddballs; 0 missing)
-- 2. Token model definition: **Not started**
-- 3. Scanner (hand-written): **Not started**
-- 4. Grammar port (PLY yacc): **Not started** (PLY installed; grammar not written)
-- 5. Tree and utility layer: **Done** (`py/accgram/ply_tree.py`; 5 golden tests pass)
-- 6. CLI wrapper: **Not started**
-- 7. Verification: **Done** (`compare-ply` subcommand; 0 / 18,666 parity as expected)
+- 2. Token model definition: **Done** (`py/accgram/ply_scanner.py`: GG code→token
+  table + leaf-name map; Phase D adds mayela/legarmeh/has_legarmeh)
+- 3. Scanner (hand-written): **In progress** (minimal scanner done in
+  `ply_scanner.py`: verse structure + Obadiah codes + silluq lookahead; the
+  mayela/legarmeh trailing-context rules + has_legarmeh deferred to Phase D)
+- 4. Grammar port (PLY yacc): **In progress** (`py/accgram/ply_grammar.py`:
+  silluq/atnach/zaqef/tifcha/tevir/pashta families; revia/segolta/zarqa/geresh/
+  big_telisha/pazer/legarmeh + `error` recovery deferred to Phase C)
+- 5. Tree and utility layer: **Done** (`py/accgram/ply_tree.py`; golden tests pass)
+- 6. CLI wrapper: **Done** (`run-ply` subcommand → `py/accgram/run_ply.py`)
+- 7. Verification: **Done** (`compare-ply` subcommand; ob 14/20 clean parity)
 - 8. Hardening: **Not started**
 
 ### Progress Log
-- **Resume here:** Phase B — minimal scanner + grammar subset to make ≥1 Obadiah
-  verse byte-identical. First files to read: `accents-1.1.4/tnk2acc.l`,
-  `accents-1.1.4/acc2tre.y`, `py/accgram/ply_tree.py`,
-  `out/accgram/goerwitz/wlc_422_ps_ob_ag.txt`. Verify harness first with
-  `.venv/Scripts/python.exe py/main_accgram.py compare-ply` (should print 0.0%)
-  and `.venv/Scripts/python.exe -m pytest py/tests/ -v` (5 passed).
+- **Resume here:** Phase C — widen the grammar in `py/accgram/ply_grammar.py`
+  family-by-family (revia, geresh, big_telisha, then segolta/zarqa/pazer/legarmeh
+  and the per-clause `error` recovery rules) until all 20 Obadiah verses pass.
+  The 6 still-skipped verses are 1:7, 1:11, 1:16 (revia under zaqef), 1:18, 1:19
+  (revia_clause with geresh_phrase), and 1:20 (big_telisha + zaqefgadol).
+  First files to read: `accents-1.1.4/acc2tre.y` (the grammar source),
+  `py/accgram/ply_grammar.py` (extend it), `out/accgram/goerwitz/wlc_422_ps_ob_ag.txt`
+  (target trees). Reproduce the current state first:
+  `.venv/Scripts/python.exe py/main_accgram.py run-ply --book ob` then
+  `.venv/Scripts/python.exe py/main_accgram.py compare-ply` (ob: 14/20 clean),
+  and `.venv/Scripts/python.exe -m pytest py/tests/ -v` (7 passed). Note: the
+  scanner already emits REVIA/GERESH/GERSHAYIM/TELISHAGEDOLA/TELISHAQETANNA
+  tokens for Obadiah, so Phase C is grammar-only — no scanner change needed for
+  the 6 deferred verses.
+- 2026-06-08: **Phase B complete (walking skeleton).** Added the minimal
+  hand-written scanner (`py/accgram/ply_scanner.py`: new-format verse structure +
+  GG code→token table + the silluq trailing-context lookahead, implemented as a
+  regex `(?=[^ 379\r\n\-?~]*00)`), a Phase-B subset of the yacc grammar
+  (`py/accgram/ply_grammar.py`: silluq/atnach/zaqef/tifcha/tevir/pashta families
+  via PLY `yacc`), the driver + `run-ply` subcommand (`py/accgram/run_ply.py`),
+  and an end-to-end golden test (`py/tests/test_ply_end_to_end_ob.py`).
+  Reproduce: `.venv/Scripts/python.exe py/main_accgram.py run-ply --book ob`
+  (parses 14/20, skips 1:7/1:11/1:16/1:18/1:19/1:20) →
+  `.venv/Scripts/python.exe py/main_accgram.py compare-ply` → ob clean 14/20,
+  0 mismatches; total clean 14/18615. `pytest py/tests/ -v` → 7 passed.
+  Artifacts committed: `out/accgram/ply/wlc_422_ps_ob_ag.txt`,
+  `out/accgram/ply/_parity_report.json`, the three new `py/accgram/ply_*`/`run_ply`
+  modules, and the new test.
+  **Quirks/decisions reverse-engineered this phase:**
+  (a) *The silluq lookahead is load-bearing for Phase B, not deferrable.* Without
+  it a metheg/silluq code (35|75|95) falls through to the GG swallow rule and the
+  verse has no silluq_phrase to reduce → parse fails. The lookahead's exclusion
+  set `[^ 379\r\n\-?~]` is exactly what distinguishes a true silluq (e.g.
+  `75D00`) from a medial metheg (e.g. `75WKFBI73…`, blocked by the `7`/space).
+  (b) *Obadiah needs no mayela/legarmeh.* 73 is always TIFCHA and 74 always MUNACH
+  here, because mayela's lookahead is broken by the word-boundary space before
+  00/92, and no `…05` (paseq) codes appear → the `74{TEXT}05` rule never fires.
+  So these were safely deferred to Phase D without affecting Obadiah parity.
+  (c) *Trailing context = regex lookahead.* lex `r/s` maps cleanly to Python
+  `r(?=s)` (consume `r`, peek `s`); flex longest-match is reproduced by picking
+  the longest consumed match at each position, ties broken by rule order.
+  (d) *PLY error token needs a `.lexer` attribute.* The custom LexToken adapter
+  must expose `lexer` (PLY sets `errtoken.lexer` on syntax error) or parsing a
+  failing verse raises AttributeError instead of returning None.
+  (e) *Reference string* is `"<book> <ch>:<vs>"` (single space); the C lexer's
+  newlocation/loc_ptr strncpy dance nets out to exactly that, so the line-oriented
+  scanner builds it directly without emulating the byte-level buffer ops.
 - 2026-06-08: **Phase A complete.** Installed PLY 3.11 and pytest 9.0.3 into
   `.venv`. Created `py/accgram/ply_tree.py` (Python port of `accutil.c`
   `make_node`/`add_leaves`/`print_tree`; display_tree==1 path only).  Created
