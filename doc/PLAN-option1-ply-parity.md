@@ -319,31 +319,54 @@ change, evidence, next step).
   `ply_scanner.py`: verse structure + Obadiah codes + silluq lookahead; the
   mayela/legarmeh trailing-context rules + has_legarmeh deferred to Phase D)
 - 4. Grammar port (PLY yacc): **In progress** (`py/accgram/ply_grammar.py`:
-  silluq/atnach/zaqef/tifcha/tevir/pashta families; revia/segolta/zarqa/geresh/
-  big_telisha/pazer/legarmeh + `error` recovery deferred to Phase C)
+  silluq/atnach/zaqef/tifcha/tevir/pashta/revia/geresh/big_telisha/pazer/legarmeh
+  families + per-clause `error` recovery deferred to Phase E; segolta/zarqa/
+  shalshelet/mayela deferred to Phase D/E)
 - 5. Tree and utility layer: **Done** (`py/accgram/ply_tree.py`; golden tests pass)
 - 6. CLI wrapper: **Done** (`run-ply` subcommand → `py/accgram/run_ply.py`)
-- 7. Verification: **Done** (`compare-ply` subcommand; ob 14/20 clean parity)
+- 7. Verification: **Done** (`compare-ply` subcommand; ob 20/20 clean parity)
 - 8. Hardening: **Not started**
 
 ### Progress Log
-- **Branch:** Phase B is on `main` (merged from `phase-b-ply-walking-skeleton`).
+- **Branch:** Phases A–C are on `main`.
   If `run-ply`/`compare-ply` report 0 verses or the `ply_*` modules are absent,
   you are on a branch behind `main` — `git checkout main` first.
-- **Resume here:** Phase C — widen the grammar in `py/accgram/ply_grammar.py`
-  family-by-family (revia, geresh, big_telisha, then segolta/zarqa/pazer/legarmeh
-  and the per-clause `error` recovery rules) until all 20 Obadiah verses pass.
-  The 6 still-skipped verses are 1:7, 1:11, 1:16 (revia under zaqef), 1:18, 1:19
-  (revia_clause with geresh_phrase), and 1:20 (big_telisha + zaqefgadol).
-  First files to read: `accents-1.1.4/acc2tre.y` (the grammar source),
-  `py/accgram/ply_grammar.py` (extend it), `out/accgram/goerwitz/wlc_422_ps_ob_ag.txt`
-  (target trees). Reproduce the current state first:
-  `.venv/Scripts/python.exe py/main_accgram.py run-ply --book ob` then
-  `.venv/Scripts/python.exe py/main_accgram.py compare-ply` (ob: 14/20 clean),
-  and `.venv/Scripts/python.exe -m pytest py/tests/ -v` (7 passed). Note: the
-  scanner already emits REVIA/GERESH/GERSHAYIM/TELISHAGEDOLA/TELISHAQETANNA
-  tokens for Obadiah, so Phase C is grammar-only — no scanner change needed for
-  the 6 deferred verses.
+- **Resume here:** Phase D — implement the four trailing-context scanner rules
+  (silluq already done; remaining: mayela `73/<lookahead>(00|92)`, legarmeh
+  `74{TEXT}05/<lookahead>81`, chapter verse-lookahead) plus the `has_legarmeh`
+  17-passage static counter, in `py/accgram/ply_scanner.py`. Goal: a prose book
+  such as Genesis at high parity. First files to read:
+  `accents-1.1.4/tnk2acc.l` (the scanner rules, especially the GG state and
+  has_legarmeh list), `py/accgram/ply_scanner.py` (extend it), and
+  `out/accgram/goerwitz/wlc_422_ps_gn_ag.txt` (target trees for Genesis).
+  Reproduce current state first:
+  `.venv/Scripts/python.exe py/main_accgram.py run-ply --book ob` (20/20) →
+  `.venv/Scripts/python.exe py/main_accgram.py compare-ply` (ob: 20/20 clean),
+  `.venv/Scripts/python.exe -m pytest py/tests/ -v` (7 passed).
+- 2026-06-08: **Phase C complete (full grammar, Obadiah 100% parity).**
+  Extended `py/accgram/ply_grammar.py` with five new accent families: revia,
+  geresh, big_telisha, pazer, legarmeh.  Also added `revia_zaqef_clause` and
+  `revia_tifcha_clause`, and extended `zaqef_clause`, `tifcha_clause`,
+  `pashta_clause`, `tevir_clause`, and the `pashta_zaqef_clause` /
+  `pashta_tifcha_clause` sub-clauses to include the new family variants.
+  Updated `py/tests/test_ply_end_to_end_ob.py` to expect 0 deferred verses
+  (Phase C contract: all 20 Obadiah verses parse).
+  Reproduce: `.venv/Scripts/python.exe py/main_accgram.py run-ply --book ob`
+  (ob: parsed 20/20) → `.venv/Scripts/python.exe py/main_accgram.py compare-ply`
+  (ob: clean 20/20, 0 diff, 0 miss; total clean 20/18615 0.1%) →
+  `.venv/Scripts/python.exe -m pytest py/tests/ -v` (7 passed).
+  Artifacts committed: `out/accgram/ply/wlc_422_ps_ob_ag.txt`,
+  `out/accgram/ply/_parity_report.json`, updated `ply_grammar.py` and test.
+  **Quirks/decisions this phase:** (a) *Phase C is grammar-only.* The scanner
+  already emitted REVIA/GERESH/GERSHAYIM/TELISHAGEDOLA/TELISHAQETANNA/AZLA/DARGA
+  tokens from Phase B; no scanner change was needed for Obadiah. (b) *Segolta,
+  zarqa, shalshelet, mayela deferred.* None appear in Obadiah and they form
+  independent families; adding them would not have unlocked any Obadiah verse.
+  (c) *Per-phrase `error` recovery productions deferred to Phase E.* Obadiah has
+  no oddball verses, so these were not needed here; they will be needed for the
+  51 ERROR-node trees across other books.  (d) *pashta_zaqef_clause extended.*
+  The C grammar has `pashta_clause revia_zaqef_clause` as a third alternative;
+  this was added to avoid a conflict/gap when `revia_zaqef_clause` was introduced.
 - 2026-06-08: **Phase B complete (walking skeleton).** Added the minimal
   hand-written scanner (`py/accgram/ply_scanner.py`: new-format verse structure +
   GG code→token table + the silluq trailing-context lookahead, implemented as a

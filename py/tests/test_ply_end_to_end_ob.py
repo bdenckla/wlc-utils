@@ -1,8 +1,8 @@
 """End-to-end golden test: scanner -> grammar -> tree on real Obadiah input.
 
-Pins the Phase-B walking skeleton: the verses the subset grammar can parse must
-be byte-identical to the frozen oracle, and the known-deferred verses (revia /
-geresh / big_telisha families) must be the ones it skips.
+Phase C: all 20 Obadiah verses must parse byte-identical to the frozen oracle.
+The grammar now covers revia / geresh / big_telisha / pazer / legarmeh families
+in addition to the Phase-B set, so no verses are deferred.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_ply_end_to_end_ob.py -v
@@ -28,15 +28,8 @@ _OB_INPUT = (
 )
 _OB_ORACLE = _REPO_ROOT / "out" / "accgram" / "goerwitz" / "wlc_422_ps_ob_ag.txt"
 
-# Verses whose families (revia / geresh / big_telisha) are deferred to Phase C.
-_DEFERRED = {
-    "Obadiah 1:7",
-    "Obadiah 1:11",
-    "Obadiah 1:16",
-    "Obadiah 1:18",
-    "Obadiah 1:19",
-    "Obadiah 1:20",
-}
+# Phase C: no verses are deferred; all 20 Obadiah verses should parse.
+_DEFERRED: set[str] = set()
 
 
 @pytest.mark.skipif(not _OB_INPUT.is_file(), reason="Obadiah input fixture not present")
