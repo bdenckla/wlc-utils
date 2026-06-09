@@ -4552,6 +4552,36 @@
       mereka tifcha 
     2 silluq_phrase
       silluq 
+1Kings 6:3
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_phrase
+        revia 
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_phrase
+          munach zaqef 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          ERROR 
+        4 zaqef_phrase
+          zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          munach atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 silluq_phrase
+      mereka silluq 
 1Kings 6:4
 0 silluq_clause
   1 zaqef_phrase
@@ -6869,6 +6899,21 @@
         mereka tifcha 
       3 atnach_phrase
         atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 silluq_phrase
+      mereka silluq 
+1Kings 8:11
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 atnach_phrase
+      ERROR 
   1 silluq_clause
     2 tifcha_phrase
       mereka tifcha 
@@ -18265,6 +18310,36 @@
         mereka tifcha 
       3 silluq_phrase
         silluq 
+1Kings 20:25
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 pazer_phrase
+          munach munach pazer 
+        4 revia_clause
+          5 geresh_phrase
+            telishaqetanna azla geresh 
+          5 revia_clause
+            6 legarmeh_phrase
+              ERROR 
+            6 revia_phrase
+              munach revia 
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 silluq_phrase
+      mereka silluq 
 1Kings 20:26
 0 silluq_clause
   1 atnach_clause

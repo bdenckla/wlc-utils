@@ -574,6 +574,33 @@ Nehemiah 2:9
         mereka tifcha 
       3 silluq_phrase
         silluq 
+Nehemiah 2:10
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 geresh_phrase
+          gershayim 
+        4 revia_phrase
+          munach revia 
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_phrase
+          munach zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        munach atnach 
+  1 silluq_clause
+    2 zaqef_phrase
+      ERROR 
+    2 silluq_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 silluq_phrase
+        mereka silluq 
 Nehemiah 2:11
 0 silluq_clause
   1 atnach_clause
@@ -4495,6 +4522,42 @@ Nehemiah 8:6
           tifcha 
       3 silluq_phrase
         mereka silluq 
+Nehemiah 8:7
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 pazer_phrase
+          pazer 
+        4 pashta_clause
+          5 pazer_phrase
+            pazer 
+          5 pashta_clause
+            6 pazer_phrase
+              ERROR 
+            6 pashta_clause
+              7 pazer_phrase
+                pazer 
+              7 pashta_clause
+                8 pazer_phrase
+                  munach pazer 
+                8 pashta_clause
+                  9 pazer_phrase
+                    pazer 
+                  9 pashta_phrase
+                    munach telishaqetanna azla mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      tifcha 
+    2 silluq_phrase
+      silluq 
 Nehemiah 8:8
 0 silluq_clause
   1 atnach_clause

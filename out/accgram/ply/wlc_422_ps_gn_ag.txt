@@ -17269,6 +17269,27 @@ Genesis 28:8
       tifcha 
     2 silluq_phrase
       mereka silluq 
+Genesis 28:9
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 atnach_phrase
+      atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_clause
+        4 pazer_phrase
+          pazer 
+        4 tevir_clause
+          5 geresh_phrase
+            ERROR 
+          5 tevir_phrase
+            darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 silluq_phrase
+      mereka silluq 
 Genesis 28:10
 0 silluq_clause
   1 atnach_clause
@@ -21130,6 +21151,21 @@ Genesis 32:23
         tifcha 
       3 silluq_phrase
         mereka silluq 
+Genesis 32:24
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_phrase
+      zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      tifcha 
+    2 silluq_phrase
+      ERROR 
 Genesis 32:25
 0 silluq_clause
   1 atnach_clause

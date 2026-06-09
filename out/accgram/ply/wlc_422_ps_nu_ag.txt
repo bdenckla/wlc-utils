@@ -20863,6 +20863,18 @@ Numbers 27:8
         mereka tifcha 
       3 silluq_phrase
         silluq 
+Numbers 27:9
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 atnach_phrase
+      atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 silluq_phrase
+      ERROR 
 Numbers 27:10
 0 silluq_clause
   1 atnach_clause

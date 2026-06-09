@@ -1,7 +1,9 @@
-"""PLY yacc grammar: Phase-D completion of acc2tre.y (all non-error productions).
+"""PLY yacc grammar: full port of acc2tre.y (Phase E — error recovery included).
 
-Stage 1 / Phase D.  Extends the Phase-C grammar with every remaining *non-error*
-production from acc2tre.y, so all clean (non-oddball) verses parse:
+Stage 1.  Translates every production of acc2tre.y one-to-one, including the
+`error`-token recovery rules that build the 51 oddball ERROR-node trees.
+
+Non-error productions (Phases B–D) cover all clean verses:
   - segolta family (segolta_phrase incl. SHALSHELET, segolta_clause, zarqa/
     pashta/revia_segolta_clause) and its wiring into silluq_clause /
     atnach_clause via segolta_silluq_clause / segolta_atnach_clause;
@@ -10,12 +12,12 @@ production from acc2tre.y, so all clean (non-oddball) verses parse:
   - METHIGAZAQEF as a zaqef_phrase; MAYELA variants in tifcha_phrase;
   - the remaining pashta_phrase and tevir_phrase servus combinations.
 
-Result: 100% byte-parity on every clean verse across all 37 books.
-
-Deferred to Phase E:
-  - per-phrase `error` recovery productions (the 51 oddball ERROR-node trees)
-    and the LOW_PRECEDENCE `pasuq : error` rule.  A verse that needs error
-    recovery currently returns None (the driver records it as skipped/missing).
+Error productions (Phase E) reproduce yacc's recovery (see the error-recovery
+section below): every `error`-token rule builds the same ERROR leaf / ERROR
+clause the C action builds and calls p.parser.errok() to mirror yacc's
+`yyerrok`.  The three pasuq-level `error` rules (no tree, location line only)
+return the LOCATION_ONLY sentinel; they do not fire on the parity corpus (all 51
+oddballs reduce via `TILDE silluq_clause SOFPASUQ` with ERROR leaves inside).
 
 Grammar actions build trees with ply_tree.make_node / add_leaves, exactly as the
 C actions call make_node / add_leaves.  Token values carry the leaf-name string
@@ -68,6 +70,7 @@ tokens = (
     "TELISHAQETANNA",
     "GALGAL",
     "MAYELA",
+    "UNKNOWN_ACCENT",
 )
 
 start = "pasuq"
@@ -944,16 +947,134 @@ def p_legarmeh_phrase_munach_munach(p):
     p[0] = add_leaves("legarmeh_phrase", p[1], p[2], p[3])
 
 
-# --- error handling ------------------------------------------------------------
-# Per-phrase error recovery productions (for the 51 oddball ERROR-node trees) are
-# deferred to Phase E.  A verse that can't be parsed returns None; the driver
-# records it as skipped.
-_HAD_ERROR = False
+# --- error recovery productions (Phase E) --------------------------------------
+# Faithful translation of every `error`-token production in acc2tre.y.  Each
+# phrase/clause-level rule builds the same ERROR-leaf / ERROR-clause tree the C
+# recovery action builds, and calls p.parser.errok() to mirror yacc's `yyerrok`
+# (resume normal error reporting immediately, so a second error in the same verse
+# can also be recovered).  These rules fire only on a genuine syntax error, so
+# clean verses reduce via the normal rules unchanged; on the 51 oddballs they
+# reproduce the C binary's ERROR-node trees byte-for-byte.
+#
+# The three pasuq-level rules build no tree (the C actions print the location and
+# call free_nodes without print_tree); they return LOCATION_ONLY so the driver
+# emits the reference line only.  They do not fire on the parity corpus.
+
+# Sentinel for a verse whose only output is its reference line (no tree).
+LOCATION_ONLY = object()
 
 
+def p_pasuq_error(p):
+    """pasuq : error
+             | TILDE error UNKNOWN_ACCENT SOFPASUQ
+             | TILDE silluq_clause error"""
+    p[0] = LOCATION_ONLY
+
+
+def p_silluq_phrase_error(p):
+    # e.g. Gen 32:24, missing silluq.
+    """silluq_phrase : error
+                     | error SILLUQ"""
+    p.parser.errok()
+    p[0] = add_leaves("silluq_phrase", "ERROR")
+
+
+def p_atnach_phrase_error(p):
+    "atnach_phrase : error ATNACH"
+    p.parser.errok()
+    p[0] = add_leaves("atnach_phrase", "ERROR")
+
+
+def p_zaqef_atnach_clause_error(p):
+    # Missing atnach in Exod 4:10 (Leningrad MS).
+    "zaqef_atnach_clause : zaqef_clause tevir_clause MEREKA ATNACH error"
+    p.parser.errok()
+    p[0] = make_node("atnach_clause", p[1], add_leaves("atnach_phrase", "ERROR"))
+
+
+def p_zaqef_phrase_error(p):
+    "zaqef_phrase : error ZAQEF"
+    p.parser.errok()
+    p[0] = add_leaves("zaqef_phrase", "ERROR")
+
+
+def p_segolta_phrase_error(p):
+    "segolta_phrase : error SEGOLTA"
+    p.parser.errok()
+    p[0] = add_leaves("segolta_phrase", "ERROR")
+
+
+def p_zarqa_segolta_clause_error(p):
+    # Isa 45:1 (MUNACH MUNACH error); a BHS error at 2Chr 7:5 (MUNACH error REVIA).
+    """zarqa_segolta_clause : zarqa_clause MUNACH MUNACH error
+                            | zarqa_clause MUNACH error REVIA"""
+    p.parser.errok()
+    p[0] = make_node("segolta_clause", p[1], add_leaves("segolta_phrase", "ERROR"))
+
+
+def p_tifcha_phrase_error(p):
+    """tifcha_phrase : error TIFCHA
+                     | geresh_clause error TIFCHA"""
+    p.parser.errok()
+    p[0] = add_leaves("tifcha_phrase", "ERROR")
+
+
+def p_revia_phrase_error(p):
+    "revia_phrase : error REVIA"
+    p.parser.errok()
+    p[0] = add_leaves("revia_phrase", "ERROR")
+
+
+def p_pashta_phrase_error(p):
+    """pashta_phrase : error PASHTA
+                     | error YETIV"""
+    p.parser.errok()
+    p[0] = add_leaves("pashta_phrase", "ERROR")
+
+
+def p_tevir_phrase_error(p):
+    "tevir_phrase : error TEVIR"
+    p.parser.errok()
+    p[0] = add_leaves("tevir_phrase", "ERROR")
+
+
+def p_zarqa_phrase_error(p):
+    "zarqa_phrase : error ZARQA"
+    p.parser.errok()
+    p[0] = add_leaves("zarqa_phrase", "ERROR")
+
+
+def p_geresh_phrase_error(p):
+    "geresh_phrase : error GERESH"
+    p.parser.errok()
+    p[0] = add_leaves("geresh_phrase", "ERROR")
+
+
+def p_big_telisha_phrase_error(p):
+    "big_telisha_phrase : error TELISHAGEDOLA"
+    p.parser.errok()
+    p[0] = add_leaves("big_telisha_phrase", "ERROR")
+
+
+def p_pazer_phrase_error(p):
+    "pazer_phrase : error PAZER"
+    p.parser.errok()
+    p[0] = add_leaves("pazer_phrase", "ERROR")
+
+
+def p_legarmeh_phrase_error(p):
+    "legarmeh_phrase : error LEGARMEH"
+    p.parser.errok()
+    p[0] = add_leaves("legarmeh_phrase", "ERROR")
+
+
+# --- error callback ------------------------------------------------------------
 def p_error(p):  # noqa: D401  (PLY callback)
-    global _HAD_ERROR
-    _HAD_ERROR = True
+    # On a syntax error, do nothing here and let PLY perform automatic
+    # error-token recovery via the productions above (yacc's recovery, which
+    # builds the ERROR-leaf trees).  Manual recovery (parser.errok here) would
+    # tell PLY the user already recovered and skip the error productions.
+    pass
 
 
 class _LexToken:
@@ -996,11 +1117,11 @@ def build_parser():
     )
 
 
-def parse_tokens(parser, toks: list[Token]) -> TN | None:
-    """Parse one verse's token stream into a tree, or None on syntax error."""
-    global _HAD_ERROR
-    _HAD_ERROR = False
-    result = parser.parse(lexer=_TokenStream(toks))
-    if _HAD_ERROR:
-        return None
-    return result
+def parse_tokens(parser, toks: list[Token]):
+    """Parse one verse's token stream.
+
+    Returns the tree (TN) for a normal or error-recovered verse, the
+    LOCATION_ONLY sentinel for a pasuq-level error verse (reference line only),
+    or None if the parse fails with no recovery possible.
+    """
+    return parser.parse(lexer=_TokenStream(toks))

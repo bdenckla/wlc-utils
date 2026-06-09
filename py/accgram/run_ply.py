@@ -16,7 +16,7 @@ import argparse
 from dataclasses import dataclass
 from pathlib import Path
 
-from accgram.ply_grammar import build_parser, parse_tokens
+from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.ply_scanner import scan_book
 from accgram.ply_tree import print_tree
 
@@ -42,7 +42,10 @@ def render_book(text: str, parser) -> tuple[str, BookRun, str]:
             continue
         parsed += 1
         out_lines.append(verse.reference + "\n")
-        out_lines.append(print_tree(tree, 0))
+        # pasuq-level error verses print the reference line only (no tree); the C
+        # `pasuq : error` actions call free_nodes without print_tree.
+        if tree is not LOCATION_ONLY:
+            out_lines.append(print_tree(tree, 0))
     stats = BookRun(bb="", verse_count=len(verses), parsed_count=parsed, skipped_refs=skipped)
     return "".join(out_lines), stats, ""
 

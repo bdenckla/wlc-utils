@@ -3991,6 +3991,48 @@ Ezekiel 9:1
         mereka tifcha 
     2 silluq_phrase
       silluq 
+Ezekiel 9:2
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 pazer_phrase
+          munach munach pazer 
+        4 revia_clause
+          5 geresh_phrase
+            ERROR 
+          5 revia_clause
+            6 legarmeh_phrase
+              legarmeh 
+            6 revia_phrase
+              munach revia 
+      3 zaqef_clause
+        4 pashta_phrase
+          azla mahpak pashta 
+        4 zaqef_phrase
+          zaqef 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          munach zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          mereka tifcha 
+        4 atnach_phrase
+          atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        mereka silluq 
 Ezekiel 9:3
 0 silluq_clause
   1 atnach_clause

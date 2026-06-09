@@ -4669,3 +4669,21 @@ Ecclesiastes 12:13
         tifcha 
       3 silluq_phrase
         silluq 
+Ecclesiastes 12:14
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_phrase
+      ERROR 
+    2 atnach_clause
+      3 tifcha_clause
+        4 tevir_phrase
+          tevir 
+        4 tifcha_phrase
+          mereka tifcha 
+      3 atnach_phrase
+        munach atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      tifcha 
+    2 silluq_phrase
+      silluq 

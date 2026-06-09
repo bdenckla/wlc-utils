@@ -3568,6 +3568,42 @@
       mereka tifcha 
     2 silluq_phrase
       mereka silluq 
+2Chronicles 7:5
+0 silluq_clause
+  1 atnach_clause
+    2 segolta_clause
+      3 zarqa_clause
+        4 geresh_phrase
+          gershayim 
+        4 zarqa_phrase
+          munach zarqa 
+      3 segolta_phrase
+        ERROR 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          zaqef 
+      3 atnach_clause
+        4 zaqef_phrase
+          zaqefgadol 
+        4 atnach_clause
+          5 tifcha_phrase
+            mereka tifcha 
+          5 atnach_phrase
+            atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        silluq 
 2Chronicles 7:6
 0 silluq_clause
   1 atnach_clause
@@ -4291,6 +4327,21 @@
         mereka tifcha 
       3 silluq_phrase
         silluq 
+2Chronicles 8:10
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        ERROR 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 atnach_phrase
+      munach atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      tifcha 
+    2 silluq_phrase
+      silluq 
 2Chronicles 8:11
 0 silluq_clause
   1 atnach_clause
@@ -13171,6 +13222,63 @@
           tifcha 
         4 silluq_phrase
           silluq 
+2Chronicles 24:27
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 geresh_phrase
+          gershayim 
+        4 revia_phrase
+          ERROR 
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_phrase
+          munach zaqef 
+    2 atnach_clause
+      3 zaqef_phrase
+        munach zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          munach atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 silluq_phrase
+      silluq 
+2Chronicles 25:1
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        azla mahpak pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          ERROR 
+        4 zaqef_phrase
+          zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          atnach 
+  1 silluq_clause
+    2 zaqef_phrase
+      munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        silluq 
 2Chronicles 25:2
 0 silluq_clause
   1 atnach_clause

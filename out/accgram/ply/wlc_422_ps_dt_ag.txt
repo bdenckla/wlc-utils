@@ -7411,6 +7411,30 @@ Deuter 10:14
       tifcha 
     2 silluq_phrase
       silluq 
+Deuter 10:15
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 atnach_phrase
+      munach atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 revia_clause
+        4 geresh_phrase
+          gershayim 
+        4 revia_phrase
+          munach revia 
+      3 tifcha_clause
+        4 tevir_phrase
+          tevir 
+        4 tifcha_phrase
+          tifcha 
+    2 silluq_phrase
+      ERROR 
 Deuter 10:16
 0 silluq_clause
   1 atnach_clause
@@ -8407,6 +8431,36 @@ Deuter 12:1
         mereka tifcha 
       3 silluq_phrase
         silluq 
+Deuter 12:2
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 revia_clause
+        4 big_telisha_phrase
+          munach telishagedola 
+        4 revia_clause
+          5 geresh_phrase
+            gershayim 
+          5 revia_phrase
+            darga munach revia 
+      3 tifcha_clause
+        4 tevir_phrase
+          mereka tevir 
+        4 tifcha_phrase
+          mereka tifcha 
+    2 atnach_phrase
+      atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        ERROR 
 Deuter 12:3
 0 silluq_clause
   1 atnach_clause
@@ -15076,6 +15130,18 @@ Deuter 23:17
       tifcha 
     2 silluq_phrase
       silluq 
+Deuter 23:18
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 atnach_phrase
+      munach atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 silluq_phrase
+      ERROR 
 Deuter 23:19
 0 silluq_clause
   1 atnach_clause
@@ -15482,6 +15548,15 @@ Deuter 24:9
   1 silluq_clause
     2 tifcha_phrase
       tifcha 
+    2 silluq_phrase
+      mereka silluq 
+Deuter 24:10
+0 silluq_clause
+  1 atnach_phrase
+    ERROR 
+  1 silluq_clause
+    2 tifcha_phrase
+      mereka tifcha 
     2 silluq_phrase
       mereka silluq 
 Deuter 24:11
@@ -20269,6 +20344,42 @@ Deuter 31:6
         mereka tifcha 
       3 silluq_phrase
         mereka silluq 
+Deuter 31:7
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 geresh_phrase
+          azla geresh 
+        4 revia_phrase
+          revia 
+      3 zaqef_clause
+        4 revia_clause
+          5 geresh_phrase
+            azla geresh 
+          5 revia_phrase
+            ERROR 
+        4 zaqef_clause
+          5 pashta_phrase
+            pashta 
+          5 zaqef_phrase
+            munach zaqef 
+    2 atnach_clause
+      3 zaqef_phrase
+        zaqefgadol 
+      3 atnach_clause
+        4 tifcha_clause
+          5 tevir_phrase
+            azla darga tevir 
+          5 tifcha_phrase
+            tifcha 
+        4 atnach_phrase
+          munach atnach 
+  1 silluq_clause
+    2 tifcha_phrase
+      tifcha 
+    2 silluq_phrase
+      mereka silluq 
 Deuter 31:8
 0 silluq_clause
   1 atnach_clause

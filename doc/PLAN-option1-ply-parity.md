@@ -318,40 +318,92 @@ change, evidence, next step).
 - 3. Scanner (hand-written): **Done** (`ply_scanner.py`: verse structure + full
   GG table + all four trailing-context rules — silluq, mayela, legarmeh, chapter
   verse-lookahead — + the `has_legarmeh` 17-passage counter, per-book isolated)
-- 4. Grammar port (PLY yacc): **Done for clean verses** (`py/accgram/ply_grammar.py`:
-  all non-error productions of `acc2tre.y` — silluq/atnach/zaqef/segolta/tifcha/
-  zarqa/revia/pashta/tevir/geresh/big_telisha/pazer/legarmeh families. Per-phrase
-  `error` recovery (the 51 oddball ERROR trees) + `pasuq : error %prec
-  LOW_PRECEDENCE` deferred to Phase E)
+- 4. Grammar port (PLY yacc): **Done** (`py/accgram/ply_grammar.py`: all of
+  `acc2tre.y` — every non-error production (silluq/atnach/zaqef/segolta/tifcha/
+  zarqa/revia/pashta/tevir/geresh/big_telisha/pazer/legarmeh families) **and**
+  every `error`-token recovery production (Phase E: the 51 oddball ERROR trees),
+  including the three pasuq-level `error` rules. `error` rules call
+  `p.parser.errok()` for yacc's `yyerrok`)
 - 5. Tree and utility layer: **Done** (`py/accgram/ply_tree.py`; golden tests pass)
 - 6. CLI wrapper: **Done** (`run-ply` subcommand → `py/accgram/run_ply.py`)
-- 7. Verification: **Done** (`compare-ply` subcommand; **100% clean parity:
-  18,615/18,615 clean verses byte-identical across all 37 books**; only the 51
-  oddballs remain, as `o-miss`)
-- 8. Hardening: **In progress** (scanner lookahead + has_legarmeh regression tests
-  added in `py/tests/test_ply_scanner_lookaheads.py`; oddball golden tests +
-  parity-check docs are Phase F)
+- 7. Verification: **Done** (`compare-ply` subcommand; **100% parity:
+  18,666/18,666 verses byte-identical across all 37 books — 18,615/18,615 clean
+  AND 51/51 oddballs**)
+- 8. Hardening: **In progress** (scanner lookahead + has_legarmeh tests in
+  `py/tests/test_ply_scanner_lookaheads.py`; 51 oddball error-recovery golden
+  tests in `py/tests/test_ply_oddballs.py`; remaining: parity-check docs +
+  one-test-per-mismatch-class accounting are Phase F)
 
 ### Progress Log
 - **Branch:** Phases A–C are on `main`.
   If `run-ply`/`compare-ply` report 0 verses or the `ply_*` modules are absent,
   you are on a branch behind `main` — `git checkout main` first.
-- **Resume here:** Phase E — reproduce the **51 oddball** ERROR-node trees. All
-  clean verses already pass (100%); the only remaining gap is the per-phrase
-  `error` recovery productions of `acc2tre.y` and `pasuq : error %prec
-  LOW_PRECEDENCE`, which build the oddball trees (currently those 51 verses fail
-  to parse and show as `o-miss` in the comparator). First files to read:
-  `accents-1.1.4/acc2tre.y` (every rule containing the `error` token, the
-  `yyerrok`/`are_errors` bookkeeping, and the `pasuq` error alternatives),
-  `py/accgram/ply_grammar.py` (add the `error` productions; PLY uses an `error`
-  token + `p_error` — note the existing `_HAD_ERROR` flag/`p_error` will need to
-  change so error-*recovery* rules build ERROR leaves instead of aborting),
-  `out/accgram/goerwitz/_oddballs.json` (the 51 target verses) and their oracle
-  trees. Reproduce current state first:
-  `.venv/Scripts/python.exe py/main_accgram.py run-ply` (parsed 18615/18666) →
+- **Resume here:** Phase F — hardening. Stage-1 parity is **complete and 100%**
+  (18,666/18,666 verses, clean AND oddball). Remaining work is documentation +
+  test-accounting only: (1) write the "how to run the parity check" doc section
+  and enumerate any accepted residual diffs (there are none); (2) confirm the
+  one-regression-test-per-mismatch-class coverage (scanner lookaheads in
+  `py/tests/test_ply_scanner_lookaheads.py`; the 51 oddball error-recovery trees
+  in `py/tests/test_ply_oddballs.py`; tree-layer golden in
+  `py/tests/test_ply_tree_golden.py`; Obadiah end-to-end in
+  `py/tests/test_ply_end_to_end_ob.py`). First files to read for Phase F:
+  this plan's "Work Breakdown" item 8 and "Acceptance Criteria", and the four
+  test files above. Reproduce current (final) state:
+  `.venv/Scripts/python.exe py/main_accgram.py run-ply` (parsed 18666/18666) →
   `.venv/Scripts/python.exe py/main_accgram.py compare-ply` (clean 18615/18615
-  100.0%, oddball 0/51) →
-  `.venv/Scripts/python.exe -m pytest py/tests/ -v` (18 passed).
+  100.0%, oddball 51/51 100.0%, total 18666/18666 100.0%) →
+  `.venv/Scripts/python.exe -m pytest py/tests/ -q` (70 passed).
+- 2026-06-08: **Phase E complete (error recovery; 100% parity on ALL 18,666
+  verses — clean AND all 51 oddballs — across 37 books).** Stage-1 parity goal
+  met. Added every `error`-token production of `acc2tre.y` to
+  `py/accgram/ply_grammar.py`: the per-phrase recovery rules (silluq/atnach/
+  zaqef/segolta/tifcha/revia/pashta/tevir/zarqa/geresh/big_telisha/pazer/
+  legarmeh — each builds `add_leaves("<x>_phrase", "ERROR")`), the three
+  clause-level error rules (`zaqef_atnach_clause … ATNACH error` for Exod 4:10;
+  `zarqa_segolta_clause` `MUNACH MUNACH error` / `MUNACH error REVIA` for Isa
+  45:1 and 2Chr 7:5; `tifcha_phrase : geresh_clause error TIFCHA`), and the
+  three pasuq-level error rules (location-only, return `LOCATION_ONLY`). Each
+  recovery action calls `p.parser.errok()` to mirror yacc's `yyerrok`. Reworked
+  `p_error` (no longer aborts — lets PLY run automatic error-token recovery) and
+  `parse_tokens` (returns the tree / `LOCATION_ONLY` / None); the driver
+  (`run_ply.py`) emits the reference line with no tree for `LOCATION_ONLY`.
+  Reproduce: `.venv/Scripts/python.exe py/main_accgram.py run-ply` (parsed
+  18666/18666) → `.venv/Scripts/python.exe py/main_accgram.py compare-ply`
+  (**clean 18615/18615 = 100.0%, oddball 51/51 = 100.0%, total 18666/18666 =
+  100.0%**; per-book c-diff=0, c-miss=0, o-diff=0, o-miss=0) →
+  `.venv/Scripts/python.exe -m pytest py/tests/ -q` (70 passed).
+  Artifacts committed: updated `ply_grammar.py`/`run_ply.py`, all 19
+  oddball-containing `out/accgram/ply/*_ag.txt`, `_parity_report.json`, and the
+  new `py/tests/test_ply_oddballs.py` (51 parametrized oddball-tree golden tests
+  + a count check).
+  **Quirks/decisions reverse-engineered this phase:**
+  (a) *PLY reproduces yacc's error recovery faithfully and with zero added
+  conflicts.* Building the full grammar (incl. all error rules) with
+  `debug=True` + a capturing logger reported **0** shift/reduce and reduce/reduce
+  conflicts and 0 warnings, so yacc-vs-PLY recovery divergence was a non-issue;
+  all 51 trees matched on the first run.
+  (b) *`yyerrok` → `p.parser.errok()`.* PLY exposes `errok()` on the parser; the
+  production object `p` carries `p.parser`. Every phrase/clause error action
+  calls it (matching the C `yyerrok`) so a second error in the same verse can
+  also recover. `p_error` itself must NOT call `errok()` — PLY treats that as
+  "user already did panic recovery" and would skip the `error`-token productions.
+  (c) *`%prec LOW_PRECEDENCE` is a no-op and was dropped.* In `acc2tre.y`
+  `LOW_PRECEDENCE` is declared only with `%token` (never `%left`/`%right`/
+  `%nonassoc`), so it carries no precedence and `%prec LOW_PRECEDENCE` assigns
+  the rule none — identical to writing `pasuq : error` plain, which is what the
+  port does.
+  (d) *The pasuq-level error rules never fire on the parity corpus.* By
+  definition every oddball has an ERROR node *in its tree*, so it reduces via
+  `TILDE silluq_clause SOFPASUQ` with ERROR leaves inside; a pasuq-level error
+  (location line, no tree) would have no ERROR node and thus not be an oddball.
+  The corpus has no location-only verses (all 18,666 produce trees). The three
+  pasuq error rules are ported for faithfulness but are dead on this input;
+  `UNKNOWN_ACCENT` is declared for the same reason and is never emitted.
+  (e) *Driver/`parse_tokens` contract changed.* Before Phase E, ANY parse error
+  meant `None` (unparseable, skipped). Now error recovery is expected: a TN tree
+  (possibly with ERROR leaves) is the normal result; `None` means a genuine
+  unrecoverable failure (does not occur on the corpus). The `_HAD_ERROR` global
+  was removed.
 - 2026-06-08: **Phase D complete (full scanner + all non-error grammar; 100%
   clean parity across all 37 books).** Far exceeded the Phase-D exit bar
   ("a prose book such as Genesis at high parity"): every clean verse now matches.

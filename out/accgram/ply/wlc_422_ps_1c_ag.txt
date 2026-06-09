@@ -712,6 +712,15 @@
       mereka tifcha 
   1 silluq_phrase
     mereka silluq 
+1Chronicles 1:53
+0 silluq_clause
+  1 tifcha_clause
+    2 tevir_phrase
+      mereka tevir 
+    2 tifcha_phrase
+      mereka tifcha 
+  1 silluq_phrase
+    ERROR 
 1Chronicles 1:54
 0 silluq_clause
   1 atnach_clause
