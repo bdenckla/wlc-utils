@@ -327,10 +327,9 @@ change, evidence, next step).
 - 8. Hardening: **Not started**
 
 ### Progress Log
-- **Branch:** Phase B landed on branch `phase-b-ply-walking-skeleton` (not yet
-  merged to `main`). If `run-ply`/`compare-ply` report 0 verses or the `ply_*`
-  modules are absent, you are on the wrong branch — `git checkout
-  phase-b-ply-walking-skeleton` (or merge it to `main`) first.
+- **Branch:** Phase B is on `main` (merged from `phase-b-ply-walking-skeleton`).
+  If `run-ply`/`compare-ply` report 0 verses or the `ply_*` modules are absent,
+  you are on a branch behind `main` — `git checkout main` first.
 - **Resume here:** Phase C — widen the grammar in `py/accgram/ply_grammar.py`
   family-by-family (revia, geresh, big_telisha, then segolta/zarqa/pazer/legarmeh
   and the per-clause `error` recovery rules) until all 20 Obadiah verses pass.
