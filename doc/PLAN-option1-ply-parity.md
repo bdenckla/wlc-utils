@@ -313,36 +313,86 @@ change, evidence, next step).
 ### Stage 1 Status Board
 - 1. Baseline and fixtures: **Done** (oracle frozen: 37 books / 18,666 verses;
   49 troublemakers excluded; 51 oddballs; 0 missing)
-- 2. Token model definition: **Done** (`py/accgram/ply_scanner.py`: GG code→token
-  table + leaf-name map; Phase D adds mayela/legarmeh/has_legarmeh)
-- 3. Scanner (hand-written): **In progress** (minimal scanner done in
-  `ply_scanner.py`: verse structure + Obadiah codes + silluq lookahead; the
-  mayela/legarmeh trailing-context rules + has_legarmeh deferred to Phase D)
-- 4. Grammar port (PLY yacc): **In progress** (`py/accgram/ply_grammar.py`:
-  silluq/atnach/zaqef/tifcha/tevir/pashta/revia/geresh/big_telisha/pazer/legarmeh
-  families + per-clause `error` recovery deferred to Phase E; segolta/zarqa/
-  shalshelet/mayela deferred to Phase D/E)
+- 2. Token model definition: **Done** (`py/accgram/ply_scanner.py`: full GG
+  code→token table + leaf-name map, incl. mayela/legarmeh/has_legarmeh)
+- 3. Scanner (hand-written): **Done** (`ply_scanner.py`: verse structure + full
+  GG table + all four trailing-context rules — silluq, mayela, legarmeh, chapter
+  verse-lookahead — + the `has_legarmeh` 17-passage counter, per-book isolated)
+- 4. Grammar port (PLY yacc): **Done for clean verses** (`py/accgram/ply_grammar.py`:
+  all non-error productions of `acc2tre.y` — silluq/atnach/zaqef/segolta/tifcha/
+  zarqa/revia/pashta/tevir/geresh/big_telisha/pazer/legarmeh families. Per-phrase
+  `error` recovery (the 51 oddball ERROR trees) + `pasuq : error %prec
+  LOW_PRECEDENCE` deferred to Phase E)
 - 5. Tree and utility layer: **Done** (`py/accgram/ply_tree.py`; golden tests pass)
 - 6. CLI wrapper: **Done** (`run-ply` subcommand → `py/accgram/run_ply.py`)
-- 7. Verification: **Done** (`compare-ply` subcommand; ob 20/20 clean parity)
-- 8. Hardening: **Not started**
+- 7. Verification: **Done** (`compare-ply` subcommand; **100% clean parity:
+  18,615/18,615 clean verses byte-identical across all 37 books**; only the 51
+  oddballs remain, as `o-miss`)
+- 8. Hardening: **In progress** (scanner lookahead + has_legarmeh regression tests
+  added in `py/tests/test_ply_scanner_lookaheads.py`; oddball golden tests +
+  parity-check docs are Phase F)
 
 ### Progress Log
 - **Branch:** Phases A–C are on `main`.
   If `run-ply`/`compare-ply` report 0 verses or the `ply_*` modules are absent,
   you are on a branch behind `main` — `git checkout main` first.
-- **Resume here:** Phase D — implement the four trailing-context scanner rules
-  (silluq already done; remaining: mayela `73/<lookahead>(00|92)`, legarmeh
-  `74{TEXT}05/<lookahead>81`, chapter verse-lookahead) plus the `has_legarmeh`
-  17-passage static counter, in `py/accgram/ply_scanner.py`. Goal: a prose book
-  such as Genesis at high parity. First files to read:
-  `accents-1.1.4/tnk2acc.l` (the scanner rules, especially the GG state and
-  has_legarmeh list), `py/accgram/ply_scanner.py` (extend it), and
-  `out/accgram/goerwitz/wlc_422_ps_gn_ag.txt` (target trees for Genesis).
-  Reproduce current state first:
-  `.venv/Scripts/python.exe py/main_accgram.py run-ply --book ob` (20/20) →
-  `.venv/Scripts/python.exe py/main_accgram.py compare-ply` (ob: 20/20 clean),
-  `.venv/Scripts/python.exe -m pytest py/tests/ -v` (7 passed).
+- **Resume here:** Phase E — reproduce the **51 oddball** ERROR-node trees. All
+  clean verses already pass (100%); the only remaining gap is the per-phrase
+  `error` recovery productions of `acc2tre.y` and `pasuq : error %prec
+  LOW_PRECEDENCE`, which build the oddball trees (currently those 51 verses fail
+  to parse and show as `o-miss` in the comparator). First files to read:
+  `accents-1.1.4/acc2tre.y` (every rule containing the `error` token, the
+  `yyerrok`/`are_errors` bookkeeping, and the `pasuq` error alternatives),
+  `py/accgram/ply_grammar.py` (add the `error` productions; PLY uses an `error`
+  token + `p_error` — note the existing `_HAD_ERROR` flag/`p_error` will need to
+  change so error-*recovery* rules build ERROR leaves instead of aborting),
+  `out/accgram/goerwitz/_oddballs.json` (the 51 target verses) and their oracle
+  trees. Reproduce current state first:
+  `.venv/Scripts/python.exe py/main_accgram.py run-ply` (parsed 18615/18666) →
+  `.venv/Scripts/python.exe py/main_accgram.py compare-ply` (clean 18615/18615
+  100.0%, oddball 0/51) →
+  `.venv/Scripts/python.exe -m pytest py/tests/ -v` (18 passed).
+- 2026-06-08: **Phase D complete (full scanner + all non-error grammar; 100%
+  clean parity across all 37 books).** Far exceeded the Phase-D exit bar
+  ("a prose book such as Genesis at high parity"): every clean verse now matches.
+  Scanner (`py/accgram/ply_scanner.py`): added the remaining GG codes (segolta
+  `(01{TEXT})?01`, shalshelet `65{TEXT}05`, methiga-zaqef `63[^01234680]*80`,
+  zarqa `(82{TEXT})?02`), the three remaining trailing-context rules
+  (mayela `73/<allowed>*(00|92)`, legarmeh `74{TEXT}05/[^12368]*…81`, and the
+  new-format chapter `:/[1-9]` lookahead via `_VERSE_RE`), the `[0-9][0-9]`
+  unrecognized-code swallow, and the `HasLegarmeh` class (17-passage list +
+  1Sam 14:47 counter), threaded per-book. Grammar (`py/accgram/ply_grammar.py`):
+  added all non-error productions of `acc2tre.y` — segolta + zarqa families,
+  METHIGAZAQEF zaqef, MAYELA tifcha variants, and the remaining pashta/tevir
+  servus combos — wiring segolta into silluq_clause/atnach_clause.
+  Reproduce: `.venv/Scripts/python.exe py/main_accgram.py run-ply` (parsed
+  18615/18666) → `.venv/Scripts/python.exe py/main_accgram.py compare-ply`
+  (**clean 18615/18615 = 100.0%**, oddball 0/51; per-book c-diff=0, c-miss=0,
+  o-diff=0, o-miss=51) → `.venv/Scripts/python.exe -m pytest py/tests/ -v`
+  (18 passed). Artifacts committed: all `out/accgram/ply/*_ag.txt` (37 books),
+  `out/accgram/ply/_parity_report.json`, updated `ply_scanner.py`/`ply_grammar.py`,
+  and `py/tests/test_ply_scanner_lookaheads.py` (11 new tests).
+  **Quirks/decisions reverse-engineered this phase:**
+  (a) *`has_legarmeh` is all-but-dead in the new format.* The lexer builds
+  `location` from the **full** bookname ("Genesis 28:9"), but the 17-passage
+  list uses **abbreviations** ("Gen 28:9"), so they never match — **except
+  "Ruth"**, whose full name equals its abbreviation. The single live new-format
+  passage is therefore **Ruth 1:2** (a munach+paseq not before revia → legarmeh).
+  Everywhere else `74{TEXT}05`-not-before-revia is plain munach. We port the
+  list verbatim so this falls out naturally; the 1Sam 14:47 count==2 path is
+  unit-tested directly against the abbreviated key to prove the ported logic.
+  (b) *Two pashta_phrase actions drop a leaf.* `MAHPAK MAHPAK PASHTA` and
+  `MAHPAK MEREKA PASHTA` call `add_leaves(2, …, $1, $2)` in C — the trailing
+  PASHTA leaf is intentionally omitted; the Python actions pass only p[1],p[2].
+  (c) *The C `[0-9][0-9]` swallow matters for alignment.* The Python catch-all
+  `.` swallows one char at a time; for an *unrecognized* 2-digit code whose
+  first digit, swallowed alone, would let the second digit pair with the next
+  code's first digit into a spurious token (e.g. `16`→swallow→`10` becomes
+  `1`+`61`=geresh), a 2-char swallow rule is needed. Added `[0-9][0-9]→None`
+  before the catch-all to reproduce flex faithfully.
+  (d) *No PLY grammar conflicts.* Building with `debug=True`+`PlyLogger`
+  reported zero shift/reduce or reduce/reduce conflicts for the full non-error
+  grammar, so yacc-vs-PLY conflict-resolution divergence is a non-issue here.
 - 2026-06-08: **Phase C complete (full grammar, Obadiah 100% parity).**
   Extended `py/accgram/ply_grammar.py` with five new accent families: revia,
   geresh, big_telisha, pazer, legarmeh.  Also added `revia_zaqef_clause` and

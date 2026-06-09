@@ -14,7 +14,7 @@ import pytest
 
 from accgram.compare_ply import _split_verses
 from accgram.ply_grammar import build_parser, parse_tokens
-from accgram.ply_scanner import scan_accents, scan_book
+from accgram.ply_scanner import HasLegarmeh, scan_accents, scan_book
 from accgram.ply_tree import print_tree
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -36,7 +36,7 @@ _DEFERRED: set[str] = set()
 def test_ob_1_2_tokens():
     """The scanner produces the expected token stream for Obadiah 1:2."""
     body = "HIN.\"71H QF+O91N N:TAT.I73Y/KF B.A/G.OWYI92M B.FZ71W.Y )AT.F73H M:)O75D00"
-    types = [t.type for t in scan_accents(body)]
+    types = [t.type for t in scan_accents(body, "Obadiah 1:2", HasLegarmeh())]
     assert types == [
         "MEREKA",
         "TEVIR",

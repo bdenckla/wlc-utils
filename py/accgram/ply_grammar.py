@@ -1,22 +1,29 @@
-"""PLY yacc grammar: Phase-C expansion of acc2tre.y.
+"""PLY yacc grammar: Phase-D completion of acc2tre.y (all non-error productions).
 
-Stage 1 / Phase C (full grammar for Obadiah).  Extends the Phase-B subset with
-the remaining accent families needed for 100% Obadiah parity: revia, geresh,
-big_telisha, pazer, legarmeh.  Also extends the existing clause rules (zaqef,
-tifcha, pashta, tevir) with the new clause variants that reference these families.
+Stage 1 / Phase D.  Extends the Phase-C grammar with every remaining *non-error*
+production from acc2tre.y, so all clean (non-oddball) verses parse:
+  - segolta family (segolta_phrase incl. SHALSHELET, segolta_clause, zarqa/
+    pashta/revia_segolta_clause) and its wiring into silluq_clause /
+    atnach_clause via segolta_silluq_clause / segolta_atnach_clause;
+  - zarqa family (zarqa_phrase, zarqa_clause, legarmeh/geresh/big_telisha/
+    pazer_zarqa_clause);
+  - METHIGAZAQEF as a zaqef_phrase; MAYELA variants in tifcha_phrase;
+  - the remaining pashta_phrase and tevir_phrase servus combinations.
 
-Deferred (not needed for Obadiah):
-  - segolta, zarqa, shalshelet families (no occurrences in Obadiah)
-  - mayela handling in tifcha_phrase (Phase D)
-  - segolta_silluq_clause, segolta_atnach_clause (Phase E)
-  - per-phrase `error` recovery productions (build the 51 oddball ERROR trees,
-    none of which are in Obadiah; deferred to Phase E)
-  - additional pashta_phrase / tevir_phrase variants from C grammar not needed
-    for Obadiah (Phase E)
+Result: 100% byte-parity on every clean verse across all 37 books.
+
+Deferred to Phase E:
+  - per-phrase `error` recovery productions (the 51 oddball ERROR-node trees)
+    and the LOW_PRECEDENCE `pasuq : error` rule.  A verse that needs error
+    recovery currently returns None (the driver records it as skipped/missing).
 
 Grammar actions build trees with ply_tree.make_node / add_leaves, exactly as the
 C actions call make_node / add_leaves.  Token values carry the leaf-name string
 (yylval.leaf), so add_leaves uses p[i] verbatim.
+
+Quirk reproduced: the C actions for `MAHPAK MAHPAK PASHTA` and
+`MAHPAK MEREKA PASHTA` call add_leaves with count 2 (only $1,$2), dropping the
+trailing PASHTA leaf; the Python actions pass only p[1],p[2] to match.
 """
 
 from __future__ import annotations
@@ -87,6 +94,7 @@ def p_silluq_clause(p):
     """silluq_clause : silluq_phrase
                      | tifcha_silluq_clause
                      | zaqef_silluq_clause
+                     | segolta_silluq_clause
                      | atnach_silluq_clause"""
     p[0] = p[1]
 
@@ -100,6 +108,12 @@ def p_zaqef_silluq_clause(p):
     """zaqef_silluq_clause : zaqef_clause silluq_phrase
                            | zaqef_clause tifcha_silluq_clause
                            | zaqef_clause zaqef_silluq_clause"""
+    p[0] = make_node("silluq_clause", p[1], p[2])
+
+
+def p_segolta_silluq_clause(p):
+    """segolta_silluq_clause : segolta_clause silluq_phrase
+                             | segolta_clause tifcha_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
@@ -129,7 +143,8 @@ def p_atnach_phrase_munach2(p):
 def p_atnach_clause(p):
     """atnach_clause : atnach_phrase
                      | tifcha_atnach_clause
-                     | zaqef_atnach_clause"""
+                     | zaqef_atnach_clause
+                     | segolta_atnach_clause"""
     p[0] = p[1]
 
 
@@ -145,9 +160,22 @@ def p_zaqef_atnach_clause(p):
     p[0] = make_node("atnach_clause", p[1], p[2])
 
 
+def p_segolta_atnach_clause(p):
+    """segolta_atnach_clause : segolta_clause atnach_phrase
+                             | segolta_clause tifcha_atnach_clause
+                             | segolta_clause zaqef_atnach_clause"""
+    p[0] = make_node("atnach_clause", p[1], p[2])
+
+
 # --- zaqef ---------------------------------------------------------------------
 def p_zaqef_phrase_zaqef(p):
     "zaqef_phrase : ZAQEF"
+    p[0] = add_leaves("zaqef_phrase", p[1])
+
+
+def p_zaqef_phrase_methigazaqef(p):
+    # Methiga zaqef looks just like AZLA ZAQEF in the M-C BHS text.
+    "zaqef_phrase : METHIGAZAQEF"
     p[0] = add_leaves("zaqef_phrase", p[1])
 
 
@@ -187,6 +215,59 @@ def p_revia_zaqef_clause(p):
     p[0] = make_node("zaqef_clause", p[1], p[2])
 
 
+# --- segolta -------------------------------------------------------------------
+# Pashta below = converted revia.  Segolta is like a strong zaqef.  Shalshelet
+# is treated as a segolta_phrase variant (see segolta_phrase below).
+def p_segolta_phrase_segolta(p):
+    "segolta_phrase : SEGOLTA"
+    p[0] = add_leaves("segolta_phrase", p[1])
+
+
+def p_segolta_phrase_shalshelet(p):
+    "segolta_phrase : SHALSHELET"
+    p[0] = add_leaves("segolta_phrase", p[1])
+
+
+def p_segolta_phrase_munach(p):
+    "segolta_phrase : MUNACH SEGOLTA"
+    p[0] = add_leaves("segolta_phrase", p[1], p[2])
+
+
+def p_segolta_phrase_munach2(p):
+    "segolta_phrase : MUNACH MUNACH SEGOLTA"
+    p[0] = add_leaves("segolta_phrase", p[1], p[2], p[3])
+
+
+def p_segolta_clause(p):
+    """segolta_clause : segolta_phrase
+                      | zarqa_segolta_clause
+                      | pashta_segolta_clause
+                      | revia_segolta_clause"""
+    p[0] = p[1]
+
+
+def p_zarqa_segolta_clause(p):
+    """zarqa_segolta_clause : zarqa_clause segolta_phrase
+                            | zarqa_clause zarqa_segolta_clause"""
+    p[0] = make_node("segolta_clause", p[1], p[2])
+
+
+def p_pashta_segolta_clause(p):
+    """pashta_segolta_clause : pashta_clause segolta_phrase
+                             | pashta_clause zarqa_segolta_clause
+                             | pashta_clause pashta_segolta_clause
+                             | pashta_clause revia_segolta_clause"""
+    p[0] = make_node("segolta_clause", p[1], p[2])
+
+
+def p_revia_segolta_clause(p):
+    """revia_segolta_clause : revia_clause segolta_phrase
+                            | revia_clause zarqa_segolta_clause
+                            | revia_clause pashta_segolta_clause
+                            | revia_clause revia_segolta_clause"""
+    p[0] = make_node("segolta_clause", p[1], p[2])
+
+
 # --- tifcha --------------------------------------------------------------------
 def p_tifcha_phrase_tifcha(p):
     "tifcha_phrase : TIFCHA"
@@ -195,6 +276,28 @@ def p_tifcha_phrase_tifcha(p):
 
 def p_tifcha_phrase_mereka(p):
     "tifcha_phrase : MEREKA TIFCHA"
+    p[0] = add_leaves("tifcha_phrase", p[1], p[2])
+
+
+def p_tifcha_phrase_darga_merekakefula(p):
+    "tifcha_phrase : DARGA MEREKAKEFULA TIFCHA"
+    p[0] = add_leaves("tifcha_phrase", p[1], p[2], p[3])
+
+
+# Mayela is a variant of tifcha: it can take a tevir before it (Jer 2:31) and
+# azla before it (Dan 4:9,18), unlike a plain conjunctive.
+def p_tifcha_phrase_mayela(p):
+    "tifcha_phrase : MAYELA"
+    p[0] = add_leaves("tifcha_phrase", p[1])
+
+
+def p_tifcha_phrase_mereka_mayela(p):
+    "tifcha_phrase : MEREKA MAYELA"
+    p[0] = add_leaves("tifcha_phrase", p[1], p[2])
+
+
+def p_tifcha_phrase_azla_mayela(p):
+    "tifcha_phrase : AZLA MAYELA"
     p[0] = add_leaves("tifcha_phrase", p[1], p[2])
 
 
@@ -244,6 +347,16 @@ def p_tevir_phrase_mereka(p):
     p[0] = add_leaves("tevir_phrase", p[1], p[2])
 
 
+def p_tevir_phrase_azla_darga(p):
+    "tevir_phrase : AZLA DARGA TEVIR"
+    p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3])
+
+
+def p_tevir_phrase_azla_mereka(p):
+    "tevir_phrase : AZLA MEREKA TEVIR"
+    p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3])
+
+
 def p_tevir_phrase_munach_darga(p):
     "tevir_phrase : MUNACH DARGA TEVIR"
     p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3])
@@ -252,6 +365,26 @@ def p_tevir_phrase_munach_darga(p):
 def p_tevir_phrase_munach_mereka(p):
     "tevir_phrase : MUNACH MEREKA TEVIR"
     p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3])
+
+
+def p_tevir_phrase_telq_azla_darga(p):
+    "tevir_phrase : TELISHAQETANNA AZLA DARGA TEVIR"
+    p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3], p[4])
+
+
+def p_tevir_phrase_telq_azla_mereka(p):
+    "tevir_phrase : TELISHAQETANNA AZLA MEREKA TEVIR"
+    p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3], p[4])
+
+
+def p_tevir_phrase_munach_telq_azla_darga(p):
+    "tevir_phrase : MUNACH TELISHAQETANNA AZLA DARGA TEVIR"
+    p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3], p[4], p[5])
+
+
+def p_tevir_phrase_munach_telq_azla_mereka(p):
+    "tevir_phrase : MUNACH TELISHAQETANNA AZLA MEREKA TEVIR"
+    p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3], p[4], p[5])
 
 
 def p_tevir_clause(p):
@@ -294,6 +427,114 @@ def p_pazer_tevir_clause(p):
     p[0] = make_node("tevir_clause", p[1], p[2])
 
 
+# --- zarqa ---------------------------------------------------------------------
+# Before segolta (with only one exception - Isa 45:1).  Zarqa is probably a
+# specially converted pashta, used before segolta.
+def p_zarqa_phrase_zarqa(p):
+    "zarqa_phrase : ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1])
+
+
+def p_zarqa_phrase_munach(p):
+    "zarqa_phrase : MUNACH ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2])
+
+
+def p_zarqa_phrase_mereka(p):
+    "zarqa_phrase : MEREKA ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2])
+
+
+def p_zarqa_phrase_mereka_munach(p):
+    "zarqa_phrase : MEREKA MUNACH ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
+
+
+def p_zarqa_phrase_mereka_mereka(p):
+    "zarqa_phrase : MEREKA MEREKA ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
+
+
+def p_zarqa_phrase_munach_munach(p):
+    "zarqa_phrase : MUNACH MUNACH ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
+
+
+def p_zarqa_phrase_munach_mereka(p):
+    "zarqa_phrase : MUNACH MEREKA ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
+
+
+def p_zarqa_phrase_azla_munach(p):
+    "zarqa_phrase : AZLA MUNACH ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
+
+
+def p_zarqa_phrase_azla_mereka(p):
+    "zarqa_phrase : AZLA MEREKA ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
+
+
+def p_zarqa_phrase_telq_azla_munach(p):
+    "zarqa_phrase : TELISHAQETANNA AZLA MUNACH ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3], p[4])
+
+
+def p_zarqa_phrase_telq_azla_mereka(p):
+    "zarqa_phrase : TELISHAQETANNA AZLA MEREKA ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3], p[4])
+
+
+def p_zarqa_phrase_munach_telq_azla_munach(p):
+    "zarqa_phrase : MUNACH TELISHAQETANNA AZLA MUNACH ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3], p[4], p[5])
+
+
+def p_zarqa_phrase_munach_telq_azla_mereka(p):
+    "zarqa_phrase : MUNACH TELISHAQETANNA AZLA MEREKA ZARQA"
+    p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3], p[4], p[5])
+
+
+def p_zarqa_clause(p):
+    """zarqa_clause : zarqa_phrase
+                    | legarmeh_zarqa_clause
+                    | geresh_zarqa_clause
+                    | big_telisha_zarqa_clause
+                    | pazer_zarqa_clause"""
+    p[0] = p[1]
+
+
+def p_legarmeh_zarqa_clause(p):
+    """legarmeh_zarqa_clause : legarmeh_phrase zarqa_phrase
+                             | legarmeh_phrase legarmeh_zarqa_clause"""
+    p[0] = make_node("zarqa_clause", p[1], p[2])
+
+
+def p_geresh_zarqa_clause(p):
+    """geresh_zarqa_clause : geresh_clause zarqa_phrase
+                           | geresh_clause legarmeh_zarqa_clause
+                           | geresh_clause big_telisha_zarqa_clause
+                           | geresh_clause geresh_zarqa_clause"""
+    p[0] = make_node("zarqa_clause", p[1], p[2])
+
+
+def p_big_telisha_zarqa_clause(p):
+    """big_telisha_zarqa_clause : big_telisha_clause zarqa_phrase
+                                | big_telisha_clause legarmeh_zarqa_clause
+                                | big_telisha_clause geresh_zarqa_clause
+                                | big_telisha_clause big_telisha_zarqa_clause"""
+    p[0] = make_node("zarqa_clause", p[1], p[2])
+
+
+def p_pazer_zarqa_clause(p):
+    """pazer_zarqa_clause : pazer_clause zarqa_phrase
+                          | pazer_clause legarmeh_zarqa_clause
+                          | pazer_clause geresh_zarqa_clause
+                          | pazer_clause big_telisha_zarqa_clause
+                          | pazer_clause pazer_zarqa_clause"""
+    p[0] = make_node("zarqa_clause", p[1], p[2])
+
+
 # --- pashta --------------------------------------------------------------------
 def p_pashta_phrase_yetiv(p):
     "pashta_phrase : YETIV"
@@ -332,6 +573,69 @@ def p_pashta_phrase_azla_mahpak(p):
 
 def p_pashta_phrase_azla_mereka(p):
     "pashta_phrase : AZLA MEREKA PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
+
+
+def p_pashta_phrase_mahpak_mahpak(p):
+    # Quirk (Judg 15:13): C action is add_leaves(2, ..., $1, $2) -- the trailing
+    # PASHTA leaf is intentionally dropped.  Reproduce by passing only p[1],p[2].
+    "pashta_phrase : MAHPAK MAHPAK PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2])
+
+
+def p_pashta_phrase_mahpak_mereka(p):
+    # Quirk (1Sam 30:9; Exod 10:13): C action drops the trailing PASHTA leaf.
+    "pashta_phrase : MAHPAK MEREKA PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2])
+
+
+def p_pashta_phrase_telq_azla_mahpak(p):
+    "pashta_phrase : TELISHAQETANNA AZLA MAHPAK PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4])
+
+
+def p_pashta_phrase_telq_azla_mereka(p):
+    "pashta_phrase : TELISHAQETANNA AZLA MEREKA PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4])
+
+
+def p_pashta_phrase_m_telq_azla_mahpak(p):
+    "pashta_phrase : MUNACH TELISHAQETANNA AZLA MAHPAK PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5])
+
+
+def p_pashta_phrase_m_telq_azla_mereka(p):
+    "pashta_phrase : MUNACH TELISHAQETANNA AZLA MEREKA PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5])
+
+
+def p_pashta_phrase_m2_telq_azla_mahpak(p):
+    "pashta_phrase : MUNACH MUNACH TELISHAQETANNA AZLA MAHPAK PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5], p[6])
+
+
+def p_pashta_phrase_m2_telq_azla_mereka(p):
+    "pashta_phrase : MUNACH MUNACH TELISHAQETANNA AZLA MEREKA PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5], p[6])
+
+
+def p_pashta_phrase_m3_telq_azla_mahpak(p):
+    "pashta_phrase : MUNACH MUNACH MUNACH TELISHAQETANNA AZLA MAHPAK PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+
+
+def p_pashta_phrase_m3_telq_azla_mereka(p):
+    "pashta_phrase : MUNACH MUNACH MUNACH TELISHAQETANNA AZLA MEREKA PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+
+
+def p_pashta_phrase_telq(p):
+    "pashta_phrase : TELISHAQETANNA PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2])
+
+
+def p_pashta_phrase_munach_telq(p):
+    "pashta_phrase : MUNACH TELISHAQETANNA PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
