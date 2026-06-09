@@ -329,30 +329,50 @@ change, evidence, next step).
 - 7. Verification: **Done** (`compare-ply` subcommand; **100% parity:
   18,666/18,666 verses byte-identical across all 37 books — 18,615/18,615 clean
   AND 51/51 oddballs**)
-- 8. Hardening: **In progress** (scanner lookahead + has_legarmeh tests in
-  `py/tests/test_ply_scanner_lookaheads.py`; 51 oddball error-recovery golden
-  tests in `py/tests/test_ply_oddballs.py`; remaining: parity-check docs +
-  one-test-per-mismatch-class accounting are Phase F)
+- 8. Hardening: **Done** (11 scanner-lookahead/has_legarmeh tests in
+  `py/tests/test_ply_scanner_lookaheads.py`; 52 oddball-tree tests in
+  `py/tests/test_ply_oddballs.py`; 5 tree-layer golden tests in
+  `py/tests/test_ply_tree_golden.py`; 2 Obadiah end-to-end tests in
+  `py/tests/test_ply_end_to_end_ob.py`; **70 total — all pass**; parity-check
+  procedure documented in "How to Run the Parity Check" below; **0 accepted
+  residual diffs**)
 
 ### Progress Log
 - **Branch:** Phases A–C are on `main`.
   If `run-ply`/`compare-ply` report 0 verses or the `ply_*` modules are absent,
   you are on a branch behind `main` — `git checkout main` first.
-- **Resume here:** Phase F — hardening. Stage-1 parity is **complete and 100%**
-  (18,666/18,666 verses, clean AND oddball). Remaining work is documentation +
-  test-accounting only: (1) write the "how to run the parity check" doc section
-  and enumerate any accepted residual diffs (there are none); (2) confirm the
-  one-regression-test-per-mismatch-class coverage (scanner lookaheads in
-  `py/tests/test_ply_scanner_lookaheads.py`; the 51 oddball error-recovery trees
-  in `py/tests/test_ply_oddballs.py`; tree-layer golden in
-  `py/tests/test_ply_tree_golden.py`; Obadiah end-to-end in
-  `py/tests/test_ply_end_to_end_ob.py`). First files to read for Phase F:
-  this plan's "Work Breakdown" item 8 and "Acceptance Criteria", and the four
-  test files above. Reproduce current (final) state:
+- **Resume here:** Stage 1 is **complete**. Stage 2 (architectural refactor) is
+  next; see `doc/PLAN-overall-port-to-python.md` for the overall plan. To verify
+  the Stage-1 baseline before starting Stage 2, run the three reproduce commands
+  in the Phase F log entry below.
+- 2026-06-09: **Phase F complete (hardening; Stage 1 done).** All 70 regression
+  tests pass. One-test-per-mismatch-class accounting:
+  - *Silluq trailing-context lookahead* → `test_silluq_fires_immediately_before_sof_pasuq`,
+    `test_silluq_blocked_by_intervening_accent_is_swallowed`
+  - *Mayela trailing-context lookahead* → `test_mayela_when_73_reaches_sof_pasuq_or_atnach`,
+    `test_tifcha_when_a_blocking_accent_intervenes`
+  - *Legarmeh trailing-context lookahead* → `test_legarmeh_when_munach_paseq_precedes_revia`,
+    `test_munach_when_paseq_not_before_revia_outside_has_legarmeh_passage`
+  - *`has_legarmeh` Ruth 1:2 new-format passage* → `test_has_legarmeh_fires_only_at_matching_location`
+  - *`has_legarmeh` 1Sam 14:47 second-occurrence counter* → `test_has_legarmeh_1sam_14_47_second_occurrence_only`
+  - *`has_legarmeh` old_i monotonicity* → `test_has_legarmeh_old_i_is_monotonic`
+  - *Chapter/verse lookahead (`:/[1-9]`)* → `test_scan_book_builds_reference_and_delimits_verses`
+  - *Tree output contract (indentation, trailing space, label format)* → 5 golden
+    tests in `test_ply_tree_golden.py`
+  - *Error-recovery ERROR-leaf trees (51 oddballs)* → 52 parametrized tests in
+    `test_ply_oddballs.py` (51 per-verse + 1 count check)
+  - *Full Obadiah end-to-end token stream + tree parity* → 2 tests in
+    `test_ply_end_to_end_ob.py`
+
+  Documentation written in "How to Run the Parity Check" section below.
+  Accepted residual diffs: **none** (0/18,666 — every verse byte-identical).
+  Stage 1 parity goal met; artifacts unchanged from Phase E; no new files needed.
+  Reproduce:
   `.venv/Scripts/python.exe py/main_accgram.py run-ply` (parsed 18666/18666) →
   `.venv/Scripts/python.exe py/main_accgram.py compare-ply` (clean 18615/18615
   100.0%, oddball 51/51 100.0%, total 18666/18666 100.0%) →
   `.venv/Scripts/python.exe -m pytest py/tests/ -q` (70 passed).
+  Next: Stage 2 refactor (see `doc/PLAN-overall-port-to-python.md`).
 - 2026-06-08: **Phase E complete (error recovery; 100% parity on ALL 18,666
   verses — clean AND all 51 oddballs — across 37 books).** Stage-1 parity goal
   met. Added every `error`-token production of `acc2tre.y` to
@@ -535,6 +555,57 @@ change, evidence, next step).
 - Special-case behaviors (`has_legarmeh`, silluq/mayela lookahead, the per-clause
   `error` recovery productions) are covered by explicit regression tests.
 - Any remaining differences are enumerated and explicitly accepted.
+
+## How to Run the Parity Check
+
+**Prerequisites.** Python `.venv` with PLY 3.11 and pytest 9.0.3 installed (run
+`pip install ply pytest` inside the venv if needed). The frozen goerwitz oracle
+(`out/accgram/goerwitz/*_ag.txt`) and the filtered per-book input fixtures
+(`../wlc-utils-io/out/goerwitz/wlc_422_psf/*.txt`) must both be present.
+
+**Step 1 — generate PLY port outputs (all 37 books):**
+
+```powershell
+.venv/Scripts/python.exe py/main_accgram.py run-ply
+```
+
+This writes `out/accgram/ply/wlc_422_ps_<bb>_ag.txt` for every book and reports
+`parsed <N>/18666` to stdout. Expected: `parsed 18666/18666`.  To restrict to a
+single book for fast iteration: `... run-ply --book ob`.
+
+**Step 2 — run the comparator:**
+
+```powershell
+.venv/Scripts/python.exe py/main_accgram.py compare-ply
+```
+
+This diffs every verse in `out/accgram/ply/` against the corresponding oracle
+verse in `out/accgram/goerwitz/`, split into `clean` and `oddball` buckets
+(oddball = oracle tree contains an ERROR node). Expected output:
+
+```
+clean   18615/18615 (100.0%)   diff=0 miss=0
+oddball    51/51   (100.0%)   diff=0 miss=0
+total   18666/18666 (100.0%)
+```
+
+The machine-readable report is written to `out/accgram/ply/_parity_report.json`
+(pass `--report <path>` to choose a different location).
+
+**Step 3 — run the regression suite:**
+
+```powershell
+.venv/Scripts/python.exe -m pytest py/tests/ -q
+```
+
+Expected: `70 passed`. The suite covers: tree-layer output contract
+(`test_ply_tree_golden.py`, 5 tests), all four trailing-context scanner rules
+and `has_legarmeh` (`test_ply_scanner_lookaheads.py`, 11 tests), Obadiah
+end-to-end token stream and tree parity (`test_ply_end_to_end_ob.py`, 2 tests),
+and all 51 oddball ERROR-node trees (`test_ply_oddballs.py`, 52 tests).
+
+**Accepted residual diffs.** None. The port is byte-identical to the goerwitz
+oracle for all 18,666 verses (18,615 clean + 51 oddball) across all 37 books.
 
 ## Risks and Mitigations
 - **PLY cannot express lex trailing context.** Mitigation: hand-written scanner
