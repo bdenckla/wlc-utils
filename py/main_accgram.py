@@ -20,12 +20,19 @@ Subcommands:
     run-goerwitz
                 Run goerwitz (via WSL) on split files and write *_ag outputs.
                 Also writes out/accgram/goerwitz/_oddballs.json.
+    compare-ply
+                Compare out/accgram/ply/ outputs against the frozen goerwitz
+                oracle (out/accgram/goerwitz/) on a per-verse basis, split into
+                clean and oddball buckets.  Prints a parity summary; optionally
+                writes a JSON report with --report.
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py filter-split-wlc
     .venv/Scripts/python.exe py/main_accgram.py research-tms-and-oddballs
     .venv/Scripts/python.exe py/main_accgram.py fresh-run-goerwitz
     .venv/Scripts/python.exe py/main_accgram.py run-goerwitz
+    .venv/Scripts/python.exe py/main_accgram.py compare-ply
+    .venv/Scripts/python.exe py/main_accgram.py compare-ply --report out/accgram/ply/_parity_report.json
 """
 
 from __future__ import annotations
@@ -36,6 +43,7 @@ from pathlib import Path
 from accgram import filter_split_wlc, split_wlc
 from accgram import run_goerwitz
 from accgram import research_tao
+from accgram import compare_ply
 
 
 def _repo_root() -> Path:
@@ -58,6 +66,10 @@ def _run_goerwitz(args: argparse.Namespace) -> None:
 
 def _run_research_tao(args: argparse.Namespace) -> None:
     research_tao.run(args)
+
+
+def _run_compare_ply(args: argparse.Namespace) -> None:
+    compare_ply.run(args)
 
 
 def _run_fresh_run_goerwitz(args: argparse.Namespace) -> None:
@@ -149,6 +161,16 @@ def main() -> None:
     )
     research_tao.add_args(research_tao_parser, repo_root=_repo_root())
     research_tao_parser.set_defaults(func=_run_research_tao)
+
+    compare_ply_parser = subparsers.add_parser(
+        "compare-ply",
+        help=(
+            "Compare out/accgram/ply/ outputs against the frozen goerwitz oracle "
+            "per-verse, split into clean and oddball buckets."
+        ),
+    )
+    compare_ply.add_args(compare_ply_parser, repo_root=_repo_root())
+    compare_ply_parser.set_defaults(func=_run_compare_ply)
 
     args = parser.parse_args()
     args.func(args)

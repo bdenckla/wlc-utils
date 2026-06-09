@@ -315,17 +315,30 @@ change, evidence, next step).
   49 troublemakers excluded; 51 oddballs; 0 missing)
 - 2. Token model definition: **Not started**
 - 3. Scanner (hand-written): **Not started**
-- 4. Grammar port (PLY yacc): **Not started** (PLY not yet installed)
-- 5. Tree and utility layer: **Not started**
+- 4. Grammar port (PLY yacc): **Not started** (PLY installed; grammar not written)
+- 5. Tree and utility layer: **Done** (`py/accgram/ply_tree.py`; 5 golden tests pass)
 - 6. CLI wrapper: **Not started**
-- 7. Verification: **Not started** (oracle exists; comparator not written)
+- 7. Verification: **Done** (`compare-ply` subcommand; 0 / 18,666 parity as expected)
 - 8. Hardening: **Not started**
 
 ### Progress Log
-- **Resume here:** Phase A — install PLY, write the per-verse comparator
-  (`out/accgram/ply/` vs `out/accgram/goerwitz/`), and lock the output contract
-  with one golden test. First files to read: `accgram/run_goerwitz.py`,
-  `accgram/oddballs.py`, `accents-1.1.4/accutil.c`.
+- **Resume here:** Phase B — minimal scanner + grammar subset to make ≥1 Obadiah
+  verse byte-identical. First files to read: `accents-1.1.4/tnk2acc.l`,
+  `accents-1.1.4/acc2tre.y`, `py/accgram/ply_tree.py`,
+  `out/accgram/goerwitz/wlc_422_ps_ob_ag.txt`. Verify harness first with
+  `.venv/Scripts/python.exe py/main_accgram.py compare-ply` (should print 0.0%)
+  and `.venv/Scripts/python.exe -m pytest py/tests/ -v` (5 passed).
+- 2026-06-08: **Phase A complete.** Installed PLY 3.11 and pytest 9.0.3 into
+  `.venv`. Created `py/accgram/ply_tree.py` (Python port of `accutil.c`
+  `make_node`/`add_leaves`/`print_tree`; display_tree==1 path only).  Created
+  `py/accgram/compare_ply.py` (per-verse comparator; clean/oddball buckets;
+  `compare-ply` subcommand). Created `py/tests/test_ply_tree_golden.py` (5
+  golden tests pinning output contract on Obadiah 1:2). Created root-level
+  `conftest.py` adding `py/` to sys.path for pytest.
+  Reproduce: `.venv/Scripts/python.exe -m pytest py/tests/ -v` → 5 passed.
+  Parity: `.venv/Scripts/python.exe py/main_accgram.py compare-ply` →
+  clean 0/18615 (0.0%), oddball 0/51 (0.0%), total 0/18666 (0.0%).
+  Report: `out/accgram/ply/_parity_report.json`.
 - 2026-06-08: Revised the whole plan against the actual C source and repo state.
   Findings: (a) only the *new* input dialect and the `-p`/display_tree path are in
   scope; betacode (`parsebc.c`) is out. (b) PLY's lexer cannot express lex
