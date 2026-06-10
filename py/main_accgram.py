@@ -7,13 +7,14 @@ Subcommands:
                 poetically-cantillated Job verses, and hardcoded troublemaker
                 verses) and write out/accgram/goerwitz/_troublemakers.json.
     research-tms-and-oddballs
-                Enrich out/accgram/goerwitz/_troublemakers.json with matching
-                wlc422-kq-u verse objects and structured XML-ish UXLC verse
-                nodes and write out/accgram/research-troublemakers.json.
-                Also enrich out/accgram/goerwitz/_oddballs.json and write
-                out/accgram/research-oddballs.json, plus HTML reports
-                including gh-pages/accgram/goerwitz.html and
-                gh-pages/accgram/goerwitz-obs.html.
+                Derive PLY-based oddball/troublemaker sets from the PLY outputs
+                (out/accgram/ply + ply-tms) into out/accgram/ply/_oddballs.json
+                (77) and _troublemakers.json (23), then enrich them with matching
+                wlc422-kq-u verse objects and structured XML-ish UXLC verse nodes
+                and write out/accgram/research-troublemakers.json and
+                out/accgram/research-oddballs.json, plus HTML reports including
+                gh-pages/accgram/goerwitz.html and goerwitz-obs.html. Does not
+                read out/accgram/goerwitz.
     fresh-run-goerwitz
                 Run filter-split-wlc, then run goerwitz on the freshly written
                 filtered split files.

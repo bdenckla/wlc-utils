@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from accgram import ob_data
+from accgram import ply_classify
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_output
@@ -18,11 +19,27 @@ from accgram.tm_sanity import sanity_check_structured_text
 
 
 def default_troubles_in(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "goerwitz" / "_troublemakers.json"
+    return repo_root / "out" / "accgram" / "ply" / "_troublemakers.json"
 
 
 def default_oddballs_in(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "goerwitz" / "_oddballs.json"
+    return repo_root / "out" / "accgram" / "ply" / "_oddballs.json"
+
+
+def default_ply_dir(repo_root: Path) -> Path:
+    return repo_root / "out" / "accgram" / "ply"
+
+
+def default_ply_tms_dir(repo_root: Path) -> Path:
+    return repo_root / "out" / "accgram" / "ply-tms"
+
+
+def default_psf_in_dir(repo_root: Path) -> Path:
+    return repo_root.parent / "wlc-utils-io" / "out" / "goerwitz" / "wlc_422_psf"
+
+
+def default_unfiltered_in_dir(repo_root: Path) -> Path:
+    return repo_root.parent / "wlc-utils-io" / "out" / "goerwitz" / "wlc_422_ps"
 
 
 def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
@@ -84,7 +101,31 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--oddballs-in",
         type=Path,
         default=default_oddballs_in(repo_root),
-        help="Path to _oddballs.json input.",
+        help="Path to _oddballs.json input (PLY-derived; regenerated each run).",
+    )
+    parser.add_argument(
+        "--ply-dir",
+        type=Path,
+        default=default_ply_dir(repo_root),
+        help="Directory of PLY *_ag.txt outputs for the clean+oddball corpus.",
+    )
+    parser.add_argument(
+        "--ply-tms-dir",
+        type=Path,
+        default=default_ply_tms_dir(repo_root),
+        help="Directory of PLY *_ag.txt outputs for the troublemaker corpus.",
+    )
+    parser.add_argument(
+        "--psf-in-dir",
+        type=Path,
+        default=default_psf_in_dir(repo_root),
+        help="Filtered new-format input dir (content for ply/ oddballs).",
+    )
+    parser.add_argument(
+        "--unfiltered-in-dir",
+        type=Path,
+        default=default_unfiltered_in_dir(repo_root),
+        help="Unfiltered new-format input dir (content for ply-tms/ oddballs and troublemakers).",
     )
     parser.add_argument(
         "--out",
@@ -115,10 +156,27 @@ def run(args: argparse.Namespace) -> None:
 
     html_out_path = rtms_report.resolve_html_out_path(args, repo_root)
 
+    oddballs_in_path = getattr(args, "oddballs_in", None)
+
+    # (Re)derive the PLY-based oddball/troublemaker sets from the PLY outputs so
+    # the research command never reads out/accgram/goerwitz. The 26 troublemakers
+    # PLY parses into ERROR trees are reclassified as oddballs here.
+    if isinstance(oddballs_in_path, Path):
+        ply_classify.write_ply_oddballs_and_troublemakers(
+            ply_dir=getattr(args, "ply_dir", None) or default_ply_dir(repo_root),
+            ply_tms_dir=getattr(args, "ply_tms_dir", None)
+            or default_ply_tms_dir(repo_root),
+            psf_in_dir=getattr(args, "psf_in_dir", None)
+            or default_psf_in_dir(repo_root),
+            unfiltered_in_dir=getattr(args, "unfiltered_in_dir", None)
+            or default_unfiltered_in_dir(repo_root),
+            oddballs_out=oddballs_in_path,
+            troubles_out=args.troubles_in,
+        )
+
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
     parsed_rows = rtms_rows.parse_troublemaker_rows(args.troubles_in, refs_by_book)
 
-    oddballs_in_path = getattr(args, "oddballs_in", None)
     oddballs_out_path = getattr(args, "oddballs_out", None)
     parsed_oddball_rows: list[tuple[dict[str, object], str, str]] = []
     if isinstance(oddballs_in_path, Path) and isinstance(oddballs_out_path, Path):
@@ -129,8 +187,15 @@ def run(args: argparse.Namespace) -> None:
     elif oddballs_in_path is not None or oddballs_out_path is not None:
         raise ValueError("Expected both oddballs_in and oddballs_out, or neither")
 
+    # Validate notes for every ref displayed with notes: the 23 troublemakers plus
+    # the 26 reclassified oddballs, whose notes are still served from tm_data.
+    reclassified_refs = [
+        ref
+        for row, _bcv, ref in parsed_oddball_rows
+        if row.get("output_dir") == "ply-tms"
+    ]
     sanity_check_structured_text(
-        refs=[ref for _row, _bcv, ref in parsed_rows],
+        refs=[ref for _row, _bcv, ref in parsed_rows] + reclassified_refs,
         all_changes_path=all_changes_path,
     )
     wlc_focus_by_ref = _wlc_focus_by_ref()
@@ -193,14 +258,16 @@ def run(args: argparse.Namespace) -> None:
             source_file=__file__,
         )
 
-    oddballs_goerwitz_out_dir = (
-        oddballs_in_path.parent if isinstance(oddballs_in_path, Path) else None
+    # Base dir holding the two PLY output subdirs (ply/, ply-tms/); the oddball
+    # report appends each row's output_dir to locate its ERROR tree.
+    accgram_base_dir = (
+        oddballs_in_path.parent.parent if isinstance(oddballs_in_path, Path) else None
     )
     overview_html_out_path, oddballs_html_out_path = rtms_output.write_html_reports(
         html_out_path,
         enriched_rows,
         enriched_oddball_rows=enriched_oddball_rows,
-        goerwitz_out_dir=oddballs_goerwitz_out_dir,
+        base_dir=accgram_base_dir,
     )
 
     rtms_output.print_run_summary(
@@ -268,6 +335,10 @@ def _wlc_focus_by_ref() -> dict[str, str | None]:
 
 def _ob_wlc_focus_by_ref() -> dict[str, str | None]:
     out: dict[str, str | None] = {}
+    # Reclassified troublemakers have no ob_data entry; fall back to tm_data so the
+    # 26 still get a WLC focus (their notes are served from tm_data).
+    for ref, structured_text in get_structured_text().items():
+        out[ref] = _structured_wlc_focus(structured_text)
     for ref, structured_text in ob_data.get_structured_text().items():
         out[ref] = _structured_wlc_focus(structured_text)
     return out

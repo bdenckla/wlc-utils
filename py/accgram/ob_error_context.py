@@ -22,17 +22,20 @@ ErrorTree = ob_tree_parse.ErrorTree
 
 def collect_error_trees_by_ref(
     rows: list[dict[str, object]],
-    goerwitz_out_dir: Path,
+    base_dir: Path,
 ) -> dict[str, ErrorTree | None]:
-    refs_by_output_file: dict[str, set[str]] = {}
+    # Group by (output_dir, output_file): the two PLY dirs (ply/, ply-tms/) share
+    # book filenames, so the same output_file can live under either subdirectory.
+    refs_by_dir_file: dict[tuple[str, str], set[str]] = {}
     for row in rows:
         ref = _row_ref(row)
         output_file = _row_output_file(row)
-        refs_by_output_file.setdefault(output_file, set()).add(ref)
+        output_dir = _row_output_dir(row)
+        refs_by_dir_file.setdefault((output_dir, output_file), set()).add(ref)
 
     out: dict[str, ErrorTree | None] = {}
-    for output_file, refs in refs_by_output_file.items():
-        output_path = goerwitz_out_dir / output_file
+    for (output_dir, output_file), refs in refs_by_dir_file.items():
+        output_path = base_dir / output_dir / output_file
         bb = _bb_from_output_file(output_file)
         if bb is None:
             for ref in refs:
@@ -221,3 +224,10 @@ def _row_output_file(row: dict[str, object]) -> str:
     if not isinstance(output_file, str) or not output_file.strip():
         raise ValueError("Oddball row is missing non-empty string field 'output_file'")
     return output_file.strip()
+
+
+def _row_output_dir(row: dict[str, object]) -> str:
+    output_dir = row.get("output_dir")
+    if not isinstance(output_dir, str) or not output_dir.strip():
+        raise ValueError("Oddball row is missing non-empty string field 'output_dir'")
+    return output_dir.strip()

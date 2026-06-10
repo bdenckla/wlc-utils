@@ -4,6 +4,7 @@ from pathlib import Path
 
 from accgram import ob_data
 from accgram import ob_error_context
+from accgram import tm_data
 from accgram import ob_tree_table
 from accgram import rtms_ref
 from accgram import rtms_report
@@ -25,14 +26,14 @@ def oddball_html_out_path(main_html_out_path: Path) -> Path:
 def write_goerwitz_obs_html_report(
     main_html_out_path: Path,
     enriched_oddball_rows: list[dict[str, object]],
-    goerwitz_out_dir: Path,
+    base_dir: Path,
 ) -> Path:
     html_out_path = oddball_html_out_path(main_html_out_path)
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
 
     error_trees_by_ref = ob_error_context.collect_error_trees_by_ref(
         enriched_oddball_rows,
-        goerwitz_out_dir,
+        base_dir,
     )
 
     body_contents = _build_body_contents(
@@ -63,8 +64,8 @@ def _build_body_contents(
         wlc_utils_html.heading_level_2("Introduction"),
         wlc_utils_html.para(
             (
-                f"These {len(enriched_oddball_rows)} verses did not cause trouble for the Goerwitz accent grammar checker,",
-                " but did contain the string “ERROR” in their parse trees."
+                f"These {len(enriched_oddball_rows)} verses are parsed by the PLY port into a tree",
+                " containing the string “ERROR”."
                 " Each section below includes links, WLC verse, SAT rows, and a complete parse tree table.",
             )
         ),
@@ -143,6 +144,9 @@ def _render_error_context_section(
 def _structured_text_value(row: dict[str, object], key: str) -> object:
     row_ref = _row_ref(row)
     structured_text = ob_data.get_structured_text().get(row_ref)
+    if not isinstance(structured_text, dict):
+        # Reclassified troublemakers keep their tm_data notes (no ob_data entry).
+        structured_text = tm_data.get_structured_text().get(row_ref)
     if not isinstance(structured_text, dict):
         return None
 

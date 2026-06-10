@@ -80,7 +80,7 @@ def write_html_reports(
     enriched_rows: list[dict[str, object]],
     *,
     enriched_oddball_rows: list[dict[str, object]] | None = None,
-    goerwitz_out_dir: Path | None = None,
+    base_dir: Path | None = None,
 ) -> tuple[Path, Path | None]:
     # Present HTML entries in standard reading order (MAM book, chapter, verse),
     # independent of the order they appear in the input/JSON payloads.
@@ -98,11 +98,11 @@ def write_html_reports(
     rtms_report.write_goerwitz_tms_msp_no_html_report(html_out_path, enriched_rows)
 
     oddballs_html_out_path: Path | None = None
-    if enriched_oddball_rows and isinstance(goerwitz_out_dir, Path):
+    if enriched_oddball_rows and isinstance(base_dir, Path):
         oddballs_html_out_path = ob_report.write_goerwitz_obs_html_report(
             main_html_out_path=html_out_path,
             enriched_oddball_rows=enriched_oddball_rows,
-            goerwitz_out_dir=goerwitz_out_dir,
+            base_dir=base_dir,
         )
 
     return overview_html_out_path, oddballs_html_out_path

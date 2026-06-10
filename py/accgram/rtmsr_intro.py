@@ -31,7 +31,8 @@ def build_intro_contents(
         else ""
     )
     intro_text = (
-        f"These {row_count} verses caused trouble for the Goerwitz accent grammar checker."
+        f"These {row_count} verses caused trouble for the Goerwitz accent grammar checker"
+        " and produce no output even under the PLY port."
         + n_of_m
         + " Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks."
     )
