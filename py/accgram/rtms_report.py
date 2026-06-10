@@ -3,31 +3,19 @@ from __future__ import annotations
 from pathlib import Path
 from collections.abc import Callable
 
-from accgram import rtmsr_bracket_notes
-from accgram import rtmsr_intro
 from accgram import rtmsr_media
-from accgram import rtmsr_open_issues
 from accgram import rtmsr_sat
-from accgram import rtmsr_subsets
 from accgram import rtmsr_verse
 from accgram import rtms_ref
 from accgram.tm_data import get_structured_text
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
-from mb_cmn import provenance
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
 
-_GOERWITZ_TMS_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _SELF_LINK_SYMBOL = "🔗"
-_MAIN_REPORT_TITLE = "Goerwitz TMs"
-_MAIN_REPORT_HEADING = "Goerwitz Troublemakers"
-_SUB_REPORT_HEADING = "Troublemakers"
-_MSP_Y_FLAVOR = "msp-y"
-_MSP_N_FLAVOR = "msp-n"
 
 StructuredTextLookup = Callable[[dict[str, object], str], object]
-AnchorIdBuilder = Callable[[str], str]
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -48,21 +36,6 @@ def resolve_html_out_path(args: object, repo_root: Path) -> Path:
     return default_html_out_path(repo_root)
 
 
-def write_goerwitz_tms_html_report(
-    html_out_path: Path,
-    enriched_rows: list[dict[str, object]],
-) -> None:
-    _write_goerwitz_tms_html_report(
-        html_out_path,
-        enriched_rows,
-        top_contents=rtmsr_subsets.build_main_subsets_top_contents(html_out_path),
-        title=_MAIN_REPORT_TITLE,
-        heading_level_1_text=_MAIN_REPORT_HEADING,
-        structured_text_lookup=_structured_text_value,
-        anchor_id_builder=_troublemaker_anchor_id,
-    )
-
-
 def path_to_gh_pages_style(html_out_path: Path) -> str:
     return _path_to_gh_pages_style(html_out_path)
 
@@ -80,134 +53,6 @@ def render_row_section_with_anchor_id(
     )
 
 
-def write_goerwitz_tms_msp_yes_html_report(
-    main_html_out_path: Path,
-    enriched_rows: list[dict[str, object]],
-) -> None:
-    total_count = len(enriched_rows)
-    html_out_path = rtmsr_subsets.missing_sof_pasuq_yes_html_out_path(
-        main_html_out_path
-    )
-    _write_goerwitz_tms_html_report(
-        html_out_path,
-        rtmsr_subsets.filter_missing_sof_pasuq_yes_rows(enriched_rows),
-        top_contents=rtmsr_subsets.build_msp_yes_related_pages_top_contents(
-            main_html_out_path
-        ),
-        title=f"{_MAIN_REPORT_TITLE} ({_MSP_Y_FLAVOR})",
-        heading_level_1_text=f"{_SUB_REPORT_HEADING} missing sof pasuq ({_MSP_Y_FLAVOR})",
-        total_count=total_count,
-        structured_text_lookup=_structured_text_value,
-        anchor_id_builder=_troublemaker_anchor_id,
-    )
-
-
-def write_goerwitz_tms_msp_no_html_report(
-    main_html_out_path: Path,
-    enriched_rows: list[dict[str, object]],
-) -> None:
-    total_count = len(enriched_rows)
-    html_out_path = rtmsr_subsets.missing_sof_pasuq_no_html_out_path(main_html_out_path)
-    _write_goerwitz_tms_html_report(
-        html_out_path,
-        rtmsr_subsets.filter_missing_sof_pasuq_no_rows(enriched_rows),
-        top_contents=rtmsr_subsets.build_msp_no_related_pages_top_contents(
-            main_html_out_path
-        ),
-        title=f"{_MAIN_REPORT_TITLE} ({_MSP_N_FLAVOR})",
-        heading_level_1_text=f"{_SUB_REPORT_HEADING} not missing sof pasuq ({_MSP_N_FLAVOR})",
-        total_count=total_count,
-        structured_text_lookup=_structured_text_value,
-        anchor_id_builder=_troublemaker_anchor_id,
-    )
-
-
-def _write_goerwitz_tms_html_report(
-    html_out_path: Path,
-    enriched_rows: list[dict[str, object]],
-    *,
-    top_contents: tuple[object, ...],
-    title: str,
-    heading_level_1_text: str,
-    total_count: int | None = None,
-    structured_text_lookup: StructuredTextLookup,
-    anchor_id_builder: AnchorIdBuilder,
-) -> None:
-    html_out_path.parent.mkdir(parents=True, exist_ok=True)
-
-    body_contents = _build_body_contents(
-        enriched_rows,
-        top_contents=top_contents,
-        heading_level_1_text=heading_level_1_text,
-        total_count=total_count,
-        structured_text_lookup=structured_text_lookup,
-        anchor_id_builder=anchor_id_builder,
-    )
-    write_ctx = wlc_utils_html.WriteCtx(
-        title=title,
-        path=str(html_out_path),
-        html_comment=provenance.generated_html_comment(__file__),
-    )
-    wlc_utils_html.write_html_to_file(
-        body_contents=body_contents,
-        write_ctx=write_ctx,
-        path_to_style=_path_to_gh_pages_style(html_out_path),
-    )
-
-
-def _build_body_contents(
-    enriched_rows: list[dict[str, object]],
-    *,
-    top_contents: tuple[object, ...],
-    heading_level_1_text: str,
-    total_count: int | None = None,
-    structured_text_lookup: StructuredTextLookup,
-    anchor_id_builder: AnchorIdBuilder,
-) -> tuple[object, ...]:
-    row_count = len(enriched_rows)
-    sections = [
-        wlc_utils_html.heading_level_1(heading_level_1_text),
-        *rtmsr_intro.build_intro_contents(row_count, total_count),
-        *top_contents,
-        *rtmsr_open_issues.build_open_issues_section(),
-        *rtmsr_bracket_notes.build_wlc_bracket_notes_section(enriched_rows),
-    ]
-
-    for index, row in enumerate(enriched_rows):
-        sections.extend(
-            _render_row_section(
-                row,
-                structured_text_lookup=structured_text_lookup,
-                anchor_id_builder=anchor_id_builder,
-            )
-        )
-        if index + 1 < len(enriched_rows):
-            sections.append(wlc_utils_html.horizontal_rule())
-
-    wrapper = wlc_utils_html.div(
-        tuple(sections),
-        {"class": _GOERWITZ_TMS_WIDTH_CLASS},
-    )
-    return (wrapper,)
-
-
-def _render_row_section(
-    row: dict[str, object],
-    *,
-    structured_text_lookup: StructuredTextLookup,
-    anchor_id_builder: AnchorIdBuilder,
-) -> tuple[object, ...]:
-    ref = _row_ref(row)
-    bb, chnu, vrnu, bcv = _parse_ref_to_wlc_bcv(ref)
-    section_anchor_id = anchor_id_builder(bcv)
-
-    return _render_row_section_with_anchor_id(
-        row,
-        section_anchor_id=section_anchor_id,
-        structured_text_lookup=structured_text_lookup,
-    )
-
-
 def _render_row_section_with_anchor_id(
     row: dict[str, object],
     *,
@@ -215,7 +60,7 @@ def _render_row_section_with_anchor_id(
     structured_text_lookup: StructuredTextLookup,
 ) -> tuple[object, ...]:
     ref = _row_ref(row)
-    bb, chnu, vrnu, bcv = _parse_ref_to_wlc_bcv(ref)
+    bb, chnu, vrnu, bcv = parse_ref_to_wlc_bcv(ref)
 
     section_items: list[object] = [
         wlc_utils_html.heading_level_2(ref, {"id": section_anchor_id}),
@@ -292,7 +137,7 @@ def _render_ref_links(
     )
 
 
-def _troublemaker_anchor_id(bcv: str) -> str:
+def troublemaker_anchor_id(bcv: str) -> str:
     return f"tm{bcv.replace(':', 'v')}"
 
 
@@ -342,7 +187,7 @@ def _render_wlc_verse_paragraph(
     )
 
 
-def _structured_text_value(row: dict[str, object], key: str) -> object:
+def structured_text_value(row: dict[str, object], key: str) -> object:
     ref = _row_ref(row)
     structured_text = get_structured_text().get(ref)
     if not isinstance(structured_text, dict):
@@ -357,7 +202,7 @@ def _row_ref(row: dict[str, object]) -> str:
     return ref.strip()
 
 
-def _parse_ref_to_wlc_bcv(ref: str) -> tuple[str, int, int, str]:
+def parse_ref_to_wlc_bcv(ref: str) -> tuple[str, int, int, str]:
     bb, chnu, vrnu = rtms_ref.parse_ref(ref)
     bcv = rtms_ref.to_compact_bcv(bb, chnu, vrnu)
     return bb, chnu, vrnu, bcv

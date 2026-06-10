@@ -30,6 +30,37 @@ div.goerwitz-tms-width-limited {
 p.goerwitz-tms-comment {
     margin-top: 0.4em;
 }
+div.goerwitz-filter {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+    margin: 1em 0;
+    padding: 0.5em 0.7em;
+    background-color: light-dark(white, black);
+    border: 1px solid light-dark(#ccc, #444);
+    border-radius: 6px;
+}
+div.goerwitz-filter fieldset {
+    margin: 0;
+    border: 1px solid light-dark(#ccc, #444);
+    border-radius: 4px;
+}
+div.goerwitz-filter label {
+    display: block;
+    white-space: nowrap;
+}
+p.gf-count {
+    margin: 0;
+    font-size: 90%;
+    font-style: italic;
+}
+section.goerwitz-verse hr {
+    margin-top: 1.2em;
+}
 p.goerwitz-tms-verse {
     margin-top: 0.4em;
     margin-bottom: 0.6em;

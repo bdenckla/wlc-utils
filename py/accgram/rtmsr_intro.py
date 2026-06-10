@@ -21,25 +21,36 @@ _GC_BOOK_URL = (
 
 
 def build_intro_contents(
-    row_count: int,
-    total_count: int | None = None,
+    troublemaker_count: int,
+    oddball_count: int,
 ) -> tuple[object, ...]:
-    n_of_m = (
-        f" These are {row_count} of the {total_count} such verses;"
-        " see \u201cRelated pages\u201d above."
-        if total_count is not None
-        else ""
-    )
+    total = troublemaker_count + oddball_count
     intro_text = (
-        f"These {row_count} verses caused trouble for the Goerwitz accent grammar checker"
-        " and produce no output even under the PLY port."
-        + n_of_m
-        + " Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks."
+        f"This page lists the {total} WLC 4.22 verses that the Goerwitz accent grammar"
+        " checker, run via the PLY port, does not parse cleanly. Use the filters below"
+        " to narrow the list along two dimensions."
+    )
+    troublemakers_text = (
+        f"Troublemakers ({troublemaker_count} verses) produce no output even under the"
+        " PLY port. Potential causes of this trouble include WLC quirks, LC quirks, and"
+        " checker quirks."
+    )
+    oddballs_text = (
+        f"Oddballs ({oddball_count} verses) are parsed by the PLY port into a tree"
+        " containing the string \u201cERROR\u201d; each oddball section includes its"
+        " complete parse tree."
+    )
+    msp_text = (
+        "The second dimension is whether a sof pasuq is missing somewhere in the"
+        " LC-BHS-WLC pipeline (msp-y) or not (msp-n)."
     )
 
     return (
         wlc_utils_html.heading_level_2("Introduction"),
         wlc_utils_html.para(intro_text),
+        wlc_utils_html.para(troublemakers_text),
+        wlc_utils_html.para(oddballs_text),
+        wlc_utils_html.para(msp_text),
     )
 
 

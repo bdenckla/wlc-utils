@@ -177,8 +177,7 @@ def main() -> None:
         help=(
             "Enrich existing _troublemakers.json entries (plus _oddballs.json) "
             "with matching wlc422-kq-u verse objects and XML-ish UXLC verse nodes, "
-            "and write goerwitz.html and goerwitz-obs.html alongside existing "
-            "troublemaker pages."
+            "and write the combined, filterable goerwitz.html report."
         ),
     )
     research_tao.add_args(research_tao_parser, repo_root=_repo_root())

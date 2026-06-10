@@ -1,49 +1,64 @@
 from __future__ import annotations
 
+from collections.abc import Callable
+from dataclasses import dataclass
 from pathlib import Path
 
+from accgram import ob_error_context
+from accgram import ob_report
+from accgram import rtms_missing_sof_pasuq_descriptions
+from accgram import rtms_ref
 from accgram import rtms_report
+from accgram import rtmsr_bracket_notes
 from accgram import rtmsr_intro
+from accgram import rtmsr_open_issues
 from accgram import rtmsr_subsets
+from accgram.tm_data import get_structured_text
 from mb_cmn import provenance
 from py_html import wlc_utils_html
 
 _REPORT_TITLE = "Goerwitz Run on WLC"
 _REPORT_HEADING = "Goerwitz Run on WLC"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
+_FILTER_SCRIPT_NAME = "goerwitz-filter.js"
+
+StructuredTextLookup = Callable[[dict[str, object], str], object]
 
 
-def write_goerwitz_overview_html_report(main_html_out_path: Path) -> Path:
+@dataclass
+class _Entry:
+    """One verse on the combined page, tagged along both filter dimensions."""
+
+    ref: str
+    kind: str  # "ob" (oddball) or "tm" (troublemaker)
+    msp: str  # "y" or "n" (missing sof pasuq)
+    anchor_id: str
+    structured_text_lookup: StructuredTextLookup
+    row: dict[str, object]
+    error_tree: ob_error_context.ErrorTree | None
+
+
+def write_goerwitz_combined_html_report(
+    main_html_out_path: Path,
+    enriched_rows: list[dict[str, object]],
+    enriched_oddball_rows: list[dict[str, object]],
+    base_dir: Path | None,
+) -> Path:
+    """Write goerwitz.html: every troublemaker and oddball verse in one flat,
+    client-side-filterable list (see goerwitz-filter.js)."""
     html_out_path = rtmsr_subsets.overview_html_out_path(main_html_out_path)
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    oddballs_name = main_html_out_path.parent.joinpath("goerwitz-obs.html").name
-    body_contents = (
-        wlc_utils_html.div(
-            (
-                wlc_utils_html.heading_level_1(_REPORT_HEADING),
-                wlc_utils_html.para(
-                    (
-                        "My analysis of the output of the Goerwitz accent grammar checker run on WLC 4.22 is divided into two parts:"
-                    )
-                ),
-                wlc_utils_html.unordered_list(
-                    (
-                        wlc_utils_html.anchor(
-                            "Goerwitz troublemakers",
-                            {"href": main_html_out_path.name},
-                        ),
-                        wlc_utils_html.anchor(
-                            "Goerwitz oddballs",
-                            {"href": oddballs_name},
-                        ),
-                    )
-                ),
-                *rtmsr_intro.checker_article_citation_contents(),
-            ),
-            {"class": _WIDTH_CLASS},
-        ),
+    error_trees_by_ref: dict[str, ob_error_context.ErrorTree | None] = {}
+    if enriched_oddball_rows and isinstance(base_dir, Path):
+        error_trees_by_ref = ob_error_context.collect_error_trees_by_ref(
+            enriched_oddball_rows, base_dir
+        )
+
+    entries = _build_entries(
+        enriched_rows, enriched_oddball_rows, error_trees_by_ref
     )
+    body_contents = _build_body_contents(entries)
 
     wlc_utils_html.write_html_to_file(
         body_contents=body_contents,
@@ -55,3 +70,162 @@ def write_goerwitz_overview_html_report(main_html_out_path: Path) -> Path:
         path_to_style=rtms_report.path_to_gh_pages_style(html_out_path),
     )
     return html_out_path
+
+
+def _build_entries(
+    enriched_rows: list[dict[str, object]],
+    enriched_oddball_rows: list[dict[str, object]],
+    error_trees_by_ref: dict[str, ob_error_context.ErrorTree | None],
+) -> list[_Entry]:
+    entries: list[_Entry] = []
+
+    for row in enriched_rows:
+        ref = _row_ref(row)
+        _bb, _chnu, _vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(ref)
+        structured_text = get_structured_text().get(ref)
+        entries.append(
+            _Entry(
+                ref=ref,
+                kind="tm",
+                msp=_msp_flag(row, structured_text),
+                anchor_id=rtms_report.troublemaker_anchor_id(bcv),
+                structured_text_lookup=rtms_report.structured_text_value,
+                row=row,
+                error_tree=None,
+            )
+        )
+
+    for row in enriched_oddball_rows:
+        ref = _row_ref(row)
+        bcv = ob_report.ref_bcv(ref)
+        structured_text = ob_report.structured_text_dict(row)
+        entries.append(
+            _Entry(
+                ref=ref,
+                kind="ob",
+                msp=_msp_flag(row, structured_text),
+                anchor_id=ob_report.oddball_anchor_id(bcv),
+                structured_text_lookup=ob_report.structured_text_value,
+                row=row,
+                error_tree=error_trees_by_ref.get(ref),
+            )
+        )
+
+    entries.sort(key=lambda entry: rtms_ref.reading_order_key(entry.ref))
+    return entries
+
+
+def _msp_flag(row: dict[str, object], structured_text: object) -> str:
+    is_yes = rtms_missing_sof_pasuq_descriptions.row_is_missing_sof_pasuq_yes(
+        row, structured_text=structured_text
+    )
+    return "y" if is_yes else "n"
+
+
+def _build_body_contents(entries: list[_Entry]) -> tuple[object, ...]:
+    counts = _counts(entries)
+    all_rows = [entry.row for entry in entries]
+
+    sections: list[object] = [
+        wlc_utils_html.heading_level_1(_REPORT_HEADING),
+        *rtmsr_intro.build_intro_contents(counts["tm"], counts["ob"]),
+        *rtmsr_intro.checker_article_citation_contents(),
+        *rtmsr_open_issues.build_open_issues_section(),
+        *rtmsr_bracket_notes.build_wlc_bracket_notes_section(all_rows),
+        _build_filter_controls(counts),
+    ]
+
+    for index, entry in enumerate(entries):
+        sections.append(_render_verse_section(entry, is_first=index == 0))
+
+    wrapper = wlc_utils_html.div(tuple(sections), {"class": _WIDTH_CLASS})
+    script = wlc_utils_html.htel_mk("script", {"src": _FILTER_SCRIPT_NAME})
+    return (wrapper, script)
+
+
+def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
+    inner = list(
+        rtms_report.render_row_section_with_anchor_id(
+            entry.row,
+            section_anchor_id=entry.anchor_id,
+            structured_text_lookup=entry.structured_text_lookup,
+        )
+    )
+    if entry.kind == "ob":
+        inner.extend(
+            ob_report.render_error_context_section(
+                entry.row, error_tree=entry.error_tree
+            )
+        )
+
+    items: list[object] = []
+    # The separating rule lives inside the section (omitted on the first one) so it
+    # hides with its verse when the filter removes it.
+    if not is_first:
+        items.append(wlc_utils_html.horizontal_rule())
+    items.extend(inner)
+
+    return wlc_utils_html.htel_mk(
+        "section",
+        {
+            "class": "goerwitz-verse",
+            "data-kind": entry.kind,
+            "data-msp": entry.msp,
+        },
+        tuple(items),
+    )
+
+
+def _build_filter_controls(counts: dict[str, int]) -> object:
+    kind_fieldset = _fieldset(
+        "Kind",
+        (
+            _checkbox("gf-kind", "ob", f"Oddballs ({counts['ob']})"),
+            _checkbox("gf-kind", "tm", f"Troublemakers ({counts['tm']})"),
+        ),
+    )
+    msp_fieldset = _fieldset(
+        "Missing sof pasuq",
+        (
+            _checkbox("gf-msp", "y", f"msp-y ({counts['y']})"),
+            _checkbox("gf-msp", "n", f"msp-n ({counts['n']})"),
+        ),
+    )
+    count_para = wlc_utils_html.para("", {"class": "gf-count"})
+    return wlc_utils_html.div(
+        (kind_fieldset, msp_fieldset, count_para),
+        {"class": "goerwitz-filter"},
+    )
+
+
+def _fieldset(legend_text: str, labels: tuple[object, ...]) -> object:
+    legend = wlc_utils_html.htel_mk("legend", None, legend_text)
+    return wlc_utils_html.htel_mk("fieldset", None, (legend, *labels))
+
+
+def _checkbox(css_class: str, value: str, label_text: str) -> object:
+    input_el = wlc_utils_html.htel_mk_inline_nc(
+        "input",
+        {
+            "type": "checkbox",
+            "class": css_class,
+            "value": value,
+            "checked": "checked",
+        },
+    )
+    return wlc_utils_html.htel_mk_inline("label", None, (input_el, f" {label_text}"))
+
+
+def _counts(entries: list[_Entry]) -> dict[str, int]:
+    counts = {"ob": 0, "tm": 0, "y": 0, "n": 0, "total": len(entries)}
+    for entry in entries:
+        counts[entry.kind] += 1
+        counts[entry.msp] += 1
+    return counts
+
+
+def _row_ref(row: dict[str, object]) -> str:
+    ref = row.get("ref")
+    if not isinstance(ref, str) or not ref.strip():
+        raise ValueError("Row is missing non-empty string field 'ref'")
+    return ref.strip()
