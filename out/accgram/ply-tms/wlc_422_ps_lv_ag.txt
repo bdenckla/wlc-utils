@@ -1,0 +1,54 @@
+Levit 18:17
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 tifcha_clause
+        4 tevir_phrase
+          mereka tevir 
+        4 tifcha_phrase
+          tifcha 
+      3 atnach_phrase
+        munach atnach 
+    2 silluq_clause
+      3 zaqef_clause
+        4 revia_clause
+          5 geresh_phrase
+            gershayim 
+          5 revia_phrase
+            revia 
+        4 zaqef_clause
+          5 pashta_phrase
+            mahpak pashta 
+          5 zaqef_phrase
+            munach zaqef 
+      3 silluq_clause
+        4 tifcha_phrase
+          mereka tifcha 
+        4 silluq_phrase
+          mereka silluq 
+  1 sof_pasuq_phrase
+    ERROR 
+Levit 19:1
+0 silluq_clause
+  1 silluq_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 silluq_phrase
+      mereka silluq 
+  1 sof_pasuq_phrase
+    ERROR 
+Levit 26:7
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 tifcha_phrase
+        tifcha 
+      3 atnach_phrase
+        atnach 
+    2 silluq_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 silluq_phrase
+        silluq 
+  1 sof_pasuq_phrase
+    ERROR 

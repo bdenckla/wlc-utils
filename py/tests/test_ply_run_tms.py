@@ -33,18 +33,19 @@ _IN_DIR = default_in_dir(_REPO_ROOT)
 # Observed buckets on the current corpus (see out/accgram/ply-tms/_run_ply_tms.json).
 _EXPECTED_COUNTS = {
     CLEAN: 0,
-    ERROR_TREE: 26,
+    ERROR_TREE: 47,
     LOCATION_ONLY_BUCKET: 0,
-    NO_OUTPUT: 23,
+    NO_OUTPUT: 2,
     MISSING_INPUT: 0,
 }
-# A few representative verses, pinned to their observed bucket.
+# A few representative verses, pinned to their observed bucket.  ex 34:6 is a
+# missing-sof-pasuq verse now flagged as an error-tree (sof_pasuq_phrase ERROR).
 _SPOT_CHECKS = {
     ("1k", 6, 2): ERROR_TREE,
     ("je", 9, 10): ERROR_TREE,
     ("nu", 20, 19): ERROR_TREE,
+    ("ex", 34, 6): ERROR_TREE,
     ("ob", 1, 1): NO_OUTPUT,
-    ("ex", 34, 6): NO_OUTPUT,
 }
 
 

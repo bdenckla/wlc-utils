@@ -14,8 +14,8 @@ Goerwitz Run on WLC</h1>
 <h2>
 Introduction</h2>
 <p>This page lists the 100 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filters below to narrow the list along two dimensions.</p>
-<p>Troublemakers (23 verses) produce no output even under the PLY port. Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks.</p>
-<p>Oddballs (77 verses) are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree.</p>
+<p>Troublemakers (2 verses) produce no output even under the PLY port. Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks.</p>
+<p>Oddballs (98 verses) are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree.</p>
 <p>The second dimension is whether a sof pasuq is missing somewhere in the LC-BHS-WLC pipeline (msp-y) or not (msp-n).</p>
 <p>The Goerwitz accent grammar checker is described in the following article:</p>
 <p>Goerwitz, Richard. ‹A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts.› In Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg (pp. 111-122). (<a href="https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b">Studies in Ancient Oriental Civilization 60</a>). The Oriental Institute, Chicago, 2007. ISBN 978-1-885923-41-7.</p>
@@ -68,7 +68,7 @@ WLC Bracket Notes</h2>
 <fieldset>
 <legend>
 Kind</legend>
-<label><input type="checkbox" class="gf-kind" value="ob" checked="checked"> Oddballs (77)</label><label><input type="checkbox" class="gf-kind" value="tm" checked="checked"> Troublemakers (23)</label></fieldset>
+<label><input type="checkbox" class="gf-kind" value="ob" checked="checked"> Oddballs (98)</label><label><input type="checkbox" class="gf-kind" value="tm" checked="checked"> Troublemakers (2)</label></fieldset>
 <fieldset>
 <legend>
 Missing sof pasuq</legend>
@@ -117,10 +117,10 @@ gn 32:24</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmex2v5">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obex2v5">
 ex 2:5</h2>
-<p><a href="#tmex2v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obex2v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A2-Exodus.html#c2v5">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Ex2:5">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ות֤רד בת־ פרעה֙ לרח֣ץ על־ היא֔ר ונערת֥יה הלכ֖ת על־ י֣ד היא֑ר ות֤רא את־ התבה֙ בת֣וך הס֔וף ותשל֥ח את־ אמת֖ה <span class="goerwitz-tms-focus-highlight">ותקחֽה</span></p>
 <table class="goerwitz-tms-sat">
@@ -128,6 +128,16 @@ ex 2:5</h2>
 <tr><td lang="hbo" dir="rtl">ותקחֽה׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="9" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="8" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="silluq">slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obex4v10">
@@ -174,10 +184,10 @@ ex 6:6</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmex14v25">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obex14v25">
 ex 14:25</h2>
-<p><a href="#tmex14v25" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obex14v25" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A2-Exodus.html#c14v25">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Ex14:25">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וי֗סר א֚ת אפ֣ן מרכבת֔יו וינהג֖הו בכבד֑ת וי֣אמר מצר֗ים אנ֙וסה֙ מפנ֣י ישרא֔ל כ֣י יהו֔ה נלח֥ם לה֖ם <span class="goerwitz-tms-focus-highlight">במצרֽים</span></p>
 <table class="goerwitz-tms-sat">
@@ -185,11 +195,22 @@ ex 14:25</h2>
 <tr><td lang="hbo" dir="rtl">במצרֽים׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="12" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="11" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="5" title="atnach_clause">atnc</td><td colspan="6" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="3" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="3" title="zaqef_clause">zaqqc</td><td colspan="3" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="revia_phrase">revp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="revia_phrase">revp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="3"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="1"></td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="revia">rev</td><td title="yetiv">yet</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="munach revia">mun rev</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="silluq">slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmex14v29">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obex14v29">
 ex 14:29</h2>
-<p><a href="#tmex14v29" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obex14v29" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A2-Exodus.html#c14v29">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Ex14:29">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ובנ֧י ישרא֛ל הלכ֥ו ביבש֖ה בת֣וך הי֑ם והמ֤ים להם֙ חמ֔ה מימינ֖ם <span class="goerwitz-tms-focus-highlight">ומשמאלֽם</span></p>
 <table class="goerwitz-tms-sat">
@@ -197,6 +218,16 @@ ex 14:29</h2>
 <tr><td lang="hbo" dir="rtl">ומשמאלֽם׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="8" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="7" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="3" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="darga tevir">dar tev</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="silluq">slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obex28v1">
@@ -246,10 +277,10 @@ ex 30:12</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmex34v6">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obex34v6">
 ex 34:6</h2>
-<p><a href="#tmex34v6" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: In the place where one would expect a sof pasuq, the LC has a vertical bar somewhat like a paseq or legarmeh.</p>
+<p><a href="#obex34v6" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: In the place where one would expect a sof pasuq, the LC has a vertical bar somewhat like a paseq or legarmeh.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A2-Exodus.html#c34v6">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Ex34:6">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ויעב֨ר יהו֥ה׀ על־ פניו֮ ויקרא֒ יהו֣ה׀ יהו֔ה א֥ל רח֖ום וחנ֑ון א֥רך אפ֖ים ורב־ ח֥סד <span class="goerwitz-tms-focus-highlight">ואמֽת׀</span></p>
 <table class="goerwitz-tms-sat">
@@ -260,6 +291,17 @@ ex 34:6</h2>
 </p>
 <figcaption class="goerwitz-tms-image-caption">Image source: <a href="https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F052A.jpg">052A</a> column 2 line 1</figcaption>
 </figure>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="8" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="7" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="5" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="segolta_clause">segac</td><td colspan="3" title="atnach_clause">atnc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="zarqa_phrase">zarp</td><td title="segolta_phrase">segap</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="3"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="3"></td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="3"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="azla mereka zarqa">qom mer zar</td><td title="segolta">sega</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obex38v12">
@@ -331,10 +373,10 @@ lv 10:6</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmlv18v17">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="oblv18v17">
 lv 18:17</h2>
-<p><a href="#tmlv18v17" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#oblv18v17" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A3-Levit.html#c18v17">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Lev18:17">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ערו֥ת אש֛ה ובת֖ה ל֣א תגל֑ה את־ בת־ בנ֞ה ואת־ בת־ בת֗ה ל֤א תקח֙ לגל֣ות ערות֔ה שאר֥ה ה֖נה זמ֥ה <span class="goerwitz-tms-focus-highlight">הֽוא</span></p>
 <table class="goerwitz-tms-sat">
@@ -342,11 +384,22 @@ lv 18:17</h2>
 <tr><td lang="hbo" dir="rtl">הֽוא׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="10" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="9" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="3" title="atnach_clause">atnc</td><td colspan="6" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="3"></td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="3"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mereka tevir">mer tev</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="gershayim">ger2</td><td title="revia">rev</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmlv19v1">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="oblv19v1">
 lv 19:1</h2>
-<p><a href="#tmlv19v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#oblv19v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A3-Levit.html#c19v1">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Lev19:1">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וידב֥ר יהו֖ה אל־ מש֥ה <span class="goerwitz-tms-focus-highlight">לאמֽר</span></p>
 <table class="goerwitz-tms-sat">
@@ -354,6 +407,14 @@ lv 19:1</h2>
 <tr><td lang="hbo" dir="rtl">לאמֽר׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="3" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="2" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="oblv21v10">
@@ -395,10 +456,10 @@ lv 25:20</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmlv26v7">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="oblv26v7">
 lv 26:7</h2>
-<p><a href="#tmlv26v7" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#oblv26v7" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A3-Levit.html#c26v7">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Lev26:7">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ורדפת֖ם את־ איביכ֑ם ונפל֥ו לפניכ֖ם <span class="goerwitz-tms-focus-highlight">לחֽרב</span></p>
 <table class="goerwitz-tms-sat">
@@ -406,6 +467,15 @@ lv 26:7</h2>
 <tr><td lang="hbo" dir="rtl">לחֽרב׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="5" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="4" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="mereka tifcha">mer tip</td><td title="silluq">slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="oblv26v28">
@@ -427,10 +497,10 @@ lv 26:28</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmnu7v32">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obnu7v32">
 nu 7:32</h2>
-<p><a href="#tmnu7v32" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obnu7v32" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A4-Numbers.html#c7v32">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Num7:32">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">כ֥ף אח֛ת עשר֥ה זה֖ב מלא֥ה <span class="goerwitz-tms-focus-highlight">קטֽרת</span></p>
 <table class="goerwitz-tms-sat">
@@ -438,11 +508,20 @@ nu 7:32</h2>
 <tr><td lang="hbo" dir="rtl">קטֽרת׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="4" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="3" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="2" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mereka tevir">mer tev</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmnu7v40">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obnu7v40">
 nu 7:40</h2>
-<p><a href="#tmnu7v40" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obnu7v40" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A4-Numbers.html#c7v40">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Num7:40">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">שעיר־ עז֥ים אח֖ד <span class="goerwitz-tms-focus-highlight">לחטֽאת</span></p>
 <table class="goerwitz-tms-sat">
@@ -450,11 +529,19 @@ nu 7:40</h2>
 <tr><td lang="hbo" dir="rtl">לחטֽאת׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="3" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="2" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mereka tifcha">mer tip</td><td title="silluq">slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmnu7v55">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obnu7v55">
 nu 7:55</h2>
-<p><a href="#tmnu7v55" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obnu7v55" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A4-Numbers.html#c7v55">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Num7:55">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">קרבנ֞ו קערת־ כ֣סף אח֗ת שלש֣ים ומאה֮ משקלה֒ מזר֤ק אחד֙ כ֔סף שבע֥ים ש֖קל בש֣קל הק֑דש שניה֣ם׀ מלא֗ים ס֛לת בלול֥ה בש֖מן <span class="goerwitz-tms-focus-highlight">למנחֽה</span></p>
 <table class="goerwitz-tms-sat">
@@ -462,11 +549,22 @@ nu 7:55</h2>
 <tr><td lang="hbo" dir="rtl">למנחֽה׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="14" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="13" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="8" title="atnach_clause">atnc</td><td colspan="5" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="4" title="segolta_clause">segac</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="4" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="segolta_clause">segac</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="tifcha_clause">tipc</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="zarqa_phrase">zarp</td><td title="segolta_phrase">segap</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="legarmeh_phrase">lgmp</td><td title="revia_phrase">revp</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="gershayim">ger2</td><td title="munach revia">mun rev</td><td title="munach zarqa">mun zar</td><td title="segolta">sega</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="legarmeh">lgm</td><td title="revia">rev</td><td title="tevir">tev</td><td title="mereka tifcha">mer tip</td><td title="silluq">slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmnu7v68">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obnu7v68">
 nu 7:68</h2>
-<p><a href="#tmnu7v68" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obnu7v68" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A4-Numbers.html#c7v68">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Num7:68">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">כ֥ף אח֛ת עשר֥ה זה֖ב מלא֥ה <span class="goerwitz-tms-focus-highlight">קטֽרת</span></p>
 <table class="goerwitz-tms-sat">
@@ -474,6 +572,15 @@ nu 7:68</h2>
 <tr><td lang="hbo" dir="rtl">קטֽרת׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="4" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="3" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="2" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mereka tevir">mer tev</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obnu20v19">
@@ -504,10 +611,10 @@ nu 20:19</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="n">
-<hr><h2 id="tmnu25v19">
+<section class="goerwitz-verse" data-kind="ob" data-msp="n">
+<hr><h2 id="obnu25v19">
 nu 25:19</h2>
-<p><a href="#tmnu25v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS puts a verse number in the middle of a chanted verse.</p>
+<p><a href="#obnu25v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS puts a verse number in the middle of a chanted verse.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A4-Numbers.html#c26v1">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Num25:19">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ויה֖י אחר֣י <span class="goerwitz-tms-focus-highlight">המגפ֑ה</span></p>
 <table class="goerwitz-tms-sat">
@@ -517,6 +624,15 @@ nu 25:19</h2>
 <p class="goerwitz-tms-comment"> In other words, the accent grammar is unexceptional here if we ignore where BHS happens to put its verse labels.</p>
 <p class="goerwitz-tms-comment"> MAM is not exceptional in its more cantillation-aware versification here; above I might have said “many editions” instead of “MAM” but I wanted to be specific.</p>
 <p class="goerwitz-tms-comment"> As to where BHS got this versification, I suspect it is not original to BHS. This versification’s rather extraordinary mid-chanted-verse verse number does correspond to a rather extraordinary mid-chanted-verse parashah petuxah break. So, while this verse number is not at the boundary of a chanted verse, it is at a boundary deemed quite significant in the layout of both cantillated and letter-only Hebrew texts.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="4" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="3" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="2" title="atnach_clause">atnc</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obnu27v9">
@@ -537,10 +653,10 @@ nu 27:9</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmdt9v20">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obdt9v20">
 dt 9:20</h2>
-<p><a href="#tmdt9v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obdt9v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A5-Deuter.html#c9v20">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Deut9:20">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ובאהר֗ן התאנ֧ף יהו֛ה מא֖ד להשמיד֑ו ואתפל֛ל גם־ בע֥ד אהר֖ן בע֥ת <span class="goerwitz-tms-focus-highlight">ההֽוא</span></p>
 <table class="goerwitz-tms-sat">
@@ -548,6 +664,17 @@ dt 9:20</h2>
 <tr><td lang="hbo" dir="rtl">ההֽוא׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="8" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="7" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="3" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="3" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="2" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="revia_phrase">revp</td><td colspan="2" title="tifcha_clause">tipc</td><td colspan="1"></td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="5"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="revia">rev</td><td title="darga tevir">dar tev</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="tevir">tev</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obdt10v15">
@@ -663,10 +790,10 @@ dt 24:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmdt25v9">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obdt25v9">
 dt 25:9</h2>
-<p><a href="#tmdt25v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obdt25v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A5-Deuter.html#c25v9">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Deut25:9">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ונגש֨ה יבמת֣ו אליו֮ לעינ֣י הזקנים֒ וחלצ֤ה נעלו֙ מע֣ל רגל֔ו וירק֖ה בפנ֑יו וענתה֙ וא֣מר֔ה כ֚כה יעש֣ה לא֔יש אש֥ר לא־ יבנ֖ה את־ ב֥ית <span class="goerwitz-tms-focus-highlight">אחֽיו</span></p>
 <table class="goerwitz-tms-sat">
@@ -674,6 +801,17 @@ dt 25:9</h2>
 <tr><td lang="hbo" dir="rtl">אחֽיו׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="13" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="12" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="6" title="atnach_clause">atnc</td><td colspan="6" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="segolta_clause">segac</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="4" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="zarqa_phrase">zarp</td><td title="segolta_phrase">segap</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="2"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="2"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="azla munach zarqa">qom mun zar</td><td title="munach segolta">mun sega</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="yetiv">yet</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obdt31v7">
@@ -868,10 +1006,10 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tm1s6v19">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="ob1s6v19">
 1s 6:19</h2>
-<p><a href="#tm1s6v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#ob1s6v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/BA-1Samuel.html#c6v19">Mwd</a> | <a href="https://tanach.us/Tanach.xml?1Sam6:19">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וי֞ך באנש֣י בית־ ש֗מש כ֤י ראו֙ באר֣ון יהו֔ה וי֤ך בעם֙ שבע֣ים א֔יש חמש֥ים א֖לף א֑יש ויתאבל֣ו הע֔ם כי־ הכ֧ה יהו֛ה בע֖ם מכ֥ה <span class="goerwitz-tms-focus-highlight">גדולֽה</span></p>
 <table class="goerwitz-tms-sat">
@@ -879,6 +1017,17 @@ ju 21:16</h2>
 <tr><td lang="hbo" dir="rtl">גדולֽה׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="13" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="12" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="8" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="4" title="atnach_clause">atnc</td><td title="zaqef_phrase">zaqqp</td><td colspan="3" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="1"></td><td colspan="2" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="1"></td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="gershayim">ger2</td><td title="munach revia">mun rev</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="munach zaqef">mun zaqq</td><td title="darga tevir">dar tev</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="ob1s14v3">
@@ -1702,10 +1851,10 @@ ek 14:11</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmek33v20">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obek33v20">
 ek 33:20</h2>
-<p><a href="#tmek33v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obek33v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/C3-Ezekiel.html#c33v20">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Ezek33:20">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ואמרת֕ם ל֥א יתכ֖ן ד֣רך אדנ֑י א֧יש כדרכ֛יו אשפ֥וט אתכ֖ם ב֥ית <span class="goerwitz-tms-focus-highlight">ישראֽל</span></p>
 <table class="goerwitz-tms-sat">
@@ -1713,11 +1862,21 @@ ek 33:20</h2>
 <tr><td lang="hbo" dir="rtl">ישראֽל׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="7" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="6" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="3" title="atnach_clause">atnc</td><td colspan="3" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="1"></td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="zaqefgadol">zaqg</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="darga tevir">dar tev</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmho4v19">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obho4v19">
 ho 4:19</h2>
-<p><a href="#tmho4v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obho4v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/CA-Hosea.html#c4v19">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Hos4:19">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">צר֥ר ר֛וח אות֖ה בכנפ֑יה ויב֖שו <span class="goerwitz-tms-focus-highlight">מזבחותֽם</span></p>
 <table class="goerwitz-tms-sat">
@@ -1725,11 +1884,21 @@ ho 4:19</h2>
 <tr><td lang="hbo" dir="rtl">מזבחותֽם׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="6" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="5" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="3" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="4"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mereka tevir">mer tev</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="tifcha">tip</td><td title="silluq">slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmho8v9">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obho8v9">
 ho 8:9</h2>
-<p><a href="#tmho8v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obho8v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/CA-Hosea.html#c8v9">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Hos8:9">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">כי־ ה֙מה֙ על֣ו אש֔ור פ֖רא בוד֣ד ל֑ו אפר֖ים התנ֥ו <span class="goerwitz-tms-focus-highlight">אהבֽים</span></p>
 <table class="goerwitz-tms-sat">
@@ -1737,6 +1906,16 @@ ho 8:9</h2>
 <tr><td lang="hbo" dir="rtl">אהבֽים׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="7" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="6" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="3"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obho11v7">
@@ -1758,10 +1937,10 @@ ho 11:7</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmam1v14">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obam1v14">
 am 1:14</h2>
-<p><a href="#tmam1v14" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obam1v14" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/CC-Amos.html#c1v14">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Am1:14">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">והצ֤תי אש֙ בחומ֣ת רב֔ה ואכל֖ה ארמנות֑יה בתרועה֙ בי֣ום מלחמ֔ה בס֖ער בי֥ום <span class="goerwitz-tms-focus-highlight">סופֽה</span></p>
 <table class="goerwitz-tms-sat">
@@ -1769,11 +1948,21 @@ am 1:14</h2>
 <tr><td lang="hbo" dir="rtl">סופֽה׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="9" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="8" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmam6v6">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obam6v6">
 am 6:6</h2>
-<p><a href="#tmam6v6" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obam6v6" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/CC-Amos.html#c6v6">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Am6:6">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">השת֤ים במזרקי֙ י֔ין וראש֥ית שמנ֖ים ימש֑חו ול֥א נחל֖ו על־ ש֥בר <span class="goerwitz-tms-focus-highlight">יוסֽף</span></p>
 <table class="goerwitz-tms-sat">
@@ -1781,11 +1970,21 @@ am 6:6</h2>
 <tr><td lang="hbo" dir="rtl">יוסֽף׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="7" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="6" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="3"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="y">
-<hr><h2 id="tmam9v5">
+<section class="goerwitz-verse" data-kind="ob" data-msp="y">
+<hr><h2 id="obam9v5">
 am 9:5</h2>
-<p><a href="#tmam9v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
+<p><a href="#obam9v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/CC-Amos.html#c9v5">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Am9:5">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ואדנ֨י יהו֜ה הצבא֗ות הנוג֤ע בא֙רץ֙ ותמ֔וג ואבל֖ו כל־ י֣ושבי ב֑ה ועלת֤ה כיאר֙ כל֔ה ושקע֖ה כיא֥ר <span class="goerwitz-tms-focus-highlight">מצרֽים</span></p>
 <table class="goerwitz-tms-sat">
@@ -1793,6 +1992,17 @@ am 9:5</h2>
 <tr><td lang="hbo" dir="rtl">מצרֽים׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">Likely the sof pasuq is missing from the start of the pipeline, i.e. from the LC.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="11" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="10" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="6" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="7"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="azla geresh">qom ger</td><td title="revia">rev</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="tm" data-msp="n">
 <hr><h2 id="tmob1v1">

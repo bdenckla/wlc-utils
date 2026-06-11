@@ -120,6 +120,9 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
 # leaf-name (yylval.leaf) for each token type, from tnk2acc.l.
 _LEAF: dict[str, str] = {
     "SOFPASUQ": "sof pasuq",
+    # Synthetic terminator for a verse missing its sof pasuq (never printed: the
+    # grammar production discards it and emits a distinct sof_pasuq_phrase ERROR).
+    "MISSING_SOFPASUQ": "",
     "SILLUQ": "silluq",
     "ATNACH": "atnach",
     "SEGOLTA": "segolta",
@@ -201,6 +204,12 @@ def scan_accents(body: str, location: str, has_legarmeh: HasLegarmeh) -> list[To
     tokens: list[Token] = []
     pos = 0
     n = len(body)
+    saw_sofpasuq = False
+    # Insertion index for recovering a *verse-final* silluq when the verse turns
+    # out to be missing its sof pasuq (see the post-loop block below).  Set when a
+    # meteg/silluq code (35|75|95) is swallowed; reset whenever any later accent is
+    # emitted, so only a trailing (verse-final) silluq survives.
+    pending_silluq: int | None = None
     while pos < n:
         best_len = 0
         best_type: str | None = None
@@ -221,9 +230,27 @@ def scan_accents(body: str, location: str, has_legarmeh: HasLegarmeh) -> list[To
             best_type = "LEGARMEH" if has_legarmeh(location) else "MUNACH"
         if best_type is not None:
             tokens.append(Token(best_type, _LEAF[best_type]))
+            pending_silluq = None
             if best_type == "SOFPASUQ":
+                saw_sofpasuq = True
                 break
+        elif body[pos : pos + 2] in ("35", "75", "95"):
+            # A swallowed meteg/silluq code; remember where its SILLUQ token would
+            # go if it proves to be the verse-final silluq of a sof-pasuq-less verse.
+            pending_silluq = len(tokens)
         pos += advance
+
+    # Extension beyond tnk2acc.l: tolerate a verse missing its sof pasuq (Unicode
+    # SOF PASUQ / code 00).  Such a verse loses *both* end-of-verse markers -- with
+    # no 00, the trailing silluq's SILLUQ rule (which requires a following 00) does
+    # not fire either, so the stream ends with nothing for the grammar to reduce.
+    # Recover the verse-final silluq as a real SILLUQ (so the anomaly is attributed
+    # to the sof pasuq, not misread as a missing silluq) and append a distinct
+    # MISSING_SOFPASUQ terminator that the grammar flags as a sof_pasuq ERROR.
+    if not saw_sofpasuq:
+        if pending_silluq is not None:
+            tokens.insert(pending_silluq, Token("SILLUQ", _LEAF["SILLUQ"]))
+        tokens.append(Token("MISSING_SOFPASUQ", _LEAF["MISSING_SOFPASUQ"]))
     return tokens
 
 

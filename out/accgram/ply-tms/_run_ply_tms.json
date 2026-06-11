@@ -4,9 +4,9 @@
     "troublemakers_total": 49,
     "by_bucket": {
       "clean": 0,
-      "error-tree": 26,
+      "error-tree": 47,
       "location-only": 0,
-      "no-output": 23,
+      "no-output": 2,
       "missing-input": 0
     },
     "reclassification_candidates": [
@@ -14,16 +14,29 @@
       "1k 16:33",
       "1k 19:11",
       "1k 20:29",
+      "1s 6:19",
       "2c 22:12",
       "2c 26:15",
       "2k 23:36",
+      "am 1:14",
+      "am 6:6",
+      "am 9:5",
       "da 2:41",
+      "dt 9:20",
       "dt 13:15",
+      "dt 25:9",
       "ec 7:21",
       "ec 9:18",
       "ek 11:1",
       "ek 14:11",
+      "ek 33:20",
+      "ex 2:5",
+      "ex 14:25",
+      "ex 14:29",
+      "ex 34:6",
       "hg 2:12",
+      "ho 4:19",
+      "ho 8:9",
       "is 36:2",
       "je 4:19",
       "je 9:10",
@@ -34,8 +47,16 @@
       "je 48:12",
       "je 49:19",
       "lm 5:5",
+      "lv 18:17",
+      "lv 19:1",
+      "lv 26:7",
       "mi 2:7",
-      "nu 20:19"
+      "nu 7:32",
+      "nu 7:40",
+      "nu 7:55",
+      "nu 7:68",
+      "nu 20:19",
+      "nu 25:19"
     ]
   },
   "verses": [
@@ -66,8 +87,8 @@
     {
       "ref": "1s 6:19",
       "reference": "1Samuel 6:19",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 zaqef_clause\n        4 revia_clause\n          5 geresh_phrase\n            gershayim \n          5 revia_phrase\n            munach revia \n        4 zaqef_clause\n          5 pashta_phrase\n            mahpak pashta \n          5 zaqef_phrase\n            munach zaqef \n      3 atnach_clause\n        4 zaqef_clause\n          5 pashta_phrase\n            mahpak pashta \n          5 zaqef_phrase\n            munach zaqef \n        4 atnach_clause\n          5 tifcha_phrase\n            mereka tifcha \n          5 atnach_phrase\n            atnach \n    2 silluq_clause\n      3 zaqef_phrase\n        munach zaqef \n      3 silluq_clause\n        4 tifcha_clause\n          5 tevir_phrase\n            darga tevir \n          5 tifcha_phrase\n            tifcha \n        4 silluq_phrase\n          mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "2c 22:12",
@@ -90,20 +111,20 @@
     {
       "ref": "am 1:14",
       "reference": "Amos 1:14",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 zaqef_clause\n        4 pashta_phrase\n          mahpak pashta \n        4 zaqef_phrase\n          munach zaqef \n      3 atnach_clause\n        4 tifcha_phrase\n          tifcha \n        4 atnach_phrase\n          atnach \n    2 silluq_clause\n      3 zaqef_clause\n        4 pashta_phrase\n          pashta \n        4 zaqef_phrase\n          munach zaqef \n      3 silluq_clause\n        4 tifcha_phrase\n          tifcha \n        4 silluq_phrase\n          mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "am 6:6",
       "reference": "Amos 6:6",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 zaqef_clause\n        4 pashta_phrase\n          mahpak pashta \n        4 zaqef_phrase\n          zaqef \n      3 atnach_clause\n        4 tifcha_phrase\n          mereka tifcha \n        4 atnach_phrase\n          atnach \n    2 silluq_clause\n      3 tifcha_phrase\n        mereka tifcha \n      3 silluq_phrase\n        mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "am 9:5",
       "reference": "Amos 9:5",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 zaqef_clause\n        4 revia_clause\n          5 geresh_phrase\n            azla geresh \n          5 revia_phrase\n            revia \n        4 zaqef_clause\n          5 pashta_phrase\n            mahpak pashta \n          5 zaqef_phrase\n            zaqef \n      3 atnach_clause\n        4 tifcha_phrase\n          tifcha \n        4 atnach_phrase\n          munach atnach \n    2 silluq_clause\n      3 zaqef_clause\n        4 pashta_phrase\n          mahpak pashta \n        4 zaqef_phrase\n          zaqef \n      3 silluq_clause\n        4 tifcha_phrase\n          tifcha \n        4 silluq_phrase\n          mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "da 2:41",
@@ -114,8 +135,8 @@
     {
       "ref": "dt 9:20",
       "reference": "Deuter 9:20",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 tifcha_clause\n        4 revia_phrase\n          revia \n        4 tifcha_clause\n          5 tevir_phrase\n            darga tevir \n          5 tifcha_phrase\n            tifcha \n      3 atnach_phrase\n        atnach \n    2 silluq_clause\n      3 tifcha_clause\n        4 tevir_phrase\n          tevir \n        4 tifcha_phrase\n          mereka tifcha \n      3 silluq_phrase\n        mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "dt 13:15",
@@ -126,8 +147,8 @@
     {
       "ref": "dt 25:9",
       "reference": "Deuter 25:9",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 segolta_clause\n        4 zarqa_phrase\n          azla munach zarqa \n        4 segolta_phrase\n          munach segolta \n      3 atnach_clause\n        4 zaqef_clause\n          5 pashta_phrase\n            mahpak pashta \n          5 zaqef_phrase\n            munach zaqef \n        4 atnach_clause\n          5 tifcha_phrase\n            tifcha \n          5 atnach_phrase\n            atnach \n    2 silluq_clause\n      3 zaqef_clause\n        4 pashta_phrase\n          pashta \n        4 zaqef_phrase\n          munach zaqef \n      3 silluq_clause\n        4 zaqef_clause\n          5 pashta_phrase\n            yetiv \n          5 zaqef_phrase\n            munach zaqef \n        4 silluq_clause\n          5 tifcha_phrase\n            mereka tifcha \n          5 silluq_phrase\n            mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "ec 7:21",
@@ -156,32 +177,32 @@
     {
       "ref": "ek 33:20",
       "reference": "Ezekiel 33:20",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 zaqef_phrase\n        zaqefgadol \n      3 atnach_clause\n        4 tifcha_phrase\n          mereka tifcha \n        4 atnach_phrase\n          munach atnach \n    2 silluq_clause\n      3 tifcha_clause\n        4 tevir_phrase\n          darga tevir \n        4 tifcha_phrase\n          mereka tifcha \n      3 silluq_phrase\n        mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "ex 2:5",
       "reference": "Exodus 2:5",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 zaqef_clause\n        4 pashta_phrase\n          mahpak pashta \n        4 zaqef_phrase\n          munach zaqef \n      3 atnach_clause\n        4 tifcha_phrase\n          mereka tifcha \n        4 atnach_phrase\n          munach atnach \n    2 silluq_clause\n      3 zaqef_clause\n        4 pashta_phrase\n          mahpak pashta \n        4 zaqef_phrase\n          munach zaqef \n      3 silluq_clause\n        4 tifcha_phrase\n          mereka tifcha \n        4 silluq_phrase\n          silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "ex 14:25",
       "reference": "Exodus 14:25",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 zaqef_clause\n        4 revia_phrase\n          revia \n        4 zaqef_clause\n          5 pashta_phrase\n            yetiv \n          5 zaqef_phrase\n            munach zaqef \n      3 atnach_clause\n        4 tifcha_phrase\n          tifcha \n        4 atnach_phrase\n          atnach \n    2 silluq_clause\n      3 zaqef_clause\n        4 revia_phrase\n          munach revia \n        4 zaqef_clause\n          5 pashta_phrase\n            pashta \n          5 zaqef_phrase\n            munach zaqef \n      3 silluq_clause\n        4 zaqef_phrase\n          munach zaqef \n        4 silluq_clause\n          5 tifcha_phrase\n            mereka tifcha \n          5 silluq_phrase\n            silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "ex 14:29",
       "reference": "Exodus 14:29",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 tifcha_clause\n        4 tevir_phrase\n          darga tevir \n        4 tifcha_phrase\n          mereka tifcha \n      3 atnach_phrase\n        munach atnach \n    2 silluq_clause\n      3 zaqef_clause\n        4 pashta_phrase\n          mahpak pashta \n        4 zaqef_phrase\n          zaqef \n      3 silluq_clause\n        4 tifcha_phrase\n          tifcha \n        4 silluq_phrase\n          silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "ex 34:6",
       "reference": "Exodus 34:6",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 segolta_clause\n        4 zarqa_phrase\n          azla mereka zarqa \n        4 segolta_phrase\n          segolta \n      3 atnach_clause\n        4 zaqef_phrase\n          munach zaqef \n        4 atnach_clause\n          5 tifcha_phrase\n            mereka tifcha \n          5 atnach_phrase\n            atnach \n    2 silluq_clause\n      3 tifcha_phrase\n        mereka tifcha \n      3 silluq_phrase\n        mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "hg 2:12",
@@ -192,14 +213,14 @@
     {
       "ref": "ho 4:19",
       "reference": "Hosea 4:19",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 tifcha_clause\n        4 tevir_phrase\n          mereka tevir \n        4 tifcha_phrase\n          tifcha \n      3 atnach_phrase\n        atnach \n    2 silluq_clause\n      3 tifcha_phrase\n        tifcha \n      3 silluq_phrase\n        silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "ho 8:9",
       "reference": "Hosea 8:9",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 zaqef_clause\n        4 pashta_phrase\n          pashta \n        4 zaqef_phrase\n          munach zaqef \n      3 atnach_clause\n        4 tifcha_phrase\n          tifcha \n        4 atnach_phrase\n          munach atnach \n    2 silluq_clause\n      3 tifcha_phrase\n        tifcha \n      3 silluq_phrase\n        mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "is 36:2",
@@ -270,20 +291,20 @@
     {
       "ref": "lv 18:17",
       "reference": "Levit 18:17",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 tifcha_clause\n        4 tevir_phrase\n          mereka tevir \n        4 tifcha_phrase\n          tifcha \n      3 atnach_phrase\n        munach atnach \n    2 silluq_clause\n      3 zaqef_clause\n        4 revia_clause\n          5 geresh_phrase\n            gershayim \n          5 revia_phrase\n            revia \n        4 zaqef_clause\n          5 pashta_phrase\n            mahpak pashta \n          5 zaqef_phrase\n            munach zaqef \n      3 silluq_clause\n        4 tifcha_phrase\n          mereka tifcha \n        4 silluq_phrase\n          mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "lv 19:1",
       "reference": "Levit 19:1",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 tifcha_phrase\n      mereka tifcha \n    2 silluq_phrase\n      mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "lv 26:7",
       "reference": "Levit 26:7",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 tifcha_phrase\n        tifcha \n      3 atnach_phrase\n        atnach \n    2 silluq_clause\n      3 tifcha_phrase\n        mereka tifcha \n      3 silluq_phrase\n        silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "mi 2:7",
@@ -294,26 +315,26 @@
     {
       "ref": "nu 7:32",
       "reference": "Numbers 7:32",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 tifcha_clause\n      3 tevir_phrase\n        mereka tevir \n      3 tifcha_phrase\n        mereka tifcha \n    2 silluq_phrase\n      mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "nu 7:40",
       "reference": "Numbers 7:40",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 tifcha_phrase\n      mereka tifcha \n    2 silluq_phrase\n      silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "nu 7:55",
       "reference": "Numbers 7:55",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 segolta_clause\n        4 revia_clause\n          5 geresh_phrase\n            gershayim \n          5 revia_phrase\n            munach revia \n        4 segolta_clause\n          5 zarqa_phrase\n            munach zarqa \n          5 segolta_phrase\n            segolta \n      3 atnach_clause\n        4 zaqef_clause\n          5 pashta_phrase\n            mahpak pashta \n          5 zaqef_phrase\n            zaqef \n        4 atnach_clause\n          5 tifcha_phrase\n            mereka tifcha \n          5 atnach_phrase\n            munach atnach \n    2 silluq_clause\n      3 tifcha_clause\n        4 revia_clause\n          5 legarmeh_phrase\n            legarmeh \n          5 revia_phrase\n            revia \n        4 tifcha_clause\n          5 tevir_phrase\n            tevir \n          5 tifcha_phrase\n            mereka tifcha \n      3 silluq_phrase\n        silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "nu 7:68",
       "reference": "Numbers 7:68",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 tifcha_clause\n      3 tevir_phrase\n        mereka tevir \n      3 tifcha_phrase\n        mereka tifcha \n    2 silluq_phrase\n      mereka silluq \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "nu 20:19",
@@ -324,8 +345,8 @@
     {
       "ref": "nu 25:19",
       "reference": "Numbers 25:19",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 silluq_clause\n    2 atnach_clause\n      3 tifcha_phrase\n        tifcha \n      3 atnach_phrase\n        munach atnach \n    2 silluq_phrase\n      ERROR \n  1 sof_pasuq_phrase\n    ERROR \n"
     },
     {
       "ref": "ob 1:1",

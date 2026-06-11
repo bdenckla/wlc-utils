@@ -70,3 +70,24 @@ Ezekiel 14:11
         tifcha 
       3 silluq_phrase
         mereka silluq 
+Ezekiel 33:20
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 zaqef_phrase
+        zaqefgadol 
+      3 atnach_clause
+        4 tifcha_phrase
+          mereka tifcha 
+        4 atnach_phrase
+          munach atnach 
+    2 silluq_clause
+      3 tifcha_clause
+        4 tevir_phrase
+          darga tevir 
+        4 tifcha_phrase
+          mereka tifcha 
+      3 silluq_phrase
+        mereka silluq 
+  1 sof_pasuq_phrase
+    ERROR 

@@ -1,3 +1,78 @@
+Numbers 7:32
+0 silluq_clause
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        mereka tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 silluq_phrase
+      mereka silluq 
+  1 sof_pasuq_phrase
+    ERROR 
+Numbers 7:40
+0 silluq_clause
+  1 silluq_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 silluq_phrase
+      silluq 
+  1 sof_pasuq_phrase
+    ERROR 
+Numbers 7:55
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 segolta_clause
+        4 revia_clause
+          5 geresh_phrase
+            gershayim 
+          5 revia_phrase
+            munach revia 
+        4 segolta_clause
+          5 zarqa_phrase
+            munach zarqa 
+          5 segolta_phrase
+            segolta 
+      3 atnach_clause
+        4 zaqef_clause
+          5 pashta_phrase
+            mahpak pashta 
+          5 zaqef_phrase
+            zaqef 
+        4 atnach_clause
+          5 tifcha_phrase
+            mereka tifcha 
+          5 atnach_phrase
+            munach atnach 
+    2 silluq_clause
+      3 tifcha_clause
+        4 revia_clause
+          5 legarmeh_phrase
+            legarmeh 
+          5 revia_phrase
+            revia 
+        4 tifcha_clause
+          5 tevir_phrase
+            tevir 
+          5 tifcha_phrase
+            mereka tifcha 
+      3 silluq_phrase
+        silluq 
+  1 sof_pasuq_phrase
+    ERROR 
+Numbers 7:68
+0 silluq_clause
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        mereka tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 silluq_phrase
+      mereka silluq 
+  1 sof_pasuq_phrase
+    ERROR 
 Numbers 20:19
 0 silluq_clause
   1 atnach_clause
@@ -19,3 +94,15 @@ Numbers 20:19
       mereka tifcha 
     2 silluq_phrase
       mereka silluq 
+Numbers 25:19
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 tifcha_phrase
+        tifcha 
+      3 atnach_phrase
+        munach atnach 
+    2 silluq_phrase
+      ERROR 
+  1 sof_pasuq_phrase
+    ERROR 

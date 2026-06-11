@@ -42,6 +42,9 @@ from accgram.ply_tree import TN, add_leaves, make_node
 tokens = (
     "TILDE",
     "SOFPASUQ",
+    # Synthetic end-of-verse marker the scanner appends to a verse missing its sof
+    # pasuq (code 00); see p_pasuq_missing_sofpasuq.  Not in acc2tre.y's %token list.
+    "MISSING_SOFPASUQ",
     "SILLUQ",
     "ATNACH",
     "SEGOLTA",
@@ -80,6 +83,16 @@ start = "pasuq"
 def p_pasuq(p):
     "pasuq : TILDE silluq_clause SOFPASUQ"
     p[0] = p[2]
+
+
+def p_pasuq_missing_sofpasuq(p):
+    "pasuq : TILDE silluq_clause MISSING_SOFPASUQ"
+    # Extension beyond acc2tre.y: a verse missing its sof pasuq (Unicode SOF PASUQ /
+    # code 00) parses normally, but is flagged distinctly with a sof_pasuq_phrase
+    # ERROR leaf -- making it an oddball rather than a no-output troublemaker.  The
+    # ERROR is separate from the silluq_phrase ERROR used for a missing silluq, so
+    # the marker correctly identifies the sof pasuq as the absent mark.
+    p[0] = make_node("silluq_clause", p[2], add_leaves("sof_pasuq_phrase", "ERROR"))
 
 
 # --- silluq --------------------------------------------------------------------
