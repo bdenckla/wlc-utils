@@ -16,6 +16,21 @@ Current top-level Python buckets are:
 
 The old transitional `py/py_misc/` compatibility layer has been removed.
 
+## Setup
+
+This repository uses a Python virtual environment (`.venv`). Do **not** rely on
+globally-installed packages — the entry scripts and test commands below all invoke
+`.venv\Scripts\python.exe`.
+
+One-time setup from the repo root (Python 3.11+):
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Third-party dependencies are listed in `requirements.txt`.
+
 Run the WLC JSON/Unicode workflow from the repo root with:
 
 ```powershell
@@ -33,7 +48,7 @@ Additional WLC-focused entry scripts now live here as well:
 Run repository tests from the repo root with:
 
 ```powershell
-.venv\Scripts\python.exe py\main_test.py -v
+.venv\Scripts\python.exe -m pytest py/tests
 ```
 
 ## GitHub Pages
