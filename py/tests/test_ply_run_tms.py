@@ -33,21 +33,23 @@ _IN_DIR = default_in_dir(_REPO_ROOT)
 # Observed buckets on the current corpus (see out/accgram/ply-tms/_run_ply_tms.json).
 _EXPECTED_COUNTS = {
     CLEAN: 0,
-    ERROR_TREE: 48,
+    ERROR_TREE: 49,
     LOCATION_ONLY_BUCKET: 0,
-    NO_OUTPUT: 1,
+    NO_OUTPUT: 0,
     MISSING_INPUT: 0,
 }
 # A few representative verses, pinned to their observed bucket.  ex 34:6 is a
-# missing-sof-pasuq verse now flagged as an error-tree (sof_pasuq_phrase ERROR);
-# ob 1:1 is recovered via the tevir_clause-before-silluq error production.
+# missing-sof-pasuq verse flagged as an error-tree (sof_pasuq_phrase ERROR); ob 1:1
+# (tevir before silluq) and ju 13:18 (silluq transcribed as a tevir, no silluq) are
+# recovered via the two tevir_clause error productions.  Every troublemaker now
+# parses into an error-tree, so there is no longer a no-output verse to spot-check.
 _SPOT_CHECKS = {
     ("1k", 6, 2): ERROR_TREE,
     ("je", 9, 10): ERROR_TREE,
     ("nu", 20, 19): ERROR_TREE,
     ("ex", 34, 6): ERROR_TREE,
     ("ob", 1, 1): ERROR_TREE,
-    ("ju", 13, 18): NO_OUTPUT,
+    ("ju", 13, 18): ERROR_TREE,
 }
 
 

@@ -1046,6 +1046,20 @@ def p_tevir_tifcha_clause_error(p):
     p[0] = make_node("tifcha_clause", p[1], add_leaves("tifcha_phrase", "ERROR"))
 
 
+def p_tifcha_silluq_clause_error(p):
+    # Extension beyond acc2tre.y (cf. p_tevir_tifcha_clause_error above): recover a
+    # verse-final tevir_clause with no silluq at all before the sof pasuq -- e.g.
+    # Judges 13:18, "... ATNACH TEVIR SOFPASUQ", where the silluq is transcribed as
+    # a tevir (a speck in the manuscript).  Same RHS as the tevir_tifcha_clause
+    # error rule but reduced on the end-of-verse SOFPASUQ lookahead (disjoint from
+    # that rule's silluq-starter lookaheads, so no conflict): close the verse with
+    # the absent silluq flagged ERROR, keeping the stray tevir.  Without this the
+    # verse yields no output -- a troublemaker.
+    "tifcha_silluq_clause : tevir_clause error"
+    p.parser.errok()
+    p[0] = make_node("silluq_clause", p[1], add_leaves("silluq_phrase", "ERROR"))
+
+
 def p_revia_phrase_error(p):
     "revia_phrase : error REVIA"
     p.parser.errok()

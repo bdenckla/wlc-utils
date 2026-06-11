@@ -7,66 +7,7 @@
   "uxlc_dir": "C:\\Users\\BenDe\\GitRepos\\wlc-utils\\in\\UXLC-39",
   "mam_simple_dir": "C:\\Users\\BenDe\\GitRepos\\MAM-simple\\json-vtrad-bhs",
   "summary": {
-    "troublemakers": 1
+    "troublemakers": 0
   },
-  "troublemakers": [
-    {
-      "ref": "ju 13:18",
-      "content": "WA/Y.O70)MER L./OW03]Q]n]p MAL:)A74K: Y:HWF80H LF71/M.FH Z.E73H T.I$:)A74L LI/$:M/I92Y W:/HW.)-PE91LI)Y00]Q]c]n S",
-      "wlc422_kq_u_verse": {
-        "vels": [
-          "וי֤אמר",
-          {
-            "word": "לו֙",
-            "notes": "]Q]n]p"
-          },
-          "מלא֣ך",
-          "יהו֔ה",
-          "ל֥מה",
-          "ז֖ה",
-          "תשא֣ל",
-          "לשמ֑י",
-          "והוא־",
-          {
-            "word": "פ֛לאי׃",
-            "notes": "]Q]c]n"
-          }
-        ]
-      },
-      "uxlc_verse": [
-        "וי֤אמר",
-        "לו֙",
-        "מלא֣ך",
-        "יהו֔ה",
-        "ל֥מה",
-        "ז֖ה",
-        "תשא֣ל",
-        "לשמ֑י",
-        "והוא־",
-        {
-          "text": "פ֛לאי׃",
-          "note": "t"
-        }
-      ],
-      "diff_wlc_uxlc": [],
-      "mam_simple_verse": {
-        "vels": [
-          "וי֤אמר",
-          "לו֙",
-          "מלא֣ך",
-          "יהו֔ה",
-          "ל֥מה",
-          "ז֖ה",
-          "תשא֣ל",
-          "לשמ֑י",
-          "והוא־",
-          "פֽלאי׃"
-        ]
-      },
-      "diff_wlc_mam": {
-        "wlc422": "פ֛לאי׃",
-        "mam_simple": "פֽלאי׃"
-      }
-    }
-  ]
+  "troublemakers": []
 }

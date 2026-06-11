@@ -14,8 +14,8 @@ Goerwitz Run on WLC</h1>
 <h2>
 Introduction</h2>
 <p>This page lists the 100 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filters below to narrow the list along two dimensions.</p>
-<p>Troublemakers (1 verses) produce no output even under the PLY port. Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks.</p>
-<p>Oddballs (99 verses) are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree.</p>
+<p>Troublemakers (0 verses) produce no output even under the PLY port. Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks.</p>
+<p>Oddballs (100 verses) are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree.</p>
 <p>The second dimension is whether a sof pasuq is missing somewhere in the LC-BHS-WLC pipeline (msp-y) or not (msp-n).</p>
 <p>The Goerwitz accent grammar checker is described in the following article:</p>
 <p>Goerwitz, Richard. ‹A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts.› In Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg (pp. 111-122). (<a href="https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b">Studies in Ancient Oriental Civilization 60</a>). The Oriental Institute, Chicago, 2007. ISBN 978-1-885923-41-7.</p>
@@ -68,7 +68,7 @@ WLC Bracket Notes</h2>
 <fieldset>
 <legend>
 Kind</legend>
-<label><input type="checkbox" class="gf-kind" value="ob" checked="checked"> Oddballs (99)</label><label><input type="checkbox" class="gf-kind" value="tm" checked="checked"> Troublemakers (1)</label></fieldset>
+<label><input type="checkbox" class="gf-kind" value="ob" checked="checked"> Oddballs (100)</label><label><input type="checkbox" class="gf-kind" value="tm" checked="checked"> Troublemakers (0)</label></fieldset>
 <fieldset>
 <legend>
 Missing sof pasuq</legend>
@@ -968,10 +968,10 @@ ju 11:24</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="n">
-<hr><h2 id="tmju13v18">
+<section class="goerwitz-verse" data-kind="ob" data-msp="n">
+<hr><h2 id="obju13v18">
 ju 13:18</h2>
-<p><a href="#tmju13v18" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHQ transcribes a silluq as a tevir due to a speck.</p>
+<p><a href="#obju13v18" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHQ transcribes a silluq as a tevir due to a speck.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/B2-Judges.html#c13v18">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Judg13:18">UXLC</a> | <a href="https://tanach.us/Notes/Judges/Judges.13.18.10-t.html">UXLC note page</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וי֤אמר לו֙ מלא֣ך יהו֔ה ל֥מה ז֖ה תשא֣ל לשמ֑י והוא־ <span class="goerwitz-tms-focus-highlight">פ֛לאי׃</span></p>
 <table class="goerwitz-tms-sat">
@@ -981,6 +981,15 @@ ju 13:18</h2>
 <p class="goerwitz-tms-comment">Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink. See the image in the UXLC note to which we link above.</p>
 <p class="goerwitz-tms-comment">Even if the editors of BHQ Judges (2011) lacked access to color images, this was an overly-literal, aggressively uncharitable transcription. Even without color, they should have been aware that this could be a non-ink speck on the LC vellum or a non-intentional ink dot. They should have found one of these possibilities more likely than a verse-final tevir. A verse-final tevir is rather far-fetched.</p>
 <p class="goerwitz-tms-comment">Are they attempting to use typography to create a pseudo-photographic image of the LC, or are they trying to transcribe the LC “meaningfully,” using some degree of interpretation to determine the most likely intended meaning of each mark? (Sometimes, as is the case here, the most likely intended meaning of a mark is no meaning at all!)</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="6" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="tevir_phrase">tevp</td><td title="silluq_phrase">slqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="tevir">tev</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obju21v16">
