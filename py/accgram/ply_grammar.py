@@ -1032,6 +1032,20 @@ def p_tifcha_phrase_error(p):
     p[0] = add_leaves("tifcha_phrase", "ERROR")
 
 
+def p_tevir_tifcha_clause_error(p):
+    # Extension beyond acc2tre.y (cf. p_pasuq_missing_sofpasuq): recover a
+    # tevir_clause whose required following tifcha is absent -- e.g. Obadiah 1:1,
+    # "... ZAQEF TEVIR MEREKA SILLUQ", a tevir illegally before silluq.  Without
+    # this, PLY's recovery stalls in the tevir_clause context (its only error
+    # production, tifcha_phrase : error TIFCHA, needs a TIFCHA that never comes)
+    # and the verse yields no output -- a troublemaker.  Completing the
+    # tifcha_clause with an ERROR leaf lets tifcha_silluq_clause consume the
+    # trailing silluq, so the verse becomes an ERROR-tree oddball instead.
+    "tevir_tifcha_clause : tevir_clause error"
+    p.parser.errok()
+    p[0] = make_node("tifcha_clause", p[1], add_leaves("tifcha_phrase", "ERROR"))
+
+
 def p_revia_phrase_error(p):
     "revia_phrase : error REVIA"
     p.parser.errok()

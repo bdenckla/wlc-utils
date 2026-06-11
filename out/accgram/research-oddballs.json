@@ -7,7 +7,7 @@
   "uxlc_dir": "C:\\Users\\BenDe\\GitRepos\\wlc-utils\\in\\UXLC-39",
   "mam_simple_dir": "C:\\Users\\BenDe\\GitRepos\\MAM-simple\\json-vtrad-bhs",
   "summary": {
-    "oddballs": 98
+    "oddballs": 99
   },
   "oddballs": [
     {
@@ -7308,6 +7308,87 @@
       "diff_wlc_mam": {
         "wlc422": "לאחיו׃",
         "mam_simple": "לאחֽיו׃"
+      }
+    },
+    {
+      "ref": "ob 1:1",
+      "content": "X:AZO73WN (O75BAD:YF92H K.O75H-)FMAR04 ):ADON/F63Y Y:HWI61H LE/):EDO81WM $:MW.(F63H $FMA61(:NW. M\"/)\"70T Y:HWFH03 W:/CIYR03 B.A/G.OWYI74M $UL.F80X Q91W.MW. W:/NFQ71W.MFH (FLEY/HF]Q]c]n LA/M.IL:XFMF75H00",
+      "output_file": "wlc_422_ps_ob_ag.txt",
+      "output_dir": "ply-tms",
+      "wlc422_kq_u_verse": {
+        "vels": [
+          "חז֖ון",
+          "עבדי֑ה",
+          "כה־",
+          "אמר֩",
+          "אדנ֨י",
+          "יהו֜ה",
+          "לאד֗ום",
+          "שמוע֨ה",
+          "שמ֜ענו",
+          "מא֤ת",
+          "יהוה֙",
+          "וציר֙",
+          "בגוי֣ם",
+          "של֔ח",
+          "ק֛ומו",
+          "ונק֥ומה",
+          {
+            "word": "עליה",
+            "notes": "]Q]c]n"
+          },
+          "למלחמֽה׃"
+        ]
+      },
+      "uxlc_verse": [
+        "חז֖ון",
+        "עבדי֑ה",
+        "כה־",
+        "אמר֩",
+        "אדנ֨י",
+        "יהו֜ה",
+        "לאד֗ום",
+        "שמוע֨ה",
+        "שמ֜ענו",
+        "מא֤ת",
+        "יהוה֙",
+        "וציר֙",
+        "בגוי֣ם",
+        "של֔ח",
+        "ק֛ומו",
+        "ונק֥ומה",
+        {
+          "text": "עליה",
+          "note": "c"
+        },
+        "למלחמֽה׃"
+      ],
+      "diff_wlc_uxlc": [],
+      "mam_simple_verse": {
+        "vels": [
+          "חז֖ון",
+          "עבדי֑ה",
+          "כה־",
+          "אמר֩",
+          "אדנ֨י",
+          "יהו֜ה",
+          "לאד֗ום",
+          "שמוע֨ה",
+          "שמ֜ענו",
+          "מא֤ת",
+          "יהוה֙",
+          "וציר֙",
+          "בגוי֣ם",
+          "של֔ח",
+          "ק֛ומו",
+          "ונק֥ומה",
+          "על֖יה",
+          "למלחמֽה׃"
+        ]
+      },
+      "diff_wlc_mam": {
+        "wlc422": "עליה",
+        "mam_simple": "על֖יה"
       }
     }
   ]

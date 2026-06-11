@@ -14,8 +14,8 @@ Goerwitz Run on WLC</h1>
 <h2>
 Introduction</h2>
 <p>This page lists the 100 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filters below to narrow the list along two dimensions.</p>
-<p>Troublemakers (2 verses) produce no output even under the PLY port. Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks.</p>
-<p>Oddballs (98 verses) are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree.</p>
+<p>Troublemakers (1 verses) produce no output even under the PLY port. Potential causes of this trouble include WLC quirks, LC quirks, and checker quirks.</p>
+<p>Oddballs (99 verses) are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree.</p>
 <p>The second dimension is whether a sof pasuq is missing somewhere in the LC-BHS-WLC pipeline (msp-y) or not (msp-n).</p>
 <p>The Goerwitz accent grammar checker is described in the following article:</p>
 <p>Goerwitz, Richard. ‹A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts.› In Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg (pp. 111-122). (<a href="https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b">Studies in Ancient Oriental Civilization 60</a>). The Oriental Institute, Chicago, 2007. ISBN 978-1-885923-41-7.</p>
@@ -68,7 +68,7 @@ WLC Bracket Notes</h2>
 <fieldset>
 <legend>
 Kind</legend>
-<label><input type="checkbox" class="gf-kind" value="ob" checked="checked"> Oddballs (98)</label><label><input type="checkbox" class="gf-kind" value="tm" checked="checked"> Troublemakers (2)</label></fieldset>
+<label><input type="checkbox" class="gf-kind" value="ob" checked="checked"> Oddballs (99)</label><label><input type="checkbox" class="gf-kind" value="tm" checked="checked"> Troublemakers (1)</label></fieldset>
 <fieldset>
 <legend>
 Missing sof pasuq</legend>
@@ -2004,10 +2004,10 @@ am 9:5</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-kind="tm" data-msp="n">
-<hr><h2 id="tmob1v1">
+<section class="goerwitz-verse" data-kind="ob" data-msp="n">
+<hr><h2 id="obob1v1">
 ob 1:1</h2>
-<p><a href="#tmob1v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has no visible accent on עליה.</p>
+<p><a href="#obob1v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has no visible accent on עליה.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/CD-Obadiah.html#c1v1">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Ob1:1">UXLC</a> | <a href="https://tanach.us/Notes/Obadiah/Obadiah.1.1.17-c.html">UXLC note page</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">חז֖ון עבדי֑ה כה־ אמר֩ אדנ֨י יהו֜ה לאד֗ום שמוע֨ה שמ֜ענו מא֤ת יהוה֙ וציר֙ בגוי֣ם של֔ח ק֛ומו ונק֥ומה <span class="goerwitz-tms-focus-highlight">עליה</span> למלחמֽה׃</p>
 <table class="goerwitz-tms-sat">
@@ -2015,6 +2015,17 @@ ob 1:1</h2>
 <tr><td lang="hbo" dir="rtl">על֖יה</td><td style="text-align: right;"></td><td>tipeḥa</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="goerwitz-tms-comment">See the image in the UXLC note to which we link above.</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="11" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="9" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="6" title="zaqef_clause">zaqqc</td><td colspan="3" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2"></td><td colspan="2" title="revia_clause">revc</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="2" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="2"></td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td colspan="2" title="pashta_clause">pashc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="4"></td><td title="geresh_phrase">gerp</td><td title="pashta_phrase">pashp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="3"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="telishaqetanna azla geresh">telq qom ger</td><td title="revia">rev</td><td title="azla geresh">qom ger</td><td title="mahpak pashta">mah pash</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tevir">tev</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="silluq">slq</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="ob" data-msp="n">
 <hr><h2 id="obmi2v7">

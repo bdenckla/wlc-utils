@@ -2,17 +2,17 @@
 
 Unlike the goerwitz analog (``oddballs.write_oddballs_json``), which classifies
 verses from the **C** ``accents`` outputs, this module classifies from the **PLY**
-port outputs.  The PLY port produces an ``ERROR``-node tree for 47 of the 49
-hard-coded "troublemakers" (which the C binary emits no output for), so those 47
+port outputs.  The PLY port produces an ``ERROR``-node tree for 48 of the 49
+hard-coded "troublemakers" (which the C binary emits no output for), so those 48
 behave exactly like the original 51 oddballs and are reclassified as oddballs here.
-(Of the 47, 21 are missing-sof-pasuq verses the scanner/grammar flag with a distinct
+(Of the 48, 21 are missing-sof-pasuq verses the scanner/grammar flag with a distinct
 sof_pasuq_phrase ERROR.)
 
 Resulting sets:
-  - **Oddballs (98):** the 51 ``ERROR`` verses in ``out/accgram/ply/`` (tagged
-    ``output_dir="ply"``) plus the 47 ``ERROR`` verses in ``out/accgram/ply-tms/``
+  - **Oddballs (99):** the 51 ``ERROR`` verses in ``out/accgram/ply/`` (tagged
+    ``output_dir="ply"``) plus the 48 ``ERROR`` verses in ``out/accgram/ply-tms/``
     (tagged ``output_dir="ply-tms"``).
-  - **Troublemakers (2):** ``tms.HARDCODED_REFS`` minus the 47 ply-tms oddballs --
+  - **Troublemakers (1):** ``tms.HARDCODED_REFS`` minus the 48 ply-tms oddballs --
     i.e. the verses that produce no output even under the PLY port.
 
 Both JSONs use the same schema as the goerwitz files so ``rtms_rows`` parses them
@@ -116,7 +116,7 @@ def write_ply_oddballs_and_troublemakers(
             "These verses are parsed by the PLY port into a tree containing at least "
             "one line with the token ERROR. They are drawn from two PLY output "
             "directories: ply/ (the 51 verses the C oracle also flags) and ply-tms/ "
-            "(47 verses the C binary emits no output for). The output_dir field on "
+            "(48 verses the C binary emits no output for). The output_dir field on "
             "each row names which directory holds that verse's ERROR tree."
         ),
         "summary": {
@@ -134,7 +134,7 @@ def write_ply_oddballs_and_troublemakers(
         "artifacts_description": "verses producing no output even under the PLY port",
         "payload_provenance_note": (
             "These verses are hardcoded troublemaker exclusions (tms.HARDCODED_REFS) "
-            "that produce no parse tree even under the PLY port, unlike the 47 "
+            "that produce no parse tree even under the PLY port, unlike the 48 "
             "siblings reclassified as oddballs."
         ),
         "summary": {

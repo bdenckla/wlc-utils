@@ -159,7 +159,7 @@ def run(args: argparse.Namespace) -> None:
     oddballs_in_path = getattr(args, "oddballs_in", None)
 
     # (Re)derive the PLY-based oddball/troublemaker sets from the PLY outputs so
-    # the research command never reads out/accgram/goerwitz. The 47 troublemakers
+    # the research command never reads out/accgram/goerwitz. The 48 troublemakers
     # PLY parses into ERROR trees are reclassified as oddballs here.
     if isinstance(oddballs_in_path, Path):
         ply_classify.write_ply_oddballs_and_troublemakers(
@@ -187,8 +187,8 @@ def run(args: argparse.Namespace) -> None:
     elif oddballs_in_path is not None or oddballs_out_path is not None:
         raise ValueError("Expected both oddballs_in and oddballs_out, or neither")
 
-    # Validate notes for every ref displayed with notes: the 2 troublemakers plus
-    # the 47 reclassified oddballs, whose notes are still served from tm_data.
+    # Validate notes for every ref displayed with notes: the 1 troublemaker plus
+    # the 48 reclassified oddballs, whose notes are still served from tm_data.
     reclassified_refs = [
         ref
         for row, _bcv, ref in parsed_oddball_rows
@@ -334,7 +334,7 @@ def _wlc_focus_by_ref() -> dict[str, str | None]:
 def _ob_wlc_focus_by_ref() -> dict[str, str | None]:
     out: dict[str, str | None] = {}
     # Reclassified troublemakers have no ob_data entry; fall back to tm_data so the
-    # 47 still get a WLC focus (their notes are served from tm_data).
+    # 48 still get a WLC focus (their notes are served from tm_data).
     for ref, structured_text in get_structured_text().items():
         out[ref] = _structured_wlc_focus(structured_text)
     for ref, structured_text in ob_data.get_structured_text().items():

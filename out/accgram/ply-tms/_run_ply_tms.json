@@ -4,9 +4,9 @@
     "troublemakers_total": 49,
     "by_bucket": {
       "clean": 0,
-      "error-tree": 47,
+      "error-tree": 48,
       "location-only": 0,
-      "no-output": 2,
+      "no-output": 1,
       "missing-input": 0
     },
     "reclassification_candidates": [
@@ -56,7 +56,8 @@
       "nu 7:55",
       "nu 7:68",
       "nu 20:19",
-      "nu 25:19"
+      "nu 25:19",
+      "ob 1:1"
     ]
   },
   "verses": [
@@ -351,8 +352,8 @@
     {
       "ref": "ob 1:1",
       "reference": "Obadiah 1:1",
-      "bucket": "no-output",
-      "tree": ""
+      "bucket": "error-tree",
+      "tree": "0 silluq_clause\n  1 atnach_clause\n    2 tifcha_phrase\n      tifcha \n    2 atnach_phrase\n      atnach \n  1 silluq_clause\n    2 zaqef_clause\n      3 revia_clause\n        4 geresh_phrase\n          telishaqetanna azla geresh \n        4 revia_phrase\n          revia \n      3 zaqef_clause\n        4 pashta_clause\n          5 geresh_phrase\n            azla geresh \n          5 pashta_phrase\n            mahpak pashta \n        4 zaqef_clause\n          5 pashta_phrase\n            pashta \n          5 zaqef_phrase\n            munach zaqef \n    2 silluq_clause\n      3 tifcha_clause\n        4 tevir_phrase\n          tevir \n        4 tifcha_phrase\n          ERROR \n      3 silluq_phrase\n        silluq \n"
     }
   ]
 }
