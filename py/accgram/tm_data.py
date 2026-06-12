@@ -89,7 +89,7 @@ _LM_0505_07 = (
 )
 _NU_2019_01 = (
     "This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors."
-    " I would have expected all 12 cases to cause trouble for the Goerwitz checker, but this one is the only one that does."
+    " I would have expected all 12 cases to be flagged as oddballs (report “ERROR”), but only seven of them are."
 )
 _NU_2019_02 = (
     "WLC’s first poor decision was to attempt to encode a meaningless scribal whim:"
@@ -116,9 +116,9 @@ _NU_2019_06 = (
     " namely, on the first letter of the syllable ending in lamed, rather than on the lamed itself."
 )
 _NU_2019_07 = (
-    "Although this is the only item of this type in the “troublemakers” set,"
-    " there are six such items in the “oddballs” set."
-    " See, for example, the “Other Goerwitz item” link regarding a similar issue in Lv 4:2 in the “oddballs” set."
+    "This is one of seven oddballs of this same type,"
+    " in which WLC turned a scribal zarqa whim into an outright error."
+    " See, for example, the “Other Goerwitz item” link regarding a similar issue in Lv 4:2."
 )
 _JU_1318_01 = (
     "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink."

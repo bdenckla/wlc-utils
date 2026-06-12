@@ -4,9 +4,10 @@ from py_html import wlc_utils_html
 
 _ITEM_FOI_NON_REVIA = (
     "munax-legarmeh (⅃-leg)\u2026non-revia:"
-    " Why do only 5 of the 17 verses whose FOI category starts with"
-    " \u201c⅃-leg\u2026non-revia\u201d cause trouble for the checker,"
-    " while the other 12 do not?"
+    " Of the 17 verses whose FOI category starts with"
+    " \u201c⅃-leg\u2026non-revia\u201d, 15 are oddballs (they parse to ERROR),"
+    " while only 2 — Daniel 3:2 and Ruth 1:2 — are not."
+    " Why are those two not oddballs?"
 )
 
 _FOI_NON_REVIA_CATEGORY_LINKS = (
@@ -31,7 +32,7 @@ _FOI_NON_REVIA_CATEGORY_LINKS = (
 _ITEM_ZARQA_ON_LAMED = (
     "zarqa on lamed (accent 82 preceding lamed):"
     " WLC encodes 12 such cases with accent 82 placed before the lamed rather than after it."
-    " Why does only 1 of these 12 cases cause trouble for the checker?"
+    " Why are only 7 of these 12 cases oddballs?"
 )
 
 

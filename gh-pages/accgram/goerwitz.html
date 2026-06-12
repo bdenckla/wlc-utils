@@ -22,7 +22,7 @@ Introduction</h2>
 Open Issues</h2>
 <ul>
 <li>
-munax-legarmeh (⅃-leg)…non-revia: Why do only 5 of the 17 verses whose FOI category starts with “⅃-leg…non-revia” cause trouble for the checker, while the other 12 do not?<ul>
+munax-legarmeh (⅃-leg)…non-revia: Of the 17 verses whose FOI category starts with “⅃-leg…non-revia”, 15 are oddballs (they parse to ERROR), while only 2 — Daniel 3:2 and Ruth 1:2 — are not. Why are those two not oddballs?<ul>
 <li>
 <a href="https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB((paz))%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB0%C2%ABspace%C2%BBintervening">⅃-leg...non-revia ((paz)) with 0 intervening</a></li>
 <li>
@@ -34,7 +34,7 @@ munax-legarmeh (⅃-leg)…non-revia: Why do only 5 of the 17 verses whose FOI c
 </ul>
 </li>
 <li>
-zarqa on lamed (accent 82 preceding lamed): WLC encodes 12 such cases with accent 82 placed before the lamed rather than after it. Why does only 1 of these 12 cases cause trouble for the checker?</li>
+zarqa on lamed (accent 82 preceding lamed): WLC encodes 12 such cases with accent 82 placed before the lamed rather than after it. Why are only 7 of these 12 cases oddballs?</li>
 </ul>
 <h2>
 WLC Bracket Notes</h2>
@@ -588,13 +588,13 @@ nu 20:19</h2>
 <tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
 <tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors. I would have expected all 12 cases to cause trouble for the Goerwitz checker, but this one is the only one that does.</p>
+<p class="goerwitz-tms-comment">This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors. I would have expected all 12 cases to be flagged as oddballs (report “ERROR”), but only seven of them are.</p>
 <p class="goerwitz-tms-comment">WLC’s first poor decision was to attempt to encode a meaningless scribal whim: the placement of a zarqa before the lamed ascender rather than after it. See the image in the UXLC change to which we link above.</p>
 <p class="goerwitz-tms-comment">WLC’s second poor decision was to characterize this as the correction of a typesetting error in BHS/BHQ. While I am as great a critic of BHS/BHQ as anyone, this is unfair. The treatment of these words in BHS/BHQ is almost certainly an editorial decision, not an oddly-systematic set of typesetting errors.</p>
 <p class="goerwitz-tms-comment">WLC’s third poor decision was to encode this by further overloading the meaning of accent 82, which is already used as tsinnorit and, rarely, as a stress-helper to accent 02 (zarqa/tsinnor).</p>
 <p class="goerwitz-tms-comment">Finally, WLC greatly compounded these poor decisions by making an outright error in implementation: the 82 codes are consistently placed preceding rather than following the L (lamed) in question, in one case by even more than one letter too far back.</p>
 <p class="goerwitz-tms-comment">They are consistently placed in a location that would be more appropriate for a tsinnorit or a zarqa stress helper, namely, on the first letter of the syllable ending in lamed, rather than on the lamed itself.</p>
-<p class="goerwitz-tms-comment">Although this is the only item of this type in the “troublemakers” set, there are six such items in the “oddballs” set. See, for example, the “Other Goerwitz item” link regarding a similar issue in Lv 4:2 in the “oddballs” set.</p>
+<p class="goerwitz-tms-comment">This is one of seven oddballs of this same type, in which WLC turned a scribal zarqa whim into an outright error. See, for example, the “Other Goerwitz item” link regarding a similar issue in Lv 4:2.</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
 <tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="7" title="silluq_clause">slqc</td></tr>
@@ -1434,9 +1434,9 @@ is 36:2</h2>
 <tr><td lang="hbo" dir="rtl">ירושל֛מה</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>tevir</td><td>wlc_focus</td></tr>
 <tr><td>wlc422: וישל֣ח; mam_simple: וישל֥ח</td><td style="text-align: right;"></td><td></td><td>diff_wlc_mam</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This verse probably causes trouble for the Goerwitz accent grammar because it has a phrase that is a member of the FOI category “⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. There are 12 other such verses that do not cause trouble.</p>
-<p class="goerwitz-tms-comment">It remains to be investigated whether all of those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”. Certainly many of them report “ERROR” (see oddballs).</p>
+<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening”. </p>
+<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
+<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
 <p class="goerwitz-tms-comment">This verse has a munaḥ vs merkha issue that may be significant.</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
@@ -1480,9 +1480,9 @@ je 4:19</h2>
 <table class="goerwitz-tms-sat">
 <tr><td lang="hbo" dir="rtl">אוח֜ילה</td><td>geresh</td><td>wlc_focus</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This verse probably causes trouble for the Goerwitz accent grammar because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. There are 12 other such verses that do not cause trouble.</p>
-<p class="goerwitz-tms-comment">It remains to be investigated whether all of those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”. Certainly many of them report “ERROR” (see oddballs).</p>
+<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
+<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
+<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
 <tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="8" title="silluq_clause">slqc</td></tr>
@@ -1649,9 +1649,9 @@ je 38:11</h2>
 <table class="goerwitz-tms-sat">
 <tr><td lang="hbo" dir="rtl">את־ האנש֜ים</td><td>maqaf geresh</td><td>wlc_focus</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This verse probably causes trouble for the Goerwitz accent grammar because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. There are 12 other such verses that do not cause trouble.</p>
-<p class="goerwitz-tms-comment">It remains to be investigated whether all of those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”. Certainly many of them report “ERROR” (see oddballs).</p>
+<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
+<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
+<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
 <tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="11" title="silluq_clause">slqc</td></tr>
@@ -2063,9 +2063,9 @@ hg 2:12</h2>
 <table class="goerwitz-tms-sat">
 <tr><td lang="hbo" dir="rtl">בשר־ ק֜דש</td><td>maqaf geresh</td><td>wlc_focus</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This verse probably causes trouble for the Goerwitz accent grammar because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. There are 12 other such verses that do not cause trouble.</p>
-<p class="goerwitz-tms-comment">It remains to be investigated whether all of those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”. Certainly many of them report “ERROR” (see oddballs).</p>
+<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
+<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
+<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
 <tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="10" title="silluq_clause">slqc</td></tr>
@@ -2400,9 +2400,9 @@ ne 8:7</h2>
 <table class="goerwitz-tms-sat">
 <tr><td lang="hbo" dir="rtl">חשבנ֜ות</td><td>geresh</td><td>wlc_focus</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This verse probably causes trouble for the Goerwitz accent grammar because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 5 troublemakers whose FOI category starts with “⅃-leg...non-revia”. There are 12 other such verses that do not cause trouble.</p>
-<p class="goerwitz-tms-comment">It remains to be investigated whether all of those other 12, despite not causing trouble, are considered ungrammatical, i.e. report the string “ERROR”. Certainly many of them report “ERROR” (see oddballs).</p>
+<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
+<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
+<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
 <tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="12" title="silluq_clause">slqc</td></tr>
