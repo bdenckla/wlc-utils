@@ -9,10 +9,18 @@ from py_html import wlc_utils_html
 
 _ITEM_FOI_NON_REVIA = (
     "munax-legarmeh (⅃-leg)\u2026non-revia:"
-    " Of the 17 verses whose FOI category starts with"
-    " \u201c⅃-leg\u2026non-revia\u201d, 15 are oddballs (they parse to ERROR),"
-    " while only 2 — Daniel 3:2 and Ruth 1:2 — are not."
-    " Why are those two not oddballs?"
+    " All 17 verses whose FOI category starts with"
+    " “⅃-leg…non-revia” now parse with a genuine legarmeh: the"
+    " munaḥ-legarmeh-not-before-revia mark (scanner code 74{TEXT}05) is read"
+    " as a real legarmeh at each of has_legarmeh’s 17 listed passages."
+    " (Previously the goerwitz C binary keyed that list on book abbreviations"
+    " — “Lev 10:6”, “Dan 3:2” — that do not match the new-format full"
+    " booknames the scanner emits, so legarmeh fired for Ruth 1:2 alone and"
+    " the other 16 mis-parsed.) Of the 17, only Isaiah 36:2 is still an"
+    " oddball — and not because of the legarmeh reading, which now succeeds,"
+    " but because its legarmeh_phrase reduces to ERROR for an unrelated"
+    " prose-grammar reason. Why does Isaiah 36:2’s legarmeh_phrase fail to"
+    " reduce?"
 )
 
 _FOI_NON_REVIA_CATEGORY_LINKS = (
@@ -38,20 +46,17 @@ _ITEM_ZARQA_ON_LAMED = (
 )
 
 
-# The two verses that escape oddball status do so for two *different* reasons,
-# which their parse trees make visible. The munaḥ-legarmeh-not-before-revia mark
-# (scanner code 74{TEXT}05) is read as a real LEGARMEH only inside one of
-# has_legarmeh's 17 listed passages; elsewhere it degrades to a plain MUNACH with
-# the paseq (05) swallowed. The list keys are book *abbreviations* ("Lev 10:6",
-# "Dan 3:2"), but the new-format scanner sees *full* booknames — so the only
-# listed verse whose name still matches is "Ruth 1:2". That coincidence makes
-# Ruth 1:2 parse with a genuine legarmeh_phrase. Daniel 3:2 escapes for an
-# unrelated reason: there the degraded munaḥ lands as a grammatical munach-pazer,
-# so it parses even *without* the legarmeh reading. (Leviticus 10:6 and 21:10,
-# which share Ruth 1:2's shape but lose the legarmeh reading, become oddballs.)
+# Now that has_legarmeh keys on structured book refs, the munaḥ-legarmeh-not-
+# before-revia mark (scanner code 74{TEXT}05) is read as a real LEGARMEH at all
+# 17 listed passages, so 16 of them parse cleanly with a legarmeh_phrase. These
+# two trees make visible why one verse, Isaiah 36:2, still does not. In Daniel
+# 3:2 the legarmeh heads a well-formed legarmeh_phrase and the verse parses; in
+# Isaiah 36:2 the very same legarmeh reading fires, but its legarmeh_phrase
+# reduces to ERROR for an independent prose-grammar reason — so Isaiah 36:2 is
+# the lone remaining oddball of the 17.
 _ITEM_FOI_NON_REVIA_TREES = (
-    ("Ruth 1:2 (mark read as legarmeh)", "ru 1:2", "wlc_422_ps_ru_ag.txt"),
-    ("Daniel 3:2 (mark read as plain munaḥ)", "da 3:2", "wlc_422_ps_da_ag.txt"),
+    ("Daniel 3:2 (legarmeh fires; legarmeh_phrase reduces)", "da 3:2", "wlc_422_ps_da_ag.txt"),
+    ("Isaiah 36:2 (legarmeh fires; legarmeh_phrase reduces to ERROR)", "is 36:2", "wlc_422_ps_is_ag.txt"),
 )
 
 

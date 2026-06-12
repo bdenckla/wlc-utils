@@ -1953,8 +1953,11 @@ Daniel 3:2
           5 pazer_phrase
             pazer 
           5 pashta_clause
-            6 pazer_phrase
-              munach pazer 
+            6 pazer_clause
+              7 legarmeh_phrase
+                legarmeh 
+              7 pazer_phrase
+                pazer 
             6 pashta_clause
               7 pazer_phrase
                 munach pazer 

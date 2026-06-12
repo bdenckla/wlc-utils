@@ -15,8 +15,14 @@ from __future__ import annotations
 from accgram.ply_scanner import HasLegarmeh, scan_accents, scan_book
 
 
-def _types(body: str, location: str = "X 1:1", h: HasLegarmeh | None = None) -> list[str]:
-    return [t.type for t in scan_accents(body, location, h or HasLegarmeh())]
+def _types(
+    body: str,
+    bb: str = "xx",
+    chnu: int = 1,
+    vrnu: int = 1,
+    h: HasLegarmeh | None = None,
+) -> list[str]:
+    return [t.type for t in scan_accents(body, bb, chnu, vrnu, h or HasLegarmeh())]
 
 
 # --- silluq (35|75|95 / [^ 379...]* 00) ----------------------------------------
@@ -52,12 +58,12 @@ def test_legarmeh_when_munach_paseq_precedes_revia():
 
 def test_munach_when_paseq_not_before_revia_outside_has_legarmeh_passage():
     # No following revia and an ordinary (non-listed) location -> plain munach.
-    assert _types("74A05B70C00", "Genesis 1:1") == ["MUNACH", "MAHPAK", "SOFPASUQ"]
+    assert _types("74A05B70C00", "gn", 1, 1) == ["MUNACH", "MAHPAK", "SOFPASUQ"]
 
 
-# --- has_legarmeh: the one live new-format passage is Ruth 1:2 ------------------
+# --- has_legarmeh: keyed on structured (bb, ch, vs), so all 17 passages fire ----
 # Real Ruth 1:2 body; the maqqef-joined "$:N\"75Y-BFNF74Y/W05" is a munach+paseq
-# that does NOT precede revia, so it is legarmeh only because location matches.
+# that does NOT precede revia, so it is legarmeh only because the ref is listed.
 _RUTH_1_2 = (
     'W:/$"74M HF/)I74Y$ ):E35LIYME83LEK: W:/$"M04 )I$:T./O63W NF(:FMI61Y '
     'W:/$"71M $:N"75Y-BFNF74Y/W05 MAX:LO70WN W:/KIL:YOWN03 )EP:RFTI80YM '
@@ -65,41 +71,43 @@ _RUTH_1_2 = (
 )
 
 
-def test_has_legarmeh_fires_only_at_matching_location():
-    # At Ruth 1:2 the munach+paseq is reinterpreted as legarmeh ...
-    assert _types(_RUTH_1_2, "Ruth 1:2").count("LEGARMEH") == 1
-    # ... but the very same body at any other location stays munach.
-    at_genesis = _types(_RUTH_1_2, "Genesis 1:1")
-    assert at_genesis.count("LEGARMEH") == 0
+def test_has_legarmeh_fires_at_listed_passage_not_elsewhere():
+    # The munach+paseq is reinterpreted as legarmeh at any listed passage --
+    # ru 1:2 *and*, now that detection is decoupled from header spelling, at a
+    # ref like lv 10:6 that the old C abbreviation quirk silently missed.
+    assert _types(_RUTH_1_2, "ru", 1, 2).count("LEGARMEH") == 1
+    assert _types(_RUTH_1_2, "lv", 10, 6).count("LEGARMEH") == 1
+    # ... but the very same body at a non-listed ref stays munach.
+    assert _types(_RUTH_1_2, "gn", 1, 1).count("LEGARMEH") == 0
 
 
-# --- has_legarmeh counter logic (ported verbatim; uses abbreviated keys) --------
+# --- has_legarmeh counter logic (now keyed on structured refs) ------------------
 def test_has_legarmeh_1sam_14_47_second_occurrence_only():
     # 1Sam 14:47 has two munach+paseq sequences not before revia; only the
-    # second counts as legarmeh.  (Dead in the new format because the live
-    # bookname is "1Samuel", not "1Sam" -- this asserts the ported logic.)
+    # second counts as legarmeh.  Now live in the new format (keyed on ("1s",
+    # 14, 47), not the dead "1Sam 14:47" abbreviation).
     h = HasLegarmeh()
-    assert h("1Sam 14:47") is False
-    assert h("1Sam 14:47") is True
+    assert h("1s", 14, 47) is False
+    assert h("1s", 14, 47) is True
 
 
 def test_has_legarmeh_plain_passage_fires_first_time():
     h = HasLegarmeh()
-    assert h("Gen 28:9") is True
+    assert h("gn", 28, 9) is True
 
 
 def test_has_legarmeh_old_i_is_monotonic():
     # old_i advances to the matched index, so an earlier passage no longer
     # matches afterwards ("assumes the books are in Jewish order").
     h = HasLegarmeh()
-    assert h("Ruth 1:2") is True       # index 13
-    assert h("Gen 28:9") is False      # index 0 < old_i -> never revisited
+    assert h("ru", 1, 2) is True        # index 13
+    assert h("gn", 28, 9) is False      # index 0 < old_i -> never revisited
 
 
 # --- new-format chapter/verse lookahead (via scan_book) ------------------------
 def test_scan_book_builds_reference_and_delimits_verses():
     text = "Genesis\n1:1 71A00\n1:2 81B00\n"
-    verses = scan_book(text)
+    verses = scan_book(text, "gn")
     assert [v.reference for v in verses] == ["Genesis 1:1", "Genesis 1:2"]
     # Each verse opens with TILDE and closes with SOFPASUQ.
     assert verses[0].tokens[0].type == "TILDE"

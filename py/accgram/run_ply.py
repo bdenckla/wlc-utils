@@ -33,9 +33,9 @@ class BookRun:
     parsed_count: int
 
 
-def render_book(text: str, parser) -> tuple[str, BookRun, str]:
+def render_book(text: str, parser, bb: str) -> tuple[str, BookRun, str]:
     """Return (output_text, stats, bb) for one book's scanner-ready text."""
-    verses = scan_book(text)
+    verses = scan_book(text, bb)
     out_lines: list[str] = []
     parsed = 0
     for verse in verses:
@@ -100,7 +100,7 @@ def run(args: argparse.Namespace) -> None:
     for bb, text in book_texts.items():
         if only is not None and bb not in only:
             continue
-        output_text, stats, _ = render_book(text, parser)
+        output_text, stats, _ = render_book(text, parser, bb)
         out_path = out_dir / f"wlc_422_ps_{bb}_ag.txt"
         # LF newlines, UTF-8.
         out_path.write_text(output_text, encoding="utf-8", newline="\n")

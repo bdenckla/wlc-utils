@@ -132,7 +132,7 @@ def run(args: argparse.Namespace) -> None:
     parsed_oddball_rows = rtms_rows.parse_oddball_rows(oddballs_in_path, refs_by_book)
 
     # "Rich" oddballs are those carrying hand-authored tm_data structured text (the
-    # 49 former troublemakers): they get the UXLC/changetext validation the old
+    # 45 former troublemakers): they get the UXLC/changetext validation the old
     # troublemaker rows used to get. The rest get plain enrichment.
     tm_structured_text = get_structured_text()
     rich_refs = [
@@ -212,7 +212,7 @@ def run(args: argparse.Namespace) -> None:
 
 def _ob_wlc_focus_by_ref() -> dict[str, str | None]:
     out: dict[str, str | None] = {}
-    # The 49 rich oddballs draw their WLC focus from tm_data; the rest from ob_data.
+    # The 45 rich oddballs draw their WLC focus from tm_data; the rest from ob_data.
     for ref, structured_text in get_structured_text().items():
         out[ref] = _structured_wlc_focus(structured_text)
     for ref, structured_text in ob_data.get_structured_text().items():

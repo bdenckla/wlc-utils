@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from accgram import xx_data
-
 
 def get_structured_text() -> dict[str, dict[str, object]]:
     return STRUCTURED_TEXT_BY_REF
@@ -19,15 +17,7 @@ _ZARQA_WHIM = {
         " See the “Other Goerwitz item” link regarding another instance (Nu 20:19)."
     ),
 }
-_RUTH_1_2_NON_ODDBALL = (
-    "It is odd that the checker does not likewise flag Ruth 1:2,"
-    " which also has a legarmeih serving pashta."
-)
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
-    "gn 28:9": {
-        "wlc_focus": "אברה֜ם",
-        "st-summary": xx_data.non_revia_summary("geresh"),
-    },
     "gn 32:24": {
         "wlc_focus": "לו׃",
         "st-summary": _SOMEWHERE,
@@ -65,22 +55,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-5",
         **_ZARQA_WHIM,
-    },
-    "lv 10:6": {
-        "wlc_focus": "תפר֙מו֙ ",
-        "st-summary": xx_data.non_revia_summary("pashta"),
-        "comment": (
-            "Like lv 21:10, this verse has a munaḥ legarmeih serving pashta.",
-            _RUTH_1_2_NON_ODDBALL,
-        ),
-    },
-    "lv 21:10": {
-        "wlc_focus": "המשחה֙",
-        "st-summary": xx_data.non_revia_summary("pashta"),
-        "comment": (
-            "Like lv 10:6, this verse has a munaḥ legarmeih serving pashta.",
-            _RUTH_1_2_NON_ODDBALL,
-        ),
     },
     "lv 25:20": {
         "wlc_focus": "נאכ֤֖ל",
@@ -195,14 +169,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "img": "LC-150A-col-1-line-22-Ju-21v16.png",
     },
-    "1s 14:3": {
-        "wlc_focus": "על֜י",
-        "st-summary": xx_data.non_revia_summary("geresh"),
-    },
-    "1s 14:47": {
-        "wlc_focus": "ובאד֜ום",
-        "st-summary": xx_data.non_revia_summary("geresh"),
-    },
     "2s 6:20": {
         "wlc_focus": "לעינ֨י",
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
@@ -212,10 +178,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "אדנ֨י",
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "img": "LC-174A-col-1-line-7-2S-11v11.png",
-    },
-    "2s 13:32": {
-        "wlc_focus": "דו֜ד",
-        "st-summary": xx_data.non_revia_summary("geresh"),
     },
     "2s 23:9": {
         "wlc_focus": "בפלשתים",
@@ -237,30 +199,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "The checker may prefer merkha to LC’s munaḥ. Or it may not like either.",
         "img": "LC-200A-col-2-line-19-1K-20v25.png",
         "Aleppo img": "AC-1K-20v25.png",
-    },
-    "2k 18:17": {
-        "wlc_focus": "תרת֥ן",
-        "st-summary": (
-            "The checker may prefer munaḥ to LC’s merkha. Or it may not like either."
-            " " + xx_data.non_revia_summary("geresh", "Also, the")
-        ),
-        "img": "LC-215A-col-1-line-24-2K-18v17.png",
-        "Aleppo img": "AC-2K-18v17.png",
-        "Da-at Miqra img": "Da-at-Miqra-2K-18v17.png",
-        "comment": (
-            [
-                "In the LC image, there is some evidence that the merkha was the result of a correction."
-                " If it was the result of a correction, that makes it hard to argue that it was a scribal error."
-                " If there was a correction here, one wonders if what was originally there was a munaḥ!"
-            ],
-            [
-                "In Da-at Miqra (see image above), Breuer observes that not only the LC (ל)"
-                " but also ק (Cairo Codex of The Prophets)"
-                " has this merkha."
-                " He also observes that the Aleppo Codex (א) and the Second Venice Miqraot Gedolot (ד)"
-                " have, instead, a munaḥ."
-            ],
-        ),
     },
     "is 13:7": {
         "wlc_focus": "ימס׃",
@@ -309,10 +247,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-35",
     },
-    "je 40:11": {
-        "wlc_focus": "ובאד֜ום",
-        "st-summary": xx_data.non_revia_summary("geresh"),
-    },
     "je 46:4": {
         "wlc_focus": "בכ֥ובע֑ים",
         "st-summary": "BHS transcribes a meteg as a merkha.",
@@ -322,10 +256,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "רפ֣ינו",
         "st-summary": _BHS_TRANSCRIBES,
         "pending_uxlc_change": "https://tanach.us/Changes/2026.10.19%20-%20Changes/2026.10.19%20-%20Changes.xml?2026.04.10-2",
-    },
-    "ek 9:2": {
-        "wlc_focus": "העלי֜ון",
-        "st-summary": xx_data.non_revia_summary("geresh"),
     },
     "ho 11:7": {
         "wlc_focus": "ירומם׃",
@@ -346,35 +276,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ב֥א",
         "st-summary": _BHS_TRANSCRIBES,
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.14-3",
-    },
-    "ne 8:7": {
-        "wlc_focus": "ושר֥בי֣ה׀",
-        "st-summary": "WLC transcribes a meteg as a merkha.",
-        "github-issue": "https://github.com/bdenckla/MAM-basics/issues/185",
-        "img": "LC458B-col-3-line-4-Ne-8v7.png",
-        "comment": (
-            (
-                "In the LC, the disputed mark looks strange."
-                " It may be two separate marks, one of which may be unintentional."
-                " The upper part of this mark (if we view it as one mark) has a merkha-like inclination"
-                " but the lower part does not."
-            ),
-            xx_data.foi_paz_category_comment_item(),
-            (
-                "It makes sense to consider ne 8:7 ungrammatical on the basis of its merkha."
-                " So, we have a plausible reason"
-                " why the checker would accept da 3:2 but not ne 8:7, since"
-                " ne 8:7 has this merkha and da 3:2 does not."
-            ),
-            (
-                "There is also the general question of how the checker decides between paseq and legarmeih."
-                " For all I know, the checker considers one or both of the marks in question"
-                " to be paseq rather than legarmeih."
-            ),
-            xx_data.github_issue_comment_item(
-                "https://github.com/bdenckla/MAM-basics/issues/185"
-            ),
-        ),
     },
     "1c 1:53": {
         "wlc_focus": "אל֣וף",

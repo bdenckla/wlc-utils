@@ -7881,8 +7881,11 @@
           5 pazer_phrase
             pazer 
           5 tevir_clause
-            6 geresh_phrase
-              ERROR 
+            6 geresh_clause
+              7 legarmeh_phrase
+                legarmeh 
+              7 geresh_phrase
+                azla geresh 
             6 tevir_phrase
               darga tevir 
       3 tifcha_phrase
@@ -9047,8 +9050,11 @@
         4 pazer_phrase
           munach munach pazer 
         4 pashta_clause
-          5 geresh_phrase
-            ERROR 
+          5 geresh_clause
+            6 legarmeh_phrase
+              legarmeh 
+            6 geresh_phrase
+              azla geresh 
           5 pashta_phrase
             mahpak pashta 
       3 zaqef_phrase

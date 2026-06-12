@@ -3999,8 +3999,11 @@ Ezekiel 9:2
         4 pazer_phrase
           munach munach pazer 
         4 revia_clause
-          5 geresh_phrase
-            ERROR 
+          5 geresh_clause
+            6 legarmeh_phrase
+              legarmeh 
+            6 geresh_phrase
+              azla geresh 
           5 revia_clause
             6 legarmeh_phrase
               legarmeh 

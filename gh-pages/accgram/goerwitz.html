@@ -13,8 +13,8 @@ Goerwitz Run on WLC</title>
 Goerwitz Run on WLC</h1>
 <h2>
 Introduction</h2>
-<p>This page lists the 100 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filter below to narrow the list.</p>
-<p>These oddballs (100 verses) are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree. Potential causes include WLC quirks, LC quirks, and checker quirks.</p>
+<p>This page lists the 86 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filter below to narrow the list.</p>
+<p>These oddballs (86 verses) are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree. Potential causes include WLC quirks, LC quirks, and checker quirks.</p>
 <p>The filter sorts each verse into one of three categories: “missing sof pasuq,” where a sof pasuq is missing somewhere in the LC-BHS-WLC pipeline; “missing silluq,” where a sof pasuq is present but the verse-final word carries no accent at all; and “other” for everything else.</p>
 <p>The Goerwitz accent grammar checker is described in the following article:</p>
 <p>Goerwitz, Richard. ‹A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts.› In Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg (pp. 111-122). (<a href="https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b">Studies in Ancient Oriental Civilization 60</a>). The Oriental Institute, Chicago, 2007. ISBN 978-1-885923-41-7.</p>
@@ -22,7 +22,7 @@ Introduction</h2>
 Open Issues</h2>
 <ul>
 <li>
-munax-legarmeh (⅃-leg)…non-revia: Of the 17 verses whose FOI category starts with “⅃-leg…non-revia”, 15 are oddballs (they parse to ERROR), while only 2 — Daniel 3:2 and Ruth 1:2 — are not. Why are those two not oddballs?<ul>
+munax-legarmeh (⅃-leg)…non-revia: All 17 verses whose FOI category starts with “⅃-leg…non-revia” now parse with a genuine legarmeh: the munaḥ-legarmeh-not-before-revia mark (scanner code 74{TEXT}05) is read as a real legarmeh at each of has_legarmeh’s 17 listed passages. (Previously the goerwitz C binary keyed that list on book abbreviations — “Lev 10:6”, “Dan 3:2” — that do not match the new-format full booknames the scanner emits, so legarmeh fired for Ruth 1:2 alone and the other 16 mis-parsed.) Of the 17, only Isaiah 36:2 is still an oddball — and not because of the legarmeh reading, which now succeeds, but because its legarmeh_phrase reduces to ERROR for an unrelated prose-grammar reason. Why does Isaiah 36:2’s legarmeh_phrase fail to reduce?<ul>
 <li>
 <a href="https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB((paz))%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB0%C2%ABspace%C2%BBintervening">⅃-leg...non-revia ((paz)) with 0 intervening</a></li>
 <li>
@@ -32,32 +32,30 @@ munax-legarmeh (⅃-leg)…non-revia: Of the 17 verses whose FOI category starts
 <li>
 <a href="https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB(p)%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB1%C2%ABspace%C2%BB(mah)%C2%ABspace%C2%BBintervening">⅃-leg...non-revia (p) with 1 (mah) intervening</a></li>
 </ul>
-<figure><figcaption>Ruth 1:2 (mark read as legarmeh)</figcaption>
+<figure><figcaption>Daniel 3:2 (legarmeh fires; legarmeh_phrase reduces)</figcaption>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="9" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="7" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="5" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="4" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="3" title="pashta_clause">pashc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="geresh_phrase">gerp</td><td colspan="2" title="pashta_clause">pashc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="2"></td><td title="legarmeh_phrase">lgmp</td><td title="pashta_phrase">pashp</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach munach pazer">mun mun paz</td><td title="telishaqetanna azla geresh">telq qom ger</td><td title="mereka legarmeh">mer lgm</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="mereka tifcha">mer tip</td><td title="silluq">slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="13" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="9" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="7" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="6" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="5" title="pashta_clause">pashc</td><td colspan="7"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="pazer_phrase">pazp</td><td colspan="4" title="pashta_clause">pashc</td><td colspan="7"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="2"></td><td colspan="2" title="pazer_clause">pazc</td><td colspan="2" title="pashta_clause">pashc</td><td colspan="7"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell">7</td><td colspan="2"></td><td title="legarmeh_phrase">lgmp</td><td title="pazer_phrase">pazp</td><td title="pazer_phrase">pazp</td><td title="pashta_phrase">pashp</td><td colspan="7"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach pazer">mun paz</td><td title="pazer">paz</td><td title="legarmeh">lgm</td><td title="pazer">paz</td><td title="munach pazer">mun paz</td><td title="telishaqetanna azla mahpak pashta">telq qom mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td></tr>
 </table>
 </div>
 </figure>
-<figure><figcaption>Daniel 3:2 (mark read as plain munaḥ)</figcaption>
+<figure><figcaption>Isaiah 36:2 (legarmeh fires; legarmeh_phrase reduces to ERROR)</figcaption>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="12" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="8" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="6" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="5" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="4" title="pashta_clause">pashc</td><td colspan="7"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="pazer_phrase">pazp</td><td colspan="3" title="pashta_clause">pashc</td><td colspan="7"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="2"></td><td title="pazer_phrase">pazp</td><td colspan="2" title="pashta_clause">pashc</td><td colspan="7"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">7</td><td colspan="3"></td><td title="pazer_phrase">pazp</td><td title="pashta_phrase">pashp</td><td colspan="7"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach pazer">mun paz</td><td title="pazer">paz</td><td title="munach pazer">mun paz</td><td title="munach pazer">mun paz</td><td title="telishaqetanna azla mahpak pashta">telq qom mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="9" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="5" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="3" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="3" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="tevir_clause">tevc</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td title="revia_phrase">revp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="legarmeh_phrase">lgmp</td><td title="tevir_phrase">tevp</td><td colspan="3"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="azla darga tevir">qom dar tev</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="revia">rev</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
 </table>
 </div>
 </figure>
@@ -71,8 +69,6 @@ WLC Bracket Notes</h2>
 <ul>
 <li>
 <code>]1</code>: BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)</li>
-<li>
-<code>]C</code>: We read an accent in ל differently from BHQ. (This is similar to the note “]c”, but the latter refers to accent differences against BHS.)</li>
 <li>
 <code>]Q</code>: Marks a place where we agree with BHQ against BHS in reading ל. This note will be preceded or followed by one or more bracket notes to specify the type(s) of disagreement(s) with BHS.</li>
 <li>
@@ -96,32 +92,11 @@ WLC Bracket Notes</h2>
 <fieldset>
 <legend>
 Category</legend>
-<label><input type="checkbox" class="gf-category" value="msp" checked="checked"> missing sof pasuq (20)</label><label><input type="checkbox" class="gf-category" value="msl" checked="checked"> missing silluq (8)</label><label><input type="checkbox" class="gf-category" value="other" checked="checked"> other (72)</label></fieldset>
+<label><input type="checkbox" class="gf-category" value="msp" checked="checked"> missing sof pasuq (20)</label><label><input type="checkbox" class="gf-category" value="msl" checked="checked"> missing silluq (8)</label><label><input type="checkbox" class="gf-category" value="other" checked="checked"> other (58)</label></fieldset>
 <p class="gf-count"></p>
 </div>
-<section class="goerwitz-verse" data-category="other">
-<h2 id="obgn28v9">
-gn 28:9</h2>
-<p><a href="#obgn28v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/A1-Genesis.html#c28v9">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Gen28:9">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וי֥לך עש֖ו אל־ ישמע֑אל ויק֡ח את־ מחל֣ת׀ בת־ ישמע֨אל בן־ <span class="goerwitz-tms-focus-highlight">אברה֜ם</span> אח֧ות נבי֛ות על־ נש֖יו ל֥ו לאשֽה׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">אברה֜ם</td><td>geresh</td><td>wlc_focus</td></tr>
-</table>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="7" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="5" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="4" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2"></td><td colspan="3" title="tevir_clause">tevc</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="2"></td><td title="pazer_phrase">pazp</td><td colspan="2" title="tevir_clause">tevc</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="3"></td><td title="geresh_phrase">gerp</td><td title="tevir_phrase">tevp</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="pazer">paz</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="darga tevir">dar tev</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
-</table>
-</div>
-</section>
 <section class="goerwitz-verse" data-category="msl">
-<hr><h2 id="obgn32v24">
+<h2 id="obgn32v24">
 gn 32:24</h2>
 <p><a href="#obgn32v24" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A1-Genesis.html#c32v24">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Gen32:24">UXLC</a></p>
@@ -376,29 +351,6 @@ lv 4:2</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
-<hr><h2 id="oblv10v6">
-lv 10:6</h2>
-<p><a href="#oblv10v6" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving pashta.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/A3-Levit.html#c10v6">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Lev10:6">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וי֣אמר מש֣ה אל־ אהר֡ן ולאלעזר֩ ולאיתמ֨ר׀ בנ֜יו ראשיכ֥ם אל־ תפר֣עו׀ ובגדיכ֤ם לא־ <span class="goerwitz-tms-focus-highlight">תפר֙מו֙</span> ול֣א תמ֔תו וע֥ל כל־ העד֖ה יקצ֑ף ואחיכם֙ כל־ ב֣ית ישרא֔ל יבכו֙ את־ השרפ֔ה אש֖ר שר֥ף יהוֽה׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">תפר֙מו֙</td><td>pashta_on_ר-pashta_on_ו</td><td>wlc_focus</td></tr>
-</table>
-<p class="goerwitz-tms-comment">Like lv 21:10, this verse has a munaḥ legarmeih serving pashta.</p>
-<p class="goerwitz-tms-comment">It is odd that the checker does not likewise flag Ruth 1:2, which also has a legarmeih serving pashta.</p>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="12" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="6" title="atnach_clause">atnc</td><td colspan="6" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="3" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="2" title="pashta_clause">pashc</td><td colspan="5"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="geresh_phrase">gerp</td><td title="pashta_phrase">pashp</td><td colspan="9"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach munach pazer">mun mun paz</td><td title="telishaqetanna azla geresh">telq qom ger</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="pashta">pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
-</table>
-</div>
-</section>
 <section class="goerwitz-verse" data-category="msp">
 <hr><h2 id="oblv18v17">
 lv 18:17</h2>
@@ -439,28 +391,6 @@ lv 19:1</h2>
 <tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="2" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
 <tr><td class="goerwitz-obs-depth-cell">2</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell"></td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
-<hr><h2 id="oblv21v10">
-lv 21:10</h2>
-<p><a href="#oblv21v10" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving pashta.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/A3-Levit.html#c21v10">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Lev21:10">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">והכהן֩ הגד֨ול מאח֜יו אשר־ יוצ֥ק על־ ראש֣ו׀ ש֤מן <span class="goerwitz-tms-focus-highlight">המשחה֙</span> ומל֣א את־ יד֔ו ללב֖ש את־ הבגד֑ים את־ ראשו֙ ל֣א יפר֔ע ובגד֖יו ל֥א יפרֽם׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">המשחה֙</td><td>pashta_on_ה</td><td>wlc_focus</td></tr>
-</table>
-<p class="goerwitz-tms-comment">Like lv 10:6, this verse has a munaḥ legarmeih serving pashta.</p>
-<p class="goerwitz-tms-comment">It is odd that the checker does not likewise flag Ruth 1:2, which also has a legarmeih serving pashta.</p>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="9" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="5" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="3" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td title="pashta_phrase">pashp</td><td colspan="7"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="telishaqetanna azla geresh">telq qom ger</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
 </table>
 </div>
 </section>
@@ -1067,49 +997,6 @@ ju 21:16</h2>
 </div>
 </section>
 <section class="goerwitz-verse" data-category="other">
-<hr><h2 id="ob1s14v3">
-1s 14:3</h2>
-<p><a href="#ob1s14v3" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/BA-1Samuel.html#c14v3">Mwd</a> | <a href="https://tanach.us/Tanach.xml?1Sam14:3">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ואחי֣ה בן־ אחט֡וב אח֡י איכב֣וד׀ בן־ פינח֨ס בן־ <span class="goerwitz-tms-focus-highlight">על֜י</span> כה֧ן׀ יהו֛ה בשל֖ו נש֣א אפ֑וד והעם֙ ל֣א יד֔ע כ֥י הל֖ך יונתֽן׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">על֜י</td><td>geresh</td><td>wlc_focus</td></tr>
-</table>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="10" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="6" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="5" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="4" title="tevir_clause">tevc</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="3" title="tevir_clause">tevc</td><td colspan="6"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="pazer_phrase">pazp</td><td colspan="2" title="tevir_clause">tevc</td><td colspan="6"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="2"></td><td title="geresh_phrase">gerp</td><td title="tevir_phrase">tevp</td><td colspan="6"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach pazer">mun paz</td><td title="pazer">paz</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="darga tevir">dar tev</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="silluq">slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
-<hr><h2 id="ob1s14v47">
-1s 14:47</h2>
-<p><a href="#ob1s14v47" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/BA-1Samuel.html#c14v47">Mwd</a> | <a href="https://tanach.us/Tanach.xml?1Sam14:47">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ושא֛ול לכ֥ד המלוכ֖ה על־ ישרא֑ל ויל֣חם סב֣יב׀ בכל־ איב֡יו במוא֣ב׀ ובבני־ עמ֨ון <span class="goerwitz-tms-focus-highlight">ובאד֜ום</span> ובמלכ֤י צובה֙ ובפלשת֔ים ובכ֥ל אשר־ יפנ֖ה ירשֽיע׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">ובאד֜ום</td><td>geresh</td><td>wlc_focus</td></tr>
-</table>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="9" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="3" title="atnach_clause">atnc</td><td colspan="6" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="2" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td colspan="3" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="3"></td><td title="pazer_phrase">pazp</td><td colspan="2" title="pashta_clause">pashc</td><td colspan="3"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="4"></td><td title="geresh_phrase">gerp</td><td title="pashta_phrase">pashp</td><td colspan="3"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="tevir">tev</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="munach munach pazer">mun mun paz</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="mereka tifcha">mer tip</td><td title="silluq">slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
 <hr><h2 id="ob2s6v20">
 2s 6:20</h2>
 <p><a href="#ob2s6v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a syllable as having qadma rather than pashta.</p>
@@ -1157,27 +1044,6 @@ ju 21:16</h2>
 <tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="2"></td><td title="big_telisha_phrase">big_telishap</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td title="geresh_phrase">gerp</td><td title="tevir_phrase">tevp</td><td colspan="6"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="3"></td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="geresh_phrase">gerp</td><td title="pashta_phrase">pashp</td><td colspan="9"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell"></td><td title="azla geresh">qom ger</td><td title="revia">rev</td><td title="telishagedola">telg</td><td title="azla geresh">qom ger</td><td title="munach revia">mun rev</td><td title="azla geresh">qom ger</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="zaqef">zaqq</td><td title="gershayim">ger2</td><td title="darga tevir">dar tev</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
-<hr><h2 id="ob2s13v32">
-2s 13:32</h2>
-<p><a href="#ob2s13v32" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/BB-2Samuel.html#c13v32">Mwd</a> | <a href="https://tanach.us/Tanach.xml?2Sam13:32">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וי֡ען יונד֣ב׀ בן־ שמע֨ה אחי־ <span class="goerwitz-tms-focus-highlight">דו֜ד</span> וי֗אמר אל־ יאמ֤ר אדני֙ א֣ת כל־ הנער֤ים בני־ המ֙לך֙ המ֔יתו כי־ אמנ֥ון לבד֖ו מ֑ת כי־ על־ פ֤י אבשלום֙ הית֣ה שומ֔ה מיום֙ ענת֔ו א֖ת תמ֥ר אחתֽו׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">דו֜ד</td><td>geresh</td><td>wlc_focus</td></tr>
-</table>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="14" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="8" title="atnach_clause">atnc</td><td colspan="6" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="6" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="3" title="revia_clause">revc</td><td colspan="3" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="2" title="revia_clause">revc</td><td title="pashta_phrase">pashp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="4"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td colspan="1"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="8"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="pazer">paz</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="revia">rev</td><td title="mahpak pashta">mah pash</td><td title="munach mahpak pashta">mun mah pash</td><td title="zaqef">zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="pashta">pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
 </table>
 </div>
 </section>
@@ -1379,43 +1245,6 @@ ju 21:16</h2>
 </div>
 </section>
 <section class="goerwitz-verse" data-category="other">
-<hr><h2 id="ob2k18v17">
-2k 18:17</h2>
-<p><a href="#ob2k18v17" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker may prefer munaḥ to LC’s merkha. Or it may not like either. Also, the checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/BD-2Kings.html#c18v17">Mwd</a> | <a href="https://tanach.us/Tanach.xml?2Kings18:17">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וישל֣ח מלך־ אש֡ור את־ <span class="goerwitz-tms-focus-highlight">תרת֥ן</span> ואת־ רב־ סר֣יס׀ ואת־ רב־ שק֨ה מן־ לכ֜יש אל־ המ֧לך חזקי֛הו בח֥יל כב֖ד ירושל֑ם ויעלו֙ ויב֣או ירושל֔ם ויעל֣ו ויב֗או ויעמדו֙ בתעלת֙ הברכ֣ה העליונ֔ה אש֕ר במסל֖ת שד֥ה כובֽס׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">תרת֥ן</td><td>merkha</td><td>wlc_focus</td></tr>
-<tr><td lang="hbo" dir="rtl">תרת֣ן</td><td>munaḥ</td><td>diff_wlc_mam[1]</td></tr>
-</table>
-<figure class="goerwitz-tms-figure"><p class="goerwitz-tms-image"><img src="../img/LC-215A-col-1-line-24-2K-18v17.png"></img>
-</p>
-<figcaption class="goerwitz-tms-image-caption">Image source: <a href="https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F215A.jpg">215A</a> column 1 line 24</figcaption>
-</figure>
-<figure class="goerwitz-tms-figure"><p class="goerwitz-tms-image"><img src="../img/AC-2K-18v17.png"></img>
-</p>
-<figcaption class="goerwitz-tms-image-caption">Image source: Aleppo Codex</figcaption>
-</figure>
-<figure class="goerwitz-tms-figure"><p class="goerwitz-tms-image"><img src="../img/Da-at-Miqra-2K-18v17.png"></img>
-</p>
-<figcaption class="goerwitz-tms-image-caption">Image source: Da'at Miqra</figcaption>
-</figure>
-<p class="goerwitz-tms-comment">In the LC image, there is some evidence that the merkha was the result of a correction. If it was the result of a correction, that makes it hard to argue that it was a scribal error. If there was a correction here, one wonders if what was originally there was a munaḥ!</p>
-<p class="goerwitz-tms-comment">In Da-at Miqra (see image above), Breuer observes that not only the LC (ל) but also ק (Cairo Codex of The Prophets) has this merkha. He also observes that the Aleppo Codex (א) and the Second Venice Miqraot Gedolot (ד) have, instead, a munaḥ.</p>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="14" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="5" title="atnach_clause">atnc</td><td colspan="9" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="7" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="3" title="tevir_clause">tevc</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="3" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="2" title="tevir_clause">tevc</td><td colspan="4"></td><td title="revia_phrase">revp</td><td colspan="3" title="zaqef_clause">zaqqc</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="geresh_phrase">gerp</td><td title="tevir_phrase">tevp</td><td colspan="5"></td><td title="pashta_phrase">pashp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="1"></td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="9"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="3"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach pazer">mun paz</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="darga tevir">dar tev</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="munach revia">mun rev</td><td title="pashta">pash</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="zaqefgadol">zaqg</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
 <hr><h2 id="ob2k23v36">
 2k 23:36</h2>
 <p><a href="#ob2k23v36" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a syllable as having qadma rather than pashta.</p>
@@ -1460,25 +1289,23 @@ is 13:7</h2>
 <section class="goerwitz-verse" data-category="other">
 <hr><h2 id="obis36v2">
 is 36:2</h2>
-<p><a href="#obis36v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving tevir.</p>
+<p><a href="#obis36v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The legarmeh fires, but its legarmeh_phrase does not reduce.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/C1-Isaiah.html#c36v2">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Isa36:2">UXLC</a></p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וישל֣ח מלך־ אש֣ור׀ את־ רב־ שק֨ה מלכ֧יש <span class="goerwitz-tms-focus-highlight">ירושל֛מה</span> אל־ המ֥לך חזקי֖הו בח֣יל כב֑ד ויעמ֗ד בתעלת֙ הברכ֣ה העליונ֔ה במסל֖ת שד֥ה כובֽס׃</p>
 <table class="goerwitz-tms-sat">
 <tr><td lang="hbo" dir="rtl">ירושל֛מה</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>tevir</td><td>wlc_focus</td></tr>
 <tr><td>wlc422: וישל֣ח; mam_simple: וישל֥ח</td><td style="text-align: right;"></td><td></td><td>diff_wlc_mam</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
-<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
-<p class="goerwitz-tms-comment">This verse has a munaḥ vs merkha issue that may be significant.</p>
+<p class="goerwitz-tms-comment">This verse’s FOI category is “⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening”. Since has_legarmeh now keys on structured book refs, the munaḥ-legarmeh-not-before-revia mark is read as a real legarmeh here, as at all 17 listed passages. But unlike the other 16, Isaiah 36:2’s legarmeh_phrase still reduces to ERROR (for a reason independent of the legarmeh reading), so it is the lone remaining oddball of the category.</p>
+<p class="goerwitz-tms-comment">This verse also has a munaḥ vs merkha issue that may be significant.</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="8" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="3" title="atnach_clause">atnc</td><td colspan="5" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="2" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="3" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td title="revia_phrase">revp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="4"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="revia">rev</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="9" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="5" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="3" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="3" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="tevir_clause">tevc</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td title="revia_phrase">revp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">4</td><td title="legarmeh_phrase">lgmp</td><td title="tevir_phrase">tevp</td><td colspan="3"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="2"></td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="azla darga tevir">qom dar tev</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="revia">rev</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
 </table>
 </div>
 </section>
@@ -1501,29 +1328,6 @@ is 45:1</h2>
 <tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="1"></td><td title="zarqa_phrase">zarp</td><td title="segolta_phrase">segap</td><td title="revia_phrase">revp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="4"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="4"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="6"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell"></td><td title="munach zarqa">mun zar</td><td title="zarqa">zar</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="revia">rev</td><td title="pashta">pash</td><td title="zaqef">zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
-<hr><h2 id="obje4v19">
-je 4:19</h2>
-<p><a href="#obje4v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/C2-Jeremiah.html#c4v19">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Jer4:19">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">מע֣י׀ מע֨י׀ <span class="goerwitz-tms-focus-highlight">אוח֜ילה</span> קיר֥ות לב֛י המה־ ל֥י לב֖י ל֣א אחר֑יש כ֣י ק֤ול שופר֙ שמ֣עת נפש֔י תרוע֖ת מלחמֽה׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">אוח֜ילה</td><td>geresh</td><td>wlc_focus</td></tr>
-</table>
-<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
-<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="8" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="3" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="tevir_clause">tevc</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td title="tevir_phrase">tevp</td><td colspan="6"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="mereka tevir">mer tev</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="munach mahpak pashta">mun mah pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="silluq">slq</td></tr>
 </table>
 </div>
 </section>
@@ -1674,50 +1478,6 @@ je 31:32</h2>
 </div>
 </section>
 <section class="goerwitz-verse" data-category="other">
-<hr><h2 id="obje38v11">
-je 38:11</h2>
-<p><a href="#obje38v11" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/C2-Jeremiah.html#c38v11">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Jer38:11">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ויק֣ח׀ עבד־ מ֨לך <span class="goerwitz-tms-focus-highlight">את־ האנש֜ים</span> ביד֗ו ויב֤א בית־ המ֙לך֙ אל־ ת֣חת האוצ֔ר ויק֤ח משם֙ בלוי֣ סחב֔ות ובלוי֖ מלח֑ים וישלח֧ם אל־ ירמי֛הו אל־ הב֖ור בחבלֽים׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">את־ האנש֜ים</td><td>maqaf geresh</td><td>wlc_focus</td></tr>
-</table>
-<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
-<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="11" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="8" title="atnach_clause">atnc</td><td colspan="3" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="2" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="3"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="revia">rev</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="darga tevir">dar tev</td><td title="tifcha">tip</td><td title="silluq">slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
-<hr><h2 id="obje40v11">
-je 40:11</h2>
-<p><a href="#obje40v11" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/C2-Jeremiah.html#c40v11">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Jer40:11">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וג֣ם כל־ היהוד֡ים אשר־ במוא֣ב׀ ובבני־ עמ֨ון <span class="goerwitz-tms-focus-highlight">ובאד֜ום</span> ואש֤ר בכל־ הארצות֙ שמע֔ו כי־ נת֧ן מלך־ בב֛ל שאר֖ית ליהוד֑ה וכי֙ הפק֣יד עליה֔ם את־ גדלי֖הו בן־ אחיק֥ם בן־ שפֽן׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">ובאד֜ום</td><td>geresh</td><td>wlc_focus</td></tr>
-</table>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="11" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="7" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="3" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="3" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="2" title="pashta_clause">pashc</td><td colspan="1"></td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="geresh_phrase">gerp</td><td title="pashta_phrase">pashp</td><td colspan="8"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach pazer">mun paz</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="darga tevir">dar tev</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
 <hr><h2 id="obje46v4">
 je 46:4</h2>
 <p><a href="#obje46v4" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a meteg as a merkha.</p>
@@ -1809,28 +1569,6 @@ je 51:9</h2>
 <tr><td class="goerwitz-obs-depth-cell">3</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="atnach_clause">atnc</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
 <tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="3"></td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="4"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="munach zaqef">mun zaqq</td><td title="zaqefgadol">zaqg</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="silluq">slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
-<hr><h2 id="obek9v2">
-ek 9:2</h2>
-<p><a href="#obek9v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/C3-Ezekiel.html#c9v2">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Ezek9:2">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">והנ֣ה שש֣ה אנש֡ים בא֣ים׀ מדרך־ ש֨ער <span class="goerwitz-tms-focus-highlight">העלי֜ון</span> אש֣ר׀ מפנ֣ה צפ֗ונה וא֨יש כל֤י מפצו֙ ביד֔ו ואיש־ אח֤ד בתוכם֙ לב֣ש בד֔ים וק֥סת הספ֖ר במתנ֑יו ויב֙או֙ וי֣עמד֔ו א֖צל מזב֥ח הנחֽשת׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">העלי֜ון</td><td>geresh</td><td>wlc_focus</td></tr>
-</table>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="14" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="10" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="6" title="zaqef_clause">zaqqc</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="4" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="3" title="revia_clause">revc</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="4"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="geresh_phrase">gerp</td><td colspan="2" title="revia_clause">revc</td><td colspan="10"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="2"></td><td title="legarmeh_phrase">lgmp</td><td title="revia_phrase">revp</td><td colspan="10"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach munach pazer">mun mun paz</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="legarmeh">lgm</td><td title="munach revia">mun rev</td><td title="azla mahpak pashta">qom mah pash</td><td title="zaqef">zaqq</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
 </table>
 </div>
 </section>
@@ -2088,31 +1826,6 @@ mi 2:7</h2>
 </div>
 </section>
 <section class="goerwitz-verse" data-category="other">
-<hr><h2 id="obhg2v12">
-hg 2:12</h2>
-<p><a href="#obhg2v12" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/CJ-Haggai.html#c2v12">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Hag2:12">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ה֣ן׀ ישא־ א֨יש <span class="goerwitz-tms-focus-highlight">בשר־ ק֜דש</span> בכנ֣ף בגד֗ו ונג֣ע ב֠כנפו אל־ הל֨חם ואל־ הנז֜יד ואל־ הי֧ין ואל־ ש֛מן ואל־ כל־ מאכ֖ל היקד֑ש ויענ֧ו הכהנ֛ים ויאמר֖ו לֽא׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">בשר־ ק֜דש</td><td>maqaf geresh</td><td>wlc_focus</td></tr>
-</table>
-<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
-<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="10" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="7" title="atnach_clause">atnc</td><td colspan="3" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="6" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="2" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="revia_clause">revc</td><td colspan="4" title="tifcha_clause">tipc</td><td colspan="1"></td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td colspan="3" title="tevir_clause">tevc</td><td title="tifcha_phrase">tipp</td><td colspan="4"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="2"></td><td title="big_telisha_phrase">big_telishap</td><td colspan="2" title="tevir_clause">tevc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="3"></td><td title="geresh_phrase">gerp</td><td title="tevir_phrase">tevp</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="munach revia">mun rev</td><td title="munach telishagedola">mun telg</td><td title="azla geresh">qom ger</td><td title="darga tevir">dar tev</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="darga tevir">dar tev</td><td title="tifcha">tip</td><td title="silluq">slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
 <hr><h2 id="oblm5v5">
 lm 5:5</h2>
 <p><a href="#oblm5v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHQ transcribes a meteg as a tipeḥa due to a missing maqaf.</p>
@@ -2260,44 +1973,6 @@ ne 2:10</h2>
 </div>
 </section>
 <section class="goerwitz-verse" data-category="other">
-<hr><h2 id="obne8v7">
-ne 8:7</h2>
-<p><a href="#obne8v7" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC transcribes a meteg as a merkha.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/FB-Nehemiah.html#c8v7">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Neh8:7">UXLC</a> | <a href="https://github.com/bdenckla/MAM-basics/issues/185">GitHub issue</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ויש֡וע ובנ֡י <span class="goerwitz-tms-focus-highlight">ושר֥בי֣ה׀</span> ימ֡ין עק֡וב שבת֣י׀ הודי֡ה מעשי֡ה קליט֣א עזריה֩ יוזב֨ד חנ֤ן פלאיה֙ והלוי֔ם מבינ֥ים את־ הע֖ם לתור֑ה והע֖ם על־ עמדֽם׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">ושר֥בי֣ה׀</td><td style="text-align: right;"><span title="We read an accent in ל differently from BHQ. (This is similar to the note “]c”, but the latter refers to accent differences against BHS.)">]C</span><span title="We read an accent in ל differently from BHS. (This is similar to the note “]C”, but the latter refers to accent differences against BHQ.)">]c</span></td><td>merkha-munaḥ-pasoleg</td><td>wlc_focus</td></tr>
-</table>
-<p class="goerwitz-tms-image"><img src="../img/LC458B-col-3-line-4-Ne-8v7.png"></img>
-</p>
-<p class="goerwitz-tms-comment">In the LC, the disputed mark looks strange. It may be two separate marks, one of which may be unintentional. The upper part of this mark (if we view it as one mark) has a merkha-like inclination but the lower part does not.</p>
-<div>
-<p class="goerwitz-tms-comment">Daniel 3:2 is the only other verse — in MAM at least, perhaps not in WLC — of this verse’s FOI category:</p>
-<ul>
-<li>
-<a href="https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB((paz))%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB0%C2%ABspace%C2%BBintervening">⅃-leg...non-revia ((paz)) with 0 intervening</a></li>
-</ul>
-</div>
-<p class="goerwitz-tms-comment">It makes sense to consider ne 8:7 ungrammatical on the basis of its merkha. So, we have a plausible reason why the checker would accept da 3:2 but not ne 8:7, since ne 8:7 has this merkha and da 3:2 does not.</p>
-<p class="goerwitz-tms-comment">There is also the general question of how the checker decides between paseq and legarmeih. For all I know, the checker considers one or both of the marks in question to be paseq rather than legarmeih.</p>
-<p class="goerwitz-tms-comment">See the <a href="https://github.com/bdenckla/MAM-basics/issues/185">GitHub issue</a> regarding this word.</p>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="12" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="10" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="8" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="7" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="6" title="pashta_clause">pashc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="pazer_phrase">pazp</td><td colspan="5" title="pashta_clause">pashc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="2"></td><td title="pazer_phrase">pazp</td><td colspan="4" title="pashta_clause">pashc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">7</td><td colspan="3"></td><td title="pazer_phrase">pazp</td><td colspan="3" title="pashta_clause">pashc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">8</td><td colspan="4"></td><td title="pazer_phrase">pazp</td><td colspan="2" title="pashta_clause">pashc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">9</td><td colspan="5"></td><td title="pazer_phrase">pazp</td><td title="pashta_phrase">pashp</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="pazer">paz</td><td title="pazer">paz</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="pazer">paz</td><td title="munach pazer">mun paz</td><td title="pazer">paz</td><td title="munach telishaqetanna azla mahpak pashta">mun telq qom mah pash</td><td title="zaqef">zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="tifcha">tip</td><td title="silluq">slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
 <hr><h2 id="ob1c1v53">
 1c 1:53</h2>
 <p><a href="#ob1c1v53" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has a munaḥ where a merkha is expected.</p>
@@ -2431,29 +2106,6 @@ ne 8:7</h2>
 <tr><td class="goerwitz-obs-depth-cell">3</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="1"></td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
 <tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="2"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="3"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell"></td><td title="azla mahpak pashta">qom mah pash</td><td title="munach zaqef">mun zaqq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="silluq">slq</td></tr>
-</table>
-</div>
-</section>
-<section class="goerwitz-verse" data-category="other">
-<hr><h2 id="ob2c26v15">
-2c 26:15</h2>
-<p><a href="#ob2c26v15" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker probably doesn’t like munaḥ legarmeih serving geresh.</p>
-<p><a href="https://bdenckla.github.io/MAM-with-doc/FD-2Chronicles.html#c26v15">Mwd</a> | <a href="https://tanach.us/Tanach.xml?2Chr26:15">UXLC</a></p>
-<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וי֣עש׀ בירושל֨ם <span class="goerwitz-tms-focus-highlight">חשבנ֜ות</span> מחש֣בת חוש֗ב להי֤ות על־ המגדלים֙ ועל־ הפנ֔ות לירוא֙ בחצ֔ים ובאבנ֖ים גדל֑ות ויצ֤א שמו֙ עד־ למ֣רח֔וק כי־ הפל֥יא להעז֖ר ע֥ד כי־ חזֽק׃</p>
-<table class="goerwitz-tms-sat">
-<tr><td lang="hbo" dir="rtl">חשבנ֜ות</td><td>geresh</td><td>wlc_focus</td></tr>
-</table>
-<p class="goerwitz-tms-comment">This verse is probably an oddball (i.e. it reports “ERROR”) because it has a phrase that is a member of the FOI category “⅃-leg...non-revia (ge) with 1 qa intervening”. </p>
-<p class="goerwitz-tms-comment">This verse is one of 15 oddballs whose FOI category starts with “⅃-leg...non-revia”. Only 2 such verses — Daniel 3:2 and Ruth 1:2 — are not oddballs.</p>
-<p class="goerwitz-tms-comment">Of the 17 verses in that category, only those 2 are not oddballs; all the rest, like this one, report the string “ERROR” (see oddballs).</p>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="12" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="8" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="4"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="munach revia">mun rev</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="pashta">pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td></tr>
 </table>
 </div>
 </section>

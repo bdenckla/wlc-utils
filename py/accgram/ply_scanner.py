@@ -24,13 +24,16 @@ Faithfulness notes (flex semantics reproduced):
     maqqef/space-delimited word; Python `re` greediness reproduces the longest
     match (backtracking to the rightmost terminator).
 
-Quirk reproduced (`has_legarmeh`): in the *new* format the lexer's `location`
-holds the **full** bookname ("Genesis 28:9"), while the 17-passage list uses
-*abbreviations* ("Gen 28:9").  They therefore never match -- except "Ruth",
-whose full name equals its abbreviation.  So across the whole new-format corpus
-the only verse where has_legarmeh fires is **Ruth 1:2** (a munach+paseq not
-before revia).  Everywhere else 74{TEXT}05-not-before-revia is plain munach.
-We port the list verbatim so this falls out naturally and is self-documenting.
+Divergence from the goerwitz C oracle (`has_legarmeh`): the C `passages[]` list
+keys on book *abbreviations* ("Gen 28:9", "Lev 10:6", "Dan 3:2"), but in the new
+format the C lexer's `location` carries the **full** bookname header ("Genesis",
+"Levit", "Daniel"), so the two coincide only for "Ruth" -- the C binary silently
+mis-fired and legarmeh fired for Ruth 1:2 alone.  That was a latent upstream
+defect driven by bad input data, not the author's intent (the tnk2acc.l comment
+says all 17 munach+paseq-not-before-revia passages are legarmeh).  We therefore
+key the 17 passages on **structured book refs** -- `(wlc_bb, chnu, vrnu)` tuples
+threaded from the caller -- so detection is decoupled from header spelling and
+all 17 passages fire as intended.  See doc/PLAN-fix-has-legarmeh-booknames.md.
 """
 
 from __future__ import annotations
@@ -157,6 +160,12 @@ _LEAF: dict[str, str] = {
 class HasLegarmeh:
     """Port of tnk2acc.l::has_legarmeh (the 17-passage list + 1Sam 14:47 rule).
 
+    Keyed on structured `(wlc_bb, chnu, vrnu)` book refs rather than the C list's
+    abbreviated location strings, so all 17 passages fire regardless of how the
+    chapter-head bookname is spelled (see the module docstring / the PLAN).  The
+    wlc_bb codes are `cmn.wlc_book_codes`' 2-char codes; the book order matches
+    the C list (which is "Jewish order").
+
     Stateful: `count` tracks munach+paseq occurrences at 1Sam 14:47 (only the
     second is legarmeh), and `old_i` advances monotonically through the list
     (the C comment: "this old_i stuff assumes the books are in Jewish order").
@@ -164,23 +173,24 @@ class HasLegarmeh:
     """
 
     _PASSAGES = (
-        "Gen 28:9", "Lev 10:6", "Lev 21:10",
-        "1Sam 14:3", "1Sam 14:47", "2Sam 13:32",
-        "2Kgs 18:17", "Isa 36:2", "Jer 4:19",
-        "Jer 38:11", "Jer 40:11", "Ezek 9:2",
-        "Hag 2:12", "Ruth 1:2", "Dan 3:2",
-        "Neh 8:7", "2Chr 26:15",
+        ("gn", 28, 9), ("lv", 10, 6), ("lv", 21, 10),
+        ("1s", 14, 3), ("1s", 14, 47), ("2s", 13, 32),
+        ("2k", 18, 17), ("is", 36, 2), ("je", 4, 19),
+        ("je", 38, 11), ("je", 40, 11), ("ek", 9, 2),
+        ("hg", 2, 12), ("ru", 1, 2), ("da", 3, 2),
+        ("ne", 8, 7), ("2c", 26, 15),
     )
 
     def __init__(self) -> None:
         self._count = 0
         self._old_i = 0
 
-    def __call__(self, location: str) -> bool:
+    def __call__(self, bb: str, chnu: int, vrnu: int) -> bool:
         # Mirrors the C short-circuit `(i != 4) || (++count == 2)`: count is
         # bumped only when we land on 1Sam 14:47 (index 4).
+        ref = (bb, chnu, vrnu)
         for i in range(self._old_i, len(self._PASSAGES)):
-            if location == self._PASSAGES[i]:
+            if ref == self._PASSAGES[i]:
                 if i != 4 or self._bump_is_second():
                     self._old_i = i
                     return True
@@ -191,15 +201,17 @@ class HasLegarmeh:
         return self._count == 2
 
 
-def scan_accents(body: str, location: str, has_legarmeh: HasLegarmeh) -> list[Token]:
+def scan_accents(
+    body: str, bb: str, chnu: int, vrnu: int, has_legarmeh: HasLegarmeh
+) -> list[Token]:
     """Scan the GG-state accent codes of one verse body into a token list.
 
     Emits accent tokens followed by a terminating SOFPASUQ.  Mirrors flex:
     at each position pick the longest match; break ties by rule order.  Stops
     after the first 00 (sof pasuq), which in flex returns to the EE state.
 
-    `location` (the verse reference, e.g. "Ruth 1:2") and `has_legarmeh` resolve
-    the 74{TEXT}05-not-before-revia rule to LEGARMEH or MUNACH.
+    The structured book ref `(bb, chnu, vrnu)` and `has_legarmeh` resolve the
+    74{TEXT}05-not-before-revia rule to LEGARMEH or MUNACH.
     """
     tokens: list[Token] = []
     pos = 0
@@ -227,7 +239,7 @@ def scan_accents(body: str, location: str, has_legarmeh: HasLegarmeh) -> list[To
         assert best_is_rule, f"no rule matched at position {pos} in {body!r}"
         advance = max(best_len, 1)
         if best_type == "_LEGARMEH_OR_MUNACH":
-            best_type = "LEGARMEH" if has_legarmeh(location) else "MUNACH"
+            best_type = "LEGARMEH" if has_legarmeh(bb, chnu, vrnu) else "MUNACH"
         if best_type is not None:
             tokens.append(Token(best_type, _LEAF[best_type]))
             pending_silluq = None
@@ -260,13 +272,17 @@ class Verse:
     tokens: list[Token]  # TILDE, accent tokens..., SOFPASUQ
 
 
-def scan_book(text: str) -> list[Verse]:
+def scan_book(text: str, bb: str) -> list[Verse]:
     """Scan a whole new-format book file into per-verse token streams.
 
     Each verse is delimited by TILDE (emitted by the chapter rule at the head of
     every verse line) and SOFPASUQ (the 00 accent code).  A single HasLegarmeh
     instance is held for the whole book, reproducing the C `static` state that
     resets per process (the harness runs one process per book file).
+
+    `bb` is the `cmn.wlc_book_codes` 2-char code for this book; it (with the
+    parsed chapter/verse numbers) is what `has_legarmeh` keys on -- the
+    chapter-head bookname only spells the human-readable `Verse.reference`.
     """
     book = ""
     has_legarmeh = HasLegarmeh()
@@ -277,7 +293,9 @@ def scan_book(text: str) -> list[Verse]:
         if mv is not None:
             ch, vs, rest = mv.group(1), mv.group(2), mv.group(3)
             reference = f"{book} {ch}:{vs}"
-            tokens = [Token("TILDE", "")] + scan_accents(rest, reference, has_legarmeh)
+            tokens = [Token("TILDE", "")] + scan_accents(
+                rest, bb, int(ch), int(vs), has_legarmeh
+            )
             verses.append(Verse(reference=reference, tokens=tokens))
             continue
         if _BOOKNAME_RE.match(line):

@@ -17282,8 +17282,11 @@ Genesis 28:9
         4 pazer_phrase
           pazer 
         4 tevir_clause
-          5 geresh_phrase
-            ERROR 
+          5 geresh_clause
+            6 legarmeh_phrase
+              legarmeh 
+            6 geresh_phrase
+              azla geresh 
           5 tevir_phrase
             darga tevir 
       3 tifcha_phrase

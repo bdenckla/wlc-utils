@@ -19,9 +19,13 @@ from accgram.ply_scanner import scan_book
 from accgram.ply_tree import print_tree
 
 
-def _parse_one(book: str, verse_line: str) -> tuple[list[str], str]:
-    """Scan + parse a single verse; return (token types, rendered tree)."""
-    verses = scan_book(f"{book}\n{verse_line}\n")
+def _parse_one(book: str, verse_line: str, bb: str = "xx") -> tuple[list[str], str]:
+    """Scan + parse a single verse; return (token types, rendered tree).
+
+    `bb` is irrelevant to these sof-pasuq tests (none is a has_legarmeh
+    passage), so it defaults to a dummy code.
+    """
+    verses = scan_book(f"{book}\n{verse_line}\n", bb)
     assert len(verses) == 1, f"expected one verse, got {len(verses)}"
     verse = verses[0]
     tree = parse_tokens(build_parser(), verse.tokens)

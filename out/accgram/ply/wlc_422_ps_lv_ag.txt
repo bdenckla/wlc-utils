@@ -5528,8 +5528,11 @@ Levit 10:6
         4 pashta_clause
           5 geresh_phrase
             telishaqetanna azla geresh 
-          5 pashta_phrase
-            ERROR 
+          5 pashta_clause
+            6 legarmeh_phrase
+              mereka legarmeh 
+            6 pashta_phrase
+              mahpak pashta 
       3 zaqef_phrase
         munach zaqef 
     2 atnach_clause
@@ -13856,8 +13859,11 @@ Levit 21:10
       3 pashta_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
-        4 pashta_phrase
-          ERROR 
+        4 pashta_clause
+          5 legarmeh_phrase
+            mereka legarmeh 
+          5 pashta_phrase
+            mahpak pashta 
       3 zaqef_phrase
         munach zaqef 
     2 atnach_clause

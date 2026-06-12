@@ -1,4 +1,4 @@
-"""Hand-authored structured research notes for the 49 former-troublemaker oddballs.
+"""Hand-authored structured research notes for the 45 former-troublemaker oddballs.
 
 Keyed by verse ref; consumed by the research-oddballs report. These verses now
 parse into ERROR trees like every other oddball, but they keep their richer
@@ -6,8 +6,6 @@ notes (and UXLC/changetext validation) here rather than in ob_data.
 """
 
 from __future__ import annotations
-
-from accgram import xx_data
 
 
 def get_structured_text() -> dict[str, dict[str, object]]:
@@ -324,18 +322,19 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "is 36:2": {
-        "st-summary": xx_data.non_revia_summary("tevir"),
+        "st-summary": "The legarmeh fires, but its legarmeh_phrase does not reduce.",
         "wlc_focus": "ירושל֛מה",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening",
-            ["This verse has a munaḥ vs merkha issue that may be significant."],
-        ),
-    },
-    "je 4:19": {
-        "st-summary": xx_data.non_revia_summary("geresh"),
-        "wlc_focus": "אוח֜ילה",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia (ge) with 1 qa intervening"
+        "comment": (
+            (
+                "This verse’s FOI category is “⅃-leg...non-revia ((tev)) with 2"
+                " (qa,da) intervening”. Since has_legarmeh now keys on structured"
+                " book refs, the munaḥ-legarmeh-not-before-revia mark is read as a"
+                " real legarmeh here, as at all 17 listed passages. But unlike the"
+                " other 16, Isaiah 36:2’s legarmeh_phrase still reduces to ERROR"
+                " (for a reason independent of the legarmeh reading), so it is the"
+                " lone remaining oddball of the category."
+            ),
+            "This verse also has a munaḥ vs merkha issue that may be significant.",
         ),
     },
     "je 9:10": {
@@ -365,13 +364,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "מא֖רץ",
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.10-41",
         "comment": "See the image in the UXLC change to which we link above.",
-    },
-    "je 38:11": {
-        "st-summary": xx_data.non_revia_summary("geresh"),
-        "wlc_focus": "את־ האנש֜ים",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia (ge) with 1 qa intervening"
-        ),
     },
     "je 48:12": {
         "st-summary": "BHS transcribes a meteg as a tipeḥa.",
@@ -464,14 +456,6 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
         "comment": "See the image in the UXLC change to which we link above.",
     },
-    "hg 2:12": {
-        "st-summary": xx_data.non_revia_summary("geresh"),
-        "wlc_focus": "בשר־ ק֜דש",
-        "BHQ": "?",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia (ge) with 1 qa intervening"
-        ),
-    },
     "lm 5:5": {
         "st-summary": "BHQ transcribes a meteg as a tipeḥa due to a missing maqaf.",
         "wlc_focus": "הונ֖ח",
@@ -521,12 +505,5 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "שנ֖ים",
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-12",
         "comment": "See the image in the UXLC change to which we link above.",
-    },
-    "2c 26:15": {
-        "st-summary": xx_data.non_revia_summary("geresh"),
-        "wlc_focus": "חשבנ֜ות",
-        "comment": xx_data.non_revia_comment(
-            "⅃-leg...non-revia (ge) with 1 qa intervening"
-        ),
     },
 }

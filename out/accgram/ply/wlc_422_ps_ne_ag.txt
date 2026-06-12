@@ -4533,14 +4533,20 @@ Nehemiah 8:7
           5 pazer_phrase
             pazer 
           5 pashta_clause
-            6 pazer_phrase
-              ERROR 
+            6 pazer_clause
+              7 legarmeh_phrase
+                mereka legarmeh 
+              7 pazer_phrase
+                pazer 
             6 pashta_clause
               7 pazer_phrase
                 pazer 
               7 pashta_clause
-                8 pazer_phrase
-                  munach pazer 
+                8 pazer_clause
+                  9 legarmeh_phrase
+                    legarmeh 
+                  9 pazer_phrase
+                    pazer 
                 8 pashta_clause
                   9 pazer_phrase
                     pazer 

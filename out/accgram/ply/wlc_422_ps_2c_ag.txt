@@ -14406,8 +14406,11 @@
   1 atnach_clause
     2 zaqef_clause
       3 revia_clause
-        4 geresh_phrase
-          ERROR 
+        4 geresh_clause
+          5 legarmeh_phrase
+            legarmeh 
+          5 geresh_phrase
+            azla geresh 
         4 revia_phrase
           munach revia 
       3 zaqef_clause

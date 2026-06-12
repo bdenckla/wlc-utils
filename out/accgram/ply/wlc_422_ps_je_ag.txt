@@ -2439,8 +2439,11 @@ Jeremiah 4:19
   1 atnach_clause
     2 tifcha_clause
       3 tevir_clause
-        4 geresh_phrase
-          ERROR 
+        4 geresh_clause
+          5 legarmeh_phrase
+            legarmeh 
+          5 geresh_phrase
+            azla geresh 
         4 tevir_phrase
           mereka tevir 
       3 tifcha_phrase
@@ -24627,8 +24630,11 @@ Jeremiah 38:11
   1 atnach_clause
     2 zaqef_clause
       3 revia_clause
-        4 geresh_phrase
-          ERROR 
+        4 geresh_clause
+          5 legarmeh_phrase
+            legarmeh 
+          5 geresh_phrase
+            azla geresh 
         4 revia_phrase
           revia 
       3 zaqef_clause
@@ -25938,8 +25944,11 @@ Jeremiah 40:11
         4 pazer_phrase
           munach pazer 
         4 pashta_clause
-          5 geresh_phrase
-            ERROR 
+          5 geresh_clause
+            6 legarmeh_phrase
+              legarmeh 
+            6 geresh_phrase
+              azla geresh 
           5 pashta_phrase
             mahpak pashta 
       3 zaqef_phrase
