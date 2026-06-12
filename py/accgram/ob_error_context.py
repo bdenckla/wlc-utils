@@ -70,6 +70,40 @@ def collect_error_tree_for_ref(
     return _extract_error_tree(verse_lines_by_ref.get(ref, []))
 
 
+def collect_tree_for_ref(
+    *,
+    ref: str,
+    output_file: str,
+    base_dir: Path,
+) -> ErrorTree | None:
+    """Parse one verse's full parse tree from its PLY *_ag.txt file, regardless of
+    whether it contains an ERROR leaf.
+
+    Unlike collect_error_tree_for_ref (which filters to oddballs by returning None
+    for error-free trees), this returns the tree for a clean, *grammatical* verse
+    too -- used to show the Ruth 1:2 and Daniel 3:2 trees in the Open Issues
+    section, neither of which is an oddball.
+    """
+    output_path = base_dir / output_file
+    bb = _bb_from_output_file(output_file)
+    if bb is None:
+        return None
+
+    verse_lines_by_ref = _collect_verse_lines_by_ref(
+        output_path=output_path,
+        bb=bb,
+        requested_refs={ref},
+    )
+    verse_lines = verse_lines_by_ref.get(ref, [])
+    if not verse_lines:
+        return None
+    return ob_tree_parse.parse_verse_tree(
+        verse_lines=verse_lines,
+        node_line_re=_NODE_LINE_RE,
+        error_token_re=_ERROR_TOKEN_RE,
+    )
+
+
 def collect_error_paths_by_ref(
     rows: list[dict[str, object]],
     goerwitz_out_dir: Path,
