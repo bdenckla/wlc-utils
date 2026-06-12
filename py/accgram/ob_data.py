@@ -351,13 +351,16 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
             (
                 "It makes sense to consider ne 8:7 ungrammatical on the basis of its merkha."
                 " So, we have a plausible reason"
-                " why the checker would accept Daniel 3:2 but not ne 8:7:"
-                " ne 8:7 has this merkha and Daniel 3:2 does not."
+                " why the checker would accept da 3:2 but not ne 8:7, since"
+                " ne 8:7 has this merkha and da 3:2 does not."
             ),
             (
                 "There is also the general question of how the checker decides between paseq and legarmeih."
                 " For all I know, the checker considers one or both of the marks in question"
                 " to be paseq rather than legarmeih."
+            ),
+            xx_data.github_issue_comment_item(
+                "https://github.com/bdenckla/MAM-basics/issues/185"
             ),
         ),
     },

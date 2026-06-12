@@ -22,6 +22,16 @@ def foi_paz_category_comment_item():
     return wlc_utils_html.div((intro, wlc_utils_html.unordered_list((link,))))
 
 
+def github_issue_comment_item(href):
+    """A comment item pointing to a word’s GitHub issue, linked as “GitHub issue”
+    just as the same issue is linked above the comment."""
+    link = wlc_utils_html.anchor("GitHub issue", {"href": href})
+    return wlc_utils_html.para(
+        ("See the ", link, " regarding this word."),
+        {"class": "goerwitz-tms-comment"},
+    )
+
+
 def non_revia_summary(accent: str, intro=None) -> str:
     return f"{intro or 'The'} checker probably doesn’t like munaḥ legarmeih serving {accent}."
 
