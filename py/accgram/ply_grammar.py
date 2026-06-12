@@ -127,6 +127,9 @@ def p_zaqef_silluq_clause(p):
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
+# Necessitated by one anomalous verse, Ezra 7:13, where atnach does not occur and
+# segolta serves as the main clause divider (Yeivin, par. 228).  That verse has no
+# zaqef either, oddly enough.
 def p_segolta_silluq_clause(p):
     """segolta_silluq_clause : segolta_clause silluq_phrase
                              | segolta_clause tifcha_silluq_clause"""
@@ -184,6 +187,9 @@ def p_segolta_atnach_clause(p):
 
 
 # --- zaqef ---------------------------------------------------------------------
+# Revia may precede a zaqef-clause with pashta; if another revia precedes, it may
+# be converted to pashta.  Yetiv seems only to be able to substitute for the
+# non-revia-replacing pashta.
 def p_zaqef_phrase_zaqef(p):
     "zaqef_phrase : ZAQEF"
     p[0] = add_leaves("zaqef_phrase", p[1])
@@ -200,6 +206,9 @@ def p_zaqef_phrase_zaqefgadol(p):
     p[0] = add_leaves("zaqef_phrase", p[1])
 
 
+# See Yeivin on shofar illuy and shofar mekarbel: these signs are often pointed
+# differently than plain munach zaqef and munach+munach zaqef in some MSS, but
+# here in L they are pointed the same as munachs before zaqef.
 def p_zaqef_phrase_munach(p):
     "zaqef_phrase : MUNACH ZAQEF"
     p[0] = add_leaves("zaqef_phrase", p[1], p[2])
@@ -418,6 +427,9 @@ def p_legarmeh_tevir_clause(p):
     p[0] = make_node("tevir_clause", p[1], p[2])
 
 
+# Yeivin says the order is big telisha, then geresh, then pashta, but that is not
+# right.  Big telisha often follows geresh, but normally by itself, or with just
+# one servus (Gen 13:1).  See also geresh_pashta_clause above.
 def p_geresh_tevir_clause(p):
     """geresh_tevir_clause : geresh_clause tevir_phrase
                            | geresh_clause legarmeh_tevir_clause
@@ -461,6 +473,7 @@ def p_zarqa_phrase_mereka(p):
     p[0] = add_leaves("zarqa_phrase", p[1], p[2])
 
 
+# The leading mereka here is rare.
 def p_zarqa_phrase_mereka_munach(p):
     "zarqa_phrase : MEREKA MUNACH ZARQA"
     p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
@@ -520,12 +533,16 @@ def p_zarqa_clause(p):
     p[0] = p[1]
 
 
+# Not actually attested, but theoretically possible.
 def p_legarmeh_zarqa_clause(p):
     """legarmeh_zarqa_clause : legarmeh_phrase zarqa_phrase
                              | legarmeh_phrase legarmeh_zarqa_clause"""
     p[0] = make_node("zarqa_clause", p[1], p[2])
 
 
+# Yeivin says the order is big telisha, then geresh, then zarqa, but that is not
+# right.  Big telisha once follows geresh before zarqa (Neh 3:15).  This works
+# basically like geresh_pashta_clause (on which, see above).
 def p_geresh_zarqa_clause(p):
     """geresh_zarqa_clause : geresh_clause zarqa_phrase
                            | geresh_clause legarmeh_zarqa_clause
@@ -552,6 +569,9 @@ def p_pazer_zarqa_clause(p):
 
 
 # --- pashta --------------------------------------------------------------------
+# Problem: the Michigan-Claremont texts occasionally mistake mahpak before pashta
+# for yetiv; since pashta can be repeated, this comes out as a legal combination.
+# See Jer 34:3, 37:7, 50:11; Job 3:16.
 def p_pashta_phrase_yetiv(p):
     "pashta_phrase : YETIV"
     p[0] = add_leaves("pashta_phrase", p[1])
@@ -645,6 +665,8 @@ def p_pashta_phrase_m3_telq_azla_mereka(p):
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5], p[6], p[7])
 
 
+# Yeivin's scheme is, by and large, good, but it misses a number of cases where
+# telisha qetanna precedes pashta with no intervening accents.
 def p_pashta_phrase_telq(p):
     "pashta_phrase : TELISHAQETANNA PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2])
@@ -655,6 +677,9 @@ def p_pashta_phrase_munach_telq(p):
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
+# Problem: if azla is mistaken for pashta, Accents will not pick up the problem
+# when a geresh comes next and then eventually a revia and a zaqef; rather, it
+# parses the azla as a well-formed pashta clause/phrase.  See, e.g., Ezek 38:4.
 def p_pashta_clause(p):
     """pashta_clause : pashta_phrase
                      | legarmeh_pashta_clause
@@ -670,6 +695,9 @@ def p_legarmeh_pashta_clause(p):
     p[0] = make_node("pashta_clause", p[1], p[2])
 
 
+# Yeivin says the order is big telisha, then geresh, then pashta, but that is not
+# right.  Big telisha often follows geresh, but normally by itself, or with just
+# one servus.
 def p_geresh_pashta_clause(p):
     """geresh_pashta_clause : geresh_clause pashta_phrase
                             | geresh_clause legarmeh_pashta_clause
@@ -711,6 +739,8 @@ def p_revia_phrase_darga_munach(p):
     p[0] = add_leaves("revia_phrase", p[1], p[2], p[3])
 
 
+# Yeivin says this combo only occurs in Isa 45:1, but in fact it occurs in two
+# other passages as well.
 def p_revia_phrase_munach_munach(p):
     "revia_phrase : MUNACH MUNACH REVIA"
     p[0] = add_leaves("revia_phrase", p[1], p[2], p[3])
@@ -781,6 +811,8 @@ def p_geresh_phrase_munach_geresh(p):
     p[0] = add_leaves("geresh_phrase", p[1], p[2])
 
 
+# See the pashta clauses above for how mistaking an azla for a pashta might not
+# result in a bad parse, as, e.g., in Ezek 38:4.
 def p_geresh_phrase_azla_geresh(p):
     "geresh_phrase : AZLA GERESH"
     p[0] = add_leaves("geresh_phrase", p[1], p[2])
@@ -801,6 +833,7 @@ def p_geresh_phrase_munach2_telq_azla(p):
     p[0] = add_leaves("geresh_phrase", p[1], p[2], p[3], p[4], p[5])
 
 
+# Judg 11:17 & about 6 other passages have this many munachs.
 def p_geresh_phrase_munach3_telq_azla(p):
     "geresh_phrase : MUNACH MUNACH MUNACH TELISHAQETANNA AZLA GERESH"
     p[0] = add_leaves("geresh_phrase", p[1], p[2], p[3], p[4], p[5], p[6])
@@ -855,6 +888,7 @@ def p_big_telisha_clause(p):
     p[0] = p[1]
 
 
+# Not attested, but theoretically possible.
 def p_legarmeh_big_telisha_clause(p):
     """legarmeh_big_telisha_clause : legarmeh_phrase big_telisha_phrase
                                    | legarmeh_phrase legarmeh_big_telisha_clause"""
@@ -917,6 +951,7 @@ def p_pazer_phrase_munach4_galgal(p):
     p[0] = add_leaves("pazer_phrase", p[1], p[2], p[3], p[4], p[5], p[6])
 
 
+# Not in Yeivin - Ezek 48:21, Ezra 6:9.
 def p_pazer_phrase_munach5_galgal(p):
     "pazer_phrase : MUNACH MUNACH MUNACH MUNACH MUNACH GALGAL PAZERGADOL"
     p[0] = add_leaves("pazer_phrase", p[1], p[2], p[3], p[4], p[5], p[6], p[7])
