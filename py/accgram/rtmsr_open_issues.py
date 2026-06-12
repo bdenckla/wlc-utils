@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from accgram import xx_data
 from py_html import wlc_utils_html
 
 _ITEM_FOI_NON_REVIA = (
@@ -11,10 +12,7 @@ _ITEM_FOI_NON_REVIA = (
 )
 
 _FOI_NON_REVIA_CATEGORY_LINKS = (
-    (
-        "⅃-leg...non-revia ((paz)) with 0 intervening",
-        "https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB((paz))%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB0%C2%ABspace%C2%BBintervening",
-    ),
+    xx_data.FOI_PAZ_CATEGORY_LINK,
     (
         "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening",
         "https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB((tev))%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB2%C2%ABspace%C2%BB(qa,da)%C2%ABspace%C2%BBintervening",

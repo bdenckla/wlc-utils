@@ -28,7 +28,7 @@ def render_comment_paragraphs(
         return ()
     if not isinstance(comment, (list, tuple)):
         comment = [comment]
-    return tuple(_render_comment_paragraph(comment_item) for comment_item in comment)
+    return tuple(_render_comment_item(comment_item) for comment_item in comment)
 
 
 def render_image_paragraphs(
@@ -169,6 +169,15 @@ def _parse_lc_image_name(img_name: str) -> tuple[str, int, int] | None:
     column = int(match.group(2))
     line = int(match.group(3))
     return page_id, column, line
+
+
+def _render_comment_item(comment_item: object) -> object:
+    # A comment item that is already an HTML element (htel) — e.g. a block that
+    # pairs a paragraph with a list underneath — is rendered as-is. A plain string
+    # (or sequence of inline contents) is wrapped in a comment paragraph.
+    if wlc_utils_html.is_htel(comment_item):
+        return comment_item
+    return _render_comment_paragraph(comment_item)
 
 
 def _render_comment_paragraph(comment: object) -> object:

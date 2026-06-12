@@ -341,10 +341,24 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "github-issue": "https://github.com/bdenckla/MAM-basics/issues/185",
         "img": "LC458B-col-3-line-4-Ne-8v7.png",
         "comment": (
-            "In the LC, the disputed mark looks strange."
-            " It may be two separate marks, one of which may be unintentional."
-            " The upper part of this mark (if we view it as one mark) has a merkha-like inclination"
-            " but the lower part does not."
+            (
+                "In the LC, the disputed mark looks strange."
+                " It may be two separate marks, one of which may be unintentional."
+                " The upper part of this mark (if we view it as one mark) has a merkha-like inclination"
+                " but the lower part does not."
+            ),
+            xx_data.foi_paz_category_comment_item(),
+            (
+                "It makes sense to consider ne 8:7 ungrammatical on the basis of its merkha."
+                " So, we have a plausible reason"
+                " why the checker would accept Daniel 3:2 but not ne 8:7:"
+                " ne 8:7 has this merkha and Daniel 3:2 does not."
+            ),
+            (
+                "There is also the general question of how the checker decides between paseq and legarmeih."
+                " For all I know, the checker considers one or both of the marks in question"
+                " to be paseq rather than legarmeih."
+            ),
         ),
     },
     "1c 1:53": {
