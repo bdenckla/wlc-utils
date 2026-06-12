@@ -1,23 +1,14 @@
-"""Derive PLY-based oddball/troublemaker sets for research-tms-and-oddballs.
+"""Derive the PLY-based oddball set for the research-oddballs subcommand.
 
-Unlike the goerwitz analog (``oddballs.write_oddballs_json``), which classifies
-verses from the **C** ``accents`` outputs, this module classifies from the **PLY**
-port outputs.  The PLY port produces an ``ERROR``-node tree for all 49 hard-coded
-"troublemakers" (which the C binary emits no output for), so all 49 behave exactly
-like the original 51 oddballs and are reclassified as oddballs here.
-(Of the 49, 21 are missing-sof-pasuq verses the scanner/grammar flag with a distinct
-sof_pasuq_phrase ERROR.)
+This module classifies oddball verses from the **PLY** port outputs. An oddball
+is any verse whose PLY parse tree contains at least one ``ERROR`` leaf. Since
+``run-ply`` now processes the full prose corpus (including the 49 verses the C
+binary emitted no output for), every such ERROR verse lives in
+``out/accgram/ply/`` directly -- there is no separate troublemaker pass.
 
-Resulting sets:
-  - **Oddballs (100):** the 51 ``ERROR`` verses in ``out/accgram/ply/`` (tagged
-    ``output_dir="ply"``) plus the 49 ``ERROR`` verses in ``out/accgram/ply-tms/``
-    (tagged ``output_dir="ply-tms"``).
-  - **Troublemakers (0):** ``tms.HARDCODED_REFS`` minus the 49 ply-tms oddballs --
-    i.e. the verses that produce no output even under the PLY port (now none).
-
-Both JSONs use the same schema as the goerwitz files so ``rtms_rows`` parses them
-unchanged.  Oddball rows carry an extra ``output_dir`` field naming which PLY
-output directory holds their ``ERROR`` tree (the two dirs share book filenames).
+The resulting ``_oddballs.json`` uses the same schema ``rtms_rows`` parses: one
+row per oddball with ``ref``, ``content`` (the source verse text, drawn from
+``wlc422_ps.txt``), and ``output_file`` (the ``*_ag.txt`` holding its ERROR tree).
 """
 
 from __future__ import annotations
@@ -27,63 +18,10 @@ import re
 from pathlib import Path
 
 from accgram import oddballs
-from accgram import tms
+from accgram import split_wlc
 from mb_cmn import provenance
 
 _OUTPUT_FILE_BB_RE = re.compile(r"^wlc_422_ps_([A-Za-z0-9]+)_ag\.txt$")
-
-
-def _oddball_rows_for_dir(
-    out_dir: Path,
-    in_dir: Path,
-    output_dir_tag: str,
-) -> list[dict[str, object]]:
-    """Collect oddball rows for one PLY output dir, content from ``in_dir``."""
-    rows: list[dict[str, object]] = []
-    output_paths = sorted(
-        p for p in out_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt"
-    )
-    for output_path in output_paths:
-        match = _OUTPUT_FILE_BB_RE.match(output_path.name)
-        if match is None:
-            continue
-        bb = match.group(1).lower()
-
-        input_path = in_dir / f"wlc_422_ps_{bb}.txt"
-        input_verses = oddballs._collect_input_verses(input_path)
-        oddball_refs = oddballs._collect_oddball_refs(output_path)
-
-        for chnu, vrnu in sorted(oddball_refs):
-            rows.append(
-                {
-                    "ref": f"{bb} {chnu}:{vrnu}",
-                    "content": input_verses.get((chnu, vrnu), ""),
-                    "output_file": output_path.name,
-                    "output_dir": output_dir_tag,
-                }
-            )
-    return rows
-
-
-def _troublemaker_rows(
-    unfiltered_in_dir: Path,
-    ply_tms_oddball_refs: set[tuple[str, int, int]],
-) -> list[dict[str, object]]:
-    """HARDCODED_REFS minus the ply-tms oddballs; content from unfiltered input."""
-    remaining = sorted(tms.HARDCODED_REFS - ply_tms_oddball_refs)
-    input_verses_by_book: dict[str, dict[tuple[int, int], str]] = {}
-    rows: list[dict[str, object]] = []
-    for bb, chnu, vrnu in remaining:
-        if bb not in input_verses_by_book:
-            input_path = unfiltered_in_dir / f"wlc_422_ps_{bb}.txt"
-            input_verses_by_book[bb] = oddballs._collect_input_verses(input_path)
-        rows.append(
-            {
-                "ref": f"{bb} {chnu}:{vrnu}",
-                "content": input_verses_by_book[bb].get((chnu, vrnu), ""),
-            }
-        )
-    return rows
 
 
 def _ref_to_tuple(ref: str) -> tuple[str, int, int]:
@@ -92,32 +30,45 @@ def _ref_to_tuple(ref: str) -> tuple[str, int, int]:
     return (bb, int(chnu), int(vrnu))
 
 
-def write_ply_oddballs_and_troublemakers(
+def write_ply_oddballs(
     ply_dir: Path,
-    ply_tms_dir: Path,
-    psf_in_dir: Path,
-    unfiltered_in_dir: Path,
+    source_input_path: Path,
     oddballs_out: Path,
-    troubles_out: Path,
 ) -> None:
-    """(Re)generate the PLY-derived ``_oddballs.json`` and ``_troublemakers.json``."""
-    ply_rows = _oddball_rows_for_dir(ply_dir, psf_in_dir, "ply")
-    ply_tms_rows = _oddball_rows_for_dir(ply_tms_dir, unfiltered_in_dir, "ply-tms")
-    oddball_rows = ply_rows + ply_tms_rows
-    oddball_rows.sort(key=lambda row: _ref_to_tuple(str(row["ref"])))
+    """(Re)generate the PLY-derived ``_oddballs.json`` from ``out/accgram/ply/``."""
+    refs_with_files: list[tuple[str, int, int, str]] = []
+    output_paths = sorted(
+        p for p in ply_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt"
+    )
+    for output_path in output_paths:
+        match = _OUTPUT_FILE_BB_RE.match(output_path.name)
+        if match is None:
+            continue
+        bb = match.group(1).lower()
+        for chnu, vrnu in sorted(oddballs._collect_oddball_refs(output_path)):
+            refs_with_files.append((bb, chnu, vrnu, output_path.name))
 
-    ply_tms_oddball_refs = {_ref_to_tuple(str(row["ref"])) for row in ply_tms_rows}
-    troublemaker_rows = _troublemaker_rows(unfiltered_in_dir, ply_tms_oddball_refs)
+    refs = {(bb, chnu, vrnu) for bb, chnu, vrnu, _ in refs_with_files}
+    source_lines = split_wlc.collect_source_lines(source_input_path, refs)
+
+    oddball_rows: list[dict[str, object]] = [
+        {
+            "ref": f"{bb} {chnu}:{vrnu}",
+            "content": source_lines.get((bb, chnu, vrnu), ""),
+            "output_file": output_file,
+        }
+        for bb, chnu, vrnu, output_file in refs_with_files
+    ]
+    oddball_rows.sort(key=lambda row: _ref_to_tuple(str(row["ref"])))
 
     books_with_oddballs = {_ref_to_tuple(str(row["ref"]))[0] for row in oddball_rows}
     oddballs_payload: dict[str, object] = {
         "artifacts_description": "oddball verses with ERROR nodes in PLY *_ag.txt outputs",
         "payload_provenance_note": (
             "These verses are parsed by the PLY port into a tree containing at least "
-            "one line with the token ERROR. They are drawn from two PLY output "
-            "directories: ply/ (the 51 verses the C oracle also flags) and ply-tms/ "
-            "(49 verses the C binary emits no output for). The output_dir field on "
-            "each row names which directory holds that verse's ERROR tree."
+            "one line with the token ERROR, drawn from out/accgram/ply/. The "
+            "output_file field on each row names which book file holds that verse's "
+            "ERROR tree."
         ),
         "summary": {
             "oddballs": len(oddball_rows),
@@ -127,28 +78,7 @@ def write_ply_oddballs_and_troublemakers(
     }
     oddballs_payload = provenance.with_json_provenance(oddballs_payload, __file__)
 
-    books_with_troublemakers = {
-        _ref_to_tuple(str(row["ref"]))[0] for row in troublemaker_rows
-    }
-    troublemakers_payload: dict[str, object] = {
-        "artifacts_description": "verses producing no output even under the PLY port",
-        "payload_provenance_note": (
-            "These verses are hardcoded troublemaker exclusions (tms.HARDCODED_REFS) "
-            "that produce no parse tree even under the PLY port, unlike the 49 "
-            "siblings reclassified as oddballs (now none -- all 49 are reclassified)."
-        ),
-        "summary": {
-            "troublemakers_excluded": len(troublemaker_rows),
-            "books_with_troublemakers": len(books_with_troublemakers),
-        },
-        "troublemakers": troublemaker_rows,
-    }
-    troublemakers_payload = provenance.with_json_provenance(
-        troublemakers_payload, __file__
-    )
-
     _write_json(oddballs_out, oddballs_payload)
-    _write_json(troubles_out, troublemakers_payload)
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:

@@ -19,7 +19,7 @@ StructuredTextLookup = Callable[[dict[str, object], str], object]
 
 
 def default_html_out_path(repo_root: Path) -> Path:
-    return repo_root / "gh-pages" / "accgram" / "goerwitz-tms.html"
+    return repo_root / "gh-pages" / "accgram" / "goerwitz.html"
 
 
 def resolve_html_out_path(args: object, repo_root: Path) -> Path:
@@ -137,10 +137,6 @@ def _render_ref_links(
     )
 
 
-def troublemaker_anchor_id(bcv: str) -> str:
-    return f"tm{bcv.replace(':', 'v')}"
-
-
 def _render_sat_table(
     row: dict[str, object],
     *,
@@ -225,11 +221,11 @@ def _mam_with_doc_url(bb: str, chnu: int, vrnu: int) -> str:
 def _derive_html_out_from_out_path(out_path: Path) -> Path | None:
     for ancestor in out_path.parents:
         if ancestor.name == "out":
-            return ancestor.parent / "gh-pages" / "accgram" / "goerwitz-tms.html"
+            return ancestor.parent / "gh-pages" / "accgram" / "goerwitz.html"
 
     parent = out_path.parent
     if parent != out_path:
-        return parent / "gh-pages" / "accgram" / "goerwitz-tms.html"
+        return parent / "gh-pages" / "accgram" / "goerwitz.html"
 
     return None
 

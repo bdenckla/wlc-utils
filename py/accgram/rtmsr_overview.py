@@ -13,7 +13,6 @@ from accgram import rtmsr_bracket_notes
 from accgram import rtmsr_intro
 from accgram import rtmsr_open_issues
 from accgram import rtmsr_subsets
-from accgram.tm_data import get_structured_text
 from mb_cmn import provenance
 from py_html import wlc_utils_html
 
@@ -27,10 +26,9 @@ StructuredTextLookup = Callable[[dict[str, object], str], object]
 
 @dataclass
 class _Entry:
-    """One verse on the combined page, tagged along both filter dimensions."""
+    """One oddball verse on the page, tagged along the msp filter dimension."""
 
     ref: str
-    kind: str  # "ob" (oddball) or "tm" (troublemaker)
     msp: str  # "y" or "n" (missing sof pasuq)
     anchor_id: str
     structured_text_lookup: StructuredTextLookup
@@ -40,11 +38,10 @@ class _Entry:
 
 def write_goerwitz_combined_html_report(
     main_html_out_path: Path,
-    enriched_rows: list[dict[str, object]],
     enriched_oddball_rows: list[dict[str, object]],
     base_dir: Path | None,
 ) -> Path:
-    """Write goerwitz.html: every troublemaker and oddball verse in one flat,
+    """Write goerwitz.html: every oddball verse in one flat,
     client-side-filterable list (see goerwitz-filter.js)."""
     html_out_path = rtmsr_subsets.overview_html_out_path(main_html_out_path)
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -55,9 +52,7 @@ def write_goerwitz_combined_html_report(
             enriched_oddball_rows, base_dir
         )
 
-    entries = _build_entries(
-        enriched_rows, enriched_oddball_rows, error_trees_by_ref
-    )
+    entries = _build_entries(enriched_oddball_rows, error_trees_by_ref)
     body_contents = _build_body_contents(entries)
 
     wlc_utils_html.write_html_to_file(
@@ -73,27 +68,10 @@ def write_goerwitz_combined_html_report(
 
 
 def _build_entries(
-    enriched_rows: list[dict[str, object]],
     enriched_oddball_rows: list[dict[str, object]],
     error_trees_by_ref: dict[str, ob_error_context.ErrorTree | None],
 ) -> list[_Entry]:
     entries: list[_Entry] = []
-
-    for row in enriched_rows:
-        ref = _row_ref(row)
-        _bb, _chnu, _vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(ref)
-        structured_text = get_structured_text().get(ref)
-        entries.append(
-            _Entry(
-                ref=ref,
-                kind="tm",
-                msp=_msp_flag(row, structured_text),
-                anchor_id=rtms_report.troublemaker_anchor_id(bcv),
-                structured_text_lookup=rtms_report.structured_text_value,
-                row=row,
-                error_tree=None,
-            )
-        )
 
     for row in enriched_oddball_rows:
         ref = _row_ref(row)
@@ -102,7 +80,6 @@ def _build_entries(
         entries.append(
             _Entry(
                 ref=ref,
-                kind="ob",
                 msp=_msp_flag(row, structured_text),
                 anchor_id=ob_report.oddball_anchor_id(bcv),
                 structured_text_lookup=ob_report.structured_text_value,
@@ -128,7 +105,7 @@ def _build_body_contents(entries: list[_Entry]) -> tuple[object, ...]:
 
     sections: list[object] = [
         wlc_utils_html.heading_level_1(_REPORT_HEADING),
-        *rtmsr_intro.build_intro_contents(counts["tm"], counts["ob"]),
+        *rtmsr_intro.build_intro_contents(counts["total"]),
         *rtmsr_intro.checker_article_citation_contents(),
         *rtmsr_open_issues.build_open_issues_section(),
         *rtmsr_bracket_notes.build_wlc_bracket_notes_section(all_rows),
@@ -151,12 +128,11 @@ def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
             structured_text_lookup=entry.structured_text_lookup,
         )
     )
-    if entry.kind == "ob":
-        inner.extend(
-            ob_report.render_error_context_section(
-                entry.row, error_tree=entry.error_tree
-            )
+    inner.extend(
+        ob_report.render_error_context_section(
+            entry.row, error_tree=entry.error_tree
         )
+    )
 
     items: list[object] = []
     # The separating rule lives inside the section (omitted on the first one) so it
@@ -169,7 +145,6 @@ def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
         "section",
         {
             "class": "goerwitz-verse",
-            "data-kind": entry.kind,
             "data-msp": entry.msp,
         },
         tuple(items),
@@ -177,13 +152,6 @@ def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
 
 
 def _build_filter_controls(counts: dict[str, int]) -> object:
-    kind_fieldset = _fieldset(
-        "Kind",
-        (
-            _checkbox("gf-kind", "ob", f"Oddballs ({counts['ob']})"),
-            _checkbox("gf-kind", "tm", f"Troublemakers ({counts['tm']})"),
-        ),
-    )
     msp_fieldset = _fieldset(
         "Missing sof pasuq",
         (
@@ -193,7 +161,7 @@ def _build_filter_controls(counts: dict[str, int]) -> object:
     )
     count_para = wlc_utils_html.para("", {"class": "gf-count"})
     return wlc_utils_html.div(
-        (kind_fieldset, msp_fieldset, count_para),
+        (msp_fieldset, count_para),
         {"class": "goerwitz-filter"},
     )
 
@@ -217,9 +185,8 @@ def _checkbox(css_class: str, value: str, label_text: str) -> object:
 
 
 def _counts(entries: list[_Entry]) -> dict[str, int]:
-    counts = {"ob": 0, "tm": 0, "y": 0, "n": 0, "total": len(entries)}
+    counts = {"y": 0, "n": 0, "total": len(entries)}
     for entry in entries:
-        counts[entry.kind] += 1
         counts[entry.msp] += 1
     return counts
 

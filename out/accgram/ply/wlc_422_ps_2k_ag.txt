@@ -18013,6 +18013,30 @@
         tifcha 
       3 silluq_phrase
         mereka silluq 
+2Kings 23:36
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_phrase
+      ERROR 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          atnach 
+  1 silluq_clause
+    2 zaqef_phrase
+      munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 silluq_phrase
+        silluq 
 2Kings 23:37
 0 silluq_clause
   1 atnach_clause

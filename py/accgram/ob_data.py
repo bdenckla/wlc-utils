@@ -13,11 +13,10 @@ _SOMEWHERE = "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rath
 _BHS_TRANSCRIBES = "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
 _ZARQA_WHIM = {
     "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
-    "other-goerwitz-item": "goerwitz-tms.html#tmnu20v19",
+    "other-goerwitz-item": "goerwitz.html#obnu20v19",
     "comment": (
-        "This is one of six items of this type in the “oddballs” set."
-        " There is only one such item in the “troublemakers” set."
-        " See, the “Other Goerwitz item” link regarding that item."
+        "This is one of seven items of this type."
+        " See the “Other Goerwitz item” link regarding another instance (Nu 20:19)."
     ),
 }
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {

@@ -8,9 +8,9 @@ from accgram import ply_classify
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_output
-from accgram import rtms_ref
 from accgram import rtms_report
 from accgram import rtms_rows
+from accgram import run_ply
 from accgram import tm_changes
 from accgram import tm_descriptor
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
@@ -18,8 +18,8 @@ from accgram.tm_data import get_structured_text
 from accgram.tm_sanity import sanity_check_structured_text
 
 
-def default_troubles_in(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply" / "_troublemakers.json"
+def default_input_path(repo_root: Path) -> Path:
+    return run_ply.default_input_path(repo_root)
 
 
 def default_oddballs_in(repo_root: Path) -> Path:
@@ -28,18 +28,6 @@ def default_oddballs_in(repo_root: Path) -> Path:
 
 def default_ply_dir(repo_root: Path) -> Path:
     return repo_root / "out" / "accgram" / "ply"
-
-
-def default_ply_tms_dir(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply-tms"
-
-
-def default_psf_in_dir(repo_root: Path) -> Path:
-    return repo_root.parent / "wlc-utils-io" / "out" / "goerwitz" / "wlc_422_psf"
-
-
-def default_unfiltered_in_dir(repo_root: Path) -> Path:
-    return repo_root.parent / "wlc-utils-io" / "out" / "goerwitz" / "wlc_422_ps"
 
 
 def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
@@ -58,20 +46,16 @@ def default_all_changes_path(repo_root: Path) -> Path:
     return repo_root.parent / "UXLC-utils" / "out" / "UXLC-misc" / "all_changes.json"
 
 
-def default_out_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "research-troublemakers.json"
-
-
 def default_oddballs_out_path(repo_root: Path) -> Path:
     return repo_root / "out" / "accgram" / "research-oddballs.json"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
     parser.add_argument(
-        "--troubles-in",
+        "--input",
         type=Path,
-        default=default_troubles_in(repo_root),
-        help="Path to _troublemakers.json input.",
+        default=default_input_path(repo_root),
+        help="Path to source wlc422_ps.txt file (oddball verse content).",
     )
     parser.add_argument(
         "--wlc422-kq-u-dir",
@@ -107,31 +91,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--ply-dir",
         type=Path,
         default=default_ply_dir(repo_root),
-        help="Directory of PLY *_ag.txt outputs for the clean+oddball corpus.",
-    )
-    parser.add_argument(
-        "--ply-tms-dir",
-        type=Path,
-        default=default_ply_tms_dir(repo_root),
-        help="Directory of PLY *_ag.txt outputs for the troublemaker corpus.",
-    )
-    parser.add_argument(
-        "--psf-in-dir",
-        type=Path,
-        default=default_psf_in_dir(repo_root),
-        help="Filtered new-format input dir (content for ply/ oddballs).",
-    )
-    parser.add_argument(
-        "--unfiltered-in-dir",
-        type=Path,
-        default=default_unfiltered_in_dir(repo_root),
-        help="Unfiltered new-format input dir (content for ply-tms/ oddballs and troublemakers).",
-    )
-    parser.add_argument(
-        "--out",
-        type=Path,
-        default=default_out_path(repo_root),
-        help="Output JSON path for enriched research artifact.",
+        help="Directory of PLY *_ag.txt outputs for the oddball corpus.",
     )
     parser.add_argument(
         "--oddballs-out",
@@ -143,7 +103,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--html-out",
         type=Path,
         default=rtms_report.default_html_out_path(repo_root),
-        help="Output HTML path for research-tms-and-oddballs report.",
+        help="Output HTML path for the research-oddballs report.",
     )
 
 
@@ -156,49 +116,34 @@ def run(args: argparse.Namespace) -> None:
 
     html_out_path = rtms_report.resolve_html_out_path(args, repo_root)
 
-    oddballs_in_path = getattr(args, "oddballs_in", None)
+    oddballs_in_path = args.oddballs_in
+    oddballs_out_path = args.oddballs_out
+    ply_dir = getattr(args, "ply_dir", None) or default_ply_dir(repo_root)
 
-    # (Re)derive the PLY-based oddball/troublemaker sets from the PLY outputs so
-    # the research command never reads out/accgram/goerwitz. All 49 troublemakers
-    # PLY parses into ERROR trees are reclassified as oddballs here.
-    if isinstance(oddballs_in_path, Path):
-        ply_classify.write_ply_oddballs_and_troublemakers(
-            ply_dir=getattr(args, "ply_dir", None) or default_ply_dir(repo_root),
-            ply_tms_dir=getattr(args, "ply_tms_dir", None)
-            or default_ply_tms_dir(repo_root),
-            psf_in_dir=getattr(args, "psf_in_dir", None)
-            or default_psf_in_dir(repo_root),
-            unfiltered_in_dir=getattr(args, "unfiltered_in_dir", None)
-            or default_unfiltered_in_dir(repo_root),
-            oddballs_out=oddballs_in_path,
-            troubles_out=args.troubles_in,
-        )
+    # (Re)derive the PLY-based oddball set from out/accgram/ply only. Every ERROR
+    # verse -- including the 49 the C binary emitted nothing for -- now lives there.
+    ply_classify.write_ply_oddballs(
+        ply_dir=ply_dir,
+        source_input_path=args.input,
+        oddballs_out=oddballs_in_path,
+    )
 
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
-    parsed_rows = rtms_rows.parse_troublemaker_rows(args.troubles_in, refs_by_book)
+    parsed_oddball_rows = rtms_rows.parse_oddball_rows(oddballs_in_path, refs_by_book)
 
-    oddballs_out_path = getattr(args, "oddballs_out", None)
-    parsed_oddball_rows: list[tuple[dict[str, object], str, str]] = []
-    if isinstance(oddballs_in_path, Path) and isinstance(oddballs_out_path, Path):
-        parsed_oddball_rows = rtms_rows.parse_oddball_rows(
-            oddballs_in_path,
-            refs_by_book,
-        )
-    elif oddballs_in_path is not None or oddballs_out_path is not None:
-        raise ValueError("Expected both oddballs_in and oddballs_out, or neither")
-
-    # Validate notes for every ref displayed with notes: the 49 reclassified
-    # oddballs (no troublemakers remain), whose notes are still served from tm_data.
-    reclassified_refs = [
-        ref
-        for row, _bcv, ref in parsed_oddball_rows
-        if row.get("output_dir") == "ply-tms"
+    # "Rich" oddballs are those carrying hand-authored tm_data structured text (the
+    # 49 former troublemakers): they get the UXLC/changetext validation the old
+    # troublemaker rows used to get. The rest get plain enrichment.
+    tm_structured_text = get_structured_text()
+    rich_refs = [
+        ref for _row, _bcv, ref in parsed_oddball_rows if ref in tm_structured_text
     ]
     sanity_check_structured_text(
-        refs=[ref for _row, _bcv, ref in parsed_rows] + reclassified_refs,
+        refs=rich_refs,
         all_changes_path=all_changes_path,
     )
-    wlc_focus_by_ref = _wlc_focus_by_ref()
+
+    wlc_focus_by_ref = _ob_wlc_focus_by_ref()
     all_changes_by_url = tm_changes.load_all_changes_by_url(all_changes_path)
 
     wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = rtms_data.load_source_indexes(
@@ -208,103 +153,10 @@ def run(args: argparse.Namespace) -> None:
         refs_by_book=refs_by_book,
     )
 
-    enriched_rows, diff_wlc_uxlc_for_checks_by_ref = _enrich_troublemaker_rows(
-        parsed_rows=parsed_rows,
-        wlc_focus_by_ref=wlc_focus_by_ref,
-        wlc422_by_bcv=wlc422_by_bcv,
-        uxlc_by_bcv=uxlc_by_bcv,
-        mam_simple_by_bcv=mam_simple_by_bcv,
-        wlc422_kq_u_dir=args.wlc422_kq_u_dir,
-        uxlc_dir=args.uxlc_dir,
-        mam_simple_dir=args.mam_simple_dir,
-    )
-
-    _validate_structured_text_high_level(
-        parsed_rows=parsed_rows,
-        wlc_focus_by_ref=wlc_focus_by_ref,
-        diff_wlc_uxlc_for_checks_by_ref=diff_wlc_uxlc_for_checks_by_ref,
-        all_changes_by_url=all_changes_by_url,
-    )
-
-    enriched_oddball_rows = _enrich_rows_without_structured_text(
-        parsed_rows=parsed_oddball_rows,
-        wlc_focus_by_ref=_ob_wlc_focus_by_ref(),
-        wlc422_by_bcv=wlc422_by_bcv,
-        uxlc_by_bcv=uxlc_by_bcv,
-        mam_simple_by_bcv=mam_simple_by_bcv,
-        wlc422_kq_u_dir=args.wlc422_kq_u_dir,
-        uxlc_dir=args.uxlc_dir,
-        mam_simple_dir=args.mam_simple_dir,
-    )
-
-    rtms_output.write_troublemakers_payload(
-        out_path=args.out,
-        troubles_in_path=args.troubles_in,
-        wlc422_kq_u_dir=args.wlc422_kq_u_dir,
-        uxlc_dir=args.uxlc_dir,
-        mam_simple_dir=args.mam_simple_dir,
-        enriched_rows=enriched_rows,
-        source_file=__file__,
-    )
-
-    if isinstance(oddballs_out_path, Path) and isinstance(oddballs_in_path, Path):
-        rtms_output.write_oddballs_payload(
-            oddballs_out_path=oddballs_out_path,
-            oddballs_in_path=oddballs_in_path,
-            wlc422_kq_u_dir=args.wlc422_kq_u_dir,
-            uxlc_dir=args.uxlc_dir,
-            mam_simple_dir=args.mam_simple_dir,
-            enriched_oddball_rows=enriched_oddball_rows,
-            source_file=__file__,
-        )
-
-    # Base dir holding the two PLY output subdirs (ply/, ply-tms/); the oddball
-    # report appends each row's output_dir to locate its ERROR tree.
-    accgram_base_dir = (
-        oddballs_in_path.parent.parent if isinstance(oddballs_in_path, Path) else None
-    )
-    combined_html_out_path = rtms_output.write_html_reports(
-        html_out_path,
-        enriched_rows,
-        enriched_oddball_rows=enriched_oddball_rows,
-        base_dir=accgram_base_dir,
-    )
-
-    rtms_output.print_run_summary(
-        troubles_in_path=args.troubles_in,
-        wlc422_kq_u_dir=args.wlc422_kq_u_dir,
-        uxlc_dir=args.uxlc_dir,
-        mam_simple_dir=args.mam_simple_dir,
-        all_changes_path=all_changes_path,
-        out_path=args.out,
-        combined_html_out_path=combined_html_out_path,
-        enriched_rows_count=len(enriched_rows),
-        oddballs_in_path=(
-            oddballs_in_path if isinstance(oddballs_in_path, Path) else None
-        ),
-        oddballs_out_path=(
-            oddballs_out_path if isinstance(oddballs_out_path, Path) else None
-        ),
-        oddball_rows_count=len(enriched_oddball_rows),
-    )
-
-
-def _enrich_troublemaker_rows(
-    *,
-    parsed_rows: list[tuple[dict[str, object], str, str]],
-    wlc_focus_by_ref: dict[str, str | None],
-    wlc422_by_bcv: dict[str, dict[str, object]],
-    uxlc_by_bcv: dict[str, dict[str, object]],
-    mam_simple_by_bcv: dict[str, dict[str, object]],
-    wlc422_kq_u_dir: Path,
-    uxlc_dir: Path,
-    mam_simple_dir: Path,
-) -> tuple[list[dict[str, object]], dict[str, object]]:
-    enriched_rows: list[dict[str, object]] = []
+    enriched_oddball_rows: list[dict[str, object]] = []
     diff_wlc_uxlc_for_checks_by_ref: dict[str, object] = {}
-    for row, bcv, ref in parsed_rows:
-        wlc_focus = wlc_focus_by_ref.get(ref)
-
+    rich_parsed_rows: list[tuple[dict[str, object], str, str]] = []
+    for row, bcv, ref in parsed_oddball_rows:
         enriched_row, diff_wlc_uxlc_for_checks = _build_enriched_row(
             row=row,
             bcv=bcv,
@@ -312,29 +164,55 @@ def _enrich_troublemaker_rows(
             wlc422_by_bcv=wlc422_by_bcv,
             uxlc_by_bcv=uxlc_by_bcv,
             mam_simple_by_bcv=mam_simple_by_bcv,
-            wlc422_kq_u_dir=wlc422_kq_u_dir,
-            uxlc_dir=uxlc_dir,
-            mam_simple_dir=mam_simple_dir,
-            wlc_focus=wlc_focus,
+            wlc422_kq_u_dir=args.wlc422_kq_u_dir,
+            uxlc_dir=args.uxlc_dir,
+            mam_simple_dir=args.mam_simple_dir,
+            wlc_focus=wlc_focus_by_ref.get(ref),
         )
-        diff_wlc_uxlc_for_checks_by_ref[ref] = diff_wlc_uxlc_for_checks
-        enriched_rows.append(enriched_row)
+        enriched_oddball_rows.append(enriched_row)
+        if ref in tm_structured_text:
+            diff_wlc_uxlc_for_checks_by_ref[ref] = diff_wlc_uxlc_for_checks
+            rich_parsed_rows.append((row, bcv, ref))
 
-    return enriched_rows, diff_wlc_uxlc_for_checks_by_ref
+    _validate_structured_text_high_level(
+        parsed_rows=rich_parsed_rows,
+        wlc_focus_by_ref=wlc_focus_by_ref,
+        diff_wlc_uxlc_for_checks_by_ref=diff_wlc_uxlc_for_checks_by_ref,
+        all_changes_by_url=all_changes_by_url,
+    )
 
+    rtms_output.write_oddballs_payload(
+        oddballs_out_path=oddballs_out_path,
+        oddballs_in_path=oddballs_in_path,
+        wlc422_kq_u_dir=args.wlc422_kq_u_dir,
+        uxlc_dir=args.uxlc_dir,
+        mam_simple_dir=args.mam_simple_dir,
+        enriched_oddball_rows=enriched_oddball_rows,
+        source_file=__file__,
+    )
 
-def _wlc_focus_by_ref() -> dict[str, str | None]:
-    out: dict[str, str | None] = {}
-    stext = get_structured_text()
-    for ref, structured_text in stext.items():
-        out[ref] = _structured_wlc_focus(structured_text)
-    return out
+    # The oddball report locates each row's ERROR tree by output_file under ply_dir.
+    combined_html_out_path = rtms_output.write_html_reports(
+        html_out_path,
+        enriched_oddball_rows=enriched_oddball_rows,
+        base_dir=ply_dir,
+    )
+
+    rtms_output.print_run_summary(
+        wlc422_kq_u_dir=args.wlc422_kq_u_dir,
+        uxlc_dir=args.uxlc_dir,
+        mam_simple_dir=args.mam_simple_dir,
+        all_changes_path=all_changes_path,
+        combined_html_out_path=combined_html_out_path,
+        oddballs_in_path=oddballs_in_path,
+        oddballs_out_path=oddballs_out_path,
+        oddball_rows_count=len(enriched_oddball_rows),
+    )
 
 
 def _ob_wlc_focus_by_ref() -> dict[str, str | None]:
     out: dict[str, str | None] = {}
-    # Reclassified troublemakers have no ob_data entry; fall back to tm_data so the
-    # 49 still get a WLC focus (their notes are served from tm_data).
+    # The 49 rich oddballs draw their WLC focus from tm_data; the rest from ob_data.
     for ref, structured_text in get_structured_text().items():
         out[ref] = _structured_wlc_focus(structured_text)
     for ref, structured_text in ob_data.get_structured_text().items():
@@ -371,35 +249,6 @@ def _validate_structured_text_high_level(
             diff_wlc_uxlc_for_checks=diff_wlc_uxlc_for_checks,
             all_changes_by_url=all_changes_by_url,
         )
-
-
-def _enrich_rows_without_structured_text(
-    *,
-    parsed_rows: list[tuple[dict[str, object], str, str]],
-    wlc_focus_by_ref: dict[str, str | None],
-    wlc422_by_bcv: dict[str, dict[str, object]],
-    uxlc_by_bcv: dict[str, dict[str, object]],
-    mam_simple_by_bcv: dict[str, dict[str, object]],
-    wlc422_kq_u_dir: Path,
-    uxlc_dir: Path,
-    mam_simple_dir: Path,
-) -> list[dict[str, object]]:
-    enriched_rows: list[dict[str, object]] = []
-    for row, bcv, ref in parsed_rows:
-        enriched_row, _ = _build_enriched_row(
-            row=row,
-            bcv=bcv,
-            ref=ref,
-            wlc422_by_bcv=wlc422_by_bcv,
-            uxlc_by_bcv=uxlc_by_bcv,
-            mam_simple_by_bcv=mam_simple_by_bcv,
-            wlc422_kq_u_dir=wlc422_kq_u_dir,
-            uxlc_dir=uxlc_dir,
-            mam_simple_dir=mam_simple_dir,
-            wlc_focus=wlc_focus_by_ref.get(ref),
-        )
-        enriched_rows.append(enriched_row)
-    return enriched_rows
 
 
 def _validate_structured_text_uxlc_match(
@@ -476,11 +325,6 @@ def _validate_structured_text_changetext_match(
         )
 
 
-# Compatibility wrappers retained for tests and report helpers.
-def _read_json(path: Path):
-    return rtms_rows.read_json(path)
-
-
 def _build_enriched_row(
     *,
     row: dict[str, object],
@@ -508,10 +352,6 @@ def _build_enriched_row(
     )
 
 
-def _normalize_payload_for_diff_ignoring_notes(payload: object) -> object:
-    return rtms_data._normalize_payload_for_diff_ignoring_notes(payload)
-
-
 def _structured_wlc_focus(structured_text: object) -> str | None:
     return rtms_focus_diff_expand.structured_wlc_focus(structured_text)
 
@@ -527,59 +367,3 @@ def _expand_subset_diff_to_wlc_focus(
         wlc_focus=wlc_focus,
         rhs_key=rhs_key,
     )
-
-
-def _validate_unique_wlc_focus_in_wlc_verse(
-    *,
-    ref: str,
-    wlc422_kq_u_verse: object,
-    wlc_focus: str | None,
-) -> None:
-    rtms_focus_diff_expand.validate_unique_focus_occurrence(
-        ref=ref,
-        wlc422_kq_u_verse=wlc422_kq_u_verse,
-        wlc_focus=wlc_focus,
-    )
-
-
-def _parse_ref(ref: str, *, row_kind: str = "troublemaker") -> tuple[str, int, int]:
-    return rtms_ref.parse_ref(ref, row_kind=row_kind)
-
-
-def _to_compact_bcv(bb: str, chnu: int, vrnu: int) -> str:
-    return rtms_ref.to_compact_bcv(bb, chnu, vrnu)
-
-
-def _to_ref(bb: str, chnu: int, vrnu: int) -> str:
-    return rtms_ref.to_ref(bb, chnu, vrnu)
-
-
-def _load_wlc422_index(wlc422_kq_u_dir: Path) -> dict[str, dict[str, object]]:
-    return rtms_data._load_wlc422_index(wlc422_kq_u_dir)
-
-
-def _collapse_wlc_notes_to_string(node: object) -> object:
-    return rtms_data._collapse_wlc_notes_to_string(node)
-
-
-def _interpolate_wlc422_kq_qere(verse_payload: dict[str, object]) -> dict[str, object]:
-    return rtms_data._interpolate_wlc422_kq_qere(verse_payload)
-
-
-def _strip_sam_pe_inun_token(token: object) -> object | None:
-    return rtms_data._strip_sam_pe_inun_token(token)
-
-
-def _load_uxlc_for_refs(
-    uxlc_dir: Path,
-    refs_by_book: dict[str, set[tuple[int, int]]],
-) -> dict[str, dict[str, object]]:
-    return rtms_data._load_uxlc_for_refs(uxlc_dir, refs_by_book)
-
-
-def _to_xmlish_verse_child(element):
-    return rtms_data._to_xmlish_verse_child(element)
-
-
-def _to_xmlish_inline(element):
-    return rtms_data._to_xmlish_inline(element)

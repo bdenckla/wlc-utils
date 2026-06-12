@@ -490,6 +490,33 @@ Exodus 2:4
         tifcha 
       3 silluq_phrase
         silluq 
+Exodus 2:5
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          munach zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          mereka tifcha 
+        4 atnach_phrase
+          munach atnach 
+    2 silluq_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          munach zaqef 
+      3 silluq_clause
+        4 tifcha_phrase
+          mereka tifcha 
+        4 silluq_phrase
+          silluq 
+  1 sof_pasuq_phrase
+    ERROR 
 Exodus 2:6
 0 silluq_clause
   1 atnach_clause
@@ -9112,6 +9139,42 @@ Exodus 14:24
         tifcha 
       3 silluq_phrase
         mereka silluq 
+Exodus 14:25
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 zaqef_clause
+        4 revia_phrase
+          revia 
+        4 zaqef_clause
+          5 pashta_phrase
+            yetiv 
+          5 zaqef_phrase
+            munach zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          atnach 
+    2 silluq_clause
+      3 zaqef_clause
+        4 revia_phrase
+          munach revia 
+        4 zaqef_clause
+          5 pashta_phrase
+            pashta 
+          5 zaqef_phrase
+            munach zaqef 
+      3 silluq_clause
+        4 zaqef_phrase
+          munach zaqef 
+        4 silluq_clause
+          5 tifcha_phrase
+            mereka tifcha 
+          5 silluq_phrase
+            silluq 
+  1 sof_pasuq_phrase
+    ERROR 
 Exodus 14:26
 0 silluq_clause
   1 atnach_clause
@@ -9193,6 +9256,30 @@ Exodus 14:28
       mereka tifcha 
     2 silluq_phrase
       silluq 
+Exodus 14:29
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 tifcha_clause
+        4 tevir_phrase
+          darga tevir 
+        4 tifcha_phrase
+          mereka tifcha 
+      3 atnach_phrase
+        munach atnach 
+    2 silluq_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          zaqef 
+      3 silluq_clause
+        4 tifcha_phrase
+          tifcha 
+        4 silluq_phrase
+          silluq 
+  1 sof_pasuq_phrase
+    ERROR 
 Exodus 14:30
 0 silluq_clause
   1 atnach_clause
@@ -21847,6 +21934,30 @@ Exodus 34:5
       mereka tifcha 
     2 silluq_phrase
       silluq 
+Exodus 34:6
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 segolta_clause
+        4 zarqa_phrase
+          azla mereka zarqa 
+        4 segolta_phrase
+          segolta 
+      3 atnach_clause
+        4 zaqef_phrase
+          munach zaqef 
+        4 atnach_clause
+          5 tifcha_phrase
+            mereka tifcha 
+          5 atnach_phrase
+            atnach 
+    2 silluq_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 silluq_phrase
+        mereka silluq 
+  1 sof_pasuq_phrase
+    ERROR 
 Exodus 34:7
 0 silluq_clause
   1 atnach_clause

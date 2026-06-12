@@ -1618,6 +1618,48 @@ Daniel 2:40
           mereka tifcha 
       3 silluq_phrase
         mereka silluq 
+Daniel 2:41
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 geresh_phrase
+          geresh 
+        4 revia_phrase
+          munach revia 
+      3 zaqef_clause
+        4 pashta_clause
+          5 geresh_phrase
+            gershayim 
+          5 pashta_phrase
+            mahpak pashta 
+        4 zaqef_phrase
+          munach zaqef 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          ERROR 
+        4 atnach_phrase
+          atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 zaqef_phrase
+        methiga-zaqef 
+      3 silluq_clause
+        4 tifcha_phrase
+          tifcha 
+        4 silluq_phrase
+          mereka silluq 
 Daniel 2:42
 0 silluq_clause
   1 atnach_clause

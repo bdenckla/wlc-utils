@@ -2434,6 +2434,30 @@ Jeremiah 4:18
         mereka tifcha 
       3 silluq_phrase
         silluq 
+Jeremiah 4:19
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 tevir_clause
+        4 geresh_phrase
+          ERROR 
+        4 tevir_phrase
+          mereka tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 atnach_phrase
+      munach atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        munach mahpak pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        silluq 
 Jeremiah 4:20
 0 silluq_clause
   1 atnach_clause
@@ -5827,6 +5851,51 @@ Jeremiah 9:9
         tifcha 
       3 silluq_phrase
         silluq 
+Jeremiah 9:10
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 atnach_phrase
+      munach atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 silluq_phrase
+      ERROR 
+Jeremiah 9:11
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        mahpak pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 atnach_clause
+      3 tifcha_clause
+        4 tevir_phrase
+          azla darga tevir 
+        4 tifcha_phrase
+          tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 silluq_phrase
+        ERROR 
 Jeremiah 9:12
 0 silluq_clause
   1 atnach_clause
@@ -6214,6 +6283,24 @@ Jeremiah 10:2
       mereka tifcha 
     2 silluq_phrase
       silluq 
+Jeremiah 10:3
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_phrase
+      mereka tifcha 
+    2 atnach_phrase
+      munach atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        ERROR 
+      3 silluq_phrase
+        silluq 
 Jeremiah 10:4
 0 silluq_clause
   1 atnach_clause
@@ -19444,6 +19531,42 @@ Jeremiah 31:31
           mereka tifcha 
     2 silluq_phrase
       mereka silluq 
+Jeremiah 31:32
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_phrase
+        munach revia 
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          zaqef 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_phrase
+          munach zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          ERROR 
+  1 silluq_clause
+    2 tifcha_clause
+      3 revia_clause
+        4 geresh_phrase
+          geresh 
+        4 revia_phrase
+          munach revia 
+      3 tifcha_clause
+        4 tevir_phrase
+          tevir 
+        4 tifcha_phrase
+          mereka tifcha 
+    2 silluq_phrase
+      silluq 
 Jeremiah 31:33
 0 silluq_clause
   1 atnach_clause
@@ -24499,6 +24622,39 @@ Jeremiah 38:10
           tifcha 
       3 silluq_phrase
         mereka silluq 
+Jeremiah 38:11
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 geresh_phrase
+          ERROR 
+        4 revia_phrase
+          revia 
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          munach zaqef 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          mahpak pashta 
+        4 zaqef_phrase
+          munach zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_phrase
+        darga tevir 
+      3 tifcha_phrase
+        tifcha 
+    2 silluq_phrase
+      silluq 
 Jeremiah 38:12
 0 silluq_clause
   1 atnach_clause
@@ -29665,6 +29821,21 @@ Jeremiah 48:11
         tifcha 
       3 silluq_phrase
         mereka silluq 
+Jeremiah 48:12
+0 silluq_clause
+  1 atnach_clause
+    2 tifcha_phrase
+      ERROR 
+    2 atnach_phrase
+      ERROR 
+  1 silluq_clause
+    2 zaqef_phrase
+      munach zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        silluq 
 Jeremiah 48:13
 0 silluq_clause
   1 atnach_clause
@@ -30844,6 +31015,39 @@ Jeremiah 49:18
         mereka tifcha 
       3 silluq_phrase
         silluq 
+Jeremiah 49:19
+0 silluq_clause
+  1 atnach_clause
+    2 segolta_clause
+      3 zarqa_clause
+        4 big_telisha_phrase
+          telishagedola 
+        4 zarqa_clause
+          5 geresh_phrase
+            gershayim 
+          5 zarqa_phrase
+            azla munach zarqa 
+      3 segolta_phrase
+        munach segolta 
+    2 atnach_clause
+      3 tifcha_phrase
+        ERROR 
+      3 atnach_phrase
+        munach atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 pashta_phrase
+        munach mahpak pashta 
+      3 zaqef_phrase
+        munach zaqef 
+    2 silluq_clause
+      3 zaqef_phrase
+        munach zaqef 
+      3 silluq_clause
+        4 tifcha_phrase
+          mereka tifcha 
+        4 silluq_phrase
+          silluq 
 Jeremiah 49:20
 0 silluq_clause
   1 atnach_clause

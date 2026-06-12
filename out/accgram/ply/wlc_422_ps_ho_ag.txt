@@ -1300,6 +1300,24 @@ Hosea 4:18
           tifcha 
       3 silluq_phrase
         silluq 
+Hosea 4:19
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 tifcha_clause
+        4 tevir_phrase
+          mereka tevir 
+        4 tifcha_phrase
+          tifcha 
+      3 atnach_phrase
+        atnach 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        silluq 
+  1 sof_pasuq_phrase
+    ERROR 
 Hosea 5:1
 0 silluq_clause
   1 atnach_clause
@@ -2341,6 +2359,27 @@ Hosea 8:8
         tifcha 
       3 silluq_phrase
         mereka silluq 
+Hosea 8:9
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_phrase
+          munach zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          tifcha 
+        4 atnach_phrase
+          munach atnach 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        mereka silluq 
+  1 sof_pasuq_phrase
+    ERROR 
 Hosea 8:10
 0 silluq_clause
   1 atnach_clause

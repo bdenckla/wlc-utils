@@ -4885,6 +4885,45 @@ Ezekiel 10:22
         mereka tifcha 
     2 silluq_phrase
       silluq 
+Ezekiel 11:1
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 revia_clause
+        4 geresh_phrase
+          azla geresh 
+        4 revia_phrase
+          revia 
+      3 zaqef_clause
+        4 pashta_clause
+          5 big_telisha_phrase
+            munach telishagedola 
+          5 pashta_phrase
+            azla mahpak pashta 
+        4 zaqef_phrase
+          munach zaqef 
+    2 atnach_clause
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_phrase
+          munach zaqef 
+      3 atnach_clause
+        4 tifcha_phrase
+          mereka tifcha 
+        4 atnach_phrase
+          atnach 
+  1 silluq_clause
+    2 tifcha_clause
+      3 tevir_clause
+        4 geresh_phrase
+          azla geresh 
+        4 tevir_phrase
+          darga tevir 
+      3 tifcha_phrase
+        mereka tifcha 
+    2 silluq_phrase
+      ERROR 
 Ezekiel 11:2
 0 silluq_clause
   1 atnach_clause
@@ -6925,6 +6964,39 @@ Ezekiel 14:10
         mereka tifcha 
       3 silluq_phrase
         silluq 
+Ezekiel 14:11
+0 silluq_clause
+  1 atnach_clause
+    2 zaqef_clause
+      3 pashta_clause
+        4 big_telisha_phrase
+          telishagedola 
+        4 pashta_phrase
+          azla mahpak pashta 
+      3 zaqef_phrase
+        zaqef 
+    2 atnach_clause
+      3 tifcha_phrase
+        mereka tifcha 
+      3 atnach_phrase
+        atnach 
+  1 silluq_clause
+    2 zaqef_clause
+      3 revia_phrase
+        ERROR 
+      3 zaqef_clause
+        4 pashta_phrase
+          pashta 
+        4 zaqef_clause
+          5 pashta_phrase
+            mahpak pashta 
+          5 zaqef_phrase
+            zaqef 
+    2 silluq_clause
+      3 tifcha_phrase
+        tifcha 
+      3 silluq_phrase
+        mereka silluq 
 Ezekiel 14:12
 0 silluq_clause
   1 tifcha_phrase
@@ -20161,6 +20233,27 @@ Ezekiel 33:19
       tifcha 
     2 silluq_phrase
       mereka silluq 
+Ezekiel 33:20
+0 silluq_clause
+  1 silluq_clause
+    2 atnach_clause
+      3 zaqef_phrase
+        zaqefgadol 
+      3 atnach_clause
+        4 tifcha_phrase
+          mereka tifcha 
+        4 atnach_phrase
+          munach atnach 
+    2 silluq_clause
+      3 tifcha_clause
+        4 tevir_phrase
+          darga tevir 
+        4 tifcha_phrase
+          mereka tifcha 
+      3 silluq_phrase
+        mereka silluq 
+  1 sof_pasuq_phrase
+    ERROR 
 Ezekiel 33:21
 0 silluq_clause
   1 atnach_clause

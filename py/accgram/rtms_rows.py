@@ -25,23 +25,6 @@ def to_ref(bb: str, chnu: int, vrnu: int) -> str:
     return rtms_ref.to_ref(bb, chnu, vrnu)
 
 
-def parse_troublemaker_rows(
-    troubles_in_path: Path,
-    refs_by_book: dict[str, set[tuple[int, int]]],
-) -> list[ParsedRow]:
-    return _parse_rows(
-        in_path=troubles_in_path,
-        payload_key="troublemakers",
-        row_kind="troublemaker",
-        invalid_payload_message=(
-            f"Expected list at troubles payload key 'troublemakers': {troubles_in_path}"
-        ),
-        row_object_message="Troublemaker rows must be JSON objects",
-        missing_ref_message="Troublemaker row is missing string field 'ref'",
-        refs_by_book=refs_by_book,
-    )
-
-
 def parse_oddball_rows(
     oddballs_in_path: Path,
     refs_by_book: dict[str, set[tuple[int, int]]],

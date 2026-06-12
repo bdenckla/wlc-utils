@@ -1,9 +1,8 @@
-// Client-side filtering for the combined Goerwitz report (goerwitz.html).
+// Client-side filtering for the Goerwitz oddball report (goerwitz.html).
 //
-// Each verse is a <section class="goerwitz-verse"> tagged with data-kind
-// ("ob"/"tm") and data-msp ("y"/"n"). Two groups of checkboxes (.gf-kind and
-// .gf-msp) show/hide verses along those two dimensions, and .gf-count reports
-// how many are currently visible.
+// Each verse is a <section class="goerwitz-verse"> tagged with data-msp
+// ("y"/"n"). A group of checkboxes (.gf-msp) shows/hides verses by whether a
+// sof pasuq is missing, and .gf-count reports how many are currently visible.
 (function () {
   "use strict";
 
@@ -18,14 +17,12 @@
   }
 
   function applyFilters() {
-    var kinds = checkedValues("input.gf-kind");
     var msps = checkedValues("input.gf-msp");
     var verses = document.querySelectorAll("section.goerwitz-verse");
     var shown = 0;
 
     verses.forEach(function (verse) {
-      var visible =
-        kinds.has(verse.dataset.kind) && msps.has(verse.dataset.msp);
+      var visible = msps.has(verse.dataset.msp);
       verse.style.display = visible ? "" : "none";
       if (visible) {
         shown += 1;
@@ -40,7 +37,7 @@
   }
 
   function init() {
-    var inputs = document.querySelectorAll("input.gf-kind, input.gf-msp");
+    var inputs = document.querySelectorAll("input.gf-msp");
     inputs.forEach(function (input) {
       input.addEventListener("change", applyFilters);
     });

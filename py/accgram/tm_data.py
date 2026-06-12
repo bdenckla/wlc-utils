@@ -1,4 +1,9 @@
-"""Per-troublemaker structured research notes used by research-tms output."""
+"""Hand-authored structured research notes for the 49 former-troublemaker oddballs.
+
+Keyed by verse ref; consumed by the research-oddballs report. These verses now
+parse into ERROR trees like every other oddball, but they keep their richer
+notes (and UXLC/changetext validation) here rather than in ob_data.
+"""
 
 from __future__ import annotations
 
@@ -220,7 +225,7 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
-        "other-goerwitz-item": "goerwitz-obs.html#oblv4v2",
+        "other-goerwitz-item": "goerwitz.html#oblv4v2",
         "comment": (
             _NU_2019_01,
             _NU_2019_02,

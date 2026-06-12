@@ -8,38 +8,6 @@ from accgram import rtmsr_overview
 from mb_cmn import provenance
 
 
-def write_troublemakers_payload(
-    *,
-    out_path: Path,
-    troubles_in_path: Path,
-    wlc422_kq_u_dir: Path,
-    uxlc_dir: Path,
-    mam_simple_dir: Path,
-    enriched_rows: list[dict[str, object]],
-    source_file: str,
-) -> None:
-    serializable_rows = rtms_meteg_witness.strip_internal_witness_fields_from_rows(
-        enriched_rows
-    )
-    payload: dict[str, object] = {
-        "artifacts_description": "enriched troublemaker verse research records",
-        "payload_provenance_note": (
-            "This artifact augments existing troublemaker rows with linked verse payloads "
-            "from wlc422-kq-u, XML-ish UXLC verse nodes, and normalized MAM-simple verses."
-        ),
-        "input": str(troubles_in_path),
-        "wlc422_kq_u_dir": str(wlc422_kq_u_dir),
-        "uxlc_dir": str(uxlc_dir),
-        "mam_simple_dir": str(mam_simple_dir),
-        "summary": {
-            "troublemakers": len(serializable_rows),
-        },
-        "troublemakers": serializable_rows,
-    }
-    payload = provenance.with_json_provenance(payload, source_file)
-    _write_json(out_path, payload)
-
-
 def write_oddballs_payload(
     *,
     oddballs_out_path: Path,
@@ -74,47 +42,38 @@ def write_oddballs_payload(
 
 def write_html_reports(
     html_out_path: Path,
-    enriched_rows: list[dict[str, object]],
     *,
-    enriched_oddball_rows: list[dict[str, object]] | None = None,
+    enriched_oddball_rows: list[dict[str, object]],
     base_dir: Path | None = None,
 ) -> Path:
-    # The combined page (rtmsr_overview) sorts its merged rows into reading order
-    # itself, so no per-list sort is needed here.
+    # The page (rtmsr_overview) sorts its rows into reading order itself, so no
+    # per-list sort is needed here.
     return rtmsr_overview.write_goerwitz_combined_html_report(
         html_out_path,
-        enriched_rows,
-        enriched_oddball_rows or [],
+        enriched_oddball_rows,
         base_dir,
     )
 
 
 def print_run_summary(
     *,
-    troubles_in_path: Path,
     wlc422_kq_u_dir: Path,
     uxlc_dir: Path,
     mam_simple_dir: Path,
     all_changes_path: Path,
-    out_path: Path,
     combined_html_out_path: Path,
-    enriched_rows_count: int,
-    oddballs_in_path: Path | None,
-    oddballs_out_path: Path | None,
+    oddballs_in_path: Path,
+    oddballs_out_path: Path,
     oddball_rows_count: int,
 ) -> None:
-    print(f"Input troublemakers: {troubles_in_path}")
     print(f"wlc422-kq-u dir: {wlc422_kq_u_dir}")
     print(f"UXLC dir: {uxlc_dir}")
     print(f"MAM-simple dir: {mam_simple_dir}")
     print(f"All changes: {all_changes_path}")
-    print(f"Output: {out_path}")
-    if isinstance(oddballs_out_path, Path):
-        print(f"Input oddballs: {oddballs_in_path}")
-        print(f"Oddballs output: {oddballs_out_path}")
-        print(f"Oddball rows: {oddball_rows_count}")
+    print(f"Input oddballs: {oddballs_in_path}")
+    print(f"Oddballs output: {oddballs_out_path}")
+    print(f"Oddball rows: {oddball_rows_count}")
     print(f"Combined HTML output: {combined_html_out_path}")
-    print(f"Troublemaker rows: {enriched_rows_count}")
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:
