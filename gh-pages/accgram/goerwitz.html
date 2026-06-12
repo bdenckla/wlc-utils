@@ -14,52 +14,13 @@ Goerwitz Run on WLC</h1>
 <h2>
 Introduction</h2>
 <p>This page lists the 86 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filter below to narrow the list.</p>
-<p>These oddballs (86 verses) are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree. Potential causes include WLC quirks, LC quirks, and checker quirks.</p>
-<p>The filter sorts each verse into one of three categories: “missing sof pasuq,” where a sof pasuq is missing somewhere in the LC-BHS-WLC pipeline; “missing silluq,” where a sof pasuq is present but the verse-final word carries no accent at all; and “other” for everything else.</p>
+<p>These 86 verses are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree. Potential causes include WLC quirks, BHS quirks, LC quirks, and checker quirks.</p>
+<p>The filter sorts each verse into one of three categories: “missing sof pasuq,” “missing silluq,” where a sof pasuq is present but the verse-final word has no accent; and “other” for everything else.</p>
 <p>The Goerwitz accent grammar checker is described in the following article:</p>
 <p>Goerwitz, Richard. ‹A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts.› In Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg (pp. 111-122). (<a href="https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b">Studies in Ancient Oriental Civilization 60</a>). The Oriental Institute, Chicago, 2007. ISBN 978-1-885923-41-7.</p>
 <h2>
 Open Issues</h2>
 <ul>
-<li>
-munax-legarmeh (⅃-leg)…non-revia: All 17 verses whose FOI category starts with “⅃-leg…non-revia” now parse with a genuine legarmeh: the munaḥ-legarmeh-not-before-revia mark (scanner code 74{TEXT}05) is read as a real legarmeh at each of has_legarmeh’s 17 listed passages. (Previously the goerwitz C binary keyed that list on book abbreviations — “Lev 10:6”, “Dan 3:2” — that do not match the new-format full booknames the scanner emits, so legarmeh fired for Ruth 1:2 alone and the other 16 mis-parsed.) Of the 17, only Isaiah 36:2 is still an oddball — and not because of the legarmeh reading, which now succeeds, but because its legarmeh_phrase reduces to ERROR for an unrelated prose-grammar reason. Why does Isaiah 36:2’s legarmeh_phrase fail to reduce?<ul>
-<li>
-<a href="https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB((paz))%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB0%C2%ABspace%C2%BBintervening">⅃-leg...non-revia ((paz)) with 0 intervening</a></li>
-<li>
-<a href="https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB((tev))%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB2%C2%ABspace%C2%BB(qa,da)%C2%ABspace%C2%BBintervening">⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening</a></li>
-<li>
-<a href="https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB(ge)%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB1%C2%ABspace%C2%BBqa%C2%ABspace%C2%BBintervening">⅃-leg...non-revia (ge) with 1 qa intervening</a></li>
-<li>
-<a href="https://bdenckla.github.io/MAM-with-doc/foi/foi-pasoleg-1.html#intro-%E2%85%83-leg...non-revia%C2%ABspace%C2%BB(p)%C2%ABspace%C2%BBwith%C2%ABspace%C2%BB1%C2%ABspace%C2%BB(mah)%C2%ABspace%C2%BBintervening">⅃-leg...non-revia (p) with 1 (mah) intervening</a></li>
-</ul>
-<figure><figcaption>Daniel 3:2 (legarmeh fires; legarmeh_phrase reduces)</figcaption>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="13" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="9" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="7" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="6" title="pashta_clause">pashc</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="pazer_phrase">pazp</td><td colspan="5" title="pashta_clause">pashc</td><td colspan="7"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="pazer_phrase">pazp</td><td colspan="4" title="pashta_clause">pashc</td><td colspan="7"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="2"></td><td colspan="2" title="pazer_clause">pazc</td><td colspan="2" title="pashta_clause">pashc</td><td colspan="7"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">7</td><td colspan="2"></td><td title="legarmeh_phrase">lgmp</td><td title="pazer_phrase">pazp</td><td title="pazer_phrase">pazp</td><td title="pashta_phrase">pashp</td><td colspan="7"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach pazer">mun paz</td><td title="pazer">paz</td><td title="legarmeh">lgm</td><td title="pazer">paz</td><td title="munach pazer">mun paz</td><td title="telishaqetanna azla mahpak pashta">telq qom mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td></tr>
-</table>
-</div>
-</figure>
-<figure><figcaption>Isaiah 36:2 (legarmeh fires; legarmeh_phrase reduces to ERROR)</figcaption>
-<div class="goerwitz-obs-tree-wrap">
-<table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="9" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="4" title="atnach_clause">atnc</td><td colspan="5" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="3" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="3" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="tevir_clause">tevc</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td title="revia_phrase">revp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="legarmeh_phrase">lgmp</td><td title="tevir_phrase">tevp</td><td colspan="3"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="azla darga tevir">qom dar tev</td><td title="mereka tifcha">mer tip</td><td title="munach atnach">mun atn</td><td title="revia">rev</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
-</table>
-</div>
-</figure>
-</li>
 <li>
 zarqa on lamed (accent 82 preceding lamed): WLC encodes 12 such cases with accent 82 placed before the lamed rather than after it. Why are only 7 of these 12 cases oddballs?</li>
 </ul>

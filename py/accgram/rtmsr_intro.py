@@ -29,17 +29,21 @@ def build_intro_contents(
         " below to narrow the list."
     )
     oddballs_text = (
-        f"These oddballs ({oddball_count} verses) are parsed by the PLY port into a tree"
+        f"These {oddball_count} verses are parsed by the PLY port into a tree"
         " containing the string \u201cERROR\u201d; each oddball section includes its"
-        " complete parse tree. Potential causes include WLC quirks, LC quirks, and"
+        " complete parse tree. Potential causes include"
+        " WLC quirks,"
+        " BHS quirks,"
+        " LC quirks, and"
         " checker quirks."
     )
     msp_text = (
-        "The filter sorts each verse into one of three categories: “missing sof"
-        " pasuq,” where a sof pasuq is missing somewhere in the LC-BHS-WLC"
-        " pipeline; “missing silluq,” where a sof pasuq is present but the"
-        " verse-final word carries no accent at all; and “other” for"
-        " everything else."
+        "The filter sorts each verse into one of three categories:"
+        " “missing sof pasuq,”"
+        " “missing silluq,”"
+        " where a sof pasuq is present"
+        " but the verse-final word has no accent; and "
+        "“other” for everything else."
     )
 
     return (
