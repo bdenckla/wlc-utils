@@ -31,9 +31,6 @@ p.goerwitz-tms-comment {
     margin-top: 0.4em;
 }
 div.goerwitz-filter {
-    position: sticky;
-    top: 0;
-    z-index: 1;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
