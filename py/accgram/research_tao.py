@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from accgram import ob_data
 from accgram import ply_classify
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
@@ -14,7 +13,7 @@ from accgram import run_ply
 from accgram import tm_changes
 from accgram import tm_descriptor
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
-from accgram.tm_data import get_structured_text
+from accgram.ob_notes import get_structured_text
 from accgram.tm_sanity import sanity_check_structured_text
 
 
@@ -131,12 +130,13 @@ def run(args: argparse.Namespace) -> None:
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
     parsed_oddball_rows = rtms_rows.parse_oddball_rows(oddballs_in_path, refs_by_book)
 
-    # "Rich" oddballs are those carrying hand-authored tm_data structured text (the
-    # 45 former troublemakers): they get the UXLC/changetext validation the old
-    # troublemaker rows used to get. The rest get plain enrichment.
-    tm_structured_text = get_structured_text()
+    # Annotated oddballs (those carrying hand-authored ob_notes structured text) get the
+    # UXLC/changetext validation the old troublemaker rows used to get; each validation
+    # step self-skips on records lacking its field (uxlc_change/assessment). Unannotated
+    # oddballs get plain enrichment.
+    structured_text_by_ref = get_structured_text()
     rich_refs = [
-        ref for _row, _bcv, ref in parsed_oddball_rows if ref in tm_structured_text
+        ref for _row, _bcv, ref in parsed_oddball_rows if ref in structured_text_by_ref
     ]
     sanity_check_structured_text(
         refs=rich_refs,
@@ -170,7 +170,7 @@ def run(args: argparse.Namespace) -> None:
             wlc_focus=wlc_focus_by_ref.get(ref),
         )
         enriched_oddball_rows.append(enriched_row)
-        if ref in tm_structured_text:
+        if ref in structured_text_by_ref:
             diff_wlc_uxlc_for_checks_by_ref[ref] = diff_wlc_uxlc_for_checks
             rich_parsed_rows.append((row, bcv, ref))
 
@@ -211,13 +211,11 @@ def run(args: argparse.Namespace) -> None:
 
 
 def _ob_wlc_focus_by_ref() -> dict[str, str | None]:
-    out: dict[str, str | None] = {}
-    # The 45 rich oddballs draw their WLC focus from tm_data; the rest from ob_data.
-    for ref, structured_text in get_structured_text().items():
-        out[ref] = _structured_wlc_focus(structured_text)
-    for ref, structured_text in ob_data.get_structured_text().items():
-        out[ref] = _structured_wlc_focus(structured_text)
-    return out
+    # Every annotated oddball's WLC focus now comes from the single by-book ob_notes set.
+    return {
+        ref: _structured_wlc_focus(structured_text)
+        for ref, structured_text in get_structured_text().items()
+    }
 
 
 def _validate_structured_text_high_level(

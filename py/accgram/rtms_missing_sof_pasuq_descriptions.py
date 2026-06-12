@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_generated_descriptions
-from accgram.tm_data import get_structured_text
+from accgram.ob_notes import get_structured_text
 
 _MISSING_SOF_PASUQ_TOKENS = {
     "silluq-no_sof_pasuq",
@@ -41,9 +41,9 @@ def _generated_descriptions(
     *,
     structured_text: object,
 ) -> list[str | None]:
-    # The structured text is only needed to derive the WLC focus. Troublemaker
-    # structured text lives in tm_data (the default lookup below); oddball rows
-    # carry their structured text elsewhere, so callers pass it in explicitly.
+    # The structured text is only needed to derive the WLC focus. It lives in the
+    # by-book ob_notes set (the default lookup below); callers that already have a
+    # row's structured text pass it in explicitly.
     if structured_text is None:
         ref = row.get("ref")
         structured_text = (
