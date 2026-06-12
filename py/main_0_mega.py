@@ -9,6 +9,8 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+from cmn.utf8_io import force_utf8_io
+
 
 @dataclass(frozen=True)
 class Step:
@@ -98,4 +100,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    force_utf8_io()
     main()

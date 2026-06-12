@@ -1,5 +1,6 @@
 """Exports main."""
 
+from cmn.utf8_io import force_utf8_io
 import py_wlc_a_notes.my_wlc_a_notes as my_wlc_a_notes
 import py_wlc_a_notes.my_wlc_a_notes_expand as my_wlc_a_notes_expand
 import py_wlc_a_notes.my_wlc_a_notes_summary as my_wlc_a_notes_summary
@@ -44,4 +45,5 @@ def _set_prev_and_next(io_records, prevkey, nextkey):
 
 
 if __name__ == "__main__":
+    force_utf8_io()
     main()

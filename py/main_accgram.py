@@ -27,6 +27,7 @@ from pathlib import Path
 
 from accgram import research_tao
 from accgram import run_ply
+from cmn.utf8_io import force_utf8_io
 
 
 def _repo_root() -> Path:
@@ -76,4 +77,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    force_utf8_io()
     main()

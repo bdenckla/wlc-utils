@@ -5,6 +5,7 @@ import datetime
 import sys
 from pathlib import Path
 
+from cmn.utf8_io import force_utf8_io
 from mb_cmn import vendoring_sync
 
 _REPO = Path(__file__).resolve().parents[1]
@@ -89,4 +90,5 @@ def _require_dir(path: Path) -> None:
 
 
 if __name__ == "__main__":
+    force_utf8_io()
     main()

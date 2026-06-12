@@ -1,5 +1,6 @@
 """Exports main."""
 
+from cmn.utf8_io import force_utf8_io
 import py_html.wlc_utils_html as wlc_utils_html
 import py_wlc_diffs_420422.my_word_diffs_420422 as my_word_diffs_420422
 import py_wlc_diffs_420422.my_word_diffs_420422_add_fields as my_word_diffs_420422_add_fields
@@ -81,4 +82,5 @@ def _path_and_title_and_intro_for_rejects(nrecs):
 
 
 if __name__ == "__main__":
+    force_utf8_io()
     main()
