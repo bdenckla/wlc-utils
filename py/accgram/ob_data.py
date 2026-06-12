@@ -19,6 +19,10 @@ _ZARQA_WHIM = {
         " See the “Other Goerwitz item” link regarding another instance (Nu 20:19)."
     ),
 }
+_RUTH_1_2_NON_ODDBALL = (
+    "It is odd that the checker does not likewise flag Ruth 1:2,"
+    " which also has a legarmeih serving pashta."
+)
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "gn 28:9": {
         "wlc_focus": "אברה֜ם",
@@ -65,10 +69,18 @@ STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
     "lv 10:6": {
         "wlc_focus": "תפר֙מו֙ ",
         "st-summary": xx_data.non_revia_summary("pashta"),
+        "comment": (
+            "Like lv 21:10, this verse has a munaḥ legarmeih serving pashta.",
+            _RUTH_1_2_NON_ODDBALL,
+        ),
     },
     "lv 21:10": {
         "wlc_focus": "המשחה֙",
         "st-summary": xx_data.non_revia_summary("pashta"),
+        "comment": (
+            "Like lv 10:6, this verse has a munaḥ legarmeih serving pashta.",
+            _RUTH_1_2_NON_ODDBALL,
+        ),
     },
     "lv 25:20": {
         "wlc_focus": "נאכ֤֖ל",
