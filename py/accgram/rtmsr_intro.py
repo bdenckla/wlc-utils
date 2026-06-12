@@ -35,8 +35,11 @@ def build_intro_contents(
         " checker quirks."
     )
     msp_text = (
-        "The filter dimension is whether a sof pasuq is missing somewhere in the"
-        " LC-BHS-WLC pipeline (msp-y) or not (msp-n)."
+        "The filter sorts each verse into one of three categories: “missing sof"
+        " pasuq,” where a sof pasuq is missing somewhere in the LC-BHS-WLC"
+        " pipeline; “missing silluq,” where a sof pasuq is present but the"
+        " verse-final word carries no accent at all; and “other” for"
+        " everything else."
     )
 
     return (

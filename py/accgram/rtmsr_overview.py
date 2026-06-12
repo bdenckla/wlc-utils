@@ -26,10 +26,10 @@ StructuredTextLookup = Callable[[dict[str, object], str], object]
 
 @dataclass
 class _Entry:
-    """One oddball verse on the page, tagged along the msp filter dimension."""
+    """One oddball verse on the page, tagged along the category filter dimension."""
 
     ref: str
-    msp: str  # "y" or "n" (missing sof pasuq)
+    category: str  # "msp" (missing sof pasuq), "msl" (missing silluq), or "other"
     anchor_id: str
     structured_text_lookup: StructuredTextLookup
     row: dict[str, object]
@@ -80,7 +80,7 @@ def _build_entries(
         entries.append(
             _Entry(
                 ref=ref,
-                msp=_msp_flag(row, structured_text),
+                category=_category(row, structured_text),
                 anchor_id=ob_report.oddball_anchor_id(bcv),
                 structured_text_lookup=ob_report.structured_text_value,
                 row=row,
@@ -92,11 +92,10 @@ def _build_entries(
     return entries
 
 
-def _msp_flag(row: dict[str, object], structured_text: object) -> str:
-    is_yes = rtms_missing_sof_pasuq_descriptions.row_is_missing_sof_pasuq_yes(
+def _category(row: dict[str, object], structured_text: object) -> str:
+    return rtms_missing_sof_pasuq_descriptions.row_category(
         row, structured_text=structured_text
     )
-    return "y" if is_yes else "n"
 
 
 def _build_body_contents(entries: list[_Entry]) -> tuple[object, ...]:
@@ -145,23 +144,26 @@ def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
         "section",
         {
             "class": "goerwitz-verse",
-            "data-msp": entry.msp,
+            "data-category": entry.category,
         },
         tuple(items),
     )
 
 
 def _build_filter_controls(counts: dict[str, int]) -> object:
-    msp_fieldset = _fieldset(
-        "Missing sof pasuq",
+    category_fieldset = _fieldset(
+        "Category",
         (
-            _checkbox("gf-msp", "y", f"msp-y ({counts['y']})"),
-            _checkbox("gf-msp", "n", f"msp-n ({counts['n']})"),
+            _checkbox(
+                "gf-category", "msp", f"missing sof pasuq ({counts['msp']})"
+            ),
+            _checkbox("gf-category", "msl", f"missing silluq ({counts['msl']})"),
+            _checkbox("gf-category", "other", f"other ({counts['other']})"),
         ),
     )
     count_para = wlc_utils_html.para("", {"class": "gf-count"})
     return wlc_utils_html.div(
-        (msp_fieldset, count_para),
+        (category_fieldset, count_para),
         {"class": "goerwitz-filter"},
     )
 
@@ -185,9 +187,9 @@ def _checkbox(css_class: str, value: str, label_text: str) -> object:
 
 
 def _counts(entries: list[_Entry]) -> dict[str, int]:
-    counts = {"y": 0, "n": 0, "total": len(entries)}
+    counts = {"msp": 0, "msl": 0, "other": 0, "total": len(entries)}
     for entry in entries:
-        counts[entry.msp] += 1
+        counts[entry.category] += 1
     return counts
 
 
