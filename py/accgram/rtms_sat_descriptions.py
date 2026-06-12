@@ -6,10 +6,6 @@ from accgram import rtmsr_diff_format
 from accgram.rtms_sat_source_rows import SatSourceRow
 
 _NON_STRING_ORIGIN_ALLOWLIST: dict[tuple[str, str], str] = {
-    (
-        "is 36:2",
-        "diff_wlc_mam",
-    ): "Composite SAT diff entry renders as a summary string, not a single describable token.",
 }
 
 

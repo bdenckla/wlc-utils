@@ -18,6 +18,9 @@ BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ז֣בח הבק֗ר",
         "st-summary": "BHS accents a word with munaḥ rather than segol.",
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.16-3",
+        "comment": (
+            "MAM has munaḥ segol whereas the LC has segol revia."
+        )
     },
     "2c 8:10": {
         "wlc_focus": "שר֤י",
