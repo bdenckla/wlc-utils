@@ -1,5 +1,7 @@
 """WLC JSON and Unicode generation entrypoint."""
 
+import sys
+
 import py_wlc_json_and_unicode.wlc_write_to_json as wlc_write_to_json
 import py_wlc_json_and_unicode.wlc_compare_mdc_with_uxlc as mx
 import py_wlc_json_and_unicode.wlc_compare_mdc_with_mdc as mm
@@ -46,4 +48,9 @@ _UXLC_BOOKS_DIR = f"{_TDIR}/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
 
 
 if __name__ == "__main__":
+    # Warnings print non-ASCII (e.g. "→"); force UTF-8 stdout/stderr so they
+    # don't crash on a non-UTF-8 console (e.g. Windows cp1252).
+    for _stream in (sys.stdout, sys.stderr):
+        if hasattr(_stream, "reconfigure"):
+            _stream.reconfigure(encoding="utf-8")
     main()
