@@ -78,7 +78,6 @@ _NU_2019_06 = (
 _NU_2019_07 = (
     "This is one of twelve oddballs of this same type,"
     " in which WLC turned a scribal zarqa whim into an outright error."
-    " See, for example, the “Other Goerwitz item” link regarding a similar issue in Lv 4:2."
 )
 
 
@@ -107,7 +106,6 @@ BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
-        "other-goerwitz-item": "goerwitz.html#oblv4v2",
         "comment": (
             _NU_2019_01,
             _NU_2019_02,

@@ -100,7 +100,6 @@ def _render_ref_links(
     pending_uxlc_change = structured_text_lookup(row, "pending_uxlc_change")
     uxlc_note_page = structured_text_lookup(row, "uxlc_note_page")
     github_issue = structured_text_lookup(row, "github-issue")
-    other_goerwitz_item = structured_text_lookup(row, "other-goerwitz-item")
 
     permalink_summary: list[object] = [
         wlc_utils_html.anchor(
@@ -126,7 +125,6 @@ def _render_ref_links(
         ("Pending UXLC change", pending_uxlc_change),
         ("UXLC note page", uxlc_note_page),
         ("GitHub issue", github_issue),
-        ("Other Goerwitz item", other_goerwitz_item),
     ]:
         if isinstance(url, str) and url.strip():
             links.extend([" | ", wlc_utils_html.anchor(label, {"href": url.strip()})])
