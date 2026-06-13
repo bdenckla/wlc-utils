@@ -93,12 +93,12 @@ def build_enriched_row(
     mam_simple_verse = mam_simple_info["mam_simple_verse"]
     mam_simple_verse_meteg_witness = sanitize_verse_text_payload(
         mam_simple_verse,
-        remove_duplicate_telisha_gedola=True,
+        remove_mam_stress_helper_duplicates=True,
         preserve_all_meteg=True,
     )
     mam_simple_verse = sanitize_verse_text_payload(
         mam_simple_verse,
-        remove_duplicate_telisha_gedola=True,
+        remove_mam_stress_helper_duplicates=True,
     )
 
     wlc422_for_diff = _normalize_payload_for_diff_ignoring_notes(wlc422_verse)

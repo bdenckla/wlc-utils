@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from mb_cmn import hebrew_accents as ha
 from mb_cmn import hebrew_points as hp
 from mb_cmn import hebrew_punctuation as hpunc
 
@@ -7,13 +8,22 @@ _HEBREW_LETTER_START = ord("\u05d0")
 _HEBREW_LETTER_END = ord("\u05ea")
 _HEBREW_ACCENT_START = ord("\u0591")
 _HEBREW_ACCENT_END = ord("\u05af")
-_HEBREW_TELISHA_GEDOLA = "\u05a0"
+
+# MAM marks word stress by duplicating a word's disjunctive accent onto the
+# stressed syllable.  The canonical accent sits at one edge of the word and the
+# extra copy (the "stress helper") sits on the stressed syllable; WLC carries
+# only the canonical copy.  To suppress this spurious MAM-vs-WLC difference we
+# keep the canonical-edge copy and drop the helper(s):
+#   - telisha gedola is prepositive (canonical copy at the word start) -> keep first
+#   - segol/segolta  is postpositive (canonical copy at the word end)  -> keep last
+_KEEP_FIRST_STRESS_HELPER_ACCENTS = (ha.TEL_G,)
+_KEEP_LAST_STRESS_HELPER_ACCENTS = (ha.SEG_A,)
 
 
 def sanitize_verse_text_payload(
     payload: object,
     *,
-    remove_duplicate_telisha_gedola: bool = False,
+    remove_mam_stress_helper_duplicates: bool = False,
     preserve_all_meteg: bool = False,
 ) -> object:
     mutable = _deep_clone_jsonish(payload)
@@ -41,7 +51,7 @@ def sanitize_verse_text_payload(
             value,
             keep_last_meteg=keep_last_meteg,
             keep_all_meteg=keep_all_meteg,
-            remove_duplicate_telisha_gedola=remove_duplicate_telisha_gedola,
+            remove_mam_stress_helper_duplicates=remove_mam_stress_helper_duplicates,
         )
 
     return mutable
@@ -90,7 +100,7 @@ def _sanitize_hebrew_token(
     *,
     keep_last_meteg: bool,
     keep_all_meteg: bool,
-    remove_duplicate_telisha_gedola: bool,
+    remove_mam_stress_helper_duplicates: bool,
 ) -> str:
     last_meteg_idx = text.rfind(hp.MTGOSLQ) if keep_last_meteg else -1
     out_chars: list[str] = []
@@ -108,27 +118,34 @@ def _sanitize_hebrew_token(
         if ch == hp.MTGOSLQ and (keep_all_meteg or idx == last_meteg_idx):
             out_chars.append(ch)
     sanitized = "".join(out_chars)
-    if remove_duplicate_telisha_gedola:
-        sanitized = _drop_duplicate_telisha_gedola(sanitized)
+    if remove_mam_stress_helper_duplicates:
+        sanitized = _drop_mam_stress_helper_duplicates(sanitized)
     return sanitized
 
 
-def _drop_duplicate_telisha_gedola(text: str) -> str:
+def _drop_mam_stress_helper_duplicates(text: str) -> str:
+    # Dedup per word: maqaf/pasoleg/sopa-joined units are treated as separate words.
     out_chars: list[str] = []
-    seen_in_token = False
+    word: list[str] = []
     for ch in text:
         if ch in {hpunc.MAQ, hpunc.PASOLEG, hpunc.SOPA}:
-            seen_in_token = False
+            out_chars.extend(_dedup_word_stress_helpers(word))
             out_chars.append(ch)
+            word = []
             continue
-        if ch == _HEBREW_TELISHA_GEDOLA:
-            if seen_in_token:
-                continue
-            seen_in_token = True
-            out_chars.append(ch)
-            continue
-        if _HEBREW_LETTER_START <= ord(ch) <= _HEBREW_LETTER_END:
-            out_chars.append(ch)
-            continue
-        out_chars.append(ch)
+        word.append(ch)
+    out_chars.extend(_dedup_word_stress_helpers(word))
     return "".join(out_chars)
+
+
+def _dedup_word_stress_helpers(word: list[str]) -> list[str]:
+    result = list(word)
+    for accent in _KEEP_FIRST_STRESS_HELPER_ACCENTS:
+        positions = [i for i, ch in enumerate(result) if ch == accent]
+        for i in reversed(positions[1:]):  # drop all but the first (canonical) copy
+            del result[i]
+    for accent in _KEEP_LAST_STRESS_HELPER_ACCENTS:
+        positions = [i for i, ch in enumerate(result) if ch == accent]
+        for i in reversed(positions[:-1]):  # drop all but the last (canonical) copy
+            del result[i]
+    return result
