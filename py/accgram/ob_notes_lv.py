@@ -34,6 +34,11 @@ BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-5",
         **_ZARQA_WHIM,
     },
+    "lv 20:2": {
+        "wlc_focus": "ישרא֘ל",
+        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-6",
+        **_ZARQA_WHIM,
+    },
     "lv 25:20": {
         "wlc_focus": "נאכ֤֖ל",
         "st-summary": "The LC has a mahapakh in addition to the expected tipeḥa.",

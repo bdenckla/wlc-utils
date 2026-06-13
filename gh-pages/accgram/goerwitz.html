@@ -13,8 +13,8 @@ Goerwitz Run on WLC</title>
 Goerwitz Run on WLC</h1>
 <h2>
 Introduction</h2>
-<p>This page lists the 86 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filter below to narrow the list.</p>
-<p>These 86 verses are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree. Potential causes include WLC quirks, BHS quirks, LC quirks, and checker quirks.</p>
+<p>This page lists the 91 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filter below to narrow the list.</p>
+<p>These 91 verses are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree. Potential causes include WLC quirks, BHS quirks, LC quirks, and checker quirks.</p>
 <p>The filter sorts each verse into one of three categories: “missing sof pasuq,” “missing silluq,” where a sof pasuq is present but the verse-final word has no accent; and “other” for everything else.</p>
 <p>The Goerwitz accent grammar checker is described in the following article:</p>
 <p>Goerwitz, Richard. ‹A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts.› In Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg (pp. 111-122). (<a href="https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b">Studies in Ancient Oriental Civilization 60</a>). The Oriental Institute, Chicago, 2007. ISBN 978-1-885923-41-7.</p>
@@ -53,11 +53,30 @@ WLC Bracket Notes</h2>
 <fieldset>
 <legend>
 Category</legend>
-<label><input type="checkbox" class="gf-category" value="msp" checked="checked"> missing sof pasuq (20)</label><label><input type="checkbox" class="gf-category" value="msl" checked="checked"> missing silluq (8)</label><label><input type="checkbox" class="gf-category" value="other" checked="checked"> other (58)</label></fieldset>
+<label><input type="checkbox" class="gf-category" value="msp" checked="checked"> missing sof pasuq (20)</label><label><input type="checkbox" class="gf-category" value="msl" checked="checked"> missing silluq (8)</label><label><input type="checkbox" class="gf-category" value="other" checked="checked"> other (63)</label></fieldset>
 <p class="gf-count"></p>
 </div>
+<section class="goerwitz-verse" data-category="other">
+<h2 id="obgn17v20">
+gn 17:20</h2>
+<p><a href="#obgn17v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
+<p><a href="https://bdenckla.github.io/MAM-with-doc/A1-Genesis.html#c17v20">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Gen17:20">UXLC</a> | <a href="https://tanach.us/Changes/2021.10.19%20-%20Changes/2021.10.19%20-%20Changes.xml?2021.08.04-1">UXLC change</a> | <a href="goerwitz.html#obnu20v19">Other Goerwitz item</a></p>
+<p class="goerwitz-tms-verse" lang="hbo" dir="rtl"><span class="goerwitz-tms-focus-highlight">ולישמע֘אל</span> שמעתיך֒ הנ֣ה׀ בר֣כתי את֗ו והפרית֥י את֛ו והרבית֥י את֖ו במא֣ד מא֑ד שנים־ עש֤ר נשיאם֙ יול֔יד ונתת֖יו לג֥וי גדֽול׃</p>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">וֽלישמע֘אל</td><td style="text-align: right;"><span title="Marks a Tsinnorit accent &lt;82&gt; that is written after (to the left of) a final Lamed in BHQ but is written before (to the right of) the Lamed in ל and other printed Hebrew Bibles (other than BHQ and BHS). This note marks a typesetting problem in BHQ.">]S</span><span title="Marks a Tsinnorit accent &lt;82&gt; that is written after (to the left of) a final Lamed in BHS but is written before (to the right of) the Lamed in ל and other printed Hebrew Bibles (other than BHS). This note marks a typesetting problem in BHS.">]s</span></td><td>meteg-zarqa_sh_on_ע</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">וֽלישמעאל֘</td><td style="text-align: right;"></td><td>meteg-zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
+<tr><td>wlc422: [ולישמע֘אל | שמעתיך֒]; mam_simple: [ולישמעאל֮ | שמעת֒יך֒]</td><td style="text-align: right;"></td><td></td><td>diff_wlc_mam</td></tr>
+</table>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
+</section>
 <section class="goerwitz-verse" data-category="msl">
-<h2 id="obgn32v24">
+<hr><h2 id="obgn32v24">
 gn 32:24</h2>
 <p><a href="#obgn32v24" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
 <p><a href="https://bdenckla.github.io/MAM-with-doc/A1-Genesis.html#c32v24">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Gen32:24">UXLC</a></p>
@@ -74,6 +93,25 @@ gn 32:24</h2>
 <tr><td class="goerwitz-obs-depth-cell">2</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="atnach_clause">atnc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
 <tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="1"></td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="2"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell"></td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="tifcha">tip</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
+</section>
+<section class="goerwitz-verse" data-category="other">
+<hr><h2 id="obgn47v29">
+gn 47:29</h2>
+<p><a href="#obgn47v29" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
+<p><a href="https://bdenckla.github.io/MAM-with-doc/A1-Genesis.html#c47v29">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Gen47:29">UXLC</a> | <a href="https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-1">UXLC change</a> | <a href="goerwitz.html#obnu20v19">Other Goerwitz item</a></p>
+<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ויקרב֣ו ימי־ <span class="goerwitz-tms-focus-highlight">ישרא֘ל</span> למות֒ ויקר֣א׀ לבנ֣ו ליוס֗ף וי֤אמר לו֙ אם־ נ֨א מצ֤אתי חן֙ בעינ֔יך שים־ נ֥א ידך֖ ת֣חת ירכ֑י ועש֤ית עמדי֙ ח֣סד ואמ֔ת אל־ נ֥א תקבר֖ני במצרֽים׃</p>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">ישרא֘ל</td><td style="text-align: right;"><span title="Marks a Tsinnorit accent &lt;82&gt; that is written after (to the left of) a final Lamed in BHQ but is written before (to the right of) the Lamed in ל and other printed Hebrew Bibles (other than BHQ and BHS). This note marks a typesetting problem in BHQ.">]S</span><span title="Marks a Tsinnorit accent &lt;82&gt; that is written after (to the left of) a final Lamed in BHS but is written before (to the right of) the Lamed in ל and other printed Hebrew Bibles (other than BHS). This note marks a typesetting problem in BHS.">]s</span></td><td>zarqa_sh_on_א</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
+<tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
+</table>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>
@@ -132,15 +170,11 @@ ex 6:6</h2>
 <tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
 <tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This is one of seven items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="10" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="6" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="6"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="gershayim">ger2</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="silluq">slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>
@@ -224,16 +258,11 @@ ex 30:12</h2>
 <tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
 <tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This is one of seven items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="8" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="5" title="atnach_clause">atnc</td><td colspan="3" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="2" title="tifcha_clause">tipc</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="3" title="tevir_clause">tevc</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="1"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td colspan="2" title="tevir_clause">tevc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="geresh_phrase">gerp</td><td title="tevir_phrase">tevp</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="munach gershayim">mun ger2</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="munach darga tevir">mun dar tev</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="mereka tevir">mer tev</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>
@@ -260,6 +289,25 @@ ex 34:6</h2>
 <tr><td class="goerwitz-obs-depth-cell">4</td><td title="zarqa_phrase">zarp</td><td title="segolta_phrase">segap</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="3"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="3"></td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="3"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell"></td><td title="azla mereka zarqa">qom mer zar</td><td title="segolta">sega</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
+</section>
+<section class="goerwitz-verse" data-category="other">
+<hr><h2 id="obex36v2">
+ex 36:2</h2>
+<p><a href="#obex36v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
+<p><a href="https://bdenckla.github.io/MAM-with-doc/A2-Exodus.html#c36v2">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Ex36:2">UXLC</a> | <a href="https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-4">UXLC change</a> | <a href="goerwitz.html#obnu20v19">Other Goerwitz item</a></p>
+<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ויקר֣א מש֗ה אל־ <span class="goerwitz-tms-focus-highlight">בצלא֘ל</span> ואל־ אהליאב֒ ואל֙ כל־ א֣יש חכם־ ל֔ב אש֨ר נת֧ן יהו֛ה חכמ֖ה בלב֑ו כ֚ל אש֣ר נשא֣ו לב֔ו לקרב֥ה אל־ המלאכ֖ה לעש֥ת אתֽה׃</p>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">בצלא֘ל</td><td style="text-align: right;"><span title="Marks a Tsinnorit accent &lt;82&gt; that is written after (to the left of) a final Lamed in BHS but is written before (to the right of) the Lamed in ל and other printed Hebrew Bibles (other than BHS). This note marks a typesetting problem in BHS.">]s</span></td><td>zarqa_sh_on_א</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">בצלאל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
+<tr><td lang="hbo" dir="rtl">בצלאל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
+</table>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>
@@ -299,16 +347,11 @@ lv 4:2</h2>
 <tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
 <tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This is one of seven items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="10" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="7" title="atnach_clause">atnc</td><td colspan="3" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="5" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="revia_clause">revc</td><td colspan="3" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="1"></td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="pashta_phrase">pashp</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="3"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="gershayim">ger2</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="mahpak pashta">mah pash</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="zaqefgadol">zaqg</td><td title="tifcha">tip</td><td title="silluq">slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>
@@ -352,6 +395,25 @@ lv 19:1</h2>
 <tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="2" title="silluq_clause">slqc</td><td title="sof_pasuq_phrase">sof_pasuqp</td></tr>
 <tr><td class="goerwitz-obs-depth-cell">2</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td><td colspan="1"></td></tr>
 <tr><td class="goerwitz-obs-depth-cell"></td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
+</section>
+<section class="goerwitz-verse" data-category="other">
+<hr><h2 id="oblv20v2">
+lv 20:2</h2>
+<p><a href="#oblv20v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
+<p><a href="https://bdenckla.github.io/MAM-with-doc/A3-Levit.html#c20v2">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Lev20:2">UXLC</a> | <a href="https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-6">UXLC change</a> | <a href="goerwitz.html#obnu20v19">Other Goerwitz item</a></p>
+<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ואל־ בנ֣י <span class="goerwitz-tms-focus-highlight">ישרא֘ל</span> תאמר֒ א֣יש איש֩ מבנ֨י ישרא֜ל ומן־ הג֣ר׀ הג֣ר בישרא֗ל אש֨ר ית֧ן מזרע֛ו למ֖לך מ֣ות יומ֑ת ע֥ם הא֖רץ ירגמ֥הו באֽבן׃</p>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">ישרא֘ל</td><td style="text-align: right;"><span title="Marks a Tsinnorit accent &lt;82&gt; that is written after (to the left of) a final Lamed in BHS but is written before (to the right of) the Lamed in ל and other printed Hebrew Bibles (other than BHS). This note marks a typesetting problem in BHS.">]s</span></td><td>zarqa_sh_on_א</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
+<tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
+</table>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>
@@ -512,21 +574,17 @@ nu 20:19</h2>
 <tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
 <tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors. I would have expected all 12 cases to be flagged as oddballs (report “ERROR”), but only seven of them are.</p>
+<p class="goerwitz-tms-comment">This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors. All 12 cases are flagged as oddballs (report “ERROR”), treated uniformly as the lexical (“alphabet”) errors they are, independent of surrounding context.</p>
 <p class="goerwitz-tms-comment">WLC’s first poor decision was to attempt to encode a meaningless scribal whim: the placement of a zarqa before the lamed ascender rather than after it. See the image in the UXLC change to which we link above.</p>
 <p class="goerwitz-tms-comment">WLC’s second poor decision was to characterize this as the correction of a typesetting error in BHS/BHQ. While I am as great a critic of BHS/BHQ as anyone, this is unfair. The treatment of these words in BHS/BHQ is almost certainly an editorial decision, not an oddly-systematic set of typesetting errors.</p>
 <p class="goerwitz-tms-comment">WLC’s third poor decision was to encode this by further overloading the meaning of accent 82, which is already used as tsinnorit and, rarely, as a stress-helper to accent 02 (zarqa/tsinnor).</p>
 <p class="goerwitz-tms-comment">Finally, WLC greatly compounded these poor decisions by making an outright error in implementation: the 82 codes are consistently placed preceding rather than following the L (lamed) in question, in one case by even more than one letter too far back.</p>
 <p class="goerwitz-tms-comment">They are consistently placed in a location that would be more appropriate for a tsinnorit or a zarqa stress helper, namely, on the first letter of the syllable ending in lamed, rather than on the lamed itself.</p>
-<p class="goerwitz-tms-comment">This is one of seven oddballs of this same type, in which WLC turned a scribal zarqa whim into an outright error. See, for example, the “Other Goerwitz item” link regarding a similar issue in Lv 4:2.</p>
+<p class="goerwitz-tms-comment">This is one of twelve oddballs of this same type, in which WLC turned a scribal zarqa whim into an outright error. See, for example, the “Other Goerwitz item” link regarding a similar issue in Lv 4:2.</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="7" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="5" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td title="segolta_phrase">segap</td><td colspan="4" title="atnach_clause">atnc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="1"></td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="1"></td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="mahpak pashta">mah pash</td><td title="munach zaqef">mun zaqq</td><td title="tifcha">tip</td><td title="atnach">atn</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>
@@ -663,6 +721,25 @@ dt 13:15</h2>
 </table>
 </div>
 </section>
+<section class="goerwitz-verse" data-category="other">
+<hr><h2 id="obdt14v24">
+dt 14:24</h2>
+<p><a href="#obdt14v24" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
+<p><a href="https://bdenckla.github.io/MAM-with-doc/A5-Deuter.html#c14v24">Mwd</a> | <a href="https://tanach.us/Tanach.xml?Deut14:24">UXLC</a> | <a href="https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-8">UXLC change</a> | <a href="goerwitz.html#obnu20v19">Other Goerwitz item</a></p>
+<p class="goerwitz-tms-verse" lang="hbo" dir="rtl">וכי־ ירב֨ה ממך֜ הד֗רך כ֣י ל֣א <span class="goerwitz-tms-focus-highlight">תוכ֘ל</span> שאתו֒ כי־ ירח֤ק ממך֙ המק֔ום אש֤ר יבחר֙ יהו֣ה אלה֔יך לש֥ום שמ֖ו ש֑ם כ֥י יברכך֖ יהו֥ה אלהֽיך׃</p>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">תוכ֘ל</td><td style="text-align: right;"><span title="Marks a Tsinnorit accent &lt;82&gt; that is written after (to the left of) a final Lamed in BHQ but is written before (to the right of) the Lamed in ל and other printed Hebrew Bibles (other than BHQ and BHS). This note marks a typesetting problem in BHQ.">]S</span><span title="Marks a Tsinnorit accent &lt;82&gt; that is written after (to the left of) a final Lamed in BHS but is written before (to the right of) the Lamed in ל and other printed Hebrew Bibles (other than BHS). This note marks a typesetting problem in BHS.">]s</span></td><td>zarqa_sh_on_כ</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">תוכל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
+<tr><td lang="hbo" dir="rtl">תוכל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
+</table>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<div class="goerwitz-obs-tree-wrap">
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
+</section>
 <section class="goerwitz-verse" data-category="msl">
 <hr><h2 id="obdt23v18">
 dt 23:18</h2>
@@ -743,16 +820,11 @@ dt 31:7</h2>
 <tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
 <tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This is one of seven items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="12" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="10" title="atnach_clause">atnc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="6" title="zaqef_clause">zaqqc</td><td colspan="4" title="atnach_clause">atnc</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="revia_clause">revc</td><td colspan="4" title="zaqef_clause">zaqqc</td><td title="zaqef_phrase">zaqqp</td><td colspan="3" title="atnach_clause">atnc</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="1"></td><td colspan="2" title="tifcha_clause">tipc</td><td title="atnach_phrase">atnp</td><td colspan="2"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="2"></td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="1"></td><td title="tevir_phrase">tevp</td><td title="tifcha_phrase">tipp</td><td colspan="3"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="azla geresh">qom ger</td><td title="revia">rev</td><td title="azla geresh">qom ger</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="pashta">pash</td><td title="munach zaqef">mun zaqq</td><td title="zaqefgadol">zaqg</td><td title="azla darga tevir">qom dar tev</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="tifcha">tip</td><td title="mereka silluq">mer slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>
@@ -767,17 +839,11 @@ js 4:8</h2>
 <tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
 <tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam[1]</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This is one of seven items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="12" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="8" title="atnach_clause">atnc</td><td colspan="4" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td title="segolta_phrase">segap</td><td colspan="7" title="atnach_clause">atnc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="1"></td><td colspan="5" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td colspan="1"></td><td colspan="3" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="4"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">5</td><td colspan="1"></td><td title="pazer_phrase">pazp</td><td colspan="2" title="revia_clause">revc</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="6"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell">6</td><td colspan="2"></td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td colspan="8"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="pazer">paz</td><td title="azla geresh">qom ger</td><td title="munach revia">mun rev</td><td title="azla mahpak pashta">qom mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="munach atnach">mun atn</td><td title="mahpak pashta">mah pash</td><td title="zaqef">zaqq</td><td title="tifcha">tip</td><td title="silluq">slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>
@@ -792,15 +858,11 @@ js 10:30</h2>
 <tr><td lang="hbo" dir="rtl">ישראל֘</td><td style="text-align: right;"></td><td>zarqa_sh_on_ל</td><td>diff_wlc_uxlc</td></tr>
 <tr><td lang="hbo" dir="rtl">ישראל֮</td><td style="text-align: right;"></td><td>zarqa</td><td>diff_wlc_mam</td></tr>
 </table>
-<p class="goerwitz-tms-comment">This is one of seven items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
+<p class="goerwitz-tms-comment">This is one of twelve items of this type. See the “Other Goerwitz item” link regarding another instance (Nu 20:19).</p>
 <div class="goerwitz-obs-tree-wrap">
 <table class="goerwitz-obs-error-table">
-<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="9" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">1</td><td colspan="6" title="atnach_clause">atnc</td><td colspan="3" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">2</td><td colspan="4" title="zaqef_clause">zaqqc</td><td colspan="2" title="atnach_clause">atnc</td><td title="zaqef_phrase">zaqqp</td><td colspan="2" title="silluq_clause">slqc</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">3</td><td colspan="2" title="revia_clause">revc</td><td colspan="2" title="zaqef_clause">zaqqc</td><td title="tifcha_phrase">tipp</td><td title="atnach_phrase">atnp</td><td colspan="1"></td><td title="tifcha_phrase">tipp</td><td title="silluq_phrase">slqp</td></tr>
-<tr><td class="goerwitz-obs-depth-cell">4</td><td title="geresh_phrase">gerp</td><td title="revia_phrase">revp</td><td title="pashta_phrase">pashp</td><td title="zaqef_phrase">zaqqp</td><td colspan="5"></td></tr>
-<tr><td class="goerwitz-obs-depth-cell"></td><td title="telishaqetanna azla geresh">telq qom ger</td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td><td title="pashta">pash</td><td title="zaqef">zaqq</td><td title="mereka tifcha">mer tip</td><td title="atnach">atn</td><td title="munach zaqef">mun zaqq</td><td title="mereka tifcha">mer tip</td><td title="mereka silluq">mer slq</td></tr>
+<tr><td class="goerwitz-obs-depth-cell">0</td><td title="illegal_mark">illegal_mark</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td title="ERROR" class="goerwitz-obs-error-cell">ERROR</td></tr>
 </table>
 </div>
 </section>

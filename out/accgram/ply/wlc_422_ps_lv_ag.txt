@@ -1175,35 +1175,8 @@ Levit 4:1
   1 silluq_phrase
     mereka silluq 
 Levit 4:2
-0 silluq_clause
-  1 atnach_clause
-    2 zaqef_clause
-      3 revia_clause
-        4 geresh_phrase
-          gershayim 
-        4 revia_phrase
-          ERROR 
-      3 zaqef_clause
-        4 pashta_phrase
-          mahpak pashta 
-        4 zaqef_clause
-          5 pashta_phrase
-            pashta 
-          5 zaqef_phrase
-            munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
-  1 silluq_clause
-    2 zaqef_phrase
-      zaqefgadol 
-    2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
-      3 silluq_phrase
-        silluq 
+0 illegal_mark
+  ERROR 
 Levit 4:3
 0 silluq_clause
   1 atnach_clause
@@ -13025,32 +12998,8 @@ Levit 20:1
   1 silluq_phrase
     mereka silluq 
 Levit 20:2
-0 silluq_clause
-  1 atnach_clause
-    2 segolta_phrase
-      munach segolta 
-    2 atnach_clause
-      3 tifcha_clause
-        4 revia_clause
-          5 geresh_phrase
-            munach telishaqetanna azla geresh 
-          5 revia_clause
-            6 legarmeh_phrase
-              legarmeh 
-            6 revia_phrase
-              munach revia 
-        4 tifcha_clause
-          5 tevir_phrase
-            azla darga tevir 
-          5 tifcha_phrase
-            tifcha 
-      3 atnach_phrase
-        munach atnach 
-  1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 silluq_phrase
-      mereka silluq 
+0 illegal_mark
+  ERROR 
 Levit 20:3
 0 silluq_clause
   1 atnach_clause

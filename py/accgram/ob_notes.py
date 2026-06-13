@@ -6,6 +6,7 @@ per-book ob_notes_* module (small books collected in ob_notes_misc).
 
 from __future__ import annotations
 
+from accgram import ob_notes_gn
 from accgram import ob_notes_ex
 from accgram import ob_notes_lv
 from accgram import ob_notes_nu
@@ -29,6 +30,7 @@ def get_structured_text() -> dict[str, dict[str, object]]:
 
 
 STRUCTURED_TEXT_BY_REF: dict[str, dict[str, object]] = {
+    **ob_notes_gn.BY_REF,
     **ob_notes_ex.BY_REF,
     **ob_notes_lv.BY_REF,
     **ob_notes_nu.BY_REF,

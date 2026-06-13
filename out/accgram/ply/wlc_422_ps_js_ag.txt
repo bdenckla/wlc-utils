@@ -1868,41 +1868,8 @@ Joshua 4:7
     2 silluq_phrase
       silluq 
 Joshua 4:8
-0 silluq_clause
-  1 atnach_clause
-    2 segolta_phrase
-      ERROR 
-    2 atnach_clause
-      3 zaqef_clause
-        4 revia_clause
-          5 pazer_phrase
-            pazer 
-          5 revia_clause
-            6 geresh_phrase
-              azla geresh 
-            6 revia_phrase
-              munach revia 
-        4 zaqef_clause
-          5 pashta_phrase
-            azla mahpak pashta 
-          5 zaqef_phrase
-            zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
-  1 silluq_clause
-    2 zaqef_clause
-      3 pashta_phrase
-        mahpak pashta 
-      3 zaqef_phrase
-        zaqef 
-    2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
-      3 silluq_phrase
-        silluq 
+0 illegal_mark
+  ERROR 
 Joshua 4:9
 0 silluq_clause
   1 atnach_clause
@@ -6716,32 +6683,8 @@ Joshua 10:29
     2 silluq_phrase
       silluq 
 Joshua 10:30
-0 silluq_clause
-  1 atnach_clause
-    2 zaqef_clause
-      3 revia_clause
-        4 geresh_phrase
-          telishaqetanna azla geresh 
-        4 revia_phrase
-          ERROR 
-      3 zaqef_clause
-        4 pashta_phrase
-          pashta 
-        4 zaqef_phrase
-          zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
-  1 silluq_clause
-    2 zaqef_phrase
-      munach zaqef 
-    2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 silluq_phrase
-        mereka silluq 
+0 illegal_mark
+  ERROR 
 Joshua 10:31
 0 silluq_clause
   1 atnach_clause

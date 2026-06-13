@@ -34,7 +34,7 @@ _ZARQA_WHIM = {
     "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
     "other-goerwitz-item": "goerwitz.html#obnu20v19",
     "comment": (
-        "This is one of seven items of this type."
+        "This is one of twelve items of this type."
         " See the “Other Goerwitz item” link regarding another instance (Nu 20:19)."
     ),
 }

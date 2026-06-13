@@ -19,11 +19,19 @@ import argparse
 from dataclasses import dataclass
 from pathlib import Path
 
+from accgram import lexical_validation
 from accgram import prose_filter
 from accgram import split_wlc
 from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.ply_scanner import scan_book
-from accgram.ply_tree import print_tree
+from accgram.ply_tree import add_leaves, print_tree
+
+# Uniform tree emitted for any prose verse carrying a stranded stress-helper (an
+# alphabet error caught by the lexical layer, not the grammar).  Identical across
+# all such verses by design -- the point is to treat every stranded `82` the same,
+# independent of whatever the rest of the accent sequence happens to parse into.
+# Contains the `ERROR` leaf so accgram.oddballs classifies the verse as an oddball.
+_ILLEGAL_MARK_TREE = add_leaves("illegal_mark", "ERROR")
 
 
 @dataclass(frozen=True)
@@ -39,6 +47,15 @@ def render_book(text: str, parser, bb: str) -> tuple[str, BookRun, str]:
     out_lines: list[str] = []
     parsed = 0
     for verse in verses:
+        # Prose lexical layer (divergence from the goerwitz C oracle): a stranded
+        # stress-helper (e.g. a `82` with no fused `02`) is an alphabet error.  Flag
+        # it uniformly with a fixed ERROR tree and skip the grammar entirely -- the
+        # context need not be parsed, and all such verses must read identically.
+        if lexical_validation.stranded_stress_helpers(verse.body):
+            parsed += 1
+            out_lines.append(verse.reference + "\n")
+            out_lines.append(print_tree(_ILLEGAL_MARK_TREE, 0))
+            continue
         tree = parse_tokens(parser, verse.tokens)
         if tree is None:
             raise RuntimeError(f"PLY produced no output for {verse.reference}")

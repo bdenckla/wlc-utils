@@ -270,6 +270,7 @@ def scan_accents(
 class Verse:
     reference: str
     tokens: list[Token]  # TILDE, accent tokens..., SOFPASUQ
+    body: str  # the raw accent-code body (after "ch:vs "), for lexical validation
 
 
 def scan_book(text: str, bb: str) -> list[Verse]:
@@ -296,7 +297,7 @@ def scan_book(text: str, bb: str) -> list[Verse]:
             tokens = [Token("TILDE", "")] + scan_accents(
                 rest, bb, int(ch), int(vs), has_legarmeh
             )
-            verses.append(Verse(reference=reference, tokens=tokens))
+            verses.append(Verse(reference=reference, tokens=tokens, body=rest))
             continue
         if _BOOKNAME_RE.match(line):
             book = line.strip()

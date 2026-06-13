@@ -3,7 +3,7 @@
   "artifacts_description": "oddball verses with ERROR nodes in PLY *_ag.txt outputs",
   "payload_provenance_note": "These verses are parsed by the PLY port into a tree containing at least one line with the token ERROR, drawn from out/accgram/ply/. The output_file field on each row names which book file holds that verse's ERROR tree.",
   "summary": {
-    "oddballs": 86,
+    "oddballs": 91,
     "books_with_oddballs": 24
   },
   "oddballs": [
@@ -138,6 +138,11 @@
       "output_file": "wlc_422_ps_dt_ag.txt"
     },
     {
+      "ref": "dt 14:24",
+      "content": "W:/KI75Y-YIR:B.E63H MIM.:/KF61 HA/D.E81REK: K.I74Y LO74) TW.KA82L]S]s &:)\"T/OW01 K.I75Y-YIR:XA70Q MIM.:/KF03 HA/M.FQO80WM ):A$E70R YIB:XAR03 Y:HWF74H ):ELOHE80Y/KF LF/&71W.M $:M/O73W $F92M K.I71Y Y:BFREK/:KF73 Y:HWF71H ):ELOHE75Y/KF00",
+      "output_file": "wlc_422_ps_dt_ag.txt"
+    },
+    {
       "ref": "dt 23:18",
       "content": "LO)-TIH:YE71H Q:D\"$F73H MI/B.:NO74WT YI&:RF)\"92L W:/LO75)-YIH:YE71H QFD\"73$ MI/B.:N\"71Y YI&:RF)\"L00]U",
       "output_file": "wlc_422_ps_dt_ag.txt"
@@ -228,13 +233,28 @@
       "output_file": "wlc_422_ps_ex_ag.txt"
     },
     {
+      "ref": "ex 36:2",
+      "content": "WA/Y.IQ:RF74) MO$E81H )EL-B.:CAL:)\"82L]s W:/)EL-)F75H:FLIY)FB01 W:/)EL03 K.FL-)I74Y$ X:AKAM-L\"80B ):A$E63R NFTA94N Y:HWF91H XFK:MF73H B.:/LIB./O92W 10K.OL ):A$E74R N:&F)/O74W LIB./O80W L:/QFR:BF71H )EL-HA/M.:LF)KF73H LA/(:A&O71T )OT/F75H.00",
+      "output_file": "wlc_422_ps_ex_ag.txt"
+    },
+    {
       "ref": "ex 38:12",
       "content": "W:/LI/P:)AT-YF81M Q:LF(IYM03 X:AMI$.I74YM B.F75/)AM.F80H (AM.W.D\"Y/HE71M (:A&FRF80H W:/)AD:N\"Y/HE73M (:A&FRF92H WFW\"94Y HF/(AM.UDI91YM WA/X:A$W.Q\"Y/HE73M K.F75SEP00",
       "output_file": "wlc_422_ps_ex_ag.txt"
     },
     {
+      "ref": "gn 17:20",
+      "content": "W.75/L:/YI$:MF(\"82)L]S]s $:MA(:T.IY/KF01 HIN.\"74H05 B.\"RA74K:T.IY )OT/O81W W:/HIP:R\"YTI71Y )OT/O91W W:/HIR:B.\"YTI71Y )OT/O73W B.I/M:)O74D M:)O92D $:N\"YM-(F&F70R N:&IY)IM03 YOWLI80YD W./N:TAT.I73Y/W L:/GO71WY G.FDO75WL00",
+      "output_file": "wlc_422_ps_gn_ag.txt"
+    },
+    {
       "ref": "gn 32:24",
       "content": "WA/Y.IQ.FX/\"80M WA/Y.A75(:ABIR/\"73M )ET-HA/N.F92XAL WA75/Y.A(:AB\"73R )ET-):A$ER-L/OW00]U",
+      "output_file": "wlc_422_ps_gn_ag.txt"
+    },
+    {
+      "ref": "gn 47:29",
+      "content": "WA/Y.IQ:R:B74W. Y:M\"75Y-YI&:RF)\"82L]S]s LF/MW.T01 WA/Y.IQ:RF74)05 LI/B:N/O74W L:/YOWS\"81P WA/Y.O70)MER L/OW03 )IM-NF63) MFCF70)TIY X\"N03 B.:/(\"YNE80Y/KF &I75YM-NF71) YFD/:KF73 T.A74XAT Y:R\"K/I92Y W:/(F&I70YTF (IM.FD/IY03 XE74SED WE/):EME80T )AL-NF71) TIQ:B.:R/\"73NIY B.:/MIC:RF75YIM00",
       "output_file": "wlc_422_ps_gn_ag.txt"
     },
     {
@@ -370,6 +390,11 @@
     {
       "ref": "lv 19:1",
       "content": "WA/Y:DAB.\"71R Y:HWF73H )EL-MO$E71H L.\"/)MO75R]1",
+      "output_file": "wlc_422_ps_lv_ag.txt"
+    },
+    {
+      "ref": "lv 20:2",
+      "content": "W:/)EL-B.:N\"74Y YI&:RF)\"82L]s T.O)MAR01 )I74Y$ )IY$04 MI/B.:N\"63Y YI&:RF)\"61L W./MIN-HA/G.\"74R05 HA/G.F74R B.:/YI&:RF)\"81L ):A$E63R YIT.\"94N MI/Z.AR:(/O91W LA/M.O73LEK: MO74WT YW.MF92T (A71M HF/)F73REC YIR:G.:MU71/HW. BF/)F75BEN00",
       "output_file": "wlc_422_ps_lv_ag.txt"
     },
     {

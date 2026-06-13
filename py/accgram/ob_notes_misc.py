@@ -6,7 +6,6 @@ from accgram.ob_notes_shared import (
     _BHS_TRANSCRIBES,
     _MISSING_SOF_PASUQ_COMMENT,
     _MISSING_SOF_PASUQ_SUMMARY,
-    _SOMEWHERE,
     _TIP_LIKE_INCL,
 )
 
@@ -102,13 +101,6 @@ BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ד֥י",
         "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
         "comment": "See the image in the UXLC change to which we link above.",
-    },
-    "gn 32:24": {
-        "wlc_focus": "לו׃",
-        "st-summary": _SOMEWHERE,
-        "comment": (
-            "There is also a question of ויקח֔ם vs וי֨קח֔ם (metigah) in this verse, but either option is grammatical."
-        ),
     },
     "ne 2:10": {
         "wlc_focus": "ב֥א",

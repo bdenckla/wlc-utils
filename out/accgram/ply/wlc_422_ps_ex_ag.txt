@@ -3023,35 +3023,8 @@ Exodus 6:5
     2 silluq_phrase
       silluq 
 Exodus 6:6
-0 silluq_clause
-  1 atnach_clause
-    2 zaqef_clause
-      3 revia_clause
-        4 geresh_phrase
-          gershayim 
-        4 revia_phrase
-          ERROR 
-      3 zaqef_clause
-        4 pashta_phrase
-          pashta 
-        4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
-  1 silluq_clause
-    2 zaqef_clause
-      3 pashta_phrase
-        mahpak pashta 
-      3 zaqef_phrase
-        munach zaqef 
-    2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
-      3 silluq_phrase
-        silluq 
+0 illegal_mark
+  ERROR 
 Exodus 6:7
 0 silluq_clause
   1 atnach_clause
@@ -19391,29 +19364,8 @@ Exodus 30:11
   1 silluq_phrase
     mereka silluq 
 Exodus 30:12
-0 silluq_clause
-  1 atnach_clause
-    2 tifcha_clause
-      3 tevir_clause
-        4 geresh_phrase
-          munach gershayim 
-        4 tevir_clause
-          5 geresh_phrase
-            ERROR 
-          5 tevir_phrase
-            munach darga tevir 
-      3 tifcha_phrase
-        tifcha 
-    2 atnach_phrase
-      munach atnach 
-  1 silluq_clause
-    2 tifcha_clause
-      3 tevir_phrase
-        mereka tevir 
-      3 tifcha_phrase
-        tifcha 
-    2 silluq_phrase
-      mereka silluq 
+0 illegal_mark
+  ERROR 
 Exodus 30:13
 0 silluq_clause
   1 atnach_clause
@@ -23426,38 +23378,8 @@ Exodus 36:1
     2 silluq_phrase
       silluq 
 Exodus 36:2
-0 silluq_clause
-  1 atnach_clause
-    2 segolta_clause
-      3 revia_phrase
-        munach revia 
-      3 segolta_phrase
-        segolta 
-    2 atnach_clause
-      3 zaqef_clause
-        4 pashta_phrase
-          pashta 
-        4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_clause
-          5 tevir_phrase
-            azla darga tevir 
-          5 tifcha_phrase
-            tifcha 
-        4 atnach_phrase
-          atnach 
-  1 silluq_clause
-    2 zaqef_clause
-      3 pashta_phrase
-        yetiv 
-      3 zaqef_phrase
-        munach munach zaqef 
-    2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 silluq_phrase
-        mereka silluq 
+0 illegal_mark
+  ERROR 
 Exodus 36:3
 0 silluq_clause
   1 atnach_clause

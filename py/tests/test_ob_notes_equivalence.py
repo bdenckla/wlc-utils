@@ -6,8 +6,11 @@ equivalent (as evaluated data) to the baseline captured just before the split, a
 every consumer of the data still imports.
 
 BASELINE_SHA256 is the SHA-256 of pprint.pformat(merged, sort_dicts=True, width=100) of
-{**tm_data, **ob_data} as of HEAD 306e15f (86 records across 24 books). If you
-intentionally edit the notes, recompute it with `_canonical_sha256(...)` below.
+the aggregated ob_notes dataset. The original split baseline was 86 records across 24
+books (HEAD 306e15f); it now stands at 91 after the stranded-`82` work added zarqa-whim
+notes for the 5 newly-flagged refs (gn 17:20, gn 47:29, ex 36:2, lv 20:2, dt 14:24) and
+gn moved into its own ob_notes_gn module. If you intentionally edit the notes, recompute
+it with `_canonical_sha256(...)` below.
 """
 
 from __future__ import annotations
@@ -18,7 +21,7 @@ import pprint
 
 from accgram import ob_notes
 
-BASELINE_SHA256 = "e32707fd7446cc58c6718a58fbde21d012c833f3248a5aad8649eecfe111ace8"
+BASELINE_SHA256 = "7297ee01dce00745d461a042d04fb419654a4cff22c9d9010097b70b586a2e4d"
 
 # Every module that consumes the structured-text dataset; importing them all is a smoke
 # test that the aggregator wiring is intact.
@@ -38,7 +41,7 @@ def _canonical_sha256(data: dict) -> str:
 
 def test_ob_notes_matches_baseline() -> None:
     data = ob_notes.get_structured_text()
-    assert len(data) == 86
+    assert len(data) == 91
     assert _canonical_sha256(data) == BASELINE_SHA256
 
 

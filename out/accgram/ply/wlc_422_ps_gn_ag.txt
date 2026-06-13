@@ -8915,35 +8915,8 @@ Genesis 17:19
     2 silluq_phrase
       mereka silluq 
 Genesis 17:20
-0 silluq_clause
-  1 atnach_clause
-    2 segolta_phrase
-      segolta 
-    2 atnach_clause
-      3 tifcha_clause
-        4 revia_clause
-          5 legarmeh_phrase
-            legarmeh 
-          5 revia_phrase
-            munach revia 
-        4 tifcha_clause
-          5 tevir_phrase
-            mereka tevir 
-          5 tifcha_phrase
-            mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
-  1 silluq_clause
-    2 zaqef_clause
-      3 pashta_phrase
-        mahpak pashta 
-      3 zaqef_phrase
-        zaqef 
-    2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
-      3 silluq_phrase
-        mereka silluq 
+0 illegal_mark
+  ERROR 
 Genesis 17:21
 0 silluq_clause
   1 atnach_clause
@@ -32282,41 +32255,8 @@ Genesis 47:28
         4 silluq_phrase
           silluq 
 Genesis 47:29
-0 silluq_clause
-  1 atnach_clause
-    2 segolta_phrase
-      munach segolta 
-    2 atnach_clause
-      3 zaqef_clause
-        4 revia_clause
-          5 legarmeh_phrase
-            legarmeh 
-          5 revia_phrase
-            munach revia 
-        4 zaqef_clause
-          5 pashta_phrase
-            mahpak pashta 
-          5 zaqef_clause
-            6 pashta_phrase
-              azla mahpak pashta 
-            6 zaqef_phrase
-              zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          munach atnach 
-  1 silluq_clause
-    2 zaqef_clause
-      3 pashta_phrase
-        mahpak pashta 
-      3 zaqef_phrase
-        munach zaqef 
-    2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 silluq_phrase
-        silluq 
+0 illegal_mark
+  ERROR 
 Genesis 47:30
 0 silluq_clause
   1 atnach_clause

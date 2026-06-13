@@ -64,6 +64,11 @@ BY_REF: dict[str, dict[str, object]] = {
             ]
         ),
     },
+    "dt 14:24": {
+        "wlc_focus": "תוכ֘ל",
+        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-8",
+        **_ZARQA_WHIM,
+    },
     "dt 31:7": {
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-9",

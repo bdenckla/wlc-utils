@@ -10196,38 +10196,8 @@ Deuter 14:23
     2 silluq_phrase
       silluq 
 Deuter 14:24
-0 silluq_clause
-  1 atnach_clause
-    2 segolta_clause
-      3 revia_clause
-        4 geresh_phrase
-          azla geresh 
-        4 revia_phrase
-          revia 
-      3 segolta_phrase
-        munach munach segolta 
-    2 atnach_clause
-      3 zaqef_clause
-        4 pashta_phrase
-          mahpak pashta 
-        4 zaqef_phrase
-          zaqef 
-      3 atnach_clause
-        4 zaqef_clause
-          5 pashta_phrase
-            mahpak pashta 
-          5 zaqef_phrase
-            munach zaqef 
-        4 atnach_clause
-          5 tifcha_phrase
-            mereka tifcha 
-          5 atnach_phrase
-            atnach 
-  1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 silluq_phrase
-      mereka silluq 
+0 illegal_mark
+  ERROR 
 Deuter 14:25
 0 silluq_clause
   1 atnach_clause
@@ -20429,41 +20399,8 @@ Deuter 31:6
       3 silluq_phrase
         mereka silluq 
 Deuter 31:7
-0 silluq_clause
-  1 atnach_clause
-    2 zaqef_clause
-      3 revia_clause
-        4 geresh_phrase
-          azla geresh 
-        4 revia_phrase
-          revia 
-      3 zaqef_clause
-        4 revia_clause
-          5 geresh_phrase
-            azla geresh 
-          5 revia_phrase
-            ERROR 
-        4 zaqef_clause
-          5 pashta_phrase
-            pashta 
-          5 zaqef_phrase
-            munach zaqef 
-    2 atnach_clause
-      3 zaqef_phrase
-        zaqefgadol 
-      3 atnach_clause
-        4 tifcha_clause
-          5 tevir_phrase
-            azla darga tevir 
-          5 tifcha_phrase
-            tifcha 
-        4 atnach_phrase
-          munach atnach 
-  1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
-    2 silluq_phrase
-      mereka silluq 
+0 illegal_mark
+  ERROR 
 Deuter 31:8
 0 silluq_clause
   1 atnach_clause

@@ -15704,26 +15704,8 @@ Numbers 20:18
     2 silluq_phrase
       mereka silluq 
 Numbers 20:19
-0 silluq_clause
-  1 atnach_clause
-    2 segolta_phrase
-      ERROR 
-    2 atnach_clause
-      3 zaqef_clause
-        4 pashta_phrase
-          mahpak pashta 
-        4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          atnach 
-  1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 silluq_phrase
-      mereka silluq 
+0 illegal_mark
+  ERROR 
 Numbers 20:20
 0 silluq_clause
   1 atnach_clause

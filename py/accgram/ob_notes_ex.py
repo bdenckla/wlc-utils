@@ -55,6 +55,11 @@ BY_REF: dict[str, dict[str, object]] = {
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-3",
         **_ZARQA_WHIM,
     },
+    "ex 36:2": {
+        "wlc_focus": "בצלא֘ל",
+        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-4",
+        **_ZARQA_WHIM,
+    },
     "ex 38:12": {
         "wlc_focus": "עמודיה֥ם",
         "st-summary": "The LC has something like a merkha where a munaḥ is expected.",
