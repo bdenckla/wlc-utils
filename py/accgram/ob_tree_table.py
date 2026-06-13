@@ -175,7 +175,12 @@ def _render_row(
         attrs: dict[str, str] = {}
         if cell.colspan > 1:
             attrs["colspan"] = str(cell.colspan)
-        if cell.title_text is not None:
+        # The title is the un-abbreviated label, shown on hover so an abbreviated
+        # cell (e.g. "slq") can be expanded ("silluq").  When the cell text was not
+        # abbreviated (e.g. "ERROR", or the illegal_mark descriptor), the title
+        # would just duplicate the visible text -- omit it rather than add a no-op
+        # hover.
+        if cell.title_text is not None and cell.title_text != cell.text:
             attrs["title"] = cell.title_text
         if cell.class_name is not None:
             attrs["class"] = cell.class_name

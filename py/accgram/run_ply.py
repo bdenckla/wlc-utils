@@ -26,12 +26,20 @@ from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.ply_scanner import scan_book
 from accgram.ply_tree import add_leaves, print_tree
 
-# Uniform tree emitted for any prose verse carrying a stranded stress-helper (an
-# alphabet error caught by the lexical layer, not the grammar).  Identical across
-# all such verses by design -- the point is to treat every stranded `82` the same,
-# independent of whatever the rest of the accent sequence happens to parse into.
-# Contains the `ERROR` leaf so accgram.oddballs classifies the verse as an oddball.
-_ILLEGAL_MARK_TREE = add_leaves("illegal_mark", "ERROR")
+
+def _illegal_mark_tree(marks: list[lexical_validation.StrandedMark]):
+    """Degenerate ERROR tree for a verse carrying stranded stress-helper(s).
+
+    The branch label names each offending code and the atom it was found in (e.g.
+    ``illegal_mark 82 in YI&:RF)"82L]s``), so the oddball reports pinpoint the
+    word; the single terminal leaf is the bare ``ERROR`` token that
+    accgram.oddballs keys on.  The *structure* is uniform across all such verses
+    (one branch + one ERROR leaf) -- only the descriptive label varies -- so the
+    error is attributed to the stranded mark itself rather than to whatever the
+    rest of the accent sequence would have parsed into.
+    """
+    detail = "; ".join(f"{mark.code} in {mark.atom}" for mark in marks)
+    return add_leaves(f"illegal_mark {detail}", "ERROR")
 
 
 @dataclass(frozen=True)
@@ -51,10 +59,11 @@ def render_book(text: str, parser, bb: str) -> tuple[str, BookRun, str]:
         # stress-helper (e.g. a `82` with no fused `02`) is an alphabet error.  Flag
         # it uniformly with a fixed ERROR tree and skip the grammar entirely -- the
         # context need not be parsed, and all such verses must read identically.
-        if lexical_validation.stranded_stress_helpers(verse.body):
+        stranded = lexical_validation.stranded_stress_helpers(verse.body)
+        if stranded:
             parsed += 1
             out_lines.append(verse.reference + "\n")
-            out_lines.append(print_tree(_ILLEGAL_MARK_TREE, 0))
+            out_lines.append(print_tree(_illegal_mark_tree(stranded), 0))
             continue
         tree = parse_tokens(parser, verse.tokens)
         if tree is None:

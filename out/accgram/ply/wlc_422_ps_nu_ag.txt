@@ -15704,7 +15704,7 @@ Numbers 20:18
     2 silluq_phrase
       mereka silluq 
 Numbers 20:19
-0 illegal_mark
+0 illegal_mark 82 in YI&:RF)"82L]s
   ERROR 
 Numbers 20:20
 0 silluq_clause
