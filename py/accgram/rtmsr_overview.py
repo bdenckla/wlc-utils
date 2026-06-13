@@ -11,7 +11,6 @@ from accgram import rtms_ref
 from accgram import rtms_report
 from accgram import rtmsr_bracket_notes
 from accgram import rtmsr_intro
-from accgram import rtmsr_open_issues
 from accgram import rtmsr_subsets
 from mb_cmn import provenance
 from py_html import wlc_utils_html
@@ -53,7 +52,7 @@ def write_goerwitz_combined_html_report(
         )
 
     entries = _build_entries(enriched_oddball_rows, error_trees_by_ref)
-    body_contents = _build_body_contents(entries, base_dir)
+    body_contents = _build_body_contents(entries)
 
     wlc_utils_html.write_html_to_file(
         body_contents=body_contents,
@@ -98,9 +97,7 @@ def _category(row: dict[str, object], structured_text: object) -> str:
     )
 
 
-def _build_body_contents(
-    entries: list[_Entry], base_dir: Path | None
-) -> tuple[object, ...]:
+def _build_body_contents(entries: list[_Entry]) -> tuple[object, ...]:
     counts = _counts(entries)
     all_rows = [entry.row for entry in entries]
 
@@ -108,7 +105,6 @@ def _build_body_contents(
         wlc_utils_html.heading_level_1(_REPORT_HEADING),
         *rtmsr_intro.build_intro_contents(counts["total"]),
         *rtmsr_intro.checker_article_citation_contents(),
-        *rtmsr_open_issues.build_open_issues_section(base_dir),
         *rtmsr_bracket_notes.build_wlc_bracket_notes_section(all_rows),
         _build_filter_controls(counts),
     ]
