@@ -13,6 +13,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "אדנ֨י",
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "img": "LC-174A-col-1-line-7-2S-11v11.png",
+        "pending_uxlc_change": "https://tanach.us/Changes/2026.10.19%20-%20Changes/2026.10.19%20-%20Changes.xml?2026.04.10-4",
     },
     "2s 23:9": {
         "wlc_focus": "בפלשתים",
