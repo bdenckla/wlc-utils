@@ -48,6 +48,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS transcribes a faded, ambiguous mark as merkha rather than munaḥ.",
         "img": "LC-144A-col-1-line-17-Ju-11v24.png",
         "edited img": "LC-144A-col-1-line-17-Ju-11v24-edited.png",
+        "pending_uxlc_change": "https://tanach.us/Changes/2026.10.19%20-%20Changes/2026.10.19%20-%20Changes.xml?2026.04.10-7",
         "comment": (
             [
                 "Ignoring the grammar of accents, the faded remains of the mark in question are slightly more plausibly"
