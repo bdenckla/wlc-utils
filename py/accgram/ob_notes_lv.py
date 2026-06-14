@@ -41,10 +41,15 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "lv 25:20": {
         "wlc_focus": "נאכ֤֖ל",
-        "st-summary": "The LC has a mahapakh in addition to the expected tipeḥa.",
+        "st-summary": "The LC has something like a mahapakh in addition to the expected tipeḥa.",
         # The UXLC change here only changes note 'n' to note 'c' (no text
         # change), so we link the note itself rather than the change.
         "uxlc_note_page": "https://tanach.us/Notes/Leviticus/Leviticus.25.20.4-c.html",
+        "comment": (
+            "The mark in question is not necessarily a mahapakh."
+            " In particular, it may be part of a broken masorah circle from the line below."
+            " See the UXLC note page."
+        ),
     },
     "lv 26:28": {
         "wlc_focus": "חטאתיכם׃",
