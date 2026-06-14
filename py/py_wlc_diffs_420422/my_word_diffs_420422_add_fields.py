@@ -62,7 +62,7 @@ def _diff_detail(record):
 
 def _read_in_all_ucps():
     """Read in lci_recs.json, raw"""
-    path = "out/UXLC-misc/all_changes.json"
+    path = "in/UXLC-misc/all_changes.json"
     with open(path, encoding="utf-8") as in_fp:
         raw_ucps = json.load(in_fp)
     by_rai = {_release_and_id(raw_ucp): raw_ucp for raw_ucp in raw_ucps}

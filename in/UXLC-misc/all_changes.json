@@ -43436,5 +43436,284 @@
     "changeuni_gen": null,
     "changeuni_erbs": false,
     "bhla": false
+  },
+  {
+    "release": "2026.10.19",
+    "changeset": "2026.04.10",
+    "n": 1,
+    "citation": "Josh 10:24.20",
+    "description": "Remove sheva from vav; reduce doubled dagesh on vav to a single dagesh.",
+    "lc": "Folio_127A 3:23",
+    "reftext": "הֶהָלְכ֣וְּּ",
+    "refuni": "he segol he qamats lamed sheva kaf munah vav dagesh dagesh sheva",
+    "changetext": "הֶהָלְכ֣וּ",
+    "changeuni": "he segol he qamats lamed sheva kaf munah vav dagesh",
+    "notes": [
+      "This a correction to the correction file of 2024.10.19 - Changes.xml file, change date 2024.07.08 - 3 that added the extra dagesh and sheva erroneously.",
+      "BHL has retains the final aleph and has no qere/ketive pair for this word. BHLA has no entry for this verse."
+    ],
+    "transnotes": null,
+    "status": "Pending",
+    "type": "vowel",
+    "authors": [
+      "Ben Denckla"
+    ],
+    "lc_gen": null,
+    "aBHL": null,
+    "aBHLA": null,
+    "D2T": null,
+    "T2D": null,
+    "refuni_gen": null,
+    "changeuni_gen": null,
+    "changeuni_erbs": false,
+    "bhla": false
+  },
+  {
+    "release": "2026.10.19",
+    "changeset": "2026.04.10",
+    "n": 2,
+    "citation": "Jer 51:9.2",
+    "description": "Change munah to mahapakh under the pe.",
+    "lc": "Folio_274B 2:23",
+    "reftext": "רִפִּ֣ינוּ",
+    "refuni": "resh hiriq pe dagesh hiriq munah yod nun vav dagesh",
+    "changetext": "רִפִּ֤ינוּ",
+    "changeuni": "resh hiriq pe dagesh hiriq mahapakh yod nun vav dagesh",
+    "notes": [
+      "In the body text the last letter may appear to be a single ayin; however, the last two two letters of this word are nun, vav, as seen from the qere letters in the margin. The mahapakh is very clear.",
+      "BHL has a mahapakh under the pe. BHLA has no entry for this verse."
+    ],
+    "transnotes": null,
+    "status": "Pending",
+    "type": "accent",
+    "authors": [
+      "Ben Denckla"
+    ],
+    "lc_gen": null,
+    "aBHL": true,
+    "aBHLA": null,
+    "D2T": null,
+    "T2D": null,
+    "refuni_gen": null,
+    "changeuni_gen": null,
+    "changeuni_erbs": false,
+    "bhla": false
+  },
+  {
+    "release": "2026.10.19",
+    "changeset": "2026.04.10",
+    "n": 3,
+    "citation": "Jer 49:19.11",
+    "description": "Change qadma over tsadi to pashta.",
+    "lc": "Folio_273A 2:23",
+    "reftext": "אֲרִיצֶ֨נּוּ֙",
+    "refuni": "alef hataf-patah resh hiriq yod tsadi segol qadma nun dagesh vav dagesh pashta",
+    "changetext": "אֲרִיצֶ֙נּוּ֙",
+    "changeuni": "alef hataf-patah resh hiriq yod tsadi segol pashta nun dagesh vav dagesh pashta",
+    "notes": [
+      "A pashta is a post-fix accent. When two post-fix accents occur in the same word the first post-fix accent is called an \"accent helper\" because it shows where the accent is actually to be placed in the word. The shift from a qadma accent to a pasha accent requires a leftward shift of the symbol by one half of the letter's width. It's NOT perceptible with some fonts.",
+      "BHL has a distinct pashta over the tsadi. BHLA has no entry for this verse."
+    ],
+    "transnotes": null,
+    "status": "Pending",
+    "type": "accent",
+    "authors": [
+      "Ben Denckla"
+    ],
+    "lc_gen": null,
+    "aBHL": true,
+    "aBHLA": null,
+    "D2T": null,
+    "T2D": null,
+    "refuni_gen": null,
+    "changeuni_gen": null,
+    "changeuni_erbs": false,
+    "bhla": false
+  },
+  {
+    "release": "2026.10.19",
+    "changeset": "2026.04.10",
+    "n": 4,
+    "citation": "2Sam 11:11.10",
+    "description": "Remove qadma from nun, place pashta on yod.",
+    "lc": "Folio_174A 1:7",
+    "reftext": "וַאדֹנִ֨י",
+    "refuni": "vav patah alef dalet holam nun hiriq qadma yod",
+    "changetext": "וַאדֹנִי֙",
+    "changeuni": "vav patah alef dalet holam nun hiriq yod pashta",
+    "notes": [
+      "The accent is clearly on the yod, not the nun. The mark is post-positive and should be a pashta rather than a qadma.",
+      "BHL has a qadma on the nun. BHLA has no entry for this verse."
+    ],
+    "transnotes": null,
+    "status": "Pending",
+    "type": "accent",
+    "authors": [
+      "Ben Denckla"
+    ],
+    "lc_gen": null,
+    "aBHL": null,
+    "aBHLA": null,
+    "D2T": null,
+    "T2D": null,
+    "refuni_gen": null,
+    "changeuni_gen": null,
+    "changeuni_erbs": false,
+    "bhla": false
+  },
+  {
+    "release": "2026.10.19",
+    "changeset": "2026.04.10",
+    "n": 5,
+    "citation": "Judg 21:16.1",
+    "description": "Remove qadma on resh; place a pashta on the final vav.",
+    "lc": "Folio_150A 1:22",
+    "reftext": "וַיֹּֽאמְר֨וּ",
+    "refuni": "vav patah yod dagesh holam meteg alef mem sheva resh qadma vav dagesh",
+    "changetext": "וַיֹּֽאמְרוּ֙",
+    "changeuni": "vav patah yod dagesh holam meteg alef mem sheva resh vav dagesh pashta",
+    "notes": [
+      "The accent is on the vav and must be a pashta. Do not mistake the tipeha of Judges 21:15.7 on the preceding line as being a pashta/qadma. This change proposal was suggested by results from a run of Richard Goerwitz's accent grammar checker on a recent (2020) Groves Center text. For more information, see Ben Denckla's \"Goerwitz Run on WLC\" at https://bdenckla.github.io/wlc-utils/accgram/goerwitz.html.",
+      "BHL has a qadma over the resh. BHLA has no entry for this verse."
+    ],
+    "transnotes": null,
+    "status": "Pending",
+    "type": "accent",
+    "authors": [
+      "Ben Denckla"
+    ],
+    "lc_gen": null,
+    "aBHL": null,
+    "aBHLA": null,
+    "D2T": null,
+    "T2D": null,
+    "refuni_gen": null,
+    "changeuni_gen": null,
+    "changeuni_erbs": false,
+    "bhla": false
+  },
+  {
+    "release": "2026.10.19",
+    "changeset": "2026.04.10",
+    "n": 6,
+    "citation": "2Chr 24:27.3",
+    "description": "Remove gershayim over the resh.",
+    "lc": "Folio_357B 2:6",
+    "reftext": "יִ֧רֶ֞ב",
+    "refuni": "yod hiriq darga resh segol gereshayim bet",
+    "changetext": "יִ֧רֶב",
+    "changeuni": "yod hiriq darga resh segol bet",
+    "notes": [
+      "The photo facsimile shows no accent over the resh.",
+      "BHL has no gershayim in this word. BHLA has no entry for this verse. This change proposal was suggested by results from a run of Richard Goerwitz's accent grammar checker on a recent (2020) Groves Center text. For more information, see Ben Denckla's \"Goerwitz Run on WLC\" at https://bdenckla.github.io/wlc-utils/accgram/goerwitz.html."
+    ],
+    "transnotes": null,
+    "status": "Pending",
+    "type": "accent",
+    "authors": [
+      "Ben Denckla"
+    ],
+    "lc_gen": null,
+    "aBHL": true,
+    "aBHLA": null,
+    "D2T": null,
+    "T2D": null,
+    "refuni_gen": null,
+    "changeuni_gen": null,
+    "changeuni_erbs": false,
+    "bhla": false
+  },
+  {
+    "release": "2026.10.19",
+    "changeset": "2026.04.10",
+    "n": 7,
+    "citation": "Judg 11:24.7",
+    "description": "Markings under the tav are indistinct. Add note 't'.",
+    "lc": "Folio_144A 1:17",
+    "reftext": "אוֹת֥וֹ",
+    "refuni": "alef vav holam tav merkha vav holam",
+    "changetext": "אוֹת֥וֹ",
+    "changeuni": "alef vav holam tav merkha vav holam",
+    "notes": [
+      "The text is of poor quality here. The darker northeast-to-southwest could be a merkha; however, it is a geresh from the following line, Judg 11:25.3. With imagination, an extremely slight southeast-to-northwest line emerges from the upper portion of the putative merkha; this accent could be a munah. This change proposal was suggested by results from a run of Richard Goerwitz's accent grammar checker on a recent (2020) Groves Center text. For more information, see Ben Denckla's \"Goerwitz Run on WLC\" at https://bdenckla.github.io/wlc-utils/accgram/goerwitz.html.",
+      "BHL has merkha under the tav. BHLA has no entry for this verse."
+    ],
+    "transnotes": null,
+    "status": "Pending",
+    "type": "NoAction",
+    "authors": [
+      "Ben Denckla"
+    ],
+    "lc_gen": null,
+    "aBHL": true,
+    "aBHLA": null,
+    "D2T": null,
+    "T2D": null,
+    "refuni_gen": null,
+    "changeuni_gen": null,
+    "changeuni_erbs": false,
+    "bhla": false
+  },
+  {
+    "release": "2026.10.19",
+    "changeset": "2026.04.10",
+    "n": 8,
+    "citation": "Jer 10:3.11",
+    "description": "Change merkha to meteg under the dalet. Add note 'm'.",
+    "lc": "Folio_251A 3:11",
+    "reftext": "יְדֵ֥י־",
+    "refuni": "yod sheva dalet tsere merkha yod maqaf",
+    "changetext": "יְדֵֽי־",
+    "changeuni": "yod sheva dalet tsere meteg yod maqaf",
+    "notes": [
+      "The line beneath the dalet lacks the northeast-to-southwest inclination of a merkha. This change proposal was suggested by results from a run of Richard Goerwitz's accent grammar checker on a recent (2020) Groves Center text. For more information, see Ben Denckla's \"Goerwitz Run on WLC\" at https://bdenckla.github.io/wlc-utils/accgram/goerwitz.html.",
+      "BHL has a meteg under the dalet. BHLA has no entry for this verse."
+    ],
+    "transnotes": null,
+    "status": "Pending",
+    "type": "accent",
+    "authors": [
+      "Ben Denckla"
+    ],
+    "lc_gen": null,
+    "aBHL": true,
+    "aBHLA": null,
+    "D2T": null,
+    "T2D": null,
+    "refuni_gen": null,
+    "changeuni_gen": null,
+    "changeuni_erbs": false,
+    "bhla": false
+  },
+  {
+    "release": "2026.10.19",
+    "changeset": "2026.04.10",
+    "n": 9,
+    "citation": "Jer 46:4.6",
+    "description": "Change merkha under kaf to meteg.",
+    "lc": "Folio_271B 1:5",
+    "reftext": "בְּכ֥וֹבָעִ֑ים",
+    "refuni": "bet dagesh sheva kaf merkha vav holam bet qamats ayin hiriq etnachta yod final-mem",
+    "changetext": "בְּכֽוֹבָעִ֑ים",
+    "changeuni": "bet dagesh sheva kaf meteg vav holam bet qamats ayin hiriq etnachta yod final-mem",
+    "notes": [
+      "The line under the kaf lacks the northeast-to-southwest inclination of a merkha. Its shortness also suggests a meteg. This change proposal was suggested by results from a run of Richard Goerwitz's accent grammar checker on a recent (2020) Groves Center text. For more information, see Ben Denckla's \"Goerwitz Run on WLC\" at https://bdenckla.github.io/wlc-utils/accgram/goerwitz.html.",
+      "BHL has a meteg under the kaf. BHLA has no entry for this verse."
+    ],
+    "transnotes": null,
+    "status": "Pending",
+    "type": "accent",
+    "authors": [
+      "Ben Denckla"
+    ],
+    "lc_gen": null,
+    "aBHL": null,
+    "aBHLA": null,
+    "D2T": null,
+    "T2D": null,
+    "refuni_gen": null,
+    "changeuni_gen": null,
+    "changeuni_erbs": false,
+    "bhla": false
   }
 ]

@@ -42,7 +42,7 @@ def default_mam_simple_dir(repo_root: Path) -> Path:
 
 
 def default_all_changes_path(repo_root: Path) -> Path:
-    return repo_root.parent / "UXLC-utils" / "out" / "UXLC-misc" / "all_changes.json"
+    return repo_root / "in" / "UXLC-misc" / "all_changes.json"
 
 
 def default_oddballs_out_path(repo_root: Path) -> Path:
@@ -78,7 +78,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--all-changes",
         type=Path,
         default=default_all_changes_path(repo_root),
-        help="Path to UXLC-utils out/UXLC-misc/all_changes.json for sanity checks.",
+        help="Path to in/UXLC-misc/all_changes.json for sanity checks.",
     )
     parser.add_argument(
         "--oddballs-in",

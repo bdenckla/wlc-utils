@@ -17,6 +17,13 @@ _DEST_PYMISC = _REPO / "py" / "mb_misc"
 _SOURCE_MBDIFF = _SOURCE_REPO / "py" / "mb_diff_mpu"
 _DEST_MBDIFF = _REPO / "py" / "mb_diff_mpu"
 
+# UXLC data folders are vendored from the UXLC-utils sibling repo, not MAM-basics.
+_UXLC_SOURCE_REPO = _REPO.parent / "UXLC-utils"
+_SOURCE_UXLC39 = _UXLC_SOURCE_REPO / "in" / "UXLC-39"
+_DEST_UXLC39 = _REPO / "in" / "UXLC-39"
+_SOURCE_UXLCMISC = _UXLC_SOURCE_REPO / "out" / "UXLC-misc"
+_DEST_UXLCMISC = _REPO / "in" / "UXLC-misc"
+
 
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -29,6 +36,11 @@ def main() -> None:
     _require_dir(_DEST_PYMISC)
     _require_dir(_SOURCE_MBDIFF)
     _require_dir(_DEST_MBDIFF)
+    _require_dir(_UXLC_SOURCE_REPO)
+    _require_dir(_SOURCE_UXLC39)
+    _require_dir(_DEST_UXLC39)
+    _require_dir(_SOURCE_UXLCMISC)
+    _require_dir(_DEST_UXLCMISC)
 
     synced_pycmm = vendoring_sync.copy_by_intersection(
         _SOURCE_PYCMN,
@@ -48,8 +60,21 @@ def main() -> None:
         include_suffixes=(".py",),
         strict=True,
     )
+    synced_uxlc39 = vendoring_sync.copy_by_intersection(
+        _SOURCE_UXLC39,
+        _DEST_UXLC39,
+        include_suffixes=(".xml",),
+        strict=True,
+    )
+    synced_uxlcmisc = vendoring_sync.copy_by_intersection(
+        _SOURCE_UXLCMISC,
+        _DEST_UXLCMISC,
+        include_suffixes=(".json",),
+        strict=True,
+    )
 
     commit, tag = vendoring_sync.get_git_info(_SOURCE_REPO)
+    uxlc_commit, uxlc_tag = vendoring_sync.get_git_info(_UXLC_SOURCE_REPO)
     date_str = datetime.date.today().isoformat()
     vendoring_sync.write_provenance(
         _DEST_PYCMN,
@@ -75,13 +100,34 @@ def main() -> None:
         tag=tag,
         date_str=date_str,
     )
+    vendoring_sync.write_provenance(
+        _DEST_UXLC39,
+        source_rel="UXLC-utils/in/UXLC-39",
+        copied_files=synced_uxlc39,
+        commit=uxlc_commit,
+        tag=uxlc_tag,
+        date_str=date_str,
+    )
+    vendoring_sync.write_provenance(
+        _DEST_UXLCMISC,
+        source_rel="UXLC-utils/out/UXLC-misc",
+        copied_files=synced_uxlcmisc,
+        commit=uxlc_commit,
+        tag=uxlc_tag,
+        date_str=date_str,
+    )
 
     print(f"{_DEST_PYCMN.relative_to(_REPO)}: copied {len(synced_pycmm)} files")
     print(f"{_DEST_PYMISC.relative_to(_REPO)}: copied {len(synced_pymisc)} files")
     print(f"{_DEST_MBDIFF.relative_to(_REPO)}: copied {len(synced_mbdiff)} files")
+    print(f"{_DEST_UXLC39.relative_to(_REPO)}: copied {len(synced_uxlc39)} files")
+    print(f"{_DEST_UXLCMISC.relative_to(_REPO)}: copied {len(synced_uxlcmisc)} files")
     print(f"MAM-basics commit: {commit}")
     if tag:
         print(f"MAM-basics tag:    {tag}")
+    print(f"UXLC-utils commit: {uxlc_commit}")
+    if uxlc_tag:
+        print(f"UXLC-utils tag:    {uxlc_tag}")
 
 
 def _require_dir(path: Path) -> None:
