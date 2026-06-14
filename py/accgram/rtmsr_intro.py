@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from accgram import rtmsr_bracket_notes
 from py_html import wlc_utils_html
 
 _GC_AUTHOR = "Goerwitz, Richard"
@@ -52,6 +53,15 @@ def build_intro_contents(
         " Each toggle is three-state: has, doesn’t have, or don’t care"
         " (the default)."
     )
+    bracket_notes_text = (
+        "We define the bracket-note codes in the ",
+        wlc_utils_html.anchor(
+            rtmsr_bracket_notes.WLC_BRACKET_NOTES_HEADING,
+            {"href": f"#{rtmsr_bracket_notes.WLC_BRACKET_NOTES_ANCHOR_ID}"},
+        ),
+        " section at the end of this page, but you can also hover over"
+        " their use in any verse to see these definitions.",
+    )
 
     return (
         wlc_utils_html.heading_level_2("Introduction"),
@@ -60,6 +70,7 @@ def build_intro_contents(
         wlc_utils_html.para(msp_text),
         wlc_utils_html.unordered_list(msp_categories),
         wlc_utils_html.para(and_text),
+        wlc_utils_html.para(bracket_notes_text),
     )
 
 

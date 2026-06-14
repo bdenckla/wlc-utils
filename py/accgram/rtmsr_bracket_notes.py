@@ -7,11 +7,17 @@ from cmn.wlc_bracket_note_definitions import bracket_note_definition
 from py_html import wlc_utils_html
 
 _BRACKET_NOTE_CODE_RE = re.compile(r"\][0-9A-Za-z]")
+WLC_BRACKET_NOTES_ANCHOR_ID = "wlc-bracket-notes"
+WLC_BRACKET_NOTES_HEADING = "WLC Bracket Notes"
 _WLC_BRACKET_NOTES_SECTION_INTRO = (
     "The following bracket-note codes are used on this page."
-    " We define them in the bulleted list immediately below,"
-    " but you can also hover over their use further below to see these definitions."
 )
+
+
+def _bracket_notes_heading() -> object:
+    return wlc_utils_html.heading_level_2(
+        WLC_BRACKET_NOTES_HEADING, {"id": WLC_BRACKET_NOTES_ANCHOR_ID}
+    )
 
 
 def build_wlc_bracket_notes_section(
@@ -20,7 +26,7 @@ def build_wlc_bracket_notes_section(
     codes = sorted(_collect_page_bracket_note_codes(enriched_rows))
     if not codes:
         return (
-            wlc_utils_html.heading_level_2("WLC Bracket Notes"),
+            _bracket_notes_heading(),
             wlc_utils_html.para("No bracket-note tokens detected on this page."),
         )
 
@@ -35,7 +41,7 @@ def build_wlc_bracket_notes_section(
         )
 
     return (
-        wlc_utils_html.heading_level_2("WLC Bracket Notes"),
+        _bracket_notes_heading(),
         wlc_utils_html.para(_WLC_BRACKET_NOTES_SECTION_INTRO),
         wlc_utils_html.unordered_list(tuple(list_items)),
     )

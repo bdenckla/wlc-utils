@@ -135,12 +135,13 @@ def _build_body_contents(entries: list[_Entry]) -> tuple[object, ...]:
         wlc_utils_html.heading_level_1(_REPORT_HEADING),
         *rtmsr_intro.build_intro_contents(counts["total"]),
         *rtmsr_intro.checker_article_citation_contents(),
-        *rtmsr_bracket_notes.build_wlc_bracket_notes_section(all_rows),
         _build_filter_controls(counts),
     ]
 
     for index, entry in enumerate(entries):
         sections.append(_render_verse_section(entry, is_first=index == 0))
+
+    sections.extend(rtmsr_bracket_notes.build_wlc_bracket_notes_section(all_rows))
 
     wrapper = wlc_utils_html.div(tuple(sections), {"class": _WIDTH_CLASS})
     script = wlc_utils_html.htel_mk("script", {"src": _FILTER_SCRIPT_NAME})
