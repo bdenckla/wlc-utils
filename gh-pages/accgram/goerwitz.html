@@ -16,6 +16,7 @@ Introduction</h2>
 <p>This page lists the 91 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filter below to narrow the list.</p>
 <p>These 91 verses are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree. Potential causes include WLC quirks, BHS quirks, LC quirks, and checker quirks.</p>
 <p>The filter sorts each verse into one of four categories: “missing sof pasuq,” “missing silluq,” where a sof pasuq is present but the verse-final word has no accent; “zarqa whim,” where WLC turns a scribal zarqa whim into an outright error; and “other” for everything else.</p>
+<p>Two further toggles narrow the list, each ANDed with the category: whether the verse has a UXLC change, and whether its table displays a WLC bracket-note. Each toggle is three-state: has, doesn’t have, or don’t care (the default).</p>
 <p>The Goerwitz accent grammar checker is described in the following article:</p>
 <p>Goerwitz, Richard. ‹A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts.› In Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg (pp. 111-122). (<a href="https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b">Studies in Ancient Oriental Civilization 60</a>). The Oriental Institute, Chicago, 2007. ISBN 978-1-885923-41-7.</p>
 <h2>
@@ -48,9 +49,17 @@ WLC Bracket Notes</h2>
 <legend>
 Category</legend>
 <label><input type="checkbox" class="gf-category" value="msp" checked="checked"> missing sof pasuq (20)</label><label><input type="checkbox" class="gf-category" value="msl" checked="checked"> missing silluq (8)</label><label><input type="checkbox" class="gf-category" value="zwhim" checked="checked"> zarqa whim (12)</label><label><input type="checkbox" class="gf-category" value="other" checked="checked"> other (51)</label></fieldset>
+<fieldset>
+<legend>
+UXLC change</legend>
+<label><input type="radio" class="gf-uchange" name="gf-uchange" value="yes"> has (<span class="gf-uchange-has-count">40</span>)</label><label><input type="radio" class="gf-uchange" name="gf-uchange" value="no"> doesn't have (<span class="gf-uchange-no-count">51</span>)</label><label><input type="radio" class="gf-uchange" name="gf-uchange" value="any" checked="checked"> don't care</label></fieldset>
+<fieldset>
+<legend>
+WLC bracket-note</legend>
+<label><input type="radio" class="gf-wnote" name="gf-wnote" value="yes"> has (<span class="gf-wnote-has-count">49</span>)</label><label><input type="radio" class="gf-wnote" name="gf-wnote" value="no"> doesn't have (<span class="gf-wnote-no-count">42</span>)</label><label><input type="radio" class="gf-wnote" name="gf-wnote" value="any" checked="checked"> don't care</label></fieldset>
 <p class="gf-count"></p>
 </div>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <h2 id="obgn17v20">
 gn 17:20</h2>
 <p><a href="#obgn17v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -69,7 +78,7 @@ gn 17:20</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msl">
+<section class="goerwitz-verse" data-category="msl" data-uchange="0" data-wnote="1">
 <hr><h2 id="obgn32v24">
 gn 32:24</h2>
 <p><a href="#obgn32v24" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
@@ -90,7 +99,7 @@ gn 32:24</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="obgn47v29">
 gn 47:29</h2>
 <p><a href="#obgn47v29" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -109,7 +118,7 @@ gn 47:29</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obex2v5">
 ex 2:5</h2>
 <p><a href="#obex2v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -131,7 +140,7 @@ ex 2:5</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="1">
 <hr><h2 id="obex4v10">
 ex 4:10</h2>
 <p><a href="#obex4v10" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC lacks an accent on this word.</p>
@@ -153,7 +162,7 @@ ex 4:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="obex6v6">
 ex 6:6</h2>
 <p><a href="#obex6v6" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -172,7 +181,7 @@ ex 6:6</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obex14v25">
 ex 14:25</h2>
 <p><a href="#obex14v25" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -195,7 +204,7 @@ ex 14:25</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obex14v29">
 ex 14:29</h2>
 <p><a href="#obex14v29" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -217,7 +226,7 @@ ex 14:29</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obex28v1">
 ex 28:1</h2>
 <p><a href="#obex28v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a revia as a zaqef_qatan.</p>
@@ -241,7 +250,7 @@ ex 28:1</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="obex30v12">
 ex 30:12</h2>
 <p><a href="#obex30v12" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -260,7 +269,7 @@ ex 30:12</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obex34v6">
 ex 34:6</h2>
 <p><a href="#obex34v6" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: In the place where one would expect a sof pasuq, the LC has a vertical bar somewhat like a paseq or legarmeh.</p>
@@ -286,7 +295,7 @@ ex 34:6</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="obex36v2">
 ex 36:2</h2>
 <p><a href="#obex36v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -305,7 +314,7 @@ ex 36:2</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obex38v12">
 ex 38:12</h2>
 <p><a href="#obex38v12" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has something like a merkha where a munaḥ is expected.</p>
@@ -330,7 +339,7 @@ ex 38:12</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="oblv4v2">
 lv 4:2</h2>
 <p><a href="#oblv4v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -349,7 +358,7 @@ lv 4:2</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="oblv18v17">
 lv 18:17</h2>
 <p><a href="#oblv18v17" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -372,7 +381,7 @@ lv 18:17</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="oblv19v1">
 lv 19:1</h2>
 <p><a href="#oblv19v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -392,7 +401,7 @@ lv 19:1</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="oblv20v2">
 lv 20:2</h2>
 <p><a href="#oblv20v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -411,7 +420,7 @@ lv 20:2</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="1">
 <hr><h2 id="oblv25v20">
 lv 25:20</h2>
 <p><a href="#oblv25v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has a mahapakh in addition to the expected tipeḥa.</p>
@@ -431,7 +440,7 @@ lv 25:20</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="oblv26v7">
 lv 26:7</h2>
 <p><a href="#oblv26v7" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -452,7 +461,7 @@ lv 26:7</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msl">
+<section class="goerwitz-verse" data-category="msl" data-uchange="0" data-wnote="1">
 <hr><h2 id="oblv26v28">
 lv 26:28</h2>
 <p><a href="#oblv26v28" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
@@ -472,7 +481,7 @@ lv 26:28</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obnu7v32">
 nu 7:32</h2>
 <p><a href="#obnu7v32" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -493,7 +502,7 @@ nu 7:32</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obnu7v40">
 nu 7:40</h2>
 <p><a href="#obnu7v40" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -513,7 +522,7 @@ nu 7:40</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obnu7v55">
 nu 7:55</h2>
 <p><a href="#obnu7v55" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -536,7 +545,7 @@ nu 7:55</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obnu7v68">
 nu 7:68</h2>
 <p><a href="#obnu7v68" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -557,7 +566,7 @@ nu 7:68</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="obnu20v19">
 nu 20:19</h2>
 <p><a href="#obnu20v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -582,7 +591,7 @@ nu 20:19</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="1">
 <hr><h2 id="obnu25v19">
 nu 25:19</h2>
 <p><a href="#obnu25v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS puts a verse number in the middle of a chanted verse.</p>
@@ -605,7 +614,7 @@ nu 25:19</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msl">
+<section class="goerwitz-verse" data-category="msl" data-uchange="0" data-wnote="1">
 <hr><h2 id="obnu27v9">
 nu 27:9</h2>
 <p><a href="#obnu27v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
@@ -624,7 +633,7 @@ nu 27:9</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obdt9v20">
 dt 9:20</h2>
 <p><a href="#obdt9v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -647,7 +656,7 @@ dt 9:20</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msl">
+<section class="goerwitz-verse" data-category="msl" data-uchange="0" data-wnote="1">
 <hr><h2 id="obdt10v15">
 dt 10:15</h2>
 <p><a href="#obdt10v15" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
@@ -668,7 +677,7 @@ dt 10:15</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msl">
+<section class="goerwitz-verse" data-category="msl" data-uchange="0" data-wnote="1">
 <hr><h2 id="obdt12v2">
 dt 12:2</h2>
 <p><a href="#obdt12v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
@@ -690,7 +699,7 @@ dt 12:2</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="1">
 <hr><h2 id="obdt13v15">
 dt 13:15</h2>
 <p><a href="#obdt13v15" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has darga where it should have tevir.</p>
@@ -715,7 +724,7 @@ dt 13:15</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="obdt14v24">
 dt 14:24</h2>
 <p><a href="#obdt14v24" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -734,7 +743,7 @@ dt 14:24</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msl">
+<section class="goerwitz-verse" data-category="msl" data-uchange="0" data-wnote="1">
 <hr><h2 id="obdt23v18">
 dt 23:18</h2>
 <p><a href="#obdt23v18" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
@@ -753,7 +762,7 @@ dt 23:18</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="1">
 <hr><h2 id="obdt24v10">
 dt 24:10</h2>
 <p><a href="#obdt24v10" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has only meteg where meteg-tipeḥa is expected.</p>
@@ -780,7 +789,7 @@ dt 24:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obdt25v9">
 dt 25:9</h2>
 <p><a href="#obdt25v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -803,7 +812,7 @@ dt 25:9</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="obdt31v7">
 dt 31:7</h2>
 <p><a href="#obdt31v7" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -822,7 +831,7 @@ dt 31:7</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="objs4v8">
 js 4:8</h2>
 <p><a href="#objs4v8" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -841,7 +850,7 @@ js 4:8</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="zwhim">
+<section class="goerwitz-verse" data-category="zwhim" data-uchange="1" data-wnote="1">
 <hr><h2 id="objs10v30">
 js 10:30</h2>
 <p><a href="#objs10v30" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -860,7 +869,7 @@ js 10:30</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="objs15v47">
 js 15:47</h2>
 <p><a href="#objs15v47" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has merkha where tevir is expected.</p>
@@ -885,7 +894,7 @@ js 15:47</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obju1v2">
 ju 1:2</h2>
 <p><a href="#obju1v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has munaḥ where a merkha is expected.</p>
@@ -909,7 +918,7 @@ ju 1:2</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obju11v24">
 ju 11:24</h2>
 <p><a href="#obju11v24" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a faded, ambiguous mark as merkha rather than munaḥ.</p>
@@ -943,7 +952,7 @@ ju 11:24</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="1">
 <hr><h2 id="obju13v18">
 ju 13:18</h2>
 <p><a href="#obju13v18" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHQ transcribes a silluq as a tevir due to a speck.</p>
@@ -966,7 +975,7 @@ ju 13:18</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obju21v16">
 ju 21:16</h2>
 <p><a href="#obju21v16" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a syllable as having qadma rather than pashta.</p>
@@ -990,7 +999,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="ob1s6v19">
 1s 6:19</h2>
 <p><a href="#ob1s6v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -1013,7 +1022,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob2s6v20">
 2s 6:20</h2>
 <p><a href="#ob2s6v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a syllable as having qadma rather than pashta.</p>
@@ -1037,7 +1046,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="ob2s11v11">
 2s 11:11</h2>
 <p><a href="#ob2s11v11" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a syllable as having qadma rather than pashta.</p>
@@ -1064,7 +1073,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob2s23v9">
 2s 23:9</h2>
 <p><a href="#ob2s23v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS does not transcribe a pashta, leaving the word without accent.</p>
@@ -1086,7 +1095,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob1k6v2">
 1k 6:2</h2>
 <p><a href="#ob1k6v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a munaḥ as a mahapakh.</p>
@@ -1110,7 +1119,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob1k6v3">
 1k 6:3</h2>
 <p><a href="#ob1k6v3" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a mahapakh as a munaḥ.</p>
@@ -1132,7 +1141,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob1k8v11">
 1k 8:11</h2>
 <p><a href="#ob1k8v11" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a munaḥ as a merkha.</p>
@@ -1153,7 +1162,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob1k16v33">
 1k 16:33</h2>
 <p><a href="#ob1k16v33" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS’s qadma matches neither the LC nor the consensus.</p>
@@ -1177,7 +1186,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="1">
 <hr><h2 id="ob1k19v11">
 1k 19:11</h2>
 <p><a href="#ob1k19v11" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC is missing a pashta.</p>
@@ -1206,7 +1215,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="ob1k20v25">
 1k 20:25</h2>
 <p><a href="#ob1k20v25" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker may prefer merkha to LC’s munaḥ. Or it may not like either.</p>
@@ -1237,7 +1246,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob1k20v29">
 1k 20:29</h2>
 <p><a href="#ob1k20v29" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a meteg as a merkha and ignores a maqaf.</p>
@@ -1261,7 +1270,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob2k23v36">
 2k 23:36</h2>
 <p><a href="#ob2k23v36" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a syllable as having qadma rather than pashta.</p>
@@ -1284,7 +1293,7 @@ ju 21:16</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msl">
+<section class="goerwitz-verse" data-category="msl" data-uchange="0" data-wnote="1">
 <hr><h2 id="obis13v7">
 is 13:7</h2>
 <p><a href="#obis13v7" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
@@ -1303,7 +1312,7 @@ is 13:7</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obis36v2">
 is 36:2</h2>
 <p><a href="#obis36v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The checker does not like munaḥ serving munaḥ legarmeh.</p>
@@ -1325,7 +1334,7 @@ is 36:2</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obis45v1">
 is 45:1</h2>
 <p><a href="#obis45v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: I think the checker wants לכ֣ורש to have a segol.</p>
@@ -1347,7 +1356,7 @@ is 45:1</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obje9v10">
 je 9:10</h2>
 <p><a href="#obje9v10" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a merkha as a tipeḥa.</p>
@@ -1371,7 +1380,7 @@ je 9:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obje9v11">
 je 9:11</h2>
 <p><a href="#obje9v11" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a merkha as a tipeḥa.</p>
@@ -1396,7 +1405,7 @@ je 9:11</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obje10v3">
 je 10:3</h2>
 <p><a href="#obje10v3" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a meteg as a merkha.</p>
@@ -1423,7 +1432,7 @@ je 10:3</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obje26v5">
 je 26:5</h2>
 <p><a href="#obje26v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a syllable as having qadma rather than pashta.</p>
@@ -1448,7 +1457,7 @@ je 26:5</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obje28v2">
 je 28:2</h2>
 <p><a href="#obje28v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a zaqef_gadol as a gershayim.</p>
@@ -1470,7 +1479,7 @@ je 28:2</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obje31v32">
 je 31:32</h2>
 <p><a href="#obje31v32" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a munaḥ as a tipeḥa.</p>
@@ -1493,7 +1502,7 @@ je 31:32</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obje46v4">
 je 46:4</h2>
 <p><a href="#obje46v4" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a meteg as a merkha.</p>
@@ -1518,7 +1527,7 @@ je 46:4</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obje48v12">
 je 48:12</h2>
 <p><a href="#obje48v12" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a meteg as a tipeḥa.</p>
@@ -1543,7 +1552,7 @@ je 48:12</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obje49v19">
 je 49:19</h2>
 <p><a href="#obje49v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS misses a pashta that is hard to see in the LC.</p>
@@ -1567,7 +1576,7 @@ je 49:19</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obje51v9">
 je 51:9</h2>
 <p><a href="#obje51v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a mahapakh as a munaḥ.</p>
@@ -1588,7 +1597,7 @@ je 51:9</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obek11v1">
 ek 11:1</h2>
 <p><a href="#obek11v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a merkha as a tipeḥa.</p>
@@ -1615,7 +1624,7 @@ ek 11:1</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="obek14v11">
 ek 14:11</h2>
 <p><a href="#obek14v11" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a meteg as a merkha due to a missing maqaf.</p>
@@ -1642,7 +1651,7 @@ ek 14:11</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obek33v20">
 ek 33:20</h2>
 <p><a href="#obek33v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -1664,7 +1673,7 @@ ek 33:20</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obho4v19">
 ho 4:19</h2>
 <p><a href="#obho4v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -1686,7 +1695,7 @@ ho 4:19</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obho8v9">
 ho 8:9</h2>
 <p><a href="#obho8v9" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -1708,7 +1717,7 @@ ho 8:9</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msl">
+<section class="goerwitz-verse" data-category="msl" data-uchange="0" data-wnote="1">
 <hr><h2 id="obho11v7">
 ho 11:7</h2>
 <p><a href="#obho11v7" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Somewhere in the LC-BHS-WLC pipeline, sof_pasuq appears rather than silluq-sof_pasuq.</p>
@@ -1728,7 +1737,7 @@ ho 11:7</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obam1v14">
 am 1:14</h2>
 <p><a href="#obam1v14" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -1750,7 +1759,7 @@ am 1:14</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obam6v6">
 am 6:6</h2>
 <p><a href="#obam6v6" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -1772,7 +1781,7 @@ am 6:6</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="msp">
+<section class="goerwitz-verse" data-category="msp" data-uchange="0" data-wnote="1">
 <hr><h2 id="obam9v5">
 am 9:5</h2>
 <p><a href="#obam9v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: A sof pasuq is missing somewhere in the LC-BHS-WLC pipeline.</p>
@@ -1795,7 +1804,7 @@ am 9:5</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="1">
 <hr><h2 id="obob1v1">
 ob 1:1</h2>
 <p><a href="#obob1v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has no visible accent on עליה.</p>
@@ -1818,7 +1827,7 @@ ob 1:1</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obmi2v7">
 mi 2:7</h2>
 <p><a href="#obmi2v7" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a syllable as having qadma rather than pashta.</p>
@@ -1841,7 +1850,7 @@ mi 2:7</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="1">
 <hr><h2 id="oblm5v5">
 lm 5:5</h2>
 <p><a href="#oblm5v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHQ transcribes a meteg as a tipeḥa due to a missing maqaf.</p>
@@ -1871,7 +1880,7 @@ lm 5:5</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obec7v21">
 ec 7:21</h2>
 <p><a href="#obec7v21" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a tevir as a merkha.</p>
@@ -1893,7 +1902,7 @@ ec 7:21</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obec9v18">
 ec 9:18</h2>
 <p><a href="#obec9v18" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC transcribes a tipeḥa as a merkha.</p>
@@ -1919,7 +1928,7 @@ ec 9:18</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obec12v14">
 ec 12:14</h2>
 <p><a href="#obec12v14" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: Defying both BHS and the LC, WLC transcribes a yetiv as a mahapakh.</p>
@@ -1942,7 +1951,7 @@ ec 12:14</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obda2v41">
 da 2:41</h2>
 <p><a href="#obda2v41" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a meteg as a merkha due to a missing maqaf.</p>
@@ -1966,7 +1975,7 @@ da 2:41</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="obne2v10">
 ne 2:10</h2>
 <p><a href="#obne2v10" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a munaḥ as a merkha.</p>
@@ -1988,7 +1997,7 @@ ne 2:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="ob1c1v53">
 1c 1:53</h2>
 <p><a href="#ob1c1v53" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: The LC has a munaḥ where a merkha is expected.</p>
@@ -2011,7 +2020,7 @@ ne 2:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob2c7v5">
 2c 7:5</h2>
 <p><a href="#ob2c7v5" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS accents a word with munaḥ rather than segol.</p>
@@ -2035,7 +2044,7 @@ ne 2:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob2c8v10">
 2c 8:10</h2>
 <p><a href="#ob2c8v10" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a darga as a mahapakh.</p>
@@ -2056,7 +2065,7 @@ ne 2:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob2c22v12">
 2c 22:12</h2>
 <p><a href="#ob2c22v12" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes an etnaḥta as a tipeḥa.</p>
@@ -2077,7 +2086,7 @@ ne 2:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="0" data-wnote="0">
 <hr><h2 id="ob2c24v27">
 2c 24:27</h2>
 <p><a href="#ob2c24v27" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS adds a gershayim out of nowhere.</p>
@@ -2103,7 +2112,7 @@ ne 2:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="other" data-uchange="1" data-wnote="0">
 <hr><h2 id="ob2c25v1">
 2c 25:1</h2>
 <p><a href="#ob2c25v1" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: BHS transcribes a mahapakh as a munaḥ.</p>

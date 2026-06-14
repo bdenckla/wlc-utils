@@ -11,7 +11,9 @@ from accgram import rtms_ref
 from accgram import rtms_report
 from accgram import rtmsr_bracket_notes
 from accgram import rtmsr_intro
+from accgram import rtmsr_sat
 from accgram import rtmsr_subsets
+from accgram import rtmsr_verse
 from mb_cmn import provenance
 from py_html import wlc_utils_html
 
@@ -25,12 +27,15 @@ StructuredTextLookup = Callable[[dict[str, object], str], object]
 
 @dataclass
 class _Entry:
-    """One oddball verse on the page, tagged along the category filter dimension."""
+    """One oddball verse on the page, tagged along the filter dimensions."""
 
     ref: str
     # "msp" (missing sof pasuq), "msl" (missing silluq), "zwhim" (zarqa whim),
     # or "other"
     category: str
+    # Independent boolean dimensions, ANDed with the category filter.
+    has_uxlc_change: bool  # the verse has a "UXLC change" link
+    has_wlc_note: bool  # the verse's SAT table displays a WLC bracket-note
     anchor_id: str
     structured_text_lookup: StructuredTextLookup
     row: dict[str, object]
@@ -82,6 +87,8 @@ def _build_entries(
             _Entry(
                 ref=ref,
                 category=_category(row, structured_text),
+                has_uxlc_change=_has_uxlc_change(structured_text),
+                has_wlc_note=_has_wlc_note(row, ref),
                 anchor_id=ob_report.oddball_anchor_id(bcv),
                 structured_text_lookup=ob_report.structured_text_value,
                 row=row,
@@ -96,6 +103,27 @@ def _build_entries(
 def _category(row: dict[str, object], structured_text: object) -> str:
     return rtms_missing_sof_pasuq_descriptions.row_category(
         row, structured_text=structured_text
+    )
+
+
+def _has_uxlc_change(structured_text: object) -> bool:
+    # Counts either a landed "UXLC change" or a "Pending UXLC change" link.
+    if not isinstance(structured_text, dict):
+        return False
+    return any(
+        isinstance(value := structured_text.get(key), str) and bool(value.strip())
+        for key in ("uxlc_change", "pending_uxlc_change")
+    )
+
+
+def _has_wlc_note(row: dict[str, object], ref: str) -> bool:
+    # Only bracket notes the verse's SAT table actually displays count, so the
+    # flag agrees with the visible "]"-spans (not notes on undisplayed words).
+    return rtmsr_sat.row_has_rendered_bracket_note(
+        row,
+        row_ref=ref,
+        structured_text_lookup=ob_report.structured_text_value,
+        wlc_tokens=rtmsr_verse.wlc_verse_vels(row),
     )
 
 
@@ -145,12 +173,19 @@ def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
         {
             "class": "goerwitz-verse",
             "data-category": entry.category,
+            "data-uchange": _flag_attr(entry.has_uxlc_change),
+            "data-wnote": _flag_attr(entry.has_wlc_note),
         },
         tuple(items),
     )
 
 
+def _flag_attr(value: bool) -> str:
+    return "1" if value else "0"
+
+
 def _build_filter_controls(counts: dict[str, int]) -> object:
+    total = counts["total"]
     category_fieldset = _fieldset(
         "Category",
         (
@@ -162,9 +197,15 @@ def _build_filter_controls(counts: dict[str, int]) -> object:
             _checkbox("gf-category", "other", f"other ({counts['other']})"),
         ),
     )
+    uchange_fieldset = _tristate_fieldset(
+        "UXLC change", "gf-uchange", counts["uchange_has"], total
+    )
+    wnote_fieldset = _tristate_fieldset(
+        "WLC bracket-note", "gf-wnote", counts["wnote_has"], total
+    )
     count_para = wlc_utils_html.para("", {"class": "gf-count"})
     return wlc_utils_html.div(
-        (category_fieldset, count_para),
+        (category_fieldset, uchange_fieldset, wnote_fieldset, count_para),
         {"class": "goerwitz-filter"},
     )
 
@@ -172,6 +213,33 @@ def _build_filter_controls(counts: dict[str, int]) -> object:
 def _fieldset(legend_text: str, labels: tuple[object, ...]) -> object:
     legend = wlc_utils_html.htel_mk("legend", None, legend_text)
     return wlc_utils_html.htel_mk("fieldset", None, (legend, *labels))
+
+
+def _tristate_fieldset(
+    legend_text: str, group_name: str, has_count: int, total: int
+) -> object:
+    """A has / doesn't-have / don't-care radio group, ANDed with the category
+    filter. Defaults to "don't care" so the page opens unfiltered on this axis.
+
+    The "has"/"doesn't have" counts are wrapped in spans the filter script
+    recomputes live, restricting to the verses passing the other filters (see
+    goerwitz-filter.js). The numbers written here are the no-JS fallback."""
+    return _fieldset(
+        legend_text,
+        (
+            _radio_with_count(
+                group_name, "yes", "has", has_count, f"{group_name}-has-count"
+            ),
+            _radio_with_count(
+                group_name,
+                "no",
+                "doesn't have",
+                total - has_count,
+                f"{group_name}-no-count",
+            ),
+            _radio(group_name, "any", "don't care", checked=True),
+        ),
+    )
 
 
 def _checkbox(css_class: str, value: str, label_text: str) -> object:
@@ -187,10 +255,52 @@ def _checkbox(css_class: str, value: str, label_text: str) -> object:
     return wlc_utils_html.htel_mk_inline("label", None, (input_el, f" {label_text}"))
 
 
+def _radio(
+    group_name: str, value: str, label_text: str, *, checked: bool
+) -> object:
+    input_el = _radio_input(group_name, value, checked=checked)
+    return wlc_utils_html.htel_mk_inline("label", None, (input_el, f" {label_text}"))
+
+
+def _radio_with_count(
+    group_name: str, value: str, prefix_text: str, count: int, count_class: str
+) -> object:
+    """A radio whose label ends in a "(N)" count the filter script keeps live."""
+    input_el = _radio_input(group_name, value, checked=False)
+    count_span = wlc_utils_html.span_c(str(count), count_class)
+    return wlc_utils_html.htel_mk_inline(
+        "label", None, (input_el, f" {prefix_text} (", count_span, ")")
+    )
+
+
+def _radio_input(group_name: str, value: str, *, checked: bool) -> object:
+    attrs: dict[str, str] = {
+        "type": "radio",
+        "class": group_name,
+        "name": group_name,
+        "value": value,
+    }
+    if checked:
+        attrs["checked"] = "checked"
+    return wlc_utils_html.htel_mk_inline_nc("input", attrs)
+
+
 def _counts(entries: list[_Entry]) -> dict[str, int]:
-    counts = {"msp": 0, "msl": 0, "zwhim": 0, "other": 0, "total": len(entries)}
+    counts = {
+        "msp": 0,
+        "msl": 0,
+        "zwhim": 0,
+        "other": 0,
+        "uchange_has": 0,
+        "wnote_has": 0,
+        "total": len(entries),
+    }
     for entry in entries:
         counts[entry.category] += 1
+        if entry.has_uxlc_change:
+            counts["uchange_has"] += 1
+        if entry.has_wlc_note:
+            counts["wnote_has"] += 1
     return counts
 
 

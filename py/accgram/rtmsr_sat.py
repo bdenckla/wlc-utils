@@ -93,6 +93,43 @@ def render_sat_table(
     )
 
 
+def row_has_rendered_bracket_note(
+    row: dict[str, object],
+    *,
+    row_ref: str,
+    structured_text_lookup: StructuredTextLookup,
+    wlc_tokens: list[object],
+) -> bool:
+    """True if this verse's rendered SAT table displays any bracket-note code.
+
+    Mirrors render_sat_table's note sources exactly (the value cells, plus the
+    notes column when it is shown), so the flag agrees with the visible
+    bracket-note spans. A bracket note sitting on some other word of the verse,
+    one the SAT table does not display, deliberately does not count."""
+    sat_rows = _build_sat_rows(
+        row,
+        row_ref=row_ref,
+        structured_text_lookup=structured_text_lookup,
+        wlc_tokens=wlc_tokens,
+    )
+    notes_column_plan = rtmsr_sat_notes_column.build_sat_notes_column_plan(
+        sat_rows,
+        notes_by_key=_sat_notes_by_key(
+            row,
+            structured_text_lookup=structured_text_lookup,
+            wlc_tokens=wlc_tokens,
+        ),
+    )
+    for value, notes_value, _middle_description, _key in notes_column_plan.render_rows:
+        if rtmsr_bracket_notes.parse_bracket_note_codes(value):
+            return True
+        if notes_column_plan.include_notes_column and (
+            rtmsr_bracket_notes.parse_bracket_note_codes(notes_value)
+        ):
+            return True
+    return False
+
+
 def derive_summary_from_sat_descriptors(
     row: dict[str, object],
     *,

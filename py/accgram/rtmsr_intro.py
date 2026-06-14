@@ -47,12 +47,20 @@ def build_intro_contents(
         " where WLC turns a scribal zarqa whim into an outright error; and "
         "“other” for everything else."
     )
+    and_text = (
+        "Two further toggles narrow the list, each ANDed with the category:"
+        " whether the verse has a UXLC change, and"
+        " whether its table displays a WLC bracket-note."
+        " Each toggle is three-state: has, doesn’t have, or don’t care"
+        " (the default)."
+    )
 
     return (
         wlc_utils_html.heading_level_2("Introduction"),
         wlc_utils_html.para(intro_text),
         wlc_utils_html.para(oddballs_text),
         wlc_utils_html.para(msp_text),
+        wlc_utils_html.para(and_text),
     )
 
 
