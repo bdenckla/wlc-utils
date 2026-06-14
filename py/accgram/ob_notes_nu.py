@@ -6,6 +6,7 @@ from accgram.ob_notes_shared import (
     _MISSING_SOF_PASUQ_COMMENT,
     _MISSING_SOF_PASUQ_SUMMARY,
     _SOMEWHERE,
+    ZARQA_WHIM_SUMMARY,
 )
 
 
@@ -103,7 +104,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "comment": _MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 20:19": {
-        "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
+        "st-summary": ZARQA_WHIM_SUMMARY,
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
         "comment": (

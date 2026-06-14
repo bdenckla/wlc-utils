@@ -1,7 +1,8 @@
 // Client-side filtering for the Goerwitz oddball report (goerwitz.html).
 //
 // Each verse is a <section class="goerwitz-verse"> tagged with data-category
-// ("msp" = missing sof pasuq, "msl" = missing silluq, "other"). A group of
+// ("msp" = missing sof pasuq, "msl" = missing silluq, "zwhim" = zarqa whim,
+// "other"). A group of
 // checkboxes (.gf-category) shows/hides verses by category, and .gf-count
 // reports how many are currently visible.
 (function () {

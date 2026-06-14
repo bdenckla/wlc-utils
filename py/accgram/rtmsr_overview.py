@@ -28,7 +28,9 @@ class _Entry:
     """One oddball verse on the page, tagged along the category filter dimension."""
 
     ref: str
-    category: str  # "msp" (missing sof pasuq), "msl" (missing silluq), or "other"
+    # "msp" (missing sof pasuq), "msl" (missing silluq), "zwhim" (zarqa whim),
+    # or "other"
+    category: str
     anchor_id: str
     structured_text_lookup: StructuredTextLookup
     row: dict[str, object]
@@ -156,6 +158,7 @@ def _build_filter_controls(counts: dict[str, int]) -> object:
                 "gf-category", "msp", f"missing sof pasuq ({counts['msp']})"
             ),
             _checkbox("gf-category", "msl", f"missing silluq ({counts['msl']})"),
+            _checkbox("gf-category", "zwhim", f"zarqa whim ({counts['zwhim']})"),
             _checkbox("gf-category", "other", f"other ({counts['other']})"),
         ),
     )
@@ -185,7 +188,7 @@ def _checkbox(css_class: str, value: str, label_text: str) -> object:
 
 
 def _counts(entries: list[_Entry]) -> dict[str, int]:
-    counts = {"msp": 0, "msl": 0, "other": 0, "total": len(entries)}
+    counts = {"msp": 0, "msl": 0, "zwhim": 0, "other": 0, "total": len(entries)}
     for entry in entries:
         counts[entry.category] += 1
     return counts

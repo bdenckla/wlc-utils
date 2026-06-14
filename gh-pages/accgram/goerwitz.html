@@ -15,7 +15,7 @@ Goerwitz Run on WLC</h1>
 Introduction</h2>
 <p>This page lists the 91 WLC 4.22 verses that the Goerwitz accent grammar checker, run via the PLY port, does not parse cleanly. Use the filter below to narrow the list.</p>
 <p>These 91 verses are parsed by the PLY port into a tree containing the string “ERROR”; each oddball section includes its complete parse tree. Potential causes include WLC quirks, BHS quirks, LC quirks, and checker quirks.</p>
-<p>The filter sorts each verse into one of three categories: “missing sof pasuq,” “missing silluq,” where a sof pasuq is present but the verse-final word has no accent; and “other” for everything else.</p>
+<p>The filter sorts each verse into one of four categories: “missing sof pasuq,” “missing silluq,” where a sof pasuq is present but the verse-final word has no accent; “zarqa whim,” where WLC turns a scribal zarqa whim into an outright error; and “other” for everything else.</p>
 <p>The Goerwitz accent grammar checker is described in the following article:</p>
 <p>Goerwitz, Richard. ‹A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts.› In Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg (pp. 111-122). (<a href="https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b">Studies in Ancient Oriental Civilization 60</a>). The Oriental Institute, Chicago, 2007. ISBN 978-1-885923-41-7.</p>
 <h2>
@@ -47,10 +47,10 @@ WLC Bracket Notes</h2>
 <fieldset>
 <legend>
 Category</legend>
-<label><input type="checkbox" class="gf-category" value="msp" checked="checked"> missing sof pasuq (20)</label><label><input type="checkbox" class="gf-category" value="msl" checked="checked"> missing silluq (8)</label><label><input type="checkbox" class="gf-category" value="other" checked="checked"> other (63)</label></fieldset>
+<label><input type="checkbox" class="gf-category" value="msp" checked="checked"> missing sof pasuq (20)</label><label><input type="checkbox" class="gf-category" value="msl" checked="checked"> missing silluq (8)</label><label><input type="checkbox" class="gf-category" value="zwhim" checked="checked"> zarqa whim (12)</label><label><input type="checkbox" class="gf-category" value="other" checked="checked"> other (51)</label></fieldset>
 <p class="gf-count"></p>
 </div>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <h2 id="obgn17v20">
 gn 17:20</h2>
 <p><a href="#obgn17v20" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -90,7 +90,7 @@ gn 32:24</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="obgn47v29">
 gn 47:29</h2>
 <p><a href="#obgn47v29" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -153,7 +153,7 @@ ex 4:10</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="obex6v6">
 ex 6:6</h2>
 <p><a href="#obex6v6" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -241,7 +241,7 @@ ex 28:1</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="obex30v12">
 ex 30:12</h2>
 <p><a href="#obex30v12" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -286,7 +286,7 @@ ex 34:6</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="obex36v2">
 ex 36:2</h2>
 <p><a href="#obex36v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -330,7 +330,7 @@ ex 38:12</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="oblv4v2">
 lv 4:2</h2>
 <p><a href="#oblv4v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -392,7 +392,7 @@ lv 19:1</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="oblv20v2">
 lv 20:2</h2>
 <p><a href="#oblv20v2" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -557,7 +557,7 @@ nu 7:68</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="obnu20v19">
 nu 20:19</h2>
 <p><a href="#obnu20v19" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -715,7 +715,7 @@ dt 13:15</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="obdt14v24">
 dt 14:24</h2>
 <p><a href="#obdt14v24" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -803,7 +803,7 @@ dt 25:9</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="obdt31v7">
 dt 31:7</h2>
 <p><a href="#obdt31v7" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -822,7 +822,7 @@ dt 31:7</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="objs4v8">
 js 4:8</h2>
 <p><a href="#objs4v8" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>
@@ -841,7 +841,7 @@ js 4:8</h2>
 </table>
 </div>
 </section>
-<section class="goerwitz-verse" data-category="other">
+<section class="goerwitz-verse" data-category="zwhim">
 <hr><h2 id="objs10v30">
 js 10:30</h2>
 <p><a href="#objs10v30" title="Permalink to this section" aria-label="Permalink to this section">🔗</a> Summary: WLC turns a scribal zarqa whim into an outright error.</p>

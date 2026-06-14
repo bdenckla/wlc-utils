@@ -3,6 +3,7 @@ from __future__ import annotations
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_generated_descriptions
 from accgram.ob_notes import get_structured_text
+from accgram.ob_notes_shared import ZARQA_WHIM_SUMMARY
 
 _MISSING_SOF_PASUQ_TOKENS = {
     "silluq-no_sof_pasuq",
@@ -25,15 +26,33 @@ def row_category(
     """Classify an oddball verse along the sof-pasuq/silluq dimension.
 
     Returns one of "msp" (missing sof pasuq), "msl" (missing silluq, i.e. a sof
-    pasuq present but no accent on the word), or "other". Precedence is
-    msp > msl > other.
+    pasuq present but no accent on the word), "zwhim" (a scribal zarqa whim that
+    WLC turns into an outright error), or "other". Precedence is
+    msp > msl > zwhim > other.
     """
     descriptions = _generated_descriptions(row, structured_text=structured_text)
     if any(description in _MISSING_SOF_PASUQ_TOKENS for description in descriptions):
         return "msp"
     if any(description in _MISSING_SILLUQ_TOKENS for description in descriptions):
         return "msl"
+    if _is_zarqa_whim(row, structured_text=structured_text):
+        return "zwhim"
     return "other"
+
+
+def _is_zarqa_whim(
+    row: dict[str, object],
+    *,
+    structured_text: object,
+) -> bool:
+    if structured_text is None:
+        ref = row.get("ref")
+        structured_text = (
+            get_structured_text().get(ref) if isinstance(ref, str) else None
+        )
+    if not isinstance(structured_text, dict):
+        return False
+    return structured_text.get("st-summary") == ZARQA_WHIM_SUMMARY
 
 
 def _generated_descriptions(

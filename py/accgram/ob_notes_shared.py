@@ -30,8 +30,11 @@ _SOMEWHERE = "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rath
 _BHS_TRANSCRIBES = "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
 
 
+ZARQA_WHIM_SUMMARY = "WLC turns a scribal zarqa whim into an outright error."
+
+
 _ZARQA_WHIM = {
-    "st-summary": "WLC turns a scribal zarqa whim into an outright error.",
+    "st-summary": ZARQA_WHIM_SUMMARY,
     "comment": (
         "This is one of twelve items of this type."
         " See nu 20:19 for more discussion of items like this."

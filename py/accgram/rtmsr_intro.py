@@ -38,11 +38,13 @@ def build_intro_contents(
         " checker quirks."
     )
     msp_text = (
-        "The filter sorts each verse into one of three categories:"
+        "The filter sorts each verse into one of four categories:"
         " “missing sof pasuq,”"
         " “missing silluq,”"
         " where a sof pasuq is present"
-        " but the verse-final word has no accent; and "
+        " but the verse-final word has no accent;"
+        " “zarqa whim,”"
+        " where WLC turns a scribal zarqa whim into an outright error; and "
         "“other” for everything else."
     )
 
