@@ -43,23 +43,23 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "ex 6:6": {
         "wlc_focus": "ישרא֘ל",
-        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-2",
+        "uxlc_change": "2021.04.01/2020.12.06-2",
         **_ZARQA_WHIM,
     },
     "ex 28:1": {
         "wlc_focus": "את֔ו",
         "st-summary": _BHS_TRANSCRIBES,
-        "uxlc_change": "https://tanach.us/Changes/2022.04.01%20-%20Changes/2022.04.01%20-%20Changes.xml?2021.11.28-2",
+        "uxlc_change": "2022.04.01/2021.11.28-2",
         "comment": ("This is the example given in Goerwitz’s article."),
     },
     "ex 30:12": {
         "wlc_focus": "ישרא֘ל",
-        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-3",
+        "uxlc_change": "2021.04.01/2020.12.06-3",
         **_ZARQA_WHIM,
     },
     "ex 36:2": {
         "wlc_focus": "בצלא֘ל",
-        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-4",
+        "uxlc_change": "2021.04.01/2020.12.06-4",
         **_ZARQA_WHIM,
     },
     "ex 38:12": {

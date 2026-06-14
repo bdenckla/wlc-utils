@@ -106,7 +106,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "nu 20:19": {
         "st-summary": ZARQA_WHIM_SUMMARY,
         "wlc_focus": "ישרא֘ל",
-        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-7",
+        "uxlc_change": "2021.04.01/2020.12.06-7",
         "comment": (
             _NU_2019_01,
             _NU_2019_02,

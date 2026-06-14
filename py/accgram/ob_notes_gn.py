@@ -11,7 +11,7 @@ from accgram.ob_notes_shared import (
 BY_REF: dict[str, dict[str, object]] = {
     "gn 17:20": {
         "wlc_focus": "ולישמע֘אל",
-        "uxlc_change": "https://tanach.us/Changes/2021.10.19%20-%20Changes/2021.10.19%20-%20Changes.xml?2021.08.04-1",
+        "uxlc_change": "2021.10.19/2021.08.04-1",
         **_ZARQA_WHIM,
     },
     "gn 32:24": {
@@ -23,7 +23,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "gn 47:29": {
         "wlc_focus": "ישרא֘ל",
-        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-1",
+        "uxlc_change": "2021.04.01/2020.12.06-1",
         **_ZARQA_WHIM,
     },
 }

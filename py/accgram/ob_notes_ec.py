@@ -8,7 +8,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS transcribes a tevir as a merkha.",
         "wlc_focus": "אש֥ר",
         "BHQ": "?",
-        "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-18",
+        "uxlc_change": "2023.10.19/2023.09.11-18",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ec 9:18": {
@@ -16,7 +16,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "יאב֥ד טוב֥ה",
         "BHQ": "?",
         "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.10.04-2",
+        "uxlc_change": "2022.12.07/2022.10.04-2",
         "comment": (
             (
                 "It is very rare for WLC to diverge from BHS like this, without a bracket note."
@@ -31,7 +31,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "ec 12:14": {
         "wlc_focus": "כ֤י",
         "st-summary": "Defying both BHS and the LC, WLC transcribes a yetiv as a mahapakh.",
-        "uxlc_change": "https://tanach.us/Changes/2023.10.19%20-%20Changes/2023.10.19%20-%20Changes.xml?2023.09.11-25",
+        "uxlc_change": "2023.10.19/2023.09.11-25",
         "comment": (
             (
                 "It is very rare for WLC to diverge from BHS like this, without a bracket note."

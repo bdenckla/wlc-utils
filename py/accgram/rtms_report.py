@@ -18,6 +18,25 @@ _SELF_LINK_SYMBOL = "🔗"
 StructuredTextLookup = Callable[[dict[str, object], str], object]
 
 
+def _expand_uxlc_change_ref(compact: object) -> object:
+    """Expand a compact UXLC change ref to its full tanach.us URL.
+
+    Compact form "2026.10.19/2026.04.10-7" (release/changeset-n) becomes
+    "https://tanach.us/Changes/2026.10.19%20-%20Changes/2026.10.19%20-%20Changes.xml?2026.04.10-7".
+    Non-strings and values that already look like URLs are returned unchanged.
+    """
+    if not isinstance(compact, str):
+        return compact
+    ref = compact.strip()
+    if not ref or ref.startswith("http"):
+        return compact
+    release, sep, changeset_n = ref.partition("/")
+    if not sep:
+        return compact
+    folder = f"{release}%20-%20Changes"
+    return f"https://tanach.us/Changes/{folder}/{folder}.xml?{changeset_n}"
+
+
 def default_html_out_path(repo_root: Path) -> Path:
     return repo_root / "gh-pages" / "accgram" / "goerwitz.html"
 
@@ -96,8 +115,10 @@ def _render_ref_links(
     mam_url = _mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)
     tanach_us_url = my_wlc_bcv_str.get_tanach_dot_us_url(bcv)
     summary = structured_text_lookup(row, "st-summary")
-    uxlc_change = structured_text_lookup(row, "uxlc_change")
-    pending_uxlc_change = structured_text_lookup(row, "pending_uxlc_change")
+    uxlc_change = _expand_uxlc_change_ref(structured_text_lookup(row, "uxlc_change"))
+    pending_uxlc_change = _expand_uxlc_change_ref(
+        structured_text_lookup(row, "pending_uxlc_change")
+    )
     uxlc_note_page = structured_text_lookup(row, "uxlc_note_page")
     github_issue = structured_text_lookup(row, "github-issue")
 

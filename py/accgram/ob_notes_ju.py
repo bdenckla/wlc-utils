@@ -48,7 +48,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS transcribes a faded, ambiguous mark as merkha rather than munaḥ.",
         "img": "LC-144A-col-1-line-17-Ju-11v24.png",
         "edited img": "LC-144A-col-1-line-17-Ju-11v24-edited.png",
-        "pending_uxlc_change": "https://tanach.us/Changes/2026.10.19%20-%20Changes/2026.10.19%20-%20Changes.xml?2026.04.10-7",
+        "pending_uxlc_change": "2026.10.19/2026.04.10-7",
         "comment": (
             [
                 "Ignoring the grammar of accents, the faded remains of the mark in question are slightly more plausibly"
@@ -82,6 +82,6 @@ BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ויאמר֨ו",
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "img": "LC-150A-col-1-line-22-Ju-21v16.png",
-        "pending_uxlc_change": "https://tanach.us/Changes/2026.10.19%20-%20Changes/2026.10.19%20-%20Changes.xml?2026.04.10-5",
+        "pending_uxlc_change": "2026.10.19/2026.04.10-5",
     },
 }

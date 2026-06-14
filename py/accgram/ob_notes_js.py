@@ -10,12 +10,12 @@ from accgram.ob_notes_shared import (
 BY_REF: dict[str, dict[str, object]] = {
     "js 4:8": {
         "wlc_focus": "ישרא֘ל",
-        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-10",
+        "uxlc_change": "2021.04.01/2020.12.06-10",
         **_ZARQA_WHIM,
     },
     "js 10:30": {
         "wlc_focus": "ישרא֘ל",
-        "uxlc_change": "https://tanach.us/Changes/2021.04.01%20-%20Changes/2021.04.01%20-%20Changes.xml?2020.12.06-11",
+        "uxlc_change": "2021.04.01/2020.12.06-11",
         **_ZARQA_WHIM,
     },
     "js 15:47": {

@@ -65,7 +65,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "2k 23:36": {
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.09.01-24",
+        "uxlc_change": "2022.12.07/2022.09.01-24",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ob 1:1": {
@@ -79,7 +79,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
         "BHQ": "?",
-        "uxlc_change": "https://tanach.us/Changes/2023.04.01%20-%20Changes/2023.04.01%20-%20Changes.xml?2022.12.12-10",
+        "uxlc_change": "2023.04.01/2022.12.12-10",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "lm 5:5": {
@@ -99,13 +99,13 @@ BY_REF: dict[str, dict[str, object]] = {
     "da 2:41": {
         "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "ד֥י",
-        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.12-3",
+        "uxlc_change": "2024.04.01/2023.09.12-3",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ne 2:10": {
         "wlc_focus": "ב֥א",
         "st-summary": _BHS_TRANSCRIBES,
-        "uxlc_change": "https://tanach.us/Changes/2024.04.01%20-%20Changes/2024.04.01%20-%20Changes.xml?2023.09.14-3",
+        "uxlc_change": "2024.04.01/2023.09.14-3",
     },
     "1c 1:53": {
         "wlc_focus": "אל֣וף",

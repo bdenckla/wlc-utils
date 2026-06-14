@@ -11,13 +11,13 @@ BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
         "st-summary": "BHS transcribes a munaḥ as a mahapakh.",
         "wlc_focus": "ועשר֤ים",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-9",
+        "uxlc_change": "2022.12.07/2022.08.31-9",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "1k 16:33": {
         "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
         "wlc_focus": "מכ֨ל",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-23",
+        "uxlc_change": "2022.12.07/2022.08.31-23",
         "comment": (
             "The LC has no visible accent on מכל. See the image in the UXLC change to which we link above."
             " The consensus accents the final syllable with pashta rather than qadma."
@@ -32,7 +32,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "1k 20:29": {
         "st-summary": "BHS transcribes a meteg as a merkha and ignores a maqaf.",
         "wlc_focus": "נ֥כח",
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-32",
+        "uxlc_change": "2022.12.07/2022.08.31-32",
         "comment": (
             ("See the image in the UXLC change to which we link above."),
             (
@@ -50,12 +50,12 @@ BY_REF: dict[str, dict[str, object]] = {
     "1k 6:3": {
         "wlc_focus": "עשר֣ים",
         "st-summary": _BHS_TRANSCRIBES,
-        "uxlc_change": "https://tanach.us/Changes/2022.12.07%20-%20Changes/2022.12.07%20-%20Changes.xml?2022.08.31-10",
+        "uxlc_change": "2022.12.07/2022.08.31-10",
     },
     "1k 8:11": {
         "wlc_focus": "מפנ֥י",
         "st-summary": _BHS_TRANSCRIBES,
-        "uxlc_change": "https://tanach.us/Changes/2022.04.01%20-%20Changes/2022.04.01%20-%20Changes.xml?2021.11.21-1",
+        "uxlc_change": "2022.04.01/2021.11.21-1",
     },
     "1k 20:25": {
         "wlc_focus": "וס֣וס",
