@@ -37,15 +37,13 @@ def build_intro_contents(
         " LC quirks, and"
         " checker quirks."
     )
-    msp_text = (
-        "The filter sorts each verse into one of four categories:"
-        " “missing sof pasuq,”"
-        " “missing silluq,”"
-        " where a sof pasuq is present"
-        " but the verse-final word has no accent;"
-        " “zarqa whim,”"
-        " where WLC turns a scribal zarqa whim into an outright error; and "
-        "“other” for everything else."
+    msp_text = "The filter sorts each verse into one of four categories:"
+    msp_categories = (
+        "“missing sof pasuq”",
+        "“missing silluq,” where a sof pasuq is present"
+        " but the verse-final word has no accent",
+        "“zarqa whim,” where WLC turns a scribal zarqa whim into an outright error",
+        "“other,” for everything else",
     )
     and_text = (
         "Two further toggles narrow the list, each ANDed with the category:"
@@ -60,6 +58,7 @@ def build_intro_contents(
         wlc_utils_html.para(intro_text),
         wlc_utils_html.para(oddballs_text),
         wlc_utils_html.para(msp_text),
+        wlc_utils_html.unordered_list(msp_categories),
         wlc_utils_html.para(and_text),
     )
 

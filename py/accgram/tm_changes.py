@@ -22,6 +22,7 @@ _CITATION_BOOK_TO_STD_BKID = {
 _REF_RE = re.compile(r"^(?P<bb>[0-9a-z]{2})\s+(?P<ch>\d+):(?P<vr>\d+)$")
 _CITATION_RE = re.compile(r"^(?P<book>.+?)\s+(?P<ch>\d+):(?P<vr>\d+)(?:\.\d+)?$")
 _RELEASE_LABEL_RE = re.compile(r"^(?P<date>\d{4}\.\d{2}\.\d{2})\s*-\s*Changes$")
+_COMPACT_CHANGE_RE = re.compile(r"^(?P<release>\d{4}\.\d{2}\.\d{2})/(?P<change_id>.+)$")
 
 
 def load_all_changes_by_url(all_changes_path: Path) -> dict[str, dict[str, object]]:
@@ -42,6 +43,10 @@ def load_all_changes_by_url(all_changes_path: Path) -> dict[str, dict[str, objec
 
 
 def canonicalize_uxlc_change_url(url: str) -> str | None:
+    compact = _COMPACT_CHANGE_RE.match(url.strip())
+    if compact is not None:
+        return uxlc_change_url(compact.group("release"), compact.group("change_id"))
+
     parsed = urlparse(url)
     if parsed.scheme not in {"http", "https"}:
         return None
