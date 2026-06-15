@@ -17,7 +17,12 @@ _NU_2509_01 = (
 )
 
 
-_NU_2509_02 = " In other words, the accent grammar is unexceptional here if we ignore where BHS happens to put its verse labels."
+_NU_2509_02 = (
+    " In other words, the accent grammar is unexceptional here"
+    " if we ignore where BHS happens to put its verse labels."
+    " In this light, the bracket-1 note in WLC should be removed."
+    " There is no anomaly in the LC here."
+)
 
 
 _NU_2509_03 = (
@@ -84,26 +89,31 @@ _NU_2019_07 = (
 
 BY_REF: dict[str, dict[str, object]] = {
     "nu 7:32": {
+        "st-source": "tbd",
         "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "קטֽרת",
         "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:40": {
+        "st-source": "tbd",
         "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "לחטֽאת",
         "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:55": {
+        "st-source": "tbd",
         "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "למנחֽה",
         "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:68": {
+        "st-source": "tbd",
         "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "קטֽרת",
         "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 20:19": {
+        "st-source": "wlc",
         "st-summary": ZARQA_WHIM_SUMMARY,
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "2021.04.01/2020.12.06-7",
@@ -118,6 +128,7 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "nu 25:19": {
+        "st-source": "bhs",
         "st-summary": "BHS puts a verse number in the middle of a chanted verse.",
         "wlc_focus": "המגפ֑ה",
         "comment": (
@@ -128,6 +139,7 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "nu 27:9": {
+        "st-source": "tbd",
         "wlc_focus": "לאחיו׃",
         "st-summary": SOMEWHERE,
     },

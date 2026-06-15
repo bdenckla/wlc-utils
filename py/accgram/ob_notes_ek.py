@@ -11,6 +11,7 @@ from accgram.ob_notes_shared import (
 
 BY_REF: dict[str, dict[str, object]] = {
     "ek 11:1": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a merkha as a tipeḥa.",
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
@@ -23,6 +24,7 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ek 14:11": {
+        "st-source": "tbd",
         "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
@@ -33,6 +35,7 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ek 33:20": {
+        "st-source": "tbd",
         "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ישראֽל",
         "comment": MISSING_SOF_PASUQ_COMMENT,

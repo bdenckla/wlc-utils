@@ -49,18 +49,21 @@ _JE_1003_03 = "Finally, it should be noted that the mark preceding this word’s
 
 BY_REF: dict[str, dict[str, object]] = {
     "je 9:10": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a merkha as a tipeḥa.",
         "wlc_focus": "מבל֖י",
         "uxlc_change": "2023.04.01/2022.12.10-15",
         "comment": _je_0910_and_11_comment("next verse (11)"),
     },
     "je 9:11": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a merkha as a tipeḥa.",
         "wlc_focus": "מבל֖י",
         "uxlc_change": "2023.04.01/2022.12.10-16",
         "comment": _je_0910_and_11_comment("previous verse (10)"),
     },
     "je 10:3": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a meteg as a merkha.",
         "wlc_focus": "יד֥י־",
         "img": "LC-251A-col-3-line-11-Je-10v3.png",
@@ -72,12 +75,14 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 31:32": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a munaḥ as a tipeḥa.",
         "wlc_focus": "מא֖רץ",
         "uxlc_change": "2023.04.01/2022.12.10-41",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "je 48:12": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a meteg as a tipeḥa.",
         "wlc_focus": "הנ֖ה־",
         "img": "LC-272A-col-3-line-3-Je-48v12.png",
@@ -88,6 +93,7 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 49:19": {
+        "st-source": "bhs",
         "st-summary": "BHS misses a pashta that is hard to see in the LC.",
         "wlc_focus": "אריצ֨נו",
         "uxlc_change": "2023.04.01/2022.12.10-60",
@@ -99,6 +105,7 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 26:5": {
+        "st-source": "bhs",
         "wlc_focus": "דבר֨י",
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "uxlc_change": "2023.04.01/2022.12.10-28",
@@ -132,17 +139,20 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "je 28:2": {
+        "st-source": "bhs",
         "wlc_focus": "שב֞רתי",
         "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2023.04.01/2022.12.10-35",
     },
     "je 46:4": {
+        "st-source": "bhs",
         "wlc_focus": "בכ֥ובע֑ים",
         "st-summary": "BHS transcribes a meteg as a merkha.",
         "img": "LC-271B-col-1-line-5-Je-46v4.png",
         "pending_uxlc_change": "2026.10.19/2026.04.10-9",
     },
     "je 51:9": {
+        "st-source": "bhs",
         "wlc_focus": "רפ֣ינו",
         "st-summary": BHS_TRANSCRIBES,
         "pending_uxlc_change": "2026.10.19/2026.04.10-2",

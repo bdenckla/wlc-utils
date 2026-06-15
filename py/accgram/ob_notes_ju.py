@@ -29,6 +29,7 @@ _JU_1318_03 = (
 
 BY_REF: dict[str, dict[str, object]] = {
     "ju 13:18": {
+        "st-source": "bhs",
         "st-summary": "BHQ transcribes a silluq as a tevir due to a speck.",
         "wlc_focus": "פ֛לאי׃",
         "uxlc_note_page": "https://tanach.us/Notes/Judges/Judges.13.18.10-t.html",
@@ -39,11 +40,13 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ju 1:2": {
+        "st-source": "lc",
         "wlc_focus": "וי֣אמר",
         "st-summary": "The LC has munaḥ where a merkha is expected.",
         "img": "LC-136A-col-1-line-7-Ju-1v2.png",
     },
     "ju 11:24": {
+        "st-source": "bhs",
         "wlc_focus": "אות֥ו תיר֑ש",
         "st-summary": "BHS transcribes a faded, ambiguous mark as merkha rather than munaḥ.",
         "img": "LC-144A-col-1-line-17-Ju-11v24.png",
@@ -79,6 +82,7 @@ BY_REF: dict[str, dict[str, object]] = {
         )
     },
     "ju 21:16": {
+        "st-source": "bhs",
         "wlc_focus": "ויאמר֨ו",
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "img": "LC-150A-col-1-line-22-Ju-21v16.png",

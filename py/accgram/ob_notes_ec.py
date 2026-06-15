@@ -5,6 +5,7 @@ from __future__ import annotations
 
 BY_REF: dict[str, dict[str, object]] = {
     "ec 7:21": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a tevir as a merkha.",
         "wlc_focus": "אש֥ר",
         "BHQ": "?",
@@ -12,6 +13,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ec 9:18": {
+        "st-source": "wlc",
         "st-summary": "WLC transcribes a tipeḥa as a merkha.",
         "wlc_focus": "יאב֥ד טוב֥ה",
         "BHQ": "?",
@@ -29,6 +31,7 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "ec 12:14": {
+        "st-source": "wlc",
         "wlc_focus": "כ֤י",
         "st-summary": "Defying both BHS and the LC, WLC transcribes a yetiv as a mahapakh.",
         "uxlc_change": "2023.10.19/2023.09.11-25",

@@ -58,17 +58,20 @@ _LM_0505_07 = (
 
 BY_REF: dict[str, dict[str, object]] = {
     "1s 6:19": {
+        "st-source": "tbd",
         "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "גדולֽה",
         "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "2k 23:36": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
         "uxlc_change": "2022.12.07/2022.09.01-24",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ob 1:1": {
+        "st-source": "lc",
         "st-summary": "The LC has no visible accent on עליה.",
         "wlc_focus": "עליה",
         "BHQ": "?",
@@ -76,6 +79,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC note to which we link above.",
     },
     "mi 2:7": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
         "BHQ": "?",
@@ -83,6 +87,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "lm 5:5": {
+        "st-source": "tbd",
         "st-summary": "BHQ transcribes a meteg as a tipeḥa due to a missing maqaf.",
         "wlc_focus": "הונ֖ח",
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
@@ -97,17 +102,20 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "da 2:41": {
+        "st-source": "tbd",
         "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
         "wlc_focus": "ד֥י",
         "uxlc_change": "2024.04.01/2023.09.12-3",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "ne 2:10": {
+        "st-source": "bhs",
         "wlc_focus": "ב֥א",
         "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2024.04.01/2023.09.14-3",
     },
     "1c 1:53": {
+        "st-source": "lc",
         "wlc_focus": "אל֣וף",
         "st-summary": "The LC has a munaḥ where a merkha is expected.",
         "img": "LC-328A-col-1-line-27-1C-1v53.png",

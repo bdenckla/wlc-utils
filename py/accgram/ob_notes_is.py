@@ -19,6 +19,7 @@ _FOI_CATEGORY_URL = (
 
 BY_REF: dict[str, dict[str, object]] = {
     "is 36:2": {
+        "st-source": "tbd",
         "st-summary": "The checker does not like munaḥ serving munaḥ legarmeh.",
         "wlc_focus": "וישל֣ח",
         "comment": [
@@ -32,10 +33,12 @@ BY_REF: dict[str, dict[str, object]] = {
         ],
     },
     "is 13:7": {
+        "st-source": "tbd",
         "wlc_focus": "ימס׃",
         "st-summary": SOMEWHERE,
     },
     "is 45:1": {
+        "st-source": "tbd",
         "wlc_focus": "לכ֣ורש",
         "st-summary": "I think the checker wants לכ֣ורש to have a segol.",
         "comment": "There is a question of whether לכ֣ורש should have a legarmeh; see MAM’s doc-note.",

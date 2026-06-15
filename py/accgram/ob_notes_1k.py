@@ -9,12 +9,14 @@ from accgram.ob_notes_shared import (
 
 BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a munaḥ as a mahapakh.",
         "wlc_focus": "ועשר֤ים",
         "uxlc_change": "2022.12.07/2022.08.31-9",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "1k 16:33": {
+        "st-source": "bhs",
         "st-summary": "BHS’s qadma matches neither the LC nor the consensus.",
         "wlc_focus": "מכ֨ל",
         "uxlc_change": "2022.12.07/2022.08.31-23",
@@ -24,12 +26,14 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "1k 19:11": {
+        "st-source": "lc",
         "st-summary": "The LC is missing a pashta.",
         "wlc_focus": "הר֨וח",
         "img": "LC-199A-col-3-line-21-1K-19v11.png",
         "comment": "Arguably, WLC and UXLC should code the mark on the resh as a pashta rather than a qadma.",
     },
     "1k 20:29": {
+        "st-source": "bhs",
         "st-summary": "BHS transcribes a meteg as a merkha and ignores a maqaf.",
         "wlc_focus": "נ֥כח",
         "uxlc_change": "2022.12.07/2022.08.31-32",
@@ -48,16 +52,19 @@ BY_REF: dict[str, dict[str, object]] = {
         ),
     },
     "1k 6:3": {
+        "st-source": "bhs",
         "wlc_focus": "עשר֣ים",
         "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2022.12.07/2022.08.31-10",
     },
     "1k 8:11": {
+        "st-source": "bhs",
         "wlc_focus": "מפנ֥י",
         "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2022.04.01/2021.11.21-1",
     },
     "1k 20:25": {
+        "st-source": "tbd",
         "wlc_focus": "וס֣וס",
         "st-summary": "The checker may prefer merkha to LC’s munaḥ. Or it may not like either.",
         "img": "LC-200A-col-2-line-19-1K-20v25.png",

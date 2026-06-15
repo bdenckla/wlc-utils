@@ -33,6 +33,9 @@ class _Entry:
     # "msp" (missing sof pasuq), "msl" (missing silluq), "zwhim" (zarqa whim),
     # or "other"
     category: str
+    # Which witness in the LC->BHS->WLC pipeline the oddball is blamed on,
+    # inferred from the prose summary: "wlc", "bhs", "lc", or "tbd" (unclear/TBD).
+    source: str
     # Independent boolean dimensions, ANDed with the category filter.
     has_uxlc_change: bool  # the verse has a "UXLC change" link
     has_wlc_note: bool  # the verse's SAT table displays a WLC bracket-note
@@ -87,6 +90,7 @@ def _build_entries(
             _Entry(
                 ref=ref,
                 category=_category(row, structured_text),
+                source=_source(structured_text, ref),
                 has_uxlc_change=_has_uxlc_change(structured_text),
                 has_wlc_note=_has_wlc_note(row, ref),
                 anchor_id=ob_report.oddball_anchor_id(bcv),
@@ -104,6 +108,34 @@ def _category(row: dict[str, object], structured_text: object) -> str:
     return rtms_missing_sof_pasuq_descriptions.row_category(
         row, structured_text=structured_text
     )
+
+
+# Display label for each "Source" slug (the slug is stored per oddball in its
+# ob_notes "st-source" field, and used as the filter checkbox's value and the
+# verse's data-source attribute), in filter-display order.
+_SOURCE_LABELS = {
+    "wlc": "WLC",
+    "bhs": "BHS/BHQ",
+    "lc": "LC",
+    "tbd": "unclear/TBD",
+}
+
+
+def _source(structured_text: object, ref: str) -> str:
+    """Return the oddball's hardcoded source slug (see _SOURCE_LABELS).
+
+    The attribution lives beside the prose in each ob_notes entry's "st-source"
+    field rather than being re-derived from the summary, so editing a summary
+    never silently changes a verse's source. Every oddball must carry a valid
+    st-source; a missing or unknown value is a hard error.
+    """
+    source = structured_text.get("st-source") if isinstance(structured_text, dict) else None
+    if source not in _SOURCE_LABELS:
+        raise ValueError(
+            f"Oddball {ref!r} has a missing or invalid 'st-source' (got "
+            f"{source!r}); expected one of {sorted(_SOURCE_LABELS)}."
+        )
+    return source
 
 
 def _has_uxlc_change(structured_text: object) -> bool:
@@ -174,6 +206,7 @@ def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
         {
             "class": "goerwitz-verse",
             "data-category": entry.category,
+            "data-source": entry.source,
             "data-uchange": _flag_attr(entry.has_uxlc_change),
             "data-wnote": _flag_attr(entry.has_wlc_note),
         },
@@ -188,7 +221,7 @@ def _flag_attr(value: bool) -> str:
 def _build_filter_controls(counts: dict[str, int]) -> object:
     total = counts["total"]
     category_fieldset = _fieldset(
-        "Category",
+        "Grammar error",
         (
             _checkbox(
                 "gf-category", "msp", f"missing sof pasuq ({counts['msp']})"
@@ -196,6 +229,15 @@ def _build_filter_controls(counts: dict[str, int]) -> object:
             _checkbox("gf-category", "msl", f"missing silluq ({counts['msl']})"),
             _checkbox("gf-category", "zwhim", f"zarqa whim ({counts['zwhim']})"),
             _checkbox("gf-category", "other", f"other ({counts['other']})"),
+        ),
+    )
+    source_fieldset = _fieldset(
+        "Source",
+        tuple(
+            _checkbox(
+                "gf-source", slug, f"{label} ({counts['src_' + slug]})"
+            )
+            for slug, label in _SOURCE_LABELS.items()
         ),
     )
     uchange_fieldset = _tristate_fieldset(
@@ -206,7 +248,13 @@ def _build_filter_controls(counts: dict[str, int]) -> object:
     )
     count_para = wlc_utils_html.para("", {"class": "gf-count"})
     return wlc_utils_html.div(
-        (category_fieldset, uchange_fieldset, wnote_fieldset, count_para),
+        (
+            category_fieldset,
+            source_fieldset,
+            uchange_fieldset,
+            wnote_fieldset,
+            count_para,
+        ),
         {"class": "goerwitz-filter"},
     )
 
@@ -296,8 +344,11 @@ def _counts(entries: list[_Entry]) -> dict[str, int]:
         "wnote_has": 0,
         "total": len(entries),
     }
+    for slug in _SOURCE_LABELS:
+        counts[f"src_{slug}"] = 0
     for entry in entries:
         counts[entry.category] += 1
+        counts[f"src_{entry.source}"] += 1
         if entry.has_uxlc_change:
             counts["uchange_has"] += 1
         if entry.has_wlc_note:

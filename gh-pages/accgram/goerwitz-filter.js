@@ -2,13 +2,16 @@
 //
 // Each verse is a <section class="goerwitz-verse"> tagged with data-category
 // ("msp" = missing sof pasuq, "msl" = missing silluq, "zwhim" = zarqa whim,
-// "other") plus two boolean flags, data-uchange and data-wnote ("1"/"0"), for
-// whether the verse has a UXLC change and a WLC bracket-note.
+// "other"), data-source ("wlc", "bhs" = BHS/BHQ, "lc", "tbd" = unclear/TBD),
+// plus two boolean flags, data-uchange and data-wnote ("1"/"0"), for whether the
+// verse has a UXLC change and a WLC bracket-note.
 //
-// The category checkboxes (.gf-category) select which categories show. Two
-// tri-state radio groups (.gf-uchange, .gf-wnote) further constrain the list,
-// ANDed with the category: each is "yes" (has), "no" (doesn't have), or "any"
-// (don't care). .gf-count reports how many verses are currently visible.
+// The grammar-error checkboxes (.gf-category) and the source checkboxes
+// (.gf-source) each select which of their values show; a verse must match a
+// checked box in BOTH groups. Two tri-state radio groups (.gf-uchange,
+// .gf-wnote) further constrain the list, ANDed with the checkboxes: each is
+// "yes" (has), "no" (doesn't have), or "any" (don't care). .gf-count reports how
+// many verses are currently visible.
 //
 // Each tri-state option's "(N)" count is recomputed live (faceted): it counts
 // the verses that pass every OTHER filter, so the number reflects how many
@@ -73,12 +76,16 @@
 
   function applyFilters() {
     var categories = checkedValues("input.gf-category");
+    var sources = checkedValues("input.gf-source");
     var wantUchange = radioValue("gf-uchange");
     var wantWnote = radioValue("gf-wnote");
     var verses = document.querySelectorAll("section.goerwitz-verse");
 
     function passesCategory(verse) {
       return categories.has(verse.dataset.category);
+    }
+    function passesSource(verse) {
+      return sources.has(verse.dataset.source);
     }
     function passesUchange(verse) {
       return flagMatches(wantUchange, verse.dataset.uchange);
@@ -90,26 +97,31 @@
     var shown = 0;
     verses.forEach(function (verse) {
       var visible =
-        passesCategory(verse) && passesUchange(verse) && passesWnote(verse);
+        passesCategory(verse) &&
+        passesSource(verse) &&
+        passesUchange(verse) &&
+        passesWnote(verse);
       verse.style.display = visible ? "" : "none";
       if (visible) {
         shown += 1;
       }
     });
 
-    // Faceted: each group's counts honor the category and the OTHER group.
+    // Faceted: each group's counts honor every filter EXCEPT itself.
     updateFacetCounts(
       { name: "gf-uchange", dataKey: "uchange" },
       verses,
       function (verse) {
-        return passesCategory(verse) && passesWnote(verse);
+        return passesCategory(verse) && passesSource(verse) && passesWnote(verse);
       }
     );
     updateFacetCounts(
       { name: "gf-wnote", dataKey: "wnote" },
       verses,
       function (verse) {
-        return passesCategory(verse) && passesUchange(verse);
+        return (
+          passesCategory(verse) && passesSource(verse) && passesUchange(verse)
+        );
       }
     );
 
@@ -122,7 +134,7 @@
 
   function init() {
     var inputs = document.querySelectorAll(
-      "input.gf-category, input.gf-uchange, input.gf-wnote"
+      "input.gf-category, input.gf-source, input.gf-uchange, input.gf-wnote"
     );
     inputs.forEach(function (input) {
       input.addEventListener("change", applyFilters);
