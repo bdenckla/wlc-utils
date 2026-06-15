@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from accgram.ob_notes_shared import (
-    _MISSING_SOF_PASUQ_COMMENT,
-    _MISSING_SOF_PASUQ_SUMMARY,
-    _ambiguous_mark_context_comment,
+    MISSING_SOF_PASUQ_COMMENT,
+    MISSING_SOF_PASUQ_SUMMARY,
+    ambiguous_mark_context_comment,
 )
 
 
@@ -15,7 +15,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "comment": (
-            _ambiguous_mark_context_comment("שרי")
+            ambiguous_mark_context_comment("שרי")
             + " It is aggressively uncharitable to transcribe the mark on שרי as tipeḥa:"
             + " tipeḥa is the least likely of the three possible meanings of this mark."
             + " Merkha is by far the most likely. If the mark were meteg, we would have to"
@@ -27,14 +27,14 @@ BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "comment": (
-            _ambiguous_mark_context_comment("והיו")
+            ambiguous_mark_context_comment("והיו")
             + " The most likely intended meaning of the mark on והיו is meteg, even though that implies that"
             + " a maqaf is missing."
         ),
     },
     "ek 33:20": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ישראֽל",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
     },
 }

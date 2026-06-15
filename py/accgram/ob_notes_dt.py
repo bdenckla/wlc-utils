@@ -3,18 +3,18 @@
 from __future__ import annotations
 
 from accgram.ob_notes_shared import (
-    _MISSING_SOF_PASUQ_COMMENT,
-    _MISSING_SOF_PASUQ_SUMMARY,
-    _SOMEWHERE,
-    _ZARQA_WHIM,
+    MISSING_SOF_PASUQ_COMMENT,
+    MISSING_SOF_PASUQ_SUMMARY,
+    SOMEWHERE,
+    ZARQA_WHIM,
 )
 
 
 BY_REF: dict[str, dict[str, object]] = {
     "dt 9:20": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ההֽוא",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
         "BHQ": "?",
     },
     "dt 13:15": {
@@ -23,22 +23,22 @@ BY_REF: dict[str, dict[str, object]] = {
         "img": "LC-107B-col-3-line-18-dt-13v15.png",
     },
     "dt 25:9": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "אחֽיו",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
         "BHQ": "?",
     },
     "dt 10:15": {
         "wlc_focus": "הזה׃",
-        "st-summary": _SOMEWHERE,
+        "st-summary": SOMEWHERE,
     },
     "dt 12:2": {
         "wlc_focus": "רענן׃",
-        "st-summary": _SOMEWHERE,
+        "st-summary": SOMEWHERE,
     },
     "dt 23:18": {
         "wlc_focus": "ישראל׃",
-        "st-summary": _SOMEWHERE,
+        "st-summary": SOMEWHERE,
     },
     "dt 24:10": {
         "wlc_focus": "ברעך",
@@ -67,11 +67,11 @@ BY_REF: dict[str, dict[str, object]] = {
     "dt 14:24": {
         "wlc_focus": "תוכ֘ל",
         "uxlc_change": "2021.04.01/2020.12.06-8",
-        **_ZARQA_WHIM,
+        **ZARQA_WHIM,
     },
     "dt 31:7": {
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "2021.04.01/2020.12.06-9",
-        **_ZARQA_WHIM,
+        **ZARQA_WHIM,
     },
 }

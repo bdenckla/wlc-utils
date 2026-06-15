@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from accgram.ob_notes_shared import (
-    _SOMEWHERE,
+    SOMEWHERE,
 )
 from py_html import wlc_utils_html
 
@@ -33,7 +33,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "is 13:7": {
         "wlc_focus": "ימס׃",
-        "st-summary": _SOMEWHERE,
+        "st-summary": SOMEWHERE,
     },
     "is 45:1": {
         "wlc_focus": "לכ֣ורש",

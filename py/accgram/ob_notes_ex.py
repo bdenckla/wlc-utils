@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 from accgram.ob_notes_shared import (
-    _BHS_TRANSCRIBES,
-    _MISSING_SOF_PASUQ_COMMENT,
-    _MISSING_SOF_PASUQ_SUMMARY,
-    _ZARQA_WHIM,
+    BHS_TRANSCRIBES,
+    MISSING_SOF_PASUQ_COMMENT,
+    MISSING_SOF_PASUQ_SUMMARY,
+    ZARQA_WHIM,
 )
 
 
@@ -15,19 +15,19 @@ _BAR_INSTEAD_OF_SOF_PASUQ_SUMMARY = "In the place where one would expect a sof p
 
 BY_REF: dict[str, dict[str, object]] = {
     "ex 2:5": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ותקחֽה",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "ex 14:25": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "במצרֽים",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "ex 14:29": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "ומשמאלֽם",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "ex 34:6": {
         "st-summary": _BAR_INSTEAD_OF_SOF_PASUQ_SUMMARY,
@@ -44,23 +44,23 @@ BY_REF: dict[str, dict[str, object]] = {
     "ex 6:6": {
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "2021.04.01/2020.12.06-2",
-        **_ZARQA_WHIM,
+        **ZARQA_WHIM,
     },
     "ex 28:1": {
         "wlc_focus": "את֔ו",
-        "st-summary": _BHS_TRANSCRIBES,
+        "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2022.04.01/2021.11.28-2",
         "comment": ("This is the example given in Goerwitz’s article."),
     },
     "ex 30:12": {
         "wlc_focus": "ישרא֘ל",
         "uxlc_change": "2021.04.01/2020.12.06-3",
-        **_ZARQA_WHIM,
+        **ZARQA_WHIM,
     },
     "ex 36:2": {
         "wlc_focus": "בצלא֘ל",
         "uxlc_change": "2021.04.01/2020.12.06-4",
-        **_ZARQA_WHIM,
+        **ZARQA_WHIM,
     },
     "ex 38:12": {
         "wlc_focus": "עמודיה֥ם",

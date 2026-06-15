@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from accgram.ob_notes_shared import (
-    _BHS_TRANSCRIBES,
+    BHS_TRANSCRIBES,
 )
 
 
@@ -49,12 +49,12 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "1k 6:3": {
         "wlc_focus": "עשר֣ים",
-        "st-summary": _BHS_TRANSCRIBES,
+        "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2022.12.07/2022.08.31-10",
     },
     "1k 8:11": {
         "wlc_focus": "מפנ֥י",
-        "st-summary": _BHS_TRANSCRIBES,
+        "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2022.04.01/2021.11.21-1",
     },
     "1k 20:25": {

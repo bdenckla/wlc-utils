@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from accgram.ob_notes_shared import (
-    _BHS_TRANSCRIBES,
-    _TIP_LIKE_INCL,
-    _ambiguous_mark_context_comment,
+    BHS_TRANSCRIBES,
+    TIP_LIKE_INCL,
+    ambiguous_mark_context_comment,
 )
 
 
@@ -14,7 +14,7 @@ def _je_0910_and_11_comment(adjacent_verse_phrase: str):
         [
             f"The same word, מבלי, appears in the {adjacent_verse_phrase} with analogous transcription problems."
         ],
-        [_ambiguous_mark_context_comment("מבלי")],
+        [ambiguous_mark_context_comment("מבלי")],
         [
             " It is aggressively uncharitable to transcribe the mark on מבלי as tipeḥa:"
             " tipeḥa is the least likely of the three possible meanings of this mark."
@@ -84,7 +84,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "comment": (
             "Yet another aggressively uncharitable, overly-literal transcription by BHS."
             + " "
-            + _TIP_LIKE_INCL
+            + TIP_LIKE_INCL
         ),
     },
     "je 49:19": {
@@ -133,7 +133,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "je 28:2": {
         "wlc_focus": "שב֞רתי",
-        "st-summary": _BHS_TRANSCRIBES,
+        "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2023.04.01/2022.12.10-35",
     },
     "je 46:4": {
@@ -144,7 +144,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "je 51:9": {
         "wlc_focus": "רפ֣ינו",
-        "st-summary": _BHS_TRANSCRIBES,
+        "st-summary": BHS_TRANSCRIBES,
         "pending_uxlc_change": "2026.10.19/2026.04.10-2",
     },
 }

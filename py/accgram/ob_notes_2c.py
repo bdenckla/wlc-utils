@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from accgram.ob_notes_shared import (
-    _BHS_TRANSCRIBES,
+    BHS_TRANSCRIBES,
 )
 
 
@@ -24,7 +24,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "2c 8:10": {
         "wlc_focus": "שר֤י",
-        "st-summary": _BHS_TRANSCRIBES,
+        "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2024.04.01/2023.09.16-4",
     },
     "2c 24:27": {
@@ -36,7 +36,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "2c 25:1": {
         "wlc_focus": "ועשר֣ים",
-        "st-summary": _BHS_TRANSCRIBES,
+        "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2024.04.01/2023.09.16-13",
         "comment": (
             "See the UXLC change image. UXLC corrects WLC but places the mahapakh under the yod, an aggresively uncharitable location for it."

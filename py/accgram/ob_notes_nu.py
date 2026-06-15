@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from accgram.ob_notes_shared import (
-    _MISSING_SOF_PASUQ_COMMENT,
-    _MISSING_SOF_PASUQ_SUMMARY,
-    _SOMEWHERE,
+    MISSING_SOF_PASUQ_COMMENT,
+    MISSING_SOF_PASUQ_SUMMARY,
+    SOMEWHERE,
     ZARQA_WHIM_SUMMARY,
 )
 
@@ -84,24 +84,24 @@ _NU_2019_07 = (
 
 BY_REF: dict[str, dict[str, object]] = {
     "nu 7:32": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "קטֽרת",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:40": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "לחטֽאת",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:55": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "למנחֽה",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 7:68": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "קטֽרת",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "nu 20:19": {
         "st-summary": ZARQA_WHIM_SUMMARY,
@@ -129,6 +129,6 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "nu 27:9": {
         "wlc_focus": "לאחיו׃",
-        "st-summary": _SOMEWHERE,
+        "st-summary": SOMEWHERE,
     },
 }

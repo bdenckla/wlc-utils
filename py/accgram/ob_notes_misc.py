@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 from accgram.ob_notes_shared import (
-    _BHS_TRANSCRIBES,
-    _MISSING_SOF_PASUQ_COMMENT,
-    _MISSING_SOF_PASUQ_SUMMARY,
-    _TIP_LIKE_INCL,
+    BHS_TRANSCRIBES,
+    MISSING_SOF_PASUQ_COMMENT,
+    MISSING_SOF_PASUQ_SUMMARY,
+    TIP_LIKE_INCL,
 )
 
 
@@ -46,7 +46,7 @@ _LM_0505_05 = (
 )
 
 
-_LM_0505_06 = _TIP_LIKE_INCL
+_LM_0505_06 = TIP_LIKE_INCL
 
 
 _LM_0505_07 = (
@@ -58,9 +58,9 @@ _LM_0505_07 = (
 
 BY_REF: dict[str, dict[str, object]] = {
     "1s 6:19": {
-        "st-summary": _MISSING_SOF_PASUQ_SUMMARY,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
         "wlc_focus": "גדולֽה",
-        "comment": _MISSING_SOF_PASUQ_COMMENT,
+        "comment": MISSING_SOF_PASUQ_COMMENT,
     },
     "2k 23:36": {
         "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
@@ -104,7 +104,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "ne 2:10": {
         "wlc_focus": "ב֥א",
-        "st-summary": _BHS_TRANSCRIBES,
+        "st-summary": BHS_TRANSCRIBES,
         "uxlc_change": "2024.04.01/2023.09.14-3",
     },
     "1c 1:53": {
