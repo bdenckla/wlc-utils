@@ -33,6 +33,11 @@ Notes / deliberate scope decisions:
 import json
 import collections
 import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from accgram import ob_notes  # noqa: E402
 
 ACC = {
     'etnachta', 'etnahta', 'atnah-hafukh', 'zarqa', 'zinor', 'pashta', 'yetiv',
@@ -111,16 +116,56 @@ def classify(d):
     return '+'.join(sorted(reasons))
 
 
+def record_key(d):
+    """Identity of a change record: (release, changeset, n)."""
+    return (d.get('release'), d.get('changeset'), d.get('n'))
+
+
+def _parse_uxlc_change(compact):
+    """Parse a compact UXLC change ref into a (release, changeset, n) key.
+
+    The compact ref "2021.04.01/2020.12.06-2" is release/changeset-n (the same
+    form `rtms_report._expand_uxlc_change_ref` expands to a tanach.us URL).
+    Returns None for anything that is not a well-formed compact ref."""
+    if not isinstance(compact, str):
+        return None
+    release, sep, changeset_n = compact.partition('/')
+    if not sep:
+        return None
+    changeset, sep, n_str = changeset_n.rpartition('-')
+    if not sep or not n_str.isdigit():
+        return None
+    return (release, changeset, int(n_str))
+
+
+def goerwitz_uxlc_change_keys():
+    """Map (release, changeset, n) -> (structured-text ref, is_pending) for every
+    `uxlc_change` / `pending_uxlc_change` named by a Goerwitz structured-text
+    entry. `is_pending` is True when the ref came from `pending_uxlc_change`
+    (a change accepted upstream but not yet in a stable release)."""
+    keys = {}
+    for ref, entry in ob_notes.STRUCTURED_TEXT_BY_REF.items():
+        for field, pending in (('uxlc_change', False), ('pending_uxlc_change', True)):
+            key = _parse_uxlc_change(entry.get(field))
+            if key is not None:
+                keys[key] = (ref, pending)
+    return keys
+
+
 def main():
     src = 'in/UXLC-misc/all_changes.json'
     out = 'in/accgram/uxlc_accent_changes.json'
     data = json.load(open(src, encoding='utf-8'))
+    gw_keys = goerwitz_uxlc_change_keys()
     result = []
     for d in data:
         reason = classify(d)
         if reason:
             rec = dict(d)
             rec['accent_change_reason'] = reason
+            ref, pending = gw_keys.get(record_key(d), (None, None))
+            rec['goerwitz_st_ref'] = ref
+            rec['goerwitz_st_pending'] = pending
             result.append(rec)
     if '--audit' in sys.argv:
         print('total records:', len(data))
@@ -129,6 +174,17 @@ def main():
         # bug check: no flagged record may have identical ref/chg representations
         bug = [r for r in result if ref_chg(r)[0] == ref_chg(r)[1] and r['accent_change_reason'] != 'maqaf']
         print('BUG (identical ref/chg yet flagged non-maqaf):', len(bug))
+        # Goerwitz structured-text coverage
+        matched = {record_key(r) for r in result if r['goerwitz_st_ref']}
+        pending = sum(1 for r in result if r['goerwitz_st_pending'])
+        print('goerwitz uxlc_change refs:', len(gw_keys))
+        print('  matched to a flagged accent change:', len(matched), f'({pending} pending)')
+        unmatched = {k: v for k, v in gw_keys.items() if k not in matched}
+        if unmatched:
+            print('  NOT matched (ref not an accent change / not in data):')
+            for k, (ref, is_pending) in sorted(unmatched.items(), key=lambda kv: kv[1][0]):
+                tag = ' [pending]' if is_pending else ''
+                print(f'    {ref}{tag}: {k[0]}/{k[1]}-{k[2]}')
         return
     json.dump(result, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
     print(f'Wrote {len(result)} accent-change records to {out}')
