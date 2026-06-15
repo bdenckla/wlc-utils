@@ -88,7 +88,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "lm 5:5": {
         "st-source": "tbd",
-        "st-summary": "BHQ transcribes a meteg as a tipeḥa due to a missing maqaf.",
+        "st-summary": "BHQ transcribes a meteg as a tipeḥa due to the LC’s missing maqaf.",
         "wlc_focus": "הונ֖ח",
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
         "comment": (
@@ -103,7 +103,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "da 2:41": {
         "st-source": "tbd",
-        "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
+        "st-summary": "BHS transcribes a meteg as a merkha due to the LC’s missing maqaf.",
         "wlc_focus": "ד֥י",
         "uxlc_change": "2024.04.01/2023.09.12-3",
         "comment": "See the image in the UXLC change to which we link above.",

@@ -25,7 +25,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "ek 14:11": {
         "st-source": "tbd",
-        "st-summary": "BHS transcribes a meteg as a merkha due to a missing maqaf.",
+        "st-summary": "BHS transcribes a meteg as a merkha due to the LC’s missing maqaf.",
         "wlc_focus": "וה֥יו ל֣י",
         "img": "LC-282B-col-2-line-3-Ezek-14v11.png",
         "comment": (
