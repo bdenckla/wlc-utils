@@ -223,20 +223,16 @@ def _build_filter_controls(counts: dict[str, int]) -> object:
     category_fieldset = _fieldset(
         "Grammar error",
         (
-            _checkbox(
-                "gf-category", "msp", f"missing sof pasuq ({counts['msp']})"
-            ),
-            _checkbox("gf-category", "msl", f"missing silluq ({counts['msl']})"),
-            _checkbox("gf-category", "zwhim", f"zarqa whim ({counts['zwhim']})"),
-            _checkbox("gf-category", "other", f"other ({counts['other']})"),
+            _checkbox("gf-category", "msp", "missing sof pasuq", counts["msp"]),
+            _checkbox("gf-category", "msl", "missing silluq", counts["msl"]),
+            _checkbox("gf-category", "zwhim", "zarqa whim", counts["zwhim"]),
+            _checkbox("gf-category", "other", "other", counts["other"]),
         ),
     )
     source_fieldset = _fieldset(
         "Source",
         tuple(
-            _checkbox(
-                "gf-source", slug, f"{label} ({counts['src_' + slug]})"
-            )
+            _checkbox("gf-source", slug, label, counts["src_" + slug])
             for slug, label in _SOURCE_LABELS.items()
         ),
     )
@@ -271,27 +267,24 @@ def _tristate_fieldset(
     filter. Defaults to "don't care" so the page opens unfiltered on this axis.
 
     The "has"/"doesn't have" counts are wrapped in spans the filter script
-    recomputes live, restricting to the verses passing the other filters (see
-    goerwitz-filter.js). The numbers written here are the no-JS fallback."""
+    recomputes live to the number of currently-visible verses matching each
+    option (see goerwitz-filter.js). The numbers written here are the no-JS
+    fallback. "don't care" carries no count."""
     return _fieldset(
         legend_text,
         (
+            _radio_with_count(group_name, "yes", "has", has_count),
             _radio_with_count(
-                group_name, "yes", "has", has_count, f"{group_name}-has-count"
-            ),
-            _radio_with_count(
-                group_name,
-                "no",
-                "doesn't have",
-                total - has_count,
-                f"{group_name}-no-count",
+                group_name, "no", "doesn't have", total - has_count
             ),
             _radio(group_name, "any", "don't care", checked=True),
         ),
     )
 
 
-def _checkbox(css_class: str, value: str, label_text: str) -> object:
+def _checkbox(
+    css_class: str, value: str, label_text: str, count: int
+) -> object:
     input_el = wlc_utils_html.htel_mk_inline_nc(
         "input",
         {
@@ -301,7 +294,9 @@ def _checkbox(css_class: str, value: str, label_text: str) -> object:
             "checked": "checked",
         },
     )
-    return wlc_utils_html.htel_mk_inline("label", None, (input_el, f" {label_text}"))
+    return wlc_utils_html.htel_mk_inline(
+        "label", None, (input_el, f" {label_text}", _count_span(count))
+    )
 
 
 def _radio(
@@ -312,14 +307,27 @@ def _radio(
 
 
 def _radio_with_count(
-    group_name: str, value: str, prefix_text: str, count: int, count_class: str
+    group_name: str, value: str, prefix_text: str, count: int
 ) -> object:
     """A radio whose label ends in a "(N)" count the filter script keeps live."""
     input_el = _radio_input(group_name, value, checked=False)
-    count_span = wlc_utils_html.span_c(str(count), count_class)
     return wlc_utils_html.htel_mk_inline(
-        "label", None, (input_el, f" {prefix_text} (", count_span, ")")
+        "label", None, (input_el, f" {prefix_text}", _count_span(count))
     )
+
+
+# The class every live count span carries, so the filter script can find the
+# count span inside any control's <label> and rewrite it (see
+# goerwitz-filter.js). A zero count renders empty (no "(0)").
+_COUNT_CLASS = "gf-opt-count"
+
+
+def _count_span(count: int) -> object:
+    return wlc_utils_html.span_c(_count_text(count), _COUNT_CLASS)
+
+
+def _count_text(count: int) -> str:
+    return f" ({count})" if count else ""
 
 
 def _radio_input(group_name: str, value: str, *, checked: bool) -> object:

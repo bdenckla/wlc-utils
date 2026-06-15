@@ -13,10 +13,12 @@
 // "yes" (has), "no" (doesn't have), or "any" (don't care). .gf-count reports how
 // many verses are currently visible.
 //
-// Each tri-state option's "(N)" count is recomputed live (faceted): it counts
-// the verses that pass every OTHER filter, so the number reflects how many
-// would show if that option were chosen. A facet's own selection never affects
-// its own counts. The spans the Python writes are the no-JS fallback.
+// Every option label ends in a .gf-opt-count span (except each group's "don't
+// care" radio). Each is recomputed live to the number of CURRENTLY-VISIBLE
+// verses matching that option, so the counts always sum to what the page shows:
+// an unchecked checkbox, or a radio option the active filters exclude, reads 0
+// and renders empty (no "(0)"). The spans the Python writes are the no-JS
+// fallback.
 (function () {
   "use strict";
 
@@ -48,30 +50,50 @@
     return true;
   }
 
-  function setCount(className, value) {
-    var el = document.querySelector("." + className);
-    if (el) {
-      el.textContent = String(value);
+  // The "(N)" a count span shows; zero renders empty (no "(0)").
+  function countText(count) {
+    return count ? " (" + count + ")" : "";
+  }
+
+  // Write `count` into the .gf-opt-count span inside an input's <label>.
+  function setOptCount(input, count) {
+    var label = input.closest("label");
+    var span = label && label.querySelector(".gf-opt-count");
+    if (span) {
+      span.textContent = countText(count);
     }
   }
 
-  // Recompute one tri-state group's counts over the verses passing `others`
-  // (every filter except this group), then write them into its count spans.
-  function updateFacetCounts(group, verses, others) {
-    var has = 0;
-    var no = 0;
-    verses.forEach(function (verse) {
-      if (!others(verse)) {
+  // Count, among the currently-visible verses, those whose dataKey attribute
+  // equals each input's wanted value, and write it into that input's count span.
+  // `valueFor` maps an input to the data-attribute value it represents (a radio
+  // returning null carries no count and is skipped).
+  function updateOptionCounts(selector, dataKey, visible, valueFor) {
+    document.querySelectorAll(selector).forEach(function (input) {
+      var wanted = valueFor(input);
+      if (wanted === null) {
         return;
       }
-      if (verse.dataset[group.dataKey] === "1") {
-        has += 1;
-      } else {
-        no += 1;
-      }
+      var count = 0;
+      visible.forEach(function (verse) {
+        if (verse.dataset[dataKey] === wanted) {
+          count += 1;
+        }
+      });
+      setOptCount(input, count);
     });
-    setCount(group.name + "-has-count", has);
-    setCount(group.name + "-no-count", no);
+  }
+
+  // The data-attribute value a tri-state radio represents: "1"/"0" for has/
+  // doesn't-have, or null for "don't care" (which shows no count).
+  function radioWanted(input) {
+    if (input.value === "yes") {
+      return "1";
+    }
+    if (input.value === "no") {
+      return "0";
+    }
+    return null;
   }
 
   function applyFilters() {
@@ -94,41 +116,34 @@
       return flagMatches(wantWnote, verse.dataset.wnote);
     }
 
-    var shown = 0;
+    var visible = [];
     verses.forEach(function (verse) {
-      var visible =
+      var isVisible =
         passesCategory(verse) &&
         passesSource(verse) &&
         passesUchange(verse) &&
         passesWnote(verse);
-      verse.style.display = visible ? "" : "none";
-      if (visible) {
-        shown += 1;
+      verse.style.display = isVisible ? "" : "none";
+      if (isVisible) {
+        visible.push(verse);
       }
     });
 
-    // Faceted: each group's counts honor every filter EXCEPT itself.
-    updateFacetCounts(
-      { name: "gf-uchange", dataKey: "uchange" },
-      verses,
-      function (verse) {
-        return passesCategory(verse) && passesSource(verse) && passesWnote(verse);
-      }
-    );
-    updateFacetCounts(
-      { name: "gf-wnote", dataKey: "wnote" },
-      verses,
-      function (verse) {
-        return (
-          passesCategory(verse) && passesSource(verse) && passesUchange(verse)
-        );
-      }
-    );
+    // Every option's count is the number of currently-visible verses matching
+    // it, so the counts always sum to what the page shows.
+    updateOptionCounts("input.gf-category", "category", visible, function (i) {
+      return i.value;
+    });
+    updateOptionCounts("input.gf-source", "source", visible, function (i) {
+      return i.value;
+    });
+    updateOptionCounts("input.gf-uchange", "uchange", visible, radioWanted);
+    updateOptionCounts("input.gf-wnote", "wnote", visible, radioWanted);
 
     var countEl = document.querySelector(".gf-count");
     if (countEl) {
       countEl.textContent =
-        "Showing " + shown + " of " + verses.length + " verses";
+        "Showing " + visible.length + " of " + verses.length + " verses";
     }
   }
 
