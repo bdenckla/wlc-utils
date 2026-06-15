@@ -1,0 +1,138 @@
+"""Find accent changes in UXLC-misc/all_changes.json.
+
+An "accent change" (per request) is a change that involves any of:
+  - changing an accent (te'am) to a different accent
+  - adding or removing an accent
+  - adding or removing a maqaf
+
+Silluq vs meteg: Unicode METEG (U+05BD) encodes both the narrow meteg (secondary
+stress) and silluq (the verse-final disjunctive accent). We are NOT interested in
+narrow meteg, but silluq IS an accent (silluq added / removed / changed to another
+accent all count). Operationally, silluq = the LAST U+05BD in the verse-final word,
+i.e. the last `meteg` token in the space-delimited segment that contains
+`sof-pasuq`. That one token is relabelled `silluq` and treated as a te'am; every
+other `meteg` is narrow meteg and ignored entirely.
+
+Marks in the refuni/changeuni token fields attach to their preceding consonant.
+We therefore anchor each accent to its base consonant, align the two consonant
+sequences, and compare the accent marks per consonant. This is robust to
+difflib's arbitrary choice of which token "moved" in a pure reorder, and to
+consonant insertions/deletions shifting positions.
+
+Notes / deliberate scope decisions:
+  - `segol` is treated as the VOWEL, not the accent segolta: in this corpus the
+    accent name segolta is never spelled out, and `segol` is always the vowel
+    (verified: accent-typed records containing `segol` always change a different,
+    distinctly-named te'am).
+  - `paseq` / `sof-pasuq` are punctuation/dividers, not te'amim -> excluded.
+  - Narrow `meteg` changes (add/remove/move a meteg that is NOT the verse-final
+    silluq) are EXCLUDED.
+  - The curated refuni/changeuni are sometimes stale (== each other) while the
+    real change is in *_gen; we use `*_gen or *` for each side.
+"""
+import json
+import collections
+import sys
+
+ACC = {
+    'etnachta', 'etnahta', 'atnah-hafukh', 'zarqa', 'zinor', 'pashta', 'yetiv',
+    'tevir', 'geresh', 'geresh-muqdam', 'gereshayim', 'gershayim',
+    'telisha-gedola', 'telisha-qetana', 'pazer', 'munah', 'mahapakh',
+    'makhapakh', 'merkha', 'darga', 'qadma', 'yerah-ben-yomo', 'ole', 'iluy',
+    'dehi', 'revia', 'zaqef-qatan', 'zaqef-gadol', 'tipeha', 'shalshelet',
+}
+CONS = {
+    'alef', 'ayin', 'bet', 'dalet', 'final-kaf', 'final-mem', 'final-nun',
+    'final-pe', 'final-tsadi', 'gimel', 'gimelt', 'he', 'het', 'kaf', 'lamed',
+    'mem', 'nun', 'pe', 'qof', 'resh', 'samekh', 'shin', 'tav', 'tet', 'tsadi',
+    'vav', 'yod', 'zayin',
+}
+
+
+def relabel_silluq(tokens):
+    """Rename the verse-final silluq (last `meteg` in the sof-pasuq segment) to
+    `silluq`; leave all other `meteg` tokens (narrow meteg) untouched."""
+    toks = list(tokens)
+    if 'sof-pasuq' not in toks:
+        return toks
+    sp = max(i for i, t in enumerate(toks) if t == 'sof-pasuq')
+    left = max([i for i in range(sp) if toks[i] == 'space'], default=-1) + 1
+    metegs = [i for i in range(left, sp + 1) if toks[i] == 'meteg']
+    if metegs:
+        toks[metegs[-1]] = 'silluq'
+    return toks
+
+
+def ref_chg(d):
+    r = d.get('refuni_gen') or d.get('refuni') or ''
+    c = d.get('changeuni_gen') or d.get('changeuni') or ''
+    return relabel_silluq(r.split()), relabel_silluq(c.split())
+
+
+# silluq is a te'am for our purposes; narrow meteg is ignored.
+ACC_S = ACC | {'silluq'}
+
+
+def units(tokens):
+    """Split into consonant-units: [consonant, [te'am marks in order]].
+
+    Te'am = ACC_S (accents + silluq); narrow meteg is ignored. A leading '^'
+    sentinel holds any marks before the first consonant."""
+    us = [['^', []]]
+    for t in tokens:
+        if t in CONS:
+            us.append([t, []])
+        elif t in ACC_S:
+            us[-1][1].append(t)
+    return us
+
+
+def maqaf_count(tokens):
+    return sum(1 for t in tokens if t == 'maqaf')
+
+
+def classify(d):
+    """Return a reason label ('maqaf', 'accent', 'silluq', or '+'-joined combo)
+    or None if the record is not an accent change."""
+    a, b = ref_chg(d)
+    reasons = set()
+    if maqaf_count(a) != maqaf_count(b):
+        reasons.add('maqaf')
+    # A change to the consonant skeleton (qere/ketiv orthography) where an accent
+    # merely re-anchors to a neighbouring letter is not an accent-layer change.
+    if [t for t in a if t in CONS] == [t for t in b if t in CONS]:
+        ua, ub = units(a), units(b)
+        for ka, kb in zip(ua, ub):
+            ma, mb = ka[1], kb[1]
+            if ma != mb:
+                reasons.add('silluq' if 'silluq' in set(ma) | set(mb) else 'accent')
+    if not reasons:
+        return None
+    return '+'.join(sorted(reasons))
+
+
+def main():
+    src = 'in/UXLC-misc/all_changes.json'
+    out = 'in/accgram/uxlc_accent_changes.json'
+    data = json.load(open(src, encoding='utf-8'))
+    result = []
+    for d in data:
+        reason = classify(d)
+        if reason:
+            rec = dict(d)
+            rec['accent_change_reason'] = reason
+            result.append(rec)
+    if '--audit' in sys.argv:
+        print('total records:', len(data))
+        print('flagged:', len(result))
+        print('by reason:', collections.Counter(r['accent_change_reason'] for r in result))
+        # bug check: no flagged record may have identical ref/chg representations
+        bug = [r for r in result if ref_chg(r)[0] == ref_chg(r)[1] and r['accent_change_reason'] != 'maqaf']
+        print('BUG (identical ref/chg yet flagged non-maqaf):', len(bug))
+        return
+    json.dump(result, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+    print(f'Wrote {len(result)} accent-change records to {out}')
+
+
+if __name__ == '__main__':
+    main()
