@@ -25,14 +25,14 @@ def build_intro_contents(
     oddball_count: int,
 ) -> tuple[object, ...]:
     intro_text = (
-        f"This page lists the {oddball_count} WLC 4.22 verses that the Goerwitz accent"
-        " grammar checker, run via the PLY port, does not parse cleanly. Use the filter"
-        " below to narrow the list."
+        f"This page lists the {oddball_count} WLC 4.22 verses that produce \u201cERROR\u201d"
+        " when run through the PLY port of the Goerwitz accent checker."
+        " Use the filter below to narrow the list."
     )
     oddballs_text = (
-        f"These {oddball_count} verses are parsed by the PLY port into a tree"
-        " containing the string \u201cERROR\u201d; each oddball section includes its"
-        " complete parse tree. Potential causes include"
+        f"These {oddball_count} verses parse into a tree"
+        " containing the string \u201cERROR\u201d; each section below includes one such"
+        " tree. Potential causes of \u201cERROR\u201d include"
         " WLC quirks,"
         " BHS quirks,"
         " LC quirks, and"
@@ -48,7 +48,7 @@ def build_intro_contents(
     )
     source_text = (
         "A Source filter, ANDed with the grammar error, attributes each verse to"
-        " WLC, BHS/BHQ, the LC, or “unclear/TBD,” inferred from its summary."
+        " WLC, BHS/BHQ, the LC, or “unclear/TBD”."
     )
     and_text = (
         "Two further toggles narrow the list, each ANDed with the filters above:"
