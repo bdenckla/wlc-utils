@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from py_html import wlc_utils_html
+
 
 def ambiguous_mark_context_comment(marked_word: str) -> str:
     return (
@@ -33,10 +35,15 @@ BHS_TRANSCRIBES = "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
 ZARQA_WHIM_SUMMARY = "WLC turns a scribal zarqa whim into an outright error."
 
 
+# In-page link to the nu 20:19 oddball section. The href must match that
+# section's anchor id (see ob_report.oddball_anchor_id: "ob" + bcv with ":"->"v").
 ZARQA_WHIM = {
     "st-summary": ZARQA_WHIM_SUMMARY,
     "comment": (
-        "This is one of twelve items of this type."
-        " See nu 20:19 for more discussion of items like this."
+        [
+            "This is one of twelve items of this type. See ",
+            wlc_utils_html.anchor("nu 20:19", {"href": "#obnu20v19"}),
+            " for more discussion of items like this.",
+        ],
     ),
 }
