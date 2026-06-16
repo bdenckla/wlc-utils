@@ -20,7 +20,7 @@ _FOI_CATEGORY_URL = (
 BY_REF: dict[str, dict[str, object]] = {
     "is 36:2": {
         "st-source": "tbd",
-        "st-summary": "The checker does not like munaḥ serving munaḥ legarmeh.",
+        "st-summary": "The checker rejects munaḥ serving munaḥ legarmeh; the servus must be merkha.",
         "wlc_focus": "וישל֣ח",
         "comment": [
             (
@@ -30,6 +30,9 @@ BY_REF: dict[str, dict[str, object]] = {
                 ),
                 "”.",
             ),
+            "Verified by re-running the checker on a fixed verse: substituting"
+            " merkha for the munaḥ servus (the MAM-simple reading) clears the"
+            " checker error.",
         ],
     },
     "is 13:7": {

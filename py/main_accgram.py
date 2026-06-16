@@ -24,6 +24,13 @@ Subcommands:
                 each with its matching wlc422-kq-u verse object and structured
                 XML-ish UXLC verse node and write out/accgram/research-oddballs.json
                 plus the HTML report gh-pages/accgram/goerwitz.html.
+    test-fixes
+                For every annotated prose oddball, test whether adopting its
+                MAM-simple value clears the ERROR: splice the MAM value into the
+                M-C body, re-scan + re-parse, and classify CONFIRMED / DENIED /
+                CHANGED / UNTESTABLE.  Cross-checks each verdict against the
+                ob_notes claim and writes out/accgram/fix-tester/_fix_tester.{txt,json}.
+                Run run-ply first.
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py run-ply
@@ -36,6 +43,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from accgram import fix_tester
 from accgram import research_tao
 from accgram import run_ply
 from accgram import run_ply_poetic
@@ -61,6 +69,10 @@ def _run_run_ply_poetic(args: argparse.Namespace) -> None:
 
 def _run_xcheck_poetic(args: argparse.Namespace) -> None:
     xcheck_poetic.run(args)
+
+
+def _run_fix_tester(args: argparse.Namespace) -> None:
+    fix_tester.run(args)
 
 
 def main() -> None:
@@ -114,6 +126,17 @@ def main() -> None:
     )
     research_tao.add_args(research_tao_parser, repo_root=_repo_root())
     research_tao_parser.set_defaults(func=_run_research_tao)
+
+    fix_tester_parser = subparsers.add_parser(
+        "test-fixes",
+        help=(
+            "Test whether adopting each annotated prose oddball's MAM-simple value "
+            "clears its ERROR; write out/accgram/fix-tester/_fix_tester.{txt,json}. "
+            "Run run-ply first."
+        ),
+    )
+    fix_tester.add_args(fix_tester_parser, repo_root=_repo_root())
+    fix_tester_parser.set_defaults(func=_run_fix_tester)
 
     args = parser.parse_args()
     args.func(args)

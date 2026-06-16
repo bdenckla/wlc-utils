@@ -1,0 +1,391 @@
+# Fix-tester: do MAM-simple values resolve annotated prose oddballs?
+
+confirmed: 51  denied: 0  changed: 0  untestable: 40  (91 annotated oddballs tested)
+speculations: 15 total; 5 confirmed, 0 denied/changed, 10 untestable
+claim-vs-result: 45 agree, 0 disagree
+
+## CONFIRMED -- MAM fix clears the oddball  (51)
+  1c 1:53 [claim: expects_fix] [AGREE]
+    fix: אל֣וף -> אל֥וף
+    transform: atom ")AL.74W.P" -> ")AL.71W.P" (74 -> 71)
+    before: MEREKA TEVIR MEREKA TIFCHA MUNACH SILLUQ SOFPASUQ  [ODDBALL: silluq_phrase]
+    after:  MEREKA TEVIR MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  1k 6:2 [claim: expects_fix] [AGREE]
+    fix: ועשר֤ים -> ועשר֣ים
+    transform: atom "W:/(E&:RI70YM" -> "W:/(E&:RI74YM" (70 -> 74)
+    before: REVIA AZLA GERESH MAHPAK PASHTA ZAQEF MEREKA TIFCHA MAHPAK ATNACH MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: atnach_phrase]
+    after:  REVIA AZLA GERESH MAHPAK PASHTA ZAQEF MEREKA TIFCHA MUNACH ATNACH MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  1k 6:3 [claim: expects_fix] [AGREE]
+    fix: עשר֣ים -> עשר֤ים
+    transform: atom "(E&:RI74YM" -> "(E&:RI70YM" (74 -> 70)
+    before: REVIA PASHTA MUNACH ZAQEF MUNACH PASHTA ZAQEF TIFCHA MUNACH ATNACH DARGA TEVIR TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: pashta_phrase]
+    after:  REVIA PASHTA MUNACH ZAQEF MAHPAK PASHTA ZAQEF TIFCHA MUNACH ATNACH DARGA TEVIR TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  1k 16:33 [claim: expects_fix] [AGREE]
+    fix: מכ֨ל -> מכל֙
+    transform: atom "MI/K.O63L" -> "MI/K.O03L" (63 -> 03)
+    before: MEREKA TIFCHA ATNACH AZLA GERESH REVIA PASHTA PASHTA MUNACH ZAQEF AZLA MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
+    after:  MEREKA TIFCHA ATNACH AZLA GERESH REVIA PASHTA PASHTA MUNACH ZAQEF PASHTA MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  1k 20:29 [speculative] [claim: expects_fix] [AGREE]
+    fix: נ֥כח -> נכח־
+    transform: atom "NO71KAX" -> "NOKAX" (71 -> (none))
+    before: DARGA MEREKAKEFULA MEREKA TIFCHA MUNACH ATNACH LEGARMEH MUNACH REVIA PASHTA ZAQEF AZLA DARGA TEVIR MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  DARGA MEREKAKEFULA TIFCHA MUNACH ATNACH LEGARMEH MUNACH REVIA PASHTA ZAQEF AZLA DARGA TEVIR MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  1s 6:19 [claim: expects_fix] [AGREE]
+    fix: גדולֽה -> גדולֽה׃
+    transform: append sof pasuq (00) to body
+    before: GERSHAYIM MUNACH REVIA MAHPAK PASHTA MUNACH ZAQEF MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA ATNACH MUNACH ZAQEF DARGA TEVIR TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  GERSHAYIM MUNACH REVIA MAHPAK PASHTA MUNACH ZAQEF MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA ATNACH MUNACH ZAQEF DARGA TEVIR TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  2c 8:10 [claim: expects_fix] [AGREE]
+    fix: שר֤י -> שר֧י
+    transform: atom "&FR"70Y" -> "&FR"94Y" (70 -> 94)
+    before: AZLA MAHPAK TEVIR MEREKA TIFCHA MUNACH ATNACH TIFCHA SILLUQ SOFPASUQ  [ODDBALL: tevir_phrase]
+    after:  AZLA DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  2c 25:1 [claim: expects_fix] [AGREE]
+    fix: ועשר֣ים -> ועשר֤ים
+    transform: atom "W:/(E&:RI74YM" -> "W:/(E&:RI70YM" (74 -> 70)
+    before: AZLA MAHPAK PASHTA MUNACH ZAQEF MUNACH PASHTA ZAQEF TIFCHA ATNACH MUNACH ZAQEF TIFCHA SILLUQ SOFPASUQ  [ODDBALL: pashta_phrase]
+    after:  AZLA MAHPAK PASHTA MUNACH ZAQEF MAHPAK PASHTA ZAQEF TIFCHA ATNACH MUNACH ZAQEF TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  2k 23:36 [claim: expects_fix] [AGREE]
+    fix: שנ֨ה -> שנה֙
+    transform: atom "$FNF63H" -> "$FNF03H" (63 -> 03)
+    before: AZLA MAHPAK AZLA MUNACH ZAQEF MAHPAK PASHTA ZAQEF TIFCHA ATNACH MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
+    after:  AZLA MAHPAK PASHTA MUNACH ZAQEF MAHPAK PASHTA ZAQEF TIFCHA ATNACH MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  2s 6:20 [claim: expects_fix] [AGREE]
+    fix: לעינ֨י -> לעיני֙
+    transform: atom "L:/("YN"63Y" -> "L:/("YN"03Y" (63 -> 03)
+    before: MEREKA TIFCHA MUNACH ATNACH GERSHAYIM MAHPAK PASHTA MUNACH ZAQEF REVIA AZLA GERESH MUNACH REVIA AZLA MAHPAK PASHTA AZLA MUNACH ZAQEF MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
+    after:  MEREKA TIFCHA MUNACH ATNACH GERSHAYIM MAHPAK PASHTA MUNACH ZAQEF REVIA AZLA GERESH MUNACH REVIA AZLA MAHPAK PASHTA PASHTA MUNACH ZAQEF MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  2s 11:11 [claim: expects_fix] [AGREE]
+    fix: אדנ֨י -> אדני֙
+    transform: atom "):ADON/I63Y" -> "):ADON/I03Y" (63 -> 03)
+    before: AZLA GERESH REVIA TELISHAGEDOLA AZLA GERESH MUNACH REVIA AZLA GERESH MAHPAK AZLA MAHPAK PASHTA ZAQEF GERSHAYIM DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH PASHTA MUNACH ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: pashta_phrase]
+    after:  AZLA GERESH REVIA TELISHAGEDOLA AZLA GERESH MUNACH REVIA AZLA GERESH MAHPAK PASHTA MAHPAK PASHTA ZAQEF GERSHAYIM DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH PASHTA MUNACH ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  am 1:14 [claim: expects_fix] [AGREE]
+    fix: סופֽה -> סופֽה׃
+    transform: append sof pasuq (00) to body
+    before: MAHPAK PASHTA MUNACH ZAQEF TIFCHA ATNACH PASHTA MUNACH ZAQEF TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  MAHPAK PASHTA MUNACH ZAQEF TIFCHA ATNACH PASHTA MUNACH ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  am 6:6 [claim: expects_fix] [AGREE]
+    fix: יוסֽף -> יוסֽף׃
+    transform: append sof pasuq (00) to body
+    before: MAHPAK PASHTA ZAQEF MEREKA TIFCHA ATNACH MEREKA TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  MAHPAK PASHTA ZAQEF MEREKA TIFCHA ATNACH MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  am 9:5 [claim: expects_fix] [AGREE]
+    fix: מצרֽים -> מצרֽים׃
+    transform: append sof pasuq (00) to body
+    before: AZLA GERESH REVIA MAHPAK PASHTA ZAQEF TIFCHA MUNACH ATNACH MAHPAK PASHTA ZAQEF TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  AZLA GERESH REVIA MAHPAK PASHTA ZAQEF TIFCHA MUNACH ATNACH MAHPAK PASHTA ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  da 2:41 [claim: expects_fix] [AGREE]
+    fix: ד֥י -> די־
+    transform: atom "DI71Y" -> "DIY" (71 -> (none))
+    before: GERESH MUNACH REVIA GERSHAYIM MAHPAK PASHTA MUNACH ZAQEF MAHPAK PASHTA ZAQEF MEREKA MEREKA TIFCHA ATNACH PASHTA MUNACH ZAQEF METHIGAZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  GERESH MUNACH REVIA GERSHAYIM MAHPAK PASHTA MUNACH ZAQEF MAHPAK PASHTA ZAQEF MEREKA TIFCHA ATNACH PASHTA MUNACH ZAQEF METHIGAZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  dt 9:20 [claim: expects_fix] [AGREE]
+    fix: ההֽוא -> ההֽוא׃
+    transform: append sof pasuq (00) to body
+    before: REVIA DARGA TEVIR TIFCHA ATNACH TEVIR MEREKA TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  REVIA DARGA TEVIR TIFCHA ATNACH TEVIR MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  dt 13:15 [claim: expects_fix] [AGREE]
+    fix: וחקרת֧ -> וחקרת֛
+    transform: atom "W:/XFQAR:T.F94]U" -> "W:/XFQAR:T.F91]U" (94 -> 91)
+    before: DARGA DARGA TIFCHA ATNACH MAHPAK PASHTA MUNACH ZAQEF TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  DARGA TEVIR TIFCHA ATNACH MAHPAK PASHTA MUNACH ZAQEF TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  dt 24:10 [speculative] [claim: expects_fix] [AGREE]
+    fix: ברעך -> ברעך֖
+    transform: atom "B:/R"75(/:AKF]U" -> "B:/R"75(/:AKF]U73" ((none) -> 73)
+    before: MEREKA MUNACH ATNACH MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: atnach_phrase]
+    after:  MEREKA TIFCHA MUNACH ATNACH MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  dt 25:9 [claim: expects_fix] [AGREE]
+    fix: אחֽיו -> אחֽיו׃
+    transform: append sof pasuq (00) to body
+    before: AZLA MUNACH ZARQA MUNACH SEGOLTA MAHPAK PASHTA MUNACH ZAQEF TIFCHA ATNACH PASHTA MUNACH ZAQEF YETIV MUNACH ZAQEF MEREKA TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  AZLA MUNACH ZARQA MUNACH SEGOLTA MAHPAK PASHTA MUNACH ZAQEF TIFCHA ATNACH PASHTA MUNACH ZAQEF YETIV MUNACH ZAQEF MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  ec 7:21 [claim: expects_fix] [AGREE]
+    fix: אש֥ר -> אש֛ר
+    transform: atom "):A$E71R" -> "):A$E91R" (71 -> 91)
+    before: MAHPAK PASHTA MUNACH ZAQEF TIFCHA ATNACH MEREKA MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  MAHPAK PASHTA MUNACH ZAQEF TIFCHA ATNACH TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ec 12:14 [speculative] [claim: expects_fix] [AGREE]
+    fix: כ֤י -> כ֚י
+    transform: atom "K.I70Y" -> "K.I10Y" (70 -> 10)
+    before: MAHPAK ZAQEF TEVIR MEREKA TIFCHA MUNACH ATNACH TIFCHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
+    after:  YETIV ZAQEF TEVIR MEREKA TIFCHA MUNACH ATNACH TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ek 33:20 [claim: expects_fix] [AGREE]
+    fix: ישראֽל -> ישראֽל׃
+    transform: append sof pasuq (00) to body
+    before: ZAQEFGADOL MEREKA TIFCHA MUNACH ATNACH DARGA TEVIR MEREKA TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  ZAQEFGADOL MEREKA TIFCHA MUNACH ATNACH DARGA TEVIR MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  ex 2:5 [claim: expects_fix] [AGREE]
+    fix: ותקחֽה -> ותקחֽה׃
+    transform: append sof pasuq (00) to body
+    before: MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ex 4:10
+    fix: דברך -> דברך֖
+    transform: atom "D.AB.ER/:KF]1" -> "D.AB.ER/:KF73]1" ((none) -> 73)
+    before: AZLA MUNACH ZARQA MUNACH SEGOLTA TELISHAQETANNA AZLA GERESH REVIA MAHPAK PASHTA MUNACH ZAQEF TEVIR MEREKA ATNACH DARGA TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: atnach_phrase]
+    after:  AZLA MUNACH ZARQA MUNACH SEGOLTA TELISHAQETANNA AZLA GERESH REVIA MAHPAK PASHTA MUNACH ZAQEF TEVIR MEREKA TIFCHA ATNACH DARGA TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ex 14:25 [claim: expects_fix] [AGREE]
+    fix: במצרֽים -> במצרֽים׃
+    transform: append sof pasuq (00) to body
+    before: REVIA YETIV MUNACH ZAQEF TIFCHA ATNACH MUNACH REVIA PASHTA MUNACH ZAQEF MUNACH ZAQEF MEREKA TIFCHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  REVIA YETIV MUNACH ZAQEF TIFCHA ATNACH MUNACH REVIA PASHTA MUNACH ZAQEF MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ex 14:29 [claim: expects_fix] [AGREE]
+    fix: ומשמאלֽם -> ומשמאלֽם׃
+    transform: append sof pasuq (00) to body
+    before: DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH MAHPAK PASHTA ZAQEF TIFCHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH MAHPAK PASHTA ZAQEF TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ex 34:6 [claim: expects_fix] [AGREE]
+    fix: ואמֽת׀ -> ואמֽת׃
+    transform: append sof pasuq (00) to body
+    before: AZLA MEREKA ZARQA SEGOLTA MUNACH ZAQEF MEREKA TIFCHA ATNACH MEREKA TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  AZLA MEREKA ZARQA SEGOLTA MUNACH ZAQEF MEREKA TIFCHA ATNACH MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  ex 38:12
+    fix: עמודיה֥ם -> עמודיה֣ם
+    transform: atom "(AM.W.D"Y/HE71M" -> "(AM.W.D"Y/HE74M" (71 -> 74)
+    before: REVIA PASHTA MUNACH ZAQEF MEREKA ZAQEF TIFCHA ATNACH DARGA TEVIR TIFCHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
+    after:  REVIA PASHTA MUNACH ZAQEF MUNACH ZAQEF TIFCHA ATNACH DARGA TEVIR TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ho 4:19 [claim: expects_fix] [AGREE]
+    fix: מזבחותֽם -> מזבחותֽם׃
+    transform: append sof pasuq (00) to body
+    before: MEREKA TEVIR TIFCHA ATNACH TIFCHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  MEREKA TEVIR TIFCHA ATNACH TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ho 8:9 [claim: expects_fix] [AGREE]
+    fix: אהבֽים -> אהבֽים׃
+    transform: append sof pasuq (00) to body
+    before: PASHTA MUNACH ZAQEF TIFCHA MUNACH ATNACH TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  PASHTA MUNACH ZAQEF TIFCHA MUNACH ATNACH TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  is 36:2
+    fix: וישל֣ח -> וישל֥ח
+    transform: atom "WA/Y.I$:LA74X" -> "WA/Y.I$:LA71X" (74 -> 71)
+    before: MUNACH LEGARMEH AZLA DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH REVIA PASHTA MUNACH ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: legarmeh_phrase]
+    after:  MEREKA LEGARMEH AZLA DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH REVIA PASHTA MUNACH ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  je 10:3 [speculative] [claim: expects_fix] [AGREE]
+    fix: יד֥י־ -> ידי־
+    transform: atom "Y:D"71Y" -> "Y:D"Y" (71 -> (none))
+    before: MEREKA TIFCHA MUNACH ATNACH PASHTA MUNACH ZAQEF MEREKA MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  MEREKA TIFCHA MUNACH ATNACH PASHTA MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  je 26:5 [claim: expects_fix] [AGREE]
+    fix: דבר֨י -> דברי֙
+    transform: atom "D.IB:R"63Y" -> "D.IB:R"03Y" (63 -> 03)
+    before: REVIA AZLA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
+    after:  REVIA PASHTA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  je 28:2 [claim: expects_fix] [AGREE]
+    fix: שב֞רתי -> שב֕רתי
+    transform: atom "$FBA62R:T.IY" -> "$FBA85R:T.IY" (62 -> 85)
+    before: GERSHAYIM DARGA TEVIR MEREKA TIFCHA ATNACH GERSHAYIM TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  GERSHAYIM DARGA TEVIR MEREKA TIFCHA ATNACH ZAQEFGADOL TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  je 31:32 [claim: expects_fix] [AGREE]
+    fix: מא֖רץ -> מא֣רץ
+    transform: atom "M"/)E73REC" -> "M"/)E74REC" (73 -> 74)
+    before: MUNACH REVIA MAHPAK PASHTA ZAQEF PASHTA MUNACH ZAQEF TIFCHA TIFCHA ATNACH GERESH MUNACH REVIA TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: atnach_phrase]
+    after:  MUNACH REVIA MAHPAK PASHTA ZAQEF PASHTA MUNACH ZAQEF TIFCHA MUNACH ATNACH GERESH MUNACH REVIA TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  je 46:4 [claim: expects_fix] [AGREE]
+    fix: בכ֥ובע֑ים -> בכובע֑ים
+    transform: atom "B.:/KO71WBF(I92YM" -> "B.:/KOWBF(I92YM" (71 -> (none))
+    before: MUNACH REVIA PASHTA MUNACH ZAQEF TIFCHA MEREKA ATNACH PASHTA ZAQEF TIFCHA SILLUQ SOFPASUQ  [ODDBALL: atnach_phrase]
+    after:  MUNACH REVIA PASHTA MUNACH ZAQEF TIFCHA ATNACH PASHTA ZAQEF TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  je 48:12 [claim: expects_fix] [AGREE]
+    fix: הנ֖ה־ -> הנה־
+    transform: atom "HIN."73H" -> "HIN."H" (73 -> (none))
+    before: GERSHAYIM TIFCHA MAHPAK PASHTA ZAQEF MEREKA TIFCHA ATNACH MUNACH ZAQEF TIFCHA SILLUQ SOFPASUQ  [ODDBALL: atnach_phrase, tifcha_phrase]
+    after:  GERSHAYIM MAHPAK PASHTA ZAQEF MEREKA TIFCHA ATNACH MUNACH ZAQEF TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  je 51:9 [claim: expects_fix] [AGREE]
+    fix: רפ֣ינו -> רפ֤אנו
+    transform: atom "**RIP.I74YNW." -> "**RIP.I70YNW." (74 -> 70)
+    before: MUNACH PASHTA MUNACH ZAQEF ZAQEFGADOL TIFCHA MUNACH ATNACH MAHPAK PASHTA ZAQEF TIFCHA SILLUQ SOFPASUQ  [ODDBALL: pashta_phrase]
+    after:  MAHPAK PASHTA MUNACH ZAQEF ZAQEFGADOL TIFCHA MUNACH ATNACH MAHPAK PASHTA ZAQEF TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ju 1:2
+    fix: וי֣אמר -> וי֥אמר
+    transform: atom "WA/Y.O74)MER" -> "WA/Y.O71)MER" (74 -> 71)
+    before: MUNACH TIFCHA MUNACH ATNACH TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  MEREKA TIFCHA MUNACH ATNACH TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ju 21:16 [claim: expects_fix] [AGREE]
+    fix: ויאמר֨ו -> ויאמרו֙
+    transform: atom "WA/Y.O75)M:R63W." -> "WA/Y.O75)M:R03W." (63 -> 03)
+    before: AZLA MUNACH ZAQEF MEREKA TIFCHA ATNACH MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
+    after:  PASHTA MUNACH ZAQEF MEREKA TIFCHA ATNACH MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  lm 5:5 [speculative] [claim: expects_fix] [AGREE]
+    fix: הונ֖ח -> הונח־
+    transform: atom "H75W.NA73X]Q]c]p" -> "H75W.NAX]Q]c]p" (73 -> (none))
+    before: MAHPAK PASHTA ZAQEF TIFCHA MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: silluq_phrase]
+    after:  MAHPAK PASHTA ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  lv 18:17 [claim: expects_fix] [AGREE]
+    fix: הֽוא -> הֽוא׃
+    transform: append sof pasuq (00) to body
+    before: MEREKA TEVIR TIFCHA MUNACH ATNACH GERSHAYIM REVIA MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  MEREKA TEVIR TIFCHA MUNACH ATNACH GERSHAYIM REVIA MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  lv 19:1 [claim: expects_fix] [AGREE]
+    fix: לאמֽר -> לאמֽר׃
+    transform: append sof pasuq (00) to body
+    before: MEREKA TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  lv 25:20
+    fix: נאכ֤֖ל -> נאכ֖ל
+    transform: atom "N.O)KA7073L]c]n" -> "N.O)KA73L]c]n" (70 -> (none))
+    before: MUNACH ZAQEF MAHPAK TIFCHA MUNACH ATNACH YETIV MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  MUNACH ZAQEF TIFCHA MUNACH ATNACH YETIV MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  lv 26:7 [claim: expects_fix] [AGREE]
+    fix: לחֽרב -> לחֽרב׃
+    transform: append sof pasuq (00) to body
+    before: TIFCHA ATNACH MEREKA TIFCHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  TIFCHA ATNACH MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  ne 2:10 [claim: expects_fix] [AGREE]
+    fix: ב֥א -> ב֣א
+    transform: atom "B.F71)" -> "B.F74)" (71 -> 74)
+    before: GERSHAYIM MUNACH REVIA PASHTA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH MEREKA ZAQEF MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
+    after:  GERSHAYIM MUNACH REVIA PASHTA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH MUNACH ZAQEF MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  nu 7:32 [claim: expects_fix] [AGREE]
+    fix: קטֽרת -> קטֽרת׃
+    transform: append sof pasuq (00) to body
+    before: MEREKA TEVIR MEREKA TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  MEREKA TEVIR MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  nu 7:40 [claim: expects_fix] [AGREE]
+    fix: לחטֽאת -> לחטֽאת׃
+    transform: append sof pasuq (00) to body
+    before: MEREKA TIFCHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  nu 7:55 [claim: expects_fix] [AGREE]
+    fix: למנחֽה -> למנחֽה׃
+    transform: append sof pasuq (00) to body
+    before: GERSHAYIM MUNACH REVIA MUNACH ZARQA SEGOLTA MAHPAK PASHTA ZAQEF MEREKA TIFCHA MUNACH ATNACH LEGARMEH REVIA TEVIR MEREKA TIFCHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  GERSHAYIM MUNACH REVIA MUNACH ZARQA SEGOLTA MAHPAK PASHTA ZAQEF MEREKA TIFCHA MUNACH ATNACH LEGARMEH REVIA TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  nu 7:68 [claim: expects_fix] [AGREE]
+    fix: קטֽרת -> קטֽרת׃
+    transform: append sof pasuq (00) to body
+    before: MEREKA TEVIR MEREKA TIFCHA MEREKA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
+    after:  MEREKA TEVIR MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  ob 1:1
+    fix: עליה -> על֖יה
+    transform: atom "(FLEY/HF]Q]c]n" -> "(FLEY/HF]Q]c]n73" ((none) -> 73)
+    before: TIFCHA ATNACH TELISHAQETANNA AZLA GERESH REVIA AZLA GERESH MAHPAK PASHTA PASHTA MUNACH ZAQEF TEVIR MEREKA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  TIFCHA ATNACH TELISHAQETANNA AZLA GERESH REVIA AZLA GERESH MAHPAK PASHTA PASHTA MUNACH ZAQEF TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+
+## DENIED -- same error remains after the fix  (0)
+
+## CHANGED -- a different error appears after the fix  (0)
+
+## UNTESTABLE -- fix could not be applied mechanically  (40)
+  1k 8:11 [claim: expects_fix]
+    fix: מפנ֥י -> מפנ֣י
+    reason: alignment_failure (15 M-C word-atoms vs 14 WLC words)
+  1k 19:11 [claim: expects_fix]
+    fix: הר֨וח -> הר֙וח֙
+    reason: multi_accent (unsupported multi-accent splice ['63'] -> ['03', '03'])
+  1k 20:25 [speculative]
+    fix: כחיל֩ -> כח֩יל֩; וס֣וס -> וס֥וס
+    reason: multi_diff
+  2c 7:5 [claim: expects_fix]
+    fix: ז֣בח הבק֗ר -> ז֣בח הבקר֒
+    reason: alignment_failure (WLC word 'ז֣בח הבק֗ר' not in vels)
+  2c 22:12 [claim: expects_fix]
+    fix: שנ֖ים -> שנ֑ים
+    reason: alignment_failure (12 M-C word-atoms vs 11 WLC words)
+  2c 24:27 [speculative] [claim: expects_fix]
+    fix: י֧ר֞ב -> י֧רב
+    reason: alignment_failure (18 M-C word-atoms vs 17 WLC words)
+  2s 23:9
+    fix: ואחר֛יו -> ואחר֛ו; בפלשתים -> בפלשתים֙
+    reason: multi_diff
+  dt 10:15 [claim: expects_fix]
+    fix: הזה׃ -> הזֽה׃
+    reason: vowel_only (no accent-name difference (vowel/meteg))
+  dt 12:2 [claim: expects_fix]
+    fix: רענן׃ -> רענֽן׃
+    reason: vowel_only (no accent-name difference (vowel/meteg))
+  dt 14:24 [claim: expects_fix]
+    fix: תוכ֘ל -> תוכל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  dt 23:18 [claim: expects_fix]
+    fix: ישראל׃ -> ישראֽל׃
+    reason: vowel_only (no accent-name difference (vowel/meteg))
+  dt 31:7 [claim: expects_fix]
+    fix: ישרא֘ל -> ישראל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  ec 9:18 [speculative] [claim: expects_fix]
+    fix: יאב֥ד טוב֥ה -> יאב֖ד טוב֥ה
+    reason: alignment_failure (WLC word 'יאב֥ד טוב֥ה' not in vels)
+  ek 11:1 [speculative] [claim: expects_fix]
+    fix: שר֖י -> שר֥י
+    reason: alignment_failure (31 M-C word-atoms vs 30 WLC words)
+  ek 14:11 [speculative] [claim: expects_fix]
+    fix: וה֥יו ל֣י -> והיו־ ל֣י
+    reason: alignment_failure (WLC word 'וה֥יו ל֣י' not in vels)
+  ex 6:6 [claim: expects_fix]
+    fix: ישרא֘ל -> ישראל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  ex 28:1 [claim: expects_fix]
+    fix: אליך֩ -> אל֩יך֩; את֔ו -> את֗ו
+    reason: multi_diff
+  ex 30:12 [claim: expects_fix]
+    fix: ישרא֘ל -> ישראל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  ex 36:2 [claim: expects_fix]
+    fix: בצלא֘ל -> בצלאל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  gn 17:20 [claim: expects_fix]
+    fix: ולישמע֘אל -> ולישמעאל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  gn 32:24 [claim: expects_fix]
+    fix: ויקח֔ם -> וי֨קח֔ם; לו׃ -> לֽו׃
+    reason: multi_diff
+  gn 47:29 [claim: expects_fix]
+    fix: ישרא֘ל -> ישראל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  ho 11:7 [claim: expects_fix]
+    fix: ירומם׃ -> ירומֽם׃
+    reason: vowel_only (no accent-name difference (vowel/meteg))
+  is 13:7 [claim: expects_fix]
+    fix: ימס׃ -> ימֽס׃
+    reason: vowel_only (no accent-name difference (vowel/meteg))
+  is 45:1 [speculative] [claim: expects_fix]
+    fix: (MAM equals WLC; nothing to adopt)
+    reason: no_mam_diff
+  je 9:10 [speculative] [claim: expects_fix]
+    fix: מבל֖י -> מבל֥י
+    reason: alignment_failure (14 M-C word-atoms vs 13 WLC words)
+  je 9:11 [speculative] [claim: expects_fix]
+    fix: מבל֖י -> מבל֥י
+    reason: alignment_failure (21 M-C word-atoms vs 20 WLC words)
+  je 49:19 [claim: expects_fix]
+    fix: אריצ֨נו -> אריצ֙נו֙
+    reason: alignment_failure (28 M-C word-atoms vs 27 WLC words)
+  js 4:8 [claim: expects_fix]
+    fix: ישרא֘ל -> ישראל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  js 10:30 [claim: expects_fix]
+    fix: ישרא֘ל -> ישראל֮
+    reason: alignment_failure (27 M-C word-atoms vs 26 WLC words)
+  js 15:47
+    fix: עז֥ה -> עז֛ה
+    reason: alignment_failure (13 M-C word-atoms vs 12 WLC words)
+  ju 11:24 [claim: expects_fix]
+    fix: אות֥ו תיר֑ש -> אות֣ו תיר֑ש
+    reason: alignment_failure (WLC word 'אות֥ו תיר֑ש' not in vels)
+  ju 13:18 [speculative] [claim: expects_fix]
+    fix: פ֛לאי׃ -> פֽלאי׃
+    reason: alignment_failure (11 M-C word-atoms vs 10 WLC words)
+  lv 4:2 [claim: expects_fix]
+    fix: ישרא֘ל -> ישראל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  lv 20:2 [claim: expects_fix]
+    fix: ישרא֘ל -> ישראל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  lv 26:28 [claim: expects_fix]
+    fix: חטאתיכם׃ -> חטאתיכֽם׃
+    reason: vowel_only (no accent-name difference (vowel/meteg))
+  mi 2:7 [claim: expects_fix]
+    fix: דבר֨י -> דברי֙; הולֽך׃ -> הלֽך׃
+    reason: multi_diff
+  nu 20:19 [claim: expects_fix]
+    fix: ישרא֘ל -> ישראל֮
+    reason: ambiguous_accent (unmappable accent (zarshit))
+  nu 25:19 [speculative] [claim: expects_fix]
+    fix: (MAM equals WLC; nothing to adopt)
+    reason: no_mam_diff
+  nu 27:9 [claim: expects_fix]
+    fix: לאחיו׃ -> לאחֽיו׃
+    reason: vowel_only (no accent-name difference (vowel/meteg))
+
+## Review queue: speculative claims whose result disagrees  (0)
+
