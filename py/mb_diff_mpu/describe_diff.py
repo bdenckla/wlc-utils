@@ -108,8 +108,8 @@ ACCENT_NAMES = {
     ha.QOM: "qadma",
     ha.TEL_Q: "telisha-qetana",
     ha.YBY: "yeraḥ-ben-yomo",
-    ha.OLE: "ole",
-    ha.ILU: "iluy",
+    ha.OLE: "oleh",
+    ha.ILU: "illuy",
     ha.DEX: "deḥi",
     ha.Z_OR_TSOR: "zarqa",
     hpu.MCIRC: "masora-circle",
@@ -181,7 +181,7 @@ def letter_ref(ch, occurrence, letter_counts, force_ordinal=False):
 
 
 POETIC_ACCENTS = {
-    ha.TIP: "tarha",
+    ha.TIP: "tarḥa",
     ha.ZSH_OR_TSIT: "tsinnorit",
     ha.Z_OR_TSOR: "tsinnor",
 }
