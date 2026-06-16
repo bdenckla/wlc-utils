@@ -1,0 +1,40 @@
+=== Approach A: WLC-4.22 vs UXLC grammaticality (changes NOT in goerwitz output) ===
+
+prose-corpus verses          : 203  (220 changes)
+  validated                  : 184 verses (200 changes)
+  unreliable (excluded)      : 19 verses (20 changes)
+
+  of validated: scanner-VISIBLE change 107, no-op 77
+
+2x2 over validated VERSES (all):
+  WLC-gram    -> UXLC-gram   : 169
+  WLC-gram    -> UXLC-ungram : 14
+  WLC-ungram  -> UXLC-gram   : 0
+  WLC-ungram  -> UXLC-ungram : 1
+
+2x2 over scanner-VISIBLE verses (the meaningful denominator):
+  WLC-gram    -> UXLC-gram   : 92
+  WLC-gram    -> UXLC-ungram : 14
+  WLC-ungram  -> UXLC-gram   : 0
+  WLC-ungram  -> UXLC-ungram : 1
+
+HYPOTHESIS cell (WLC-gram -> UXLC-ungram): 14 verses
+    1Kings 2:30.12   [accent/add_accent] Add merka following segol under the mem.
+    1Kings 12:25.6   [accent/substitution] Replace tipeha and patah from under resh with qamats. P
+    1Kings 17:16.9   [accent/substitution] Change munah under the bet to a mahapakh.
+    1Sam 17:52.23    [silluq/remove_terminator] Remove sof-pasuq. Add note 'c'.
+    1Sam 30:15.9     [accent/add_accent] Add telisha-qetana above the shin.
+    2Chr 33:14.8     [accent/add_accent] Add telisha-qetana over resh.
+    2Kings 9:35.10   [accent/substitution] Replace merkha under pe with tipeha.
+    Ezek 5:15.9      [accent/add_accent] Add telisha qetana over shin.
+    Ezek 34:12.20    [accent/substitution] Change merkha under yod to tipeha.
+    Ex 22:4.18       [silluq/remove_terminator] Remove sof pasuq; add note 'c'.
+    Gen 18:15.8      [accent/add_accent] Add merkha after segol under mem. Add note 't'.
+    Jer 52:18.10     [accent/substitution] Change revia on pe to zaqef qatan.
+    Josh 14:10.4     [accent/substitution] Change munah under vav to meteg. Add note 'm'.
+    Judg 18:19.1     [accent/add_accent] Add telisha qetana to yod.
+
+By-kind breakdown of WLC-gram solo-change verses (confidence buckets):
+  add_accent        : -> UXLC-gram  23   -> UXLC-ungram   6
+  remove_terminator : -> UXLC-gram   0   -> UXLC-ungram   2
+  substitution      : -> UXLC-gram 131   -> UXLC-ungram   6
