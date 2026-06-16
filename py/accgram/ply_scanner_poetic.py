@@ -40,8 +40,10 @@ Known gaps (deferred to the validation pass, see the module's tests / notes):
   - "revia mugrash without geresh" (#367): a bare 81 acting as the main verse
     divider when the verse has no atnah is currently scanned as revia (gadol);
     distinguishing it needs verse-level context.
-  - oleh-we-yored whose ole is unmarked (only the yored merka is written, when a
-    revia precedes -- #363) is not recovered; its yored merka is read as a servus.
+  - oleh-we-yored whose ole is unmarked (only the yored merka is written -- #363):
+    recovered when the galgal servus (93) immediately precedes it (see
+    _recover_unmarked_oleh, MAM-cross-checked); the rarer "when a revia precedes"
+    variant is still read as a servus (its signal is ambiguous -- see that helper).
   - shalshelet qetannah (the conjunctive, 8 verses) is swallowed, not emitted.
 
 The scanner returns a list of (token_type, leaf_name) pairs ready for
@@ -54,6 +56,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from accgram import poetic_accent_names as pan
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 _TEXT = r"[^ \r\n\-]*"  # within one maqqef/space-delimited word (as in prose)
@@ -65,58 +68,43 @@ _BOOKNAME_RE = re.compile(r"^([1234][ \t]*)?[A-Z][a-z]+[ \t]*$")
 _VERSE_RE = re.compile(r"^([1-9][0-9]*):([1-9][0-9]*)[ \t](.*)$")
 
 # Disjunctive token types, for the revia gadol/qatan second-pass lookahead.
-_POETIC_DISJUNCTIVES = frozenset(
-    {
-        "SILLUQ",
-        "ATNACH",
-        "OLEH_WEYORED",
-        "REVIA",
-        "REVIA_MUGRASH",
-        "REVIA_GADOL",
-        "REVIA_QATAN",
-        "DEHI",
-        "SINNOR",
-        "PAZER",
-        "LEGARMEH",
-        "SHALSHELET_GEDOLAH",
-    }
-)
+_POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
 
 # Rule table: (regex anchored at scan position, token type or None to swallow).
 # Longest match wins; ties broken by order (mirrors flex / the prose scanner).
 _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
-    (re.compile(r"00"), "SOFPASUQ"),
+    (re.compile(r"00"), pan.SOFPASUQ),
     # silluq: meteg/silluq sign (35|75|95) immediately before sof pasuq.
-    (re.compile(r"(?:35|75|95)(?=[^ 379\r\n\-?~]*00)"), "SILLUQ"),
-    (re.compile(r"92"), "ATNACH"),
+    (re.compile(r"(?:35|75|95)(?=[^ 379\r\n\-?~]*00)"), pan.SILLUQ),
+    (re.compile(r"92"), pan.ATNAX),
     # oleh-we-yored: ole (60) plus its yored merka (71) in the same word; the 71
     # is consumed here so it is not also emitted as a servus.  Bare 60 (yored on
     # the next word, or unmarked) still yields the accent.
-    (re.compile(r"60" + _TEXT + r"71"), "OLEH_WEYORED"),
-    (re.compile(r"60"), "OLEH_WEYORED"),
+    (re.compile(r"60" + _TEXT + r"71"), pan.OLEH_WEYORED),
+    (re.compile(r"60"), pan.OLEH_WEYORED),
     # revia mugrash: geresh muqdam (11) plus revia (81) in the same word; the 81
     # is consumed.  Bare 11 = implied revia (omitted because it would share the
     # geresh muqdam's letter).
-    (re.compile(r"11" + _TEXT + r"81"), "REVIA_MUGRASH"),
-    (re.compile(r"11"), "REVIA_MUGRASH"),
-    (re.compile(r"13"), "DEHI"),
-    (re.compile(r"02"), "SINNOR"),
-    (re.compile(r"83"), "PAZER"),
+    (re.compile(r"11" + _TEXT + r"81"), pan.REVIA_MUGRASH),
+    (re.compile(r"11"), pan.REVIA_MUGRASH),
+    (re.compile(r"13"), pan.DEXI),
+    (re.compile(r"02"), pan.TSINNOR),
+    (re.compile(r"83"), pan.PAZER),
     # shalshelet gedolah = shalshelet (65) followed by paseq (05).
-    (re.compile(r"65" + _TEXT + r"05"), "SHALSHELET_GEDOLAH"),
+    (re.compile(r"65" + _TEXT + r"05"), pan.SHALSHELET_GEDOLAH),
     # legarmeh = azla (63) or mehuppak (70) followed by paseq (05).  Must precede
-    # the bare AZLA / MAHPAK rules so the longer paseq-terminated match wins.
-    (re.compile(r"(?:63|70)" + _TEXT + r"05"), "LEGARMEH"),
+    # the bare AZLA / MAHAPAKH rules so the longer paseq-terminated match wins.
+    (re.compile(r"(?:63|70)" + _TEXT + r"05"), pan.LEGARMEH),
     # revia (gadol/qatan) -- reclassified in the second pass.
-    (re.compile(r"81"), "REVIA"),
+    (re.compile(r"81"), pan.REVIA),
     # conjunctive servi
-    (re.compile(r"74"), "MUNACH"),
-    (re.compile(r"71"), "MEREKA"),
-    (re.compile(r"70"), "MAHPAK"),
-    (re.compile(r"63"), "AZLA"),
-    (re.compile(r"64"), "ILLUY"),
-    (re.compile(r"73"), "TARHA"),
-    (re.compile(r"93"), "GALGAL"),
+    (re.compile(r"74"), pan.MUNAX),
+    (re.compile(r"71"), pan.MERKHA),
+    (re.compile(r"70"), pan.MAHAPAKH),
+    (re.compile(r"63"), pan.AZLA),
+    (re.compile(r"64"), pan.ILLUY),
+    (re.compile(r"73"), pan.TARXA),
+    (re.compile(r"93"), pan.GALGAL),
     # swallowed: sinnorit, bare shalshelet (qetannah conjunctive), meteg, paseq,
     # puncta, and any other 2-digit code (prose accents should not occur here).
     (re.compile(r"82|65|35|75|95|05|52|53"), None),
@@ -126,27 +114,57 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(r".", re.DOTALL), None),
 ]
 
+# Display leaf names (lowercase, shown in printed trees), keyed by token type.
 _LEAF: dict[str, str] = {
-    "SOFPASUQ": "sof pasuq",
-    "SILLUQ": "silluq",
-    "ATNACH": "atnah",
-    "OLEH_WEYORED": "oleh we-yored",
-    "REVIA_MUGRASH": "revia mugrash",
-    "REVIA_GADOL": "revia gadol",
-    "REVIA_QATAN": "revia qatan",
-    "DEHI": "dehi",
-    "SINNOR": "sinnor",
-    "PAZER": "pazer",
-    "LEGARMEH": "legarmeh",
-    "SHALSHELET_GEDOLAH": "shalshelet gedolah",
-    "MUNACH": "munah",
-    "MEREKA": "merka",
-    "MAHPAK": "mehuppak",
-    "AZLA": "azla",
-    "ILLUY": "illuy",
-    "TARHA": "tarha",
-    "GALGAL": "galgal",
+    pan.SOFPASUQ: "sof pasuq",
+    pan.SILLUQ: "silluq",
+    pan.ATNAX: "atnah",
+    pan.OLEH_WEYORED: "oleh we-yored",
+    pan.REVIA_MUGRASH: "revia mugrash",
+    pan.REVIA_GADOL: "revia gadol",
+    pan.REVIA_QATAN: "revia qatan",
+    pan.DEXI: "dehi",
+    pan.TSINNOR: "sinnor",
+    pan.PAZER: "pazer",
+    pan.LEGARMEH: "legarmeh",
+    pan.SHALSHELET_GEDOLAH: "shalshelet gedolah",
+    pan.MUNAX: "munah",
+    pan.MERKHA: "merka",
+    pan.MAHAPAKH: "mehuppak",
+    pan.AZLA: "azla",
+    pan.ILLUY: "illuy",
+    pan.TARXA: "tarha",
+    pan.GALGAL: "galgal",
 }
+
+
+def _recover_unmarked_oleh(types: list[str]) -> list[str]:
+    """Recover an oleh-we-yored whose ole sign L leaves unmarked (ITM #363).
+
+    In the Leningrad codex the ole (the upper sign of oleh-we-yored) is sometimes
+    omitted, leaving only the yored -- a merka (M-C 71) -- written below the stress;
+    MAM-simple always supplies the ole, and the user confirms L/LC drops it.  Read
+    literally the lone merka looks like a conjunctive servus, so the scanner misses
+    the divider (the verse then fails to parse).
+
+    The reliable, MAM-cross-checked signal is the oleh-we-yored's own servus: the
+    galgal (yerah-ben-yomo, M-C 93, the "v"-shaped sign) standing immediately before
+    it.  A GALGAL directly followed by a bare MERKHA is that servus + an unmarked
+    yored, so the MERKHA is reclassified to OLEH_WEYORED.  Validated against the MAM
+    disjunctive oracle (accgram.xcheck_poetic): this recovers 9 Psalms/Job verses
+    and introduces no new disagreements across the corpus.
+
+    The other unmarked-ole context #363 notes -- a *revia* preceding the yored --
+    is deliberately NOT recovered here: a revia followed by a merka servus is an
+    extremely common ordinary sequence, so that signal is unusable without
+    word-level information (it breaks ~1400 verses against the oracle).  Those few
+    verses remain flagged divergences for a later, narrower pass.
+    """
+    out = list(types)
+    for i in range(1, len(out)):
+        if out[i] == pan.MERKHA and out[i - 1] == pan.GALGAL:
+            out[i] = pan.OLEH_WEYORED
+    return out
 
 
 def _reclassify_revia(types: list[str]) -> list[str]:
@@ -166,18 +184,18 @@ def _reclassify_revia(types: list[str]) -> list[str]:
     """
     out = list(types)
     for i, t in enumerate(out):
-        if t != "REVIA":
+        if t != pan.REVIA:
             continue
         nxt = next(
             (out[j] for j in range(i + 1, len(out)) if out[j] in _POETIC_DISJUNCTIVES),
             None,
         )
-        if nxt == "OLEH_WEYORED":
-            out[i] = "REVIA_QATAN"
-        elif nxt == "SILLUQ":
-            out[i] = "REVIA_MUGRASH"
+        if nxt == pan.OLEH_WEYORED:
+            out[i] = pan.REVIA_QATAN
+        elif nxt == pan.SILLUQ:
+            out[i] = pan.REVIA_MUGRASH
         else:
-            out[i] = "REVIA_GADOL"
+            out[i] = pan.REVIA_GADOL
     return out
 
 
@@ -210,7 +228,7 @@ def scan_accents(body: str) -> list[tuple[str, str]]:
                 break
         pos += max(best_len, 1)
 
-    resolved = _reclassify_revia(raw_types)
+    resolved = _reclassify_revia(_recover_unmarked_oleh(raw_types))
     return [(t, _LEAF[t]) for t in resolved]
 
 

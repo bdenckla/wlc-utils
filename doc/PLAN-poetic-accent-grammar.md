@@ -19,14 +19,51 @@ regenerate outputs and confirm before moving on.
 - `py/accgram/run_ply_poetic.py` + `run-ply-poetic` subcommand → writes
   `out/accgram/ply-poetic/wlc_422_ps_{ps,pr,jb}_ag.txt` (git-tracked). Unparseable
   verses are non-fatal `NO_PARSE: <token types>` lines (greppable), tallied.
-- Run: **ps 2421/2527 (95.8%), pr 897/915 (98.0%), jb 1001/1023 (97.8%); total
-  4319/4465 (96.7%)**. 146 NO_PARSE = the structural tail (categories A–D below).
-- Next: **Phase 2** (MAM-simple cross-check + scanner fixes).
 
-Built and tested (full suite: 42 passing):
+**Phase 2 DONE** (MAM-simple cross-check + the one safe scanner fix):
+- `py/accgram/mam_poetic_accents.py` — extracts the ordered *disjunctive* sequence
+  from MAM-simple's pointed Unicode (legarmeh/shalshelet-gedolah via the
+  `lp-legarmeih` paseq node; revia/oleh/etc. by combining accent). Servi dropped
+  (L and MAM pick different conjunctive signs; no oracle for servus chains).
+- `py/accgram/xcheck_poetic.py` + `xcheck-poetic` subcommand → writes git-tracked
+  `out/accgram/ply-poetic/_mam_xcheck.txt` (per-book agreement + every divergence
+  grouped by difflib edit signature, each flagged parses/NO_PARSE). The Phase 2
+  verification surface.
+- **Scanner fix landed:** `_recover_unmarked_oleh` — when L drops the ole sign
+  (#363; user-confirmed LC habit) leaving only the yored merka, a galgal servus
+  (93) immediately before the bare merka recovers it as OLEH_WEYORED. Oracle-
+  validated: +9 agreement, **0 new disagreements**. The "revia precedes" variant
+  is left unrecovered (its signal breaks ~1400 verses; see the helper docstring).
+- Result after fix: parse **ps 2426/2527, pr 898/915, jb 1003/1023; total
+  4327/4465 (96.9%)**; MAM agreement **4392/4465 (98.37%)**, 73 divergences.
+- **Divergence taxonomy** (the 73): only the dropped-oleh class was a scanner bug.
+  The rest are *faithful-to-L* and split into: missing silluq (13, = category A);
+  dehi⇄munah/tarḥa (L vs MAM differ on dehi, ~25); legarmeh⇄plain-paseq (L vs MAM
+  differ on paseq, ~19); revia present/absent (~8); the remaining unrecovered
+  dropped-oleh (revia-precedes, ~7); one missing atnah. These are real L/MAM
+  textual differences, not scanner errors — document, do not "correct" in-scanner.
+- **book-of-job cross-validation:** `../book-of-job` is a critical review of BHQ
+  (vs BHS/WLC/UXLC/manuscripts; thesis: BHQ barely improves on BHS). The Job dehi
+  divergences were checked against its `out/enriched-quirkrecs.json` (the
+  `zdexiWLC` "טרחא not דחי" etc. quirk records). 6 reproduced and directionally consistent (e.g. Job 6:17 "דחי
+  not מונח" ↔ checker WLC-extra-DEHI). 31 book-of-job dehi quirks are invisible to
+  this checker because **WLC already fixes a BHS *transcription* error (tarḥa→deḥi)**
+  — WLC began as a near-perfect copy of BHS and corrects these, flagging them with
+  `]c` (e.g. `13YOWM]c` in Job 3:3). This is transcriptional, NOT a manuscript
+  defect: the LC mark should be transcribed grammar-sensitively as deḥi (a
+  disjunctive in that slot), which BHS got wrong and WLC corrected — exactly the
+  distinction a grammar-aware checker exists to make. 2 checker-only dehi cases
+  book-of-job's set omits: Job 5:27 (WLC dehi vs MAM tarḥa) and Job 31:26 (WLC
+  tarḥa `73` vs MAM deḥi — a BHS transcription error WLC did NOT fix?) — worth a look.
+- Next: **Phase 3** (structural tail: missing-silluq A, legarmeh-under-atnah B,
+  pazer-before-silluq C, singletons D — per the open decisions below).
+
+Built and tested (full suite: 51 passing):
 - `py/accgram/ply_scanner_poetic.py` — M-C accent codes → poetic tokens.
 - `py/accgram/ply_grammar_poetic.py` — PLY grammar; **zero LALR conflicts**.
-- `py/tests/test_ply_scanner_poetic.py`, `py/tests/test_ply_poetic_grammar.py`.
+- `py/accgram/mam_poetic_accents.py` — MAM-simple → poetic disjunctive sequence.
+- `py/tests/test_ply_scanner_poetic.py`, `py/tests/test_ply_poetic_grammar.py`,
+  `py/tests/test_mam_poetic_accents.py`.
 
 Derived from Yeivin, *Introduction to the Tiberian Masorah* (ITM) §358–374, and
 the M-C accent table `wlc-utils-io/in/wlc420/supplmt.wts` (column II = poetic),
@@ -51,6 +88,20 @@ Baseline parse rate (ad-hoc script over `wlc-utils-io/in/wlc422/wlc422_ps.txt`,
    galgal (not atnah-hafukh); dehi = `13`; sinnor = `02`. Bare `81` reclassified:
    next disjunct oleh → revia qatan; next silluq → revia mugrash w/o geresh; else
    revia gadol.
+4. **Token-type names are constants, not literals.** All poetic token-type strings
+   live in `py/accgram/poetic_accent_names.py` (the single source of truth);
+   grammar/scanner/MAM-extractor/tests import and reference them — never re-type the
+   literal. (PLY's `p_*` rule docstrings are the one forced exception: PLY parses
+   them textually, so terminals are spelled literally there and the `tokens` tuple +
+   parse/conflict tests keep them pinned.) Spellings follow the canonical names in
+   `py/mb_diff_mpu/describe_diff.py`, uppercased with its `ḥ` written **X**: DEXI,
+   MUNAX (deḥi/munaḥ), TSINNOR, MERKHA, MAHAPAKH. Maintainer overrides of
+   describe_diff: **ATNAX** (it calls the accent "etnaḥta"), **TARXA** (its plain
+   "tarha" is a bug — ḥet takes X), **ILLUY** (doubled L over "iluy"); OLEH_WEYORED
+   keeps "we-" (no `veyored` precedent). Poetic intentionally diverges from the
+   prose Goerwitz grammar (ATNACH/MUNACH/MEREKA/MAHPAK/TIFCHA), a frozen C-oracle
+   port. Tree *outputs* are unaffected (they use lowercase `_LEAF` display names +
+   nonterminal labels); only the `NO_PARSE:` diagnostic lines show the spellings.
 
 ## Remaining-failure taxonomy (the ~3.6%, all real oddballs)
 
@@ -119,10 +170,19 @@ tracked outputs so later phases diff against them.
 Handoff: parse rate per book recorded; Job rate known; failure list captured in
 the output.
 
-## Phase 2 — MAM-simple cross-check + scanner fixes
+## Phase 2 — MAM-simple cross-check + scanner fixes  — DONE (see Status above)
 
 Goal: confirm the trees' segmentation is *correct*, not just parseable, and fix
 scanner bugs it surfaces.
+
+Outcome: the disjunctive cross-check (`mam_poetic_accents` + `xcheck-poetic`)
+validated 98.37% of verses against MAM-simple. The only true scanner bug surfaced
+was the galgal-adjacent dropped oleh-we-yored, now fixed and oracle-validated; the
+other ~64 divergences are genuine L/MAM textual differences (faithful to L) and are
+documented in the Status taxonomy, not corrected in the scanner. Of the original
+"known suspects" below, only the unmarked-ole one was real-and-fixable from L alone;
+the yored-on-next-word (maqqef) and shalshelet-qetannah suspects did not surface as
+disjunctive-level errors against MAM and are left as-is.
 
 - MAM-simple is the sibling repo `../MAM-simple` (all repos sit flat under
   `GitRepos/`); poetic data is `json-vtrad-bhs/{Ps,Prov,Job}.json`. **Loading is

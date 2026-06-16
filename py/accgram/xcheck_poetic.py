@@ -1,0 +1,198 @@
+r"""Cross-check the poetic scanner's disjunctive segmentation against MAM-simple.
+
+Phase 2 of ``doc/PLAN-poetic-accent-grammar.md``: confirm the trees' division
+points are *correct*, not merely parseable.  For every poetic verse we compare two
+ordered disjunctive sequences:
+
+  * WLC side -- the disjunctive tokens the scanner (``ply_scanner_poetic``) reads
+    from the Michigan-Claremont codes, in order.
+  * MAM side -- the disjunctive sequence extracted from MAM-simple's pointed
+    Unicode text by ``mam_poetic_accents.disjunctives_from_verse_node``.
+
+Servus (conjunctive) signs are excluded on both sides: L and MAM routinely pick
+different conjunctive *signs* for the same slot and Yeivin pins no exact servus
+chains, so only the disjunctive skeleton is a meaningful equality check (see
+``mam_poetic_accents`` for the rationale).
+
+The run writes a git-tracked report ``out/accgram/ply-poetic/_mam_xcheck.txt``: a
+per-book agreement tally, then every divergence grouped by its edit signature
+(the difflib opcodes turning the WLC sequence into the MAM one), each annotated
+with whether the WLC verse currently parses.  This file is the Phase 2 verification
+surface -- regenerate and diff it after any scanner change.
+"""
+
+from __future__ import annotations
+
+import argparse
+import difflib
+from collections import Counter
+from dataclasses import dataclass
+from pathlib import Path
+
+from accgram import poetic_filter
+from accgram import split_wlc
+from accgram.mam_poetic_accents import load_poetic_disjunctives
+from accgram.mam_simple_verse import default_mam_simple_dir
+from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
+from accgram.ply_grammar_poetic import build_parser, parse_tokens
+from accgram.ply_scanner_poetic import scan_book
+
+
+@dataclass(frozen=True)
+class Divergence:
+    reference: str
+    wlc: tuple[str, ...]
+    mam: tuple[str, ...]
+    parses: bool
+    signature: tuple[tuple[str, tuple[str, ...], tuple[str, ...]], ...]
+
+
+def _edit_signature(
+    wlc: list[str], mam: list[str]
+) -> tuple[tuple[str, tuple[str, ...], tuple[str, ...]], ...]:
+    """The difflib opcodes (minus 'equal') turning the WLC seq into the MAM seq."""
+    matcher = difflib.SequenceMatcher(a=wlc, b=mam, autojunk=False)
+    return tuple(
+        (tag, tuple(wlc[i1:i2]), tuple(mam[j1:j2]))
+        for tag, i1, i2, j1, j2 in matcher.get_opcodes()
+        if tag != "equal"
+    )
+
+
+def _signature_label(
+    signature: tuple[tuple[str, tuple[str, ...], tuple[str, ...]], ...],
+) -> str:
+    parts = []
+    for tag, wlc_run, mam_run in signature:
+        if tag == "insert":
+            parts.append(f"MAM adds {' '.join(mam_run)}")
+        elif tag == "delete":
+            parts.append(f"WLC has extra {' '.join(wlc_run)}")
+        else:  # replace
+            parts.append(f"WLC {' '.join(wlc_run)} -> MAM {' '.join(mam_run)}")
+    return "; ".join(parts)
+
+
+def collect_divergences(
+    input_path: Path, mam_simple_dir: Path
+) -> tuple[list[Divergence], dict[str, tuple[int, int]]]:
+    """Return (divergences, per-book (matched, total)) over the poetic corpus."""
+    mam_by_ref = load_poetic_disjunctives(mam_simple_dir)
+    parser = build_parser()
+    book_texts = split_wlc.split_wlc_to_book_texts(
+        input_path, keep_line_fn=poetic_filter.should_keep_line
+    )
+
+    divergences: list[Divergence] = []
+    per_book: dict[str, tuple[int, int]] = {}
+    for bb, text in book_texts.items():
+        matched = 0
+        total = 0
+        for verse in scan_book(text, bb):
+            mam = mam_by_ref.get(verse.reference)
+            if mam is None:
+                continue
+            total += 1
+            wlc = [t for t, _ in verse.tokens if t in _POETIC_DISJUNCTIVES]
+            if wlc == mam:
+                matched += 1
+                continue
+            divergences.append(
+                Divergence(
+                    reference=verse.reference,
+                    wlc=tuple(wlc),
+                    mam=tuple(mam),
+                    parses=parse_tokens(parser, verse.tokens) is not None,
+                    signature=_edit_signature(wlc, mam),
+                )
+            )
+        per_book[bb] = (matched, total)
+    return divergences, per_book
+
+
+def render_report(
+    divergences: list[Divergence], per_book: dict[str, tuple[int, int]]
+) -> str:
+    lines: list[str] = []
+    lines.append("# Poetic scanner vs MAM-simple: disjunctive cross-check")
+    lines.append("")
+    total_matched = sum(m for m, _ in per_book.values())
+    total_all = sum(t for _, t in per_book.values())
+    for bb, (matched, total) in per_book.items():
+        rate = 100.0 * matched / total if total else 0.0
+        lines.append(f"{bb}: {matched}/{total} verses agree ({rate:.2f}%)")
+    overall = 100.0 * total_matched / total_all if total_all else 0.0
+    lines.append(
+        f"total: {total_matched}/{total_all} agree ({overall:.2f}%); "
+        f"{len(divergences)} divergences"
+    )
+    lines.append("")
+
+    by_sig: dict[
+        tuple[tuple[str, tuple[str, ...], tuple[str, ...]], ...], list[Divergence]
+    ] = {}
+    for div in divergences:
+        by_sig.setdefault(div.signature, []).append(div)
+
+    lines.append("## Divergences grouped by edit signature")
+    lines.append("")
+    for signature, group in sorted(by_sig.items(), key=lambda kv: -len(kv[1])):
+        parses_n = sum(1 for d in group if d.parses)
+        lines.append(
+            f"### {_signature_label(signature)} "
+            f"-- {len(group)} verse(s); {parses_n} parse, "
+            f"{len(group) - parses_n} NO_PARSE"
+        )
+        for div in group:
+            flag = "parses" if div.parses else "NO_PARSE"
+            lines.append(f"  {div.reference} [{flag}]")
+            lines.append(f"    WLC: {' '.join(div.wlc)}")
+            lines.append(f"    MAM: {' '.join(div.mam)}")
+        lines.append("")
+    return "\n".join(lines) + "\n"
+
+
+def default_input_path(repo_root: Path) -> Path:
+    return repo_root.parent / "wlc-utils-io" / "in" / "wlc422" / "wlc422_ps.txt"
+
+
+def default_report_path(repo_root: Path) -> Path:
+    return repo_root / "out" / "accgram" / "ply-poetic" / "_mam_xcheck.txt"
+
+
+def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
+    parser.add_argument(
+        "--input",
+        type=Path,
+        default=default_input_path(repo_root),
+        help="Path to source wlc422_ps.txt file.",
+    )
+    parser.add_argument(
+        "--mam-simple-dir",
+        type=Path,
+        default=default_mam_simple_dir(repo_root),
+        help="Directory containing MAM-simple json-vtrad-bhs book files.",
+    )
+    parser.add_argument(
+        "--report",
+        type=Path,
+        default=default_report_path(repo_root),
+        help="Output path for the cross-check report.",
+    )
+
+
+def run(args: argparse.Namespace) -> None:
+    divergences, per_book = collect_divergences(args.input, args.mam_simple_dir)
+    report = render_report(divergences, per_book)
+
+    report_path: Path = args.report
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(report, encoding="utf-8", newline="\n")
+
+    total_matched = sum(m for m, _ in per_book.values())
+    total_all = sum(t for _, t in per_book.values())
+    overall = 100.0 * total_matched / total_all if total_all else 0.0
+    print(
+        f"Cross-check: {total_matched}/{total_all} verses agree ({overall:.2f}%); "
+        f"{len(divergences)} divergences -> {report_path}"
+    )

@@ -13,6 +13,11 @@ Subcommands:
                 write out/accgram/ply-poetic/*_ag.txt.  Unparseable verses are
                 emitted as NO_PARSE lines and tallied, not fatal.  Use --book to
                 restrict (ps, pr, jb).
+    xcheck-poetic
+                Cross-check the poetic scanner's disjunctive segmentation against
+                MAM-simple and write out/accgram/ply-poetic/_mam_xcheck.txt (a
+                per-book agreement tally plus every divergence grouped by edit
+                signature).  The Phase 2 validation surface.
     research-oddballs
                 Derive the PLY-based oddball set from the PLY outputs
                 (out/accgram/ply) into out/accgram/ply/_oddballs.json, then enrich
@@ -34,6 +39,7 @@ from pathlib import Path
 from accgram import research_tao
 from accgram import run_ply
 from accgram import run_ply_poetic
+from accgram import xcheck_poetic
 from cmn.utf8_io import force_utf8_io
 
 
@@ -51,6 +57,10 @@ def _run_run_ply(args: argparse.Namespace) -> None:
 
 def _run_run_ply_poetic(args: argparse.Namespace) -> None:
     run_ply_poetic.run(args)
+
+
+def _run_xcheck_poetic(args: argparse.Namespace) -> None:
+    xcheck_poetic.run(args)
 
 
 def main() -> None:
@@ -83,6 +93,16 @@ def main() -> None:
     )
     run_ply_poetic.add_args(run_ply_poetic_parser, repo_root=_repo_root())
     run_ply_poetic_parser.set_defaults(func=_run_run_ply_poetic)
+
+    xcheck_poetic_parser = subparsers.add_parser(
+        "xcheck-poetic",
+        help=(
+            "Cross-check the poetic scanner's disjunctive segmentation against "
+            "MAM-simple and write out/accgram/ply-poetic/_mam_xcheck.txt."
+        ),
+    )
+    xcheck_poetic.add_args(xcheck_poetic_parser, repo_root=_repo_root())
+    xcheck_poetic_parser.set_defaults(func=_run_xcheck_poetic)
 
     research_tao_parser = subparsers.add_parser(
         "research-oddballs",

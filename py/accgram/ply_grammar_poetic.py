@@ -55,36 +55,42 @@ import sys
 
 from ply import yacc
 
+from accgram import poetic_accent_names as pan
 from accgram.ply_tree import add_leaves, make_node
 
+# Token-type names come from poetic_accent_names (the single source of truth).  The
+# terminals are still spelled literally in the p_* rule docstrings below because
+# PLY parses those textually; this tuple keeps them pinned to the constants, and
+# the parse / zero-conflict tests fail if a docstring terminal ever drifts.
+#
+# NOTE: the conjunctive shalshelet qetannah (#371) is a real poetic servus but
+# occurs in only eight verses, each as one link in a chain of conjunctives before
+# silluq/atnah/revia-mugrash-without-geresh.  Yeivin gives no exact chains, so it
+# is left unmodeled (no token) rather than fabricated.
 tokens = (
     # structure
-    "TILDE",
-    "SOFPASUQ",
+    pan.TILDE,
+    pan.SOFPASUQ,
     # disjunctives (greatest -> least)
-    "SILLUQ",
-    "OLEH_WEYORED",
-    "ATNACH",
-    "REVIA_GADOL",
-    "REVIA_MUGRASH",
-    "REVIA_QATAN",
-    "DEHI",
-    "SINNOR",
-    "PAZER",
-    "LEGARMEH",
-    "SHALSHELET_GEDOLAH",
+    pan.SILLUQ,
+    pan.OLEH_WEYORED,
+    pan.ATNAX,
+    pan.REVIA_GADOL,
+    pan.REVIA_MUGRASH,
+    pan.REVIA_QATAN,
+    pan.DEXI,
+    pan.TSINNOR,
+    pan.PAZER,
+    pan.LEGARMEH,
+    pan.SHALSHELET_GEDOLAH,
     # conjunctive servi (ITM #358; GALGAL also serves oleh-we-yored, #363)
-    "MUNACH",
-    "MEREKA",
-    "MAHPAK",
-    "AZLA",
-    "GALGAL",
-    "ILLUY",
-    "TARHA",
-    # NOTE: the conjunctive shalshelet qetannah (#371) is a real poetic servus but
-    # occurs in only eight verses, each as one link in a chain of conjunctives
-    # before silluq/atnah/revia-mugrash-without-geresh.  Yeivin gives no exact
-    # chains, so it is left unmodeled (no token) rather than fabricated.
+    pan.MUNAX,
+    pan.MERKHA,
+    pan.MAHAPAKH,
+    pan.AZLA,
+    pan.GALGAL,
+    pan.ILLUY,
+    pan.TARXA,
 )
 
 start = "pasuq"
@@ -92,13 +98,13 @@ start = "pasuq"
 
 # --- conjunctive servi (permissive chain, see module docstring) ----------------
 def p_conj(p):
-    """conj : MUNACH
-            | MEREKA
-            | MAHPAK
+    """conj : MUNAX
+            | MERKHA
+            | MAHAPAKH
             | AZLA
             | GALGAL
             | ILLUY
-            | TARHA"""
+            | TARXA"""
     p[0] = p[1]  # the leaf-name string
 
 
@@ -138,8 +144,8 @@ def p_oleh_weyored_phrase(p):
 
 
 def p_atnach_phrase(p):
-    """atnach_phrase : ATNACH
-                     | servi ATNACH"""
+    """atnach_phrase : ATNAX
+                     | servi ATNAX"""
     _phrase(p, "atnach_phrase")
 
 
@@ -162,14 +168,14 @@ def p_revia_mugrash_phrase(p):
 
 
 def p_dehi_phrase(p):
-    """dehi_phrase : DEHI
-                   | servi DEHI"""
+    """dehi_phrase : DEXI
+                   | servi DEXI"""
     _phrase(p, "dehi_phrase")
 
 
 def p_sinnor_phrase(p):
-    """sinnor_phrase : SINNOR
-                     | servi SINNOR"""
+    """sinnor_phrase : TSINNOR
+                     | servi TSINNOR"""
     _phrase(p, "sinnor_phrase")
 
 

@@ -9,22 +9,28 @@ The poetic grammar (accgram.ply_grammar_poetic) is derived from Yeivin ITM
      silluq; revia gadol / dehi / sinnor / revia qatan under them; pazer and
      legarmeh as the lesser dividers).
 
-These are structural, not corpus-validated (no poetic scanner exists yet); they
-exercise the grammar, not a golden oracle output.
+These are structural, not corpus-validated; they exercise the grammar, not a
+golden oracle output.  Token-type names come from accgram.poetic_accent_names so
+the (variable) transliterations are never re-typed as literals here.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_ply_poetic_grammar.py -v
 """
 
+from accgram import poetic_accent_names as pan
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_tree import print_tree
 
 
 def _verse(*accents):
-    """Build a (type, leaf) token stream: TILDE, accents..., SOFPASUQ."""
-    toks = [("TILDE", "")]
+    """Build a (type, leaf) token stream: TILDE, accents..., SOFPASUQ.
+
+    The leaf is just the lowercased token type (these grammar tests don't run the
+    scanner, so the display string is arbitrary).
+    """
+    toks = [(pan.TILDE, "")]
     toks += [(a, a.lower()) for a in accents]
-    toks.append(("SOFPASUQ", "sof pasuq"))
+    toks.append((pan.SOFPASUQ, "sof pasuq"))
     return toks
 
 
@@ -35,22 +41,22 @@ def test_builds_without_conflicts():
 
 def test_silluq_only():
     parser = build_parser()
-    tree = parse_tokens(parser, _verse("MUNACH", "SILLUQ"))
+    tree = parse_tokens(parser, _verse(pan.MUNAX, pan.SILLUQ))
     assert tree is not None
-    assert print_tree(tree, 0) == "0 silluq_phrase\n  munach silluq \n"
+    assert print_tree(tree, 0) == "0 silluq_phrase\n  munax silluq \n"
 
 
 def test_atnah_divided_verse():
     """A short verse: atnah is the great divider, silluq ends it."""
     parser = build_parser()
-    tree = parse_tokens(parser, _verse("MEREKA", "ATNACH", "MEREKA", "SILLUQ"))
+    tree = parse_tokens(parser, _verse(pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.SILLUQ))
     assert tree is not None
     assert print_tree(tree, 0) == (
         "0 silluq_clause\n"
         "  1 atnach_phrase\n"
-        "    mereka atnach \n"
+        "    merkha atnax \n"
         "  1 silluq_phrase\n"
-        "    mereka silluq \n"
+        "    merkha silluq \n"
     )
 
 
@@ -59,7 +65,10 @@ def test_revia_mugrash_before_silluq():
     parser = build_parser()
     tree = parse_tokens(
         parser,
-        _verse("MUNACH", "ATNACH", "MEREKA", "REVIA_MUGRASH", "TARHA", "MUNACH", "SILLUQ"),
+        _verse(
+            pan.MUNAX, pan.ATNAX, pan.MERKHA, pan.REVIA_MUGRASH,
+            pan.TARXA, pan.MUNAX, pan.SILLUQ,
+        ),
     )
     assert tree is not None
     out = print_tree(tree, 0)
@@ -74,8 +83,8 @@ def test_oleh_weyored_is_topmost_divider():
     tree = parse_tokens(
         parser,
         _verse(
-            "REVIA_GADOL", "MEREKA", "REVIA_QATAN", "GALGAL", "OLEH_WEYORED",
-            "MUNACH", "ATNACH", "MEREKA", "REVIA_MUGRASH", "SILLUQ",
+            pan.REVIA_GADOL, pan.MERKHA, pan.REVIA_QATAN, pan.GALGAL, pan.OLEH_WEYORED,
+            pan.MUNAX, pan.ATNAX, pan.MERKHA, pan.REVIA_MUGRASH, pan.SILLUQ,
         ),
     )
     assert tree is not None
@@ -95,10 +104,10 @@ def test_full_hierarchy_pazer_legarmeh_dehi_sinnor():
     tree = parse_tokens(
         parser,
         _verse(
-            "PAZER", "LEGARMEH", "REVIA_GADOL", "MEREKA", "SINNOR",
-            "GALGAL", "OLEH_WEYORED",
-            "MUNACH", "DEHI", "MEREKA", "ATNACH",
-            "MEREKA", "REVIA_MUGRASH", "SILLUQ",
+            pan.PAZER, pan.LEGARMEH, pan.REVIA_GADOL, pan.MERKHA, pan.TSINNOR,
+            pan.GALGAL, pan.OLEH_WEYORED,
+            pan.MUNAX, pan.DEXI, pan.MERKHA, pan.ATNAX,
+            pan.MERKHA, pan.REVIA_MUGRASH, pan.SILLUQ,
         ),
     )
     assert tree is not None
@@ -114,7 +123,7 @@ def test_full_hierarchy_pazer_legarmeh_dehi_sinnor():
 def test_shalshelet_gedolah_before_silluq():
     parser = build_parser()
     tree = parse_tokens(
-        parser, _verse("SHALSHELET_GEDOLAH", "TARHA", "MUNACH", "SILLUQ")
+        parser, _verse(pan.SHALSHELET_GEDOLAH, pan.TARXA, pan.MUNAX, pan.SILLUQ)
     )
     assert tree is not None
     assert "shalshelet_gedolah_phrase" in print_tree(tree, 0)

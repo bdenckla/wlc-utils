@@ -7,10 +7,13 @@ revia-mugrash geresh muqdam (11+81), oleh-we-yored (60 ole + 71 yored merka),
 azla/mehuppak legarmeh (63/70 + 05 paseq), the galgal servus of oleh-we-yored
 (93), and the revia gadol/qatan/mugrash disambiguation.
 
+Token-type names come from accgram.poetic_accent_names (no re-typed literals).
+
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_ply_scanner_poetic.py -v
 """
 
+from accgram import poetic_accent_names as pan
 from accgram.ply_scanner_poetic import scan_accents
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_scanner_poetic import scan_verse
@@ -28,12 +31,12 @@ def test_ps_1_1_revia_mugrash_geresh_muqdam():
         r'W./B:/MOW$A71B 11L"CI81YM LO74) YF$F75B00'
     )
     types = _types(body)
-    assert types[-1] == "SOFPASUQ"
-    assert types[-2] == "SILLUQ"  # 75 before 00
-    assert "REVIA_MUGRASH" in types  # the 11(+81)
-    assert "ATNACH" in types  # 92
-    assert "SINNOR" in types  # 02 (no zarqa in poetic)
-    assert "DEHI" in types  # 13
+    assert types[-1] == pan.SOFPASUQ
+    assert types[-2] == pan.SILLUQ  # 75 before 00
+    assert pan.REVIA_MUGRASH in types  # the 11(+81)
+    assert pan.ATNAX in types  # 92
+    assert pan.TSINNOR in types  # 02 (no zarqa in poetic)
+    assert pan.DEXI in types  # 13
 
 
 def test_ps_2_2_azla_legarmeh():
@@ -43,10 +46,10 @@ def test_ps_2_2_azla_legarmeh():
         r"NO75WS:DW.-YF92XAD (AL-11Y:HWFH W:/(AL-M:$IYX/O75W00"
     )
     types = _types(body)
-    assert "LEGARMEH" in types
+    assert pan.LEGARMEH in types
     # the revia after the legarmeh (81 on )EREC, next disjunctive atnah) is gadol
-    assert "REVIA_GADOL" in types
-    assert "ATNACH" in types
+    assert pan.REVIA_GADOL in types
+    assert pan.ATNAX in types
 
 
 def test_ps_3_3_oleh_weyored_with_galgal_servus():
@@ -56,14 +59,14 @@ def test_ps_3_3_oleh_weyored_with_galgal_servus():
         r"Y:75$W.(F65T/FH L./O64W B\"75/)LOHI64YM SE75LFH00"
     )
     types = _types(body)
-    assert "OLEH_WEYORED" in types
-    assert "SINNOR" in types  # 02 on RAB.IYM
+    assert pan.OLEH_WEYORED in types
+    assert pan.TSINNOR in types  # 02 on RAB.IYM
     # the galgal (93) precedes oleh-we-yored as its servus
-    assert types.index("GALGAL") < types.index("OLEH_WEYORED")
+    assert types.index(pan.GALGAL) < types.index(pan.OLEH_WEYORED)
     # the yored merka (71) is folded into OLEH_WEYORED, not emitted separately just
-    # before it: no MEREKA sits between GALGAL and OLEH_WEYORED
-    g, o = types.index("GALGAL"), types.index("OLEH_WEYORED")
-    assert "MEREKA" not in types[g + 1 : o]
+    # before it: no MERKHA sits between GALGAL and OLEH_WEYORED
+    g, o = types.index(pan.GALGAL), types.index(pan.OLEH_WEYORED)
+    assert pan.MERKHA not in types[g + 1 : o]
 
 
 def test_ps_37_28_revia_gadol_then_dehi_then_atnah():
@@ -73,17 +76,47 @@ def test_ps_37_28_revia_gadol_then_dehi_then_atnah():
         r")ET-13X:ASIYDFY/W L:/(OWLF74M NI$:MF92RW. W:/ZE73RA( R:$F(I74YM NIK:RF75T00"
     )
     types = _types(body)
-    assert "LEGARMEH" in types  # 63+05 on YHWH
-    assert "REVIA_GADOL" in types  # 81 on MI$:P.F+ (next disjunctive is atnah)
-    assert "DEHI" in types  # 13
-    assert "ATNACH" in types
-    assert types[-2:] == ["SILLUQ", "SOFPASUQ"]
+    assert pan.LEGARMEH in types  # 63+05 on YHWH
+    assert pan.REVIA_GADOL in types  # 81 on MI$:P.F+ (next disjunctive is atnah)
+    assert pan.DEXI in types  # 13
+    assert pan.ATNAX in types
+    assert types[-2:] == [pan.SILLUQ, pan.SOFPASUQ]
+
+
+def test_unmarked_oleh_recovered_after_galgal():
+    # Ps 30:12: L omits the ole (#363), writing only the yored merka (L/I71Y);
+    # the galgal servus (93) immediately precedes it, so the bare merka is
+    # recovered as oleh-we-yored rather than read as a servus.  MAM-cross-checked.
+    body = (
+        r"HFPA74K:T.F MIS:P.:D/IY02 L:/MFXO93WL L/I71Y P.IT.A71X:T.F "
+        r'&AQ./I92Y WA75/T.:)AZ.:R/"71NIY &IM:XF75H00'
+    )
+    types = _types(body)
+    assert pan.OLEH_WEYORED in types
+    # the galgal stays as the oleh-we-yored's servus, directly before it
+    g, o = types.index(pan.GALGAL), types.index(pan.OLEH_WEYORED)
+    assert o == g + 1
+    # the verse now parses (it was a NO_PARSE before the recovery)
+    parser = build_parser()
+    assert parse_tokens(parser, scan_verse("Psalms 30:12", body).tokens) is not None
+
+
+def test_galgal_then_marked_oleh_not_doubly_recovered():
+    # When the ole IS marked (60+71), the yored is already folded into
+    # OLEH_WEYORED by the rule table, so there is no bare MERKHA after the galgal
+    # to misread (Ps 1:1: B.A/(:ACA93T R:$F60(I71YM).
+    body = r"B.A/(:ACA93T R:$F60(I71YM W./B:/DE74REK: LO74) YF$F75B00"
+    types = _types(body)
+    assert types.count(pan.OLEH_WEYORED) == 1
+    g, o = types.index(pan.GALGAL), types.index(pan.OLEH_WEYORED)
+    assert o == g + 1
+    assert pan.MERKHA not in types[g:o]
 
 
 def test_revia_qatan_before_oleh():
     # A bare revia (81) whose next disjunctive is oleh-we-yored is revia qatan.
     body = r"FOO81 BAR60BAZ71 QUX75X00"
-    assert "REVIA_QATAN" in _types(body)
+    assert pan.REVIA_QATAN in _types(body)
 
 
 def test_these_verses_parse():
