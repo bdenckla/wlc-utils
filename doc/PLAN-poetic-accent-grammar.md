@@ -12,6 +12,17 @@ regenerate outputs and confirm before moving on.
 
 ## Status (2026-06-16)
 
+**Phase 1 DONE** (commit `poetic corpus driver + run`): driver + corpus run landed.
+- `py/accgram/poetic_filter.py` — inverse of `prose_filter` (ps/pr + poetcant Job).
+- `py/accgram/ply_scanner_poetic.py::scan_book` — book text → Verses, clean
+  `bk39id` references ("Job", not "Defeatmatchforjob").
+- `py/accgram/run_ply_poetic.py` + `run-ply-poetic` subcommand → writes
+  `out/accgram/ply-poetic/wlc_422_ps_{ps,pr,jb}_ag.txt` (git-tracked). Unparseable
+  verses are non-fatal `NO_PARSE: <token types>` lines (greppable), tallied.
+- Run: **ps 2421/2527 (95.8%), pr 897/915 (98.0%), jb 1001/1023 (97.8%); total
+  4319/4465 (96.7%)**. 146 NO_PARSE = the structural tail (categories A–D below).
+- Next: **Phase 2** (MAM-simple cross-check + scanner fixes).
+
 Built and tested (full suite: 42 passing):
 - `py/accgram/ply_scanner_poetic.py` — M-C accent codes → poetic tokens.
 - `py/accgram/ply_grammar_poetic.py` — PLY grammar; **zero LALR conflicts**.
