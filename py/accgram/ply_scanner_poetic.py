@@ -54,7 +54,15 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from cmn.wlc_book_codes import wlc_bb_to_bk39id
+
 _TEXT = r"[^ \r\n\-]*"  # within one maqqef/space-delimited word (as in prose)
+
+# Verse-structure line patterns, as in accgram.ply_scanner.scan_book: a verse line
+# is "ch:vr <accent codes>"; a lone capitalized word is a chapter/book header we
+# skip (the poetic reference is built from the WLC book code, not the header).
+_BOOKNAME_RE = re.compile(r"^([1234][ \t]*)?[A-Z][a-z]+[ \t]*$")
+_VERSE_RE = re.compile(r"^([1-9][0-9]*):([1-9][0-9]*)[ \t](.*)$")
 
 # Disjunctive token types, for the revia gadol/qatan second-pass lookahead.
 _POETIC_DISJUNCTIVES = frozenset(
@@ -218,3 +226,28 @@ def scan_verse(reference: str, body: str) -> Verse:
     tokens: list[tuple[str, str]] = [("TILDE", "")]
     tokens += scan_accents(body)
     return Verse(reference=reference, tokens=tokens, body=body)
+
+
+def scan_book(text: str, bb: str) -> list[Verse]:
+    """Scan a whole split_wlc book text into per-verse poetic token streams.
+
+    Mirrors accgram.ply_scanner.scan_book's line walk -- header lines are skipped,
+    each ``ch:vr <accents>`` line becomes one Verse via scan_verse -- but the
+    reference uses the clean book name (the WLC code's bk39id: "Psalms",
+    "Proverbs", "Job") rather than the goerwitz header word, since the poetic
+    output has no C oracle to match and the header carries a binary-dodging
+    placeholder for Job ("Defeatmatchforjob").
+    """
+    book = wlc_bb_to_bk39id(bb)
+    verses: list[Verse] = []
+    for raw_line in text.splitlines():
+        line = raw_line.rstrip("\r\n")
+        mv = _VERSE_RE.match(line)
+        if mv is not None:
+            ch, vs, rest = mv.group(1), mv.group(2), mv.group(3)
+            verses.append(scan_verse(f"{book} {ch}:{vs}", rest))
+            continue
+        # Non-verse lines are book/chapter headers (or blank); ignore them.
+        if not line.strip() or _BOOKNAME_RE.match(line):
+            continue
+    return verses

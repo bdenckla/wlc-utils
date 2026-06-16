@@ -7,6 +7,12 @@ Subcommands:
                 out/accgram/ply/*_ag.txt (mirrors `accents -p`).  A verse the
                 grammar cannot parse at all is a fatal error.  Use --book to
                 restrict to specific books (e.g. --book ob).
+    run-ply-poetic
+                Run the POETIC (Three Books) PLY scanner + grammar over the
+                poetic corpus (Psalms, Proverbs, poetically-cantillated Job) and
+                write out/accgram/ply-poetic/*_ag.txt.  Unparseable verses are
+                emitted as NO_PARSE lines and tallied, not fatal.  Use --book to
+                restrict (ps, pr, jb).
     research-oddballs
                 Derive the PLY-based oddball set from the PLY outputs
                 (out/accgram/ply) into out/accgram/ply/_oddballs.json, then enrich
@@ -27,6 +33,7 @@ from pathlib import Path
 
 from accgram import research_tao
 from accgram import run_ply
+from accgram import run_ply_poetic
 from cmn.utf8_io import force_utf8_io
 
 
@@ -40,6 +47,10 @@ def _run_research_tao(args: argparse.Namespace) -> None:
 
 def _run_run_ply(args: argparse.Namespace) -> None:
     run_ply.run(args)
+
+
+def _run_run_ply_poetic(args: argparse.Namespace) -> None:
+    run_ply_poetic.run(args)
 
 
 def main() -> None:
@@ -60,6 +71,18 @@ def main() -> None:
     )
     run_ply.add_args(run_ply_parser, repo_root=_repo_root())
     run_ply_parser.set_defaults(func=_run_run_ply)
+
+    run_ply_poetic_parser = subparsers.add_parser(
+        "run-ply-poetic",
+        help=(
+            "Run the poetic (Three Books) PLY scanner + grammar over Psalms, "
+            "Proverbs, and poetically-cantillated Job and write "
+            "out/accgram/ply-poetic/*_ag.txt. Unparseable verses become NO_PARSE "
+            "lines (not fatal). Use --book to restrict (ps, pr, jb)."
+        ),
+    )
+    run_ply_poetic.add_args(run_ply_poetic_parser, repo_root=_repo_root())
+    run_ply_poetic_parser.set_defaults(func=_run_run_ply_poetic)
 
     research_tao_parser = subparsers.add_parser(
         "research-oddballs",
