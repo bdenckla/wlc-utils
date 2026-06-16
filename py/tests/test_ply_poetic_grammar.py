@@ -74,7 +74,7 @@ def test_oleh_weyored_is_topmost_divider():
     tree = parse_tokens(
         parser,
         _verse(
-            "REVIA_GADOL", "MEREKA", "REVIA_QATAN", "ATNAH_HAFUKH", "OLEH_WEYORED",
+            "REVIA_GADOL", "MEREKA", "REVIA_QATAN", "GALGAL", "OLEH_WEYORED",
             "MUNACH", "ATNACH", "MEREKA", "REVIA_MUGRASH", "SILLUQ",
         ),
     )
@@ -96,7 +96,7 @@ def test_full_hierarchy_pazer_legarmeh_dehi_sinnor():
         parser,
         _verse(
             "PAZER", "LEGARMEH", "REVIA_GADOL", "MEREKA", "SINNOR",
-            "ATNAH_HAFUKH", "OLEH_WEYORED",
+            "GALGAL", "OLEH_WEYORED",
             "MUNACH", "DEHI", "MEREKA", "ATNACH",
             "MEREKA", "REVIA_MUGRASH", "SILLUQ",
         ),

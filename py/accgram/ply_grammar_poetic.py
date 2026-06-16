@@ -2,57 +2,51 @@
 
 This is the poetic counterpart of accgram.ply_grammar (which ports acc2tre.y, the
 prose / Twenty-One Books grammar).  There is no Goerwitz C oracle for the poetic
-books; the productions here are derived directly from Yeivin, *Introduction to the
-Tiberian Masorah* (ITM), the section "The Accents of the Three Books" (Psalms,
-Proverbs, and the poetic core of Job), paragraphs 358-374.  Section numbers are
-cited inline.  See also accgram-adjacent mb_cmn.hebrew_accents, whose poetic
-conjunctive list already cites ITM #358 / #361.
+books; the productions here are derived from Yeivin, *Introduction to the Tiberian
+Masorah* (ITM), the section "The Accents of the Three Books" (Psalms, Proverbs,
+and the poetic core of Job), paragraphs 358-374.  Section numbers are cited
+inline.  See also mb_cmn.hebrew_accents, whose poetic conjunctive list cites ITM
+#358 / #361.
 
-Hierarchy of disjunctives (greater divider -> the divider one rank below that
-subdivides its domain), per Yeivin:
+Design: strict clause hierarchy, permissive servus chains.
+  The *clause* rules encode Yeivin's disjunctive hierarchy strictly (this is the
+  linguistically meaningful structure).  The *phrase* rules, by contrast, accept
+  any run of conjunctive servi before a disjunctive, because Yeivin describes the
+  poetic servi only loosely -- "up to N servi", "various combinations", "governed
+  by intricate rules" -- and there is no oracle to pin exact patterns against.  So
+  every ``D_phrase`` is just ``D`` optionally preceded by a ``servi`` chain; the
+  particular servus counts/orders Yeivin documents (munah/merka before silluq,
+  galgal+mahpak/azla before pazer, the galgal "v"-servus of oleh-we-yored, etc.)
+  are admitted but not required.  Tightening the servus rules to what L actually
+  attests is left to a corpus-validation pass.
 
-  silluq (verse end, ITM #359)
-    great division: oleh-we-yored (distant) OR atnah (close)   (#361)
+Hierarchy of disjunctives (greater divider -> the divider one rank below it):
+
+  silluq (verse end, #359)
+    great division: oleh-we-yored (distant) OR atnah (close)             (#361)
     near division before silluq: revia mugrash / shalshelet gedolah  (#366, #371)
   oleh-we-yored (the main verse divider, #363)
-    main subdivider: revia gadol; immediately preceded by revia qatan (no
-    servus) or sinnor (with servus)                            (#363, #365, #368)
-  atnah (#362)
-    subdivider: dehi (near) / revia gadol (distant)            (#362, #364)
-  revia gadol (#363)        -> pazer (distant) / legarmeh (near)
-  revia qatan (#368)        -> legarmeh only
-  revia mugrash (#366)      -> pazer / legarmeh
-  dehi (#364)               -> pazer / legarmeh
-  sinnor (#365)             -> pazer / legarmeh
-  pazer (#369)              -> legarmeh only
-  legarmeh (#370)           -> (terminal lowest disjunctive)
+    main subdivider: revia gadol; immediately preceded by revia qatan
+    (no servus) or sinnor (with servus)                          (#363, #365, #368)
+  atnah (#362)               -> dehi (near) / revia gadol (distant)  (#362, #364)
+  revia gadol (#363)         -> pazer / legarmeh
+  revia qatan (#368)         -> legarmeh only
+  revia mugrash (#366-367)   -> pazer / legarmeh (with geresh, tifcha-like);
+                                also dehi / revia gadol when "without geresh" it
+                                acts as the main verse divider like atnah (#367)
+  dehi (#364)                -> pazer / legarmeh
+  sinnor (#365)              -> pazer / legarmeh
+  pazer (#369)               -> legarmeh only
+  legarmeh (#370)            -> (terminal lowest disjunctive)
 
-As in the prose grammar, each disjunctive D gets:
-  - a ``D_phrase`` rule: the disjunctive sign with its permitted conjunctive
-    servi (the servus patterns are taken from Yeivin's described examples; where
-    Yeivin says the rules are "intricate" or gives only rare examples, the open
-    cases are noted rather than enumerated exhaustively -- this grammar has not
-    yet been validated against the L corpus);
-  - a ``D_clause`` rule: a ``D_phrase`` optionally preceded by a clause of each
-    disjunctive that may subdivide D's domain.
+Token disambiguation that the scanner (accgram.ply_scanner_poetic) performs and
+this grammar relies on: the three revias share signs but are distinct tokens here
+(REVIA_GADOL / REVIA_QATAN / REVIA_MUGRASH); the scanner separates them by the
+geresh muqdam (mugrash) and by position (qatan only before oleh-we-yored, a bare
+revia before silluq = mugrash without geresh, #391).
 
-Caveats (why this grammar is not yet wired into a driver):
-  - Scanner disambiguation is unsolved.  Several poetic disjunctives share a
-    Unicode sign and therefore a Michigan-Claremont code with each other or with
-    a prose accent: the three revias (gadol/qatan/mugrash) are one dot (prose
-    code 81); dehi and the conjunctive tarha both use the tifcha sign (73);
-    sinnor uses the zarqa sign (02).  Telling them apart needs positional /
-    contextual logic the prose ply_scanner does not perform, so a poetic scanner
-    is future work.  This module therefore works on already-classified poetic
-    token *types* and is exercised by hand-built token streams (see the module
-    test) rather than by run_ply.
-  - No error-recovery productions: the prose grammar's ``error`` rules are a
-    faithful port of acc2tre.y's recovery; there is no analogous poetic oracle to
-    reproduce, so error handling is deferred.
-
-Grammar actions build trees with ply_tree.make_node / add_leaves, exactly as the
-prose grammar does, so accgram.ply_tree.print_tree renders poetic trees in the
-same indented format.
+Grammar actions build trees with ply_tree.make_node / add_leaves, as the prose
+grammar does, so accgram.ply_tree.print_tree renders poetic trees identically.
 """
 
 from __future__ import annotations
@@ -63,10 +57,6 @@ from ply import yacc
 
 from accgram.ply_tree import add_leaves, make_node
 
-# Poetic token set.  Disjunctives and structure first, then the conjunctive
-# servi.  The three revias are distinct tokens (distinct grammatical roles) even
-# though they share one sign; likewise DEHI vs TARHA and SINNOR share signs with
-# prose accents -- disambiguation is the scanner's job (see module docstring).
 tokens = (
     # structure
     "TILDE",
@@ -83,7 +73,7 @@ tokens = (
     "PAZER",
     "LEGARMEH",
     "SHALSHELET_GEDOLAH",
-    # conjunctive servi (ITM #358; ATNAH_HAFUKH per #363)
+    # conjunctive servi (ITM #358; GALGAL also serves oleh-we-yored, #363)
     "MUNACH",
     "MEREKA",
     "MAHPAK",
@@ -91,15 +81,35 @@ tokens = (
     "GALGAL",
     "ILLUY",
     "TARHA",
-    "ATNAH_HAFUKH",
     # NOTE: the conjunctive shalshelet qetannah (#371) is a real poetic servus but
-    # occurs in only eight verses, each time as one link in a chain of conjunctives
-    # before silluq, atnah, or revia mugrash without geresh.  Yeivin does not give
-    # the exact chains, so it is left unmodeled (no token) rather than fabricated;
-    # see the shalshelet gedolah section below.
+    # occurs in only eight verses, each as one link in a chain of conjunctives
+    # before silluq/atnah/revia-mugrash-without-geresh.  Yeivin gives no exact
+    # chains, so it is left unmodeled (no token) rather than fabricated.
 )
 
 start = "pasuq"
+
+
+# --- conjunctive servi (permissive chain, see module docstring) ----------------
+def p_conj(p):
+    """conj : MUNACH
+            | MEREKA
+            | MAHPAK
+            | AZLA
+            | GALGAL
+            | ILLUY
+            | TARHA"""
+    p[0] = p[1]  # the leaf-name string
+
+
+def p_servi_one(p):
+    "servi : conj"
+    p[0] = [p[1]]
+
+
+def p_servi_many(p):
+    "servi : servi conj"
+    p[0] = p[1] + [p[2]]
 
 
 # --- pasuq ---------------------------------------------------------------------
@@ -108,34 +118,92 @@ def p_pasuq(p):
     p[0] = p[2]
 
 
-# --- silluq (#359) -------------------------------------------------------------
-# Up to four servi.  A single servus is usually munah (Ps 1:1) or merka (Ps 1:2);
-# two servi are usually tarha + munah (Ps 1:6).  Three and four servi follow
-# "intricate rules" (Yeivin) and are not enumerated here.
-def p_silluq_phrase_silluq(p):
-    "silluq_phrase : SILLUQ"
-    p[0] = add_leaves("silluq_phrase", p[1])
+# --- phrases (disjunctive + optional servus chain) -----------------------------
+# One uniform pair of productions per disjunctive: the bare sign, or a servus
+# chain followed by the sign.
+def p_silluq_phrase(p):
+    """silluq_phrase : SILLUQ
+                     | servi SILLUQ"""
+    _phrase(p, "silluq_phrase")
 
 
-def p_silluq_phrase_munach(p):
-    "silluq_phrase : MUNACH SILLUQ"
-    p[0] = add_leaves("silluq_phrase", p[1], p[2])
+def p_oleh_weyored_phrase(p):
+    """oleh_weyored_phrase : OLEH_WEYORED
+                           | servi OLEH_WEYORED"""
+    # The characteristic servus is the "v"-shaped sign, coded as galgal in L (the
+    # same sign as pazer's servus; #363); mahpak/merka also occur.  The yored
+    # (merka below the stress) is part of the oleh-we-yored sign and is folded into
+    # the OLEH_WEYORED token by the scanner, not a servus.
+    _phrase(p, "oleh_weyored_phrase")
 
 
-def p_silluq_phrase_mereka(p):
-    "silluq_phrase : MEREKA SILLUQ"
-    p[0] = add_leaves("silluq_phrase", p[1], p[2])
+def p_atnach_phrase(p):
+    """atnach_phrase : ATNACH
+                     | servi ATNACH"""
+    _phrase(p, "atnach_phrase")
 
 
-def p_silluq_phrase_tarha_munach(p):
-    "silluq_phrase : TARHA MUNACH SILLUQ"
-    p[0] = add_leaves("silluq_phrase", p[1], p[2], p[3])
+def p_revia_gadol_phrase(p):
+    """revia_gadol_phrase : REVIA_GADOL
+                          | servi REVIA_GADOL"""
+    _phrase(p, "revia_gadol_phrase")
 
 
+def p_revia_qatan_phrase(p):
+    """revia_qatan_phrase : REVIA_QATAN
+                          | servi REVIA_QATAN"""
+    _phrase(p, "revia_qatan_phrase")
+
+
+def p_revia_mugrash_phrase(p):
+    """revia_mugrash_phrase : REVIA_MUGRASH
+                            | servi REVIA_MUGRASH"""
+    _phrase(p, "revia_mugrash_phrase")
+
+
+def p_dehi_phrase(p):
+    """dehi_phrase : DEHI
+                   | servi DEHI"""
+    _phrase(p, "dehi_phrase")
+
+
+def p_sinnor_phrase(p):
+    """sinnor_phrase : SINNOR
+                     | servi SINNOR"""
+    _phrase(p, "sinnor_phrase")
+
+
+def p_pazer_phrase(p):
+    """pazer_phrase : PAZER
+                    | servi PAZER"""
+    _phrase(p, "pazer_phrase")
+
+
+def p_legarmeh_phrase(p):
+    """legarmeh_phrase : LEGARMEH
+                       | servi LEGARMEH"""
+    _phrase(p, "legarmeh_phrase")
+
+
+def p_shalshelet_gedolah_phrase(p):
+    """shalshelet_gedolah_phrase : SHALSHELET_GEDOLAH
+                                 | servi SHALSHELET_GEDOLAH"""
+    _phrase(p, "shalshelet_gedolah_phrase")
+
+
+def _phrase(p, label):
+    """Shared action: build a phrase leaf from optional servi + the disjunctive."""
+    if len(p) == 2:  # bare disjunctive
+        p[0] = add_leaves(label, p[1])
+    else:  # servi (a list) + disjunctive
+        p[0] = add_leaves(label, *p[1], p[2])
+
+
+# --- silluq clause (#359, #361, #366, #371) ------------------------------------
 # The silluq domain is the whole verse.  Its near divider before silluq is revia
-# mugrash or shalshelet gedolah (#366, #371); its great divider is atnah or
-# oleh-we-yored (#361).  oleh-we-yored, when present, is the topmost divider and
-# may itself contain an atnah-divided remainder before silluq (#361).
+# mugrash or shalshelet gedolah; its great divider is atnah or oleh-we-yored.
+# oleh-we-yored, when present, is the topmost divider and may contain an
+# atnah-divided remainder before silluq.
 def p_silluq_clause(p):
     """silluq_clause : silluq_phrase
                      | revia_mugrash_silluq_clause
@@ -170,34 +238,9 @@ def p_oleh_silluq_clause(p):
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
-# --- oleh-we-yored (#363) ------------------------------------------------------
-# The main verse divider.  One servus or none.  The characteristic servus is the
-# "v"-shaped sign (atnah hafukh); mehuppak where the word is stressed on its first
-# syllable, occasionally merka.
-def p_oleh_phrase_bare(p):
-    "oleh_weyored_phrase : OLEH_WEYORED"
-    p[0] = add_leaves("oleh_weyored_phrase", p[1])
-
-
-def p_oleh_phrase_atnah_hafukh(p):
-    "oleh_weyored_phrase : ATNAH_HAFUKH OLEH_WEYORED"
-    p[0] = add_leaves("oleh_weyored_phrase", p[1], p[2])
-
-
-def p_oleh_phrase_mahpak(p):
-    "oleh_weyored_phrase : MAHPAK OLEH_WEYORED"
-    p[0] = add_leaves("oleh_weyored_phrase", p[1], p[2])
-
-
-def p_oleh_phrase_mereka(p):
-    "oleh_weyored_phrase : MEREKA OLEH_WEYORED"
-    p[0] = add_leaves("oleh_weyored_phrase", p[1], p[2])
-
-
-# oleh-we-yored is "always preceded by revia [qatan] or sinnor" (#363, #371): the
-# immediate predecessor is revia qatan (no servus) or sinnor (with servus).  The
-# main subdivider of its domain is revia gadol, which stands before the
-# revia-qatan/sinnor.
+# --- oleh-we-yored clause (#363, #365, #368) -----------------------------------
+# Immediately preceded by revia qatan (no servus) or sinnor (with servus); the
+# main subdivider of its domain is revia gadol, standing before that.
 def p_oleh_clause(p):
     """oleh_clause : oleh_weyored_phrase
                    | revia_qatan_oleh_clause
@@ -224,37 +267,9 @@ def p_revia_gadol_oleh_clause(p):
     p[0] = make_node("oleh_weyored_clause", p[1], p[2])
 
 
-# --- atnah (#362) --------------------------------------------------------------
-# Up to five servi.  A single servus is munah when dehi precedes, else merka; two
-# servi are both munah; with paseq before atnah the servi are tarha + merka.
-def p_atnach_phrase_bare(p):
-    "atnach_phrase : ATNACH"
-    p[0] = add_leaves("atnach_phrase", p[1])
-
-
-def p_atnach_phrase_munach(p):
-    "atnach_phrase : MUNACH ATNACH"
-    p[0] = add_leaves("atnach_phrase", p[1], p[2])
-
-
-def p_atnach_phrase_mereka(p):
-    "atnach_phrase : MEREKA ATNACH"
-    p[0] = add_leaves("atnach_phrase", p[1], p[2])
-
-
-def p_atnach_phrase_munach2(p):
-    "atnach_phrase : MUNACH MUNACH ATNACH"
-    p[0] = add_leaves("atnach_phrase", p[1], p[2], p[3])
-
-
-def p_atnach_phrase_tarha_mereka(p):
-    "atnach_phrase : TARHA MEREKA ATNACH"
-    p[0] = add_leaves("atnach_phrase", p[1], p[2], p[3])
-
-
-# The atnah domain is subdivided by dehi (near) or revia gadol (distant); revia
-# gadol is the higher divider, so it may contain a dehi subdivision but not vice
-# versa.
+# --- atnah clause (#362, #364) -------------------------------------------------
+# Subdivided by dehi (near) or revia gadol (distant); revia gadol is the higher
+# divider, so it may contain a dehi subdivision but not vice versa.
 def p_atnach_clause(p):
     """atnach_clause : atnach_phrase
                      | dehi_atnach_clause
@@ -275,32 +290,9 @@ def p_revia_gadol_atnach_clause(p):
     p[0] = make_node("atnach_clause", p[1], p[2])
 
 
-# --- revia gadol (#363) --------------------------------------------------------
-# Rarely more than one servus: merka, or mehuppak, or illuy (one of the shofar
-# accents).  Mehuppak with sinnorit ("mehuppak mesunnar") -- the sinnorit is a
-# secondary "helping tune" the scanner swallows, so only MAHPAK is seen here.
-def p_revia_gadol_phrase_bare(p):
-    "revia_gadol_phrase : REVIA_GADOL"
-    p[0] = add_leaves("revia_gadol_phrase", p[1])
-
-
-def p_revia_gadol_phrase_mereka(p):
-    "revia_gadol_phrase : MEREKA REVIA_GADOL"
-    p[0] = add_leaves("revia_gadol_phrase", p[1], p[2])
-
-
-def p_revia_gadol_phrase_mahpak(p):
-    "revia_gadol_phrase : MAHPAK REVIA_GADOL"
-    p[0] = add_leaves("revia_gadol_phrase", p[1], p[2])
-
-
-def p_revia_gadol_phrase_illuy(p):
-    "revia_gadol_phrase : ILLUY REVIA_GADOL"
-    p[0] = add_leaves("revia_gadol_phrase", p[1], p[2])
-
-
-# A near/minor division is legarmeh; a distant/major one is pazer; both may occur
-# (#363).  pazer is the higher of the two, so it may contain legarmeh.
+# --- revia gadol clause (#363) -------------------------------------------------
+# A near/minor division is legarmeh; a distant/major one is pazer; pazer is the
+# higher of the two and may contain legarmeh.
 def p_revia_gadol_clause(p):
     """revia_gadol_clause : revia_gadol_phrase
                           | legarmeh_revia_gadol_clause
@@ -321,30 +313,8 @@ def p_pazer_revia_gadol_clause(p):
     p[0] = make_node("revia_gadol_clause", p[1], p[2])
 
 
-# --- revia qatan (#368) --------------------------------------------------------
-# Only immediately before oleh-we-yored.  Up to three servi: one merka; two are
-# mehuppak + merka, or two merkas (Ps 67:5); three only in Ps 1:2.
-def p_revia_qatan_phrase_bare(p):
-    "revia_qatan_phrase : REVIA_QATAN"
-    p[0] = add_leaves("revia_qatan_phrase", p[1])
-
-
-def p_revia_qatan_phrase_mereka(p):
-    "revia_qatan_phrase : MEREKA REVIA_QATAN"
-    p[0] = add_leaves("revia_qatan_phrase", p[1], p[2])
-
-
-def p_revia_qatan_phrase_mahpak_mereka(p):
-    "revia_qatan_phrase : MAHPAK MEREKA REVIA_QATAN"
-    p[0] = add_leaves("revia_qatan_phrase", p[1], p[2], p[3])
-
-
-def p_revia_qatan_phrase_mereka_mereka(p):
-    "revia_qatan_phrase : MEREKA MEREKA REVIA_QATAN"
-    p[0] = add_leaves("revia_qatan_phrase", p[1], p[2], p[3])
-
-
-# The only subordinate disjunctive is legarmeh (#368).
+# --- revia qatan clause (#368) -------------------------------------------------
+# The only subordinate disjunctive is legarmeh.
 def p_revia_qatan_clause(p):
     """revia_qatan_clause : revia_qatan_phrase
                           | legarmeh_revia_qatan_clause"""
@@ -357,37 +327,18 @@ def p_legarmeh_revia_qatan_clause(p):
     p[0] = make_node("revia_qatan_clause", p[1], p[2])
 
 
-# --- revia mugrash (#366-367) --------------------------------------------------
-# The last disjunctive before silluq (masoretic "tifha"); functions like prose
-# tifcha.  With geresh: one or two merka servi.  "Without geresh" (when no atnah
-# in the verse, acting as main verse divider): up to four servi, two being
-# tarha + merka.  The geresh stroke is orthographic, so both share one token.
-def p_revia_mugrash_phrase_bare(p):
-    "revia_mugrash_phrase : REVIA_MUGRASH"
-    p[0] = add_leaves("revia_mugrash_phrase", p[1])
-
-
-def p_revia_mugrash_phrase_mereka(p):
-    "revia_mugrash_phrase : MEREKA REVIA_MUGRASH"
-    p[0] = add_leaves("revia_mugrash_phrase", p[1], p[2])
-
-
-def p_revia_mugrash_phrase_mereka2(p):
-    "revia_mugrash_phrase : MEREKA MEREKA REVIA_MUGRASH"
-    p[0] = add_leaves("revia_mugrash_phrase", p[1], p[2], p[3])
-
-
-def p_revia_mugrash_phrase_tarha_mereka(p):
-    "revia_mugrash_phrase : TARHA MEREKA REVIA_MUGRASH"
-    p[0] = add_leaves("revia_mugrash_phrase", p[1], p[2], p[3])
-
-
-# Lower divisions under revia mugrash are the universal lesser dividers pazer /
-# legarmeh (as for revia gadol).
+# --- revia mugrash clause (#366-367) -------------------------------------------
+# With the geresh stroke: the last disjunctive before silluq, like prose tifcha,
+# subdivided by the lesser dividers pazer / legarmeh.  "Without the geresh" (a bare
+# revia before silluq when the verse has no atnah) it acts as the main verse
+# divider "like atnah", so it is also subdivided by dehi (near) and revia gadol
+# (distant).  Both roles share the REVIA_MUGRASH token, so all four are allowed.
 def p_revia_mugrash_clause(p):
     """revia_mugrash_clause : revia_mugrash_phrase
                             | legarmeh_revia_mugrash_clause
-                            | pazer_revia_mugrash_clause"""
+                            | pazer_revia_mugrash_clause
+                            | dehi_revia_mugrash_clause
+                            | revia_gadol_revia_mugrash_clause"""
     p[0] = p[1]
 
 
@@ -404,25 +355,20 @@ def p_pazer_revia_mugrash_clause(p):
     p[0] = make_node("revia_mugrash_clause", p[1], p[2])
 
 
-# --- dehi (#364) ---------------------------------------------------------------
-# Subordinate to atnah; prepositive tifha-shaped stroke.  Up to three servi: one
-# munah; a second servus is various, e.g. mehuppak; three only Ps 56:10/Job 34:37.
-def p_dehi_phrase_bare(p):
-    "dehi_phrase : DEHI"
-    p[0] = add_leaves("dehi_phrase", p[1])
+def p_dehi_revia_mugrash_clause(p):
+    """dehi_revia_mugrash_clause : dehi_clause revia_mugrash_phrase
+                                 | dehi_clause dehi_revia_mugrash_clause"""
+    p[0] = make_node("revia_mugrash_clause", p[1], p[2])
 
 
-def p_dehi_phrase_munach(p):
-    "dehi_phrase : MUNACH DEHI"
-    p[0] = add_leaves("dehi_phrase", p[1], p[2])
+def p_revia_gadol_revia_mugrash_clause(p):
+    """revia_gadol_revia_mugrash_clause : revia_gadol_clause revia_mugrash_phrase
+                                        | revia_gadol_clause dehi_revia_mugrash_clause
+                                        | revia_gadol_clause revia_gadol_revia_mugrash_clause"""
+    p[0] = make_node("revia_mugrash_clause", p[1], p[2])
 
 
-def p_dehi_phrase_mahpak_munach(p):
-    "dehi_phrase : MAHPAK MUNACH DEHI"
-    p[0] = add_leaves("dehi_phrase", p[1], p[2], p[3])
-
-
-# Divisions under dehi are legarmeh or pazer or both (#364).
+# --- dehi clause (#364) --------------------------------------------------------
 def p_dehi_clause(p):
     """dehi_clause : dehi_phrase
                    | legarmeh_dehi_clause
@@ -443,35 +389,7 @@ def p_pazer_dehi_clause(p):
     p[0] = make_node("dehi_clause", p[1], p[2])
 
 
-# --- sinnor (#365) -------------------------------------------------------------
-# Subordinate to oleh-we-yored; postpositive zarqa-shaped sign.  One or two servi:
-# one is merka or munah; two are usually merka + munah, sometimes mehuppak + munah.
-def p_sinnor_phrase_bare(p):
-    "sinnor_phrase : SINNOR"
-    p[0] = add_leaves("sinnor_phrase", p[1])
-
-
-def p_sinnor_phrase_mereka(p):
-    "sinnor_phrase : MEREKA SINNOR"
-    p[0] = add_leaves("sinnor_phrase", p[1], p[2])
-
-
-def p_sinnor_phrase_munach(p):
-    "sinnor_phrase : MUNACH SINNOR"
-    p[0] = add_leaves("sinnor_phrase", p[1], p[2])
-
-
-def p_sinnor_phrase_mereka_munach(p):
-    "sinnor_phrase : MEREKA MUNACH SINNOR"
-    p[0] = add_leaves("sinnor_phrase", p[1], p[2], p[3])
-
-
-def p_sinnor_phrase_mahpak_munach(p):
-    "sinnor_phrase : MAHPAK MUNACH SINNOR"
-    p[0] = add_leaves("sinnor_phrase", p[1], p[2], p[3])
-
-
-# Divisions under sinnor are legarmeh or pazer or both (#365).
+# --- sinnor clause (#365) ------------------------------------------------------
 def p_sinnor_clause(p):
     """sinnor_clause : sinnor_phrase
                      | legarmeh_sinnor_clause
@@ -492,31 +410,8 @@ def p_pazer_sinnor_clause(p):
     p[0] = make_node("sinnor_clause", p[1], p[2])
 
 
-# --- pazer (#369) --------------------------------------------------------------
-# Up to three servi.  A single servus is rare, usually merka.  Two servi (system
-# of A and L): the servus immediately before pazer is galgal, the second is
-# mehuppak (word stressed on first syllable) else azla.  A third servus is various.
-def p_pazer_phrase_bare(p):
-    "pazer_phrase : PAZER"
-    p[0] = add_leaves("pazer_phrase", p[1])
-
-
-def p_pazer_phrase_mereka(p):
-    "pazer_phrase : MEREKA PAZER"
-    p[0] = add_leaves("pazer_phrase", p[1], p[2])
-
-
-def p_pazer_phrase_mahpak_galgal(p):
-    "pazer_phrase : MAHPAK GALGAL PAZER"
-    p[0] = add_leaves("pazer_phrase", p[1], p[2], p[3])
-
-
-def p_pazer_phrase_azla_galgal(p):
-    "pazer_phrase : AZLA GALGAL PAZER"
-    p[0] = add_leaves("pazer_phrase", p[1], p[2], p[3])
-
-
-# The only subordinate disjunctive is legarmeh (#369).
+# --- pazer clause (#369) -------------------------------------------------------
+# The only subordinate disjunctive is legarmeh.
 def p_pazer_clause(p):
     """pazer_clause : pazer_phrase
                     | legarmeh_pazer_clause"""
@@ -529,32 +424,8 @@ def p_legarmeh_pazer_clause(p):
     p[0] = make_node("pazer_clause", p[1], p[2])
 
 
-# --- legarmeh (#370) -----------------------------------------------------------
-# Conjunctive (azla or mehuppak) + paseq; azla legarmeh and mehuppak legarmeh are
-# variant forms of one accent, so both are the LEGARMEH token.  One or two servi:
-# the commonest single servus is mehuppak, also illuy or merka; two servi occur in
-# three places only.  The lowest disjunctive: it takes no subordinate disjunctive,
-# but legarmeh may itself repeat in a chain.
-def p_legarmeh_phrase_bare(p):
-    "legarmeh_phrase : LEGARMEH"
-    p[0] = add_leaves("legarmeh_phrase", p[1])
-
-
-def p_legarmeh_phrase_mahpak(p):
-    "legarmeh_phrase : MAHPAK LEGARMEH"
-    p[0] = add_leaves("legarmeh_phrase", p[1], p[2])
-
-
-def p_legarmeh_phrase_illuy(p):
-    "legarmeh_phrase : ILLUY LEGARMEH"
-    p[0] = add_leaves("legarmeh_phrase", p[1], p[2])
-
-
-def p_legarmeh_phrase_mereka(p):
-    "legarmeh_phrase : MEREKA LEGARMEH"
-    p[0] = add_leaves("legarmeh_phrase", p[1], p[2])
-
-
+# --- legarmeh clause (#370) ----------------------------------------------------
+# The lowest disjunctive: no subordinate disjunctive, but legarmeh may repeat.
 def p_legarmeh_clause(p):
     """legarmeh_clause : legarmeh_phrase
                        | legarmeh_clause legarmeh_phrase"""
@@ -564,17 +435,9 @@ def p_legarmeh_clause(p):
         p[0] = make_node("legarmeh_clause", p[1], p[2])
 
 
-# --- shalshelet gedolah (#371) -------------------------------------------------
-# A disjunctive in the second half of the verse, followed by the two servi of
-# silluq (so it sits at the revia-mugrash rank before silluq).  As a rule it has
-# no servi (one servus in Ps 89:2, two in rare cases), so only the bare phrase /
-# clause is given.  Distinct from the conjunctive shalshelet qetannah, which never
-# carries the following paseq.
-def p_shalshelet_gedolah_phrase(p):
-    "shalshelet_gedolah_phrase : SHALSHELET_GEDOLAH"
-    p[0] = add_leaves("shalshelet_gedolah_phrase", p[1])
-
-
+# --- shalshelet gedolah clause (#371) ------------------------------------------
+# A disjunctive in the second half before silluq (revia-mugrash rank).  As a rule
+# it has no servi; distinct from the conjunctive shalshelet qetannah.
 def p_shalshelet_gedolah_clause(p):
     "shalshelet_gedolah_clause : shalshelet_gedolah_phrase"
     p[0] = p[1]
@@ -582,9 +445,9 @@ def p_shalshelet_gedolah_clause(p):
 
 # --- error callback ------------------------------------------------------------
 def p_error(p):  # noqa: D401  (PLY callback)
-    # No poetic error-recovery productions yet (see module docstring): on a syntax
-    # error PLY has nothing to recover with, so the parse fails (parser.parse
-    # returns None).  Kept as a no-op so PLY does not raise.
+    # No poetic error-recovery productions yet (the prose grammar's recovery is a
+    # port of acc2tre.y; there is no poetic oracle).  On a syntax error PLY has
+    # nothing to recover with, so parse_tokens returns None.
     pass
 
 
@@ -622,8 +485,8 @@ def build_parser(*, capture_warnings: bool = False):
     """Build the poetic PLY parser.
 
     With ``capture_warnings=True`` the LALR construction log (shift/reduce and
-    reduce/reduce conflict warnings) is returned alongside the parser, for
-    grammar development; otherwise warnings are silenced like the prose grammar.
+    reduce/reduce conflict warnings) is returned alongside the parser, for grammar
+    development; otherwise warnings are silenced like the prose grammar.
     """
     if capture_warnings:
         import io

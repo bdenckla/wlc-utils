@@ -1,0 +1,97 @@
+"""Tests for the poetic (Three Books) scanner.
+
+Pins the decoded token stream of a few real Psalms verses whose Michigan-Claremont
+encoding was checked by hand against the M-C accent table (wlc420/supplmt.wts,
+column II) and Yeivin ITM #358-374.  These exercise the tricky cases: the
+revia-mugrash geresh muqdam (11+81), oleh-we-yored (60 ole + 71 yored merka),
+azla/mehuppak legarmeh (63/70 + 05 paseq), the galgal servus of oleh-we-yored
+(93), and the revia gadol/qatan/mugrash disambiguation.
+
+Run:
+    .venv/Scripts/python.exe -m pytest py/tests/test_ply_scanner_poetic.py -v
+"""
+
+from accgram.ply_scanner_poetic import scan_accents
+from accgram.ply_grammar_poetic import build_parser, parse_tokens
+from accgram.ply_scanner_poetic import scan_verse
+
+
+def _types(body):
+    return [t for t, _ in scan_accents(body)]
+
+
+def test_ps_1_1_revia_mugrash_geresh_muqdam():
+    # ... 11L"CI81YM = geresh muqdam (11) + revia (81) -> one revia mugrash.
+    body = (
+        r')A71$:75R"Y-HF/)I81Y$]c ):A$E70R05 LO71) HFLAK:02 B.A/(:ACA93T '
+        r'R:$F60(I71YM W./B:/DE74REK: 13XA+.F)IYM LO71) (FMF92D '
+        r'W./B:/MOW$A71B 11L"CI81YM LO74) YF$F75B00'
+    )
+    types = _types(body)
+    assert types[-1] == "SOFPASUQ"
+    assert types[-2] == "SILLUQ"  # 75 before 00
+    assert "REVIA_MUGRASH" in types  # the 11(+81)
+    assert "ATNACH" in types  # 92
+    assert "SINNOR" in types  # 02 (no zarqa in poetic)
+    assert "DEHI" in types  # 13
+
+
+def test_ps_2_2_azla_legarmeh():
+    # YI71T:YAC.:B63W.05 = azla (63) + paseq (05) -> azla legarmeh.
+    body = (
+        r"YI71T:YAC.:B63W.05 MAL:K\"Y-)E81REC W:/ROWZ:NI71YM "
+        r"NO75WS:DW.-YF92XAD (AL-11Y:HWFH W:/(AL-M:$IYX/O75W00"
+    )
+    types = _types(body)
+    assert "LEGARMEH" in types
+    # the revia after the legarmeh (81 on )EREC, next disjunctive atnah) is gadol
+    assert "REVIA_GADOL" in types
+    assert "ATNACH" in types
+
+
+def test_ps_3_3_oleh_weyored_with_galgal_servus():
+    # )OM:RI93YM = galgal servus; L:/NA60P:$/I71Y = ole (60) + yored merka (71).
+    body = (
+        r"RAB.IYM02 )OM:RI93YM L:/NA60P:$/I71Y )\"70YN "
+        r"Y:75$W.(F65T/FH L./O64W B\"75/)LOHI64YM SE75LFH00"
+    )
+    types = _types(body)
+    assert "OLEH_WEYORED" in types
+    assert "SINNOR" in types  # 02 on RAB.IYM
+    # the galgal (93) precedes oleh-we-yored as its servus
+    assert types.index("GALGAL") < types.index("OLEH_WEYORED")
+    # the yored merka (71) is folded into OLEH_WEYORED, not emitted separately just
+    # before it: no MEREKA sits between GALGAL and OLEH_WEYORED
+    g, o = types.index("GALGAL"), types.index("OLEH_WEYORED")
+    assert "MEREKA" not in types[g + 1 : o]
+
+
+def test_ps_37_28_revia_gadol_then_dehi_then_atnah():
+    # Yeivin's legarmeh-under-revia-gadol example; second half has dehi before atnah.
+    body = (
+        r"K.I70Y Y:HWF63H05 )O82H\"70B MI$:P.F81+ W:/LO)-YA(:AZO74B "
+        r")ET-13X:ASIYDFY/W L:/(OWLF74M NI$:MF92RW. W:/ZE73RA( R:$F(I74YM NIK:RF75T00"
+    )
+    types = _types(body)
+    assert "LEGARMEH" in types  # 63+05 on YHWH
+    assert "REVIA_GADOL" in types  # 81 on MI$:P.F+ (next disjunctive is atnah)
+    assert "DEHI" in types  # 13
+    assert "ATNACH" in types
+    assert types[-2:] == ["SILLUQ", "SOFPASUQ"]
+
+
+def test_revia_qatan_before_oleh():
+    # A bare revia (81) whose next disjunctive is oleh-we-yored is revia qatan.
+    body = r"FOO81 BAR60BAZ71 QUX75X00"
+    assert "REVIA_QATAN" in _types(body)
+
+
+def test_these_verses_parse():
+    parser = build_parser()
+    for body in (
+        r')A71$:75R"Y-HF/)I81Y$]c ):A$E70R05 LO71) HFLAK:02 B.A/(:ACA93T '
+        r'R:$F60(I71YM W./B:/DE74REK: 13XA+.F)IYM LO71) (FMF92D '
+        r'W./B:/MOW$A71B 11L"CI81YM LO74) YF$F75B00',
+    ):
+        v = scan_verse("test 1:1", body)
+        assert parse_tokens(parser, v.tokens) is not None
