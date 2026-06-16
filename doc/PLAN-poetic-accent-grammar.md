@@ -124,8 +124,12 @@ the output.
 Goal: confirm the trees' segmentation is *correct*, not just parseable, and fix
 scanner bugs it surfaces.
 
-- Locate MAM-simple (the user references `MAM-simple/json-vtrad-bhs/…`; it is NOT
-  in this repo — find or obtain it; `prose_filter.py` comments cite its path).
+- MAM-simple is the sibling repo `../MAM-simple` (all repos sit flat under
+  `GitRepos/`); poetic data is `json-vtrad-bhs/{Ps,Prov,Job}.json`. **Loading is
+  already built** — the prose `research-oddballs` workflow integrates it:
+  `mam_simple_verse.load_mam_simple_for_refs` (+ `default_mam_simple_dir` =
+  `repo_root.parent/MAM-simple/json-vtrad-bhs`) and `mam_simple_diff.py`. Reuse
+  these for the poetic cross-check rather than rebuilding the loader.
 - For a structurally diverse sample (verses with oleh-we-yored, two revias before
   silluq, dehi under atnah, sinnor before oleh, nested pazer/legarmeh), compare
   the poetic tree's implied division points against MAM-simple's accents. The user
