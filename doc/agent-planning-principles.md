@@ -1,6 +1,6 @@
 # Agent Planning Principles
 
-These principles capture planning preferences for AI coding agents working in this repository. They are especially relevant when preparing plans for GPT-5.3-Codex-sized execution chunks.
+These principles capture planning preferences for AI coding agents working in this repository.
 
 ## Generated Outputs Are the Tests
 
@@ -23,19 +23,17 @@ Prefer small, purpose-named modules for new feature areas rather than swelling e
 
 This keeps review simpler and makes it easier to abandon, revise, or phase in new behavior without disturbing mature code paths.
 
-## Use GPT-5.3-Codex-Sized Phases
+## Size Phases to Natural Boundaries
 
-When dividing work into phases, avoid both tiny checklist fragments and sprawling multi-feature batches.
+Size phases to coherent goals and natural verification points, not to any model's context limit. A capable agent can take on a large phase in one session, so do not pre-fragment work to fit a smaller executor; combine steps that share a goal and a verification point.
 
 A good phase should have:
 
 - A coherent implementation goal.
 - A natural verification point.
-- A limited blast radius.
-- Enough context to be executable in a fresh agent session.
 - A clear handoff boundary to the next phase.
 
-Do not make every mechanical step its own phase. For example, styling and docs are often too small to be standalone phases; they usually belong with the functional work they support. Conversely, risky refactors that preserve existing behavior may deserve their own phase before new behavior is added.
+Limited blast radius and fresh-session executability are virtues, but they follow from a coherent goal rather than from an imposed size budget. Do not make every mechanical step its own phase. For example, styling and docs are often too small to be standalone phases; they usually belong with the functional work they support. Conversely, a risky refactor that preserves existing behavior may deserve its own phase before new behavior is added.
 
 ## Write State Back Before Continuing
 
