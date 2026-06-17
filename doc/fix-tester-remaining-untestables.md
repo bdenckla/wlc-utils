@@ -7,8 +7,8 @@ and classifies the outcome `CONFIRMED` / `DENIED` / `CHANGED` / `UNTESTABLE`. Th
 proposed fix is normally "adopt the MAM-simple value", but when MAM equals WLC the
 note's hand-authored `synth_fix` is tested instead (flagged `synthesized`).
 
-As of 2026-06-16: **91 tested — 68 CONFIRMED, 0 DENIED, 0 CHANGED, 23 UNTESTABLE.**
-This file enumerates the 23 untestables, why each cannot be mechanically tested, and
+As of 2026-06-16: **91 tested — 80 CONFIRMED, 0 DENIED, 0 CHANGED, 11 UNTESTABLE.**
+This file enumerates the 11 untestables, why each cannot be mechanically tested, and
 whether the barrier is an *apparatus limit* (could be lifted with more tooling) or
 *inherent* (the change cannot affect the grammar, so there is nothing to test).
 
@@ -18,10 +18,11 @@ ignore these.
 
 | reason | count | kind | path to testability |
 |---|---:|---|---|
-| `ambiguous_accent` (zarshit) | 12 | apparatus / deliberate | handle the code-82 zarqa lexical pair |
 | `meteg_only` | 8 | inherent | grammar is blind to meteg; needs a real accent hypothesis (`synth_fix`) |
 | `multi_accent` | 2 | apparatus | support a 1→many accent splice |
 | `no_mam_diff` | 1 | inherent | not a word-accent change at all |
+
+(`ambiguous_accent` / zarshit, formerly 12, was RESOLVED 2026-06-16 — see below.)
 
 ---
 
@@ -88,37 +89,61 @@ Covered by `test_verse_final_silluq_swap_applies` and
 
 ---
 
-## `ambiguous_accent` — zarshit / code 82 (12) — apparatus, deliberately refused
+## `ambiguous_accent` — zarshit / code 82 — RESOLVED 2026-06-16 (was 12, apparatus)
 
-Every one of these moves a **zarshit** (the medial zarqa/tsinnorit stress-helper,
-M-C code 82) — and every one already carries an `illegal_mark:82` lexical error.
-`(zarshit)` is listed in `fix_tester_codes.UNTESTABLE_ABBREVS` on purpose: code 82 is
-a lexical pair, not a context-free accent, so the splice refuses it rather than
-guess.
+**Fixed. All 12 now CONFIRMED.** Every one of these is the **stranded-82** family:
+a medial **zarshit** (the zarqa/tsinnorit stress-helper, U+0598 / M-C code 82) sits
+where WLC should have a proper postpositive zarqa, with no fusion partner `02` in
+the atom, so each already carries an `illegal_mark:82` lexical error. MAM has the
+proper zarqa (`(zarnor)` / U+05AE / M-C code 02); the diff is a clean
+`(zarshit)` → `(zarnor)`, i.e. **82 → 02**.
 
-| ref | proposed fix | grammar error |
-|---|---|---|
-| ex 6:6 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
-| ex 30:12 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
-| ex 36:2 | בצלא֘ל → בצלאל֮ | illegal_mark:82 |
-| gn 17:20 | ולישמע֘אל → ולישמעאל֮ | illegal_mark:82 |
-| gn 47:29 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
-| dt 14:24 | תוכ֘ל → תוכל֮ | illegal_mark:82 |
-| dt 31:7 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
-| lv 4:2 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
-| lv 20:2 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
-| nu 20:19 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
-| js 4:8 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
-| js 10:30 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
+The barrier was *not* the lexical-pair complexity it looked like — the fix-tester's
+checker already re-runs the lexical layer (`fix_tester._evaluate` calls
+`lexical_validation.stranded_stress_helpers` before the grammar), so removing the 82
+clears the error and the word then parses as a normal ZARQA. The only thing in the
+way was a single bailout: `(zarshit)` is in `fix_tester_codes.UNTESTABLE_ABBREVS`
+because code 82 has **no standalone token type** (alone the scanner swallows it; it
+only means *zarqa* when fused as `82{TEXT}02`), so it was barred from
+`SAFE_ABBREV_TO_CODE` and `_codes_for` returned it as unmappable.
+
+But that invariant governs **adding** an accent. For this fix the 82 is only ever
+**deleted** (located by its literal code and removed), and deletion needs no token
+type. The fix splits the two concerns:
+
+- `fix_tester_codes.REMOVAL_ONLY_ABBREV_TO_CODE` (`{"(zarshit)": "82"}`) + a new
+  `removal_code()` resolve delete-only accents that `accent_code()` still refuses.
+- `fix_apply._codes_for` gained a `for_removal` flag; `_splice_word` passes it for
+  the *removed* side only. The diff is then a normal 1→1 swap (82 → 02), the atom
+  re-scans as ZARQA, the lexical layer no longer flags it, and the verse parses
+  CLEAN.
+
+`(zarshit)` stays in `UNTESTABLE_ABBREVS` (it genuinely cannot be *added*); the
+removal path is orthogonal. Covered by `test_stranded_zarshit_swapped_to_zarqa` and
+`test_zarshit_addable_only_via_removal`.
+
+| ref | proposed fix | transform | new verdict |
+|---|---|---|---|
+| ex 6:6 | ישרא֘ל → ישראל֮ | 82 → 02 | CONFIRMED |
+| ex 30:12 | ישרא֘ל → ישראל֮ | 82 → 02 | CONFIRMED |
+| ex 36:2 | בצלא֘ל → בצלאל֮ | 82 → 02 | CONFIRMED |
+| gn 17:20 | ולישמע֘אל → ולישמעאל֮ | 82 → 02 | CONFIRMED |
+| gn 47:29 | ישרא֘ל → ישראל֮ | 82 → 02 | CONFIRMED |
+| dt 14:24 | תוכ֘ל → תוכל֮ | 82 → 02 | CONFIRMED |
+| dt 31:7 | ישרא֘ל → ישראל֮ | 82 → 02 | CONFIRMED |
+| lv 4:2 | ישרא֘ל → ישראל֮ | 82 → 02 | CONFIRMED |
+| lv 20:2 | ישרא֘ל → ישראל֮ | 82 → 02 | CONFIRMED |
+| nu 20:19 | ישרא֘ל → ישראל֮ | 82 → 02 | CONFIRMED |
+| js 4:8 | ישרא֘ל → ישראל֮ | 82 → 02 | CONFIRMED |
+| js 10:30 | ישרא֘ל → ישראל֮ | 82 → 02 | CONFIRMED |
 
 (js 10:30 joined this family on 2026-06-16 once the `alignment_failure` barrier was
 lifted; it was always in both lists.)
 
-These are the **stranded-82** family: the mark sits in a medial position (U+0598
-zarshit) where WLC should have a proper zarqa. The fix is the same shape across all
-12 (relocate/normalize the zarqa). Making them testable would mean teaching the
-splice the 82 lexical pair — a deliberate, contained extension, but one that
-overlaps the lexical-validation layer rather than the accent grammar.
+Note: the swap is **in-place** (the 02 lands where the 82 was, medial), not moved to
+the word end as the philological fix would. It is mechanically equivalent — the
+scanner rule `(?:82{TEXT})?02 → ZARQA` reads a bare `02` as ZARQA anywhere in the
+atom — so the parse outcome is identical.
 
 ---
 
@@ -181,8 +206,8 @@ single-word reading to splice, so it stays untestable by design.
 0. ~~**`alignment_failure` (12)**~~ — DONE 2026-06-16 (section-marker exclusion in
    `_word_atom_spans`, plus verse-final silluq promotion in `_accent_name_diff`):
    10 CONFIRMED, 2 fell through to the barriers below; 0 DENIED.
-1. **zarshit / code-82 (12)** — decide whether the splice should handle the 82
-   lexical pair, or whether these belong wholly to the lexical-validation layer.
+1. ~~**zarshit / code-82 (12)**~~ — DONE 2026-06-16 (delete-only `removal_code` for
+   `(zarshit)`, `for_removal` flag in `_codes_for`): all 12 CONFIRMED via 82 → 02.
 2. **`multi_accent` (2)** — extend `_splice` to 1→many.
 3. **`meteg_only` (8)** and **`no_mam_diff` (1)** — inherent; testable only by
    authoring a `synth_fix` where a genuine accent hypothesis exists.

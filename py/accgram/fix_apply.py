@@ -344,7 +344,9 @@ def _splice_word(
 ) -> tuple[str, list[str], list[str]] | UntestableFix:
     """Map accent names -> M-C codes and splice them into ``target``'s atom text."""
     atom_text = target.group()
-    removed_codes, bad = _codes_for(removed)
+    # The removed side may resolve delete-only accents (e.g. a stranded zarshit /
+    # 82) that have no standalone token type and so cannot be added.
+    removed_codes, bad = _codes_for(removed, for_removal=True)
     if bad is not None:
         return UntestableFix("ambiguous_accent", f"unmappable accent {bad}")
     added_codes, bad = _codes_for(added)
@@ -377,10 +379,15 @@ def _no_accent_change_reason(wlc_tokens: list[str], mam_tokens: list[str]) -> st
     return "meteg_only" if wlc_mos != mam_mos else "vowel_only"
 
 
-def _codes_for(abbrevs: list[str]) -> tuple[list[str], str | None]:
+def _codes_for(
+    abbrevs: list[str], for_removal: bool = False
+) -> tuple[list[str], str | None]:
+    lookup = (
+        fix_tester_codes.removal_code if for_removal else fix_tester_codes.accent_code
+    )
     codes: list[str] = []
     for abbrev in abbrevs:
-        code = fix_tester_codes.accent_code(abbrev)
+        code = lookup(abbrev)
         if code is None:
             return [], abbrev
         codes.append(code)

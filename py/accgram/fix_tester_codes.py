@@ -111,12 +111,36 @@ MOS_ABBREV = "(mos)"
 SILLUQ_ABBREV = "(sil)"
 SILLUQ_CODE = "35"
 
+# Accents the splice may *delete* (locate by literal code) but cannot *add*.
+# ``(zarshit)`` is the zarqa stress-helper, M-C code 82: standing alone it is
+# swallowed by the scanner (no token type -- which is why it is barred from
+# SAFE_ABBREV_TO_CODE and listed in UNTESTABLE_ABBREVS), but a *stranded* 82 is
+# exactly what the stranded-82 fix removes, replacing it with a proper zarqa
+# (``(zarnor)`` / code 02).  Deletion needs only the literal code, not a token
+# type, so the removal side can resolve it even though the add side cannot.
+REMOVAL_ONLY_ABBREV_TO_CODE: dict[str, str] = {
+    "(zarshit)": "82",
+}
+
 
 def accent_code(abbrev: str) -> str | None:
     """Return the canonical M-C code for a mappable accent abbreviation, else None."""
     if abbrev == SILLUQ_ABBREV:
         return SILLUQ_CODE
     return SAFE_ABBREV_TO_CODE.get(abbrev)
+
+
+def removal_code(abbrev: str) -> str | None:
+    """M-C code for an accent the splice may *delete*, else None.
+
+    Like ``accent_code`` but additionally resolves the delete-only accents in
+    ``REMOVAL_ONLY_ABBREV_TO_CODE`` (e.g. the stranded ``(zarshit)`` / 82) that
+    have no standalone token type and so cannot be *added*.
+    """
+    code = accent_code(abbrev)
+    if code is not None:
+        return code
+    return REMOVAL_ONLY_ABBREV_TO_CODE.get(abbrev)
 
 
 def assert_in_sync_with_gg_rules() -> None:

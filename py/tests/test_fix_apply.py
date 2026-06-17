@@ -12,7 +12,7 @@ Run:
 
 from __future__ import annotations
 
-from accgram import fix_apply, fix_tester_codes
+from accgram import fix_apply, fix_tester_codes, lexical_validation
 from accgram.fix_apply import AppliedFix, UntestableFix, apply_mam_fix
 from accgram.ply_scanner import HasLegarmeh, scan_accents
 
@@ -36,6 +36,34 @@ def test_swap_munach_to_mereka():
     assert result.new_body == ")AL.71W.P B.F/(F75M00"
     assert "MEREKA" in _types(result.new_body)
     assert "MUNACH" not in _types(result.new_body)
+
+
+def test_stranded_zarshit_swapped_to_zarqa():
+    # The stranded-82 family (ex 6:6 etc.): a medial zarqa stress-helper (zarshit,
+    # code 82) with no fusion partner is the WLC error; MAM has a proper zarqa
+    # (zarnor, code 02).  The diff is (zarshit)->(zarnor); the removed side must
+    # resolve (zarshit) to literal 82 (it has no standalone token type, so only
+    # the delete side can map it) so the 1->1 swap fires.
+    wlc = "ישרא" + "֘" + "ל"  # medial zarqa stress-helper (zarshit)
+    mam = "ישראל" + "֮"  # postpositive zarqa (zarnor)
+    result = apply_mam_fix(
+        'YI&:RF)"82L]s 00',
+        [wlc],
+        {"wlc422": wlc, "mam_simple": mam},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.new_body == 'YI&:RF)"02L]s 00'
+    # The stranded 82 is gone (so the lexical layer no longer flags it) and the
+    # word now scans as a real ZARQA.
+    assert "ZARQA" in _types(result.new_body)
+    assert not lexical_validation.stranded_stress_helpers(result.new_body)
+
+
+def test_zarshit_addable_only_via_removal():
+    # (zarshit) can be located for deletion but never added: it has no standalone
+    # token type, so accent_code refuses it while removal_code resolves it to 82.
+    assert fix_tester_codes.accent_code("(zarshit)") is None
+    assert fix_tester_codes.removal_code("(zarshit)") == "82"
 
 
 def test_delete_accent():
