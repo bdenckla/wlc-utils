@@ -264,12 +264,19 @@ def p_dehi_phrase(p):
 
 
 # Permissive servi before TSINNOR.  NB: Breuer Ch 11 §23 limits the servant to MUNAX or
-# MERKHA only.  Vetted via servi_xcheck (2026-06-17) and REFUTED at the token level: of
-# the two L outliers, Ps 31:20 marks MAHAPAKH and MAM agrees (a real two-witness
-# construction); Ps 79:6 (AZLA) is one-sided (MAM reads it bare).  So a MUNAX|MERKHA-only
-# constraint would flag a verse both witnesses build with mahapakh -- the same
-# phonological servant-type alternation that refuted DEXI and PAZER, out of a token
-# grammar's scope.  Not encoded.  See memory poetic-servant-rules-breuer.
+# MERKHA only.  servi_xcheck found two L outliers; an FOI cross-check (2026-06-17) shows
+# neither is a clean primary counter-example, so the rule effectively HOLDS for PRIMARY
+# servants -- but it is still not worth encoding:
+#   - Ps 31:20 (L MAHAPAKH): MAM's FOI catalog classifies this mahapakh as a METZUNAR
+#     (secondary) mark + secondary meteg at the tsinnor slot (foi-sec-misc), and it is
+#     CoS-CONTESTED (foi-sec-star-breuer-cos, Breuer 9.31) -- not a settled primary
+#     mahapakh; L merely keeps a sign the scanner did not treat as secondary.
+#   - Ps 79:6 (L AZLA): one-sided -- MAM reads that word as a REVIA_GADOL divider, so the
+#     DISJUNCTIVE cross-check already flags the verse (MAM carries an extra REVIA_GADOL).
+# Encoding MUNAX|MERKHA-only would fire on just these two -- one CoS-contested, one already
+# surfaced by the disjunctive xcheck -- while turning two clean L parses into NO_PARSE.  Not
+# encoded (confirmed-but-inert/redundant, like revia gadol).  See memory
+# poetic-servant-rules-breuer.
 def p_sinnor_phrase(p):
     """sinnor_phrase : TSINNOR
                      | servi TSINNOR"""
