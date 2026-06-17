@@ -127,3 +127,135 @@ def test_shalshelet_gedolah_before_silluq():
     )
     assert tree is not None
     assert "shalshelet_gedolah_phrase" in print_tree(tree, 0)
+
+
+# --- Phase 3: lower disjunctives directly subdividing higher domains ------------
+# L (MAM-confirmed) uses a lower disjunctive directly within a higher domain when
+# the unit is short, exactly as the prose silluq/atnah domains admit their lower
+# dividers.  These pin the rank-ordered near-divider cascades added in Phase 3.
+
+
+def test_legarmeh_directly_under_atnah():
+    """legarmeh subdivides the atnah domain directly (Ps 31:15)."""
+    parser = build_parser()
+    tree = parse_tokens(
+        parser,
+        _verse(
+            pan.LEGARMEH, pan.MUNAX, pan.MUNAX, pan.ATNAX,
+            pan.REVIA_MUGRASH, pan.MERKHA, pan.SILLUQ,
+        ),
+    )
+    assert tree is not None
+    out = print_tree(tree, 0)
+    # legarmeh nests as a subdivider inside the atnah clause, above atnah's phrase
+    assert "atnach_clause" in out
+    assert out.index("legarmeh_phrase") < out.index("atnach_phrase")
+
+
+def test_legarmeh_directly_before_silluq_under_revia_mugrash():
+    """revia mugrash near-divides silluq, then legarmeh divides the final unit
+    (Ps 3:1, ATNAX REVIA_MUGRASH LEGARMEH SILLUQ)."""
+    parser = build_parser()
+    tree = parse_tokens(
+        parser,
+        _verse(
+            pan.MERKHA, pan.ATNAX, pan.REVIA_MUGRASH,
+            pan.LEGARMEH, pan.ILLUY, pan.SILLUQ,
+        ),
+    )
+    assert tree is not None
+    out = print_tree(tree, 0)
+    # legarmeh is the last divider, immediately above the silluq phrase
+    assert out.index("revia_mugrash_phrase") < out.index("legarmeh_phrase")
+    assert out.index("legarmeh_phrase") < out.index("silluq_phrase")
+
+
+def test_dehi_directly_before_silluq():
+    """dehi may stand directly before silluq (Ps, ATNAX DEXI SILLUQ -- faithful to
+    L; an L/MAM divergence the xcheck flags separately)."""
+    parser = build_parser()
+    tree = parse_tokens(
+        parser, _verse(pan.MERKHA, pan.ATNAX, pan.DEXI, pan.MUNAX, pan.SILLUQ)
+    )
+    assert tree is not None
+    out = print_tree(tree, 0)
+    assert out.index("atnach_phrase") < out.index("dehi_phrase")
+    assert out.index("dehi_phrase") < out.index("silluq_phrase")
+
+
+def test_pazer_directly_before_silluq():
+    """pazer directly before silluq in a short superscription (Ps 18:2, 30:1)."""
+    parser = build_parser()
+    tree = parse_tokens(parser, _verse(pan.PAZER, pan.TARXA, pan.MUNAX, pan.SILLUQ))
+    assert tree is not None
+    out = print_tree(tree, 0)
+    assert "pazer_phrase" in out
+    assert out.index("pazer_phrase") < out.index("silluq_phrase")
+
+
+def test_sinnor_subdivides_revia_qatan_before_oleh():
+    """When sinnor and revia qatan both precede oleh-we-yored, revia qatan is the
+    near divider and sinnor subdivides its domain (Ps 13:6,
+    LEGARMEH TSINNOR REVIA_QATAN OLEH_WEYORED ...)."""
+    parser = build_parser()
+    tree = parse_tokens(
+        parser,
+        _verse(
+            pan.LEGARMEH, pan.TSINNOR, pan.REVIA_QATAN, pan.OLEH_WEYORED,
+            pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.SILLUQ,
+        ),
+    )
+    assert tree is not None
+    out = print_tree(tree, 0)
+    # revia_qatan_clause contains a sinnor subdivision, which contains legarmeh
+    assert "revia_qatan_clause" in out
+    assert out.index("sinnor_phrase") < out.index("revia_qatan_phrase")
+    assert out.index("legarmeh_phrase") < out.index("sinnor_phrase")
+
+
+def test_missing_silluq_recovers_as_error_tree():
+    """Category A: a verse with no silluq code (servi then sof pasuq) recovers into
+    a tree whose silluq_phrase is ERROR, preserving the rest of the structure
+    (Ps 37:31, MUNAX MUNAX ATNAX TARXA MUNAX)."""
+    parser = build_parser()
+    tree = parse_tokens(
+        parser, _verse(pan.MUNAX, pan.MUNAX, pan.ATNAX, pan.TARXA, pan.MUNAX)
+    )
+    assert tree is not None
+    out = print_tree(tree, 0)
+    assert "atnach_phrase" in out  # the rest of the verse is preserved
+    assert "ERROR" in out  # the absent silluq is flagged
+    assert "silluq_phrase" in out
+
+
+def test_misplaced_disjunctive_stays_no_parse():
+    """A genuine hierarchy violation (sinnor before legarmeh, an L anomaly MAM
+    reads differently) is NOT masked by error recovery -- parse_tokens returns None
+    so the driver records an informative NO_PARSE line (Ps 68:20)."""
+    parser = build_parser()
+    tree = parse_tokens(
+        parser,
+        _verse(
+            pan.MAHAPAKH, pan.MUNAX, pan.TSINNOR, pan.LEGARMEH, pan.MERKHA,
+            pan.REVIA_MUGRASH, pan.MAHAPAKH, pan.ILLUY, pan.SILLUQ,
+        ),
+    )
+    assert tree is None
+
+
+def test_pazer_directly_under_atnah():
+    """pazer subdivides the atnah domain directly, with legarmeh below it
+    (LEGARMEH PAZER ATNAX REVIA_MUGRASH SILLUQ)."""
+    parser = build_parser()
+    tree = parse_tokens(
+        parser,
+        _verse(
+            pan.LEGARMEH, pan.PAZER, pan.ATNAX,
+            pan.REVIA_MUGRASH, pan.SILLUQ,
+        ),
+    )
+    assert tree is not None
+    out = print_tree(tree, 0)
+    assert "atnach_clause" in out
+    assert out.index("pazer_phrase") < out.index("atnach_phrase")
+    assert out.index("legarmeh_phrase") < out.index("pazer_phrase")

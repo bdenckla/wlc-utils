@@ -125,7 +125,20 @@ Job 3:12
     2 silluq_phrase
       munah silluq 
 Job 3:13
-NO_PARSE: DEXI MUNAX ATNAX REVIA_MUGRASH LEGARMEH ILLUY SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 dehi_phrase
+      dehi 
+    2 atnach_phrase
+      munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_clause
+      3 legarmeh_phrase
+        legarmeh 
+      3 silluq_phrase
+        illuy silluq 
 Job 3:14
 0 silluq_clause
   1 atnach_clause
@@ -298,7 +311,17 @@ Job 4:4
   1 silluq_phrase
     tarha munah silluq 
 Job 4:5
-NO_PARSE: MAHAPAKH LEGARMEH MUNAX MUNAX ATNAX MERKHA REVIA_MUGRASH SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      mehuppak legarmeh 
+    2 atnach_phrase
+      munah munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      merka revia mugrash 
+    2 silluq_phrase
+      silluq 
 Job 4:6
 0 silluq_clause
   1 atnach_clause
@@ -528,7 +551,17 @@ Job 5:5
   1 silluq_phrase
     tarha munah silluq 
 Job 5:6
-NO_PARSE: LEGARMEH MUNAX MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      legarmeh 
+    2 atnach_phrase
+      munah munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_phrase
+      merka silluq 
 Job 5:7
 0 silluq_clause
   1 atnach_clause
@@ -1931,7 +1964,14 @@ Job 10:5
     2 silluq_phrase
       munah silluq 
 Job 10:6
-NO_PARSE: MERKHA ATNAX DEXI MERKHA SILLUQ
+0 silluq_clause
+  1 atnach_phrase
+    merka atnah 
+  1 silluq_clause
+    2 dehi_phrase
+      dehi 
+    2 silluq_phrase
+      merka silluq 
 Job 10:7
 0 silluq_clause
   1 atnach_clause
@@ -2248,7 +2288,17 @@ Job 11:12
     2 silluq_phrase
       merka silluq 
 Job 11:13
-NO_PARSE: DEXI REVIA_GADOL MUNAX ATNAX TARXA MUNAX SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 revia_gadol_clause
+      3 dehi_phrase
+        dehi 
+      3 revia_gadol_phrase
+        revia gadol 
+    2 atnach_phrase
+      munah atnah 
+  1 silluq_phrase
+    tarha munah silluq 
 Job 11:14
 0 silluq_clause
   1 atnach_clause
@@ -2259,7 +2309,17 @@ Job 11:14
   1 silluq_phrase
     tarha munah silluq 
 Job 11:15
-NO_PARSE: LEGARMEH MUNAX MUNAX ATNAX MERKHA REVIA_MUGRASH MUNAX SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      legarmeh 
+    2 atnach_phrase
+      munah munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      merka revia mugrash 
+    2 silluq_phrase
+      munah silluq 
 Job 11:16
 0 silluq_clause
   1 atnach_clause
@@ -2717,7 +2777,17 @@ Job 13:13
   1 silluq_phrase
     tarha munah silluq 
 Job 13:14
-NO_PARSE: LEGARMEH MUNAX MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      legarmeh 
+    2 atnach_phrase
+      munah munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_phrase
+      merka silluq 
 Job 13:15
 0 silluq_clause
   1 atnach_clause
@@ -3340,7 +3410,20 @@ Job 15:23
     2 silluq_phrase
       tarha munah silluq 
 Job 15:24
-NO_PARSE: DEXI MUNAX ATNAX REVIA_MUGRASH LEGARMEH ILLUY SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 dehi_phrase
+      dehi 
+    2 atnach_phrase
+      munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_clause
+      3 legarmeh_phrase
+        legarmeh 
+      3 silluq_phrase
+        illuy silluq 
 Job 15:25
 0 silluq_clause
   1 atnach_phrase
@@ -3873,7 +3956,17 @@ Job 18:1
   1 silluq_phrase
     silluq 
 Job 18:2
-NO_PARSE: LEGARMEH MUNAX MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      legarmeh 
+    2 atnach_phrase
+      munah munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_phrase
+      merka silluq 
 Job 18:3
 0 silluq_clause
   1 atnach_clause
@@ -4595,7 +4688,17 @@ Job 20:19
     2 silluq_phrase
       munah silluq 
 Job 20:20
-NO_PARSE: LEGARMEH MUNAX MUNAX ATNAX REVIA_MUGRASH MUNAX SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      legarmeh 
+    2 atnach_phrase
+      munah munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_phrase
+      munah silluq 
 Job 20:21
 0 silluq_clause
   1 atnach_phrase
@@ -4981,7 +5084,20 @@ Job 21:27
     2 silluq_phrase
       merka silluq 
 Job 21:28
-NO_PARSE: MAHAPAKH REVIA_GADOL MERKHA ATNAX REVIA_MUGRASH LEGARMEH ILLUY SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 revia_gadol_phrase
+      mehuppak revia gadol 
+    2 atnach_phrase
+      merka atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_clause
+      3 legarmeh_phrase
+        legarmeh 
+      3 silluq_phrase
+        illuy silluq 
 Job 21:29
 0 silluq_clause
   1 atnach_clause
@@ -5703,7 +5819,17 @@ Job 24:16
     2 silluq_phrase
       merka silluq 
 Job 24:17
-NO_PARSE: MAHAPAKH LEGARMEH MUNAX MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      mehuppak legarmeh 
+    2 atnach_phrase
+      munah munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_phrase
+      merka silluq 
 Job 24:18
 0 silluq_clause
   1 atnach_clause
@@ -6113,7 +6239,17 @@ Job 27:12
     2 silluq_phrase
       munah silluq 
 Job 27:13
-NO_PARSE: LEGARMEH TARXA MERKHA ATNAX MERKHA REVIA_MUGRASH MERKHA SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      legarmeh 
+    2 atnach_phrase
+      tarha merka atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      merka revia mugrash 
+    2 silluq_phrase
+      merka silluq 
 Job 27:14
 0 silluq_clause
   1 atnach_phrase
@@ -6781,7 +6917,26 @@ Job 29:25
     2 silluq_phrase
       tarha munah silluq 
 Job 30:1
-NO_PARSE: LEGARMEH MUNAX TSINNOR MERKHA REVIA_QATAN OLEH_WEYORED MERKHA ATNAX REVIA_MUGRASH MERKHA SILLUQ
+0 silluq_clause
+  1 oleh_weyored_clause
+    2 revia_qatan_clause
+      3 sinnor_clause
+        4 legarmeh_phrase
+          legarmeh 
+        4 sinnor_phrase
+          munah sinnor 
+      3 revia_qatan_phrase
+        merka revia qatan 
+    2 oleh_weyored_phrase
+      oleh we-yored 
+  1 silluq_clause
+    2 atnach_phrase
+      merka atnah 
+    2 silluq_clause
+      3 revia_mugrash_phrase
+        revia mugrash 
+      3 silluq_phrase
+        merka silluq 
 Job 30:2
 0 silluq_clause
   1 atnach_clause
@@ -6936,7 +7091,20 @@ Job 30:15
       3 silluq_phrase
         merka silluq 
 Job 30:16
-NO_PARSE: REVIA_GADOL DEXI MUNAX ATNAX DEXI MUNAX SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 revia_gadol_phrase
+      revia gadol 
+    2 atnach_clause
+      3 dehi_phrase
+        dehi 
+      3 atnach_phrase
+        munah atnah 
+  1 silluq_clause
+    2 dehi_phrase
+      dehi 
+    2 silluq_phrase
+      munah silluq 
 Job 30:17
 0 silluq_clause
   1 atnach_clause
@@ -7109,7 +7277,17 @@ Job 31:1
     2 silluq_phrase
       silluq 
 Job 31:2
-NO_PARSE: LEGARMEH MUNAX MUNAX ATNAX MERKHA REVIA_MUGRASH SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      legarmeh 
+    2 atnach_phrase
+      munah munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      merka revia mugrash 
+    2 silluq_phrase
+      silluq 
 Job 31:3
 0 silluq_clause
   1 atnach_phrase
@@ -8931,7 +9109,17 @@ Job 36:27
   1 silluq_phrase
     tarha munah silluq 
 Job 36:28
-NO_PARSE: MERKHA ATNAX REVIA_MUGRASH LEGARMEH ILLUY SILLUQ
+0 silluq_clause
+  1 atnach_phrase
+    merka atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_clause
+      3 legarmeh_phrase
+        legarmeh 
+      3 silluq_phrase
+        illuy silluq 
 Job 36:29
 0 silluq_clause
   1 atnach_clause
@@ -9095,7 +9283,17 @@ Job 37:11
     2 silluq_phrase
       munah silluq 
 Job 37:12
-NO_PARSE: MAHAPAKH LEGARMEH MUNAX MUNAX ATNAX TARXA MERKHA SHALSHELET_GEDOLAH TARXA MUNAX SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 legarmeh_phrase
+      mehuppak legarmeh 
+    2 atnach_phrase
+      munah munah atnah 
+  1 silluq_clause
+    2 shalshelet_gedolah_phrase
+      tarha merka shalshelet gedolah 
+    2 silluq_phrase
+      tarha munah silluq 
 Job 37:13
 0 silluq_clause
   1 atnach_phrase
@@ -9106,7 +9304,17 @@ Job 37:13
     2 silluq_phrase
       silluq 
 Job 37:14
-NO_PARSE: MUNAX MUNAX ATNAX REVIA_MUGRASH LEGARMEH ILLUY SILLUQ
+0 silluq_clause
+  1 atnach_phrase
+    munah munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_clause
+      3 legarmeh_phrase
+        legarmeh 
+      3 silluq_phrase
+        illuy silluq 
 Job 37:15
 0 silluq_clause
   1 atnach_clause

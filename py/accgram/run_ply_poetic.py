@@ -26,14 +26,23 @@ from accgram import poetic_filter
 from accgram import split_wlc
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_scanner_poetic import scan_book
-from accgram.ply_tree import print_tree
+from accgram.ply_tree import TN, print_tree
 
 
 @dataclass(frozen=True)
 class BookRun:
     bb: str
     verse_count: int
-    parsed_count: int
+    parsed_count: int  # clean parses (no ERROR leaf)
+    oddball_count: int  # category-A missing-silluq ERROR-leaf trees
+    no_parse_count: int  # unrecoverable failures (NO_PARSE lines)
+
+
+def _has_error_leaf(tree: TN) -> bool:
+    """True if the tree contains an ERROR leaf (a recovered missing-silluq verse)."""
+    if tree.left is None:
+        return "ERROR" in tree.leaves
+    return _has_error_leaf(tree.left) or _has_error_leaf(tree.right)
 
 
 def _no_parse_line(tokens: list[tuple[str, str]]) -> str:
@@ -52,15 +61,27 @@ def render_book(text: str, parser, bb: str) -> tuple[str, BookRun]:
     verses = scan_book(text, bb)
     out_lines: list[str] = []
     parsed = 0
+    oddballs = 0
+    no_parse = 0
     for verse in verses:
         out_lines.append(verse.reference + "\n")
         tree = parse_tokens(parser, verse.tokens)
         if tree is None:
+            no_parse += 1
             out_lines.append(_no_parse_line(verse.tokens))
             continue
-        parsed += 1
+        if _has_error_leaf(tree):
+            oddballs += 1
+        else:
+            parsed += 1
         out_lines.append(print_tree(tree, 0))
-    return "".join(out_lines), BookRun(bb=bb, verse_count=len(verses), parsed_count=parsed)
+    return "".join(out_lines), BookRun(
+        bb=bb,
+        verse_count=len(verses),
+        parsed_count=parsed,
+        oddball_count=oddballs,
+        no_parse_count=no_parse,
+    )
 
 
 def default_input_path(repo_root: Path) -> Path:
@@ -107,6 +128,8 @@ def run(args: argparse.Namespace) -> None:
     )
 
     total_parsed = 0
+    total_oddballs = 0
+    total_no_parse = 0
     total_verses = 0
     for bb, text in book_texts.items():
         if only is not None and bb not in only:
@@ -116,15 +139,19 @@ def run(args: argparse.Namespace) -> None:
         # LF newlines, UTF-8.
         out_path.write_text(output_text, encoding="utf-8", newline="\n")
         total_parsed += stats.parsed_count
+        total_oddballs += stats.oddball_count
+        total_no_parse += stats.no_parse_count
         total_verses += stats.verse_count
         rate = 100.0 * stats.parsed_count / stats.verse_count if stats.verse_count else 0.0
         print(
-            f"{bb}: parsed {stats.parsed_count}/{stats.verse_count} "
-            f"({rate:.1f}%) verses -> {out_path}"
+            f"{bb}: parsed {stats.parsed_count}/{stats.verse_count} ({rate:.1f}%) clean"
+            f"; {stats.oddball_count} missing-silluq oddball(s), "
+            f"{stats.no_parse_count} NO_PARSE -> {out_path}"
         )
 
     total_rate = 100.0 * total_parsed / total_verses if total_verses else 0.0
     print(
-        f"\nTotal: parsed {total_parsed}/{total_verses} ({total_rate:.1f}%) "
-        "verses across selected poetic books."
+        f"\nTotal: {total_parsed}/{total_verses} ({total_rate:.2f}%) clean parses"
+        f"; {total_oddballs} missing-silluq ERROR-leaf oddball(s); "
+        f"{total_no_parse} NO_PARSE across selected poetic books."
     )

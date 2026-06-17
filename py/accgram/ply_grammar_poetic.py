@@ -8,29 +8,42 @@ and the poetic core of Job), paragraphs 358-374.  Section numbers are cited
 inline.  See also mb_cmn.hebrew_accents, whose poetic conjunctive list cites ITM
 #358 / #361.
 
-Design: strict clause hierarchy, permissive servus chains.
-  The *clause* rules encode Yeivin's disjunctive hierarchy strictly (this is the
-  linguistically meaningful structure).  The *phrase* rules, by contrast, accept
-  any run of conjunctive servi before a disjunctive, because Yeivin describes the
-  poetic servi only loosely -- "up to N servi", "various combinations", "governed
-  by intricate rules" -- and there is no oracle to pin exact patterns against.  So
-  every ``D_phrase`` is just ``D`` optionally preceded by a ``servi`` chain; the
-  particular servus counts/orders Yeivin documents (munah/merka before silluq,
-  galgal+mahpak/azla before pazer, the galgal "v"-servus of oleh-we-yored, etc.)
-  are admitted but not required.  Tightening the servus rules to what L actually
-  attests is left to a corpus-validation pass.
+Design: rank-ordered clause hierarchy, permissive servus chains.
+  The *clause* rules encode Yeivin's disjunctive hierarchy by RANK: a domain headed
+  by disjunctive D admits, as its near subdividers, the disjunctives of any lower
+  rank -- not merely the one rank immediately below.  (Phase 3 relaxed an earlier
+  "immediate-sub only" form: L freely uses a lower divider directly when a unit is
+  too short for the intermediate one -- legarmeh straight under atnah, dehi or
+  legarmeh straight before silluq -- exactly as the prose grammar's silluq/atnah
+  domains admit their lower dividers.  Every such case here is MAM-confirmed.)  The
+  *phrase* rules, by contrast, accept any run of conjunctive servi before a
+  disjunctive, because Yeivin describes the poetic servi only loosely -- "up to N
+  servi", "various combinations", "governed by intricate rules" -- and there is no
+  oracle to pin exact patterns against.  So every ``D_phrase`` is just ``D``
+  optionally preceded by a ``servi`` chain; the particular servus counts/orders
+  Yeivin documents (munah/merka before silluq, galgal+mahpak/azla before pazer, the
+  galgal "v"-servus of oleh-we-yored, etc.) are admitted but not required.
 
-Hierarchy of disjunctives (greater divider -> the divider one rank below it):
+  Error recovery is limited to one rule (p_silluq_phrase_error): a verse missing
+  its silluq entirely (category A) recovers into an ERROR-leaf silluq_phrase,
+  mirroring the prose grammar.  p_error gates this to the verse-final-SOFPASUQ case
+  so genuine mid-verse anomalies still surface as NO_PARSE (parse_tokens -> None).
+
+Hierarchy of disjunctives (each lists its CANONICAL near subdivider(s); per the
+rank-ordered design above, a domain also admits any lower-ranked divider directly
+when a unit is too short for the intermediate one):
 
   silluq (verse end, #359)
     great division: oleh-we-yored (distant) OR atnah (close)             (#361)
-    near division before silluq: revia mugrash / shalshelet gedolah  (#366, #371)
+    near division before silluq: revia mugrash / shalshelet gedolah  (#366, #371);
+      also dehi / pazer / legarmeh directly when the final unit is short
   oleh-we-yored (the main verse divider, #363)
     main subdivider: revia gadol; immediately preceded by revia qatan
     (no servus) or sinnor (with servus)                          (#363, #365, #368)
-  atnah (#362)               -> dehi (near) / revia gadol (distant)  (#362, #364)
-  revia gadol (#363)         -> pazer / legarmeh
-  revia qatan (#368)         -> legarmeh only
+  atnah (#362)               -> dehi (near) / revia gadol (distant)  (#362, #364);
+                                also pazer / legarmeh directly
+  revia gadol (#363)         -> pazer / legarmeh; also dehi / sinnor directly
+  revia qatan (#368)         -> legarmeh; also sinnor (TSINNOR REVIA_QATAN OLEH)
   revia mugrash (#366-367)   -> pazer / legarmeh (with geresh, tifcha-like);
                                 also dehi / revia gadol when "without geresh" it
                                 acts as the main verse divider like atnah (#367)
@@ -133,6 +146,22 @@ def p_silluq_phrase(p):
     _phrase(p, "silluq_phrase")
 
 
+def p_silluq_phrase_error(p):
+    # Category A: 13 verses lack any silluq code in L (e.g. Ps 37:31,
+    # "...):A$URFY/W00" -- the sof pasuq directly follows the last servus, no
+    # silluq).  Mirror the prose grammar's missing-silluq recovery
+    # (ply_grammar.p_silluq_phrase_error): on the syntax error PLY reduces the
+    # absent silluq to a silluq_phrase whose mark is ERROR and errok() resumes
+    # normal reporting, so the verse becomes a flagged oddball *tree* (the rest of
+    # its structure preserved and visible) instead of a no-output NO_PARSE line.
+    # This is the only poetic error-recovery rule: there is no poetic C oracle, so
+    # recovery is deliberately limited to this one well-understood shape.
+    """silluq_phrase : error
+                     | error SILLUQ"""
+    p.parser.errok()
+    p[0] = add_leaves("silluq_phrase", "ERROR")
+
+
 def p_oleh_weyored_phrase(p):
     """oleh_weyored_phrase : OLEH_WEYORED
                            | servi OLEH_WEYORED"""
@@ -206,33 +235,76 @@ def _phrase(p, label):
 
 
 # --- silluq clause (#359, #361, #366, #371) ------------------------------------
-# The silluq domain is the whole verse.  Its near divider before silluq is revia
-# mugrash or shalshelet gedolah; its great divider is atnah or oleh-we-yored.
-# oleh-we-yored, when present, is the topmost divider and may contain an
-# atnah-divided remainder before silluq.
+# The silluq domain is the whole verse.  Its great divider is atnah or
+# oleh-we-yored; oleh-we-yored, when present, is the topmost divider and may
+# contain an atnah-divided remainder before silluq.
+#
+# Below the great dividers, the near divider before silluq is most often revia
+# mugrash or shalshelet gedolah, but L (faithful to it, MAM-confirmed) freely uses
+# a *lower* disjunctive directly when the final unit is short: dehi, pazer, or
+# legarmeh may stand immediately before silluq with no revia mugrash, exactly as
+# the prose silluq domain admits its lower dividers (tifcha -> ... directly).  So
+# the silluq domain admits a rank-ordered chain of near dividers --
+# revia_mugrash / shalshelet (highest), then dehi, then pazer, then legarmeh --
+# each of which may be followed (toward silluq) by any lower one.  This is the
+# poetic analogue of the prose tifcha/zaqef_silluq cascade in ply_grammar.py.
 def p_silluq_clause(p):
     """silluq_clause : silluq_phrase
                      | revia_mugrash_silluq_clause
                      | shalshelet_silluq_clause
+                     | dehi_silluq_clause
+                     | pazer_silluq_clause
+                     | legarmeh_silluq_clause
                      | atnach_silluq_clause
                      | oleh_silluq_clause"""
     p[0] = p[1]
 
 
+def p_legarmeh_silluq_clause(p):
+    """legarmeh_silluq_clause : legarmeh_clause silluq_phrase
+                              | legarmeh_clause legarmeh_silluq_clause"""
+    p[0] = make_node("silluq_clause", p[1], p[2])
+
+
+def p_pazer_silluq_clause(p):
+    """pazer_silluq_clause : pazer_clause silluq_phrase
+                           | pazer_clause legarmeh_silluq_clause
+                           | pazer_clause pazer_silluq_clause"""
+    p[0] = make_node("silluq_clause", p[1], p[2])
+
+
+def p_dehi_silluq_clause(p):
+    """dehi_silluq_clause : dehi_clause silluq_phrase
+                          | dehi_clause legarmeh_silluq_clause
+                          | dehi_clause pazer_silluq_clause
+                          | dehi_clause dehi_silluq_clause"""
+    p[0] = make_node("silluq_clause", p[1], p[2])
+
+
 def p_revia_mugrash_silluq_clause(p):
-    "revia_mugrash_silluq_clause : revia_mugrash_clause silluq_phrase"
+    """revia_mugrash_silluq_clause : revia_mugrash_clause silluq_phrase
+                                   | revia_mugrash_clause legarmeh_silluq_clause
+                                   | revia_mugrash_clause pazer_silluq_clause
+                                   | revia_mugrash_clause dehi_silluq_clause
+                                   | revia_mugrash_clause revia_mugrash_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
 def p_shalshelet_silluq_clause(p):
-    "shalshelet_silluq_clause : shalshelet_gedolah_clause silluq_phrase"
+    """shalshelet_silluq_clause : shalshelet_gedolah_clause silluq_phrase
+                                | shalshelet_gedolah_clause legarmeh_silluq_clause
+                                | shalshelet_gedolah_clause pazer_silluq_clause
+                                | shalshelet_gedolah_clause dehi_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
 def p_atnach_silluq_clause(p):
     """atnach_silluq_clause : atnach_clause silluq_phrase
                             | atnach_clause revia_mugrash_silluq_clause
-                            | atnach_clause shalshelet_silluq_clause"""
+                            | atnach_clause shalshelet_silluq_clause
+                            | atnach_clause dehi_silluq_clause
+                            | atnach_clause pazer_silluq_clause
+                            | atnach_clause legarmeh_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
@@ -240,6 +312,9 @@ def p_oleh_silluq_clause(p):
     """oleh_silluq_clause : oleh_clause silluq_phrase
                           | oleh_clause revia_mugrash_silluq_clause
                           | oleh_clause shalshelet_silluq_clause
+                          | oleh_clause dehi_silluq_clause
+                          | oleh_clause pazer_silluq_clause
+                          | oleh_clause legarmeh_silluq_clause
                           | oleh_clause atnach_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
@@ -274,17 +349,37 @@ def p_revia_gadol_oleh_clause(p):
 
 
 # --- atnah clause (#362, #364) -------------------------------------------------
-# Subdivided by dehi (near) or revia gadol (distant); revia gadol is the higher
-# divider, so it may contain a dehi subdivision but not vice versa.
+# Subdivided by revia gadol (distant) or dehi (near); and, like the silluq domain
+# (and as L attests, MAM-confirmed), directly by a lower disjunctive -- pazer or
+# legarmeh -- when the unit is too short for a dehi.  Rank order of near dividers:
+# revia gadol (highest), dehi, pazer, legarmeh; each may be followed (toward
+# atnah) by any lower one.
 def p_atnach_clause(p):
     """atnach_clause : atnach_phrase
                      | dehi_atnach_clause
-                     | revia_gadol_atnach_clause"""
+                     | revia_gadol_atnach_clause
+                     | pazer_atnach_clause
+                     | legarmeh_atnach_clause"""
     p[0] = p[1]
+
+
+def p_legarmeh_atnach_clause(p):
+    """legarmeh_atnach_clause : legarmeh_clause atnach_phrase
+                              | legarmeh_clause legarmeh_atnach_clause"""
+    p[0] = make_node("atnach_clause", p[1], p[2])
+
+
+def p_pazer_atnach_clause(p):
+    """pazer_atnach_clause : pazer_clause atnach_phrase
+                           | pazer_clause legarmeh_atnach_clause
+                           | pazer_clause pazer_atnach_clause"""
+    p[0] = make_node("atnach_clause", p[1], p[2])
 
 
 def p_dehi_atnach_clause(p):
     """dehi_atnach_clause : dehi_clause atnach_phrase
+                          | dehi_clause legarmeh_atnach_clause
+                          | dehi_clause pazer_atnach_clause
                           | dehi_clause dehi_atnach_clause"""
     p[0] = make_node("atnach_clause", p[1], p[2])
 
@@ -292,18 +387,34 @@ def p_dehi_atnach_clause(p):
 def p_revia_gadol_atnach_clause(p):
     """revia_gadol_atnach_clause : revia_gadol_clause atnach_phrase
                                  | revia_gadol_clause dehi_atnach_clause
+                                 | revia_gadol_clause pazer_atnach_clause
+                                 | revia_gadol_clause legarmeh_atnach_clause
                                  | revia_gadol_clause revia_gadol_atnach_clause"""
     p[0] = make_node("atnach_clause", p[1], p[2])
 
 
 # --- revia gadol clause (#363) -------------------------------------------------
-# A near/minor division is legarmeh; a distant/major one is pazer; pazer is the
-# higher of the two and may contain legarmeh.
+# Its subdividers, in rank order: dehi (highest), pazer, legarmeh.  Yeivin names
+# pazer and legarmeh; L also attests dehi directly subdividing revia gadol (e.g.
+# DEXI REVIA_GADOL ATNAX ...), the same near-divider relation dehi has under atnah.
 def p_revia_gadol_clause(p):
     """revia_gadol_clause : revia_gadol_phrase
                           | legarmeh_revia_gadol_clause
-                          | pazer_revia_gadol_clause"""
+                          | pazer_revia_gadol_clause
+                          | dehi_revia_gadol_clause
+                          | sinnor_revia_gadol_clause"""
     p[0] = p[1]
+
+
+# Sinnor (a second-degree divider, rank with dehi) also subdivides revia gadol
+# directly where L has no oleh-we-yored (e.g. Ps 55:20, TSINNOR REVIA_GADOL ATNAX;
+# MAM reads REVIA_QATAN OLEH_WEYORED there -- an L/MAM divergence the xcheck flags,
+# parsed faithfully to L here).
+def p_sinnor_revia_gadol_clause(p):
+    """sinnor_revia_gadol_clause : sinnor_clause revia_gadol_phrase
+                                 | sinnor_clause legarmeh_revia_gadol_clause
+                                 | sinnor_clause sinnor_revia_gadol_clause"""
+    p[0] = make_node("revia_gadol_clause", p[1], p[2])
 
 
 def p_legarmeh_revia_gadol_clause(p):
@@ -319,17 +430,37 @@ def p_pazer_revia_gadol_clause(p):
     p[0] = make_node("revia_gadol_clause", p[1], p[2])
 
 
+def p_dehi_revia_gadol_clause(p):
+    """dehi_revia_gadol_clause : dehi_clause revia_gadol_phrase
+                               | dehi_clause legarmeh_revia_gadol_clause
+                               | dehi_clause pazer_revia_gadol_clause
+                               | dehi_clause dehi_revia_gadol_clause"""
+    p[0] = make_node("revia_gadol_clause", p[1], p[2])
+
+
 # --- revia qatan clause (#368) -------------------------------------------------
-# The only subordinate disjunctive is legarmeh.
+# Its subdividers are sinnor (higher) and legarmeh.  Yeivin treats revia qatan and
+# sinnor as alternatives immediately before oleh-we-yored, but when both occur
+# (TSINNOR REVIA_QATAN OLEH_WEYORED, ~12 verses) revia qatan is the one adjacent to
+# oleh and sinnor subdivides its remaining span -- so sinnor heads a clause within
+# the revia qatan domain, with legarmeh below it.
 def p_revia_qatan_clause(p):
     """revia_qatan_clause : revia_qatan_phrase
-                          | legarmeh_revia_qatan_clause"""
+                          | legarmeh_revia_qatan_clause
+                          | sinnor_revia_qatan_clause"""
     p[0] = p[1]
 
 
 def p_legarmeh_revia_qatan_clause(p):
     """legarmeh_revia_qatan_clause : legarmeh_clause revia_qatan_phrase
                                     | legarmeh_clause legarmeh_revia_qatan_clause"""
+    p[0] = make_node("revia_qatan_clause", p[1], p[2])
+
+
+def p_sinnor_revia_qatan_clause(p):
+    """sinnor_revia_qatan_clause : sinnor_clause revia_qatan_phrase
+                                 | sinnor_clause legarmeh_revia_qatan_clause
+                                 | sinnor_clause sinnor_revia_qatan_clause"""
     p[0] = make_node("revia_qatan_clause", p[1], p[2])
 
 
@@ -369,6 +500,8 @@ def p_dehi_revia_mugrash_clause(p):
 
 def p_revia_gadol_revia_mugrash_clause(p):
     """revia_gadol_revia_mugrash_clause : revia_gadol_clause revia_mugrash_phrase
+                                        | revia_gadol_clause legarmeh_revia_mugrash_clause
+                                        | revia_gadol_clause pazer_revia_mugrash_clause
                                         | revia_gadol_clause dehi_revia_mugrash_clause
                                         | revia_gadol_clause revia_gadol_revia_mugrash_clause"""
     p[0] = make_node("revia_mugrash_clause", p[1], p[2])
@@ -401,6 +534,15 @@ def p_sinnor_clause(p):
                      | legarmeh_sinnor_clause
                      | pazer_sinnor_clause"""
     p[0] = p[1]
+
+
+# NOTE: sinnor may repeat before oleh-we-yored (Ps 17:14, ...TSINNOR TSINNOR GALGAL
+# OLEH_WEYORED; MAM-confirmed).  It is intentionally left unmodeled: the repeated
+# sinnor before an oleh that itself carries a servus is beyond LALR(1) -- the
+# servus is ambiguous between the next repeated sinnor's servi prefix and oleh's
+# own servi, and the merged lookahead dead-ends.  Adding it parsed no verse (the
+# only attestation has the servus), so Ps 17:14 stays a documented oddball rather
+# than distorting the servus handling.
 
 
 def p_legarmeh_sinnor_clause(p):
@@ -450,11 +592,26 @@ def p_shalshelet_gedolah_clause(p):
 
 
 # --- error callback ------------------------------------------------------------
+class _PoeticUnrecoverable(Exception):
+    """Raised from p_error to abort error recovery for non-category-A failures."""
+
+
 def p_error(p):  # noqa: D401  (PLY callback)
-    # No poetic error-recovery productions yet (the prose grammar's recovery is a
-    # port of acc2tre.y; there is no poetic oracle).  On a syntax error PLY has
-    # nothing to recover with, so parse_tokens returns None.
-    pass
+    # Recovery is allowed ONLY for the missing-silluq shape (category A): the
+    # syntax error must be the verse-final sof pasuq arriving where the silluq was
+    # due (p.type == SOFPASUQ).  In that one case, do nothing and let PLY recover
+    # via p_silluq_phrase_error, producing an ERROR-leaf silluq_phrase while
+    # preserving the rest of the verse's structure.
+    #
+    # Every other syntax error is a genuine non-parse -- a disjunctive standing
+    # where the hierarchy forbids it (the handful of L anomalies MAM reads
+    # differently).  There, PLY's generic error-token recovery would pop the stack
+    # to the silluq_phrase context and swallow the whole tail into one ERROR leaf,
+    # destroying the diagnostic token sequence.  Abort instead, so parse_tokens
+    # returns None and the driver records an informative NO_PARSE line.
+    if p is not None and p.type != pan.SOFPASUQ:
+        raise _PoeticUnrecoverable
+    # else (mid-verse EOF, or the verse-final SOFPASUQ): let PLY recover.
 
 
 class _LexToken:
@@ -523,6 +680,10 @@ def parse_tokens(parser, toks):
 
     ``toks`` is a list of (token_type, leaf_name) pairs beginning with
     ('TILDE', '') and ending with ('SOFPASUQ', 'sof pasuq').  Returns the tree
-    (ply_tree.TN) or None if the parse fails.
+    (ply_tree.TN) -- including a missing-silluq ERROR-leaf tree for category A --
+    or None if the parse fails with no recoverable shape (NO_PARSE).
     """
-    return parser.parse(lexer=_TokenStream(toks))
+    try:
+        return parser.parse(lexer=_TokenStream(toks))
+    except _PoeticUnrecoverable:
+        return None

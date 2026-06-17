@@ -55,8 +55,35 @@ regenerate outputs and confirm before moving on.
   distinction a grammar-aware checker exists to make. 2 checker-only dehi cases
   book-of-job's set omits: Job 5:27 (WLC dehi vs MAM tarḥa) and Job 31:26 (WLC
   tarḥa `73` vs MAM deḥi — a BHS transcription error WLC did NOT fix?) — worth a look.
-- Next: **Phase 3** (structural tail: missing-silluq A, legarmeh-under-atnah B,
-  pazer-before-silluq C, singletons D — per the open decisions below).
+**Phase 3 DONE** (structural tail resolved): parse rate **96.9% → 99.62% clean**
+(4448/4465), **zero LALR conflicts**, full suite green (68 tests).
+- **Generalized the disjunctive hierarchy** to admit lower-rank dividers directly,
+  mirroring the prose silluq/atnah cascade (ply_grammar.py).  Each higher domain
+  now takes a rank-ordered chain of near dividers: **silluq** admits revia_mugrash/
+  shalshelet → dehi → pazer → legarmeh; **atnah** admits revia_gadol → dehi →
+  pazer → legarmeh; **revia_gadol** also admits dehi; **revia_qatan** admits sinnor
+  (when TSINNOR REVIA_QATAN OLEH, revia_qatan is the near divider and sinnor
+  subdivides its span); plus revia_gadol→legarmeh/pazer under revia_mugrash.  All
+  MAM-confirmed well-formed (the NO_PARSE verses already agreed with MAM); trees
+  spot-checked (Ps 31:15, 3:1, 13:6) and correct.  Design invariant #1 ("strict
+  hierarchy") is relaxed to "rank-ordered" — sanctioned by this Phase's brief.
+- **Category A (missing silluq, 13 verses): maintainer chose ERROR-leaf trees.**
+  Added the one poetic error-recovery rule `silluq_phrase : error` (mirrors prose
+  p_silluq_phrase_error): a verse whose sof pasuq arrives with no silluq recovers
+  into a tree whose silluq_phrase mark is ERROR, structure preserved (e.g. Ps
+  37:31).  Recovery is **gated to the verse-final-SOFPASUQ case** in p_error
+  (raising `_PoeticUnrecoverable` otherwise) so it never masks the 4 anomalies
+  below — those keep their diagnostic NO_PARSE token lines.  The driver tallies
+  clean / missing-silluq-oddball / NO_PARSE separately.
+- **4 residual NO_PARSE** — hierarchy-violating L anomalies where MAM reads a
+  coherent sequence (no valid tree exists; left as documented oddballs):
+  Ps 17:14 (TSINNOR TSINNOR before an oleh that carries a servus — beyond LALR(1);
+  MAM agrees but unmodelable); Ps 68:20 & Prov 30:15 (TSINNOR before LEGARMEH —
+  WLC legarmeh vs MAM OLEH_WEYORED); Job 31:15 (extra leading REVIA_MUGRASH — MAM
+  reads DEXI ATNAX REVIA_MUGRASH).
+- MAM agreement unchanged at **98.37%** (parsing doesn't touch the scanned
+  sequence; the xcheck's [parses]/[NO_PARSE] labels were refreshed).
+- Next: **Phase 4** (optional poetic oddball report, mirrors prose research-oddballs).
 
 Built and tested (full suite: 51 passing):
 - `py/accgram/ply_scanner_poetic.py` — M-C accent codes → poetic tokens.
@@ -119,9 +146,10 @@ D. Long-tail singletons (e.g. ps 3:1 `ATNACH REVIA_MUGRASH LEGARMEH SILLUQ`) —
 
 ## Open decisions (maintainer's call — do not presume)
 
-- **Missing silluq (A):** inject an implied SILLUQ in the scanner (clean parse) vs.
-  emit an ERROR/oddball mirroring prose. The prose system treats these as ERROR
-  oddballs; matching that is the conservative default, but poetic has no oracle.
+- **Missing silluq (A): RESOLVED 2026-06-16 — maintainer chose ERROR-leaf trees**
+  (mirroring prose), not scanner injection. See Phase 3 status above. The single
+  recovery rule is gated to the verse-final-SOFPASUQ case so it never fires on a
+  mid-verse anomaly.
 - **revia trichotomy:** keep three distinct tokens (current) vs. one REVIA token
   with gadol/qatan/mugrash inferred purely from tree position. Current approach
   works; only revisit if MAM cross-check shows misclassification.
@@ -208,10 +236,17 @@ match MAM-simple; document any intentional divergences.
 Handoff: scanner correctness validated on a sample; bug fixes landed; outputs
 regenerated.
 
-## Phase 3 — Resolve the structural tail
+## Phase 3 — Resolve the structural tail  — DONE (see Status above)
 
 Goal: drive the parse rate toward ~100% or convert each residual to a documented
 oddball, deciding the open questions above per category.
+
+Outcome: 99.62% clean (4448/4465), 13 missing-silluq ERROR-leaf oddballs, 4
+documented NO_PARSE anomalies; zero LALR conflicts; 68 tests green.  The grammar
+generalization (lower dividers admitted directly into higher domains, rank-ordered)
+cleared A's grammar-adjacent siblings plus B/C/D wholesale; A itself became
+ERROR-leaf trees per the maintainer's call; the irreducible 4 are L anomalies MAM
+reads coherently.  The per-category notes below record what was decided.
 
 - A (missing silluq, 13 verses): implement the chosen approach (implied-silluq
   injection vs. ERROR/oddball). If ERROR, add poetic error productions modeled on
