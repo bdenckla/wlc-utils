@@ -15,24 +15,38 @@ M-C source body, the full scanned token sequence, the rendered ERROR tree or
 NO_PARSE line, and -- the key review datum for accent oddballs -- the WLC vs
 MAM-simple disjunctive sequences (what L's accents say versus what the MAM oracle
 reads). It writes a git-tracked ``_oddballs.json`` next to the corpus outputs and
-a self-contained ``gh-pages/accgram/poetic.html`` for review.
+``gh-pages/accgram/poetic.html`` for review.
+
+The HTML deliberately shares the prose ``goerwitz.html`` shell -- the same
+``../style.css``, width-limited wrapper, single flat client-side-filterable
+verse list (``poetic-filter.js``), per-verse permalinks + Mwd/UXLC links, and
+the parse tree rendered as an HTML table via ``ob_tree_table`` -- so the two
+reports can later be merged into one generator (see issue #10). It keeps two
+poetic-only displays the prose page has no analogue for: the M-C source body
+and the WLC-vs-MAM disjunctive compare.
 
 Unlike the prose ``research_tao`` report, there is no UXLC / changetext / hand-
 authored ob_notes machinery here: the poetic oddballs are a closed set of 17
 documented structural cases, and the MAM disjunctive comparison is the relevant
 oracle (the prose UXLC enrichment targets vowel/consonant text changes, which
-these accent-structure oddballs do not concern).
+these accent-structure oddballs do not concern). Pointed-Hebrew rendering and
+the prose SAT focus-word table are likewise not reproduced, as those need
+WLC/UXLC/MAM verse-token enrichment this closed set does not load.
 """
 
 from __future__ import annotations
 
 import argparse
-import html
 import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from accgram import ob_error_context
+from accgram import ob_report
+from accgram import ob_tree_table
 from accgram import poetic_filter
+from accgram import rtms_ref
+from accgram import rtms_report
 from accgram import split_wlc
 from accgram.mam_poetic_accents import load_poetic_disjunctives
 from accgram.mam_simple_verse import default_mam_simple_dir
@@ -42,6 +56,8 @@ from accgram.ply_scanner_poetic import scan_book
 from accgram.ply_tree import print_tree
 from accgram.run_ply_poetic import _has_error_leaf, _no_parse_line
 from mb_cmn import provenance
+from py_html import wlc_utils_html
+from py_wlc import my_wlc_bcv_str
 
 KIND_MISSING_SILLUQ = "missing_silluq"
 KIND_NO_PARSE = "no_parse"
@@ -142,78 +158,283 @@ def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, 
     return provenance.with_json_provenance(payload, source_file)
 
 
+# The poetic page shares goerwitz.html's stylesheet + width-limited shell and
+# the same single flat, client-side-filterable verse list (see
+# gh-pages/accgram/poetic-filter.js), so a later merge of the two reports is
+# mostly mechanical. It deliberately keeps two poetic-only data displays the
+# prose page has no analogue for: the Michigan-Claremont source body and the
+# WLC-vs-MAM disjunctive compare (the relevant oracle for accent-structure
+# oddballs). Pointed-Hebrew rendering and the prose SAT focus-word table are
+# not reproduced, as those need WLC/UXLC/MAM verse-token enrichment the closed
+# poetic oddball set does not load.
+_REPORT_TITLE = "Poetic accent-grammar oddballs"
+_REPORT_HEADING = "Poetic (Three Books) accent-grammar oddballs"
+_WIDTH_CLASS = "goerwitz-tms-width-limited"
+_FILTER_SCRIPT_NAME = "poetic-filter.js"
+_SELF_LINK_SYMBOL = "🔗"
+# The class every live count span carries, shared with goerwitz-filter.js so the
+# poetic filter script reuses the same per-option count machinery.
+_COUNT_CLASS = "gf-opt-count"
+
 _KIND_LABEL = {
     KIND_MISSING_SILLUQ: "Missing silluq (ERROR-leaf recovery)",
     KIND_NO_PARSE: "NO_PARSE (hierarchy-violating L anomaly)",
 }
 
+# Short labels for the kind filter checkboxes (the headings use _KIND_LABEL).
+_KIND_FILTER_LABEL = {
+    KIND_MISSING_SILLUQ: "missing silluq",
+    KIND_NO_PARSE: "NO_PARSE",
+}
 
-def _disj_compare_html(ob: PoeticOddball) -> str:
-    wlc = " ".join(ob.wlc_disjunctives)
+# Display labels for the book and MAM-compare filter facets, in filter order.
+_BOOK_LABEL = {"ps": "Psalms", "pr": "Proverbs", "jb": "Job"}
+_AGREE_LABEL = {
+    "agree": "WLC = MAM",
+    "differ": "WLC ≠ MAM",
+    "na": "not in MAM-simple",
+}
+
+
+def _agree_slug(ob: PoeticOddball) -> str:
+    """Filter facet for the WLC-vs-MAM disjunctive compare (see _AGREE_LABEL)."""
     if ob.mam_disjunctives is None:
-        mam = "<em>(not in MAM-simple)</em>"
-        agree = ""
-    else:
-        mam = html.escape(" ".join(ob.mam_disjunctives))
-        agree = (
-            ' <span class="agree">(agree)</span>'
-            if ob.wlc_disjunctives == ob.mam_disjunctives
-            else ' <span class="diff">(differ)</span>'
-        )
-    return (
-        f'<div class="disj"><span class="lbl">WLC:</span> {html.escape(wlc)}{agree}</div>'
-        f'<div class="disj"><span class="lbl">MAM:</span> {mam}</div>'
+        return "na"
+    return "agree" if ob.wlc_disjunctives == ob.mam_disjunctives else "differ"
+
+
+def _bb_ref(ob: PoeticOddball) -> str:
+    """Rebuild the two-letter bb form ("ps 31:20") the shared rtms_ref/url
+    helpers expect from the clean book-name reference ("Psalms 31:20")."""
+    _name, _sep, chv = ob.reference.rpartition(" ")
+    return f"{ob.bb} {chv}"
+
+
+def render_body_contents(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
+    counts = _counts(oddballs)
+    ordered = sorted(
+        oddballs, key=lambda ob: rtms_ref.reading_order_key(_bb_ref(ob))
     )
 
+    sections: list[object] = [
+        *_build_intro(oddballs),
+        _build_filter_controls(counts),
+    ]
+    for index, ob in enumerate(ordered):
+        sections.append(_render_oddball_section(ob, is_first=index == 0))
 
-def render_html(oddballs: list[PoeticOddball]) -> str:
+    wrapper = wlc_utils_html.div(tuple(sections), {"class": _WIDTH_CLASS})
+    script = wlc_utils_html.htel_mk("script", {"src": _FILTER_SCRIPT_NAME})
+    return (wrapper, script)
+
+
+def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
     n_silluq = sum(1 for o in oddballs if o.kind == KIND_MISSING_SILLUQ)
     n_noparse = sum(1 for o in oddballs if o.kind == KIND_NO_PARSE)
-    parts: list[str] = []
-    parts.append("<!DOCTYPE html>")
-    parts.append('<html lang="en"><head><meta charset="utf-8">')
-    parts.append("<title>Poetic accent-grammar oddballs</title>")
-    parts.append(
-        "<style>"
-        "body{font-family:system-ui,sans-serif;margin:2rem;max-width:60rem;color:#222}"
-        "h1{font-size:1.5rem}h2{font-size:1.15rem;margin-top:2rem;border-bottom:1px solid #ccc}"
-        ".ob{border:1px solid #ddd;border-radius:6px;padding:.8rem 1rem;margin:1rem 0}"
-        ".ref{font-weight:600;font-size:1.05rem}"
-        ".src{font-family:ui-monospace,monospace;background:#f6f6f6;padding:.3rem .5rem;"
-        "border-radius:4px;word-break:break-all;margin:.4rem 0;direction:ltr;unicode-bidi:plaintext}"
-        ".disj{font-family:ui-monospace,monospace;font-size:.9rem;margin:.15rem 0}"
-        ".lbl{display:inline-block;width:3rem;color:#666}"
-        ".agree{color:#178017}.diff{color:#b00}"
-        "pre{background:#fafafa;border:1px solid #eee;padding:.5rem;overflow-x:auto;font-size:.85rem}"
-        ".meta{color:#666;font-size:.85rem;margin:.3rem 0}"
-        "</style></head><body>"
-    )
-    parts.append("<h1>Poetic (Three Books) accent-grammar oddballs</h1>")
-    parts.append(
-        f"<p>{len(oddballs)} residual oddball verse(s): "
-        f"{n_silluq} missing-silluq (ERROR-leaf), {n_noparse} NO_PARSE. "
-        "See <code>doc/PLAN-poetic-accent-grammar.md</code> for the taxonomy.</p>"
-    )
-
-    for kind in (KIND_MISSING_SILLUQ, KIND_NO_PARSE):
-        group = [o for o in oddballs if o.kind == kind]
-        if not group:
-            continue
-        parts.append(f"<h2>{html.escape(_KIND_LABEL[kind])} &mdash; {len(group)}</h2>")
-        for ob in group:
-            parts.append('<div class="ob">')
-            parts.append(f'<div class="ref">{html.escape(ob.reference)}</div>')
-            parts.append(f'<div class="src">{html.escape(ob.body)}</div>')
-            parts.append(_disj_compare_html(ob))
-            parts.append(
-                f'<div class="meta">tokens: {html.escape(" ".join(ob.token_types))}'
-                f' &middot; <code>{html.escape(ob.output_file)}</code></div>'
+    return (
+        wlc_utils_html.heading_level_1(_REPORT_HEADING),
+        wlc_utils_html.heading_level_2("Introduction"),
+        wlc_utils_html.para(
+            f"This page lists the {len(oddballs)} poetic (Three Books) WLC 4.22 "
+            f"verses the PLY accent grammar cannot parse cleanly "
+            f"({n_silluq} missing-silluq, {n_noparse} NO_PARSE). Use the filter "
+            "below to narrow the list."
+        ),
+        wlc_utils_html.para("Each verse falls into one of two documented kinds:"),
+        wlc_utils_html.unordered_list(
+            (
+                "“missing silluq,” where the sof pasuq arrives with no silluq, "
+                "recovered into an ERROR-leaf tree (structure preserved).",
+                "“NO_PARSE,” a hierarchy-violating L anomaly for which no valid "
+                "tree exists.",
             )
-            parts.append(f"<pre>{html.escape(ob.tree_text)}</pre>")
-            parts.append("</div>")
+        ),
+        wlc_utils_html.para(
+            (
+                "Each verse shows its Michigan-Claremont source body and a "
+                "WLC-vs-MAM-simple disjunctive compare: the scanner's disjunctive "
+                "skeleton against the MAM oracle's. See ",
+                wlc_utils_html.code("doc/PLAN-poetic-accent-grammar.md"),
+                " for the full taxonomy.",
+            )
+        ),
+    )
 
-    parts.append("</body></html>")
-    return "\n".join(parts) + "\n"
+
+def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
+    bb, chnu, vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(ob))
+    anchor_id = ob_report.oddball_anchor_id(bcv)
+
+    items: list[object] = []
+    # The separating rule lives inside the section (omitted on the first one) so
+    # it hides with its verse when the filter removes it -- as in goerwitz.html.
+    if not is_first:
+        items.append(wlc_utils_html.horizontal_rule())
+    items.append(wlc_utils_html.heading_level_2(ob.reference, {"id": anchor_id}))
+    items.extend(_render_ref_links(ob, bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, anchor_id=anchor_id))
+    items.append(wlc_utils_html.para(ob.body, {"class": "poetic-src"}))
+    items.append(_render_disj_table(ob))
+    items.append(_render_meta(ob))
+    items.append(_render_tree(ob))
+
+    return wlc_utils_html.htel_mk(
+        "section",
+        {
+            "class": "goerwitz-verse",
+            "data-kind": ob.kind,
+            "data-book": ob.bb,
+            "data-agree": _agree_slug(ob),
+        },
+        tuple(items),
+    )
+
+
+def _render_ref_links(
+    ob: PoeticOddball,
+    *,
+    bb: str,
+    chnu: int,
+    vrnu: int,
+    bcv: str,
+    anchor_id: str,
+) -> tuple[object, ...]:
+    permalink = wlc_utils_html.anchor(
+        _SELF_LINK_SYMBOL,
+        {
+            "href": f"#{anchor_id}",
+            "title": "Permalink to this section",
+            "aria-label": "Permalink to this section",
+        },
+    )
+    perma_para = wlc_utils_html.para(
+        (permalink, f" Kind: {_KIND_LABEL[ob.kind]}.")
+    )
+    links_para = wlc_utils_html.para(
+        (
+            wlc_utils_html.anchor(
+                "Mwd", {"href": rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)}
+            ),
+            " | ",
+            wlc_utils_html.anchor(
+                "UXLC", {"href": my_wlc_bcv_str.get_tanach_dot_us_url(bcv)}
+            ),
+        )
+    )
+    return (perma_para, links_para)
+
+
+def _render_disj_table(ob: PoeticOddball) -> object:
+    wlc_seq = " ".join(ob.wlc_disjunctives)
+    if ob.mam_disjunctives is None:
+        mam_cell: object = "(not in MAM-simple)"
+        agree_cell: object = ""
+    else:
+        mam_cell = " ".join(ob.mam_disjunctives)
+        if ob.wlc_disjunctives == ob.mam_disjunctives:
+            agree_cell = wlc_utils_html.span_c("(agree)", "poetic-agree")
+        else:
+            agree_cell = wlc_utils_html.span_c("(differ)", "poetic-differ")
+    return wlc_utils_html.table(
+        (
+            wlc_utils_html.table_row_of_data(("WLC", wlc_seq, agree_cell)),
+            wlc_utils_html.table_row_of_data(("MAM", mam_cell, "")),
+        ),
+        {"class": "goerwitz-tms-sat poetic-disj"},
+    )
+
+
+def _render_meta(ob: PoeticOddball) -> object:
+    return wlc_utils_html.para(
+        (
+            f"tokens: {' '.join(ob.token_types)} · ",
+            wlc_utils_html.code(ob.output_file),
+        ),
+        {"class": "poetic-meta"},
+    )
+
+
+def _render_tree(ob: PoeticOddball) -> object:
+    if ob.kind == KIND_MISSING_SILLUQ:
+        tree = ob_error_context.parse_error_tree_from_text(ob.tree_text)
+        if tree is not None:
+            return wlc_utils_html.div(
+                (ob_tree_table.render_error_tree_table(tree),),
+                {"class": "goerwitz-obs-tree-wrap"},
+            )
+    # NO_PARSE has no tree; show the raw NO_PARSE token line verbatim.
+    return wlc_utils_html.div(
+        (wlc_utils_html.htel_mk_inline("pre", None, ob.tree_text),),
+        {"class": "goerwitz-obs-tree-wrap"},
+    )
+
+
+def _build_filter_controls(counts: dict[str, int]) -> object:
+    kind_fieldset = _fieldset(
+        "Oddball kind",
+        tuple(
+            _checkbox("pf-kind", slug, label, counts[f"kind_{slug}"])
+            for slug, label in _KIND_FILTER_LABEL.items()
+        ),
+    )
+    book_fieldset = _fieldset(
+        "Book",
+        tuple(
+            _checkbox("pf-book", slug, label, counts[f"book_{slug}"])
+            for slug, label in _BOOK_LABEL.items()
+        ),
+    )
+    agree_fieldset = _fieldset(
+        "MAM compare",
+        tuple(
+            _checkbox("pf-agree", slug, label, counts[f"agree_{slug}"])
+            for slug, label in _AGREE_LABEL.items()
+        ),
+    )
+    count_para = wlc_utils_html.para("", {"class": "pf-count"})
+    return wlc_utils_html.div(
+        (kind_fieldset, book_fieldset, agree_fieldset, count_para),
+        {"class": "goerwitz-filter"},
+    )
+
+
+def _fieldset(legend_text: str, labels: tuple[object, ...]) -> object:
+    legend = wlc_utils_html.htel_mk("legend", None, legend_text)
+    return wlc_utils_html.htel_mk("fieldset", None, (legend, *labels))
+
+
+def _checkbox(css_class: str, value: str, label_text: str, count: int) -> object:
+    input_el = wlc_utils_html.htel_mk_inline_nc(
+        "input",
+        {
+            "type": "checkbox",
+            "class": css_class,
+            "value": value,
+            "checked": "checked",
+        },
+    )
+    return wlc_utils_html.htel_mk_inline(
+        "label", None, (input_el, f" {label_text}", _count_span(count))
+    )
+
+
+def _count_span(count: int) -> object:
+    # A zero count renders empty (no "(0)"); the filter script keeps it live.
+    return wlc_utils_html.span_c(f" ({count})" if count else "", _COUNT_CLASS)
+
+
+def _counts(oddballs: list[PoeticOddball]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for slug in _KIND_FILTER_LABEL:
+        counts[f"kind_{slug}"] = 0
+    for slug in _BOOK_LABEL:
+        counts[f"book_{slug}"] = 0
+    for slug in _AGREE_LABEL:
+        counts[f"agree_{slug}"] = 0
+    for ob in oddballs:
+        counts[f"kind_{ob.kind}"] += 1
+        counts[f"book_{ob.bb}"] += 1
+        counts[f"agree_{_agree_slug(ob)}"] += 1
+    return counts
 
 
 def default_input_path(repo_root: Path) -> Path:
@@ -267,7 +488,15 @@ def run(args: argparse.Namespace) -> None:
 
     html_out: Path = args.html_out
     html_out.parent.mkdir(parents=True, exist_ok=True)
-    html_out.write_text(render_html(oddballs), encoding="utf-8", newline="\n")
+    wlc_utils_html.write_html_to_file(
+        body_contents=render_body_contents(oddballs),
+        write_ctx=wlc_utils_html.WriteCtx(
+            title=_REPORT_TITLE,
+            path=str(html_out),
+            html_comment=provenance.generated_html_comment(__file__),
+        ),
+        path_to_style=rtms_report.path_to_gh_pages_style(html_out),
+    )
 
     n_silluq = sum(1 for o in oddballs if o.kind == KIND_MISSING_SILLUQ)
     n_noparse = sum(1 for o in oddballs if o.kind == KIND_NO_PARSE)

@@ -111,6 +111,28 @@ p.goerwitz-obs-error-note {
     margin-top: 0.35em;
     margin-bottom: 0.35em;
 }
+/* Poetic oddball report (poetic.html). It shares the goerwitz-* shell above
+   but renders the Michigan-Claremont source body and the WLC-vs-MAM
+   disjunctive compare, which the prose page has no analogue for. */
+p.poetic-src {
+    font-family: ui-monospace, monospace;
+    background-color: light-dark(#f6f6f6, #1c1c1c);
+    padding: 0.3em 0.5em;
+    border-radius: 4px;
+    word-break: break-all;
+    direction: ltr;
+    unicode-bidi: plaintext;
+}
+p.poetic-meta {
+    font-size: 85%;
+    color: light-dark(#555, #aaa);
+    margin: 0.3em 0;
+}
+table.poetic-disj td {
+    font-family: ui-monospace, monospace;
+}
+span.poetic-agree { color: light-dark(#178017, #6fcf6f); }
+span.poetic-differ { color: light-dark(#b00000, #ff9b9b); }
 th, td {
     padding-right: 0.4em;
     padding-left: 0.4em;

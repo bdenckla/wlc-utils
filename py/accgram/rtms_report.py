@@ -223,6 +223,11 @@ def parse_ref_to_wlc_bcv(ref: str) -> tuple[str, int, int, str]:
     return bb, chnu, vrnu, bcv
 
 
+def mam_with_doc_url(*, bb: str, chnu: int, vrnu: int) -> str:
+    """Public MAM-with-doc verse URL, shared with the poetic oddball report."""
+    return _mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)
+
+
 def _remap_mam_with_doc_chapter_verse(bb: str, chnu: int, vrnu: int) -> tuple[int, int]:
     # One-time remap: Numbers 25:19 aligns to MAM-with-doc at 26:1.
     if bb == "nu" and chnu == 25 and vrnu == 19:

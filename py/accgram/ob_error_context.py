@@ -189,6 +189,16 @@ def _extract_error_paths(verse_lines: list[str]) -> list[ErrorPath]:
     return error_paths
 
 
+def parse_error_tree_from_text(tree_text: str) -> ErrorTree | None:
+    """Parse an already-rendered ERROR tree (e.g. poetic ``print_tree`` output)
+    into an ``ErrorTree``, single-sourcing the node/ERROR line regexes.
+
+    Returns None when the text holds no ERROR leaf (so a clean tree, or a
+    non-tree line such as the poetic ``NO_PARSE: ...`` form, yields None).
+    """
+    return _extract_error_tree(tree_text.splitlines())
+
+
 def _extract_error_tree(verse_lines: list[str]) -> ErrorTree | None:
     if not verse_lines:
         return None
