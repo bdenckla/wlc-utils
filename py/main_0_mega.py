@@ -31,14 +31,14 @@ def _steps(repo_root: Path) -> tuple[Step, ...]:
         ),
         Step(
             name="accgram_run_ply",
-            argv=(sys.executable, str(py_dir / "main_accgram.py"), "run-ply"),
+            argv=(sys.executable, str(py_dir / "main_accgram.py"), "run-ply-goerwitz"),
         ),
         Step(
             name="accgram_research_oddballs",
             argv=(
                 sys.executable,
                 str(py_dir / "main_accgram.py"),
-                "research-oddballs",
+                "generate-goerwitz-html",
             ),
         ),
         Step(

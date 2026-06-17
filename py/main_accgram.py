@@ -1,7 +1,7 @@
 """Accent grammar utilities.
 
 Subcommands:
-    run-ply
+    run-ply-goerwitz
                 Run the Python PLY port over the WLC prose corpus
                 (wlc-utils-io/in/wlc422/wlc422_ps.txt, genre-filtered) and write
                 out/accgram/ply/*_ag.txt (mirrors `accents -p`).  A verse the
@@ -24,15 +24,15 @@ Subcommands:
                 out/accgram/ply-poetic/_servi_xcheck.txt.  The second-witness gate
                 for vetting Breuer servant-adjacency rules (it settled deḥi and
                 small revia).  Use --target to restrict.
-    run-ply-poetic-oddballs
+    generate-poetic-html
                 Collect the residual poetic oddballs (the missing-silluq
                 ERROR-leaf trees and the NO_PARSE anomalies) from the poetic
                 corpus, enrich each with its M-C body, scanned token sequence,
                 rendered tree, and WLC-vs-MAM-simple disjunctive comparison, and
                 write out/accgram/ply-poetic/_oddballs.json plus the HTML report
                 gh-pages/accgram/poetic.html.  The optional Phase 4 analogue of
-                research-oddballs.  Run run-ply-poetic first.
-    research-oddballs
+                generate-goerwitz-html.  Run run-ply-poetic first.
+    generate-goerwitz-html
                 Derive the PLY-based oddball set from the PLY outputs
                 (out/accgram/ply) into out/accgram/ply/_oddballs.json, then enrich
                 each with its matching wlc422-kq-u verse object and structured
@@ -44,12 +44,12 @@ Subcommands:
                 M-C body, re-scan + re-parse, and classify CONFIRMED / DENIED /
                 CHANGED / UNTESTABLE.  Cross-checks each verdict against the
                 ob_notes claim and writes out/accgram/fix-tester/_fix_tester.{txt,json}.
-                Run run-ply first.
+                Run run-ply-goerwitz first.
 
 Examples:
-    .venv/Scripts/python.exe py/main_accgram.py run-ply
-    .venv/Scripts/python.exe py/main_accgram.py run-ply --book ob
-    .venv/Scripts/python.exe py/main_accgram.py research-oddballs
+    .venv/Scripts/python.exe py/main_accgram.py run-ply-goerwitz
+    .venv/Scripts/python.exe py/main_accgram.py run-ply-goerwitz --book ob
+    .venv/Scripts/python.exe py/main_accgram.py generate-goerwitz-html
 """
 
 from __future__ import annotations
@@ -108,7 +108,7 @@ def main() -> None:
     subparsers.required = True
 
     run_ply_parser = subparsers.add_parser(
-        "run-ply",
+        "run-ply-goerwitz",
         help=(
             "Run the Python PLY port over the WLC prose corpus and write "
             "out/accgram/ply/*_ag.txt (mirrors `accents -p`). Use --book to "
@@ -153,7 +153,7 @@ def main() -> None:
     servi_xcheck_parser.set_defaults(func=_run_servi_xcheck)
 
     poetic_oddballs_parser = subparsers.add_parser(
-        "run-ply-poetic-oddballs",
+        "generate-poetic-html",
         help=(
             "Collect the residual poetic oddballs (missing-silluq ERROR-leaf trees "
             "and NO_PARSE anomalies), enrich each with its M-C body, token sequence, "
@@ -165,7 +165,7 @@ def main() -> None:
     poetic_oddballs_parser.set_defaults(func=_run_poetic_oddballs)
 
     research_tao_parser = subparsers.add_parser(
-        "research-oddballs",
+        "generate-goerwitz-html",
         help=(
             "Enrich the PLY-derived _oddballs.json entries with matching "
             "wlc422-kq-u verse objects and XML-ish UXLC verse nodes, and write "
@@ -180,7 +180,7 @@ def main() -> None:
         help=(
             "Test whether adopting each annotated prose oddball's MAM-simple value "
             "clears its ERROR; write out/accgram/fix-tester/_fix_tester.{txt,json}. "
-            "Run run-ply first."
+            "Run run-ply-goerwitz first."
         ),
     )
     fix_tester.add_args(fix_tester_parser, repo_root=_repo_root())

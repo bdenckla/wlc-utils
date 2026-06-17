@@ -1,8 +1,8 @@
-"""Derive the PLY-based oddball set for the research-oddballs subcommand.
+"""Derive the PLY-based oddball set for the generate-goerwitz-html subcommand.
 
 This module classifies oddball verses from the **PLY** port outputs. An oddball
 is any verse whose PLY parse tree contains at least one ``ERROR`` leaf. Since
-``run-ply`` now processes the full prose corpus (including the 49 verses the C
+``run-ply-goerwitz`` now processes the full prose corpus (including the 49 verses the C
 binary emitted no output for), every such ERROR verse lives in
 ``out/accgram/ply/`` directly -- there is no separate troublemaker pass.
 

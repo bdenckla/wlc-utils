@@ -102,7 +102,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--html-out",
         type=Path,
         default=rtms_report.default_html_out_path(repo_root),
-        help="Output HTML path for the research-oddballs report.",
+        help="Output HTML path for the goerwitz.html report.",
     )
 
 

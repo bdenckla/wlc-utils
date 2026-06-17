@@ -1,4 +1,4 @@
-"""Poetic oddball report -- the optional Phase 4 analogue of ``research-oddballs``.
+"""Poetic oddball report -- the optional Phase 4 analogue of ``generate-goerwitz-html``.
 
 The poetic corpus run (``run-ply-poetic``) parses 99.62% of the Three Books
 cleanly; the residual splits into two documented oddball kinds:
@@ -183,8 +183,8 @@ def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, 
 # oddballs). Pointed-Hebrew rendering and the prose SAT focus-word table are
 # not reproduced, as those need WLC/UXLC/MAM verse-token enrichment the closed
 # poetic oddball set does not load.
-_REPORT_TITLE = "Poetic accent-grammar oddballs"
-_REPORT_HEADING = "Poetic (Three Books) accent-grammar oddballs"
+_REPORT_TITLE = "Poetic checker run on WLC"
+_REPORT_HEADING = "Poetic checker run on WLC"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 _FILTER_SCRIPT_NAME = "poetic-filter.js"
 _SELF_LINK_SYMBOL = "🔗"

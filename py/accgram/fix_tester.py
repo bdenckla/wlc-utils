@@ -1,4 +1,4 @@
-r"""Test whether the suggested fixes in the research-oddballs report actually work.
+r"""Test whether the suggested fixes in the goerwitz.html report actually work.
 
 For every *annotated* prose oddball (one carrying an ob_notes_* note), the
 goerwitz.html report suggests a fix -- almost always "adopt the MAM-simple value
@@ -28,7 +28,7 @@ writes a standalone text + JSON report under ``out/accgram/fix-tester/``.  It
 never edits goerwitz.html or the ob_notes_* prose; a human applies prose edits
 from the report.
 
-Depends on ``out/accgram/ply/`` -- run ``run-ply`` first.
+Depends on ``out/accgram/ply/`` -- run ``run-ply-goerwitz`` first.
 """
 
 from __future__ import annotations
