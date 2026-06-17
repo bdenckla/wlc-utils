@@ -196,9 +196,25 @@ def p_revia_mugrash_phrase(p):
     _phrase(p, "revia_mugrash_phrase")
 
 
+# Breuer, *The Cantillation of Scripture* (Wengrov tr.), Ch 11 §11: "The servant
+# next to the dekhi is ALWAYS a munakh" (stated flatly, no "usually" hedge).  So the
+# servus immediately adjacent to DEXI must be MUNAX; any earlier servi (the
+# legarmeh-substitute / distant servants of Ch 11 §12-14, which may be merka/azla)
+# precede that munah.  This replaces the blanket ``servi DEXI`` and is the first
+# Breuer-derived tightening of the otherwise-permissive servus chains (see memory
+# poetic-servant-rules-breuer).  A bare DEXI (dehi with no servant) is still allowed.
+# This intentionally makes ~19 verses NO_PARSE where L marks merka/mahpak (not munah)
+# immediately before dehi -- a real, surfaced class of L divergence from Breuer's
+# rule, NOT something to suppress to protect the parse rate.
+def p_dehi_servi(p):
+    """dehi_servi : MUNAX
+                  | servi MUNAX"""
+    p[0] = [p[1]] if len(p) == 2 else p[1] + [p[2]]
+
+
 def p_dehi_phrase(p):
     """dehi_phrase : DEXI
-                   | servi DEXI"""
+                   | dehi_servi DEXI"""
     _phrase(p, "dehi_phrase")
 
 

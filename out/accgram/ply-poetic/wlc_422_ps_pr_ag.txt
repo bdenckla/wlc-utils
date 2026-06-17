@@ -1436,23 +1436,7 @@ Proverbs 5:18
     2 silluq_phrase
       merka silluq 
 Proverbs 5:19
-0 silluq_clause
-  1 oleh_weyored_clause
-    2 revia_qatan_phrase
-      merka revia qatan 
-    2 oleh_weyored_phrase
-      oleh we-yored 
-  1 silluq_clause
-    2 atnach_clause
-      3 dehi_phrase
-        merka dehi 
-      3 atnach_phrase
-        munah atnah 
-    2 silluq_clause
-      3 revia_mugrash_phrase
-        revia mugrash 
-      3 silluq_phrase
-        merka silluq 
+NO_PARSE: MERKHA REVIA_QATAN OLEH_WEYORED MERKHA DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ
 Proverbs 5:20
 0 silluq_clause
   1 atnach_phrase
@@ -7709,20 +7693,7 @@ Proverbs 25:6
     2 silluq_phrase
       silluq 
 Proverbs 25:7
-0 silluq_clause
-  1 oleh_weyored_clause
-    2 revia_qatan_phrase
-      mehuppak merka revia qatan 
-    2 oleh_weyored_phrase
-      oleh we-yored 
-  1 silluq_clause
-    2 atnach_clause
-      3 dehi_phrase
-        merka dehi 
-      3 atnach_phrase
-        munah munah atnah 
-    2 silluq_phrase
-      tarha munah silluq 
+NO_PARSE: MAHAPAKH MERKHA REVIA_QATAN OLEH_WEYORED MERKHA DEXI MUNAX MUNAX ATNAX TARXA MUNAX SILLUQ
 Proverbs 25:8
 0 silluq_clause
   1 oleh_weyored_clause
@@ -9406,23 +9377,7 @@ Proverbs 30:14
 Proverbs 30:15
 NO_PARSE: LEGARMEH MERKHA TSINNOR LEGARMEH MERKHA MUNAX DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ
 Proverbs 30:16
-0 silluq_clause
-  1 oleh_weyored_clause
-    2 sinnor_phrase
-      sinnor 
-    2 oleh_weyored_phrase
-      galgal oleh we-yored 
-  1 silluq_clause
-    2 atnach_clause
-      3 dehi_phrase
-        merka dehi 
-      3 atnach_phrase
-        munah atnah 
-    2 silluq_clause
-      3 revia_mugrash_phrase
-        revia mugrash 
-      3 silluq_phrase
-        merka silluq 
+NO_PARSE: TSINNOR GALGAL OLEH_WEYORED MERKHA DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ
 Proverbs 30:17
 0 silluq_clause
   1 oleh_weyored_clause
