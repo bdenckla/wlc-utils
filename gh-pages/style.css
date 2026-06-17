@@ -133,6 +133,16 @@ table.poetic-disj td {
 }
 span.poetic-agree { color: light-dark(#178017, #6fcf6f); }
 span.poetic-differ { color: light-dark(#b00000, #ff9b9b); }
+p.poetic-auto-summary {
+    margin: 0.3em 0;
+    font-style: italic;
+}
+span.poetic-auto-summary-label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 90%;
+    color: light-dark(#555, #aaa);
+}
 th, td {
     padding-right: 0.4em;
     padding-left: 0.4em;

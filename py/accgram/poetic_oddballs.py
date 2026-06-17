@@ -37,6 +37,7 @@ WLC/UXLC/MAM verse-token enrichment this closed set does not load.
 from __future__ import annotations
 
 import argparse
+import difflib
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -269,7 +270,9 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
                 "Each verse shows its pointed-Hebrew text (the verse-final word "
                 "highlighted for missing-silluq cases), its Michigan-Claremont "
                 "source body, and a WLC-vs-MAM-simple disjunctive compare: the "
-                "scanner's disjunctive skeleton against the MAM oracle's. See ",
+                "scanner's disjunctive skeleton against the MAM oracle's. The "
+                "per-verse summary is mechanically auto-derived from that compare "
+                "and labelled tentative — it is not a hand-vetted attribution. See ",
                 wlc_utils_html.code("doc/PLAN-poetic-accent-grammar.md"),
                 " for the full taxonomy.",
             )
@@ -288,6 +291,7 @@ def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
         items.append(wlc_utils_html.horizontal_rule())
     items.append(wlc_utils_html.heading_level_2(ob.reference, {"id": anchor_id}))
     items.extend(_render_ref_links(ob, bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, anchor_id=anchor_id))
+    items.append(_render_summary(ob))
     hebrew_verse = _render_hebrew_verse(ob)
     if hebrew_verse is not None:
         items.append(hebrew_verse)
@@ -340,6 +344,66 @@ def _render_ref_links(
         )
     )
     return (perma_para, links_para)
+
+
+def _render_summary(ob: PoeticOddball) -> object:
+    """A tentative, mechanically auto-derived summary (NOT hand-authored).
+
+    It is computed by diffing the WLC and MAM-simple disjunctive skeletons, so
+    it is only as reliable as that compare; it is labelled tentative/auto-derived
+    so a reader knows not to treat it as a vetted attribution. This is the
+    poetic analogue of the prose page's hand-authored st-summary / the
+    SAT-descriptor-derived summary (rtmsr_sat.derive_summary_from_sat_descriptors).
+    """
+    return wlc_utils_html.para(
+        (
+            wlc_utils_html.span_c(
+                "Auto-derived summary (tentative): ", "poetic-auto-summary-label"
+            ),
+            _derive_tentative_summary(ob),
+        ),
+        {"class": "poetic-auto-summary"},
+    )
+
+
+def _derive_tentative_summary(ob: PoeticOddball) -> str:
+    if ob.mam_disjunctives is None:
+        return (
+            "Not in MAM-simple, so no disjunctive oracle is available "
+            "for comparison."
+        )
+    if ob.wlc_disjunctives == ob.mam_disjunctives:
+        return (
+            "WLC and MAM-simple read the same disjunctive skeleton, yet the verse "
+            "does not parse — the anomaly is structural, not a WLC/MAM divergence."
+        )
+    clauses = _describe_disjunctive_diff(ob.wlc_disjunctives, ob.mam_disjunctives)
+    return "Relative to the MAM-simple oracle, " + "; ".join(clauses) + "."
+
+
+def _describe_disjunctive_diff(
+    wlc: tuple[str, ...], mam: tuple[str, ...]
+) -> list[str]:
+    """Phrase each edit between the WLC and MAM disjunctive skeletons from WLC's
+    side (MAM is the oracle), e.g. "WLC omits silluq that MAM reads"."""
+    matcher = difflib.SequenceMatcher(a=wlc, b=mam, autojunk=False)
+    clauses: list[str] = []
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
+            continue
+        wlc_part = _humanize_disjunctives(wlc[i1:i2])
+        mam_part = _humanize_disjunctives(mam[j1:j2])
+        if tag == "delete":
+            clauses.append(f"WLC has an extra {wlc_part} not in MAM")
+        elif tag == "insert":
+            clauses.append(f"WLC omits {mam_part} that MAM reads")
+        else:  # replace
+            clauses.append(f"WLC reads {wlc_part} where MAM reads {mam_part}")
+    return clauses
+
+
+def _humanize_disjunctives(tokens: tuple[str, ...]) -> str:
+    return ", ".join(token.lower().replace("_", " ") for token in tokens)
 
 
 def _render_hebrew_verse(ob: PoeticOddball) -> object | None:
