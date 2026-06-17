@@ -168,13 +168,45 @@ def test_verse_final_silluq_swap_applies():
     assert _types("PE35LI)Y00") == ["SILLUQ", "SOFPASUQ"]
 
 
-def test_meteg_added_on_sof_pasuq_word_stays_inert():
-    # The verse-final-silluq promotion must NOT fire when a (mos) is merely *added*
-    # (no real accent removed): that is an ordinary meteg, invisible to the grammar.
+def test_verse_final_silluq_added_when_word_lacks_one():
+    # A verse-final word with no accent at all in WLC but the silluq glyph (U+05BD)
+    # in MAM: that (mos) IS the missing verse-final silluq -- it sits before sof
+    # pasuq, where the scanner reads a code-35 as SILLUQ -- not an inert meteg.
+    # Promote it to a real silluq so the splice supplies the accent silluq_phrase
+    # is complaining is absent.
     result = apply_mam_fix(
         "HAZ.EH00",
         ["הזה׃"],
         {"wlc422": "הזה׃", "mam_simple": "הזֽה׃"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.new_body == "HAZ.EH3500"
+    assert _types("HAZ.EH3500") == ["SILLUQ", "SOFPASUQ"]
+
+
+def test_verse_final_silluq_inserts_before_sof_pasuq_not_after_note_marker():
+    # The silluq must land immediately before the 00, even when the atom carries a
+    # trailing note-marker whose payload is an M-C letter (``]U``).  "After the last
+    # letter" would put it past the 00 (``00]U35``), where the scanner -- which
+    # stops at sof pasuq -- never reaches it (the dt 10:15 / gn 32:24 family).
+    result = apply_mam_fix(
+        "HAZ.EH00]U",
+        ["הזה׃"],
+        {"wlc422": "הזה׃", "mam_simple": "הזֽה׃"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.new_body == "HAZ.EH3500]U"
+    assert _types("HAZ.EH3500]U") == ["SILLUQ", "SOFPASUQ"]
+
+
+def test_meteg_added_to_word_that_already_has_silluq_stays_inert():
+    # When the WLC word *already* bears a (mos) (its verse-final silluq), a further
+    # (mos) MAM adds is a genuine medial meteg -- promoting it would scan as a
+    # duplicate silluq.  The promotion must not fire; the change is grammar-inert.
+    result = apply_mam_fix(
+        "HA35Z.EH00",
+        ["הֽזה׃"],
+        {"wlc422": "הֽזה׃", "mam_simple": "הֽזֽה׃"},
     )
     assert isinstance(result, UntestableFix)
     assert result.reason == "meteg_only"

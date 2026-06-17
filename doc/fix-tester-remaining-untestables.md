@@ -7,14 +7,16 @@ and classifies the outcome `CONFIRMED` / `DENIED` / `CHANGED` / `UNTESTABLE`. Th
 proposed fix is normally "adopt the MAM-simple value", but when MAM equals WLC the
 note's hand-authored `synth_fix` is tested instead (flagged `synthesized`).
 
-As of 2026-06-16: **91 tested — 82 CONFIRMED, 0 DENIED, 0 CHANGED, 9 UNTESTABLE.**
-This file enumerates the 9 untestables, why each cannot be mechanically tested, and
-whether the barrier is an *apparatus limit* (could be lifted with more tooling) or
-*inherent* (the change cannot affect the grammar, so there is nothing to test).
+As of 2026-06-16: **91 tested — 90 CONFIRMED, 0 DENIED, 0 CHANGED, 1 UNTESTABLE.**
+This file enumerates the one remaining untestable, why it cannot be mechanically
+tested, and the four apparatus barriers that were lifted to get here. Each barrier
+was either an *apparatus limit* (could be lifted with more tooling) or *inherent*
+(the change cannot affect the grammar, so there is nothing to test).
 
-Every remaining untestable is now **inherent**: the three apparatus barriers
-(`alignment_failure`, `ambiguous_accent`/zarshit, `multi_accent`) have all been
-lifted.
+The sole remaining untestable is **inherent**: there is no word-accent change to
+splice. All four apparatus barriers (`alignment_failure`, `ambiguous_accent`/zarshit,
+`multi_accent`, and the verse-final-silluq promotion that had mislabelled 8 cases
+`meteg_only`) have been lifted.
 
 `UNTESTABLE` is not a verdict on the oddball — it means the fix could not be reduced
 to a single, safely-appliable accent splice. The verdict counts (`agree`/`disagree`)
@@ -22,11 +24,10 @@ ignore these.
 
 | reason | count | kind | path to testability |
 |---|---:|---|---|
-| `meteg_only` | 8 | inherent | grammar is blind to meteg; needs a real accent hypothesis (`synth_fix`) |
 | `no_mam_diff` | 1 | inherent | not a word-accent change at all |
 
-(`alignment_failure` (12), `ambiguous_accent` / zarshit (12), and `multi_accent` (2)
-were all RESOLVED 2026-06-16 — see below.)
+(`alignment_failure` (12), `ambiguous_accent` / zarshit (12), `multi_accent` (2), and
+the 8 formerly-`meteg_only` were all RESOLVED 2026-06-16 — see below.)
 
 ---
 
@@ -76,20 +77,23 @@ silluq**, and adopting it parses clean.
 
 The trap: a silluq and a meteg are the **same glyph** (U+05BD), so
 `uni_heb.accent_names` reduces both to `(mos)` (meteg-**o**r-**s**illuq).
-`_accent_name_diff` strips `(mos)` from both sides of the diff — correct for the 8
-`meteg_only` cases (a meteg is invisible to the grammar) — but here it discarded the
-*silluq* the fix was supposed to add. The splice degenerated to "delete the tevir,
-add nothing", leaving the word accent-less and still failing `silluq_phrase`.
+`_accent_name_diff` strips `(mos)` from both sides of the diff — but here it
+discarded the *silluq* the fix was supposed to add. The splice degenerated to
+"delete the tevir, add nothing", leaving the word accent-less and still failing
+`silluq_phrase`.
 
 The fix (`fix_apply._accent_name_diff` + `fix_tester_codes`): a `(mos)` that
 **replaces** a real WLC accent on a sof-pasuq-bearing word is the verse-final
 silluq, not a meteg — it is promoted to a synthetic `(sil)` abbreviation mapping to
 M-C code 35, which the scanner tokenizes as SILLUQ before sof-pasuq
-(`(?:35|75|95)(?=…00)`). A `(mos)` merely *added* (nothing removed) stays an inert
-meteg, so the `meteg_only` cases are unaffected. The splice then swaps tevir (91) →
-silluq (35), the verse parses CLEAN, and the verdict **agrees** with the note.
-Covered by `test_verse_final_silluq_swap_applies` and
-`test_meteg_added_on_sof_pasuq_word_stays_inert`.
+(`(?:35|75|95)(?=…00)`). At first this promotion fired only for a *replacement*
+(`removed and not added`); a `(mos)` merely *added* was left inert, which
+mislabelled 8 pure-addition cases `meteg_only` — corrected below (see
+[`meteg_only` — RESOLVED](#meteg_only--resolved-2026-06-16-was-8-mislabelled-inherent)),
+where the promotion was extended to pure addition. The splice then swaps tevir
+(91) → silluq (35), the verse parses CLEAN, and the verdict **agrees** with the
+note. Covered by `test_verse_final_silluq_swap_applies` and
+`test_meteg_added_to_word_that_already_has_silluq_stays_inert`.
 
 ---
 
@@ -151,29 +155,60 @@ atom — so the parse outcome is identical.
 
 ---
 
-## `meteg_only` (8) — inherent
+## `meteg_only` — RESOLVED 2026-06-16 (was 8, **mislabelled inherent**)
 
-The sole difference between WLC and MAM here is a **meteg** (U+05BD). The scanner
-swallows meteg (and vowels) — only accents and punctuation reach the grammar — so
-adopting MAM cannot change the parse. Every one is flagged `silluq_phrase`, i.e. the
-real complaint is about the verse-final silluq / sof-pasuq region, which the meteg
-diff does not touch.
+**Fixed. All 8 now CONFIRMED.** These had been filed as *inherent* on the reasoning
+that *"the scanner swallows meteg, so adopting MAM cannot change the parse."* **That
+reasoning was wrong.** Each of the 8 is a verse-final word that carries *no accent at
+all* in WLC — which is exactly why it is flagged `silluq_phrase` (a missing
+verse-final silluq) — and the U+05BD that MAM adds sits before the sof pasuq. A
+U+05BD before `00` is a **silluq, not a meteg**: the scanner's silluq
+trailing-context rule (`(?:35|75|95)(?=[^ 379…]*00)`, `ply_scanner.py`) tokenizes a
+code-35 anywhere in the final word as SILLUQ. So the splice *does* reach the grammar,
+and supplying the silluq clears `silluq_phrase`.
 
-| ref | proposed fix | grammar error |
-|---|---|---|
-| dt 10:15 | הזה׃ → הזֽה׃ | silluq_phrase |
-| dt 12:2 | רענן׃ → רענֽן׃ | silluq_phrase |
-| dt 23:18 | ישראל׃ → ישראֽל׃ | silluq_phrase |
-| gn 32:24 | לו׃ → לֽו׃ | silluq_phrase |
-| ho 11:7 | ירומם׃ → ירומֽם׃ | silluq_phrase |
-| is 13:7 | ימס׃ → ימֽס׃ | silluq_phrase |
-| lv 26:28 | חטאתיכם׃ → חטאתיכֽם׃ | silluq_phrase |
-| nu 27:9 | לאחיו׃ → לאחֽיו׃ | silluq_phrase |
+The real barrier was the one ju 13:18 exposed, in two parts — both in `fix_apply`:
 
-These are correctly inert: there is nothing to test, because the meteg is invisible
-to the grammar. If a real accent-level hypothesis exists for any of them (as with
-is 45:1's segolta), it can be authored as a `synth_fix` and *that* will be tested —
-see the [is 45:1 pattern](../py/accgram/ob_notes_is.py).
+1. **Promotion scoped to replacement only.** `_accent_name_diff` strips the `(mos)`
+   abbreviation (meteg-**or**-silluq, U+05BD) from both sides, then re-promoted it to
+   a real silluq *only* when MAM **replaced** a WLC accent (`removed and not added` —
+   the ju 13:18 tevir→silluq case). A `(mos)` merely **added** stayed stripped → an
+   empty diff → labelled `meteg_only`. But an added `(mos)` on a sof-pasuq word with
+   no prior silluq *is* the missing verse-final silluq. The promotion now also fires
+   on pure addition, guarded by `wlc_mos == 0` (the WLC word has no silluq of its
+   own, so no risk of scanning a duplicate). A `(mos)` added to a word that *already*
+   has one stays an inert medial meteg.
+
+2. **Placement after the last letter, not before the sof pasuq.** Once promoted, the
+   silluq was inserted "after the last M-C letter." For 5 of the 8 the atom carries a
+   trailing note-marker whose payload is a *letter* (`…00]U`), so the silluq landed
+   *past* the `00` (`…00]U35`), where the scanner — which stops at sof pasuq — never
+   reaches it (a false DENIED). `_insert_codes` now places a verse-final silluq
+   immediately **before** the `00` (`_insert_before_first_code`), which is also where
+   the `…00]1` atoms' silluq already landed — so both trailing-marker shapes are
+   handled uniformly.
+
+| ref | proposed fix | grammar error | splice | new verdict |
+|---|---|---|---|---|
+| dt 10:15 | הזה׃ → הזֽה׃ | silluq_phrase | +silluq (35) before 00 | CONFIRMED |
+| dt 12:2 | רענן׃ → רענֽן׃ | silluq_phrase | +silluq (35) before 00 | CONFIRMED |
+| dt 23:18 | ישראל׃ → ישראֽל׃ | silluq_phrase | +silluq (35) before 00 | CONFIRMED |
+| gn 32:24 | לו׃ → לֽו׃ | silluq_phrase | +silluq (35) before 00 | CONFIRMED |
+| ho 11:7 | ירומם׃ → ירומֽם׃ | silluq_phrase | +silluq (35) before 00 | CONFIRMED |
+| is 13:7 | ימס׃ → ימֽס׃ | silluq_phrase | +silluq (35) before 00 | CONFIRMED |
+| lv 26:28 | חטאתיכם׃ → חטאתיכֽם׃ | silluq_phrase | +silluq (35) before 00 | CONFIRMED |
+| nu 27:9 | לאחיו׃ → לאחֽיו׃ | silluq_phrase | +silluq (35) before 00 | CONFIRMED |
+
+Covered by `test_verse_final_silluq_added_when_word_lacks_one`,
+`test_verse_final_silluq_inserts_before_sof_pasuq_not_after_note_marker`, and
+`test_meteg_added_to_word_that_already_has_silluq_stays_inert`.
+
+A *genuine* medial meteg — a `(mos)` added to a word that already has its silluq, or
+on a non-final word — is still grammar-inert and would still correctly file as
+`meteg_only`; none remain among the annotated oddballs. If a real accent-level
+hypothesis exists for a truly-inert case (as with is 45:1's segolta), it can be
+authored as a `synth_fix` and *that* will be tested — see the
+[is 45:1 pattern](../py/accgram/ob_notes_is.py).
 
 ---
 
@@ -223,6 +258,10 @@ single-word reading to splice, so it stays untestable by design.
    `(zarshit)`, `for_removal` flag in `_codes_for`): all 12 CONFIRMED via 82 → 02.
 2. ~~**`multi_accent` (2)**~~ — DONE 2026-06-16 (delete-then-insert path in
    `_splice`, replacing the `_MULTI_SPLICE` bailout): both CONFIRMED via 63 → 03 03.
-3. **`meteg_only` (8)** and **`no_mam_diff` (1)** — inherent; testable only by
-   authoring a `synth_fix` where a genuine accent hypothesis exists. **No apparatus
-   barriers remain.**
+3. ~~**`meteg_only` (8)**~~ — DONE 2026-06-16 (verse-final-silluq promotion extended
+   to pure addition guarded by `wlc_mos == 0`, plus before-sof-pasuq placement in
+   `_insert_codes`): all 8 CONFIRMED. These had been **mislabelled inherent** — the
+   added U+05BD before sof pasuq is a silluq, not a meteg.
+4. **`no_mam_diff` (1)** — the only inherent untestable; not a word-accent change, so
+   there is nothing to splice. Testable only if a genuine accent hypothesis is
+   authored as a `synth_fix`. **No apparatus barriers remain.**

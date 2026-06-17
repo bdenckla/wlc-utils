@@ -49,6 +49,7 @@ _KETIV_RE = re.compile(r"^\*(?!\*)")
 # alignment either (mirrors wlc_read_and_parse_mdc._distinguish_sam_pe_inun).
 _SECTION_MARKER_RE = re.compile(r"^[PSN](?:\].)*$")
 _SOFPASUQ_CODE = "00"
+_SILLUQ_CODE = "35"  # the meteg/silluq glyph U+05BD; a verse-final silluq before 00.
 # Sof pasuq punctuation (U+05C3); its M-C code is 00.  A MAM value that merely
 # adds it is the "missing sof pasuq" fix -- testable by appending 00 to the body.
 _SOF_PASUQ = "׃"
@@ -309,19 +310,29 @@ def _accent_name_diff(wlc_word: str, mam_word: str) -> tuple[list[str], list[str
     wlc_accs = Counter(uni_heb.accent_names(wlc_word))
     mam_accs = Counter(uni_heb.accent_names(mam_word))
     # ``(mos)`` is the meteg/silluq glyph (U+05BD); strip it from the cantillation
-    # diff -- a meteg difference is invisible to the grammar.
-    del wlc_accs[fix_tester_codes.MOS_ABBREV]
+    # diff -- a *medial* meteg difference is invisible to the grammar.
+    wlc_mos = wlc_accs.pop(fix_tester_codes.MOS_ABBREV, 0)
     mam_mos = mam_accs.pop(fix_tester_codes.MOS_ABBREV, 0)
     removed = list((wlc_accs - mam_accs).elements())
     added = list((mam_accs - wlc_accs).elements())
-    # Verse-final silluq: when MAM trades a real WLC accent for a ``(mos)`` on a
-    # sof-pasuq-bearing word, that ``(mos)`` is the verse-final silluq -- a real,
-    # grammar-visible accent (code 35), not meteg.  Promote it so the splice swaps
-    # accent->silluq instead of silently dropping the silluq (which would leave the
-    # word accent-less and still failing silluq_phrase -- a false DENIED, e.g.
-    # ju 13:18).  A ``(mos)`` merely *added* (nothing removed) stays an inert meteg,
-    # as in the meteg_only cases.
-    if mam_mos and removed and not added and _SOF_PASUQ in mam_word:
+    # Verse-final silluq: a ``(mos)`` MAM places on a sof-pasuq-bearing word is the
+    # verse-final silluq -- a real, grammar-visible accent (the scanner tokenizes a
+    # code-35 before 00 as SILLUQ, anywhere in the final word), not an inert meteg.
+    # Promote it to a real SILLUQ so the splice adds the accent the grammar needs.
+    # Two genuinely-silluq cases:
+    #   * MAM *trades* a real WLC accent for the ``(mos)`` (``removed and not
+    #     added``): the ju 13:18 tevir->silluq case.
+    #   * MAM *adds* the ``(mos)`` to a word that carried no silluq of its own
+    #     (``wlc_mos == 0`` and nothing else added): the missing-verse-final-silluq
+    #     case (the former ``meteg_only`` 8, each flagged ``silluq_phrase``).
+    # A ``(mos)`` added to a word that *already* has one (``wlc_mos > 0``) stays an
+    # inert medial meteg -- promoting it would scan as a duplicate silluq.
+    if (
+        mam_mos
+        and not added
+        and _SOF_PASUQ in mam_word
+        and (removed or wlc_mos == 0)
+    ):
         added.append(fix_tester_codes.SILLUQ_ABBREV)
     return removed, added
 
@@ -421,7 +432,22 @@ def _replace_first_code(atom: str, old_code: str, new_code: str) -> str | None:
 
 
 def _insert_codes(atom: str, codes: list[str]) -> str:
+    # A verse-final silluq (code 35, promoted from a sof-pasuq-bearing (mos)) must
+    # land immediately *before* the sof-pasuq 00, not after the last M-C letter:
+    # when the atom carries a trailing note-marker whose payload is a letter
+    # (e.g. ``00]U``), "after the last letter" puts the silluq *past* the 00, where
+    # it never scans (the scanner stops at sof pasuq).  Inserting before the 00 is
+    # also where an ``]1``-style atom's silluq already landed, so it is consistent.
+    if codes == [_SILLUQ_CODE] and _SOFPASUQ_CODE in atom:
+        return _insert_before_first_code(atom, _SOFPASUQ_CODE, codes[0])
     return _insert_after_last_letter(atom, "".join(codes))
+
+
+def _insert_before_first_code(text: str, target_code: str, ins: str) -> str:
+    for m in _CODE_RE.finditer(text):
+        if m.group() == target_code:
+            return text[: m.start()] + ins + text[m.start() :]
+    return _insert_after_last_letter(text, ins)
 
 
 def _insert_after_last_letter(text: str, ins: str) -> str:

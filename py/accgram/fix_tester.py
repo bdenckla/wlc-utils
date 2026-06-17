@@ -486,9 +486,10 @@ def render_text_report(results: list[FixTestResult]) -> str:
         lines.append(f"## {name} -- {blurb}  ({len(group)})")
         if name == "UNTESTABLE":
             lines.append(
-                "  (note: reasons 'vowel_only'/'meteg_only' are grammar-inert -- the "
-                "scanner swallows vowels and meteg, so the speculated change cannot "
-                "clear the oddball; the rest are apparatus limits, not verdicts.)"
+                "  (note: 'no_mam_diff' is inherent -- there is no word-accent change "
+                "to splice; 'vowel_only'/'meteg_only' (a *medial* meteg) are "
+                "grammar-inert, the scanner swallowing the mark.  None of these is a "
+                "verdict on the oddball.)"
             )
         for r in group:
             lines.extend(_render_entry(r))

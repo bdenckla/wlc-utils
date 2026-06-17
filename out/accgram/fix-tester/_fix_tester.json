@@ -3,14 +3,14 @@
   "artifacts_description": "fix-tester verdicts: whether adopting each annotated prose oddball's MAM-simple value clears its grammar/lexical error",
   "summary": {
     "tested": 91,
-    "confirmed": 82,
+    "confirmed": 90,
     "denied": 0,
     "changed": 0,
-    "untestable": 9,
+    "untestable": 1,
     "speculative_total": 15,
     "speculative_confirmed": 14,
     "synthesized": 1,
-    "agree": 73,
+    "agree": 81,
     "disagree": 0
   },
   "results": [
@@ -1340,14 +1340,14 @@
       "bcv": "dt10:15",
       "wlc_focus": "הזה׃",
       "fix_description": "הזה׃ -> הזֽה׃",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "meteg_only",
-      "transformation": "no accent/punctuation difference -- invisible to the grammar",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"HA/Z.EH00]U\" -> \"HA/Z.EH3500]U\" ((none) -> 35)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "DARGA",
@@ -1364,11 +1364,26 @@
         "MEREKA",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "DARGA",
+        "TEVIR",
+        "MEREKA",
+        "TIFCHA",
+        "MUNACH",
+        "ATNACH",
+        "GERSHAYIM",
+        "MUNACH",
+        "REVIA",
+        "TEVIR",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
     },
     {
@@ -1376,14 +1391,14 @@
       "bcv": "dt12:2",
       "wlc_focus": "רענן׃",
       "fix_description": "רענן׃ -> רענֽן׃",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "meteg_only",
-      "transformation": "no accent/punctuation difference -- invisible to the grammar",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"RA(:ANFN00]U\" -> \"RA(:ANFN3500]U\" ((none) -> 35)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "MUNACH",
@@ -1404,11 +1419,30 @@
         "MEREKA",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "MUNACH",
+        "TELISHAGEDOLA",
+        "GERSHAYIM",
+        "DARGA",
+        "MUNACH",
+        "REVIA",
+        "MEREKA",
+        "TEVIR",
+        "MEREKA",
+        "TIFCHA",
+        "ATNACH",
+        "MAHPAK",
+        "PASHTA",
+        "ZAQEF",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
     },
     {
@@ -1533,14 +1567,14 @@
       "bcv": "dt23:18",
       "wlc_focus": "ישראל׃",
       "fix_description": "ישראל׃ -> ישראֽל׃",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "meteg_only",
-      "transformation": "no accent/punctuation difference -- invisible to the grammar",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"YI&:RF)\"L00]U\" -> \"YI&:RF)\"L3500]U\" ((none) -> 35)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "MEREKA",
@@ -1552,11 +1586,21 @@
         "MEREKA",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "MEREKA",
+        "TIFCHA",
+        "MUNACH",
+        "ATNACH",
+        "MEREKA",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
     },
     {
@@ -2706,14 +2750,14 @@
       "bcv": "gn32:24",
       "wlc_focus": "לו׃",
       "fix_description": "לו׃ -> לֽו׃",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "meteg_only",
-      "transformation": "no accent/punctuation difference -- invisible to the grammar",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"L/OW00]U\" -> \"L/OW3500]U\" ((none) -> 35)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "ZAQEF",
@@ -2722,11 +2766,18 @@
         "TIFCHA",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "ZAQEF",
+        "TIFCHA",
+        "ATNACH",
+        "TIFCHA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
     },
     {
@@ -2887,14 +2938,14 @@
       "bcv": "ho11:7",
       "wlc_focus": "ירומם׃",
       "fix_description": "ירומם׃ -> ירומֽם׃",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "meteg_only",
-      "transformation": "no accent/punctuation difference -- invisible to the grammar",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"Y:ROWM\"M00]U\" -> \"Y:ROWM\"M3500]U\" ((none) -> 35)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "MEREKA",
@@ -2906,11 +2957,21 @@
         "MEREKA",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "MEREKA",
+        "TIFCHA",
+        "ATNACH",
+        "PASHTA",
+        "ZAQEF",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
     },
     {
@@ -2918,14 +2979,14 @@
       "bcv": "is13:7",
       "wlc_focus": "ימס׃",
       "fix_description": "ימס׃ -> ימֽס׃",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "meteg_only",
-      "transformation": "no accent/punctuation difference -- invisible to the grammar",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"YIM.FS00]1\" -> \"YIM.FS3500]1\" ((none) -> 35)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "TIFCHA",
@@ -2935,11 +2996,19 @@
         "TIFCHA",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "TIFCHA",
+        "MUNACH",
+        "ATNACH",
+        "MEREKA",
+        "TIFCHA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
     },
     {
@@ -4305,14 +4374,14 @@
       "bcv": "lv26:28",
       "wlc_focus": "חטאתיכם׃",
       "fix_description": "חטאתיכם׃ -> חטאתיכֽם׃",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "meteg_only",
-      "transformation": "no accent/punctuation difference -- invisible to the grammar",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"XA+.O)T\"Y/KEM00]1\" -> \"XA+.O)T\"Y/KEM3500]1\" ((none) -> 35)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "MEREKA",
@@ -4324,11 +4393,21 @@
         "TIFCHA",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "MEREKA",
+        "TIFCHA",
+        "ATNACH",
+        "MAHPAK",
+        "PASHTA",
+        "ZAQEF",
+        "TIFCHA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
     },
     {
@@ -4700,14 +4779,14 @@
       "bcv": "nu27:9",
       "wlc_focus": "לאחיו׃",
       "fix_description": "לאחיו׃ -> לאחֽיו׃",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "meteg_only",
-      "transformation": "no accent/punctuation difference -- invisible to the grammar",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"L:/)EXFY/W00]1\" -> \"L:/)EXFY/W3500]1\" ((none) -> 35)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "MEREKA",
@@ -4717,11 +4796,19 @@
         "TIFCHA",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "MEREKA",
+        "TIFCHA",
+        "ATNACH",
+        "MEREKA",
+        "TIFCHA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "Somewhere in the LC-BHS-WLC pipeline, $wlc_focus_desc appears rather than $diff_wlc_mam_desc."
     },
     {
