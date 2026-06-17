@@ -7,8 +7,8 @@ and classifies the outcome `CONFIRMED` / `DENIED` / `CHANGED` / `UNTESTABLE`. Th
 proposed fix is normally "adopt the MAM-simple value", but when MAM equals WLC the
 note's hand-authored `synth_fix` is tested instead (flagged `synthesized`).
 
-As of 2026-06-16: **91 tested — 58 CONFIRMED, 0 DENIED, 0 CHANGED, 33 UNTESTABLE.**
-This file enumerates the 33 untestables, why each cannot be mechanically tested, and
+As of 2026-06-16: **91 tested — 67 CONFIRMED, 1 DENIED, 0 CHANGED, 23 UNTESTABLE.**
+This file enumerates the 23 untestables, why each cannot be mechanically tested, and
 whether the barrier is an *apparatus limit* (could be lifted with more tooling) or
 *inherent* (the change cannot affect the grammar, so there is nothing to test).
 
@@ -18,47 +18,56 @@ ignore these.
 
 | reason | count | kind | path to testability |
 |---|---:|---|---|
-| `alignment_failure` | 12 | apparatus | fix the M-C-atom ↔ WLC-word alignment (off-by-one) |
-| `ambiguous_accent` (zarshit) | 11 | apparatus / deliberate | handle the code-82 zarqa lexical pair |
+| `ambiguous_accent` (zarshit) | 12 | apparatus / deliberate | handle the code-82 zarqa lexical pair |
 | `meteg_only` | 8 | inherent | grammar is blind to meteg; needs a real accent hypothesis (`synth_fix`) |
-| `multi_accent` | 1 | apparatus | support a 1→many accent splice |
+| `multi_accent` | 2 | apparatus | support a 1→many accent splice |
 | `no_mam_diff` | 1 | inherent | not a word-accent change at all |
 
 ---
 
-## `alignment_failure` (12) — apparatus
+## `alignment_failure` — RESOLVED 2026-06-16 (was 12, apparatus)
 
-The splice locates the changed word by index-aligning the M-C body's word-atoms
-(`fix_apply._word_atom_spans`) 1:1 with the WLC verse's word tokens
-(`fix_apply.verse_words`). In every one of these cases the body has **exactly one
-more** word-atom than the WLC word list, so the alignment is rejected before any
-splice is attempted.
+**Fixed.** Of the 12, **9 now CONFIRMED**, **1 DENIED** (ju 13:18), and **2 fell
+through to their next barrier** (je 49:19 → `multi_accent`, js 10:30 →
+`ambiguous_accent`/zarshit — it was always in both lists).
 
-| ref | proposed fix | grammar error | atoms vs words |
+The doc's hypothesis was exactly right: a single shared tokenization bug, not 12
+distinct problems. The splice located the changed word by index-aligning the M-C
+body's word-atoms (`fix_apply._word_atom_spans`) 1:1 with the WLC word tokens
+(`fix_apply.verse_words`); each body had **exactly one more** word-atom.
+
+The extra atom was the **section marker**: every petuhah (`P`), setumah (`S`), and
+nun-inversum (`N`) is encoded in the M-C body as a bare single-letter atom. The WLC
+side already drops it (`verse_words` skips it — no Hebrew consonant; rtms_data tags
+it `sam_pe_inun`), but `_word_atom_spans` kept it, because `S`/`P` double as the
+M-C consonants samekh and pe and so matched `_MC_LETTER_RE`. The fix: a
+`_SECTION_MARKER_RE` (`^[PSN](?:\].)*$`) excludes a *lone* P/S/N (a real word
+bearing those consonants always carries vowels), mirroring
+`wlc_read_and_parse_mdc._distinguish_sam_pe_inun`. Covered by
+`test_section_marker_atom_excluded_from_alignment`.
+
+| ref | proposed fix | grammar error | new verdict |
 |---|---|---|---|
-| 1k 8:11 | מפנ֥י → מפנ֣י | atnach_phrase | 15 vs 14 |
-| 1k 20:25 | וס֣וס → וס֥וס | legarmeh_phrase | 23 vs 22 |
-| 2c 22:12 | שנ֖ים → שנ֑ים | silluq_phrase | 12 vs 11 |
-| 2c 24:27 | י֧ר֞ב → י֧רב | revia_phrase | 18 vs 17 |
-| ek 11:1 | שר֖י → שר֥י | silluq_phrase | 31 vs 30 |
-| ek 14:11 | וה֥יו ל֣י → והיו־ ל֣י | revia_phrase | 23 vs 22 |
-| je 9:10 | מבל֖י → מבל֥י | silluq_phrase | 14 vs 13 |
-| je 9:11 | מבל֖י → מבל֥י | silluq_phrase | 21 vs 20 |
-| je 49:19 | אריצ֨נו → אריצ֙נו֙ | tifcha_phrase | 28 vs 27 |
-| js 10:30 | ישרא֘ל → ישראל֮ | illegal_mark:82 | 27 vs 26 |
-| js 15:47 | עז֥ה → עז֛ה | tifcha_phrase | 13 vs 12 |
-| ju 13:18 | פ֛לאי׃ → פֽלאי׃ | silluq_phrase | 11 vs 10 |
+| 1k 8:11 | מפנ֥י → מפנ֣י | atnach_phrase | CONFIRMED |
+| 1k 20:25 | וס֣וס → וס֥וס | legarmeh_phrase | CONFIRMED (multi-word path) |
+| 2c 22:12 | שנ֖ים → שנ֑ים | silluq_phrase | CONFIRMED |
+| 2c 24:27 | י֧ר֞ב → י֧רב | revia_phrase | CONFIRMED |
+| ek 11:1 | שר֖י → שר֥י | silluq_phrase | CONFIRMED |
+| ek 14:11 | וה֥יו ל֣י → והיו־ ל֣י | revia_phrase | CONFIRMED (multi-word path) |
+| je 9:10 | מבל֖י → מבל֥י | silluq_phrase | CONFIRMED |
+| je 9:11 | מבל֖י → מבל֥י | silluq_phrase | CONFIRMED |
+| je 49:19 | אריצ֨נו → אריצ֙נו֙ | tifcha_phrase | UNTESTABLE → `multi_accent` |
+| js 10:30 | ישרא֘ל → ישראל֮ | illegal_mark:82 | UNTESTABLE → `ambiguous_accent` |
+| js 15:47 | עז֥ה → עז֛ה | tifcha_phrase | CONFIRMED |
+| ju 13:18 | פ֛לאי׃ → פֽלאי׃ | silluq_phrase | DENIED |
 
-The consistent +1 points at a single tokenization mismatch between the two word
-counts (e.g. a paseq / maqaf / standalone punctuation atom counted on one side but
-not the other), not 12 distinct problems. **Lifting this is the highest-value next
-step**: it would unblock testing of 12 oddballs at once (note 1k 20:25 and ek 14:11
-also exercise the multi-word splice path). Investigate `_word_atom_spans`
-vs `verse_words` on one case (e.g. ju 13:18, the shortest) to find the extra atom.
+ju 13:18 is now a genuine **DENIED**: removing the tevir (91) still leaves the
+silluq_phrase error, because MAM's remaining change there is a meteg — invisible to
+the grammar.
 
 ---
 
-## `ambiguous_accent` — zarshit / code 82 (11) — apparatus, deliberately refused
+## `ambiguous_accent` — zarshit / code 82 (12) — apparatus, deliberately refused
 
 Every one of these moves a **zarshit** (the medial zarqa/tsinnorit stress-helper,
 M-C code 82) — and every one already carries an `illegal_mark:82` lexical error.
@@ -79,14 +88,16 @@ guess.
 | lv 20:2 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
 | nu 20:19 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
 | js 4:8 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
+| js 10:30 | ישרא֘ל → ישראל֮ | illegal_mark:82 |
+
+(js 10:30 joined this family on 2026-06-16 once the `alignment_failure` barrier was
+lifted; it was always in both lists.)
 
 These are the **stranded-82** family: the mark sits in a medial position (U+0598
 zarshit) where WLC should have a proper zarqa. The fix is the same shape across all
-11 (relocate/normalize the zarqa). Making them testable would mean teaching the
+12 (relocate/normalize the zarqa). Making them testable would mean teaching the
 splice the 82 lexical pair — a deliberate, contained extension, but one that
-overlaps the lexical-validation layer rather than the accent grammar. (Several of
-these also fall under `alignment_failure`, e.g. js 4:8 vs js 10:30, so both barriers
-would need lifting.)
+overlaps the lexical-validation layer rather than the accent grammar.
 
 ---
 
@@ -116,16 +127,19 @@ see the [is 45:1 pattern](../py/accgram/ob_notes_is.py).
 
 ---
 
-## `multi_accent` (1) — apparatus
+## `multi_accent` (2) — apparatus
 
 | ref | proposed fix | grammar error | splice |
 |---|---|---|---|
 | 1k 19:11 | הר֨וח → הר֙וח֙ | zaqef_phrase | `['63']` → `['03','03']` |
+| je 49:19 | אריצ֨נו → אריצ֙נו֙ | tifcha_phrase | `['63']` → `['03','03']` |
 
 The MAM reading replaces one accent (azla, 63) with **two** (two pashtas, 03 03) on
 the same word. `fix_apply._splice` handles 1→1, delete-only, and insert-only; a
 1→many replacement is refused. Supporting it (delete the old code, insert the new
-ones at the right offset) would make this one testable.
+ones at the right offset) would make these testable. (je 49:19 joined this category
+on 2026-06-16 once the `alignment_failure` barrier was lifted — same azla→pashta×2
+shape as 1k 19:11.)
 
 ---
 
@@ -143,10 +157,10 @@ single-word reading to splice, so it stays untestable by design.
 
 ## Summary of next steps, by leverage
 
-1. **`alignment_failure` (12)** — find the M-C-atom/WLC-word off-by-one in
-   `fix_apply`. Single fix, unblocks the most cases.
-2. **zarshit / code-82 (11)** — decide whether the splice should handle the 82
+0. ~~**`alignment_failure` (12)**~~ — DONE 2026-06-16 (section-marker exclusion in
+   `_word_atom_spans`): 9 CONFIRMED, 1 DENIED, 2 fell through to the barriers below.
+1. **zarshit / code-82 (12)** — decide whether the splice should handle the 82
    lexical pair, or whether these belong wholly to the lexical-validation layer.
-3. **`multi_accent` (1)** — extend `_splice` to 1→many.
-4. **`meteg_only` (8)** and **`no_mam_diff` (1)** — inherent; testable only by
+2. **`multi_accent` (2)** — extend `_splice` to 1→many.
+3. **`meteg_only` (8)** and **`no_mam_diff` (1)** — inherent; testable only by
    authoring a `synth_fix` where a genuine accent hypothesis exists.

@@ -89,6 +89,19 @@ def test_ketiv_atom_excluded_from_alignment():
     assert result.new_body == "*H/NCYBYM **HA/N.IC71YM ZZ00"
 
 
+def test_section_marker_atom_excluded_from_alignment():
+    # A lone setumah (S) / petuhah (P) section marker stands as its own M-C atom but
+    # is dropped from the WLC word list (tagged sam_pe_inun), so it must not count
+    # during alignment: 1 real word-atom aligns to 1 WLC word despite the trailing S.
+    result = apply_mam_fix(
+        "PE91LI)Y00 S",
+        ["פל֛אי"],  # one WLC word; the S marker is not a word
+        {"wlc422": "פל֛אי", "mam_simple": "פל֥אי"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.new_body == "PE71LI)Y00 S"
+
+
 def test_vowel_only_is_untestable():
     result = apply_mam_fix(
         "B.F71)00",

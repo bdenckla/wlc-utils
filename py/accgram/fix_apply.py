@@ -39,6 +39,14 @@ _MC_LETTER_RE = re.compile(r"[A-Za-z)($&]")
 # swallows the ketiv whole (``\*[^* ...]+``) and rtms_data drops it from the WLC
 # word list, so it must not count as a word-atom during index alignment.
 _KETIV_RE = re.compile(r"^\*(?!\*)")
+# A section marker -- petuhah (``P``), setumah (``S``), or nun-inversum (``N``,
+# which carries note ``]8``) -- stands as its own atom in the M-C body, optionally
+# trailing note markers like ``]8``.  ``S``/``P`` double as the consonants samekh
+# and pe, but a real word bearing them always carries vowels, so a *lone* P/S/N is
+# unambiguously a marker.  rtms_data tags it ``sam_pe_inun`` and ``verse_words``
+# drops it (no Hebrew consonant), so it must not count as a word-atom during
+# alignment either (mirrors wlc_read_and_parse_mdc._distinguish_sam_pe_inun).
+_SECTION_MARKER_RE = re.compile(r"^[PSN](?:\].)*$")
 _SOFPASUQ_CODE = "00"
 # Sof pasuq punctuation (U+05C3); its M-C code is 00.  A MAM value that merely
 # adds it is the "missing sof pasuq" fix -- testable by appending 00 to the body.
@@ -308,12 +316,15 @@ def _accent_name_diff(wlc_word: str, mam_word: str) -> tuple[list[str], list[str
 
 
 def _word_atom_spans(body: str) -> list[re.Match[str]]:
-    """The M-C body's word-bearing atoms (a Hebrew letter, not a ketiv ``*atom``),
-    index-aligned 1:1 with the WLC verse's word tokens."""
+    """The M-C body's word-bearing atoms (a Hebrew letter, not a ketiv ``*atom``
+    and not a lone P/S/N section marker), index-aligned 1:1 with the WLC verse's
+    word tokens."""
     return [
         m
         for m in _ATOM_SPAN_RE.finditer(body)
-        if _MC_LETTER_RE.search(m.group()) and not _KETIV_RE.match(m.group())
+        if _MC_LETTER_RE.search(m.group())
+        and not _KETIV_RE.match(m.group())
+        and not _SECTION_MARKER_RE.match(m.group())
     ]
 
 

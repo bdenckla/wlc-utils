@@ -3,15 +3,15 @@
   "artifacts_description": "fix-tester verdicts: whether adopting each annotated prose oddball's MAM-simple value clears its grammar/lexical error",
   "summary": {
     "tested": 91,
-    "confirmed": 58,
-    "denied": 0,
+    "confirmed": 67,
+    "denied": 1,
     "changed": 0,
-    "untestable": 33,
-    "speculative_total": 14,
-    "speculative_confirmed": 6,
+    "untestable": 23,
+    "speculative_total": 15,
+    "speculative_confirmed": 13,
     "synthesized": 1,
-    "agree": 51,
-    "disagree": 0
+    "agree": 58,
+    "disagree": 1
   },
   "results": [
     {
@@ -165,14 +165,14 @@
       "bcv": "1k8:11",
       "wlc_focus": "מפנ֥י",
       "fix_description": "מפנ֥י -> מפנ֣י",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "15 M-C word-atoms vs 14 WLC words",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"MI/P.:N\"71Y\" -> \"MI/P.:N\"74Y\" (71 -> 74)",
       "before_status": "ODDBALL",
       "before_labels": [
         "atnach_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "DARGA",
@@ -187,11 +187,23 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "DARGA",
+        "TEVIR",
+        "MEREKA",
+        "TIFCHA",
+        "MUNACH",
+        "ATNACH",
+        "MEREKA",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
     },
     {
@@ -308,14 +320,14 @@
       "bcv": "1k20:25",
       "wlc_focus": "וס֣וס",
       "fix_description": "וס֣וס -> וס֥וס",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "23 M-C word-atoms vs 22 WLC words",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"W:/S74W.S\" -> \"W:/S71W.S\" (74 -> 71)",
       "before_status": "ODDBALL",
       "before_labels": [
         "legarmeh_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "MUNACH",
@@ -340,7 +352,29 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "MUNACH",
+        "MUNACH",
+        "PAZER",
+        "TELISHAQETANNA",
+        "AZLA",
+        "GERESH",
+        "MEREKA",
+        "LEGARMEH",
+        "MUNACH",
+        "REVIA",
+        "MAHPAK",
+        "PASHTA",
+        "ZAQEF",
+        "MEREKA",
+        "TIFCHA",
+        "ATNACH",
+        "MEREKA",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": true,
       "synthesized": false,
       "claimed_outcome": "unclear",
@@ -585,14 +619,14 @@
       "bcv": "2c22:12",
       "wlc_focus": "שנ֖ים",
       "fix_description": "שנ֖ים -> שנ֑ים",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "12 M-C word-atoms vs 11 WLC words",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"$FNI73YM\" -> \"$FNI92YM\" (73 -> 92)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "MAHPAK",
@@ -607,11 +641,23 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "MAHPAK",
+        "PASHTA",
+        "MUNACH",
+        "ZAQEF",
+        "TIFCHA",
+        "MUNACH",
+        "ATNACH",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "BHS transcribes an etnaḥta as a tipeḥa."
     },
     {
@@ -619,14 +665,14 @@
       "bcv": "2c24:27",
       "wlc_focus": "י֧ר֞ב",
       "fix_description": "י֧ר֞ב -> י֧רב",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "18 M-C word-atoms vs 17 WLC words",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"**YI94RE62B\" -> \"**YI94REB\" (62 -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "revia_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "GERSHAYIM",
@@ -648,11 +694,29 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "GERSHAYIM",
+        "DARGA",
+        "MUNACH",
+        "REVIA",
+        "PASHTA",
+        "MUNACH",
+        "ZAQEF",
+        "MUNACH",
+        "ZAQEF",
+        "TIFCHA",
+        "MUNACH",
+        "ATNACH",
+        "TEVIR",
+        "MEREKA",
+        "TIFCHA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": true,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "BHS adds a gershayim out of nowhere."
     },
     {
@@ -1737,14 +1801,14 @@
       "bcv": "ek11:1",
       "wlc_focus": "שר֖י",
       "fix_description": "שר֖י -> שר֥י",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "31 M-C word-atoms vs 30 WLC words",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"&FR\"73Y\" -> \"&FR\"71Y\" (73 -> 71)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "AZLA",
@@ -1773,11 +1837,37 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "AZLA",
+        "GERESH",
+        "REVIA",
+        "MUNACH",
+        "TELISHAGEDOLA",
+        "AZLA",
+        "MAHPAK",
+        "PASHTA",
+        "MUNACH",
+        "ZAQEF",
+        "PASHTA",
+        "MUNACH",
+        "ZAQEF",
+        "MEREKA",
+        "TIFCHA",
+        "ATNACH",
+        "AZLA",
+        "GERESH",
+        "DARGA",
+        "TEVIR",
+        "MEREKA",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": true,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "BHS transcribes a merkha as a tipeḥa."
     },
     {
@@ -1785,14 +1875,14 @@
       "bcv": "ek14:11",
       "wlc_focus": "וה֥יו ל֣י",
       "fix_description": "וה֥יו ל֣י -> והיו־ ל֣י",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "23 M-C word-atoms vs 22 WLC words",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"W:/HF71YW.\" -> \"W:/HFYW.\" (71 -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "revia_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "TELISHAGEDOLA",
@@ -1815,11 +1905,30 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "TELISHAGEDOLA",
+        "AZLA",
+        "MAHPAK",
+        "PASHTA",
+        "ZAQEF",
+        "MEREKA",
+        "TIFCHA",
+        "ATNACH",
+        "MUNACH",
+        "REVIA",
+        "PASHTA",
+        "MAHPAK",
+        "PASHTA",
+        "ZAQEF",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": true,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "BHS transcribes a meteg as a merkha due to the LC’s missing maqaf."
     },
     {
@@ -2759,25 +2868,25 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "speculative": false,
+      "speculative": true,
       "synthesized": true,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "The checker requires a segolta in לכ֣ורש: the munaḥ should be a segolta (the segol accent, not the vowel), which clears the segolta_phrase error."
+      "st_summary": "The checker requires a segol accent rather than a munaḥ."
     },
     {
       "ref": "je 9:10",
       "bcv": "je9:10",
       "wlc_focus": "מבל֖י",
       "fix_description": "מבל֖י -> מבל֥י",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "14 M-C word-atoms vs 13 WLC words",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"MI/B.:LI73Y\" -> \"MI/B.:LI71Y\" (73 -> 71)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "DARGA",
@@ -2793,11 +2902,24 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "DARGA",
+        "TEVIR",
+        "TIFCHA",
+        "MUNACH",
+        "ATNACH",
+        "DARGA",
+        "TEVIR",
+        "MEREKA",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": true,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "BHS transcribes a merkha as a tipeḥa."
     },
     {
@@ -2805,14 +2927,14 @@
       "bcv": "je9:11",
       "wlc_focus": "מבל֖י",
       "fix_description": "מבל֖י -> מבל֥י",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "21 M-C word-atoms vs 20 WLC words",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"MI/B.:LI73Y\" -> \"MI/B.:LI71Y\" (73 -> 71)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "MAHPAK",
@@ -2833,11 +2955,29 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "MAHPAK",
+        "PASHTA",
+        "MUNACH",
+        "ZAQEF",
+        "AZLA",
+        "DARGA",
+        "TEVIR",
+        "TIFCHA",
+        "ATNACH",
+        "PASHTA",
+        "MUNACH",
+        "ZAQEF",
+        "MEREKA",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": true,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "agree",
       "st_summary": "BHS transcribes a merkha as a tipeḥa."
     },
     {
@@ -3150,8 +3290,8 @@
       "wlc_focus": "אריצ֨נו",
       "fix_description": "אריצ֨נו -> אריצ֙נו֙",
       "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "28 M-C word-atoms vs 27 WLC words",
+      "untestable_reason": "multi_accent",
+      "transformation": "unsupported multi-accent splice ['63'] -> ['03', '03']",
       "before_status": "ODDBALL",
       "before_labels": [
         "tifcha_phrase"
@@ -3294,8 +3434,8 @@
       "wlc_focus": "ישרא֘ל",
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "27 M-C word-atoms vs 26 WLC words",
+      "untestable_reason": "ambiguous_accent",
+      "transformation": "unmappable accent (zarshit)",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -3335,14 +3475,14 @@
       "bcv": "js15:47",
       "wlc_focus": "עז֥ה",
       "fix_description": "עז֥ה -> עז֛ה",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "13 M-C word-atoms vs 12 WLC words",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"(AZ.F71H\" -> \"(AZ.F91H\" (71 -> 91)",
       "before_status": "ODDBALL",
       "before_labels": [
         "tifcha_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "GERSHAYIM",
@@ -3358,7 +3498,20 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "GERSHAYIM",
+        "MUNACH",
+        "REVIA",
+        "TEVIR",
+        "MEREKA",
+        "TIFCHA",
+        "MUNACH",
+        "ATNACH",
+        "MEREKA",
+        "TIFCHA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
       "speculative": false,
       "synthesized": false,
       "claimed_outcome": "unclear",
@@ -3470,15 +3623,17 @@
       "bcv": "ju13:18",
       "wlc_focus": "פ֛לאי׃",
       "fix_description": "פ֛לאי׃ -> פֽלאי׃",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "alignment_failure",
-      "transformation": "11 M-C word-atoms vs 10 WLC words",
+      "classification": "DENIED",
+      "untestable_reason": null,
+      "transformation": "atom \"PE91LI)Y00]Q]c]n\" -> \"PELI)Y00]Q]c]n\" (91 -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": null,
-      "after_labels": [],
+      "after_status": "ODDBALL",
+      "after_labels": [
+        "silluq_phrase"
+      ],
       "before_tokens": [
         "MAHPAK",
         "PASHTA",
@@ -3491,11 +3646,21 @@
         "TEVIR",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
+      "after_tokens": [
+        "MAHPAK",
+        "PASHTA",
+        "MUNACH",
+        "ZAQEF",
+        "MEREKA",
+        "TIFCHA",
+        "MUNACH",
+        "ATNACH",
+        "SOFPASUQ"
+      ],
       "speculative": true,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
+      "agreement": "disagree",
       "st_summary": "BHQ transcribes a silluq as a tevir due to a speck."
     },
     {
