@@ -235,6 +235,20 @@ def p_sinnor_phrase(p):
     _phrase(p, "sinnor_phrase")
 
 
+# Permissive servi before pazer.  NB: Breuer Ch 11 §7-9 says the servant before pazer is
+# "always galgal" (yerah-ben-yomo), which would justify forcing the adjacent servus to
+# GALGAL.  REFUTED by the servant cross-check (servi_xcheck) once it learned to read a
+# SAME-WORD servant: galgal often sits on the pazer's own word (e.g. Ps 32:5, 65:10), and
+# those "GALGAL vs MAM-qadma" mismatches were a measurement artifact -- they actually
+# CONFIRM galgal.  But three verses keep a primary merka on the word right before pazer in
+# BOTH witnesses -- Ps 4:3, 59:6, 71:3 -- and MAM's own FOI catalog does NOT flag those as
+# secondary merka, so merka-served pazer is a real two-witness construction (the same
+# shape as the refuted dehi<-munah rule; the galgal/merka choice is phonological, hence out
+# of a token grammar's scope).  Two further non-galgal cases are not counter-evidence but
+# also not galgal: Ps 28:5 is a plain L-vs-MAM sign divergence (L mahpak, MAM galgal), and
+# Ps 89:20's merka is a CoS-contested secondary merka (stays non-galgal even if dropped).
+# Enforcing galgal-only would flag the three correct merka verses.  See memory
+# poetic-servant-rules-breuer.
 def p_pazer_phrase(p):
     """pazer_phrase : PAZER
                     | servi PAZER"""

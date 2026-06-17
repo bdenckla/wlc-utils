@@ -131,13 +131,28 @@ def _silluq_word() -> dict:
 
 
 def test_word_accents_pairs_disjunctive_and_servus():
-    # merka(servus) | dehi(divider) | silluq -- exactly one column non-None per word.
+    # merka(servus) | dehi(divider) | silluq -- exactly one of disj/servus per word, and
+    # no same-word servant here, so self_servus is None throughout.
     node = _verse(_text(ha.MER), _text(ha.DEX), _silluq_word())
     assert word_accents_from_verse_node(node) == [
-        (None, pan.MERKHA),
-        (pan.DEXI, None),
-        (pan.SILLUQ, None),
+        (None, pan.MERKHA, None),
+        (pan.DEXI, None, None),
+        (pan.SILLUQ, None, None),
     ]
+
+
+def test_word_accents_captures_same_word_galgal_before_pazer():
+    # A long word can host its own servant: galgal (yerah-ben-yomo) then pazer on one
+    # word (e.g. Ps 32:5 אוֹדִ֪יעֲךָ֡).  The galgal is recorded as the pazer word's
+    # self_servus, not lost -- and it is what stands adjacent to the pazer.
+    node = _verse(_text(ha.MUN), {"type": "text", "text": B + ha.YBY + B + ha.PAZ}, _silluq_word())
+    assert word_accents_from_verse_node(node) == [
+        (None, pan.MUNAX, None),
+        (pan.PAZER, None, pan.GALGAL),
+        (pan.SILLUQ, None, None),
+    ]
+    # The same-word galgal wins over the preceding munah word.
+    assert servi_before_from_verse_node(node, pan.PAZER) == [pan.GALGAL]
 
 
 def test_servi_before_dehi_merka_and_munah():
@@ -163,17 +178,28 @@ def test_servi_before_in_words_operates_on_a_word_list():
     # The factored helper (used by servi-xcheck over load_word_accents) reads a
     # prebuilt (disjunctive, servus) list without re-walking a node.
     words = [
-        (None, pan.MAHAPAKH),   # distant servant
-        (None, pan.MERKHA),     # adjacent servant
-        (pan.REVIA_QATAN, None),
-        (pan.OLEH_WEYORED, None),  # a divider: the dehi-less target is bare here
-        (None, pan.MUNAX),
-        (pan.DEXI, None),       # munah-served dehi
-        (pan.SILLUQ, None),
+        (None, pan.MAHAPAKH, None),   # distant servant
+        (None, pan.MERKHA, None),     # adjacent servant
+        (pan.REVIA_QATAN, None, None),
+        (pan.OLEH_WEYORED, None, None),  # a divider: the dehi-less target is bare here
+        (None, pan.MUNAX, None),
+        (pan.DEXI, None, None),       # munah-served dehi
+        (pan.SILLUQ, None, None),
     ]
     assert servi_before_in_words(words, pan.REVIA_QATAN) == [pan.MERKHA]
     assert servi_before_in_words(words, pan.DEXI) == [pan.MUNAX]
     assert servi_before_in_words(words, pan.OLEH_WEYORED) == [None]  # preceded by a divider
+
+
+def test_servi_before_in_words_prefers_same_word_self_servus():
+    # When the target word carries its own preceding conjunctive (self_servus), that wins
+    # over the previous word's servus -- the same-word servant is the adjacent one.
+    words = [
+        (None, pan.MUNAX, None),
+        (pan.PAZER, None, pan.GALGAL),  # galgal on the pazer's own word
+        (pan.SILLUQ, None, None),
+    ]
+    assert servi_before_in_words(words, pan.PAZER) == [pan.GALGAL]
 
 
 def test_servi_before_normalizes_atnah_hafukh_to_galgal():

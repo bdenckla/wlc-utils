@@ -60,11 +60,13 @@ from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 _SOF_PASUQ = "׃"
 
-# One in-order traversal event: (kind, disjunctive_marker, servus).  WORD carries
-# both a (provisional) disjunctive marker and a servus -- at most one is non-None,
-# since a word's main accent is either a divider or a conjunctive.  SOFPASUQ / LP_LEG
-# / LP_PASEQ carry neither.
-_Event = tuple[str, str | None, str | None]
+# One in-order traversal event: (kind, disjunctive_marker, servus, self_servus).  A
+# WORD carries a (provisional) disjunctive marker XOR a servus (its main accent is
+# either a divider or a conjunctive), plus an optional self_servus: a conjunctive sign
+# standing on the SAME word, before the disjunctive mark (a long word can host its own
+# servant -- e.g. galgal then pazer on one word).  SOFPASUQ / LP_LEG / LP_PASEQ carry
+# none of the three.
+_Event = tuple[str, str | None, str | None, str | None]
 
 # MAM Unicode accent -> intermediate disjunctive marker (REVIA / SHALSHELET stay
 # provisional; resolved in the second pass).  Checked in this priority order so
@@ -119,18 +121,47 @@ _POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
 
 def _word_marker(accents: str) -> str | None:
     """Resolve one word's combining accents to a provisional disjunctive marker."""
+    return _word_marker_and_char(accents)[0]
+
+
+def _word_marker_and_char(accents: str) -> tuple[str | None, str | None]:
+    """Like ``_word_marker``, but also return the matching MAM accent char (for position).
+
+    The char lets ``_word_self_servus`` locate the disjunctive mark within the word and
+    look for a conjunctive standing before it.
+    """
     for accent_char, marker in _DISJ_PRIORITY:
         if accent_char in accents:
-            return marker
-    return None
+            return marker, accent_char
+    return None, None
+
+
+def _word_self_servus(accents: str, marker_char: str) -> str | None:
+    """The conjunctive servus on the SAME word, standing before the disjunctive mark.
+
+    A long word can host its own servant: e.g. a yerah-ben-yomo (galgal) and a pazer on
+    one word -- the galgal is pazer's adjacent servant, exactly as the L scanner emits it
+    as a token right before the pazer.  Returns the servus sign closest before the
+    disjunctive mark, or None.  Order matters here (not mere membership): a conjunctive
+    AFTER the disjunctive mark -- e.g. the yored merka of an oleh-we-yored -- is part of
+    the divider, not a preceding servant, so it must not be picked up.
+    """
+    disj_idx = accents.find(marker_char)
+    best_idx = -1
+    best_name: str | None = None
+    for sign, name in _SERVUS_SIGNS:
+        idx = accents.rfind(sign, 0, disj_idx)  # closest occurrence before the disjunctive
+        if idx > best_idx:
+            best_idx = idx
+            best_name = name
+    return best_name
 
 
 def _word_servus(accents: str) -> str | None:
-    """Resolve one word's combining accents to a poetic servus token, or None.
+    """Resolve a no-disjunctive word's combining accents to a poetic servus token, or None.
 
-    Only meaningful for a word with no disjunctive: a disjunctive word's main accent
-    is the divider, and any conjunctive sign on it is a swallowed secondary mark
-    (merka/mahpak metzunar), exactly as the L scanner drops it.
+    Called only for a word with no divider (a divider word's own conjunctive is captured
+    separately as its self_servus, via ``_word_self_servus``).
     """
     for sign, name in _SERVUS_SIGNS:
         if sign in accents:
@@ -139,19 +170,30 @@ def _word_servus(accents: str) -> str | None:
 
 
 def _emit_word_events(text: str, events: list[_Event]) -> None:
-    """Append a ('WORD', marker, servus) event per whitespace-delimited word.
+    """Append a ('WORD', marker, servus, self_servus) event per whitespace-delimited word.
 
     The final word of the verse carries SOF PASUQ; its meteg is silluq, so it is
-    emitted as a ('SOFPASUQ', None, None) sentinel the second pass turns into SILLUQ.
-    A word's servus is recorded only when it carries no disjunctive marker.
+    emitted as a ('SOFPASUQ', None, None, None) sentinel the second pass turns into
+    SILLUQ.  A word's plain servus is recorded only when it carries no disjunctive
+    marker; a disjunctive word instead records any same-word conjunctive standing before
+    its divider as self_servus.
     """
     for word in text.split():
         if _SOF_PASUQ in word:
-            events.append(("SOFPASUQ", None, None))
+            events.append(("SOFPASUQ", None, None, None))
             continue
-        marker = _word_marker(word)
-        servus = None if marker is not None else _word_servus(word)
-        events.append(("WORD", marker, servus))
+        marker, marker_char = _word_marker_and_char(word)
+        if marker is None:
+            events.append(("WORD", None, _word_servus(word), None))
+        else:
+            # Oleh-we-yored is a two-mark sign (ole + a yored merka); MAM sometimes
+            # encodes the yored merka BEFORE the ole, so it would masquerade as a
+            # same-word servant.  It is part of the divider, and oleh-we-yored's true
+            # servant always sits on the preceding word, so it has no self_servus.
+            self_servus = (
+                None if marker == pan.OLEH_WEYORED else _word_self_servus(word, marker_char)
+            )
+            events.append(("WORD", marker, None, self_servus))
 
 
 def _walk(node: object, events: list[_Event]) -> None:
@@ -166,10 +208,10 @@ def _walk(node: object, events: list[_Event]) -> None:
     node_type = node.get("type")
     if isinstance(node_type, str):
         if node_type == "lp-legarmeih":
-            events.append(("LP_LEG", None, None))
+            events.append(("LP_LEG", None, None, None))
             return
         if node_type == "lp-paseq":
-            events.append(("LP_PASEQ", None, None))
+            events.append(("LP_PASEQ", None, None, None))
             return
         if node_type in _KETIV_TYPES:
             return
@@ -214,23 +256,23 @@ def _walk_kq(node: dict, events: list[_Event]) -> None:
 
 
 def _build_word_accents(events: list[_Event]) -> list[list[str | None]]:
-    """Reduce traversal events to a per-word ``[disjunctive, servus]`` list, in order.
+    """Reduce traversal events to a per-word ``[disjunctive, servus, self_servus]`` list.
 
     One entry per WORD (and the final SOFPASUQ word, which becomes SILLUQ).  LP_LEG /
     LP_PASEQ promote the preceding word (legarmeh, or shalshelet -> shalshelet
     gedolah); bare shalshelet (qetannah) is swallowed to a None disjunctive; generic
     REVIA is reclassified to gadol/qatan/mugrash by the next disjunctive-bearing word
-    (the same rule as ``ply_scanner_poetic._reclassify_revia``).  The servus column is
-    carried through untouched.
+    (the same rule as ``ply_scanner_poetic._reclassify_revia``).  The servus and
+    self_servus columns are carried through untouched.
     """
     words: list[list[str | None]] = []
     last_word_index: int | None = None
-    for kind, marker, servus in events:
+    for kind, marker, servus, self_servus in events:
         if kind == "WORD":
-            words.append([marker, servus])
+            words.append([marker, servus, self_servus])
             last_word_index = len(words) - 1
         elif kind == "SOFPASUQ":
-            words.append([pan.SILLUQ, None])
+            words.append([pan.SILLUQ, None, None])
             last_word_index = len(words) - 1
         elif kind == "LP_LEG":
             # Preceding word is legarmeh (conjunctive + paseq) or, if it carried
@@ -268,40 +310,50 @@ def _build_word_accents(events: list[_Event]) -> list[list[str | None]]:
     return words
 
 
-def word_accents_from_verse_node(verse_node: dict) -> list[tuple[str | None, str | None]]:
-    """Per-word ``(disjunctive, servus)`` for one MAM-simple verse, in verse order.
+def word_accents_from_verse_node(
+    verse_node: dict,
+) -> list[tuple[str | None, str | None, str | None]]:
+    """Per-word ``(disjunctive, servus, self_servus)`` for a MAM-simple verse, in order.
 
-    At most one of the pair is non-None for an accented word (a divider word lists its
-    disjunctive; a conjunctive word lists its servus in the L scanner's vocabulary); a
-    word with neither (proclitic / meteg-only) is ``(None, None)``.  The final word is
-    ``(SILLUQ, None)``.
+    A divider word lists its disjunctive (and, if its own word also bears a conjunctive
+    before that divider, a self_servus); a conjunctive word lists its servus in the L
+    scanner's vocabulary; a word with neither (proclitic / meteg-only) is
+    ``(None, None, None)``.  At most one of ``disjunctive``/``servus`` is non-None.  The
+    final word is ``(SILLUQ, None, None)``.
     """
     events: list[_Event] = []
     _walk(verse_node, events)
-    return [(w[0], w[1]) for w in _build_word_accents(events)]
+    return [(w[0], w[1], w[2]) for w in _build_word_accents(events)]
 
 
 def disjunctives_from_verse_node(verse_node: dict) -> list[str]:
     """Return the ordered poetic disjunctive sequence for one MAM-simple verse."""
-    return [d for d, _servus in word_accents_from_verse_node(verse_node) if d is not None]
+    return [
+        d for d, _servus, _self in word_accents_from_verse_node(verse_node) if d is not None
+    ]
 
 
 def servi_before_in_words(
-    words: list[tuple[str | None, str | None]], target: str
+    words: list[tuple[str | None, str | None, str | None]], target: str
 ) -> list[str | None]:
-    """Servus before each ``target`` occurrence in a per-word ``(disjunctive, servus)``.
+    """Servus before each ``target`` occurrence in per-word ``(disj, servus, self_servus)``.
 
     Factored out of ``servi_before_from_verse_node`` so a caller already holding a
     verse's word-accents (e.g. from ``load_word_accents``) need not re-walk it.  One
-    entry per occurrence of ``target``, in order: the preceding word's servus token, or
-    ``None`` when ``target`` has no servant there (verse-initial, or the preceding word
-    itself bears a disjunctive -- a bare ``target``).
+    entry per occurrence of ``target``, in order.  The adjacent servant is the target
+    word's own ``self_servus`` when present (a same-word conjunctive standing before the
+    divider, e.g. galgal before pazer -- matching how the L scanner emits it as the token
+    right before the disjunctive); otherwise the preceding word's servus, or ``None`` when
+    there is none (verse-initial, or the preceding word is itself a divider -- a bare
+    ``target``).
     """
     out: list[str | None] = []
-    for i, (disj, _servus) in enumerate(words):
+    for i, (disj, _servus, self_servus) in enumerate(words):
         if disj != target:
             continue
-        if i == 0 or words[i - 1][0] is not None:
+        if self_servus is not None:
+            out.append(self_servus)
+        elif i == 0 or words[i - 1][0] is not None:
             out.append(None)  # verse-initial, or preceding word is itself a divider
         else:
             out.append(words[i - 1][1])
@@ -383,8 +435,8 @@ def load_poetic_disjunctives(
 def load_word_accents(
     mam_simple_dir: Path,
     books: tuple[str, ...] = ("ps", "pr", "jb"),
-) -> dict[str, list[tuple[str | None, str | None]]]:
-    """Map ``"<book> <ch>:<vs>"`` -> per-word ``(disjunctive, servus)`` for the corpus.
+) -> dict[str, list[tuple[str | None, str | None, str | None]]]:
+    """Map ``"<book> <ch>:<vs>"`` -> per-word ``(disj, servus, self_servus)`` for the corpus.
 
     One corpus walk; ``servi_before_in_words(words, target)`` then derives the servant
     before any number of disjunctive targets without re-reading the JSON (what the
