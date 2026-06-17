@@ -44,7 +44,23 @@ Job 3:5
     2 silluq_phrase
       merka silluq 
 Job 3:6
-NO_PARSE: MERKHA TSINNOR GALGAL OLEH_WEYORED MERKHA DEXI MUNAX ATNAX MERKHA REVIA_MUGRASH SILLUQ
+0 silluq_clause
+  1 oleh_weyored_clause
+    2 sinnor_phrase
+      merka sinnor 
+    2 oleh_weyored_phrase
+      galgal oleh we-yored 
+  1 silluq_clause
+    2 atnach_clause
+      3 dehi_phrase
+        merka dehi 
+      3 atnach_phrase
+        munah atnah 
+    2 silluq_clause
+      3 revia_mugrash_phrase
+        merka revia mugrash 
+      3 silluq_phrase
+        silluq 
 Job 3:7
 0 silluq_clause
   1 atnach_clause
@@ -1180,7 +1196,23 @@ Job 7:10
   1 silluq_phrase
     tarha munah silluq 
 Job 7:11
-NO_PARSE: TSINNOR MAHAPAKH OLEH_WEYORED MERKHA DEXI MUNAX ATNAX REVIA_MUGRASH MUNAX SILLUQ
+0 silluq_clause
+  1 oleh_weyored_clause
+    2 sinnor_phrase
+      sinnor 
+    2 oleh_weyored_phrase
+      mehuppak oleh we-yored 
+  1 silluq_clause
+    2 atnach_clause
+      3 dehi_phrase
+        merka dehi 
+      3 atnach_phrase
+        munah atnah 
+    2 silluq_clause
+      3 revia_mugrash_phrase
+        revia mugrash 
+      3 silluq_phrase
+        munah silluq 
 Job 7:12
 0 silluq_clause
   1 atnach_clause
@@ -1347,7 +1379,20 @@ Job 8:5
     2 silluq_phrase
       silluq 
 Job 8:6
-NO_PARSE: MERKHA REVIA_GADOL MERKHA DEXI MUNAX ATNAX REVIA_MUGRASH MUNAX SILLUQ
+0 silluq_clause
+  1 atnach_clause
+    2 revia_gadol_phrase
+      merka revia gadol 
+    2 atnach_clause
+      3 dehi_phrase
+        merka dehi 
+      3 atnach_phrase
+        munah atnah 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_phrase
+      munah silluq 
 Job 8:7
 0 silluq_clause
   1 atnach_phrase
@@ -5093,7 +5138,23 @@ Job 21:32
   1 silluq_phrase
     merka silluq 
 Job 21:33
-NO_PARSE: REVIA_QATAN OLEH_WEYORED MERKHA DEXI MUNAX ATNAX REVIA_MUGRASH MUNAX SILLUQ
+0 silluq_clause
+  1 oleh_weyored_clause
+    2 revia_qatan_phrase
+      revia qatan 
+    2 oleh_weyored_phrase
+      oleh we-yored 
+  1 silluq_clause
+    2 atnach_clause
+      3 dehi_phrase
+        merka dehi 
+      3 atnach_phrase
+        munah atnah 
+    2 silluq_clause
+      3 revia_mugrash_phrase
+        revia mugrash 
+      3 silluq_phrase
+        munah silluq 
 Job 21:34
 0 silluq_clause
   1 atnach_clause
@@ -7626,7 +7687,26 @@ Job 32:1
   1 silluq_phrase
     mehuppak tarha munah silluq 
 Job 32:2
-NO_PARSE: MAHAPAKH LEGARMEH MUNAX MUNAX TSINNOR GALGAL OLEH_WEYORED MERKHA DEXI MUNAX ATNAX MERKHA REVIA_MUGRASH SILLUQ
+0 silluq_clause
+  1 oleh_weyored_clause
+    2 sinnor_clause
+      3 legarmeh_phrase
+        mehuppak legarmeh 
+      3 sinnor_phrase
+        munah munah sinnor 
+    2 oleh_weyored_phrase
+      galgal oleh we-yored 
+  1 silluq_clause
+    2 atnach_clause
+      3 dehi_phrase
+        merka dehi 
+      3 atnach_phrase
+        munah atnah 
+    2 silluq_clause
+      3 revia_mugrash_phrase
+        merka revia mugrash 
+      3 silluq_phrase
+        silluq 
 Job 32:3
 0 silluq_clause
   1 oleh_weyored_clause
