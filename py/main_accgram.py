@@ -18,6 +18,14 @@ Subcommands:
                 MAM-simple and write out/accgram/ply-poetic/_mam_xcheck.txt (a
                 per-book agreement tally plus every divergence grouped by edit
                 signature).  The Phase 2 validation surface.
+    run-ply-poetic-oddballs
+                Collect the residual poetic oddballs (the missing-silluq
+                ERROR-leaf trees and the NO_PARSE anomalies) from the poetic
+                corpus, enrich each with its M-C body, scanned token sequence,
+                rendered tree, and WLC-vs-MAM-simple disjunctive comparison, and
+                write out/accgram/ply-poetic/_oddballs.json plus the HTML report
+                gh-pages/accgram/poetic.html.  The optional Phase 4 analogue of
+                research-oddballs.  Run run-ply-poetic first.
     research-oddballs
                 Derive the PLY-based oddball set from the PLY outputs
                 (out/accgram/ply) into out/accgram/ply/_oddballs.json, then enrich
@@ -44,6 +52,7 @@ import argparse
 from pathlib import Path
 
 from accgram import fix_tester
+from accgram import poetic_oddballs
 from accgram import research_tao
 from accgram import run_ply
 from accgram import run_ply_poetic
@@ -69,6 +78,10 @@ def _run_run_ply_poetic(args: argparse.Namespace) -> None:
 
 def _run_xcheck_poetic(args: argparse.Namespace) -> None:
     xcheck_poetic.run(args)
+
+
+def _run_poetic_oddballs(args: argparse.Namespace) -> None:
+    poetic_oddballs.run(args)
 
 
 def _run_fix_tester(args: argparse.Namespace) -> None:
@@ -115,6 +128,18 @@ def main() -> None:
     )
     xcheck_poetic.add_args(xcheck_poetic_parser, repo_root=_repo_root())
     xcheck_poetic_parser.set_defaults(func=_run_xcheck_poetic)
+
+    poetic_oddballs_parser = subparsers.add_parser(
+        "run-ply-poetic-oddballs",
+        help=(
+            "Collect the residual poetic oddballs (missing-silluq ERROR-leaf trees "
+            "and NO_PARSE anomalies), enrich each with its M-C body, token sequence, "
+            "tree, and WLC-vs-MAM disjunctive comparison, and write "
+            "out/accgram/ply-poetic/_oddballs.json + gh-pages/accgram/poetic.html."
+        ),
+    )
+    poetic_oddballs.add_args(poetic_oddballs_parser, repo_root=_repo_root())
+    poetic_oddballs_parser.set_defaults(func=_run_poetic_oddballs)
 
     research_tao_parser = subparsers.add_parser(
         "research-oddballs",

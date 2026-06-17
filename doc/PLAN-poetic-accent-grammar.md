@@ -83,7 +83,18 @@ regenerate outputs and confirm before moving on.
   reads DEXI ATNAX REVIA_MUGRASH).
 - MAM agreement unchanged at **98.37%** (parsing doesn't touch the scanned
   sequence; the xcheck's [parses]/[NO_PARSE] labels were refreshed).
-- Next: **Phase 4** (optional poetic oddball report, mirrors prose research-oddballs).
+
+**Phase 4 DONE** (poetic oddball report): `py/accgram/poetic_oddballs.py` +
+`run-ply-poetic-oddballs` subcommand. Re-scans + re-parses the corpus, collects
+the 17 residual oddballs (**13 missing-silluq ERROR-leaf + 4 NO_PARSE**), and
+writes git-tracked `out/accgram/ply-poetic/_oddballs.json` and self-contained
+`gh-pages/accgram/poetic.html`. Each row carries the M-C body, full token
+sequence, rendered ERROR tree / NO_PARSE line, `output_file`, and the **WLC vs
+MAM-simple disjunctive comparison** (the review oracle: every missing-silluq row
+shows WLC's skeleton ending without the SILLUQ MAM supplies). Deliberately omits
+the prose UXLC/changetext/ob_notes machinery — those target vowel/consonant text
+changes, irrelevant to these accent-structure oddballs; the MAM disjunctive
+diff is the relevant oracle. Project state: **all phases (1–4) complete.**
 
 Built and tested (full suite: 51 passing):
 - `py/accgram/ply_scanner_poetic.py` — M-C accent codes → poetic tokens.
@@ -263,15 +274,25 @@ is listed with a one-line reason. Re-run the unit tests.
 
 Handoff: residual oddball set enumerated and explained.
 
-## Phase 4 — Oddball report (optional, mirrors prose)
+## Phase 4 — Oddball report (optional, mirrors prose)  — DONE (see Status above)
 
 Goal: a poetic analogue of `research-oddballs` — JSON + HTML enriching each
 remaining oddball with its verse object, for review.
+
+Outcome: `py/accgram/poetic_oddballs.py` + the `run-ply-poetic-oddballs`
+subcommand collect all 17 residual oddballs and write
+`out/accgram/ply-poetic/_oddballs.json` and `gh-pages/accgram/poetic.html`.
+Rather than the prose UXLC/changetext enrichment (which targets vowel/consonant
+text changes), each row is enriched with the WLC-vs-MAM-simple disjunctive
+comparison — the right oracle for accent-structure oddballs. Run
+`run-ply-poetic` first (or rely on the module's own re-scan, which is the same
+source of truth).
 
 - Mirror `oddballs.py` / `research_tao.py` for the poetic outputs; new
   `run-ply-poetic-oddballs` subcommand; write
   `out/accgram/ply-poetic/_oddballs.json` and a `gh-pages/accgram/poetic.html`.
 
-Verification: run the command; inspect the HTML report.
+Verification: `.venv/Scripts/python.exe py/main_accgram.py run-ply-poetic-oddballs`
+prints `17 (13 missing-silluq, 4 NO_PARSE)`; inspect the HTML report.
 
 Handoff: reviewable poetic oddball report; project state written back here.
