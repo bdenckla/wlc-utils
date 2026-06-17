@@ -30,7 +30,7 @@ def default_ply_dir(repo_root: Path) -> Path:
 
 
 def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
-    return repo_root.parent / "wlc-utils-io" / "out" / "wlc422-kq-u"
+    return rtms_data.default_wlc422_kq_u_dir(repo_root)
 
 
 def default_uxlc_dir(repo_root: Path) -> Path:

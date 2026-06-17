@@ -22,6 +22,30 @@ _IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS: set[tuple[tuple[str, ...], tuple[str, ...]]] 
 }
 
 
+def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
+    """Directory of the WLC 4.22 ketiv/qere Unicode ``1verses_*.json`` files."""
+    return repo_root.parent / "wlc-utils-io" / "out" / "wlc422-kq-u"
+
+
+def load_wlc422_index(wlc422_kq_u_dir: Path) -> dict[str, dict[str, object]]:
+    """Public WLC 4.22 verse index keyed by compact bcv (e.g. "ps31:20")."""
+    return _load_wlc422_index(wlc422_kq_u_dir)
+
+
+def prepare_wlc422_verse_for_render(verse: dict[str, object]) -> dict[str, object]:
+    """Interpolate qere + sanitize a raw WLC 4.22 verse for display, the same
+    way build_enriched_row does before rendering the pointed-Hebrew paragraph.
+
+    (The meteg-witness pass build_enriched_row also runs feeds the prose SAT
+    table, not the plain verse paragraph, so it is omitted here.)
+    """
+    verse = _interpolate_wlc422_kq_qere(verse)
+    verse = sanitize_verse_text_payload(verse)
+    if isinstance(verse, dict):
+        verse.pop("bcv", None)
+    return verse
+
+
 def load_source_indexes(
     *,
     wlc422_kq_u_dir: Path,

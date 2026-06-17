@@ -45,8 +45,10 @@ from accgram import ob_error_context
 from accgram import ob_report
 from accgram import ob_tree_table
 from accgram import poetic_filter
+from accgram import rtms_data
 from accgram import rtms_ref
 from accgram import rtms_report
+from accgram import rtmsr_verse
 from accgram import split_wlc
 from accgram.mam_poetic_accents import load_poetic_disjunctives
 from accgram.mam_simple_verse import default_mam_simple_dir
@@ -74,13 +76,18 @@ class PoeticOddball:
     wlc_disjunctives: tuple[str, ...]  # WLC disjunctive skeleton (scanner)
     mam_disjunctives: tuple[str, ...] | None  # MAM oracle skeleton (None if absent)
     tree_text: str  # rendered ERROR tree, or the NO_PARSE line
+    # WLC 4.22 pointed-Hebrew verse (qere-interpolated + sanitized), for the
+    # HTML report's verse paragraph; None if the verse is absent from the index.
+    # Not written to _oddballs.json (the disjunctive skeletons are the datum).
+    wlc_verse: dict[str, object] | None
 
 
 def collect_poetic_oddballs(
-    input_path: Path, mam_simple_dir: Path
+    input_path: Path, mam_simple_dir: Path, wlc422_kq_u_dir: Path
 ) -> list[PoeticOddball]:
     """Re-scan + re-parse the poetic corpus and return every oddball verse."""
     mam_by_ref = load_poetic_disjunctives(mam_simple_dir)
+    wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
     parser = build_parser()
     book_texts = split_wlc.split_wlc_to_book_texts(
         input_path, keep_line_fn=poetic_filter.should_keep_line
@@ -102,6 +109,13 @@ def collect_poetic_oddballs(
 
             wlc = tuple(t for t, _ in verse.tokens if t in _POETIC_DISJUNCTIVES)
             mam = mam_by_ref.get(verse.reference)
+            bcv = f"{bb}{verse.reference.rpartition(' ')[2]}"
+            raw_verse = wlc_index.get(bcv)
+            wlc_verse = (
+                rtms_data.prepare_wlc422_verse_for_render(raw_verse)
+                if isinstance(raw_verse, dict)
+                else None
+            )
             oddballs.append(
                 PoeticOddball(
                     reference=verse.reference,
@@ -113,6 +127,7 @@ def collect_poetic_oddballs(
                     wlc_disjunctives=wlc,
                     mam_disjunctives=tuple(mam) if mam is not None else None,
                     tree_text=tree_text,
+                    wlc_verse=wlc_verse,
                 )
             )
     return oddballs
@@ -251,9 +266,10 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
         ),
         wlc_utils_html.para(
             (
-                "Each verse shows its Michigan-Claremont source body and a "
-                "WLC-vs-MAM-simple disjunctive compare: the scanner's disjunctive "
-                "skeleton against the MAM oracle's. See ",
+                "Each verse shows its pointed-Hebrew text (the verse-final word "
+                "highlighted for missing-silluq cases), its Michigan-Claremont "
+                "source body, and a WLC-vs-MAM-simple disjunctive compare: the "
+                "scanner's disjunctive skeleton against the MAM oracle's. See ",
                 wlc_utils_html.code("doc/PLAN-poetic-accent-grammar.md"),
                 " for the full taxonomy.",
             )
@@ -272,6 +288,9 @@ def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
         items.append(wlc_utils_html.horizontal_rule())
     items.append(wlc_utils_html.heading_level_2(ob.reference, {"id": anchor_id}))
     items.extend(_render_ref_links(ob, bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, anchor_id=anchor_id))
+    hebrew_verse = _render_hebrew_verse(ob)
+    if hebrew_verse is not None:
+        items.append(hebrew_verse)
     items.append(wlc_utils_html.para(ob.body, {"class": "poetic-src"}))
     items.append(_render_disj_table(ob))
     items.append(_render_meta(ob))
@@ -321,6 +340,40 @@ def _render_ref_links(
         )
     )
     return (perma_para, links_para)
+
+
+def _render_hebrew_verse(ob: PoeticOddball) -> object | None:
+    """Pointed-Hebrew (RTL) verse paragraph via the shared goerwitz renderer.
+
+    For a missing-silluq verse the locus is the verse-final word (the word that
+    arrives with no silluq), so highlight it; NO_PARSE is not localized to one
+    word, so render the plain verse. A non-unique/absent focus degrades to no
+    highlight (the renderer falls back gracefully)."""
+    if not isinstance(ob.wlc_verse, dict):
+        return None
+    focus = _final_word_focus(ob) if ob.kind == KIND_MISSING_SILLUQ else None
+    row = {"wlc422_kq_u_verse": ob.wlc_verse, "wlc_focus": focus}
+    return rtmsr_verse.render_wlc_verse_paragraph(
+        row, structured_text_lookup=lambda r, key: r.get(key)
+    )
+
+
+def _final_word_focus(ob: PoeticOddball) -> str | None:
+    vels = ob.wlc_verse.get("vels") if isinstance(ob.wlc_verse, dict) else None
+    if not isinstance(vels, list) or not vels:
+        return None
+    return _token_text(vels[-1]) or None
+
+
+def _token_text(token: object) -> str:
+    if isinstance(token, str):
+        return token
+    if isinstance(token, dict):
+        for key in ("word", "text"):
+            value = token.get(key)
+            if isinstance(value, str):
+                return value
+    return ""
 
 
 def _render_disj_table(ob: PoeticOddball) -> object:
@@ -463,6 +516,13 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         help="Directory containing MAM-simple json-vtrad-bhs book files.",
     )
     parser.add_argument(
+        "--wlc422-kq-u-dir",
+        type=Path,
+        default=rtms_data.default_wlc422_kq_u_dir(repo_root),
+        help="Directory of WLC 4.22 ketiv/qere Unicode 1verses_*.json files "
+        "(for pointed-Hebrew verse rendering).",
+    )
+    parser.add_argument(
         "--oddballs-out",
         type=Path,
         default=default_oddballs_out_path(repo_root),
@@ -477,7 +537,9 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 
 def run(args: argparse.Namespace) -> None:
-    oddballs = collect_poetic_oddballs(args.input, args.mam_simple_dir)
+    oddballs = collect_poetic_oddballs(
+        args.input, args.mam_simple_dir, args.wlc422_kq_u_dir
+    )
 
     payload = build_payload(oddballs, __file__)
     oddballs_out: Path = args.oddballs_out
