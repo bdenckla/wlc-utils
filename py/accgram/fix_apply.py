@@ -10,10 +10,11 @@ verse's word tokens, computes which accent the change adds/removes (by name, via
 modified body for re-scanning.
 
 An adjacent run of words (a multi-word ``wlc_focus``) is spliced atom by atom.
-Anything it cannot do mechanically and safely -- a non-adjacent / mismatched-count
-multi-word diff, a multi-accent splice, a vowel- or meteg-only change, an accent
-whose code is context-dependent, a word/atom misalignment, or a code the diff
-claims but the body lacks -- is returned as an ``UntestableFix`` with a
+A one-accent-out / many-accent-in replacement (azla -> pashta x2) is spliced as a
+delete-then-insert.  Anything it cannot do mechanically and safely -- a
+non-adjacent / mismatched-count multi-word diff, a vowel- or meteg-only change, an
+accent whose code is context-dependent, a word/atom misalignment, or a code the
+diff claims but the body lacks -- is returned as an ``UntestableFix`` with a
 machine-readable reason, never guessed.
 """
 
@@ -280,7 +281,6 @@ def verse_words(wlc_verse: object) -> list[str]:
 # --- helpers -----------------------------------------------------------------
 
 _MULTI = object()  # sentinel: a diff side that is a multi-word list
-_MULTI_SPLICE = "\x00multi"  # sentinel: an unsupported multi-accent splice
 
 
 def _token_text(token: object) -> str | None:
@@ -359,11 +359,6 @@ def _splice_word(
             "code_not_found",
             f"codes {removed_codes} not all in atom {atom_text!r}",
         )
-    if new_atom == _MULTI_SPLICE:
-        return UntestableFix(
-            "multi_accent",
-            f"unsupported multi-accent splice {removed_codes} -> {added_codes}",
-        )
     return new_atom, removed_codes, added_codes
 
 
@@ -395,23 +390,27 @@ def _codes_for(
 
 
 def _splice(atom: str, removed_codes: list[str], added_codes: list[str]) -> str | None:
-    """Return the atom with the accent codes changed, or None / _MULTI_SPLICE.
+    """Return the atom with the accent codes changed, or None if a removed code is
+    absent from the atom.
 
-    Handles the three safe shapes: 1->1 swap, delete-only, insert-only.  Anything
-    else returns the _MULTI_SPLICE sentinel (caller marks it UNTESTABLE).
+    Handles four shapes: a 1->1 swap (in place, preserving the code's offset -- so
+    e.g. an in-place zarshit 82->02 or verse-final silluq 91->35 stays put), and
+    the general delete-then-insert that covers delete-only, insert-only, and the
+    1->many replacement (azla -> pashta x2, 1k 19:11 / je 49:19).  In the general
+    path the added codes land after the last M-C letter, exactly as the insert-only
+    case always has: the offset among letters is irrelevant to tokenization, and a
+    postpositive accent (pashta) belongs on the final consonant anyway.
     """
     if len(removed_codes) == 1 and len(added_codes) == 1:
         return _replace_first_code(atom, removed_codes[0], added_codes[0])
-    if removed_codes and not added_codes:
-        out = atom
-        for code in removed_codes:
-            out = _replace_first_code(out, code, "")
-            if out is None:
-                return None
-        return out
-    if added_codes and not removed_codes:
-        return _insert_codes(atom, added_codes)
-    return _MULTI_SPLICE
+    out = atom
+    for code in removed_codes:
+        out = _replace_first_code(out, code, "")
+        if out is None:
+            return None
+    if added_codes:
+        out = _insert_codes(out, added_codes)
+    return out
 
 
 def _replace_first_code(atom: str, old_code: str, new_code: str) -> str | None:

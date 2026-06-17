@@ -1,11 +1,11 @@
 # Fix-tester: do MAM-simple values resolve annotated prose oddballs?
 
-confirmed: 80  denied: 0  changed: 0  untestable: 11  (91 annotated oddballs tested)
+confirmed: 82  denied: 0  changed: 0  untestable: 9  (91 annotated oddballs tested)
 speculations: 15 total; 14 confirmed, 0 denied/changed, 1 untestable
 synthesized fixes (no MAM diff; tested the note's synth_fix): 1
-claim-vs-result: 71 agree, 0 disagree
+claim-vs-result: 73 agree, 0 disagree
 
-## CONFIRMED -- MAM fix clears the oddball  (80)
+## CONFIRMED -- MAM fix clears the oddball  (82)
   1c 1:53 [claim: expects_fix] [AGREE]
     fix: אל֣וף -> אל֥וף
     transform: atom ")AL.74W.P" -> ")AL.71W.P" (74 -> 71)
@@ -31,6 +31,11 @@ claim-vs-result: 71 agree, 0 disagree
     transform: atom "MI/K.O63L" -> "MI/K.O03L" (63 -> 03)
     before: MEREKA TIFCHA ATNACH AZLA GERESH REVIA PASHTA PASHTA MUNACH ZAQEF AZLA MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  MEREKA TIFCHA ATNACH AZLA GERESH REVIA PASHTA PASHTA MUNACH ZAQEF PASHTA MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  1k 19:11 [claim: expects_fix] [AGREE]
+    fix: הר֨וח -> הר֙וח֙
+    transform: atom "HF/R63W.XA]1" -> "HF/RW.XA0303]1" (63 -> 03 03)
+    before: REVIA MUNACH MUNACH ZARQA MUNACH SEGOLTA DARGA MUNACH REVIA MUNACH PAZER GERSHAYIM TELISHAQETANNA AZLA MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA ATNACH MAHPAK AZLA ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
+    after:  REVIA MUNACH MUNACH ZARQA MUNACH SEGOLTA DARGA MUNACH REVIA MUNACH PAZER GERSHAYIM TELISHAQETANNA AZLA MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA ATNACH MAHPAK PASHTA PASHTA ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
   1k 20:25 [speculative]
     fix: וס֣וס -> וס֥וס
     transform: atom "W:/S74W.S" -> "W:/S71W.S" (74 -> 71)
@@ -291,6 +296,11 @@ claim-vs-result: 71 agree, 0 disagree
     transform: atom "HIN."73H" -> "HIN."H" (73 -> (none))
     before: GERSHAYIM TIFCHA MAHPAK PASHTA ZAQEF MEREKA TIFCHA ATNACH MUNACH ZAQEF TIFCHA SILLUQ SOFPASUQ  [ODDBALL: atnach_phrase, tifcha_phrase]
     after:  GERSHAYIM MAHPAK PASHTA ZAQEF MEREKA TIFCHA ATNACH MUNACH ZAQEF TIFCHA SILLUQ SOFPASUQ  [CLEAN]
+  je 49:19 [claim: expects_fix] [AGREE]
+    fix: אריצ֨נו -> אריצ֙נו֙
+    transform: atom "):ARIYC/E63N.W." -> "):ARIYC/EN.W0303." (63 -> 03 03)
+    before: TELISHAGEDOLA GERSHAYIM AZLA MUNACH ZARQA MUNACH SEGOLTA MAHPAK METHIGAZAQEF MEREKA TIFCHA MUNACH ATNACH MUNACH MAHPAK PASHTA MUNACH ZAQEF MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
+    after:  TELISHAGEDOLA GERSHAYIM AZLA MUNACH ZARQA MUNACH SEGOLTA MAHPAK PASHTA PASHTA ZAQEF MEREKA TIFCHA MUNACH ATNACH MUNACH MAHPAK PASHTA MUNACH ZAQEF MUNACH ZAQEF MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
   je 51:9 [claim: expects_fix] [AGREE]
     fix: רפ֣ינו -> רפ֤אנו
     transform: atom "**RIP.I74YNW." -> "**RIP.I70YNW." (74 -> 70)
@@ -411,11 +421,8 @@ claim-vs-result: 71 agree, 0 disagree
 
 ## CHANGED -- a different error appears after the fix  (0)
 
-## UNTESTABLE -- fix could not be applied mechanically  (11)
+## UNTESTABLE -- fix could not be applied mechanically  (9)
   (note: reasons 'vowel_only'/'meteg_only' are grammar-inert -- the scanner swallows vowels and meteg, so the speculated change cannot clear the oddball; the rest are apparatus limits, not verdicts.)
-  1k 19:11 [claim: expects_fix]
-    fix: הר֨וח -> הר֙וח֙
-    reason: multi_accent (unsupported multi-accent splice ['63'] -> ['03', '03'])
   dt 10:15 [claim: expects_fix]
     fix: הזה׃ -> הזֽה׃
     reason: meteg_only (no accent/punctuation difference -- invisible to the grammar)
@@ -434,9 +441,6 @@ claim-vs-result: 71 agree, 0 disagree
   is 13:7 [claim: expects_fix]
     fix: ימס׃ -> ימֽס׃
     reason: meteg_only (no accent/punctuation difference -- invisible to the grammar)
-  je 49:19 [claim: expects_fix]
-    fix: אריצ֨נו -> אריצ֙נו֙
-    reason: multi_accent (unsupported multi-accent splice ['63'] -> ['03', '03'])
   lv 26:28 [claim: expects_fix]
     fix: חטאתיכם׃ -> חטאתיכֽם׃
     reason: meteg_only (no accent/punctuation difference -- invisible to the grammar)

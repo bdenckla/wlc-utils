@@ -207,6 +207,24 @@ def test_adjacent_two_word_one_word_is_noop():
     assert result.extra_transforms == ()
 
 
+def test_azla_to_double_pashta_applies():
+    # 1k 19:11 / je 49:19: MAM replaces one azla (qadma, 63) with two pashtas
+    # (03 03) on the same word.  A 1->many replacement is spliced delete-then-
+    # insert: drop the 63, then place both 03s after the last letter (pashta is
+    # postpositive).  Re-scanned, the word now carries two PASHTA tokens.
+    result = apply_mam_fix(
+        "HF/R.63W.AX X92Y00",
+        ["הר֨וח", "זה"],
+        {"wlc422": "הר֨וח", "mam_simple": "הר֙וח֙"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.removed_codes == ("63",)
+    assert result.added_codes == ("03", "03")
+    assert result.new_body == "HF/R.W.AX0303 X92Y00"
+    assert _types(result.new_body).count("PASHTA") == 2
+    assert "AZLA" not in _types(result.new_body)
+
+
 def test_multi_word_unequal_counts_is_untestable():
     result = apply_mam_fix(
         "X74Y Z73W",

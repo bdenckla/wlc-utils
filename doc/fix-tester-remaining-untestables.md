@@ -7,10 +7,14 @@ and classifies the outcome `CONFIRMED` / `DENIED` / `CHANGED` / `UNTESTABLE`. Th
 proposed fix is normally "adopt the MAM-simple value", but when MAM equals WLC the
 note's hand-authored `synth_fix` is tested instead (flagged `synthesized`).
 
-As of 2026-06-16: **91 tested — 80 CONFIRMED, 0 DENIED, 0 CHANGED, 11 UNTESTABLE.**
-This file enumerates the 11 untestables, why each cannot be mechanically tested, and
+As of 2026-06-16: **91 tested — 82 CONFIRMED, 0 DENIED, 0 CHANGED, 9 UNTESTABLE.**
+This file enumerates the 9 untestables, why each cannot be mechanically tested, and
 whether the barrier is an *apparatus limit* (could be lifted with more tooling) or
 *inherent* (the change cannot affect the grammar, so there is nothing to test).
+
+Every remaining untestable is now **inherent**: the three apparatus barriers
+(`alignment_failure`, `ambiguous_accent`/zarshit, `multi_accent`) have all been
+lifted.
 
 `UNTESTABLE` is not a verdict on the oddball — it means the fix could not be reduced
 to a single, safely-appliable accent splice. The verdict counts (`agree`/`disagree`)
@@ -19,10 +23,10 @@ ignore these.
 | reason | count | kind | path to testability |
 |---|---:|---|---|
 | `meteg_only` | 8 | inherent | grammar is blind to meteg; needs a real accent hypothesis (`synth_fix`) |
-| `multi_accent` | 2 | apparatus | support a 1→many accent splice |
 | `no_mam_diff` | 1 | inherent | not a word-accent change at all |
 
-(`ambiguous_accent` / zarshit, formerly 12, was RESOLVED 2026-06-16 — see below.)
+(`alignment_failure` (12), `ambiguous_accent` / zarshit (12), and `multi_accent` (2)
+were all RESOLVED 2026-06-16 — see below.)
 
 ---
 
@@ -173,19 +177,28 @@ see the [is 45:1 pattern](../py/accgram/ob_notes_is.py).
 
 ---
 
-## `multi_accent` (2) — apparatus
+## `multi_accent` — RESOLVED 2026-06-16 (was 2, apparatus)
 
-| ref | proposed fix | grammar error | splice |
-|---|---|---|---|
-| 1k 19:11 | הר֨וח → הר֙וח֙ | zaqef_phrase | `['63']` → `['03','03']` |
-| je 49:19 | אריצ֨נו → אריצ֙נו֙ | tifcha_phrase | `['63']` → `['03','03']` |
+**Fixed. Both now CONFIRMED.** Each replaces one accent (azla, 63) with **two**
+(two pashtas, 03 03) on the same word — a 1→many splice that
+`fix_apply._splice` refused, handling only 1→1, delete-only, and insert-only.
 
-The MAM reading replaces one accent (azla, 63) with **two** (two pashtas, 03 03) on
-the same word. `fix_apply._splice` handles 1→1, delete-only, and insert-only; a
-1→many replacement is refused. Supporting it (delete the old code, insert the new
-ones at the right offset) would make these testable. (je 49:19 joined this category
-on 2026-06-16 once the `alignment_failure` barrier was lifted — same azla→pashta×2
-shape as 1k 19:11.)
+| ref | proposed fix | grammar error | splice | new verdict |
+|---|---|---|---|---|
+| 1k 19:11 | הר֨וח → הר֙וח֙ | zaqef_phrase | `['63']` → `['03','03']` | CONFIRMED |
+| je 49:19 | אריצ֨נו → אריצ֙נו֙ | tifcha_phrase | `['63']` → `['03','03']` | CONFIRMED |
+
+The fix collapsed delete-only and insert-only into one **delete-then-insert** path:
+`_splice` keeps the in-place 1→1 swap special-cased (so an in-place zarshit 82→02 or
+verse-final silluq 91→35 stays at its offset), then for everything else deletes
+every removed code and, if any codes are added, inserts them after the last M-C
+letter via the existing `_insert_after_last_letter`. That placement is exactly the
+simplification the insert-only path always made — the offset among letters is
+irrelevant to tokenization, and pashta is postpositive, so both `03`s belong on the
+final consonant anyway. The splice lands them *before* a trailing note-marker (e.g.
+1k 19:11's `…XA]1` → `…XA0303]1`), so no `]1`+`03` digit-fusion. The `_MULTI_SPLICE`
+sentinel and the `multi_accent` UntestableFix reason are gone. Covered by
+`test_azla_to_double_pashta_applies`.
 
 ---
 
@@ -208,6 +221,8 @@ single-word reading to splice, so it stays untestable by design.
    10 CONFIRMED, 2 fell through to the barriers below; 0 DENIED.
 1. ~~**zarshit / code-82 (12)**~~ — DONE 2026-06-16 (delete-only `removal_code` for
    `(zarshit)`, `for_removal` flag in `_codes_for`): all 12 CONFIRMED via 82 → 02.
-2. **`multi_accent` (2)** — extend `_splice` to 1→many.
+2. ~~**`multi_accent` (2)**~~ — DONE 2026-06-16 (delete-then-insert path in
+   `_splice`, replacing the `_MULTI_SPLICE` bailout): both CONFIRMED via 63 → 03 03.
 3. **`meteg_only` (8)** and **`no_mam_diff` (1)** — inherent; testable only by
-   authoring a `synth_fix` where a genuine accent hypothesis exists.
+   authoring a `synth_fix` where a genuine accent hypothesis exists. **No apparatus
+   barriers remain.**
