@@ -35,6 +35,16 @@ scanner emits):
 Other accents (munah, merka, mahpak, qadma/azla, illuy, tipeha/tarha, galgal,
 atnah-hafukh, zarqa=tsinnorit, telisha, plain meteg/ga'ya, plain paseq) are servi
 or secondary marks and contribute no disjunctive.
+
+The *servant* of a disjunctive -- the conjunctive sign on the word immediately
+preceding it -- IS extractable, via ``servi_before_from_verse_node`` /
+``load_servi_before``.  That is the second-witness oracle for vetting servant-
+ADJACENCY rules (e.g. Breuer's "the servant next to dekhi is munakh"): MAM's servant
+*choice* per slot is read in the scanner's own servus vocabulary and compared
+word-for-word against L.  (The disjunctive cross-check above is silent on servi;
+this fills that gap.  The munah/merka *selection within* a slot is phonological and
+still out of a token grammar's scope -- the oracle tells you what L and MAM actually
+do, not why.)
 """
 
 from __future__ import annotations
@@ -50,6 +60,12 @@ from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 _SOF_PASUQ = "׃"
 
+# One in-order traversal event: (kind, disjunctive_marker, servus).  WORD carries
+# both a (provisional) disjunctive marker and a servus -- at most one is non-None,
+# since a word's main accent is either a divider or a conjunctive.  SOFPASUQ / LP_LEG
+# / LP_PASEQ carry neither.
+_Event = tuple[str, str | None, str | None]
+
 # MAM Unicode accent -> intermediate disjunctive marker (REVIA / SHALSHELET stay
 # provisional; resolved in the second pass).  Checked in this priority order so
 # composite words resolve correctly (geresh muqdam + revia -> mugrash; ole +
@@ -63,6 +79,23 @@ _DISJ_PRIORITY: list[tuple[str, str]] = [
     (ha.Z_OR_TSOR, pan.TSINNOR),
     (ha.PAZ, pan.PAZER),
     (ha.REV, pan.REVIA),  # provisional: reclassified gadol/qatan/mugrash by position
+]
+
+# MAM Unicode conjunctive sign -> poetic servus token (poetic_accent_names, the same
+# vocabulary the L scanner emits), so servant choices compare apples-to-apples across
+# the two witnesses.  The oleh-we-yored servus is written atnah-hafukh (U+05A2) in MAM
+# but coded galgal in L (see the disjunctive note above); it is normalized to GALGAL
+# so the same structural slot matches.  Priority only disambiguates a word carrying
+# more than one conjunctive mark (rare) -- the first match wins.
+_SERVUS_SIGNS: list[tuple[str, str]] = [
+    (ha.MUN, pan.MUNAX),
+    (ha.MER, pan.MERKHA),
+    (ha.MAH, pan.MAHAPAKH),
+    (ha.QOM, pan.AZLA),      # qadma = azla (the conjunctive)
+    (ha.YBY, pan.GALGAL),    # yerah-ben-yomo = galgal
+    (ha.ATN_H, pan.GALGAL),  # atnah-hafukh: MAM's oleh-we-yored servus (L codes galgal)
+    (ha.ILU, pan.ILLUY),
+    (ha.TIP, pan.TARXA),     # tipeha sign = the poetic tarha servant
 ]
 
 # Node types whose subtree carries no cantillated text for our purposes.
@@ -92,20 +125,36 @@ def _word_marker(accents: str) -> str | None:
     return None
 
 
-def _emit_word_events(text: str, events: list[tuple[str, str | None]]) -> None:
-    """Append a ('WORD', marker) event per whitespace-delimited word in ``text``.
+def _word_servus(accents: str) -> str | None:
+    """Resolve one word's combining accents to a poetic servus token, or None.
+
+    Only meaningful for a word with no disjunctive: a disjunctive word's main accent
+    is the divider, and any conjunctive sign on it is a swallowed secondary mark
+    (merka/mahpak metzunar), exactly as the L scanner drops it.
+    """
+    for sign, name in _SERVUS_SIGNS:
+        if sign in accents:
+            return name
+    return None
+
+
+def _emit_word_events(text: str, events: list[_Event]) -> None:
+    """Append a ('WORD', marker, servus) event per whitespace-delimited word.
 
     The final word of the verse carries SOF PASUQ; its meteg is silluq, so it is
-    emitted as a ('SOFPASUQ', None) sentinel that the second pass turns into SILLUQ.
+    emitted as a ('SOFPASUQ', None, None) sentinel the second pass turns into SILLUQ.
+    A word's servus is recorded only when it carries no disjunctive marker.
     """
     for word in text.split():
         if _SOF_PASUQ in word:
-            events.append(("SOFPASUQ", None))
+            events.append(("SOFPASUQ", None, None))
             continue
-        events.append(("WORD", _word_marker(word)))
+        marker = _word_marker(word)
+        servus = None if marker is not None else _word_servus(word)
+        events.append(("WORD", marker, servus))
 
 
-def _walk(node: object, events: list[tuple[str, str | None]]) -> None:
+def _walk(node: object, events: list[_Event]) -> None:
     """In-order DFS collecting WORD / LP_LEG / LP_PASEQ / SOFPASUQ events.
 
     ``lp-legarmeih`` and ``lp-paseq`` are sibling structural nodes that sit between
@@ -117,10 +166,10 @@ def _walk(node: object, events: list[tuple[str, str | None]]) -> None:
     node_type = node.get("type")
     if isinstance(node_type, str):
         if node_type == "lp-legarmeih":
-            events.append(("LP_LEG", None))
+            events.append(("LP_LEG", None, None))
             return
         if node_type == "lp-paseq":
-            events.append(("LP_PASEQ", None))
+            events.append(("LP_PASEQ", None, None))
             return
         if node_type in _KETIV_TYPES:
             return
@@ -141,7 +190,7 @@ def _walk(node: object, events: list[tuple[str, str | None]]) -> None:
         _emit_word_events(text, events)
 
 
-def _walk_kq(node: dict, events: list[tuple[str, str | None]]) -> None:
+def _walk_kq(node: dict, events: list[_Event]) -> None:
     """Walk a ketiv/qere node, reading only its qere half (the accented reading)."""
     contents = node.get("contents")
     if not isinstance(contents, list):
@@ -164,63 +213,99 @@ def _walk_kq(node: dict, events: list[tuple[str, str | None]]) -> None:
         _walk(child, events)
 
 
-def _reclassify_revia(disjunctives: list[str]) -> list[str]:
-    """Resolve each generic REVIA to gadol/qatan/mugrash by the next disjunctive.
+def _build_word_accents(events: list[_Event]) -> list[list[str | None]]:
+    """Reduce traversal events to a per-word ``[disjunctive, servus]`` list, in order.
 
-    Identical rule to ``ply_scanner_poetic._reclassify_revia`` (which scans the next
-    disjunctive in the full token stream); here the list already contains only
-    disjunctives, so the "next disjunctive" is simply the next element.
+    One entry per WORD (and the final SOFPASUQ word, which becomes SILLUQ).  LP_LEG /
+    LP_PASEQ promote the preceding word (legarmeh, or shalshelet -> shalshelet
+    gedolah); bare shalshelet (qetannah) is swallowed to a None disjunctive; generic
+    REVIA is reclassified to gadol/qatan/mugrash by the next disjunctive-bearing word
+    (the same rule as ``ply_scanner_poetic._reclassify_revia``).  The servus column is
+    carried through untouched.
     """
-    out = list(disjunctives)
-    for i, marker in enumerate(out):
-        if marker != pan.REVIA:
+    words: list[list[str | None]] = []
+    last_word_index: int | None = None
+    for kind, marker, servus in events:
+        if kind == "WORD":
+            words.append([marker, servus])
+            last_word_index = len(words) - 1
+        elif kind == "SOFPASUQ":
+            words.append([pan.SILLUQ, None])
+            last_word_index = len(words) - 1
+        elif kind == "LP_LEG":
+            # Preceding word is legarmeh (conjunctive + paseq) or, if it carried
+            # shalshelet, shalshelet gedolah.
+            if last_word_index is None:
+                continue
+            prev = words[last_word_index][0]
+            if prev == pan.SHALSHELET:
+                words[last_word_index][0] = pan.SHALSHELET_GEDOLAH
+            elif prev is None:
+                words[last_word_index][0] = pan.LEGARMEH
+            # else: an lp-legarmeih after a real disjunctive -- leave it alone.
+        elif kind == "LP_PASEQ":
+            # A plain paseq promotes a preceding shalshelet to gedolah, but does not
+            # by itself create a legarmeh.
+            if last_word_index is not None and words[last_word_index][0] == pan.SHALSHELET:
+                words[last_word_index][0] = pan.SHALSHELET_GEDOLAH
+
+    # Bare shalshelet (no paseq) is the conjunctive qetannah -> swallow its disjunctive.
+    for word in words:
+        if word[0] == pan.SHALSHELET:
+            word[0] = None
+
+    disj_positions = [i for i, w in enumerate(words) if w[0] is not None]
+    for k, i in enumerate(disj_positions):
+        if words[i][0] != pan.REVIA:
             continue
-        nxt = next((out[j] for j in range(i + 1, len(out))), None)
+        nxt = words[disj_positions[k + 1]][0] if k + 1 < len(disj_positions) else None
         if nxt == pan.OLEH_WEYORED:
-            out[i] = pan.REVIA_QATAN
+            words[i][0] = pan.REVIA_QATAN
         elif nxt == pan.SILLUQ:
-            out[i] = pan.REVIA_MUGRASH
+            words[i][0] = pan.REVIA_MUGRASH
         else:
-            out[i] = pan.REVIA_GADOL
-    return out
+            words[i][0] = pan.REVIA_GADOL
+    return words
+
+
+def word_accents_from_verse_node(verse_node: dict) -> list[tuple[str | None, str | None]]:
+    """Per-word ``(disjunctive, servus)`` for one MAM-simple verse, in verse order.
+
+    At most one of the pair is non-None for an accented word (a divider word lists its
+    disjunctive; a conjunctive word lists its servus in the L scanner's vocabulary); a
+    word with neither (proclitic / meteg-only) is ``(None, None)``.  The final word is
+    ``(SILLUQ, None)``.
+    """
+    events: list[_Event] = []
+    _walk(verse_node, events)
+    return [(w[0], w[1]) for w in _build_word_accents(events)]
 
 
 def disjunctives_from_verse_node(verse_node: dict) -> list[str]:
     """Return the ordered poetic disjunctive sequence for one MAM-simple verse."""
-    events: list[tuple[str, str | None]] = []
-    _walk(verse_node, events)
+    return [d for d, _servus in word_accents_from_verse_node(verse_node) if d is not None]
 
-    markers: list[str | None] = []
-    last_word_index: int | None = None
-    for kind, marker in events:
-        if kind == "WORD":
-            markers.append(marker)
-            last_word_index = len(markers) - 1
-        elif kind == "SOFPASUQ":
-            markers.append(pan.SILLUQ)
-            last_word_index = len(markers) - 1
-        elif kind == "LP_LEG":
-            # The preceding word is legarmeh (conjunctive + paseq) or, if it carried
-            # shalshelet, shalshelet gedolah.
-            if last_word_index is None:
-                continue
-            prev = markers[last_word_index]
-            if prev == pan.SHALSHELET:
-                markers[last_word_index] = pan.SHALSHELET_GEDOLAH
-            elif prev is None:
-                markers[last_word_index] = pan.LEGARMEH
-            # else: an lp-legarmeih after a real disjunctive -- leave it alone.
-        elif kind == "LP_PASEQ":
-            # A plain paseq promotes a preceding shalshelet to gedolah too, but does
-            # not by itself create a legarmeh.
-            if last_word_index is not None and markers[last_word_index] == pan.SHALSHELET:
-                markers[last_word_index] = pan.SHALSHELET_GEDOLAH
 
-    # Bare shalshelet (no paseq) is the conjunctive qetannah -> swallow.
-    disjunctives = [
-        m for m in markers if m is not None and m != pan.SHALSHELET
-    ]
-    return _reclassify_revia(disjunctives)
+def servi_before_from_verse_node(verse_node: dict, target: str) -> list[str | None]:
+    """Servus on the word immediately before each occurrence of ``target`` disjunctive.
+
+    One entry per occurrence of ``target`` (a poetic disjunctive token name, e.g.
+    ``pan.DEXI``) in the verse, in order.  The value is the preceding word's servus
+    token, or ``None`` when ``target`` has no servant there -- it is verse-initial, or
+    the preceding word itself bears a disjunctive (a bare ``target``).  This is the
+    MAM side of a servant-adjacency check; the L side is the servus that stands right
+    before the same ``target`` in ``ply_scanner_poetic``'s token stream.
+    """
+    words = word_accents_from_verse_node(verse_node)
+    out: list[str | None] = []
+    for i, (disj, _servus) in enumerate(words):
+        if disj != target:
+            continue
+        if i == 0 or words[i - 1][0] is not None:
+            out.append(None)  # verse-initial, or preceding word is itself a divider
+        else:
+            out.append(words[i - 1][1])
+    return out
 
 
 def _mam_json_path(mam_simple_dir: Path, bk39id: str) -> Path | None:
@@ -245,18 +330,14 @@ def _iter_verse_nodes(value: object):
             yield from _iter_verse_nodes(child)
 
 
-def load_poetic_disjunctives(
-    mam_simple_dir: Path,
-    books: tuple[str, ...] = ("ps", "pr", "jb"),
-) -> dict[str, list[str]]:
-    """Map ``"<book> <ch>:<vs>"`` -> MAM disjunctive sequence for the poetic books.
+def _iter_book_verses(mam_simple_dir: Path, books: tuple[str, ...]):
+    """Yield ``(ref, verse_node)`` for the poetic books, ``ref`` like ``"Psalms 1:1"``.
 
-    The reference string matches ``ply_scanner_poetic``'s (e.g. ``"Psalms 1:1"``).
+    Shared corpus walk for the ``load_*`` functions (reference strings match
+    ``ply_scanner_poetic``'s).
     """
     if not mam_simple_dir.is_dir():
         raise FileNotFoundError(f"MAM-simple directory not found: {mam_simple_dir}")
-
-    by_ref: dict[str, list[str]] = {}
     for bb in books:
         bk39id = wlc_bb_to_bk39id(bb)
         json_path = _mam_json_path(mam_simple_dir, bk39id)
@@ -272,6 +353,38 @@ def load_poetic_disjunctives(
             parts = osis_id.split(".")
             if len(parts) != 3:
                 continue
-            ref = f"{bk39id} {parts[1]}:{parts[2]}"
-            by_ref[ref] = disjunctives_from_verse_node(verse_node)
-    return by_ref
+            yield f"{bk39id} {parts[1]}:{parts[2]}", verse_node
+
+
+def load_poetic_disjunctives(
+    mam_simple_dir: Path,
+    books: tuple[str, ...] = ("ps", "pr", "jb"),
+) -> dict[str, list[str]]:
+    """Map ``"<book> <ch>:<vs>"`` -> MAM disjunctive sequence for the poetic books.
+
+    The reference string matches ``ply_scanner_poetic``'s (e.g. ``"Psalms 1:1"``).
+    """
+    return {
+        ref: disjunctives_from_verse_node(vn)
+        for ref, vn in _iter_book_verses(mam_simple_dir, books)
+    }
+
+
+def load_servi_before(
+    mam_simple_dir: Path,
+    target: str,
+    books: tuple[str, ...] = ("ps", "pr", "jb"),
+) -> dict[str, list[str | None]]:
+    """Map ``"<book> <ch>:<vs>"`` -> the servus(es) MAM puts before ``target`` per verse.
+
+    ``target`` is a poetic disjunctive token name (e.g. ``pan.DEXI``).  Each value is
+    the list returned by ``servi_before_from_verse_node`` -- one servus token (or None
+    = bare/verse-initial) per occurrence of ``target`` in that verse.  Verses with no
+    ``target`` map to an empty list.  This is the second-witness oracle for vetting
+    Breuer's servant-adjacency rules against MAM; compare to the L servus that
+    precedes the same ``target`` in ``ply_scanner_poetic``'s token stream.
+    """
+    return {
+        ref: servi_before_from_verse_node(vn, target)
+        for ref, vn in _iter_book_verses(mam_simple_dir, books)
+    }

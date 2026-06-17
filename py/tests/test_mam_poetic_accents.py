@@ -13,7 +13,11 @@ Run:
 from mb_cmn import hebrew_accents as ha
 
 from accgram import poetic_accent_names as pan
-from accgram.mam_poetic_accents import disjunctives_from_verse_node
+from accgram.mam_poetic_accents import (
+    disjunctives_from_verse_node,
+    servi_before_from_verse_node,
+    word_accents_from_verse_node,
+)
 
 # Combining-accent helpers; the consonant carrier is irrelevant to extraction.
 B = "ב"  # an arbitrary base letter (bet)
@@ -117,3 +121,50 @@ def test_ketiv_skipped_qere_read():
         {"type": "text", "text": B + ha.MER + SOF},
     )
     assert disjunctives_from_verse_node(node) == [pan.ATNAX, pan.SILLUQ]
+
+
+# --- servant (conjunctive) extraction: servi_before / word_accents ---------------
+
+def _silluq_word() -> dict:
+    return {"type": "text", "text": B + ha.MER + SOF}
+
+
+def test_word_accents_pairs_disjunctive_and_servus():
+    # merka(servus) | dehi(divider) | silluq -- exactly one column non-None per word.
+    node = _verse(_text(ha.MER), _text(ha.DEX), _silluq_word())
+    assert word_accents_from_verse_node(node) == [
+        (None, pan.MERKHA),
+        (pan.DEXI, None),
+        (pan.SILLUQ, None),
+    ]
+
+
+def test_servi_before_dehi_merka_and_munah():
+    # The servant immediately before dehi is read in the L scanner's vocabulary.
+    merka = _verse(_text(ha.MER), _text(ha.DEX), _silluq_word())
+    assert servi_before_from_verse_node(merka, pan.DEXI) == [pan.MERKHA]
+
+    munah = _verse(_text(ha.MUN), _text(ha.DEX), _silluq_word())
+    assert servi_before_from_verse_node(munah, pan.DEXI) == [pan.MUNAX]
+
+
+def test_servi_before_is_none_when_target_is_bare():
+    # Verse-initial dehi (no preceding word) and dehi preceded by a divider both
+    # count as servant-less -> None.
+    initial = _verse(_text(ha.DEX), _text(ha.MUN), _silluq_word())
+    assert servi_before_from_verse_node(initial, pan.DEXI) == [None]
+
+    after_divider = _verse(_text(ha.ATN), _text(ha.DEX), _silluq_word())
+    assert servi_before_from_verse_node(after_divider, pan.DEXI) == [None]
+
+
+def test_servi_before_normalizes_atnah_hafukh_to_galgal():
+    # MAM writes the oleh-we-yored servus as atnah-hafukh (U+05A2); L codes it galgal.
+    # The extractor normalizes it so the same slot matches across witnesses.
+    node = _verse(
+        _text(ha.ATN_H),
+        {"type": "text", "text": B + ha.OLE + B + ha.MER},  # oleh-we-yored word
+        _text(ha.ATN),
+        _silluq_word(),
+    )
+    assert servi_before_from_verse_node(node, pan.OLEH_WEYORED) == [pan.GALGAL]
