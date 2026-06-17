@@ -9,9 +9,9 @@ where the two witnesses agree or differ.
 It is the second-witness gate for vetting Breuer's servant-ADJACENCY rules before
 encoding any of them in the grammar.  It already settled two:
 
-  * dekhi: Breuer Ch 11 §11 says "always munakh", but L marks merka in 16/19 cases and
-    MAM agrees (munah in 0) -- REFUTED.
-  * small revia': Breuer §16 says "merka", and L is 125/125 merka with MAM agreeing and
+  * deḥi: Breuer Ch 11 §11 says "always [munaḥ]", but L marks merkha in 16/19 cases and
+    MAM agrees (munaḥ in 0) -- REFUTED.
+  * small revia': Breuer §16 says "[merkha]", and L is 125/125 merkha with MAM agreeing and
     zero servant-type conflicts -- CONFIRMED (encoded, though it then fires on nothing).
 
 Per target it shows: the L adjacent-servant distribution; and, over verses where L and

@@ -184,12 +184,12 @@ def p_revia_gadol_phrase(p):
     _phrase(p, "revia_gadol_phrase")
 
 
-# Breuer Ch 11 §16: "the servant next to a small revia' is merka, and a mahpakh
+# Breuer Ch 11 §16: "the servant next to a small revia' is [merkha], and a [mahapakh]
 # precedes it."  So the servus immediately adjacent to REVIA_QATAN must be MERKHA;
-# any earlier servi (e.g. the preceding mahpak) are free.  Unlike the refuted
-# dekhi<-munah rule, this is CONFIRMED by both witnesses via the servi_before oracle
-# (mam_poetic_accents): L marks merka before small revia in 125/125 cases and MAM
-# agrees on merka wherever it too has a servant there, with ZERO servant-type
+# any earlier servi (e.g. the preceding mahapakh) are free.  Unlike the refuted
+# deḥi<-munaḥ rule, this is CONFIRMED by both witnesses via the servi_before oracle
+# (mam_poetic_accents): L marks merkha before small revia in 125/125 cases and MAM
+# agrees on merkha wherever it too has a servant there, with ZERO servant-type
 # conflicts.  NOTE: precisely because both witnesses already agree, this rule does
 # NOT currently fire -- it flags 0 verses in the present corpus.  It is encoded as a
 # faithful, evidence-backed constraint and a guard against future / other-text
@@ -214,14 +214,14 @@ def p_revia_mugrash_phrase(p):
 
 
 # Permissive servi before dehi (same shape as the other phrases).  NB: Breuer
-# Ch 11 §11 states "the servant next to the dekhi is ALWAYS a munakh", which would
+# Ch 11 §11 states "the servant next to the [deḥi] is ALWAYS a [munaḥ]", which would
 # justify forcing the adjacent servus to MUNAX.  That tightening was tried (commit
 # fc9c0d7) and REFUTED: a MAM-simple cross-check of the servant sign (not just the
-# disjunctive skeleton) shows MAM independently agrees with L on *merka* before dehi
-# in all 16 merka cases and has munah in NONE of them -- so merka-served dehi is a
+# disjunctive skeleton) shows MAM independently agrees with L on *merkha* before deḥi
+# in all 16 merkha cases and has munaḥ in NONE of them -- so merkha-served deḥi is a
 # real, two-witness construction and Breuer's flat "always" is an oversimplification
-# (the munah/merka choice is phonological, hence out of scope for a token grammar).
-# Enforcing munah-only would flag 16 correct verses.  See memory
+# (the munaḥ/merkha choice is phonological, hence out of scope for a token grammar).
+# Enforcing munaḥ-only would flag 16 correct verses.  See memory
 # poetic-servant-rules-breuer.
 def p_dehi_phrase(p):
     """dehi_phrase : DEXI

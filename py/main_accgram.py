@@ -22,7 +22,7 @@ Subcommands:
                 Cross-check, per disjunctive, the servant (conjunctive) the WLC
                 scanner and MAM-simple put immediately before it, and write
                 out/accgram/ply-poetic/_servi_xcheck.txt.  The second-witness gate
-                for vetting Breuer servant-adjacency rules (it settled dekhi and
+                for vetting Breuer servant-adjacency rules (it settled deḥi and
                 small revia).  Use --target to restrict.
     run-ply-poetic-oddballs
                 Collect the residual poetic oddballs (the missing-silluq

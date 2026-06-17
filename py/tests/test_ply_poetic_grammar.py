@@ -215,13 +215,13 @@ def test_sinnor_subdivides_revia_qatan_before_oleh():
 
 def test_revia_qatan_requires_merka_servant():
     """Breuer Ch 11 §16, confirmed by both witnesses (servi_before oracle): the
-    servant adjacent to a small revia' is merka (a mahpakh may precede it).  A
-    merka-served small revia parses; a non-merka adjacent servant (here munah) does
+    servant adjacent to a small revia' is merkha (a mahapakh may precede it).  A
+    merkha-served small revia parses; a non-merkha adjacent servant (here munaḥ) does
     not, even though the position is otherwise valid.  This rule is faithful but
-    currently inert on the corpus (L marks merka in 125/125 cases)."""
+    currently inert on the corpus (L marks merkha in 125/125 cases)."""
     parser = build_parser()
     tail = (pan.OLEH_WEYORED, pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.SILLUQ)
-    # merka adjacent, with a mahpakh before it ("a mahpakh precedes it") -> parses
+    # merkha adjacent, with a mahapakh before it ("a [mahapakh] precedes it") -> parses
     ok = parse_tokens(parser, _verse(pan.MAHAPAKH, pan.MERKHA, pan.REVIA_QATAN, *tail))
     assert ok is not None
     assert "revia_qatan_phrase" in print_tree(ok, 0)

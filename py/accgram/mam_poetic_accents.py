@@ -39,7 +39,7 @@ or secondary marks and contribute no disjunctive.
 The *servant* of a disjunctive -- the conjunctive sign on the word immediately
 preceding it -- IS extractable, via ``servi_before_from_verse_node`` /
 ``load_servi_before``.  That is the second-witness oracle for vetting servant-
-ADJACENCY rules (e.g. Breuer's "the servant next to dekhi is munakh"): MAM's servant
+ADJACENCY rules (e.g. Breuer's "the servant next to [deḥi] is [munaḥ]"): MAM's servant
 *choice* per slot is read in the scanner's own servus vocabulary and compared
 word-for-word against L.  (The disjunctive cross-check above is silent on servi;
 this fills that gap.  The munah/merka *selection within* a slot is phonological and
