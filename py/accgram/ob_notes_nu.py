@@ -131,6 +131,12 @@ BY_REF: dict[str, dict[str, object]] = {
         "st-source": "bhs",
         "st-summary": "BHS puts a verse number in the middle of a chanted verse.",
         "wlc_focus": "המגפ֑ה",
+        # MAM equals WLC word-for-word here; the only difference is versification.
+        # So there is no word-accent splice to test -- instead the fix-tester appends
+        # the M-C body of the named next verse (the second half of MAM's single
+        # chanted verse) and re-parses.  The stranded atnach then bisects a complete
+        # verse ending in silluq + sof-pasuq, clearing silluq_phrase/sof_pasuq_phrase.
+        "merge_next": "nu 26:1",
         "comment": (
             _NU_2509_01,
             _NU_2509_02,

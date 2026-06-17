@@ -16,8 +16,11 @@ it splices the MAM value into the verse's Michigan-Claremont body
 
 For a multi-entry diff, the entry matching the note's ``wlc_focus`` is the one
 tested (adjacent multi-word foci are spliced word by word).  When MAM equals WLC
-but the note carries a hand-authored ``synth_fix`` value, that speculated reading
-is tested instead (flagged ``synthesized``).
+the fix is not a word splice: if the note carries a hand-authored ``synth_fix``
+value, that speculated reading is tested instead (flagged ``synthesized``); if it
+carries a ``merge_next`` ref (the lone versification oddball nu 25:19, where BHS
+strands a verse number mid-chanted-verse), the named next verse's M-C body is
+*appended* and the joined verse re-parsed (``_test_merge_next``).
 
 It then cross-checks the verdict against the note's claim, flagging speculative
 claims ("I think the checker wants...") whose mechanical result disagrees, and
@@ -44,6 +47,7 @@ from accgram import research_tao
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_rows
+from accgram import split_wlc
 from accgram import lexical_validation
 from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.ply_scanner import HasLegarmeh, Token, scan_accents
@@ -198,6 +202,22 @@ def _synth_fix(structured_text: object) -> str | None:
     return None
 
 
+def _merge_next(structured_text: object) -> str | None:
+    """The note's adjacent-verse merge target (``merge_next``), if present.
+
+    For the lone versification oddball (nu 25:19) MAM equals WLC word-for-word --
+    BHS merely puts a verse number mid-chanted-verse.  The fix is not a word splice
+    but a *verse* splice: append the named next verse's M-C body and re-parse.  See
+    ``doc/fix-tester-remaining-untestables.md``.
+    """
+    if not isinstance(structured_text, dict):
+        return None
+    value = structured_text.get("merge_next")
+    if isinstance(value, str) and value.strip():
+        return value.strip()
+    return None
+
+
 _NO_DIFF = object()
 _MULTI_DIFF = object()
 
@@ -301,6 +321,19 @@ def _test_one(
     diff_entry = _select_diff_entry(diff, wlc_focus)
     synthesized = False
     if diff_entry is _NO_DIFF:
+        merge_ref = _merge_next(structured_text)
+        if merge_ref is not None:
+            return _test_merge_next(
+                merge_ref=merge_ref,
+                body=body,
+                bb=bb,
+                chnu=chnu,
+                vrnu=vrnu,
+                before=before,
+                args=args,
+                guard=guard,
+                result=result,
+            )
         if synth_fix is None or not wlc_focus:
             return result(
                 "UNTESTABLE", reason="no_mam_diff", before=before,
@@ -352,6 +385,68 @@ def _test_one(
         transformation=applied.transformation(),
         fix_description=fix_description,
         synthesized=synthesized,
+    )
+
+
+def _test_merge_next(
+    *,
+    merge_ref: str,
+    body: str,
+    bb: str,
+    chnu: int,
+    vrnu: int,
+    before: _Eval,
+    args: argparse.Namespace,
+    guard: _ParseGuard,
+    result,
+) -> FixTestResult:
+    """The lone *verse*-level splice: append the named next verse's M-C body.
+
+    Unlike every other fix (a single-word accent edit inside one verse via
+    ``fix_apply``), nu 25:19's fix is versification: BHS strands a verse number
+    mid-chanted-verse, so the "verse" ends on an atnach with no silluq/sof-pasuq.
+    Appending the body BHS labels as the next verse supplies the second half, the
+    atnach bisects a complete verse, and the parse comes out CLEAN.
+    """
+    nbb, nchnu, nvrnu = rtms_rows.parse_ref(merge_ref, row_kind="oddball")
+    next_key = (nbb, nchnu, nvrnu)
+    bodies = split_wlc.collect_source_lines(args.input, {next_key})
+    next_body = bodies.get(next_key)
+    fix_description = (
+        f"merge next verse {merge_ref} "
+        f"(MAM versification: BHS splits one chanted verse in two)"
+    )
+    if not next_body:
+        return result(
+            "UNTESTABLE",
+            reason="merge_target_missing",
+            before=before,
+            fix_description=fix_description,
+        )
+
+    combined = f"{body} {next_body}"
+    after = _evaluate(combined, bb, chnu, vrnu, guard)
+    transformation = f"appended {merge_ref} M-C body"
+    if after.status == "PARSE_TIMEOUT":
+        return result(
+            "UNTESTABLE",
+            reason="parse_timeout",
+            before=before,
+            transformation=transformation,
+            fix_description=fix_description,
+        )
+    if after.status == "CLEAN":
+        classification = "CONFIRMED"
+    elif (after.status, after.labels) == (before.status, before.labels):
+        classification = "DENIED"
+    else:
+        classification = "CHANGED"
+    return result(
+        classification,
+        before=before,
+        after=after,
+        transformation=transformation,
+        fix_description=fix_description,
     )
 
 
@@ -484,12 +579,12 @@ def render_text_report(results: list[FixTestResult]) -> str:
     for name, blurb in _SECTIONS:
         group = by_class.get(name, [])
         lines.append(f"## {name} -- {blurb}  ({len(group)})")
-        if name == "UNTESTABLE":
+        if name == "UNTESTABLE" and group:
             lines.append(
-                "  (note: 'no_mam_diff' is inherent -- there is no word-accent change "
-                "to splice; 'vowel_only'/'meteg_only' (a *medial* meteg) are "
-                "grammar-inert, the scanner swallowing the mark.  None of these is a "
-                "verdict on the oddball.)"
+                "  (note: a *medial* 'vowel_only'/'meteg_only' mark is grammar-inert, "
+                "the scanner swallowing it; 'merge_target_missing' means the named "
+                "merge_next verse was not found in the source.  Neither is a verdict "
+                "on the oddball.)"
             )
         for r in group:
             lines.extend(_render_entry(r))

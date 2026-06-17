@@ -1,33 +1,31 @@
-# Fix-tester: the remaining untestables
+# Fix-tester: how the last untestables were resolved
 
 What the fix-tester ([`py/accgram/fix_tester.py`](../py/accgram/fix_tester.py)) does:
 for every annotated prose oddball it splices the proposed fix into the
 Michigan-Claremont (M-C) body, re-scans + re-parses with the real scanner/grammar,
 and classifies the outcome `CONFIRMED` / `DENIED` / `CHANGED` / `UNTESTABLE`. The
-proposed fix is normally "adopt the MAM-simple value", but when MAM equals WLC the
-note's hand-authored `synth_fix` is tested instead (flagged `synthesized`).
+proposed fix is normally "adopt the MAM-simple value"; when MAM equals WLC the note's
+hand-authored `synth_fix` is tested instead (flagged `synthesized`), or — for the one
+versification oddball — its `merge_next` ref drives a verse-level concatenation.
 
-As of 2026-06-16: **91 tested — 90 CONFIRMED, 0 DENIED, 0 CHANGED, 1 UNTESTABLE.**
-This file enumerates the one remaining untestable, why it cannot be mechanically
-tested, and the four apparatus barriers that were lifted to get here. Each barrier
-was either an *apparatus limit* (could be lifted with more tooling) or *inherent*
-(the change cannot affect the grammar, so there is nothing to test).
+As of 2026-06-17: **91 tested — 91 CONFIRMED, 0 DENIED, 0 CHANGED, 0 UNTESTABLE.**
+There are no remaining untestables. This file records the five barriers that were
+lifted to get here. Each was either an *apparatus limit* (lifted with more tooling)
+or, in the last case, a misframing — what looked *inherent* (nu 25:19, "not a
+word-accent change at all") turned out testable once the splice was generalized from
+the word level to the **verse** level.
 
-The sole remaining untestable is **inherent**: there is no word-accent change to
-splice. All four apparatus barriers (`alignment_failure`, `ambiguous_accent`/zarshit,
-`multi_accent`, and the verse-final-silluq promotion that had mislabelled 8 cases
-`meteg_only`) have been lifted.
+All five barriers — `alignment_failure`, `ambiguous_accent`/zarshit, `multi_accent`,
+the verse-final-silluq promotion that had mislabelled 8 cases `meteg_only`, and the
+versification `no_mam_diff` (nu 25:19) — have been lifted.
 
 `UNTESTABLE` is not a verdict on the oddball — it means the fix could not be reduced
-to a single, safely-appliable accent splice. The verdict counts (`agree`/`disagree`)
-ignore these.
+to a safely-appliable splice. The verdict counts (`agree`/`disagree`) ignore these;
+none remain.
 
-| reason | count | kind | path to testability |
-|---|---:|---|---|
-| `no_mam_diff` | 1 | inherent | not a word-accent change at all |
-
-(`alignment_failure` (12), `ambiguous_accent` / zarshit (12), `multi_accent` (2), and
-the 8 formerly-`meteg_only` were all RESOLVED 2026-06-16 — see below.)
+(`alignment_failure` (12), `ambiguous_accent` / zarshit (12), `multi_accent` (2), the
+8 formerly-`meteg_only`, and `no_mam_diff` (1) were all RESOLVED — the first four on
+2026-06-16, the last on 2026-06-17. See below.)
 
 ---
 
@@ -237,19 +235,40 @@ sentinel and the `multi_accent` UntestableFix reason are gone. Covered by
 
 ---
 
-## `no_mam_diff` (1) — inherent
+## `no_mam_diff` — RESOLVED 2026-06-17 (was 1, **not inherent after all**)
 
-| ref | proposed fix | grammar error |
-|---|---|---|
-| nu 25:19 | (MAM equals WLC; nothing to adopt) | silluq_phrase, sof_pasuq_phrase |
+**Fixed. Now CONFIRMED — the lone *verse*-level splice.** This had been filed as
+*inherent* on the reasoning that *"MAM equals WLC word-for-word, so there is no
+single-word reading to splice."* The words are indeed identical — but the fix was
+never a word change. BHS strands a verse number mid-chanted-verse: it labels the
+first half of MAM's single verse `25:19` and the second half `26:1`. So `25:19`
+alone ends on an **atnach** (`HA/M.AG."PF92H`) with no silluq and no sof-pasuq —
+exactly `silluq_phrase` + `sof_pasuq_phrase`.
 
-MAM equals WLC and no `synth_fix` is authored, because this oddball is a misplaced
-verse-number (a BHS structural artifact), not a word-accent change. There is no
-single-word reading to splice, so it stays untestable by design.
+The fix is to **append the next verse**. Every other fix is a single-word accent
+edit inside one verse's M-C body (`fix_apply.apply_mam_fix`); this one concatenates
+`body₂₅:₁₉ + " " + body₂₆:₁` and re-parses the joined verse. The stranded atnach
+then bisects a complete verse ending in silluq + sof-pasuq, and the mid-verse `]1`
+note marker and `P` petuhah are inert (no spurious tokens appear). The parse comes
+out CLEAN, confirming the ob_note's thesis that *"the accent grammar is unexceptional
+here if we ignore where BHS happens to put its verse labels."*
+
+The mechanism: the `nu 25:19` ob_note carries a `merge_next: "nu 26:1"` directive (a
+third `_NO_DIFF` escape hatch alongside `synth_fix`); `fix_tester._test_merge_next`
+pulls 26:1's M-C body from the source via `split_wlc.collect_source_lines`, appends
+it, and classifies the re-parse.
+
+| ref | proposed fix | before → after | new verdict |
+|---|---|---|---|
+| nu 25:19 | merge next verse nu 26:1 | …ATNACH MISSING_SOFPASUQ → …ATNACH … SILLUQ SOFPASUQ | CONFIRMED |
+
+Covered by `test_merge_next_concatenation_parses_clean`,
+`test_nu_2519_alone_is_the_oddball`, and `test_merge_next_extracted_from_note`
+(`py/tests/test_fix_tester.py`).
 
 ---
 
-## Summary of next steps, by leverage
+## Summary — all barriers lifted (91/91 CONFIRMED)
 
 0. ~~**`alignment_failure` (12)**~~ — DONE 2026-06-16 (section-marker exclusion in
    `_word_atom_spans`, plus verse-final silluq promotion in `_accent_name_diff`):
@@ -262,6 +281,10 @@ single-word reading to splice, so it stays untestable by design.
    to pure addition guarded by `wlc_mos == 0`, plus before-sof-pasuq placement in
    `_insert_codes`): all 8 CONFIRMED. These had been **mislabelled inherent** — the
    added U+05BD before sof pasuq is a silluq, not a meteg.
-4. **`no_mam_diff` (1)** — the only inherent untestable; not a word-accent change, so
-   there is nothing to splice. Testable only if a genuine accent hypothesis is
-   authored as a `synth_fix`. **No apparatus barriers remain.**
+4. ~~**`no_mam_diff` (1)**~~ — DONE 2026-06-17 (verse-level splice: `merge_next` ref
+   on the note + `fix_tester._test_merge_next`, appending nu 26:1's M-C body via
+   `split_wlc.collect_source_lines`): CONFIRMED. Had been **mislabelled inherent** —
+   the fix is a versification merge, not a word-accent change, but is mechanically
+   testable by concatenating the verse BHS stranded.
+
+**Nothing remains untestable.** All 91 annotated prose oddballs are CONFIRMED.

@@ -1,11 +1,11 @@
 # Fix-tester: do MAM-simple values resolve annotated prose oddballs?
 
-confirmed: 90  denied: 0  changed: 0  untestable: 1  (91 annotated oddballs tested)
-speculations: 15 total; 14 confirmed, 0 denied/changed, 1 untestable
+confirmed: 91  denied: 0  changed: 0  untestable: 0  (91 annotated oddballs tested)
+speculations: 15 total; 15 confirmed, 0 denied/changed, 0 untestable
 synthesized fixes (no MAM diff; tested the note's synth_fix): 1
-claim-vs-result: 81 agree, 0 disagree
+claim-vs-result: 82 agree, 0 disagree
 
-## CONFIRMED -- MAM fix clears the oddball  (90)
+## CONFIRMED -- MAM fix clears the oddball  (91)
   1c 1:53 [claim: expects_fix] [AGREE]
     fix: אל֣וף -> אל֥וף
     transform: atom ")AL.74W.P" -> ")AL.71W.P" (74 -> 71)
@@ -446,6 +446,11 @@ claim-vs-result: 81 agree, 0 disagree
     transform: atom "YI&:RF)"82L]s" -> "YI&:RF)"02L]s" (82 -> 02)
     before: AZLA MEREKA MUNACH SEGOLTA MAHPAK PASHTA MUNACH ZAQEF TIFCHA ATNACH MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  AZLA MEREKA ZARQA MUNACH SEGOLTA MAHPAK PASHTA MUNACH ZAQEF TIFCHA ATNACH MEREKA TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  nu 25:19 [speculative] [claim: expects_fix] [AGREE]
+    fix: merge next verse nu 26:1 (MAM versification: BHS splits one chanted verse in two)
+    transform: appended nu 26:1 M-C body
+    before: TIFCHA MUNACH ATNACH MISSING_SOFPASUQ  [ODDBALL: silluq_phrase, sof_pasuq_phrase]
+    after:  TIFCHA MUNACH ATNACH MAHPAK PASHTA ZAQEF DARGA TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
   nu 27:9 [claim: expects_fix] [AGREE]
     fix: לאחיו׃ -> לאחֽיו׃
     transform: atom "L:/)EXFY/W00]1" -> "L:/)EXFY/W3500]1" ((none) -> 35)
@@ -461,11 +466,7 @@ claim-vs-result: 81 agree, 0 disagree
 
 ## CHANGED -- a different error appears after the fix  (0)
 
-## UNTESTABLE -- fix could not be applied mechanically  (1)
-  (note: 'no_mam_diff' is inherent -- there is no word-accent change to splice; 'vowel_only'/'meteg_only' (a *medial* meteg) are grammar-inert, the scanner swallowing the mark.  None of these is a verdict on the oddball.)
-  nu 25:19 [speculative] [claim: expects_fix]
-    fix: (MAM equals WLC; nothing to adopt)
-    reason: no_mam_diff
+## UNTESTABLE -- fix could not be applied mechanically  (0)
 
 ## Review queue: speculative claims whose result disagrees  (0)
 
