@@ -3,14 +3,14 @@
   "artifacts_description": "fix-tester verdicts: whether adopting each annotated prose oddball's MAM-simple value clears its grammar/lexical error",
   "summary": {
     "tested": 91,
-    "confirmed": 57,
+    "confirmed": 58,
     "denied": 0,
     "changed": 0,
-    "untestable": 34,
-    "speculative_total": 15,
+    "untestable": 33,
+    "speculative_total": 14,
     "speculative_confirmed": 6,
     "synthesized": 1,
-    "agree": 50,
+    "agree": 51,
     "disagree": 0
   },
   "results": [
@@ -2709,15 +2709,15 @@
       "ref": "is 45:1",
       "bcv": "is45:1",
       "wlc_focus": "לכ֣ורש",
-      "fix_description": "לכ֣ורש -> לכֶ֣ורש  (synthesized)",
-      "classification": "UNTESTABLE",
-      "untestable_reason": "vowel_only",
-      "transformation": "no accent/punctuation difference -- invisible to the grammar",
+      "fix_description": "לכ֣ורש -> לכ֒ורש  (synthesized)",
+      "classification": "CONFIRMED",
+      "untestable_reason": null,
+      "transformation": "atom \"L:/KO74WRE$\" -> \"L:/KO01WRE$\" (74 -> 01)",
       "before_status": "ODDBALL",
       "before_labels": [
         "segolta_phrase"
       ],
-      "after_status": null,
+      "after_status": "CLEAN",
       "after_labels": [],
       "before_tokens": [
         "MUNACH",
@@ -2739,12 +2739,31 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "after_tokens": null,
-      "speculative": true,
+      "after_tokens": [
+        "MUNACH",
+        "ZARQA",
+        "ZARQA",
+        "SEGOLTA",
+        "MUNACH",
+        "REVIA",
+        "PASHTA",
+        "ZAQEF",
+        "MEREKA",
+        "TIFCHA",
+        "ATNACH",
+        "MAHPAK",
+        "PASHTA",
+        "ZAQEF",
+        "TIFCHA",
+        "MEREKA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
+      "speculative": false,
       "synthesized": true,
       "claimed_outcome": "expects_fix",
-      "agreement": "n/a",
-      "st_summary": "I think the checker wants לכ֣ורש to have a segol."
+      "agreement": "agree",
+      "st_summary": "The checker requires a segolta in לכ֣ורש: the munaḥ should be a segolta (the segol accent, not the vowel), which clears the segolta_phrase error."
     },
     {
       "ref": "je 9:10",

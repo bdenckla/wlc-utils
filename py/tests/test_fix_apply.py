@@ -160,10 +160,23 @@ def test_synthetic_accent_fix_applies():
     assert result.new_body == ")AL.71W.P B.F/(F75M00"
 
 
-def test_synthetic_vowel_fix_is_inert():
-    # is 45:1-style: the speculated fix adds only a segol (a vowel) -> grammar-inert.
+def test_synthetic_segolta_fix_applies():
+    # is 45:1-style: the speculated fix is the segol *accent* (segolta, U+0592), not
+    # the segol vowel -- a real munaH -> segolta change the grammar sees (74 -> 01).
     result = apply_mam_fix(
-        "L:K.71WR$",
+        "L:K.74WR$",
+        ["לכ֣ורש"],
+        {"wlc422": "לכ֣ורש", "mam_simple": "לכ֒ורש"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.new_body == "L:K.01WR$"
+    assert "SEGOLTA" in _types(result.new_body)
+
+
+def test_synthetic_vowel_fix_is_inert():
+    # A synth_fix that adds only a vowel (segol point, U+05B6) is grammar-inert.
+    result = apply_mam_fix(
+        "L:K.74WR$",
         ["לכורש"],
         {"wlc422": "לכ֣ורש", "mam_simple": "לכֶ֣ורש"},
     )

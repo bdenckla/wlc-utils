@@ -1,11 +1,11 @@
 # Fix-tester: do MAM-simple values resolve annotated prose oddballs?
 
-confirmed: 57  denied: 0  changed: 0  untestable: 34  (91 annotated oddballs tested)
-speculations: 15 total; 6 confirmed, 0 denied/changed, 9 untestable
+confirmed: 58  denied: 0  changed: 0  untestable: 33  (91 annotated oddballs tested)
+speculations: 14 total; 6 confirmed, 0 denied/changed, 8 untestable
 synthesized fixes (no MAM diff; tested the note's synth_fix): 1
-claim-vs-result: 50 agree, 0 disagree
+claim-vs-result: 51 agree, 0 disagree
 
-## CONFIRMED -- MAM fix clears the oddball  (57)
+## CONFIRMED -- MAM fix clears the oddball  (58)
   1c 1:53 [claim: expects_fix] [AGREE]
     fix: אל֣וף -> אל֥וף
     transform: atom ")AL.74W.P" -> ")AL.71W.P" (74 -> 71)
@@ -181,6 +181,11 @@ claim-vs-result: 50 agree, 0 disagree
     transform: atom "WA/Y.I$:LA74X" -> "WA/Y.I$:LA71X" (74 -> 71)
     before: MUNACH LEGARMEH AZLA DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH REVIA PASHTA MUNACH ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: legarmeh_phrase]
     after:  MEREKA LEGARMEH AZLA DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH REVIA PASHTA MUNACH ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  is 45:1 [synthesized] [claim: expects_fix] [AGREE]
+    fix: לכ֣ורש -> לכ֒ורש  (synthesized)
+    transform: atom "L:/KO74WRE$" -> "L:/KO01WRE$" (74 -> 01)
+    before: MUNACH ZARQA ZARQA MUNACH MUNACH REVIA PASHTA ZAQEF MEREKA TIFCHA ATNACH MAHPAK PASHTA ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: segolta_phrase]
+    after:  MUNACH ZARQA ZARQA SEGOLTA MUNACH REVIA PASHTA ZAQEF MEREKA TIFCHA ATNACH MAHPAK PASHTA ZAQEF TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
   je 10:3 [speculative] [claim: expects_fix] [AGREE]
     fix: יד֥י־ -> ידי־
     transform: atom "Y:D"71Y" -> "Y:D"Y" (71 -> (none))
@@ -296,7 +301,7 @@ claim-vs-result: 50 agree, 0 disagree
 
 ## CHANGED -- a different error appears after the fix  (0)
 
-## UNTESTABLE -- fix could not be applied mechanically  (34)
+## UNTESTABLE -- fix could not be applied mechanically  (33)
   (note: reasons 'vowel_only'/'meteg_only' are grammar-inert -- the scanner swallows vowels and meteg, so the speculated change cannot clear the oddball; the rest are apparatus limits, not verdicts.)
   1k 8:11 [claim: expects_fix]
     fix: מפנ֥י -> מפנ֣י
@@ -358,9 +363,6 @@ claim-vs-result: 50 agree, 0 disagree
   is 13:7 [claim: expects_fix]
     fix: ימס׃ -> ימֽס׃
     reason: meteg_only (no accent/punctuation difference -- invisible to the grammar)
-  is 45:1 [synthesized] [speculative] [claim: expects_fix]
-    fix: לכ֣ורש -> לכֶ֣ורש  (synthesized)
-    reason: vowel_only (no accent/punctuation difference -- invisible to the grammar)
   je 9:10 [speculative] [claim: expects_fix]
     fix: מבל֖י -> מבל֥י
     reason: alignment_failure (14 M-C word-atoms vs 13 WLC words)

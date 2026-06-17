@@ -43,12 +43,26 @@ BY_REF: dict[str, dict[str, object]] = {
     "is 45:1": {
         "st-source": "tbd",
         "wlc_focus": "לכ֣ורש",
-        # The speculated reading to test (segol on the kaf).  MAM equals WLC here,
-        # so the fix-tester exercises this synth_fix instead.  A segol is a vowel,
-        # invisible to the grammar, so the verdict is grammar-inert -- which
-        # mechanically refutes the "the checker wants a segol" reading below.
-        "synth_fix": "לכֶ֣ורש",
-        "st-summary": "I think the checker wants לכ֣ורש to have a segol.",
-        "comment": "There is a question of whether לכ֣ורש should have a legarmeh; see MAM’s doc-note.",
+        # The speculated reading to test: "segol" here is the *accent* segol
+        # (segolta, U+0592), not the segol vowel -- the checker validates accents.
+        # MAM equals WLC, so the fix-tester exercises this synth_fix: replace the
+        # munaH (U+05A3) with a segolta (U+0592).
+        "synth_fix": "לכ֒ורש",
+        "st-summary": (
+            "The checker requires a segol accent rather than a munaḥ."
+        ),
+        "comment": [
+            "Verified by re-running the checker on a fixed verse: replacing the"
+            " munaḥ with a segol accent clears the segolta_phrase error. Note that"
+            " MAM, like WLC, has a munaḥ here, so this is a checker-vs-consensus tension,"
+            " not a quirk in the LC, BHS, or WLC.",
+            " The question of whether there should be a legarmeh after לכ֣ורש"
+            " (see MAM’s doc-note)"
+            " is independent of the checker’s"
+            " problem with this verse."
+            " Giving the word a legarmeh does not clear the error"
+            " (the verse then fails to parse at all)."
+            " Only the segol accent resolves it.",
+        ],
     },
 }
