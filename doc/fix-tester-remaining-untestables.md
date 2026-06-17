@@ -7,7 +7,7 @@ and classifies the outcome `CONFIRMED` / `DENIED` / `CHANGED` / `UNTESTABLE`. Th
 proposed fix is normally "adopt the MAM-simple value", but when MAM equals WLC the
 note's hand-authored `synth_fix` is tested instead (flagged `synthesized`).
 
-As of 2026-06-16: **91 tested — 67 CONFIRMED, 1 DENIED, 0 CHANGED, 23 UNTESTABLE.**
+As of 2026-06-16: **91 tested — 68 CONFIRMED, 0 DENIED, 0 CHANGED, 23 UNTESTABLE.**
 This file enumerates the 23 untestables, why each cannot be mechanically tested, and
 whether the barrier is an *apparatus limit* (could be lifted with more tooling) or
 *inherent* (the change cannot affect the grammar, so there is nothing to test).
@@ -27,9 +27,10 @@ ignore these.
 
 ## `alignment_failure` — RESOLVED 2026-06-16 (was 12, apparatus)
 
-**Fixed.** Of the 12, **9 now CONFIRMED**, **1 DENIED** (ju 13:18), and **2 fell
-through to their next barrier** (je 49:19 → `multi_accent`, js 10:30 →
-`ambiguous_accent`/zarshit — it was always in both lists).
+**Fixed.** Of the 12, **10 now CONFIRMED** and **2 fell through to their next
+barrier** (je 49:19 → `multi_accent`, js 10:30 → `ambiguous_accent`/zarshit — it was
+always in both lists). ju 13:18 first surfaced as a *false* DENIED; a second fix
+(verse-final silluq promotion, below) turned it into the 10th CONFIRMED.
 
 The doc's hypothesis was exactly right: a single shared tokenization bug, not 12
 distinct problems. The splice located the changed word by index-aligning the M-C
@@ -59,11 +60,31 @@ bearing those consonants always carries vowels), mirroring
 | je 49:19 | אריצ֨נו → אריצ֙נו֙ | tifcha_phrase | UNTESTABLE → `multi_accent` |
 | js 10:30 | ישרא֘ל → ישראל֮ | illegal_mark:82 | UNTESTABLE → `ambiguous_accent` |
 | js 15:47 | עז֥ה → עז֛ה | tifcha_phrase | CONFIRMED |
-| ju 13:18 | פ֛לאי׃ → פֽלאי׃ | silluq_phrase | DENIED |
+| ju 13:18 | פ֛לאי׃ → פֽלאי׃ | silluq_phrase | CONFIRMED (silluq promotion, below) |
 
-ju 13:18 is now a genuine **DENIED**: removing the tevir (91) still leaves the
-silluq_phrase error, because MAM's remaining change there is a meteg — invisible to
-the grammar.
+### Verse-final silluq promotion (the ju 13:18 fix)
+
+Once the section-marker fix let ju 13:18 splice, it came out **DENIED** — but that
+was a false negative, an apparatus artifact. The ob_note's claim is *"BHQ
+transcribes a silluq as a tevir due to a speck"*: the fix is **tevir → verse-final
+silluq**, and adopting it parses clean.
+
+The trap: a silluq and a meteg are the **same glyph** (U+05BD), so
+`uni_heb.accent_names` reduces both to `(mos)` (meteg-**o**r-**s**illuq).
+`_accent_name_diff` strips `(mos)` from both sides of the diff — correct for the 8
+`meteg_only` cases (a meteg is invisible to the grammar) — but here it discarded the
+*silluq* the fix was supposed to add. The splice degenerated to "delete the tevir,
+add nothing", leaving the word accent-less and still failing `silluq_phrase`.
+
+The fix (`fix_apply._accent_name_diff` + `fix_tester_codes`): a `(mos)` that
+**replaces** a real WLC accent on a sof-pasuq-bearing word is the verse-final
+silluq, not a meteg — it is promoted to a synthetic `(sil)` abbreviation mapping to
+M-C code 35, which the scanner tokenizes as SILLUQ before sof-pasuq
+(`(?:35|75|95)(?=…00)`). A `(mos)` merely *added* (nothing removed) stays an inert
+meteg, so the `meteg_only` cases are unaffected. The splice then swaps tevir (91) →
+silluq (35), the verse parses CLEAN, and the verdict **agrees** with the note.
+Covered by `test_verse_final_silluq_swap_applies` and
+`test_meteg_added_on_sof_pasuq_word_stays_inert`.
 
 ---
 
@@ -158,7 +179,8 @@ single-word reading to splice, so it stays untestable by design.
 ## Summary of next steps, by leverage
 
 0. ~~**`alignment_failure` (12)**~~ — DONE 2026-06-16 (section-marker exclusion in
-   `_word_atom_spans`): 9 CONFIRMED, 1 DENIED, 2 fell through to the barriers below.
+   `_word_atom_spans`, plus verse-final silluq promotion in `_accent_name_diff`):
+   10 CONFIRMED, 2 fell through to the barriers below; 0 DENIED.
 1. **zarshit / code-82 (12)** — decide whether the splice should handle the 82
    lexical pair, or whether these belong wholly to the lexical-validation layer.
 2. **`multi_accent` (2)** — extend `_splice` to 1→many.

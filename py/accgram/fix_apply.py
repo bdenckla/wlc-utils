@@ -308,10 +308,21 @@ def _diff_side_word(diff_entry: object, key: str) -> object:
 def _accent_name_diff(wlc_word: str, mam_word: str) -> tuple[list[str], list[str]]:
     wlc_accs = Counter(uni_heb.accent_names(wlc_word))
     mam_accs = Counter(uni_heb.accent_names(mam_word))
+    # ``(mos)`` is the meteg/silluq glyph (U+05BD); strip it from the cantillation
+    # diff -- a meteg difference is invisible to the grammar.
     del wlc_accs[fix_tester_codes.MOS_ABBREV]
-    del mam_accs[fix_tester_codes.MOS_ABBREV]
+    mam_mos = mam_accs.pop(fix_tester_codes.MOS_ABBREV, 0)
     removed = list((wlc_accs - mam_accs).elements())
     added = list((mam_accs - wlc_accs).elements())
+    # Verse-final silluq: when MAM trades a real WLC accent for a ``(mos)`` on a
+    # sof-pasuq-bearing word, that ``(mos)`` is the verse-final silluq -- a real,
+    # grammar-visible accent (code 35), not meteg.  Promote it so the splice swaps
+    # accent->silluq instead of silently dropping the silluq (which would leave the
+    # word accent-less and still failing silluq_phrase -- a false DENIED, e.g.
+    # ju 13:18).  A ``(mos)`` merely *added* (nothing removed) stays an inert meteg,
+    # as in the meteg_only cases.
+    if mam_mos and removed and not added and _SOF_PASUQ in mam_word:
+        added.append(fix_tester_codes.SILLUQ_ABBREV)
     return removed, added
 
 

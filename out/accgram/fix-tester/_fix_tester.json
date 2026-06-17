@@ -3,15 +3,15 @@
   "artifacts_description": "fix-tester verdicts: whether adopting each annotated prose oddball's MAM-simple value clears its grammar/lexical error",
   "summary": {
     "tested": 91,
-    "confirmed": 67,
-    "denied": 1,
+    "confirmed": 68,
+    "denied": 0,
     "changed": 0,
     "untestable": 23,
     "speculative_total": 15,
-    "speculative_confirmed": 13,
+    "speculative_confirmed": 14,
     "synthesized": 1,
-    "agree": 58,
-    "disagree": 1
+    "agree": 59,
+    "disagree": 0
   },
   "results": [
     {
@@ -3623,17 +3623,15 @@
       "bcv": "ju13:18",
       "wlc_focus": "פ֛לאי׃",
       "fix_description": "פ֛לאי׃ -> פֽלאי׃",
-      "classification": "DENIED",
+      "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"PE91LI)Y00]Q]c]n\" -> \"PELI)Y00]Q]c]n\" (91 -> (none))",
+      "transformation": "atom \"PE91LI)Y00]Q]c]n\" -> \"PE35LI)Y00]Q]c]n\" (91 -> 35)",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
       ],
-      "after_status": "ODDBALL",
-      "after_labels": [
-        "silluq_phrase"
-      ],
+      "after_status": "CLEAN",
+      "after_labels": [],
       "before_tokens": [
         "MAHPAK",
         "PASHTA",
@@ -3655,12 +3653,13 @@
         "TIFCHA",
         "MUNACH",
         "ATNACH",
+        "SILLUQ",
         "SOFPASUQ"
       ],
       "speculative": true,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
-      "agreement": "disagree",
+      "agreement": "agree",
       "st_summary": "BHQ transcribes a silluq as a tevir due to a speck."
     },
     {

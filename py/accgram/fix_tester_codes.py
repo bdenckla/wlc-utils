@@ -102,9 +102,20 @@ UNTESTABLE_ABBREVS: frozenset[str] = frozenset(
 # accent diff (a meteg difference is not a cantillation-accent fix).
 MOS_ABBREV = "(mos)"
 
+# The verse-final silluq.  ``uni_heb`` cannot tell silluq from meteg -- both are
+# U+05BD and reduce to ``(mos)`` -- so it is *not* a uni_heb abbreviation and is
+# exempt from the coverage invariant below.  ``fix_apply`` promotes a ``(mos)``
+# that *replaces* a real accent on a sof-pasuq-bearing word (a verse-final silluq,
+# not meteg) to this abbreviation; it maps to the M-C silluq code 35, which scans
+# to SILLUQ before a sof pasuq (``ply_scanner`` rule ``(?:35|75|95)(?=...00)``).
+SILLUQ_ABBREV = "(sil)"
+SILLUQ_CODE = "35"
+
 
 def accent_code(abbrev: str) -> str | None:
     """Return the canonical M-C code for a mappable accent abbreviation, else None."""
+    if abbrev == SILLUQ_ABBREV:
+        return SILLUQ_CODE
     return SAFE_ABBREV_TO_CODE.get(abbrev)
 
 
@@ -148,3 +159,15 @@ def assert_in_sync_with_gg_rules() -> None:
                 f"fix_tester_codes: code {code} for {abbrev} no longer scans to "
                 f"{expected} (got {sorted(types)}); ply_scanner._GG_RULES changed?"
             )
+
+    # The verse-final silluq is mapped outside SAFE_ABBREV_TO_CODE (its abbreviation
+    # is synthetic), so probe it separately: code 35 immediately before a sof pasuq
+    # (00) must still scan to SILLUQ.
+    silluq_types = {
+        tok.type for tok in scan_accents(f"Z{SILLUQ_CODE}Z00", "zz", 1, 1, HasLegarmeh())
+    }
+    if "SILLUQ" not in silluq_types:
+        raise AssertionError(
+            f"fix_tester_codes: silluq code {SILLUQ_CODE} no longer scans to SILLUQ "
+            f"(got {sorted(silluq_types)}); ply_scanner._GG_RULES changed?"
+        )

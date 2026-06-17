@@ -1,11 +1,11 @@
 # Fix-tester: do MAM-simple values resolve annotated prose oddballs?
 
-confirmed: 67  denied: 1  changed: 0  untestable: 23  (91 annotated oddballs tested)
-speculations: 15 total; 13 confirmed, 1 denied/changed, 1 untestable
+confirmed: 68  denied: 0  changed: 0  untestable: 23  (91 annotated oddballs tested)
+speculations: 15 total; 14 confirmed, 0 denied/changed, 1 untestable
 synthesized fixes (no MAM diff; tested the note's synth_fix): 1
-claim-vs-result: 58 agree, 1 disagree
+claim-vs-result: 59 agree, 0 disagree
 
-## CONFIRMED -- MAM fix clears the oddball  (67)
+## CONFIRMED -- MAM fix clears the oddball  (68)
   1c 1:53 [claim: expects_fix] [AGREE]
     fix: אל֣וף -> אל֥וף
     transform: atom ")AL.74W.P" -> ")AL.71W.P" (74 -> 71)
@@ -276,6 +276,11 @@ claim-vs-result: 58 agree, 1 disagree
     transform: atom ")OWT/O71W" -> ")OWT/O74W" (71 -> 74)
     before: GERSHAYIM MUNACH DARGA TEVIR MEREKA TIFCHA MEREKA ATNACH TELISHAQETANNA AZLA GERESH DARGA TEVIR TIFCHA MEREKA SILLUQ SOFPASUQ  [ODDBALL: atnach_phrase]
     after:  GERSHAYIM MUNACH DARGA TEVIR MEREKA TIFCHA MUNACH ATNACH TELISHAQETANNA AZLA GERESH DARGA TEVIR TIFCHA MEREKA SILLUQ SOFPASUQ  [CLEAN]
+  ju 13:18 [speculative] [claim: expects_fix] [AGREE]
+    fix: פ֛לאי׃ -> פֽלאי׃
+    transform: atom "PE91LI)Y00]Q]c]n" -> "PE35LI)Y00]Q]c]n" (91 -> 35)
+    before: MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH TEVIR SOFPASUQ  [ODDBALL: silluq_phrase]
+    after:  MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH SILLUQ SOFPASUQ  [CLEAN]
   ju 21:16 [claim: expects_fix] [AGREE]
     fix: ויאמר֨ו -> ויאמרו֙
     transform: atom "WA/Y.O75)M:R63W." -> "WA/Y.O75)M:R03W." (63 -> 03)
@@ -342,12 +347,7 @@ claim-vs-result: 58 agree, 1 disagree
     before: TIFCHA ATNACH TELISHAQETANNA AZLA GERESH REVIA AZLA GERESH MAHPAK PASHTA PASHTA MUNACH ZAQEF TEVIR MEREKA SILLUQ SOFPASUQ  [ODDBALL: tifcha_phrase]
     after:  TIFCHA ATNACH TELISHAQETANNA AZLA GERESH REVIA AZLA GERESH MAHPAK PASHTA PASHTA MUNACH ZAQEF TEVIR MEREKA TIFCHA SILLUQ SOFPASUQ  [CLEAN]
 
-## DENIED -- same error remains after the fix  (1)
-  ju 13:18 [speculative] [claim: expects_fix] [DISAGREE]
-    fix: פ֛לאי׃ -> פֽלאי׃
-    transform: atom "PE91LI)Y00]Q]c]n" -> "PELI)Y00]Q]c]n" (91 -> (none))
-    before: MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH TEVIR SOFPASUQ  [ODDBALL: silluq_phrase]
-    after:  MAHPAK PASHTA MUNACH ZAQEF MEREKA TIFCHA MUNACH ATNACH SOFPASUQ  [ODDBALL: silluq_phrase]
+## DENIED -- same error remains after the fix  (0)
 
 ## CHANGED -- a different error appears after the fix  (0)
 
@@ -423,6 +423,5 @@ claim-vs-result: 58 agree, 1 disagree
     fix: לאחיו׃ -> לאחֽיו׃
     reason: meteg_only (no accent/punctuation difference -- invisible to the grammar)
 
-## Review queue: speculative claims whose result disagrees  (1)
-  ju 13:18  [DENIED] claim: 'BHQ transcribes a silluq as a tevir due to a speck.'
+## Review queue: speculative claims whose result disagrees  (0)
 

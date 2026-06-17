@@ -124,6 +124,34 @@ def test_meteg_only_is_untestable():
     assert result.reason == "meteg_only"
 
 
+def test_verse_final_silluq_swap_applies():
+    # A speck made BHQ transcribe a verse-final silluq as a tevir (ju 13:18).  MAM
+    # restores the silluq (U+05BD).  uni_heb cannot tell silluq from meteg (both
+    # (mos)), but a (mos) *replacing* a real accent on a sof-pasuq word is the
+    # verse-final silluq: the splice must swap tevir (91) -> silluq (35), not just
+    # delete the tevir.  Re-scanned, 35 before 00 tokenizes as SILLUQ.
+    result = apply_mam_fix(
+        "PE91LI)Y00",
+        ["פל֛אי׃"],
+        {"wlc422": "פל֛אי׃", "mam_simple": "פֽלאי׃"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.new_body == "PE35LI)Y00"
+    assert _types("PE35LI)Y00") == ["SILLUQ", "SOFPASUQ"]
+
+
+def test_meteg_added_on_sof_pasuq_word_stays_inert():
+    # The verse-final-silluq promotion must NOT fire when a (mos) is merely *added*
+    # (no real accent removed): that is an ordinary meteg, invisible to the grammar.
+    result = apply_mam_fix(
+        "HAZ.EH00",
+        ["הזה׃"],
+        {"wlc422": "הזה׃", "mam_simple": "הזֽה׃"},
+    )
+    assert isinstance(result, UntestableFix)
+    assert result.reason == "meteg_only"
+
+
 def test_adjacent_two_word_splice():
     # A wlc_focus spanning two adjacent words: change munaH->merkha on the first and
     # tipeHa->munaH on the second; both atoms are spliced (right-to-left).
