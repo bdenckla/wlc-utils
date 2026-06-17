@@ -10,8 +10,14 @@ it splices the MAM value into the verse's Michigan-Claremont body
   * CONFIRMED  -- the oddball's ERROR cleared (the verse now parses clean);
   * DENIED     -- the same error remains;
   * CHANGED    -- a *different* error appears;
-  * UNTESTABLE -- the fix could not be applied mechanically (vowel-only,
-                  multi-word, context-dependent accent, alignment failure, ...).
+  * UNTESTABLE -- the fix could not be applied mechanically (vowel-/meteg-only,
+                  non-adjacent multi-word, context-dependent accent, alignment
+                  failure, ...).
+
+For a multi-entry diff, the entry matching the note's ``wlc_focus`` is the one
+tested (adjacent multi-word foci are spliced word by word).  When MAM equals WLC
+but the note carries a hand-authored ``synth_fix`` value, that speculated reading
+is tested instead (flagged ``synthesized``).
 
 It then cross-checks the verdict against the note's claim, flagging speculative
 claims ("I think the checker wants...") whose mechanical result disagrees, and
@@ -62,6 +68,7 @@ class FixTestResult:
     before_tokens: tuple[str, ...]
     after_tokens: tuple[str, ...] | None
     speculative: bool
+    synthesized: bool  # fix tested came from the note's hand-authored synth_fix
     claimed_outcome: str
     agreement: str  # agree | disagree | n/a
     st_summary: str
@@ -150,8 +157,14 @@ def _error_labels(tree: TN, out: set[str] | None = None) -> set[str]:
 # --- diff -> single testable change ------------------------------------------
 
 
-def _single_diff_entry(diff: object) -> object:
-    """Return the lone diff dict, or a sentinel: _NO_DIFF / _MULTI_DIFF."""
+def _select_diff_entry(diff: object, wlc_focus: str | None) -> object:
+    """Return the single testable diff dict, or a sentinel: _NO_DIFF / _MULTI_DIFF.
+
+    For a multi-entry diff, the entry whose wlc422 side equals the note's wlc_focus
+    is the one the annotation is about (mirrors the SAT display selection in
+    rtms_sat_source_rows); the other entries are incidental and dropped.  Adjacent
+    multi-word foci arrive pre-collapsed into one entry by the wlc_focus expansion.
+    """
     if isinstance(diff, dict):
         return diff
     if diff is None:
@@ -162,8 +175,27 @@ def _single_diff_entry(diff: object) -> object:
             return _NO_DIFF
         if len(entries) == 1:
             return entries[0]
+        if wlc_focus:
+            focus = " ".join(wlc_focus.split())
+            matches = [e for e in entries if _entry_wlc_matches_focus(e, focus)]
+            if len(matches) == 1:
+                return matches[0]
         return _MULTI_DIFF
     return _NO_DIFF
+
+
+def _entry_wlc_matches_focus(entry: dict, focus: str) -> bool:
+    return " ".join(_side_repr(entry.get("wlc422")).split()) == focus
+
+
+def _synth_fix(structured_text: object) -> str | None:
+    """The note's hand-authored speculated fix value (``synth_fix``), if present."""
+    if not isinstance(structured_text, dict):
+        return None
+    value = structured_text.get("synth_fix")
+    if isinstance(value, str) and value.strip():
+        return value.strip()
+    return None
 
 
 _NO_DIFF = object()
@@ -216,6 +248,7 @@ def _test_one(
         before: _Eval | None = None,
         after: _Eval | None = None,
         fix_description: str = "",
+        synthesized: bool = False,
     ) -> FixTestResult:
         agreement = _agreement(claimed, classification)
         return FixTestResult(
@@ -233,6 +266,7 @@ def _test_one(
             before_tokens=before.token_types if before else (),
             after_tokens=after.token_types if after else None,
             speculative=speculative,
+            synthesized=synthesized,
             claimed_outcome=claimed,
             agreement=agreement,
             st_summary=st_summary,
@@ -263,19 +297,27 @@ def _test_one(
     wlc_words = fix_apply.verse_words(enriched_row.get("wlc422_kq_u_verse"))
     before = _evaluate(body, bb, chnu, vrnu, guard)
 
-    diff_entry = _single_diff_entry(diff)
+    synth_fix = _synth_fix(structured_text)
+    diff_entry = _select_diff_entry(diff, wlc_focus)
+    synthesized = False
     if diff_entry is _NO_DIFF:
-        return result(
-            "UNTESTABLE", reason="no_mam_diff", before=before,
-            fix_description="(MAM equals WLC; nothing to adopt)",
-        )
-    if diff_entry is _MULTI_DIFF:
+        if synth_fix is None or not wlc_focus:
+            return result(
+                "UNTESTABLE", reason="no_mam_diff", before=before,
+                fix_description="(MAM equals WLC; nothing to adopt)",
+            )
+        # MAM offers nothing to adopt; test the note's hand-authored speculation.
+        diff_entry = {"wlc422": wlc_focus, "mam_simple": synth_fix}
+        synthesized = True
+    elif diff_entry is _MULTI_DIFF:
         return result(
             "UNTESTABLE", reason="multi_diff", before=before,
             fix_description=_describe_diff_list(diff),
         )
 
     fix_description = _describe_diff(diff_entry)
+    if synthesized:
+        fix_description = f"{fix_description}  (synthesized)"
     applied = fix_apply.apply_mam_fix(body, wlc_words, diff_entry)
     if isinstance(applied, fix_apply.UntestableFix):
         return result(
@@ -284,6 +326,7 @@ def _test_one(
             before=before,
             fix_description=fix_description,
             transformation=applied.detail or None,
+            synthesized=synthesized,
         )
 
     after = _evaluate(applied.new_body, bb, chnu, vrnu, guard)
@@ -294,6 +337,7 @@ def _test_one(
             before=before,
             transformation=applied.transformation(),
             fix_description=fix_description,
+            synthesized=synthesized,
         )
     if after.status == "CLEAN":
         classification = "CONFIRMED"
@@ -307,6 +351,7 @@ def _test_one(
         after=after,
         transformation=applied.transformation(),
         fix_description=fix_description,
+        synthesized=synthesized,
     )
 
 
@@ -412,6 +457,7 @@ def render_text_report(results: list[FixTestResult]) -> str:
     spec_untest = sum(1 for r in specs if r.classification == "UNTESTABLE")
     agree = sum(1 for r in results if r.agreement == "agree")
     disagree = sum(1 for r in results if r.agreement == "disagree")
+    synth = sum(1 for r in results if r.synthesized)
 
     lines: list[str] = []
     lines.append("# Fix-tester: do MAM-simple values resolve annotated prose oddballs?")
@@ -425,6 +471,9 @@ def render_text_report(results: list[FixTestResult]) -> str:
         f"speculations: {len(specs)} total; {spec_conf} confirmed, "
         f"{spec_denied} denied/changed, {spec_untest} untestable"
     )
+    lines.append(
+        f"synthesized fixes (no MAM diff; tested the note's synth_fix): {synth}"
+    )
     lines.append(f"claim-vs-result: {agree} agree, {disagree} disagree")
     lines.append("")
 
@@ -435,6 +484,12 @@ def render_text_report(results: list[FixTestResult]) -> str:
     for name, blurb in _SECTIONS:
         group = by_class.get(name, [])
         lines.append(f"## {name} -- {blurb}  ({len(group)})")
+        if name == "UNTESTABLE":
+            lines.append(
+                "  (note: reasons 'vowel_only'/'meteg_only' are grammar-inert -- the "
+                "scanner swallows vowels and meteg, so the speculated change cannot "
+                "clear the oddball; the rest are apparatus limits, not verdicts.)"
+            )
         for r in group:
             lines.extend(_render_entry(r))
         lines.append("")
@@ -452,6 +507,8 @@ def render_text_report(results: list[FixTestResult]) -> str:
 
 def _render_entry(r: FixTestResult) -> list[str]:
     tags = []
+    if r.synthesized:
+        tags.append("synthesized")
     if r.speculative:
         tags.append("speculative")
     if r.claimed_outcome != "unclear":
@@ -496,6 +553,7 @@ def build_json_report(results: list[FixTestResult]) -> dict:
             "speculative_confirmed": sum(
                 1 for r in specs if r.classification == "CONFIRMED"
             ),
+            "synthesized": sum(1 for r in results if r.synthesized),
             "agree": sum(1 for r in results if r.agreement == "agree"),
             "disagree": sum(1 for r in results if r.agreement == "disagree"),
         },

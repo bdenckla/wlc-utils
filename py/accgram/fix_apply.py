@@ -9,10 +9,12 @@ verse's word tokens, computes which accent the change adds/removes (by name, via
 (``fix_tester_codes``), splices the code change into that atom, and returns the
 modified body for re-scanning.
 
-Anything it cannot do mechanically and safely -- a multi-word or multi-accent
-diff, a vowel-only change, an accent whose code is context-dependent, a
-word/atom misalignment, or a code the diff claims but the body lacks -- is
-returned as an ``UntestableFix`` with a machine-readable reason, never guessed.
+An adjacent run of words (a multi-word ``wlc_focus``) is spliced atom by atom.
+Anything it cannot do mechanically and safely -- a non-adjacent / mismatched-count
+multi-word diff, a multi-accent splice, a vowel- or meteg-only change, an accent
+whose code is context-dependent, a word/atom misalignment, or a code the diff
+claims but the body lacks -- is returned as an ``UntestableFix`` with a
+machine-readable reason, never guessed.
 """
 
 from __future__ import annotations
@@ -46,20 +48,26 @@ _SOF_PASUQ = "׃"
 @dataclass(frozen=True)
 class AppliedFix:
     new_body: str
-    word_index: int
+    word_index: int  # index (in wlc_words) of the first *changed* word
     old_atom: str
     new_atom: str
     removed_accents: tuple[str, ...]  # accent abbreviations, WLC side
     added_accents: tuple[str, ...]  # accent abbreviations, MAM side
     removed_codes: tuple[str, ...]
     added_codes: tuple[str, ...]
+    # Pre-formatted transform descriptions for any *additional* changed words in a
+    # multi-word (adjacent wlc_focus) splice; empty for the common single-word case.
+    extra_transforms: tuple[str, ...] = ()
 
     def transformation(self) -> str:
         if not self.old_atom and self.added_codes == (_SOFPASUQ_CODE,):
             return "append sof pasuq (00) to body"
         rm = " ".join(self.removed_codes) or "(none)"
         ad = " ".join(self.added_codes) or "(none)"
-        return f'atom "{self.old_atom}" -> "{self.new_atom}" ({rm} -> {ad})'
+        base = f'atom "{self.old_atom}" -> "{self.new_atom}" ({rm} -> {ad})'
+        if self.extra_transforms:
+            return "; ".join((base, *self.extra_transforms))
+        return base
 
 
 @dataclass(frozen=True)
@@ -73,7 +81,12 @@ def apply_mam_fix(
     wlc_words: list[str],
     diff_entry: object,
 ) -> AppliedFix | UntestableFix:
-    """Splice the MAM value of ``diff_entry`` into ``body``; see module docstring."""
+    """Splice the MAM value of ``diff_entry`` into ``body``; see module docstring.
+
+    A ``wlc_focus``-expanded entry may carry several *adjacent* words on each side
+    (space-joined); the splice then changes each word's atom in place.  The common
+    case is a single word.
+    """
     wlc_word = _diff_side_word(diff_entry, "wlc422")
     mam_word = _diff_side_word(diff_entry, "mam_simple")
     if wlc_word is _MULTI or mam_word is _MULTI:
@@ -81,6 +94,24 @@ def apply_mam_fix(
     if not isinstance(wlc_word, str) or not isinstance(mam_word, str):
         return UntestableFix("bad_diff_shape", repr(diff_entry))
 
+    wlc_tokens = wlc_word.split()
+    mam_tokens = mam_word.split()
+    if len(wlc_tokens) != len(mam_tokens):
+        return UntestableFix(
+            "multi_word",
+            f"diff word counts differ ({len(wlc_tokens)} vs {len(mam_tokens)})",
+        )
+    if len(wlc_tokens) > 1:
+        return _apply_multi_word_change(body, wlc_words, wlc_tokens, mam_tokens)
+    return _apply_word_change(body, wlc_words, wlc_word, mam_word)
+
+
+def _apply_word_change(
+    body: str,
+    wlc_words: list[str],
+    wlc_word: str,
+    mam_word: str,
+) -> AppliedFix | UntestableFix:
     # --- which accents the fix removes vs adds (by name) ---
     removed, added = _accent_name_diff(wlc_word, mam_word)
     if not removed and not added:
@@ -103,7 +134,12 @@ def apply_mam_fix(
                 removed_codes=(),
                 added_codes=(_SOFPASUQ_CODE,),
             )
-        return UntestableFix("vowel_only", "no accent-name difference (vowel/meteg)")
+        # A vowel- or meteg-only change cannot reach the grammar (the scanner
+        # swallows vowels and meteg), so the speculated fix is grammar-inert.
+        return UntestableFix(
+            _no_accent_change_reason([wlc_word], [mam_word]),
+            "no accent/punctuation difference -- invisible to the grammar",
+        )
 
     # --- locate the changed word, by index, in the M-C body's atoms ---
     occurrences = [i for i, word in enumerate(wlc_words) if word == wlc_word]
@@ -113,48 +149,108 @@ def apply_mam_fix(
         return UntestableFix("ambiguous_word", f"WLC word {wlc_word!r} not unique")
     word_index = occurrences[0]
 
-    atom_spans = [
-        m
-        for m in _ATOM_SPAN_RE.finditer(body)
-        if _MC_LETTER_RE.search(m.group()) and not _KETIV_RE.match(m.group())
-    ]
+    atom_spans = _word_atom_spans(body)
     if len(atom_spans) != len(wlc_words):
         return UntestableFix(
             "alignment_failure",
             f"{len(atom_spans)} M-C word-atoms vs {len(wlc_words)} WLC words",
         )
+
+    spliced = _splice_word(atom_spans[word_index], removed, added)
+    if isinstance(spliced, UntestableFix):
+        return spliced
+
+    new_atom, removed_codes, added_codes = spliced
     target = atom_spans[word_index]
-    atom_text = target.group()
-
-    removed_codes, bad = _codes_for(removed)
-    if bad is not None:
-        return UntestableFix("ambiguous_accent", f"unmappable accent {bad}")
-    added_codes, bad = _codes_for(added)
-    if bad is not None:
-        return UntestableFix("ambiguous_accent", f"unmappable accent {bad}")
-
-    new_atom = _splice(atom_text, removed_codes, added_codes)
-    if new_atom is None:
-        return UntestableFix(
-            "code_not_found",
-            f"codes {removed_codes} not all in atom {atom_text!r}",
-        )
-    if new_atom == _MULTI_SPLICE:
-        return UntestableFix(
-            "multi_accent",
-            f"unsupported multi-accent splice {removed_codes} -> {added_codes}",
-        )
-
     new_body = body[: target.start()] + new_atom + body[target.end() :]
     return AppliedFix(
         new_body=new_body,
         word_index=word_index,
-        old_atom=atom_text,
+        old_atom=target.group(),
         new_atom=new_atom,
         removed_accents=tuple(removed),
         added_accents=tuple(added),
         removed_codes=tuple(removed_codes),
         added_codes=tuple(added_codes),
+    )
+
+
+def _apply_multi_word_change(
+    body: str,
+    wlc_words: list[str],
+    wlc_tokens: list[str],
+    mam_tokens: list[str],
+) -> AppliedFix | UntestableFix:
+    """Splice an adjacent run of words (a multi-word ``wlc_focus``) atom by atom."""
+    span = len(wlc_tokens)
+    starts = [
+        i
+        for i in range(len(wlc_words) - span + 1)
+        if wlc_words[i : i + span] == wlc_tokens
+    ]
+    if not starts:
+        return UntestableFix(
+            "alignment_failure", f"multi-word run {wlc_tokens!r} not in vels"
+        )
+    if len(starts) > 1:
+        return UntestableFix(
+            "ambiguous_word", f"multi-word run {wlc_tokens!r} not unique"
+        )
+    start = starts[0]
+
+    atom_spans = _word_atom_spans(body)
+    if len(atom_spans) != len(wlc_words):
+        return UntestableFix(
+            "alignment_failure",
+            f"{len(atom_spans)} M-C word-atoms vs {len(wlc_words)} WLC words",
+        )
+
+    # (word_index, span, new_atom, removed, added, removed_codes, added_codes)
+    changes: list[tuple[int, object, str, list[str], list[str], list[str], list[str]]] = []
+    for offset in range(span):
+        removed, added = _accent_name_diff(wlc_tokens[offset], mam_tokens[offset])
+        if not removed and not added:
+            continue  # vowel/meteg-only on this word: a no-op for the grammar
+        target = atom_spans[start + offset]
+        spliced = _splice_word(target, removed, added)
+        if isinstance(spliced, UntestableFix):
+            return spliced
+        new_atom, removed_codes, added_codes = spliced
+        changes.append(
+            (start + offset, target, new_atom, removed, added, removed_codes, added_codes)
+        )
+
+    if not changes:
+        return UntestableFix(
+            _no_accent_change_reason(wlc_tokens, mam_tokens),
+            "no accent/punctuation difference -- invisible to the grammar",
+        )
+
+    # Apply right-to-left so earlier splices do not shift later atom offsets.
+    new_body = body
+    for _idx, target, new_atom, *_rest in sorted(
+        changes, key=lambda c: c[1].start(), reverse=True
+    ):
+        new_body = new_body[: target.start()] + new_atom + new_body[target.end() :]
+
+    first_index, first_target, first_atom, removed, added, removed_codes, added_codes = (
+        changes[0]
+    )
+    extra_transforms = tuple(
+        f'atom "{t.group()}" -> "{na}" '
+        f'({" ".join(rc) or "(none)"} -> {" ".join(ac) or "(none)"})'
+        for (_i, t, na, _rm, _ad, rc, ac) in changes[1:]
+    )
+    return AppliedFix(
+        new_body=new_body,
+        word_index=first_index,
+        old_atom=first_target.group(),
+        new_atom=first_atom,
+        removed_accents=tuple(removed),
+        added_accents=tuple(added),
+        removed_codes=tuple(removed_codes),
+        added_codes=tuple(added_codes),
+        extra_transforms=extra_transforms,
     )
 
 
@@ -209,6 +305,54 @@ def _accent_name_diff(wlc_word: str, mam_word: str) -> tuple[list[str], list[str
     removed = list((wlc_accs - mam_accs).elements())
     added = list((mam_accs - wlc_accs).elements())
     return removed, added
+
+
+def _word_atom_spans(body: str) -> list[re.Match[str]]:
+    """The M-C body's word-bearing atoms (a Hebrew letter, not a ketiv ``*atom``),
+    index-aligned 1:1 with the WLC verse's word tokens."""
+    return [
+        m
+        for m in _ATOM_SPAN_RE.finditer(body)
+        if _MC_LETTER_RE.search(m.group()) and not _KETIV_RE.match(m.group())
+    ]
+
+
+def _splice_word(
+    target: re.Match[str], removed: list[str], added: list[str]
+) -> tuple[str, list[str], list[str]] | UntestableFix:
+    """Map accent names -> M-C codes and splice them into ``target``'s atom text."""
+    atom_text = target.group()
+    removed_codes, bad = _codes_for(removed)
+    if bad is not None:
+        return UntestableFix("ambiguous_accent", f"unmappable accent {bad}")
+    added_codes, bad = _codes_for(added)
+    if bad is not None:
+        return UntestableFix("ambiguous_accent", f"unmappable accent {bad}")
+
+    new_atom = _splice(atom_text, removed_codes, added_codes)
+    if new_atom is None:
+        return UntestableFix(
+            "code_not_found",
+            f"codes {removed_codes} not all in atom {atom_text!r}",
+        )
+    if new_atom == _MULTI_SPLICE:
+        return UntestableFix(
+            "multi_accent",
+            f"unsupported multi-accent splice {removed_codes} -> {added_codes}",
+        )
+    return new_atom, removed_codes, added_codes
+
+
+def _no_accent_change_reason(wlc_tokens: list[str], mam_tokens: list[str]) -> str:
+    """Distinguish a meteg/silluq-only change from a pure niqqud change; both are
+    invisible to the grammar, but the label tells which mark moved."""
+    wlc_mos = sum(
+        Counter(uni_heb.accent_names(w))[fix_tester_codes.MOS_ABBREV] for w in wlc_tokens
+    )
+    mam_mos = sum(
+        Counter(uni_heb.accent_names(w))[fix_tester_codes.MOS_ABBREV] for w in mam_tokens
+    )
+    return "meteg_only" if wlc_mos != mam_mos else "vowel_only"
 
 
 def _codes_for(abbrevs: list[str]) -> tuple[list[str], str | None]:

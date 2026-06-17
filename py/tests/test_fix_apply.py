@@ -99,6 +99,78 @@ def test_vowel_only_is_untestable():
     assert result.reason == "vowel_only"
 
 
+def test_meteg_only_is_untestable():
+    # The sole difference is a meteg (U+05BD) -- a vowel-tier mark the grammar never
+    # sees, so it is grammar-inert and labeled distinctly from a pure-niqqud diff.
+    result = apply_mam_fix(
+        "Y:D.71Y X92Z00",
+        ["ידי", "זה"],
+        {"wlc422": "יד֥י", "mam_simple": "ידֽ֥י"},
+    )
+    assert isinstance(result, UntestableFix)
+    assert result.reason == "meteg_only"
+
+
+def test_adjacent_two_word_splice():
+    # A wlc_focus spanning two adjacent words: change munaH->merkha on the first and
+    # tipeHa->munaH on the second; both atoms are spliced (right-to-left).
+    result = apply_mam_fix(
+        "X74Y Z73W",
+        ["א֣", "ב֖"],
+        {"wlc422": "א֣ ב֖", "mam_simple": "א֥ ב֣"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.new_body == "X71Y Z74W"
+    assert result.word_index == 0
+    assert result.extra_transforms == ('atom "Z73W" -> "Z74W" (73 -> 74)',)
+
+
+def test_adjacent_two_word_one_word_is_noop():
+    # Second word differs only by a vowel: a no-op for the grammar, first word still
+    # splices cleanly.
+    result = apply_mam_fix(
+        ")AL.74W.P B.F/(F75M00",
+        ["אל֣וף", "בעם"],
+        {"wlc422": "אל֣וף בעם", "mam_simple": "אל֥וף בעם"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.new_body == ")AL.71W.P B.F/(F75M00"
+    assert result.extra_transforms == ()
+
+
+def test_multi_word_unequal_counts_is_untestable():
+    result = apply_mam_fix(
+        "X74Y Z73W",
+        ["א֣", "ב֖"],
+        {"wlc422": "א֣ ב֖", "mam_simple": "א֥"},
+    )
+    assert isinstance(result, UntestableFix)
+    assert result.reason == "multi_word"
+
+
+def test_synthetic_accent_fix_applies():
+    # A synthesized {wlc_focus -> synth_fix} entry (used when MAM == WLC) flows through
+    # the same splice machinery: munaH -> merkha.
+    result = apply_mam_fix(
+        ")AL.74W.P B.F/(F75M00",
+        ["אל֣וף", "בעם"],
+        {"wlc422": "אל֣וף", "mam_simple": "אל֥וף"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert result.new_body == ")AL.71W.P B.F/(F75M00"
+
+
+def test_synthetic_vowel_fix_is_inert():
+    # is 45:1-style: the speculated fix adds only a segol (a vowel) -> grammar-inert.
+    result = apply_mam_fix(
+        "L:K.71WR$",
+        ["לכורש"],
+        {"wlc422": "לכ֣ורש", "mam_simple": "לכֶ֣ורש"},
+    )
+    assert isinstance(result, UntestableFix)
+    assert result.reason == "vowel_only"
+
+
 def test_multi_word_is_untestable():
     result = apply_mam_fix(
         "A92B00",

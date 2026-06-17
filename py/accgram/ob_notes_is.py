@@ -43,6 +43,11 @@ BY_REF: dict[str, dict[str, object]] = {
     "is 45:1": {
         "st-source": "tbd",
         "wlc_focus": "לכ֣ורש",
+        # The speculated reading to test (segol on the kaf).  MAM equals WLC here,
+        # so the fix-tester exercises this synth_fix instead.  A segol is a vowel,
+        # invisible to the grammar, so the verdict is grammar-inert -- which
+        # mechanically refutes the "the checker wants a segol" reading below.
+        "synth_fix": "לכֶ֣ורש",
         "st-summary": "I think the checker wants לכ֣ורש to have a segol.",
         "comment": "There is a question of whether לכ֣ורש should have a legarmeh; see MAM’s doc-note.",
     },
