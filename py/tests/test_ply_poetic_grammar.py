@@ -213,6 +213,23 @@ def test_sinnor_subdivides_revia_qatan_before_oleh():
     assert out.index("legarmeh_phrase") < out.index("sinnor_phrase")
 
 
+def test_revia_qatan_requires_merka_servant():
+    """Breuer Ch 11 §16, confirmed by both witnesses (servi_before oracle): the
+    servant adjacent to a small revia' is merka (a mahpakh may precede it).  A
+    merka-served small revia parses; a non-merka adjacent servant (here munah) does
+    not, even though the position is otherwise valid.  This rule is faithful but
+    currently inert on the corpus (L marks merka in 125/125 cases)."""
+    parser = build_parser()
+    tail = (pan.OLEH_WEYORED, pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.SILLUQ)
+    # merka adjacent, with a mahpakh before it ("a mahpakh precedes it") -> parses
+    ok = parse_tokens(parser, _verse(pan.MAHAPAKH, pan.MERKHA, pan.REVIA_QATAN, *tail))
+    assert ok is not None
+    assert "revia_qatan_phrase" in print_tree(ok, 0)
+    # munah adjacent to the small revia -> rejected (no parse)
+    bad = parse_tokens(parser, _verse(pan.MUNAX, pan.REVIA_QATAN, *tail))
+    assert bad is None
+
+
 def test_missing_silluq_recovers_as_error_tree():
     """Category A: a verse with no silluq code (servi then sof pasuq) recovers into
     a tree whose silluq_phrase is ERROR, preserving the rest of the structure

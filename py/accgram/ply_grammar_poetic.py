@@ -184,9 +184,26 @@ def p_revia_gadol_phrase(p):
     _phrase(p, "revia_gadol_phrase")
 
 
+# Breuer Ch 11 §16: "the servant next to a small revia' is merka, and a mahpakh
+# precedes it."  So the servus immediately adjacent to REVIA_QATAN must be MERKHA;
+# any earlier servi (e.g. the preceding mahpak) are free.  Unlike the refuted
+# dekhi<-munah rule, this is CONFIRMED by both witnesses via the servi_before oracle
+# (mam_poetic_accents): L marks merka before small revia in 125/125 cases and MAM
+# agrees on merka wherever it too has a servant there, with ZERO servant-type
+# conflicts.  NOTE: precisely because both witnesses already agree, this rule does
+# NOT currently fire -- it flags 0 verses in the present corpus.  It is encoded as a
+# faithful, evidence-backed constraint and a guard against future / other-text
+# deviations (e.g. UXLC), not as a live diagnostic.  A bare REVIA_QATAN (no servant)
+# stays allowed.
+def p_revia_qatan_servi(p):
+    """revia_qatan_servi : MERKHA
+                         | servi MERKHA"""
+    p[0] = [p[1]] if len(p) == 2 else p[1] + [p[2]]
+
+
 def p_revia_qatan_phrase(p):
     """revia_qatan_phrase : REVIA_QATAN
-                          | servi REVIA_QATAN"""
+                          | revia_qatan_servi REVIA_QATAN"""
     _phrase(p, "revia_qatan_phrase")
 
 
