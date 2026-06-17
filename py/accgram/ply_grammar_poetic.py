@@ -195,6 +195,16 @@ def p_atnach_phrase(p):
     _phrase(p, "atnach_phrase")
 
 
+# Permissive servi before REVIA_GADOL.  Breuer Ch 11 §32-33 gives a phonology-dependent
+# 3-set -- mahapakh | merka | illuy -- and servi_xcheck (2026-06-17) confirms it: L's
+# distribution is exactly those three (108 / 65 / 32) with ZERO servant-type conflicts vs
+# MAM.  The only out-of-set L servant is AZLA in three verses (Ps 72:17, Job 32:11, 34:33),
+# and those are NOT a two-witness azla servant: L has a bare azla (no paseq) where MAM marks
+# azla-LEGARMEH (azla + paseq), i.e. a near-divider, not a servant.  The disjunctive cross-
+# check already flags all three (MAM carries an extra LEGARMEH that L lacks), so a servant-
+# set constraint here would be redundant -- and, by requiring the adjacent servant in
+# {mahapakh, merka, illuy}, would turn three clean parses into NO_PARSE for a paseq-omission
+# divergence already surfaced elsewhere.  Not encoded.  See memory poetic-servant-rules-breuer.
 def p_revia_gadol_phrase(p):
     """revia_gadol_phrase : REVIA_GADOL
                           | servi REVIA_GADOL"""
@@ -224,6 +234,13 @@ def p_revia_qatan_phrase(p):
     _phrase(p, "revia_qatan_phrase")
 
 
+# Permissive servi before REVIA_MUGRASH.  NB: Breuer Ch 11 §35 says the servant is merka
+# (with a mahapakh before it).  Vetted via servi_xcheck (2026-06-17) and REFUTED at the
+# token level: against 1185 merka, L marks MAHAPAKH in 9 verses (Ps 31:16, 34:8, 68:15,
+# 79:3, 116:19, 135:21, Prov 7:7, 27:1, 27:19) and ILLUY in 1 (Ps 137:9), and MAM agrees in
+# every one -- genuine two-witness constructions of the same phonological servant-type family
+# that refuted DEXI / PAZER / TSINNOR.  A merka-only constraint would flag 10 correct verses.
+# Not encoded.  See memory poetic-servant-rules-breuer.
 def p_revia_mugrash_phrase(p):
     """revia_mugrash_phrase : REVIA_MUGRASH
                             | servi REVIA_MUGRASH"""
@@ -649,8 +666,13 @@ def p_legarmeh_clause(p):
 
 
 # --- shalshelet gedolah clause (#371) ------------------------------------------
-# A disjunctive in the second half before silluq (revia-mugrash rank).  As a rule
-# it has no servi; distinct from the conjunctive shalshelet qetannah.
+# A disjunctive in the second half before silluq (revia-mugrash rank); distinct from the
+# conjunctive shalshelet qetannah.  Its servant is merka: Breuer Ch 11 §30 (merka, with a
+# tarkha before it), confirmed by servi_xcheck (2026-06-17) -- all 3 poetic occurrences
+# carry a merka servant in both L and MAM (uniform, zero conflicts), like small revia'.
+# (This corrects an earlier "as a rule it has no servi" note, which holds for the prose
+# shalshelet gedolah but not the poetic one.)  Left permissive; a merka constraint would
+# fire on nothing.  See memory poetic-servant-rules-breuer.
 def p_shalshelet_gedolah_clause(p):
     "shalshelet_gedolah_clause : shalshelet_gedolah_phrase"
     p[0] = p[1]
