@@ -140,6 +140,15 @@ def p_pasuq(p):
 # --- phrases (disjunctive + optional servus chain) -----------------------------
 # One uniform pair of productions per disjunctive: the bare sign, or a servus
 # chain followed by the sign.
+# Permissive servi before SILLUQ.  NB: Breuer Ch 9 §11 limits the servant of silluq
+# (and ATNAX, below) to merkha or MUNAX.  Vetted via servi_xcheck (2026-06-17) and
+# REFUTED at the token level: L marks ILLUY before silluq in 43 verses (plus Job 12:15
+# TARXA), and MAM agrees in all but the lone one-sided Prov 21:29.  ILLUY is a
+# MUNAX-family conjunctive Breuer counts as MUNAX, but the scanner emits it as a
+# distinct token -- so a MERKHA|MUNAX-only constraint would flag 43 two-witness-
+# confirmed verses.  The single in-set type-conflict (Ps 60:3 MERKHA -> MAM MUNAX) is a
+# phonological MUNAX/merkha swap, not a structural divergence.  Not encoded.  See memory
+# poetic-servant-rules-breuer.
 def p_silluq_phrase(p):
     """silluq_phrase : SILLUQ
                      | servi SILLUQ"""
@@ -172,6 +181,14 @@ def p_oleh_weyored_phrase(p):
     _phrase(p, "oleh_weyored_phrase")
 
 
+# Permissive servi before ATNAX.  NB: Breuer Ch 9 §11 limits the servant of ATNAX
+# (and silluq, above) to merkha or MUNAX.  Vetted via servi_xcheck (2026-06-17) and
+# REFUTED at the token level: the seven L outliers are MAHAPAKH (Ps 14:3, 53:4, Prov
+# 6:3, 24:29) and ILLUY (Prov 1:9, 6:27) -- all MAM-confirmed two-witness constructions
+# -- plus the one genuine servant-type conflict Prov 3:4 (L TARXA -> MAM MERKHA), where
+# L alone uses an out-of-set tarkha (a sign-choice oddball, not rule material).  A
+# MERKHA|MUNAX-only constraint would flag six correct verses, so it is not encoded.  See
+# memory poetic-servant-rules-breuer.
 def p_atnach_phrase(p):
     """atnach_phrase : ATNAX
                      | servi ATNAX"""
@@ -229,6 +246,13 @@ def p_dehi_phrase(p):
     _phrase(p, "dehi_phrase")
 
 
+# Permissive servi before TSINNOR.  NB: Breuer Ch 11 §23 limits the servant to MUNAX or
+# MERKHA only.  Vetted via servi_xcheck (2026-06-17) and REFUTED at the token level: of
+# the two L outliers, Ps 31:20 marks MAHAPAKH and MAM agrees (a real two-witness
+# construction); Ps 79:6 (AZLA) is one-sided (MAM reads it bare).  So a MUNAX|MERKHA-only
+# constraint would flag a verse both witnesses build with mahapakh -- the same
+# phonological servant-type alternation that refuted DEXI and PAZER, out of a token
+# grammar's scope.  Not encoded.  See memory poetic-servant-rules-breuer.
 def p_sinnor_phrase(p):
     """sinnor_phrase : TSINNOR
                      | servi TSINNOR"""
