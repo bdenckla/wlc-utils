@@ -286,17 +286,17 @@ def disjunctives_from_verse_node(verse_node: dict) -> list[str]:
     return [d for d, _servus in word_accents_from_verse_node(verse_node) if d is not None]
 
 
-def servi_before_from_verse_node(verse_node: dict, target: str) -> list[str | None]:
-    """Servus on the word immediately before each occurrence of ``target`` disjunctive.
+def servi_before_in_words(
+    words: list[tuple[str | None, str | None]], target: str
+) -> list[str | None]:
+    """Servus before each ``target`` occurrence in a per-word ``(disjunctive, servus)``.
 
-    One entry per occurrence of ``target`` (a poetic disjunctive token name, e.g.
-    ``pan.DEXI``) in the verse, in order.  The value is the preceding word's servus
-    token, or ``None`` when ``target`` has no servant there -- it is verse-initial, or
-    the preceding word itself bears a disjunctive (a bare ``target``).  This is the
-    MAM side of a servant-adjacency check; the L side is the servus that stands right
-    before the same ``target`` in ``ply_scanner_poetic``'s token stream.
+    Factored out of ``servi_before_from_verse_node`` so a caller already holding a
+    verse's word-accents (e.g. from ``load_word_accents``) need not re-walk it.  One
+    entry per occurrence of ``target``, in order: the preceding word's servus token, or
+    ``None`` when ``target`` has no servant there (verse-initial, or the preceding word
+    itself bears a disjunctive -- a bare ``target``).
     """
-    words = word_accents_from_verse_node(verse_node)
     out: list[str | None] = []
     for i, (disj, _servus) in enumerate(words):
         if disj != target:
@@ -306,6 +306,16 @@ def servi_before_from_verse_node(verse_node: dict, target: str) -> list[str | No
         else:
             out.append(words[i - 1][1])
     return out
+
+
+def servi_before_from_verse_node(verse_node: dict, target: str) -> list[str | None]:
+    """Servus on the word immediately before each occurrence of ``target`` disjunctive.
+
+    ``target`` is a poetic disjunctive token name (e.g. ``pan.DEXI``).  This is the MAM
+    side of a servant-adjacency check; the L side is the servus that stands right before
+    the same ``target`` in ``ply_scanner_poetic``'s token stream.
+    """
+    return servi_before_in_words(word_accents_from_verse_node(verse_node), target)
 
 
 def _mam_json_path(mam_simple_dir: Path, bk39id: str) -> Path | None:
@@ -366,6 +376,22 @@ def load_poetic_disjunctives(
     """
     return {
         ref: disjunctives_from_verse_node(vn)
+        for ref, vn in _iter_book_verses(mam_simple_dir, books)
+    }
+
+
+def load_word_accents(
+    mam_simple_dir: Path,
+    books: tuple[str, ...] = ("ps", "pr", "jb"),
+) -> dict[str, list[tuple[str | None, str | None]]]:
+    """Map ``"<book> <ch>:<vs>"`` -> per-word ``(disjunctive, servus)`` for the corpus.
+
+    One corpus walk; ``servi_before_in_words(words, target)`` then derives the servant
+    before any number of disjunctive targets without re-reading the JSON (what the
+    ``servi-xcheck`` tool does to vet every Breuer adjacency rule in a single pass).
+    """
+    return {
+        ref: word_accents_from_verse_node(vn)
         for ref, vn in _iter_book_verses(mam_simple_dir, books)
     }
 

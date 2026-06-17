@@ -16,6 +16,7 @@ from accgram import poetic_accent_names as pan
 from accgram.mam_poetic_accents import (
     disjunctives_from_verse_node,
     servi_before_from_verse_node,
+    servi_before_in_words,
     word_accents_from_verse_node,
 )
 
@@ -156,6 +157,23 @@ def test_servi_before_is_none_when_target_is_bare():
 
     after_divider = _verse(_text(ha.ATN), _text(ha.DEX), _silluq_word())
     assert servi_before_from_verse_node(after_divider, pan.DEXI) == [None]
+
+
+def test_servi_before_in_words_operates_on_a_word_list():
+    # The factored helper (used by servi-xcheck over load_word_accents) reads a
+    # prebuilt (disjunctive, servus) list without re-walking a node.
+    words = [
+        (None, pan.MAHAPAKH),   # distant servant
+        (None, pan.MERKHA),     # adjacent servant
+        (pan.REVIA_QATAN, None),
+        (pan.OLEH_WEYORED, None),  # a divider: the dehi-less target is bare here
+        (None, pan.MUNAX),
+        (pan.DEXI, None),       # munah-served dehi
+        (pan.SILLUQ, None),
+    ]
+    assert servi_before_in_words(words, pan.REVIA_QATAN) == [pan.MERKHA]
+    assert servi_before_in_words(words, pan.DEXI) == [pan.MUNAX]
+    assert servi_before_in_words(words, pan.OLEH_WEYORED) == [None]  # preceded by a divider
 
 
 def test_servi_before_normalizes_atnah_hafukh_to_galgal():

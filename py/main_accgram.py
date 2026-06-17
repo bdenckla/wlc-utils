@@ -18,6 +18,12 @@ Subcommands:
                 MAM-simple and write out/accgram/ply-poetic/_mam_xcheck.txt (a
                 per-book agreement tally plus every divergence grouped by edit
                 signature).  The Phase 2 validation surface.
+    servi-xcheck
+                Cross-check, per disjunctive, the servant (conjunctive) the WLC
+                scanner and MAM-simple put immediately before it, and write
+                out/accgram/ply-poetic/_servi_xcheck.txt.  The second-witness gate
+                for vetting Breuer servant-adjacency rules (it settled dekhi and
+                small revia).  Use --target to restrict.
     run-ply-poetic-oddballs
                 Collect the residual poetic oddballs (the missing-silluq
                 ERROR-leaf trees and the NO_PARSE anomalies) from the poetic
@@ -56,6 +62,7 @@ from accgram import poetic_oddballs
 from accgram import research_tao
 from accgram import run_ply
 from accgram import run_ply_poetic
+from accgram import servi_xcheck
 from accgram import xcheck_poetic
 from cmn.utf8_io import force_utf8_io
 
@@ -78,6 +85,10 @@ def _run_run_ply_poetic(args: argparse.Namespace) -> None:
 
 def _run_xcheck_poetic(args: argparse.Namespace) -> None:
     xcheck_poetic.run(args)
+
+
+def _run_servi_xcheck(args: argparse.Namespace) -> None:
+    servi_xcheck.run(args)
 
 
 def _run_poetic_oddballs(args: argparse.Namespace) -> None:
@@ -128,6 +139,18 @@ def main() -> None:
     )
     xcheck_poetic.add_args(xcheck_poetic_parser, repo_root=_repo_root())
     xcheck_poetic_parser.set_defaults(func=_run_xcheck_poetic)
+
+    servi_xcheck_parser = subparsers.add_parser(
+        "servi-xcheck",
+        help=(
+            "Cross-check, per disjunctive, the servant (conjunctive) the WLC scanner "
+            "and MAM-simple put immediately before it -- the second-witness gate for "
+            "vetting Breuer servant-adjacency rules. Writes "
+            "out/accgram/ply-poetic/_servi_xcheck.txt. Use --target to restrict."
+        ),
+    )
+    servi_xcheck.add_args(servi_xcheck_parser, repo_root=_repo_root())
+    servi_xcheck_parser.set_defaults(func=_run_servi_xcheck)
 
     poetic_oddballs_parser = subparsers.add_parser(
         "run-ply-poetic-oddballs",
