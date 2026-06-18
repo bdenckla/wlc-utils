@@ -60,13 +60,33 @@ from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 _SOF_PASUQ = "׃"
 
-# One in-order traversal event: (kind, disjunctive_marker, servus, self_servus).  A
-# WORD carries a (provisional) disjunctive marker XOR a servus (its main accent is
+# Hebrew consonant block (alef..tav, final forms included): the alignment key that
+# lets a MAM accent-word be matched word-for-word against its WLC counterpart with
+# vowels/accents/punctuation stripped (see ``base_consonants``).
+_HEBREW_LETTER_LO = 0x05D0
+_HEBREW_LETTER_HI = 0x05EA
+
+
+def base_consonants(word: str) -> str:
+    """The bare consonantal skeleton of a Hebrew word (vowels/accents/punctuation dropped).
+
+    Used as the per-word alignment key when matching WLC and MAM accent-words: the same
+    word carries different points and accents on the two witnesses, so only the letters
+    are a stable equality key.
+    """
+    return "".join(
+        ch for ch in word if _HEBREW_LETTER_LO <= ord(ch) <= _HEBREW_LETTER_HI
+    )
+
+
+# One in-order traversal event: (kind, disjunctive_marker, servus, self_servus, text).
+# A WORD carries a (provisional) disjunctive marker XOR a servus (its main accent is
 # either a divider or a conjunctive), plus an optional self_servus: a conjunctive sign
 # standing on the SAME word, before the disjunctive mark (a long word can host its own
-# servant -- e.g. galgal then pazer on one word).  SOFPASUQ / LP_LEG / LP_PASEQ carry
-# none of the three.
-_Event = tuple[str, str | None, str | None, str | None]
+# servant -- e.g. galgal then pazer on one word), and ``text`` = its base consonants
+# (the word-alignment key).  SOFPASUQ carries only its text; LP_LEG / LP_PASEQ carry
+# none of the four.
+_Event = tuple[str, str | None, str | None, str | None, str | None]
 
 # MAM Unicode accent -> intermediate disjunctive marker (REVIA / SHALSHELET stay
 # provisional; resolved in the second pass).  Checked in this priority order so
@@ -179,12 +199,13 @@ def _emit_word_events(text: str, events: list[_Event]) -> None:
     its divider as self_servus.
     """
     for word in text.split():
+        cons = base_consonants(word)
         if _SOF_PASUQ in word:
-            events.append(("SOFPASUQ", None, None, None))
+            events.append(("SOFPASUQ", None, None, None, cons))
             continue
         marker, marker_char = _word_marker_and_char(word)
         if marker is None:
-            events.append(("WORD", None, _word_servus(word), None))
+            events.append(("WORD", None, _word_servus(word), None, cons))
         else:
             # Oleh-we-yored is a two-mark sign (ole + a yored merka); MAM sometimes
             # encodes the yored merka BEFORE the ole, so it would masquerade as a
@@ -193,7 +214,7 @@ def _emit_word_events(text: str, events: list[_Event]) -> None:
             self_servus = (
                 None if marker == pan.OLEH_WEYORED else _word_self_servus(word, marker_char)
             )
-            events.append(("WORD", marker, None, self_servus))
+            events.append(("WORD", marker, None, self_servus, cons))
 
 
 def _walk(node: object, events: list[_Event]) -> None:
@@ -208,10 +229,10 @@ def _walk(node: object, events: list[_Event]) -> None:
     node_type = node.get("type")
     if isinstance(node_type, str):
         if node_type == "lp-legarmeih":
-            events.append(("LP_LEG", None, None, None))
+            events.append(("LP_LEG", None, None, None, None))
             return
         if node_type == "lp-paseq":
-            events.append(("LP_PASEQ", None, None, None))
+            events.append(("LP_PASEQ", None, None, None, None))
             return
         if node_type in _KETIV_TYPES:
             return
@@ -256,23 +277,24 @@ def _walk_kq(node: dict, events: list[_Event]) -> None:
 
 
 def _build_word_accents(events: list[_Event]) -> list[list[str | None]]:
-    """Reduce traversal events to a per-word ``[disjunctive, servus, self_servus]`` list.
+    """Reduce traversal events to a per-word ``[disjunctive, servus, self_servus, text]`` list.
 
     One entry per WORD (and the final SOFPASUQ word, which becomes SILLUQ).  LP_LEG /
     LP_PASEQ promote the preceding word (legarmeh, or shalshelet -> shalshelet
     gedolah); bare shalshelet (qetannah) is swallowed to a None disjunctive; generic
     REVIA is reclassified to gadol/qatan/mugrash by the next disjunctive-bearing word
-    (the same rule as ``ply_scanner_poetic._reclassify_revia``).  The servus and
-    self_servus columns are carried through untouched.
+    (the same rule as ``ply_scanner_poetic._reclassify_revia``).  The servus,
+    self_servus, and text (base-consonant alignment key) columns are carried through
+    untouched.
     """
     words: list[list[str | None]] = []
     last_word_index: int | None = None
-    for kind, marker, servus, self_servus in events:
+    for kind, marker, servus, self_servus, text in events:
         if kind == "WORD":
-            words.append([marker, servus, self_servus])
+            words.append([marker, servus, self_servus, text])
             last_word_index = len(words) - 1
         elif kind == "SOFPASUQ":
-            words.append([pan.SILLUQ, None, None])
+            words.append([pan.SILLUQ, None, None, text])
             last_word_index = len(words) - 1
         elif kind == "LP_LEG":
             # Preceding word is legarmeh (conjunctive + paseq) or, if it carried
@@ -331,6 +353,22 @@ def disjunctives_from_verse_node(verse_node: dict) -> list[str]:
     return [
         d for d, _servus, _self in word_accents_from_verse_node(verse_node) if d is not None
     ]
+
+
+def word_disj_and_text_from_verse_node(
+    verse_node: dict,
+) -> list[tuple[str, str | None]]:
+    """Per-word ``(base_consonants, disjunctive_or_None)`` for a MAM-simple verse, in order.
+
+    The disjunctive is the fully resolved one (legarmeh / shalshelet gedolah / revia
+    classified, as in ``word_accents_from_verse_node``); the consonants are the word-
+    alignment key (see ``base_consonants``).  This is the per-word datum the poetic
+    oddball report aligns against its WLC counterpart to describe divider differences
+    word-for-word rather than over the conjunctive-stripped disjunctive skeleton.
+    """
+    events: list[_Event] = []
+    _walk(verse_node, events)
+    return [(w[3] or "", w[0]) for w in _build_word_accents(events)]
 
 
 def servi_before_in_words(
@@ -428,6 +466,22 @@ def load_poetic_disjunctives(
     """
     return {
         ref: disjunctives_from_verse_node(vn)
+        for ref, vn in _iter_book_verses(mam_simple_dir, books)
+    }
+
+
+def load_poetic_word_disj(
+    mam_simple_dir: Path,
+    books: tuple[str, ...] = ("ps", "pr", "jb"),
+) -> dict[str, list[tuple[str, str | None]]]:
+    """Map ``"<book> <ch>:<vs>"`` -> per-word ``(base_consonants, disjunctive_or_None)``.
+
+    The word-aligned counterpart of ``load_poetic_disjunctives``: it keeps every word
+    (with its consonant alignment key), not just the disjunctive-bearing ones, so the
+    poetic oddball summary can pair each WLC word against its MAM word.
+    """
+    return {
+        ref: word_disj_and_text_from_verse_node(vn)
         for ref, vn in _iter_book_verses(mam_simple_dir, books)
     }
 

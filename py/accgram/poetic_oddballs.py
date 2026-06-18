@@ -37,7 +37,6 @@ WLC/UXLC/MAM verse-token enrichment this closed set does not load.
 from __future__ import annotations
 
 import argparse
-import difflib
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -51,11 +50,12 @@ from accgram import rtms_ref
 from accgram import rtms_report
 from accgram import rtmsr_verse
 from accgram import split_wlc
-from accgram.mam_poetic_accents import load_poetic_disjunctives
+from accgram.mam_poetic_accents import load_poetic_word_disj
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_scanner_poetic import scan_book
+from accgram.poetic_oddball_summary import derive_tentative_summary
 from accgram.ply_tree import print_tree
 from accgram.run_ply_poetic import _has_error_leaf, _no_parse_line
 from mb_cmn import provenance
@@ -76,6 +76,10 @@ class PoeticOddball:
     token_types: tuple[str, ...]  # full scanned token-type sequence
     wlc_disjunctives: tuple[str, ...]  # WLC disjunctive skeleton (scanner)
     mam_disjunctives: tuple[str, ...] | None  # MAM oracle skeleton (None if absent)
+    # MAM per-word (base_consonants, disjunctive_or_None), the word-aligned counterpart
+    # of mam_disjunctives used to derive the summary; None if the verse is absent from
+    # MAM-simple.  Not written to _oddballs.json (the skeletons are the persisted datum).
+    mam_words: tuple[tuple[str, str | None], ...] | None
     tree_text: str  # rendered ERROR tree, or the NO_PARSE line
     # WLC 4.22 pointed-Hebrew verse (qere-interpolated + sanitized), for the
     # HTML report's verse paragraph; None if the verse is absent from the index.
@@ -87,7 +91,7 @@ def collect_poetic_oddballs(
     input_path: Path, mam_simple_dir: Path, wlc422_kq_u_dir: Path
 ) -> list[PoeticOddball]:
     """Re-scan + re-parse the poetic corpus and return every oddball verse."""
-    mam_by_ref = load_poetic_disjunctives(mam_simple_dir)
+    mam_words_by_ref = load_poetic_word_disj(mam_simple_dir)
     wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
     parser = build_parser()
     book_texts = split_wlc.split_wlc_to_book_texts(
@@ -109,7 +113,12 @@ def collect_poetic_oddballs(
                 continue
 
             wlc = tuple(t for t, _ in verse.tokens if t in _POETIC_DISJUNCTIVES)
-            mam = mam_by_ref.get(verse.reference)
+            mam_words = mam_words_by_ref.get(verse.reference)
+            mam = (
+                [d for _cons, d in mam_words if d is not None]
+                if mam_words is not None
+                else None
+            )
             bcv = f"{bb}{verse.reference.rpartition(' ')[2]}"
             raw_verse = wlc_index.get(bcv)
             wlc_verse = (
@@ -127,6 +136,7 @@ def collect_poetic_oddballs(
                     token_types=tuple(t for t, _ in verse.tokens),
                     wlc_disjunctives=wlc,
                     mam_disjunctives=tuple(mam) if mam is not None else None,
+                    mam_words=tuple(mam_words) if mam_words is not None else None,
                     tree_text=tree_text,
                     wlc_verse=wlc_verse,
                 )
@@ -271,8 +281,12 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
                 "highlighted for missing-silluq cases), its Michigan-Claremont "
                 "source body, and a WLC-vs-MAM-simple disjunctive compare: the "
                 "scanner's disjunctive skeleton against the MAM oracle's. The "
-                "per-verse summary is mechanically auto-derived from that compare "
-                "and labelled tentative — it is not a hand-vetted attribution. See ",
+                "per-verse summary is mechanically auto-derived — but from a "
+                "word-by-word alignment of the two verses, not from the "
+                "conjunctive-stripped skeletons above, so a divider that merely "
+                "sits on a different word is reported as such rather than as a "
+                "phantom substitution. It is labelled tentative — not a hand-vetted "
+                "attribution. See ",
                 wlc_utils_html.code("doc/PLAN-poetic-accent-grammar.md"),
                 " for the full taxonomy.",
             )
@@ -349,9 +363,12 @@ def _render_ref_links(
 def _render_summary(ob: PoeticOddball) -> object:
     """A tentative, mechanically auto-derived summary (NOT hand-authored).
 
-    It is computed by diffing the WLC and MAM-simple disjunctive skeletons, so
-    it is only as reliable as that compare; it is labelled tentative/auto-derived
-    so a reader knows not to treat it as a vetted attribution. This is the
+    It is computed by aligning the WLC and MAM-simple verses word-for-word (the
+    consonantal skeleton as the key) and reporting each word whose divider differs;
+    it is labelled tentative/auto-derived so a reader knows not to treat it as a
+    vetted attribution. Earlier this diffed the conjunctive-stripped disjunctive
+    skeletons, which conflated a divider that shifted to the neighbouring word into a
+    phantom substitution (Ps 68:20 / Pr 30:15); word alignment fixes that. This is the
     poetic analogue of the prose page's hand-authored st-summary / the
     SAT-descriptor-derived summary (rtmsr_sat.derive_summary_from_sat_descriptors).
     """
@@ -360,50 +377,10 @@ def _render_summary(ob: PoeticOddball) -> object:
             wlc_utils_html.span_c(
                 "Auto-derived summary (tentative): ", "poetic-auto-summary-label"
             ),
-            _derive_tentative_summary(ob),
+            derive_tentative_summary(ob),
         ),
         {"class": "poetic-auto-summary"},
     )
-
-
-def _derive_tentative_summary(ob: PoeticOddball) -> str:
-    if ob.mam_disjunctives is None:
-        return (
-            "Not in MAM-simple, so no disjunctive oracle is available "
-            "for comparison."
-        )
-    if ob.wlc_disjunctives == ob.mam_disjunctives:
-        return (
-            "WLC and MAM-simple read the same disjunctive skeleton, yet the verse "
-            "does not parse — the anomaly is structural, not a WLC/MAM divergence."
-        )
-    clauses = _describe_disjunctive_diff(ob.wlc_disjunctives, ob.mam_disjunctives)
-    return "Relative to the MAM-simple oracle, " + "; ".join(clauses) + "."
-
-
-def _describe_disjunctive_diff(
-    wlc: tuple[str, ...], mam: tuple[str, ...]
-) -> list[str]:
-    """Phrase each edit between the WLC and MAM disjunctive skeletons from WLC's
-    side (MAM is the oracle), e.g. "WLC omits silluq that MAM reads"."""
-    matcher = difflib.SequenceMatcher(a=wlc, b=mam, autojunk=False)
-    clauses: list[str] = []
-    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-        if tag == "equal":
-            continue
-        wlc_part = _humanize_disjunctives(wlc[i1:i2])
-        mam_part = _humanize_disjunctives(mam[j1:j2])
-        if tag == "delete":
-            clauses.append(f"WLC has an extra {wlc_part} not in MAM")
-        elif tag == "insert":
-            clauses.append(f"WLC omits {mam_part} that MAM reads")
-        else:  # replace
-            clauses.append(f"WLC reads {wlc_part} where MAM reads {mam_part}")
-    return clauses
-
-
-def _humanize_disjunctives(tokens: tuple[str, ...]) -> str:
-    return ", ".join(token.lower().replace("_", " ") for token in tokens)
 
 
 def _render_hebrew_verse(ob: PoeticOddball) -> object | None:
