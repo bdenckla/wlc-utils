@@ -148,8 +148,7 @@ def p_pasuq(p):
 # MUNAX-family conjunctive Breuer counts as MUNAX, but the scanner emits it as a
 # distinct token -- so a MERKHA|MUNAX-only constraint would flag 43 two-witness-
 # confirmed verses.  The single in-set type-conflict (Ps 60:3 MERKHA -> MAM MUNAX) is a
-# phonological MUNAX/merkha swap, not a structural divergence.  Not encoded.  See memory
-# poetic-servant-rules-breuer.
+# phonological MUNAX/merkha swap, not a structural divergence.  Not encoded.  See issue #18.
 def p_silluq_phrase(p):
     """silluq_phrase : SILLUQ
                      | servi SILLUQ"""
@@ -188,8 +187,7 @@ def p_oleh_weyored_phrase(p):
 # 6:3, 24:29) and ILLUY (Prov 1:9, 6:27) -- all MAM-confirmed two-witness constructions
 # -- plus the one genuine servant-type conflict Prov 3:4 (L TARXA -> MAM MERKHA), where
 # L alone uses an out-of-set tarkha (a sign-choice oddball, not rule material).  A
-# MERKHA|MUNAX-only constraint would flag six correct verses, so it is not encoded.  See
-# memory poetic-servant-rules-breuer.
+# MERKHA|MUNAX-only constraint would flag six correct verses, so it is not encoded.  See issue #18.
 def p_atnach_phrase(p):
     """atnach_phrase : ATNAX
                      | servi ATNAX"""
@@ -205,7 +203,7 @@ def p_atnach_phrase(p):
 # check already flags all three (MAM carries an extra LEGARMEH that L lacks), so a servant-
 # set constraint here would be redundant -- and, by requiring the adjacent servant in
 # {mahapakh, merka, illuy}, would turn three clean parses into NO_PARSE for a paseq-omission
-# divergence already surfaced elsewhere.  Not encoded.  See memory poetic-servant-rules-breuer.
+# divergence already surfaced elsewhere.  Not encoded.  See issue #18.
 def p_revia_gadol_phrase(p):
     """revia_gadol_phrase : REVIA_GADOL
                           | servi REVIA_GADOL"""
@@ -241,7 +239,7 @@ def p_revia_qatan_phrase(p):
 # 79:3, 116:19, 135:21, Prov 7:7, 27:1, 27:19) and ILLUY in 1 (Ps 137:9), and MAM agrees in
 # every one -- genuine two-witness constructions of the same phonological servant-type family
 # that refuted DEXI / PAZER / TSINNOR.  A merka-only constraint would flag 10 correct verses.
-# Not encoded.  See memory poetic-servant-rules-breuer.
+# Not encoded.  See issue #18.
 def p_revia_mugrash_phrase(p):
     """revia_mugrash_phrase : REVIA_MUGRASH
                             | servi REVIA_MUGRASH"""
@@ -256,8 +254,7 @@ def p_revia_mugrash_phrase(p):
 # in all 16 merkha cases and has munaḥ in NONE of them -- so merkha-served deḥi is a
 # real, two-witness construction and Breuer's flat "always" is an oversimplification
 # (the munaḥ/merkha choice is phonological, hence out of scope for a token grammar).
-# Enforcing munaḥ-only would flag 16 correct verses.  See memory
-# poetic-servant-rules-breuer.
+# Enforcing munaḥ-only would flag 16 correct verses.  See issue #18.
 def p_dehi_phrase(p):
     """dehi_phrase : DEXI
                    | servi DEXI"""
@@ -276,8 +273,7 @@ def p_dehi_phrase(p):
 #     DISJUNCTIVE cross-check already flags the verse (MAM carries an extra REVIA_GADOL).
 # Encoding MUNAX|MERKHA-only would fire on just these two -- one CoS-contested, one already
 # surfaced by the disjunctive xcheck -- while turning two clean L parses into NO_PARSE.  Not
-# encoded (confirmed-but-inert/redundant, like revia gadol).  See memory
-# poetic-servant-rules-breuer.
+# encoded (confirmed-but-inert/redundant, like revia gadol).  See issue #18.
 def p_sinnor_phrase(p):
     """sinnor_phrase : TSINNOR
                      | servi TSINNOR"""
@@ -296,8 +292,7 @@ def p_sinnor_phrase(p):
 # of a token grammar's scope).  Two further non-galgal cases are not counter-evidence but
 # also not galgal: Ps 28:5 is a plain L-vs-MAM sign divergence (L mahpak, MAM galgal), and
 # Ps 89:20's merka is a CoS-contested secondary merka (stays non-galgal even if dropped).
-# Enforcing galgal-only would flag the three correct merka verses.  See memory
-# poetic-servant-rules-breuer.
+# Enforcing galgal-only would flag the three correct merka verses.  See issue #18.
 def p_pazer_phrase(p):
     """pazer_phrase : PAZER
                     | servi PAZER"""
@@ -680,7 +675,7 @@ def p_legarmeh_clause(p):
 # carry a merka servant in both L and MAM (uniform, zero conflicts), like small revia'.
 # (This corrects an earlier "as a rule it has no servi" note, which holds for the prose
 # shalshelet gedolah but not the poetic one.)  Left permissive; a merka constraint would
-# fire on nothing.  See memory poetic-servant-rules-breuer.
+# fire on nothing.  See issue #18.
 def p_shalshelet_gedolah_clause(p):
     "shalshelet_gedolah_clause : shalshelet_gedolah_phrase"
     p[0] = p[1]
