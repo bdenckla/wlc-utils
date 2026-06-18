@@ -27,8 +27,31 @@ from py_html import wlc_utils_html
 
 _JOB_31_15_NOTE_URL = "https://tanach.us/Notes/Job/Job.31.15.1-t.html"
 
+# Sibling, hand-authored (not generated) page next to poetic.html: an English
+# rendering of MAM's four documentation notes on this verse.
+_PS_17_14_NOTES_HREF = "ps17v14-mam-doc-notes.html"
+
 
 BY_REF: dict[str, dict[str, object]] = {
+    "ps 17:14": {
+        "comment": (
+            [
+                "This verse is heavily commented upon by MAM (see the ",
+                wlc_utils_html.anchor(
+                    "translation of those notes", {"href": _PS_17_14_NOTES_HREF}
+                ),
+                "), but the comments either do not concern cantillation, or "
+                "concern cantillation only in ways that would not change "
+                "whatever the checker's issue is with the accent grammar of the "
+                "verse. (The four notes turn on a secondary merkha plus ga'ya, a "
+                "ḥataf, a missing shva, and the placement of the silluq -- none "
+                "of which alters the disjunctive skeleton the parser rejects, and "
+                "the conjunctive servus chain the grammar does parse is "
+                "permissive enough that a secondary conjunctive is absorbed "
+                "harmlessly.)",
+            ],
+        ),
+    },
     "jb 31:15": {
         "uxlc_note_page": _JOB_31_15_NOTE_URL,
         "st-summary": (
