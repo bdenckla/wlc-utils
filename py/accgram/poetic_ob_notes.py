@@ -31,6 +31,23 @@ _JOB_31_15_NOTE_URL = "https://tanach.us/Notes/Job/Job.31.15.1-t.html"
 # rendering of MAM's four documentation notes on this verse.
 _PS_17_14_NOTES_HREF = "ps17v14-mam-doc-notes.html"
 
+# Reuse the goerwitz manuscript-image styling so embedded figures match the
+# prose page, but caption them vaguely (just the manuscript) rather than with
+# the page/column/line detail the prose LC images carry.
+_TMS_FIGURE_CLASS = "goerwitz-tms-figure"
+_TMS_IMAGE_CLASS = "goerwitz-tms-image"
+_TMS_CAPTION_CLASS = "goerwitz-tms-image-caption"
+
+
+def _vaguely_captioned_image(img_path: str, caption: str) -> object:
+    """A manuscript figure captioned only by manuscript -- no page/line/column."""
+    image_para = wlc_utils_html.para(
+        wlc_utils_html.img({"src": f"../img/{img_path}"}),
+        {"class": _TMS_IMAGE_CLASS},
+    )
+    caption_el = wlc_utils_html.figcaption(caption, {"class": _TMS_CAPTION_CLASS})
+    return wlc_utils_html.figure((image_para, caption_el), {"class": _TMS_FIGURE_CLASS})
+
 
 BY_REF: dict[str, dict[str, object]] = {
     "ps 17:14": {
@@ -50,6 +67,12 @@ BY_REF: dict[str, dict[str, object]] = {
                 "permissive enough that a secondary conjunctive is absorbed "
                 "harmlessly.)",
             ],
+            "This verse is not extant in the Aleppo Codex.",
+            "Though in the LC the first of the two tsinnor marks is a little "
+            "oddly shaped, S1 (Sassoon 1053) clearly shares these two adjacent "
+            "tsinnor marks, with no questions of penmanship.",
+            _vaguely_captioned_image("LC-Ps-17v14.png", "Leningrad Codex"),
+            _vaguely_captioned_image("S1-Ps-17v14.png", "Sassoon 1053 (S1)"),
         ),
     },
     "jb 31:15": {
