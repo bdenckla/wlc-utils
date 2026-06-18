@@ -10,6 +10,7 @@ body {
     font-family: "Taamey D WOFF2";
     font-size: 140%;
     font-feature-settings: 'ss01'; /* ss01 = xataf qamats qatan */
+    font-style: normal; /* never italicize Hebrew, even inside italic context */
 }
 @font-face {
     font-family: "Taamey D WOFF2";

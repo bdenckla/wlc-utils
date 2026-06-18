@@ -25,19 +25,23 @@ reports can later be merged into one generator (see issue #10). It keeps two
 poetic-only displays the prose page has no analogue for: the M-C source body
 and the WLC-vs-MAM disjunctive compare.
 
-Unlike the prose ``research_tao`` report, there is no UXLC / changetext / hand-
-authored ob_notes machinery here: the poetic oddballs are a closed set of 17
-documented structural cases, and the MAM disjunctive comparison is the relevant
-oracle (the prose UXLC enrichment targets vowel/consonant text changes, which
-these accent-structure oddballs do not concern). Pointed-Hebrew rendering and
-the prose SAT focus-word table are likewise not reproduced, as those need
-WLC/UXLC/MAM verse-token enrichment this closed set does not load.
+The mechanically auto-derived WLC-vs-MAM-simple summary is the relevant oracle
+for these accent-structure oddballs (the prose UXLC change-text enrichment
+targets vowel/consonant text changes, which these do not concern). On top of it
+there is an optional hand-authored annotation layer -- the poetic analogue of
+the prose ``ob_notes_*`` modules -- in ``poetic_ob_notes``: a per-oddball
+``st-summary`` / ``comment`` plus external links (a tanach.us ``uxlc_note_page``,
+a ``github-issue``), shown only for the few cases that warrant it. The prose SAT
+focus-word table is not reproduced, as it needs WLC/UXLC/MAM verse-token
+enrichment this closed set does not load.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import re
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -45,9 +49,11 @@ from accgram import ob_error_context
 from accgram import ob_report
 from accgram import ob_tree_table
 from accgram import poetic_filter
+from accgram import poetic_ob_notes
 from accgram import rtms_data
 from accgram import rtms_ref
 from accgram import rtms_report
+from accgram import rtmsr_media
 from accgram import rtmsr_verse
 from accgram import split_wlc
 from accgram.mam_poetic_accents import load_poetic_word_disj
@@ -64,6 +70,11 @@ from py_wlc import my_wlc_bcv_str
 
 KIND_MISSING_SILLUQ = "missing_silluq"
 KIND_NO_PARSE = "no_parse"
+
+# The prose-report-shaped (row, key) -> value lookup the shared rtmsr_* helpers
+# expect; for the poetic page the row is ignored and the value comes from the
+# oddball's hand-authored poetic_ob_notes entry (see _structured_text_lookup).
+StructuredTextLookup = Callable[[dict[str, object], str], object]
 
 
 @dataclass(frozen=True)
@@ -236,6 +247,18 @@ def _bb_ref(ob: PoeticOddball) -> str:
     return f"{ob.bb} {chv}"
 
 
+def _structured_text_lookup(ob: PoeticOddball) -> StructuredTextLookup:
+    """A ``(row, key) -> value`` lookup over this oddball's hand-authored notes.
+
+    Returns the prose-report-shaped callable the shared rtmsr_media/ rtmsr_verse
+    helpers expect; ``row`` is ignored (the notes are keyed by the oddball's bb
+    reference, not carried on a row). Yields ``None`` for every key when the
+    oddball has no hand-authored entry."""
+    notes = poetic_ob_notes.get_structured_text().get(_bb_ref(ob))
+    notes = notes if isinstance(notes, dict) else {}
+    return lambda _row, key: notes.get(key)
+
+
 def render_body_contents(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
     counts = _counts(oddballs)
     ordered = sorted(
@@ -313,6 +336,11 @@ def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
     items.append(_render_disj_table(ob))
     items.append(_render_meta(ob))
     items.append(_render_tree(ob))
+    items.extend(
+        rtmsr_media.render_comment_paragraphs(
+            {}, structured_text_lookup=_structured_text_lookup(ob)
+        )
+    )
 
     return wlc_utils_html.htel_mk(
         "section",
@@ -335,6 +363,7 @@ def _render_ref_links(
     bcv: str,
     anchor_id: str,
 ) -> tuple[object, ...]:
+    lookup = _structured_text_lookup(ob)
     permalink = wlc_utils_html.anchor(
         _SELF_LINK_SYMBOL,
         {
@@ -343,20 +372,24 @@ def _render_ref_links(
             "aria-label": "Permalink to this section",
         },
     )
-    perma_para = wlc_utils_html.para(
-        (permalink, f" Kind: {_KIND_LABEL[ob.kind]}.")
-    )
-    links_para = wlc_utils_html.para(
-        (
-            wlc_utils_html.anchor(
-                "Mwd", {"href": rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)}
-            ),
-            " | ",
-            wlc_utils_html.anchor(
-                "UXLC", {"href": my_wlc_bcv_str.get_tanach_dot_us_url(bcv)}
-            ),
-        )
-    )
+    perma_contents: list[object] = [permalink, f" Kind: {_KIND_LABEL[ob.kind]}."]
+    summary = lookup({}, "st-summary")
+    if isinstance(summary, str) and summary.strip():
+        perma_contents.append(f" Summary: {summary.strip()}")
+    perma_para = wlc_utils_html.para(tuple(perma_contents))
+
+    links: list[object] = [
+        wlc_utils_html.anchor(
+            "Mwd", {"href": rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)}
+        ),
+        " | ",
+        wlc_utils_html.anchor("UXLC", {"href": my_wlc_bcv_str.get_tanach_dot_us_url(bcv)}),
+    ]
+    for label, key in (("UXLC note page", "uxlc_note_page"), ("GitHub issue", "github-issue")):
+        url = lookup({}, key)
+        if isinstance(url, str) and url.strip():
+            links.extend((" | ", wlc_utils_html.anchor(label, {"href": url.strip()})))
+    links_para = wlc_utils_html.para(tuple(links))
     return (perma_para, links_para)
 
 
@@ -377,10 +410,34 @@ def _render_summary(ob: PoeticOddball) -> object:
             wlc_utils_html.span_c(
                 "Auto-derived summary (tentative): ", "poetic-auto-summary-label"
             ),
-            derive_tentative_summary(ob),
+            *_wrap_hebrew_runs(derive_tentative_summary(ob)),
         ),
         {"class": "poetic-auto-summary"},
     )
+
+
+# A run of Hebrew letters (alef..tav, final forms) plus the maqaf that joins them
+# into one accent-word -- the Hebrew words the auto-derived summary embeds.
+_HEBREW_RUN_RE = re.compile(r"[־א-ת]+")
+
+
+def _wrap_hebrew_runs(text: str) -> tuple[object, ...]:
+    """Split ``text`` into a flat (string | hbo-span) sequence, wrapping each Hebrew run.
+
+    The summary is shown in an italic paragraph; wrapping its Hebrew words in
+    ``lang="hbo"`` spans gives them the Hebrew font and (via the stylesheet) keeps them
+    upright -- Hebrew is never italicized."""
+    pieces: list[object] = []
+    cursor = 0
+    for match in _HEBREW_RUN_RE.finditer(text):
+        start, end = match.span()
+        if start > cursor:
+            pieces.append(text[cursor:start])
+        pieces.append(wlc_utils_html.span(match.group(0), {"lang": "hbo"}))
+        cursor = end
+    if cursor < len(text):
+        pieces.append(text[cursor:])
+    return tuple(pieces)
 
 
 def _render_hebrew_verse(ob: PoeticOddball) -> object | None:

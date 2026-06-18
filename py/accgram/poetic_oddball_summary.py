@@ -80,8 +80,11 @@ def _word_aligned_clauses(ob: PoeticOddball) -> list[str] | None:
         return None
     mam_words = [(cons, (d,) if d else ()) for cons, d in ob.mam_words]
 
+    # The WLC word strings keep their maqaf for display ("הלא־בבטן"); the MAM side's
+    # base_consonants drops it, so strip it back out for the alignment key only -- the
+    # opcode indices below still address the maqaf-bearing wlc_words for phrasing.
     matcher = difflib.SequenceMatcher(
-        a=[cons for cons, _ in wlc_words],
+        a=[cons.replace(hpunc.MAQ, "") for cons, _ in wlc_words],
         b=[cons for cons, _ in mam_words],
         autojunk=False,
     )
@@ -118,8 +121,11 @@ def _wlc_consonant_words(wlc_verse: object) -> list[str] | None:
     """Group the wlc422 ``vels`` into accent-words and return each one's consonants.
 
     A maqaf-terminated token joins the next sub-word into one accent-word (matching the
-    M-C scanner's whitespace-delimited words); punctuation-only tokens (paseq) drop
-    out.  None if the verse carries no ``vels``."""
+    M-C scanner's whitespace-delimited words); the maqaf itself is kept in the returned
+    string so a joined word displays as "הלא־בבטן" rather than the run-together
+    "הלאבבטן" (the alignment key strips it back out -- see _word_aligned_clauses --
+    since the MAM side's base_consonants drops the maqaf).  Punctuation-only tokens
+    (paseq) drop out.  None if the verse carries no ``vels``."""
     if not isinstance(wlc_verse, dict):
         return None
     vels = wlc_verse.get("vels")
@@ -136,6 +142,7 @@ def _wlc_consonant_words(wlc_verse: object) -> list[str] | None:
             continue
         current += cons
         if hpunc.MAQ in text:  # maqaf joins this to the next sub-word
+            current += hpunc.MAQ
             continue
         words.append(current)
         current = ""
