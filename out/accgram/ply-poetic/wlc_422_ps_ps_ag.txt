@@ -9313,11 +9313,8 @@ Psalms 50:1
   1 silluq_clause
     2 atnach_clause
       3 revia_gadol_clause
-        4 pazer_clause
-          5 legarmeh_phrase
-            legarmeh 
-          5 pazer_phrase
-            pazer 
+        4 pazer_phrase
+          mehuppak pazer 
         4 revia_gadol_phrase
           revia gadol 
       3 atnach_phrase
@@ -10338,12 +10335,9 @@ Psalms 55:20
     2 revia_gadol_clause
       3 sinnor_clause
         4 legarmeh_phrase
-          legarmeh 
-        4 sinnor_clause
-          5 legarmeh_phrase
-            legarmeh 
-          5 sinnor_phrase
-            sinnor 
+          mehuppak legarmeh 
+        4 sinnor_phrase
+          sinnor 
       3 revia_gadol_phrase
         mehuppak merka revia gadol 
     2 atnach_phrase
@@ -11881,11 +11875,8 @@ Psalms 65:10
 0 silluq_clause
   1 atnach_clause
     2 revia_gadol_clause
-      3 pazer_clause
-        4 legarmeh_phrase
-          merka legarmeh 
-        4 pazer_phrase
-          galgal pazer 
+      3 pazer_phrase
+        merka azla galgal pazer 
       3 revia_gadol_phrase
         illuy revia gadol 
     2 atnach_clause
@@ -12496,21 +12487,25 @@ Psalms 68:19
   1 silluq_clause
     2 revia_mugrash_phrase
       merka revia mugrash 
-    2 silluq_clause
-      3 legarmeh_phrase
-        legarmeh 
-      3 silluq_phrase
-        illuy silluq 
+    2 silluq_phrase
+      mehuppak illuy silluq 
 Psalms 68:20
-NO_PARSE: MAHAPAKH MUNAX TSINNOR LEGARMEH MERKHA REVIA_MUGRASH MAHAPAKH ILLUY SILLUQ
+0 silluq_clause
+  1 oleh_weyored_clause
+    2 sinnor_phrase
+      mehuppak munah sinnor 
+    2 oleh_weyored_phrase
+      mehuppak oleh we-yored 
+  1 silluq_clause
+    2 revia_mugrash_phrase
+      revia mugrash 
+    2 silluq_phrase
+      mehuppak illuy silluq 
 Psalms 68:21
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
-      3 legarmeh_phrase
-        legarmeh 
-      3 sinnor_phrase
-        sinnor 
+    2 sinnor_phrase
+      mehuppak sinnor 
     2 oleh_weyored_phrase
       mehuppak oleh we-yored 
   1 silluq_clause
@@ -12718,11 +12713,8 @@ Psalms 68:36
     2 revia_mugrash_clause
       3 revia_gadol_phrase
         mehuppak revia gadol 
-      3 revia_mugrash_clause
-        4 legarmeh_phrase
-          mehuppak legarmeh 
-        4 revia_mugrash_phrase
-          tarha merka revia mugrash 
+      3 revia_mugrash_phrase
+        mehuppak azla tarha merka revia mugrash 
     2 silluq_phrase
       merka silluq 
 Psalms 69:1
@@ -16551,11 +16543,8 @@ Psalms 84:4
 0 silluq_clause
   1 oleh_weyored_clause
     2 sinnor_clause
-      3 pazer_clause
-        4 legarmeh_phrase
-          legarmeh 
-        4 pazer_phrase
-          galgal pazer 
+      3 pazer_phrase
+        azla galgal pazer 
       3 sinnor_clause
         4 legarmeh_phrase
           legarmeh 
@@ -16786,11 +16775,8 @@ Psalms 85:9
       merka silluq 
 Psalms 85:10
 0 silluq_clause
-  1 atnach_clause
-    2 legarmeh_phrase
-      legarmeh 
-    2 atnach_phrase
-      munah munah atnah 
+  1 atnach_phrase
+    mehuppak munah munah atnah 
   1 silluq_phrase
     tarha munah silluq 
 Psalms 85:11
@@ -25984,11 +25970,8 @@ Psalms 127:1
           legarmeh 
         4 revia_gadol_phrase
           illuy revia gadol 
-      3 atnach_clause
-        4 legarmeh_phrase
-          legarmeh 
-        4 atnach_phrase
-          munah munah atnah 
+      3 atnach_phrase
+        mehuppak munah munah atnah 
     2 silluq_clause
       3 revia_mugrash_phrase
         merka revia mugrash 
@@ -26001,11 +25984,8 @@ Psalms 127:2
 0 silluq_clause
   1 atnach_clause
     2 revia_gadol_clause
-      3 pazer_clause
-        4 legarmeh_phrase
-          mehuppak legarmeh 
-        4 pazer_phrase
-          galgal pazer 
+      3 pazer_phrase
+        mehuppak azla galgal pazer 
       3 revia_gadol_phrase
         revia gadol 
     2 atnach_clause
@@ -27250,11 +27230,8 @@ Psalms 137:7
     2 atnach_clause
       3 dehi_phrase
         dehi 
-      3 atnach_clause
-        4 legarmeh_phrase
-          munah legarmeh 
-        4 atnach_phrase
-          atnah 
+      3 atnach_phrase
+        munah mehuppak atnah 
     2 silluq_clause
       3 revia_mugrash_phrase
         revia mugrash 

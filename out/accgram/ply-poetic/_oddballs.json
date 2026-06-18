@@ -3,9 +3,9 @@
   "artifacts_description": "poetic (Three Books) oddball verses for review",
   "payload_provenance_note": "Each row is a poetic verse the PLY port could not parse cleanly: either a missing-silluq verse recovered into an ERROR-leaf tree ('missing_silluq') or a hierarchy-violating L anomaly emitted as a NO_PARSE line ('no_parse'). wlc_disjunctives is the scanner's disjunctive skeleton; mam_disjunctives is the MAM-simple oracle's, for comparison. output_file names the *_ag.txt holding the tree/NO_PARSE line.",
   "summary": {
-    "oddballs": 17,
+    "oddballs": 15,
     "missing_silluq": 13,
-    "no_parse": 4
+    "no_parse": 2
   },
   "oddballs": [
     {
@@ -227,39 +227,6 @@
       "tree": "0 silluq_clause\n  1 atnach_phrase\n    munah munah atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
-      "ref": "Psalms 68:20",
-      "bb": "ps",
-      "kind": "no_parse",
-      "content": "B.F70R74W.K: ):ADON/FY02 YO70WM05 YO71WM YA75(:AMFS-L/F81NW. HF82/)\"70L Y:75$W.(FT/\"64NW. SE75LFH00",
-      "output_file": "wlc_422_ps_ps_ag.txt",
-      "token_types": [
-        "TILDE",
-        "MAHAPAKH",
-        "MUNAX",
-        "TSINNOR",
-        "LEGARMEH",
-        "MERKHA",
-        "REVIA_MUGRASH",
-        "MAHAPAKH",
-        "ILLUY",
-        "SILLUQ",
-        "SOFPASUQ"
-      ],
-      "wlc_disjunctives": [
-        "TSINNOR",
-        "LEGARMEH",
-        "REVIA_MUGRASH",
-        "SILLUQ"
-      ],
-      "mam_disjunctives": [
-        "TSINNOR",
-        "OLEH_WEYORED",
-        "REVIA_MUGRASH",
-        "SILLUQ"
-      ],
-      "tree": "NO_PARSE: MAHAPAKH MUNAX TSINNOR LEGARMEH MERKHA REVIA_MUGRASH MAHAPAKH ILLUY SILLUQ"
-    },
-    {
       "ref": "Psalms 71:4",
       "bb": "ps",
       "kind": "missing_silluq",
@@ -479,48 +446,6 @@
         "SILLUQ"
       ],
       "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      munah dehi \n    2 atnach_phrase\n      munah atnah \n  1 silluq_phrase\n    ERROR "
-    },
-    {
-      "ref": "Proverbs 30:15",
-      "bb": "pr",
-      "kind": "no_parse",
-      "content": "LA95/(:ALW.QF63H05 $:T.\"71Y BFNOWT02 HA70B05 HA71B $FLO74W$ 13H\"N.FH LO74) TI&:B.A92(:NFH 11)AR:B.A81( LO)-)F71M:RW. HO75WN00",
-      "output_file": "wlc_422_ps_pr_ag.txt",
-      "token_types": [
-        "TILDE",
-        "LEGARMEH",
-        "MERKHA",
-        "TSINNOR",
-        "LEGARMEH",
-        "MERKHA",
-        "MUNAX",
-        "DEXI",
-        "MUNAX",
-        "ATNAX",
-        "REVIA_MUGRASH",
-        "MERKHA",
-        "SILLUQ",
-        "SOFPASUQ"
-      ],
-      "wlc_disjunctives": [
-        "LEGARMEH",
-        "TSINNOR",
-        "LEGARMEH",
-        "DEXI",
-        "ATNAX",
-        "REVIA_MUGRASH",
-        "SILLUQ"
-      ],
-      "mam_disjunctives": [
-        "LEGARMEH",
-        "TSINNOR",
-        "OLEH_WEYORED",
-        "DEXI",
-        "ATNAX",
-        "REVIA_MUGRASH",
-        "SILLUQ"
-      ],
-      "tree": "NO_PARSE: LEGARMEH MERKHA TSINNOR LEGARMEH MERKHA MUNAX DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ"
     }
   ]
 }

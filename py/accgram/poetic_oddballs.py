@@ -68,6 +68,7 @@ from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_scanner_poetic import scan_book
+from accgram.poetic_reconcile import reconcile_tokens
 from accgram.poetic_oddball_summary import derive_tentative_summary
 from accgram.ply_tree import print_tree
 from accgram.run_ply_poetic import _has_error_leaf, _no_parse_line
@@ -128,23 +129,29 @@ def collect_poetic_oddballs(
     for bb, text in book_texts.items():
         output_file = f"wlc_422_ps_{bb}_ag.txt"
         for verse in scan_book(text, bb):
-            tree = parse_tokens(parser, verse.tokens)
-            if tree is None:
-                kind = KIND_NO_PARSE
-                tree_text = _no_parse_line(verse.tokens).rstrip("\n")
-            elif _has_error_leaf(tree):
-                kind = KIND_MISSING_SILLUQ
-                tree_text = print_tree(tree, 0).rstrip("\n")
-            else:
-                continue
-
-            wlc = tuple(t for t, _ in verse.tokens if t in _POETIC_DISJUNCTIVES)
             mam_words = mam_words_by_ref.get(verse.reference)
             mam = (
                 [d for _cons, d in mam_words if d is not None]
                 if mam_words is not None
                 else None
             )
+            # Apply the legarmeh-vs-paseq and unmarked-oleh corrections before parsing,
+            # exactly as run_ply_poetic does, so this report agrees with the driver's
+            # trees (and the two resolved NO_PARSE verses no longer surface here).
+            tokens = reconcile_tokens(
+                verse.reference, verse.body, list(verse.tokens), mam, parser
+            )
+            tree = parse_tokens(parser, tokens)
+            if tree is None:
+                kind = KIND_NO_PARSE
+                tree_text = _no_parse_line(tokens).rstrip("\n")
+            elif _has_error_leaf(tree):
+                kind = KIND_MISSING_SILLUQ
+                tree_text = print_tree(tree, 0).rstrip("\n")
+            else:
+                continue
+
+            wlc = tuple(t for t, _ in tokens if t in _POETIC_DISJUNCTIVES)
             bcv = f"{bb}{verse.reference.rpartition(' ')[2]}"
             raw_verse = wlc_index.get(bcv)
             wlc_verse = (
@@ -159,7 +166,7 @@ def collect_poetic_oddballs(
                     kind=kind,
                     body=verse.body,
                     output_file=output_file,
-                    token_types=tuple(t for t, _ in verse.tokens),
+                    token_types=tuple(t for t, _ in tokens),
                     wlc_disjunctives=wlc,
                     mam_disjunctives=tuple(mam) if mam is not None else None,
                     mam_words=tuple(mam_words) if mam_words is not None else None,

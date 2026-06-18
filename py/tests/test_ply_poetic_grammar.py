@@ -246,9 +246,13 @@ def test_missing_silluq_recovers_as_error_tree():
 
 
 def test_misplaced_disjunctive_stays_no_parse():
-    """A genuine hierarchy violation (sinnor before legarmeh, an L anomaly MAM
-    reads differently) is NOT masked by error recovery -- parse_tokens returns None
-    so the driver records an informative NO_PARSE line (Ps 68:20)."""
+    """The *raw* scanner reading of Ps 68:20 (sinnor before a legarmeh) is a hierarchy
+    violation the grammar must NOT mask by error recovery -- parse_tokens returns None.
+
+    In the live pipeline this verse no longer surfaces as NO_PARSE: poetic_reconcile
+    corrects the scanner's blanket legarmeh to MAM's paseq and recovers the unmarked
+    oleh-we-yored, and the reconciled tokens parse (see test_poetic_reconcile).  This
+    test pins the grammar property on the *unreconciled* sequence."""
     parser = build_parser()
     tree = parse_tokens(
         parser,

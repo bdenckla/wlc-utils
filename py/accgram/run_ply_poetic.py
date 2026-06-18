@@ -3,9 +3,11 @@
 The poetic counterpart of accgram.run_ply.  Reads the canonical source
 ``wlc-utils-io/in/wlc422/wlc422_ps.txt``, keeps only the poetic verses (Psalms and
 Proverbs wholesale plus poetically-cantillated Job, via poetic_filter), scans each
-verse with ply_scanner_poetic and parses it with ply_grammar_poetic, then writes
-the reference line followed by the indented tree -- the same shape run_ply writes
-for the prose books.  Output goes to out/accgram/ply-poetic/.
+verse with ply_scanner_poetic, reconciles the tokens against MAM (poetic_reconcile:
+the legarmeh-vs-paseq and unmarked-oleh corrections the M-C source cannot express),
+parses the result with ply_grammar_poetic, then writes the reference line followed by
+the indented tree -- the same shape run_ply writes for the prose books.  Output goes
+to out/accgram/ply-poetic/.
 
 Unlike the prose driver, an unparseable verse is NOT fatal.  The poetic grammar is
 derived from Yeivin (no C oracle) and ~3.6% of verses are known structural
@@ -24,9 +26,12 @@ from pathlib import Path
 
 from accgram import poetic_filter
 from accgram import split_wlc
+from accgram.mam_poetic_accents import load_poetic_disjunctives
+from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_scanner_poetic import scan_book
 from accgram.ply_tree import TN, print_tree
+from accgram.poetic_reconcile import reconcile_tokens
 
 
 @dataclass(frozen=True)
@@ -56,8 +61,15 @@ def _no_parse_line(tokens: list[tuple[str, str]]) -> str:
     return "NO_PARSE: " + " ".join(accents) + "\n"
 
 
-def render_book(text: str, parser, bb: str) -> tuple[str, BookRun]:
-    """Return (output_text, stats) for one book's scanner-ready text."""
+def render_book(
+    text: str, parser, bb: str, mam_disj_by_ref: dict[str, list[str]]
+) -> tuple[str, BookRun]:
+    """Return (output_text, stats) for one book's scanner-ready text.
+
+    Each verse's scanned tokens are first reconciled (poetic_reconcile) against the
+    MAM disjunctive skeleton so the legarmeh-vs-paseq and unmarked-oleh corrections
+    WLC's M-C source cannot express are applied before the grammar sees the tokens.
+    """
     verses = scan_book(text, bb)
     out_lines: list[str] = []
     parsed = 0
@@ -65,10 +77,17 @@ def render_book(text: str, parser, bb: str) -> tuple[str, BookRun]:
     no_parse = 0
     for verse in verses:
         out_lines.append(verse.reference + "\n")
-        tree = parse_tokens(parser, verse.tokens)
+        tokens = reconcile_tokens(
+            verse.reference,
+            verse.body,
+            list(verse.tokens),
+            mam_disj_by_ref.get(verse.reference),
+            parser,
+        )
+        tree = parse_tokens(parser, tokens)
         if tree is None:
             no_parse += 1
-            out_lines.append(_no_parse_line(verse.tokens))
+            out_lines.append(_no_parse_line(tokens))
             continue
         if _has_error_leaf(tree):
             oddballs += 1
@@ -106,6 +125,13 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         help="Directory for poetic PLY outputs named wlc_422_ps_<bb>_ag.txt.",
     )
     parser.add_argument(
+        "--mam-simple-dir",
+        type=Path,
+        default=default_mam_simple_dir(repo_root),
+        help="Directory containing MAM-simple json-vtrad-bhs book files "
+        "(the legarmeh-vs-paseq oracle for token reconciliation).",
+    )
+    parser.add_argument(
         "--book",
         action="append",
         default=None,
@@ -122,6 +148,7 @@ def run(args: argparse.Namespace) -> None:
 
     only = set(args.book) if args.book else None
     parser = build_parser()
+    mam_disj_by_ref = load_poetic_disjunctives(args.mam_simple_dir)
 
     book_texts = split_wlc.split_wlc_to_book_texts(
         input_path, keep_line_fn=poetic_filter.should_keep_line
@@ -134,7 +161,7 @@ def run(args: argparse.Namespace) -> None:
     for bb, text in book_texts.items():
         if only is not None and bb not in only:
             continue
-        output_text, stats = render_book(text, parser, bb)
+        output_text, stats = render_book(text, parser, bb, mam_disj_by_ref)
         out_path = out_dir / f"wlc_422_ps_{bb}_ag.txt"
         # LF newlines, UTF-8.
         out_path.write_text(output_text, encoding="utf-8", newline="\n")

@@ -14,6 +14,13 @@ different conjunctive *signs* for the same slot and Yeivin pins no exact servus
 chains, so only the disjunctive skeleton is a meaningful equality check (see
 ``mam_poetic_accents`` for the rationale).
 
+The WLC side compares the *reconciled* token stream (``poetic_reconcile``), the same
+one the driver parses.  One consequence is honest to flag: legarmeh-vs-paseq is not in
+WLC's M-C source, so the reconciler resolves it *from MAM* -- the legarmeh dimension of
+this check is therefore agree-by-construction, not an independent witness.  Every other
+disjunctive (silluq, atnah, oleh-we-yored, the revias, dehi, sinnor, pazer) is still
+derived from WLC alone, so the check remains a meaningful Phase-2 surface for them.
+
 The run writes a git-tracked report ``out/accgram/ply-poetic/_mam_xcheck.txt``: a
 per-book agreement tally, then every divergence grouped by its edit signature
 (the difflib opcodes turning the WLC sequence into the MAM one), each annotated
@@ -36,6 +43,7 @@ from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_scanner_poetic import scan_book
+from accgram.poetic_reconcile import reconcile_tokens
 
 
 @dataclass(frozen=True)
@@ -93,7 +101,10 @@ def collect_divergences(
             if mam is None:
                 continue
             total += 1
-            wlc = [t for t, _ in verse.tokens if t in _POETIC_DISJUNCTIVES]
+            tokens = reconcile_tokens(
+                verse.reference, verse.body, list(verse.tokens), mam, parser
+            )
+            wlc = [t for t, _ in tokens if t in _POETIC_DISJUNCTIVES]
             if wlc == mam:
                 matched += 1
                 continue
@@ -102,7 +113,7 @@ def collect_divergences(
                     reference=verse.reference,
                     wlc=tuple(wlc),
                     mam=tuple(mam),
-                    parses=parse_tokens(parser, verse.tokens) is not None,
+                    parses=parse_tokens(parser, tokens) is not None,
                     signature=_edit_signature(wlc, mam),
                 )
             )

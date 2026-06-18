@@ -7278,11 +7278,8 @@ Job 31:1
       silluq 
 Job 31:2
 0 silluq_clause
-  1 atnach_clause
-    2 legarmeh_phrase
-      legarmeh 
-    2 atnach_phrase
-      munah munah atnah 
+  1 atnach_phrase
+    mehuppak munah munah atnah 
   1 silluq_clause
     2 revia_mugrash_phrase
       merka revia mugrash 
