@@ -19,21 +19,26 @@ reads). It writes a git-tracked ``_oddballs.json`` next to the corpus outputs an
 
 The HTML deliberately shares the prose ``goerwitz.html`` shell -- the same
 ``../style.css``, width-limited wrapper, single flat client-side-filterable
-verse list (``poetic-filter.js``), per-verse permalinks + Mwd/UXLC links, and
-the parse tree rendered as an HTML table via ``ob_tree_table`` -- so the two
-reports can later be merged into one generator (see issue #10). It keeps two
-poetic-only displays the prose page has no analogue for: the M-C source body
-and the WLC-vs-MAM disjunctive compare.
+verse list (``poetic-filter.js``), per-verse permalinks + Mwd/UXLC links, the
+parse tree rendered as an HTML table via ``ob_tree_table``, and the SAT
+focus-word table via ``poetic_sat`` (which reuses the prose ``rtmsr_sat``
+renderer) -- so the two reports can later be merged into one generator (see
+issue #10). It keeps one poetic-only display the prose
+page has no analogue for: the M-C source body. The verse-final NO_PARSE cases,
+having no valid parse, render a flat best-effort tree (each token a cell, capped
+by an ERROR leaf) so they too display through the shared error-tree table.
 
 The mechanically auto-derived WLC-vs-MAM-simple summary is the relevant oracle
 for these accent-structure oddballs (the prose UXLC change-text enrichment
-targets vowel/consonant text changes, which these do not concern). On top of it
-there is an optional hand-authored annotation layer -- the poetic analogue of
-the prose ``ob_notes_*`` modules -- in ``poetic_ob_notes``: a per-oddball
+targets vowel/consonant text changes, which these do not concern); it -- with
+the client-side "MAM compare" filter facet -- now carries the WLC-vs-MAM
+disjunctive comparison that an earlier standalone skeleton table showed. On top
+of it there is an optional hand-authored annotation layer -- the poetic analogue
+of the prose ``ob_notes_*`` modules -- in ``poetic_ob_notes``: a per-oddball
 ``st-summary`` / ``comment`` plus external links (a tanach.us ``uxlc_note_page``,
-a ``github-issue``), shown only for the few cases that warrant it. The prose SAT
-focus-word table is not reproduced, as it needs WLC/UXLC/MAM verse-token
-enrichment this closed set does not load.
+a ``github-issue``), shown only for the few cases that warrant it. The SAT
+focus-word table is reproduced for missing-silluq verses (whose locus is the
+verse-final word); NO_PARSE verses, having no single focus word, omit it.
 """
 
 from __future__ import annotations
@@ -42,7 +47,7 @@ import argparse
 import json
 import re
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 from accgram import ob_error_context
@@ -50,6 +55,8 @@ from accgram import ob_report
 from accgram import ob_tree_table
 from accgram import poetic_filter
 from accgram import poetic_ob_notes
+from accgram import poetic_sat
+from accgram import research_tao
 from accgram import rtms_data
 from accgram import rtms_ref
 from accgram import rtms_report
@@ -96,10 +103,18 @@ class PoeticOddball:
     # HTML report's verse paragraph; None if the verse is absent from the index.
     # Not written to _oddballs.json (the disjunctive skeletons are the datum).
     wlc_verse: dict[str, object] | None
+    # The build_enriched_row payload (WLC/UXLC/MAM focus-word verses + diffs)
+    # feeding the SAT focus-word table; built only for missing-silluq verses with a
+    # unique verse-final focus word, None otherwise. Rebuilt at collection time, never
+    # persisted to _oddballs.json.
+    enriched_row: dict[str, object] | None
 
 
 def collect_poetic_oddballs(
-    input_path: Path, mam_simple_dir: Path, wlc422_kq_u_dir: Path
+    input_path: Path,
+    mam_simple_dir: Path,
+    wlc422_kq_u_dir: Path,
+    uxlc_dir: Path,
 ) -> list[PoeticOddball]:
     """Re-scan + re-parse the poetic corpus and return every oddball verse."""
     mam_words_by_ref = load_poetic_word_disj(mam_simple_dir)
@@ -150,9 +165,94 @@ def collect_poetic_oddballs(
                     mam_words=tuple(mam_words) if mam_words is not None else None,
                     tree_text=tree_text,
                     wlc_verse=wlc_verse,
+                    enriched_row=None,
                 )
             )
-    return oddballs
+
+    return _attach_enriched_rows(
+        oddballs,
+        wlc422_kq_u_dir=wlc422_kq_u_dir,
+        uxlc_dir=uxlc_dir,
+        mam_simple_dir=mam_simple_dir,
+    )
+
+
+def _attach_enriched_rows(
+    oddballs: list[PoeticOddball],
+    *,
+    wlc422_kq_u_dir: Path,
+    uxlc_dir: Path,
+    mam_simple_dir: Path,
+) -> list[PoeticOddball]:
+    """Enrich each missing-silluq oddball with the WLC/UXLC/MAM focus-word payload
+    the SAT table needs, leaving NO_PARSE verses (no localized focus) untouched."""
+    refs_by_book: dict[str, set[tuple[int, int]]] = {}
+    for ob in oddballs:
+        if ob.kind != KIND_MISSING_SILLUQ:
+            continue
+        _bb, chnu, vrnu, _bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(ob))
+        refs_by_book.setdefault(ob.bb, set()).add((chnu, vrnu))
+
+    wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = rtms_data.load_source_indexes(
+        wlc422_kq_u_dir=wlc422_kq_u_dir,
+        uxlc_dir=uxlc_dir,
+        mam_simple_dir=mam_simple_dir,
+        refs_by_book=refs_by_book,
+    )
+
+    return [
+        replace(
+            ob,
+            enriched_row=_enriched_row_for(
+                ob,
+                wlc422_by_bcv=wlc422_by_bcv,
+                uxlc_by_bcv=uxlc_by_bcv,
+                mam_simple_by_bcv=mam_simple_by_bcv,
+                wlc422_kq_u_dir=wlc422_kq_u_dir,
+                uxlc_dir=uxlc_dir,
+                mam_simple_dir=mam_simple_dir,
+            ),
+        )
+        for ob in oddballs
+    ]
+
+
+def _enriched_row_for(
+    ob: PoeticOddball,
+    *,
+    wlc422_by_bcv: dict[str, dict[str, object]],
+    uxlc_by_bcv: dict[str, dict[str, object]],
+    mam_simple_by_bcv: dict[str, dict[str, object]],
+    wlc422_kq_u_dir: Path,
+    uxlc_dir: Path,
+    mam_simple_dir: Path,
+) -> dict[str, object] | None:
+    """The poetic_sat focus-word payload for ob's SAT table, or None.
+
+    Only missing-silluq verses get one (their locus is the verse-final focus word);
+    a missing UXLC/MAM witness or a non-unique focus degrades to None, in which case
+    the verse simply renders no SAT table -- the run stays non-fatal."""
+    if ob.kind != KIND_MISSING_SILLUQ:
+        return None
+    wlc_focus = poetic_sat.focus_word(
+        final_word=_final_word_focus(ob), wlc_verse=ob.wlc_verse
+    )
+    if not wlc_focus:
+        return None
+    bb_ref = _bb_ref(ob)
+    _bb, _chnu, _vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(bb_ref)
+    return poetic_sat.build_focus_enriched_row(
+        bb_ref=bb_ref,
+        bcv=bcv,
+        output_file=ob.output_file,
+        wlc_focus=wlc_focus,
+        wlc422_by_bcv=wlc422_by_bcv,
+        uxlc_by_bcv=uxlc_by_bcv,
+        mam_simple_by_bcv=mam_simple_by_bcv,
+        wlc422_kq_u_dir=wlc422_kq_u_dir,
+        uxlc_dir=uxlc_dir,
+        mam_simple_dir=mam_simple_dir,
+    )
 
 
 def _oddball_to_row(ob: PoeticOddball) -> dict[str, object]:
@@ -302,8 +402,9 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
             (
                 "Each verse shows its pointed-Hebrew text (the verse-final word "
                 "highlighted for missing-silluq cases), its Michigan-Claremont "
-                "source body, and a WLC-vs-MAM-simple disjunctive compare: the "
-                "scanner's disjunctive skeleton against the MAM oracle's. The "
+                "source body, and — for missing-silluq verses — a SAT focus-word "
+                "table comparing the WLC focus word against its UXLC and MAM-simple "
+                "readings. The "
                 "per-verse summary is mechanically auto-derived — but from a "
                 "word-by-word alignment of the two verses, not from the "
                 "conjunctive-stripped skeletons above, so a divider that merely "
@@ -333,7 +434,9 @@ def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
     if hebrew_verse is not None:
         items.append(hebrew_verse)
     items.append(wlc_utils_html.para(ob.body, {"class": "poetic-src"}))
-    items.append(_render_disj_table(ob))
+    sat_table = poetic_sat.render_table(ob.enriched_row, row_ref=_bb_ref(ob))
+    if sat_table is not None:
+        items.append(sat_table)
     items.append(_render_meta(ob))
     items.append(_render_tree(ob))
     items.extend(
@@ -474,26 +577,6 @@ def _token_text(token: object) -> str:
     return ""
 
 
-def _render_disj_table(ob: PoeticOddball) -> object:
-    wlc_seq = " ".join(ob.wlc_disjunctives)
-    if ob.mam_disjunctives is None:
-        mam_cell: object = "(not in MAM-simple)"
-        agree_cell: object = ""
-    else:
-        mam_cell = " ".join(ob.mam_disjunctives)
-        if ob.wlc_disjunctives == ob.mam_disjunctives:
-            agree_cell = wlc_utils_html.span_c("(agree)", "poetic-agree")
-        else:
-            agree_cell = wlc_utils_html.span_c("(differ)", "poetic-differ")
-    return wlc_utils_html.table(
-        (
-            wlc_utils_html.table_row_of_data(("WLC", wlc_seq, agree_cell)),
-            wlc_utils_html.table_row_of_data(("MAM", mam_cell, "")),
-        ),
-        {"class": "goerwitz-tms-sat poetic-disj"},
-    )
-
-
 def _render_meta(ob: PoeticOddball) -> object:
     return wlc_utils_html.para(
         (
@@ -505,18 +588,39 @@ def _render_meta(ob: PoeticOddball) -> object:
 
 
 def _render_tree(ob: PoeticOddball) -> object:
-    if ob.kind == KIND_MISSING_SILLUQ:
-        tree = ob_error_context.parse_error_tree_from_text(ob.tree_text)
-        if tree is not None:
-            return wlc_utils_html.div(
-                (ob_tree_table.render_error_tree_table(tree),),
-                {"class": "goerwitz-obs-tree-wrap"},
-            )
-    # NO_PARSE has no tree; show the raw NO_PARSE token line verbatim.
+    # missing_silluq carries a real ERROR-leaf tree; NO_PARSE has no valid tree, so
+    # synthesize a flat best-effort one (each token a cell, capped by an ERROR leaf)
+    # -- both render through the shared error-tree table.
+    tree_text = (
+        ob.tree_text
+        if ob.kind == KIND_MISSING_SILLUQ
+        else _no_parse_tree_text(ob.token_types)
+    )
+    tree = ob_error_context.parse_error_tree_from_text(tree_text)
+    if tree is not None:
+        return wlc_utils_html.div(
+            (ob_tree_table.render_error_tree_table(tree),),
+            {"class": "goerwitz-obs-tree-wrap"},
+        )
+    # Last-resort fallback: show the raw tree/NO_PARSE line verbatim.
     return wlc_utils_html.div(
         (wlc_utils_html.htel_mk_inline("pre", None, ob.tree_text),),
         {"class": "goerwitz-obs-tree-wrap"},
     )
+
+
+def _no_parse_tree_text(token_types: tuple[str, ...]) -> str:
+    """A flat best-effort "tree" for a NO_PARSE verse, in print_tree text form.
+
+    No valid parse exists, so this is not a real tree: a single ``no_parse`` branch
+    whose leaves are the accent token types (the TILDE/SOFPASUQ structural bookends
+    dropped, as in run_ply_poetic._no_parse_line), capped by an ``ERROR`` leaf. Fed
+    through the shared error-tree table it puts each token in its own cell and
+    highlights the ERROR cell -- more legible than the bare NO_PARSE token line, and
+    visually consistent with the missing-silluq ERROR trees."""
+    accents = [t for t in token_types if t not in ("TILDE", "SOFPASUQ")]
+    leaf_lines = "".join(f"  {accent}\n" for accent in accents)
+    return f"0 no_parse\n{leaf_lines}  ERROR\n"
 
 
 def _build_filter_controls(counts: dict[str, int]) -> object:
@@ -621,6 +725,12 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "(for pointed-Hebrew verse rendering).",
     )
     parser.add_argument(
+        "--uxlc-dir",
+        type=Path,
+        default=research_tao.default_uxlc_dir(repo_root),
+        help="Directory of UXLC-39 book XML files (for the SAT focus-word table).",
+    )
+    parser.add_argument(
         "--oddballs-out",
         type=Path,
         default=default_oddballs_out_path(repo_root),
@@ -636,7 +746,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 def run(args: argparse.Namespace) -> None:
     oddballs = collect_poetic_oddballs(
-        args.input, args.mam_simple_dir, args.wlc422_kq_u_dir
+        args.input, args.mam_simple_dir, args.wlc422_kq_u_dir, args.uxlc_dir
     )
 
     payload = build_payload(oddballs, __file__)

@@ -21,7 +21,7 @@ Introduction</h2>
 <li>
 “NO_PARSE,” a hierarchy-violating L anomaly for which no valid tree exists.</li>
 </ul>
-<p>Each verse shows its pointed-Hebrew text (the verse-final word highlighted for missing-silluq cases), its Michigan-Claremont source body, and a WLC-vs-MAM-simple disjunctive compare: the scanner's disjunctive skeleton against the MAM oracle's. The per-verse summary is mechanically auto-derived — but from a word-by-word alignment of the two verses, not from the conjunctive-stripped skeletons above, so a divider that merely sits on a different word is reported as such rather than as a phantom substitution. It is labelled tentative — not a hand-vetted attribution. See <code>doc/PLAN-poetic-accent-grammar.md</code> for the full taxonomy.</p>
+<p>Each verse shows its pointed-Hebrew text (the verse-final word highlighted for missing-silluq cases), its Michigan-Claremont source body, and — for missing-silluq verses — a SAT focus-word table comparing the WLC focus word against its UXLC and MAM-simple readings. The per-verse summary is mechanically auto-derived — but from a word-by-word alignment of the two verses, not from the conjunctive-stripped skeletons above, so a divider that merely sits on a different word is reported as such rather than as a phantom substitution. It is labelled tentative — not a hand-vetted attribution. See <code>doc/PLAN-poetic-accent-grammar.md</code> for the full taxonomy.</p>
 <div class="goerwitz-filter">
 <fieldset>
 <legend>
@@ -45,13 +45,13 @@ Psalms 17:14</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>WLC and MAM-simple read the same disjunctive skeleton, yet the verse does not parse — the anomaly is structural, not a WLC/MAM divergence.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ממת֥ים ידך֨׀ יהו֡ה ממת֬ים מח֗לד חלק֥ם בחיים֮ וצפונך֮ תמל֪א ב֫טנ֥ם ישבע֥ו בנ֑ים והנ֥יחו י֝תר֗ם לעולליהֽם׃</p>
 <p class="poetic-src">MI75/M:TI71YM YFD/:KF6305 Y:HWF83H MI75/M:TI64YM M"/XE81LED XEL:Q/F71M B.A75/XAY.IYM02 *W/CPYN/K **W.75/C:PW.N/:KF02 T.:MAL."93) BI60+:N/F71M YI&amp;:B.:(71W. BFNI92YM W:/HIN.I71YXW. 11YIT:R/F81M L:/(OWL:L"Y/HE95M00</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>LEGARMEH PAZER REVIA_GADOL TSINNOR TSINNOR OLEH_WEYORED ATNAX REVIA_MUGRASH SILLUQ</td><td><span class="poetic-agree">(agree)</span></td></tr>
-<tr><td>MAM</td><td>LEGARMEH PAZER REVIA_GADOL TSINNOR TSINNOR OLEH_WEYORED ATNAX REVIA_MUGRASH SILLUQ</td><td></td></tr>
-</table>
 <p class="poetic-meta">tokens: TILDE MERKHA LEGARMEH PAZER ILLUY REVIA_GADOL MERKHA TSINNOR TSINNOR GALGAL OLEH_WEYORED MERKHA ATNAX MERKHA REVIA_MUGRASH SILLUQ SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
-<pre>NO_PARSE: MERKHA LEGARMEH PAZER ILLUY REVIA_GADOL MERKHA TSINNOR TSINNOR GALGAL OLEH_WEYORED MERKHA ATNAX MERKHA REVIA_MUGRASH SILLUQ</pre></div>
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="16">no_parse</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td>MERKHA</td><td>LEGARMEH</td><td>PAZER</td><td>ILLUY</td><td>REVIA_GADOL</td><td>MERKHA</td><td>TSINNOR</td><td>TSINNOR</td><td>GALGAL</td><td>OLEH_WEYORED</td><td>MERKHA</td><td>ATNAX</td><td>MERKHA</td><td>REVIA_MUGRASH</td><td>SILLUQ</td><td class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="missing_silluq" data-book="ps" data-agree="differ">
 <hr><h2 id="obps31v20">
@@ -61,9 +61,9 @@ Psalms 31:20</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">אדם</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">מ֤ה רב־ טובך֮ אשר־ צפ֪נת ליר֫א֥יך פ֭עלת לחס֣ים ב֑ך נ֝֗גד בנ֣י <span class="goerwitz-tms-focus-highlight">אדם׃</span></p>
 <p class="poetic-src">MF70H RA75B-+W.B/:KF02 ):A$ER-CFPA93N:T.F L.I75/YR"60)E71Y/KF 13P.F(AL:T.F LA/XOSI74YM B./F92K: 11NE81GED B.:N"74Y )FDFM00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>TSINNOR OLEH_WEYORED DEXI ATNAX REVIA_MUGRASH</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>TSINNOR OLEH_WEYORED DEXI ATNAX REVIA_MUGRASH SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">אדם׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">אדֽם׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MAHAPAKH TSINNOR GALGAL OLEH_WEYORED DEXI MUNAX ATNAX REVIA_MUGRASH MUNAX SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -84,9 +84,9 @@ Psalms 32:2</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">רמיה</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">א֥שרי אד֗ם ל֤א יחש֬ב יהו֣ה ל֣ו עו֑ן וא֖ין ברוח֣ו <span class="goerwitz-tms-focus-highlight">רמיה׃</span></p>
 <p class="poetic-src">)A71$:75R"Y )FDF81M LO70) YAX:$O64B Y:HWF74H L/O74W (FWO92N W:/)"73YN B.:/RW.X/O74W R:MIY.FH00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>REVIA_GADOL ATNAX</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>REVIA_GADOL ATNAX SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">רמיה׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">רמיֽה׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MERKHA REVIA_GADOL MAHAPAKH ILLUY MUNAX MUNAX ATNAX TARXA MUNAX SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -106,9 +106,9 @@ Psalms 37:31</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">אשריו</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">תור֣ת אלה֣יו בלב֑ו ל֖א תמע֣ד <span class="goerwitz-tms-focus-highlight">אשריו׃</span></p>
 <p class="poetic-src">T.OWRA74T ):ELOHF74Y/W B.:/LIB./O92W LO73) TIM:(A74D ):A$URFY/W00]c</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>ATNAX</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>ATNAX SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">אשריו׃</td><td style="text-align: right;"><span title="We read an accent in ל differently from BHS. (This is similar to the note “]C”, but the latter refers to accent differences against BHQ.)">]c</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">אשרֽיו׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MUNAX MUNAX ATNAX TARXA MUNAX SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -127,9 +127,9 @@ Psalms 37:32</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">להמיתו</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">צופ֣ה ר֭שע לצד֑יק ו֝מבק֗ש <span class="goerwitz-tms-focus-highlight">להמיתו׃</span></p>
 <p class="poetic-src">COWPE74H 13RF$F( LA/C.AD.I92YQ 11W./M:BAQ."81$ LA/H:AMIYT/OW00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>DEXI ATNAX REVIA_MUGRASH</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>DEXI ATNAX REVIA_MUGRASH SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">להמיתו׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">להמיתֽו׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MUNAX DEXI ATNAX REVIA_MUGRASH SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -149,9 +149,9 @@ Psalms 59:5</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, WLC segments this stretch as <span lang="hbo">ירוצון</span> where MAM has <span lang="hbo">ירצון</span>; on <span lang="hbo">וראה</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">בלי־ ע֭ון ירוצ֣ון ויכונ֑נו ע֖ורה לקראת֣י <span class="goerwitz-tms-focus-highlight">וראה׃</span></p>
 <p class="poetic-src">B.:75LIY-13(FWON Y:RW.C74W./N W:/YIK.OWNF92NW. (73W.R/FH LI/Q:RF)T/I74Y W./R:)"H00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>DEXI ATNAX</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>DEXI ATNAX SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">וראה׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">וראֽה׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE DEXI MUNAX ATNAX TARXA MUNAX SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -171,9 +171,9 @@ Psalms 60:13</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">אדם</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">הבה־ ל֣נו עזר֣ת מצ֑ר ו֝ש֗וא תשוע֥ת <span class="goerwitz-tms-focus-highlight">אדם׃</span></p>
 <p class="poetic-src">HF75B/FH-L./F74NW. (EZ:RF74T MI/C.F92R 11W:/$F81W:) T.:$W.(A71T )FDFM00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>ATNAX REVIA_MUGRASH</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>ATNAX REVIA_MUGRASH SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">אדם׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">אדֽם׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MUNAX MUNAX ATNAX REVIA_MUGRASH MERKHA SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -193,13 +193,13 @@ Psalms 68:20</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">יום</span>, WLC reads legarmeh where MAM reads no divider (a conjunctive); on <span lang="hbo">יום</span>, WLC reads no divider (a conjunctive) where MAM reads oleh weyored.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ב֤ר֣וך אדני֮ י֤ום׀ י֥ום יעמס־ ל֗נו ה֘א֤ל ישועת֬נו סֽלה׃</p>
 <p class="poetic-src">B.F70R74W.K: ):ADON/FY02 YO70WM05 YO71WM YA75(:AMFS-L/F81NW. HF82/)"70L Y:75$W.(FT/"64NW. SE75LFH00</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>TSINNOR LEGARMEH REVIA_MUGRASH SILLUQ</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>TSINNOR OLEH_WEYORED REVIA_MUGRASH SILLUQ</td><td></td></tr>
-</table>
 <p class="poetic-meta">tokens: TILDE MAHAPAKH MUNAX TSINNOR LEGARMEH MERKHA REVIA_MUGRASH MAHAPAKH ILLUY SILLUQ SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
-<pre>NO_PARSE: MAHAPAKH MUNAX TSINNOR LEGARMEH MERKHA REVIA_MUGRASH MAHAPAKH ILLUY SILLUQ</pre></div>
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="10">no_parse</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td>MAHAPAKH</td><td>MUNAX</td><td>TSINNOR</td><td>LEGARMEH</td><td>MERKHA</td><td>REVIA_MUGRASH</td><td>MAHAPAKH</td><td>ILLUY</td><td>SILLUQ</td><td class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="missing_silluq" data-book="ps" data-agree="differ">
 <hr><h2 id="obps71v4">
@@ -209,9 +209,9 @@ Psalms 71:4</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">וחומץ</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">אלה֗י פ֭לטני מי֣ד רש֑ע מכ֖ף מעו֣ל <span class="goerwitz-tms-focus-highlight">וחומץ׃</span></p>
 <p class="poetic-src">):E35LOH/A81Y 13P.AL.:+/"NIY MI/Y.A74D RF$F92( MI/K.A73P M:(AW."74L W:/XOWM"C00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>REVIA_GADOL DEXI ATNAX</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>REVIA_GADOL DEXI ATNAX SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">וחומץ׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">וחומֽץ׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE REVIA_GADOL DEXI MUNAX ATNAX TARXA MUNAX SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -232,9 +232,9 @@ Psalms 74:17</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">יצרתם</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">את֣ה ה֭צבת כל־ גבול֣ות א֑רץ ק֥יץ ו֝ח֗רף את֥ה <span class="goerwitz-tms-focus-highlight">יצרתם׃</span></p>
 <p class="poetic-src">)AT.F74H 13HIC.AB:T.F K.FL-G.:BW.LO74WT )F92REC QA71YIC 11WF/XO81REP )AT.F71H Y:CAR:T.F/M00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>DEXI ATNAX REVIA_MUGRASH</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>DEXI ATNAX REVIA_MUGRASH SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">יצרתם׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">יצרתֽם׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MUNAX DEXI MUNAX ATNAX MERKHA REVIA_MUGRASH MERKHA SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -254,9 +254,9 @@ Psalms 78:41</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">התוו</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ויש֣ובו וינס֣ו א֑ל וקד֖וש ישרא֣ל <span class="goerwitz-tms-focus-highlight">התוו׃</span></p>
 <p class="poetic-src">WA/Y.F$74W.BW. WA/Y:NAS.74W. )"92L W./Q:DO73W$ YI&amp;:RF)"74L HIT:WW.00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>ATNAX</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>ATNAX SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">התוו׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">התוֽו׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MUNAX MUNAX ATNAX TARXA MUNAX SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -275,9 +275,9 @@ Psalms 89:7</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">אלים</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">כ֤י מ֣י ב֭שחק יער֣ך ליהו֑ה ידמ֥ה ל֝יהו֗ה בבנ֥י <span class="goerwitz-tms-focus-highlight">אלים׃</span></p>
 <p class="poetic-src">K.I70Y MI74Y 13BA/$.AXAQ YA(:ARO74K: LA/YHWF92H YID:ME71H 11LA/YHWF81H B.I/B:N"71Y )"LIYM00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>DEXI ATNAX REVIA_MUGRASH</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>DEXI ATNAX REVIA_MUGRASH SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">אלים׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">אלֽים׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MAHAPAKH MUNAX DEXI MUNAX ATNAX MERKHA REVIA_MUGRASH MERKHA SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -297,9 +297,9 @@ Psalms 89:41</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">מחתה</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">פר֥צת כל־ גדרת֑יו ש֖מת מבצר֣יו <span class="goerwitz-tms-focus-highlight">מחתה׃</span></p>
 <p class="poetic-src">P.FRA71C:T.F KFL-G.:D"ROTF92Y/W &amp;A73M:T.F MIB:CFRF74Y/W M:XIT.FH00]1</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>ATNAX</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>ATNAX SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">מחתה׃</td><td style="text-align: right;"><span title="BHS has been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as BHS. (This is similar to the note “]U”, but the latter refers to cases where BHQ has been published and we keep the same form as both BHS and BHQ.)">]1</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">מחתֽה׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MERKHA ATNAX TARXA MUNAX SOFPASUQ · <code>wlc_422_ps_ps_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -318,9 +318,9 @@ Proverbs 8:28</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">תהום</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">באמצ֣ו שחק֣ים ממ֑על ב֝עז֗וז עינ֥ות <span class="goerwitz-tms-focus-highlight">תהום׃</span></p>
 <p class="poetic-src">B.:/)AM.:C/O74W $:XFQI74YM MI/M.F92(AL 11B.A/(:AZO81WZ (IYNO71WT T.:HOWM00]U</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>ATNAX REVIA_MUGRASH</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>ATNAX REVIA_MUGRASH SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">תהום׃</td><td style="text-align: right;"><span title="BHS and BHQ have both been faithful to ל (the Leningrad Codex) where there might be a question of the validity of the form and we keep the same form as both BHS and BHQ. This is similar to the note “]1”, but the latter refers to cases where we keep the same form as just BHS. (“]U” only applies when the relevant fascicle of BHQ has been published and BHQ has the same reading as BHS.)">]U</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">תהֽום׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MUNAX MUNAX ATNAX REVIA_MUGRASH MERKHA SOFPASUQ · <code>wlc_422_ps_pr_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -340,9 +340,9 @@ Proverbs 24:15</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">רבצו</span>, WLC reads no divider (a conjunctive) where MAM reads silluq.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">אל־ תאר֣ב ר֭שע לנו֣ה צד֑יק אל־ תשד֥ד <span class="goerwitz-tms-focus-highlight">רבצו׃</span></p>
 <p class="poetic-src">)AL-T.E):ERO74B 13RF$F( LI/N:W"74H CAD.I92YQ )A75L-T.:$AD."71D RIB:C/OW00]Q]c]n</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>DEXI ATNAX</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>DEXI ATNAX SILLUQ</td><td></td></tr>
+<table class="goerwitz-tms-sat">
+<tr><td lang="hbo" dir="rtl">רבצו׃</td><td style="text-align: right;"><span title="Marks a place where we agree with BHQ against BHS in reading ל. This note will be preceded or followed by one or more bracket notes to specify the type(s) of disagreement(s) with BHS.">]Q</span><span title="We read an accent in ל differently from BHS. (This is similar to the note “]C”, but the latter refers to accent differences against BHQ.)">]c</span><span title="An anomalous form in the text of ל. This bracket note was new to WLC 4.14 (only two occurrences in that version), and was not yet widely used at first, occurring on only 23 words in WLC 4.16. However, this bracket note occurs on 111 words (167 morphemes) in WLC 4.20.">]n</span></td><td>sof_pasuq</td><td>wlc_focus</td></tr>
+<tr><td lang="hbo" dir="rtl">רבצֽו׃</td><td style="text-align: right;"></td><td>silluq-sof_pasuq</td><td>diff_wlc_mam</td></tr>
 </table>
 <p class="poetic-meta">tokens: TILDE MUNAX DEXI MUNAX ATNAX MERKHA SOFPASUQ · <code>wlc_422_ps_pr_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
@@ -362,13 +362,13 @@ Proverbs 30:15</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, WLC segments this stretch as <span lang="hbo">הב</span> [legarmeh] where MAM has <span lang="hbo">ה</span>, <span lang="hbo">ב</span>; on <span lang="hbo">הב</span>, WLC reads no divider (a conjunctive) where MAM reads oleh weyored.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">לעלוק֨ה׀ שת֥י בנות֮ ה֤ב׀ ה֥ב של֣וש ה֭נה ל֣א תשב֑ענה א֝רב֗ע לא־ א֥מרו הֽון׃</p>
 <p class="poetic-src">LA95/(:ALW.QF63H05 $:T."71Y BFNOWT02 HA70B05 HA71B $FLO74W$ 13H"N.FH LO74) TI&amp;:B.A92(:NFH 11)AR:B.A81( LO)-)F71M:RW. HO75WN00</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>LEGARMEH TSINNOR LEGARMEH DEXI ATNAX REVIA_MUGRASH SILLUQ</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>LEGARMEH TSINNOR OLEH_WEYORED DEXI ATNAX REVIA_MUGRASH SILLUQ</td><td></td></tr>
-</table>
 <p class="poetic-meta">tokens: TILDE LEGARMEH MERKHA TSINNOR LEGARMEH MERKHA MUNAX DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ SOFPASUQ · <code>wlc_422_ps_pr_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
-<pre>NO_PARSE: LEGARMEH MERKHA TSINNOR LEGARMEH MERKHA MUNAX DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ</pre></div>
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="13">no_parse</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td>LEGARMEH</td><td>MERKHA</td><td>TSINNOR</td><td>LEGARMEH</td><td>MERKHA</td><td>MUNAX</td><td>DEXI</td><td>MUNAX</td><td>ATNAX</td><td>REVIA_MUGRASH</td><td>MERKHA</td><td>SILLUQ</td><td class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 </section>
 <section class="goerwitz-verse" data-kind="no_parse" data-book="jb" data-agree="differ">
 <hr><h2 id="objb31v15">
@@ -378,13 +378,13 @@ Job 31:15</h2>
 <p class="poetic-auto-summary"><span class="poetic-auto-summary-label">Auto-derived summary (tentative): </span>Word-aligned against MAM-simple, on <span lang="hbo">הלא־בבטן</span>, WLC reads revia mugrash, dexi where MAM reads dexi.</p>
 <p class="goerwitz-tms-verse" lang="hbo" dir="rtl">ה֝לא־ ב֭בטן עש֣ני עש֑הו ו֝יכנ֗נו בר֥חם אחֽד׃</p>
 <p class="poetic-src">11H:A35/LO)-13BA/B.E+EN (O&amp;/"74NIY (F&amp;/F92HW. 11WA/Y:KUN/E81N.W. B.F/RE71XEM )EXF75D00</p>
-<table class="goerwitz-tms-sat poetic-disj">
-<tr><td>WLC</td><td>REVIA_MUGRASH DEXI ATNAX REVIA_MUGRASH SILLUQ</td><td><span class="poetic-differ">(differ)</span></td></tr>
-<tr><td>MAM</td><td>DEXI ATNAX REVIA_MUGRASH SILLUQ</td><td></td></tr>
-</table>
 <p class="poetic-meta">tokens: TILDE REVIA_MUGRASH DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ SOFPASUQ · <code>wlc_422_ps_jb_ag.txt</code></p>
 <div class="goerwitz-obs-tree-wrap">
-<pre>NO_PARSE: REVIA_MUGRASH DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ</pre></div>
+<table class="goerwitz-obs-error-table">
+<tr><td class="goerwitz-obs-depth-cell">0</td><td colspan="8">no_parse</td></tr>
+<tr><td class="goerwitz-obs-depth-cell"></td><td>REVIA_MUGRASH</td><td>DEXI</td><td>MUNAX</td><td>ATNAX</td><td>REVIA_MUGRASH</td><td>MERKHA</td><td>SILLUQ</td><td class="goerwitz-obs-error-cell">ERROR</td></tr>
+</table>
+</div>
 <p class="goerwitz-tms-comment">The UXLC <a href="https://tanach.us/Notes/Job/Job.31.15.1-t.html">note for this verse</a> describes the mark WLC transcribes here as a geresh muqdam of “a very odd shape,” a vertical straight line arising from the top front of the he, and flags it with a transcription-uncertainty “t” marker; BHL lacks the geresh muqdam entirely.</p>
 <p class="goerwitz-tms-comment">In my opinion, to transcribe this mark at all is uncharitable. To continue to transcribe it with the benefit of the high-resolution color images now available seems not just uncharitable but aggressively uncharitable, almost absurd.</p>
 </section>
