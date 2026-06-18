@@ -71,6 +71,13 @@ BY_REF: dict[str, dict[str, object]] = {
             "Though in the LC the first of the two tsinnor marks is a little "
             "oddly shaped, S1 (Sassoon 1053) clearly shares these two adjacent "
             "tsinnor marks, with no questions of penmanship.",
+            "A scan of the disjunctive accent stream of every poetic verse "
+            "finds that these two adjacent tsinnor marks are unique in the "
+            "Three Books: of the 250 poetic verses carrying at least one "
+            "tsinnor, Ps 17:14 is the only one in which two tsinnor occur "
+            "consecutively. Both arise from genuine Michigan-Claremont 02 "
+            "(tsinnor) codes -- not a swallowed 82 (tsinnorit) -- on adjacent "
+            "words: בַּחַיִּים and the qere וּצְפוּנְךָ.",
             _vaguely_captioned_image("LC-Ps-17v14.png", "Leningrad Codex"),
             _vaguely_captioned_image("S1-Ps-17v14.png", "Sassoon 1053 (S1)"),
         ),
