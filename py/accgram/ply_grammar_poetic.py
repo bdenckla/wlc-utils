@@ -65,6 +65,7 @@ grammar does, so accgram.ply_tree.print_tree renders poetic trees identically.
 from __future__ import annotations
 
 import sys
+from dataclasses import dataclass
 
 from ply import yacc
 
@@ -686,8 +687,41 @@ def p_shalshelet_gedolah_clause(p):
 
 
 # --- error callback ------------------------------------------------------------
+@dataclass(frozen=True)
+class ParseError:
+    """Where a NO_PARSE verse's parse dead-ended -- the pinpoint for an oddball.
+
+    ``token_type`` is the offending lookahead: the first token the LALR(1) parser
+    could not shift onto any valid prefix.  ``accent_index`` is its 1-based position
+    among the verse's accent tokens (the TILDE/SOFPASUQ bookends excluded), so index
+    k means "every accent through k-1 was consumable; accent k is where the grammar
+    stalled."
+
+    This is the stall point, not necessarily the root-cause accent: a hierarchy
+    violation a few accents earlier can leave a still-valid prefix that only
+    dead-ends here.  Ps 17:14 is the canonical case -- its double sinnor (#7-8) plus
+    galgal (#9) parse fine, and the parse only fails at the OLEH_WEYORED (#10) that
+    follows them, because that oleh has nowhere to attach after the repeated sinnor.
+    So the locus narrows the failure to a region ("valid through GALGAL, stalled at
+    OLEH_WEYORED") rather than blaming the whole verse, even though the reader must
+    still look just left of the stall for the cause.
+    """
+
+    token_type: str
+    accent_index: int
+
+
 class _PoeticUnrecoverable(Exception):
-    """Raised from p_error to abort error recovery for non-category-A failures."""
+    """Raised from p_error to abort error recovery for non-category-A failures.
+
+    Carries the offending PLY lookahead token (always a real accent -- p_error
+    raises this only for a non-SOFPASUQ token), so parse_tokens_diagnostic can
+    report the stall locus instead of a bare None.
+    """
+
+    def __init__(self, token):
+        super().__init__()
+        self.token = token
 
 
 def p_error(p):  # noqa: D401  (PLY callback)
@@ -704,7 +738,7 @@ def p_error(p):  # noqa: D401  (PLY callback)
     # destroying the diagnostic token sequence.  Abort instead, so parse_tokens
     # returns None and the driver records an informative NO_PARSE line.
     if p is not None and p.type != pan.SOFPASUQ:
-        raise _PoeticUnrecoverable
+        raise _PoeticUnrecoverable(p)
     # else (mid-verse EOF, or the verse-final SOFPASUQ): let PLY recover.
 
 
@@ -722,20 +756,28 @@ class _LexToken:
 
 
 class _TokenStream:
-    """Adapts a list of (type, leaf) pairs to PLY's lexer interface."""
+    """Adapts a list of (type, leaf) pairs to PLY's lexer interface.
+
+    Each emitted token carries its 0-based position in the stream as ``lexpos`` so
+    that, on a syntax error, p_error's offending lookahead token pinpoints where the
+    parse stalled (see ParseError).  TILDE is index 0, so an accent's 1-based ordinal
+    among the accents equals its lexpos.
+    """
 
     def __init__(self, toks):
-        self._it = iter(toks)
+        self._it = iter(enumerate(toks))
 
     def input(self, _s):  # PLY may call this; we ignore it.
         pass
 
     def token(self):
         try:
-            ttype, leaf = next(self._it)
+            index, (ttype, leaf) = next(self._it)
         except StopIteration:
             return None
-        return _LexToken(ttype, leaf)
+        tok = _LexToken(ttype, leaf)
+        tok.lexpos = index
+        return tok
 
 
 def build_parser(*, capture_warnings: bool = False):
@@ -769,15 +811,32 @@ def build_parser(*, capture_warnings: bool = False):
     )
 
 
-def parse_tokens(parser, toks):
-    """Parse one poetic verse's token stream.
+def parse_tokens_diagnostic(parser, toks):
+    """Parse one poetic verse, returning ``(tree, error)``.
+
+    On success ``tree`` is the parse tree (ply_tree.TN) -- including a missing-silluq
+    ERROR-leaf tree for category A -- and ``error`` is None.  On an unrecoverable
+    failure (NO_PARSE) ``tree`` is None and ``error`` is a ParseError naming the
+    offending token and its accent ordinal, so the caller can pinpoint the stall
+    rather than flag the whole verse.
 
     ``toks`` is a list of (token_type, leaf_name) pairs beginning with
-    ('TILDE', '') and ending with ('SOFPASUQ', 'sof pasuq').  Returns the tree
-    (ply_tree.TN) -- including a missing-silluq ERROR-leaf tree for category A --
-    or None if the parse fails with no recoverable shape (NO_PARSE).
+    ('TILDE', '') and ending with ('SOFPASUQ', 'sof pasuq').
     """
     try:
-        return parser.parse(lexer=_TokenStream(toks))
-    except _PoeticUnrecoverable:
-        return None
+        return parser.parse(lexer=_TokenStream(toks)), None
+    except _PoeticUnrecoverable as exc:
+        tok = exc.token
+        # tok.lexpos is the offending token's 0-based index in the full stream;
+        # TILDE occupies index 0, so the 1-based accent ordinal equals lexpos.
+        return None, ParseError(token_type=tok.type, accent_index=tok.lexpos)
+
+
+def parse_tokens(parser, toks):
+    """Parse one poetic verse's token stream, returning the tree or None.
+
+    Thin wrapper over parse_tokens_diagnostic for the many callers that only need
+    the tree (and a None / not-None test); use parse_tokens_diagnostic when the
+    NO_PARSE stall locus is wanted.
+    """
+    return parse_tokens_diagnostic(parser, toks)[0]

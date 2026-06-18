@@ -66,7 +66,7 @@ from accgram import split_wlc
 from accgram.mam_poetic_accents import load_poetic_word_disj
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
-from accgram.ply_grammar_poetic import build_parser, parse_tokens
+from accgram.ply_grammar_poetic import ParseError, build_parser, parse_tokens_diagnostic
 from accgram.ply_scanner_poetic import scan_book
 from accgram.poetic_reconcile import reconcile_tokens
 from accgram.poetic_oddball_summary import derive_tentative_summary
@@ -100,6 +100,10 @@ class PoeticOddball:
     # MAM-simple.  Not written to _oddballs.json (the skeletons are the persisted datum).
     mam_words: tuple[tuple[str, str | None], ...] | None
     tree_text: str  # rendered ERROR tree, or the NO_PARSE line
+    # The parse stall locus for a NO_PARSE verse (None for missing-silluq): the
+    # offending accent's token type and its 1-based ordinal among the verse's
+    # accents, so the report can pinpoint where the parse dead-ended.
+    error: ParseError | None
     # WLC 4.22 pointed-Hebrew verse (qere-interpolated + sanitized), for the
     # HTML report's verse paragraph; None if the verse is absent from the index.
     # Not written to _oddballs.json (the disjunctive skeletons are the datum).
@@ -141,12 +145,13 @@ def collect_poetic_oddballs(
             tokens = reconcile_tokens(
                 verse.reference, verse.body, list(verse.tokens), mam, parser
             )
-            tree = parse_tokens(parser, tokens)
+            tree, error = parse_tokens_diagnostic(parser, tokens)
             if tree is None:
                 kind = KIND_NO_PARSE
-                tree_text = _no_parse_line(tokens).rstrip("\n")
+                tree_text = _no_parse_line(tokens, error).rstrip("\n")
             elif _has_error_leaf(tree):
                 kind = KIND_MISSING_SILLUQ
+                error = None
                 tree_text = print_tree(tree, 0).rstrip("\n")
             else:
                 continue
@@ -171,6 +176,7 @@ def collect_poetic_oddballs(
                     mam_disjunctives=tuple(mam) if mam is not None else None,
                     mam_words=tuple(mam_words) if mam_words is not None else None,
                     tree_text=tree_text,
+                    error=error,
                     wlc_verse=wlc_verse,
                     enriched_row=None,
                 )
@@ -274,6 +280,14 @@ def _oddball_to_row(ob: PoeticOddball) -> dict[str, object]:
         "mam_disjunctives": (
             list(ob.mam_disjunctives) if ob.mam_disjunctives is not None else None
         ),
+        # For a NO_PARSE verse, where the parse dead-ended (the offending accent's
+        # token type and its 1-based ordinal among the verse's accents); null for a
+        # missing-silluq verse, which has a full ERROR-leaf tree instead.
+        "stall": (
+            {"accent_index": ob.error.accent_index, "token_type": ob.error.token_type}
+            if ob.error is not None
+            else None
+        ),
         "tree": ob.tree_text,
     }
 
@@ -290,7 +304,11 @@ def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, 
             f"('{KIND_MISSING_SILLUQ}') or a hierarchy-violating L anomaly emitted as "
             f"a NO_PARSE line ('{KIND_NO_PARSE}'). wlc_disjunctives is the scanner's "
             "disjunctive skeleton; mam_disjunctives is the MAM-simple oracle's, for "
-            "comparison. output_file names the *_ag.txt holding the tree/NO_PARSE line."
+            "comparison. For a NO_PARSE verse, stall names the offending accent (its "
+            "1-based ordinal among the verse's accents and its token type) -- where "
+            "the LALR(1) parse dead-ended, i.e. every accent before it was consumable "
+            "(the stall point, not necessarily the root-cause accent). output_file "
+            "names the *_ag.txt holding the tree/NO_PARSE line."
         ),
         "summary": {
             "oddballs": len(oddballs),
@@ -402,7 +420,8 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
                 "“missing silluq,” where the sof pasuq arrives with no silluq, "
                 "recovered into an ERROR-leaf tree (structure preserved).",
                 "“NO_PARSE,” a hierarchy-violating L anomaly for which no valid "
-                "tree exists.",
+                "tree exists; the offending accent (where the parse dead-ended) is "
+                "marked “← stalled here” in its tree and named in the meta line.",
             )
         ),
         wlc_utils_html.para(
@@ -585,13 +604,17 @@ def _token_text(token: object) -> str:
 
 
 def _render_meta(ob: PoeticOddball) -> object:
-    return wlc_utils_html.para(
-        (
-            f"tokens: {' '.join(ob.token_types)} · ",
-            wlc_utils_html.code(ob.output_file),
-        ),
-        {"class": "poetic-meta"},
-    )
+    contents: list[object] = [f"tokens: {' '.join(ob.token_types)} · "]
+    if ob.error is not None:
+        n_accents = sum(
+            1 for t in ob.token_types if t not in ("TILDE", "SOFPASUQ")
+        )
+        contents.append(
+            f"parser stalled at accent {ob.error.accent_index}/{n_accents} "
+            f"({ob.error.token_type}) · "
+        )
+    contents.append(wlc_utils_html.code(ob.output_file))
+    return wlc_utils_html.para(tuple(contents), {"class": "poetic-meta"})
 
 
 def _render_tree(ob: PoeticOddball) -> object:
@@ -601,7 +624,10 @@ def _render_tree(ob: PoeticOddball) -> object:
     tree_text = (
         ob.tree_text
         if ob.kind == KIND_MISSING_SILLUQ
-        else _no_parse_tree_text(ob.token_types)
+        else _no_parse_tree_text(
+            ob.token_types,
+            stall_index=ob.error.accent_index if ob.error is not None else None,
+        )
     )
     tree = ob_error_context.parse_error_tree_from_text(tree_text)
     if tree is not None:
@@ -616,7 +642,9 @@ def _render_tree(ob: PoeticOddball) -> object:
     )
 
 
-def _no_parse_tree_text(token_types: tuple[str, ...]) -> str:
+def _no_parse_tree_text(
+    token_types: tuple[str, ...], stall_index: int | None = None
+) -> str:
     """A flat best-effort "tree" for a NO_PARSE verse, in print_tree text form.
 
     No valid parse exists, so this is not a real tree: a single ``no_parse`` branch
@@ -624,9 +652,16 @@ def _no_parse_tree_text(token_types: tuple[str, ...]) -> str:
     dropped, as in run_ply_poetic._no_parse_line), capped by an ``ERROR`` leaf. Fed
     through the shared error-tree table it puts each token in its own cell and
     highlights the ERROR cell -- more legible than the bare NO_PARSE token line, and
-    visually consistent with the missing-silluq ERROR trees."""
+    visually consistent with the missing-silluq ERROR trees.
+
+    When ``stall_index`` (the offending accent's 1-based ordinal, from ParseError) is
+    given, that leaf is annotated ``← stalled here`` so the tree pinpoints where the
+    parse dead-ended."""
     accents = [t for t in token_types if t not in ("TILDE", "SOFPASUQ")]
-    leaf_lines = "".join(f"  {accent}\n" for accent in accents)
+    leaves = list(accents)
+    if stall_index is not None and 1 <= stall_index <= len(leaves):
+        leaves[stall_index - 1] = f"{leaves[stall_index - 1]} ← stalled here"
+    leaf_lines = "".join(f"  {leaf}\n" for leaf in leaves)
     return f"0 no_parse\n{leaf_lines}  ERROR\n"
 
 

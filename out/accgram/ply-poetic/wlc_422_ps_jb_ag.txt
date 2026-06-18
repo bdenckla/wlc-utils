@@ -7409,7 +7409,7 @@ Job 31:14
     2 silluq_phrase
       munah silluq 
 Job 31:15
-NO_PARSE: REVIA_MUGRASH DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ
+NO_PARSE: REVIA_MUGRASH DEXI MUNAX >>ATNAX<< REVIA_MUGRASH MERKHA SILLUQ  (stalled at accent 4/7: ATNAX)
 Job 31:16
 0 silluq_clause
   1 atnach_clause

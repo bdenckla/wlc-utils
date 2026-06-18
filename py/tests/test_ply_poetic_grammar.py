@@ -18,7 +18,11 @@ Run:
 """
 
 from accgram import poetic_accent_names as pan
-from accgram.ply_grammar_poetic import build_parser, parse_tokens
+from accgram.ply_grammar_poetic import (
+    build_parser,
+    parse_tokens,
+    parse_tokens_diagnostic,
+)
 from accgram.ply_tree import print_tree
 
 
@@ -262,6 +266,32 @@ def test_misplaced_disjunctive_stays_no_parse():
         ),
     )
     assert tree is None
+
+
+def test_diagnostic_pinpoints_the_stall_token():
+    """parse_tokens_diagnostic reports WHERE a NO_PARSE verse dead-ends, not just
+    that it failed.  Ps 17:14's shape (double sinnor + galgal then oleh-we-yored)
+    parses through the GALGAL and stalls at the OLEH_WEYORED that follows it -- the
+    1-based ordinal among the verse's accents (TILDE excluded)."""
+    parser = build_parser()
+    accents = [
+        pan.MERKHA, pan.LEGARMEH, pan.PAZER, pan.ILLUY, pan.REVIA_GADOL,
+        pan.MERKHA, pan.TSINNOR, pan.TSINNOR, pan.GALGAL, pan.OLEH_WEYORED,
+        pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.REVIA_MUGRASH, pan.SILLUQ,
+    ]
+    tree, error = parse_tokens_diagnostic(parser, _verse(*accents))
+    assert tree is None
+    assert error is not None
+    assert error.token_type == pan.OLEH_WEYORED
+    assert error.accent_index == 10  # the 10th accent (1-based); accents[9]
+    assert accents[error.accent_index - 1] == pan.OLEH_WEYORED
+
+
+def test_diagnostic_returns_no_error_on_clean_parse():
+    parser = build_parser()
+    tree, error = parse_tokens_diagnostic(parser, _verse(pan.MUNAX, pan.SILLUQ))
+    assert tree is not None
+    assert error is None
 
 
 def test_pazer_directly_under_atnah():

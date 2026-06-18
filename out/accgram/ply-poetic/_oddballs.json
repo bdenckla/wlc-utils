@@ -55,7 +55,11 @@
         "REVIA_MUGRASH",
         "SILLUQ"
       ],
-      "tree": "NO_PARSE: MERKHA LEGARMEH PAZER ILLUY REVIA_GADOL MERKHA TSINNOR TSINNOR GALGAL OLEH_WEYORED MERKHA ATNAX MERKHA REVIA_MUGRASH SILLUQ"
+      "stall": {
+        "accent_index": 10,
+        "token_type": "OLEH_WEYORED"
+      },
+      "tree": "NO_PARSE: MERKHA LEGARMEH PAZER ILLUY REVIA_GADOL MERKHA TSINNOR TSINNOR GALGAL >>OLEH_WEYORED<< MERKHA ATNAX MERKHA REVIA_MUGRASH SILLUQ  (stalled at accent 10/15: OLEH_WEYORED)"
     },
     {
       "ref": "Psalms 31:20",
@@ -91,6 +95,7 @@
         "REVIA_MUGRASH",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 oleh_weyored_clause\n    2 sinnor_phrase\n      mehuppak sinnor \n    2 oleh_weyored_phrase\n      galgal oleh we-yored \n  1 silluq_clause\n    2 atnach_clause\n      3 dehi_phrase\n        dehi \n      3 atnach_phrase\n        munah atnah \n    2 silluq_clause\n      3 revia_mugrash_phrase\n        revia mugrash \n      3 silluq_phrase\n        ERROR "
     },
     {
@@ -121,6 +126,7 @@
         "ATNAX",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_clause\n    2 revia_gadol_phrase\n      merka revia gadol \n    2 atnach_phrase\n      mehuppak illuy munah munah atnah \n  1 silluq_phrase\n    ERROR "
     },
     {
@@ -145,6 +151,7 @@
         "ATNAX",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_phrase\n    munah munah atnah \n  1 silluq_phrase\n    ERROR "
     },
     {
@@ -172,6 +179,7 @@
         "REVIA_MUGRASH",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      munah dehi \n    2 atnach_phrase\n      atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
@@ -198,6 +206,7 @@
         "ATNAX",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      dehi \n    2 atnach_phrase\n      munah atnah \n  1 silluq_phrase\n    ERROR "
     },
     {
@@ -224,6 +233,7 @@
         "REVIA_MUGRASH",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_phrase\n    munah munah atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
@@ -253,6 +263,7 @@
         "ATNAX",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_clause\n    2 revia_gadol_phrase\n      revia gadol \n    2 atnach_clause\n      3 dehi_phrase\n        dehi \n      3 atnach_phrase\n        munah atnah \n  1 silluq_phrase\n    ERROR "
     },
     {
@@ -283,6 +294,7 @@
         "REVIA_MUGRASH",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      munah dehi \n    2 atnach_phrase\n      munah atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      merka revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
@@ -307,6 +319,7 @@
         "ATNAX",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_phrase\n    munah munah atnah \n  1 silluq_phrase\n    ERROR "
     },
     {
@@ -338,6 +351,7 @@
         "REVIA_MUGRASH",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      mehuppak munah dehi \n    2 atnach_phrase\n      munah atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      merka revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
@@ -361,6 +375,7 @@
         "ATNAX",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_phrase\n    merka atnah \n  1 silluq_phrase\n    ERROR "
     },
     {
@@ -393,7 +408,11 @@
         "REVIA_MUGRASH",
         "SILLUQ"
       ],
-      "tree": "NO_PARSE: REVIA_MUGRASH DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ"
+      "stall": {
+        "accent_index": 4,
+        "token_type": "ATNAX"
+      },
+      "tree": "NO_PARSE: REVIA_MUGRASH DEXI MUNAX >>ATNAX<< REVIA_MUGRASH MERKHA SILLUQ  (stalled at accent 4/7: ATNAX)"
     },
     {
       "ref": "Proverbs 8:28",
@@ -419,6 +438,7 @@
         "REVIA_MUGRASH",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_phrase\n    munah munah atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
@@ -445,6 +465,7 @@
         "ATNAX",
         "SILLUQ"
       ],
+      "stall": null,
       "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      munah dehi \n    2 atnach_phrase\n      munah atnah \n  1 silluq_phrase\n    ERROR "
     }
   ]

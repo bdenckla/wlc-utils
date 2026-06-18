@@ -28,7 +28,7 @@ from accgram import poetic_filter
 from accgram import split_wlc
 from accgram.mam_poetic_accents import load_poetic_disjunctives
 from accgram.mam_simple_verse import default_mam_simple_dir
-from accgram.ply_grammar_poetic import build_parser, parse_tokens
+from accgram.ply_grammar_poetic import ParseError, build_parser, parse_tokens_diagnostic
 from accgram.ply_scanner_poetic import scan_book
 from accgram.ply_tree import TN, print_tree
 from accgram.poetic_reconcile import reconcile_tokens
@@ -50,15 +50,34 @@ def _has_error_leaf(tree: TN) -> bool:
     return _has_error_leaf(tree.left) or _has_error_leaf(tree.right)
 
 
-def _no_parse_line(tokens: list[tuple[str, str]]) -> str:
+def _no_parse_line(
+    tokens: list[tuple[str, str]], error: ParseError | None = None
+) -> str:
     """A greppable placeholder for an unparseable verse, naming its token types.
 
     The TILDE/SOFPASUQ structural bookends are dropped; only the accent token types
     between them are listed, so the failing accent sequence is visible at a glance
     (e.g. ``NO_PARSE: PAZER SILLUQ``).
+
+    When ``error`` (the ParseError from parse_tokens_diagnostic) is supplied, the
+    stall accent is bracketed with ``>> <<`` and a trailing ``(stalled at accent
+    k/n)`` note is appended, so the line pinpoints where the parse dead-ended rather
+    than implicating the whole verse.  The ``NO_PARSE:`` prefix is kept either way so
+    the lines stay greppable.
     """
     accents = [t for t, _ in tokens if t not in ("TILDE", "SOFPASUQ")]
-    return "NO_PARSE: " + " ".join(accents) + "\n"
+    if error is None:
+        return "NO_PARSE: " + " ".join(accents) + "\n"
+    marked = list(accents)
+    i = error.accent_index - 1
+    if 0 <= i < len(marked):
+        marked[i] = f">>{marked[i]}<<"
+    return (
+        "NO_PARSE: "
+        + " ".join(marked)
+        + f"  (stalled at accent {error.accent_index}/{len(accents)}: "
+        + f"{error.token_type})\n"
+    )
 
 
 def render_book(
@@ -84,10 +103,10 @@ def render_book(
             mam_disj_by_ref.get(verse.reference),
             parser,
         )
-        tree = parse_tokens(parser, tokens)
+        tree, error = parse_tokens_diagnostic(parser, tokens)
         if tree is None:
             no_parse += 1
-            out_lines.append(_no_parse_line(tokens))
+            out_lines.append(_no_parse_line(tokens, error))
             continue
         if _has_error_leaf(tree):
             oddballs += 1
