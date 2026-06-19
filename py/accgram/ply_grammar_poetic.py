@@ -8,6 +8,18 @@ and the poetic core of Job), paragraphs 358-374.  Section numbers are cited
 inline.  See also mb_cmn.hebrew_accents, whose poetic conjunctive list cites ITM
 #358 / #361.
 
+Breuer, *Ta'amei ha-Miqra*, Ch 10 (English trans. "Cantillation of Scripture,
+Ch 10", the systematic theory of the Eme"t hierarchy: Emperor siluk -> Kings
+[oleh-we-yored, ethnakhta, revia'] -> additional mafsiqim [revia mugrash, big
+shalshelet, mahpakh legarmeih] -> Viceroys [big revia, tsinnor, small revia, dehi]
+-> military secretaries [pazer, legarmeih]) is the parallel systematic source, and
+confirms this same skeleton term-for-term: dehi as the final viceroy of
+ethnakhta/revia only (never under oleh-we-yored); tsinnor and small revia only
+under oleh-we-yored; and revia mugrash / big shalshelet as additional mafsiqim that
+"can only divide the left side of ethnakhta" (the silluq-near second part) -- which
+is exactly why a revia mugrash in atnah's own realm (Job 31:15, L-only) is rejected.
+Ch 10 §9 on the doubled tsinnor is cited at collapse_repeated_sinnor below.
+
 Design: rank-ordered clause hierarchy, permissive servus chains.
   The *clause* rules encode Yeivin's disjunctive hierarchy by RANK: a domain headed
   by disjunctive D admits, as its near subdividers, the disjunctives of any lower

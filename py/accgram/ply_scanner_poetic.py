@@ -36,10 +36,14 @@ M-C code -> poetic accent (the codes that matter in the Three Books):
     82 sinnorit   65 (without following paseq) shalshelet qetannah
     35|75|95 (not before sof pasuq) meteg   05 (plain) paseq   52|53 puncta
 
+Note: "revia mugrash without geresh" (#367 = Breuer Ch 10 §17-18) -- a bare 81
+acting as the main verse divider when the verse has no atnah -- is NOT a gap: it is
+the last disjunctive before silluq, so _reclassify_revia maps it to REVIA_MUGRASH
+(see that function's docstring), and the rich revia_mugrash_clause then carries its
+viceroys (dehi etc.), parsing Breuer's revia-substitute-for-ethnakhta verses (Ps
+105:45, 119:4, Job 14:4) without verse-level context.
+
 Known gaps (deferred to the validation pass, see the module's tests / notes):
-  - "revia mugrash without geresh" (#367): a bare 81 acting as the main verse
-    divider when the verse has no atnah is currently scanned as revia (gadol);
-    distinguishing it needs verse-level context.
   - oleh-we-yored whose ole is unmarked (only the yored merka is written -- #363):
     recovered when the galgal servus (93) immediately precedes it (see
     _recover_unmarked_oleh, MAM-cross-checked); the rarer "when a revia precedes"
