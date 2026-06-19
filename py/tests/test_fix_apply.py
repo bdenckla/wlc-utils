@@ -25,7 +25,7 @@ def test_codes_table_in_sync():
     fix_tester_codes.assert_in_sync_with_gg_rules()
 
 
-def test_swap_munach_to_mereka():
+def test_swap_munax_to_merkha():
     # 1c 1:53-style: munaH (74) -> merkha (71) on the first word.
     result = apply_mam_fix(
         ")AL.74W.P B.F/(F75M00",
@@ -34,8 +34,8 @@ def test_swap_munach_to_mereka():
     )
     assert isinstance(result, AppliedFix)
     assert result.new_body == ")AL.71W.P B.F/(F75M00"
-    assert "MEREKA" in _types(result.new_body)
-    assert "MUNACH" not in _types(result.new_body)
+    assert "MERKHA" in _types(result.new_body)
+    assert "MUNAX" not in _types(result.new_body)
 
 
 def test_stranded_zarshit_swapped_to_zarqa():
@@ -86,8 +86,8 @@ def test_insert_after_last_letter_not_before_note_digit():
     )
     assert isinstance(result, AppliedFix)
     assert result.new_body == "D.AB.ER/:KF73]1 X92Y00"
-    # The 73 must scan as TIFCHA, never as a spurious 17 + 3.
-    assert "TIFCHA" in _types(result.new_body)
+    # The 73 must scan as TIPEXA, never as a spurious 17 + 3.
+    assert "TIPEXA" in _types(result.new_body)
 
 
 def test_missing_sof_pasuq_append():

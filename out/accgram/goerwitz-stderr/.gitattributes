@@ -1,3 +1,0 @@
-# Enforce LF line endings for text outputs in this subtree.
-*.txt text eol=lf
-*.json text

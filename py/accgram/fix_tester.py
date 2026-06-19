@@ -730,7 +730,7 @@ def run(args: argparse.Namespace) -> None:
     text_path: Path = args.report_txt
     json_path: Path = args.report_json
     text_path.parent.mkdir(parents=True, exist_ok=True)
-    text_path.write_text(render_text_report(results), encoding="utf-8", newline="\n")
+    text_path.write_text(render_text_report(results), encoding="utf-8")
     with json_path.open("w", encoding="utf-8") as f_out:
         json.dump(build_json_report(results), f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")

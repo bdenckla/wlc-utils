@@ -217,7 +217,7 @@ def run(args: argparse.Namespace) -> None:
 
     report_path: Path = args.report
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(report_text, encoding="utf-8", newline="\n")
+    report_path.write_text(report_text, encoding="utf-8")
 
     for rep in reports:
         dist = ", ".join(f"{k}:{v}" for k, v in rep.l_dist.most_common()) or "(none)"

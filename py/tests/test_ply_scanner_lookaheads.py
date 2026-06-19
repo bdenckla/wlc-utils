@@ -34,35 +34,35 @@ def test_silluq_fires_immediately_before_sof_pasuq():
 
 
 def test_silluq_blocked_by_intervening_accent_is_swallowed():
-    # 92 (atnach) carries a '9', which the exclusion set [^ 379...] forbids, so
-    # the 75 is a medial metheg -> swallowed, and atnach is emitted instead.
-    assert _types("7592)00") == ["ATNACH", "SOFPASUQ"]
+    # 92 (atnax) carries a '9', which the exclusion set [^ 379...] forbids, so
+    # the 75 is a medial metheg -> swallowed, and atnax is emitted instead.
+    assert _types("7592)00") == ["ATNAX", "SOFPASUQ"]
 
 
-# --- mayela (73 / <ga`ya-only>* (00|92)) vs plain tifcha -----------------------
-def test_mayela_when_73_reaches_sof_pasuq_or_atnach():
+# --- mayela (73 / <ga`ya-only>* (00|92)) vs plain tipexa -----------------------
+def test_mayela_when_73_reaches_sof_pasuq_or_atnax():
     # 73 followed (within the word) only by allowed chars up to 00/92 -> mayela.
     assert _types("73NA00") == ["MAYELA", "SOFPASUQ"]
-    assert _types("73NA92Z00") == ["MAYELA", "ATNACH", "SOFPASUQ"]
+    assert _types("73NA92Z00") == ["MAYELA", "ATNAX", "SOFPASUQ"]
 
 
-def test_tifcha_when_a_blocking_accent_intervenes():
-    # 81 (revia) carries an '8', a blocking digit, so 73 is plain tifcha.
-    assert _types("73NA81C00") == ["TIFCHA", "REVIA", "SOFPASUQ"]
+def test_tipexa_when_a_blocking_accent_intervenes():
+    # 81 (revia) carries an '8', a blocking digit, so 73 is plain tipexa.
+    assert _types("73NA81C00") == ["TIPEXA", "REVIA", "SOFPASUQ"]
 
 
 # --- legarmeh (74{TEXT}05 / [^12368]*...81) ------------------------------------
-def test_legarmeh_when_munach_paseq_precedes_revia():
+def test_legarmeh_when_munax_paseq_precedes_revia():
     assert _types("74A05B81C00") == ["LEGARMEH", "REVIA", "SOFPASUQ"]
 
 
-def test_munach_when_paseq_not_before_revia_outside_has_legarmeh_passage():
-    # No following revia and an ordinary (non-listed) location -> plain munach.
-    assert _types("74A05B70C00", "gn", 1, 1) == ["MUNACH", "MAHPAK", "SOFPASUQ"]
+def test_munax_when_paseq_not_before_revia_outside_has_legarmeh_passage():
+    # No following revia and an ordinary (non-listed) location -> plain munax.
+    assert _types("74A05B70C00", "gn", 1, 1) == ["MUNAX", "MAHAPAKH", "SOFPASUQ"]
 
 
 # --- has_legarmeh: keyed on structured (bb, ch, vs), so all 17 passages fire ----
-# Real Ruth 1:2 body; the maqqef-joined "$:N\"75Y-BFNF74Y/W05" is a munach+paseq
+# Real Ruth 1:2 body; the maqqef-joined "$:N\"75Y-BFNF74Y/W05" is a munax+paseq
 # that does NOT precede revia, so it is legarmeh only because the ref is listed.
 _RUTH_1_2 = (
     'W:/$"74M HF/)I74Y$ ):E35LIYME83LEK: W:/$"M04 )I$:T./O63W NF(:FMI61Y '
@@ -72,18 +72,18 @@ _RUTH_1_2 = (
 
 
 def test_has_legarmeh_fires_at_listed_passage_not_elsewhere():
-    # The munach+paseq is reinterpreted as legarmeh at any listed passage --
+    # The munax+paseq is reinterpreted as legarmeh at any listed passage --
     # ru 1:2 *and*, now that detection is decoupled from header spelling, at a
     # ref like lv 10:6 that the old C abbreviation quirk silently missed.
     assert _types(_RUTH_1_2, "ru", 1, 2).count("LEGARMEH") == 1
     assert _types(_RUTH_1_2, "lv", 10, 6).count("LEGARMEH") == 1
-    # ... but the very same body at a non-listed ref stays munach.
+    # ... but the very same body at a non-listed ref stays munax.
     assert _types(_RUTH_1_2, "gn", 1, 1).count("LEGARMEH") == 0
 
 
 # --- has_legarmeh counter logic (now keyed on structured refs) ------------------
 def test_has_legarmeh_1sam_14_47_second_occurrence_only():
-    # 1Sam 14:47 has two munach+paseq sequences not before revia; only the
+    # 1Sam 14:47 has two munax+paseq sequences not before revia; only the
     # second counts as legarmeh.  Now live in the new format (keyed on ("1s",
     # 14, 47), not the dead "1Sam 14:47" abbreviation).
     h = HasLegarmeh()

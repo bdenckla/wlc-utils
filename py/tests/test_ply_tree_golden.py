@@ -16,17 +16,17 @@ def _ob_1_2_tree():
     return make_node(
         "silluq_clause",
         make_node(
-            "atnach_clause",
+            "atnax_clause",
             make_node(
-                "tifcha_clause",
-                add_leaves("tevir_phrase", "mereka", "tevir"),
-                add_leaves("tifcha_phrase", "tifcha"),
+                "tipexa_clause",
+                add_leaves("tevir_phrase", "merkha", "tevir"),
+                add_leaves("tipexa_phrase", "tipexa"),
             ),
-            add_leaves("atnach_phrase", "atnach"),
+            add_leaves("atnax_phrase", "atnax"),
         ),
         make_node(
             "silluq_clause",
-            add_leaves("tifcha_phrase", "mereka", "tifcha"),
+            add_leaves("tipexa_phrase", "merkha", "tipexa"),
             add_leaves("silluq_phrase", "silluq"),
         ),
     )
@@ -34,17 +34,17 @@ def _ob_1_2_tree():
 
 _OB_1_2_EXPECTED_TREE = (
     "0 silluq_clause\n"
-    "  1 atnach_clause\n"
-    "    2 tifcha_clause\n"
+    "  1 atnax_clause\n"
+    "    2 tipexa_clause\n"
     "      3 tevir_phrase\n"
-    "        mereka tevir \n"
-    "      3 tifcha_phrase\n"
-    "        tifcha \n"
-    "    2 atnach_phrase\n"
-    "      atnach \n"
+    "        merkha tevir \n"
+    "      3 tipexa_phrase\n"
+    "        tipexa \n"
+    "    2 atnax_phrase\n"
+    "      atnax \n"
     "  1 silluq_clause\n"
-    "    2 tifcha_phrase\n"
-    "      mereka tifcha \n"
+    "    2 tipexa_phrase\n"
+    "      merkha tipexa \n"
     "    2 silluq_phrase\n"
     "      silluq \n"
 )
@@ -67,8 +67,8 @@ def test_verse_output_ob_1_2():
 
 def test_leaf_trailing_space():
     """Each leaf name in add_leaves() gets a trailing space (C strcat loop)."""
-    node = add_leaves("test_phrase", "mereka", "tifcha")
-    assert node.leaves == "mereka tifcha "
+    node = add_leaves("test_phrase", "merkha", "tipexa")
+    assert node.leaves == "merkha tipexa "
 
 
 def test_single_leaf_trailing_space():

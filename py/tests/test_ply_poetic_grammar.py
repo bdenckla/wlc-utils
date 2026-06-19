@@ -59,7 +59,7 @@ def test_atnah_divided_verse():
     assert tree is not None
     assert print_tree(tree, 0) == (
         "0 silluq_clause\n"
-        "  1 atnach_phrase\n"
+        "  1 atnax_phrase\n"
         "    merkha atnax \n"
         "  1 silluq_phrase\n"
         "    merkha silluq \n"
@@ -80,7 +80,7 @@ def test_revia_mugrash_before_silluq():
     out = print_tree(tree, 0)
     assert "revia_mugrash_phrase" in out
     # revia mugrash nests inside the second-half silluq_clause, below atnah
-    assert out.index("atnach_phrase") < out.index("revia_mugrash_phrase")
+    assert out.index("atnax_phrase") < out.index("revia_mugrash_phrase")
 
 
 def test_oleh_weyored_is_topmost_divider():
@@ -103,7 +103,7 @@ def test_oleh_weyored_is_topmost_divider():
     assert "oleh_weyored_phrase" in out
 
 
-def test_full_hierarchy_pazer_legarmeh_dehi_sinnor():
+def test_full_hierarchy_pazer_legarmeh_dexi_sinnor():
     """A verse exercising every rank: pazer/legarmeh under revia gadol, sinnor
     before oleh, dehi under atnah."""
     parser = build_parser()
@@ -120,8 +120,8 @@ def test_full_hierarchy_pazer_legarmeh_dehi_sinnor():
     out = print_tree(tree, 0)
     for label in (
         "pazer_phrase", "legarmeh_phrase", "revia_gadol_clause",
-        "sinnor_phrase", "oleh_weyored_phrase", "dehi_phrase",
-        "atnach_phrase", "revia_mugrash_phrase", "silluq_phrase",
+        "sinnor_phrase", "oleh_weyored_phrase", "dexi_phrase",
+        "atnax_phrase", "revia_mugrash_phrase", "silluq_phrase",
     ):
         assert label in out, label
 
@@ -154,8 +154,8 @@ def test_legarmeh_directly_under_atnah():
     assert tree is not None
     out = print_tree(tree, 0)
     # legarmeh nests as a subdivider inside the atnah clause, above atnah's phrase
-    assert "atnach_clause" in out
-    assert out.index("legarmeh_phrase") < out.index("atnach_phrase")
+    assert "atnax_clause" in out
+    assert out.index("legarmeh_phrase") < out.index("atnax_phrase")
 
 
 def test_legarmeh_directly_before_silluq_under_revia_mugrash():
@@ -176,7 +176,7 @@ def test_legarmeh_directly_before_silluq_under_revia_mugrash():
     assert out.index("legarmeh_phrase") < out.index("silluq_phrase")
 
 
-def test_dehi_directly_before_silluq():
+def test_dexi_directly_before_silluq():
     """dehi may stand directly before silluq (Ps, ATNAX DEXI SILLUQ -- faithful to
     L; an L/MAM divergence the xcheck flags separately)."""
     parser = build_parser()
@@ -185,8 +185,8 @@ def test_dehi_directly_before_silluq():
     )
     assert tree is not None
     out = print_tree(tree, 0)
-    assert out.index("atnach_phrase") < out.index("dehi_phrase")
-    assert out.index("dehi_phrase") < out.index("silluq_phrase")
+    assert out.index("atnax_phrase") < out.index("dexi_phrase")
+    assert out.index("dexi_phrase") < out.index("silluq_phrase")
 
 
 def test_pazer_directly_before_silluq():
@@ -246,7 +246,7 @@ def test_missing_silluq_recovers_as_error_tree():
     )
     assert tree is not None
     out = print_tree(tree, 0)
-    assert "atnach_phrase" in out  # the rest of the verse is preserved
+    assert "atnax_phrase" in out  # the rest of the verse is preserved
     assert "ERROR" in out  # the absent silluq is flagged
     assert "silluq_phrase" in out
 
@@ -349,6 +349,6 @@ def test_pazer_directly_under_atnah():
     )
     assert tree is not None
     out = print_tree(tree, 0)
-    assert "atnach_clause" in out
-    assert out.index("pazer_phrase") < out.index("atnach_phrase")
+    assert "atnax_clause" in out
+    assert out.index("pazer_phrase") < out.index("atnax_phrase")
     assert out.index("legarmeh_phrase") < out.index("pazer_phrase")

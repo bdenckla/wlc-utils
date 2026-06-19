@@ -40,8 +40,8 @@ def test_no_sof_pasuq_recovers_silluq_and_flags_sof_pasuq():
     assert types[-2:] == ["SILLUQ", "MISSING_SOFPASUQ"]
     # The sof pasuq is flagged distinctly...
     assert "sof_pasuq_phrase" in tree and "ERROR" in tree
-    # ...and the silluq is NOT misreported as missing (it parses as "mereka silluq").
-    assert "mereka silluq" in tree
+    # ...and the silluq is NOT misreported as missing (it parses as "merkha silluq").
+    assert "merkha silluq" in tree
 
 
 def test_pasoleg_recovers_silluq_and_flags_sof_pasuq():
@@ -52,11 +52,11 @@ def test_pasoleg_recovers_silluq_and_flags_sof_pasuq():
         r'K.I/D:RFKF91Y/W )E$:P.O71W+ )ET/:KE73M B."71YT YI&:RF)"75L]p P',
     )
     assert types[-2:] == ["SILLUQ", "MISSING_SOFPASUQ"]
-    assert "sof_pasuq_phrase" in tree and "mereka silluq" in tree
+    assert "sof_pasuq_phrase" in tree and "merkha silluq" in tree
 
 
 def test_missing_both_silluq_and_sof_pasuq_flags_both():
-    # nu 25:19: ends in atnach (92), no silluq and no sof pasuq -> both flagged.
+    # nu 25:19: ends in atnax (92), no silluq and no sof pasuq -> both flagged.
     types, tree = _parse_one("Numbers", r'25:19 WA/Y:HI73Y )AX:AR"74Y HA/M.AG."PF92H]1 P')
     assert types[-1] == "MISSING_SOFPASUQ"
     assert "SILLUQ" not in types  # nothing to recover

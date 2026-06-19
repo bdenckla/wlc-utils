@@ -7,8 +7,8 @@ scan) and the complete GG-state accent table, including the four lex
 
   - silluq    35|75|95/[^ 379...]*00        (a true silluq is a metheg/silluq
               immediately before sof pasuq)
-  - mayela    73/<allowed>*(00|92)          (tifcha variant before atnach/silluq)
-  - legarmeh  74{TEXT}05/[^12368]*...81      (munach+paseq before revia)
+  - mayela    73/<allowed>*(00|92)          (tipexa variant before atnax/silluq)
+  - legarmeh  74{TEXT}05/[^12368]*...81      (munax+paseq before revia)
   - chapter   ^[1-9][0-9]*:/[1-9]            (new-format verse lookahead; handled
               by the line-oriented _VERSE_RE below)
 
@@ -30,7 +30,7 @@ format the C lexer's `location` carries the **full** bookname header ("Genesis",
 "Levit", "Daniel"), so the two coincide only for "Ruth" -- the C binary silently
 mis-fired and legarmeh fired for Ruth 1:2 alone.  That was a latent upstream
 defect driven by bad input data, not the author's intent (the tnk2acc.l comment
-says all 17 munach+paseq-not-before-revia passages are legarmeh).  We therefore
+says all 17 munax+paseq-not-before-revia passages are legarmeh).  We therefore
 key the 17 passages on **structured book refs** -- `(wlc_bb, chnu, vrnu)` tuples
 threaded from the caller -- so detection is decoupled from header spelling and
 all 17 passages fire as intended.  See doc/PLAN-fix-has-legarmeh-booknames.md.
@@ -64,7 +64,7 @@ _VERSE_RE = re.compile(r"^([1-9][0-9]*):([1-9][0-9]*)[ \t](.*)$")
 # --- GG-state accent rules -----------------------------------------------------
 # Each entry: (compiled regex anchored at the scan position, token type or None).
 # token type None == "swallow" (consume, emit nothing).  The sentinel
-# "_LEGARMEH_OR_MUNACH" is resolved at emit time via has_legarmeh(location).
+# "_LEGARMEH_OR_MUNAX" is resolved at emit time via has_legarmeh(location).
 # Trailing context is a lookahead so it is not consumed.  TEXT is [^ \r\n\-]*.
 _TEXT = r"[^ \r\n\-]*"
 
@@ -77,7 +77,7 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(r"00"), "SOFPASUQ"),
     # silluq: 35|75|95 immediately before sof pasuq (00), excluding mayela etc.
     (re.compile(r"(?:35|75|95)(?=[^ 379\r\n\-?~]*00)"), "SILLUQ"),
-    (re.compile(r"92"), "ATNACH"),
+    (re.compile(r"92"), "ATNAX"),
     (re.compile(r"(?:01" + _TEXT + r")?01"), "SEGOLTA"),
     (re.compile(r"65" + _TEXT + r"05"), "SHALSHELET"),
     (re.compile(r"63[^01234680]*80"), "METHIGAZAQEF"),
@@ -86,7 +86,7 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(r"81"), "REVIA"),
     # mayela (trailing context): 73 before 00/92 with only ga`ya intervening.
     (re.compile(r"73" + _MAYELA_LA), "MAYELA"),
-    (re.compile(r"73"), "TIFCHA"),
+    (re.compile(r"73"), "TIPEXA"),
     (re.compile(r"(?:82" + _TEXT + r")?02"), "ZARQA"),
     (re.compile(r"(?:33" + _TEXT + r")?03"), "PASHTA"),
     (re.compile(r"10"), "YETIV"),
@@ -96,14 +96,14 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(r"83"), "PAZER"),
     (re.compile(r"84"), "PAZERGADOL"),
     (re.compile(r"14"), "TELISHAGEDOLA"),
-    # legarmeh (trailing context): munach+paseq before a subsequent revia.
+    # legarmeh (trailing context): munax+paseq before a subsequent revia.
     (re.compile(r"74" + _TEXT + r"05" + _LEGARMEH_LA), "LEGARMEH"),
-    # munach+paseq NOT before revia: legarmeh only inside a has_legarmeh passage.
-    (re.compile(r"74" + _TEXT + r"05"), "_LEGARMEH_OR_MUNACH"),
-    (re.compile(r"74"), "MUNACH"),
-    (re.compile(r"70"), "MAHPAK"),
-    (re.compile(r"71"), "MEREKA"),
-    (re.compile(r"72"), "MEREKAKEFULA"),
+    # munax+paseq NOT before revia: legarmeh only inside a has_legarmeh passage.
+    (re.compile(r"74" + _TEXT + r"05"), "_LEGARMEH_OR_MUNAX"),
+    (re.compile(r"74"), "MUNAX"),
+    (re.compile(r"70"), "MAHAPAKH"),
+    (re.compile(r"71"), "MERKHA"),
+    (re.compile(r"72"), "MERKHAKEFULA"),
     (re.compile(r"94"), "DARGA"),
     (re.compile(r"63"), "AZLA"),
     (re.compile(r"24" + _TEXT + r"04"), "TELISHAQETANNA"),
@@ -127,7 +127,7 @@ _LEAF: dict[str, str] = {
     # grammar production discards it and emits a distinct sof_pasuq_phrase ERROR).
     "MISSING_SOFPASUQ": "",
     "SILLUQ": "silluq",
-    "ATNACH": "atnach",
+    "ATNAX": "atnax",
     "SEGOLTA": "segolta",
     "SHALSHELET": "shalshelet",
     "METHIGAZAQEF": "methiga-zaqef",
@@ -135,7 +135,7 @@ _LEAF: dict[str, str] = {
     "ZAQEFGADOL": "zaqefgadol",
     "REVIA": "revia",
     "MAYELA": "mayela",
-    "TIFCHA": "tifcha",
+    "TIPEXA": "tipexa",
     "ZARQA": "zarqa",
     "PASHTA": "pashta",
     "YETIV": "yetiv",
@@ -146,10 +146,10 @@ _LEAF: dict[str, str] = {
     "PAZERGADOL": "pazergadol",
     "TELISHAGEDOLA": "telishagedola",
     "LEGARMEH": "legarmeh",
-    "MUNACH": "munach",
-    "MAHPAK": "mahpak",
-    "MEREKA": "mereka",
-    "MEREKAKEFULA": "merekakefula",
+    "MUNAX": "munax",
+    "MAHAPAKH": "mahapakh",
+    "MERKHA": "merkha",
+    "MERKHAKEFULA": "merkhakefula",
     "DARGA": "darga",
     "AZLA": "azla",
     "TELISHAQETANNA": "telishaqetanna",
@@ -166,7 +166,7 @@ class HasLegarmeh:
     wlc_bb codes are `cmn.wlc_book_codes`' 2-char codes; the book order matches
     the C list (which is "Jewish order").
 
-    Stateful: `count` tracks munach+paseq occurrences at 1Sam 14:47 (only the
+    Stateful: `count` tracks munax+paseq occurrences at 1Sam 14:47 (only the
     second is legarmeh), and `old_i` advances monotonically through the list
     (the C comment: "this old_i stuff assumes the books are in Jewish order").
     One instance per book file reproduces the C `static` per-process reset.
@@ -211,7 +211,7 @@ def scan_accents(
     after the first 00 (sof pasuq), which in flex returns to the EE state.
 
     The structured book ref `(bb, chnu, vrnu)` and `has_legarmeh` resolve the
-    74{TEXT}05-not-before-revia rule to LEGARMEH or MUNACH.
+    74{TEXT}05-not-before-revia rule to LEGARMEH or MUNAX.
     """
     tokens: list[Token] = []
     pos = 0
@@ -238,8 +238,8 @@ def scan_accents(
         # The catch-all `.` guarantees best_is_rule is always True for pos < n.
         assert best_is_rule, f"no rule matched at position {pos} in {body!r}"
         advance = max(best_len, 1)
-        if best_type == "_LEGARMEH_OR_MUNACH":
-            best_type = "LEGARMEH" if has_legarmeh(bb, chnu, vrnu) else "MUNACH"
+        if best_type == "_LEGARMEH_OR_MUNAX":
+            best_type = "LEGARMEH" if has_legarmeh(bb, chnu, vrnu) else "MUNAX"
         if best_type is not None:
             tokens.append(Token(best_type, _LEAF[best_type]))
             pending_silluq = None

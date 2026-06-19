@@ -3,7 +3,7 @@
 This is a *prose-only* layer that sits on top of the faithful C-port scanner/
 grammar (ply_scanner / ply_grammar) and intentionally **diverges from the
 goerwitz C oracle**, in the same documented spirit as the MISSING_SOFPASUQ and
-tevir/tifcha recoveries: where the C lexer silently swallows a malformed accent,
+tevir/tipexa recoveries: where the C lexer silently swallows a malformed accent,
 we surface it as an oddball.
 
 The one helper handled today is accent ``82``.  In the prose accent system, ``82``

@@ -187,8 +187,8 @@ def run(args: argparse.Namespace) -> None:
             continue
         output_text, stats = render_book(text, parser, bb, mam_disj_by_ref)
         out_path = out_dir / f"wlc_422_ps_{bb}_ag.txt"
-        # LF newlines, UTF-8.
-        out_path.write_text(output_text, encoding="utf-8", newline="\n")
+        # UTF-8; native platform line endings (CRLF on Windows), per .gitattributes / issue #14.
+        out_path.write_text(output_text, encoding="utf-8")
         total_parsed += stats.parsed_count
         total_oddballs += stats.oddball_count
         total_no_parse += stats.no_parse_count

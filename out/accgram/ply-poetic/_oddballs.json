@@ -43,7 +43,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 oleh_weyored_clause\n    2 sinnor_phrase\n      mehuppak sinnor \n    2 oleh_weyored_phrase\n      galgal oleh we-yored \n  1 silluq_clause\n    2 atnach_clause\n      3 dehi_phrase\n        dehi \n      3 atnach_phrase\n        munah atnah \n    2 silluq_clause\n      3 revia_mugrash_phrase\n        revia mugrash \n      3 silluq_phrase\n        ERROR "
+      "tree": "0 silluq_clause\n  1 oleh_weyored_clause\n    2 sinnor_phrase\n      mahapakh sinnor \n    2 oleh_weyored_phrase\n      galgal oleh we-yored \n  1 silluq_clause\n    2 atnax_clause\n      3 dexi_phrase\n        dexi \n      3 atnax_phrase\n        munax atnax \n    2 silluq_clause\n      3 revia_mugrash_phrase\n        revia mugrash \n      3 silluq_phrase\n        ERROR "
     },
     {
       "ref": "Psalms 32:2",
@@ -74,7 +74,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_clause\n    2 revia_gadol_phrase\n      merka revia gadol \n    2 atnach_phrase\n      mehuppak illuy munah munah atnah \n  1 silluq_phrase\n    ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_clause\n    2 revia_gadol_phrase\n      merkha revia gadol \n    2 atnax_phrase\n      mahapakh illuy munax munax atnax \n  1 silluq_phrase\n    ERROR "
     },
     {
       "ref": "Psalms 37:31",
@@ -99,7 +99,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_phrase\n    munah munah atnah \n  1 silluq_phrase\n    ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_phrase\n    munax munax atnax \n  1 silluq_phrase\n    ERROR "
     },
     {
       "ref": "Psalms 37:32",
@@ -127,7 +127,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      munah dehi \n    2 atnach_phrase\n      atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_clause\n    2 dexi_phrase\n      munax dexi \n    2 atnax_phrase\n      atnax \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
       "ref": "Psalms 59:5",
@@ -154,7 +154,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      dehi \n    2 atnach_phrase\n      munah atnah \n  1 silluq_phrase\n    ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_clause\n    2 dexi_phrase\n      dexi \n    2 atnax_phrase\n      munax atnax \n  1 silluq_phrase\n    ERROR "
     },
     {
       "ref": "Psalms 60:13",
@@ -181,7 +181,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_phrase\n    munah munah atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_phrase\n    munax munax atnax \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
       "ref": "Psalms 71:4",
@@ -211,7 +211,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_clause\n    2 revia_gadol_phrase\n      revia gadol \n    2 atnach_clause\n      3 dehi_phrase\n        dehi \n      3 atnach_phrase\n        munah atnah \n  1 silluq_phrase\n    ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_clause\n    2 revia_gadol_phrase\n      revia gadol \n    2 atnax_clause\n      3 dexi_phrase\n        dexi \n      3 atnax_phrase\n        munax atnax \n  1 silluq_phrase\n    ERROR "
     },
     {
       "ref": "Psalms 74:17",
@@ -242,7 +242,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      munah dehi \n    2 atnach_phrase\n      munah atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      merka revia mugrash \n    2 silluq_phrase\n      ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_clause\n    2 dexi_phrase\n      munax dexi \n    2 atnax_phrase\n      munax atnax \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      merkha revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
       "ref": "Psalms 78:41",
@@ -267,7 +267,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_phrase\n    munah munah atnah \n  1 silluq_phrase\n    ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_phrase\n    munax munax atnax \n  1 silluq_phrase\n    ERROR "
     },
     {
       "ref": "Psalms 89:7",
@@ -299,7 +299,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      mehuppak munah dehi \n    2 atnach_phrase\n      munah atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      merka revia mugrash \n    2 silluq_phrase\n      ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_clause\n    2 dexi_phrase\n      mahapakh munax dexi \n    2 atnax_phrase\n      munax atnax \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      merkha revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
       "ref": "Psalms 89:41",
@@ -323,7 +323,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_phrase\n    merka atnah \n  1 silluq_phrase\n    ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_phrase\n    merkha atnax \n  1 silluq_phrase\n    ERROR "
     },
     {
       "ref": "Job 31:15",
@@ -386,7 +386,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_phrase\n    munah munah atnah \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_phrase\n    munax munax atnax \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
     },
     {
       "ref": "Proverbs 24:15",
@@ -413,7 +413,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 atnach_clause\n    2 dehi_phrase\n      munah dehi \n    2 atnach_phrase\n      munah atnah \n  1 silluq_phrase\n    ERROR "
+      "tree": "0 silluq_clause\n  1 atnax_clause\n    2 dexi_phrase\n      munax dexi \n    2 atnax_phrase\n      munax atnax \n  1 silluq_phrase\n    ERROR "
     }
   ]
 }

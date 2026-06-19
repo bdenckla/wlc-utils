@@ -4,7 +4,7 @@ Every other fix the tester applies is a single-word accent edit inside one
 verse's M-C body (see ``test_fix_apply``).  nu 25:19 is the lone exception: MAM
 equals WLC word-for-word and the only difference is versification -- BHS strands
 a verse number mid-chanted-verse.  The fix is to append the M-C body BHS labels
-as the *next* verse and re-parse; the stranded atnach then bisects a complete
+as the *next* verse and re-parse; the stranded atnax then bisects a complete
 verse ending in silluq + sof-pasuq.  See doc/fix-tester-remaining-untestables.md.
 
 Run:
@@ -16,7 +16,7 @@ from __future__ import annotations
 from accgram import fix_tester
 
 
-# The two real M-C bodies (from wlc422_ps.txt).  nu 25:19 ends on an atnach (92)
+# The two real M-C bodies (from wlc422_ps.txt).  nu 25:19 ends on an atnax (92)
 # plus a ]1 note marker and a P petuhah -- no silluq, no sof-pasuq (00).
 _NU_2519 = 'WA/Y:HI73Y )AX:AR"74Y HA/M.AG."PF92H]1 P'
 # nu 26:1 ends in silluq (75) + sof-pasuq (00) -- the verse's true second half.
@@ -35,24 +35,24 @@ def test_merge_next_extracted_from_note():
 
 
 def test_nu_2519_alone_is_the_oddball():
-    # Standalone, the BHS "verse" ends on an atnach with nothing after it, so both
+    # Standalone, the BHS "verse" ends on an atnax with nothing after it, so both
     # the silluq and the sof-pasuq phrases are missing.
     guard = fix_tester._ParseGuard()
     before = fix_tester._evaluate(_NU_2519, "nu", 25, 19, guard)
     assert before.status == "ODDBALL"
     assert before.labels == frozenset({"silluq_phrase", "sof_pasuq_phrase"})
-    assert before.token_types[-2:] == ("ATNACH", "MISSING_SOFPASUQ")
+    assert before.token_types[-2:] == ("ATNAX", "MISSING_SOFPASUQ")
 
 
 def test_merge_next_concatenation_parses_clean():
-    # Append nu 26:1: the atnach now bisects a complete verse that ends in
+    # Append nu 26:1: the atnax now bisects a complete verse that ends in
     # silluq + sof-pasuq, and the mid-verse ]1 note / P petuhah are inert.
     guard = fix_tester._ParseGuard()
     before = fix_tester._evaluate(_NU_2519, "nu", 25, 19, guard)
     after = fix_tester._evaluate(f"{_NU_2519} {_NU_2601}", "nu", 25, 19, guard)
     assert after.status == "CLEAN"
     assert not after.labels
-    assert "ATNACH" in after.token_types
+    assert "ATNAX" in after.token_types
     assert after.token_types[-2:] == ("SILLUQ", "SOFPASUQ")
     # No spurious token sneaks in where the mid-verse petuhah/note sit.
-    assert after.token_types.count("ATNACH") == 1
+    assert after.token_types.count("ATNAX") == 1

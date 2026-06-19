@@ -153,5 +153,5 @@ def _charitable_oleh(
 
 # Display leaf names for the tokens this module introduces, matching
 # ply_scanner_poetic._LEAF (kept local to avoid importing the scanner's private map).
-_SERVUS_LEAF = {pan.AZLA: "azla", pan.MAHAPAKH: "mehuppak"}
+_SERVUS_LEAF = {pan.AZLA: "azla", pan.MAHAPAKH: "mahapakh"}
 _OLEH_LEAF = "oleh we-yored"

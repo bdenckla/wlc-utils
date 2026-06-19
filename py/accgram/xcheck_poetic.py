@@ -198,7 +198,7 @@ def run(args: argparse.Namespace) -> None:
 
     report_path: Path = args.report
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(report, encoding="utf-8", newline="\n")
+    report_path.write_text(report, encoding="utf-8")
 
     total_matched = sum(m for m, _ in per_book.values())
     total_all = sum(t for _, t in per_book.values())

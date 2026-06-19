@@ -1,84 +1,84 @@
 Esther 1:1
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      tifcha 
-    2 atnach_phrase
-      munach atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 1:2
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      tifcha 
-    2 atnach_phrase
-      atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           yetiv 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 1:3
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_phrase
-        munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          atnach 
+        munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
-      3 tifcha_clause
+          munax revia 
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 1:4
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
@@ -86,144 +86,144 @@ Esther 1:4
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
+          munax zaqef 
+    2 atnax_clause
       3 zaqef_phrase
         methiga-zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 1:5
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_clause
+  1 atnax_clause
+    2 tipexa_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
-      3 tifcha_clause
+          munax revia 
+      3 tipexa_clause
         4 tevir_clause
           5 pazer_phrase
-            munach pazer 
+            munax pazer 
           5 tevir_clause
             6 geresh_phrase
-              munach telishaqetanna azla geresh 
+              munax telishaqetanna azla geresh 
             6 tevir_phrase
               darga tevir 
-        4 tifcha_phrase
-          tifcha 
-    2 atnach_phrase
-      munach atnach 
+        4 tipexa_phrase
+          tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
     2 zaqef_phrase
       zaqefgadol 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 1:6
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
-      3 tifcha_clause
+          munax revia 
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 1:7
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
-        mereka tevir 
-      3 tifcha_phrase
-        tifcha 
+        merkha tevir 
+      3 tipexa_phrase
+        tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 1:8
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      munach atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           yetiv 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 1:9
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         yetiv 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
@@ -231,23 +231,23 @@ Esther 1:9
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 1:10
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_clause
@@ -260,117 +260,117 @@ Esther 1:10
             6 geresh_phrase
               azla geresh 
             6 pashta_phrase
-              mahpak pashta 
+              mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
       3 silluq_clause
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
         4 silluq_clause
-          5 tifcha_phrase
-            tifcha 
+          5 tipexa_phrase
+            tipexa 
           5 silluq_phrase
-            mereka silluq 
+            merkha silluq 
 Esther 1:11
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_clause
+  1 atnax_clause
+    2 tipexa_clause
       3 tevir_clause
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
           darga tevir 
-      3 tifcha_phrase
-        mereka tifcha 
-    2 atnach_phrase
-      munach atnach 
+      3 tipexa_phrase
+        merkha tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahpak pashta 
+        azla mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 1:12
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           gershayim 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 1:13
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
       3 zaqef_phrase
         zaqefgadol 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
-          mereka silluq 
+          merkha silluq 
 Esther 1:14
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
@@ -380,116 +380,116 @@ Esther 1:14
           5 legarmeh_phrase
             legarmeh 
           5 revia_phrase
-            munach revia 
+            munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 1:15
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 1:16
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
       3 zaqef_phrase
         zaqefgadol 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
-          mereka silluq 
+          merkha silluq 
 Esther 1:17
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_phrase
         revia 
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_clause
           5 pazer_phrase
-            munach pazer 
+            munax pazer 
           5 tevir_clause
             6 geresh_phrase
               gershayim 
             6 tevir_phrase
               azla darga tevir 
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
     2 silluq_phrase
       silluq 
 Esther 1:18
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
@@ -498,41 +498,41 @@ Esther 1:18
           5 legarmeh_phrase
             legarmeh 
           5 revia_phrase
-            munach revia 
+            munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 1:19
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
@@ -544,243 +544,243 @@ Esther 1:19
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
-          mereka silluq 
+          merkha silluq 
 Esther 1:20
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahpak pashta 
+        telishaqetanna azla mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 1:21
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 1:22
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
+        munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 2:1
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
+        munax zaqef 
+    2 atnax_clause
       3 zaqef_phrase
         zaqefgadol 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 2:2
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
-        mereka tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+        merkha tevir 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 2:3
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munach zarqa 
+        azla munax zarqa 
       3 segolta_phrase
-        munach segolta 
-    2 atnach_clause
+        munax segolta 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_clause
           5 big_telisha_phrase
-            munach telishagedola 
+            munax telishagedola 
           5 pashta_clause
             6 geresh_phrase
               azla geresh 
             6 pashta_phrase
-              mahpak pashta 
+              mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_clause
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_clause
           5 tevir_phrase
-            mereka tevir 
-          5 tifcha_phrase
-            mereka tifcha 
-        4 atnach_phrase
-          munach atnach 
+            merkha tevir 
+          5 tipexa_phrase
+            merkha tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 2:4
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         darga tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 2:5
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_phrase
-        munach revia 
-      3 tifcha_clause
+        munax revia 
+      3 tipexa_clause
         4 tevir_phrase
-          munach darga tevir 
-        4 tifcha_phrase
-          tifcha 
+          munax darga tevir 
+        4 tipexa_phrase
+          tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 2:6
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
+        munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 2:7
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
@@ -789,154 +789,154 @@ Esther 2:7
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 silluq_clause
-        4 tifcha_clause
+        4 tipexa_clause
           5 tevir_phrase
             darga tevir 
-          5 tifcha_phrase
-            tifcha 
+          5 tipexa_phrase
+            tipexa 
         4 silluq_phrase
           silluq 
 Esther 2:8
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_clause
           5 geresh_phrase
             gershayim 
           5 tevir_phrase
-            mereka tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+            merkha tevir 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 2:9
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munach zarqa 
+        azla munax zarqa 
       3 segolta_phrase
-        munach munach segolta 
-    2 atnach_clause
+        munax munax segolta 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_clause
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
+          munax zaqef 
+      3 atnax_clause
         4 zaqef_clause
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
-            munach zaqef 
-        4 atnach_clause
-          5 tifcha_phrase
-            mereka tifcha 
-          5 atnach_phrase
-            munach atnach 
+            munax zaqef 
+        4 atnax_clause
+          5 tipexa_phrase
+            merkha tipexa 
+          5 atnax_phrase
+            munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         darga tevir 
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 2:10
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         darga tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 2:11
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
+      munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 2:12
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 pazer_phrase
@@ -948,362 +948,362 @@ Esther 2:12
             6 legarmeh_phrase
               legarmeh 
             6 revia_phrase
-              munach revia 
+              munax revia 
       3 zaqef_clause
         4 pashta_clause
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
-          munach munach zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+          munax munax zaqef 
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
           silluq 
 Esther 2:13
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
       zaqefgadol 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 2:14
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_clause
           5 big_telisha_phrase
             telishagedola 
           5 pashta_clause
             6 geresh_phrase
-              munach gershayim 
+              munax gershayim 
             6 pashta_phrase
-              mahpak pashta 
+              mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           darga tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mereka pashta 
+        merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
-          munach mereka tevir 
-        4 tifcha_phrase
-          tifcha 
+          munax merkha tevir 
+        4 tipexa_phrase
+          tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 2:15
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 pazer_phrase
-          munach munach munach munach pazer 
+          munax munax munax munax pazer 
         4 revia_clause
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 revia_phrase
-            munach revia 
+            munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_clause
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            munach mereka tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+            munax merkha tevir 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 2:16
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 2:17
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahpak pashta 
+        azla mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
-          mereka tevir 
-        4 tifcha_phrase
-          tifcha 
-      3 atnach_phrase
-        atnach 
+          merkha tevir 
+        4 tipexa_phrase
+          tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 2:18
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 2:19
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 2:20
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 2:21
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
           silluq 
 Esther 2:22
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         darga tevir 
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 2:23
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_phrase
         revia 
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 3:1
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_clause
+  1 atnax_clause
+    2 tipexa_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
-      3 tifcha_clause
+          munax revia 
+      3 tipexa_clause
         4 tevir_clause
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 tevir_phrase
             darga tevir 
-        4 tifcha_phrase
-          tifcha 
-    2 atnach_phrase
-      atnach 
+        4 tipexa_phrase
+          tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
@@ -1314,81 +1314,81 @@ Esther 3:1
       3 zaqef_phrase
         zaqefgadol 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
-          mereka silluq 
+          merkha silluq 
 Esther 3:2
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_phrase
       methiga-zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 3:3
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_clause
+  1 atnax_clause
+    2 tipexa_clause
       3 tevir_clause
         4 geresh_phrase
           azla geresh 
         4 tevir_phrase
-          mereka tevir 
-      3 tifcha_phrase
-        mereka tifcha 
-    2 atnach_phrase
-      atnach 
+          merkha tevir 
+      3 tipexa_phrase
+        merkha tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 3:4
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
@@ -1396,145 +1396,145 @@ Esther 3:4
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
-            munach zaqef 
+            munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 3:5
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
+      munax zaqef 
+    2 atnax_clause
       3 zaqef_phrase
-        munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+        munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 3:6
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_phrase
-        munach revia 
-      3 tifcha_clause
+        munax revia 
+      3 tipexa_clause
         4 tevir_phrase
           darga tevir 
-        4 tifcha_clause
+        4 tipexa_clause
           5 tevir_phrase
             tevir 
-          5 tifcha_phrase
-            mereka tifcha 
+          5 tipexa_phrase
+            merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 3:7
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
+        munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          atnach 
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_clause
         4 geresh_phrase
-          munach telishaqetanna azla geresh 
+          munax telishaqetanna azla geresh 
         4 revia_phrase
-          munach revia 
-      3 tifcha_clause
+          munax revia 
+      3 tipexa_clause
         4 tevir_phrase
           darga tevir 
-        4 tifcha_clause
+        4 tipexa_clause
           5 tevir_phrase
             tevir 
-          5 tifcha_phrase
-            mereka tifcha 
+          5 tipexa_phrase
+            merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 3:8
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
+        munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 revia_phrase
-          munach revia 
+          munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
           5 zaqef_phrase
-            munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+            munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           gershayim 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 3:9
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
@@ -1549,76 +1549,76 @@ Esther 3:9
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
-            munach zaqef 
+            munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 3:10
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_clause
+  1 atnax_clause
+    2 tipexa_clause
       3 tevir_phrase
         darga tevir 
-      3 tifcha_phrase
-        tifcha 
-    2 atnach_phrase
-      munach atnach 
+      3 tipexa_phrase
+        tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_phrase
         revia 
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
           darga tevir 
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 3:11
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_phrase
       zaqefgadol 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 3:12
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 revia_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munach zarqa 
+          azla munax zarqa 
         4 segolta_phrase
           segolta 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 revia_clause
           5 pazer_phrase
-            munach munach pazer 
+            munax munax pazer 
           5 revia_clause
             6 big_telisha_phrase
-              munach telishagedola 
+              munax telishagedola 
             6 revia_clause
               7 geresh_phrase
                 gershayim 
@@ -1626,124 +1626,124 @@ Esther 3:12
                 8 legarmeh_phrase
                   legarmeh 
                 8 revia_phrase
-                  munach revia 
+                  munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-      3 atnach_clause
+      3 atnax_clause
         4 zaqef_clause
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-        4 atnach_clause
-          5 tifcha_phrase
-            mereka tifcha 
-          5 atnach_phrase
-            atnach 
+        4 atnax_clause
+          5 tipexa_phrase
+            merkha tipexa 
+          5 atnax_phrase
+            atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahpak pashta 
+        azla mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 3:13
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 zarqa_clause
         4 geresh_phrase
           azla geresh 
         4 zarqa_phrase
-          munach zarqa 
+          munax zarqa 
       3 segolta_phrase
-        munach segolta 
-    2 atnach_clause
+        munax segolta 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_clause
           5 pazer_phrase
             pazer 
           5 pashta_clause
             6 big_telisha_phrase
-              munach munach telishagedola 
+              munax munax telishagedola 
             6 pashta_clause
               7 geresh_phrase
                 azla geresh 
               7 pashta_phrase
-                mahpak pashta 
+                mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_clause
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_clause
           5 tevir_phrase
-            mereka tevir 
-          5 tifcha_phrase
-            mereka tifcha 
-        4 atnach_phrase
-          munach atnach 
+            merkha tevir 
+          5 tipexa_phrase
+            merkha tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 3:14
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 3:15
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 4:1
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
@@ -1751,240 +1751,240 @@ Esther 4:1
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
+          munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 4:2
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
       zaqefgadol 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
-        munach mereka tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+        munax merkha tevir 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 4:3
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahpak pashta 
+            azla mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 4:4
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahpak pashta 
+          azla mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_clause
         4 geresh_phrase
           azla geresh 
         4 revia_phrase
-          munach revia 
-      3 tifcha_clause
+          munax revia 
+      3 tipexa_clause
         4 tevir_phrase
-          mereka tevir 
-        4 tifcha_phrase
-          tifcha 
+          merkha tevir 
+        4 tipexa_phrase
+          tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 4:5
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
-        munach munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+        munax munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 4:6
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 4:7
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
-      3 tifcha_clause
+          munax revia 
+      3 tipexa_clause
         4 pashta_phrase
-          azla mahpak pashta 
-        4 tifcha_clause
+          azla mahapakh pashta 
+        4 tipexa_clause
           5 tevir_clause
             6 big_telisha_phrase
               telishagedola 
             6 tevir_phrase
-              mereka tevir 
-          5 tifcha_phrase
-            tifcha 
+              merkha tevir 
+          5 tipexa_phrase
+            tipexa 
     2 silluq_phrase
       silluq 
 Esther 4:8
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 big_telisha_phrase
-          munach telishagedola 
+          munax telishagedola 
         4 pashta_phrase
-          azla mahpak pashta 
+          azla mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_phrase
-        munach revia 
-      3 tifcha_clause
+        munax revia 
+      3 tipexa_clause
         4 tevir_phrase
           azla darga tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 4:9
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      tifcha 
-    2 atnach_phrase
-      atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 4:10
 0 silluq_clause
   1 zaqef_clause
     2 pashta_phrase
-      mahpak pashta 
+      mahapakh pashta 
     2 zaqef_phrase
       zaqef 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 4:11
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 pazer_phrase
-          munach pazer 
+          munax pazer 
         4 revia_clause
           5 geresh_phrase
             azla geresh 
@@ -1993,190 +1993,190 @@ Esther 4:11
       3 zaqef_clause
         4 revia_clause
           5 pazer_phrase
-            munach munach pazer 
+            munax munax pazer 
           5 revia_clause
             6 geresh_phrase
-              munach telishaqetanna azla geresh 
+              munax telishaqetanna azla geresh 
             6 revia_phrase
-              munach revia 
+              munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_clause
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla mereka tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        atnach 
+            azla merkha tevir 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 4:12
 0 silluq_clause
   1 zaqef_phrase
-    munach zaqef 
+    munax zaqef 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 4:13
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      munach atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 4:14
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        munach munach zarqa 
+        munax munax zarqa 
       3 segolta_phrase
-        munach segolta 
-    2 atnach_clause
+        munax segolta 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_clause
           5 geresh_phrase
-            munach gershayim 
+            munax gershayim 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
           silluq 
 Esther 4:15
 0 silluq_clause
-  1 tifcha_phrase
-    mereka tifcha 
+  1 tipexa_phrase
+    merkha tipexa 
   1 silluq_phrase
-    mereka silluq 
+    merkha silluq 
 Esther 4:16
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_clause
           5 big_telisha_phrase
-            munach telishagedola 
+            munax telishagedola 
           5 pashta_clause
             6 geresh_phrase
               azla geresh 
             6 pashta_phrase
-              mahpak pashta 
+              mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 4:17
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      tifcha 
-    2 atnach_phrase
-      atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
     2 zaqef_phrase
       zaqefgadol 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 5:1
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_clause
           5 geresh_phrase
             gershayim 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_clause
@@ -2186,33 +2186,33 @@ Esther 5:1
           5 geresh_phrase
             gershayim 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 5:2
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
@@ -2222,327 +2222,327 @@ Esther 5:2
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
-          mereka silluq 
+          merkha silluq 
 Esther 5:3
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 5:4
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahpak pashta 
+        azla mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 5:5
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
+      munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 5:6
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahpak pashta 
+        azla mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 5:7
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 5:8
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          atnach 
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
-        darga munach revia 
+        darga munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach munach zaqef 
+          munax munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 5:9
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
-          mereka tevir 
-        4 tifcha_phrase
-          tifcha 
+          merkha tevir 
+        4 tipexa_phrase
+          tipexa 
       3 silluq_phrase
         silluq 
 Esther 5:10
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 5:11
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_clause
+  1 atnax_clause
+    2 tipexa_clause
       3 tevir_phrase
-        azla mereka tevir 
-      3 tifcha_phrase
-        mereka tifcha 
-    2 atnach_phrase
-      munach atnach 
+        azla merkha tevir 
+      3 tipexa_phrase
+        merkha tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahpak pashta 
+        telishaqetanna azla mahapakh pashta 
       3 zaqef_phrase
-        munach munach zaqef 
+        munax munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 5:12
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
         zarqa 
       3 segolta_phrase
         segolta 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
-          munach telishaqetanna azla darga tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax telishaqetanna azla darga tevir 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 5:13
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
       zaqefgadol 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahpak pashta 
+          azla mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 5:14
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 revia_clause
         4 geresh_phrase
-          munach telishaqetanna azla geresh 
+          munax telishaqetanna azla geresh 
         4 revia_phrase
           revia 
       3 segolta_clause
         4 zarqa_phrase
           zarqa 
         4 segolta_phrase
-          munach munach segolta 
-    2 atnach_clause
+          munax munax segolta 
+    2 atnax_clause
       3 zaqef_clause
         4 revia_clause
           5 legarmeh_phrase
             legarmeh 
           5 revia_phrase
-            munach revia 
+            munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         darga tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 6:1
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
@@ -2552,96 +2552,96 @@ Esther 6:1
           5 geresh_phrase
             gershayim 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 6:2
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 revia_clause
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 revia_phrase
-            munach revia 
+            munax revia 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
-            munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+            munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 6:3
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_clause
           5 geresh_phrase
             gershayim 
           5 tevir_phrase
             darga tevir 
-        4 tifcha_phrase
-          tifcha 
-      3 atnach_phrase
-        atnach 
+        4 tipexa_phrase
+          tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 6:4
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      munach atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
       3 silluq_clause
         4 zaqef_clause
           5 pashta_phrase
@@ -2649,121 +2649,121 @@ Esther 6:4
           5 zaqef_phrase
             zaqef 
         4 silluq_clause
-          5 tifcha_phrase
-            tifcha 
+          5 tipexa_phrase
+            tipexa 
           5 silluq_phrase
-            mereka silluq 
+            merkha silluq 
 Esther 6:5
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 6:6
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
         zarqa 
       3 segolta_phrase
         segolta 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
+      3 atnax_clause
         4 zaqef_phrase
           zaqefgadol 
-        4 atnach_clause
+        4 atnax_clause
           5 zaqef_phrase
             zaqefgadol 
-          5 atnach_clause
-            6 tifcha_phrase
-              mereka tifcha 
-            6 atnach_phrase
-              munach atnach 
+          5 atnax_clause
+            6 tipexa_phrase
+              merkha tipexa 
+            6 atnax_phrase
+              munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_clause
           5 geresh_phrase
             gershayim 
           5 tevir_phrase
-            mereka tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+            merkha tevir 
+        4 tipexa_phrase
+          merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 6:7
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
     2 zaqef_phrase
       zaqefgadol 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 6:8
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahpak pashta 
+          azla mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
-          mereka tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+          merkha tevir 
+        4 tipexa_phrase
+          merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 6:9
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
@@ -2775,43 +2775,43 @@ Esther 6:9
           5 geresh_phrase
             gershayim 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
       3 silluq_clause
         4 zaqef_clause
           5 pashta_phrase
             yetiv 
           5 zaqef_phrase
-            munach zaqef 
+            munax zaqef 
         4 silluq_clause
-          5 tifcha_phrase
-            mereka tifcha 
+          5 tipexa_phrase
+            merkha tipexa 
           5 silluq_phrase
-            mereka silluq 
+            merkha silluq 
 Esther 6:10
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
@@ -2823,328 +2823,328 @@ Esther 6:10
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            munach mahpak pashta 
+            munax mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
+          munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 6:11
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
       3 silluq_clause
         4 zaqef_clause
           5 pashta_phrase
             yetiv 
           5 zaqef_phrase
-            munach zaqef 
+            munax zaqef 
         4 silluq_clause
-          5 tifcha_phrase
-            mereka tifcha 
+          5 tipexa_phrase
+            merkha tipexa 
           5 silluq_phrase
-            mereka silluq 
+            merkha silluq 
 Esther 6:12
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      munach atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 6:13
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_clause
           5 pazer_phrase
-            munach munach pazer 
+            munax munax pazer 
           5 pashta_clause
             6 geresh_phrase
               gershayim 
             6 pashta_phrase
-              telishaqetanna azla mahpak pashta 
+              telishaqetanna azla mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 6:14
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 7:1
 0 silluq_clause
   1 zaqef_clause
     2 pashta_phrase
-      mahpak pashta 
+      mahapakh pashta 
     2 zaqef_phrase
       zaqef 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 7:2
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 pashta_phrase
-          munach mahpak pashta 
+          munax mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 7:3
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahpak pashta 
+        azla mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahpak pashta 
+          azla mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 7:4
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_clause
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahpak pashta 
+          azla mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
-          munach mereka tevir 
-        4 tifcha_phrase
-          tifcha 
+          munax merkha tevir 
+        4 tipexa_phrase
+          tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 7:5
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        munach mereka pashta 
+        munax merkha pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 7:6
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
+      munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           yetiv 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 7:7
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           geresh 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
       3 silluq_clause
-        4 tifcha_clause
+        4 tipexa_clause
           5 tevir_phrase
-            mereka tevir 
-          5 tifcha_phrase
-            tifcha 
+            merkha tevir 
+          5 tipexa_phrase
+            tipexa 
         4 silluq_phrase
-          mereka silluq 
+          merkha silluq 
 Esther 7:8
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 pazer_phrase
@@ -3156,7 +3156,7 @@ Esther 7:8
             6 legarmeh_phrase
               legarmeh 
             6 revia_phrase
-              munach revia 
+              munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
@@ -3167,21 +3167,21 @@ Esther 7:8
             6 pashta_phrase
               pashta 
             6 zaqef_phrase
-              munach munach zaqef 
-    2 atnach_clause
+              munax munax zaqef 
+    2 atnax_clause
       3 zaqef_phrase
-        munach zaqef 
-      3 atnach_clause
-        4 tifcha_clause
+        munax zaqef 
+      3 atnax_clause
+        4 tipexa_clause
           5 tevir_clause
             6 big_telisha_phrase
               telishagedola 
             6 tevir_phrase
               darga tevir 
-          5 tifcha_phrase
-            tifcha 
-        4 atnach_phrase
-          atnach 
+          5 tipexa_phrase
+            tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
@@ -3190,85 +3190,85 @@ Esther 7:8
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 7:9
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 big_telisha_phrase
-          munach telishagedola 
+          munax telishagedola 
         4 revia_clause
           5 geresh_phrase
             azla geresh 
           5 revia_phrase
-            munach revia 
+            munax revia 
       3 zaqef_clause
         4 revia_clause
           5 pazer_phrase
-            munach munach galgal pazergadol 
+            munax munax galgal pazergadol 
           5 revia_clause
             6 geresh_phrase
               gershayim 
             6 revia_phrase
-              darga munach revia 
+              darga munax revia 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
-            munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+            munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 7:10
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 8:1
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_clause
           5 geresh_phrase
             gershayim 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
@@ -3277,15 +3277,15 @@ Esther 8:1
         4 pashta_phrase
           yetiv 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 8:2
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
@@ -3294,42 +3294,42 @@ Esther 8:2
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         darga tevir 
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 8:3
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
@@ -3337,7 +3337,7 @@ Esther 8:3
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
-            munach zaqef 
+            munax zaqef 
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
@@ -3345,34 +3345,34 @@ Esther 8:3
         4 zaqef_phrase
           zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
         4 silluq_phrase
           silluq 
 Esther 8:4
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 8:5
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 big_telisha_phrase
@@ -3381,109 +3381,109 @@ Esther 8:5
           5 geresh_phrase
             azla geresh 
           5 revia_phrase
-            darga munach revia 
+            darga munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           gershayim 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_clause
           5 geresh_phrase
             geresh 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
       3 zaqef_clause
         4 revia_phrase
-          munach revia 
+          munax revia 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
             zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
-          mereka silluq 
+          merkha silluq 
 Esther 8:6
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 8:7
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahpak pashta 
+        azla mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 8:8
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 big_telisha_phrase
@@ -3492,85 +3492,85 @@ Esther 8:8
           5 geresh_phrase
             azla geresh 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_clause
         4 geresh_phrase
           gershayim 
         4 revia_phrase
-          munach revia 
-      3 tifcha_clause
+          munax revia 
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
+        4 tipexa_phrase
+          merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 8:9
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 revia_clause
         4 big_telisha_phrase
-          munach munach telishagedola 
+          munax munax telishagedola 
         4 revia_clause
           5 geresh_phrase
             azla geresh 
           5 revia_phrase
-            munach revia 
+            munax revia 
       3 segolta_clause
         4 zarqa_phrase
-          munach zarqa 
+          munax zarqa 
         4 segolta_phrase
           segolta 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 revia_clause
           5 pazer_phrase
-            munach munach munach pazer 
+            munax munax munax pazer 
           5 revia_clause
             6 geresh_phrase
-              munach telishaqetanna azla geresh 
+              munax telishaqetanna azla geresh 
             6 revia_clause
               7 legarmeh_phrase
                 legarmeh 
               7 revia_phrase
-                munach revia 
+                munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            munach mahpak pashta 
+            munax mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-      3 atnach_clause
+      3 atnax_clause
         4 zaqef_clause
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-        4 atnach_clause
-          5 tifcha_phrase
-            mereka tifcha 
-          5 atnach_phrase
-            atnach 
+        4 atnax_clause
+          5 tipexa_phrase
+            merkha tipexa 
+          5 atnax_phrase
+            atnax 
   1 silluq_clause
     2 zaqef_phrase
       methiga-zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 8:10
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
@@ -3578,32 +3578,32 @@ Esther 8:10
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_clause
         4 pazer_phrase
-          munach pazer 
+          munax pazer 
         4 pashta_clause
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 8:11
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 revia_clause
         4 geresh_phrase
@@ -3612,100 +3612,100 @@ Esther 8:11
           5 legarmeh_phrase
             legarmeh 
           5 revia_phrase
-            munach revia 
+            munax revia 
       3 segolta_clause
         4 zarqa_phrase
           zarqa 
         4 segolta_phrase
-          munach segolta 
-    2 atnach_clause
-      3 tifcha_clause
+          munax segolta 
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_clause
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 tevir_phrase
             azla darga tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 8:12
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
-        mereka tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+        merkha tevir 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 8:13
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahpak pashta 
+        azla mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 8:14
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 8:15
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
@@ -3714,110 +3714,110 @@ Esther 8:15
           5 legarmeh_phrase
             legarmeh 
           5 revia_phrase
-            munach revia 
+            munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
+          munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 8:16
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
       zaqefgadol 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 8:17
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahpak pashta 
+            azla mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 9:1
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mereka pashta 
+          azla merkha pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           azla darga tevir 
-        4 tifcha_phrase
-          tifcha 
-      3 atnach_phrase
-        atnach 
+        4 tipexa_phrase
+          tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
@@ -3827,23 +3827,23 @@ Esther 9:1
           5 geresh_phrase
             azla geresh 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
       3 silluq_clause
-        4 tifcha_clause
+        4 tipexa_clause
           5 tevir_phrase
             azla darga tevir 
-          5 tifcha_phrase
-            tifcha 
+          5 tipexa_phrase
+            tipexa 
         4 silluq_phrase
           silluq 
 Esther 9:2
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
@@ -3854,297 +3854,297 @@ Esther 9:2
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
+          munax zaqef 
+    2 atnax_clause
       3 zaqef_phrase
-        munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          atnach 
+        munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 9:3
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:4
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        munach atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 9:5
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:6
 0 silluq_clause
   1 zaqef_clause
     2 revia_phrase
-      munach revia 
+      munax revia 
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
         zaqef 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:7
 0 silluq_clause
-  1 tifcha_clause
+  1 tipexa_clause
     2 tevir_phrase
       darga tevir 
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
   1 silluq_phrase
-    mereka silluq 
+    merkha silluq 
 Esther 9:8
 0 silluq_clause
-  1 tifcha_clause
+  1 tipexa_clause
     2 tevir_phrase
       darga tevir 
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
   1 silluq_phrase
-    mereka silluq 
+    merkha silluq 
 Esther 9:9
 0 silluq_clause
   1 zaqef_clause
     2 pashta_phrase
-      mahpak pashta 
+      mahapakh pashta 
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 9:10
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_clause
+  1 atnax_clause
+    2 tipexa_clause
       3 tevir_clause
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
           azla darga tevir 
-      3 tifcha_phrase
-        mereka tifcha 
-    2 atnach_phrase
-      atnach 
+      3 tipexa_phrase
+        merkha tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
     2 zaqef_phrase
       methiga-zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 9:11
 0 silluq_clause
-  1 tifcha_clause
+  1 tipexa_clause
     2 revia_phrase
-      munach revia 
-    2 tifcha_clause
+      munax revia 
+    2 tipexa_clause
       3 tevir_phrase
-        munach darga tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+        munax darga tevir 
+      3 tipexa_phrase
+        merkha tipexa 
   1 silluq_phrase
-    mereka silluq 
+    merkha silluq 
 Esther 9:12
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           azla geresh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 revia_clause
           5 pazer_phrase
-            munach pazer 
+            munax pazer 
           5 revia_clause
             6 geresh_phrase
               telishaqetanna azla geresh 
             6 revia_phrase
-              darga munach revia 
+              darga munax revia 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
-            munach zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+            munax zaqef 
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 9:13
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
+        munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 revia_phrase
-          munach revia 
+          munax revia 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
-            munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+            munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 9:14
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+        munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:15
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           gershayim 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_clause
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            munach mahpak pashta 
+            munax mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
+          munax zaqef 
+    2 atnax_clause
       3 zaqef_phrase
-        munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+        munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_phrase
       methiga-zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 9:16
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 pazer_phrase
-          munach pazer 
+          munax pazer 
         4 revia_clause
           5 geresh_phrase
             telishaqetanna azla geresh 
@@ -4152,106 +4152,106 @@ Esther 9:16
             6 legarmeh_phrase
               legarmeh 
             6 revia_phrase
-              munach revia 
+              munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
+          munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_phrase
       methiga-zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 9:17
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_phrase
-      mereka tifcha 
-    2 atnach_phrase
-      munach atnach 
+  1 atnax_clause
+    2 tipexa_phrase
+      merkha tipexa 
+    2 atnax_phrase
+      munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
-          mereka silluq 
+          merkha silluq 
 Esther 9:18
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
-          mereka silluq 
+          merkha silluq 
 Esther 9:19
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 revia_clause
         4 geresh_phrase
           gershayim 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 segolta_clause
         4 zarqa_phrase
           zarqa 
         4 segolta_phrase
-          munach segolta 
-    2 atnach_clause
+          munax segolta 
+    2 atnax_clause
       3 zaqef_clause
         4 revia_phrase
           revia 
@@ -4260,29 +4260,29 @@ Esther 9:19
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              munach mahpak pashta 
+              munax mahapakh pashta 
           5 zaqef_phrase
-            munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          munach atnach 
+            munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
-      mereka silluq 
+      merkha silluq 
 Esther 9:20
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+      munax zaqef 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
@@ -4297,114 +4297,114 @@ Esther 9:20
           5 pashta_phrase
             pashta 
           5 zaqef_phrase
-            munach zaqef 
+            munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 9:21
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
         zarqa 
       3 segolta_phrase
         segolta 
-    2 atnach_clause
+    2 atnax_clause
       3 zaqef_clause
         4 revia_phrase
-          munach revia 
+          munax revia 
         4 zaqef_clause
           5 pashta_clause
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              munach mahpak pashta 
+              munax mahapakh pashta 
           5 zaqef_phrase
-            munach zaqef 
-      3 atnach_clause
-        4 tifcha_clause
+            munax zaqef 
+      3 atnax_clause
+        4 tipexa_clause
           5 tevir_phrase
             tevir 
-          5 tifcha_phrase
-            mereka tifcha 
-        4 atnach_phrase
-          atnach 
+          5 tipexa_phrase
+            merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:22
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_phrase
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahpak pashta 
+          azla mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
+          munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 revia_phrase
           revia 
         4 zaqef_clause
           5 pashta_phrase
-            telishaqetanna azla mahpak pashta 
+            telishaqetanna azla mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
       3 silluq_clause
-        4 tifcha_phrase
-          tifcha 
+        4 tipexa_phrase
+          tipexa 
         4 silluq_phrase
           silluq 
 Esther 9:23
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
         pashta 
       3 zaqef_phrase
         zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
         tevir 
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:24
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
@@ -4416,175 +4416,175 @@ Esther 9:24
           pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mereka pashta 
+        merkha pashta 
       3 zaqef_phrase
-        munach zaqef 
+        munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
         silluq 
 Esther 9:25
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
         zarqa 
       3 segolta_phrase
-        munach segolta 
-    2 atnach_clause
+        munax segolta 
+    2 atnax_clause
       3 zaqef_phrase
-        munach zaqef 
-      3 atnach_clause
-        4 tifcha_clause
+        munax zaqef 
+      3 atnax_clause
+        4 tipexa_clause
           5 tevir_clause
             6 geresh_phrase
               gershayim 
             6 tevir_phrase
               darga tevir 
-          5 tifcha_phrase
-            mereka tifcha 
-        4 atnach_phrase
-          atnach 
+          5 tipexa_phrase
+            merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 tevir_phrase
-        mereka tevir 
-      3 tifcha_phrase
-        tifcha 
+        merkha tevir 
+      3 tipexa_phrase
+        tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:26
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          telishaqetanna azla mahpak pashta 
+          telishaqetanna azla mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
+        munax zaqef 
+    2 atnax_clause
       3 zaqef_phrase
         zaqefgadol 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_phrase
-      munach zaqef 
+      munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 
 Esther 9:27
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
         4 geresh_phrase
-          munach munach telishaqetanna azla geresh 
+          munax munax telishaqetanna azla geresh 
         4 pashta_phrase
-          azla mahpak pashta 
+          azla mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
+        munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 revia_phrase
-          munach revia 
+          munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            munach mahpak pashta 
+            munax mahapakh pashta 
           5 zaqef_phrase
             zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:28
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 big_telisha_phrase
-          munach telishagedola 
+          munax telishagedola 
         4 revia_clause
           5 geresh_phrase
             azla geresh 
           5 revia_phrase
-            munach revia 
+            munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        mereka tifcha 
-      3 atnach_phrase
-        munach atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        merkha tipexa 
+      3 atnax_phrase
+        munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
           gershayim 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          mahpak pashta 
+          mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 9:29
 0 silluq_clause
-  1 atnach_clause
-    2 tifcha_clause
+  1 atnax_clause
+    2 tipexa_clause
       3 tevir_clause
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
           azla darga tevir 
-      3 tifcha_phrase
-        mereka tifcha 
-    2 atnach_phrase
-      atnach 
+      3 tipexa_phrase
+        merkha tipexa 
+    2 atnax_phrase
+      atnax 
   1 silluq_clause
-    2 tifcha_clause
+    2 tipexa_clause
       3 revia_phrase
         revia 
-      3 tifcha_clause
+      3 tipexa_clause
         4 tevir_phrase
-          munach darga tevir 
-        4 tifcha_phrase
-          tifcha 
+          munax darga tevir 
+        4 tipexa_phrase
+          tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:30
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 geresh_phrase
@@ -4593,22 +4593,22 @@ Esther 9:30
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahpak pashta 
+          azla mahapakh pashta 
         4 zaqef_phrase
           zaqef 
-    2 atnach_clause
-      3 tifcha_phrase
-        tifcha 
-      3 atnach_phrase
-        atnach 
+    2 atnax_clause
+      3 tipexa_phrase
+        tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:31
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 pazer_phrase
@@ -4623,115 +4623,115 @@ Esther 9:31
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 pashta_phrase
-            mahpak pashta 
+            mahapakh pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
-      3 tifcha_clause
+          munax zaqef 
+    2 atnax_clause
+      3 tipexa_clause
         4 tevir_phrase
           tevir 
-        4 tifcha_phrase
-          mereka tifcha 
-      3 atnach_phrase
-        atnach 
+        4 tipexa_phrase
+          merkha tipexa 
+      3 atnax_phrase
+        atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      mereka tifcha 
+    2 tipexa_phrase
+      merkha tipexa 
     2 silluq_phrase
       silluq 
 Esther 9:32
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_phrase
-      munach zaqef 
-    2 atnach_clause
+      munax zaqef 
+    2 atnax_clause
       3 zaqef_phrase
         zaqefgadol 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
     2 silluq_phrase
       silluq 
 Esther 10:1
 0 silluq_clause
-  1 tifcha_clause
+  1 tipexa_clause
     2 tevir_phrase
       telishaqetanna azla darga tevir 
-    2 tifcha_phrase
-      tifcha 
+    2 tipexa_phrase
+      tipexa 
   1 silluq_phrase
-    mereka silluq 
+    merkha silluq 
 Esther 10:2
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahpak pashta 
+        mahapakh pashta 
       3 zaqef_phrase
-        munach zaqef 
-    2 atnach_clause
+        munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          mereka tifcha 
-        4 atnach_phrase
-          atnach 
+          munax zaqef 
+      3 atnax_clause
+        4 tipexa_phrase
+          merkha tipexa 
+        4 atnax_phrase
+          atnax 
   1 silluq_clause
     2 zaqef_clause
       3 revia_phrase
-        munach revia 
+        munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
+          munax zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        tifcha 
+      3 tipexa_phrase
+        tipexa 
       3 silluq_phrase
-        mereka silluq 
+        merkha silluq 
 Esther 10:3
 0 silluq_clause
-  1 atnach_clause
+  1 atnax_clause
     2 zaqef_clause
       3 revia_clause
         4 legarmeh_phrase
           legarmeh 
         4 revia_phrase
-          munach revia 
+          munax revia 
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
-          munach zaqef 
-    2 atnach_clause
+          munax zaqef 
+    2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
           pashta 
         4 zaqef_phrase
           zaqef 
-      3 atnach_clause
-        4 tifcha_phrase
-          tifcha 
-        4 atnach_phrase
-          munach atnach 
+      3 atnax_clause
+        4 tipexa_phrase
+          tipexa 
+        4 atnax_phrase
+          munax atnax 
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mereka pashta 
+        merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
-      3 tifcha_phrase
-        mereka tifcha 
+      3 tipexa_phrase
+        merkha tipexa 
       3 silluq_phrase
         silluq 

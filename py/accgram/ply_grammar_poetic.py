@@ -56,7 +56,7 @@ when a unit is too short for the intermediate one):
                                 also pazer / legarmeh directly
   revia gadol (#363)         -> pazer / legarmeh; also dehi / sinnor directly
   revia qatan (#368)         -> legarmeh; also sinnor (TSINNOR REVIA_QATAN OLEH)
-  revia mugrash (#366-367)   -> pazer / legarmeh (with geresh, tifcha-like);
+  revia mugrash (#366-367)   -> pazer / legarmeh (with geresh, tipeḥa-like);
                                 also dehi / revia gadol when "without geresh" it
                                 acts as the main verse divider like atnah (#367)
   dehi (#364)                -> pazer / legarmeh
@@ -200,10 +200,10 @@ def p_oleh_weyored_phrase(p):
 # -- plus the one genuine servant-type conflict Prov 3:4 (L TARXA -> MAM MERKHA), where
 # L alone uses an out-of-set tarkha (a sign-choice oddball, not rule material).  A
 # MERKHA|MUNAX-only constraint would flag six correct verses, so it is not encoded.  See issue #18.
-def p_atnach_phrase(p):
-    """atnach_phrase : ATNAX
+def p_atnax_phrase(p):
+    """atnax_phrase : ATNAX
                      | servi ATNAX"""
-    _phrase(p, "atnach_phrase")
+    _phrase(p, "atnax_phrase")
 
 
 # Permissive servi before REVIA_GADOL.  Breuer Ch 11 §32-33 gives a phonology-dependent
@@ -267,10 +267,10 @@ def p_revia_mugrash_phrase(p):
 # real, two-witness construction and Breuer's flat "always" is an oversimplification
 # (the munaḥ/merkha choice is phonological, hence out of scope for a token grammar).
 # Enforcing munaḥ-only would flag 16 correct verses.  See issue #18.
-def p_dehi_phrase(p):
-    """dehi_phrase : DEXI
+def p_dexi_phrase(p):
+    """dexi_phrase : DEXI
                    | servi DEXI"""
-    _phrase(p, "dehi_phrase")
+    _phrase(p, "dexi_phrase")
 
 
 # Permissive servi before TSINNOR.  NB: Breuer Ch 11 §23 limits the servant to MUNAX or
@@ -340,19 +340,19 @@ def _phrase(p, label):
 # mugrash or shalshelet gedolah, but L (faithful to it, MAM-confirmed) freely uses
 # a *lower* disjunctive directly when the final unit is short: dehi, pazer, or
 # legarmeh may stand immediately before silluq with no revia mugrash, exactly as
-# the prose silluq domain admits its lower dividers (tifcha -> ... directly).  So
+# the prose silluq domain admits its lower dividers (tipeḥa -> ... directly).  So
 # the silluq domain admits a rank-ordered chain of near dividers --
 # revia_mugrash / shalshelet (highest), then dehi, then pazer, then legarmeh --
 # each of which may be followed (toward silluq) by any lower one.  This is the
-# poetic analogue of the prose tifcha/zaqef_silluq cascade in ply_grammar.py.
+# poetic analogue of the prose tipeḥa/zaqef_silluq cascade in ply_grammar.py.
 def p_silluq_clause(p):
     """silluq_clause : silluq_phrase
                      | revia_mugrash_silluq_clause
                      | shalshelet_silluq_clause
-                     | dehi_silluq_clause
+                     | dexi_silluq_clause
                      | pazer_silluq_clause
                      | legarmeh_silluq_clause
-                     | atnach_silluq_clause
+                     | atnax_silluq_clause
                      | oleh_silluq_clause"""
     p[0] = p[1]
 
@@ -370,11 +370,11 @@ def p_pazer_silluq_clause(p):
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
-def p_dehi_silluq_clause(p):
-    """dehi_silluq_clause : dehi_clause silluq_phrase
-                          | dehi_clause legarmeh_silluq_clause
-                          | dehi_clause pazer_silluq_clause
-                          | dehi_clause dehi_silluq_clause"""
+def p_dexi_silluq_clause(p):
+    """dexi_silluq_clause : dexi_clause silluq_phrase
+                          | dexi_clause legarmeh_silluq_clause
+                          | dexi_clause pazer_silluq_clause
+                          | dexi_clause dexi_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
@@ -382,7 +382,7 @@ def p_revia_mugrash_silluq_clause(p):
     """revia_mugrash_silluq_clause : revia_mugrash_clause silluq_phrase
                                    | revia_mugrash_clause legarmeh_silluq_clause
                                    | revia_mugrash_clause pazer_silluq_clause
-                                   | revia_mugrash_clause dehi_silluq_clause
+                                   | revia_mugrash_clause dexi_silluq_clause
                                    | revia_mugrash_clause revia_mugrash_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
@@ -391,17 +391,17 @@ def p_shalshelet_silluq_clause(p):
     """shalshelet_silluq_clause : shalshelet_gedolah_clause silluq_phrase
                                 | shalshelet_gedolah_clause legarmeh_silluq_clause
                                 | shalshelet_gedolah_clause pazer_silluq_clause
-                                | shalshelet_gedolah_clause dehi_silluq_clause"""
+                                | shalshelet_gedolah_clause dexi_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
-def p_atnach_silluq_clause(p):
-    """atnach_silluq_clause : atnach_clause silluq_phrase
-                            | atnach_clause revia_mugrash_silluq_clause
-                            | atnach_clause shalshelet_silluq_clause
-                            | atnach_clause dehi_silluq_clause
-                            | atnach_clause pazer_silluq_clause
-                            | atnach_clause legarmeh_silluq_clause"""
+def p_atnax_silluq_clause(p):
+    """atnax_silluq_clause : atnax_clause silluq_phrase
+                            | atnax_clause revia_mugrash_silluq_clause
+                            | atnax_clause shalshelet_silluq_clause
+                            | atnax_clause dexi_silluq_clause
+                            | atnax_clause pazer_silluq_clause
+                            | atnax_clause legarmeh_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
@@ -409,10 +409,10 @@ def p_oleh_silluq_clause(p):
     """oleh_silluq_clause : oleh_clause silluq_phrase
                           | oleh_clause revia_mugrash_silluq_clause
                           | oleh_clause shalshelet_silluq_clause
-                          | oleh_clause dehi_silluq_clause
+                          | oleh_clause dexi_silluq_clause
                           | oleh_clause pazer_silluq_clause
                           | oleh_clause legarmeh_silluq_clause
-                          | oleh_clause atnach_silluq_clause"""
+                          | oleh_clause atnax_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
@@ -451,43 +451,43 @@ def p_revia_gadol_oleh_clause(p):
 # legarmeh -- when the unit is too short for a dehi.  Rank order of near dividers:
 # revia gadol (highest), dehi, pazer, legarmeh; each may be followed (toward
 # atnah) by any lower one.
-def p_atnach_clause(p):
-    """atnach_clause : atnach_phrase
-                     | dehi_atnach_clause
-                     | revia_gadol_atnach_clause
-                     | pazer_atnach_clause
-                     | legarmeh_atnach_clause"""
+def p_atnax_clause(p):
+    """atnax_clause : atnax_phrase
+                     | dexi_atnax_clause
+                     | revia_gadol_atnax_clause
+                     | pazer_atnax_clause
+                     | legarmeh_atnax_clause"""
     p[0] = p[1]
 
 
-def p_legarmeh_atnach_clause(p):
-    """legarmeh_atnach_clause : legarmeh_clause atnach_phrase
-                              | legarmeh_clause legarmeh_atnach_clause"""
-    p[0] = make_node("atnach_clause", p[1], p[2])
+def p_legarmeh_atnax_clause(p):
+    """legarmeh_atnax_clause : legarmeh_clause atnax_phrase
+                              | legarmeh_clause legarmeh_atnax_clause"""
+    p[0] = make_node("atnax_clause", p[1], p[2])
 
 
-def p_pazer_atnach_clause(p):
-    """pazer_atnach_clause : pazer_clause atnach_phrase
-                           | pazer_clause legarmeh_atnach_clause
-                           | pazer_clause pazer_atnach_clause"""
-    p[0] = make_node("atnach_clause", p[1], p[2])
+def p_pazer_atnax_clause(p):
+    """pazer_atnax_clause : pazer_clause atnax_phrase
+                           | pazer_clause legarmeh_atnax_clause
+                           | pazer_clause pazer_atnax_clause"""
+    p[0] = make_node("atnax_clause", p[1], p[2])
 
 
-def p_dehi_atnach_clause(p):
-    """dehi_atnach_clause : dehi_clause atnach_phrase
-                          | dehi_clause legarmeh_atnach_clause
-                          | dehi_clause pazer_atnach_clause
-                          | dehi_clause dehi_atnach_clause"""
-    p[0] = make_node("atnach_clause", p[1], p[2])
+def p_dexi_atnax_clause(p):
+    """dexi_atnax_clause : dexi_clause atnax_phrase
+                          | dexi_clause legarmeh_atnax_clause
+                          | dexi_clause pazer_atnax_clause
+                          | dexi_clause dexi_atnax_clause"""
+    p[0] = make_node("atnax_clause", p[1], p[2])
 
 
-def p_revia_gadol_atnach_clause(p):
-    """revia_gadol_atnach_clause : revia_gadol_clause atnach_phrase
-                                 | revia_gadol_clause dehi_atnach_clause
-                                 | revia_gadol_clause pazer_atnach_clause
-                                 | revia_gadol_clause legarmeh_atnach_clause
-                                 | revia_gadol_clause revia_gadol_atnach_clause"""
-    p[0] = make_node("atnach_clause", p[1], p[2])
+def p_revia_gadol_atnax_clause(p):
+    """revia_gadol_atnax_clause : revia_gadol_clause atnax_phrase
+                                 | revia_gadol_clause dexi_atnax_clause
+                                 | revia_gadol_clause pazer_atnax_clause
+                                 | revia_gadol_clause legarmeh_atnax_clause
+                                 | revia_gadol_clause revia_gadol_atnax_clause"""
+    p[0] = make_node("atnax_clause", p[1], p[2])
 
 
 # --- revia gadol clause (#363) -------------------------------------------------
@@ -498,7 +498,7 @@ def p_revia_gadol_clause(p):
     """revia_gadol_clause : revia_gadol_phrase
                           | legarmeh_revia_gadol_clause
                           | pazer_revia_gadol_clause
-                          | dehi_revia_gadol_clause
+                          | dexi_revia_gadol_clause
                           | sinnor_revia_gadol_clause"""
     p[0] = p[1]
 
@@ -527,11 +527,11 @@ def p_pazer_revia_gadol_clause(p):
     p[0] = make_node("revia_gadol_clause", p[1], p[2])
 
 
-def p_dehi_revia_gadol_clause(p):
-    """dehi_revia_gadol_clause : dehi_clause revia_gadol_phrase
-                               | dehi_clause legarmeh_revia_gadol_clause
-                               | dehi_clause pazer_revia_gadol_clause
-                               | dehi_clause dehi_revia_gadol_clause"""
+def p_dexi_revia_gadol_clause(p):
+    """dexi_revia_gadol_clause : dexi_clause revia_gadol_phrase
+                               | dexi_clause legarmeh_revia_gadol_clause
+                               | dexi_clause pazer_revia_gadol_clause
+                               | dexi_clause dexi_revia_gadol_clause"""
     p[0] = make_node("revia_gadol_clause", p[1], p[2])
 
 
@@ -562,7 +562,7 @@ def p_sinnor_revia_qatan_clause(p):
 
 
 # --- revia mugrash clause (#366-367) -------------------------------------------
-# With the geresh stroke: the last disjunctive before silluq, like prose tifcha,
+# With the geresh stroke: the last disjunctive before silluq, like prose tipeḥa,
 # subdivided by the lesser dividers pazer / legarmeh.  "Without the geresh" (a bare
 # revia before silluq when the verse has no atnah) it acts as the main verse
 # divider "like atnah", so it is also subdivided by dehi (near) and revia gadol
@@ -571,7 +571,7 @@ def p_revia_mugrash_clause(p):
     """revia_mugrash_clause : revia_mugrash_phrase
                             | legarmeh_revia_mugrash_clause
                             | pazer_revia_mugrash_clause
-                            | dehi_revia_mugrash_clause
+                            | dexi_revia_mugrash_clause
                             | revia_gadol_revia_mugrash_clause"""
     p[0] = p[1]
 
@@ -589,9 +589,9 @@ def p_pazer_revia_mugrash_clause(p):
     p[0] = make_node("revia_mugrash_clause", p[1], p[2])
 
 
-def p_dehi_revia_mugrash_clause(p):
-    """dehi_revia_mugrash_clause : dehi_clause revia_mugrash_phrase
-                                 | dehi_clause dehi_revia_mugrash_clause"""
+def p_dexi_revia_mugrash_clause(p):
+    """dexi_revia_mugrash_clause : dexi_clause revia_mugrash_phrase
+                                 | dexi_clause dexi_revia_mugrash_clause"""
     p[0] = make_node("revia_mugrash_clause", p[1], p[2])
 
 
@@ -599,30 +599,30 @@ def p_revia_gadol_revia_mugrash_clause(p):
     """revia_gadol_revia_mugrash_clause : revia_gadol_clause revia_mugrash_phrase
                                         | revia_gadol_clause legarmeh_revia_mugrash_clause
                                         | revia_gadol_clause pazer_revia_mugrash_clause
-                                        | revia_gadol_clause dehi_revia_mugrash_clause
+                                        | revia_gadol_clause dexi_revia_mugrash_clause
                                         | revia_gadol_clause revia_gadol_revia_mugrash_clause"""
     p[0] = make_node("revia_mugrash_clause", p[1], p[2])
 
 
 # --- dehi clause (#364) --------------------------------------------------------
-def p_dehi_clause(p):
-    """dehi_clause : dehi_phrase
-                   | legarmeh_dehi_clause
-                   | pazer_dehi_clause"""
+def p_dexi_clause(p):
+    """dexi_clause : dexi_phrase
+                   | legarmeh_dexi_clause
+                   | pazer_dexi_clause"""
     p[0] = p[1]
 
 
-def p_legarmeh_dehi_clause(p):
-    """legarmeh_dehi_clause : legarmeh_clause dehi_phrase
-                            | legarmeh_clause legarmeh_dehi_clause"""
-    p[0] = make_node("dehi_clause", p[1], p[2])
+def p_legarmeh_dexi_clause(p):
+    """legarmeh_dexi_clause : legarmeh_clause dexi_phrase
+                            | legarmeh_clause legarmeh_dexi_clause"""
+    p[0] = make_node("dexi_clause", p[1], p[2])
 
 
-def p_pazer_dehi_clause(p):
-    """pazer_dehi_clause : pazer_clause dehi_phrase
-                         | pazer_clause legarmeh_dehi_clause
-                         | pazer_clause pazer_dehi_clause"""
-    p[0] = make_node("dehi_clause", p[1], p[2])
+def p_pazer_dexi_clause(p):
+    """pazer_dexi_clause : pazer_clause dexi_phrase
+                         | pazer_clause legarmeh_dexi_clause
+                         | pazer_clause pazer_dexi_clause"""
+    p[0] = make_node("dexi_clause", p[1], p[2])
 
 
 # --- sinnor clause (#365) ------------------------------------------------------

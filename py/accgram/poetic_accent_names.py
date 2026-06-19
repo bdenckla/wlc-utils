@@ -15,23 +15,27 @@ pinned to this file.
 
 Transliteration choices (avoid proliferating spellings; follow existing precedent):
 Spellings follow the canonical display names in ``py/mb_diff_mpu/describe_diff.py``
-(ACCENT_NAMES / POETIC_ACCENTS), uppercased with its ``ḥ`` written **X** for ASCII:
-  - deḥi -> DEXI, munaḥ -> MUNAX (ḥ -> X; cf. mb_cmn ``DEX``).
+(ACCENT_NAMES / POETIC_ACCENTS), uppercased with its ``ḥ`` written **X** for ASCII:
+  - deḥi -> DEXI, munaḥ -> MUNAX (ḥ -> X; cf. mb_cmn ``DEX``).
   - tsinnor -> TSINNOR (describe_diff "tsinnor", doubled n).
-  - merkha -> MERKHA, mahapakh -> MAHAPAKH (cf. Unicode names; the prose Goerwitz
-    "MEREKA"/"MAHPAK" lose the kaf).
-  - names describe_diff spells plainly keep the prose Goerwitz form (ply_grammar.py):
+  - merkha -> MERKHA, mahapakh -> MAHAPAKH (cf. Unicode names; the kaf-dropping
+    Goerwitz "MEREKA"/"MAHPAK" lose to the full forms).
+  - names describe_diff spells plainly keep the plain Goerwitz form (ply_grammar.py):
     SILLUQ, PAZER, LEGARMEH, AZLA, GALGAL, REVIA, SHALSHELET.
 
 Maintainer overrides of describe_diff:
-  - ATNAX, not ETNAXTA (describe_diff calls the accent "etnaḥta").
-  - TARXA, not TARHA: describe_diff's plain "tarha" is a bug; the ḥet takes X.
+  - ATNAX, not ETNAXTA (describe_diff calls the accent "etnaḥta").
+  - TARXA, not TARHA: describe_diff's plain "tarha" is a bug; the ḥet takes X.
   - ILLUY, not ILUY: doubled L preferred.
   - OLEH_WEYORED keeps "we-" (no "veyored" precedent in the tree).
 
-NOTE: the prose grammar (a port of the Goerwitz C oracle acc2tre.y) keeps ATNACH /
-MUNACH / MEREKA / MAHPAK / TARHA-as-TIFCHA; the poetic vocabulary intentionally
-diverges to the spellings above.
+NOTE: the prose grammar (a port of the Goerwitz C oracle acc2tre.y) now adopts the
+shared spellings ATNAX / MUNAX / MERKHA / MAHAPAKH, so there is one transliteration
+per use case across prose and poetic; see issue #13.  (Byte-for-byte parity with the
+Goerwitz C output is no longer a goal.)  TARXA stays poetic-only: the tifcha-shaped
+sign is a *distinct accent* in each system -- prose tipeḥa (TIPEXA, with mayela as
+its variant) vs poetic tarḥa (TARXA) -- that merely shares one Unicode code point, so
+the two keep separate names.
 """
 
 from __future__ import annotations
@@ -47,7 +51,7 @@ OLEH_WEYORED = "OLEH_WEYORED"
 REVIA_GADOL = "REVIA_GADOL"
 REVIA_MUGRASH = "REVIA_MUGRASH"
 REVIA_QATAN = "REVIA_QATAN"
-DEXI = "DEXI"  # deḥi
+DEXI = "DEXI"  # deḥi
 TSINNOR = "TSINNOR"  # tsinnor (Unicode "zinor")
 PAZER = "PAZER"
 LEGARMEH = "LEGARMEH"
@@ -61,14 +65,14 @@ REVIA = "REVIA"
 SHALSHELET = "SHALSHELET"
 
 # --- conjunctive servi ---------------------------------------------------------
-MUNAX = "MUNAX"  # munaḥ
+MUNAX = "MUNAX"  # munaḥ
 MERKHA = "MERKHA"
 MAHAPAKH = "MAHAPAKH"
 AZLA = "AZLA"
 GALGAL = "GALGAL"
 ILLUY = "ILLUY"  # doubled L preferred over describe_diff's "iluy"
-TARXA = "TARXA"  # tarḥa (poetic name for the tifcha-shaped sign; describe_diff's
-# plain "tarha" is a bug per the maintainer -- the ḥet takes X like MUNAX/DEXI)
+TARXA = "TARXA"  # tarḥa (poetic name for the tipeḥa-shaped sign; describe_diff's
+# plain "tarha" is a bug per the maintainer -- the ḥet takes X like MUNAX/DEXI)
 
 # The disjunctive token types, for the revia gadol/qatan/mugrash lookahead and the
 # WLC-vs-MAM cross-check.

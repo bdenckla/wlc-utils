@@ -81,13 +81,13 @@ def test_charitable_oleh_uniquely_recovers_an_unmarked_yored():
     parser = build_parser()
     tokens = [
         (pan.TILDE, ""),
-        (pan.MAHAPAKH, "mehuppak"),
-        (pan.MUNAX, "munah"),
+        (pan.MAHAPAKH, "mahapakh"),
+        (pan.MUNAX, "munax"),
         (pan.TSINNOR, "sinnor"),
-        (pan.MAHAPAKH, "mehuppak"),
-        (pan.MERKHA, "merka"),
+        (pan.MAHAPAKH, "mahapakh"),
+        (pan.MERKHA, "merkha"),
         (pan.REVIA_MUGRASH, "revia mugrash"),
-        (pan.MAHAPAKH, "mehuppak"),
+        (pan.MAHAPAKH, "mahapakh"),
         (pan.ILLUY, "illuy"),
         (pan.SILLUQ, "silluq"),
         (pan.SOFPASUQ, "sof pasuq"),
@@ -102,7 +102,7 @@ def test_charitable_oleh_uniquely_recovers_an_unmarked_yored():
 def test_charitable_oleh_is_none_when_no_promotion_parses():
     parser = build_parser()
     # A verse with no merka cannot be repaired by promoting a merka.
-    tokens = [(pan.TILDE, ""), (pan.ATNAX, "atnah"), (pan.SILLUQ, "silluq"), (pan.SOFPASUQ, "")]
+    tokens = [(pan.TILDE, ""), (pan.ATNAX, "atnax"), (pan.SILLUQ, "silluq"), (pan.SOFPASUQ, "")]
     assert pr._charitable_oleh(tokens, parser) is None
 
 

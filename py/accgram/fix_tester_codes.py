@@ -1,7 +1,7 @@
 """Accent-name <-> Michigan-Claremont (M-C) code bridge for the fix-tester.
 
 The PLY scanner/grammar consume M-C 2-digit accent *codes* (74 = munaH,
-71 = mereka, 92 = atnaH, ...).  A proposed "fix" is the MAM-simple *Unicode*
+71 = merkha, 92 = atnaH, ...).  A proposed "fix" is the MAM-simple *Unicode*
 value, and ``mb_cmn.uni_heb.accent_names`` reduces a Unicode word to the ordered
 list of accent abbreviations it carries (``(mun)``, ``(mer)``, ``(tip)``, ...).
 To re-test a fix we must splice the changed accent's M-C code into the M-C body,
@@ -56,11 +56,11 @@ SAFE_ABBREV_TO_CODE: dict[str, str] = {
 # The scanner token type each mappable code must produce (the sync check probes
 # the scanner and asserts this).
 SAFE_ABBREV_TO_TYPE: dict[str, str] = {
-    "(atn)": "ATNACH",
+    "(atn)": "ATNAX",
     "(zaq_q)": "ZAQEF",
     "(zaq_g)": "ZAQEFGADOL",
     "(rev)": "REVIA",
-    "(tip)": "TIFCHA",
+    "(tip)": "TIPEXA",
     "(yet)": "YETIV",
     "(tev)": "TEVIR",
     "(ger)": "GERESH",
@@ -68,10 +68,10 @@ SAFE_ABBREV_TO_TYPE: dict[str, str] = {
     "(paz)": "PAZER",
     "(qar)": "PAZERGADOL",
     "(tel_g)": "TELISHAGEDOLA",
-    "(mun)": "MUNACH",
-    "(mah)": "MAHPAK",
-    "(mer)": "MEREKA",
-    "(mer_2)": "MEREKAKEFULA",
+    "(mun)": "MUNAX",
+    "(mah)": "MAHAPAKH",
+    "(mer)": "MERKHA",
+    "(mer_2)": "MERKHAKEFULA",
     "(dar)": "DARGA",
     "(qom)": "AZLA",
     "(tel_q)": "TELISHAQETANNA",
@@ -175,7 +175,7 @@ def assert_in_sync_with_gg_rules() -> None:
         # A context-free probe: a swallowed letter, the code, then a geresh (61)
         # and sof pasuq (00).  The 61 supplies an excluded digit right after the
         # code so the mayela trailing-context (tipeHa before 00/92) cannot fire,
-        # pinning 73 to TIFCHA; no 05 is present, so 74 stays MUNACH.
+        # pinning 73 to TIPEXA; no 05 is present, so 74 stays MUNAX.
         probe = f"Z{code}Z61Z00"
         types = {tok.type for tok in scan_accents(probe, "zz", 1, 1, HasLegarmeh())}
         if expected not in types:

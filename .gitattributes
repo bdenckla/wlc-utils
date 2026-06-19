@@ -10,6 +10,3 @@
 *.png  binary
 *.jpg  binary
 *.woff2 binary
-
-# Subtree override: out/accgram/goerwitz-stderr/ keeps LF in the workdir
-# (see that directory's own .gitattributes).
