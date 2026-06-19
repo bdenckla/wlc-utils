@@ -1,0 +1,15 @@
+# Line-ending policy (see issue #14):
+#   - Git storage: LF for all text files.
+#   - Workdir: CRLF, produced by automatic conversion on checkout.
+# Pinned here so the policy holds regardless of each clone's core.autocrlf/core.eol.
+
+# text=auto keeps git's text/binary auto-detection; eol=crlf forces CRLF in the workdir.
+* text=auto eol=crlf
+
+# Binary assets: never convert.
+*.png  binary
+*.jpg  binary
+*.woff2 binary
+
+# Subtree override: out/accgram/goerwitz-stderr/ keeps LF in the workdir
+# (see that directory's own .gitattributes).
