@@ -20,7 +20,9 @@ Run:
 from accgram import poetic_accent_names as pan
 from accgram.ply_grammar_poetic import (
     build_parser,
+    collapse_repeated_sinnor,
     parse_tokens,
+    parse_tokens_accepting_repeats,
     parse_tokens_diagnostic,
 )
 from accgram.ply_tree import print_tree
@@ -268,23 +270,63 @@ def test_misplaced_disjunctive_stays_no_parse():
     assert tree is None
 
 
+_PS_17_14_ACCENTS = [
+    pan.MERKHA, pan.LEGARMEH, pan.PAZER, pan.ILLUY, pan.REVIA_GADOL,
+    pan.MERKHA, pan.TSINNOR, pan.TSINNOR, pan.GALGAL, pan.OLEH_WEYORED,
+    pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.REVIA_MUGRASH, pan.SILLUQ,
+]
+
+
 def test_diagnostic_pinpoints_the_stall_token():
     """parse_tokens_diagnostic reports WHERE a NO_PARSE verse dead-ends, not just
     that it failed.  Ps 17:14's shape (double sinnor + galgal then oleh-we-yored)
     parses through the GALGAL and stalls at the OLEH_WEYORED that follows it -- the
-    1-based ordinal among the verse's accents (TILDE excluded)."""
+    1-based ordinal among the verse's accents (TILDE excluded).
+
+    This is the *raw* grammar verdict; the live pipeline accepts the verse via
+    parse_tokens_accepting_repeats (see the next test), which keeps this diagnostic
+    pure and the stall locus inspectable."""
     parser = build_parser()
-    accents = [
-        pan.MERKHA, pan.LEGARMEH, pan.PAZER, pan.ILLUY, pan.REVIA_GADOL,
-        pan.MERKHA, pan.TSINNOR, pan.TSINNOR, pan.GALGAL, pan.OLEH_WEYORED,
-        pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.REVIA_MUGRASH, pan.SILLUQ,
-    ]
+    accents = _PS_17_14_ACCENTS
     tree, error = parse_tokens_diagnostic(parser, _verse(*accents))
     assert tree is None
     assert error is not None
     assert error.token_type == pan.OLEH_WEYORED
     assert error.accent_index == 10  # the 10th accent (1-based); accents[9]
     assert accents[error.accent_index - 1] == pan.OLEH_WEYORED
+
+
+def test_repeated_tsinnor_accepted_as_single_divider():
+    """Ps 17:14's double tsinnor is accepted by parse_tokens_accepting_repeats: a
+    repeated divider counts once, so collapsing the run to a single TSINNOR lets the
+    existing sinnor productions parse it cleanly -- even though the raw grammar (the
+    test above) stalls at the following oleh-we-yored.  The canonical token list is
+    left untouched (both tsinnorin remain), so the disjunctive cross-check is
+    unaffected."""
+    parser = build_parser()
+    toks = _verse(*_PS_17_14_ACCENTS)
+    tree, error = parse_tokens_accepting_repeats(parser, toks)
+    assert tree is not None  # accepted: a clean parse
+    assert error is None
+    # the input is not mutated -- both tsinnorin still present
+    assert sum(1 for t, _ in toks if t == pan.TSINNOR) == 2
+    # the mechanism: a run of consecutive TSINNOR collapses to one
+    collapsed = [t for t, _ in collapse_repeated_sinnor(toks)]
+    assert collapsed.count(pan.TSINNOR) == 1
+
+
+def test_accepting_repeats_leaves_other_no_parse_untouched():
+    """With no repeated tsinnor there is nothing to collapse, so the accepting path
+    returns the raw NO_PARSE verdict unchanged -- it rescues only repeated dividers.
+    Uses the raw (unreconciled) Ps 68:20 sequence, a single-tsinnor hierarchy
+    violation that must stay NO_PARSE."""
+    parser = build_parser()
+    toks = _verse(
+        pan.MAHAPAKH, pan.MUNAX, pan.TSINNOR, pan.LEGARMEH, pan.MERKHA,
+        pan.REVIA_MUGRASH, pan.MAHAPAKH, pan.ILLUY, pan.SILLUQ,
+    )
+    assert parse_tokens_diagnostic(parser, toks)[0] is None
+    assert parse_tokens_accepting_repeats(parser, toks)[0] is None
 
 
 def test_diagnostic_returns_no_error_on_clean_parse():

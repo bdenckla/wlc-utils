@@ -27,61 +27,14 @@ from py_html import wlc_utils_html
 
 _JOB_31_15_NOTE_URL = "https://tanach.us/Notes/Job/Job.31.15.1-t.html"
 
-# Sibling, hand-authored (not generated) page next to poetic.html: an English
-# rendering of MAM's four documentation notes on this verse.
-_PS_17_14_NOTES_HREF = "ps17v14-mam-doc-notes.html"
 
-# Reuse the goerwitz manuscript-image styling so embedded figures match the
-# prose page, but caption them vaguely (just the manuscript) rather than with
-# the page/column/line detail the prose LC images carry.
-_TMS_FIGURE_CLASS = "goerwitz-tms-figure"
-_TMS_IMAGE_CLASS = "goerwitz-tms-image"
-_TMS_CAPTION_CLASS = "goerwitz-tms-image-caption"
-
-
-def _vaguely_captioned_image(img_path: str, caption: str) -> object:
-    """A manuscript figure captioned only by manuscript -- no page/line/column."""
-    image_para = wlc_utils_html.para(
-        wlc_utils_html.img({"src": f"../img/{img_path}"}),
-        {"class": _TMS_IMAGE_CLASS},
-    )
-    caption_el = wlc_utils_html.figcaption(caption, {"class": _TMS_CAPTION_CLASS})
-    return wlc_utils_html.figure((image_para, caption_el), {"class": _TMS_FIGURE_CLASS})
-
-
+# NOTE: Ps 17:14 (the unique double tsinnor) once had an entry here, but the
+# checker now accepts that verse (ply_grammar_poetic.parse_tokens_accepting_repeats
+# collapses the repeated divider), so it no longer surfaces as a poetic oddball and
+# this layer can no longer render notes for it.  Its manuscript / MAM / Breuer
+# discussion, plus the LC and S1 images, now live on the hand-authored page
+# gh-pages/accgram/ps17v14-double-tsinnor.html.
 BY_REF: dict[str, dict[str, object]] = {
-    "ps 17:14": {
-        "comment": (
-            [
-                "This verse is heavily commented upon by MAM (see the ",
-                wlc_utils_html.anchor(
-                    "translation of those notes", {"href": _PS_17_14_NOTES_HREF}
-                ),
-                "), but the comments either do not concern cantillation, or "
-                "concern cantillation only in ways that would not change "
-                "whatever the checker's issue is with the accent grammar of the "
-                "verse. (The four notes turn on a secondary merkha plus ga'ya, a "
-                "ḥataf, a missing shva, and the placement of the silluq -- none "
-                "of which alters the disjunctive skeleton the parser rejects, and "
-                "the conjunctive servus chain the grammar does parse is "
-                "permissive enough that a secondary conjunctive is absorbed "
-                "harmlessly.)",
-            ],
-            "This verse is not extant in the Aleppo Codex.",
-            "Though in the LC the first of the two tsinnor marks is a little "
-            "oddly shaped, S1 (Sassoon 1053) clearly shares these two adjacent "
-            "tsinnor marks, with no questions of penmanship.",
-            "A scan of the disjunctive accent stream of every poetic verse "
-            "finds that these two adjacent tsinnor marks are unique in the "
-            "Three Books: of the 250 poetic verses carrying at least one "
-            "tsinnor, Ps 17:14 is the only one in which two tsinnor occur "
-            "consecutively. Both arise from genuine Michigan-Claremont 02 "
-            "(tsinnor) codes -- not a swallowed 82 (tsinnorit) -- on adjacent "
-            "words: בַּחַיִּים and the qere וּצְפוּנְךָ.",
-            _vaguely_captioned_image("LC-Ps-17v14.png", "Leningrad Codex"),
-            _vaguely_captioned_image("S1-Ps-17v14.png", "Sassoon 1053 (S1)"),
-        ),
-    },
     "jb 31:15": {
         "uxlc_note_page": _JOB_31_15_NOTE_URL,
         "st-summary": (

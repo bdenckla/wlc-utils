@@ -8,7 +8,9 @@ Two corrections the M-C source cannot express, applied before the grammar parses
      one ambiguous merka as a yored iff that uniquely makes the verse parse.
 
 The two named oddballs (Ps 68:20, Pr 30:15) need *both* corrections; the two unrelated
-NO_PARSE verses (Ps 17:14, Job 31:15) must stay NO_PARSE.
+NO_PARSE verses (Ps 17:14, Job 31:15) must stay NO_PARSE under reconciliation.  (Ps
+17:14's double tsinnor is separately accepted one layer up, at the parse boundary, by
+parse_tokens_accepting_repeats -- not here; reconcile leaves it NO_PARSE.)
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_poetic_reconcile.py -v

@@ -3,64 +3,11 @@
   "artifacts_description": "poetic (Three Books) oddball verses for review",
   "payload_provenance_note": "Each row is a poetic verse the PLY port could not parse cleanly: either a missing-silluq verse recovered into an ERROR-leaf tree ('missing_silluq') or a hierarchy-violating L anomaly emitted as a NO_PARSE line ('no_parse'). wlc_disjunctives is the scanner's disjunctive skeleton; mam_disjunctives is the MAM-simple oracle's, for comparison. For a NO_PARSE verse, stall names the offending accent (its 1-based ordinal among the verse's accents and its token type) -- where the LALR(1) parse dead-ended, i.e. every accent before it was consumable (the stall point, not necessarily the root-cause accent). output_file names the *_ag.txt holding the tree/NO_PARSE line.",
   "summary": {
-    "oddballs": 15,
+    "oddballs": 14,
     "missing_silluq": 13,
-    "no_parse": 2
+    "no_parse": 1
   },
   "oddballs": [
-    {
-      "ref": "Psalms 17:14",
-      "bb": "ps",
-      "kind": "no_parse",
-      "content": "MI75/M:TI71YM YFD/:KF6305 Y:HWF83H MI75/M:TI64YM M\"/XE81LED XEL:Q/F71M B.A75/XAY.IYM02 *W/CPYN/K **W.75/C:PW.N/:KF02 T.:MAL.\"93) BI60+:N/F71M YI&:B.:(71W. BFNI92YM W:/HIN.I71YXW. 11YIT:R/F81M L:/(OWL:L\"Y/HE95M00",
-      "output_file": "wlc_422_ps_ps_ag.txt",
-      "token_types": [
-        "TILDE",
-        "MERKHA",
-        "LEGARMEH",
-        "PAZER",
-        "ILLUY",
-        "REVIA_GADOL",
-        "MERKHA",
-        "TSINNOR",
-        "TSINNOR",
-        "GALGAL",
-        "OLEH_WEYORED",
-        "MERKHA",
-        "ATNAX",
-        "MERKHA",
-        "REVIA_MUGRASH",
-        "SILLUQ",
-        "SOFPASUQ"
-      ],
-      "wlc_disjunctives": [
-        "LEGARMEH",
-        "PAZER",
-        "REVIA_GADOL",
-        "TSINNOR",
-        "TSINNOR",
-        "OLEH_WEYORED",
-        "ATNAX",
-        "REVIA_MUGRASH",
-        "SILLUQ"
-      ],
-      "mam_disjunctives": [
-        "LEGARMEH",
-        "PAZER",
-        "REVIA_GADOL",
-        "TSINNOR",
-        "TSINNOR",
-        "OLEH_WEYORED",
-        "ATNAX",
-        "REVIA_MUGRASH",
-        "SILLUQ"
-      ],
-      "stall": {
-        "accent_index": 10,
-        "token_type": "OLEH_WEYORED"
-      },
-      "tree": "NO_PARSE: MERKHA LEGARMEH PAZER ILLUY REVIA_GADOL MERKHA TSINNOR TSINNOR GALGAL >>OLEH_WEYORED<< MERKHA ATNAX MERKHA REVIA_MUGRASH SILLUQ  (stalled at accent 10/15: OLEH_WEYORED)"
-    },
     {
       "ref": "Psalms 31:20",
       "bb": "ps",

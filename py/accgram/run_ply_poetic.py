@@ -10,9 +10,10 @@ the indented tree -- the same shape run_ply writes for the prose books.  Output 
 to out/accgram/ply-poetic/.
 
 Unlike the prose driver, an unparseable verse is NOT fatal.  The poetic grammar is
-derived from Yeivin (no C oracle) and ~3.6% of verses are known structural
-oddballs; making each one fatal would block the whole corpus run.  So a verse the
-grammar cannot parse (parse_tokens returns None) is emitted as a ``NO_PARSE`` line
+derived from Yeivin (no C oracle) and a small fraction of verses are known
+structural oddballs; making each one fatal would block the whole corpus run.  So a
+verse the grammar cannot parse (parse_tokens returns None) is emitted as a
+``NO_PARSE`` line
 carrying its scanned token types -- inspectable in the tracked output and tallied
 -- and the run continues.  This output is the verification surface later phases
 diff against.
@@ -28,7 +29,11 @@ from accgram import poetic_filter
 from accgram import split_wlc
 from accgram.mam_poetic_accents import load_poetic_disjunctives
 from accgram.mam_simple_verse import default_mam_simple_dir
-from accgram.ply_grammar_poetic import ParseError, build_parser, parse_tokens_diagnostic
+from accgram.ply_grammar_poetic import (
+    ParseError,
+    build_parser,
+    parse_tokens_accepting_repeats,
+)
 from accgram.ply_scanner_poetic import scan_book
 from accgram.ply_tree import TN, print_tree
 from accgram.poetic_reconcile import reconcile_tokens
@@ -103,7 +108,7 @@ def render_book(
             mam_disj_by_ref.get(verse.reference),
             parser,
         )
-        tree, error = parse_tokens_diagnostic(parser, tokens)
+        tree, error = parse_tokens_accepting_repeats(parser, tokens)
         if tree is None:
             no_parse += 1
             out_lines.append(_no_parse_line(tokens, error))

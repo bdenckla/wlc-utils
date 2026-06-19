@@ -2366,7 +2366,29 @@ Psalms 17:13
     2 silluq_phrase
       merka silluq 
 Psalms 17:14
-NO_PARSE: MERKHA LEGARMEH PAZER ILLUY REVIA_GADOL MERKHA TSINNOR TSINNOR GALGAL >>OLEH_WEYORED<< MERKHA ATNAX MERKHA REVIA_MUGRASH SILLUQ  (stalled at accent 10/15: OLEH_WEYORED)
+0 silluq_clause
+  1 oleh_weyored_clause
+    2 revia_gadol_clause
+      3 pazer_clause
+        4 legarmeh_phrase
+          merka legarmeh 
+        4 pazer_phrase
+          pazer 
+      3 revia_gadol_phrase
+        illuy revia gadol 
+    2 oleh_weyored_clause
+      3 sinnor_phrase
+        merka sinnor 
+      3 oleh_weyored_phrase
+        galgal oleh we-yored 
+  1 silluq_clause
+    2 atnach_phrase
+      merka atnah 
+    2 silluq_clause
+      3 revia_mugrash_phrase
+        merka revia mugrash 
+      3 silluq_phrase
+        silluq 
 Psalms 17:15
 0 silluq_clause
   1 atnach_clause

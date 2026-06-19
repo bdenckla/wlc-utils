@@ -622,12 +622,15 @@ def p_sinnor_clause(p):
 
 
 # NOTE: sinnor may repeat before oleh-we-yored (Ps 17:14, ...TSINNOR TSINNOR GALGAL
-# OLEH_WEYORED; MAM-confirmed).  It is intentionally left unmodeled: the repeated
-# sinnor before an oleh that itself carries a servus is beyond LALR(1) -- the
-# servus is ambiguous between the next repeated sinnor's servi prefix and oleh's
-# own servi, and the merged lookahead dead-ends.  Adding it parsed no verse (the
-# only attestation has the servus), so Ps 17:14 stays a documented oddball rather
-# than distorting the servus handling.
+# OLEH_WEYORED; MAM-confirmed).  It is intentionally NOT modeled as a grammar
+# production: the repeated sinnor before an oleh that itself carries a servus is
+# beyond LALR(1) -- the servus is ambiguous between the next repeated sinnor's
+# servi prefix and oleh's own servi, and the merged lookahead dead-ends.  Adding
+# it parsed no verse.  Instead the repeat is accepted at the parse boundary by
+# collapsing it to a single TSINNOR before parsing (collapse_repeated_sinnor /
+# parse_tokens_accepting_repeats, below): a repeated divider counts once, so the
+# existing sinnor productions parse it, with no LALR distortion of the servus
+# handling.  parse_tokens_diagnostic itself stays the raw, uncollapsed verdict.
 
 
 def p_legarmeh_sinnor_clause(p):
@@ -835,3 +838,63 @@ def parse_tokens(parser, toks):
     NO_PARSE stall locus is wanted.
     """
     return parse_tokens_diagnostic(parser, toks)[0]
+
+
+def collapse_repeated_sinnor(toks):
+    """Return ``toks`` with each run of consecutive TSINNOR collapsed to one.
+
+    A repeated disjunctive is the same divider written twice (Yeivin on the
+    repeatable zarqa; Breuer Ch. 10 §9 on the doubled tsinnor, with Wickes p. 81
+    n. 4) -- for grammaticality it counts once.  Collapsing the run lets the
+    existing sinnor productions parse it without a dedicated grammar rule the
+    LALR(1) table cannot express (see the sinnor-clause NOTE).
+
+    Motivated by, and ONLY by, Ps 17:14.  That verse is the sole place in the
+    Three Books where two tsinnor occur consecutively (of the 250 tsinnor-bearing
+    poetic verses), so this rule fires on exactly one verse and exists only
+    because of it.  It is phrased as a pattern (any consecutive-TSINNOR run)
+    rather than a "ps 17:14" reference whitelist on principle -- a repeated
+    divider counts once, wherever it occurs -- not because any other verse needs
+    it; should the corpus ever change, this is the only verse it currently
+    affects.
+
+    Returns a new list with adjacent duplicate TSINNOR tokens dropped, or a list
+    equal to the input when there is no such repeat.  This is a parse-only
+    normalization: callers pass the canonical token list and must NOT let the
+    result replace it, so the WLC-vs-MAM disjunctive cross-check keeps counting
+    every tsinnor.
+    """
+    out: list[tuple[str, str]] = []
+    prev = None
+    for ttype, leaf in toks:
+        if ttype == pan.TSINNOR and prev == pan.TSINNOR:
+            continue
+        out.append((ttype, leaf))
+        prev = ttype
+    return out
+
+
+def parse_tokens_accepting_repeats(parser, toks):
+    """Parse, accepting a repeated TSINNOR divider as a single divider.
+
+    First parses ``toks`` as-is -- the grammar's raw verdict, which keeps
+    parse_tokens_diagnostic pure and the stall-locus diagnostics intact.  Only if
+    that is a NO_PARSE *and* the verse repeats a TSINNOR does it retry on a copy
+    with the repeat collapsed (collapse_repeated_sinnor), returning that result
+    when it parses.  So Ps 17:14's double tsinnor (the lone case in the Three
+    Books) is accepted without distorting the servus handling, while every other
+    verse takes the raw verdict unchanged.
+
+    Returns ``(tree, error)`` like parse_tokens_diagnostic.  The collapse is
+    internal and never mutates ``toks``.
+    """
+    tree, error = parse_tokens_diagnostic(parser, toks)
+    if tree is not None:
+        return tree, error
+    collapsed = collapse_repeated_sinnor(toks)
+    if collapsed == toks:
+        return tree, error
+    tree2, error2 = parse_tokens_diagnostic(parser, collapsed)
+    if tree2 is not None:
+        return tree2, error2
+    return tree, error

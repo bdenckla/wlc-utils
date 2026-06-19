@@ -1,13 +1,16 @@
 """Poetic oddball report -- the optional Phase 4 analogue of ``generate-goerwitz-html``.
 
-The poetic corpus run (``run-ply-poetic``) parses 99.62% of the Three Books
+The poetic corpus run (``run-ply-poetic``) parses 99.69% of the Three Books
 cleanly; the residual splits into two documented oddball kinds:
 
   * ``missing_silluq`` -- the 13 verses whose sof pasuq arrives with no silluq
     code, recovered by the grammar into an ERROR-leaf tree (structure preserved,
     the silluq_phrase mark is ``ERROR``).
-  * ``no_parse`` -- the 4 hierarchy-violating L anomalies for which no valid tree
-    exists; emitted as ``NO_PARSE`` token lines by the driver.
+  * ``no_parse`` -- the 1 hierarchy-violating L anomaly (Job 31:15) for which no
+    valid tree exists; emitted as a ``NO_PARSE`` token line by the driver.  (Ps
+    17:14's double tsinnor was a second such case until the parser began accepting
+    a repeated divider as one; see ply_grammar_poetic.parse_tokens_accepting_repeats
+    and gh-pages/accgram/ps17v14-double-tsinnor.html.)
 
 This module re-scans + re-parses the poetic corpus (the same source of truth the
 driver writes from), collects every oddball verse, and enriches each with: the
@@ -66,7 +69,11 @@ from accgram import split_wlc
 from accgram.mam_poetic_accents import load_poetic_word_disj
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
-from accgram.ply_grammar_poetic import ParseError, build_parser, parse_tokens_diagnostic
+from accgram.ply_grammar_poetic import (
+    ParseError,
+    build_parser,
+    parse_tokens_accepting_repeats,
+)
 from accgram.ply_scanner_poetic import scan_book
 from accgram.poetic_reconcile import reconcile_tokens
 from accgram.poetic_oddball_summary import derive_tentative_summary
@@ -145,7 +152,7 @@ def collect_poetic_oddballs(
             tokens = reconcile_tokens(
                 verse.reference, verse.body, list(verse.tokens), mam, parser
             )
-            tree, error = parse_tokens_diagnostic(parser, tokens)
+            tree, error = parse_tokens_accepting_repeats(parser, tokens)
             if tree is None:
                 kind = KIND_NO_PARSE
                 tree_text = _no_parse_line(tokens, error).rstrip("\n")
