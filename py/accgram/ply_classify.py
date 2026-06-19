@@ -7,8 +7,9 @@ binary emitted no output for), every such ERROR verse lives in
 ``out/accgram/ply/`` directly -- there is no separate troublemaker pass.
 
 The resulting ``_oddballs.json`` uses the same schema ``rtms_rows`` parses: one
-row per oddball with ``ref``, ``content`` (the source verse text, drawn from
-``wlc422_ps.txt``), and ``output_file`` (the ``*_ag.txt`` holding its ERROR tree).
+row per oddball with ``ref``, ``content`` (the verse's pointed-Hebrew text, drawn
+from the canonical ``-kq-u`` Unicode source -- issue #9 retired the M-C body as an
+input), and ``output_file`` (the ``*_ag.txt`` holding its ERROR tree).
 """
 
 from __future__ import annotations
@@ -18,7 +19,9 @@ import re
 from pathlib import Path
 
 from accgram import oddballs
-from accgram import split_wlc
+from accgram import rtms_data
+from accgram import rtms_focus_diff_expand
+from accgram import rtms_rows
 from mb_cmn import provenance
 
 _OUTPUT_FILE_BB_RE = re.compile(r"^wlc_422_ps_([A-Za-z0-9]+)_ag\.txt$")
@@ -32,7 +35,7 @@ def _ref_to_tuple(ref: str) -> tuple[str, int, int]:
 
 def write_ply_oddballs(
     ply_dir: Path,
-    source_input_path: Path,
+    wlc422_kq_u_dir: Path,
     oddballs_out: Path,
 ) -> None:
     """(Re)generate the PLY-derived ``_oddballs.json`` from ``out/accgram/ply/``."""
@@ -48,13 +51,12 @@ def write_ply_oddballs(
         for chnu, vrnu in sorted(oddballs._collect_oddball_refs(output_path)):
             refs_with_files.append((bb, chnu, vrnu, output_path.name))
 
-    refs = {(bb, chnu, vrnu) for bb, chnu, vrnu, _ in refs_with_files}
-    source_lines = split_wlc.collect_source_lines(source_input_path, refs)
+    wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
 
     oddball_rows: list[dict[str, object]] = [
         {
             "ref": f"{bb} {chnu}:{vrnu}",
-            "content": source_lines.get((bb, chnu, vrnu), ""),
+            "content": _verse_unicode_text(wlc_index, bb, chnu, vrnu),
             "output_file": output_file,
         }
         for bb, chnu, vrnu, output_file in refs_with_files
@@ -79,6 +81,19 @@ def write_ply_oddballs(
     oddballs_payload = provenance.with_json_provenance(oddballs_payload, __file__)
 
     _write_json(oddballs_out, oddballs_payload)
+
+
+def _verse_unicode_text(
+    wlc_index: dict[str, dict[str, object]], bb: str, chnu: int, vrnu: int
+) -> str:
+    """The verse's normalized pointed-Hebrew text (qere interpolated), or "" if
+    the verse is absent from the ``-kq-u`` index."""
+    bcv = rtms_rows.to_compact_bcv(bb, chnu, vrnu)
+    verse = wlc_index.get(bcv)
+    if not isinstance(verse, dict):
+        return ""
+    prepared = rtms_data.prepare_wlc422_verse_for_render(verse)
+    return rtms_focus_diff_expand.normalized_wlc_verse_text_from_payload(prepared)
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:

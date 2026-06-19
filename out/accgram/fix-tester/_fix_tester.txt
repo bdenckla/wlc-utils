@@ -8,442 +8,442 @@ claim-vs-result: 82 agree, 0 disagree
 ## CONFIRMED -- MAM fix clears the oddball  (91)
   1c 1:53 [claim: expects_fix] [AGREE]
     fix: אל֣וף -> אל֥וף
-    transform: atom ")AL.74W.P" -> ")AL.71W.P" (74 -> 71)
+    transform: word "אל֣וף" -> "אל֥וף" ((mun) -> (mer))
     before: MERKHA TEVIR MERKHA TIPEXA MUNAX SILLUQ SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MERKHA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   1k 6:2 [claim: expects_fix] [AGREE]
     fix: ועשר֤ים -> ועשר֣ים
-    transform: atom "W:/(E&:RI70YM" -> "W:/(E&:RI74YM" (70 -> 74)
+    transform: word "ועשר֤ים" -> "ועשר֣ים" ((mah) -> (mun))
     before: REVIA AZLA GERESH MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA MAHAPAKH ATNAX MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: atnax_phrase]
     after:  REVIA AZLA GERESH MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   1k 6:3 [claim: expects_fix] [AGREE]
     fix: עשר֣ים -> עשר֤ים
-    transform: atom "(E&:RI74YM" -> "(E&:RI70YM" (74 -> 70)
+    transform: word "עשר֣ים" -> "עשר֤ים" ((mun) -> (mah))
     before: REVIA PASHTA MUNAX ZAQEF MUNAX PASHTA ZAQEF TIPEXA MUNAX ATNAX DARGA TEVIR TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: pashta_phrase]
     after:  REVIA PASHTA MUNAX ZAQEF MAHAPAKH PASHTA ZAQEF TIPEXA MUNAX ATNAX DARGA TEVIR TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   1k 8:11 [claim: expects_fix] [AGREE]
     fix: מפנ֥י -> מפנ֣י
-    transform: atom "MI/P.:N"71Y" -> "MI/P.:N"74Y" (71 -> 74)
+    transform: word "מפנ֥י" -> "מפנ֣י" ((mer) -> (mun))
     before: DARGA TEVIR MERKHA TIPEXA MERKHA ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: atnax_phrase]
     after:  DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   1k 16:33 [claim: expects_fix] [AGREE]
     fix: מכ֨ל -> מכל֙
-    transform: atom "MI/K.O63L" -> "MI/K.O03L" (63 -> 03)
+    transform: word "מכ֨ל" -> "מכל֙" ((qom) -> (pash))
     before: MERKHA TIPEXA ATNAX AZLA GERESH REVIA PASHTA PASHTA MUNAX ZAQEF AZLA MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  MERKHA TIPEXA ATNAX AZLA GERESH REVIA PASHTA PASHTA MUNAX ZAQEF PASHTA MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   1k 19:11 [claim: expects_fix] [AGREE]
     fix: הר֨וח -> הר֙וח֙
-    transform: atom "HF/R63W.XA]1" -> "HF/RW.XA0303]1" (63 -> 03 03)
+    transform: word "הר֨וח" -> "הר֙וח֙" ((qom) -> (pash) (pash))
     before: REVIA MUNAX MUNAX ZARQA MUNAX SEGOLTA DARGA MUNAX REVIA MUNAX PAZER GERSHAYIM TELISHAQETANNA AZLA MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MAHAPAKH AZLA ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
-    after:  REVIA MUNAX MUNAX ZARQA MUNAX SEGOLTA DARGA MUNAX REVIA MUNAX PAZER GERSHAYIM TELISHAQETANNA AZLA MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MAHAPAKH PASHTA PASHTA ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
+    after:  REVIA MUNAX MUNAX ZARQA MUNAX SEGOLTA DARGA MUNAX REVIA MUNAX PAZER GERSHAYIM TELISHAQETANNA AZLA MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   1k 20:25 [speculative]
     fix: וס֣וס -> וס֥וס
-    transform: atom "W:/S74W.S" -> "W:/S71W.S" (74 -> 71)
+    transform: word "וס֣וס" -> "וס֥וס" ((mun) -> (mer))
     before: MUNAX MUNAX PAZER TELISHAQETANNA AZLA GERESH MUNAX LEGARMEH MUNAX REVIA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: legarmeh_phrase]
     after:  MUNAX MUNAX PAZER TELISHAQETANNA AZLA GERESH MERKHA LEGARMEH MUNAX REVIA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   1k 20:29 [speculative] [claim: expects_fix] [AGREE]
     fix: נ֥כח -> נכח־
-    transform: atom "NO71KAX" -> "NOKAX" (71 -> (none))
+    transform: word "נ֥כח" -> "נכח־" ((mer) -> (none))
     before: DARGA MERKHAKEFULA MERKHA TIPEXA MUNAX ATNAX LEGARMEH MUNAX REVIA PASHTA ZAQEF AZLA DARGA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  DARGA MERKHAKEFULA TIPEXA MUNAX ATNAX LEGARMEH MUNAX REVIA PASHTA ZAQEF AZLA DARGA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   1s 6:19 [claim: expects_fix] [AGREE]
     fix: גדולֽה -> גדולֽה׃
-    transform: append sof pasuq (00) to body
+    transform: word "גדולֽה" -> "גדולֽה׃" ((none) -> (sof pasuq))
     before: GERSHAYIM MUNAX REVIA MAHAPAKH PASHTA MUNAX ZAQEF MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MUNAX ZAQEF DARGA TEVIR TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  GERSHAYIM MUNAX REVIA MAHAPAKH PASHTA MUNAX ZAQEF MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MUNAX ZAQEF DARGA TEVIR TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   2c 7:5 [claim: expects_fix] [AGREE]
     fix: ז֣בח הבק֗ר -> ז֣בח הבקר֒
-    transform: atom "HA/B.FQF81R" -> "HA/B.FQF01R" (81 -> 01)
+    transform: word "ז֣בח" -> "ז֣בח" ((none) -> (none)); word "הבק֗ר" -> "הבקר֒" ((rev) -> (seg_a))
     before: GERSHAYIM MUNAX ZARQA MUNAX REVIA MAHAPAKH PASHTA ZAQEF ZAQEFGADOL MERKHA TIPEXA ATNAX PASHTA MUNAX ZAQEF TIPEXA SILLUQ SOFPASUQ  [ODDBALL: segolta_phrase]
     after:  GERSHAYIM MUNAX ZARQA MUNAX SEGOLTA MAHAPAKH PASHTA ZAQEF ZAQEFGADOL MERKHA TIPEXA ATNAX PASHTA MUNAX ZAQEF TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   2c 8:10 [claim: expects_fix] [AGREE]
     fix: שר֤י -> שר֧י
-    transform: atom "&FR"70Y" -> "&FR"94Y" (70 -> 94)
+    transform: word "שר֤י" -> "שר֧י" ((mah) -> (dar))
     before: AZLA MAHAPAKH TEVIR MERKHA TIPEXA MUNAX ATNAX TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tevir_phrase]
     after:  AZLA DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   2c 22:12 [claim: expects_fix] [AGREE]
     fix: שנ֖ים -> שנ֑ים
-    transform: atom "$FNI73YM" -> "$FNI92YM" (73 -> 92)
+    transform: word "שנ֖ים" -> "שנ֑ים" ((tip) -> (atn))
     before: MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA MUNAX TIPEXA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA MUNAX ATNAX TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   2c 24:27 [speculative] [claim: expects_fix] [AGREE]
     fix: י֧ר֞ב -> י֧רב
-    transform: atom "**YI94RE62B" -> "**YI94REB" (62 -> (none))
+    transform: word "י֧ר֞ב" -> "י֧רב" ((ger_2) -> (none))
     before: GERSHAYIM DARGA GERSHAYIM MUNAX REVIA PASHTA MUNAX ZAQEF MUNAX ZAQEF TIPEXA MUNAX ATNAX TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: revia_phrase]
     after:  GERSHAYIM DARGA MUNAX REVIA PASHTA MUNAX ZAQEF MUNAX ZAQEF TIPEXA MUNAX ATNAX TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   2c 25:1 [claim: expects_fix] [AGREE]
     fix: ועשר֣ים -> ועשר֤ים
-    transform: atom "W:/(E&:RI74YM" -> "W:/(E&:RI70YM" (74 -> 70)
+    transform: word "ועשר֣ים" -> "ועשר֤ים" ((mun) -> (mah))
     before: AZLA MAHAPAKH PASHTA MUNAX ZAQEF MUNAX PASHTA ZAQEF TIPEXA ATNAX MUNAX ZAQEF TIPEXA SILLUQ SOFPASUQ  [ODDBALL: pashta_phrase]
     after:  AZLA MAHAPAKH PASHTA MUNAX ZAQEF MAHAPAKH PASHTA ZAQEF TIPEXA ATNAX MUNAX ZAQEF TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   2k 23:36 [claim: expects_fix] [AGREE]
     fix: שנ֨ה -> שנה֙
-    transform: atom "$FNF63H" -> "$FNF03H" (63 -> 03)
+    transform: word "שנ֨ה" -> "שנה֙" ((qom) -> (pash))
     before: AZLA MAHAPAKH AZLA MUNAX ZAQEF MAHAPAKH PASHTA ZAQEF TIPEXA ATNAX MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  AZLA MAHAPAKH PASHTA MUNAX ZAQEF MAHAPAKH PASHTA ZAQEF TIPEXA ATNAX MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   2s 6:20 [claim: expects_fix] [AGREE]
     fix: לעינ֨י -> לעיני֙
-    transform: atom "L:/("YN"63Y" -> "L:/("YN"03Y" (63 -> 03)
+    transform: word "לעינ֨י" -> "לעיני֙" ((qom) -> (pash))
     before: MERKHA TIPEXA MUNAX ATNAX GERSHAYIM MAHAPAKH PASHTA MUNAX ZAQEF REVIA AZLA GERESH MUNAX REVIA AZLA MAHAPAKH PASHTA AZLA MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  MERKHA TIPEXA MUNAX ATNAX GERSHAYIM MAHAPAKH PASHTA MUNAX ZAQEF REVIA AZLA GERESH MUNAX REVIA AZLA MAHAPAKH PASHTA PASHTA MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   2s 11:11 [claim: expects_fix] [AGREE]
     fix: אדנ֨י -> אדני֙
-    transform: atom "):ADON/I63Y" -> "):ADON/I03Y" (63 -> 03)
+    transform: word "אדנ֨י" -> "אדני֙" ((qom) -> (pash))
     before: AZLA GERESH REVIA TELISHAGEDOLA AZLA GERESH MUNAX REVIA AZLA GERESH MAHAPAKH AZLA MAHAPAKH PASHTA ZAQEF GERSHAYIM DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX PASHTA MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: pashta_phrase]
     after:  AZLA GERESH REVIA TELISHAGEDOLA AZLA GERESH MUNAX REVIA AZLA GERESH MAHAPAKH PASHTA MAHAPAKH PASHTA ZAQEF GERSHAYIM DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX PASHTA MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   2s 23:9
     fix: בפלשתים -> בפלשתים֙
-    transform: atom "B.A/P.:LI$:T.IYM" -> "B.A/P.:LI$:T.IYM03" ((none) -> 03)
+    transform: word "בפלשתים" -> "בפלשתים֙" ((none) -> (pash))
     before: TEVIR MERKHA TIPEXA ATNAX AZLA GERESH REVIA MAHAPAKH MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  TEVIR MERKHA TIPEXA ATNAX AZLA GERESH REVIA MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   am 1:14 [claim: expects_fix] [AGREE]
     fix: סופֽה -> סופֽה׃
-    transform: append sof pasuq (00) to body
+    transform: word "סופֽה" -> "סופֽה׃" ((none) -> (sof pasuq))
     before: MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA ATNAX PASHTA MUNAX ZAQEF TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA ATNAX PASHTA MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   am 6:6 [claim: expects_fix] [AGREE]
     fix: יוסֽף -> יוסֽף׃
-    transform: append sof pasuq (00) to body
+    transform: word "יוסֽף" -> "יוסֽף׃" ((none) -> (sof pasuq))
     before: MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   am 9:5 [claim: expects_fix] [AGREE]
     fix: מצרֽים -> מצרֽים׃
-    transform: append sof pasuq (00) to body
+    transform: word "מצרֽים" -> "מצרֽים׃" ((none) -> (sof pasuq))
     before: AZLA GERESH REVIA MAHAPAKH PASHTA ZAQEF TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  AZLA GERESH REVIA MAHAPAKH PASHTA ZAQEF TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   da 2:41 [claim: expects_fix] [AGREE]
     fix: ד֥י -> די־
-    transform: atom "DI71Y" -> "DIY" (71 -> (none))
+    transform: word "ד֥י" -> "די־" ((mer) -> (none))
     before: GERESH MUNAX REVIA GERSHAYIM MAHAPAKH PASHTA MUNAX ZAQEF MAHAPAKH PASHTA ZAQEF MERKHA MERKHA TIPEXA ATNAX PASHTA MUNAX ZAQEF METHIGAZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  GERESH MUNAX REVIA GERSHAYIM MAHAPAKH PASHTA MUNAX ZAQEF MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA ATNAX PASHTA MUNAX ZAQEF METHIGAZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   dt 9:20 [claim: expects_fix] [AGREE]
     fix: ההֽוא -> ההֽוא׃
-    transform: append sof pasuq (00) to body
+    transform: word "ההֽוא" -> "ההֽוא׃" ((none) -> (sof pasuq))
     before: REVIA DARGA TEVIR TIPEXA ATNAX TEVIR MERKHA TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  REVIA DARGA TEVIR TIPEXA ATNAX TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   dt 10:15 [claim: expects_fix] [AGREE]
     fix: הזה׃ -> הזֽה׃
-    transform: atom "HA/Z.EH00]U" -> "HA/Z.EH3500]U" ((none) -> 35)
+    transform: word "הזה׃" -> "הזֽה׃" ((none) -> (sil))
     before: DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX GERSHAYIM MUNAX REVIA TEVIR TIPEXA MERKHA SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX GERSHAYIM MUNAX REVIA TEVIR TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   dt 12:2 [claim: expects_fix] [AGREE]
     fix: רענן׃ -> רענֽן׃
-    transform: atom "RA(:ANFN00]U" -> "RA(:ANFN3500]U" ((none) -> 35)
+    transform: word "רענן׃" -> "רענֽן׃" ((none) -> (sil))
     before: MUNAX TELISHAGEDOLA GERSHAYIM DARGA MUNAX REVIA MERKHA TEVIR MERKHA TIPEXA ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MUNAX TELISHAGEDOLA GERSHAYIM DARGA MUNAX REVIA MERKHA TEVIR MERKHA TIPEXA ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   dt 13:15 [claim: expects_fix] [AGREE]
     fix: וחקרת֧ -> וחקרת֛
-    transform: atom "W:/XFQAR:T.F94]U" -> "W:/XFQAR:T.F91]U" (94 -> 91)
+    transform: word "וחקרת֧" -> "וחקרת֛" ((dar) -> (tev))
     before: DARGA DARGA TIPEXA ATNAX MAHAPAKH PASHTA MUNAX ZAQEF TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  DARGA TEVIR TIPEXA ATNAX MAHAPAKH PASHTA MUNAX ZAQEF TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   dt 14:24 [claim: expects_fix] [AGREE]
     fix: תוכ֘ל -> תוכל֮
-    transform: atom "TW.KA82L]S]s" -> "TW.KA02L]S]s" (82 -> 02)
+    transform: word "תוכ֘ל" -> "תוכל֮" ((zarshit) -> (zarnor))
     before: AZLA GERESH REVIA MUNAX MUNAX SEGOLTA MAHAPAKH PASHTA ZAQEF MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  AZLA GERESH REVIA MUNAX MUNAX ZARQA SEGOLTA MAHAPAKH PASHTA ZAQEF MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   dt 23:18 [claim: expects_fix] [AGREE]
     fix: ישראל׃ -> ישראֽל׃
-    transform: atom "YI&:RF)"L00]U" -> "YI&:RF)"L3500]U" ((none) -> 35)
+    transform: word "ישראל׃" -> "ישראֽל׃" ((none) -> (sil))
     before: MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA MERKHA SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   dt 24:10 [speculative] [claim: expects_fix] [AGREE]
     fix: ברעך -> ברעך֖
-    transform: atom "B:/R"75(/:AKF]U" -> "B:/R"75(/:AKF]U73" ((none) -> 73)
+    transform: word "ברעך" -> "ברעך֖" ((none) -> (tip))
     before: MERKHA MUNAX ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: atnax_phrase]
     after:  MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   dt 25:9 [claim: expects_fix] [AGREE]
     fix: אחֽיו -> אחֽיו׃
-    transform: append sof pasuq (00) to body
+    transform: word "אחֽיו" -> "אחֽיו׃" ((none) -> (sof pasuq))
     before: AZLA MUNAX ZARQA MUNAX SEGOLTA MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA ATNAX PASHTA MUNAX ZAQEF YETIV MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  AZLA MUNAX ZARQA MUNAX SEGOLTA MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA ATNAX PASHTA MUNAX ZAQEF YETIV MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   dt 31:7 [claim: expects_fix] [AGREE]
     fix: ישרא֘ל -> ישראל֮
-    transform: atom "YI&:RF)"82L]S]s" -> "YI&:RF)"02L]S]s" (82 -> 02)
+    transform: word "ישרא֘ל" -> "ישראל֮" ((zarshit) -> (zarnor))
     before: AZLA GERESH REVIA AZLA GERESH MUNAX MUNAX SEGOLTA MUNAX REVIA PASHTA MUNAX ZAQEF ZAQEFGADOL AZLA DARGA TEVIR TIPEXA MUNAX ATNAX TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  AZLA GERESH REVIA AZLA GERESH MUNAX ZARQA MUNAX SEGOLTA MUNAX REVIA PASHTA MUNAX ZAQEF ZAQEFGADOL AZLA DARGA TEVIR TIPEXA MUNAX ATNAX TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ec 7:21 [claim: expects_fix] [AGREE]
     fix: אש֥ר -> אש֛ר
-    transform: atom "):A$E71R" -> "):A$E91R" (71 -> 91)
+    transform: word "אש֥ר" -> "אש֛ר" ((mer) -> (tev))
     before: MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA ATNAX MERKHA MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA ATNAX TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ec 9:18 [speculative] [claim: expects_fix] [AGREE]
     fix: יאב֥ד טוב֥ה -> יאב֖ד טוב֥ה
-    transform: atom "Y:)AB."71D" -> "Y:)AB."73D" (71 -> 73)
+    transform: word "יאב֥ד" -> "יאב֖ד" ((mer) -> (tip))
     before: MERKHA TIPEXA MUNAX ATNAX MUNAX ZAQEF MERKHA MERKHA SILLUQ SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MERKHA TIPEXA MUNAX ATNAX MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ec 12:14 [speculative] [claim: expects_fix] [AGREE]
     fix: כ֤י -> כ֚י
-    transform: atom "K.I70Y" -> "K.I10Y" (70 -> 10)
+    transform: word "כ֤י" -> "כ֚י" ((mah) -> (yet))
     before: MAHAPAKH ZAQEF TEVIR MERKHA TIPEXA MUNAX ATNAX TIPEXA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  YETIV ZAQEF TEVIR MERKHA TIPEXA MUNAX ATNAX TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ek 11:1 [speculative] [claim: expects_fix] [AGREE]
     fix: שר֖י -> שר֥י
-    transform: atom "&FR"73Y" -> "&FR"71Y" (73 -> 71)
+    transform: word "שר֖י" -> "שר֥י" ((tip) -> (mer))
     before: AZLA GERESH REVIA MUNAX TELISHAGEDOLA AZLA MAHAPAKH PASHTA MUNAX ZAQEF PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX AZLA GERESH DARGA TEVIR MERKHA TIPEXA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  AZLA GERESH REVIA MUNAX TELISHAGEDOLA AZLA MAHAPAKH PASHTA MUNAX ZAQEF PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX AZLA GERESH DARGA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ek 14:11 [speculative] [claim: expects_fix] [AGREE]
     fix: וה֥יו ל֣י -> והיו־ ל֣י
-    transform: atom "W:/HF71YW." -> "W:/HFYW." (71 -> (none))
+    transform: word "וה֥יו" -> "והיו־" ((mer) -> (none))
     before: TELISHAGEDOLA AZLA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA ATNAX MERKHA MUNAX REVIA PASHTA MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: revia_phrase]
     after:  TELISHAGEDOLA AZLA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA ATNAX MUNAX REVIA PASHTA MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ek 33:20 [claim: expects_fix] [AGREE]
     fix: ישראֽל -> ישראֽל׃
-    transform: append sof pasuq (00) to body
+    transform: word "ישראֽל" -> "ישראֽל׃" ((none) -> (sof pasuq))
     before: ZAQEFGADOL MERKHA TIPEXA MUNAX ATNAX DARGA TEVIR MERKHA TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  ZAQEFGADOL MERKHA TIPEXA MUNAX ATNAX DARGA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ex 2:5 [claim: expects_fix] [AGREE]
     fix: ותקחֽה -> ותקחֽה׃
-    transform: append sof pasuq (00) to body
+    transform: word "ותקחֽה" -> "ותקחֽה׃" ((none) -> (sof pasuq))
     before: MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ex 4:10
     fix: דברך -> דברך֖
-    transform: atom "D.AB.ER/:KF]1" -> "D.AB.ER/:KF73]1" ((none) -> 73)
+    transform: word "דברך" -> "דברך֖" ((none) -> (tip))
     before: AZLA MUNAX ZARQA MUNAX SEGOLTA TELISHAQETANNA AZLA GERESH REVIA MAHAPAKH PASHTA MUNAX ZAQEF TEVIR MERKHA ATNAX DARGA TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: atnax_phrase]
     after:  AZLA MUNAX ZARQA MUNAX SEGOLTA TELISHAQETANNA AZLA GERESH REVIA MAHAPAKH PASHTA MUNAX ZAQEF TEVIR MERKHA TIPEXA ATNAX DARGA TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ex 6:6 [claim: expects_fix] [AGREE]
     fix: ישרא֘ל -> ישראל֮
-    transform: atom "YI&:RF)"82L]s" -> "YI&:RF)"02L]s" (82 -> 02)
+    transform: word "ישרא֘ל" -> "ישראל֮" ((zarshit) -> (zarnor))
     before: GERSHAYIM MERKHA MUNAX SEGOLTA MUNAX REVIA PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  GERSHAYIM MERKHA ZARQA MUNAX SEGOLTA MUNAX REVIA PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ex 14:25 [claim: expects_fix] [AGREE]
     fix: במצרֽים -> במצרֽים׃
-    transform: append sof pasuq (00) to body
+    transform: word "במצרֽים" -> "במצרֽים׃" ((none) -> (sof pasuq))
     before: REVIA YETIV MUNAX ZAQEF TIPEXA ATNAX MUNAX REVIA PASHTA MUNAX ZAQEF MUNAX ZAQEF MERKHA TIPEXA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  REVIA YETIV MUNAX ZAQEF TIPEXA ATNAX MUNAX REVIA PASHTA MUNAX ZAQEF MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ex 14:29 [claim: expects_fix] [AGREE]
     fix: ומשמאלֽם -> ומשמאלֽם׃
-    transform: append sof pasuq (00) to body
+    transform: word "ומשמאלֽם" -> "ומשמאלֽם׃" ((none) -> (sof pasuq))
     before: DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ex 28:1 [claim: expects_fix] [AGREE]
     fix: את֔ו -> את֗ו
-    transform: atom ")IT./O80W" -> ")IT./O81W" (80 -> 81)
+    transform: word "את֔ו" -> "את֗ו" ((zaq_q) -> (rev))
     before: PAZER MUNAX TELISHAQETANNA AZLA GERESH MUNAX ZAQEF TEVIR MERKHA TIPEXA ATNAX ZAQEFGADOL DARGA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: tevir_phrase]
     after:  PAZER MUNAX TELISHAQETANNA AZLA GERESH MUNAX REVIA TEVIR MERKHA TIPEXA ATNAX ZAQEFGADOL DARGA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ex 30:12 [claim: expects_fix] [AGREE]
     fix: ישרא֘ל -> ישראל֮
-    transform: atom "YI&:RF)"82L]s" -> "YI&:RF)"02L]s" (82 -> 02)
+    transform: word "ישרא֘ל" -> "ישראל֮" ((zarshit) -> (zarnor))
     before: MUNAX GERSHAYIM MERKHA SEGOLTA AZLA GERESH MUNAX DARGA TEVIR TIPEXA MUNAX ATNAX MERKHA TEVIR TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  MUNAX GERSHAYIM MERKHA ZARQA SEGOLTA AZLA GERESH MUNAX DARGA TEVIR TIPEXA MUNAX ATNAX MERKHA TEVIR TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ex 34:6 [claim: expects_fix] [AGREE]
     fix: ואמֽת׀ -> ואמֽת׃
-    transform: append sof pasuq (00) to body
+    transform: word "ואמֽת׀" -> "ואמֽת׃" ((none) -> (sof pasuq))
     before: AZLA MERKHA ZARQA SEGOLTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  AZLA MERKHA ZARQA SEGOLTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ex 36:2 [claim: expects_fix] [AGREE]
     fix: בצלא֘ל -> בצלאל֮
-    transform: atom "B.:CAL:)"82L]s" -> "B.:CAL:)"02L]s" (82 -> 02)
+    transform: word "בצלא֘ל" -> "בצלאל֮" ((zarshit) -> (zarnor))
     before: MUNAX REVIA SEGOLTA PASHTA MUNAX ZAQEF AZLA DARGA TEVIR TIPEXA ATNAX YETIV MUNAX MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  MUNAX REVIA ZARQA SEGOLTA PASHTA MUNAX ZAQEF AZLA DARGA TEVIR TIPEXA ATNAX YETIV MUNAX MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ex 38:12
     fix: עמודיה֥ם -> עמודיה֣ם
-    transform: atom "(AM.W.D"Y/HE71M" -> "(AM.W.D"Y/HE74M" (71 -> 74)
+    transform: word "עמודיה֥ם" -> "עמודיה֣ם" ((mer) -> (mun))
     before: REVIA PASHTA MUNAX ZAQEF MERKHA ZAQEF TIPEXA ATNAX DARGA TEVIR TIPEXA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  REVIA PASHTA MUNAX ZAQEF MUNAX ZAQEF TIPEXA ATNAX DARGA TEVIR TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   gn 17:20 [claim: expects_fix] [AGREE]
     fix: ולישמע֘אל -> ולישמעאל֮
-    transform: atom "W.75/L:/YI$:MF("82)L]S]s" -> "W.75/L:/YI$:MF("02)L]S]s" (82 -> 02)
+    transform: word "ולישמע֘אל" -> "ולישמעאל֮" ((zarshit) -> (zarnor))
     before: SEGOLTA LEGARMEH MUNAX REVIA MERKHA TEVIR MERKHA TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  ZARQA SEGOLTA LEGARMEH MUNAX REVIA MERKHA TEVIR MERKHA TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   gn 32:24 [claim: expects_fix] [AGREE]
     fix: לו׃ -> לֽו׃
-    transform: atom "L/OW00]U" -> "L/OW3500]U" ((none) -> 35)
+    transform: word "לו׃" -> "לֽו׃" ((none) -> (sil))
     before: ZAQEF TIPEXA ATNAX TIPEXA SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  ZAQEF TIPEXA ATNAX TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   gn 47:29 [claim: expects_fix] [AGREE]
     fix: ישרא֘ל -> ישראל֮
-    transform: atom "YI&:RF)"82L]S]s" -> "YI&:RF)"02L]S]s" (82 -> 02)
+    transform: word "ישרא֘ל" -> "ישראל֮" ((zarshit) -> (zarnor))
     before: MUNAX SEGOLTA LEGARMEH MUNAX REVIA MAHAPAKH PASHTA AZLA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA MUNAX ATNAX MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  MUNAX ZARQA SEGOLTA LEGARMEH MUNAX REVIA MAHAPAKH PASHTA AZLA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA MUNAX ATNAX MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ho 4:19 [claim: expects_fix] [AGREE]
     fix: מזבחותֽם -> מזבחותֽם׃
-    transform: append sof pasuq (00) to body
+    transform: word "מזבחותֽם" -> "מזבחותֽם׃" ((none) -> (sof pasuq))
     before: MERKHA TEVIR TIPEXA ATNAX TIPEXA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  MERKHA TEVIR TIPEXA ATNAX TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ho 8:9 [claim: expects_fix] [AGREE]
     fix: אהבֽים -> אהבֽים׃
-    transform: append sof pasuq (00) to body
+    transform: word "אהבֽים" -> "אהבֽים׃" ((none) -> (sof pasuq))
     before: PASHTA MUNAX ZAQEF TIPEXA MUNAX ATNAX TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  PASHTA MUNAX ZAQEF TIPEXA MUNAX ATNAX TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ho 11:7 [claim: expects_fix] [AGREE]
     fix: ירומם׃ -> ירומֽם׃
-    transform: atom "Y:ROWM"M00]U" -> "Y:ROWM"M3500]U" ((none) -> 35)
+    transform: word "ירומם׃" -> "ירומֽם׃" ((none) -> (sil))
     before: MERKHA TIPEXA ATNAX PASHTA ZAQEF TIPEXA MERKHA SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MERKHA TIPEXA ATNAX PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   is 13:7 [claim: expects_fix] [AGREE]
     fix: ימס׃ -> ימֽס׃
-    transform: atom "YIM.FS00]1" -> "YIM.FS3500]1" ((none) -> 35)
+    transform: word "ימס׃" -> "ימֽס׃" ((none) -> (sil))
     before: TIPEXA MUNAX ATNAX MERKHA TIPEXA SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  TIPEXA MUNAX ATNAX MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   is 36:2
     fix: וישל֣ח -> וישל֥ח
-    transform: atom "WA/Y.I$:LA74X" -> "WA/Y.I$:LA71X" (74 -> 71)
+    transform: word "וישל֣ח" -> "וישל֥ח" ((mun) -> (mer))
     before: MUNAX LEGARMEH AZLA DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX REVIA PASHTA MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: legarmeh_phrase]
     after:  MERKHA LEGARMEH AZLA DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX REVIA PASHTA MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   is 45:1 [synthesized] [speculative] [claim: expects_fix] [AGREE]
     fix: לכ֣ורש -> לכ֒ורש  (synthesized)
-    transform: atom "L:/KO74WRE$" -> "L:/KO01WRE$" (74 -> 01)
+    transform: word "לכ֣ורש" -> "לכ֒ורש" ((mun) -> (seg_a))
     before: MUNAX ZARQA ZARQA MUNAX MUNAX REVIA PASHTA ZAQEF MERKHA TIPEXA ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: segolta_phrase]
     after:  MUNAX ZARQA ZARQA SEGOLTA MUNAX REVIA PASHTA ZAQEF MERKHA TIPEXA ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   je 9:10 [speculative] [claim: expects_fix] [AGREE]
     fix: מבל֖י -> מבל֥י
-    transform: atom "MI/B.:LI73Y" -> "MI/B.:LI71Y" (73 -> 71)
+    transform: word "מבל֖י" -> "מבל֥י" ((tip) -> (mer))
     before: DARGA TEVIR TIPEXA MUNAX ATNAX DARGA TEVIR MERKHA TIPEXA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  DARGA TEVIR TIPEXA MUNAX ATNAX DARGA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   je 9:11 [speculative] [claim: expects_fix] [AGREE]
     fix: מבל֖י -> מבל֥י
-    transform: atom "MI/B.:LI73Y" -> "MI/B.:LI71Y" (73 -> 71)
+    transform: word "מבל֖י" -> "מבל֥י" ((tip) -> (mer))
     before: MAHAPAKH PASHTA MUNAX ZAQEF AZLA DARGA TEVIR TIPEXA ATNAX PASHTA MUNAX ZAQEF MERKHA TIPEXA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MAHAPAKH PASHTA MUNAX ZAQEF AZLA DARGA TEVIR TIPEXA ATNAX PASHTA MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   je 10:3 [speculative] [claim: expects_fix] [AGREE]
     fix: יד֥י־ -> ידי־
-    transform: atom "Y:D"71Y" -> "Y:D"Y" (71 -> (none))
+    transform: word "יד֥י־" -> "ידי־" ((mer) -> (none))
     before: MERKHA TIPEXA MUNAX ATNAX PASHTA MUNAX ZAQEF MERKHA MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  MERKHA TIPEXA MUNAX ATNAX PASHTA MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   je 26:5 [claim: expects_fix] [AGREE]
     fix: דבר֨י -> דברי֙
-    transform: atom "D.IB:R"63Y" -> "D.IB:R"03Y" (63 -> 03)
+    transform: word "דבר֨י" -> "דברי֙" ((qom) -> (pash))
     before: REVIA AZLA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  REVIA PASHTA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   je 28:2 [claim: expects_fix] [AGREE]
     fix: שב֞רתי -> שב֕רתי
-    transform: atom "$FBA62R:T.IY" -> "$FBA85R:T.IY" (62 -> 85)
+    transform: word "שב֞רתי" -> "שב֕רתי" ((ger_2) -> (zaq_g))
     before: GERSHAYIM DARGA TEVIR MERKHA TIPEXA ATNAX GERSHAYIM TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  GERSHAYIM DARGA TEVIR MERKHA TIPEXA ATNAX ZAQEFGADOL TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   je 31:32 [claim: expects_fix] [AGREE]
     fix: מא֖רץ -> מא֣רץ
-    transform: atom "M"/)E73REC" -> "M"/)E74REC" (73 -> 74)
+    transform: word "מא֖רץ" -> "מא֣רץ" ((tip) -> (mun))
     before: MUNAX REVIA MAHAPAKH PASHTA ZAQEF PASHTA MUNAX ZAQEF TIPEXA TIPEXA ATNAX GERESH MUNAX REVIA TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: atnax_phrase]
     after:  MUNAX REVIA MAHAPAKH PASHTA ZAQEF PASHTA MUNAX ZAQEF TIPEXA MUNAX ATNAX GERESH MUNAX REVIA TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   je 46:4 [claim: expects_fix] [AGREE]
     fix: בכ֥ובע֑ים -> בכובע֑ים
-    transform: atom "B.:/KO71WBF(I92YM" -> "B.:/KOWBF(I92YM" (71 -> (none))
+    transform: word "בכ֥ובע֑ים" -> "בכובע֑ים" ((mer) -> (none))
     before: MUNAX REVIA PASHTA MUNAX ZAQEF TIPEXA MERKHA ATNAX PASHTA ZAQEF TIPEXA SILLUQ SOFPASUQ  [ODDBALL: atnax_phrase]
     after:  MUNAX REVIA PASHTA MUNAX ZAQEF TIPEXA ATNAX PASHTA ZAQEF TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   je 48:12 [claim: expects_fix] [AGREE]
     fix: הנ֖ה־ -> הנה־
-    transform: atom "HIN."73H" -> "HIN."H" (73 -> (none))
+    transform: word "הנ֖ה־" -> "הנה־" ((tip) -> (none))
     before: GERSHAYIM TIPEXA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA ATNAX MUNAX ZAQEF TIPEXA SILLUQ SOFPASUQ  [ODDBALL: atnax_phrase, tipexa_phrase]
     after:  GERSHAYIM MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA ATNAX MUNAX ZAQEF TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   je 49:19 [claim: expects_fix] [AGREE]
     fix: אריצ֨נו -> אריצ֙נו֙
-    transform: atom "):ARIYC/E63N.W." -> "):ARIYC/EN.W0303." (63 -> 03 03)
+    transform: word "אריצ֨נו" -> "אריצ֙נו֙" ((qom) -> (pash) (pash))
     before: TELISHAGEDOLA GERSHAYIM AZLA MUNAX ZARQA MUNAX SEGOLTA MAHAPAKH METHIGAZAQEF MERKHA TIPEXA MUNAX ATNAX MUNAX MAHAPAKH PASHTA MUNAX ZAQEF MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
-    after:  TELISHAGEDOLA GERSHAYIM AZLA MUNAX ZARQA MUNAX SEGOLTA MAHAPAKH PASHTA PASHTA ZAQEF MERKHA TIPEXA MUNAX ATNAX MUNAX MAHAPAKH PASHTA MUNAX ZAQEF MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
+    after:  TELISHAGEDOLA GERSHAYIM AZLA MUNAX ZARQA MUNAX SEGOLTA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA MUNAX ATNAX MUNAX MAHAPAKH PASHTA MUNAX ZAQEF MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   je 51:9 [claim: expects_fix] [AGREE]
     fix: רפ֣ינו -> רפ֤אנו
-    transform: atom "**RIP.I74YNW." -> "**RIP.I70YNW." (74 -> 70)
+    transform: word "רפ֣ינו" -> "רפ֤אנו" ((mun) -> (mah))
     before: MUNAX PASHTA MUNAX ZAQEF ZAQEFGADOL TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA SILLUQ SOFPASUQ  [ODDBALL: pashta_phrase]
     after:  MAHAPAKH PASHTA MUNAX ZAQEF ZAQEFGADOL TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   js 4:8 [claim: expects_fix] [AGREE]
     fix: ישרא֘ל -> ישראל֮
-    transform: atom "YI&:RF)"82L]s" -> "YI&:RF)"02L]s" (82 -> 02)
+    transform: word "ישרא֘ל" -> "ישראל֮" ((zarshit) -> (zarnor))
     before: MUNAX MUNAX MUNAX SEGOLTA PAZER AZLA GERESH MUNAX REVIA AZLA MAHAPAKH PASHTA ZAQEF TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  MUNAX ZARQA MUNAX MUNAX SEGOLTA PAZER AZLA GERESH MUNAX REVIA AZLA MAHAPAKH PASHTA ZAQEF TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   js 10:30 [claim: expects_fix] [AGREE]
     fix: ישרא֘ל -> ישראל֮
-    transform: atom "YI&:RF)"82L]s" -> "YI&:RF)"02L]s" (82 -> 02)
+    transform: word "ישרא֘ל" -> "ישראל֮" ((zarshit) -> (zarnor))
     before: TELISHAQETANNA AZLA GERESH MUNAX SEGOLTA MUNAX REVIA PASHTA ZAQEF MERKHA TIPEXA ATNAX MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  TELISHAQETANNA AZLA GERESH MUNAX ZARQA SEGOLTA MUNAX REVIA PASHTA ZAQEF MERKHA TIPEXA ATNAX MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   js 15:47
     fix: עז֥ה -> עז֛ה
-    transform: atom "(AZ.F71H" -> "(AZ.F91H" (71 -> 91)
+    transform: word "עז֥ה" -> "עז֛ה" ((mer) -> (tev))
     before: GERSHAYIM MUNAX REVIA MERKHA MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  GERSHAYIM MUNAX REVIA TEVIR MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ju 1:2
     fix: וי֣אמר -> וי֥אמר
-    transform: atom "WA/Y.O74)MER" -> "WA/Y.O71)MER" (74 -> 71)
+    transform: word "וי֣אמר" -> "וי֥אמר" ((mun) -> (mer))
     before: MUNAX TIPEXA MUNAX ATNAX TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  MERKHA TIPEXA MUNAX ATNAX TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ju 11:24 [claim: expects_fix] [AGREE]
     fix: אות֥ו תיר֑ש -> אות֣ו תיר֑ש
-    transform: atom ")OWT/O71W" -> ")OWT/O74W" (71 -> 74)
+    transform: word "אות֥ו" -> "אות֣ו" ((mer) -> (mun))
     before: GERSHAYIM MUNAX DARGA TEVIR MERKHA TIPEXA MERKHA ATNAX TELISHAQETANNA AZLA GERESH DARGA TEVIR TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: atnax_phrase]
     after:  GERSHAYIM MUNAX DARGA TEVIR MERKHA TIPEXA MUNAX ATNAX TELISHAQETANNA AZLA GERESH DARGA TEVIR TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ju 13:18 [speculative] [claim: expects_fix] [AGREE]
     fix: פ֛לאי׃ -> פֽלאי׃
-    transform: atom "PE91LI)Y00]Q]c]n" -> "PE35LI)Y00]Q]c]n" (91 -> 35)
+    transform: word "פ֛לאי׃" -> "פֽלאי׃" ((tev) -> (sil))
     before: MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX TEVIR SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX SILLUQ SOFPASUQ  [CLEAN]
   ju 21:16 [claim: expects_fix] [AGREE]
     fix: ויאמר֨ו -> ויאמרו֙
-    transform: atom "WA/Y.O75)M:R63W." -> "WA/Y.O75)M:R03W." (63 -> 03)
+    transform: word "ויאמר֨ו" -> "ויאמרו֙" ((qom) -> (pash))
     before: AZLA MUNAX ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  PASHTA MUNAX ZAQEF MERKHA TIPEXA ATNAX MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   lm 5:5 [speculative] [claim: expects_fix] [AGREE]
     fix: הונ֖ח -> הונח־
-    transform: atom "H75W.NA73X]Q]c]p" -> "H75W.NAX]Q]c]p" (73 -> (none))
+    transform: word "הונ֖ח" -> "הונח־" ((tip) -> (none))
     before: MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   lv 4:2 [claim: expects_fix] [AGREE]
     fix: ישרא֘ל -> ישראל֮
-    transform: atom "YI&:RF)"82L]s" -> "YI&:RF)"02L]s" (82 -> 02)
+    transform: word "ישרא֘ל" -> "ישראל֮" ((zarshit) -> (zarnor))
     before: GERSHAYIM MUNAX SEGOLTA REVIA MAHAPAKH PASHTA PASHTA MUNAX ZAQEF TIPEXA MUNAX ATNAX ZAQEFGADOL TIPEXA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  GERSHAYIM MUNAX ZARQA SEGOLTA REVIA MAHAPAKH PASHTA PASHTA MUNAX ZAQEF TIPEXA MUNAX ATNAX ZAQEFGADOL TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   lv 18:17 [claim: expects_fix] [AGREE]
     fix: הֽוא -> הֽוא׃
-    transform: append sof pasuq (00) to body
+    transform: word "הֽוא" -> "הֽוא׃" ((none) -> (sof pasuq))
     before: MERKHA TEVIR TIPEXA MUNAX ATNAX GERSHAYIM REVIA MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  MERKHA TEVIR TIPEXA MUNAX ATNAX GERSHAYIM REVIA MAHAPAKH PASHTA MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   lv 19:1 [claim: expects_fix] [AGREE]
     fix: לאמֽר -> לאמֽר׃
-    transform: append sof pasuq (00) to body
+    transform: word "לאמֽר" -> "לאמֽר׃" ((none) -> (sof pasuq))
     before: MERKHA TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   lv 20:2 [claim: expects_fix] [AGREE]
     fix: ישרא֘ל -> ישראל֮
-    transform: atom "YI&:RF)"82L]s" -> "YI&:RF)"02L]s" (82 -> 02)
+    transform: word "ישרא֘ל" -> "ישראל֮" ((zarshit) -> (zarnor))
     before: MUNAX SEGOLTA MUNAX TELISHAQETANNA AZLA GERESH LEGARMEH MUNAX REVIA AZLA DARGA TEVIR TIPEXA MUNAX ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  MUNAX ZARQA SEGOLTA MUNAX TELISHAQETANNA AZLA GERESH LEGARMEH MUNAX REVIA AZLA DARGA TEVIR TIPEXA MUNAX ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   lv 25:20
     fix: נאכ֤֖ל -> נאכ֖ל
-    transform: atom "N.O)KA7073L]c]n" -> "N.O)KA73L]c]n" (70 -> (none))
+    transform: word "נאכ֤֖ל" -> "נאכ֖ל" ((mah) -> (none))
     before: MUNAX ZAQEF MAHAPAKH TIPEXA MUNAX ATNAX YETIV MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  MUNAX ZAQEF TIPEXA MUNAX ATNAX YETIV MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   lv 26:7 [claim: expects_fix] [AGREE]
     fix: לחֽרב -> לחֽרב׃
-    transform: append sof pasuq (00) to body
+    transform: word "לחֽרב" -> "לחֽרב׃" ((none) -> (sof pasuq))
     before: TIPEXA ATNAX MERKHA TIPEXA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  TIPEXA ATNAX MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   lv 26:28 [claim: expects_fix] [AGREE]
     fix: חטאתיכם׃ -> חטאתיכֽם׃
-    transform: atom "XA+.O)T"Y/KEM00]1" -> "XA+.O)T"Y/KEM3500]1" ((none) -> 35)
+    transform: word "חטאתיכם׃" -> "חטאתיכֽם׃" ((none) -> (sil))
     before: MERKHA TIPEXA ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MERKHA TIPEXA ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   mi 2:7 [claim: expects_fix] [AGREE]
     fix: דבר֨י -> דברי֙
-    transform: atom "D:BFR/A63Y" -> "D:BFR/A03Y" (63 -> 03)
+    transform: word "דבר֨י" -> "דברי֙" ((qom) -> (pash))
     before: MUNAX REVIA PASHTA MUNAX ZAQEF TIPEXA ATNAX MAHAPAKH METHIGAZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  MUNAX REVIA PASHTA MUNAX ZAQEF TIPEXA ATNAX MAHAPAKH PASHTA ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   ne 2:10 [claim: expects_fix] [AGREE]
     fix: ב֥א -> ב֣א
-    transform: atom "B.F71)" -> "B.F74)" (71 -> 74)
+    transform: word "ב֥א" -> "ב֣א" ((mer) -> (mun))
     before: GERSHAYIM MUNAX REVIA PASHTA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX MERKHA ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]
     after:  GERSHAYIM MUNAX REVIA PASHTA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   nu 7:32 [claim: expects_fix] [AGREE]
     fix: קטֽרת -> קטֽרת׃
-    transform: append sof pasuq (00) to body
+    transform: word "קטֽרת" -> "קטֽרת׃" ((none) -> (sof pasuq))
     before: MERKHA TEVIR MERKHA TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  MERKHA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   nu 7:40 [claim: expects_fix] [AGREE]
     fix: לחטֽאת -> לחטֽאת׃
-    transform: append sof pasuq (00) to body
+    transform: word "לחטֽאת" -> "לחטֽאת׃" ((none) -> (sof pasuq))
     before: MERKHA TIPEXA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   nu 7:55 [claim: expects_fix] [AGREE]
     fix: למנחֽה -> למנחֽה׃
-    transform: append sof pasuq (00) to body
+    transform: word "למנחֽה" -> "למנחֽה׃" ((none) -> (sof pasuq))
     before: GERSHAYIM MUNAX REVIA MUNAX ZARQA SEGOLTA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA MUNAX ATNAX LEGARMEH REVIA TEVIR MERKHA TIPEXA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  GERSHAYIM MUNAX REVIA MUNAX ZARQA SEGOLTA MAHAPAKH PASHTA ZAQEF MERKHA TIPEXA MUNAX ATNAX LEGARMEH REVIA TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   nu 7:68 [claim: expects_fix] [AGREE]
     fix: קטֽרת -> קטֽרת׃
-    transform: append sof pasuq (00) to body
+    transform: word "קטֽרת" -> "קטֽרת׃" ((none) -> (sof pasuq))
     before: MERKHA TEVIR MERKHA TIPEXA MERKHA SILLUQ MISSING_SOFPASUQ  [ODDBALL: sof_pasuq_phrase]
     after:  MERKHA TEVIR MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   nu 20:19 [claim: expects_fix] [AGREE]
     fix: ישרא֘ל -> ישראל֮
-    transform: atom "YI&:RF)"82L]s" -> "YI&:RF)"02L]s" (82 -> 02)
+    transform: word "ישרא֘ל" -> "ישראל֮" ((zarshit) -> (zarnor))
     before: AZLA MERKHA MUNAX SEGOLTA MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:82]
     after:  AZLA MERKHA ZARQA MUNAX SEGOLTA MAHAPAKH PASHTA MUNAX ZAQEF TIPEXA ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   nu 25:19 [speculative] [claim: expects_fix] [AGREE]
@@ -453,12 +453,12 @@ claim-vs-result: 82 agree, 0 disagree
     after:  TIPEXA MUNAX ATNAX MAHAPAKH PASHTA ZAQEF DARGA TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   nu 27:9 [claim: expects_fix] [AGREE]
     fix: לאחיו׃ -> לאחֽיו׃
-    transform: atom "L:/)EXFY/W00]1" -> "L:/)EXFY/W3500]1" ((none) -> 35)
+    transform: word "לאחיו׃" -> "לאחֽיו׃" ((none) -> (sil))
     before: MERKHA TIPEXA ATNAX MERKHA TIPEXA SOFPASUQ  [ODDBALL: silluq_phrase]
     after:  MERKHA TIPEXA ATNAX MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   ob 1:1
     fix: עליה -> על֖יה
-    transform: atom "(FLEY/HF]Q]c]n" -> "(FLEY/HF]Q]c]n73" ((none) -> 73)
+    transform: word "עליה" -> "על֖יה" ((none) -> (tip))
     before: TIPEXA ATNAX TELISHAQETANNA AZLA GERESH REVIA AZLA GERESH MAHAPAKH PASHTA PASHTA MUNAX ZAQEF TEVIR MERKHA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  TIPEXA ATNAX TELISHAQETANNA AZLA GERESH REVIA AZLA GERESH MAHAPAKH PASHTA PASHTA MUNAX ZAQEF TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
 

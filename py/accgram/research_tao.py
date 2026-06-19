@@ -9,16 +9,11 @@ from accgram import rtms_focus_diff_expand
 from accgram import rtms_output
 from accgram import rtms_report
 from accgram import rtms_rows
-from accgram import run_ply
 from accgram import tm_changes
 from accgram import tm_descriptor
 from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
 from accgram.ob_notes import get_structured_text
 from accgram.tm_sanity import sanity_check_structured_text
-
-
-def default_input_path(repo_root: Path) -> Path:
-    return run_ply.default_input_path(repo_root)
 
 
 def default_oddballs_in(repo_root: Path) -> Path:
@@ -50,12 +45,6 @@ def default_oddballs_out_path(repo_root: Path) -> Path:
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
-    parser.add_argument(
-        "--input",
-        type=Path,
-        default=default_input_path(repo_root),
-        help="Path to source wlc422_ps.txt file (oddball verse content).",
-    )
     parser.add_argument(
         "--wlc422-kq-u-dir",
         type=Path,
@@ -123,7 +112,7 @@ def run(args: argparse.Namespace) -> None:
     # verse -- including the 49 the C binary emitted nothing for -- now lives there.
     ply_classify.write_ply_oddballs(
         ply_dir=ply_dir,
-        source_input_path=args.input,
+        wlc422_kq_u_dir=args.wlc422_kq_u_dir,
         oddballs_out=oddballs_in_path,
     )
 

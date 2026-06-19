@@ -14,8 +14,8 @@ cleanly; the residual splits into two documented oddball kinds:
 
 This module re-scans + re-parses the poetic corpus (the same source of truth the
 driver writes from), collects every oddball verse, and enriches each with: the
-M-C source body, the full scanned token sequence, the rendered ERROR tree or
-NO_PARSE line, and -- the key review datum for accent oddballs -- the WLC vs
+verse's pointed-Hebrew text, the full scanned token sequence, the rendered ERROR
+tree or NO_PARSE line, and -- the key review datum for accent oddballs -- the WLC vs
 MAM-simple disjunctive sequences (what L's accents say versus what the MAM oracle
 reads). It writes a git-tracked ``_oddballs.json`` next to the corpus outputs and
 ``gh-pages/accgram/poetic.html`` for review.
@@ -27,7 +27,7 @@ parse tree rendered as an HTML table via ``ob_tree_table``, and the SAT
 focus-word table via ``poetic_sat`` (which reuses the prose ``rtmsr_sat``
 renderer) -- so the two reports can later be merged into one generator (see
 issue #10). It keeps one poetic-only display the prose
-page has no analogue for: the M-C source body. The verse-final NO_PARSE cases,
+page has no analogue for: the WLC-vs-MAM disjunctive compare. The verse-final NO_PARSE cases,
 having no valid parse, render a flat best-effort tree (each token a cell, capped
 by an ERROR leaf) so they too display through the shared error-tree table.
 
@@ -61,11 +61,12 @@ from accgram import poetic_ob_notes
 from accgram import poetic_sat
 from accgram import research_tao
 from accgram import rtms_data
+from accgram import rtms_focus_diff_expand
 from accgram import rtms_ref
 from accgram import rtms_report
 from accgram import rtmsr_media
 from accgram import rtmsr_verse
-from accgram import split_wlc
+from accgram import uni_to_mc_body
 from accgram.mam_poetic_accents import load_poetic_word_disj
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
@@ -123,7 +124,6 @@ class PoeticOddball:
 
 
 def collect_poetic_oddballs(
-    input_path: Path,
     mam_simple_dir: Path,
     wlc422_kq_u_dir: Path,
     uxlc_dir: Path,
@@ -132,8 +132,8 @@ def collect_poetic_oddballs(
     mam_words_by_ref = load_poetic_word_disj(mam_simple_dir)
     wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
     parser = build_parser()
-    book_texts = split_wlc.split_wlc_to_book_texts(
-        input_path, keep_line_fn=poetic_filter.should_keep_line
+    book_texts = uni_to_mc_body.build_book_texts(
+        wlc422_kq_u_dir, keep_line_fn=poetic_filter.should_keep_line
     )
 
     oddballs: list[PoeticOddball] = []
@@ -280,7 +280,7 @@ def _oddball_to_row(ob: PoeticOddball) -> dict[str, object]:
         "ref": ob.reference,
         "bb": ob.bb,
         "kind": ob.kind,
-        "content": ob.body,
+        "content": _unicode_text(ob),
         "output_file": ob.output_file,
         "token_types": list(ob.token_types),
         "wlc_disjunctives": list(ob.wlc_disjunctives),
@@ -330,12 +330,10 @@ def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, 
 # The poetic page shares goerwitz.html's stylesheet + width-limited shell and
 # the same single flat, client-side-filterable verse list (see
 # gh-pages/accgram/poetic-filter.js), so a later merge of the two reports is
-# mostly mechanical. It deliberately keeps two poetic-only data displays the
-# prose page has no analogue for: the Michigan-Claremont source body and the
-# WLC-vs-MAM disjunctive compare (the relevant oracle for accent-structure
-# oddballs). Pointed-Hebrew rendering and the prose SAT focus-word table are
-# not reproduced, as those need WLC/UXLC/MAM verse-token enrichment the closed
-# poetic oddball set does not load.
+# mostly mechanical. It keeps one poetic-only data display the prose page has no
+# analogue for: the WLC-vs-MAM disjunctive compare (the relevant oracle for
+# accent-structure oddballs). The verse text is shown as pointed Hebrew (issue #9
+# retired the Michigan-Claremont body from the reports).
 _REPORT_TITLE = "Poetic checker run on WLC"
 _REPORT_HEADING = "Poetic checker run on WLC"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
@@ -434,8 +432,8 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
         wlc_utils_html.para(
             (
                 "Each verse shows its pointed-Hebrew text (the verse-final word "
-                "highlighted for missing-silluq cases), its Michigan-Claremont "
-                "source body, and — for missing-silluq verses — a SAT focus-word "
+                "highlighted for missing-silluq cases) and — for missing-silluq "
+                "verses — a SAT focus-word "
                 "table comparing the WLC focus word against its UXLC and MAM-simple "
                 "readings. The "
                 "per-verse summary is mechanically auto-derived — but from a "
@@ -466,7 +464,12 @@ def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
     hebrew_verse = _render_hebrew_verse(ob)
     if hebrew_verse is not None:
         items.append(hebrew_verse)
-    items.append(wlc_utils_html.para(ob.body, {"class": "poetic-src"}))
+    items.append(
+        wlc_utils_html.para(
+            wlc_utils_html.span(_unicode_text(ob), {"lang": "hbo"}),
+            {"class": "poetic-src"},
+        )
+    )
     sat_table = poetic_sat.render_table(ob.enriched_row, row_ref=_bb_ref(ob))
     if sat_table is not None:
         items.append(sat_table)
@@ -590,6 +593,13 @@ def _render_hebrew_verse(ob: PoeticOddball) -> object | None:
     return rtmsr_verse.render_wlc_verse_paragraph(
         row, structured_text_lookup=lambda r, key: r.get(key)
     )
+
+
+def _unicode_text(ob: PoeticOddball) -> str:
+    """The verse's normalized pointed-Hebrew text (qere interpolated), from the
+    ``-kq-u`` verse; "" if the verse is absent from the index.  Issue #9 replaced the
+    Michigan-Claremont source body with this in the report display and ``content``."""
+    return rtms_focus_diff_expand.normalized_wlc_verse_text_from_payload(ob.wlc_verse)
 
 
 def _final_word_focus(ob: PoeticOddball) -> str | None:
@@ -741,10 +751,6 @@ def _counts(oddballs: list[PoeticOddball]) -> dict[str, int]:
     return counts
 
 
-def default_input_path(repo_root: Path) -> Path:
-    return repo_root.parent / "wlc-utils-io" / "in" / "wlc422" / "wlc422_ps.txt"
-
-
 def default_oddballs_out_path(repo_root: Path) -> Path:
     return repo_root / "out" / "accgram" / "ply-poetic" / "_oddballs.json"
 
@@ -754,12 +760,6 @@ def default_html_out_path(repo_root: Path) -> Path:
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
-    parser.add_argument(
-        "--input",
-        type=Path,
-        default=default_input_path(repo_root),
-        help="Path to source wlc422_ps.txt file.",
-    )
     parser.add_argument(
         "--mam-simple-dir",
         type=Path,
@@ -795,7 +795,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 def run(args: argparse.Namespace) -> None:
     oddballs = collect_poetic_oddballs(
-        args.input, args.mam_simple_dir, args.wlc422_kq_u_dir, args.uxlc_dir
+        args.mam_simple_dir, args.wlc422_kq_u_dir, args.uxlc_dir
     )
 
     payload = build_payload(oddballs, __file__)

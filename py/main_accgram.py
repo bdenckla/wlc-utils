@@ -3,7 +3,7 @@
 Subcommands:
     run-ply-goerwitz
                 Run the Python PLY port over the WLC prose corpus
-                (wlc-utils-io/in/wlc422/wlc422_ps.txt, genre-filtered) and write
+                (wlc-utils-io/out/wlc422-kq-u, genre-filtered) and write
                 out/accgram/ply/*_ag.txt (mirrors `accents -p`).  A verse the
                 grammar cannot parse at all is a fatal error.  Use --book to
                 restrict to specific books (e.g. --book ob).
@@ -27,8 +27,8 @@ Subcommands:
     generate-poetic-html
                 Collect the residual poetic oddballs (the missing-silluq
                 ERROR-leaf trees and the NO_PARSE anomalies) from the poetic
-                corpus, enrich each with its M-C body, scanned token sequence,
-                rendered tree, and WLC-vs-MAM-simple disjunctive comparison, and
+                corpus, enrich each with its pointed-Hebrew text, scanned token
+                sequence, rendered tree, and WLC-vs-MAM-simple disjunctive comparison, and
                 write out/accgram/ply-poetic/_oddballs.json plus the HTML report
                 gh-pages/accgram/poetic.html.  The optional Phase 4 analogue of
                 generate-goerwitz-html.  Run run-ply-poetic first.
@@ -40,8 +40,8 @@ Subcommands:
                 plus the HTML report gh-pages/accgram/goerwitz.html.
     test-fixes
                 For every annotated prose oddball, test whether adopting its
-                MAM-simple value clears the ERROR: splice the MAM value into the
-                M-C body, re-scan + re-parse, and classify CONFIRMED / DENIED /
+                MAM-simple value clears the ERROR: substitute the MAM value into the
+                verse, re-transcode + re-scan + re-parse, and classify CONFIRMED / DENIED /
                 CHANGED / UNTESTABLE.  Cross-checks each verdict against the
                 ob_notes claim and writes out/accgram/fix-tester/_fix_tester.{txt,json}.
                 Run run-ply-goerwitz first.
@@ -156,8 +156,8 @@ def main() -> None:
         "generate-poetic-html",
         help=(
             "Collect the residual poetic oddballs (missing-silluq ERROR-leaf trees "
-            "and NO_PARSE anomalies), enrich each with its M-C body, token sequence, "
-            "tree, and WLC-vs-MAM disjunctive comparison, and write "
+            "and NO_PARSE anomalies), enrich each with its pointed-Hebrew text, token "
+            "sequence, tree, and WLC-vs-MAM disjunctive comparison, and write "
             "out/accgram/ply-poetic/_oddballs.json + gh-pages/accgram/poetic.html."
         ),
     )

@@ -35,7 +35,8 @@ from pathlib import Path
 
 from accgram import poetic_accent_names as pan
 from accgram import poetic_filter
-from accgram import split_wlc
+from accgram import rtms_data
+from accgram import uni_to_mc_body
 from accgram.mam_poetic_accents import load_word_accents, servi_before_in_words
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.ply_scanner_poetic import scan_book
@@ -80,7 +81,7 @@ class TargetReport:
 
 def _scan_l(input_path: Path) -> dict[str, list[str]]:
     """Map each verse reference -> the scanner's ordered token-type list (L side)."""
-    book_texts = split_wlc.split_wlc_to_book_texts(
+    book_texts = uni_to_mc_body.build_book_texts(
         input_path, keep_line_fn=poetic_filter.should_keep_line
     )
     out: dict[str, list[str]] = {}
@@ -175,7 +176,7 @@ def render_report(reports: list[TargetReport]) -> str:
 
 
 def default_input_path(repo_root: Path) -> Path:
-    return repo_root.parent / "wlc-utils-io" / "in" / "wlc422" / "wlc422_ps.txt"
+    return rtms_data.default_wlc422_kq_u_dir(repo_root)
 
 
 def default_report_path(repo_root: Path) -> Path:
@@ -187,7 +188,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--input",
         type=Path,
         default=default_input_path(repo_root),
-        help="Path to source wlc422_ps.txt file.",
+        help="Directory of the -kq-u Unicode source (wlc422-kq-u/1verses_*.json).",
     )
     parser.add_argument(
         "--mam-simple-dir",

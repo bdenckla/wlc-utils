@@ -28,7 +28,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from accgram import split_wlc  # noqa: E402
+from accgram import rtms_data  # noqa: E402
+from accgram import rtms_rows  # noqa: E402
+from accgram import uni_to_mc_body  # noqa: E402
 from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens  # noqa: E402
 from accgram.ply_scanner import HasLegarmeh, Token, scan_accents  # noqa: E402
 from accgram.ply_tree import print_tree  # noqa: E402
@@ -37,7 +39,7 @@ from cmn.wlc_book_codes import bk39id_to_wlc_bb  # noqa: E402
 from py_uxlc.my_uxlc_book_abbreviations import expand_citation  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
-WLC_PS = REPO.parent / "wlc-utils-io" / "in" / "wlc422" / "wlc422_ps.txt"
+WLC_KQ_U = REPO.parent / "wlc-utils-io" / "out" / "wlc422-kq-u"
 SRC = REPO / "in" / "accgram" / "uxlc_accent_changes.json"
 OUT = REPO / "out" / "accgram" / "uxlc_grammar_test.txt"
 
@@ -169,6 +171,20 @@ def _kind(r) -> str:
     return "substitution"
 
 
+def _transcoded_bodies(
+    keys,
+) -> dict[tuple[str, int, int], str]:
+    """The scanner-ready M-C body for each ``(bb, ch, vs)``, transcoded from the
+    canonical ``-kq-u`` Unicode source (issue #9 retired ``wlc422_ps.txt``)."""
+    index = rtms_data.load_wlc422_index(WLC_KQ_U)
+    bodies: dict[tuple[str, int, int], str] = {}
+    for bb, ch, vs in keys:
+        verse = index.get(rtms_rows.to_compact_bcv(bb, ch, vs))
+        if isinstance(verse, dict):
+            bodies[(bb, ch, vs)] = uni_to_mc_body.verse_to_mc_body(verse)
+    return bodies
+
+
 def main() -> None:
     data = json.load(open(SRC, encoding="utf-8"))
     out_set = [r for r in data if not r["goerwitz_st_ref"]]
@@ -183,7 +199,7 @@ def main() -> None:
             continue
         by_verse.setdefault((bb, ch, vs), []).append((wd, r))
 
-    bodies = split_wlc.collect_source_lines(WLC_PS, set(by_verse))
+    bodies = _transcoded_bodies(by_verse)
     parser = build_parser()
 
     stat = Counter()

@@ -1,80 +1,61 @@
-"""Apply a MAM-simple fix to a Michigan-Claremont (M-C) verse body, for re-testing.
+"""Apply a MAM-simple fix to a WLC verse at the Unicode-word level, for re-testing.
 
 The fix-tester wants to ask: *if we adopt the MAM-simple value here, does the
-oddball clear?*  The scanner reads M-C codes but the fix is a Unicode word-diff
-(``diff_wlc_mam``).  This module bridges the two: it locates the single changed
-word in the M-C body by index-aligning the body's space/maqaf atoms to the WLC
-verse's word tokens, computes which accent the change adds/removes (by name, via
-``uni_heb.accent_names``), maps those names to M-C codes
-(``fix_tester_codes``), splices the code change into that atom, and returns the
-modified body for re-scanning.
+oddball clear?*  The fix is a Unicode word-diff (``diff_wlc_mam``) and the scanner
+reads a Michigan-Claremont (M-C) accent body, so this module bridges the two the
+direct way (issue #9, Phase 1): it locates the single changed word in the verse's
+``vels`` by index-aligning to the WLC word tokens, substitutes the MAM Unicode word
+in place (keeping the surrounding structure -- ketiv-qere wrappers, ``notes``,
+section markers), and re-transcodes the modified verse to an M-C body
+(``uni_to_mc_body``) for re-scanning.  No accent-name->code bridge is involved; the
+transcoder owns the helper/main split and every code emission.
 
-An adjacent run of words (a multi-word ``wlc_focus``) is spliced atom by atom.
-A one-accent-out / many-accent-in replacement (azla -> pashta x2) is spliced as a
-delete-then-insert.  Anything it cannot do mechanically and safely -- a
-non-adjacent / mismatched-count multi-word diff, a vowel- or meteg-only change, an
-accent whose code is context-dependent, a word/atom misalignment, or a code the
-diff claims but the body lacks -- is returned as an ``UntestableFix`` with a
-machine-readable reason, never guessed.
+An adjacent run of words (a multi-word ``wlc_focus``) is substituted word by word.
+A change the grammar cannot see -- a vowel- or meteg-only edit -- is returned as an
+``UntestableFix`` (it would re-transcode to the same body), as is a non-adjacent /
+mismatched-count multi-word diff or a word/atom misalignment.  Nothing is guessed.
 """
 
 from __future__ import annotations
 
+import copy
 import re
 from collections import Counter
 from dataclasses import dataclass
 
-from accgram import fix_tester_codes
+from accgram import uni_to_mc_body
 from mb_cmn import uni_heb
 
-# Atoms are the scanner's space/maqaf-delimited units (TEXT = ``[^ \r\n-]*``).
-_ATOM_SPAN_RE = re.compile(r"[^ \t\r\n\-]+")
-# Every M-C cantillation code is exactly two adjacent digits.
-_CODE_RE = re.compile(r"\d\d")
-# A Hebrew consonant (used to tell a real word token from punctuation).
+# A Hebrew consonant (used to tell a real word token from punctuation/markers).
 _HEB_LETTER_RE = re.compile(r"[א-ת]")
-# An M-C letter (consonant or vowel); ``)`` = alef, ``(`` = ayin, ``$`` = shin,
-# ``&`` = sin.  An atom with none of these is pure punctuation/code, not a word.
-_MC_LETTER_RE = re.compile(r"[A-Za-z)($&]")
-# A ketiv atom is prefixed by a single ``*`` (the qere is ``**``).  The scanner
-# swallows the ketiv whole (``\*[^* ...]+``) and rtms_data drops it from the WLC
-# word list, so it must not count as a word-atom during index alignment.
-_KETIV_RE = re.compile(r"^\*(?!\*)")
-# A section marker -- petuhah (``P``), setumah (``S``), or nun-inversum (``N``,
-# which carries note ``]8``) -- stands as its own atom in the M-C body, optionally
-# trailing note markers like ``]8``.  ``S``/``P`` double as the consonants samekh
-# and pe, but a real word bearing them always carries vowels, so a *lone* P/S/N is
-# unambiguously a marker.  rtms_data tags it ``sam_pe_inun`` and ``verse_words``
-# drops it (no Hebrew consonant), so it must not count as a word-atom during
-# alignment either (mirrors wlc_read_and_parse_mdc._distinguish_sam_pe_inun).
-_SECTION_MARKER_RE = re.compile(r"^[PSN](?:\].)*$")
-_SOFPASUQ_CODE = "00"
-_SILLUQ_CODE = "35"  # the meteg/silluq glyph U+05BD; a verse-final silluq before 00.
-# Sof pasuq punctuation (U+05C3); its M-C code is 00.  A MAM value that merely
-# adds it is the "missing sof pasuq" fix -- testable by appending 00 to the body.
+# Sof pasuq punctuation (U+05C3).  A MAM value that merely adds it is the "missing
+# sof pasuq" fix -- grammar-visible (the transcoder emits 00, the scanner terminates).
 _SOF_PASUQ = "׃"
+
+# Accent abbreviations as ``uni_heb.accent_names`` returns them.  ``(mos)`` is the
+# meteg/silluq glyph (U+05BD); a *medial* meteg difference is invisible to the
+# grammar, so it is stripped before diffing.  ``(sil)`` is the synthetic verse-final
+# silluq promoted from a ``(mos)`` that lands on a sof-pasuq-bearing word.
+_MOS_ABBREV = "(mos)"
+_SILLUQ_ABBREV = "(sil)"
 
 
 @dataclass(frozen=True)
 class AppliedFix:
-    new_body: str
+    new_body: str  # the re-transcoded M-C body to re-scan
     word_index: int  # index (in wlc_words) of the first *changed* word
-    old_atom: str
-    new_atom: str
+    old_word: str  # the WLC Unicode word (first, for a multi-word focus)
+    new_word: str  # the MAM Unicode word it was replaced with
     removed_accents: tuple[str, ...]  # accent abbreviations, WLC side
     added_accents: tuple[str, ...]  # accent abbreviations, MAM side
-    removed_codes: tuple[str, ...]
-    added_codes: tuple[str, ...]
     # Pre-formatted transform descriptions for any *additional* changed words in a
     # multi-word (adjacent wlc_focus) splice; empty for the common single-word case.
     extra_transforms: tuple[str, ...] = ()
 
     def transformation(self) -> str:
-        if not self.old_atom and self.added_codes == (_SOFPASUQ_CODE,):
-            return "append sof pasuq (00) to body"
-        rm = " ".join(self.removed_codes) or "(none)"
-        ad = " ".join(self.added_codes) or "(none)"
-        base = f'atom "{self.old_atom}" -> "{self.new_atom}" ({rm} -> {ad})'
+        rm = " ".join(self.removed_accents) or "(none)"
+        ad = " ".join(self.added_accents) or "(none)"
+        base = f'word "{self.old_word}" -> "{self.new_word}" ({rm} -> {ad})'
         if self.extra_transforms:
             return "; ".join((base, *self.extra_transforms))
         return base
@@ -87,15 +68,17 @@ class UntestableFix:
 
 
 def apply_mam_fix(
-    body: str,
+    verse: object,
     wlc_words: list[str],
     diff_entry: object,
 ) -> AppliedFix | UntestableFix:
-    """Splice the MAM value of ``diff_entry`` into ``body``; see module docstring.
+    """Substitute the MAM value of ``diff_entry`` into ``verse`` and re-transcode.
 
-    A ``wlc_focus``-expanded entry may carry several *adjacent* words on each side
-    (space-joined); the splice then changes each word's atom in place.  The common
-    case is a single word.
+    ``verse`` is the raw ``-kq-u`` verse (``{vels: [...]}``); ``wlc_words`` is its WLC
+    word list (``verse_words`` of the display verse), used to locate the changed
+    word(s) by index.  A ``wlc_focus``-expanded entry may carry several *adjacent*
+    words on each side (space-joined); the substitution then replaces each word's vel
+    in place.  The common case is a single word.
     """
     wlc_word = _diff_side_word(diff_entry, "wlc422")
     mam_word = _diff_side_word(diff_entry, "mam_simple")
@@ -111,87 +94,36 @@ def apply_mam_fix(
             "multi_word",
             f"diff word counts differ ({len(wlc_tokens)} vs {len(mam_tokens)})",
         )
-    if len(wlc_tokens) > 1:
-        return _apply_multi_word_change(body, wlc_words, wlc_tokens, mam_tokens)
-    return _apply_word_change(body, wlc_words, wlc_word, mam_word)
+    if not wlc_tokens:
+        return UntestableFix("bad_diff_shape", "empty diff word")
 
-
-def _apply_word_change(
-    body: str,
-    wlc_words: list[str],
-    wlc_word: str,
-    mam_word: str,
-) -> AppliedFix | UntestableFix:
-    # --- which accents the fix removes vs adds (by name) ---
-    removed, added = _accent_name_diff(wlc_word, mam_word)
-    if not removed and not added:
-        # No accent change.  The common "missing sof pasuq" fix adds only the sof
-        # pasuq punctuation; test it by appending 00 to the (sof-pasuq-less) body.
-        if _SOF_PASUQ in mam_word and _SOF_PASUQ not in wlc_word and "00" not in body:
-            # Place 00 right after the last accent code (the verse-final silluq),
-            # not at the raw body end and not merely after the last letter: a
-            # trailing note-marker like ]1 would fuse (]1 + 00 -> ]100, mis-scanned
-            # as YETIV 10), and a silluq code sitting *after* the last consonant
-            # would be cut off (00 before it -> the silluq is lost).
-            new_body = _insert_after_last_code(body, _SOFPASUQ_CODE)
-            return AppliedFix(
-                new_body=new_body,
-                word_index=len(wlc_words) - 1,
-                old_atom="",
-                new_atom=_SOFPASUQ_CODE,
-                removed_accents=(),
-                added_accents=("(sof pasuq)",),
-                removed_codes=(),
-                added_codes=(_SOFPASUQ_CODE,),
-            )
-        # A vowel- or meteg-only change cannot reach the grammar (the scanner
-        # swallows vowels and meteg), so the speculated fix is grammar-inert.
+    # --- grammar visibility gate (per word) ---
+    removed_first: list[str] = []
+    added_first: list[str] = []
+    extra_transforms: list[str] = []
+    any_visible = False
+    for offset, (wlc_tok, mam_tok) in enumerate(zip(wlc_tokens, mam_tokens)):
+        removed, added = _accent_name_diff(wlc_tok, mam_tok)
+        sof_added = _SOF_PASUQ in mam_tok and _SOF_PASUQ not in wlc_tok
+        if sof_added:
+            added = [*added, "(sof pasuq)"]
+        if removed or added:
+            any_visible = True
+        if offset == 0:
+            removed_first, added_first = removed, added
+        elif removed or added:
+            rm = " ".join(removed) or "(none)"
+            ad = " ".join(added) or "(none)"
+            extra_transforms.append(f'word "{wlc_tok}" -> "{mam_tok}" ({rm} -> {ad})')
+    if not any_visible:
+        # A vowel- or (medial) meteg-only change cannot reach the grammar (the
+        # scanner swallows vowels and meteg), so the speculated fix is grammar-inert.
         return UntestableFix(
-            _no_accent_change_reason([wlc_word], [mam_word]),
+            _no_accent_change_reason(wlc_tokens, mam_tokens),
             "no accent/punctuation difference -- invisible to the grammar",
         )
 
-    # --- locate the changed word, by index, in the M-C body's atoms ---
-    occurrences = [i for i, word in enumerate(wlc_words) if word == wlc_word]
-    if not occurrences:
-        return UntestableFix("alignment_failure", f"WLC word {wlc_word!r} not in vels")
-    if len(occurrences) > 1:
-        return UntestableFix("ambiguous_word", f"WLC word {wlc_word!r} not unique")
-    word_index = occurrences[0]
-
-    atom_spans = _word_atom_spans(body)
-    if len(atom_spans) != len(wlc_words):
-        return UntestableFix(
-            "alignment_failure",
-            f"{len(atom_spans)} M-C word-atoms vs {len(wlc_words)} WLC words",
-        )
-
-    spliced = _splice_word(atom_spans[word_index], removed, added)
-    if isinstance(spliced, UntestableFix):
-        return spliced
-
-    new_atom, removed_codes, added_codes = spliced
-    target = atom_spans[word_index]
-    new_body = body[: target.start()] + new_atom + body[target.end() :]
-    return AppliedFix(
-        new_body=new_body,
-        word_index=word_index,
-        old_atom=target.group(),
-        new_atom=new_atom,
-        removed_accents=tuple(removed),
-        added_accents=tuple(added),
-        removed_codes=tuple(removed_codes),
-        added_codes=tuple(added_codes),
-    )
-
-
-def _apply_multi_word_change(
-    body: str,
-    wlc_words: list[str],
-    wlc_tokens: list[str],
-    mam_tokens: list[str],
-) -> AppliedFix | UntestableFix:
-    """Splice an adjacent run of words (a multi-word ``wlc_focus``) atom by atom."""
+    # --- locate the changed run, by index, in the WLC word list ---
     span = len(wlc_tokens)
     starts = [
         i
@@ -199,68 +131,31 @@ def _apply_multi_word_change(
         if wlc_words[i : i + span] == wlc_tokens
     ]
     if not starts:
-        return UntestableFix(
-            "alignment_failure", f"multi-word run {wlc_tokens!r} not in vels"
-        )
+        return UntestableFix("alignment_failure", f"WLC run {wlc_tokens!r} not in vels")
     if len(starts) > 1:
-        return UntestableFix(
-            "ambiguous_word", f"multi-word run {wlc_tokens!r} not unique"
-        )
+        return UntestableFix("ambiguous_word", f"WLC run {wlc_tokens!r} not unique")
     start = starts[0]
 
-    atom_spans = _word_atom_spans(body)
-    if len(atom_spans) != len(wlc_words):
+    # --- substitute the MAM word(s) into a copy of the verse and re-transcode ---
+    new_verse = copy.deepcopy(verse)
+    setters = _word_unit_setters(new_verse)
+    if len(setters) != len(wlc_words):
         return UntestableFix(
             "alignment_failure",
-            f"{len(atom_spans)} M-C word-atoms vs {len(wlc_words)} WLC words",
+            f"{len(setters)} verse word-units vs {len(wlc_words)} WLC words",
         )
-
-    # (word_index, span, new_atom, removed, added, removed_codes, added_codes)
-    changes: list[tuple[int, object, str, list[str], list[str], list[str], list[str]]] = []
     for offset in range(span):
-        removed, added = _accent_name_diff(wlc_tokens[offset], mam_tokens[offset])
-        if not removed and not added:
-            continue  # vowel/meteg-only on this word: a no-op for the grammar
-        target = atom_spans[start + offset]
-        spliced = _splice_word(target, removed, added)
-        if isinstance(spliced, UntestableFix):
-            return spliced
-        new_atom, removed_codes, added_codes = spliced
-        changes.append(
-            (start + offset, target, new_atom, removed, added, removed_codes, added_codes)
-        )
+        setters[start + offset](mam_tokens[offset])
+    new_body = uni_to_mc_body.verse_to_mc_body(new_verse)
 
-    if not changes:
-        return UntestableFix(
-            _no_accent_change_reason(wlc_tokens, mam_tokens),
-            "no accent/punctuation difference -- invisible to the grammar",
-        )
-
-    # Apply right-to-left so earlier splices do not shift later atom offsets.
-    new_body = body
-    for _idx, target, new_atom, *_rest in sorted(
-        changes, key=lambda c: c[1].start(), reverse=True
-    ):
-        new_body = new_body[: target.start()] + new_atom + new_body[target.end() :]
-
-    first_index, first_target, first_atom, removed, added, removed_codes, added_codes = (
-        changes[0]
-    )
-    extra_transforms = tuple(
-        f'atom "{t.group()}" -> "{na}" '
-        f'({" ".join(rc) or "(none)"} -> {" ".join(ac) or "(none)"})'
-        for (_i, t, na, _rm, _ad, rc, ac) in changes[1:]
-    )
     return AppliedFix(
         new_body=new_body,
-        word_index=first_index,
-        old_atom=first_target.group(),
-        new_atom=first_atom,
-        removed_accents=tuple(removed),
-        added_accents=tuple(added),
-        removed_codes=tuple(removed_codes),
-        added_codes=tuple(added_codes),
-        extra_transforms=extra_transforms,
+        word_index=start,
+        old_word=wlc_tokens[0],
+        new_word=mam_tokens[0],
+        removed_accents=tuple(removed_first),
+        added_accents=tuple(added_first),
+        extra_transforms=tuple(extra_transforms),
     )
 
 
@@ -307,168 +202,77 @@ def _diff_side_word(diff_entry: object, key: str) -> object:
 
 
 def _accent_name_diff(wlc_word: str, mam_word: str) -> tuple[list[str], list[str]]:
+    """The cantillation accents the fix removes vs adds, by abbreviation.
+
+    Used only as the grammar-visibility gate and for the human-readable transform
+    description; the actual fix is the whole-word substitution.  A *medial* meteg
+    (``(mos)``) is stripped from both sides (invisible to the grammar), but a
+    ``(mos)`` that *replaces* a real accent on a sof-pasuq-bearing word -- or is added
+    to a sof-pasuq word that carried no silluq -- is the verse-final silluq, a real
+    grammar-visible accent, so it is promoted to ``(sil)``.
+    """
     wlc_accs = Counter(uni_heb.accent_names(wlc_word))
     mam_accs = Counter(uni_heb.accent_names(mam_word))
-    # ``(mos)`` is the meteg/silluq glyph (U+05BD); strip it from the cantillation
-    # diff -- a *medial* meteg difference is invisible to the grammar.
-    wlc_mos = wlc_accs.pop(fix_tester_codes.MOS_ABBREV, 0)
-    mam_mos = mam_accs.pop(fix_tester_codes.MOS_ABBREV, 0)
+    wlc_mos = wlc_accs.pop(_MOS_ABBREV, 0)
+    mam_mos = mam_accs.pop(_MOS_ABBREV, 0)
     removed = list((wlc_accs - mam_accs).elements())
     added = list((mam_accs - wlc_accs).elements())
-    # Verse-final silluq: a ``(mos)`` MAM places on a sof-pasuq-bearing word is the
-    # verse-final silluq -- a real, grammar-visible accent (the scanner tokenizes a
-    # code-35 before 00 as SILLUQ, anywhere in the final word), not an inert meteg.
-    # Promote it to a real SILLUQ so the splice adds the accent the grammar needs.
-    # Two genuinely-silluq cases:
-    #   * MAM *trades* a real WLC accent for the ``(mos)`` (``removed and not
-    #     added``): the ju 13:18 tevir->silluq case.
-    #   * MAM *adds* the ``(mos)`` to a word that carried no silluq of its own
-    #     (``wlc_mos == 0`` and nothing else added): the missing-verse-final-silluq
-    #     case (the former ``meteg_only`` 8, each flagged ``silluq_phrase``).
-    # A ``(mos)`` added to a word that *already* has one (``wlc_mos > 0``) stays an
-    # inert medial meteg -- promoting it would scan as a duplicate silluq.
     if (
         mam_mos
         and not added
         and _SOF_PASUQ in mam_word
         and (removed or wlc_mos == 0)
     ):
-        added.append(fix_tester_codes.SILLUQ_ABBREV)
+        added.append(_SILLUQ_ABBREV)
     return removed, added
-
-
-def _word_atom_spans(body: str) -> list[re.Match[str]]:
-    """The M-C body's word-bearing atoms (a Hebrew letter, not a ketiv ``*atom``
-    and not a lone P/S/N section marker), index-aligned 1:1 with the WLC verse's
-    word tokens."""
-    return [
-        m
-        for m in _ATOM_SPAN_RE.finditer(body)
-        if _MC_LETTER_RE.search(m.group())
-        and not _KETIV_RE.match(m.group())
-        and not _SECTION_MARKER_RE.match(m.group())
-    ]
-
-
-def _splice_word(
-    target: re.Match[str], removed: list[str], added: list[str]
-) -> tuple[str, list[str], list[str]] | UntestableFix:
-    """Map accent names -> M-C codes and splice them into ``target``'s atom text."""
-    atom_text = target.group()
-    # The removed side may resolve delete-only accents (e.g. a stranded zarshit /
-    # 82) that have no standalone token type and so cannot be added.
-    removed_codes, bad = _codes_for(removed, for_removal=True)
-    if bad is not None:
-        return UntestableFix("ambiguous_accent", f"unmappable accent {bad}")
-    added_codes, bad = _codes_for(added)
-    if bad is not None:
-        return UntestableFix("ambiguous_accent", f"unmappable accent {bad}")
-
-    new_atom = _splice(atom_text, removed_codes, added_codes)
-    if new_atom is None:
-        return UntestableFix(
-            "code_not_found",
-            f"codes {removed_codes} not all in atom {atom_text!r}",
-        )
-    return new_atom, removed_codes, added_codes
 
 
 def _no_accent_change_reason(wlc_tokens: list[str], mam_tokens: list[str]) -> str:
     """Distinguish a meteg/silluq-only change from a pure niqqud change; both are
     invisible to the grammar, but the label tells which mark moved."""
     wlc_mos = sum(
-        Counter(uni_heb.accent_names(w))[fix_tester_codes.MOS_ABBREV] for w in wlc_tokens
+        Counter(uni_heb.accent_names(w))[_MOS_ABBREV] for w in wlc_tokens
     )
     mam_mos = sum(
-        Counter(uni_heb.accent_names(w))[fix_tester_codes.MOS_ABBREV] for w in mam_tokens
+        Counter(uni_heb.accent_names(w))[_MOS_ABBREV] for w in mam_tokens
     )
     return "meteg_only" if wlc_mos != mam_mos else "vowel_only"
 
 
-def _codes_for(
-    abbrevs: list[str], for_removal: bool = False
-) -> tuple[list[str], str | None]:
-    lookup = (
-        fix_tester_codes.removal_code if for_removal else fix_tester_codes.accent_code
-    )
-    codes: list[str] = []
-    for abbrev in abbrevs:
-        code = lookup(abbrev)
-        if code is None:
-            return [], abbrev
-        codes.append(code)
-    return codes, None
+def _word_unit_setters(verse: object):
+    """Setters for each word-bearing unit in ``verse['vels']``, in WLC word order.
 
-
-def _splice(atom: str, removed_codes: list[str], added_codes: list[str]) -> str | None:
-    """Return the atom with the accent codes changed, or None if a removed code is
-    absent from the atom.
-
-    Handles four shapes: a 1->1 swap (in place, preserving the code's offset -- so
-    e.g. an in-place zarshit 82->02 or verse-final silluq 91->35 stays put), and
-    the general delete-then-insert that covers delete-only, insert-only, and the
-    1->many replacement (azla -> pashta x2, 1k 19:11 / je 49:19).  In the general
-    path the added codes land after the last M-C letter, exactly as the insert-only
-    case always has: the offset among letters is irrelevant to tokenization, and a
-    postpositive accent (pashta) belongs on the final consonant anyway.
+    Each setter replaces one word's Unicode text in place (preserving any ``notes``
+    and the ketiv-qere wrapper), so the list is 1:1 with ``verse_words`` of the
+    display verse: maqaf-joined sub-words are separate vels (hence separate units),
+    ketiv-qere descends into the qere side, and lone section markers contribute none.
     """
-    if len(removed_codes) == 1 and len(added_codes) == 1:
-        return _replace_first_code(atom, removed_codes[0], added_codes[0])
-    out = atom
-    for code in removed_codes:
-        out = _replace_first_code(out, code, "")
-        if out is None:
-            return None
-    if added_codes:
-        out = _insert_codes(out, added_codes)
-    return out
+    setters: list = []
+    vels = verse.get("vels") if isinstance(verse, dict) else None
+    if not isinstance(vels, list):
+        return setters
+    _collect_unit_setters(vels, setters)
+    return setters
 
 
-def _replace_first_code(atom: str, old_code: str, new_code: str) -> str | None:
-    for m in _CODE_RE.finditer(atom):
-        if m.group() == old_code:
-            return atom[: m.start()] + new_code + atom[m.end() :]
-    return None
-
-
-def _insert_codes(atom: str, codes: list[str]) -> str:
-    # A verse-final silluq (code 35, promoted from a sof-pasuq-bearing (mos)) must
-    # land immediately *before* the sof-pasuq 00, not after the last M-C letter:
-    # when the atom carries a trailing note-marker whose payload is a letter
-    # (e.g. ``00]U``), "after the last letter" puts the silluq *past* the 00, where
-    # it never scans (the scanner stops at sof pasuq).  Inserting before the 00 is
-    # also where an ``]1``-style atom's silluq already landed, so it is consistent.
-    if codes == [_SILLUQ_CODE] and _SOFPASUQ_CODE in atom:
-        return _insert_before_first_code(atom, _SOFPASUQ_CODE, codes[0])
-    return _insert_after_last_letter(atom, "".join(codes))
-
-
-def _insert_before_first_code(text: str, target_code: str, ins: str) -> str:
-    for m in _CODE_RE.finditer(text):
-        if m.group() == target_code:
-            return text[: m.start()] + ins + text[m.start() :]
-    return _insert_after_last_letter(text, ins)
-
-
-def _insert_after_last_letter(text: str, ins: str) -> str:
-    # Insert right after the last M-C letter (the stress-bearing consonant), not
-    # at the very end: trailing note-markers like ``]1`` carry stray digits that
-    # would fuse with an end-appended code into a spurious 2-digit code.  The
-    # exact letter offset among earlier letters is irrelevant to tokenization.
-    last_letter = None
-    for m in _MC_LETTER_RE.finditer(text):
-        last_letter = m
-    insert_at = last_letter.end() if last_letter is not None else len(text)
-    return text[:insert_at] + ins + text[insert_at:]
-
-
-def _insert_after_last_code(text: str, ins: str) -> str:
-    # Insert right after the last 2-digit accent code (the verse-final silluq for
-    # a sof-pasuq append), so the silluq still scans and the inserted 00 does not
-    # fuse with note-marker digits.  Falls back to after the last letter.
-    last_code = None
-    for m in _CODE_RE.finditer(text):
-        last_code = m
-    if last_code is not None:
-        return text[: last_code.end()] + ins + text[last_code.end() :]
-    return _insert_after_last_letter(text, ins)
+def _collect_unit_setters(container: list, setters: list) -> None:
+    """Append a setter for every word-bearing unit reachable from ``container`` (a
+    vels list, or a qere list inside a ketiv-qere wrapper), in order."""
+    for index, vel in enumerate(container):
+        if isinstance(vel, str):
+            if _HEB_LETTER_RE.search(vel):
+                setters.append(
+                    lambda new_word, c=container, i=index: c.__setitem__(i, new_word)
+                )
+            continue
+        if not isinstance(vel, dict):
+            continue
+        kq = vel.get("kq")
+        if isinstance(kq, (list, tuple)) and len(kq) == 2 and isinstance(kq[1], list):
+            _collect_unit_setters(kq[1], setters)
+            continue
+        word = vel.get("word")
+        if isinstance(word, str) and _HEB_LETTER_RE.search(word):
+            setters.append(
+                lambda new_word, d=vel: d.__setitem__("word", new_word)
+            )

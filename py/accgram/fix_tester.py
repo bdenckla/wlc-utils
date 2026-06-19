@@ -41,13 +41,12 @@ from pathlib import Path
 
 from accgram import fix_apply
 from accgram import fix_claim
-from accgram import fix_tester_codes
 from accgram import ply_classify
 from accgram import research_tao
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_rows
-from accgram import split_wlc
+from accgram import uni_to_mc_body
 from accgram import lexical_validation
 from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.ply_scanner import HasLegarmeh, Token, scan_accents
@@ -292,11 +291,18 @@ def _test_one(
             st_summary=st_summary,
         )
 
-    body = row.get("content")
-    if not isinstance(body, str) or not body:
+    wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = source_indexes
+    # The scanned body is transcoded from the canonical -kq-u verse (issue #9: M-C
+    # dropped as an input), not read from the oddball row's stored content.
+    raw_verse = wlc422_by_bcv.get(bcv)
+    body = (
+        uni_to_mc_body.verse_to_mc_body(raw_verse)
+        if isinstance(raw_verse, dict)
+        else ""
+    )
+    if not body:
         return result("UNTESTABLE", reason="no_body")
 
-    wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = source_indexes
     try:
         enriched_row, _ = rtms_data.build_enriched_row(
             row=row,
@@ -330,7 +336,7 @@ def _test_one(
                 chnu=chnu,
                 vrnu=vrnu,
                 before=before,
-                args=args,
+                wlc422_by_bcv=wlc422_by_bcv,
                 guard=guard,
                 result=result,
             )
@@ -351,7 +357,7 @@ def _test_one(
     fix_description = _describe_diff(diff_entry)
     if synthesized:
         fix_description = f"{fix_description}  (synthesized)"
-    applied = fix_apply.apply_mam_fix(body, wlc_words, diff_entry)
+    applied = fix_apply.apply_mam_fix(raw_verse, wlc_words, diff_entry)
     if isinstance(applied, fix_apply.UntestableFix):
         return result(
             "UNTESTABLE",
@@ -396,7 +402,7 @@ def _test_merge_next(
     chnu: int,
     vrnu: int,
     before: _Eval,
-    args: argparse.Namespace,
+    wlc422_by_bcv: dict[str, dict[str, object]],
     guard: _ParseGuard,
     result,
 ) -> FixTestResult:
@@ -409,9 +415,13 @@ def _test_merge_next(
     atnach bisects a complete verse, and the parse comes out CLEAN.
     """
     nbb, nchnu, nvrnu = rtms_rows.parse_ref(merge_ref, row_kind="oddball")
-    next_key = (nbb, nchnu, nvrnu)
-    bodies = split_wlc.collect_source_lines(args.input, {next_key})
-    next_body = bodies.get(next_key)
+    next_bcv = rtms_rows.to_compact_bcv(nbb, nchnu, nvrnu)
+    next_verse = wlc422_by_bcv.get(next_bcv)
+    next_body = (
+        uni_to_mc_body.verse_to_mc_body(next_verse)
+        if isinstance(next_verse, dict)
+        else None
+    )
     fix_description = (
         f"merge next verse {merge_ref} "
         f"(MAM versification: BHS splits one chanted verse in two)"
@@ -479,12 +489,11 @@ def _agreement(claimed: str, classification: str) -> str:
 
 
 def run_tests(args: argparse.Namespace) -> list[FixTestResult]:
-    fix_tester_codes.assert_in_sync_with_gg_rules()
     repo_root = _repo_root()
 
     ply_classify.write_ply_oddballs(
         ply_dir=getattr(args, "ply_dir", None) or research_tao.default_ply_dir(repo_root),
-        source_input_path=args.input,
+        wlc422_kq_u_dir=args.wlc422_kq_u_dir,
         oddballs_out=args.oddballs_in,
     )
 
@@ -674,12 +683,6 @@ def default_report_json_path(repo_root: Path) -> Path:
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
-    parser.add_argument(
-        "--input",
-        type=Path,
-        default=research_tao.default_input_path(repo_root),
-        help="Path to source wlc422_ps.txt file (oddball verse content).",
-    )
     parser.add_argument(
         "--wlc422-kq-u-dir",
         type=Path,

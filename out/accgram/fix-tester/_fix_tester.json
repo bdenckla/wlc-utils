@@ -21,7 +21,7 @@
       "fix_description": "אל֣וף -> אל֥וף",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \")AL.74W.P\" -> \")AL.71W.P\" (74 -> 71)",
+      "transformation": "word \"אל֣וף\" -> \"אל֥וף\" ((mun) -> (mer))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -59,7 +59,7 @@
       "fix_description": "ועשר֤ים -> ועשר֣ים",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"W:/(E&:RI70YM\" -> \"W:/(E&:RI74YM\" (70 -> 74)",
+      "transformation": "word \"ועשר֤ים\" -> \"ועשר֣ים\" ((mah) -> (mun))",
       "before_status": "ODDBALL",
       "before_labels": [
         "atnax_phrase"
@@ -111,7 +111,7 @@
       "fix_description": "עשר֣ים -> עשר֤ים",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"(E&:RI74YM\" -> \"(E&:RI70YM\" (74 -> 70)",
+      "transformation": "word \"עשר֣ים\" -> \"עשר֤ים\" ((mun) -> (mah))",
       "before_status": "ODDBALL",
       "before_labels": [
         "pashta_phrase"
@@ -167,7 +167,7 @@
       "fix_description": "מפנ֥י -> מפנ֣י",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"MI/P.:N\"71Y\" -> \"MI/P.:N\"74Y\" (71 -> 74)",
+      "transformation": "word \"מפנ֥י\" -> \"מפנ֣י\" ((mer) -> (mun))",
       "before_status": "ODDBALL",
       "before_labels": [
         "atnax_phrase"
@@ -213,7 +213,7 @@
       "fix_description": "מכ֨ל -> מכל֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"MI/K.O63L\" -> \"MI/K.O03L\" (63 -> 03)",
+      "transformation": "word \"מכ֨ל\" -> \"מכל֙\" ((qom) -> (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -271,7 +271,7 @@
       "fix_description": "הר֨וח -> הר֙וח֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"HF/R63W.XA]1\" -> \"HF/RW.XA0303]1\" (63 -> 03 03)",
+      "transformation": "word \"הר֨וח\" -> \"הר֙וח֙\" ((qom) -> (pash) (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -332,7 +332,6 @@
         "ATNAX",
         "MAHAPAKH",
         "PASHTA",
-        "PASHTA",
         "ZAQEF",
         "MERKHA",
         "TIPEXA",
@@ -352,7 +351,7 @@
       "fix_description": "וס֣וס -> וס֥וס",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"W:/S74W.S\" -> \"W:/S71W.S\" (74 -> 71)",
+      "transformation": "word \"וס֣וס\" -> \"וס֥וס\" ((mun) -> (mer))",
       "before_status": "ODDBALL",
       "before_labels": [
         "legarmeh_phrase"
@@ -418,7 +417,7 @@
       "fix_description": "נ֥כח -> נכח־",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"NO71KAX\" -> \"NOKAX\" (71 -> (none))",
+      "transformation": "word \"נ֥כח\" -> \"נכח־\" ((mer) -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -479,7 +478,7 @@
       "fix_description": "גדולֽה -> גדולֽה׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"גדולֽה\" -> \"גדולֽה׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -547,7 +546,7 @@
       "fix_description": "ז֣בח הבק֗ר -> ז֣בח הבקר֒",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"HA/B.FQF81R\" -> \"HA/B.FQF01R\" (81 -> 01)",
+      "transformation": "word \"ז֣בח\" -> \"ז֣בח\" ((none) -> (none)); word \"הבק֗ר\" -> \"הבקר֒\" ((rev) -> (seg_a))",
       "before_status": "ODDBALL",
       "before_labels": [
         "segolta_phrase"
@@ -607,7 +606,7 @@
       "fix_description": "שר֤י -> שר֧י",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"&FR\"70Y\" -> \"&FR\"94Y\" (70 -> 94)",
+      "transformation": "word \"שר֤י\" -> \"שר֧י\" ((mah) -> (dar))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tevir_phrase"
@@ -651,7 +650,7 @@
       "fix_description": "שנ֖ים -> שנ֑ים",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"$FNI73YM\" -> \"$FNI92YM\" (73 -> 92)",
+      "transformation": "word \"שנ֖ים\" -> \"שנ֑ים\" ((tip) -> (atn))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -697,7 +696,7 @@
       "fix_description": "י֧ר֞ב -> י֧רב",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"**YI94RE62B\" -> \"**YI94REB\" (62 -> (none))",
+      "transformation": "word \"י֧ר֞ב\" -> \"י֧רב\" ((ger_2) -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "revia_phrase"
@@ -756,7 +755,7 @@
       "fix_description": "ועשר֣ים -> ועשר֤ים",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"W:/(E&:RI74YM\" -> \"W:/(E&:RI70YM\" (74 -> 70)",
+      "transformation": "word \"ועשר֣ים\" -> \"ועשר֤ים\" ((mun) -> (mah))",
       "before_status": "ODDBALL",
       "before_labels": [
         "pashta_phrase"
@@ -810,7 +809,7 @@
       "fix_description": "שנ֨ה -> שנה֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"$FNF63H\" -> \"$FNF03H\" (63 -> 03)",
+      "transformation": "word \"שנ֨ה\" -> \"שנה֙\" ((qom) -> (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -866,7 +865,7 @@
       "fix_description": "לעינ֨י -> לעיני֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"L:/(\"YN\"63Y\" -> \"L:/(\"YN\"03Y\" (63 -> 03)",
+      "transformation": "word \"לעינ֨י\" -> \"לעיני֙\" ((qom) -> (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -940,7 +939,7 @@
       "fix_description": "אדנ֨י -> אדני֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"):ADON/I63Y\" -> \"):ADON/I03Y\" (63 -> 03)",
+      "transformation": "word \"אדנ֨י\" -> \"אדני֙\" ((qom) -> (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "pashta_phrase"
@@ -1022,7 +1021,7 @@
       "fix_description": "בפלשתים -> בפלשתים֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"B.A/P.:LI$:T.IYM\" -> \"B.A/P.:LI$:T.IYM03\" ((none) -> 03)",
+      "transformation": "word \"בפלשתים\" -> \"בפלשתים֙\" ((none) -> (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -1075,7 +1074,7 @@
       "fix_description": "סופֽה -> סופֽה׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"סופֽה\" -> \"סופֽה׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -1125,7 +1124,7 @@
       "fix_description": "יוסֽף -> יוסֽף׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"יוסֽף\" -> \"יוסֽף׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -1171,7 +1170,7 @@
       "fix_description": "מצרֽים -> מצרֽים׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"מצרֽים\" -> \"מצרֽים׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -1227,7 +1226,7 @@
       "fix_description": "ד֥י -> די־",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"DI71Y\" -> \"DIY\" (71 -> (none))",
+      "transformation": "word \"ד֥י\" -> \"די־\" ((mer) -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -1296,7 +1295,7 @@
       "fix_description": "ההֽוא -> ההֽוא׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"ההֽוא\" -> \"ההֽוא׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -1342,7 +1341,7 @@
       "fix_description": "הזה׃ -> הזֽה׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"HA/Z.EH00]U\" -> \"HA/Z.EH3500]U\" ((none) -> 35)",
+      "transformation": "word \"הזה׃\" -> \"הזֽה׃\" ((none) -> (sil))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -1393,7 +1392,7 @@
       "fix_description": "רענן׃ -> רענֽן׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"RA(:ANFN00]U\" -> \"RA(:ANFN3500]U\" ((none) -> 35)",
+      "transformation": "word \"רענן׃\" -> \"רענֽן׃\" ((none) -> (sil))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -1452,7 +1451,7 @@
       "fix_description": "וחקרת֧ -> וחקרת֛",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"W:/XFQAR:T.F94]U\" -> \"W:/XFQAR:T.F91]U\" (94 -> 91)",
+      "transformation": "word \"וחקרת֧\" -> \"וחקרת֛\" ((dar) -> (tev))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -1502,7 +1501,7 @@
       "fix_description": "תוכ֘ל -> תוכל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"TW.KA82L]S]s\" -> \"TW.KA02L]S]s\" (82 -> 02)",
+      "transformation": "word \"תוכ֘ל\" -> \"תוכל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -1569,7 +1568,7 @@
       "fix_description": "ישראל׃ -> ישראֽל׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"L00]U\" -> \"YI&:RF)\"L3500]U\" ((none) -> 35)",
+      "transformation": "word \"ישראל׃\" -> \"ישראֽל׃\" ((none) -> (sil))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -1610,7 +1609,7 @@
       "fix_description": "ברעך -> ברעך֖",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"B:/R\"75(/:AKF]U\" -> \"B:/R\"75(/:AKF]U73\" ((none) -> 73)",
+      "transformation": "word \"ברעך\" -> \"ברעך֖\" ((none) -> (tip))",
       "before_status": "ODDBALL",
       "before_labels": [
         "atnax_phrase"
@@ -1651,7 +1650,7 @@
       "fix_description": "אחֽיו -> אחֽיו׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"אחֽיו\" -> \"אחֽיו׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -1719,7 +1718,7 @@
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"82L]S]s\" -> \"YI&:RF)\"02L]S]s\" (82 -> 02)",
+      "transformation": "word \"ישרא֘ל\" -> \"ישראל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -1792,7 +1791,7 @@
       "fix_description": "אש֥ר -> אש֛ר",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"):A$E71R\" -> \"):A$E91R\" (71 -> 91)",
+      "transformation": "word \"אש֥ר\" -> \"אש֛ר\" ((mer) -> (tev))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -1838,7 +1837,7 @@
       "fix_description": "יאב֥ד טוב֥ה -> יאב֖ד טוב֥ה",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"Y:)AB.\"71D\" -> \"Y:)AB.\"73D\" (71 -> 73)",
+      "transformation": "word \"יאב֥ד\" -> \"יאב֖ד\" ((mer) -> (tip))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -1882,7 +1881,7 @@
       "fix_description": "כ֤י -> כ֚י",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"K.I70Y\" -> \"K.I10Y\" (70 -> 10)",
+      "transformation": "word \"כ֤י\" -> \"כ֚י\" ((mah) -> (yet))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -1926,7 +1925,7 @@
       "fix_description": "שר֖י -> שר֥י",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"&FR\"73Y\" -> \"&FR\"71Y\" (73 -> 71)",
+      "transformation": "word \"שר֖י\" -> \"שר֥י\" ((tip) -> (mer))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -2000,7 +1999,7 @@
       "fix_description": "וה֥יו ל֣י -> והיו־ ל֣י",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"W:/HF71YW.\" -> \"W:/HFYW.\" (71 -> (none))",
+      "transformation": "word \"וה֥יו\" -> \"והיו־\" ((mer) -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "revia_phrase"
@@ -2061,7 +2060,7 @@
       "fix_description": "ישראֽל -> ישראֽל׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"ישראֽל\" -> \"ישראֽל׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -2109,7 +2108,7 @@
       "fix_description": "ותקחֽה -> ותקחֽה׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"ותקחֽה\" -> \"ותקחֽה׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -2165,7 +2164,7 @@
       "fix_description": "דברך -> דברך֖",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"D.AB.ER/:KF]1\" -> \"D.AB.ER/:KF73]1\" ((none) -> 73)",
+      "transformation": "word \"דברך\" -> \"דברך֖\" ((none) -> (tip))",
       "before_status": "ODDBALL",
       "before_labels": [
         "atnax_phrase"
@@ -2234,7 +2233,7 @@
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"82L]s\" -> \"YI&:RF)\"02L]s\" (82 -> 02)",
+      "transformation": "word \"ישרא֘ל\" -> \"ישראל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -2297,7 +2296,7 @@
       "fix_description": "במצרֽים -> במצרֽים׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"במצרֽים\" -> \"במצרֽים׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -2355,7 +2354,7 @@
       "fix_description": "ומשמאלֽם -> ומשמאלֽם׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"ומשמאלֽם\" -> \"ומשמאלֽם׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -2403,7 +2402,7 @@
       "fix_description": "את֔ו -> את֗ו",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \")IT./O80W\" -> \")IT./O81W\" (80 -> 81)",
+      "transformation": "word \"את֔ו\" -> \"את֗ו\" ((zaq_q) -> (rev))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tevir_phrase"
@@ -2465,7 +2464,7 @@
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"82L]s\" -> \"YI&:RF)\"02L]s\" (82 -> 02)",
+      "transformation": "word \"ישרא֘ל\" -> \"ישראל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -2526,7 +2525,7 @@
       "fix_description": "ואמֽת׀ -> ואמֽת׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"ואמֽת׀\" -> \"ואמֽת׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -2578,7 +2577,7 @@
       "fix_description": "בצלא֘ל -> בצלאל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"B.:CAL:)\"82L]s\" -> \"B.:CAL:)\"02L]s\" (82 -> 02)",
+      "transformation": "word \"בצלא֘ל\" -> \"בצלאל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -2643,7 +2642,7 @@
       "fix_description": "עמודיה֥ם -> עמודיה֣ם",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"(AM.W.D\"Y/HE71M\" -> \"(AM.W.D\"Y/HE74M\" (71 -> 74)",
+      "transformation": "word \"עמודיה֥ם\" -> \"עמודיה֣ם\" ((mer) -> (mun))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -2693,7 +2692,7 @@
       "fix_description": "ולישמע֘אל -> ולישמעאל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"W.75/L:/YI$:MF(\"82)L]S]s\" -> \"W.75/L:/YI$:MF(\"02)L]S]s\" (82 -> 02)",
+      "transformation": "word \"ולישמע֘אל\" -> \"ולישמעאל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -2752,7 +2751,7 @@
       "fix_description": "לו׃ -> לֽו׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"L/OW00]U\" -> \"L/OW3500]U\" ((none) -> 35)",
+      "transformation": "word \"לו׃\" -> \"לֽו׃\" ((none) -> (sil))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -2787,7 +2786,7 @@
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"82L]S]s\" -> \"YI&:RF)\"02L]S]s\" (82 -> 02)",
+      "transformation": "word \"ישרא֘ל\" -> \"ישראל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -2858,7 +2857,7 @@
       "fix_description": "מזבחותֽם -> מזבחותֽם׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"מזבחותֽם\" -> \"מזבחותֽם׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -2896,7 +2895,7 @@
       "fix_description": "אהבֽים -> אהבֽים׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"אהבֽים\" -> \"אהבֽים׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -2940,7 +2939,7 @@
       "fix_description": "ירומם׃ -> ירומֽם׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"Y:ROWM\"M00]U\" -> \"Y:ROWM\"M3500]U\" ((none) -> 35)",
+      "transformation": "word \"ירומם׃\" -> \"ירומֽם׃\" ((none) -> (sil))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -2981,7 +2980,7 @@
       "fix_description": "ימס׃ -> ימֽס׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YIM.FS00]1\" -> \"YIM.FS3500]1\" ((none) -> 35)",
+      "transformation": "word \"ימס׃\" -> \"ימֽס׃\" ((none) -> (sil))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -3018,7 +3017,7 @@
       "fix_description": "וישל֣ח -> וישל֥ח",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"WA/Y.I$:LA74X\" -> \"WA/Y.I$:LA71X\" (74 -> 71)",
+      "transformation": "word \"וישל֣ח\" -> \"וישל֥ח\" ((mun) -> (mer))",
       "before_status": "ODDBALL",
       "before_labels": [
         "legarmeh_phrase"
@@ -3076,7 +3075,7 @@
       "fix_description": "לכ֣ורש -> לכ֒ורש  (synthesized)",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"L:/KO74WRE$\" -> \"L:/KO01WRE$\" (74 -> 01)",
+      "transformation": "word \"לכ֣ורש\" -> \"לכ֒ורש\" ((mun) -> (seg_a))",
       "before_status": "ODDBALL",
       "before_labels": [
         "segolta_phrase"
@@ -3136,7 +3135,7 @@
       "fix_description": "מבל֖י -> מבל֥י",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"MI/B.:LI73Y\" -> \"MI/B.:LI71Y\" (73 -> 71)",
+      "transformation": "word \"מבל֖י\" -> \"מבל֥י\" ((tip) -> (mer))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -3184,7 +3183,7 @@
       "fix_description": "מבל֖י -> מבל֥י",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"MI/B.:LI73Y\" -> \"MI/B.:LI71Y\" (73 -> 71)",
+      "transformation": "word \"מבל֖י\" -> \"מבל֥י\" ((tip) -> (mer))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -3242,7 +3241,7 @@
       "fix_description": "יד֥י־ -> ידי־",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"Y:D\"71Y\" -> \"Y:D\"Y\" (71 -> (none))",
+      "transformation": "word \"יד֥י־\" -> \"ידי־\" ((mer) -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -3289,7 +3288,7 @@
       "fix_description": "דבר֨י -> דברי֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"D.IB:R\"63Y\" -> \"D.IB:R\"03Y\" (63 -> 03)",
+      "transformation": "word \"דבר֨י\" -> \"דברי֙\" ((qom) -> (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -3339,7 +3338,7 @@
       "fix_description": "שב֞רתי -> שב֕רתי",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"$FBA62R:T.IY\" -> \"$FBA85R:T.IY\" (62 -> 85)",
+      "transformation": "word \"שב֞רתי\" -> \"שב֕רתי\" ((ger_2) -> (zaq_g))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -3385,7 +3384,7 @@
       "fix_description": "מא֖רץ -> מא֣רץ",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"M\"/)E73REC\" -> \"M\"/)E74REC\" (73 -> 74)",
+      "transformation": "word \"מא֖רץ\" -> \"מא֣רץ\" ((tip) -> (mun))",
       "before_status": "ODDBALL",
       "before_labels": [
         "atnax_phrase"
@@ -3447,7 +3446,7 @@
       "fix_description": "בכ֥ובע֑ים -> בכובע֑ים",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"B.:/KO71WBF(I92YM\" -> \"B.:/KOWBF(I92YM\" (71 -> (none))",
+      "transformation": "word \"בכ֥ובע֑ים\" -> \"בכובע֑ים\" ((mer) -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "atnax_phrase"
@@ -3496,7 +3495,7 @@
       "fix_description": "הנ֖ה־ -> הנה־",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"HIN.\"73H\" -> \"HIN.\"H\" (73 -> (none))",
+      "transformation": "word \"הנ֖ה־\" -> \"הנה־\" ((tip) -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "atnax_phrase",
@@ -3546,7 +3545,7 @@
       "fix_description": "אריצ֨נו -> אריצ֙נו֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"):ARIYC/E63N.W.\" -> \"):ARIYC/EN.W0303.\" (63 -> 03 03)",
+      "transformation": "word \"אריצ֨נו\" -> \"אריצ֙נו֙\" ((qom) -> (pash) (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -3589,7 +3588,6 @@
         "SEGOLTA",
         "MAHAPAKH",
         "PASHTA",
-        "PASHTA",
         "ZAQEF",
         "MERKHA",
         "TIPEXA",
@@ -3620,7 +3618,7 @@
       "fix_description": "רפ֣ינו -> רפ֤אנו",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"**RIP.I74YNW.\" -> \"**RIP.I70YNW.\" (74 -> 70)",
+      "transformation": "word \"רפ֣ינו\" -> \"רפ֤אנו\" ((mun) -> (mah))",
       "before_status": "ODDBALL",
       "before_labels": [
         "pashta_phrase"
@@ -3672,7 +3670,7 @@
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"82L]s\" -> \"YI&:RF)\"02L]s\" (82 -> 02)",
+      "transformation": "word \"ישרא֘ל\" -> \"ישראל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -3741,7 +3739,7 @@
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"82L]s\" -> \"YI&:RF)\"02L]s\" (82 -> 02)",
+      "transformation": "word \"ישרא֘ל\" -> \"ישראל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -3804,7 +3802,7 @@
       "fix_description": "עז֥ה -> עז֛ה",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"(AZ.F71H\" -> \"(AZ.F91H\" (71 -> 91)",
+      "transformation": "word \"עז֥ה\" -> \"עז֛ה\" ((mer) -> (tev))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -3852,7 +3850,7 @@
       "fix_description": "וי֣אמר -> וי֥אמר",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"WA/Y.O74)MER\" -> \"WA/Y.O71)MER\" (74 -> 71)",
+      "transformation": "word \"וי֣אמר\" -> \"וי֥אמר\" ((mun) -> (mer))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -3894,7 +3892,7 @@
       "fix_description": "אות֥ו תיר֑ש -> אות֣ו תיר֑ש",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \")OWT/O71W\" -> \")OWT/O74W\" (71 -> 74)",
+      "transformation": "word \"אות֥ו\" -> \"אות֣ו\" ((mer) -> (mun))",
       "before_status": "ODDBALL",
       "before_labels": [
         "atnax_phrase"
@@ -3952,7 +3950,7 @@
       "fix_description": "פ֛לאי׃ -> פֽלאי׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"PE91LI)Y00]Q]c]n\" -> \"PE35LI)Y00]Q]c]n\" (91 -> 35)",
+      "transformation": "word \"פ֛לאי׃\" -> \"פֽלאי׃\" ((tev) -> (sil))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -3996,7 +3994,7 @@
       "fix_description": "ויאמר֨ו -> ויאמרו֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"WA/Y.O75)M:R63W.\" -> \"WA/Y.O75)M:R03W.\" (63 -> 03)",
+      "transformation": "word \"ויאמר֨ו\" -> \"ויאמרו֙\" ((qom) -> (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -4040,7 +4038,7 @@
       "fix_description": "הונ֖ח -> הונח־",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"H75W.NA73X]Q]c]p\" -> \"H75W.NAX]Q]c]p\" (73 -> (none))",
+      "transformation": "word \"הונ֖ח\" -> \"הונח־\" ((tip) -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -4079,7 +4077,7 @@
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"82L]s\" -> \"YI&:RF)\"02L]s\" (82 -> 02)",
+      "transformation": "word \"ישרא֘ל\" -> \"ישראל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -4136,7 +4134,7 @@
       "fix_description": "הֽוא -> הֽוא׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"הֽוא\" -> \"הֽוא׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -4192,7 +4190,7 @@
       "fix_description": "לאמֽר -> לאמֽר׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"לאמֽר\" -> \"לאמֽר׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -4226,7 +4224,7 @@
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"82L]s\" -> \"YI&:RF)\"02L]s\" (82 -> 02)",
+      "transformation": "word \"ישרא֘ל\" -> \"ישראל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -4291,7 +4289,7 @@
       "fix_description": "נאכ֤֖ל -> נאכ֖ל",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"N.O)KA7073L]c]n\" -> \"N.O)KA73L]c]n\" (70 -> (none))",
+      "transformation": "word \"נאכ֤֖ל\" -> \"נאכ֖ל\" ((mah) -> (none))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -4340,7 +4338,7 @@
       "fix_description": "לחֽרב -> לחֽרב׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"לחֽרב\" -> \"לחֽרב׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -4376,7 +4374,7 @@
       "fix_description": "חטאתיכם׃ -> חטאתיכֽם׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"XA+.O)T\"Y/KEM00]1\" -> \"XA+.O)T\"Y/KEM3500]1\" ((none) -> 35)",
+      "transformation": "word \"חטאתיכם׃\" -> \"חטאתיכֽם׃\" ((none) -> (sil))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -4417,7 +4415,7 @@
       "fix_description": "דבר֨י -> דברי֙",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"D:BFR/A63Y\" -> \"D:BFR/A03Y\" (63 -> 03)",
+      "transformation": "word \"דבר֨י\" -> \"דברי֙\" ((qom) -> (pash))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"
@@ -4468,7 +4466,7 @@
       "fix_description": "ב֥א -> ב֣א",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"B.F71)\" -> \"B.F74)\" (71 -> 74)",
+      "transformation": "word \"ב֥א\" -> \"ב֣א\" ((mer) -> (mun))",
       "before_status": "ODDBALL",
       "before_labels": [
         "zaqef_phrase"
@@ -4526,7 +4524,7 @@
       "fix_description": "קטֽרת -> קטֽרת׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"קטֽרת\" -> \"קטֽרת׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -4564,7 +4562,7 @@
       "fix_description": "לחטֽאת -> לחטֽאת׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"לחטֽאת\" -> \"לחטֽאת׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -4596,7 +4594,7 @@
       "fix_description": "למנחֽה -> למנחֽה׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"למנחֽה\" -> \"למנחֽה׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -4660,7 +4658,7 @@
       "fix_description": "קטֽרת -> קטֽרת׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "append sof pasuq (00) to body",
+      "transformation": "word \"קטֽרת\" -> \"קטֽרת׃\" ((none) -> (sof pasuq))",
       "before_status": "ODDBALL",
       "before_labels": [
         "sof_pasuq_phrase"
@@ -4698,7 +4696,7 @@
       "fix_description": "ישרא֘ל -> ישראל֮",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"YI&:RF)\"82L]s\" -> \"YI&:RF)\"02L]s\" (82 -> 02)",
+      "transformation": "word \"ישרא֘ל\" -> \"ישראל֮\" ((zarshit) -> (zarnor))",
       "before_status": "ODDBALL",
       "before_labels": [
         "illegal_mark:82"
@@ -4794,7 +4792,7 @@
       "fix_description": "לאחיו׃ -> לאחֽיו׃",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"L:/)EXFY/W00]1\" -> \"L:/)EXFY/W3500]1\" ((none) -> 35)",
+      "transformation": "word \"לאחיו׃\" -> \"לאחֽיו׃\" ((none) -> (sil))",
       "before_status": "ODDBALL",
       "before_labels": [
         "silluq_phrase"
@@ -4831,7 +4829,7 @@
       "fix_description": "עליה -> על֖יה",
       "classification": "CONFIRMED",
       "untestable_reason": null,
-      "transformation": "atom \"(FLEY/HF]Q]c]n\" -> \"(FLEY/HF]Q]c]n73\" ((none) -> 73)",
+      "transformation": "word \"עליה\" -> \"על֖יה\" ((none) -> (tip))",
       "before_status": "ODDBALL",
       "before_labels": [
         "tipexa_phrase"

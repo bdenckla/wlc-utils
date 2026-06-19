@@ -1,10 +1,12 @@
-"""Unit tests for the fix-tester's M-C splice (accgram.fix_apply).
+"""Unit tests for the fix-tester's Unicode substitution (accgram.fix_apply).
 
-Pin the mechanical behavior of ``apply_mam_fix``: a 1->1 accent swap, an accent
-deletion, an insertion placed *after the last letter* (so a trailing note-marker
-digit cannot fuse with the new code), the missing-sof-pasuq append, ketiv-atom
-exclusion during alignment, and the UNTESTABLE bailouts.  Each splice is also
-re-scanned through the real scanner to confirm it tokenizes as intended.
+Issue #9 retired the M-C splice: ``apply_mam_fix`` now substitutes the MAM Unicode
+word into a copy of the ``-kq-u`` verse and re-transcodes it (``uni_to_mc_body``) to
+an M-C body to re-scan.  These tests pin that behavior -- a 1->1 accent swap, an
+accent deletion, the missing-sof-pasuq add, the verse-final silluq, ketiv-qere
+descent, lone section-marker exclusion, adjacent multi-word foci, and the UNTESTABLE
+bailouts -- each re-scanned through the real scanner to confirm it tokenizes as
+intended, and each confirming the input verse is not mutated.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_fix_apply.py -v
@@ -12,7 +14,7 @@ Run:
 
 from __future__ import annotations
 
-from accgram import fix_apply, fix_tester_codes, lexical_validation
+from accgram import fix_apply, lexical_validation
 from accgram.fix_apply import AppliedFix, UntestableFix, apply_mam_fix
 from accgram.ply_scanner import HasLegarmeh, scan_accents
 
@@ -21,190 +23,81 @@ def _types(body: str) -> list[str]:
     return [t.type for t in scan_accents(body, "zz", 1, 1, HasLegarmeh())]
 
 
-def test_codes_table_in_sync():
-    fix_tester_codes.assert_in_sync_with_gg_rules()
-
-
 def test_swap_munax_to_merkha():
-    # 1c 1:53-style: munaH (74) -> merkha (71) on the first word.
+    # 1c 1:53-style: munaH -> merkha on the first word.
+    verse = {"vels": ["אל֣וף", "בעם"]}
     result = apply_mam_fix(
-        ")AL.74W.P B.F/(F75M00",
+        verse,
         ["אל֣וף", "בעם"],
         {"wlc422": "אל֣וף", "mam_simple": "אל֥וף"},
     )
     assert isinstance(result, AppliedFix)
-    assert result.new_body == ")AL.71W.P B.F/(F75M00"
     assert "MERKHA" in _types(result.new_body)
     assert "MUNAX" not in _types(result.new_body)
-
-
-def test_stranded_zarshit_swapped_to_zarqa():
-    # The stranded-82 family (ex 6:6 etc.): a medial zarqa stress-helper (zarshit,
-    # code 82) with no fusion partner is the WLC error; MAM has a proper zarqa
-    # (zarnor, code 02).  The diff is (zarshit)->(zarnor); the removed side must
-    # resolve (zarshit) to literal 82 (it has no standalone token type, so only
-    # the delete side can map it) so the 1->1 swap fires.
-    wlc = "ישרא" + "֘" + "ל"  # medial zarqa stress-helper (zarshit)
-    mam = "ישראל" + "֮"  # postpositive zarqa (zarnor)
-    result = apply_mam_fix(
-        'YI&:RF)"82L]s 00',
-        [wlc],
-        {"wlc422": wlc, "mam_simple": mam},
-    )
-    assert isinstance(result, AppliedFix)
-    assert result.new_body == 'YI&:RF)"02L]s 00'
-    # The stranded 82 is gone (so the lexical layer no longer flags it) and the
-    # word now scans as a real ZARQA.
-    assert "ZARQA" in _types(result.new_body)
-    assert not lexical_validation.stranded_stress_helpers(result.new_body)
-
-
-def test_zarshit_addable_only_via_removal():
-    # (zarshit) can be located for deletion but never added: it has no standalone
-    # token type, so accent_code refuses it while removal_code resolves it to 82.
-    assert fix_tester_codes.accent_code("(zarshit)") is None
-    assert fix_tester_codes.removal_code("(zarshit)") == "82"
+    assert result.word_index == 0
+    # The caller's verse is never mutated (apply works on a deep copy).
+    assert verse == {"vels": ["אל֣וף", "בעם"]}
 
 
 def test_delete_accent():
     # je 10:3-style: drop a merkha (71) entirely.
     result = apply_mam_fix(
-        "Y:D.71Y X92Z00",
+        {"vels": ["יד֥י", "זה"]},
         ["יד֥י", "זה"],
         {"wlc422": "יד֥י", "mam_simple": "ידי"},
     )
     assert isinstance(result, AppliedFix)
-    assert result.new_body == "Y:D.Y X92Z00"
+    assert "MERKHA" not in _types(result.new_body)
 
 
-def test_insert_after_last_letter_not_before_note_digit():
-    # ex 4:10-style: a trailing note-marker ]1 must not fuse with an inserted 73.
+def test_stranded_zarshit_swapped_to_zarqa():
+    # The stranded-82 family (ex 6:6 etc.): a medial zarqa stress-helper (zarshit,
+    # U+0598) with no fusion partner is the WLC error; MAM has a proper zarqa
+    # (zarnor, U+05AE).  Substituting the whole MAM word clears the stranded mark and
+    # the word now scans as a real ZARQA.
+    wlc = "ישרא" + "֘" + "ל"  # medial zarqa stress-helper (zarshit)
+    mam = "ישראל" + "֮"  # postpositive zarqa (zarnor)
     result = apply_mam_fix(
-        "D.AB.ER/:KF]1 X92Y00",
-        ["דברך", "זה"],
-        {"wlc422": "דברך", "mam_simple": "דברך֖"},
+        {"vels": [wlc, "׃"]},
+        [wlc],
+        {"wlc422": wlc, "mam_simple": mam},
     )
     assert isinstance(result, AppliedFix)
-    assert result.new_body == "D.AB.ER/:KF73]1 X92Y00"
-    # The 73 must scan as TIPEXA, never as a spurious 17 + 3.
-    assert "TIPEXA" in _types(result.new_body)
+    assert "ZARQA" in _types(result.new_body)
+    assert not lexical_validation.stranded_stress_helpers(result.new_body)
 
 
 def test_missing_sof_pasuq_append():
-    # A MAM value that only adds the sof pasuq punctuation -> insert 00 after the
-    # last accent code (the verse-final silluq 75), so silluq + sof pasuq both scan.
-    body = "WA/Y.O71MER )ELOHIY75M"  # no 00: missing sof pasuq; 75 = final silluq
+    # A MAM value that only adds the sof pasuq punctuation: the substituted word
+    # carries the sof pasuq, so the re-transcoded body terminates (silluq + sof pasuq
+    # both scan).
     result = apply_mam_fix(
-        body,
-        ["ויאמר", "אלהים"],
-        {"wlc422": "אלהים", "mam_simple": "אלהים׃"},
+        {"vels": ["ויאמר", "אלהיֽם"]},  # final meteg -> verse-final silluq
+        ["ויאמר", "אלהיֽם"],
+        {"wlc422": "אלהיֽם", "mam_simple": "אלהיֽם׃"},
     )
     assert isinstance(result, AppliedFix)
-    assert result.added_codes == ("00",)
-    assert result.new_body == "WA/Y.O71MER )ELOHIY7500M"
     assert _types(result.new_body)[-2:] == ["SILLUQ", "SOFPASUQ"]
-
-
-def test_ketiv_atom_excluded_from_alignment():
-    # The *ketiv atom is swallowed by the scanner and dropped from vels, so it must
-    # not count during alignment: 2 word-atoms (qere + last) align to 2 WLC words.
-    result = apply_mam_fix(
-        "*H/NCYBYM **HA/N.IC74YM ZZ00",
-        ["הנציב֣ים", "זז"],
-        {"wlc422": "הנציב֣ים", "mam_simple": "הנציב֥ים"},
-    )
-    assert isinstance(result, AppliedFix)
-    assert result.new_body == "*H/NCYBYM **HA/N.IC71YM ZZ00"
-
-
-def test_section_marker_atom_excluded_from_alignment():
-    # A lone setumah (S) / petuhah (P) section marker stands as its own M-C atom but
-    # is dropped from the WLC word list (tagged sam_pe_inun), so it must not count
-    # during alignment: 1 real word-atom aligns to 1 WLC word despite the trailing S.
-    result = apply_mam_fix(
-        "PE91LI)Y00 S",
-        ["פל֛אי"],  # one WLC word; the S marker is not a word
-        {"wlc422": "פל֛אי", "mam_simple": "פל֥אי"},
-    )
-    assert isinstance(result, AppliedFix)
-    assert result.new_body == "PE71LI)Y00 S"
-
-
-def test_vowel_only_is_untestable():
-    result = apply_mam_fix(
-        "B.F71)00",
-        ["בא"],
-        {"wlc422": "בָא", "mam_simple": "בָּא"},
-    )
-    assert isinstance(result, UntestableFix)
-    assert result.reason == "vowel_only"
-
-
-def test_meteg_only_is_untestable():
-    # The sole difference is a meteg (U+05BD) -- a vowel-tier mark the grammar never
-    # sees, so it is grammar-inert and labeled distinctly from a pure-niqqud diff.
-    result = apply_mam_fix(
-        "Y:D.71Y X92Z00",
-        ["ידי", "זה"],
-        {"wlc422": "יד֥י", "mam_simple": "ידֽ֥י"},
-    )
-    assert isinstance(result, UntestableFix)
-    assert result.reason == "meteg_only"
 
 
 def test_verse_final_silluq_swap_applies():
     # A speck made BHQ transcribe a verse-final silluq as a tevir (ju 13:18).  MAM
-    # restores the silluq (U+05BD).  uni_heb cannot tell silluq from meteg (both
-    # (mos)), but a (mos) *replacing* a real accent on a sof-pasuq word is the
-    # verse-final silluq: the splice must swap tevir (91) -> silluq (35), not just
-    # delete the tevir.  Re-scanned, 35 before 00 tokenizes as SILLUQ.
+    # restores the silluq (U+05BD).  Substituting the MAM word, the transcoder emits a
+    # 75 before the sof pasuq, which the scanner reads as SILLUQ.
     result = apply_mam_fix(
-        "PE91LI)Y00",
+        {"vels": ["פל֛אי׃"]},
         ["פל֛אי׃"],
         {"wlc422": "פל֛אי׃", "mam_simple": "פֽלאי׃"},
     )
     assert isinstance(result, AppliedFix)
-    assert result.new_body == "PE35LI)Y00"
-    assert _types("PE35LI)Y00") == ["SILLUQ", "SOFPASUQ"]
-
-
-def test_verse_final_silluq_added_when_word_lacks_one():
-    # A verse-final word with no accent at all in WLC but the silluq glyph (U+05BD)
-    # in MAM: that (mos) IS the missing verse-final silluq -- it sits before sof
-    # pasuq, where the scanner reads a code-35 as SILLUQ -- not an inert meteg.
-    # Promote it to a real silluq so the splice supplies the accent silluq_phrase
-    # is complaining is absent.
-    result = apply_mam_fix(
-        "HAZ.EH00",
-        ["הזה׃"],
-        {"wlc422": "הזה׃", "mam_simple": "הזֽה׃"},
-    )
-    assert isinstance(result, AppliedFix)
-    assert result.new_body == "HAZ.EH3500"
-    assert _types("HAZ.EH3500") == ["SILLUQ", "SOFPASUQ"]
-
-
-def test_verse_final_silluq_inserts_before_sof_pasuq_not_after_note_marker():
-    # The silluq must land immediately before the 00, even when the atom carries a
-    # trailing note-marker whose payload is an M-C letter (``]U``).  "After the last
-    # letter" would put it past the 00 (``00]U35``), where the scanner -- which
-    # stops at sof pasuq -- never reaches it (the dt 10:15 / gn 32:24 family).
-    result = apply_mam_fix(
-        "HAZ.EH00]U",
-        ["הזה׃"],
-        {"wlc422": "הזה׃", "mam_simple": "הזֽה׃"},
-    )
-    assert isinstance(result, AppliedFix)
-    assert result.new_body == "HAZ.EH3500]U"
-    assert _types("HAZ.EH3500]U") == ["SILLUQ", "SOFPASUQ"]
+    assert _types(result.new_body) == ["SILLUQ", "SOFPASUQ"]
 
 
 def test_meteg_added_to_word_that_already_has_silluq_stays_inert():
     # When the WLC word *already* bears a (mos) (its verse-final silluq), a further
-    # (mos) MAM adds is a genuine medial meteg -- promoting it would scan as a
-    # duplicate silluq.  The promotion must not fire; the change is grammar-inert.
+    # (mos) MAM adds is a genuine medial meteg -- grammar-inert.
     result = apply_mam_fix(
-        "HA35Z.EH00",
+        {"vels": ["הֽזה׃"]},
         ["הֽזה׃"],
         {"wlc422": "הֽזה׃", "mam_simple": "הֽזֽה׃"},
     )
@@ -212,100 +105,89 @@ def test_meteg_added_to_word_that_already_has_silluq_stays_inert():
     assert result.reason == "meteg_only"
 
 
-def test_adjacent_two_word_splice():
-    # A wlc_focus spanning two adjacent words: change munaH->merkha on the first and
-    # tipeHa->munaH on the second; both atoms are spliced (right-to-left).
+def test_ketiv_qere_substitutes_the_qere_side():
+    # The ketiv is swallowed by the scanner and dropped from vels; the WLC word is the
+    # qere, so the substitution descends into the qere side and the ketiv wrapper is
+    # preserved.  2 word-units (qere + last) align to 2 WLC words.
+    verse = {"vels": [{"kq": [["הנצבים"], ["הנציב֣ים"]]}, "זז׃"]}
     result = apply_mam_fix(
-        "X74Y Z73W",
+        verse,
+        ["הנציב֣ים", "זז׃"],
+        {"wlc422": "הנציב֣ים", "mam_simple": "הנציב֥ים"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert "MERKHA" in _types(result.new_body)
+    assert "MUNAX" not in _types(result.new_body)
+    # The ketiv is still swallowed (emitted as a *<ketiv> atom).
+    assert result.new_body.startswith("*")
+    assert verse["vels"][0]["kq"][1] == ["הנציב֣ים"]  # source qere untouched
+
+
+def test_section_marker_excluded_from_alignment():
+    # A lone setumah/petuhah/nun-inversum stands as its own vel but is not a word
+    # (no Hebrew consonant via _token_text), so it must not count during alignment:
+    # 1 real word-unit aligns to 1 WLC word despite the trailing section marker.
+    result = apply_mam_fix(
+        {"vels": ["פל֛אי׃", {"sam_pe_inun": "S"}]},
+        ["פל֛אי׃"],  # one WLC word; the S marker is not a word
+        {"wlc422": "פל֛אי׃", "mam_simple": "פל֥אי׃"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert "MERKHA" in _types(result.new_body)
+
+
+def test_adjacent_two_word_substitution():
+    # A wlc_focus spanning two adjacent words: munaH->merkha on the first and
+    # tipeHa->munaH on the second; both vels are substituted.
+    result = apply_mam_fix(
+        {"vels": ["א֣", "ב֖"]},
         ["א֣", "ב֖"],
         {"wlc422": "א֣ ב֖", "mam_simple": "א֥ ב֣"},
     )
     assert isinstance(result, AppliedFix)
-    assert result.new_body == "X71Y Z74W"
+    assert _types(result.new_body)[:2] == ["MERKHA", "MUNAX"]
     assert result.word_index == 0
-    assert result.extra_transforms == ('atom "Z73W" -> "Z74W" (73 -> 74)',)
+    assert len(result.extra_transforms) == 1
 
 
 def test_adjacent_two_word_one_word_is_noop():
     # Second word differs only by a vowel: a no-op for the grammar, first word still
-    # splices cleanly.
+    # substitutes cleanly and no extra transform is recorded.
     result = apply_mam_fix(
-        ")AL.74W.P B.F/(F75M00",
+        {"vels": ["אל֣וף", "בעם"]},
         ["אל֣וף", "בעם"],
         {"wlc422": "אל֣וף בעם", "mam_simple": "אל֥וף בעם"},
     )
     assert isinstance(result, AppliedFix)
-    assert result.new_body == ")AL.71W.P B.F/(F75M00"
+    assert "MERKHA" in _types(result.new_body)
     assert result.extra_transforms == ()
 
 
-def test_azla_to_double_pashta_applies():
-    # 1k 19:11 / je 49:19: MAM replaces one azla (qadma, 63) with two pashtas
-    # (03 03) on the same word.  A 1->many replacement is spliced delete-then-
-    # insert: drop the 63, then place both 03s after the last letter (pashta is
-    # postpositive).  Re-scanned, the word now carries two PASHTA tokens.
+def test_vowel_only_is_untestable():
     result = apply_mam_fix(
-        "HF/R.63W.AX X92Y00",
-        ["הר֨וח", "זה"],
-        {"wlc422": "הר֨וח", "mam_simple": "הר֙וח֙"},
-    )
-    assert isinstance(result, AppliedFix)
-    assert result.removed_codes == ("63",)
-    assert result.added_codes == ("03", "03")
-    assert result.new_body == "HF/R.W.AX0303 X92Y00"
-    assert _types(result.new_body).count("PASHTA") == 2
-    assert "AZLA" not in _types(result.new_body)
-
-
-def test_multi_word_unequal_counts_is_untestable():
-    result = apply_mam_fix(
-        "X74Y Z73W",
-        ["א֣", "ב֖"],
-        {"wlc422": "א֣ ב֖", "mam_simple": "א֥"},
-    )
-    assert isinstance(result, UntestableFix)
-    assert result.reason == "multi_word"
-
-
-def test_synthetic_accent_fix_applies():
-    # A synthesized {wlc_focus -> synth_fix} entry (used when MAM == WLC) flows through
-    # the same splice machinery: munaH -> merkha.
-    result = apply_mam_fix(
-        ")AL.74W.P B.F/(F75M00",
-        ["אל֣וף", "בעם"],
-        {"wlc422": "אל֣וף", "mam_simple": "אל֥וף"},
-    )
-    assert isinstance(result, AppliedFix)
-    assert result.new_body == ")AL.71W.P B.F/(F75M00"
-
-
-def test_synthetic_segolta_fix_applies():
-    # is 45:1-style: the speculated fix is the segol *accent* (segolta, U+0592), not
-    # the segol vowel -- a real munaH -> segolta change the grammar sees (74 -> 01).
-    result = apply_mam_fix(
-        "L:K.74WR$",
-        ["לכ֣ורש"],
-        {"wlc422": "לכ֣ורש", "mam_simple": "לכ֒ורש"},
-    )
-    assert isinstance(result, AppliedFix)
-    assert result.new_body == "L:K.01WR$"
-    assert "SEGOLTA" in _types(result.new_body)
-
-
-def test_synthetic_vowel_fix_is_inert():
-    # A synth_fix that adds only a vowel (segol point, U+05B6) is grammar-inert.
-    result = apply_mam_fix(
-        "L:K.74WR$",
-        ["לכורש"],
-        {"wlc422": "לכ֣ורש", "mam_simple": "לכֶ֣ורש"},
+        {"vels": ["בָא"]},
+        ["בָא"],
+        {"wlc422": "בָא", "mam_simple": "בָּא"},
     )
     assert isinstance(result, UntestableFix)
     assert result.reason == "vowel_only"
 
 
-def test_multi_word_is_untestable():
+def test_meteg_only_is_untestable():
+    # The sole difference is a medial meteg (U+05BD) -- grammar-inert and labeled
+    # distinctly from a pure-niqqud diff.
     result = apply_mam_fix(
-        "A92B00",
+        {"vels": ["יד֥י", "זה"]},
+        ["יד֥י", "זה"],
+        {"wlc422": "יד֥י", "mam_simple": "ידֽ֥י"},
+    )
+    assert isinstance(result, UntestableFix)
+    assert result.reason == "meteg_only"
+
+
+def test_multi_word_diff_list_is_untestable():
+    result = apply_mam_fix(
+        {"vels": ["x"]},
         ["x"],
         {"wlc422": ["a", "b"], "mam_simple": ["c"]},
     )
@@ -313,11 +195,56 @@ def test_multi_word_is_untestable():
     assert result.reason == "multi_word"
 
 
-def test_alignment_failure_when_counts_differ():
+def test_multi_word_unequal_counts_is_untestable():
     result = apply_mam_fix(
-        ")AL.74W.P B.F/(F75M00",
-        ["אל֣וף"],  # one WLC word vs two M-C atoms
-        {"wlc422": "אל֣וף", "mam_simple": "אל֥וף"},
+        {"vels": ["א֣", "ב֖"]},
+        ["א֣", "ב֖"],
+        {"wlc422": "א֣ ב֖", "mam_simple": "א֥"},
+    )
+    assert isinstance(result, UntestableFix)
+    assert result.reason == "multi_word"
+
+
+def test_alignment_failure_when_counts_differ():
+    # Two verse word-units vs one WLC word -> the alignment guard fires.
+    result = apply_mam_fix(
+        {"vels": ["א֣", "ב֖"]},
+        ["א֣"],
+        {"wlc422": "א֣", "mam_simple": "א֥"},
     )
     assert isinstance(result, UntestableFix)
     assert result.reason == "alignment_failure"
+
+
+def test_ambiguous_word_is_untestable():
+    # The focus word occurs twice -> the splice refuses to guess which.
+    result = apply_mam_fix(
+        {"vels": ["א֣", "א֣"]},
+        ["א֣", "א֣"],
+        {"wlc422": "א֣", "mam_simple": "א֥"},
+    )
+    assert isinstance(result, UntestableFix)
+    assert result.reason == "ambiguous_word"
+
+
+def test_synthetic_segolta_fix_applies():
+    # is 45:1-style: the speculated fix is the segol *accent* (segolta, U+0592), not
+    # the segol vowel -- a real munaH -> segolta change the grammar sees.
+    result = apply_mam_fix(
+        {"vels": ["לכ֣ורש"]},
+        ["לכ֣ורש"],
+        {"wlc422": "לכ֣ורש", "mam_simple": "לכ֒ורש"},
+    )
+    assert isinstance(result, AppliedFix)
+    assert "SEGOLTA" in _types(result.new_body)
+
+
+def test_synthetic_vowel_fix_is_inert():
+    # A synth_fix that adds only a vowel (segol point, U+05B6) is grammar-inert.
+    result = apply_mam_fix(
+        {"vels": ["לכ֣ורש"]},
+        ["לכ֣ורש"],
+        {"wlc422": "לכ֣ורש", "mam_simple": "לכֶ֣ורש"},
+    )
+    assert isinstance(result, UntestableFix)
+    assert result.reason == "vowel_only"
