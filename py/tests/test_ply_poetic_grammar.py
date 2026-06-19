@@ -301,14 +301,14 @@ def test_repeated_tsinnor_accepted_as_single_divider():
     repeated divider counts once, so collapsing the run to a single TSINNOR lets the
     existing sinnor productions parse it cleanly -- even though the raw grammar (the
     test above) stalls at the following oleh-we-yored.  The canonical token list is
-    left untouched (both tsinnorin remain), so the disjunctive cross-check is
+    left untouched (both tsinnor marks remain), so the disjunctive cross-check is
     unaffected."""
     parser = build_parser()
     toks = _verse(*_PS_17_14_ACCENTS)
     tree, error = parse_tokens_accepting_repeats(parser, toks)
     assert tree is not None  # accepted: a clean parse
     assert error is None
-    # the input is not mutated -- both tsinnorin still present
+    # the input is not mutated -- both tsinnor marks still present
     assert sum(1 for t, _ in toks if t == pan.TSINNOR) == 2
     # the mechanism: a run of consecutive TSINNOR collapses to one
     collapsed = [t for t, _ in collapse_repeated_sinnor(toks)]

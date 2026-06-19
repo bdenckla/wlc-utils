@@ -63,16 +63,20 @@ with no questions of penmanship.</p>
 
 <h2>How the checker treats it</h2>
 
-<p>The poetic accent grammar could not parse this sequence: a repeated sinnor
-standing before an oleh-we-yored that itself carries a servus is beyond the
-checker's LALR(1) grammar (the servus is ambiguous between the second sinnor and
-the oleh), so the verse was reported as <code>NO_PARSE</code>. The checker now
-<em>accepts</em> it on a principled basis: a repeated disjunctive is the same
-divider written twice — Yeivin notes that the zarqa (the prose counterpart of the
-tsinnor) may be repeated, and Breuer says the same of the doubled tsinnor — so for
-grammaticality a repeated divider counts once. The checker collapses the run of two
-tsinnorin to one before parsing, leaving the verse's recorded accents (both
-tsinnorin) untouched for the WLC-vs-MAM comparison.</p>
+<p>The checker's underlying grammar still cannot parse this sequence directly, and
+never could: a repeated tsinnor standing before an oleh-weyored that itself carries
+a servus is beyond its LALR(1) power (the servus is ambiguous between the second
+tsinnor and the oleh). That limitation has not changed. What changed is that the
+verse used to be reported as <code>NO_PARSE</code> and no longer is.</p>
+
+<p>The checker now <em>accepts</em> the verse, on a principled basis: a repeated
+disjunctive is the same divider written twice — Yeivin notes that the zarqa (the
+prose counterpart of the tsinnor) may be repeated, and Breuer says the same of the
+doubled tsinnor — so for grammaticality a repeated divider counts once. Rather than
+extend the grammar, the checker adds a step ahead of it: before parsing, it
+collapses the run of two tsinnor marks to one, and the grammar then parses what
+remains. The verse's recorded accents — both tsinnor marks — are left untouched, so
+the WLC-vs-MAM comparison still sees the doubled mark.</p>
 
 <h2>MAM's documentation notes</h2>
 
@@ -89,29 +93,29 @@ secondary conjunctive is absorbed harmlessly.</p>
 
 <p>Breuer treats the doubled tsinnor in two places. In <em>The Cantillation of
 Scripture</em>, Ch. 11 (footnote 11, attached to the Psalms 17:14 example
-<span lang="hbo">חֶלְקָם בַּחַיִּים</span> — &ldquo;whose portion is eternal
-life&rdquo;), he calls this <strong>&ldquo;the sole example of two consecutive
-tzinnor marks&rdquo;</strong> in Scripture. Following Wickes (p. 81 n. 4), he holds
+<span lang="hbo">חֶלְקָם בַּחַיִּים</span>), he calls this
+<strong>&ldquo;the sole example of two consecutive
+[tsinnor] marks&rdquo;</strong> in Scripture. Following Wickes (p. 81 n. 4), he holds
 that the servant's exceptional cantillation results from the exceptional (doubled)
 <em>mafsik</em>, and he notes a parallel in the Twenty-One Books (Ch. 3 §16 III):
 there too the servant of the zarqa changes where there are two consecutive zarqa
 marks.</p>
 
-<p>His structural account is in Ch. 10 §9, on the subdividers of the oleh-we-yored
+<p>His structural account is in Ch. 10 §9, on the subdividers of the oleh-weyored
 domain. (Breuer's English translation calls such a subdivider a
 &ldquo;viceroy&rdquo;; its default form is the big revia&rsquo; / revia gadol.)
 Psalms 17:14 is one of very few verses with <em>three</em> such subdividers in the
-oleh-we-yored realm, and its cantillation, he says, is exceptional:</p>
+oleh-weyored realm, and its cantillation, he says, is exceptional:</p>
 
-<blockquote>&ldquo;In example II [Psalms 17:14], the final viceroy is tzinnor,
-because it is not next to the oleh &amp; yored. The penultimate viceroy is tzinnor
+<blockquote>&ldquo;In example II [Psalms 17:14], the final viceroy is [tsinnor],
+because it is not next to the oleh [weyored]. The penultimate viceroy is [tsinnor]
 preceded by a big revia&rsquo;; but we would expect both these viceroys to be big
 revia&rsquo; marks.&rdquo;</blockquote>
 
 <p>That is: where the rule would place a pair of big revia&rsquo; subdividers before
-the oleh-we-yored, Psalms 17:14 substitutes a <em>tzinnor</em> for each — and that
+the oleh-weyored, Psalms 17:14 substitutes a <em>tsinnor</em> for each — and that
 substitution, applied to two adjacent subdividers at once, is precisely what yields
-the unique run of two consecutive tsinnorin. It is the same divider (the tsinnor)
+the unique run of two consecutive tsinnor marks. It is the same divider (the tsinnor)
 appearing twice, which is exactly why the accent-grammar checker can accept the
 sequence by counting the repeated divider once (above).</p>
 
