@@ -1868,7 +1868,7 @@ Joshua 4:7
     2 silluq_phrase
       silluq 
 Joshua 4:8
-0 illegal_mark 82 in YI&:RF)"82L]s
+0 illegal_mark 82 in יִשְׂרָאֵ֘ל
   ERROR 
 Joshua 4:9
 0 silluq_clause
@@ -6683,7 +6683,7 @@ Joshua 10:29
     2 silluq_phrase
       silluq 
 Joshua 10:30
-0 illegal_mark 82 in YI&:RF)"82L]s
+0 illegal_mark 82 in יִשְׂרָאֵ֘ל
   ERROR 
 Joshua 10:31
 0 silluq_clause

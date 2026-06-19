@@ -1175,7 +1175,7 @@ Levit 4:1
   1 silluq_phrase
     merkha silluq 
 Levit 4:2
-0 illegal_mark 82 in YI&:RF)"82L]s
+0 illegal_mark 82 in יִשְׂרָאֵ֘ל
   ERROR 
 Levit 4:3
 0 silluq_clause
@@ -12998,7 +12998,7 @@ Levit 20:1
   1 silluq_phrase
     merkha silluq 
 Levit 20:2
-0 illegal_mark 82 in YI&:RF)"82L]s
+0 illegal_mark 82 in יִשְׂרָאֵ֘ל
   ERROR 
 Levit 20:3
 0 silluq_clause

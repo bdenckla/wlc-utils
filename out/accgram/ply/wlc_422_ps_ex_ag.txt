@@ -3023,7 +3023,7 @@ Exodus 6:5
     2 silluq_phrase
       silluq 
 Exodus 6:6
-0 illegal_mark 82 in YI&:RF)"82L]s
+0 illegal_mark 82 in יִשְׂרָאֵ֘ל
   ERROR 
 Exodus 6:7
 0 silluq_clause
@@ -19364,7 +19364,7 @@ Exodus 30:11
   1 silluq_phrase
     merkha silluq 
 Exodus 30:12
-0 illegal_mark 82 in YI&:RF)"82L]s
+0 illegal_mark 82 in יִשְׂרָאֵ֘ל
   ERROR 
 Exodus 30:13
 0 silluq_clause
@@ -23378,7 +23378,7 @@ Exodus 36:1
     2 silluq_phrase
       silluq 
 Exodus 36:2
-0 illegal_mark 82 in B.:CAL:)"82L]s
+0 illegal_mark 82 in בְּצַלְאֵ֘ל
   ERROR 
 Exodus 36:3
 0 silluq_clause

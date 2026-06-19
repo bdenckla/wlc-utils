@@ -1,8 +1,9 @@
 """Driver for the POETIC (Three Books) PLY scanner + grammar over the corpus.
 
-The poetic counterpart of accgram.run_ply.  Reads the canonical source
-``wlc-utils-io/in/wlc422/wlc422_ps.txt``, keeps only the poetic verses (Psalms and
-Proverbs wholesale plus poetically-cantillated Job, via poetic_filter), scans each
+The poetic counterpart of accgram.run_ply.  Reads the canonical `-kq-u` Unicode source
+``wlc-utils-io/out/wlc422-kq-u/`` (transcoded to scanner-ready M-C text by
+uni_to_mc_body), keeps only the poetic verses (Psalms and Proverbs wholesale plus
+poetically-cantillated Job, via poetic_filter), scans each
 verse with ply_scanner_poetic, reconciles the tokens against MAM (poetic_reconcile:
 the legarmeh-vs-paseq and unmarked-oleh corrections the M-C source cannot express),
 parses the result with ply_grammar_poetic, then writes the reference line followed by
@@ -26,7 +27,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from accgram import poetic_filter
-from accgram import split_wlc
+from accgram import uni_to_mc_body
 from accgram.mam_poetic_accents import load_poetic_disjunctives
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.ply_grammar_poetic import (
@@ -128,7 +129,7 @@ def render_book(
 
 
 def default_input_path(repo_root: Path) -> Path:
-    return repo_root.parent / "wlc-utils-io" / "in" / "wlc422" / "wlc422_ps.txt"
+    return repo_root.parent / "wlc-utils-io" / "out" / "wlc422-kq-u"
 
 
 def default_out_dir(repo_root: Path) -> Path:
@@ -140,7 +141,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--input",
         type=Path,
         default=default_input_path(repo_root),
-        help="Path to source wlc422_ps.txt file.",
+        help="Directory of the -kq-u Unicode source (wlc422-kq-u/1verses_*.json).",
     )
     parser.add_argument(
         "--out-dir",
@@ -174,7 +175,7 @@ def run(args: argparse.Namespace) -> None:
     parser = build_parser()
     mam_disj_by_ref = load_poetic_disjunctives(args.mam_simple_dir)
 
-    book_texts = split_wlc.split_wlc_to_book_texts(
+    book_texts = uni_to_mc_body.build_book_texts(
         input_path, keep_line_fn=poetic_filter.should_keep_line
     )
 

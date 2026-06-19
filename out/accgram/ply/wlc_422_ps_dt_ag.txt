@@ -10196,7 +10196,7 @@ Deuter 14:23
     2 silluq_phrase
       silluq 
 Deuter 14:24
-0 illegal_mark 82 in TW.KA82L]S]s
+0 illegal_mark 82 in תוּכַ֘ל
   ERROR 
 Deuter 14:25
 0 silluq_clause
@@ -20399,7 +20399,7 @@ Deuter 31:6
       3 silluq_phrase
         merkha silluq 
 Deuter 31:7
-0 illegal_mark 82 in YI&:RF)"82L]S]s
+0 illegal_mark 82 in יִשְׂרָאֵ֘ל
   ERROR 
 Deuter 31:8
 0 silluq_clause

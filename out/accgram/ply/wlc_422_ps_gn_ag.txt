@@ -8915,7 +8915,7 @@ Genesis 17:19
     2 silluq_phrase
       merkha silluq 
 Genesis 17:20
-0 illegal_mark 82 in W.75/L:/YI$:MF("82)L]S]s
+0 illegal_mark 82 in וּֽלְיִשְׁמָעֵ֘אל
   ERROR 
 Genesis 17:21
 0 silluq_clause
@@ -32255,7 +32255,7 @@ Genesis 47:28
         4 silluq_phrase
           silluq 
 Genesis 47:29
-0 illegal_mark 82 in YI&:RF)"82L]S]s
+0 illegal_mark 82 in יִשְׂרָאֵ֘ל
   ERROR 
 Genesis 47:30
 0 silluq_clause
