@@ -3,7 +3,11 @@ r"""Hand-written scanner: reproduces the GG-state token stream of tnk2acc.l.
 Stage 1 / Phase D (full scanner including the four trailing-context rules).
 Handles the new-format verse structure (bookname -> chapter -> verse -> accent
 scan) and the complete GG-state accent table, including the four lex
-*trailing-context* rules that PLY's lexer cannot express:
+*trailing-context* rules that PLY's lexer cannot express.  Phase 2 of issue #9
+retired the Michigan-Claremont 2-digit-code alphabet: the rule table now matches
+directly over the Unicode mark alphabet (`accent_marks`), and the trailing-context
+digit classes are rebuilt onto it by `am.negated_class`.  The original M-C-code
+shapes are shown below for reference (each code is now its own mark):
 
   - silluq    35|75|95/[^ 379...]*00        (a true silluq is a metheg/silluq
               immediately before sof pasuq)
@@ -41,6 +45,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from accgram import accent_marks as am
+
 
 @dataclass(frozen=True)
 class Token:
@@ -65,58 +71,89 @@ _VERSE_RE = re.compile(r"^([1-9][0-9]*):([1-9][0-9]*)[ \t](.*)$")
 # Each entry: (compiled regex anchored at the scan position, token type or None).
 # token type None == "swallow" (consume, emit nothing).  The sentinel
 # "_LEGARMEH_OR_MUNAX" is resolved at emit time via has_legarmeh(location).
-# Trailing context is a lookahead so it is not consumed.  TEXT is [^ \r\n\-]*.
-_TEXT = r"[^ \r\n\-]*"
+# Trailing context is a lookahead so it is not consumed.  Phase 2 (issue #9) matches
+# over the Unicode mark alphabet (accent_marks); the four trailing-context digit
+# classes are rebuilt onto it by `am.negated_class` (see that function).  TEXT keeps
+# a match within one maqaf/space-delimited word.
+_TEXT = am.TEXT
 
-# mayela right context:  73/(([^ 0123468\r\n\-]|\-[^ 0123468]*)*(\][0-9])?)*(00|92)
-_MAYELA_LA = r"(?=(?:(?:[^ 0123468\r\n\-]|-[^ 0123468]*)*(?:\][0-9])?)*(?:00|92))"
-# legarmeh right context:  74{TEXT}05/[^12368]*(\][0-9])?[^12368]*81
-_LEGARMEH_LA = r"(?=[^12368]*(?:\][0-9])?[^12368]*81)"
+# silluq right context:  35|75|95 / [^ 379\r\n\-?~]* 00
+_SILLUQ_LA = r"(?=" + am.negated_class(" \r\n-?~", "379") + r"*" + am.SOF_PASUQ + r")"
+# mayela right context:  73 / (([^ 0123468\r\n\-]|\-[^ 0123468]*)*(\][0-9])?)* (00|92)
+_MAYELA_LA = (
+    r"(?=(?:(?:"
+    + am.negated_class(" \r\n-", "0123468")
+    + r"|-"
+    + am.negated_class(" ", "0123468")
+    + r"*)*(?:\][0-9])?)*(?:"
+    + am.SOF_PASUQ
+    + r"|"
+    + am.ATNAX
+    + r"))"
+)
+# legarmeh right context:  74{TEXT}05 / [^12368]*(\][0-9])?[^12368]* 81
+_LEGARMEH_LA = (
+    r"(?="
+    + am.negated_class("", "12368")
+    + r"*(?:\][0-9])?"
+    + am.negated_class("", "12368")
+    + r"*"
+    + am.REVIA
+    + r")"
+)
+# methiga-zaqef body:  63 [^01234680]* 80
+_METHIGA_MID = am.negated_class("", "0123468")
 
 _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
-    (re.compile(r"00"), "SOFPASUQ"),
-    # silluq: 35|75|95 immediately before sof pasuq (00), excluding mayela etc.
-    (re.compile(r"(?:35|75|95)(?=[^ 379\r\n\-?~]*00)"), "SILLUQ"),
-    (re.compile(r"92"), "ATNAX"),
-    (re.compile(r"(?:01" + _TEXT + r")?01"), "SEGOLTA"),
-    (re.compile(r"65" + _TEXT + r"05"), "SHALSHELET"),
-    (re.compile(r"63[^01234680]*80"), "METHIGAZAQEF"),
-    (re.compile(r"80"), "ZAQEF"),
-    (re.compile(r"85"), "ZAQEFGADOL"),
-    (re.compile(r"81"), "REVIA"),
-    # mayela (trailing context): 73 before 00/92 with only ga`ya intervening.
-    (re.compile(r"73" + _MAYELA_LA), "MAYELA"),
-    (re.compile(r"73"), "TIPEXA"),
-    (re.compile(r"(?:82" + _TEXT + r")?02"), "ZARQA"),
-    (re.compile(r"(?:33" + _TEXT + r")?03"), "PASHTA"),
-    (re.compile(r"10"), "YETIV"),
-    (re.compile(r"91"), "TEVIR"),
-    (re.compile(r"61"), "GERESH"),
-    (re.compile(r"62"), "GERSHAYIM"),
-    (re.compile(r"83"), "PAZER"),
-    (re.compile(r"84"), "PAZERGADOL"),
-    (re.compile(r"14"), "TELISHAGEDOLA"),
+    (re.compile(am.SOF_PASUQ), "SOFPASUQ"),
+    # silluq: meteg/silluq immediately before sof pasuq, excluding mayela etc.
+    (re.compile(am.METEG + _SILLUQ_LA), "SILLUQ"),
+    (re.compile(am.ATNAX), "ATNAX"),
+    (re.compile(r"(?:" + am.SEGOLTA + _TEXT + r")?" + am.SEGOLTA), "SEGOLTA"),
+    (re.compile(am.SHALSHELET + _TEXT + am.PASEQ), "SHALSHELET"),
+    (re.compile(am.QADMA + _METHIGA_MID + r"*" + am.ZAQEF_QATAN), "METHIGAZAQEF"),
+    (re.compile(am.ZAQEF_QATAN), "ZAQEF"),
+    (re.compile(am.ZAQEF_GADOL), "ZAQEFGADOL"),
+    (re.compile(am.REVIA), "REVIA"),
+    # mayela (trailing context): tipexa before sof-pasuq/atnax, only ga`ya intervening.
+    (re.compile(am.TIPEHA + _MAYELA_LA), "MAYELA"),
+    (re.compile(am.TIPEHA), "TIPEXA"),
+    # zarqa: optional tsinnorit stress-helper fused onto the zinor (one token).
+    (re.compile(r"(?:" + am.TSINNORIT + _TEXT + r")?" + am.ZINOR), "ZARQA"),
+    # pashta: a stress-helper pashta fused onto the main pashta (one token).
+    (re.compile(r"(?:" + am.PASHTA + _TEXT + r")?" + am.PASHTA), "PASHTA"),
+    (re.compile(am.YETIV), "YETIV"),
+    (re.compile(am.TEVIR), "TEVIR"),
+    (re.compile(am.GERESH), "GERESH"),
+    (re.compile(am.GERSHAYIM), "GERSHAYIM"),
+    (re.compile(am.PAZER), "PAZER"),
+    (re.compile(am.QARNEY_PARA), "PAZERGADOL"),
+    (re.compile(am.TELISHA_GEDOLA), "TELISHAGEDOLA"),
     # legarmeh (trailing context): munax+paseq before a subsequent revia.
-    (re.compile(r"74" + _TEXT + r"05" + _LEGARMEH_LA), "LEGARMEH"),
+    (re.compile(am.MUNAH + _TEXT + am.PASEQ + _LEGARMEH_LA), "LEGARMEH"),
     # munax+paseq NOT before revia: legarmeh only inside a has_legarmeh passage.
-    (re.compile(r"74" + _TEXT + r"05"), "_LEGARMEH_OR_MUNAX"),
-    (re.compile(r"74"), "MUNAX"),
-    (re.compile(r"70"), "MAHAPAKH"),
-    (re.compile(r"71"), "MERKHA"),
-    (re.compile(r"72"), "MERKHAKEFULA"),
-    (re.compile(r"94"), "DARGA"),
-    (re.compile(r"63"), "AZLA"),
-    (re.compile(r"24" + _TEXT + r"04"), "TELISHAQETANNA"),
-    (re.compile(r"04|24"), "TELISHAQETANNA"),
-    (re.compile(r"93"), "GALGAL"),
-    # leftover schwa/medial telisha/paseq/tsinnorit/puncta -> swallowed
-    (re.compile(r"35|75|95|44|05|82|52"), None),
-    # any other unrecognized 2-digit accent code -> swallowed (GG [0-9][0-9])
-    (re.compile(r"[0-9][0-9]"), None),
+    (re.compile(am.MUNAH + _TEXT + am.PASEQ), "_LEGARMEH_OR_MUNAX"),
+    (re.compile(am.MUNAH), "MUNAX"),
+    (re.compile(am.MAHAPAKH), "MAHAPAKH"),
+    (re.compile(am.MERKHA), "MERKHA"),
+    (re.compile(am.MERKHA_KEFULA), "MERKHAKEFULA"),
+    (re.compile(am.DARGA), "DARGA"),
+    (re.compile(am.QADMA), "AZLA"),
+    # telisha-qetanna: a stress-helper telisha fused onto the main (one token).
+    (re.compile(am.TELISHA_QETANA + _TEXT + am.TELISHA_QETANA), "TELISHAQETANNA"),
+    (re.compile(am.TELISHA_QETANA), "TELISHAQETANNA"),
+    (re.compile(am.YERAH), "GALGAL"),
+    # leftover medial meteg/paseq/tsinnorit/puncta -> swallowed
+    (
+        re.compile(
+            "[" + am.METEG + am.PASEQ + am.TSINNORIT + am.UPPER_DOT + am.LOWER_DOT + "]"
+        ),
+        None,
+    ),
     # "**" and "*<non-space>+" -> swallowed
     (re.compile(r"\*\*"), None),
     (re.compile(r"\*[^* \r\n\-]+"), None),
-    # catch-all: any other single char -> swallowed
+    # catch-all: any other single char (letter X, maqaf, space, ]N digit) -> swallowed
     (re.compile(r".", re.DOTALL), None),
 ]
 
@@ -246,8 +283,8 @@ def scan_accents(
             if best_type == "SOFPASUQ":
                 saw_sofpasuq = True
                 break
-        elif body[pos : pos + 2] in ("35", "75", "95"):
-            # A swallowed meteg/silluq code; remember where its SILLUQ token would
+        elif body[pos] == am.METEG:
+            # A swallowed meteg/silluq mark; remember where its SILLUQ token would
             # go if it proves to be the verse-final silluq of a sof-pasuq-less verse.
             pending_silluq = len(tokens)
         pos += advance

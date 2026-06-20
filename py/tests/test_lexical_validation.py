@@ -1,9 +1,11 @@
 """Unit tests for the prose lexical-validation layer (stranded stress-helpers).
 
-Pin the pure-function semantics of `stranded_stress_helpers`: a prose `82` is an
-alphabet error unless it is fused with a later `02` in the *same* maqaf/space-
-delimited atom.  These guard the fuse-vs-strand and atom-boundary logic so a
-regression fails here rather than silently shifting the oddball corpus.
+Pin the pure-function semantics of `stranded_stress_helpers`: a prose tsinnorit
+(M-C ``82``) is an alphabet error unless it is fused with a later zinor (M-C ``02``)
+in the *same* maqaf/space-delimited atom.  These guard the fuse-vs-strand and
+atom-boundary logic so a regression fails here rather than silently shifting the
+oddball corpus.  Bodies are written over the Unicode mark alphabet (issue #9, Phase
+2); arbitrary capital letters stand in for consonant filler.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_lexical_validation.py -v
@@ -11,7 +13,11 @@ Run:
 
 from __future__ import annotations
 
+from accgram import accent_marks as am
 from accgram.lexical_validation import stranded_stress_helpers
+
+_TS = am.TSINNORIT  # M-C 82 (zarqa stress-helper)
+_ZI = am.ZINOR      # M-C 02 (zinor / zarqa main)
 
 
 def _codes(body: str) -> list[str]:
@@ -19,36 +25,37 @@ def _codes(body: str) -> list[str]:
 
 
 def test_bare_82_is_stranded():
-    # gn 47:29-style: 82 with no later 02 anywhere -> stranded.
-    assert _codes('YI&:RF)"82L]s') == ["82"]
+    # gn 47:29-style: a tsinnorit with no later zinor anywhere -> stranded.
+    assert _codes("YISRA" + _TS + "L]s") == ["82"]
 
 
 def test_82_fused_with_later_02_same_atom_is_clean():
-    # A real zarqa stress-helper: 82{TEXT}02 on one atom fuses into one ZARQA.
-    assert _codes("X82Y02Z") == []
+    # A real zarqa stress-helper: tsinnorit{TEXT}zinor on one atom fuses into one ZARQA.
+    assert _codes("X" + _TS + "Y" + _ZI + "Z") == []
 
 
 def test_82_two_letters_back_still_stranded():
-    # gn 17:20: the 82 sits two letters before the lamed; still no 02 -> stranded.
-    assert _codes('W.75/L:/YI$:MF("82)L]S]s') == ["82"]
+    # gn 17:20: the tsinnorit sits two letters before the lamed; still no zinor -> stranded.
+    assert _codes("W" + am.METEG + "LYISMA" + _TS + ")L]S]s") == ["82"]
 
 
 def test_02_in_a_different_atom_does_not_rescue_82():
-    # Maqaf/space ends the atom, so an 02 across the boundary cannot fuse.
-    assert _codes("A82B-C02D") == ["82"]
-    assert _codes("A82B C02D") == ["82"]
+    # Maqaf/space ends the atom, so a zinor across the boundary cannot fuse.
+    assert _codes("A" + _TS + "B-C" + _ZI + "D") == ["82"]
+    assert _codes("A" + _TS + "B C" + _ZI + "D") == ["82"]
 
 
 def test_02_before_82_does_not_fuse():
-    # Fusion requires the 02 to follow the 82; an earlier 02 leaves it stranded.
-    assert _codes("A02B82C") == ["82"]
+    # Fusion requires the zinor to follow the tsinnorit; an earlier zinor leaves it stranded.
+    assert _codes("A" + _ZI + "B" + _TS + "C") == ["82"]
 
 
 def test_no_82_anywhere_is_clean():
-    assert _codes("WA/Y.O71MER03 )ELOHI92YM00") == []
+    assert _codes("WAYO" + am.MERKHA + "MER" + am.PASHTA + " )ELOHI" + am.ATNAX + "YM" + am.SOF_PASUQ) == []
 
 
 def test_atom_with_both_returns_the_atom_text():
-    [mark] = stranded_stress_helpers('YI&:RF)"82L]s')
+    body = "YISRA" + _TS + "L]s"
+    [mark] = stranded_stress_helpers(body)
     assert mark.code == "82"
-    assert mark.atom == 'YI&:RF)"82L]s'
+    assert mark.atom == body

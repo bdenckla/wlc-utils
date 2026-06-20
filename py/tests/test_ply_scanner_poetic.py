@@ -17,10 +17,14 @@ from accgram import poetic_accent_names as pan
 from accgram.ply_scanner_poetic import scan_accents
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_scanner_poetic import scan_verse
+from tests.mc_marks import mc_to_marks
+
+# The fixtures are written in the legacy M-C encoding (checked by hand against the
+# accent table) and converted to the Phase-2 mark alphabet here (issue #9).
 
 
 def _types(body):
-    return [t for t, _ in scan_accents(body)]
+    return [t for t, _ in scan_accents(mc_to_marks(body))]
 
 
 def test_ps_1_1_revia_mugrash_geresh_muqdam():
@@ -98,7 +102,8 @@ def test_unmarked_oleh_recovered_after_galgal():
     assert o == g + 1
     # the verse now parses (it was a NO_PARSE before the recovery)
     parser = build_parser()
-    assert parse_tokens(parser, scan_verse("Psalms 30:12", body).tokens) is not None
+    toks = scan_verse("Psalms 30:12", mc_to_marks(body)).tokens
+    assert parse_tokens(parser, toks) is not None
 
 
 def test_galgal_then_marked_oleh_not_doubly_recovered():
@@ -126,5 +131,5 @@ def test_these_verses_parse():
         r'R:$F60(I71YM W./B:/DE74REK: 13XA+.F)IYM LO71) (FMF92D '
         r'W./B:/MOW$A71B 11L"CI81YM LO74) YF$F75B00',
     ):
-        v = scan_verse("test 1:1", body)
+        v = scan_verse("test 1:1", mc_to_marks(body))
         assert parse_tokens(parser, v.tokens) is not None

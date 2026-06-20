@@ -20,6 +20,10 @@ from accgram import poetic_accent_names as pan
 from accgram import poetic_reconcile as pr
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_scanner_poetic import scan_verse
+from tests.mc_marks import mc_to_marks
+
+# Bodies are written in the legacy M-C encoding for readability and converted to the
+# Phase-2 mark alphabet (issue #9) at each use.
 
 
 def _types(tokens):
@@ -31,20 +35,24 @@ def _types(tokens):
 
 def test_underlying_servi_reads_the_conjunctive_under_each_legarmeh():
     # azla(63)+paseq(05), then mehuppak(70)+paseq(05): azla then mehuppak servus.
-    assert pr._legarmeh_underlying_servi("QF63H05 HA70B05") == [pan.AZLA, pan.MAHAPAKH]
+    assert pr._legarmeh_underlying_servi(mc_to_marks("QF63H05 HA70B05")) == [
+        pan.AZLA, pan.MAHAPAKH,
+    ]
 
 
 def test_demote_when_mam_reads_no_legarmeh():
     # One mehuppak-legarmeh word; MAM reads no disjunctive there (a plain paseq).
     tokens = [(pan.TILDE, ""), (pan.LEGARMEH, "legarmeh"), (pan.SOFPASUQ, "sof pasuq")]
-    out = pr._demote_mam_paseq("YO70WM05", tokens, mam_disjunctives=[])
+    out = pr._demote_mam_paseq(mc_to_marks("YO70WM05"), tokens, mam_disjunctives=[])
     # The legarmeh becomes its underlying mehuppak servus; the paseq is dropped.
     assert _types(out) == [pan.TILDE, pan.MAHAPAKH, pan.SOFPASUQ]
 
 
 def test_no_demotion_when_mam_also_reads_legarmeh():
     tokens = [(pan.TILDE, ""), (pan.LEGARMEH, "legarmeh"), (pan.SOFPASUQ, "sof pasuq")]
-    out = pr._demote_mam_paseq("QF63H05", tokens, mam_disjunctives=[pan.LEGARMEH])
+    out = pr._demote_mam_paseq(
+        mc_to_marks("QF63H05"), tokens, mam_disjunctives=[pan.LEGARMEH]
+    )
     assert _types(out) == [pan.TILDE, pan.LEGARMEH, pan.SOFPASUQ]
 
 
@@ -59,7 +67,7 @@ def test_demotion_keeps_the_legarmeh_mam_confirms_and_drops_the_one_it_does_not(
         (pan.SOFPASUQ, "sof pasuq"),
     ]
     out = pr._demote_mam_paseq(
-        "QF63H05 BFNOWT02 HA70B05",
+        mc_to_marks("QF63H05 BFNOWT02 HA70B05"),
         tokens,
         mam_disjunctives=[pan.LEGARMEH, pan.TSINNOR, pan.OLEH_WEYORED],
     )
@@ -68,7 +76,7 @@ def test_demotion_keeps_the_legarmeh_mam_confirms_and_drops_the_one_it_does_not(
 
 def test_demote_is_a_noop_when_verse_is_absent_from_mam():
     tokens = [(pan.TILDE, ""), (pan.LEGARMEH, "legarmeh"), (pan.SOFPASUQ, "sof pasuq")]
-    out = pr._demote_mam_paseq("YO70WM05", tokens, mam_disjunctives=None)
+    out = pr._demote_mam_paseq(mc_to_marks("YO70WM05"), tokens, mam_disjunctives=None)
     assert out is tokens
 
 
@@ -108,13 +116,14 @@ def test_charitable_oleh_is_none_when_no_promotion_parses():
 
 # --- end to end ---------------------------------------------------------------
 
-# The M-C bodies of the two named oddballs and their MAM disjunctive skeletons.
-_PS_68_20 = (
+# The bodies of the two named oddballs (M-C source, converted to marks) and their MAM
+# disjunctive skeletons.
+_PS_68_20 = mc_to_marks(
     "B.F70R74W.K: ):ADON/FY02 YO70WM05 YO71WM YA75(:AMFS-L/F81NW. "
     "HF82/)\"70L Y:75$W.(FT/\"64NW. SE75LFH00"
 )
 _PS_68_20_MAM = [pan.TSINNOR, pan.OLEH_WEYORED, pan.REVIA_MUGRASH, pan.SILLUQ]
-_PR_30_15 = (
+_PR_30_15 = mc_to_marks(
     "LA95/(:ALW.QF63H05 $:T.\"71Y BFNOWT02 HA70B05 HA71B $FLO74W$ 13H\"N.FH "
     "LO74) TI&:B.A92(:NFH 11)AR:B.A81( LO)-)F71M:RW. HO75WN00"
 )

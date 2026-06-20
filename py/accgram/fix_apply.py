@@ -2,13 +2,13 @@
 
 The fix-tester wants to ask: *if we adopt the MAM-simple value here, does the
 oddball clear?*  The fix is a Unicode word-diff (``diff_wlc_mam``) and the scanner
-reads a Michigan-Claremont (M-C) accent body, so this module bridges the two the
-direct way (issue #9, Phase 1): it locates the single changed word in the verse's
+reads a Unicode mark body, so this module bridges the two the
+direct way (issue #9): it locates the single changed word in the verse's
 ``vels`` by index-aligning to the WLC word tokens, substitutes the MAM Unicode word
 in place (keeping the surrounding structure -- ketiv-qere wrappers, ``notes``,
-section markers), and re-transcodes the modified verse to an M-C body
-(``uni_to_mc_body``) for re-scanning.  No accent-name->code bridge is involved; the
-transcoder owns the helper/main split and every code emission.
+section markers), and re-transcodes the modified verse to a mark body
+(``uni_to_marks``) for re-scanning.  No accent-name->code bridge is involved; the
+transcoder owns the helper/main split and every mark emission.
 
 An adjacent run of words (a multi-word ``wlc_focus``) is substituted word by word.
 A change the grammar cannot see -- a vowel- or meteg-only edit -- is returned as an
@@ -23,7 +23,7 @@ import re
 from collections import Counter
 from dataclasses import dataclass
 
-from accgram import uni_to_mc_body
+from accgram import uni_to_marks
 from mb_cmn import uni_heb
 
 # A Hebrew consonant (used to tell a real word token from punctuation/markers).
@@ -146,7 +146,7 @@ def apply_mam_fix(
         )
     for offset in range(span):
         setters[start + offset](mam_tokens[offset])
-    new_body = uni_to_mc_body.verse_to_mc_body(new_verse)
+    new_body = uni_to_marks.verse_to_marks(new_verse)
 
     return AppliedFix(
         new_body=new_body,

@@ -36,15 +36,19 @@ from __future__ import annotations
 import difflib
 import re
 
+from accgram import accent_marks as am
 from accgram import poetic_accent_names as pan
 from accgram.ply_grammar_poetic import parse_tokens
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 
-# A conjunctive (azla 63 / mehuppak 70) followed eventually by a paseq (05) within one
-# whitespace-delimited word -- the legarmeh the scanner emits.  Mirrors the scanner's
-# leftmost-longest legarmeh rule, so group(1) is the servus the legarmeh sits on.
-_LEGARMEH_WORD_RE = re.compile(r"(63|70)[^ \r\n\-]*05")
-_SERVUS_FOR_CODE = {"63": pan.AZLA, "70": pan.MAHAPAKH}
+# A conjunctive (azla/qadma or mehuppak/mahapakh) followed eventually by a paseq within
+# one whitespace-delimited word -- the legarmeh the scanner emits.  Mirrors the
+# scanner's leftmost-longest legarmeh rule, so group(1) is the servus mark the legarmeh
+# sits on (issue #9, Phase 2: matched over the Unicode mark alphabet).
+_LEGARMEH_WORD_RE = re.compile(
+    r"(" + am.QADMA + r"|" + am.MAHAPAKH + r")" + am.TEXT + am.PASEQ
+)
+_SERVUS_FOR_CODE = {am.QADMA: pan.AZLA, am.MAHAPAKH: pan.MAHAPAKH}
 
 
 def reconcile_tokens(

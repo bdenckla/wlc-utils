@@ -66,7 +66,7 @@ from accgram import rtms_ref
 from accgram import rtms_report
 from accgram import rtmsr_media
 from accgram import rtmsr_verse
-from accgram import uni_to_mc_body
+from accgram import uni_to_marks
 from accgram.mam_poetic_accents import load_poetic_word_disj
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
@@ -98,7 +98,7 @@ class PoeticOddball:
     reference: str  # clean book-name form, e.g. "Psalms 31:21"
     bb: str
     kind: str  # KIND_MISSING_SILLUQ | KIND_NO_PARSE
-    body: str  # the M-C accent body (source content after "ch:vr ")
+    body: str  # the Unicode mark body (source content after "ch:vr ")
     output_file: str  # the *_ag.txt holding this verse's tree/NO_PARSE line
     token_types: tuple[str, ...]  # full scanned token-type sequence
     wlc_disjunctives: tuple[str, ...]  # WLC disjunctive skeleton (scanner)
@@ -132,7 +132,7 @@ def collect_poetic_oddballs(
     mam_words_by_ref = load_poetic_word_disj(mam_simple_dir)
     wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
     parser = build_parser()
-    book_texts = uni_to_mc_body.build_book_texts(
+    book_texts = uni_to_marks.build_book_texts(
         wlc422_kq_u_dir, keep_line_fn=poetic_filter.should_keep_line
     )
 

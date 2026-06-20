@@ -36,44 +36,45 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-# Atoms are delimited by spaces and maqaf (``-``), mirroring the scanner's TEXT
-# class ``[^ \r\n-]*`` which keeps a fused 82...02 pair inside one atom.
-_ATOM_SPLIT_RE = re.compile(r"[ \t\r\n\-]+")
-# A 2-digit accent code.  In the M-C encoding every cantillation code is exactly
-# two adjacent digits, so non-overlapping ``\d\d`` matches recover the code stream.
-_CODE_RE = re.compile(r"\d\d")
+from accgram import accent_marks as am
 
-# stress-helper code -> the fusion-partner code that must follow it (later in the
-# same atom) for the helper to be well-formed.  Only 82 (zarqa stress-helper,
-# whose partner is 02 = zarqa/tsinnor) is active today.
-_STRESS_HELPER_PARTNER: dict[str, str] = {"82": "02"}
+# Atoms are delimited by spaces and maqaf (``-``), mirroring the scanner's TEXT
+# class ``[^ \r\n-]*`` which keeps a fused tsinnorit...zinor pair inside one atom.
+_ATOM_SPLIT_RE = re.compile(r"[ \t\r\n\-]+")
+
+# stress-helper mark -> (fusion-partner mark, M-C code label) where the partner must
+# follow the helper later in the same atom for the helper to be well-formed.  Only the
+# zarqa stress-helper (tsinnorit, U+0598, M-C 82) -- whose partner is the zinor (U+05AE,
+# M-C 02) -- is active today.  The label is the original M-C code, kept so the
+# ``illegal_mark`` report reads identically to the pre-Phase-2 output.
+_STRESS_HELPER_PARTNER: dict[str, tuple[str, str]] = {am.TSINNORIT: (am.ZINOR, "82")}
 
 
 @dataclass(frozen=True)
 class StrandedMark:
-    """A stress-helper code left without its fusion partner in the same atom."""
+    """A stress-helper mark left without its fusion partner in the same atom."""
 
-    code: str  # the stranded helper, e.g. "82"
+    code: str  # the stranded helper's M-C code label, e.g. "82"
     atom: str  # the maqaf/space-delimited atom that contains it
 
 
 def stranded_stress_helpers(body: str) -> list[StrandedMark]:
     """Return every stranded stress-helper in a prose verse body.
 
-    A stress-helper (today only ``82``) is *stranded* when its fusion partner
-    (``02``) does not occur later in the same maqaf/space-delimited atom.  Such a
-    code is an intrinsic lexical ("alphabet") error independent of surrounding
-    context.
+    A stress-helper (today only the tsinnorit, M-C ``82``) is *stranded* when its
+    fusion partner (the zinor, M-C ``02``) does not occur later in the same maqaf/
+    space-delimited atom.  Such a mark is an intrinsic lexical ("alphabet") error
+    independent of surrounding context.
     """
     stranded: list[StrandedMark] = []
     for atom in _ATOM_SPLIT_RE.split(body):
         if not atom:
             continue
-        codes = _CODE_RE.findall(atom)
-        for i, code in enumerate(codes):
-            partner = _STRESS_HELPER_PARTNER.get(code)
-            if partner is None:
+        for i, ch in enumerate(atom):
+            entry = _STRESS_HELPER_PARTNER.get(ch)
+            if entry is None:
                 continue
-            if partner not in codes[i + 1 :]:
+            partner, code = entry
+            if partner not in atom[i + 1 :]:
                 stranded.append(StrandedMark(code=code, atom=atom))
     return stranded

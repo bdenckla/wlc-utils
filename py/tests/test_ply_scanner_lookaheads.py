@@ -12,6 +12,7 @@ Run:
 
 from __future__ import annotations
 
+from accgram import accent_marks as am
 from accgram.ply_scanner import HasLegarmeh, scan_accents, scan_book
 
 
@@ -25,49 +26,54 @@ def _types(
     return [t.type for t in scan_accents(body, bb, chnu, vrnu, h or HasLegarmeh())]
 
 
-# --- silluq (35|75|95 / [^ 379...]* 00) ----------------------------------------
+# --- silluq (meteg / [^ 379...]* sof-pasuq) ------------------------------------
 def test_silluq_fires_immediately_before_sof_pasuq():
-    # A metheg/silluq code directly (modulo plain text) before 00 is silluq.
-    assert _types("75D00") == ["SILLUQ", "SOFPASUQ"]
-    assert _types("35F00") == ["SILLUQ", "SOFPASUQ"]
-    assert _types("95F00") == ["SILLUQ", "SOFPASUQ"]
+    # A meteg/silluq mark directly (modulo plain text) before sof pasuq is silluq.
+    assert _types(am.METEG + "D" + am.SOF_PASUQ) == ["SILLUQ", "SOFPASUQ"]
+    assert _types(am.METEG + "F" + am.SOF_PASUQ) == ["SILLUQ", "SOFPASUQ"]
 
 
 def test_silluq_blocked_by_intervening_accent_is_swallowed():
-    # 92 (atnax) carries a '9', which the exclusion set [^ 379...] forbids, so
-    # the 75 is a medial metheg -> swallowed, and atnax is emitted instead.
-    assert _types("7592)00") == ["ATNAX", "SOFPASUQ"]
+    # atnax is a blocking mark (M-C 92 carries a '9'), so the meteg is a medial
+    # metheg -> swallowed, and atnax is emitted instead.
+    assert _types(am.METEG + am.ATNAX + ")" + am.SOF_PASUQ) == ["ATNAX", "SOFPASUQ"]
 
 
-# --- mayela (73 / <ga`ya-only>* (00|92)) vs plain tipexa -----------------------
+# --- mayela (tipexa / <ga`ya-only>* (sof-pasuq|atnax)) vs plain tipexa ----------
 def test_mayela_when_73_reaches_sof_pasuq_or_atnax():
-    # 73 followed (within the word) only by allowed chars up to 00/92 -> mayela.
-    assert _types("73NA00") == ["MAYELA", "SOFPASUQ"]
-    assert _types("73NA92Z00") == ["MAYELA", "ATNAX", "SOFPASUQ"]
+    # tipexa followed (within the word) only by allowed chars up to sof-pasuq/atnax.
+    assert _types(am.TIPEHA + "NA" + am.SOF_PASUQ) == ["MAYELA", "SOFPASUQ"]
+    assert _types(am.TIPEHA + "NA" + am.ATNAX + "Z" + am.SOF_PASUQ) == [
+        "MAYELA", "ATNAX", "SOFPASUQ",
+    ]
 
 
 def test_tipexa_when_a_blocking_accent_intervenes():
-    # 81 (revia) carries an '8', a blocking digit, so 73 is plain tipexa.
-    assert _types("73NA81C00") == ["TIPEXA", "REVIA", "SOFPASUQ"]
+    # revia is a blocking mark (M-C 81 carries an '8'), so tipexa stays plain.
+    assert _types(am.TIPEHA + "NA" + am.REVIA + "C" + am.SOF_PASUQ) == [
+        "TIPEXA", "REVIA", "SOFPASUQ",
+    ]
 
 
-# --- legarmeh (74{TEXT}05 / [^12368]*...81) ------------------------------------
+# --- legarmeh (munax{TEXT}paseq / [^12368]*...revia) ---------------------------
 def test_legarmeh_when_munax_paseq_precedes_revia():
-    assert _types("74A05B81C00") == ["LEGARMEH", "REVIA", "SOFPASUQ"]
+    assert _types(am.MUNAH + "A" + am.PASEQ + "B" + am.REVIA + "C" + am.SOF_PASUQ) == [
+        "LEGARMEH", "REVIA", "SOFPASUQ",
+    ]
 
 
 def test_munax_when_paseq_not_before_revia_outside_has_legarmeh_passage():
     # No following revia and an ordinary (non-listed) location -> plain munax.
-    assert _types("74A05B70C00", "gn", 1, 1) == ["MUNAX", "MAHAPAKH", "SOFPASUQ"]
+    assert _types(
+        am.MUNAH + "A" + am.PASEQ + "B" + am.MAHAPAKH + "C" + am.SOF_PASUQ, "gn", 1, 1
+    ) == ["MUNAX", "MAHAPAKH", "SOFPASUQ"]
 
 
 # --- has_legarmeh: keyed on structured (bb, ch, vs), so all 17 passages fire ----
-# Real Ruth 1:2 body; the maqqef-joined "$:N\"75Y-BFNF74Y/W05" is a munax+paseq
-# that does NOT precede revia, so it is legarmeh only because the ref is listed.
+# A synthetic munax+paseq that does NOT precede revia (so it is legarmeh only because
+# the ref is listed), followed by a plain accent and a terminating silluq+sof-pasuq.
 _RUTH_1_2 = (
-    'W:/$"74M HF/)I74Y$ ):E35LIYME83LEK: W:/$"M04 )I$:T./O63W NF(:FMI61Y '
-    'W:/$"71M $:N"75Y-BFNF74Y/W05 MAX:LO70WN W:/KIL:YOWN03 )EP:RFTI80YM '
-    'MI/B."71YT LE73XEM Y:HW.DF92H WA/Y.FBO71)W. &:D"Y-MOW)F73B WA/Y.I75H:YW.-$F75M00'
+    am.MUNAH + "A" + am.PASEQ + "B" + am.MAHAPAKH + "C" + am.METEG + "D" + am.SOF_PASUQ
 )
 
 
@@ -106,7 +112,9 @@ def test_has_legarmeh_old_i_is_monotonic():
 
 # --- new-format chapter/verse lookahead (via scan_book) ------------------------
 def test_scan_book_builds_reference_and_delimits_verses():
-    text = "Genesis\n1:1 71A00\n1:2 81B00\n"
+    text = (
+        f"Genesis\n1:1 {am.MERKHA}A{am.SOF_PASUQ}\n1:2 {am.REVIA}B{am.SOF_PASUQ}\n"
+    )
     verses = scan_book(text, "gn")
     assert [v.reference for v in verses] == ["Genesis 1:1", "Genesis 1:2"]
     # Each verse opens with TILDE and closes with SOFPASUQ.

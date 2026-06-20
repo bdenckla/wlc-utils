@@ -1,7 +1,7 @@
 """Driver for the Python PLY port: mirrors `accents -p` on the WLC prose corpus.
 
 Reads the canonical `-kq-u` Unicode source `wlc-utils-io/out/wlc422-kq-u/`, transcodes
-each verse into per-book scanner-ready M-C text (uni_to_mc_body, applying the genre
+each verse into per-book scanner-ready mark text (uni_to_marks, applying the genre
 filter so poetic books never reach the prose grammar), scans each verse into a token
 stream
 (ply_scanner), parses it into a tree (ply_grammar), and writes the reference line
@@ -23,7 +23,7 @@ from pathlib import Path
 from accgram import lexical_validation
 from accgram import prose_filter
 from accgram import rtms_data
-from accgram import uni_to_mc_body
+from accgram import uni_to_marks
 from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.ply_scanner import scan_book
 from accgram.ply_tree import add_leaves, print_tree
@@ -190,7 +190,7 @@ def run(args: argparse.Namespace) -> None:
     only = set(args.book) if args.book else None
     parser = build_parser()
 
-    book_texts = uni_to_mc_body.build_book_texts(
+    book_texts = uni_to_marks.build_book_texts(
         input_path, keep_line_fn=prose_filter.should_keep_line
     )
     wlc_index = rtms_data.load_wlc422_index(input_path)

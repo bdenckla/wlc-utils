@@ -38,7 +38,7 @@ from pathlib import Path
 
 from accgram import poetic_filter
 from accgram import rtms_data
-from accgram import uni_to_mc_body
+from accgram import uni_to_marks
 from accgram.mam_poetic_accents import load_poetic_disjunctives
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
@@ -88,7 +88,7 @@ def collect_divergences(
     """Return (divergences, per-book (matched, total)) over the poetic corpus."""
     mam_by_ref = load_poetic_disjunctives(mam_simple_dir)
     parser = build_parser()
-    book_texts = uni_to_mc_body.build_book_texts(
+    book_texts = uni_to_marks.build_book_texts(
         input_path, keep_line_fn=poetic_filter.should_keep_line
     )
 

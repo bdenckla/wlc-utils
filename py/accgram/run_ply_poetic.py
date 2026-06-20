@@ -2,7 +2,7 @@
 
 The poetic counterpart of accgram.run_ply.  Reads the canonical `-kq-u` Unicode source
 ``wlc-utils-io/out/wlc422-kq-u/`` (transcoded to scanner-ready M-C text by
-uni_to_mc_body), keeps only the poetic verses (Psalms and Proverbs wholesale plus
+uni_to_marks), keeps only the poetic verses (Psalms and Proverbs wholesale plus
 poetically-cantillated Job, via poetic_filter), scans each
 verse with ply_scanner_poetic, reconciles the tokens against MAM (poetic_reconcile:
 the legarmeh-vs-paseq and unmarked-oleh corrections the M-C source cannot express),
@@ -27,7 +27,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from accgram import poetic_filter
-from accgram import uni_to_mc_body
+from accgram import uni_to_marks
 from accgram.mam_poetic_accents import load_poetic_disjunctives
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.ply_grammar_poetic import (
@@ -175,7 +175,7 @@ def run(args: argparse.Namespace) -> None:
     parser = build_parser()
     mam_disj_by_ref = load_poetic_disjunctives(args.mam_simple_dir)
 
-    book_texts = uni_to_mc_body.build_book_texts(
+    book_texts = uni_to_marks.build_book_texts(
         input_path, keep_line_fn=poetic_filter.should_keep_line
     )
 

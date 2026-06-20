@@ -28,9 +28,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from accgram import accent_marks as am  # noqa: E402
 from accgram import rtms_data  # noqa: E402
 from accgram import rtms_rows  # noqa: E402
-from accgram import uni_to_mc_body  # noqa: E402
+from accgram import uni_to_marks  # noqa: E402
 from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens  # noqa: E402
 from accgram.ply_scanner import HasLegarmeh, Token, scan_accents  # noqa: E402
 from accgram.ply_tree import print_tree  # noqa: E402
@@ -43,68 +44,67 @@ WLC_KQ_U = REPO.parent / "wlc-utils-io" / "out" / "wlc422-kq-u"
 SRC = REPO / "in" / "accgram" / "uxlc_accent_changes.json"
 OUT = REPO / "out" / "accgram" / "uxlc_grammar_test.txt"
 
-# Unicode accent NAME (as used in refuni/changeuni) -> canonical M-C accent code.
-# These are the prose te'amim; poetic-only accents (atnah-hafukh, etc.) have no
-# prose code and simply will not validate if they appear.
-NAME2CODE = {
-    "etnachta": "92", "etnahta": "92",
-    "zarqa": "02", "zinor": "02",
-    "pashta": "03",
-    "yetiv": "10",
-    "tevir": "91",
-    "geresh": "61", "geresh-muqdam": "11",
-    "gereshayim": "62", "gershayim": "62",
-    "telisha-gedola": "14",
-    "telisha-qetana": "04",
-    "pazer": "83",
-    "munah": "74",
-    "mahapakh": "70", "makhapakh": "70",
-    "merkha": "71",
-    "darga": "94",
-    "qadma": "63",
-    "yerah-ben-yomo": "93",
-    "ole": "60",
-    "iluy": "64",
-    "dehi": "13",
-    "revia": "81",
-    "zaqef-qatan": "80",
-    "zaqef-gadol": "85",
-    "tipeha": "73",
-    "shalshelet": "65",
+# Unicode accent NAME (as used in refuni/changeuni) -> its scanner mark (accent_marks).
+# These are the prose te'amim; poetic-only accents (atnah-hafukh, etc.) have no prose
+# mark and simply will not validate if they appear.
+NAME2MARK = {
+    "etnachta": am.ATNAX, "etnahta": am.ATNAX,
+    "zarqa": am.ZINOR, "zinor": am.ZINOR,
+    "pashta": am.PASHTA,
+    "yetiv": am.YETIV,
+    "tevir": am.TEVIR,
+    "geresh": am.GERESH, "geresh-muqdam": am.GERESH_MUQDAM,
+    "gereshayim": am.GERSHAYIM, "gershayim": am.GERSHAYIM,
+    "telisha-gedola": am.TELISHA_GEDOLA,
+    "telisha-qetana": am.TELISHA_QETANA,
+    "pazer": am.PAZER,
+    "munah": am.MUNAH,
+    "mahapakh": am.MAHAPAKH, "makhapakh": am.MAHAPAKH,
+    "merkha": am.MERKHA,
+    "darga": am.DARGA,
+    "qadma": am.QADMA,
+    "yerah-ben-yomo": am.YERAH,
+    "ole": am.OLE,
+    "iluy": am.ILUY,
+    "dehi": am.DEHI,
+    "revia": am.REVIA,
+    "zaqef-qatan": am.ZAQEF_QATAN,
+    "zaqef-gadol": am.ZAQEF_GADOL,
+    "tipeha": am.TIPEHA,
+    "shalshelet": am.SHALSHELET,
 }
-# Non-accent tokens that still carry M-C meaning for the scanner.
+# Non-accent tokens that still carry meaning for the scanner.
 _METEGISH = {"meteg", "silluq"}
 
 
 def synth_word(uni_tokens: list[str]) -> str | None:
-    """Synthesize an M-C-scannable word string from refuni/changeuni token names.
+    """Synthesize a scanner-readable mark word from refuni/changeuni token names.
 
-    Consonants -> a filler 'X' (the scanner swallows letters; they only serve as
-    non-terminator TEXT).  Vowels/points are dropped.  Accents/meteg/sof-pasuq/
-    paseq/maqaf become their M-C codes/delimiters, in order.  Returns None if a
-    token has no known prose code (e.g. a poetic accent) -> case is unsupported.
+    Consonants -> a filler placeholder (the scanner swallows letters; they only serve
+    as non-terminator TEXT).  Vowels/points are dropped.  Accents/meteg/sof-pasuq/
+    paseq/maqaf become their marks/delimiters, in order.  Returns None if a token has
+    no known prose mark (e.g. a poetic accent) -> case is unsupported.
     """
     out: list[str] = []
     for tok in uni_tokens:
-        if tok in NAME2CODE:
-            out.append(NAME2CODE[tok])
+        if tok in NAME2MARK:
+            out.append(NAME2MARK[tok])
         elif tok in _METEGISH:
-            out.append("75")
+            out.append(am.METEG)
         elif tok == "sof-pasuq":
-            out.append("00")
+            out.append(am.SOF_PASUQ)
         elif tok == "paseq":
-            out.append("05")
+            out.append(am.PASEQ)
         elif tok == "maqaf":
-            out.append("-")
+            out.append(am.MAQAF)
         elif tok == "space":
-            # The flanking space of a paseq: in M-C, paseq (05) attaches to its
-            # word with no word-boundary space, so emit nothing (a real space here
-            # would spuriously split the maqaf-unit into two words).
+            # The flanking space of a paseq: paseq attaches to its word with no
+            # word-boundary space, so emit nothing (a real space here would spuriously
+            # split the maqaf-unit into two words).
             continue
         else:
-            # consonant or vowel/point; anchor accents with a filler letter so
-            # adjacent codes never merge across a (real) consonant boundary.
-            out.append("X")
+            # consonant or vowel/point -> a placeholder filler letter.
+            out.append(am.LETTER)
     return "".join(out)
 
 
@@ -163,7 +163,7 @@ def _kind(r) -> str:
     chg = set((r.get("changeuni_gen") or r.get("changeuni") or "").split())
     if "sof-pasuq" in ref and "sof-pasuq" not in chg:
         return "remove_terminator"
-    acc = lambda s: sum(1 for t in s if t in NAME2CODE)
+    acc = lambda s: sum(1 for t in s if t in NAME2MARK)
     if acc((r.get("changeuni_gen") or r.get("changeuni") or "").split()) > acc(
         (r.get("refuni_gen") or r.get("refuni") or "").split()
     ):
@@ -174,14 +174,14 @@ def _kind(r) -> str:
 def _transcoded_bodies(
     keys,
 ) -> dict[tuple[str, int, int], str]:
-    """The scanner-ready M-C body for each ``(bb, ch, vs)``, transcoded from the
+    """The scanner-ready mark body for each ``(bb, ch, vs)``, transcoded from the
     canonical ``-kq-u`` Unicode source (issue #9 retired ``wlc422_ps.txt``)."""
     index = rtms_data.load_wlc422_index(WLC_KQ_U)
     bodies: dict[tuple[str, int, int], str] = {}
     for bb, ch, vs in keys:
         verse = index.get(rtms_rows.to_compact_bcv(bb, ch, vs))
         if isinstance(verse, dict):
-            bodies[(bb, ch, vs)] = uni_to_mc_body.verse_to_mc_body(verse)
+            bodies[(bb, ch, vs)] = uni_to_marks.verse_to_marks(verse)
     return bodies
 
 

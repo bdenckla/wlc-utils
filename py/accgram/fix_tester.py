@@ -46,7 +46,7 @@ from accgram import research_tao
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_rows
-from accgram import uni_to_mc_body
+from accgram import uni_to_marks
 from accgram import lexical_validation
 from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.ply_scanner import HasLegarmeh, Token, scan_accents
@@ -296,7 +296,7 @@ def _test_one(
     # dropped as an input), not read from the oddball row's stored content.
     raw_verse = wlc422_by_bcv.get(bcv)
     body = (
-        uni_to_mc_body.verse_to_mc_body(raw_verse)
+        uni_to_marks.verse_to_marks(raw_verse)
         if isinstance(raw_verse, dict)
         else ""
     )
@@ -418,7 +418,7 @@ def _test_merge_next(
     next_bcv = rtms_rows.to_compact_bcv(nbb, nchnu, nvrnu)
     next_verse = wlc422_by_bcv.get(next_bcv)
     next_body = (
-        uni_to_mc_body.verse_to_mc_body(next_verse)
+        uni_to_marks.verse_to_marks(next_verse)
         if isinstance(next_verse, dict)
         else None
     )

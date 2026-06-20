@@ -60,10 +60,15 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from accgram import accent_marks as am
 from accgram import poetic_accent_names as pan
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
-_TEXT = r"[^ \r\n\-]*"  # within one maqqef/space-delimited word (as in prose)
+_TEXT = am.TEXT  # within one maqqef/space-delimited word (as in prose)
+
+# silluq right context (as in prose ply_scanner): meteg/silluq immediately before
+# sof pasuq, rebuilt over the mark alphabet (issue #9, Phase 2).
+_SILLUQ_LA = r"(?=" + am.negated_class(" \r\n-?~", "379") + r"*" + am.SOF_PASUQ + r")"
 
 # Verse-structure line patterns, as in accgram.ply_scanner.scan_book: a verse line
 # is "ch:vr <accent codes>"; a lone capitalized word is a chapter/book header we
@@ -76,43 +81,50 @@ _POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
 
 # Rule table: (regex anchored at scan position, token type or None to swallow).
 # Longest match wins; ties broken by order (mirrors flex / the prose scanner).
+# Phase 2 (issue #9): the rule table matches over the Unicode mark alphabet
+# (accent_marks) instead of M-C 2-digit codes.  Each accent is its own codepoint;
+# the merge rules below fuse a stress-helper / preposed sign onto its main accent.
 _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
-    (re.compile(r"00"), pan.SOFPASUQ),
-    # silluq: meteg/silluq sign (35|75|95) immediately before sof pasuq.
-    (re.compile(r"(?:35|75|95)(?=[^ 379\r\n\-?~]*00)"), pan.SILLUQ),
-    (re.compile(r"92"), pan.ATNAX),
-    # oleh-we-yored: ole (60) plus its yored merka (71) in the same word; the 71
-    # is consumed here so it is not also emitted as a servus.  Bare 60 (yored on
+    (re.compile(am.SOF_PASUQ), pan.SOFPASUQ),
+    # silluq: meteg/silluq sign immediately before sof pasuq.
+    (re.compile(am.METEG + _SILLUQ_LA), pan.SILLUQ),
+    (re.compile(am.ATNAX), pan.ATNAX),
+    # oleh-we-yored: ole plus its yored merka in the same word; the merka is
+    # consumed here so it is not also emitted as a servus.  Bare ole (yored on
     # the next word, or unmarked) still yields the accent.
-    (re.compile(r"60" + _TEXT + r"71"), pan.OLEH_WEYORED),
-    (re.compile(r"60"), pan.OLEH_WEYORED),
-    # revia mugrash: geresh muqdam (11) plus revia (81) in the same word; the 81
-    # is consumed.  Bare 11 = implied revia (omitted because it would share the
-    # geresh muqdam's letter).
-    (re.compile(r"11" + _TEXT + r"81"), pan.REVIA_MUGRASH),
-    (re.compile(r"11"), pan.REVIA_MUGRASH),
-    (re.compile(r"13"), pan.DEXI),
-    (re.compile(r"02"), pan.TSINNOR),
-    (re.compile(r"83"), pan.PAZER),
-    # shalshelet gedolah = shalshelet (65) followed by paseq (05).
-    (re.compile(r"65" + _TEXT + r"05"), pan.SHALSHELET_GEDOLAH),
-    # legarmeh = azla (63) or mehuppak (70) followed by paseq (05).  Must precede
+    (re.compile(am.OLE + _TEXT + am.MERKHA), pan.OLEH_WEYORED),
+    (re.compile(am.OLE), pan.OLEH_WEYORED),
+    # revia mugrash: geresh muqdam plus revia in the same word; the revia is
+    # consumed.  Bare geresh muqdam = implied revia (omitted because it would share
+    # the geresh muqdam's letter).
+    (re.compile(am.GERESH_MUQDAM + _TEXT + am.REVIA), pan.REVIA_MUGRASH),
+    (re.compile(am.GERESH_MUQDAM), pan.REVIA_MUGRASH),
+    (re.compile(am.DEHI), pan.DEXI),
+    (re.compile(am.ZINOR), pan.TSINNOR),
+    (re.compile(am.PAZER), pan.PAZER),
+    # shalshelet gedolah = shalshelet followed by paseq.
+    (re.compile(am.SHALSHELET + _TEXT + am.PASEQ), pan.SHALSHELET_GEDOLAH),
+    # legarmeh = azla (qadma) or mehuppak (mahapakh) followed by paseq.  Must precede
     # the bare AZLA / MAHAPAKH rules so the longer paseq-terminated match wins.
-    (re.compile(r"(?:63|70)" + _TEXT + r"05"), pan.LEGARMEH),
+    (re.compile(r"(?:" + am.QADMA + r"|" + am.MAHAPAKH + r")" + _TEXT + am.PASEQ), pan.LEGARMEH),
     # revia (gadol/qatan) -- reclassified in the second pass.
-    (re.compile(r"81"), pan.REVIA),
+    (re.compile(am.REVIA), pan.REVIA),
     # conjunctive servi
-    (re.compile(r"74"), pan.MUNAX),
-    (re.compile(r"71"), pan.MERKHA),
-    (re.compile(r"70"), pan.MAHAPAKH),
-    (re.compile(r"63"), pan.AZLA),
-    (re.compile(r"64"), pan.ILLUY),
-    (re.compile(r"73"), pan.TARXA),
-    (re.compile(r"93"), pan.GALGAL),
+    (re.compile(am.MUNAH), pan.MUNAX),
+    (re.compile(am.MERKHA), pan.MERKHA),
+    (re.compile(am.MAHAPAKH), pan.MAHAPAKH),
+    (re.compile(am.QADMA), pan.AZLA),
+    (re.compile(am.ILUY), pan.ILLUY),
+    (re.compile(am.TIPEHA), pan.TARXA),
+    (re.compile(am.YERAH), pan.GALGAL),
     # swallowed: sinnorit, bare shalshelet (qetannah conjunctive), meteg, paseq,
-    # puncta, and any other 2-digit code (prose accents should not occur here).
-    (re.compile(r"82|65|35|75|95|05|52|53"), None),
-    (re.compile(r"[0-9][0-9]"), None),
+    # puncta (prose-only accents should not occur in the Three Books).
+    (
+        re.compile(
+            "[" + am.TSINNORIT + am.SHALSHELET + am.METEG + am.PASEQ + am.UPPER_DOT + am.LOWER_DOT + "]"
+        ),
+        None,
+    ),
     (re.compile(r"\*\*"), None),
     (re.compile(r"\*[^* \r\n\-]+"), None),
     (re.compile(r".", re.DOTALL), None),
