@@ -68,6 +68,7 @@ tokens = (
     "LEGARMEH",
     "MUNAX",
     "MAHAPAKH",
+    "MAHAPAKHAZLA",
     "MERKHA",
     "MERKHAKEFULA",
     "DARGA",
@@ -638,6 +639,17 @@ def p_pashta_phrase_telq_azla_mahapakh(p):
 def p_pashta_phrase_telq_azla_merkha(p):
     "pashta_phrase : TELISHAQETANNA AZLA MERKHA PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4])
+
+
+def p_pashta_phrase_telq_mahapakhazla(p):
+    # Ezekiel 20:31: mahapakh and qadma/azla fused on one letter (see the scanner's
+    # MAHAPAKHAZLA rule).  The fused cluster fills the single servus slot before
+    # pashta -- the same slot the AZLA MAHAPAKH *pair* fills on separate letters --
+    # so this is the one-token analogue of TELISHAQETANNA AZLA MAHAPAKH PASHTA.  Only
+    # this exact context is attested; the MUNAX-prefixed siblings of the AZLA MAHAPAKH
+    # family are deliberately not mirrored until a real occurrence calls for one.
+    "pashta_phrase : TELISHAQETANNA MAHAPAKHAZLA PASHTA"
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
 def p_pashta_phrase_m_telq_azla_mahapakh(p):

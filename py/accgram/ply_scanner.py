@@ -134,6 +134,14 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # munax+paseq NOT before revia: legarmeh only inside a has_legarmeh passage.
     (re.compile(am.MUNAH + _TEXT + am.PASEQ), "_LEGARMEH_OR_MUNAX"),
     (re.compile(am.MUNAH), "MUNAX"),
+    # mahapakh + qadma/azla on one base letter (adjacent in the mark string, no X
+    # between -> same letter): an impositive above-accent and below-accent share a
+    # consonant, a cluster with no natural order.  Fused into one
+    # unitary token rather than judged as a servus *sequence*; the genuine cross-
+    # letter `qadma...mehuppakh` chain still tokenizes as AZLA then MAHAPAKH.  Stored
+    # mahapakh-then-qadma (U+05A4 < U+05A8).  Outside the (ungrammar-checked)
+    # decalogues this occurs only at Ezekiel 20:31.
+    (re.compile(am.MAHAPAKH + am.QADMA), "MAHAPAKHAZLA"),
     (re.compile(am.MAHAPAKH), "MAHAPAKH"),
     (re.compile(am.MERKHA), "MERKHA"),
     (re.compile(am.MERKHA_KEFULA), "MERKHAKEFULA"),
@@ -185,6 +193,10 @@ _LEAF: dict[str, str] = {
     "LEGARMEH": "legarmeh",
     "MUNAX": "munax",
     "MAHAPAKH": "mahapakh",
+    # ``!`` (not ``_``) joins the fused cluster: these are two distinct accents under
+    # duress on one letter, not one accent with a space in its name -- and the cluster
+    # is extraordinary, sometimes even illegal (cf. the mahapakh!tipexa of Lev 25:20).
+    "MAHAPAKHAZLA": "mahapakh!azla",
     "MERKHA": "merkha",
     "MERKHAKEFULA": "merkhakefula",
     "DARGA": "darga",

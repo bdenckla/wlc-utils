@@ -11421,7 +11421,7 @@ Ezekiel 20:31
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna mahapakh!azla pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
