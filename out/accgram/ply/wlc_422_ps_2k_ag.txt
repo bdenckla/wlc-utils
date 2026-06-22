@@ -9629,7 +9629,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        mahapakh mahapakh 
+        mahapakh mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause

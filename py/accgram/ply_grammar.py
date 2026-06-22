@@ -23,9 +23,11 @@ Grammar actions build trees with ply_tree.make_node / add_leaves, exactly as the
 C actions call make_node / add_leaves.  Token values carry the leaf-name string
 (yylval.leaf), so add_leaves uses p[i] verbatim.
 
-Quirk reproduced: the C actions for `MAHAPAKH MAHAPAKH PASHTA` and
-`MAHAPAKH MERKHA PASHTA` call add_leaves with count 2 (only $1,$2), dropping the
-trailing PASHTA leaf; the Python actions pass only p[1],p[2] to match.
+Deliberate correction (diverging from the C oracle, like MISSING_SOFPASUQ): the C
+actions for `MAHAPAKH MAHAPAKH PASHTA` and `MAHAPAKH MERKHA PASHTA` call add_leaves
+with count 2 (only $1,$2), an off-by-one that drops the trailing PASHTA leaf -- the
+phrase's own disjunctive head.  Every sibling servus+pashta rule keeps all leaves,
+so these now pass p[1],p[2],p[3] too (affects Judg 15:13, 1Sam 30:9, Exod 10:13).
 """
 
 from __future__ import annotations
@@ -613,16 +615,19 @@ def p_pashta_phrase_azla_merkha(p):
 
 
 def p_pashta_phrase_mahapakh_mahapakh(p):
-    # Quirk (Judg 15:13): C action is add_leaves(2, ..., $1, $2) -- the trailing
-    # PASHTA leaf is intentionally dropped.  Reproduce by passing only p[1],p[2].
+    # Correction (Judg 15:13): the C action was add_leaves(2, ..., $1, $2), an
+    # off-by-one that dropped the trailing PASHTA leaf -- the very disjunctive the
+    # phrase is built around.  Every sibling servus+pashta rule keeps all leaves;
+    # we now do too (diverging from the C oracle, like MISSING_SOFPASUQ).
     "pashta_phrase : MAHAPAKH MAHAPAKH PASHTA"
-    p[0] = add_leaves("pashta_phrase", p[1], p[2])
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
 def p_pashta_phrase_mahapakh_merkha(p):
-    # Quirk (1Sam 30:9; Exod 10:13): C action drops the trailing PASHTA leaf.
+    # Correction (1Sam 30:9; Exod 10:13): the C action dropped the trailing PASHTA
+    # leaf (same off-by-one as MAHAPAKH MAHAPAKH PASHTA); we keep it.
     "pashta_phrase : MAHAPAKH MERKHA PASHTA"
-    p[0] = add_leaves("pashta_phrase", p[1], p[2])
+    p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
 def p_pashta_phrase_telq_azla_mahapakh(p):
