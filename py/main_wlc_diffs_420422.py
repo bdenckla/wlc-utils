@@ -7,6 +7,11 @@ import py_wlc_diffs_420422.my_word_diffs_420422_add_fields as my_word_diffs_4204
 import py_wlc_diffs_420422.my_word_diffs_420422_full as my_word_diffs_420422_full
 import py_wlc_diffs_420422.my_word_diffs_420422_summary as my_word_diffs_420422_summary
 
+_NOTE_DIFFS_JSON_URL = (
+    "https://github.com/bdenckla/wlc-utils-io/blob/main/out/"
+    "diff_mm_wlc420_wlc422.json"
+)
+
 
 def main():
     """Writes 420-to-422 word diff survey to HTML files."""
@@ -64,9 +69,25 @@ def _path_and_title_and_intro_for_main(nrecs, rejects_path):
         ),
         ".",
     ]
+    # The word changes shown here are not the only 4.20-to-4.22 differences.
+    # There are also note (bracket-note) changes, recorded but not surfaced on
+    # any page. The count below is taken from the "notes differences" array of
+    # the diff JSON named in _NOTE_DIFFS_JSON_URL; update it if that file is
+    # regenerated.
+    caveat = [
+        "These word changes are not the only differences between WLC 4.20 "
+        "and 4.22: there are also 196 note (bracket-note) changes, which can "
+        "be seen in the ",
+        wlc_utils_html.anchor(
+            "notes differences section of diff_mm_wlc420_wlc422.json",
+            {"href": _NOTE_DIFFS_JSON_URL},
+        ),
+        ".",
+    ]
     intro = [
         wlc_utils_html.para(para1_contents),
         wlc_utils_html.para(link_to_rejects),
+        wlc_utils_html.para(caveat),
     ]
     title = "WLC 4.22 Changes"
     return "index.html", title, intro
