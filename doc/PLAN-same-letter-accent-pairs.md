@@ -55,7 +55,7 @@ The **real targets** (normally-cantillated text, dual-cantillation refs removed)
 | mahapakh + qadma/azla | ek20:31 | **DONE** → fused `mahapakh!azla`; legal, clean parse. |
 | telisha-gedola + gershayim (same letter) | gn5:29, zp2:15 | **DONE** → keep telg, **drop the gershayim** (read as the telg's stress-helper companion). Telg-only, clean parse. (Previously *both* were dropped — the word was silently unaccented.) |
 | telisha-gedola + geresh-muqdam (same letter) | 2k17:13 | **DONE** → geresh-muqdam charitably read as geresh (it is a poetic-only sign; its use in prose is typographic), then dropped as the companion (`telg!germuq → telg!geresh → telg`). Telg-only, clean parse. |
-| mahapakh + tipeḥa | lv25:20 | The "mahapakh-tipeḥa" — both *below*-accents, considered an **error**/illegal. Wants `mahapakh!tipexa` landing in an oddball/ERROR, not a clean rule. |
+| mahapakh + tipeḥa | lv25:20 | The "mahapakh-tipeḥa" — both *below*-accents, considered an **error**/illegal. **Current handling (2026-06-22):** *already an oddball* — both accents survive `uni_to_marks`, and the grammar emits `tipexa_phrase → ERROR` (so it already reads as wrong). **Open (design):** give it a *named* fused leaf `mahapakh!tipexa` (cluster made explicit) vs. leave the bare ERROR? See open question #2. |
 
 **Note — telisha-gedola + geresh/gershayim (resolved together).** There are exactly
 **five** words corpus-wide carrying both a telisha-gedola and a geresh or gershayim
@@ -88,10 +88,10 @@ dropped upstream as the telg companion. Cited in code: tanach.us changes
 ### Poetic
 | cluster (source order) | refs | notes |
 |---|---|---|
-| geresh-muqdam + revia | 241× (all Psalms: ps7:1, ps11:1, …) | This is **revia mugrash**, a *normal* poetic accent (geresh + revia as one unit). Almost certainly already handled by the poetic scanner — verify it parses, don't "fix" it. The high count is the tell. |
-| merkha + qadma | ps56:10 | Check current handling. |
-| munah + deḥi | ps135:2, jb32:13 | deḥi is prepositive. Check current handling. |
-| revia + geresh | ps124:4 | Note the *reversed* order vs revia-mugrash's geresh+revia — a variant/anomaly to look at. |
+| geresh-muqdam + revia | 241× (all Psalms: ps7:1, ps11:1, …) | This is **revia mugrash**, a *normal* poetic accent (one `REVIA_MUGRASH` token). **Current handling:** parses clean. **RESOLVED** — established accent, out of scope; don't "fix" it. |
+| merkha + qadma | ps56:10 | **Current handling (2026-06-22):** parses **clean**, no ERROR (renders `azla merkha mahapakh munax dexi` — qadma→`azla`, merkha kept, both conjunctives). Likely no action. |
+| munah + deḥi | ps135:2, jb32:13 | deḥi is prepositive. **Current handling (2026-06-22):** both parse **clean**, no ERROR (`dexi` phrase + `munax` servus). Likely no action. |
+| revia + geresh | ps124:4 | The *reversed* order vs revia-mugrash's geresh+revia. **Current handling (2026-06-22):** parses **clean** — currently absorbed as `revia mugrash` (`revia_mugrash_phrase`). **Open:** confirm that reading is right vs. treating the reversed order as a distinct anomaly. |
 
 (Exact counts/refs as of 2026-06-22 against `wlc422-kq-u`. Re-run the recipe to refresh.)
 
@@ -108,11 +108,12 @@ dropped upstream as the telg companion. Cited in code: tanach.us changes
    Add the grammar token + only the **attested** rule(s) (no speculative variants —
    see memory `parse-rate-not-a-goal`).
 4. For clusters currently handled by **dropping** a secondary (telisha-gedola +
-   gershayim/geresh-muqdam), the choice is fuse-vs-keep-dropping; unifying on fusion
-   means revisiting `uni_to_marks` lines ~115-124.
-5. Verify: `pytest`; regenerate the affected corpus (`main_accgram.py
-   run-ply-goerwitz` for prose, the poetic entrypoint for poetic) and confirm the
-   diff is only the intended verses.
+   geresh/gershayim), the choice is fuse-vs-keep-dropping; unifying on fusion means
+   revisiting the drop logic in `uni_to_marks.word_to_marks` (the telisha-gedola /
+   geresh-or-gershayim handling).
+5. Verify: `pytest`; regenerate the affected corpus (`main_accgram.py run-ply-goerwitz`
+   for prose, `main_accgram.py run-ply-poetic` for poetic) and confirm the diff is only
+   the intended verses.
 
 ## Open questions
 
@@ -129,8 +130,56 @@ dropped upstream as the telg companion. Cited in code: tanach.us changes
   (telg + geresh-family → telg). The drop-secondary approach in `uni_to_marks` is kept,
   now stated as a principled rule rather than an incidental clustered-secondary drop.
 
-## Remaining (poetic, lower priority)
+## Remaining work (for a fresh session)
 
-The poetic same-letter pairs (merkha+qadma ps56:10, munah+deḥi ps135:2/jb32:13,
-revia+geresh ps124:4 — the reversed-order anomaly) still want a "check current handling"
-pass; revia-mugrash itself is resolved (above).
+Two items remain. Current-handling already established (see tables above, dated
+2026-06-22); the harness for re-checking is in **Drive one verse** below.
+
+1. **Prose — mahapakh + tipeḥa (lv25:20).** The only unresolved prose cluster. It is
+   *already* an oddball today (`tipexa_phrase → ERROR`). The decision (open question #2)
+   is purely presentational: introduce a named fused `mahapakh!tipexa` leaf — following
+   the ek20:31 fusion mechanism (Method step 3), but routed so it lands in an ERROR/oddball
+   context, not a clean rule — or leave the bare ERROR as-is. No grammaticality question;
+   confirm the "illegal" status against Yeivin / a MAM doc-note before adding a named leaf.
+
+2. **Poetic pairs — all four already parse clean** (no ERROR): merkha+qadma (ps56:10),
+   munah+deḥi (ps135:2, jb32:13), revia+geresh (ps124:4). The only thing left to *decide*
+   is ps124:4: the reversed revia+geresh is currently absorbed as `revia mugrash` —
+   confirm that is the right reading, or whether the reversed order is a distinct anomaly.
+   The other three need no action unless a closer reading disagrees with the clean parse.
+
+## Drive one verse (test recipe)
+
+To see what one verse tokenizes/parses to — and to test a hypothetical change before a
+full corpus regen. Run from `py/`, `PYTHONIOENCODING=utf-8`. A verse is **ungrammatical**
+iff its tree contains an `ERROR` leaf (poetic-only: a `NO_PARSE` line = total failure).
+
+**Authoritative current output (no code):** grep the committed trees. Prose:
+`out/accgram/ply/wlc_422_ps_<bb>_ag.txt` (refs like `Levit 25:20`). Poetic:
+`out/accgram/ply-poetic/wlc_422_ps_<bb>_ag.txt` (refs like `Psalms 56:10`, `Job 32:13`).
+
+**Prose, ad-hoc** (lets you mutate `body` to try a change):
+
+```python
+from pathlib import Path
+from accgram import rtms_data, research_tao, uni_to_marks, ply_scanner, ply_grammar
+from accgram.ply_scanner import Token, HasLegarmeh
+from accgram.ply_tree import print_tree
+index = rtms_data.load_wlc422_index(research_tao.default_wlc422_kq_u_dir(Path('..').resolve()))
+parser, HL = ply_grammar.build_parser(), HasLegarmeh()
+bcv = 'lv25:20'; bb = bcv[:2]; ch, vr = bcv[2:].split(':')
+body = uni_to_marks.verse_to_marks(index[bcv])      # <- mutate to test a hypothetical
+toks = [Token('TILDE', '')] + ply_scanner.scan_accents(body, bb, int(ch), int(vr), HL)
+tree = ply_grammar.parse_tokens(parser, toks)       # None | LOCATION_ONLY | TN
+print(print_tree(tree) if tree and tree is not ply_grammar.LOCATION_ONLY else tree)
+```
+
+The leading `('TILDE', '')` is **mandatory** (the grammar's `pasuq : TILDE … SOFPASUQ`);
+omit it and every parse returns `None`. `scan_accents` needs a `HasLegarmeh` instance even
+when no legarmeh is involved.
+
+**Poetic** is the same shape with `ply_scanner_poetic` / `ply_grammar_poetic`, *but* the
+faithful pipeline first runs `poetic_reconcile.reconcile_tokens` (the MAM-simple
+disjunctive oracle) and then `ply_grammar_poetic.parse_tokens_accepting_repeats`; oddballs
+are detected via `run_ply_poetic._has_error_leaf`. For a quick check prefer regenerating
+(`main_accgram.py run-ply-poetic --book ps`) and grepping the output above.
