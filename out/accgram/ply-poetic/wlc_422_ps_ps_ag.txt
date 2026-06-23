@@ -10538,7 +10538,7 @@ Psalms 56:10
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      azla merkha mahapakh munax dexi 
+      merkha azla mahapakh munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_clause

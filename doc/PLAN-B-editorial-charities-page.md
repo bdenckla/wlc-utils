@@ -1,7 +1,7 @@
 # Plan B: generated "editorial charities" HTML page
 
 **Status (2026-06-23):** stub / not started. Companion to **Plan A**
-(`doc/PLAN-same-letter-accent-pairs.md`), which defines the charities this page
+(`doc/PLAN-A-same-letter-accent-pairs.md`), which defines the charities this page
 documents and the taxonomy behind them. One-way dependency: Plan B consumes Plan A's
 content, so Plan A's definitions (and the lv25:20 verdict) should be settled first.
 

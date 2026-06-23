@@ -99,6 +99,17 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # the geresh muqdam's letter).
     (re.compile(am.GERESH_MUQDAM + _TEXT + am.REVIA), pan.REVIA_MUGRASH),
     (re.compile(am.GERESH_MUQDAM), pan.REVIA_MUGRASH),
+    # revia mugrash by same-letter charity (ps124:4): a *plain* geresh (61) is illegal
+    # in the Three Books -- it has no poetic rule and is the lone accent the catch-all
+    # silently swallows (corpus-wide, exactly once).  The sole charitable exception is a
+    # plain geresh sharing one letter with a revia: read it as revia mugrash.  Mechanism
+    # = within-letter order-normalize (revia+geresh, the storage order, is equivalent to
+    # geresh+revia -- we are liberal about mark order *within* a letter, never across)
+    # then promote the geresh to geresh muqdam, which the rule above fuses; expressed
+    # here directly as one REVIA+GERESH fusion.  Adjacency (no X between) keeps it
+    # same-letter only.  (Failing fast on any *other* stray accent is deferred to the
+    # poetic "stop swallowing" work, Plan C; geresh is the only attested case.)
+    (re.compile(am.REVIA + am.GERESH), pan.REVIA_MUGRASH),
     (re.compile(am.DEHI), pan.DEXI),
     (re.compile(am.ZINOR), pan.TSINNOR),
     (re.compile(am.PAZER), pan.PAZER),

@@ -14,14 +14,20 @@ Run:
 from __future__ import annotations
 
 from accgram import accent_marks as am
-from accgram.lexical_validation import stranded_stress_helpers
+from accgram.lexical_validation import illegal_below_pairs, stranded_stress_helpers
 
 _TS = am.TSINNORIT  # M-C 82 (zarqa stress-helper)
 _ZI = am.ZINOR      # M-C 02 (zinor / zarqa main)
+_MA = am.MAHAPAKH   # U+05A4 (below)
+_TI = am.TIPEHA     # U+0596 (below)
 
 
 def _codes(body: str) -> list[str]:
     return [m.code for m in stranded_stress_helpers(body)]
+
+
+def _below(body: str) -> list[str]:
+    return [m.code for m in illegal_below_pairs(body)]
 
 
 def test_bare_82_is_stranded():
@@ -59,3 +65,31 @@ def test_atom_with_both_returns_the_atom_text():
     [mark] = stranded_stress_helpers(body)
     assert mark.code == "82"
     assert mark.atom == body
+
+
+# --- illegal same-letter below-pair (mahapakh!tipexa, lv25:20) -----------------
+
+
+def test_mahapakh_tipexa_same_letter_is_illegal():
+    # lv25:20 word נֹּאכַל: mahapakh + tipeḥa adjacent (one letter) -> illegal below-pair.
+    assert _below("XX-XXX" + _MA + _TI + "X]c]n") == ["mahapakh!tipexa"]
+
+
+def test_below_pair_matches_either_within_letter_order():
+    # within-letter order is not meaningful; the reversed order is equally illegal.
+    assert _below("X" + _TI + _MA + "X") == ["mahapakh!tipexa"]
+
+
+def test_below_accents_on_different_letters_are_clean():
+    # An X (base letter) between them => different letters => a legal sequence, not a pair.
+    assert _below("X" + _MA + "X" + _TI + "X") == []
+
+
+def test_below_accents_across_atom_boundary_are_clean():
+    assert _below("X" + _MA + "-X" + _TI + "X") == []
+    assert _below("X" + _MA + " X" + _TI + "X") == []
+
+
+def test_no_below_pair_is_clean():
+    assert _below("XX" + _MA + "X XXX" + _TI + "X" + am.SOF_PASUQ) == []
+    assert _below("YISRA" + _TS + "L]s") == []  # a stranded 82 is not a below-pair

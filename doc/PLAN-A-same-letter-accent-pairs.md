@@ -1,13 +1,20 @@
 # Plan A: same-letter accent pairs — unified treatment + two open verses
 
-**Status (2026-06-23):** the design has converged on a single taxonomy that makes
-the formerly ad-hoc handling principled. Two live code changes remain: **lv25:20**
-(prose lexical error — settled below) and **ps124:4** (poetic geresh — reframed below as
-fail-fast + charity, *no longer* "documentation only"). Companions: **Plan B**
-(`doc/PLAN-editorial-charities-page.md`) — the generated HTML page that documents these
-"charities"; and **Plan C** (`doc/PLAN-poetic-swallowed-accents.md`) — the poetic
+**Status (2026-06-23):** **DONE** — the design converged on a single taxonomy that makes
+the formerly ad-hoc handling principled, and both live code changes have landed:
+**lv25:20** (prose lexical error) and **ps124:4** (poetic geresh charity). The one piece
+*not* done here is the poetic catch-all **fail-fast guard**, deliberately **deferred to
+Plan C** (see the ps124:4 section): research showed the catch-all is load-bearing (it
+swallows every `X`/space/maqaf/note marker — geresh is its only *accent* customer), so a
+fail-fast must be a narrow stray-accent rule, and Plan C is already rebuilding that exact
+swallow region. The charity alone makes ps124:4 principled. Companions: **Plan B**
+(`doc/PLAN-B-editorial-charities-page.md`) — the generated HTML page that documents these
+"charities"; **Plan C** (`doc/PLAN-C-poetic-swallowed-accents.md`) — the poetic
 scanner's silent-swallowing defect (tsinnorit, shalshelet qetannah), discovered while
-running down the ps124:4 geresh. Resolved precedents: ek20:31 (mahapakh+azla, **fused**);
+running down the ps124:4 geresh; and **Plan D**
+(`doc/PLAN-D-faithful-same-letter-bangs.md`) — the spin-off "no swallowed *bangs*" goal
+(represent same-letter co-equal pairs as one `!` token rather than a reorderable
+sequence), prompted by ps56:10. Resolved precedents: ek20:31 (mahapakh+azla, **fused**);
 the telisha-gedola + geresh-family family (5 words, **drop-to-telg**); poetic
 revia-mugrash (established single token). See also the durable design note in memory
 `fused-impositive-cluster-token`, and the worked example
@@ -52,11 +59,22 @@ The poetic grammar treats conjunctives as a **fully permissive servus chain** (e
 constraint was tested against L+MAM and **deliberately not encoded** — see the `issue
 #18` notes throughout `ply_grammar_poetic.py`). So the poetic grammaticality verdict is
 a function of the **disjunctive skeleton alone**. Consequence: **every same-letter pair
-that includes a conjunctive is automatically a non-issue in poetic** —
+that includes a conjunctive is automatically a non-issue for the *grammaticality
+verdict*** —
 
 - deḥi + munaḥ (munaḥ is a servus, absorbed into `dexi_phrase`);
 - merkha + qadma, ps56:10 (both are conjunctives — just servi);
 - a secondary merkha / secondary mahapakh (conjunctives; never constrained).
+
+**But a non-issue for the verdict is not a non-issue for faithful *representation*.** Such
+a pair is two co-equal same-letter accents with no natural order (ps56:10's leaf even
+flipped `azla merkha`↔`merkha azla` across code versions — the signature of "no natural
+order"), so by the taxonomy's `fuse` row it arguably wants **one `merkha!azla` bang**, not
+a reorderable sequence. Plan A does **not** do that here: bangs are gated to the *under
+duress* case (a grammar-forced decision, like prose ek20:31), and poetic conjunctives are
+never under duress. Dropping that gate — making the bang a faithfulness device for *all*
+same-letter co-equal conjunctive pairs — is spun off as **Plan D**
+(`doc/PLAN-D-faithful-same-letter-bangs.md`).
 
 The only poetic same-letter pairs that *can* matter touch the **disjunctive** skeleton:
 revia-mugrash (lexicalized), ps124:4 (geresh+revia — **charitable promotion** to
@@ -106,13 +124,27 @@ sufficient alone**. Tested on ps124:4: promoting the geresh *in place* (keeping
 revia-then-geresh order) **breaks** it — `REVIA_GADOL` + `REVIA_MUGRASH`, two
 disjunctives; only after the same-letter swap does the single `REVIA_MUGRASH` survive.
 
-**Implementation:** flip the poetic scanner's catch-all from silent-swallow (`None`) to a
-fail-fast lexical flag, with the same-letter geresh charity (order-normalize + promote)
-**above** it. Geresh is the catch-all's only current customer, so this flip is scoped to
-the geresh question and lives here; the *explicit-swallow* real accents (tsinnorit,
-shalshelet qetannah) are **Plan C**'s. Verify only ps124:4 still yields revia-mugrash and
-that **no other poetic verse newly errors** (Plan C's corpus swallow-sweep confirms
-geresh is the lone catch-all hit, so the blast radius is exactly ps124:4).
+**Implementation — DONE (charity); fail-fast deferred to Plan C.** The same-letter geresh
+charity landed as one fusion rule in `ply_scanner_poetic._POETIC_GG_RULES`:
+`REVIA + GERESH → REVIA_MUGRASH`, placed above the bare `REVIA` rule (longest-match wins;
+adjacency = same-letter, no `X` between). Verified: ps124:4 still yields a single
+`REVIA_MUGRASH` — now because the geresh is *consumed*, not swallowed — and the corpus
+regen produces **no output diff at ps124:4** (the token was already right) and **no new
+errors anywhere** (clean/oddball/NO_PARSE counts unchanged). Test:
+`test_ps124_4_plain_geresh_charity_to_revia_mugrash` (+ a same-vs-cross-letter guard) in
+`py/tests/test_ply_scanner_poetic.py`.
+
+**Correction to the original premise (verified by corpus sweep):** "geresh is the
+catch-all's only customer" is true **only for accents**. The `.` catch-all is
+**load-bearing** — it is the scanner's general skip for every `X` placeholder (126,913×),
+space, maqaf, and `]N` note marker. So it **cannot** be flipped wholesale; a fail-fast
+must be a narrow rule matching a *stray accent* (U+0591–U+05AE) **above** the catch-all,
+leaving the catch-all swallowing structural junk. After the charity that rule has **zero
+live customers** (geresh is now consumed), so its representation is corpus-neutral — and a
+poetic lexical-error representation doesn't exist yet (no poetic analog of prose
+`lexical_validation`). Per the maintainer (2026-06-23), the **fail-fast guard is deferred
+to Plan C**, which is already rebuilding this swallow region (tsinnorit / shalshelet
+qetannah) and establishing the poetic "nothing vanishes" discipline holistically.
 
 (Terminology note: geresh-muqdam **is** prepositive, but the revia/geresh here are
 ordinary same-letter marks; keep "within-letter order normalization" for *same-letter*
@@ -135,7 +167,13 @@ stress-helpers... added later").
   and, when it returns anything, emits an `illegal_mark` ERROR tree and **skips the
   grammar entirely**. So a lexical flag on lv25:20 automatically pre-empts today's
   `tipexa_phrase → ERROR`.
-- **Implementation:**
+- **Implementation — DONE (2026-06-23).** All six steps landed as specified; the prose
+  regen flips **only** lv25:20, now reading `illegal_mark mahapakh!tipexa in נֹּאכַ֤֖ל`
+  (the precise intended label). New detector `lexical_validation.illegal_below_pairs`
+  (matches the pair in either within-letter order), wired into `run_ply.render_book`
+  alongside `stranded_stress_helpers`; the rep-char map was renamed
+  `_STRESS_HELPER_CHAR → _ILLEGAL_MARK_REP_CHAR` and keyed on mahapakh (U+05A4). Tests in
+  `py/tests/test_lexical_validation.py`. Original step list, for the record:
   1. Add a detector to `lexical_validation` for one letter carrying **both mahapakh
      (U+05A4) and tipeḥa (U+0596)** — two *below*-accents adjacent in the mark string
      (no base letter between). This is a *different shape* from the existing
@@ -235,13 +273,25 @@ first runs `poetic_reconcile.reconcile_tokens` then
 
 ## Remaining work
 
-1. **ps124:4** — make the geresh principled: flip the poetic catch-all to fail-fast, add
-   the same-letter charity (order-normalize + promote to geresh-muqdam). Live code, blast
-   radius = ps124:4 only. Document the charity on the Plan B page.
-2. **lv25:20** — extend `lexical_validation` to flag mahapakh!tipeḥa as a lexical error
-   (label `mahapakh!tipexa`, generalized word-locator keyed on mahapakh). Illegal status
-   **confirmed** (MAM + WLC `]n`); no further sourcing needed.
-3. Hand the charity inventory + alternate-tree exhibit to **Plan B**.
+1. ~~**ps124:4** — make the geresh principled.~~ **DONE** (charity rule). The catch-all
+   **fail-fast guard** is **moved to Plan C** (the catch-all is load-bearing; only a
+   narrow stray-accent rule is needed, with zero live customers after the charity).
+2. ~~**lv25:20** — extend `lexical_validation` to flag mahapakh!tipeḥa.~~ **DONE**
+   (`illegal_below_pairs`; label `mahapakh!tipexa`; locator keyed on mahapakh).
+3. Hand the charity inventory + alternate-tree exhibit to **Plan B** (still open — Plan B).
 4. **Plan C** owns the two *legal* swallowed poetic accents (tsinnorit, shalshelet
-   qetannah); coordinate the shared catch-all-vs-explicit-swallow boundary (geresh's
-   fail-fast flip is here; the explicit-swallow conversions are there).
+   qetannah) **and now also the catch-all stray-accent fail-fast guard** (geresh's charity
+   already landed here; the fail-fast representation is built there, alongside the
+   explicit-swallow conversions, as the unified poetic "stop swallowing" pass).
+5. **Plan D** owns the "stop swallowing *bangs*" goal — representing same-letter co-equal
+   conjunctive pairs (ps56:10's merkha+qadma, etc.) as one `!` token rather than a
+   reorderable sequence. See `doc/PLAN-D-faithful-same-letter-bangs.md`.
+
+> **Side note from the regen (the seed of Plan D):** regenerating the poetic corpus
+> surfaced a **pre-existing stale output** at **Psalms 56:10** — current HEAD code emits
+> the within-letter servus order `merkha azla` but the committed file still had
+> `azla merkha` (the merkha+qadma same-letter pair). This drift predates and is
+> independent of the geresh charity (it reproduces with the charity reverted); the
+> regenerated file now matches current code. The fact that the *order flips at all* is
+> exactly what motivates **Plan D**: a same-letter co-equal pair has no natural order, so
+> emitting it as an ordered sequence presents an arbitrary order as if it were meaningful.

@@ -29,11 +29,13 @@ from accgram.ply_scanner import scan_book
 from accgram.ply_tree import add_leaves, print_tree
 
 
-# The Unicode codepoint each stranded M-C stress-helper code carries, so the
-# illegal_mark label can name the offending *Unicode* word (issue #9: M-C dropped,
-# reports show the actual pointed Hebrew).  Only ``82`` (zarqa stress-helper /
-# tsinnorit, U+0598) is wired up in lexical_validation today.
-_STRESS_HELPER_CHAR = {"82": "֘"}
+# A *representative* Unicode codepoint for each illegal-mark code, so the illegal_mark
+# label can name the offending *Unicode* word (issue #9: M-C dropped, reports show the
+# actual pointed Hebrew).  The rep char must be a mark unique to the offending word in
+# its verse, or the locator mis-points.  ``82`` -> the zarqa stress-helper (U+0598);
+# ``mahapakh!tipexa`` -> mahapakh (U+05A4), NOT tipeḥa, which recurs elsewhere in
+# lv25:20 (word נֶאֱסֹף) and would mis-locate.
+_ILLEGAL_MARK_REP_CHAR = {"82": "֘", "mahapakh!tipexa": "֤"}
 
 
 def _illegal_mark_tree(
@@ -62,19 +64,19 @@ def _stranded_unicode_words(
 ) -> list[str]:
     """The pointed-Hebrew word bearing each stranded mark, aligned to ``marks``.
 
-    Each stranded helper (today only ``82`` = U+0598) lives in exactly one verse word;
-    collect the words carrying that codepoint in order and pair them with ``marks``.
-    Falls back to a mark's raw M-C atom if the Unicode word cannot be located (so the
-    label is always populated)."""
+    Each illegal mark (``82`` = U+0598; ``mahapakh!tipexa`` located via U+05A4) lives in
+    exactly one verse word; collect the words carrying its representative codepoint in
+    order and pair them with ``marks``.  Falls back to a mark's raw M-C atom if the
+    Unicode word cannot be located (so the label is always populated)."""
     by_char: dict[str, list[str]] = {}
     for word in _verse_display_words(verse):
-        for char in set(by_char) | set(_STRESS_HELPER_CHAR.values()):
+        for char in set(by_char) | set(_ILLEGAL_MARK_REP_CHAR.values()):
             if char in word:
                 by_char.setdefault(char, []).append(word)
     cursor: dict[str, int] = {}
     out: list[str] = []
     for mark in marks:
-        char = _STRESS_HELPER_CHAR.get(mark.code)
+        char = _ILLEGAL_MARK_REP_CHAR.get(mark.code)
         candidates = by_char.get(char, []) if char else []
         i = cursor.get(char, 0)
         if i < len(candidates):
@@ -126,10 +128,13 @@ def render_book(
     parsed = 0
     for verse in verses:
         # Prose lexical layer (divergence from the goerwitz C oracle): a stranded
-        # stress-helper (e.g. a `82` with no fused `02`) is an alphabet error.  Flag
-        # it uniformly with a fixed ERROR tree and skip the grammar entirely -- the
+        # stress-helper (e.g. a `82` with no fused `02`), or an illegal same-letter
+        # below-pair (mahapakh!tipexa, lv25:20), is an alphabet error.  Flag it
+        # uniformly with a fixed ERROR tree and skip the grammar entirely -- the
         # context need not be parsed, and all such verses must read identically.
-        stranded = lexical_validation.stranded_stress_helpers(verse.body)
+        stranded = lexical_validation.stranded_stress_helpers(
+            verse.body
+        ) + lexical_validation.illegal_below_pairs(verse.body)
         if stranded:
             parsed += 1
             out_lines.append(verse.reference + "\n")

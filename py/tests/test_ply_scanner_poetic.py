@@ -13,6 +13,7 @@ Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_ply_scanner_poetic.py -v
 """
 
+from accgram import accent_marks as am
 from accgram import poetic_accent_names as pan
 from accgram.ply_scanner_poetic import scan_accents
 from accgram.ply_grammar_poetic import build_parser, parse_tokens
@@ -25,6 +26,11 @@ from tests.mc_marks import mc_to_marks
 
 def _types(body):
     return [t for t, _ in scan_accents(mc_to_marks(body))]
+
+
+def _types_marks(body):
+    """Token types for a body already in the Phase-2 mark alphabet (not M-C)."""
+    return [t for t, _ in scan_accents(body)]
 
 
 def test_ps_1_1_revia_mugrash_geresh_muqdam():
@@ -122,6 +128,38 @@ def test_revia_qatan_before_oleh():
     # A bare revia (81) whose next disjunctive is oleh-we-yored is revia qatan.
     body = r"FOO81 BAR60BAZ71 QUX75X00"
     assert pan.REVIA_QATAN in _types(body)
+
+
+def test_ps124_4_plain_geresh_charity_to_revia_mugrash():
+    # ps124:4: revia (U+0597) + plain geresh (U+059C) on ONE letter -- the only plain
+    # geresh in the Three Books.  Read charitably as a single revia mugrash: the geresh
+    # is *consumed* into the fused token, not silently swallowed by the catch-all (which
+    # would leave a bare revia that only incidentally reclassifies to revia mugrash).
+    # Body mirrors the real verse's shape: ... revia+geresh word (with a ]1 note) ...
+    # then a meteg-before-sofpasuq silluq.
+    body = (
+        "X" + am.DEHI + "XX XX" + am.MUNAH + "XX XXX" + am.ATNAX + "XXX "
+        "X" + am.REVIA + am.GERESH + "XXX]1 XX" + am.MERKHA + "X "
+        "XX-XXX" + am.METEG + "XX" + am.SOF_PASUQ
+    )
+    types = _types_marks(body)
+    assert pan.REVIA_MUGRASH in types
+    assert types.count(pan.REVIA_MUGRASH) == 1
+    # the geresh is consumed, so no spurious extra disjunctive appears
+    assert pan.REVIA not in types and pan.REVIA_GADOL not in types
+    assert types[-2:] == [pan.SILLUQ, pan.SOFPASUQ]
+
+
+def test_revia_then_geresh_only_fuses_same_letter():
+    # The charity is same-letter only (adjacency, no X between).  Trailing atnah makes a
+    # *bare* revia reclassify to revia GADOL, so fusion (same-letter) vs swallow
+    # (cross-letter) is visible in the output: were the trailing disjunctive silluq,
+    # the bare revia would reclassify to mugrash too and hide the difference.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    same = _types_marks("X" + am.REVIA + am.GERESH + tail)
+    cross = _types_marks("X" + am.REVIA + "X" + am.GERESH + tail)
+    assert same.count(pan.REVIA_MUGRASH) == 1  # fused, regardless of what follows
+    assert pan.REVIA_GADOL in cross and pan.REVIA_MUGRASH not in cross  # geresh swallowed
 
 
 def test_these_verses_parse():

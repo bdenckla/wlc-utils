@@ -16673,26 +16673,8 @@ Levit 25:19
     2 silluq_phrase
       silluq 
 Levit 25:20
-0 silluq_clause
-  1 atnax_clause
-    2 zaqef_phrase
-      munax zaqef 
-    2 atnax_clause
-      3 tipexa_phrase
-        ERROR 
-      3 atnax_phrase
-        munax atnax 
-  1 silluq_clause
-    2 zaqef_clause
-      3 pashta_phrase
-        yetiv 
-      3 zaqef_phrase
-        munax zaqef 
-    2 silluq_clause
-      3 tipexa_phrase
-        merkha tipexa 
-      3 silluq_phrase
-        silluq 
+0 illegal_mark mahapakh!tipexa in נֹּאכַ֤֖ל
+  ERROR 
 Levit 25:21
 0 silluq_clause
   1 atnax_clause

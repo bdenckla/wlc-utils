@@ -1,15 +1,20 @@
 # Plan C: faithful poetic scanning — stop swallowing real accents
 
 **Status (2026-06-23):** new, not started. Companion to **Plan A**
-(`doc/PLAN-same-letter-accent-pairs.md`) and **Plan B**
-(`doc/PLAN-editorial-charities-page.md`). Discovered while running down the ps124:4
+(`doc/PLAN-A-same-letter-accent-pairs.md`) and **Plan B**
+(`doc/PLAN-B-editorial-charities-page.md`); sibling of **Plan D**
+(`doc/PLAN-D-faithful-same-letter-bangs.md`), which pursues the parallel "stop swallowing
+*bangs*" goal. Discovered while running down the ps124:4
 geresh: the poetic scanner (`ply_scanner_poetic`) **silently swallows real accents**
 instead of representing them. This plan owns the two *legal* swallowed accents —
 **tsinnorit** and **shalshelet qetannah** — whose fix is faithful *representation* (fuse
 / emit), with **no grammaticality verdict change**. The third swallowed accent, the
-*illegal* poetic **geresh** (the catch-all's only customer), stays in **Plan A** because
-its fix is fail-fast + a same-letter charitable promotion, and geresh+revia is a
-same-letter pair.
+*illegal* poetic **geresh**, split: its same-letter **charity** (read revia+geresh as
+revia mugrash) **landed in Plan A** (geresh+revia is a same-letter pair), but the
+**fail-fast guard** for the catch-all came back **here** once Plan A's research showed the
+catch-all is load-bearing (geresh is its only *accent* customer, now consumed) — so the
+guard is a narrow stray-accent rule with zero live customers, best built alongside this
+plan's "stop swallowing" conversions. See *Design principle* below.
 
 ## The defect, and how it was found
 
@@ -141,9 +146,23 @@ Plan A's lv25:20 work adds a prose layer that **surfaces a silently-swallowed ma
 mark** as an explicit oddball instead of letting the C lexer drop it. This plan is the
 poetic counterpart of the same principle — *stop silently swallowing* — but the poetic
 marks here are **legal**, so the faithful response is **representation** (fuse tsinnorit;
-emit shalshelet qetannah), not error. The *illegal* poetic case (geresh) is the fail-fast
-analog and lives in Plan A. Together: the poetic scanner should emit a token for every
-real accent and fail fast on every impossible one — nothing vanishes.
+emit shalshelet qetannah), not error. The *illegal* poetic case is the **plain geresh**:
+its same-letter charity (read revia+geresh as revia mugrash) **already landed in Plan A**,
+but the **fail-fast guard** for any *other* stray accent is **inherited by this plan**
+(see below). Together: the poetic scanner should emit a token for every real accent and
+fail fast on every impossible one — nothing vanishes.
+
+**Inherited from Plan A — the catch-all fail-fast guard (with a corrected premise).**
+Plan A's research established that the `.` catch-all is **load-bearing**: corpus-wide it
+swallows every `X` placeholder (126,913×), space, maqaf, and `]N` note marker — geresh
+(U+059C) is its only *accent* customer, exactly once (ps124:4), and that customer is now
+consumed by the charity. So the fail-fast is **not** "flip the catch-all"; it is a narrow
+new rule matching a *stray accent* (`[U+0591–U+05AE]`) placed **above** the catch-all,
+which keeps swallowing structural junk. It has **zero live customers** today, so its job
+is purely to guarantee no future stray accent vanishes silently. Build its representation
+**here**, unified with the tsinnorit/shalshelet conversions, since poetic has no
+lexical-error surface yet (no analog of prose `lexical_validation` / `_illegal_mark_tree`)
+and this plan is the natural home for the whole "stop swallowing" discipline.
 
 ## Verification
 
@@ -163,6 +182,10 @@ real accent and fail fast on every impossible one — nothing vanishes.
 1. **tsinnorit** — mint the metzunar token(s); scanner rules for both shapes (intra-atom;
    omitted-maqaf chanted word); add to `conj`. Verify all 198 fuse, none strand.
 2. **shalshelet qetannah** — token + emit + 8th `conj` terminal. Verify the 8 verses.
-3. Hand the tsinnorit/shalshelet "we now *represent* rather than drop" note to **Plan B**
+3. **catch-all stray-accent fail-fast guard** (inherited from Plan A) — add a
+   `[U+0591–U+05AE]` rule above the (retained) `.` catch-all and choose its lexical-error
+   representation. Zero live customers today (geresh charity already consumed the lone
+   case), so verify it changes **no** output; it is future-proofing.
+4. Hand the tsinnorit/shalshelet "we now *represent* rather than drop" note to **Plan B**
    if the charities page wants to show them (they are not charities — they hide nothing —
    but they are part of the same "stop swallowing" story).
