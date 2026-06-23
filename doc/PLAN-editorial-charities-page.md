@@ -25,11 +25,14 @@ Each entry: what we normalize, why, the direction, and a citation.
 - **geresh-muqdam → geresh (prose).** WLC uses geresh-muqdam (U+059D), a poetic-only
   sign, in the 21 prose books only twice (lv1:3 alone; 2k17:13) as a typographic device
   for a plain geresh. Read as geresh. Cite tanach.us changes `2020.09.22-1`, `-2`.
-- **plain geresh → geresh-muqdam (poetic), i.e. within-letter order normalization.**
-  ps124:4's revia + plain geresh is the reversed order of revia-mugrash's geresh+revia;
-  we are liberal about mark order **within a letter** and read it as revia-mugrash.
-  Same-letter only (consonant-adjacent marks); cross-letter order is preserved. Cite
-  <https://tanach.us/Notes/Psalms/Psalms.124.4.4-c.html>.
+- **plain geresh → geresh-muqdam (poetic), a charitable promotion.** A plain geresh in a
+  poetic verse is otherwise a fail-fast lexical error (Plan A); the **sole exception** is
+  ps124:4's revia + plain geresh on **one letter**, read charitably as revia-mugrash. The
+  mechanism is two ingredients: within-letter order-normalization (revia+geresh ≡
+  geresh+revia — same-letter only, cross-letter order preserved) **plus** promotion of the
+  geresh to geresh-muqdam. NB this is **not** what makes ps124:4 parse *today* (today the
+  geresh is silently swallowed and the bare revia reclassified) — it is the *principled*
+  replacement. Cite <https://tanach.us/Notes/Psalms/Psalms.124.4.4-c.html>.
 - **telisha-gedola + geresh/gershayim → telisha-gedola (drop).** Five words; keep the
   telg, drop the geresh/gershayim companion. (See the alternate-tree exhibit below.)
 - **swallowed-helper fusions.** Stress-helper tsinnorit fused onto zinor (zarqa),
