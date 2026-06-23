@@ -163,7 +163,7 @@ Psalms 2:7
       3 revia_gadol_phrase
         merkha revia gadol 
       3 atnax_phrase
-        merkha merkha atnax 
+        merkha metsunnar merkha atnax 
     2 silluq_clause
       3 revia_mugrash_phrase
         revia mugrash 
@@ -264,7 +264,7 @@ Psalms 3:3
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_phrase
-    mahapakh illuy illuy silluq 
+    mahapakh shalshelet qetannah illuy illuy silluq 
 Psalms 3:4
 0 silluq_clause
   1 atnax_clause
@@ -315,9 +315,9 @@ Psalms 3:8
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       munax munax atnax 
   1 silluq_phrase
@@ -344,7 +344,7 @@ Psalms 4:2
         4 legarmeh_phrase
           legarmeh 
         4 revia_gadol_phrase
-          mahapakh revia gadol 
+          mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -487,7 +487,7 @@ Psalms 5:5
     2 legarmeh_phrase
       legarmeh 
     2 atnax_phrase
-      mahapakh merkha atnax 
+      mahapakh merkha metsunnar atnax 
   1 silluq_phrase
     tarxa munax silluq 
 Psalms 5:6
@@ -513,7 +513,7 @@ Psalms 5:7
     2 revia_mugrash_phrase
       merkha revia mugrash 
     2 silluq_phrase
-      merkha silluq 
+      merkha metsunnar silluq 
 Psalms 5:8
 0 silluq_clause
   1 atnax_clause
@@ -816,7 +816,7 @@ Psalms 7:7
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -1168,7 +1168,7 @@ Psalms 9:9
 Psalms 9:10
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       revia mugrash 
@@ -1308,7 +1308,7 @@ Psalms 9:21
   1 oleh_weyored_clause
     2 revia_qatan_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_qatan_phrase
         revia qatan 
     2 oleh_weyored_phrase
@@ -1353,7 +1353,7 @@ Psalms 10:3
     2 revia_mugrash_phrase
       merkha revia mugrash 
     2 silluq_phrase
-      merkha silluq 
+      merkha metsunnar silluq 
 Psalms 10:4
 0 silluq_clause
   1 atnax_clause
@@ -1374,7 +1374,7 @@ Psalms 10:5
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -1503,7 +1503,7 @@ Psalms 10:14
           legarmeh 
         4 sinnor_clause
           5 legarmeh_phrase
-            mahapakh legarmeh 
+            mahapakh metsunnar legarmeh 
           5 sinnor_phrase
             sinnor 
     2 oleh_weyored_phrase
@@ -1628,7 +1628,7 @@ Psalms 11:4
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 oleh_weyored_clause
       3 sinnor_phrase
         sinnor 
@@ -1880,7 +1880,7 @@ Psalms 14:1
   1 silluq_clause
     2 atnax_clause
       3 dexi_phrase
-        mahapakh munax dexi 
+        mahapakh metsunnar munax dexi 
       3 atnax_phrase
         munax atnax 
     2 silluq_clause
@@ -2033,7 +2033,7 @@ Psalms 15:4
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       munax munax atnax 
   1 silluq_clause
@@ -2238,9 +2238,9 @@ Psalms 17:3
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_clause
@@ -2428,7 +2428,7 @@ Psalms 18:1
           munax atnax 
     2 silluq_clause
       3 revia_mugrash_phrase
-        mahapakh merkha merkha revia mugrash 
+        mahapakh merkha metsunnar merkha revia mugrash 
       3 silluq_phrase
         merkha silluq 
 Psalms 18:2
@@ -2526,7 +2526,7 @@ Psalms 18:9
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -2679,7 +2679,7 @@ Psalms 18:20
     2 revia_mugrash_phrase
       revia mugrash 
     2 silluq_phrase
-      merkha silluq 
+      merkha metsunnar silluq 
 Psalms 18:21
 0 silluq_clause
   1 atnax_phrase
@@ -3077,7 +3077,7 @@ Psalms 19:5
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -3122,7 +3122,7 @@ Psalms 19:8
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_clause
@@ -3134,7 +3134,7 @@ Psalms 19:9
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       atnax 
   1 silluq_clause
@@ -3269,7 +3269,7 @@ Psalms 20:6
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_clause
@@ -3585,7 +3585,7 @@ Psalms 22:9
     2 revia_mugrash_phrase
       revia mugrash 
     2 silluq_phrase
-      merkha silluq 
+      merkha metsunnar silluq 
 Psalms 22:10
 0 silluq_clause
   1 atnax_phrase
@@ -3660,7 +3660,7 @@ Psalms 22:16
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -3896,7 +3896,7 @@ Psalms 23:4
       3 pazer_phrase
         mahapakh azla galgal pazer 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_clause
@@ -4122,7 +4122,7 @@ Psalms 25:5
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -4662,7 +4662,7 @@ Psalms 28:1
         pazer 
       3 revia_gadol_clause
         4 legarmeh_phrase
-          mahapakh legarmeh 
+          mahapakh metsunnar legarmeh 
         4 revia_gadol_phrase
           revia gadol 
     2 oleh_weyored_clause
@@ -4770,7 +4770,7 @@ Psalms 28:8
   1 atnax_phrase
     merkha atnax 
   1 silluq_phrase
-    mahapakh tarxa munax silluq 
+    mahapakh metsunnar tarxa munax silluq 
 Psalms 28:9
 0 silluq_clause
   1 atnax_clause
@@ -5269,7 +5269,7 @@ Psalms 31:16
     merkha atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
-      mahapakh revia mugrash 
+      mahapakh metsunnar revia mugrash 
     2 silluq_phrase
       silluq 
 Psalms 31:17
@@ -5347,7 +5347,7 @@ Psalms 31:22
     merkha atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
-      merkha merkha revia mugrash 
+      merkha merkha metsunnar revia mugrash 
     2 silluq_phrase
       munax silluq 
 Psalms 31:23
@@ -5357,7 +5357,7 @@ Psalms 31:23
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 oleh_weyored_clause
       3 sinnor_phrase
         sinnor 
@@ -5462,7 +5462,7 @@ Psalms 32:5
       3 pazer_phrase
         azla galgal pazer 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 revia_gadol_phrase
         revia gadol 
@@ -5472,7 +5472,7 @@ Psalms 32:5
         4 atnax_phrase
           atnax 
   1 silluq_phrase
-    azla mahapakh tarxa munax silluq 
+    azla mahapakh metsunnar tarxa munax silluq 
 Psalms 32:6
 0 silluq_clause
   1 oleh_weyored_clause
@@ -5872,7 +5872,7 @@ Psalms 34:7
 Psalms 34:8
 0 silluq_clause
   1 revia_mugrash_phrase
-    mahapakh mahapakh revia mugrash 
+    mahapakh shalshelet qetannah mahapakh metsunnar revia mugrash 
   1 silluq_phrase
     silluq 
 Psalms 34:9
@@ -6056,7 +6056,7 @@ Psalms 35:3
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_clause
@@ -6351,7 +6351,7 @@ Psalms 35:26
   1 oleh_weyored_clause
     2 sinnor_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 sinnor_phrase
         sinnor 
     2 oleh_weyored_phrase
@@ -6866,7 +6866,7 @@ Psalms 37:28
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -7302,7 +7302,7 @@ Psalms 39:5
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -7319,7 +7319,7 @@ Psalms 39:6
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       munax munax atnax 
   1 silluq_clause
@@ -7383,7 +7383,7 @@ Psalms 39:12
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         illuy revia gadol 
     2 atnax_phrase
@@ -7562,7 +7562,7 @@ Psalms 40:10
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -7639,7 +7639,7 @@ Psalms 40:15
     2 revia_qatan_clause
       3 sinnor_clause
         4 legarmeh_phrase
-          mahapakh legarmeh 
+          mahapakh metsunnar legarmeh 
         4 sinnor_phrase
           sinnor 
       3 revia_qatan_phrase
@@ -7668,13 +7668,13 @@ Psalms 40:16
     2 revia_mugrash_phrase
       merkha revia mugrash 
     2 silluq_phrase
-      merkha silluq 
+      merkha metsunnar silluq 
 Psalms 40:17
 0 silluq_clause
   1 oleh_weyored_clause
     2 revia_qatan_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_qatan_phrase
         revia qatan 
     2 oleh_weyored_phrase
@@ -7869,16 +7869,16 @@ Psalms 41:14
   1 revia_mugrash_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 revia_mugrash_clause
       3 dexi_phrase
         dexi 
       3 revia_mugrash_phrase
         merkha revia mugrash 
   1 silluq_phrase
-    merkha silluq 
+    merkha metsunnar silluq 
 Psalms 42:1
 0 silluq_clause
   1 revia_mugrash_phrase
@@ -8084,7 +8084,7 @@ Psalms 43:1
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_phrase
@@ -8472,9 +8472,9 @@ Psalms 45:2
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -8907,7 +8907,7 @@ Psalms 47:10
   1 oleh_weyored_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 oleh_weyored_clause
@@ -8932,7 +8932,7 @@ Psalms 48:1
 Psalms 48:2
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       merkha revia mugrash 
@@ -9015,7 +9015,7 @@ Psalms 48:9
       3 atnax_phrase
         munax atnax 
   1 silluq_phrase
-    mahapakh tarxa munax silluq 
+    mahapakh metsunnar tarxa munax silluq 
 Psalms 48:10
 0 silluq_clause
   1 atnax_phrase
@@ -9191,7 +9191,7 @@ Psalms 49:11
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       mahapakh munax munax atnax 
   1 silluq_phrase
@@ -9249,7 +9249,7 @@ Psalms 49:15
     2 revia_mugrash_clause
       3 revia_gadol_clause
         4 legarmeh_phrase
-          mahapakh legarmeh 
+          mahapakh metsunnar legarmeh 
         4 revia_gadol_phrase
           revia gadol 
       3 revia_mugrash_clause
@@ -9491,7 +9491,7 @@ Psalms 50:16
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -9744,7 +9744,7 @@ Psalms 51:16
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -9953,7 +9953,7 @@ Psalms 53:2
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_clause
@@ -10343,7 +10343,7 @@ Psalms 55:19
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       atnax 
   1 silluq_clause
@@ -10538,7 +10538,7 @@ Psalms 56:10
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      merkha azla mahapakh munax dexi 
+      merkha azla mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_clause
@@ -10706,7 +10706,7 @@ Psalms 57:8
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_clause
@@ -10943,7 +10943,7 @@ Psalms 59:6
       3 pazer_phrase
         mahapakh merkha pazer 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 revia_gadol_phrase
         revia gadol 
@@ -10967,7 +10967,7 @@ Psalms 59:8
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -11165,7 +11165,7 @@ Psalms 60:6
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       atnax 
   1 silluq_clause
@@ -11463,7 +11463,7 @@ Psalms 62:9
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -11711,7 +11711,7 @@ Psalms 64:6
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -11797,7 +11797,7 @@ Psalms 65:1
 Psalms 65:2
 0 silluq_clause
   1 atnax_phrase
-    mahapakh illuy merkha atnax 
+    mahapakh illuy shalshelet qetannah merkha metsunnar atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       revia mugrash 
@@ -12042,7 +12042,7 @@ Psalms 66:7
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -12122,7 +12122,7 @@ Psalms 66:15
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_phrase
@@ -12172,7 +12172,7 @@ Psalms 66:20
     merkha atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
-      merkha merkha revia mugrash 
+      merkha merkha metsunnar revia mugrash 
     2 silluq_phrase
       silluq 
 Psalms 67:1
@@ -12342,7 +12342,7 @@ Psalms 68:7
         legarmeh 
       3 revia_gadol_clause
         4 legarmeh_phrase
-          mahapakh legarmeh 
+          mahapakh metsunnar legarmeh 
         4 revia_gadol_phrase
           revia gadol 
     2 atnax_clause
@@ -12445,7 +12445,7 @@ Psalms 68:14
 Psalms 68:15
 0 silluq_clause
   1 revia_mugrash_phrase
-    mahapakh mahapakh revia mugrash 
+    mahapakh metsunnar shalshelet qetannah mahapakh metsunnar revia mugrash 
   1 silluq_phrase
     merkha silluq 
 Psalms 68:16
@@ -12498,9 +12498,9 @@ Psalms 68:19
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -12522,7 +12522,7 @@ Psalms 68:20
     2 revia_mugrash_phrase
       revia mugrash 
     2 silluq_phrase
-      mahapakh illuy silluq 
+      mahapakh metsunnar illuy silluq 
 Psalms 68:21
 0 silluq_clause
   1 oleh_weyored_clause
@@ -12588,7 +12588,7 @@ Psalms 68:25
   1 atnax_phrase
     munax munax atnax 
   1 silluq_phrase
-    mahapakh tarxa munax silluq 
+    mahapakh metsunnar tarxa munax silluq 
 Psalms 68:26
 0 silluq_clause
   1 atnax_clause
@@ -12820,7 +12820,7 @@ Psalms 69:7
     2 revia_qatan_clause
       3 sinnor_clause
         4 legarmeh_phrase
-          mahapakh legarmeh 
+          mahapakh metsunnar legarmeh 
         4 sinnor_phrase
           sinnor 
       3 revia_qatan_phrase
@@ -13130,7 +13130,7 @@ Psalms 69:36
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -13197,13 +13197,13 @@ Psalms 70:4
     2 revia_mugrash_phrase
       revia mugrash 
     2 silluq_phrase
-      merkha silluq 
+      merkha metsunnar silluq 
 Psalms 70:5
 0 silluq_clause
   1 oleh_weyored_clause
     2 revia_qatan_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_qatan_phrase
         revia qatan 
     2 oleh_weyored_phrase
@@ -13573,7 +13573,7 @@ Psalms 72:2
 Psalms 72:3
 0 silluq_clause
   1 atnax_phrase
-    mahapakh merkha atnax 
+    mahapakh shalshelet qetannah merkha metsunnar atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       revia mugrash 
@@ -13776,7 +13776,7 @@ Psalms 72:19
       3 revia_mugrash_phrase
         merkha revia mugrash 
     2 silluq_phrase
-      merkha silluq 
+      merkha metsunnar silluq 
 Psalms 72:20
 0 silluq_clause
   1 atnax_phrase
@@ -14117,7 +14117,7 @@ Psalms 74:2
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -14217,7 +14217,7 @@ Psalms 74:10
     2 atnax_phrase
       munax atnax 
   1 silluq_phrase
-    mahapakh tarxa munax silluq 
+    mahapakh metsunnar tarxa munax silluq 
 Psalms 74:11
 0 silluq_clause
   1 atnax_clause
@@ -14376,7 +14376,7 @@ Psalms 75:2
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -14775,7 +14775,7 @@ Psalms 77:17
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -15212,7 +15212,7 @@ Psalms 78:31
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -15733,7 +15733,7 @@ Psalms 79:3
       3 revia_gadol_phrase
         revia gadol 
     2 revia_mugrash_phrase
-      mahapakh revia mugrash 
+      mahapakh metsunnar revia mugrash 
   1 silluq_phrase
     munax silluq 
 Psalms 79:4
@@ -15806,7 +15806,7 @@ Psalms 79:9
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_clause
@@ -15851,11 +15851,11 @@ Psalms 79:12
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       atnax 
   1 silluq_phrase
-    mahapakh tarxa munax silluq 
+    mahapakh metsunnar tarxa munax silluq 
 Psalms 79:13
 0 silluq_clause
   1 oleh_weyored_clause
@@ -15888,7 +15888,7 @@ Psalms 80:2
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -15902,7 +15902,7 @@ Psalms 80:3
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_phrase
@@ -16072,7 +16072,7 @@ Psalms 80:19
 Psalms 80:20
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       merkha revia mugrash 
@@ -16127,7 +16127,7 @@ Psalms 81:6
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -16190,7 +16190,7 @@ Psalms 81:11
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -16637,7 +16637,7 @@ Psalms 84:9
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_phrase
@@ -16956,7 +16956,7 @@ Psalms 86:11
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -16997,7 +16997,7 @@ Psalms 86:14
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -17314,7 +17314,7 @@ Psalms 88:15
 Psalms 88:16
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_phrase
     tarxa munax silluq 
 Psalms 88:17
@@ -17404,7 +17404,7 @@ Psalms 89:5
 Psalms 89:6
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       revia mugrash 
@@ -17441,7 +17441,7 @@ Psalms 89:9
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       tarxa merkha atnax 
   1 silluq_clause
@@ -17895,7 +17895,7 @@ Psalms 89:53
   1 revia_mugrash_phrase
     tarxa merkha revia mugrash 
   1 silluq_phrase
-    merkha silluq 
+    merkha metsunnar silluq 
 Psalms 90:1
 0 silluq_clause
   1 oleh_weyored_clause
@@ -17921,7 +17921,7 @@ Psalms 90:2
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       munax munax atnax 
   1 silluq_clause
@@ -18014,7 +18014,7 @@ Psalms 90:10
         4 legarmeh_phrase
           mahapakh legarmeh 
         4 revia_gadol_phrase
-          mahapakh revia gadol 
+          mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -18812,7 +18812,7 @@ Psalms 95:7
 0 silluq_clause
   1 atnax_clause
     2 revia_gadol_phrase
-      mahapakh revia gadol 
+      mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         mahapakh munax dexi 
@@ -18852,9 +18852,9 @@ Psalms 95:10
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 revia_gadol_phrase
         revia gadol 
@@ -18910,7 +18910,7 @@ Psalms 96:3
 Psalms 96:4
 0 silluq_clause
   1 atnax_phrase
-    merkha mahapakh munax munax atnax 
+    merkha mahapakh metsunnar munax munax atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       merkha revia mugrash 
@@ -18980,7 +18980,7 @@ Psalms 96:10
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -19212,7 +19212,7 @@ Psalms 98:3
   1 oleh_weyored_clause
     2 sinnor_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 sinnor_phrase
         sinnor 
     2 oleh_weyored_phrase
@@ -19358,7 +19358,7 @@ Psalms 99:5
       3 pazer_phrase
         pazer 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 revia_mugrash_clause
       3 dexi_phrase
         dexi 
@@ -19371,7 +19371,7 @@ Psalms 99:6
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -19421,7 +19421,7 @@ Psalms 99:9
       3 pazer_phrase
         pazer 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -21125,7 +21125,7 @@ Psalms 106:5
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -21147,7 +21147,7 @@ Psalms 106:7
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         illuy revia gadol 
     2 atnax_clause
@@ -21329,7 +21329,7 @@ Psalms 106:23
         4 pazer_phrase
           pazer 
         4 revia_gadol_phrase
-          mahapakh revia gadol 
+          mahapakh metsunnar revia gadol 
       3 atnax_phrase
         munax munax atnax 
     2 silluq_clause
@@ -21488,7 +21488,7 @@ Psalms 106:38
       3 pazer_phrase
         azla galgal pazer 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -21590,7 +21590,7 @@ Psalms 106:47
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 oleh_weyored_clause
       3 sinnor_phrase
         sinnor 
@@ -22244,7 +22244,7 @@ Psalms 109:5
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_clause
@@ -22430,7 +22430,7 @@ Psalms 109:21
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -22528,7 +22528,7 @@ Psalms 109:29
 Psalms 109:30
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_phrase
     tarxa munax silluq 
 Psalms 109:31
@@ -22733,7 +22733,7 @@ Psalms 111:9
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_phrase
@@ -22743,7 +22743,7 @@ Psalms 111:10
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         illuy revia gadol 
     2 atnax_clause
@@ -22796,7 +22796,7 @@ Psalms 112:4
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       atnax 
   1 silluq_phrase
@@ -22847,7 +22847,7 @@ Psalms 112:9
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -22863,7 +22863,7 @@ Psalms 112:10
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -23258,7 +23258,7 @@ Psalms 115:18
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 revia_mugrash_phrase
       merkha revia mugrash 
   1 silluq_phrase
@@ -23458,7 +23458,7 @@ Psalms 116:19
       3 revia_gadol_phrase
         mahapakh revia gadol 
     2 revia_mugrash_phrase
-      mahapakh revia mugrash 
+      mahapakh metsunnar revia mugrash 
   1 silluq_phrase
     silluq 
 Psalms 117:1
@@ -23478,7 +23478,7 @@ Psalms 117:2
   1 revia_mugrash_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        merkha mahapakh legarmeh 
+        merkha mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 revia_mugrash_phrase
@@ -23725,12 +23725,12 @@ Psalms 118:25
     2 dexi_phrase
       munax dexi 
     2 atnax_phrase
-      merkha atnax 
+      merkha metsunnar atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       merkha revia mugrash 
     2 silluq_phrase
-      merkha silluq 
+      merkha metsunnar silluq 
 Psalms 118:26
 0 silluq_clause
   1 atnax_clause
@@ -24229,7 +24229,7 @@ Psalms 119:51
 Psalms 119:52
 0 silluq_clause
   1 revia_mugrash_phrase
-    mahapakh tarxa merkha revia mugrash 
+    mahapakh metsunnar tarxa merkha revia mugrash 
   1 silluq_phrase
     silluq 
 Psalms 119:53
@@ -24256,7 +24256,7 @@ Psalms 119:54
 Psalms 119:55
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       revia mugrash 
@@ -25965,7 +25965,7 @@ Psalms 126:6
   1 oleh_weyored_clause
     2 sinnor_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 sinnor_phrase
         sinnor 
     2 oleh_weyored_phrase
@@ -26931,11 +26931,11 @@ Psalms 135:21
   1 revia_mugrash_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 revia_mugrash_phrase
-      mahapakh revia mugrash 
+      mahapakh metsunnar revia mugrash 
   1 silluq_phrase
     silluq 
 Psalms 136:1
@@ -26965,7 +26965,7 @@ Psalms 136:3
 Psalms 136:4
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_phrase
     tarxa munax silluq 
 Psalms 136:5
@@ -27058,7 +27058,7 @@ Psalms 136:14
 Psalms 136:15
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_phrase
     tarxa munax silluq 
 Psalms 136:16
@@ -27280,7 +27280,7 @@ Psalms 137:9
     2 legarmeh_phrase
       legarmeh 
     2 revia_mugrash_phrase
-      illuy revia mugrash 
+      shalshelet qetannah illuy revia mugrash 
   1 silluq_phrase
     silluq 
 Psalms 138:1
@@ -27299,7 +27299,7 @@ Psalms 138:2
       3 pazer_phrase
         azla galgal pazer 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_clause
@@ -27563,7 +27563,7 @@ Psalms 139:16
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 oleh_weyored_clause
       3 sinnor_phrase
         sinnor 
@@ -27701,7 +27701,7 @@ Psalms 140:5
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       munax munax atnax 
   1 silluq_clause
@@ -27876,7 +27876,7 @@ Psalms 141:4
         azla galgal pazer 
       3 revia_gadol_clause
         4 legarmeh_phrase
-          mahapakh legarmeh 
+          mahapakh metsunnar legarmeh 
         4 revia_gadol_phrase
           revia gadol 
     2 atnax_phrase
@@ -28062,7 +28062,7 @@ Psalms 142:8
   1 oleh_weyored_clause
     2 sinnor_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 sinnor_phrase
         sinnor 
     2 oleh_weyored_phrase
@@ -28110,7 +28110,7 @@ Psalms 143:3
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        merkha mahapakh legarmeh 
+        merkha mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -28137,7 +28137,7 @@ Psalms 143:5
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -28158,7 +28158,7 @@ Psalms 143:7
   1 oleh_weyored_clause
     2 sinnor_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 sinnor_phrase
         sinnor 
     2 oleh_weyored_phrase
@@ -28176,7 +28176,7 @@ Psalms 143:8
   1 oleh_weyored_clause
     2 sinnor_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 sinnor_phrase
         sinnor 
     2 oleh_weyored_phrase
@@ -28251,7 +28251,7 @@ Psalms 144:1
         legarmeh 
       3 revia_gadol_clause
         4 legarmeh_phrase
-          mahapakh legarmeh 
+          mahapakh metsunnar legarmeh 
         4 revia_gadol_phrase
           revia gadol 
     2 atnax_phrase
@@ -28495,7 +28495,7 @@ Psalms 145:2
 Psalms 145:3
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       revia mugrash 
@@ -28730,7 +28730,7 @@ Psalms 146:6
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_phrase
@@ -28760,7 +28760,7 @@ Psalms 146:8
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -28778,7 +28778,7 @@ Psalms 146:9
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       munax munax atnax 
   1 silluq_phrase
@@ -28977,7 +28977,7 @@ Psalms 147:20
   1 revia_mugrash_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 revia_mugrash_phrase

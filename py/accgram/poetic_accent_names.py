@@ -60,9 +60,17 @@ SHALSHELET_GEDOLAH = "SHALSHELET_GEDOLAH"
 # Generic revia (M-C 81, no geresh muqdam): a scanner-internal token reclassified
 # to REVIA_GADOL / REVIA_QATAN / REVIA_MUGRASH by position; never reaches the
 # grammar.  Likewise SHALSHELET is the scanner/MAM-internal provisional that
-# becomes SHALSHELET_GEDOLAH (with paseq) or is swallowed (bare = qetannah).
+# becomes SHALSHELET_GEDOLAH (with paseq) or SHALSHELET_QETANNAH (bare conjunctive).
 REVIA = "REVIA"
 SHALSHELET = "SHALSHELET"
+
+# A *stray* accent (any U+0591..U+05AE the poetic rules cannot consume): the scanner
+# emits this in place of silently swallowing it, and the grammar has no terminal for
+# it, so any verse carrying one becomes a NO_PARSE with the stray accent as its stall
+# locus.  Zero live customers today -- the lone attested catch-all accent (the ps124:4
+# geresh) is consumed by the same-letter revia-mugrash charity -- so this is a
+# future-proofing guard, the poetic side of "nothing vanishes silently".
+STRAY_ACCENT = "STRAY_ACCENT"
 
 # --- conjunctive servi ---------------------------------------------------------
 MUNAX = "MUNAX"  # munaḥ
@@ -73,6 +81,22 @@ GALGAL = "GALGAL"
 ILLUY = "ILLUY"  # doubled L preferred over describe_diff's "iluy"
 TARXA = "TARXA"  # tarḥa (poetic name for the tipeḥa-shaped sign; describe_diff's
 # plain "tarha" is a bug per the maintainer -- the ḥet takes X like MUNAX/DEXI)
+
+# --- fused tsinnorit servi and the conjunctive shalshelet ----------------------
+# A mahapakh / merkha carrying a tsinnorit (U+0598) secondary on the open syllable
+# before the stress: Yeivin §372's "mehuppak mesunnar", Breuer Ch. 9 §22's "mahpakh
+# metzunar" / "merkha metzunar".  The scanner fuses the tsinnorit onto its mahapakh /
+# merkha partner (in the same chanted word) into one of these tokens instead of
+# dropping it.  Functionally still the conjunctive (the tsinnorit is only a secondary),
+# so each joins the permissive `conj` servus chain -- no disjunctive-skeleton change.
+# Spelling "metsunnar" = "me" + the vowel-permuted repo-standard "tsinnor".
+MAHAPAKH_METSUNNAR = "MAHAPAKH_METSUNNAR"
+MERKHA_METSUNNAR = "MERKHA_METSUNNAR"
+
+# The conjunctive shalshelet qetannah (#371): bare shalshelet (U+0593, no following
+# paseq), distinct from the disjunctive shalshelet gedolah (shalshelet + paseq).  A
+# real poetic servus in eight verses; emitted (not swallowed) and absorbed by `conj`.
+SHALSHELET_QETANNAH = "SHALSHELET_QETANNAH"
 
 # The disjunctive token types, for the revia gadol/qatan/mugrash lookahead and the
 # WLC-vs-MAM cross-check.

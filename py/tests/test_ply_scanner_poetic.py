@@ -162,6 +162,68 @@ def test_revia_then_geresh_only_fuses_same_letter():
     assert pan.REVIA_GADOL in cross and pan.REVIA_MUGRASH not in cross  # geresh swallowed
 
 
+def test_intra_atom_tsinnorit_fuses_to_metsunnar():
+    # Plan C: tsinnorit (U+0598) + its mahapakh / merkha partner on ONE chanted word
+    # (same atom) -> one MAHAPAKH_METSUNNAR / MERKHA_METSUNNAR conjunctive; the
+    # tsinnorit is consumed (fused), not swallowed.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    mah = _types_marks("X" + am.TSINNORIT + "X" + am.MAHAPAKH + "X" + tail)
+    assert pan.MAHAPAKH_METSUNNAR in mah
+    assert pan.MAHAPAKH not in mah  # the bare partner is gone (fused into metsunnar)
+    assert pan.STRAY_ACCENT not in mah
+    mer = _types_marks("X" + am.TSINNORIT + "X" + am.MERKHA + "X" + tail)
+    assert pan.MERKHA_METSUNNAR in mer
+    assert pan.MERKHA not in mer
+
+
+def test_omitted_maqaf_tsinnorit_fuses_across_space():
+    # Plan C / Breuer §22 (Ps 49:15 shape): a tsinnorit-ONLY atom (no main accent of
+    # its own), then the omitted-hyphen space, then the atom completing the chanted
+    # word and carrying the partner -> one metsunnar across the space.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    types = _types_marks("XX" + am.TSINNORIT + "X X" + am.MAHAPAKH + "X" + tail)
+    assert types.count(pan.MAHAPAKH_METSUNNAR) == 1
+    assert pan.MAHAPAKH not in types
+
+
+def test_intra_atom_partner_wins_over_next_atom():
+    # The omitted-maqaf rule fires only for a tsinnorit-ONLY atom: when the tsinnorit's
+    # own atom already carries the partner, fusion takes that same-atom partner and
+    # never reaches across the space to a following atom's conjunctive.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    types = _types_marks(
+        "X" + am.TSINNORIT + "X" + am.MAHAPAKH + "X X" + am.MERKHA + "X" + tail
+    )
+    assert pan.MAHAPAKH_METSUNNAR in types  # fused with the same-atom mahapakh
+    assert pan.MERKHA_METSUNNAR not in types  # did NOT reach the next atom's merkha
+    assert pan.MERKHA in types  # which stays a plain servus
+
+
+def test_bare_shalshelet_emits_qetannah():
+    # Plan C: bare shalshelet (U+0593, no following paseq) is the conjunctive
+    # qetannah, now emitted as a real servus instead of swallowed.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    bare = _types_marks("X" + am.SHALSHELET + "X" + tail)
+    assert pan.SHALSHELET_QETANNAH in bare
+    assert pan.SHALSHELET_GEDOLAH not in bare
+    # shalshelet + paseq (same atom) is still the disjunctive gedolah (longest match)
+    ged = _types_marks("X" + am.SHALSHELET + "X" + am.PASEQ + tail)
+    assert pan.SHALSHELET_GEDOLAH in ged
+    assert pan.SHALSHELET_QETANNAH not in ged
+
+
+def test_stray_accent_fails_fast_not_swallowed():
+    # Plan C fail-fast guard: a prose-only accent (segolta, U+0592) has no poetic rule;
+    # rather than let the catch-all swallow it silently, the scanner emits STRAY_ACCENT,
+    # which the grammar cannot parse -> the verse becomes a NO_PARSE.
+    body = "X" + am.SEGOLTA + "X XX" + am.METEG + am.SOF_PASUQ
+    types = _types_marks(body)
+    assert pan.STRAY_ACCENT in types
+    parser = build_parser()
+    toks = scan_verse("test 1:1", body).tokens
+    assert parse_tokens(parser, toks) is None
+
+
 def test_these_verses_parse():
     parser = build_parser()
     for body in (

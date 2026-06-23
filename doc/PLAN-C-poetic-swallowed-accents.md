@@ -1,11 +1,14 @@
 # Plan C: faithful poetic scanning — stop swallowing real accents
 
-**Status (2026-06-23):** new, not started. Companion to **Plan A**
+**Status (2026-06-23):** **DONE** — all three pieces landed and verified. The poetic
+scanner now **represents every real accent and fails fast on impossible ones; nothing
+vanishes silently.** Companion to **Plan A**
 (`doc/PLAN-A-same-letter-accent-pairs.md`) and **Plan B**
 (`doc/PLAN-B-editorial-charities-page.md`); sibling of **Plan D**
 (`doc/PLAN-D-faithful-same-letter-bangs.md`), which pursues the parallel "stop swallowing
-*bangs*" goal. Discovered while running down the ps124:4
-geresh: the poetic scanner (`ply_scanner_poetic`) **silently swallows real accents**
+*bangs*" goal and edits the same scanner region (land its bangs after this; re-run the
+regen so each diff is attributable). Discovered while running down the ps124:4
+geresh: the poetic scanner (`ply_scanner_poetic`) **silently swallowed real accents**
 instead of representing them. This plan owns the two *legal* swallowed accents —
 **tsinnorit** and **shalshelet qetannah** — whose fix is faithful *representation* (fuse
 / emit), with **no grammaticality verdict change**. The third swallowed accent, the
@@ -15,6 +18,32 @@ revia mugrash) **landed in Plan A** (geresh+revia is a same-letter pair), but th
 catch-all is load-bearing (geresh is its only *accent* customer, now consumed) — so the
 guard is a narrow stray-accent rule with zero live customers, best built alongside this
 plan's "stop swallowing" conversions. See *Design principle* below.
+
+**What landed (2026-06-23).** All in `py/accgram/`, verified by `pytest` (125 pass,
+incl. new scanner + grammar tests) and a full poetic regen whose diff is **leaf-only**
+(no disjunctive-skeleton change, no new ERROR/NO_PARSE):
+
+- **tsinnorit → metsunnar** (198/198 fuse, 0 strand). New conjunctive tokens
+  `MAHAPAKH_METSUNNAR` / `MERKHA_METSUNNAR` (spelling "metsunnar" = "me" + the
+  vowel-permuted repo-standard "tsinnor"; leaves `mahapakh metsunnar` / `merkha
+  metsunnar`), four scanner rules (intra-atom × {mahapakh, merkha}; omitted-maqaf ×
+  {mahapakh, merkha}, gated by `_TSINNORIT_ATOM_TAIL` = a tsinnorit-only atom), both
+  added to the grammar `conj` chain. Output: 179 mahapakh + 19 merkha metsunnar = 198.
+- **shalshelet qetannah → emit + 8th `conj`** (8 verses). Token `SHALSHELET_QETANNAH`,
+  a bare-shalshelet scanner rule below the gedolah rule (longest-match keeps gedolah
+  when a paseq follows), added to `conj`. Output: 8 emitted, each absorbed into its
+  existing disjunctive phrase (e.g. Ps 137:9 `illuy revia mugrash` → `shalshelet
+  qetannah illuy revia mugrash`, the `revia_mugrash_phrase` unchanged).
+- **stray-accent fail-fast guard** (0 live customers). A `[U+0591–U+05AE]` rule above
+  the retained `.` catch-all emits `STRAY_ACCENT`, which the grammar has no terminal
+  for → `NO_PARSE` (the poetic-native error surface, chosen over building a new
+  lexical layer for zero customers). Corpus count: 0 (the lone ps124:4 geresh is
+  consumed by Plan A's charity).
+- **servant cross-check stayed byte-identical.** A metsunnar servant is its base
+  mahapakh/merkha for servant-TYPE purposes (the tsinnorit is a secondary MAM's oracle
+  does not catalog), so `servi_xcheck._l_servi_before` normalizes it via
+  `_METSUNNAR_BASE`; `_mam_xcheck.txt` (the disjunctive oracle) and `_servi_xcheck.txt`
+  are both unchanged.
 
 ## The defect, and how it was found
 
@@ -82,6 +111,17 @@ The 15 are Breuer §22's **omitted-hyphen** case (his own example **Ps 49:15**,
 `וירדו בם` for `וירדו־בם`): *"customary to omit the hyphen which was supposed to appear
 after the tzinnorit… the word is still considered joined by hyphen."* In WLC all 15 use
 the omitted (space) maqaf, never a written `־`.
+
+**Independently confirmed against MAM (2026-06-23).** All **15/15** are marked **gray
+maqaf** (מקף אפור, the *notionally-present-but-unwritten* hyphen) in **MAM-parsed-plus**
+(`../MAM-parsed/plus/D{1,2,3}-*.json`, template `מ:מקף אפור`), each joining the
+tsinnorit-bearing word to its mahapakh/merkha partner word — exactly the junction this
+scanner reconstitutes. This is a **two-witness** agreement that the chanted word is
+joined across the WLC space. (The distinction is invisible in **MAM-simple**, which
+promotes gray maqaf to an ordinary maqaf — hence the check ran against MAM-parsed-plus;
+2 of the 15, Ps 5:5 and 18:20, carry the gray maqaf *inside* a `נוסח` variant template,
+and Ps 5:5's note even cites Breuer 11.54 on "mahapakh as a secondary accent" = the
+metsunnar reading.) See memory [[mam-parsed-plus-gray-maqaf]].
 
 **Fix — fuse, don't drop.** Add scanner rules emitting one *metzunar* token (a
 conjunctive), above the bare MAHAPAKH/MERKHA rules, exactly as the scanner already fuses
@@ -179,13 +219,14 @@ and this plan is the natural home for the whole "stop swallowing" discipline.
 
 ## Remaining work
 
-1. **tsinnorit** — mint the metzunar token(s); scanner rules for both shapes (intra-atom;
-   omitted-maqaf chanted word); add to `conj`. Verify all 198 fuse, none strand.
-2. **shalshelet qetannah** — token + emit + 8th `conj` terminal. Verify the 8 verses.
-3. **catch-all stray-accent fail-fast guard** (inherited from Plan A) — add a
-   `[U+0591–U+05AE]` rule above the (retained) `.` catch-all and choose its lexical-error
-   representation. Zero live customers today (geresh charity already consumed the lone
-   case), so verify it changes **no** output; it is future-proofing.
-4. Hand the tsinnorit/shalshelet "we now *represent* rather than drop" note to **Plan B**
-   if the charities page wants to show them (they are not charities — they hide nothing —
-   but they are part of the same "stop swallowing" story).
+1. ~~**tsinnorit** — mint the metzunar token(s); scanner rules for both shapes; add to
+   `conj`. Verify all 198 fuse, none strand.~~ **DONE** (`MAHAPAKH_METSUNNAR` /
+   `MERKHA_METSUNNAR`; 198/198 fuse, 0 strand).
+2. ~~**shalshelet qetannah** — token + emit + 8th `conj` terminal. Verify the 8
+   verses.~~ **DONE** (`SHALSHELET_QETANNAH`; 8 emitted).
+3. ~~**catch-all stray-accent fail-fast guard** — add a `[U+0591–U+05AE]` rule above the
+   (retained) `.` catch-all and choose its lexical-error representation.~~ **DONE**
+   (`STRAY_ACCENT` → NO_PARSE; 0 live customers; no output change).
+4. **Open (Plan B):** hand the tsinnorit/shalshelet "we now *represent* rather than drop"
+   note to **Plan B** if the charities page wants to show them (they are not charities —
+   they hide nothing — but they are part of the same "stop swallowing" story).

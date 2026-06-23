@@ -126,6 +126,39 @@ def test_full_hierarchy_pazer_legarmeh_dexi_sinnor():
         assert label in out, label
 
 
+def test_conj_absorbs_metsunnar_and_shalshelet_qetannah():
+    """Plan C: the fused-tsinnorit servi (mahapakh/merkha metsunnar) and the
+    conjunctive shalshelet qetannah are ordinary servi -- absorbed by the permissive
+    `conj` chain before a disjunctive, with no effect on the disjunctive skeleton."""
+    parser = build_parser()
+    tree = parse_tokens(
+        parser,
+        _verse(
+            pan.MAHAPAKH_METSUNNAR, pan.MERKHA_METSUNNAR, pan.SHALSHELET_QETANNAH,
+            pan.ATNAX, pan.MERKHA, pan.SILLUQ,
+        ),
+    )
+    assert tree is not None
+    out = print_tree(tree, 0)
+    # the three new servi sit inside the atnah phrase; skeleton is still atnah | silluq
+    assert "atnax_phrase" in out
+    assert tree.label == "silluq_clause"
+    # dropping the three servi leaves the same disjunctive skeleton (servus-neutral)
+    bare = parse_tokens(parser, _verse(pan.ATNAX, pan.MERKHA, pan.SILLUQ))
+    assert [n.label for n in (tree.left, tree.right)] == [bare.left.label, bare.right.label]
+
+
+def test_stray_accent_is_unparseable():
+    """Plan C fail-fast: STRAY_ACCENT has no grammar terminal, so any verse carrying
+    one is a NO_PARSE (the poetic-native error surface)."""
+    parser = build_parser()
+    tree, error = parse_tokens_diagnostic(
+        parser, _verse(pan.STRAY_ACCENT, pan.SILLUQ)
+    )
+    assert tree is None
+    assert error is not None and error.token_type == pan.STRAY_ACCENT
+
+
 def test_shalshelet_gedolah_before_silluq():
     parser = build_parser()
     tree = parse_tokens(

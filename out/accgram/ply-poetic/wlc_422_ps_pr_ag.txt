@@ -94,7 +94,7 @@ Proverbs 1:9
     2 legarmeh_phrase
       legarmeh 
     2 atnax_phrase
-      mahapakh illuy atnax 
+      mahapakh shalshelet qetannah illuy atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       revia mugrash 
@@ -900,7 +900,7 @@ Proverbs 3:28
   1 revia_mugrash_clause
     2 dexi_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 dexi_phrase
         munax dexi 
     2 revia_mugrash_phrase
@@ -1525,7 +1525,7 @@ Proverbs 6:3
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
-      mahapakh atnax 
+      mahapakh metsunnar atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       merkha revia mugrash 
@@ -1795,7 +1795,7 @@ Proverbs 6:26
 Proverbs 6:27
 0 silluq_clause
   1 atnax_phrase
-    mahapakh illuy atnax 
+    mahapakh shalshelet qetannah illuy atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       revia mugrash 
@@ -1957,7 +1957,7 @@ Proverbs 7:7
     2 revia_gadol_phrase
       mahapakh revia gadol 
     2 revia_mugrash_phrase
-      mahapakh revia mugrash 
+      mahapakh metsunnar revia mugrash 
   1 silluq_phrase
     munax silluq 
 Proverbs 7:8
@@ -2303,7 +2303,7 @@ Proverbs 8:13
   1 silluq_clause
     2 dexi_clause
       3 legarmeh_phrase
-        merkha mahapakh legarmeh 
+        merkha mahapakh metsunnar legarmeh 
       3 dexi_phrase
         munax dexi 
     2 silluq_phrase
@@ -2466,7 +2466,7 @@ Proverbs 8:29
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -5849,7 +5849,7 @@ Proverbs 19:24
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       atnax 
   1 silluq_clause
@@ -6866,7 +6866,7 @@ Proverbs 22:29
         4 legarmeh_phrase
           legarmeh 
         4 revia_gadol_phrase
-          mahapakh revia gadol 
+          mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_clause
@@ -7389,7 +7389,7 @@ Proverbs 24:12
     2 atnax_clause
       3 revia_gadol_clause
         4 legarmeh_phrase
-          merkha mahapakh legarmeh 
+          merkha mahapakh metsunnar legarmeh 
         4 revia_gadol_phrase
           revia gadol 
       3 atnax_clause
@@ -7554,7 +7554,7 @@ Proverbs 24:27
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -7599,7 +7599,7 @@ Proverbs 24:31
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        azla mahapakh legarmeh 
+        azla mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -7954,7 +7954,7 @@ Proverbs 25:26
 Proverbs 25:27
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_phrase
     tarxa munax silluq 
 Proverbs 25:28
@@ -8126,7 +8126,7 @@ Proverbs 26:15
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       atnax 
   1 silluq_clause
@@ -8427,7 +8427,7 @@ Proverbs 27:14
   1 atnax_clause
     2 dexi_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 dexi_phrase
         munax dexi 
     2 atnax_phrase
@@ -8846,7 +8846,7 @@ Proverbs 28:23
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_phrase
@@ -8858,7 +8858,7 @@ Proverbs 28:24
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_clause
@@ -9638,7 +9638,7 @@ Proverbs 30:33
       3 pazer_phrase
         mahapakh galgal pazer 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 

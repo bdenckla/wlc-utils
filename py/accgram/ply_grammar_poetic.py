@@ -89,10 +89,6 @@ from accgram.ply_tree import add_leaves, make_node
 # PLY parses those textually; this tuple keeps them pinned to the constants, and
 # the parse / zero-conflict tests fail if a docstring terminal ever drifts.
 #
-# NOTE: the conjunctive shalshelet qetannah (#371) is a real poetic servus but
-# occurs in only eight verses, each as one link in a chain of conjunctives before
-# silluq/atnah/revia-mugrash-without-geresh.  Yeivin gives no exact chains, so it
-# is left unmodeled (no token) rather than fabricated.
 tokens = (
     # structure
     pan.TILDE,
@@ -117,6 +113,13 @@ tokens = (
     pan.GALGAL,
     pan.ILLUY,
     pan.TARXA,
+    # fused-tsinnorit servi (Plan C): a mahapakh/merkha carrying a secondary tsinnorit;
+    # and the conjunctive shalshelet qetannah (#371), a real servus the scanner now
+    # emits (eight verses) instead of swallowing.  All three join the `conj` chain, so
+    # they are absorbed exactly like the seven primary servi -- no skeleton change.
+    pan.MAHAPAKH_METSUNNAR,
+    pan.MERKHA_METSUNNAR,
+    pan.SHALSHELET_QETANNAH,
 )
 
 start = "pasuq"
@@ -130,7 +133,10 @@ def p_conj(p):
             | AZLA
             | GALGAL
             | ILLUY
-            | TARXA"""
+            | TARXA
+            | MAHAPAKH_METSUNNAR
+            | MERKHA_METSUNNAR
+            | SHALSHELET_QETANNAH"""
     p[0] = p[1]  # the leaf-name string
 
 

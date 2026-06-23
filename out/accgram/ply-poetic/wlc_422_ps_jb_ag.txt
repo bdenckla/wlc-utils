@@ -545,7 +545,7 @@ Job 5:5
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_phrase
@@ -890,7 +890,7 @@ Job 6:10
       3 legarmeh_phrase
         merkha legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -1136,7 +1136,7 @@ Job 7:5
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_clause
@@ -2916,7 +2916,7 @@ Job 13:27
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -2970,7 +2970,7 @@ Job 14:3
     2 atnax_phrase
       munax atnax 
   1 silluq_phrase
-    mahapakh tarxa munax silluq 
+    mahapakh metsunnar tarxa munax silluq 
 Job 14:4
 0 silluq_clause
   1 revia_mugrash_clause
@@ -3403,7 +3403,7 @@ Job 15:22
 Job 15:23
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_clause
     2 shalshelet_gedolah_phrase
       shalshelet gedolah 
@@ -3455,7 +3455,7 @@ Job 15:28
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -3672,7 +3672,7 @@ Job 16:12
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -3690,7 +3690,7 @@ Job 16:13
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_clause
@@ -4138,7 +4138,7 @@ Job 18:18
 Job 18:19
 0 silluq_clause
   1 atnax_phrase
-    mahapakh munax munax atnax 
+    mahapakh metsunnar munax munax atnax 
   1 silluq_clause
     2 revia_mugrash_phrase
       merkha revia mugrash 
@@ -4289,7 +4289,7 @@ Job 19:12
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       munax munax atnax 
   1 silluq_phrase
@@ -4316,7 +4316,7 @@ Job 19:15
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      mahapakh munax dexi 
+      mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_clause
@@ -4785,7 +4785,7 @@ Job 20:27
     2 revia_mugrash_phrase
       revia mugrash 
     2 silluq_phrase
-      merkha silluq 
+      merkha metsunnar silluq 
 Job 20:28
 0 silluq_clause
   1 atnax_clause
@@ -4970,7 +4970,7 @@ Job 21:17
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       munax munax atnax 
   1 silluq_clause
@@ -5751,7 +5751,7 @@ Job 24:12
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
         revia gadol 
     2 atnax_phrase
@@ -5786,7 +5786,7 @@ Job 24:14
       3 pazer_phrase
         pazer 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_clause
@@ -5859,9 +5859,9 @@ Job 24:20
   1 atnax_clause
     2 revia_gadol_clause
       3 legarmeh_phrase
-        mahapakh legarmeh 
+        mahapakh metsunnar legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_phrase
@@ -7588,7 +7588,7 @@ Job 31:34
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_phrase
       merkha atnax 
   1 silluq_clause
@@ -7603,7 +7603,7 @@ Job 31:35
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 
@@ -7738,7 +7738,7 @@ Job 32:5
       mahapakh revia gadol 
     2 revia_mugrash_clause
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
       3 revia_mugrash_clause
         4 dexi_phrase
           dexi 
@@ -7759,7 +7759,7 @@ Job 32:6
   1 silluq_clause
     2 atnax_clause
       3 dexi_phrase
-        mahapakh munax dexi 
+        mahapakh metsunnar munax dexi 
       3 atnax_phrase
         munax atnax 
     2 silluq_clause
@@ -8659,7 +8659,7 @@ Job 34:37
 0 silluq_clause
   1 atnax_clause
     2 dexi_phrase
-      merkha mahapakh munax dexi 
+      merkha mahapakh metsunnar munax dexi 
     2 atnax_phrase
       munax atnax 
   1 silluq_phrase
@@ -9388,7 +9388,7 @@ Job 37:21
       3 legarmeh_phrase
         legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         munax dexi 
@@ -10072,7 +10072,7 @@ Job 39:25
       3 legarmeh_phrase
         mahapakh legarmeh 
       3 revia_gadol_phrase
-        mahapakh revia gadol 
+        mahapakh metsunnar revia gadol 
     2 atnax_clause
       3 dexi_phrase
         dexi 

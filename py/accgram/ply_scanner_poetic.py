@@ -32,9 +32,18 @@ M-C code -> poetic accent (the codes that matter in the Three Books):
     74 munah   71 merka   70 mehuppak   63 azla   64 illuy   73 tarha
     93 galgal (yerah; also the servus of oleh-we-yored and of pazer)
 
+  fused / emitted (Plan C -- stop swallowing real accents)
+    82 sinnorit   fused onto its mahapakh (70) / merkha (71) partner in the same
+                  chanted word -> one MAHAPAKH_METSUNNAR / MERKHA_METSUNNAR conjunctive
+    65 (without following paseq) shalshelet qetannah -> emitted as a conjunctive servus
+
   swallowed (secondary / ga`ya / separators, not structural accents)
-    82 sinnorit   65 (without following paseq) shalshelet qetannah
     35|75|95 (not before sof pasuq) meteg   05 (plain) paseq   52|53 puncta
+
+  fail-fast (Plan C): any other stray accent (U+0591..U+05AE) no rule consumes is
+  emitted as STRAY_ACCENT (the grammar has no terminal for it -> NO_PARSE), never
+  silently swallowed.  Zero live customers (the lone ps124:4 geresh is consumed by the
+  same-letter revia-mugrash charity).
 
 Note: "revia mugrash without geresh" (#367 = Breuer Ch 10 §17-18) -- a bare 81
 acting as the main verse divider when the verse has no atnah -- is NOT a gap: it is
@@ -48,7 +57,6 @@ Known gaps (deferred to the validation pass, see the module's tests / notes):
     recovered when the galgal servus (93) immediately precedes it (see
     _recover_unmarked_oleh, MAM-cross-checked); the rarer "when a revia precedes"
     variant is still read as a servus (its signal is ambiguous -- see that helper).
-  - shalshelet qetannah (the conjunctive, 8 verses) is swallowed, not emitted.
 
 The scanner returns a list of (token_type, leaf_name) pairs ready for
 accgram.ply_grammar_poetic.parse_tokens; the verse begins with ('TILDE','') and
@@ -65,6 +73,14 @@ from accgram import poetic_accent_names as pan
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 _TEXT = am.TEXT  # within one maqqef/space-delimited word (as in prose)
+
+# The run of letters after a tsinnorit, up to its partner, in the metsunnar rules:
+# like _TEXT but also excluding every accent (U+0591..U+05AE), so the partner is the
+# FIRST accent after the tsinnorit.  Intra-atom, this keeps the fusion from reaching
+# across an intervening divider (an ole, a mahapakh-legarmeh) to a later conjunctive;
+# in the omitted-maqaf rule it additionally enforces a tsinnorit-*only* first atom (no
+# main accent of its own -- the cue that the chanted word continues across the hyphen).
+_TSINNORIT_ATOM_TAIL = r"[^ \r\n֑-֮-]*"
 
 # silluq right context (as in prose ply_scanner): meteg/silluq immediately before
 # sof pasuq, rebuilt over the mark alphabet (issue #9, Phase 2).
@@ -113,11 +129,31 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.DEHI), pan.DEXI),
     (re.compile(am.ZINOR), pan.TSINNOR),
     (re.compile(am.PAZER), pan.PAZER),
-    # shalshelet gedolah = shalshelet followed by paseq.
+    # shalshelet gedolah = shalshelet followed by paseq.  Longer than the bare
+    # shalshelet (qetannah) rule below, so the paseq case wins by longest-match.
     (re.compile(am.SHALSHELET + _TEXT + am.PASEQ), pan.SHALSHELET_GEDOLAH),
+    # shalshelet qetannah = bare shalshelet (no following paseq): a real conjunctive
+    # servus (#371) in eight verses, emitted rather than swallowed.
+    (re.compile(am.SHALSHELET), pan.SHALSHELET_QETANNAH),
     # legarmeh = azla (qadma) or mehuppak (mahapakh) followed by paseq.  Must precede
     # the bare AZLA / MAHAPAKH rules so the longer paseq-terminated match wins.
     (re.compile(r"(?:" + am.QADMA + r"|" + am.MAHAPAKH + r")" + _TEXT + am.PASEQ), pan.LEGARMEH),
+    # mahapakh / merkha metsunnar = a tsinnorit (U+0598) fused onto its mahapakh /
+    # merkha partner in the same chanted word, the secondary tsinnorit consumed into
+    # one conjunctive token instead of swallowed (Plan C).  Two graphical shapes:
+    #   - intra-atom: tsinnorit and its partner in one space/maqaf-delimited atom;
+    #   - omitted-maqaf: a tsinnorit-only atom (no main accent of its own -- the cue),
+    #     then a single space (the omitted hyphen, Breuer §22), then the next atom that
+    #     completes the chanted word and carries the partner.  Must precede the bare
+    #     MAHAPAKH / MERKHA rules.  Both shapes use _TSINNORIT_ATOM_TAIL (no accent
+    #     between the tsinnorit and its partner): the partner is the FIRST accent after
+    #     the tsinnorit (Yeivin §372 "immediately before the stress"; corpus-confirmed
+    #     for all 198), so the rule cannot reach across an intervening divider (an ole,
+    #     a mahapakh-legarmeh) to steal it, and the two shapes stay disjoint.
+    (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + am.MAHAPAKH), pan.MAHAPAKH_METSUNNAR),
+    (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + am.MERKHA), pan.MERKHA_METSUNNAR),
+    (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + " " + _TEXT + am.MAHAPAKH), pan.MAHAPAKH_METSUNNAR),
+    (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + " " + _TEXT + am.MERKHA), pan.MERKHA_METSUNNAR),
     # revia (gadol/qatan) -- reclassified in the second pass.
     (re.compile(am.REVIA), pan.REVIA),
     # conjunctive servi
@@ -128,14 +164,19 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.ILUY), pan.ILLUY),
     (re.compile(am.TIPEHA), pan.TARXA),
     (re.compile(am.YERAH), pan.GALGAL),
-    # swallowed: sinnorit, bare shalshelet (qetannah conjunctive), meteg, paseq,
-    # puncta (prose-only accents should not occur in the Three Books).
-    (
-        re.compile(
-            "[" + am.TSINNORIT + am.SHALSHELET + am.METEG + am.PASEQ + am.UPPER_DOT + am.LOWER_DOT + "]"
-        ),
-        None,
-    ),
+    # swallowed: meteg (ga`ya/silluq-helper), bare paseq (a separator), and the
+    # upper/lower puncta -- genuine secondaries/separators, not structural accents.
+    # (tsinnorit and bare shalshelet, formerly swallowed here, are now emitted above
+    # as metsunnar / shalshelet qetannah.)
+    (re.compile("[" + am.METEG + am.PASEQ + am.UPPER_DOT + am.LOWER_DOT + "]"), None),
+    # Fail-fast guard: any *accent* (U+0591..U+05AE) no rule above consumed is a stray
+    # mark.  Emit STRAY_ACCENT (which the grammar cannot parse -> NO_PARSE) rather than
+    # let the catch-all swallow it silently.  Placed above the catch-all so a 1-char
+    # accent match beats the equally-long `.`; the catch-all keeps swallowing the
+    # structural junk (X placeholders, spaces, maqaf, `]N` note markers).  Zero live
+    # customers today -- the only attested catch-all accent (the ps124:4 geresh) is
+    # consumed by the same-letter revia-mugrash charity above.
+    (re.compile("[֑-֮]"), pan.STRAY_ACCENT),
     (re.compile(r"\*\*"), None),
     (re.compile(r"\*[^* \r\n\-]+"), None),
     (re.compile(r".", re.DOTALL), None),
@@ -155,6 +196,10 @@ _LEAF: dict[str, str] = {
     pan.PAZER: "pazer",
     pan.LEGARMEH: "legarmeh",
     pan.SHALSHELET_GEDOLAH: "shalshelet gedolah",
+    pan.SHALSHELET_QETANNAH: "shalshelet qetannah",
+    pan.MAHAPAKH_METSUNNAR: "mahapakh metsunnar",
+    pan.MERKHA_METSUNNAR: "merkha metsunnar",
+    pan.STRAY_ACCENT: "stray accent",
     pan.MUNAX: "munax",
     pan.MERKHA: "merkha",
     pan.MAHAPAKH: "mahapakh",
