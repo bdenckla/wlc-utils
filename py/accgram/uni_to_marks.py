@@ -16,8 +16,9 @@ and `lexical_validation` actually read:
   no longer need distinct codes: pashta and telisha-qetana keep both their stress-helper
   and their main occurrence (the scanner merges an adjacent same-accent run into one
   token), and the swallowed secondaries -- the non-first of a repeated telisha-gedola,
-  and a geresh-family sign (geresh / geresh muqdam / gershayim) sharing a word with a
-  telisha-gedola -- are dropped here, keeping the telisha-gedola (`word_to_marks`).
+  and a geresh or gershayim sharing a word with a telisha-gedola -- are dropped here,
+  keeping the telisha-gedola (a prose geresh muqdam is first read as the plain geresh it
+  mis-encodes, then dropped under that rule; `word_to_marks`).
 * **Prepositive accents** (yetiv, geresh-muqdam, dehi, telisha-gedola) are relocated to
   the front of the word's mark sequence, undoing `wlc_uword._PREPOS_PATT`'s move past an
   accent on the first consonant, so the scanner reads the accents in M-C order.
@@ -62,9 +63,10 @@ _PREPOSITIVE_MARKS = frozenset(
     (am.YETIV, am.GERESH_MUQDAM, am.DEHI, am.TELISHA_GEDOLA)
 )
 
-# Geresh-family signs.  A geresh / geresh muqdam / gershayim that shares a *word* with
-# a telisha gedola is dropped (keeping the telisha gedola) -- see `word_to_marks`.
-_GERESH_FAMILY = frozenset((am.GERESH, am.GERESH_MUQDAM, am.GERSHAYIM))
+# A geresh or gershayim that shares a *word* with a telisha gedola is dropped (keeping
+# the telisha gedola) -- see `word_to_marks`.  (A prose geresh muqdam is first read as
+# the plain geresh it mis-encodes, so it is dropped under this rule too.)
+_GERESH_OR_GERSHAYIM = frozenset((am.GERESH, am.GERSHAYIM))
 
 
 def _is_base_letter(ch: str) -> bool:
@@ -88,30 +90,31 @@ def word_to_marks(word: str) -> str:
     `_PREPOSITIVE_MARKS`).
 
     Two secondaries are dropped here.  (1) The non-first of a *repeated* telisha gedola
-    (M-C 44).  (2) A geresh-family sign (geresh / geresh muqdam / gershayim) in a word
-    that also carries a telisha gedola: in those five words -- Gen 5:29, Lev 10:4,
-    2 Kings 17:13, Ezek 48:10, Zeph 2:15 -- we keep the telisha gedola and drop the
-    geresh-family sign, whether the two sit on one letter (Gen 5:29, 2 Kings 17:13,
-    Zeph 2:15) or on different letters of the word (Lev 10:4, Ezek 48:10).
+    (M-C 44).  (2) A geresh or gershayim that shares a word with a telisha gedola.  Think
+    of (2) as two conceptual steps in order: *first*, normalize away the abomination of a
+    prose geresh muqdam -- a poetic-only sign that WLC, in the 21 prose books, uses only
+    as a typographic device for a plain geresh (see ply_scanner) -- reading it as that
+    geresh; *then* drop a geresh or gershayim that shares a word with a telisha gedola,
+    whether on the same letter or a different letter of the word.  This covers exactly
+    five words, in each of which we keep the telisha gedola: Gen 5:29, 2 Kings 17:13 and
+    Zeph 2:15 (same letter) and Lev 10:4 and Ezek 48:10 (different letters).  2 Kings
+    17:13 is the geresh-muqdam case: telg + geresh-muqdam -> telg + geresh -> telg.
 
     The reading treats the (prepositive) telisha gedola as analogous to the (prepositive)
-    geresh muqdam, and the geresh-family sign as analogous to the revia of revia mugrash:
-    a prepositive whose stress-helper is always written, even when -- the stress being
-    initial -- it is not needed.  (Manuscripts often DO drop that revia when the stress is
-    initial, but they cannot drop the geresh-family sign, because the word would then read
-    as a plain telisha gedola; whereas there is no such thing as a plain "geresh muqdam
-    word" -- geresh muqdam occurs only as part of a revia mugrash, even when the revia is
-    not shown.)  The analogy is a little inverted -- one wants the geresh-family sign to be
-    the analogue of geresh muqdam -- but the geresh-family sign is not prepositive, so it
-    is the telisha gedola that plays the geresh-muqdam role.  The geresh muqdam of
-    2 Kings 17:13 is itself the poetic-only sign the prose scanner would otherwise
-    normalize to geresh; here it is dropped first as the companion
-    (telg!geresh-muqdam -> telg!geresh -> telg).
+    geresh muqdam, and the geresh (or gershayim) as analogous to the revia of revia
+    mugrash: a prepositive whose stress-helper is always written, even when -- the stress
+    being initial -- it is not needed.  (Manuscripts often DO drop that revia when the
+    stress is initial, but they cannot drop the geresh/gershayim, because the word would
+    then read as a plain telisha gedola; whereas there is no such thing as a plain "geresh
+    muqdam word" -- geresh muqdam occurs only as part of a revia mugrash, even when the
+    revia is not shown.)  The analogy is a little inverted -- one wants the geresh to be
+    the analogue of geresh muqdam -- but the geresh/gershayim is not prepositive, so it is
+    the telisha gedola that plays the geresh-muqdam role.
 
     Two other interpretations are equally grammatical (all five verses verified to parse
     either way): we could just as easily have dropped the telisha gedola and retained the
-    geresh-family sign; or retained BOTH accents and read the same-letter pairs as a
-    telisha-gedola-then-gerstar sequence (the cross-word telisha-gedola -> geresh/gershayim
+    geresh/gershayim; or retained BOTH accents and read the same-letter pairs as a
+    telisha-gedola-then-geresh sequence (the cross-word telisha-gedola -> geresh/gershayim
     bigram occurs ~165x, so the sequence parses cleanly too).  We deliberately choose
     neither -- in particular the sequential reading, though grammatical, is not the right
     way to think of these words, even the two whose accents fall on different letters.
@@ -139,9 +142,14 @@ def word_to_marks(word: str) -> str:
                 if telg_seen > 1:
                     continue  # non-first of a repeated telisha gedola (M-C 44)
                 mark = am.TELISHA_GEDOLA
-            elif word_has_telg and ch in _GERESH_FAMILY:
-                continue  # stress-helper companion of the telisha gedola (see docstring)
             else:
+                # First read a prose geresh muqdam as the plain geresh it mis-encodes (a
+                # poetic geresh muqdam -- revia mugrash -- never shares a word with a
+                # telisha gedola, so this never mis-fires on real poetic text); then drop
+                # a geresh or gershayim that shares a word with a telisha gedola.
+                as_geresh = am.GERESH if ch == am.GERESH_MUQDAM else ch
+                if word_has_telg and as_geresh in _GERESH_OR_GERSHAYIM:
+                    continue
                 mark = ch  # the accent codepoint is its own mark
         elif ch in _KEPT_NON_ACCENT:
             mark = ch

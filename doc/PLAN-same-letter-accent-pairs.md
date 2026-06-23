@@ -57,29 +57,33 @@ The **real targets** (normally-cantillated text, dual-cantillation refs removed)
 | telisha-gedola + geresh-muqdam (same letter) | 2k17:13 | **DONE** → geresh-muqdam charitably read as geresh (it is a poetic-only sign; its use in prose is typographic), then dropped as the companion (`telg!germuq → telg!geresh → telg`). Telg-only, clean parse. |
 | mahapakh + tipeḥa | lv25:20 | The "mahapakh-tipeḥa" — both *below*-accents, considered an **error**/illegal. Wants `mahapakh!tipexa` landing in an oddball/ERROR, not a clean rule. |
 
-**Note — the telisha-gedola + geresh-family family (resolved together).** There are
-exactly **five** words corpus-wide carrying both a telisha-gedola and a geresh-family
-sign (geresh / geresh-muqdam / gershayim): the three same-letter ones above plus two
-**cross-letter, same-word** ones — lv10:4 (telg…gershayim) and ek48:10 (telg…geresh).
-All five are now handled by **one per-word rule** in `uni_to_marks.word_to_marks`: if a
-word has a telisha-gedola, keep it and drop any geresh-family sign. Rationale: the
+**Note — telisha-gedola + geresh/gershayim (resolved together).** There are exactly
+**five** words corpus-wide carrying both a telisha-gedola and a geresh or gershayim
+(counting 2k17:13's prose geresh-muqdam as the plain geresh it stands for): the three
+same-letter ones above plus two **cross-letter, same-word** ones — lv10:4 (telg…gershayim)
+and ek48:10 (telg…geresh). All five are now handled in `uni_to_marks.word_to_marks` as
+**two conceptual steps, in order**: (1) read a prose geresh-muqdam as the plain geresh it
+mis-encodes (it is a poetic-only sign — see below); then (2) if a word has a telisha-gedola,
+keep it and drop any geresh or gershayim in that word. Rationale: the
 (prepositive) telg is treated as analogous to the (prepositive) geresh-muqdam, and the
-geresh-family sign as analogous to the revia of *revia mugrash* — a prepositive whose
+geresh (or gershayim) as analogous to the revia of *revia mugrash* — a prepositive whose
 stress-helper is always written even when (the stress being initial) it is not needed.
-The manuscripts drop that revia on initial stress but cannot drop the geresh-family sign
+The manuscripts drop that revia on initial stress but cannot drop the geresh/gershayim
 (the word would then read as a plain telisha-gedola). Two **alternatives are equally
-grammatical** (verified for all five): drop the telg and keep the gerstar; or keep both
-and read the same-letter pairs as a telg-then-gerstar *sequence* (the cross-word
+grammatical** (verified for all five): drop the telg and keep the geresh/gershayim; or
+keep both and read the same-letter pairs as a telg-then-geresh *sequence* (the cross-word
 telg → geresh/gershayim bigram occurs ~165×, so the sequence parses cleanly). The
 sequential reading is **deliberately not** chosen — it is not the right way to think of
 these words, even the two cross-letter ones. Note this is **drop**, not **fusion** — the
 opposite resolution from ek20:31's `mahapakh!azla`.
 
-**Note — geresh-muqdam in prose (lv1:3, 2k17:13).** Geresh-muqdam (U+059D) appears in the
-21 prose books only twice, both typographic devices for a plain geresh: lv1:3 (alone) and
-2k17:13 (the telg word above). The prose scanner reads it as geresh (lv1:3 — previously
-silently dropped); the 2k17:13 one is dropped upstream as the telg companion. Cited in
-code: tanach.us changes `2020.09.22-1` (lv1:3) and `2020.09.22-2` (2k17:13).
+**Note — geresh-muqdam in prose (lv1:3, 2k17:13).** *In WLC*, geresh-muqdam (U+059D)
+appears in the 21 prose books only twice — a property (arguably a bug) of **WLC**, not a
+statement about the wider Masoretic tradition. Both are typographic devices for a plain
+geresh: lv1:3 (alone) and 2k17:13 (the telg word above). The prose scanner reads it as
+geresh (lv1:3 — previously silently dropped); the 2k17:13 one is read as geresh and then
+dropped upstream as the telg companion. Cited in code: tanach.us changes
+`2020.09.22-1` (lv1:3) and `2020.09.22-2` (2k17:13).
 
 ### Poetic
 | cluster (source order) | refs | notes |
