@@ -1,6 +1,8 @@
 # Plan D: faithful same-letter bangs — stop swallowing the bang into a sequence
 
-**Status (2026-06-23):** new, not started. Spun off from **Plan A**
+**Status (2026-06-23):** new, not started — the **next plan to execute** (its sibling
+**Plan C** is **DONE/committed `d50e021`**; Plan B, the charities page, is best done last
+so it documents the settled state). Spun off from **Plan A**
 (`doc/PLAN-A-same-letter-accent-pairs.md`), whose taxonomy and `!` convention this plan
 extends; sibling of **Plan C** (`doc/PLAN-C-poetic-swallowed-accents.md`). The two are the
 matched halves of one "stop silently flattening the text" discipline:
@@ -99,8 +101,12 @@ same-letter co-equal *sequence* in either genre is in scope.
   the taxonomy and the `!` convention; Plan D is its faithfulness-driven extension.
 - **Plan C** edits the same poetic-scanner swallow/fusion region (tsinnorit→metzunar,
   shalshelet qetannah, the stray-accent fail-fast). Plan D adds *more* fusion rules there.
-  Land them in a deliberate order (suggest C's representation work first, then D's bangs)
-  and re-run the full poetic regen after each so each plan's diff is attributable.
+  **Plan C is DONE and committed (`d50e021`, 2026-06-23)** — its representation work
+  landed first, as planned (token spelling settled on `metsunnar`; fused tokens
+  `MAHAPAKH_METSUNNAR` / `MERKHA_METSUNNAR` and `SHALSHELET_QETANNAH` join the `conj`
+  chain in `ply_grammar_poetic`). Plan D's bangs now build on that committed region; add
+  the bang rules above the bare-servus rules (as C's metsunnar rules are) and re-run the
+  full poetic regen so D's diff is attributable on top of C's leaf-only baseline.
 - The shared token-minting convention: helper→main fusions and idioms keep their named
   tokens; **bangs** use the literal `a!b` spelling (memory `fused-impositive-cluster-token`).
 
