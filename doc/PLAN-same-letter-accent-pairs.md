@@ -1,9 +1,11 @@
 # Plan: same-letter accent pairs (general)
 
-**Status:** open exploration. Ezekiel 20:31 (mahapakh+azla) is the first instance,
-already resolved — see `doc/PLAN-ezekiel-20-31-azla-mahapakh-order.md` (a worked
-example, slated for eventual deletion) and the durable design note in memory
-`fused-impositive-cluster-token`.
+**Status:** in progress. Resolved so far: ek20:31 (mahapakh+azla, **fused**); the whole
+telisha-gedola + geresh-family family (5 words, **drop-to-telg**); geresh-muqdam in prose
+(read as geresh); poetic revia-mugrash (already an established single token). Remaining:
+the illegal mahapakh+tipeḥa (lv25:20), and a "check current handling" pass on the poetic
+pairs. See `doc/PLAN-ezekiel-20-31-azla-mahapakh-order.md` (a worked example, slated for
+eventual deletion) and the durable design note in memory `fused-impositive-cluster-token`.
 
 ## Goal
 
@@ -51,9 +53,33 @@ The **real targets** (normally-cantillated text, dual-cantillation refs removed)
 | cluster (source order) | refs | notes |
 |---|---|---|
 | mahapakh + qadma/azla | ek20:31 | **DONE** → fused `mahapakh!azla`; legal, clean parse. |
-| telisha-gedola + gershayim | gn5:29, zp2:15 | The known double-prepositive anomaly. Currently the secondary is **dropped** in `uni_to_marks` (clustered gershayim → M-C 12). Fuse-vs-drop decision. |
-| telisha-gedola + geresh-muqdam | 2k17:13 | Same family; the clustered telisha-gedola is currently **dropped** in `uni_to_marks`. Check what 2k17:13 parses to today. |
+| telisha-gedola + gershayim (same letter) | gn5:29, zp2:15 | **DONE** → keep telg, **drop the gershayim** (read as the telg's stress-helper companion). Telg-only, clean parse. (Previously *both* were dropped — the word was silently unaccented.) |
+| telisha-gedola + geresh-muqdam (same letter) | 2k17:13 | **DONE** → geresh-muqdam charitably read as geresh (it is a poetic-only sign; its use in prose is typographic), then dropped as the companion (`telg!germuq → telg!geresh → telg`). Telg-only, clean parse. |
 | mahapakh + tipeḥa | lv25:20 | The "mahapakh-tipeḥa" — both *below*-accents, considered an **error**/illegal. Wants `mahapakh!tipexa` landing in an oddball/ERROR, not a clean rule. |
+
+**Note — the telisha-gedola + geresh-family family (resolved together).** There are
+exactly **five** words corpus-wide carrying both a telisha-gedola and a geresh-family
+sign (geresh / geresh-muqdam / gershayim): the three same-letter ones above plus two
+**cross-letter, same-word** ones — lv10:4 (telg…gershayim) and ek48:10 (telg…geresh).
+All five are now handled by **one per-word rule** in `uni_to_marks.word_to_marks`: if a
+word has a telisha-gedola, keep it and drop any geresh-family sign. Rationale: the
+(prepositive) telg is treated as analogous to the (prepositive) geresh-muqdam, and the
+geresh-family sign as analogous to the revia of *revia mugrash* — a prepositive whose
+stress-helper is always written even when (the stress being initial) it is not needed.
+The manuscripts drop that revia on initial stress but cannot drop the geresh-family sign
+(the word would then read as a plain telisha-gedola). Two **alternatives are equally
+grammatical** (verified for all five): drop the telg and keep the gerstar; or keep both
+and read the same-letter pairs as a telg-then-gerstar *sequence* (the cross-word
+telg → geresh/gershayim bigram occurs ~165×, so the sequence parses cleanly). The
+sequential reading is **deliberately not** chosen — it is not the right way to think of
+these words, even the two cross-letter ones. Note this is **drop**, not **fusion** — the
+opposite resolution from ek20:31's `mahapakh!azla`.
+
+**Note — geresh-muqdam in prose (lv1:3, 2k17:13).** Geresh-muqdam (U+059D) appears in the
+21 prose books only twice, both typographic devices for a plain geresh: lv1:3 (alone) and
+2k17:13 (the telg word above). The prose scanner reads it as geresh (lv1:3 — previously
+silently dropped); the 2k17:13 one is dropped upstream as the telg companion. Cited in
+code: tanach.us changes `2020.09.22-1` (lv1:3) and `2020.09.22-2` (2k17:13).
 
 ### Poetic
 | cluster (source order) | refs | notes |
@@ -86,11 +112,21 @@ The **real targets** (normally-cantillated text, dual-cantillation refs removed)
 
 ## Open questions
 
-- Is the poetic revia-mugrash (geresh-muqdam+revia, 241×) already a recognized
-  single token, and if so does it argue for or against treating it as "another
-  same-letter pair" here, or is it simply out of scope as an established accent?
+- ~~Is the poetic revia-mugrash (geresh-muqdam+revia, 241×) already a recognized single
+  token…?~~ **RESOLVED:** yes — `ply_scanner_poetic` already emits one `REVIA_MUGRASH`
+  token (`GERESH_MUQDAM [+ REVIA]`); it is an established accent, out of scope here.
 - Should the illegal clusters (mahapakh!tipexa) get a *named* fused leaf at all, or
   is a distinct ERROR/oddball flavor better, so they read as wrong rather than as a
-  recognized unit?
-- Consistency: do we want one uniform strategy (fusion) for all same-letter pairs,
-  retiring the drop-secondary approach in `uni_to_marks`?
+  recognized unit?  *(Still open — the only remaining prose cluster.)*
+- ~~Consistency: one uniform strategy (fusion) for all same-letter pairs?~~ **RESOLVED
+  as: no, not uniform.** Strategy is per-cluster by what the pair *means*: **fuse** when
+  the two accents are a genuine unit with no natural order (ek20:31 `mahapakh!azla`);
+  **drop** the companion when one accent is a stress-helper of a prepositive
+  (telg + geresh-family → telg). The drop-secondary approach in `uni_to_marks` is kept,
+  now stated as a principled rule rather than an incidental clustered-secondary drop.
+
+## Remaining (poetic, lower priority)
+
+The poetic same-letter pairs (merkha+qadma ps56:10, munah+deḥi ps135:2/jb32:13,
+revia+geresh ps124:4 — the reversed-order anomaly) still want a "check current handling"
+pass; revia-mugrash itself is resolved (above).

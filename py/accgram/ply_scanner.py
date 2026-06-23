@@ -125,6 +125,16 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.YETIV), "YETIV"),
     (re.compile(am.TEVIR), "TEVIR"),
     (re.compile(am.GERESH), "GERESH"),
+    # geresh muqdam (U+059D) is a poetic-only sign (the preposed geresh of revia
+    # mugrash).  It appears in the 21 prose books only twice, both a typographic device
+    # for what is abstractly a plain geresh: Lev 1:3 (alone), read here as a geresh; and
+    # 2 Kings 17:13 (sharing a word with a telisha gedola), where it is dropped upstream
+    # as that telisha gedola's companion (uni_to_marks.word_to_marks) and so never
+    # reaches this rule.  (The poetic scanner keeps its own revia-mugrash handling.)
+    # See the tanach.us changes
+    # Lev 1:3:       https://tanach.us/Changes/2020.10.19%20-%20Changes/2020.10.19%20-%20Changes.xml?2020.09.22-1
+    # 2 Kings 17:13: https://tanach.us/Changes/2020.10.19%20-%20Changes/2020.10.19%20-%20Changes.xml?2020.09.22-2
+    (re.compile(am.GERESH_MUQDAM), "GERESH"),
     (re.compile(am.GERSHAYIM), "GERSHAYIM"),
     (re.compile(am.PAZER), "PAZER"),
     (re.compile(am.QARNEY_PARA), "PAZERGADOL"),

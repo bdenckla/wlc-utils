@@ -30581,11 +30581,8 @@ Ezekiel 48:10
       3 zarqa_clause
         4 big_telisha_phrase
           telishagedola 
-        4 zarqa_clause
-          5 geresh_phrase
-            geresh 
-          5 zarqa_phrase
-            munax zarqa 
+        4 zarqa_phrase
+          munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause

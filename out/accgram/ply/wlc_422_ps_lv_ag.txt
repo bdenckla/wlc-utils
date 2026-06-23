@@ -67,8 +67,11 @@ Levit 1:3
         atnax 
   1 silluq_clause
     2 zaqef_clause
-      3 pashta_phrase
-        mahapakh pashta 
+      3 pashta_clause
+        4 geresh_phrase
+          geresh 
+        4 pashta_phrase
+          mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -5458,11 +5461,8 @@ Levit 10:4
         4 pashta_clause
           5 big_telisha_phrase
             telishagedola 
-          5 pashta_clause
-            6 geresh_phrase
-              gershayim 
-            6 pashta_phrase
-              mahapakh pashta 
+          5 pashta_phrase
+            mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause

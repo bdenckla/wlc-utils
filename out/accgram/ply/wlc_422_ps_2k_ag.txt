@@ -12332,8 +12332,11 @@
             6 revia_phrase
               revia 
       3 zaqef_clause
-        4 pashta_phrase
-          mahapakh pashta 
+        4 pashta_clause
+          5 big_telisha_phrase
+            telishagedola 
+          5 pashta_phrase
+            mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 

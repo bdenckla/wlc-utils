@@ -2950,8 +2950,11 @@ Genesis 5:29
       atnax 
   1 silluq_clause
     2 zaqef_clause
-      3 pashta_phrase
-        mahapakh pashta 
+      3 pashta_clause
+        4 big_telisha_phrase
+          telishagedola 
+        4 pashta_phrase
+          mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause

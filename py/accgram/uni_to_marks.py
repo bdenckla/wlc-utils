@@ -15,9 +15,9 @@ and `lexical_validation` actually read:
 * **Accents** pass through as their own codepoint.  The five M-C codepoint conflations
   no longer need distinct codes: pashta and telisha-qetana keep both their stress-helper
   and their main occurrence (the scanner merges an adjacent same-accent run into one
-  token), and the swallowed secondaries -- a telisha-gedola or gershayim that shares its
-  base letter with another accent, or a repeated telisha-gedola -- are dropped here
-  (`word_to_marks`).
+  token), and the swallowed secondaries -- the non-first of a repeated telisha-gedola,
+  and a geresh-family sign (geresh / geresh muqdam / gershayim) sharing a word with a
+  telisha-gedola -- are dropped here, keeping the telisha-gedola (`word_to_marks`).
 * **Prepositive accents** (yetiv, geresh-muqdam, dehi, telisha-gedola) are relocated to
   the front of the word's mark sequence, undoing `wlc_uword._PREPOS_PATT`'s move past an
   accent on the first consonant, so the scanner reads the accents in M-C order.
@@ -62,6 +62,10 @@ _PREPOSITIVE_MARKS = frozenset(
     (am.YETIV, am.GERESH_MUQDAM, am.DEHI, am.TELISHA_GEDOLA)
 )
 
+# Geresh-family signs.  A geresh / geresh muqdam / gershayim that shares a *word* with
+# a telisha gedola is dropped (keeping the telisha gedola) -- see `word_to_marks`.
+_GERESH_FAMILY = frozenset((am.GERESH, am.GERESH_MUQDAM, am.GERSHAYIM))
+
 
 def _is_base_letter(ch: str) -> bool:
     return "א" <= ch <= "ת"
@@ -79,30 +83,49 @@ def word_to_marks(word: str) -> str:
     """Transcode one Unicode word/atom into its scanner-ready mark string.
 
     Letters become ``X`` placeholders, points are dropped, accents pass through as
-    their codepoints (swallowed-secondary telisha-gedola / gershayim dropped), and
-    maqaf / paseq / sof pasuq / puncta are emitted verbatim.  Prepositive accents are
-    restored to the front of the mark sequence (see `_PREPOSITIVE_MARKS`).
-    """
-    # Pass 1: assign each character a "letter group" index (incremented on each base
-    # consonant) and tally the non-meteg accents per group, so the cluster test below
-    # can tell whether an accent shares its base letter with another accent.
-    group_of: list[int] = []
-    group = 0
-    accents_per_group: dict[int, int] = {}
-    for ch in word:
-        if _is_base_letter(ch):
-            group += 1
-        group_of.append(group)
-        if _is_accent(ch):
-            accents_per_group[group] = accents_per_group.get(group, 0) + 1
+    their codepoints, and maqaf / paseq / sof pasuq / puncta are emitted verbatim.
+    Prepositive accents are restored to the front of the mark sequence (see
+    `_PREPOSITIVE_MARKS`).
 
-    # Pass 2: build the ordered mark sequence and the skeleton of letters/maqaf,
-    # marking where marks go.  Prepositive accent marks are pulled to the front.
+    Two secondaries are dropped here.  (1) The non-first of a *repeated* telisha gedola
+    (M-C 44).  (2) A geresh-family sign (geresh / geresh muqdam / gershayim) in a word
+    that also carries a telisha gedola: in those five words -- Gen 5:29, Lev 10:4,
+    2 Kings 17:13, Ezek 48:10, Zeph 2:15 -- we keep the telisha gedola and drop the
+    geresh-family sign, whether the two sit on one letter (Gen 5:29, 2 Kings 17:13,
+    Zeph 2:15) or on different letters of the word (Lev 10:4, Ezek 48:10).
+
+    The reading treats the (prepositive) telisha gedola as analogous to the (prepositive)
+    geresh muqdam, and the geresh-family sign as analogous to the revia of revia mugrash:
+    a prepositive whose stress-helper is always written, even when -- the stress being
+    initial -- it is not needed.  (Manuscripts often DO drop that revia when the stress is
+    initial, but they cannot drop the geresh-family sign, because the word would then read
+    as a plain telisha gedola; whereas there is no such thing as a plain "geresh muqdam
+    word" -- geresh muqdam occurs only as part of a revia mugrash, even when the revia is
+    not shown.)  The analogy is a little inverted -- one wants the geresh-family sign to be
+    the analogue of geresh muqdam -- but the geresh-family sign is not prepositive, so it
+    is the telisha gedola that plays the geresh-muqdam role.  The geresh muqdam of
+    2 Kings 17:13 is itself the poetic-only sign the prose scanner would otherwise
+    normalize to geresh; here it is dropped first as the companion
+    (telg!geresh-muqdam -> telg!geresh -> telg).
+
+    Two other interpretations are equally grammatical (all five verses verified to parse
+    either way): we could just as easily have dropped the telisha gedola and retained the
+    geresh-family sign; or retained BOTH accents and read the same-letter pairs as a
+    telisha-gedola-then-gerstar sequence (the cross-word telisha-gedola -> geresh/gershayim
+    bigram occurs ~165x, so the sequence parses cleanly too).  We deliberately choose
+    neither -- in particular the sequential reading, though grammatical, is not the right
+    way to think of these words, even the two whose accents fall on different letters.
+    See doc/PLAN-same-letter-accent-pairs.md.
+    """
+    word_has_telg = am.TELISHA_GEDOLA in word
+
+    # Build the ordered mark sequence and the skeleton of letters/maqaf, marking where
+    # marks go.  Prepositive accent marks are pulled to the front.
     skeleton: list[str | None] = []  # str = literal char; None = "a mark slot here"
     prepos_marks: list[str] = []
     other_marks: list[str] = []
     telg_seen = 0
-    for i, ch in enumerate(word):
+    for ch in word:
         if _is_base_letter(ch):
             skeleton.append(am.LETTER)
             continue
@@ -111,18 +134,13 @@ def word_to_marks(word: str) -> str:
             continue
         mark: str | None = None
         if _is_accent(ch):
-            clustered = accents_per_group[group_of[i]] >= 2
             if ch == am.TELISHA_GEDOLA:
                 telg_seen += 1
-                # A telisha-gedola sharing its letter with another accent, or the
-                # non-first of a repeated pair, is the swallowed secondary (M-C 44).
-                if clustered or telg_seen > 1:
-                    continue
+                if telg_seen > 1:
+                    continue  # non-first of a repeated telisha gedola (M-C 44)
                 mark = am.TELISHA_GEDOLA
-            elif ch == am.GERSHAYIM and clustered:
-                # A gershayim sharing its letter with another accent is the swallowed
-                # secondary (M-C 12, the gn 5:29 / Zeph 2:15 double-prepositive anomaly).
-                continue
+            elif word_has_telg and ch in _GERESH_FAMILY:
+                continue  # stress-helper companion of the telisha gedola (see docstring)
             else:
                 mark = ch  # the accent codepoint is its own mark
         elif ch in _KEPT_NON_ACCENT:
