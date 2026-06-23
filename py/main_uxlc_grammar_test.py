@@ -5,12 +5,13 @@ For each grammar-relevant accent change (per uxlc_accent_changes.json) that is N
 linked to a Goerwitz oddball note and that lies in the PROSE corpus the checker
 can evaluate, we:
 
-  1. Fetch the real WLC 4.22 Michigan-Claremont (M-C) verse body from wlc422_ps.txt.
+  1. Transcode the real WLC 4.22 verse to its scanner-ready mark body from the
+     canonical `-kq-u` Unicode source (issue #9 retired wlc422_ps.txt).
   2. Locate the changed word (by the citation's word index).
   3. VALIDATE: synthesize the WLC reading of that word from `refuni` (Unicode token
-     names -> M-C accent codes) and confirm that scanning the synthesized word
-     yields the SAME token stream as scanning the real M-C word.  This certifies,
-     per case, that our name->code synthesis is faithful for this accent content
+     names -> accent marks) and confirm that scanning the synthesized word
+     yields the SAME token stream as scanning the real word.  This certifies,
+     per case, that our name->mark synthesis is faithful for this accent content
      (it auto-excludes stress-helper / ordering cases we can't reproduce).
   4. If validated, synthesize the UXLC reading from `changeuni`, splice it into the
      verse body, and re-run the existing scanner+grammar on both the original
