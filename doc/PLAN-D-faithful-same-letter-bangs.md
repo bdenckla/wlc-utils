@@ -1,8 +1,13 @@
 # Plan D: faithful same-letter bangs — stop swallowing the bang into a sequence
 
-**Status (2026-06-23):** new, not started — the **next plan to execute** (its sibling
-**Plan C** is **DONE/committed `d50e021`**; Plan B, the charities page, is best done last
-so it documents the settled state). Spun off from **Plan A**
+**Status (2026-06-23):** **DONE** — the sweep proved the worklist is a *single* poetic
+pair (ps56:10's `merkha+qadma`), now emitted as one order-less **`merkha!azla`** bang.
+Verified: `pytest` (128 pass, incl. 3 new bang tests), poetic regen diff is **one
+leaf-only line** (`merkha azla` → `merkha!azla` at ps56:10, skeleton unchanged, no new
+ERROR/NO_PARSE), and both cross-checks (`_mam_xcheck.txt` disjunctive oracle,
+`_servi_xcheck.txt` servant) regenerate **byte-identical**. Sibling **Plan C** is
+**DONE/committed `d50e021`**; Plan B, the charities page, is best done last so it
+documents the settled state. Spun off from **Plan A**
 (`doc/PLAN-A-same-letter-accent-pairs.md`), whose taxonomy and `!` convention this plan
 extends; sibling of **Plan C** (`doc/PLAN-C-poetic-swallowed-accents.md`). The two are the
 matched halves of one "stop silently flattening the text" discipline:
@@ -121,25 +126,73 @@ same-letter co-equal *sequence* in either genre is in scope.
   canonical spelling), and never flips again.
 - Cross-check the disjunctive oracle (`xcheck_poetic`) is unchanged.
 
-## Open questions
+## Open questions — RESOLVED
 
-- **Canonical bang spelling / ordering.** `merkha!azla` vs `azla!merkha`: storage order,
-  or a fixed accent precedence? Whatever the rule, it must be deterministic so the leaf
-  stops flipping. (ek20:31 is `mahapakh!azla` — is that storage order or a precedence we
-  should generalize?)
-- **Exact membership of "co-equal."** Both-conjunctive is clear; are there same-letter
-  two-*disjunctive* co-equal pairs (e.g. doubled tsinnor, Ps 17:14 — currently
-  "collapsed")? Decide whether collapse vs bang is right for those.
-- **Does Plan B want to show bangs?** Like Plan C's tsinnorit/shalshelet note: bangs are
+- **Canonical bang spelling / ordering — RESOLVED: lower-codepoint mark first, `!`-joined.**
+  The sweep attests `merkha+qadma` in exactly one storage order (merkha U+05A5 *then*
+  qadma U+05A8), which already coincides with both codepoint order and the prose
+  `mahapakh!azla` convention (mahapakh U+05A4 < qadma U+05A8) — so all three rules agree
+  and the leaf is `merkha!azla`. Per memory `parse-rate-not-a-goal`, only the **attested**
+  storage-order rule is added (`am.MERKHA + am.QADMA`); a reverse `azla!merkha` order
+  never occurs, so no second rule is invented.
+- **Exact membership of "co-equal" — RESOLVED empirically: no same-letter two-*disjunctive*
+  pair exists.** The sweep's only doubled-divider candidate, Ps 17:14's tsinnor+tsinnor,
+  is **cross-letter** (two consecutive TSINNOR tokens, handled by
+  `collapse_repeated_sinnor`), not same-letter — so the collapse-vs-bang question never
+  arises on one letter. Every same-letter two-accent cluster in the corpus is one of:
+  revia-mugrash (idiom), munah+dehi (not co-equal — disjunctive+conjunctive), telg
+  companions (drop), the lv25:20 illegal below-pair (unlexical), the ek20:31 /ps56:10
+  co-equal conjunctive bangs, or the ps124:4 geresh charity.
+- **Does Plan B want to show bangs? — handed to Plan B (still open there).** Bangs are
   **not charities** (they hide nothing — they *stop* hiding the co-equality), but they are
   part of the same "faithful representation" story; the charities page may want a sibling
-  section.
+  section noting both `mahapakh!azla` (prose) and `merkha!azla` (poetic).
+
+## The single worklist case (full sweep result)
+
+The same-letter two-accent sweep (both genres, raw `-kq-u`, decalogues/Gn35:22 excluded)
+found these clusters; only one is an in-scope Plan D bang:
+
+| pair (storage order) | count / genre | classification | action |
+|---|---|---|---|
+| geresh-muqdam + revia | 241 poetic | idiom (revia mugrash); geresh-muqdam prepositive | drop (already fused) |
+| munah + dehi | 2 poetic | not co-equal (conj + disjunctive); dehi prepositive | sequence (unchanged) |
+| telg + gershayim / + geresh-muqdam | 3 prose | drop-class telg companion | drop (uni_to_marks) |
+| mahapakh + qadma | 1 prose (ek20:31) | co-equal under duress | **already `mahapakh!azla`** |
+| mahapakh + tipeha | 1 prose (lv25:20) | unlexical (two below-accents) | Plan A `illegal_below_pairs` |
+| revia + geresh | 1 poetic (ps124:4) | same-letter geresh charity | Plan A `REVIA+GERESH→revia mugrash` |
+| **merkha + qadma** | **1 poetic (ps56:10)** | **two co-equal conjunctives** | **→ `merkha!azla` (this plan)** |
+
+No single letter carries more than two accents (re-confirms Plan A's corpus-wide claim).
+
+## What landed (2026-06-23)
+
+All in `py/accgram/`:
+- **token** `pan.MERKHA_AZLA` (leaf `merkha!azla`) in `poetic_accent_names.py`.
+- **scanner** one fusion rule `am.MERKHA + am.QADMA → MERKHA_AZLA` in
+  `ply_scanner_poetic._POETIC_GG_RULES`, above the bare MERKHA / AZLA rules
+  (longest-match; adjacency = same-letter), plus its `_LEAF` entry.
+- **grammar** `MERKHA_AZLA` added to the `tokens` tuple and the `p_conj` terminal list in
+  `ply_grammar_poetic.py` — absorbed by the permissive servus chain, so the disjunctive
+  skeleton is untouched.
+- **servant cross-check** `servi_xcheck._METSUNNAR_BASE` generalized to
+  `_FUSED_SERVANT_BASE`, adding `MERKHA_AZLA → AZLA` (the storage-last servant the pair
+  presented before fusion) so a bang adjacent to a divider reads as its old sequence's
+  adjacent servant. **Zero live customers** (ps56:10's bang is not adjacent to any target
+  — a munah sits between it and the dexi), so `_servi_xcheck.txt` is byte-identical; the
+  entry future-proofs the byte-identical guarantee.
+- **tests** `test_same_letter_merkha_azla_fuses_to_bang` +
+  `test_cross_letter_merkha_then_azla_stays_a_sequence`
+  (`test_ply_scanner_poetic.py`) and `test_conj_absorbs_merkha_azla_bang`
+  (`test_ply_poetic_grammar.py`).
 
 ## Remaining work
 
-1. Run the same-letter two-accent sweep (both genres); produce the attested co-equal-pair
-   worklist.
-2. Decide the canonical bang spelling.
-3. Add scanner fusion rules + grammar terminals for each attested pair.
-4. Verify (pytest + dual corpus regen + xcheck); confirm verdict-neutral, leaf-only diff.
-5. Update Plan A's `fuse`-row examples; hand the "we now represent bangs" note to Plan B.
+1. ~~Run the same-letter two-accent sweep (both genres); produce the worklist.~~ **DONE**
+   (table above; the single in-scope pair is ps56:10).
+2. ~~Decide the canonical bang spelling.~~ **DONE** (`merkha!azla`, lower-codepoint-first).
+3. ~~Add scanner fusion rule + grammar terminal.~~ **DONE** (`MERKHA_AZLA`).
+4. ~~Verify (pytest + regen + xcheck); verdict-neutral, leaf-only diff.~~ **DONE**
+   (128 pass; one-line leaf diff; both cross-checks byte-identical).
+5. ~~Update Plan A's `fuse`-row examples~~ **DONE**; hand the "we now represent bangs"
+   note to **Plan B** (still open — Plan B).

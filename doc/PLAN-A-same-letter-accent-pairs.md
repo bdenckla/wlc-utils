@@ -29,7 +29,7 @@ to each other*, not by a per-pair enumeration. Five readings:
 | reading | when | mechanism | examples |
 |---|---|---|---|
 | **sequence** *(default)* | two ordinary accents adjacent; one prepositive/postpositive, or just neighbors | tokenize each in source order; **normalize order only within a letter** (never across letters) | munaḥ+deḥi (poetic); most same-letter pairs |
-| **fuse (`!`)** | co-equal accents, **no natural order**, under duress | one `a!b` token | `mahapakh!azla` (ek20:31) |
+| **fuse (`!`)** | co-equal accents, **no natural order** (the under-duress gate is **lifted for same-letter pairs by Plan D**) | one `a!b` token | `mahapakh!azla` (ek20:31, prose); `merkha!azla` (ps56:10, poetic) |
 | **idiom** | an established compound accent | one named token | revia-mugrash, oleh-we-yored, methiga-zaqef |
 | **drop** | a redundant companion of a prepositive/postpositive | drop the secondary | telg + geresh/gershayim → telg |
 | **unlexical** | a positionally/grammatically **impossible** combination | alphabet-error post-pass (`lexical_validation`), *before* the grammar | `mahapakh!tipexa` (lv25:20) |
@@ -74,7 +74,9 @@ a reorderable sequence. Plan A does **not** do that here: bangs are gated to the
 duress* case (a grammar-forced decision, like prose ek20:31), and poetic conjunctives are
 never under duress. Dropping that gate — making the bang a faithfulness device for *all*
 same-letter co-equal conjunctive pairs — is spun off as **Plan D**
-(`doc/PLAN-D-faithful-same-letter-bangs.md`).
+(`doc/PLAN-D-faithful-same-letter-bangs.md`), **now DONE** (`merkha!azla` at ps56:10; the
+sweep confirmed it is the *only* such pair in either genre beyond the already-fused
+ek20:31).
 
 The only poetic same-letter pairs that *can* matter touch the **disjunctive** skeleton:
 revia-mugrash (lexicalized), ps124:4 (geresh+revia — **charitable promotion** to
@@ -283,9 +285,12 @@ first runs `poetic_reconcile.reconcile_tokens` then
    qetannah) **and now also the catch-all stray-accent fail-fast guard** (geresh's charity
    already landed here; the fail-fast representation is built there, alongside the
    explicit-swallow conversions, as the unified poetic "stop swallowing" pass).
-5. **Plan D** owns the "stop swallowing *bangs*" goal — representing same-letter co-equal
+5. ~~**Plan D** owns the "stop swallowing *bangs*" goal — representing same-letter co-equal
    conjunctive pairs (ps56:10's merkha+qadma, etc.) as one `!` token rather than a
-   reorderable sequence. See `doc/PLAN-D-faithful-same-letter-bangs.md`.
+   reorderable sequence.~~ **DONE** — the sweep found ps56:10's `merkha+qadma` is the
+   *sole* in-scope pair (everything else is idiom / drop / prepositive-neighbor /
+   unlexical / already-fused), now emitted as one `merkha!azla` bang. See
+   `doc/PLAN-D-faithful-same-letter-bangs.md`.
 
 > **Side note from the regen (the seed of Plan D):** regenerating the poetic corpus
 > surfaced a **pre-existing stale output** at **Psalms 56:10** — current HEAD code emits
