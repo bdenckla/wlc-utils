@@ -2,12 +2,12 @@ r"""Extract the ordered POETIC *disjunctive* sequence from MAM-simple verses.
 
 This is the cross-check oracle for the poetic scanner+grammar (Phase 2 of
 ``doc/PLAN-poetic-accent-grammar.md``).  The WLC poetic scanner
-(``accgram.ply_scanner_poetic``) reads Michigan-Claremont accent *codes*; MAM-simple
+(``accgram.ply_scanner_poetic``) matches over a Unicode accent-mark alphabet; MAM-simple
 stores fully-pointed Unicode Hebrew with combining accent marks.  To confirm the
 trees' segmentation is correct -- not merely parseable -- we reduce each side to its
 ordered list of disjunctive accents (the division points) and diff those.  Servus
-(conjunctive) signs are deliberately dropped: MAM and L often choose different
-conjunctive *signs* for the same slot (e.g. L codes the oleh-we-yored servus as
+(conjunctive) signs are deliberately dropped: MAM and the LC often choose different
+conjunctive *signs* for the same slot (e.g. the LC codes the oleh-weyored servus as
 galgal/yeraḥ-ben-yomo while MAM writes atnaḥ-hafukh), and Yeivin pins no exact
 servus chains, so only the disjunctive skeleton is a meaningful equality check.
 
@@ -15,9 +15,9 @@ Disjunctive markers, MAM Unicode accent -> poetic token (same vocabulary the
 scanner emits):
 
   ETNAHTA (U+0591)        -> ATNAX
-  OLE (U+05AB)            -> OLEH_WEYORED  (its yored merka is folded in, as in L)
+  OLE (U+05AB)            -> OLEH_WEYORED  (its yored merkha is folded in, as in the LC)
   GERESH MUQDAM (U+059D)  -> REVIA_MUGRASH (MAM always writes the revia dot too,
-                            even where L omits it under the geresh muqdam -- the
+                            even where the LC omits it under the geresh muqdam -- the
                             geresh muqdam alone is the reliable marker)
   REVIA (U+0597) alone    -> REVIA (generic; reclassified gadol/qatan/mugrash by
                             position, exactly as the scanner's second pass)
@@ -32,18 +32,21 @@ scanner emits):
                             SHALSHELET_GEDOLAH
   SOF PASUQ (U+05C3)      -> SILLUQ (the final word's meteg; verse end)
 
-Other accents (munaḥ, merka, mahapakh, qadma/azla, illuy, tipeḥa/tarḥa, galgal,
-atnaḥ-hafukh, zarqa=tsinnorit, telisha, plain meteg/ga'ya, plain paseq) are servi
-or secondary marks and contribute no disjunctive.
+Every other mark a poetic word can carry contributes no disjunctive to this
+skeleton: the conjunctive accents (servi) -- munaḥ, merkha, mahapakh, azla,
+illuy, tarḥa, galgal, atnaḥ-hafukh -- and the non-accent marks meteg
+and narrow-sense paseq.  (Narrow-sense paseq -- paseq as distinct from
+legarmeh -- is the residual ``lp-paseq`` node; the legarmeh-forming paseq is the
+``lp-legarmeih`` node resolved above.)
 
 The *servant* of a disjunctive -- the conjunctive sign on the word immediately
 preceding it -- IS extractable, via ``servi_before_from_verse_node`` /
 ``load_servi_before``.  That is the second-witness oracle for vetting servant-
 ADJACENCY rules (e.g. Breuer's "the servant next to [deḥi] is [munaḥ]"): MAM's servant
 *choice* per slot is read in the scanner's own servus vocabulary and compared
-word-for-word against L.  (The disjunctive cross-check above is silent on servi;
-this fills that gap.  The munaḥ/merka *selection within* a slot is phonological and
-still out of a token grammar's scope -- the oracle tells you what L and MAM actually
+word-for-word against the LC.  (The disjunctive cross-check above is silent on servi;
+this fills that gap.  The munaḥ/merkha *selection within* a slot is phonological and
+still out of a token grammar's scope -- the oracle tells you what the LC and MAM actually
 do, not why.)
 """
 
@@ -91,7 +94,7 @@ _Event = tuple[str, str | None, str | None, str | None, str | None]
 # MAM Unicode accent -> intermediate disjunctive marker (REVIA / SHALSHELET stay
 # provisional; resolved in the second pass).  Checked in this priority order so
 # composite words resolve correctly (geresh muqdam + revia -> mugrash; ole +
-# merka -> oleh-we-yored).
+# merkha -> oleh-weyored).
 _DISJ_PRIORITY: list[tuple[str, str]] = [
     (ha.OLE, pan.OLEH_WEYORED),
     (ha.GER_M, pan.REVIA_MUGRASH),
@@ -104,9 +107,9 @@ _DISJ_PRIORITY: list[tuple[str, str]] = [
 ]
 
 # MAM Unicode conjunctive sign -> poetic servus token (poetic_accent_names, the same
-# vocabulary the L scanner emits), so servant choices compare apples-to-apples across
-# the two witnesses.  The oleh-we-yored servus is written atnaḥ-hafukh (U+05A2) in MAM
-# but coded galgal in L (see the disjunctive note above); it is normalized to GALGAL
+# vocabulary the scanner emits), so servant choices compare apples-to-apples across
+# the two witnesses.  The oleh-weyored servus is written atnaḥ-hafukh (U+05A2) in MAM
+# but coded galgal in the LC (see the disjunctive note above); it is normalized to GALGAL
 # so the same structural slot matches.  Priority only disambiguates a word carrying
 # more than one conjunctive mark (rare) -- the first match wins.
 _SERVUS_SIGNS: list[tuple[str, str]] = [
@@ -115,9 +118,9 @@ _SERVUS_SIGNS: list[tuple[str, str]] = [
     (ha.MAH, pan.MAHAPAKH),
     (ha.QOM, pan.AZLA),      # qadma = azla (the conjunctive)
     (ha.YBY, pan.GALGAL),    # yeraḥ-ben-yomo = galgal
-    (ha.ATN_H, pan.GALGAL),  # atnaḥ-hafukh: MAM's oleh-we-yored servus (L codes galgal)
+    (ha.ATN_H, pan.GALGAL),  # atnaḥ-hafukh: MAM's oleh-weyored servus (the LC codes galgal)
     (ha.ILU, pan.ILLUY),
-    (ha.TIP, pan.TARXA),     # tipeḥa sign = the poetic tarḥa servant
+    (ha.TIP, pan.TARXA),     # U+0596 (tipeḥa in prose) is the poetic tarḥa servant
 ]
 
 # Node types whose subtree carries no cantillated text for our purposes.
@@ -160,10 +163,10 @@ def _word_self_servus(accents: str, marker_char: str) -> str | None:
     """The conjunctive servus on the SAME word, standing before the disjunctive mark.
 
     A long word can host its own servant: e.g. a yeraḥ-ben-yomo (galgal) and a pazer on
-    one word -- the galgal is pazer's adjacent servant, exactly as the L scanner emits it
+    one word -- the galgal is pazer's adjacent servant, exactly as the scanner emits it
     as a token right before the pazer.  Returns the servus sign closest before the
     disjunctive mark, or None.  Order matters here (not mere membership): a conjunctive
-    AFTER the disjunctive mark -- e.g. the yored merka of an oleh-we-yored -- is part of
+    AFTER the disjunctive mark -- e.g. the yored merkha of an oleh-weyored -- is part of
     the divider, not a preceding servant, so it must not be picked up.
     """
     disj_idx = accents.find(marker_char)
@@ -207,9 +210,9 @@ def _emit_word_events(text: str, events: list[_Event]) -> None:
         if marker is None:
             events.append(("WORD", None, _word_servus(word), None, cons))
         else:
-            # Oleh-we-yored is a two-mark sign (ole + a yored merka); MAM sometimes
-            # encodes the yored merka BEFORE the ole, so it would masquerade as a
-            # same-word servant.  It is part of the divider, and oleh-we-yored's true
+            # Oleh-weyored is a two-mark sign (ole + a yored merkha); MAM sometimes
+            # encodes the yored merkha BEFORE the ole, so it would masquerade as a
+            # same-word servant.  It is part of the divider, and oleh-weyored's true
             # servant always sits on the preceding word, so it has no self_servus.
             self_servus = (
                 None if marker == pan.OLEH_WEYORED else _word_self_servus(word, marker_char)
@@ -308,7 +311,7 @@ def _build_word_accents(events: list[_Event]) -> list[list[str | None]]:
                 words[last_word_index][0] = pan.LEGARMEH
             # else: an lp-legarmeih after a real disjunctive -- leave it alone.
         elif kind == "LP_PASEQ":
-            # A plain paseq promotes a preceding shalshelet to gedolah, but does not
+            # A narrow-sense paseq promotes a preceding shalshelet to gedolah, but does not
             # by itself create a legarmeh.
             if last_word_index is not None and words[last_word_index][0] == pan.SHALSHELET:
                 words[last_word_index][0] = pan.SHALSHELET_GEDOLAH
@@ -338,7 +341,7 @@ def word_accents_from_verse_node(
     """Per-word ``(disjunctive, servus, self_servus)`` for a MAM-simple verse, in order.
 
     A divider word lists its disjunctive (and, if its own word also bears a conjunctive
-    before that divider, a self_servus); a conjunctive word lists its servus in the L
+    before that divider, a self_servus); a conjunctive word lists its servus in the
     scanner's vocabulary; a word with neither (proclitic / meteg-only) is
     ``(None, None, None)``.  At most one of ``disjunctive``/``servus`` is non-None.  The
     final word is ``(SILLUQ, None, None)``.
@@ -380,7 +383,7 @@ def servi_before_in_words(
     verse's word-accents (e.g. from ``load_word_accents``) need not re-walk it.  One
     entry per occurrence of ``target``, in order.  The adjacent servant is the target
     word's own ``self_servus`` when present (a same-word conjunctive standing before the
-    divider, e.g. galgal before pazer -- matching how the L scanner emits it as the token
+    divider, e.g. galgal before pazer -- matching how the scanner emits it as the token
     right before the disjunctive); otherwise the preceding word's servus, or ``None`` when
     there is none (verse-initial, or the preceding word is itself a divider -- a bare
     ``target``).
@@ -402,7 +405,7 @@ def servi_before_from_verse_node(verse_node: dict, target: str) -> list[str | No
     """Servus on the word immediately before each occurrence of ``target`` disjunctive.
 
     ``target`` is a poetic disjunctive token name (e.g. ``pan.DEXI``).  This is the MAM
-    side of a servant-adjacency check; the L side is the servus that stands right before
+    side of a servant-adjacency check; the LC side is the servus that stands right before
     the same ``target`` in ``ply_scanner_poetic``'s token stream.
     """
     return servi_before_in_words(word_accents_from_verse_node(verse_node), target)
@@ -513,7 +516,7 @@ def load_servi_before(
     the list returned by ``servi_before_from_verse_node`` -- one servus token (or None
     = bare/verse-initial) per occurrence of ``target`` in that verse.  Verses with no
     ``target`` map to an empty list.  This is the second-witness oracle for vetting
-    Breuer's servant-adjacency rules against MAM; compare to the L servus that
+    Breuer's servant-adjacency rules against MAM; compare to the LC servus that
     precedes the same ``target`` in ``ply_scanner_poetic``'s token stream.
     """
     return {

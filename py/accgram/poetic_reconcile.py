@@ -6,12 +6,12 @@ codes alone.  Two distinctions are simply not *in* that encoding, so the scanner
 makes a blanket guess that this module corrects before the grammar sees the tokens:
 
 1. **legarmeh vs paseq.**  A conjunctive (azla 63 / mahapakh 70) followed by a paseq
-   (05) is written identically whether it is a legarmeh (a disjunctive) or a plain
-   paseq (the conjunctive stays a servus and the bar is a bare pause).  The scanner
+   (05) is written identically whether it is a legarmeh (a disjunctive) or a
+   narrow-sense paseq (the conjunctive stays a servus and the bar is a bare pause).  The scanner
    emits ``LEGARMEH`` for *every* such sequence.  MAM-simple, by contrast, encodes the
    distinction structurally (``lp-legarmeih`` vs ``lp-paseq`` nodes), so we treat MAM
-   as the oracle: where MAM reads a plain paseq we demote the scanner's ``LEGARMEH``
-   back to its underlying conjunctive servus (the paseq is then swallowed, as a bare
+   as the oracle: where MAM reads a narrow-sense paseq we demote the scanner's ``LEGARMEH``
+   back to its underlying conjunctive servus (the paseq is then swallowed, as such a
    paseq always is).  This is the poetic counterpart of the prose scanner's
    has_legarmeh rule+exception list, but data-driven from MAM rather than hardcoded.
    (A future project, gh issue, may replace the MAM oracle with a poetic rule that

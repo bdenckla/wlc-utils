@@ -2,7 +2,7 @@
 
 Two corrections the M-C source cannot express, applied before the grammar parses:
 
-  1. legarmeh-vs-paseq: a scanner LEGARMEH MAM reads as a plain paseq is demoted to
+  1. legarmeh-vs-paseq: a scanner LEGARMEH MAM reads as a narrow-sense paseq is demoted to
      its underlying conjunctive servus (azla 63 / mahapakh 70), the paseq swallowed.
   2. the unmarked oleh-we-yored (Yeivin #363): a charitable, parse-driven pass reads
      one ambiguous merka as a yored iff that uniquely makes the verse parse.
@@ -41,7 +41,7 @@ def test_underlying_servi_reads_the_conjunctive_under_each_legarmeh():
 
 
 def test_demote_when_mam_reads_no_legarmeh():
-    # One mahapakh-legarmeh word; MAM reads no disjunctive there (a plain paseq).
+    # One mahapakh-legarmeh word; MAM reads no disjunctive there (a narrow-sense paseq).
     tokens = [(pan.TILDE, ""), (pan.LEGARMEH, "legarmeh"), (pan.SOFPASUQ, "sof pasuq")]
     out = pr._demote_mam_paseq(mc_to_marks("YO70WM05"), tokens, mam_disjunctives=[])
     # The legarmeh becomes its underlying mahapakh servus; the paseq is dropped.
