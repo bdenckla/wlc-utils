@@ -55,6 +55,16 @@ _TOKEN_ABBREV.update(_TOKEN_ABBREV_OVERRIDES)
 _TOKEN_ABBREV["legarmeh"] = "lgm"
 
 
+def _abbreviate_acc_token(token: str) -> str | None:
+    """Abbreviate one accent token, handling `!`-fused unitary tokens such as
+    "mahapakh!azla" -> "mah!qom". Returns None if any `!`-separated part is
+    not a known accent token."""
+    parts = token.split("!")
+    if all(part in _TOKEN_ABBREV for part in parts):
+        return "!".join(_TOKEN_ABBREV[part] for part in parts)
+    return None
+
+
 def abbreviate_branch_label(label: str) -> str:
     base_label = label.strip()
     suffix = ""
@@ -66,10 +76,14 @@ def abbreviate_branch_label(label: str) -> str:
         suffix = "p"
 
     tokens = [token for token in base_label.split("_") if token]
-    if tokens and all(token in _TOKEN_ABBREV for token in tokens):
-        short_base = "".join(_TOKEN_ABBREV[token] for token in tokens)
+    abbrevs = [_abbreviate_acc_token(token) for token in tokens]
+    if tokens and all(abbrev is not None for abbrev in abbrevs):
+        short_base = "".join(abbrevs)
     elif tokens:
-        short_base = "_".join(_TOKEN_ABBREV.get(token, token) for token in tokens)
+        short_base = "_".join(
+            abbrev if abbrev is not None else token
+            for abbrev, token in zip(abbrevs, tokens)
+        )
     else:
         short_base = base_label
 
@@ -85,4 +99,4 @@ def abbreviate_leaf_text(text: str) -> str:
     if not tokens:
         return stripped
 
-    return " ".join(_TOKEN_ABBREV.get(token, token) for token in tokens)
+    return " ".join(_abbreviate_acc_token(token) or token for token in tokens)
