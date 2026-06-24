@@ -6,8 +6,9 @@ cleanly; the residual splits into two documented oddball kinds:
   * ``missing_silluq`` -- the 13 verses whose sof pasuq arrives with no silluq
     code, recovered by the grammar into an ERROR-leaf tree (structure preserved,
     the silluq_phrase mark is ``ERROR``).
-  * ``no_parse`` -- the 1 hierarchy-violating L anomaly (Job 31:15) for which no
-    valid tree exists; emitted as a ``NO_PARSE`` token line by the driver.  (Ps
+  * ``no_parse`` -- the 1 NO_PARSE L anomaly (Job 31:15) for which no valid tree
+    exists (the disjunctive hierarchy is violated or a token is lexically
+    illicit); emitted as a ``NO_PARSE`` token line by the driver.  (Ps
     17:14's double tsinnor was a second such case until the parser began accepting
     a repeated divider as one; see ply_grammar_poetic.parse_tokens_accepting_repeats
     and gh-pages/accgram/ps17v14-double-tsinnor.html.)
@@ -308,7 +309,8 @@ def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, 
         "payload_provenance_note": (
             "Each row is a poetic verse the PLY port could not parse cleanly: either "
             "a missing-silluq verse recovered into an ERROR-leaf tree "
-            f"('{KIND_MISSING_SILLUQ}') or a hierarchy-violating L anomaly emitted as "
+            f"('{KIND_MISSING_SILLUQ}') or a structural L anomaly -- the disjunctive "
+            "hierarchy is violated or a token is lexically illicit -- emitted as "
             f"a NO_PARSE line ('{KIND_NO_PARSE}'). wlc_disjunctives is the scanner's "
             "disjunctive skeleton; mam_disjunctives is the MAM-simple oracle's, for "
             "comparison. For a NO_PARSE verse, stall names the offending accent (its "
@@ -345,7 +347,7 @@ _COUNT_CLASS = "gf-opt-count"
 
 _KIND_LABEL = {
     KIND_MISSING_SILLUQ: "Missing silluq (ERROR-leaf recovery)",
-    KIND_NO_PARSE: "NO_PARSE (hierarchy-violating L anomaly)",
+    KIND_NO_PARSE: "NO_PARSE (L anomaly — no valid tree exists)",
 }
 
 # Short labels for the kind filter checkboxes (the headings use _KIND_LABEL).
@@ -424,9 +426,11 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
             (
                 "“missing silluq,” where the sof pasuq arrives with no silluq, "
                 "recovered into an ERROR-leaf tree (structure preserved).",
-                "“NO_PARSE,” a hierarchy-violating L anomaly for which no valid "
-                "tree exists; the offending accent (where the parse dead-ended) is "
-                "marked “← stalled here” in its tree and named in the meta line.",
+                "“NO_PARSE,” a structural L anomaly for which no valid tree exists "
+                "— whether the disjunctive hierarchy is violated or a token is "
+                "lexically illicit; the offending accent (where the parse "
+                "dead-ended) is marked “← stalled here” in its tree and named in "
+                "the meta line.",
             )
         ),
         wlc_utils_html.para(
