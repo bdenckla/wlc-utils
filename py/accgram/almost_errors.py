@@ -430,7 +430,7 @@ def _intro() -> tuple[object, ...]:
                 "Second, the ",
                 H.bold("masoretically-blessed oddities"),
                 ": features that look error-like — two cantillation accents crowding"
-                " one letter or one word, or a stress-helper riding a disjunctive — but"
+                " one letter or one word — but"
                 " that are 100% official masoretic tradition, attested in the standard"
                 " witnesses, ",
                 H.bold("not"),
@@ -634,7 +634,7 @@ def _oddities_intro() -> tuple[object, ...]:
         H.heading_level_2("Masoretically-blessed oddities (not charities)"),
         H.para(
             "The features below would make a naïve checker blink — two accents sharing"
-            " one letter or one word, or a stress-helper fused onto a disjunctive — but"
+            " one letter or one word — but"
             " none of them is a quirk of LC, BHS, or WLC to be forgiven. They are"
             " official masoretic tradition, attested in the standard witnesses. The"
             " checker accepts them; its only real decision is one of representation —"
