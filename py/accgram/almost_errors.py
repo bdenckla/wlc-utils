@@ -522,7 +522,7 @@ def _ps124_section() -> tuple[object, ...]:
                 "This within-letter order normalization is licit precisely because it"
                 " stays within a single letter — we are liberal about mark order on one"
                 " letter (questionable penmanship is not our concern) but preserve order"
-                " across letters, which is meaningful reading order. Cite ",
+                " across letters, which is meaningful reading order. See the ",
                 _link(
                     "tanach.us Psalms 124:4 note",
                     "https://tanach.us/Notes/Psalms/Psalms.124.4.4-c.html",
