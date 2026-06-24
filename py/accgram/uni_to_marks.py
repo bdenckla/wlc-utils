@@ -118,7 +118,8 @@ def word_to_marks(word: str) -> str:
     bigram occurs ~165x, so the sequence parses cleanly too).  We deliberately choose
     neither -- in particular the sequential reading, though grammatical, is not the right
     way to think of these words, even the two whose accents fall on different letters.
-    See doc/PLAN-A-same-letter-accent-pairs.md.
+    See the telisha-gedola section of gh-pages/accgram/almost-errors.html (generator:
+    accgram/almost_errors.py), which shows the parse trees of all three readings.
     """
     word_has_telg = am.TELISHA_GEDOLA in word
 

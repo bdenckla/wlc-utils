@@ -1,7 +1,6 @@
 """Generate gh-pages/accgram/almost-errors.html -- the "almost errors" page.
 
-This is the page Plan B (``doc/PLAN-B-editorial-charities-page.md``) calls for,
-with the scope expansion Plan B/A discuss: it documents, in one place, both
+It documents, in one place, both
 
   * the **editorial charities** -- places where the accgram checkers silently
     *normalize away* a quirk of WLC (sometimes a genuine Leningrad feature,
@@ -19,8 +18,8 @@ those choices visible (with, for the telisha-gedola + geresh family, the parse
 trees of the readings we did **not** choose).
 
 The page is **generated** rather than hand-authored for one reason: the alternate-
-reading parse trees in the telisha-gedola exhibit, and the live trees for ek20:31
-and lv25:20, are produced from the actual grammar at build time (a mode-aware copy
+reading parse trees in the telisha-gedola exhibit, and the live tree for ek20:31,
+are produced from the actual grammar at build time (a mode-aware copy
 of ``uni_to_marks.word_to_marks`` drives the three alternate telg readings), so they
 can never drift from the checker's real behaviour. It shares goerwitz.html's
 stylesheet + width-limited shell and the shared error-tree table renderer
