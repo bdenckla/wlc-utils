@@ -102,6 +102,23 @@ def test_ek2031_tree_fuses_mahapakh_azla() -> None:
     assert "ERROR" not in text
 
 
+def test_ek2031_verdict_table_only_fused_and_azla_mah_parse() -> None:
+    # The five readings of ek20:31's mahapakh + qadma pair: only the fused token and the
+    # qadma/azla-then-mahapakh sequence parse (the grammar's pashta_phrase has rules for
+    # MAHAPAKHAZLA and the cross-letter AZLA MAHAPAKH pair, but not for a bare mahapakh, a
+    # bare azla, or a mahapakh-then-azla order).
+    index = _load_index_or_skip()
+    parser, has_legarmeh = build_parser(), HasLegarmeh()
+    verdicts = {
+        mode: ae._ek_verdict_for(mode, index, parser, has_legarmeh)
+        for mode, _label in ae._EK_MODES
+    }
+    assert verdicts["fused"] == "clean", verdicts
+    assert verdicts["seq_azla_mah"] == "clean", verdicts
+    for mode in ("drop_azla", "drop_mahapakh", "seq_mah_azla"):
+        assert verdicts[mode] != "clean", verdicts
+
+
 def test_lv2520_tree_is_illegal_mark() -> None:
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()

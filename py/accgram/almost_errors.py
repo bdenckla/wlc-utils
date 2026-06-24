@@ -36,10 +36,12 @@ import contextlib
 from pathlib import Path
 
 from accgram import accent_marks as am
+from accgram import ply_scanner
 from accgram import ob_error_context
 from accgram import ob_tree_table
 from accgram import rtms_data
 from accgram import rtms_report
+from accgram import rtmsr_media
 from accgram import run_ply
 from accgram import uni_to_marks
 from accgram import lexical_validation
@@ -82,20 +84,34 @@ _TELG_MODES = (
     ("keep_both", "keep both, as a telisha gedola then a geresh phrase"),
 )
 
+# The five ways to hand ek20:31's mahapakh + qadma pair to the grammar: the fused token
+# the checker actually emits, plus the four alternatives (drop one mark, or keep both as
+# a sequence in either order).  Only two parse cleanly -- the fused token and the
+# qadma-then-mahapakh sequence -- because the grammar's pashta_phrase has rules for
+# both MAHAPAKHAZLA and the cross-letter AZLA MAHAPAKH pair, but none for a bare mahapakh,
+# a bare azla, or a mahapakh-then-azla order.  The verdict table makes that visible.
+_EK_MODES = (
+    ("fused", "fuse into one mahapakh!azla token (what the checker does)"),
+    ("drop_azla", "keep the mahapakh, drop the qadma"),
+    ("drop_mahapakh", "keep the qadma, drop the mahapakh"),
+    ("seq_azla_mah", "keep both, as a qadma then mahapakh sequence"),
+    ("seq_mah_azla", "keep both, as a mahapakh then qadma sequence"),
+)
+
 # MAM's documentation note on ek20:31 (from MAM-parsed-plus / MAM-with-doc), the
 # witness that ek20:31's double-marking is standard masoretic tradition, not an L
 # anomaly.  Quoted (Hebrew) and paraphrased (English) on the page.
 _EK2031_MAM_NOTE_HE = (
     "זאת התיבה היחידה בכל המקרא שיש בה שני טעמים מחברים בהברה אחת."
     " הקדמא קודמת למהפך בקריאה, כמו בעוד שש מקומות במקרא (שבהם הקדמא"
-    " במקום הראוי לגעיה והמהפך בהברת הטעם), כגון: ויקרא כה,מו; במדבר כא,א."
+    " במקום הראוי לגעיה והמהפך בהברת הטעם), כגון: ויקרא כה,מו; במדבר [כ,א]."
 )
 
 # The six places (besides ek20:31) where a qadma sits in a syllable fit for a ga'ya and
 # a mahapakh on the stressed syllable -- the pattern the MAM note above invokes.  The note
 # names only the first two as examples (and miscites Num 20:1 as "21:1"); the other four
-# are flagged ``bracketed`` so the page can mark them as our additions, not the note's.
-# (bb, chnu, vrnu, display, bracketed)
+# are flagged ``supplied`` so the page can list them separately as our additions, not the
+# note's.  (bb, chnu, vrnu, display, supplied)
 _QADMA_GAYA_REFS = (
     ("lv", 25, 46, "Lev. 25:46", False),
     ("nu", 20, 1, "Num. 20:1", False),
@@ -219,6 +235,91 @@ def _prose_verse_tree_text(bcv: str, index, parser, has_legarmeh: HasLegarmeh) -
     return _tree_text(_scan_and_parse(bcv, body, parser, has_legarmeh))
 
 
+def _ek2031_word_variant(word: str, mode: str, base) -> str:
+    """``uni_to_marks.word_to_marks``, but for ek20:31's ``נִטְמְאִ֤֨ים`` (the one word
+    carrying BOTH a mahapakh and a qadma on a single letter) apply ``mode`` -- one of the
+    four alternatives to the fused reading (drop one mark, or keep both as a sequence in
+    either order).  ``base`` is the real (pre-swap) ``word_to_marks``, used unchanged for
+    ``fused`` and for every word not carrying both marks.
+
+    For ``fused`` (and any non-matching word) the scanner fuses the pair as it normally
+    would.  The two ``seq_*`` modes only set the mark *order*; ``seq_mah_azla`` still
+    scans as the fused token unless the caller also suppresses the fuse rule (see
+    ``_no_mahapakh_azla_fuse``)."""
+    both = am.MAHAPAKH in word and am.QADMA in word
+    if mode == "fused" or not both:
+        return base(word)
+    skeleton: list[str | None] = []
+    prepos: list[str] = []
+    other: list[str] = []
+    for ch in word:
+        if _is_base_letter(ch):
+            skeleton.append(am.LETTER)
+            continue
+        if ch == _MAQAF:
+            skeleton.append(am.MAQAF)
+            continue
+        mark: str | None = None
+        if ch == am.MAHAPAKH:
+            if mode == "drop_mahapakh":
+                continue
+            mark = am.MAHAPAKH
+        elif ch == am.QADMA:
+            if mode == "drop_azla":
+                continue
+            mark = am.QADMA
+        elif _is_accent(ch):
+            mark = ch
+        elif ch in _KEPT_NON_ACCENT:
+            mark = ch
+        if mark is None:
+            continue
+        skeleton.append(None)
+        (prepos if mark in _PREPOSITIVE_MARKS else other).append(mark)
+    if mode in ("seq_azla_mah", "seq_mah_azla"):
+        mah_i, qad_i = other.index(am.MAHAPAKH), other.index(am.QADMA)
+        want_qadma_first = mode == "seq_azla_mah"
+        if (qad_i < mah_i) != want_qadma_first:
+            other[mah_i], other[qad_i] = other[qad_i], other[mah_i]
+    marks = iter(prepos + other)
+    return "".join(next(marks) if p is None else p for p in skeleton)
+
+
+@contextlib.contextmanager
+def _ek_word_to_marks_mode(mode: str):
+    """Temporarily swap ``uni_to_marks.word_to_marks`` for the ek20:31 variant, restoring
+    the original on exit (read-only: the module is never left mutated)."""
+    original = uni_to_marks.word_to_marks
+    uni_to_marks.word_to_marks = lambda w: _ek2031_word_variant(w, mode, original)
+    try:
+        yield
+    finally:
+        uni_to_marks.word_to_marks = original
+
+
+@contextlib.contextmanager
+def _no_mahapakh_azla_fuse():
+    """Temporarily drop the scanner's ``MAHAPAKHAZLA`` fuse rule so a mahapakh-then-qadma
+    adjacency scans as two tokens (``MAHAPAKH AZLA``) instead of re-fusing -- the only way
+    to observe the ``seq_mah_azla`` reading as a genuine sequence.  Restored on exit."""
+    original = ply_scanner._GG_RULES
+    ply_scanner._GG_RULES = [r for r in original if r[1] != "MAHAPAKHAZLA"]
+    try:
+        yield
+    finally:
+        ply_scanner._GG_RULES = original
+
+
+def _ek_verdict_for(mode: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
+    """``clean`` / ``ERROR`` / ``NO_PARSE`` for ek20:31 under one ``_EK_MODES`` reading."""
+    with contextlib.ExitStack() as stack:
+        stack.enter_context(_ek_word_to_marks_mode(mode))
+        if mode == "seq_mah_azla":
+            stack.enter_context(_no_mahapakh_azla_fuse())
+        body = uni_to_marks.verse_to_marks(index["ek20:31"])
+        return _telg_verdict(_scan_and_parse("ek20:31", body, parser, has_legarmeh))
+
+
 # --------------------------------------------------------------------------- #
 # Rendering helpers
 # --------------------------------------------------------------------------- #
@@ -251,15 +352,17 @@ def _render_tree(tree_text: str) -> object:
     )
 
 
-def _qadma_gaya_list() -> tuple[object, ...]:
-    """The six qadma-as-ga'ya + mahapakh places as a ``; ``-joined run of MAM-with-doc
-    links, with the four not named in the MAM note wrapped in square brackets."""
+def _qadma_gaya_links(*, supplied: bool) -> tuple[object, ...]:
+    """The qadma-as-ga'ya + mahapakh places as a ``; ``-joined run of MAM-with-doc links,
+    filtered to either the two the MAM note names as examples (``supplied=False``) or the
+    four supplied here (``supplied=True``)."""
     nodes: list[object] = []
-    for index, (bb, chnu, vrnu, display, bracketed) in enumerate(_QADMA_GAYA_REFS):
-        if index:
+    for bb, chnu, vrnu, display, is_supplied in _QADMA_GAYA_REFS:
+        if is_supplied != supplied:
+            continue
+        if nodes:
             nodes.append("; ")
-        link = _link(display, rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu))
-        nodes.extend(("[", link, "]") if bracketed else (link,))
+        nodes.append(_link(display, rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)))
     return tuple(nodes)
 
 
@@ -501,6 +604,15 @@ def _telg_gerstar_word(verse: object) -> str | None:
     return None
 
 
+def _ek_verdict_table(index, parser, has_legarmeh: HasLegarmeh) -> object:
+    """One row per ek20:31 reading (``_EK_MODES``): the reading and its parse verdict."""
+    rows: list[object] = [H.table_row_of_headers(("reading", "verdict"))]
+    for mode, label in _EK_MODES:
+        verdict = _ek_verdict_for(mode, index, parser, has_legarmeh)
+        rows.append(H.table_row_of_data((label, verdict)))
+    return H.table(tuple(rows), {"class": "limited-width"})
+
+
 def _oddities_intro() -> tuple[object, ...]:
     return (
         H.heading_level_2("Masoretically-blessed oddities (not charities)"),
@@ -538,27 +650,45 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
         ),
         H.para(
             (
-                "MAM has this double accent, and has a documentation note"
-                " citing support for this from three standard witnesses (Aleppo, Leningrad, Cairo)"
-                " and their masorot. It also cites Yeivin 28.1 p. 232 and spells out why this double accent is"
-                " puzzling yet standard:",
+                "That this double accent is intentional in the LC is"
+                " supported by the word’s masorah qetannah note,"
+                " ל̇ בטע̇" # we purposely don't format this as hbo because Taamey D doesn't support "combining dot above" well
+                " (“[this is the] one [word in all Tanakh that appears] with [these]"
+                " accents [arranged like this]”):",
             )
         ),
-        H.blockquote(_hbo(_EK2031_MAM_NOTE_HE), {"dir": "rtl"}),
+        *rtmsr_media.render_image_paragraphs(
+            {"img": "LC-286A-col-3-line-21-Ezek-20v31.png"},
+            structured_text_lookup=lambda row, key: row.get(key),
+        ),
         H.para(
             (
-                "That is:"
-                " this is the only word in all of Tanakh with two conjunctive accents on one letter;"
-                " the qadma precedes the mahapakh in reading,"
-                " as in six other places where"
-                " a qadma occupies a syllable suitable for a ga‘ya"
-                " and a mahapakh occupies the stressed syllable: ",
-                *_qadma_gaya_list(),
-                ". The note names only the first two as examples — and writes"
-                " “Num. 21:1” where it means Num. 20:1 (21:1 carries no qadma) —"
-                " so the four bracketed references are the remaining places,"
-                " supplied here rather than drawn from the note."
-                " See the full note on the ",
+                "MAM has this double accent,"
+                " and has a documentation note citing support for it from"
+                " three standard witnesses (Aleppo, Leningrad, Cairo) and their masorot."
+                " MAM also cites Yeivin 28.1 p. 232."
+                " MAM spells out why this double accent is puzzling yet standard:",
+            )
+        ),
+        H.blockquote(_EK2031_MAM_NOTE_HE, {"dir": "rtl"}),
+        H.blockquote(
+            (
+                "This is the only word in all of Tanakh with two conjunctive accents on one letter;"
+                " the qadma precedes the mahapakh in chanting,"
+                " as in six other places where [(on a single word)]"
+                " a qadma occupies a syllable fit for a ga‘ya"
+                " and a mahapakh occupies the stressed syllable, for example: ",
+                *_qadma_gaya_links(supplied=False),
+                ".",
+            )
+        ),
+        H.para(
+            (
+                "The note names only those two as examples — and writes"
+                " “Num. 21:1” where it means Num. 20:1. The other four verses alluded to"
+                " above are as follows, making six total: ",
+                *_qadma_gaya_links(supplied=True),
+                ". See the full note on the ",
                 _link(
                     "MAM-with-doc Ezekiel page",
                     "https://bdenckla.github.io/MAM-with-doc/C3-Ezekiel.html#c20v31",
@@ -585,6 +715,25 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
                 " support from other manuscripts, so it, like Lev. 25:20, is flagged as an error.",
             )
         ),
+        H.para(
+            (
+                "How forced is the fusion? Unlike the telisha gedola readings above — where"
+                " every alternative parses cleanly and the choice is merely cosmetic — here"
+                " the grammar all but dictates it. The table below runs the verse through"
+                " the real checker under each of the five ways to present the pair: the"
+                " fused token, dropping either mark, and keeping both as a sequence in"
+                " either order. Only two parse: the fused ",
+                H.code("mahapakh!azla"),
+                " token and the qadma-then-mahapakh sequence — and those coincide,"
+                " because the same pashta phrase rule that accepts the fused cluster also"
+                " accepts the cross-letter ",
+                H.code("azla mahapakh"),
+                " pair, in exactly the reading order the MAM note describes (qadma before"
+                " mahapakh). Dropping either mark, or ordering them mahapakh-then-azla, is"
+                " ungrammatical.",
+            )
+        ),
+        _ek_verdict_table(index, parser, has_legarmeh),
         H.para(
             "The checker’s parse tree for the verse, with the fused token shown as"
             " mahapakh!azla:"
