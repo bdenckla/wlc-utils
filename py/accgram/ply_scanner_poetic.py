@@ -26,11 +26,11 @@ accent -> poetic reading (the accents that matter in the Three Books):
     tsinnor       (no zarqa exists in the poetic system)                   II.7
     pazer                                                                  II.10
     shalshelet gedolah  shalshelet sign + paseq                           II.6
-    legarmeh      azla legarmeh / mehuppak legarmeh, i.e. a conjunctive    II.12
+    legarmeh      azla legarmeh / mahapakh legarmeh, i.e. a conjunctive    II.12
                   (azla or mahapakh) followed by paseq, as prose munaḥ+paseq
 
   conjunctive servi
-    munaḥ   merkha   mahapakh (mahapakh)   azla   illuy   tarḥa
+    munaḥ   merkha   mahapakh   azla   illuy   tarḥa
     galgal (yeraḥ; also the servus of oleh-we-yored and of pazer)
 
   fused / emitted (Plan C -- stop swallowing real accents)
@@ -190,7 +190,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # shalshelet qetannah = bare shalshelet (no following paseq): a real conjunctive
     # servus (#371) in eight verses, emitted rather than swallowed.
     (re.compile(am.SHALSHELET), pan.SHALSHELET_QETANNAH),
-    # legarmeh = azla (qadma) or mahapakh (mahapakh) followed by paseq.  Must precede
+    # legarmeh = azla (qadma) or mahapakh followed by paseq.  Must precede
     # the bare AZLA / MAHAPAKH rules so the longer paseq-terminated match wins.
     (re.compile(r"(?:" + am.QADMA + r"|" + am.MAHAPAKH + r")" + _TEXT + am.PASEQ), pan.LEGARMEH),
     # mahapakh / merkha metsunnar = a tsinnorit (U+0598) fused onto its mahapakh /
