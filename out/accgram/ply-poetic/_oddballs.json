@@ -3,9 +3,9 @@
   "artifacts_description": "poetic (Three Books) oddball verses for review",
   "payload_provenance_note": "Each row is a poetic verse the PLY port could not parse cleanly: either a missing-silluq verse recovered into an ERROR-leaf tree ('missing_silluq') or a hierarchy-violating L anomaly emitted as a NO_PARSE line ('no_parse'). wlc_disjunctives is the scanner's disjunctive skeleton; mam_disjunctives is the MAM-simple oracle's, for comparison. For a NO_PARSE verse, stall names the offending accent (its 1-based ordinal among the verse's accents and its token type) -- where the LALR(1) parse dead-ended, i.e. every accent before it was consumable (the stall point, not necessarily the root-cause accent). output_file names the *_ag.txt holding the tree/NO_PARSE line.",
   "summary": {
-    "oddballs": 14,
+    "oddballs": 15,
     "missing_silluq": 13,
-    "no_parse": 1
+    "no_parse": 2
   },
   "oddballs": [
     {
@@ -128,6 +128,43 @@
       ],
       "stall": null,
       "tree": "0 silluq_clause\n  1 atnax_clause\n    2 dexi_phrase\n      munax dexi \n    2 atnax_phrase\n      atnax \n  1 silluq_clause\n    2 revia_mugrash_phrase\n      revia mugrash \n    2 silluq_phrase\n      ERROR "
+    },
+    {
+      "ref": "Psalms 56:10",
+      "bb": "ps",
+      "kind": "no_parse",
+      "content": "א֥֨ז י֘ש֤ובו אויב֣י א֭חור בי֣ום אקר֑א זה־ י֝ד֗עתי כי־ אלה֥ים לֽי׃",
+      "output_file": "wlc_422_ps_ps_ag.txt",
+      "token_types": [
+        "TILDE",
+        "MERKHA_AZLA",
+        "MAHAPAKH_METSUNNAR",
+        "MUNAX",
+        "DEXI",
+        "MUNAX",
+        "ATNAX",
+        "REVIA_MUGRASH",
+        "MERKHA",
+        "SILLUQ",
+        "SOFPASUQ"
+      ],
+      "wlc_disjunctives": [
+        "DEXI",
+        "ATNAX",
+        "REVIA_MUGRASH",
+        "SILLUQ"
+      ],
+      "mam_disjunctives": [
+        "DEXI",
+        "ATNAX",
+        "REVIA_MUGRASH",
+        "SILLUQ"
+      ],
+      "stall": {
+        "accent_index": 1,
+        "token_type": "MERKHA_AZLA"
+      },
+      "tree": "NO_PARSE: >>MERKHA_AZLA<< MAHAPAKH_METSUNNAR MUNAX DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ  (stalled at accent 1/9: MERKHA_AZLA)"
     },
     {
       "ref": "Psalms 59:5",

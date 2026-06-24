@@ -42,8 +42,11 @@ def derive_tentative_summary(ob: PoeticOddball) -> str:
         )
     if ob.wlc_disjunctives == ob.mam_disjunctives:
         return (
-            "WLC and MAM-simple read the same disjunctive skeleton, yet the verse "
-            "does not parse — the anomaly is structural, not a WLC/MAM divergence."
+            "WLC and MAM-simple agree on the disjunctive skeleton, yet the verse does "
+            "not parse — so the anomaly is below the disjunctive skeleton (a conjunctive "
+            "or lexical matter), not a disjunctive divergence. This skeleton-level oracle "
+            "does not look beneath the skeleton, so it cannot say whether WLC and MAM "
+            "diverge there (they may well: e.g. Ps 56:10's extra merkha)."
         )
     clauses = _word_aligned_clauses(ob)
     if clauses is None:

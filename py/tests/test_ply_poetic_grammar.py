@@ -148,6 +148,19 @@ def test_conj_absorbs_metsunnar_and_shalshelet_qetannah():
     assert [n.label for n in (tree.left, tree.right)] == [bare.left.label, bare.right.label]
 
 
+def test_merkha_azla_bang_is_unparseable():
+    """Plan D (revised): the same-letter merkha!azla bang is a lexical anomaly, NOT a
+    licit servus -- two primary conjunctives on one letter.  The scanner emits it
+    faithfully, but the grammar has no `conj` terminal for it, so any verse carrying one
+    dead-ends to NO_PARSE (the poetic lexical-error surface, like STRAY_ACCENT)."""
+    parser = build_parser()
+    tree, error = parse_tokens_diagnostic(
+        parser, _verse(pan.MERKHA_AZLA, pan.ATNAX, pan.MERKHA, pan.SILLUQ)
+    )
+    assert tree is None
+    assert error is not None and error.token_type == pan.MERKHA_AZLA
+
+
 def test_stray_accent_is_unparseable():
     """Plan C fail-fast: STRAY_ACCENT has no grammar terminal, so any verse carrying
     one is a NO_PARSE (the poetic-native error surface)."""

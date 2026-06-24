@@ -46,14 +46,21 @@ _SERVI = frozenset(
     {pan.MUNAX, pan.MERKHA, pan.MAHAPAKH, pan.AZLA, pan.GALGAL, pan.ILLUY, pan.TARXA}
 )
 
-# A mahapakh / merkha metsunnar servant is, for servant-TYPE purposes, just its base
-# mahapakh / merkha: the fused tsinnorit is a secondary the MAM oracle does not catalog
-# as a servus sign (mam_poetic_accents._SERVUS_SIGNS), so MAM reads the partner word's
-# plain mahapakh / merkha.  Normalize the L side to the base sign so the two witnesses
-# compare apples-to-apples (and so this fusion leaves the servant cross-check unchanged).
-_METSUNNAR_BASE = {
+# A fused conjunctive token, for servant-TYPE purposes, is just the base sign the
+# servant cross-check would have seen before the fusion -- so the fusion leaves this
+# cross-check byte-identical:
+#   - a mahapakh / merkha metsunnar is its base mahapakh / merkha: the fused tsinnorit
+#     is a secondary the MAM oracle does not catalog as a servus sign
+#     (mam_poetic_accents._SERVUS_SIGNS), so MAM reads the partner word's plain sign;
+#   - a merkha!azla bang (Plan D) is the azla -- the storage-last of its two co-equal
+#     servi, hence the one that was `types[i-1]` (the adjacent servant) before the
+#     pair fused.  Zero live customers: the lone bang (ps56:10) is not adjacent to any
+#     target disjunctive (a munax sits between it and the dexi), so this entry never
+#     fires today; it future-proofs the byte-identical guarantee against other texts.
+_FUSED_SERVANT_BASE = {
     pan.MAHAPAKH_METSUNNAR: pan.MAHAPAKH,
     pan.MERKHA_METSUNNAR: pan.MERKHA,
+    pan.MERKHA_AZLA: pan.AZLA,
 }
 
 # Disjunctives worth checking -- every concrete poetic divider that can take a servant
@@ -108,7 +115,7 @@ def _l_servi_before(types: list[str], target: str) -> list[str | None]:
         if t != target:
             continue
         prev = types[i - 1] if i > 0 else None
-        prev = _METSUNNAR_BASE.get(prev, prev)  # a metsunnar servant is its base sign
+        prev = _FUSED_SERVANT_BASE.get(prev, prev)  # a fused servant is its base sign
         out.append(prev if prev in _SERVI else None)
     return out
 

@@ -212,6 +212,26 @@ def test_bare_shalshelet_emits_qetannah():
     assert pan.SHALSHELET_QETANNAH not in ged
 
 
+def test_same_letter_merkha_azla_fuses_to_bang():
+    # Plan D (ps56:10): merkha (U+05A5) + qadma/azla (U+05A8) on ONE base letter (no X
+    # between) is two co-equal conjunctive servi with no natural order -> one order-less
+    # MERKHA_AZLA bang, not a reorderable MERKHA AZLA sequence.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    same = _types_marks("X" + am.MERKHA + am.QADMA + "X" + tail)
+    assert pan.MERKHA_AZLA in same
+    # the two bare servi are gone -- consumed into the one bang
+    assert pan.MERKHA not in same and pan.AZLA not in same
+
+
+def test_cross_letter_merkha_then_azla_stays_a_sequence():
+    # The bang is same-letter only: a genuine cross-letter merkha...azla chain (an X
+    # between the two marks -> two letters, meaningful reading order) must NOT fuse.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    cross = _types_marks("X" + am.MERKHA + "X" + am.QADMA + "X" + tail)
+    assert pan.MERKHA_AZLA not in cross
+    assert pan.MERKHA in cross and pan.AZLA in cross
+
+
 def test_stray_accent_fails_fast_not_swallowed():
     # Plan C fail-fast guard: a prose-only accent (segolta, U+0592) has no poetic rule;
     # rather than let the catch-all swallow it silently, the scanner emits STRAY_ACCENT,

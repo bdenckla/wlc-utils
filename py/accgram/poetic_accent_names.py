@@ -98,6 +98,23 @@ MERKHA_METSUNNAR = "MERKHA_METSUNNAR"
 # real poetic servus in eight verses; emitted (not swallowed) and absorbed by `conj`.
 SHALSHELET_QETANNAH = "SHALSHELET_QETANNAH"
 
+# A same-letter pair: merkha (U+05A5) + qadma/azla (U+05A8) on one base letter (ps56:10,
+# the lone poetic case).  Emitting them as an ordered MERKHA AZLA *sequence* presents an
+# arbitrary order as if it were meaningful (the leaf even flipped azla<->merkha across
+# code versions), so the scanner fuses them into one order-less `!` bang token (Plan D),
+# the poetic sibling of prose ek20:31's `mahapakh!azla` (memory
+# `fused-impositive-cluster-token`).  The leaf `merkha!azla` follows the prose bang
+# convention (the lower-codepoint mark first; storage order U+05A5<U+05A8 matches it).
+#
+# Unlike the metsunnar / shalshelet-qetannah servi, MERKHA_AZLA is *not* a grammar token:
+# two impositive accents sharing one letter is a lexical anomaly, so the bang has no
+# `conj` terminal and the verse dead-ends to NO_PARSE (the poetic lexical-error surface),
+# surfacing ps56:10 as a flagged oddball.  Manuscript rationale: MAM carries azla alone
+# and, according to Breuer, so does the Aleppo Codex, while Sassoon 1053 carries merkha
+# alone -- L's double-marking looks like a conflation of the two single-accent traditions
+# (see poetic_ob_notes["ps 56:10"]).
+MERKHA_AZLA = "MERKHA_AZLA"
+
 # The disjunctive token types, for the revia gadol/qatan/mugrash lookahead and the
 # WLC-vs-MAM cross-check.
 POETIC_DISJUNCTIVES = frozenset(

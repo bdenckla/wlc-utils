@@ -19,6 +19,10 @@ report understands. The poetic report currently renders:
   * ``uxlc_note_page``  -- external tanach.us UXLC note URL, linked next to the
     Mwd/UXLC reference links.
   * ``github-issue``    -- external GitHub issue URL, linked likewise.
+  * ``img``             -- a Leningrad-Codex image filename under ``gh-pages/img/``
+    (the ``LC-<folio>-col-<n>-line-<n>-<ref>.png`` form), shown with an auto-derived
+    source caption; ``Da-at Miqra img`` / ``Aleppo img`` add a captioned companion
+    image (see ``rtmsr_media.render_image_paragraphs``).
 """
 
 from __future__ import annotations
@@ -35,6 +39,36 @@ _JOB_31_15_NOTE_URL = "https://tanach.us/Notes/Job/Job.31.15.1-t.html"
 # discussion, plus the LC and S1 images, now live on the hand-authored page
 # gh-pages/accgram/ps17v14-double-tsinnor.html.
 BY_REF: dict[str, dict[str, object]] = {
+    "ps 56:10": {
+        "st-summary": (
+            "On the verse-initial word אָ֥֨ז, WLC (faithful to the LC) transcribes TWO "
+            "accents on the one alef — a merkha (below) and a qadma/azla (above). MAM "
+            "carries the azla alone; according to Breuer, the Aleppo Codex likewise has "
+            "azla and Sassoon 1053 has merkha. The checker fuses the pair into one "
+            "order-less merkha!azla bang-pair and flags the verse as a lexical anomaly: "
+            "two impositive accents cannot share a letter."
+        ),
+        "img": "LC-376B-col-2-line-5-Ps-56v10.png",
+        "Da-at Miqra img": "Da-at-Miqra-Ps-56v10.png",
+        "comment": (
+            "Across the witnesses the two marks split cleanly one-each: MAM has azla; "
+            "according to Breuer, the Aleppo Codex likewise has azla and Sassoon 1053 has "
+            "merkha. The LC's carrying of BOTH, on a single letter, therefore looks less "
+            "like a genuine two-accent reading than like a conflation that preserves both "
+            "single-accent traditions — recording the two options rather than choosing.",
+            "The upper mark (transcribed as the qadma/azla) is in any case oddly placed "
+            "and oddly shaped; it could as easily be a misshapen part of the alef as a "
+            "deliberate accent — so even the azla half of the supposed pair is uncertain, "
+            "much as the Job 31:15 geresh-muqdam is.",
+            "The checker represents the cluster faithfully as one merkha!azla bang-pair "
+            "but does NOT bless it grammatically (it is not a licit servus), so the verse is a "
+            "NO_PARSE oddball rather than a silently-clean parse. Each of the four "
+            "interpretations — merkha alone, azla alone, and the two orderings as a "
+            "sequence — does parse, but only weakly: our poetic conjunctive grammar is "
+            "permissive, so it cannot yet make “both options are well-formed” a strong "
+            "claim. Strengthening that is a noted, separate direction.",
+        ),
+    },
     "jb 31:15": {
         "uxlc_note_page": _JOB_31_15_NOTE_URL,
         "st-summary": (

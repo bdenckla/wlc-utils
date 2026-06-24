@@ -10535,17 +10535,7 @@ Psalms 56:9
       3 silluq_phrase
         silluq 
 Psalms 56:10
-0 silluq_clause
-  1 atnax_clause
-    2 dexi_phrase
-      merkha azla mahapakh metsunnar munax dexi 
-    2 atnax_phrase
-      munax atnax 
-  1 silluq_clause
-    2 revia_mugrash_phrase
-      revia mugrash 
-    2 silluq_phrase
-      merkha silluq 
+NO_PARSE: >>MERKHA_AZLA<< MAHAPAKH_METSUNNAR MUNAX DEXI MUNAX ATNAX REVIA_MUGRASH MERKHA SILLUQ  (stalled at accent 1/9: MERKHA_AZLA)
 Psalms 56:11
 0 silluq_clause
   1 atnax_clause

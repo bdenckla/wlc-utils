@@ -36,6 +36,9 @@ M-C code -> poetic accent (the codes that matter in the Three Books):
     82 sinnorit   fused onto its mahapakh (70) / merkha (71) partner in the same
                   chanted word -> one MAHAPAKH_METSUNNAR / MERKHA_METSUNNAR conjunctive
     65 (without following paseq) shalshelet qetannah -> emitted as a conjunctive servus
+    71 + 63 merkha + qadma on one letter (Plan D) -> one order-less MERKHA_AZLA bang
+                  (merkha!azla); faithfully emitted but NOT a grammar token (two primary
+                  conjunctives on one letter is a lexical anomaly -> NO_PARSE oddball)
 
   swallowed (secondary / ga`ya / separators, not structural accents)
     35|75|95 (not before sof pasuq) meteg   05 (plain) paseq   52|53 puncta
@@ -156,6 +159,17 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + " " + _TEXT + am.MERKHA), pan.MERKHA_METSUNNAR),
     # revia (gadol/qatan) -- reclassified in the second pass.
     (re.compile(am.REVIA), pan.REVIA),
+    # merkha!azla bang = merkha (U+05A5) + qadma/azla (U+05A8) on one base letter
+    # (adjacent in the mark string, no X between -> same letter): fused into one
+    # order-less `!` token rather than emitted as a reorderable MERKHA AZLA *sequence*
+    # (Plan D; the poetic sibling of prose ek20:31's mahapakh!azla).  Must precede the
+    # bare MERKHA / AZLA rules so the 2-mark match wins (longest-match).  Stored
+    # merkha-then-qadma (U+05A5 < U+05A8); the genuine cross-letter merkha...qadma chain
+    # (an X between) still tokenizes as MERKHA then AZLA.  The bang is faithfully emitted
+    # but the grammar has no terminal for it (two impositive accents on one letter is a
+    # lexical anomaly), so the verse dead-ends to NO_PARSE -- an oddball, not silently
+    # clean.  Outside the (ungrammar-checked) decalogues this occurs only at Ps 56:10.
+    (re.compile(am.MERKHA + am.QADMA), pan.MERKHA_AZLA),
     # conjunctive servi
     (re.compile(am.MUNAH), pan.MUNAX),
     (re.compile(am.MERKHA), pan.MERKHA),
@@ -199,6 +213,10 @@ _LEAF: dict[str, str] = {
     pan.SHALSHELET_QETANNAH: "shalshelet qetannah",
     pan.MAHAPAKH_METSUNNAR: "mahapakh metsunnar",
     pan.MERKHA_METSUNNAR: "merkha metsunnar",
+    # `!` (not a space) joins the bang: two distinct co-equal accents on one letter
+    # with no natural order, not one accent with a space in its name -- as the prose
+    # mahapakh!azla / mahapakh!tipexa (see accgram.ply_scanner._LEAF).
+    pan.MERKHA_AZLA: "merkha!azla",
     pan.STRAY_ACCENT: "stray accent",
     pan.MUNAX: "munax",
     pan.MERKHA: "merkha",

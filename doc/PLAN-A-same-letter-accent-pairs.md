@@ -29,15 +29,17 @@ to each other*, not by a per-pair enumeration. Five readings:
 | reading | when | mechanism | examples |
 |---|---|---|---|
 | **sequence** *(default)* | two ordinary accents adjacent; one prepositive/postpositive, or just neighbors | tokenize each in source order; **normalize order only within a letter** (never across letters) | munaḥ+deḥi (poetic); most same-letter pairs |
-| **fuse (`!`)** | co-equal accents, **no natural order** (the under-duress gate is **lifted for same-letter pairs by Plan D**) | one `a!b` token | `mahapakh!azla` (ek20:31, prose); `merkha!azla` (ps56:10, poetic) |
+| **fuse (`!`)** | co-equal accents, **no natural order**, **and a licit combination** | one `a!b` token, accepted | `mahapakh!azla` (ek20:31, prose) |
 | **idiom** | an established compound accent | one named token | revia-mugrash, oleh-we-yored, methiga-zaqef |
 | **drop** | a redundant companion of a prepositive/postpositive | drop the secondary | telg + geresh/gershayim → telg |
-| **unlexical** | a positionally/grammatically **impossible** combination | alphabet-error post-pass (`lexical_validation`), *before* the grammar | `mahapakh!tipexa` (lv25:20) |
+| **unlexical** | a same-letter combination that is positionally/grammatically **illicit** (even when each accent alone is fine) | flagged, not parsed: prose `lexical_validation` (skip grammar); poetic = no `conj` terminal → NO_PARSE oddball | `mahapakh!tipexa` (lv25:20, two below-accents); `merkha!azla` (ps56:10, two impositive accents) |
 
 The orthographic convention already encodes part of this: a single word (`zaqefgadol`,
 `merkhakefula`) = one accent with a traditional compound name; a **hyphen**
 (`methiga-zaqef`) = an *ordered, cross-letter* idiom; a **bang** (`mahapakh!azla`) =
-an *order-less, same-letter* duress cluster.
+an *order-less, same-letter* cluster. The bang is a **representation** convention,
+orthogonal to the *verdict*: it labels both the licit `fuse` case (`mahapakh!azla`,
+accepted) and the `unlexical` case (`mahapakh!tipexa`, `merkha!azla`, flagged).
 
 ### Order normalization is same-letter only
 
@@ -72,11 +74,18 @@ flipped `azla merkha`↔`merkha azla` across code versions — the signature of 
 order"), so by the taxonomy's `fuse` row it arguably wants **one `merkha!azla` bang**, not
 a reorderable sequence. Plan A does **not** do that here: bangs are gated to the *under
 duress* case (a grammar-forced decision, like prose ek20:31), and poetic conjunctives are
-never under duress. Dropping that gate — making the bang a faithfulness device for *all*
-same-letter co-equal conjunctive pairs — is spun off as **Plan D**
-(`doc/PLAN-D-faithful-same-letter-bangs.md`), **now DONE** (`merkha!azla` at ps56:10; the
-sweep confirmed it is the *only* such pair in either genre beyond the already-fused
-ek20:31).
+never under duress. The faithful-representation half of that — emitting **one
+`merkha!azla` bang** instead of a reorderable sequence — is spun off as **Plan D**
+(`doc/PLAN-D-faithful-same-letter-bangs.md`), **now DONE**. But Plan D's *verdict* landed
+on the opposite of "lift the gate to accept it": ps56:10 is treated as a **lexical
+anomaly** (two impositive accents cannot share a letter), faithfully represented as the
+bang yet flagged as a NO_PARSE oddball, with manuscript evidence (MAM carries azla alone
+and, according to Breuer, so does the Aleppo Codex, while Sassoon 1053 carries merkha
+alone — L conflates the two). The sweep
+confirmed ps56:10 is the *only* same-letter co-equal conjunctive pair in either genre
+beyond ek20:31. (Whether prose ek20:31's `mahapakh!azla` should likewise be reclassified
+unlexical under the same "two impositive accents" principle is deferred with the
+conjunctive-grammaticality work — see Plan D.)
 
 The only poetic same-letter pairs that *can* matter touch the **disjunctive** skeleton:
 revia-mugrash (lexicalized), ps124:4 (geresh+revia — **charitable promotion** to
@@ -289,8 +298,9 @@ first runs `poetic_reconcile.reconcile_tokens` then
    conjunctive pairs (ps56:10's merkha+qadma, etc.) as one `!` token rather than a
    reorderable sequence.~~ **DONE** — the sweep found ps56:10's `merkha+qadma` is the
    *sole* in-scope pair (everything else is idiom / drop / prepositive-neighbor /
-   unlexical / already-fused), now emitted as one `merkha!azla` bang. See
-   `doc/PLAN-D-faithful-same-letter-bangs.md`.
+   unlexical / already-fused), now represented as one `merkha!azla` bang but **flagged
+   as a lexical anomaly** (NO_PARSE oddball, with LC/MAM/Aleppo/Sassoon manuscript notes
+   + images). See `doc/PLAN-D-faithful-same-letter-bangs.md`.
 
 > **Side note from the regen (the seed of Plan D):** regenerating the poetic corpus
 > surfaced a **pre-existing stale output** at **Psalms 56:10** — current HEAD code emits

@@ -1,11 +1,16 @@
 # Plan D: faithful same-letter bangs — stop swallowing the bang into a sequence
 
 **Status (2026-06-23):** **DONE** — the sweep proved the worklist is a *single* poetic
-pair (ps56:10's `merkha+qadma`), now emitted as one order-less **`merkha!azla`** bang.
-Verified: `pytest` (128 pass, incl. 3 new bang tests), poetic regen diff is **one
-leaf-only line** (`merkha azla` → `merkha!azla` at ps56:10, skeleton unchanged, no new
-ERROR/NO_PARSE), and both cross-checks (`_mam_xcheck.txt` disjunctive oracle,
-`_servi_xcheck.txt` servant) regenerate **byte-identical**. Sibling **Plan C** is
+pair (ps56:10's `merkha+qadma`). It is now faithfully **represented** as one order-less
+**`merkha!azla`** bang but, after review (see *Revision* below), **not blessed
+grammatically**: two impositive accents sharing one letter is treated as a **lexical
+anomaly**, so the bang has no `conj` terminal and ps56:10 surfaces as a **NO_PARSE
+oddball** (the poetic lexical-error surface) annotated with manuscript evidence + the two
+images, rather than a silently-clean parse. Verified: `pytest` (128 pass), poetic regen
+diff is **one line** (`merkha azla` clean tree → `NO_PARSE` at ps56:10; nothing else
+changes), both cross-checks (`_mam_xcheck.txt`, `_servi_xcheck.txt`) regenerate
+**byte-identical**, and the regenerated `poetic.html` shows the ps56:10 oddball with its
+summary, three comment paragraphs, and the LC + Da'at-Miqra images. Sibling **Plan C** is
 **DONE/committed `d50e021`**; Plan B, the charities page, is best done last so it
 documents the settled state. Spun off from **Plan A**
 (`doc/PLAN-A-same-letter-accent-pairs.md`), whose taxonomy and `!` convention this plan
@@ -94,16 +99,19 @@ same-letter co-equal *sequence* in either genre is in scope.
    `mahapakh!azla` and the helper-fusions are done. Add only **attested** pairs (memory
    `parse-rate-not-a-goal`); do not invent a general "fuse any two adjacent servi" rule
    beyond what the sweep attests.
-4. **Make the grammar accept the fused token.** Poetic: add each `a!b` servus to the
-   permissive `conj` terminal list (same mechanism as Plan C's shalshelet qetannah / the
-   metzunar tokens) so the disjunctive skeleton is untouched. Prose: only if the sweep
-   finds a prose case beyond ek20:31; add the attested rule.
+4. ~~**Make the grammar accept the fused token.**~~ **SUPERSEDED by the Revision below.**
+   The original intent was to add each `a!b` servus to the permissive `conj` list. On
+   review this was rejected: a same-letter co-occurrence is *not* automatically licit, so
+   `MERKHA_AZLA` is left out of the grammar (→ NO_PARSE lexical anomaly) rather than
+   blessed. See *Revision*.
 
 ## Coordination with Plan A and Plan C
 
-- **Plan A** is updated to record that the "under duress" gate is *lifted for same-letter
-  co-equal pairs by Plan D*; the `fuse` row's examples grow beyond ek20:31. Plan A keeps
-  the taxonomy and the `!` convention; Plan D is its faithfulness-driven extension.
+- **Plan A** is updated (note: the "lift the gate" framing was **superseded** — see
+  *Revision*). What actually landed: `merkha!azla` is added to Plan A's **`unlexical`**
+  row (not `fuse`), and the `!` bang is documented as a *representation* orthogonal to the
+  verdict (it labels both the licit `mahapakh!azla` and the unlexical
+  `mahapakh!tipexa` / `merkha!azla`). Plan A keeps the taxonomy and the `!` convention.
 - **Plan C** edits the same poetic-scanner swallow/fusion region (tsinnorit→metzunar,
   shalshelet qetannah, the stray-accent fail-fast). Plan D adds *more* fusion rules there.
   **Plan C is DONE and committed (`d50e021`, 2026-06-23)** — its representation work
@@ -161,38 +169,81 @@ found these clusters; only one is an in-scope Plan D bang:
 | mahapakh + qadma | 1 prose (ek20:31) | co-equal under duress | **already `mahapakh!azla`** |
 | mahapakh + tipeha | 1 prose (lv25:20) | unlexical (two below-accents) | Plan A `illegal_below_pairs` |
 | revia + geresh | 1 poetic (ps124:4) | same-letter geresh charity | Plan A `REVIA+GERESH→revia mugrash` |
-| **merkha + qadma** | **1 poetic (ps56:10)** | **two co-equal conjunctives** | **→ `merkha!azla` (this plan)** |
+| **merkha + qadma** | **1 poetic (ps56:10)** | **two impositive accents → unlexical** | **→ `merkha!azla` bang, flagged NO_PARSE (this plan)** |
 
 No single letter carries more than two accents (re-confirms Plan A's corpus-wide claim).
 
+## Revision — the bang is a *lexical anomaly*, not a blessed servus
+
+The first cut (above) added `MERKHA_AZLA` to the permissive `conj` chain, leaving ps56:10
+a clean parse. On review the maintainer rejected that: **"a verse grammatical with x then
+y does not make x stacked on y grammatical"** — the same point the codebase already makes
+for lv25:20's `mahapakh!tipexa` (a fine *sequence*, an impossible *stack*). Putting
+`MERKHA_AZLA` in `conj` silently encoded a grammaticality verdict that was never
+established. So Plan D's *representation* (the bang) is kept, but its *verdict* is flipped
+to **unlexical**: two impositive accents cannot share one letter.
+
+**Manuscript rationale (the maintainer's reading).** Across witnesses the two marks split
+cleanly one-each: **MAM carries azla alone** and, according to Breuer, so does the
+**Aleppo Codex**, while **Sassoon 1053 carries merkha alone**. L's carrying of *both*, on one letter,
+looks less like a genuine two-accent reading than a **conflation** preserving both
+single-accent traditions (recording the options, not choosing). The upper mark (the
+qadma/azla) is in any case oddly placed and shaped — it could be a misshapen part of the
+alef, much as the Job 31:15 geresh-muqdam — so even the azla half is uncertain. (Whether
+prose ek20:31's `mahapakh!azla` should be reclassified the same way is deferred with the
+conjunctive-grammaticality work below.)
+
+**The "how legal" measure (`bang_legality`).** A separate diagnostic measures *how legal*
+a bang `a x!y b` is by which of its four interpretations parse: `a x b` (x only), `a y b`
+(y only), `a x y b`, `a y x b`. ps56:10 scores **4/4** — every reading is grammatical — so
+it is a *maximally-legal anomaly*: flagged, but harmless however resolved. **Caveat the
+maintainer flagged:** the poetic `conj` chain is fully permissive, so for an all-
+conjunctive bang the measure is near-vacuous (it tends to 4/4 regardless). It only gains
+teeth once **conjunctive grammaticality is strengthened** — a noted, deferred direction
+(levers: secondary/ga`ya positional rules; per-witness legality; a structural "no two
+impositive accents on one letter" rule, which would make this very anomaly fall out of
+the grammar rather than a special case). The module is in `py/accgram/bang_legality.py`,
+unwired pending that work.
+
 ## What landed (2026-06-23)
 
-All in `py/accgram/`:
 - **token** `pan.MERKHA_AZLA` (leaf `merkha!azla`) in `poetic_accent_names.py`.
 - **scanner** one fusion rule `am.MERKHA + am.QADMA → MERKHA_AZLA` in
   `ply_scanner_poetic._POETIC_GG_RULES`, above the bare MERKHA / AZLA rules
-  (longest-match; adjacency = same-letter), plus its `_LEAF` entry.
-- **grammar** `MERKHA_AZLA` added to the `tokens` tuple and the `p_conj` terminal list in
-  `ply_grammar_poetic.py` — absorbed by the permissive servus chain, so the disjunctive
-  skeleton is untouched.
+  (longest-match; adjacency = same-letter), plus its `_LEAF` entry. The bang is
+  faithfully *emitted*.
+- **grammar** `MERKHA_AZLA` is deliberately **NOT** a grammar token / not in `p_conj`:
+  with no terminal the parser dead-ends → **NO_PARSE** (the poetic lexical-error surface,
+  as `STRAY_ACCENT`), so ps56:10 is a flagged oddball.
+- **oddball annotation** `poetic_ob_notes["ps 56:10"]` — `st-summary` + three `comment`
+  paragraphs (the manuscript/conflation/paleography argument) + the two images
+  (`img` = `LC-376B-col-2-line-5-Ps-56v10.png`, `Da-at Miqra img` =
+  `Da-at-Miqra-Ps-56v10.png`). `poetic_oddballs._render_oddball_section` now also calls
+  `rtmsr_media.render_image_paragraphs` (poetic oddballs previously rendered comments but
+  not images).
+- **how-legal diagnostic** `bang_legality.py` (the four-interpretation measure; ps56:10 →
+  4/4, near-vacuous until conj grammaticality is strengthened).
 - **servant cross-check** `servi_xcheck._METSUNNAR_BASE` generalized to
-  `_FUSED_SERVANT_BASE`, adding `MERKHA_AZLA → AZLA` (the storage-last servant the pair
-  presented before fusion) so a bang adjacent to a divider reads as its old sequence's
-  adjacent servant. **Zero live customers** (ps56:10's bang is not adjacent to any target
-  — a munah sits between it and the dexi), so `_servi_xcheck.txt` is byte-identical; the
-  entry future-proofs the byte-identical guarantee.
+  `_FUSED_SERVANT_BASE` with `MERKHA_AZLA → AZLA`; zero live customers (the bang is not
+  adjacent to any target), so `_servi_xcheck.txt` stays byte-identical.
 - **tests** `test_same_letter_merkha_azla_fuses_to_bang` +
-  `test_cross_letter_merkha_then_azla_stays_a_sequence`
-  (`test_ply_scanner_poetic.py`) and `test_conj_absorbs_merkha_azla_bang`
-  (`test_ply_poetic_grammar.py`).
+  `test_cross_letter_merkha_then_azla_stays_a_sequence` (`test_ply_scanner_poetic.py`);
+  `test_merkha_azla_bang_is_unparseable` (`test_ply_poetic_grammar.py`).
 
 ## Remaining work
 
 1. ~~Run the same-letter two-accent sweep (both genres); produce the worklist.~~ **DONE**
    (table above; the single in-scope pair is ps56:10).
 2. ~~Decide the canonical bang spelling.~~ **DONE** (`merkha!azla`, lower-codepoint-first).
-3. ~~Add scanner fusion rule + grammar terminal.~~ **DONE** (`MERKHA_AZLA`).
-4. ~~Verify (pytest + regen + xcheck); verdict-neutral, leaf-only diff.~~ **DONE**
-   (128 pass; one-line leaf diff; both cross-checks byte-identical).
-5. ~~Update Plan A's `fuse`-row examples~~ **DONE**; hand the "we now represent bangs"
-   note to **Plan B** (still open — Plan B).
+3. ~~Add scanner fusion rule + grammar terminal.~~ **DONE (revised)** — scanner rule kept;
+   the grammar terminal was **removed** so the bang is a lexical anomaly (NO_PARSE), not a
+   blessed servus.
+4. ~~Verify.~~ **DONE** (128 pass; one-line corpus diff ps56:10 → NO_PARSE; both
+   cross-checks byte-identical; `poetic.html` shows the oddball + images).
+5. ~~Update Plan A's taxonomy~~ **DONE** (`merkha!azla` moved to the `unlexical` row; the
+   `!` bang documented as a representation orthogonal to the verdict). Hand the bangs note
+   to **Plan B** (still open — Plan B).
+6. **Deferred (noted, not acted):** strengthen conjunctive grammaticality so the
+   `bang_legality` measure is meaningful and so "two impositive accents on one letter"
+   becomes a structural rule; revisit prose ek20:31 under the same principle; wire
+   `bang_legality` once it has teeth.
