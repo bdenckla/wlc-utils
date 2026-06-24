@@ -16,6 +16,8 @@ import pytest
 
 from accgram import accent_marks as am
 from accgram import almost_errors_html as aeh
+from accgram import almost_errors_html_shared as aes
+from accgram import almost_errors_oddities as aeo
 from accgram import almost_errors_trees as aet
 from accgram import ob_error_context
 from accgram import ob_tree_parse
@@ -66,7 +68,7 @@ def test_parse_tree_from_text_renders_clean_tree() -> None:
     assert ob_tree_parse.iter_leaf_texts(tree) == ["tipexa", "silluq"]
     assert ob_error_context.parse_error_tree_from_text(clean) is None
     # The shared table renderer accepts the error-free tree.
-    assert H.is_htel(aeh._render_tree(clean))
+    assert H.is_htel(aes._render_tree(clean))
 
 
 def test_parse_tree_from_text_empty_is_none() -> None:
@@ -89,8 +91,8 @@ def _load_index_or_skip():
 def test_all_five_telg_verses_parse_clean_in_all_three_readings() -> None:
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
-    for bcv in aeh._TELG_EXHIBIT_REFS:
-        for mode, _label in aeh._TELG_MODES:
+    for bcv in aeo._TELG_EXHIBIT_REFS:
+        for mode, _label in aeo._TELG_MODES:
             verdict = aet._telg_verdict_for(bcv, mode, index, parser, has_legarmeh)
             assert verdict == "clean", f"{bcv} [{mode}] -> {verdict}"
 
@@ -112,7 +114,7 @@ def test_ek2031_verdict_table_only_fused_and_azla_mah_parse() -> None:
     parser, has_legarmeh = build_parser(), HasLegarmeh()
     verdicts = {
         mode: aet._ek_verdict_for(mode, index, parser, has_legarmeh)
-        for mode, _label in aeh._EK_MODES
+        for mode, _label in aeo._EK_MODES
     }
     assert verdicts["fused"] == "clean", verdicts
     assert verdicts["seq_azla_mah"] == "clean", verdicts
