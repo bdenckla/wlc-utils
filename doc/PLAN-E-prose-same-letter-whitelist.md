@@ -9,7 +9,7 @@ rule, suspecting the prose whitelist might be empty.
 
 ## The question
 
-Poetic's same-letter whitelist is three pairs (revia+geresh-muqdam, deḥi+munaḥ,
+Poetic's same-letter whitelist is three pairs (revia+geresh-muqdam, deḥi+munaḥ,
 oleh+yored) — **all poetic-specific accents that do not exist in the prose system**. So
 what is the prose whitelist, and should prose get the same "flag any non-whitelisted
 same-letter accent pair" guard?
@@ -23,7 +23,7 @@ same letter):
 | pair | count | verse | status |
 |---|---|---|---|
 | mahapakh + qadma | 1 | ek20:31 | the "known exception" — fused to `mahapakh!azla`, **accepted** |
-| mahapakh + tipeḥa | 1 | lv25:20 | **flagged illegal** via `lexical_validation.illegal_below_pairs` |
+| mahapakh + tipeḥa | 1 | lv25:20 | **flagged illegal** via `lexical_validation.illegal_below_pairs` |
 
 Reproduce (run from `py/`, `PYTHONIOENCODING=utf-8`):
 ```python
@@ -52,8 +52,8 @@ marks), so they never produce a same-letter pair — confirmed: they do not appe
   **no `]c` note**. **MAM keeps BOTH** marks (`MAM-simple/json-vtrad-bhs/Ezek.json`,
   same word `נִטְמְאִ֤֨ים`). So this is a **genuine, two-witness-confirmed** same-letter
   pair — a real exception, not just a special-case.
-- **lv25:20** `נֹּאכַ֤֖ל` carries mahapakh + tipeḥa (two *below* accents). **MAM keeps only
-  the tipeḥa** (dropped the mahapakh) — an L anomaly, already flagged (`]c]n` in WLC; see
+- **lv25:20** `נֹּאכַ֤֖ל` carries mahapakh + tipeḥa (two *below* accents). **MAM keeps only
+  the tipeḥa** (dropped the mahapakh) — an L anomaly, already flagged (`]c]n` in WLC; see
   Plan A's lv25:20 section).
 
 **Contrast with poetic ps56:10** (`merkha!azla`): there MAM dropped the merkha (L-only),
@@ -70,11 +70,11 @@ is the only one, and it is real.) Everything else two-on-a-letter is illicit.
 Prose already enforces this *piecemeal*, not as a principle:
 - ek20:31 → scanner fusion rule `am.MAHAPAKH + am.QADMA → MAHAPAKHAZLA`
   (`ply_scanner.py`), leaf `mahapakh!azla`, accepted by the grammar. (The whitelist.)
-- lv25:20 → `lexical_validation.illegal_below_pairs` detects **mahapakh+tipeḥa
+- lv25:20 → `lexical_validation.illegal_below_pairs` detects **mahapakh+tipeḥa
   specifically** → `illegal_mark` tree, grammar skipped (wired in `run_ply.render_book`).
 
 **Proposed (the equivalent of Plan D's whitelist guard):** replace the *specific*
-`illegal_below_pairs` (mahapakh+tipeḥa only) with a **general** detector — "any two
+`illegal_below_pairs` (mahapakh+tipeḥa only) with a **general** detector — "any two
 accents on one base letter (adjacent in the body, no `X` between) that is **not** the
 whitelisted `mahapakh+qadma` → `illegal_mark`." This:
 - keeps lv25:20 flagged (now via the general rule, label still `mahapakh!tipexa`);
@@ -115,7 +115,7 @@ Read these to confirm exact signatures before editing (the Explore pass did not 
    (U+05A4 + U+05A8). Label `code = f"{name_a}!{name_b}"` reusing the prose leaf names
    (mahapakh, tipexa, azla, …). Key the rep-char on the pair's first/distinguishing
    codepoint for `_stranded_unicode_words` word location (mirror how lv25:20 keyed on
-   mahapakh, NOT tipeḥa, which recurs elsewhere in the verse).
+   mahapakh, NOT tipeḥa, which recurs elsewhere in the verse).
 2. Define the whitelist as a small constant (e.g. `_WHITELISTED_SAME_LETTER = {am.MAHAPAKH+am.QADMA}`),
    the prose analogue of `ply_scanner_poetic._WHITELISTED_ADJACENT_PAIRS`.
 3. Either **replace** `illegal_below_pairs` with the general detector (lv25:20 becomes a
@@ -125,7 +125,7 @@ Read these to confirm exact signatures before editing (the Explore pass did not 
 
 ## Verification
 
-- `pytest` (extend `py/tests/test_lexical_validation.py`: lv25:20 mahapakh+tipeḥa still
+- `pytest` (extend `py/tests/test_lexical_validation.py`: lv25:20 mahapakh+tipeḥa still
   flagged via the general rule; a *third* hypothetical same-letter pair flags; ek20:31's
   mahapakh+qadma does **not** flag; a cross-letter pair does not flag).
 - Regenerate the prose corpus (`main_accgram.py run-ply-goerwitz`) and confirm the diff is

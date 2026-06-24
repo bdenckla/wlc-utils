@@ -28,11 +28,11 @@ to each other*, not by a per-pair enumeration. Five readings:
 
 | reading | when | mechanism | examples |
 |---|---|---|---|
-| **sequence** *(default)* | two ordinary accents adjacent; one prepositive/postpositive, or just neighbors | tokenize each in source order; **normalize order only within a letter** (never across letters) | munaḥ+deḥi (poetic); most same-letter pairs |
+| **sequence** *(default)* | two ordinary accents adjacent; one prepositive/postpositive, or just neighbors | tokenize each in source order; **normalize order only within a letter** (never across letters) | munaḥ+deḥi (poetic); most same-letter pairs |
 | **fuse (`!`)** | co-equal accents, **no natural order**, **and a licit combination** | one `a!b` token, accepted | `mahapakh!azla` (ek20:31, prose) |
 | **idiom** | an established compound accent | one named token | revia-mugrash, oleh-we-yored, methiga-zaqef |
 | **drop** | a redundant companion of a prepositive/postpositive | drop the secondary | telg + geresh/gershayim → telg |
-| **unlexical** | a same-letter combination that is positionally/grammatically **illicit** (even when each accent alone is fine) — i.e. a same-letter accent pair **not on the whitelist** (revia+geresh-muqdam, deḥi+munaḥ, oleh+yored) | flagged, not parsed: prose `lexical_validation` (skip grammar); poetic = no `conj` terminal → NO_PARSE oddball | `mahapakh!tipexa` (lv25:20, two below-accents); `merkha!azla` (ps56:10) |
+| **unlexical** | a same-letter combination that is positionally/grammatically **illicit** (even when each accent alone is fine) — i.e. a same-letter accent pair **not on the whitelist** (revia+geresh-muqdam, deḥi+munaḥ, oleh+yored) | flagged, not parsed: prose `lexical_validation` (skip grammar); poetic = no `conj` terminal → NO_PARSE oddball | `mahapakh!tipexa` (lv25:20, two below-accents); `merkha!azla` (ps56:10) |
 
 The orthographic convention already encodes part of this: a single word (`zaqefgadol`,
 `merkhakefula`) = one accent with a traditional compound name; a **hyphen**
@@ -64,7 +64,7 @@ a function of the **disjunctive skeleton alone**. Consequence: **every same-lett
 that includes a conjunctive is automatically a non-issue for the *grammaticality
 verdict*** —
 
-- deḥi + munaḥ (munaḥ is a servus, absorbed into `dexi_phrase`);
+- deḥi + munaḥ (munaḥ is a servus, absorbed into `dexi_phrase`);
 - merkha + qadma, ps56:10 (both are conjunctives — just servi);
 - a secondary merkha / secondary mahapakh (conjunctives; never constrained).
 
@@ -79,7 +79,7 @@ never under duress. The faithful-representation half of that — emitting **one
 (`doc/PLAN-D-faithful-same-letter-bangs.md`), **now DONE**. But Plan D's *verdict* landed
 on the opposite of "lift the gate to accept it": ps56:10 is treated as a **lexical
 anomaly** (its merkha+azla is a same-letter pair *not on the whitelist* of legitimate
-same-letter pairs — revia+geresh-muqdam, deḥi+munaḥ, oleh+yored), faithfully represented
+same-letter pairs — revia+geresh-muqdam, deḥi+munaḥ, oleh+yored), faithfully represented
 as the bang yet flagged as a NO_PARSE oddball, with manuscript evidence (MAM carries azla
 alone and, according to Breuer, so does the Aleppo Codex, while Sassoon 1053 carries
 merkha alone — L conflates the two). The sweep confirmed ps56:10 is the *only* such
@@ -163,7 +163,7 @@ swaps only — never cross-letter, which is meaningful reading order.)
 
 ### lv25:20 — DECIDED: a *lexical* error, not a grammatical one
 
-**Decision (2026-06-23):** mahapakh + tipeḥa (two *below*-accents on one letter) is to
+**Decision (2026-06-23):** mahapakh + tipeḥa (two *below*-accents on one letter) is to
 be treated as a **lexical (alphabet) error**, not a grammatical one. Two below-accents
 cannot share a letter — the fault is *intrinsic to the letter*, independent of context;
 it is an *unknown accent*, not a known accent in an illegal sequence. This is the same
@@ -186,7 +186,7 @@ stress-helpers... added later").
   `_STRESS_HELPER_CHAR → _ILLEGAL_MARK_REP_CHAR` and keyed on mahapakh (U+05A4). Tests in
   `py/tests/test_lexical_validation.py`. Original step list, for the record:
   1. Add a detector to `lexical_validation` for one letter carrying **both mahapakh
-     (U+05A4) and tipeḥa (U+0596)** — two *below*-accents adjacent in the mark string
+     (U+05A4) and tipeḥa (U+0596)** — two *below*-accents adjacent in the mark string
      (no base letter between). This is a *different shape* from the existing
      stranded-helper check, so add a **sibling function** (e.g. `illegal_below_pairs`)
      returning the same `StrandedMark`-style record, not an overload of
@@ -201,18 +201,18 @@ stress-helpers... added later").
      `_stranded_unicode_words`, which maps a *code → representative char*
      (`_STRESS_HELPER_CHAR`). Rename that map to something neutral (e.g.
      `_ILLEGAL_MARK_REP_CHAR`) and key the new entry on **mahapakh (U+05A4)** — *not*
-     tipeḥa, which recurs elsewhere in lv25:20 (word `נֶאֱסֹף`) and would mis-locate.
+     tipeḥa, which recurs elsewhere in lv25:20 (word `נֶאֱסֹף`) and would mis-locate.
   4. In `run_ply.py`, call the new detector alongside `stranded_stress_helpers` and feed
      both into the existing `_illegal_mark_tree` / skip-grammar block.
-  5. **Scope to the attested pair only** — hardcode mahapakh+tipeḥa; do **not**
+  5. **Scope to the attested pair only** — hardcode mahapakh+tipeḥa; do **not**
      generalize to "any two below-accents" (memory `parse-rate-not-a-goal`).
   6. Test in `py/tests/test_lexical_validation.py`; verify by regenerating the prose
      corpus (`main_accgram.py run-ply-goerwitz`) and confirming **only lv25:20** flips
      from `tipexa_phrase → ERROR` to `illegal_mark`. A raw `-kq-u` scan (see *Faithful
      scan recipe* below) confirms lv25:20 is the **unique** non-decalogue verse with a
-     same-letter mahapakh+tipeḥa pair, so the blast radius is exactly one verse.
+     same-letter mahapakh+tipeḥa pair, so the blast radius is exactly one verse.
 - **Illegal status — confirmed (2026-06-23), gate satisfied.** No need to block on Yeivin:
-  - **MAM has only the tipeḥa** — `MAM-simple/json-vtrad-bhs/Lev.json`, word `נֹּאכַל`
+  - **MAM has only the tipeḥa** — `MAM-simple/json-vtrad-bhs/Lev.json`, word `נֹּאכַל`
     carries `TIPEHA` alone; MAM dropped the mahapakh WLC keeps.
   - **WLC's own note is `]c]n`** — and `]n` = *"An anomalous form in the text of ל"*
     (`py/cmn/wlc_bracket_note_definitions.py`); `]c` = accent differs from BHS, "often a
@@ -287,7 +287,7 @@ first runs `poetic_reconcile.reconcile_tokens` then
 1. ~~**ps124:4** — make the geresh principled.~~ **DONE** (charity rule). The catch-all
    **fail-fast guard** is **moved to Plan C** (the catch-all is load-bearing; only a
    narrow stray-accent rule is needed, with zero live customers after the charity).
-2. ~~**lv25:20** — extend `lexical_validation` to flag mahapakh!tipeḥa.~~ **DONE**
+2. ~~**lv25:20** — extend `lexical_validation` to flag mahapakh!tipeḥa.~~ **DONE**
    (`illegal_below_pairs`; label `mahapakh!tipexa`; locator keyed on mahapakh).
 3. Hand the charity inventory + alternate-tree exhibit to **Plan B** (still open — Plan B).
 4. **Plan C** owns the two *legal* swallowed poetic accents (tsinnorit, shalshelet

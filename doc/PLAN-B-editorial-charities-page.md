@@ -37,7 +37,7 @@ Each entry: what we normalize, why, the direction, and a citation.
   telg, drop the geresh/gershayim companion. (See the alternate-tree exhibit below.)
 - **swallowed-helper fusions.** Stress-helper tsinnorit fused onto zinor (zarqa),
   doubled pashta, doubled telisha-qetana — fused into one token by the scanner.
-- **mahapakh + tipeḥa → lexical error (lv25:20).** Not a charity that *hides* a quirk
+- **mahapakh + tipeḥa → lexical error (lv25:20).** Not a charity that *hides* a quirk
   but a charity of *classification*: flagged as an alphabet (lexical) error, not a
   grammatical one (Plan A decision). Document alongside so the lexical-vs-grammatical
   distinction is visible.

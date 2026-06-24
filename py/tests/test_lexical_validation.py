@@ -71,7 +71,7 @@ def test_atom_with_both_returns_the_atom_text():
 
 
 def test_mahapakh_tipexa_same_letter_is_illegal():
-    # lv25:20 word נֹּאכַל: mahapakh + tipeḥa adjacent (one letter) -> illegal below-pair.
+    # lv25:20 word נֹּאכַל: mahapakh + tipeḥa adjacent (one letter) -> illegal below-pair.
     assert _below("XX-XXX" + _MA + _TI + "X]c]n") == ["mahapakh!tipexa"]
 
 

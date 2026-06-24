@@ -18,7 +18,7 @@ ascender) are equally wrong; this layer flags them uniformly.
 
 A second, sibling check (``illegal_below_pairs``) flags an impossible *same-letter*
 configuration rather than a stranded helper: two *below*-the-letter accents on one
-letter.  The sole attested pair is mahapakh + tipeḥa (lv25:20); two below-accents
+letter.  The sole attested pair is mahapakh + tipeḥa (lv25:20); two below-accents
 cannot share a letter, so the fault is intrinsic to the letter -- an alphabet error,
 not an illegal grammatical sequence (which the grammar would otherwise flag as
 ``tipexa_phrase -> ERROR``, the wrong rationale).
@@ -59,7 +59,7 @@ _STRESS_HELPER_PARTNER: dict[str, tuple[str, str]] = {am.TSINNORIT: (am.ZINOR, "
 # Two *below*-the-letter accents cannot share a single letter: the fault is intrinsic
 # to the letter, independent of surrounding context, so it is an alphabet (lexical)
 # error rather than an illegal grammatical *sequence*.  The one attested pair is
-# mahapakh (U+05A4) + tipeḥa (U+0596) on one letter (lv25:20, word נֹּאכַל -- WLC keeps a
+# mahapakh (U+05A4) + tipeḥa (U+0596) on one letter (lv25:20, word נֹּאכַל -- WLC keeps a
 # mahapakh MAM drops, and tags the word anomalous via ]n).  Scoped to this attested pair
 # only; deliberately NOT generalized to "any two below-accents" (see the plan / memory
 # parse-rate-not-a-goal).  The label uses the same-letter-pair bang convention.
@@ -104,7 +104,7 @@ def stranded_stress_helpers(body: str) -> list[StrandedMark]:
 def illegal_below_pairs(body: str) -> list[StrandedMark]:
     """Return every illegal same-letter below-accent pair in a prose verse body.
 
-    Today the sole attested pair is mahapakh (U+05A4) + tipeḥa (U+0596) on one letter
+    Today the sole attested pair is mahapakh (U+05A4) + tipeḥa (U+0596) on one letter
     (lv25:20).  Two marks are on one letter iff they are *adjacent* in the mark string
     (no base-letter ``X`` between them); within-letter order is not meaningful, so the
     pair is matched in either order.  Reported with the bang label ``mahapakh!tipexa``.

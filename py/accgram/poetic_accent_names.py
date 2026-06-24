@@ -33,8 +33,8 @@ NOTE: the prose grammar (a port of the Goerwitz C oracle acc2tre.y) now adopts t
 shared spellings ATNAX / MUNAX / MERKHA / MAHAPAKH, so there is one transliteration
 per use case across prose and poetic; see issue #13.  (Byte-for-byte parity with the
 Goerwitz C output is no longer a goal.)  TARXA stays poetic-only: the tifcha-shaped
-sign is a *distinct accent* in each system -- prose tipeḥa (TIPEXA, with mayela as
-its variant) vs poetic tarḥa (TARXA) -- that merely shares one Unicode code point, so
+sign is a *distinct accent* in each system -- prose tipeḥa (TIPEXA, with mayela as
+its variant) vs poetic tarḥa (TARXA) -- that merely shares one Unicode code point, so
 the two keep separate names.
 """
 
@@ -108,7 +108,7 @@ SHALSHELET_QETANNAH = "SHALSHELET_QETANNAH"
 #
 # Unlike the metsunnar / shalshelet-qetannah servi, this is *not* a grammar token: two
 # accents sharing one letter is a lexical anomaly UNLESS the pair is whitelisted (revia +
-# geresh muqdam, ole + yored, deḥi + munaḥ), so the bang has no `conj` terminal and the
+# geresh muqdam, ole + yored, deḥi + munaḥ), so the bang has no `conj` terminal and the
 # verse dead-ends to NO_PARSE (the poetic lexical-error surface), surfacing ps56:10 as a
 # flagged oddball.  Manuscript rationale: MAM carries azla alone and, according to Breuer,
 # so does the Aleppo Codex, while Sassoon 1053 carries merkha alone -- L's double-marking

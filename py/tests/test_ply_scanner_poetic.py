@@ -250,8 +250,8 @@ def test_non_whitelisted_pair_fuses_to_bang():
 
 
 def test_whitelisted_pairs_not_flagged():
-    # The whitelisted same-letter pairs must NOT become a bang: deḥi+munaḥ stays a
-    # deḥi/munax sequence (the lone whitelisted pair that reaches the guard, spared by
+    # The whitelisted same-letter pairs must NOT become a bang: deḥi+munaḥ stays a
+    # deḥi/munax sequence (the lone whitelisted pair that reaches the guard, spared by
     # _WHITELISTED_ADJACENT_PAIRS), and tsinnorit+mahapakh is the metsunnar fusion (a
     # cross-letter pair consumed upstream), not a bang.
     tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ

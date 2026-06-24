@@ -75,7 +75,7 @@ The seed cases (from Plan A's enumeration; **to be confirmed and completed by a 
 - **merkha + qadma** — ps56:10 (poetic), and any others the sweep finds;
 - **a secondary merkha / secondary mahapakh** sharing a letter with another co-equal
   conjunctive (Plan A lists these as "never constrained" — candidates, pending the sweep);
-- (deḥi + munaḥ is **not** a candidate: deḥi is disjunctive, munaḥ conjunctive — not
+- (deḥi + munaḥ is **not** a candidate: deḥi is disjunctive, munaḥ conjunctive — not
   co-equal; it is a servus-absorbed sequence and stays a sequence.)
 
 **Prose vs poetic:** ps56:10 is poetic, but the same faithfulness argument applies in
@@ -214,7 +214,7 @@ this anomaly falls out of a principle rather than a special-cased pair. The modu
   (merkha+qadma → `MERKHA_AZLA` / `merkha!azla`, exactly the prior output). It beats the
   bare single-mark rules by longest-match. The legitimate same-letter pairs are either
   **fused upstream** (revia+geresh-muqdam / revia+geresh → revia mugrash; ole+merkha →
-  oleh-we-yored) and so never reach it, or are the **deḥi+munaḥ** sequence, spared by
+  oleh-we-yored) and so never reach it, or are the **deḥi+munaḥ** sequence, spared by
   `_WHITELISTED_ADJACENT_PAIRS` (a negative lookahead). Everything else → bang. This
   whitelist supersedes the earlier "two impositive accents" blacklist, which leaned on
   contested positional classifications (tsinnorit, ole) of marks that — per the corpus —
@@ -240,7 +240,7 @@ this anomaly falls out of a principle rather than a special-cased pair. The modu
 - **tests** `test_same_letter_merkha_azla_fuses_to_bang`,
   `test_cross_letter_merkha_then_azla_stays_a_sequence`,
   `test_non_whitelisted_pair_fuses_to_bang` (a *different* pair, munah+merkha, proving
-  generality), `test_whitelisted_pairs_not_flagged` (deḥi+munaḥ / tsinnorit+mahapakh
+  generality), `test_whitelisted_pairs_not_flagged` (deḥi+munaḥ / tsinnorit+mahapakh
   do **not** fire the guard) (`test_ply_scanner_poetic.py`);
   `test_merkha_azla_bang_is_unparseable` (`test_ply_poetic_grammar.py`). 130 pass.
 
@@ -265,7 +265,7 @@ this anomaly falls out of a principle rather than a special-cased pair. The modu
    bang. (Supersedes the interim "two impositive accents" blacklist.)
 7. ~~Confirm the whitelist membership.~~ **DONE / complete** — the body scan is
    exhaustive: the *only* adjacent-accent pairs anywhere in the poetic corpus are
-   geresh-muqdam+revia, deḥi+munaḥ, merkha+qadma, and revia+geresh; every one except
+   geresh-muqdam+revia, deḥi+munaḥ, merkha+qadma, and revia+geresh; every one except
    merkha+qadma is whitelisted or fused, so no legitimate same-letter pair is omitted.
 8. **Deferred (noted, not acted):** strengthen *conjunctive* grammaticality so the
    `bang_legality` measure stops being near-vacuous (levers: secondary/ga`ya positional

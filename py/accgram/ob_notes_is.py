@@ -31,7 +31,7 @@ BY_REF: dict[str, dict[str, object]] = {
                 "”.",
             ),
             "Verified by re-running the checker on a fixed verse: substituting"
-            " merkha for the munaḥ servus (the MAM-simple reading) clears the"
+            " merkha for the munaḥ servus (the MAM-simple reading) clears the"
             " checker error.",
         ],
     },
@@ -49,12 +49,12 @@ BY_REF: dict[str, dict[str, object]] = {
         # munaḥ (U+05A3) with a segolta (U+0592).
         "synth_fix": "לכ֒ורש",
         "st-summary": (
-            "The checker requires a segol accent rather than a munaḥ."
+            "The checker requires a segol accent rather than a munaḥ."
         ),
         "comment": [
             "Verified by re-running the checker on a fixed verse: replacing the"
-            " munaḥ with a segol accent clears the segolta_phrase error. Note that"
-            " MAM, like WLC, has a munaḥ here, so this is a checker-vs-consensus tension,"
+            " munaḥ with a segol accent clears the segolta_phrase error. Note that"
+            " MAM, like WLC, has a munaḥ here, so this is a checker-vs-consensus tension,"
             " not a quirk in the LC, BHS, or WLC.",
             " The question of whether there should be a legarmeh after לכ֣ורש"
             " (see MAM’s doc-note)"

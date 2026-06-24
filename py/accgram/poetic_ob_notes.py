@@ -48,7 +48,7 @@ BY_REF: dict[str, dict[str, object]] = {
             "carries the azla alone; according to Breuer, the Aleppo Codex likewise has "
             "azla and Sassoon 1053 has merkha. The checker fuses the pair into one "
             "order-less merkha!azla bang-pair and flags the verse as a lexical anomaly: "
-            "only a few accent pairs (revia + geresh-muqdam, deḥi + munaḥ, oleh + yored) "
+            "only a few accent pairs (revia + geresh-muqdam, deḥi + munaḥ, oleh + yored) "
             "may legitimately share one letter, and merkha + azla is not among them."
         ),
         "img": "LC-376B-col-2-line-5-Ps-56v10.png",

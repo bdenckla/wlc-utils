@@ -38,7 +38,7 @@ accent -> poetic reading (the accents that matter in the Three Books):
                   chanted word -> one MAHAPAKH_METSUNNAR / MERKHA_METSUNNAR conjunctive
     shalshelet qetannah  bare shalshelet (no following paseq) -> emitted as a servus
     two adjacent accents on one letter that are not a WHITELISTED pair (revia+geresh
-                  muqdam, ole+yored, deḥi+munaḥ) -> one order-less a!b bang-pair (e.g.
+                  muqdam, ole+yored, deḥi+munaḥ) -> one order-less a!b bang-pair (e.g.
                   merkha + azla -> merkha!azla); faithfully emitted but NOT a grammar
                   token (a non-whitelisted same-letter stack is a lexical anomaly ->
                   NO_PARSE)
@@ -108,10 +108,10 @@ _POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
 #   - revia + (plain) geresh  -> revia mugrash      (the ps124:4 charity, fused above)
 #   - oleh   + yored (merkha) -> oleh-we-yored      (fused above; cross-letter in WLC,
 #                                                    same-letter in MAM)
-#   - deḥi   + munaḥ          -> a legit *sequence* (a prepositive deḥi visually on its
-#                                munaḥ servus's letter, not a shared syllable)
+#   - deḥi   + munaḥ          -> a legit *sequence* (a prepositive deḥi visually on its
+#                                munaḥ servus's letter, not a shared syllable)
 # The first three are CONSUMED by the specific fusion rules above, so they never reach
-# the guard; only deḥi+munaḥ reaches it as two adjacent marks, and is spared by name
+# the guard; only deḥi+munaḥ reaches it as two adjacent marks, and is spared by name
 # (_WHITELISTED_ADJACENT_PAIRS).  Everything else -> bang.  (This whitelist supersedes an
 # earlier "two impositive accents" blacklist, which leaned on contested positional
 # classifications of marks -- tsinnorit, ole -- that, per the corpus, never share a letter
@@ -120,7 +120,7 @@ _ANY_ACCENT = "[֑-֮]"  # U+0591..U+05AE (as the stray-accent class; meteg U+05
 
 # Legit same-letter pairs that survive to the guard as two adjacent marks (i.e. are NOT
 # fused by an earlier rule), spared from the bang via negative lookahead.  Order is the
-# post-relocation body order (deḥi, a prepositive, is moved to the front).
+# post-relocation body order (deḥi, a prepositive, is moved to the front).
 _WHITELISTED_ADJACENT_PAIRS = (am.DEXI + am.MUNAX,)
 
 # Display names for building a bang's per-pair (type, leaf); covers the poetic accents,
@@ -218,7 +218,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # sibling of prose ek20:31's mahapakh!azla).  The 2-mark match beats the bare
     # single-mark rules by longest-match.  The legit same-letter pairs are either FUSED by
     # a rule above (revia+geresh muqdam / revia+geresh -> revia mugrash; ole+merkha ->
-    # oleh-we-yored) and so never reach here, or are the deḥi+munaḥ sequence, which
+    # oleh-we-yored) and so never reach here, or are the deḥi+munaḥ sequence, which
     # _BANG_GUARD's lookahead spares.  The bang has no grammar terminal -> NO_PARSE oddball.
     # Corpus-wide this fires only at Ps 56:10 (merkha+azla); the generality guards any
     # other / future same-letter stack.

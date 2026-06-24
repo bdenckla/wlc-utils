@@ -33,7 +33,7 @@ from accgram.ply_tree import add_leaves, print_tree
 # label can name the offending *Unicode* word (issue #9: M-C dropped, reports show the
 # actual pointed Hebrew).  The rep char must be a mark unique to the offending word in
 # its verse, or the locator mis-points.  ``82`` -> the zarqa stress-helper (U+0598);
-# ``mahapakh!tipexa`` -> mahapakh (U+05A4), NOT tipeḥa, which recurs elsewhere in
+# ``mahapakh!tipexa`` -> mahapakh (U+05A4), NOT tipeḥa, which recurs elsewhere in
 # lv25:20 (word נֶאֱסֹף) and would mis-locate.
 _ILLEGAL_MARK_REP_CHAR = {"82": "֘", "mahapakh!tipexa": "֤"}
 

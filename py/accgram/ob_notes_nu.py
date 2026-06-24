@@ -34,7 +34,7 @@ _NU_2509_03 = (
 _NU_2509_04 = (
     " As to where BHS got this versification, I suspect it is not original to BHS."
     " This versification’s rather extraordinary mid-chanted-verse verse number does correspond to"
-    " a rather extraordinary mid-chanted-verse parashah petuḥah break."
+    " a rather extraordinary mid-chanted-verse parashah petuḥah break."
     " So, while this verse number is not at the boundary of a chanted verse,"
     " it is at a boundary deemed quite significant in the layout of both cantillated and letter-only Hebrew texts."
 )

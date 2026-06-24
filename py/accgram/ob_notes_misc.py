@@ -52,7 +52,7 @@ _LM_0505_06 = TIP_LIKE_INCL
 _LM_0505_07 = (
     "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh."
     " BHQ claims that manuscripts L34 and Y (in its sigil vocabulary) have this dagesh."
-    " Breuer (in Da-at Miqra) claims that Minḥat Shai asserts this dagesh."
+    " Breuer (in Da-at Miqra) claims that Minḥat Shai asserts this dagesh."
 )
 
 
