@@ -53,9 +53,9 @@ BY_REF: dict[str, dict[str, object]] = {
         "comment": (
             "Across the witnesses the two marks split cleanly one-each: MAM has azla; "
             "according to Breuer, the Aleppo Codex likewise has azla and Sassoon 1053 has "
-            "merkha. The LC's carrying of BOTH, on a single letter, therefore looks less "
-            "like a genuine two-accent reading than like a conflation that preserves both "
-            "single-accent traditions — recording the two options rather than choosing.",
+            "merkha. The LC's carrying of BOTH, on a single letter, could be an attempt to "
+            "preserve two single-accent traditions — recording the two options rather than "
+            "choosing.",
             "The upper mark (transcribed as the qadma/azla) is in any case oddly placed "
             "and oddly shaped; it could as easily be a misshapen part of the alef as a "
             "deliberate accent — so even the azla half of the supposed pair is uncertain, "
