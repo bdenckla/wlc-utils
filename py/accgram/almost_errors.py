@@ -25,7 +25,7 @@ can never drift from the checker's real behaviour. It shares goerwitz.html's
 stylesheet + width-limited shell and the shared error-tree table renderer
 (``ob_tree_table``), so a later merge with the prose/poetic reports is mechanical.
 
-Run via ``main_accgram.py generate-almost-errors-html`` (read-only; no module is
+Run via ``main_accgram.py generate-html`` (read-only; no module is
 mutated permanently -- the ``word_to_marks`` swap is scoped and restored).
 """
 
@@ -86,9 +86,9 @@ _TELG_MODES = (
 # witness that ek20:31's double-marking is standard masoretic tradition, not an L
 # anomaly.  Quoted (Hebrew) and paraphrased (English) on the page.
 _EK2031_MAM_NOTE_HE = (
-    "זאת התיבה היחידה בכל המקרא שיש בה שני טעמים מחברים בהברה אחת. "
-    "הקדמא קודמת למהפך בקריאה, כמו בעוד שש מקומות במקרא (שבהם הקדמא "
-    "במקום הראוי לגעיה והמהפך בהברת הטעם), כגון: ויקרא כה,מו; במדבר כא,א."
+    "זאת התיבה היחידה בכל המקרא שיש בה שני טעמים מחברים בהברה אחת."
+    " הקדמא קודמת למהפך בקריאה, כמו בעוד שש מקומות במקרא (שבהם הקדמא"
+    " במקום הראוי לגעיה והמהפך בהברת הטעם), כגון: ויקרא כה,מו; במדבר כא,א."
 )
 
 
@@ -263,41 +263,41 @@ def _intro() -> tuple[object, ...]:
         H.heading_level_1(_REPORT_TITLE),
         H.heading_level_2("Introduction"),
         H.para(
-            "This page documents the accent-grammar checker's “almost errors”: "
-            "cantillation features that a naïve checker would flag, but that we "
-            "do not flag — and, in each case, the reading we chose is a choice, "
-            "not a forced move. Two kinds appear here."
+            "This page documents the accent-grammar checker's “almost errors”:"
+            " cantillation features that a naïve checker would flag, but that we"
+            " do not flag — and, in each case, the reading we chose is a choice,"
+            " not a forced move. Two kinds appear here."
         ),
         H.para(
             (
                 "First, the ",
                 H.bold("editorial charities"),
-                ": places where the checker silently normalizes away a genuine quirk "
-                "of WLC — sometimes a real Leningrad Codex feature, sometimes an "
-                "artifact introduced in BHS or WLC — and reads the text charitably "
-                "rather than reporting an error. Here something at least questionable "
-                "is being forgiven; the value is transparency about exactly what the "
-                "checker quietly fixes, in which direction, and why.",
+                ": places where the checker silently normalizes away a genuine quirk"
+                " of WLC — sometimes a real Leningrad Codex feature, sometimes an"
+                " artifact introduced in BHS or WLC — and reads the text charitably"
+                " rather than reporting an error. Here something at least questionable"
+                " is being forgiven; the value is transparency about exactly what the"
+                " checker quietly fixes, in which direction, and why.",
             )
         ),
         H.para(
             (
                 "Second, the ",
                 H.bold("masoretically-blessed oddities"),
-                ": features that look error-like — two cantillation accents crowding "
-                "one letter or one word, or a stress-helper riding a disjunctive — but "
-                "that are 100% official masoretic tradition, attested in the standard "
-                "witnesses, ",
+                ": features that look error-like — two cantillation accents crowding"
+                " one letter or one word, or a stress-helper riding a disjunctive — but"
+                " that are 100% official masoretic tradition, attested in the standard"
+                " witnesses, ",
                 H.bold("not"),
-                " leniencies specific to LC, BHS, or WLC. Nothing here is forgiven; the "
-                "checker accepts these, and where it must pick how to represent one for "
-                "parsing — which mark to carry into the parse, or how to fuse a pair — "
-                "that choice is among readings that all parse cleanly (the "
-                "telisha-gedola exhibit below shows the alternatives). The headline case "
-                "is Ezekiel 20:31’s mahapakh + azla (",
+                " leniencies specific to LC, BHS, or WLC. Nothing here is forgiven; the"
+                " checker accepts these, and where it must pick how to represent one for"
+                " parsing — which mark to carry into the parse, or how to fuse a pair —"
+                " that choice is among readings that all parse cleanly (the"
+                " telisha-gedola exhibit below shows the alternatives). The headline case"
+                " is Ezekiel 20:31’s mahapakh + azla (",
                 H.code("mahapakh!azla"),
-                "), the only word in the entire Bible with two conjunctive accents on "
-                "one letter.",
+                "), the only word in Tanakh with two conjunctive accents on"
+                " one letter.",
             )
         ),
         H.para(
@@ -306,8 +306,8 @@ def _intro() -> tuple[object, ...]:
                 _link("Goerwitz checker run", "goerwitz.html"),
                 " and the ",
                 _link("poetic checker run", "poetic.html"),
-                " list the verses the checker actually flags; this page is the "
-                "inventory of what it deliberately does not.",
+                " list the verses the checker actually flags; this page is the"
+                " inventory of what it deliberately does not.",
             )
         ),
     )
@@ -317,10 +317,10 @@ def _charities_intro() -> tuple[object, ...]:
     return (
         H.heading_level_2("Editorial charities"),
         H.para(
-            "Each charity below names what the checker normalizes, the direction, and "
-            "why, with a citation. Both reinterpret a mark the manuscript should not "
-            "have here — a prose geresh-muqdam read as a plain geresh, and a stray "
-            "poetic geresh promoted into a revia-mugrash."
+            "Each charity below names what the checker normalizes, the direction, and"
+            " why, with a citation. Both reinterpret a mark the manuscript should not"
+            " have here — a prose geresh-muqdam read as a plain geresh, and a stray"
+            " poetic geresh promoted into a revia-mugrash."
         ),
     )
 
@@ -330,13 +330,13 @@ def _geresh_muqdam_section() -> tuple[object, ...]:
         H.heading_level_3("Geresh-muqdam → geresh (prose)"),
         H.para(
             (
-                "Geresh-muqdam (U+059D) is a poetic-only sign. In the 21 prose books "
-                "WLC uses it just twice — Leviticus 1:3 (alone) and 2 Kings 17:13 — "
-                "as a typographic device standing in for "
-                "a plain geresh. The checker reads it as a plain geresh, so the prose "
-                "grammar (which has no geresh-muqdam) sees the geresh it expects. "
-                "Direction: poetic-looking sign → its prose counterpart. tanach.us "
-                "itself made the same correction in both verses — changes ",
+                "Geresh-muqdam (U+059D) is a poetic-only sign. In the 21 prose books"
+                " WLC uses it just twice — Leviticus 1:3 (alone) and 2 Kings 17:13 —"
+                " as a typographic device standing in for"
+                " a plain geresh. The checker reads it as a plain geresh, so the prose"
+                " grammar (which has no geresh-muqdam) sees the geresh it expects."
+                " Direction: poetic-looking sign → its prose counterpart. tanach.us"
+                " itself made the same correction in both verses — changes ",
                 _uxlc_change_link("2020.10.19/2020.09.22-1"),
                 " (Leviticus 1:3) and ",
                 _uxlc_change_link("2020.10.19/2020.09.22-2"),
@@ -345,12 +345,12 @@ def _geresh_muqdam_section() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "The two verses differ in what happens next. In Leviticus 1:3 the "
-                "geresh-muqdam stands alone, so the charity is the whole story. In 2 "
-                "Kings 17:13 the converted geresh then sits on a word that also carries "
-                "a telisha-gedola — so once the charity has run, what remains is one of "
-                "the telisha-gedola + geresh oddities below (the only one of those five "
-                "whose geresh reaches the checker by way of a charity).",
+                "The two verses differ in what happens next. In Leviticus 1:3 the"
+                " geresh-muqdam stands alone, so the charity is the whole story. In 2"
+                " Kings 17:13 the converted geresh then sits on a word that also carries"
+                " a telisha-gedola — so once the charity has run, what remains is one of"
+                " the telisha-gedola + geresh oddities below (the only one of those five"
+                " whose geresh reaches the checker by way of a charity).",
             )
         ),
     )
@@ -361,23 +361,23 @@ def _ps124_section() -> tuple[object, ...]:
         H.heading_level_3("Plain geresh → revia-mugrash (poetic): Psalms 124:4"),
         H.para(
             (
-                "A plain geresh in a poetic verse is otherwise a fail-fast lexical "
-                "error: the poetic grammar has no plain geresh. The sole charitable "
-                "exception is Psalms 124:4, where a revia and a plain geresh share "
-                "one letter. There the "
-                "checker reads the pair charitably as a single revia-mugrash — the "
-                "established poetic compound — by normalizing the two same-letter "
-                "marks into order (revia + geresh → geresh + revia) and promoting the "
-                "plain geresh to geresh-muqdam, so the existing geresh-muqdam + revia "
-                "→ revia-mugrash rule consumes both as one token.",
+                "A plain geresh in a poetic verse is otherwise a fail-fast lexical"
+                " error: the poetic grammar has no plain geresh. The sole charitable"
+                " exception is Psalms 124:4, where a revia and a plain geresh share"
+                " one letter. There the"
+                " checker reads the pair charitably as a single revia-mugrash — the"
+                " established poetic compound — by normalizing the two same-letter"
+                " marks into order (revia + geresh → geresh + revia) and promoting the"
+                " plain geresh to geresh-muqdam, so the existing geresh-muqdam + revia"
+                " → revia-mugrash rule consumes both as one token.",
             )
         ),
         H.para(
             (
-                "This within-letter order normalization is licit precisely because it "
-                "stays within a single letter — we are liberal about mark order on one "
-                "letter (questionable penmanship is not our concern) but preserve order "
-                "across letters, which is meaningful reading order. Cite ",
+                "This within-letter order normalization is licit precisely because it"
+                " stays within a single letter — we are liberal about mark order on one"
+                " letter (questionable penmanship is not our concern) but preserve order"
+                " across letters, which is meaningful reading order. Cite ",
                 _link(
                     "tanach.us Psalms 124:4 note",
                     "https://tanach.us/Notes/Psalms/Psalms.124.4.4-c.html",
@@ -392,24 +392,24 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
     items: list[object] = [
         H.heading_level_3("Telisha-gedola + geresh/gershayim (five words)"),
         H.para(
-            "Five WLC words carry both a telisha-gedola and a geresh-family companion "
-            "(a plain geresh or gershayim — or, in 2 Kings 17:13, a geresh that the "
-            "geresh-muqdam charity above produced). This double-marking is not a quirk "
-            "to forgive: it is official masoretic tradition, attested in the standard "
-            "witnesses. What the checker must decide is only how to represent it for "
-            "parsing — and there it keeps the telisha-gedola and drops the companion. "
-            "That is a choice, but a choice among grammatically-clean options: the "
-            "verses also parse cleanly if the telisha-gedola is dropped instead, or if "
-            "both marks are kept as a sequence."
+            "Five WLC words carry both a telisha-gedola and a geresh-family companion"
+            " (a plain geresh or gershayim — or, in 2 Kings 17:13, a geresh that the"
+            " geresh-muqdam charity above produced). This double-marking is not a quirk"
+            " to forgive: it is official masoretic tradition, attested in the standard"
+            " witnesses. What the checker must decide is only how to represent it for"
+            " parsing — and there it keeps the telisha-gedola and drops the companion."
+            " That is a choice, but a choice among grammatically-clean options: the"
+            " verses also parse cleanly if the telisha-gedola is dropped instead, or if"
+            " both marks are kept as a sequence."
         ),
         _telg_verdict_table(index, parser, has_legarmeh),
         H.para(
-            "Every one of the five verses parses cleanly under all three readings "
-            "(no ERROR, no NO_PARSE), so the choice is not forced by grammaticality — "
-            "it is purely a representation preference for the telisha-gedola. The two "
-            "verses below show the full parse tree under each reading (one same-letter "
-            "case, one cross-letter); the trees differ exactly at the companion word, "
-            "as expected."
+            "Every one of the five verses parses cleanly under all three readings"
+            " (no ERROR, no NO_PARSE), so the choice is not forced by grammaticality —"
+            " it is purely a representation preference for the telisha-gedola. The two"
+            " verses below show the full parse tree under each reading (one same-letter"
+            " case, one cross-letter); the trees differ exactly at the companion word,"
+            " as expected."
         ),
     ]
     for bcv in _TELG_TREE_REFS:
@@ -426,14 +426,14 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
     items.append(
         H.para(
             (
-                "A presentation note: even the same-letter keep-both case "
-                "(Zephaniah 2:15) renders as a sequence — a telisha-gedola phrase, "
-                "then a geresh "
-                "phrase, one tree level deeper — not as a fused same-letter cluster, "
-                "because the telisha-gedola is prepositive (relocated to the front of "
-                "the word) and the scanner emits the two marks as separate tokens. So "
-                "the real word’s keep-both tree already makes the sequence visible; no "
-                "synthetic repeated-word illustration is needed.",
+                "A presentation note: even the same-letter keep-both case"
+                " (Zephaniah 2:15) renders as a sequence — a telisha-gedola phrase,"
+                " then a geresh"
+                " phrase, one tree level deeper — not as a fused same-letter cluster,"
+                " because the telisha-gedola is prepositive (relocated to the front of"
+                " the word) and the scanner emits the two marks as separate tokens. So"
+                " the real word’s keep-both tree already makes the sequence visible; no"
+                " synthetic repeated-word illustration is needed.",
             )
         )
     )
@@ -475,37 +475,18 @@ def _telg_gerstar_word(verse: object) -> str | None:
     return None
 
 
-def _fusions_section() -> tuple[object, ...]:
-    return (
-        H.heading_level_3("Swallowed-helper fusions"),
-        H.para(
-            "A handful of stress-helper marks are fused onto their neighbour by the "
-            "scanner before the grammar ever sees them, so the grammar reads one token "
-            "where the manuscript wrote two: a stress-helper tsinnorit fused onto a "
-            "zinor to make a zarqa, a doubled pashta, and a doubled telisha-qetana. "
-            "Like the pairs above these are standard masoretic combinations, not "
-            "leniencies — a zarqa simply is a zinor with its tsinnorit, and a doubled "
-            "prepositive accent is one accent written twice — so the fusion is just "
-            "faithful tokenization, not forgiveness. Unlike the same-letter pairs, "
-            "these are cross-letter fusions (the scanner allows base letters between "
-            "the two marks), so they never present as a two-accents-on-one-letter "
-            "cluster."
-        ),
-    )
-
-
 def _oddities_intro() -> tuple[object, ...]:
     return (
         H.heading_level_2("Masoretically-blessed oddities (not charities)"),
         H.para(
-            "The features below would make a naïve checker blink — two accents sharing "
-            "one letter or one word, or a stress-helper fused onto a disjunctive — but "
-            "none of them is a quirk of LC, BHS, or WLC to be forgiven. They are "
-            "official masoretic tradition, attested in the standard witnesses. The "
-            "checker accepts them; its only real decision is one of representation — "
-            "which mark to carry into the parse, or how to fuse a pair — and, as the "
-            "telisha-gedola exhibit shows, that decision is a choice among readings "
-            "that all parse cleanly."
+            "The features below would make a naïve checker blink — two accents sharing"
+            " one letter or one word, or a stress-helper fused onto a disjunctive — but"
+            " none of them is a quirk of LC, BHS, or WLC to be forgiven. They are"
+            " official masoretic tradition, attested in the standard witnesses. The"
+            " checker accepts them; its only real decision is one of representation —"
+            " which mark to carry into the parse, or how to fuse a pair — and, as the"
+            " telisha-gedola exhibit shows, that decision is a choice among readings"
+            " that all parse cleanly."
         ),
     )
 
@@ -517,65 +498,63 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
         _verse_links("ek20:31"),
         H.para(
             (
-                "Ezekiel 20:31’s ",
-                _hbo("נִטְמְאִים"),
-                " carries a mahapakh (U+05A4) and a qadma/azla (U+05A8) on one "
-                "letter. It is the most extreme of these oddities — the only word in "
-                "the entire Bible with two conjunctive accents on one letter — and the "
-                "checker accepts it outright (the scanner fuses the pair into one ",
+                "In Ezekiel 20:31, ",
+                _hbo("נִטְמְאִ֤֨ים"),
+                " carries both a mahapakh and a qadma on its"
+                " alef. It is the only word in"
+                " Tanakh with two conjunctive accents on one letter. The"
+                " checker accepts it outright: the scanner fuses the pair into one ",
                 H.code("mahapakh!azla"),
-                " token, which the grammar parses as an ordinary accent). Unlike the "
-                "telisha-gedola words, nothing is dropped: both marks survive into the "
-                "single fused token.",
+                " token, which the grammar parses as an ordinary accent. Unlike the"
+                " telisha-gedola words, nothing is dropped: both marks survive into the"
+                " single fused token.",
             )
         ),
         H.para(
             (
-                "MAM attests the same double-marking (it keeps ",
-                H.bold("both"),
-                " marks, with no variant note), and MAM’s documentation note on the "
-                "verse — citing the three standard witnesses (Aleppo, Leningrad, Cairo) "
-                "and their masorot, and Yeivin Ch. 1 p. 232 — spells out why it is "
-                "puzzling yet standard:",
+                "MAM has this double accent, and has a documentation note"
+                " citing support for this from three standard witnesses (Aleppo, Leningrad, Cairo)"
+                " and their masorot. It also cites Yeivin 28.1 p. 232 and spells out why this double accent is"
+                " puzzling yet standard:",
             )
         ),
         H.blockquote(_hbo(_EK2031_MAM_NOTE_HE)),
         H.para(
             (
-                "That is: this is the only word in all of Scripture with two "
-                "conjunctive accents on one letter; the qadma precedes the mahapakh in "
-                "reading, as in six other places where a qadma sits where a ga‘ya would "
-                "be expected and the mahapakh on the stressed syllable (e.g. Leviticus "
-                "25:46; Numbers 21:1). See the full note on the ",
+                "That is: this is the only word in all of Tanakh with two"
+                " conjunctive accents on one letter; the qadma precedes the mahapakh in"
+                " reading, as in six other places where a qadma sits where a ga‘ya would"
+                " be expected and a mahapakh occupies the stressed syllable (e.g. Leviticus"
+                " 25:46; Numbers 21:1). See the full note on the ",
                 _link(
                     "MAM-with-doc Ezekiel page",
                     "https://bdenckla.github.io/MAM-with-doc/C3-Ezekiel.html#c20v31",
                 ),
-                ". Because the witnesses agree, ek20:31 is legitimately whitelisted, "
-                "not an anomaly.",
+                ". Because the witnesses agree, ek20:31 is whitelisted,"
+                " rather than treated an error.",
             )
         ),
         H.para(
             (
                 "The instructive contrast is Leviticus 25:20, the ",
                 H.bold("only other"),
-                " prose word with two accents on one letter (a mahapakh + tipeḥa). "
-                "There the witnesses do ",
+                " prose word with two accents on one letter (a mahapakh + tipeḥa)."
+                " There the witnesses do ",
                 H.bold("not"),
-                " agree — MAM keeps only the tipeḥa and WLC tags the word anomalous — "
-                "so it is a genuine Leningrad slip, and the checker flags it (as a "
-                "lexical error). Same surface shape, opposite verdict, decided by the "
-                "witnesses. Its full treatment is on the ",
+                " agree — MAM keeps only the tipeḥa and WLC tags the word anomalous —"
+                " so it is a genuine Leningrad slip, and the checker flags it (as a"
+                " lexical error). Same surface shape, opposite verdict, decided by the"
+                " witnesses. Its full treatment is on the ",
                 _link("Goerwitz page", "goerwitz.html#oblv25v20"),
                 " (the poetic ",
                 H.code("merkha!azla"),
-                " of Psalms 56:10 is the same story on the poetic side: L carries it "
-                "alone, so it too is flagged).",
+                " of Psalms 56:10 is the same story on the poetic side: L carries it"
+                " alone, so it too is flagged).",
             )
         ),
         H.para(
-            "The checker’s live tree for the verse, with the fused token shown as "
-            "mahapakh!azla:"
+            "The checker’s live tree for the verse, with the fused token shown as"
+            " mahapakh!azla:"
         ),
         _render_tree(tree_text),
     )
@@ -593,7 +572,6 @@ def render_body_contents(index, parser, has_legarmeh: HasLegarmeh) -> tuple[obje
         *_oddities_intro(),
         *_telg_section(index, parser, has_legarmeh),
         *_ek2031_section(index, parser, has_legarmeh),
-        *_fusions_section(),
     ]
     wrapper = H.div(tuple(sections), {"class": _WIDTH_CLASS})
     return (wrapper,)

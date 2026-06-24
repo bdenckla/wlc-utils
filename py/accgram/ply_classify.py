@@ -1,4 +1,4 @@
-"""Derive the PLY-based oddball set for the generate-goerwitz-html subcommand.
+"""Derive the PLY-based oddball set for the goerwitz.html report (generate-html).
 
 This module classifies oddball verses from the **PLY** port outputs. An oddball
 is any verse whose PLY parse tree contains at least one ``ERROR`` leaf. Since

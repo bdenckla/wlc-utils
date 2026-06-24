@@ -1,4 +1,4 @@
-"""Poetic oddball report -- the optional Phase 4 analogue of ``generate-goerwitz-html``.
+"""Poetic oddball report -- the optional Phase 4 analogue of the goerwitz.html report.
 
 The poetic corpus run (``run-ply-poetic``) parses 99.69% of the Three Books
 cleanly; the residual splits into two documented oddball kinds:

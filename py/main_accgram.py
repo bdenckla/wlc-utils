@@ -24,26 +24,25 @@ Subcommands:
                 out/accgram/ply-poetic/_servi_xcheck.txt.  The second-witness gate
                 for vetting Breuer servant-adjacency rules (it settled deḥi and
                 small revia).  Use --target to restrict.
-    generate-poetic-html
-                Collect the residual poetic oddballs (the missing-silluq
-                ERROR-leaf trees and the NO_PARSE anomalies) from the poetic
-                corpus, enrich each with its pointed-Hebrew text, scanned token
-                sequence, rendered tree, and WLC-vs-MAM-simple disjunctive comparison, and
-                write out/accgram/ply-poetic/_oddballs.json plus the HTML report
-                gh-pages/accgram/poetic.html.  The optional Phase 4 analogue of
-                generate-goerwitz-html.  Run run-ply-poetic first.
-    generate-goerwitz-html
-                Derive the PLY-based oddball set from the PLY outputs
-                (out/accgram/ply) into out/accgram/ply/_oddballs.json, then enrich
-                each with its matching wlc422-kq-u verse object and structured
-                XML-ish UXLC verse node and write out/accgram/research-oddballs.json
-                plus the HTML report gh-pages/accgram/goerwitz.html.
-    generate-almost-errors-html
-                Generate gh-pages/accgram/almost-errors.html: the "almost errors"
-                page documenting the editorial charities the checker applies and
-                the non-charity ek20:31 mahapakh!azla.  Live parse trees (the
-                telisha-gedola alternate readings, ek20:31, lv25:20) are
-                regenerated from the grammar at build time.
+    generate-html
+                Generate all three accgram HTML reports in one pass:
+
+                  * gh-pages/accgram/poetic.html -- the residual poetic oddballs
+                    (missing-silluq ERROR-leaf trees and NO_PARSE anomalies),
+                    each enriched with its pointed-Hebrew text, scanned token
+                    sequence, rendered tree, and WLC-vs-MAM-simple disjunctive
+                    comparison (plus out/accgram/ply-poetic/_oddballs.json).
+                    Run run-ply-poetic first.
+                  * gh-pages/accgram/goerwitz.html -- the PLY-based prose oddball
+                    set (from out/accgram/ply), enriched with its matching
+                    wlc422-kq-u verse object and structured XML-ish UXLC verse
+                    node (plus out/accgram/research-oddballs.json).
+                  * gh-pages/accgram/almost-errors.html -- the "almost errors"
+                    page documenting the editorial charities the checker applies
+                    and the non-charity ek20:31 mahapakh!azla, with live parse
+                    trees regenerated from the grammar at build time.
+
+                Each report runs with its default paths.
     test-fixes
                 For every annotated prose oddball, test whether adopting its
                 MAM-simple value clears the ERROR: substitute the MAM value into the
@@ -55,7 +54,7 @@ Subcommands:
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py run-ply-goerwitz
     .venv/Scripts/python.exe py/main_accgram.py run-ply-goerwitz --book ob
-    .venv/Scripts/python.exe py/main_accgram.py generate-goerwitz-html
+    .venv/Scripts/python.exe py/main_accgram.py generate-html
 """
 
 from __future__ import annotations
@@ -78,10 +77,6 @@ def _repo_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
-def _run_research_tao(args: argparse.Namespace) -> None:
-    research_tao.run(args)
-
-
 def _run_run_ply(args: argparse.Namespace) -> None:
     run_ply.run(args)
 
@@ -98,16 +93,17 @@ def _run_servi_xcheck(args: argparse.Namespace) -> None:
     servi_xcheck.run(args)
 
 
-def _run_poetic_oddballs(args: argparse.Namespace) -> None:
-    poetic_oddballs.run(args)
-
-
 def _run_fix_tester(args: argparse.Namespace) -> None:
     fix_tester.run(args)
 
 
-def _run_almost_errors(args: argparse.Namespace) -> None:
-    almost_errors.run(args)
+def _run_generate_html(_args: argparse.Namespace) -> None:
+    """Run all three HTML generators, each with its own default arguments."""
+    repo_root = _repo_root()
+    for module in (poetic_oddballs, research_tao, almost_errors):
+        sub = argparse.ArgumentParser()
+        module.add_args(sub, repo_root=repo_root)
+        module.run(sub.parse_args([]))
 
 
 def main() -> None:
@@ -163,29 +159,6 @@ def main() -> None:
     servi_xcheck.add_args(servi_xcheck_parser, repo_root=_repo_root())
     servi_xcheck_parser.set_defaults(func=_run_servi_xcheck)
 
-    poetic_oddballs_parser = subparsers.add_parser(
-        "generate-poetic-html",
-        help=(
-            "Collect the residual poetic oddballs (missing-silluq ERROR-leaf trees "
-            "and NO_PARSE anomalies), enrich each with its pointed-Hebrew text, token "
-            "sequence, tree, and WLC-vs-MAM disjunctive comparison, and write "
-            "out/accgram/ply-poetic/_oddballs.json + gh-pages/accgram/poetic.html."
-        ),
-    )
-    poetic_oddballs.add_args(poetic_oddballs_parser, repo_root=_repo_root())
-    poetic_oddballs_parser.set_defaults(func=_run_poetic_oddballs)
-
-    research_tao_parser = subparsers.add_parser(
-        "generate-goerwitz-html",
-        help=(
-            "Enrich the PLY-derived _oddballs.json entries with matching "
-            "wlc422-kq-u verse objects and XML-ish UXLC verse nodes, and write "
-            "the filterable goerwitz.html report."
-        ),
-    )
-    research_tao.add_args(research_tao_parser, repo_root=_repo_root())
-    research_tao_parser.set_defaults(func=_run_research_tao)
-
     fix_tester_parser = subparsers.add_parser(
         "test-fixes",
         help=(
@@ -197,18 +170,16 @@ def main() -> None:
     fix_tester.add_args(fix_tester_parser, repo_root=_repo_root())
     fix_tester_parser.set_defaults(func=_run_fix_tester)
 
-    almost_errors_parser = subparsers.add_parser(
-        "generate-almost-errors-html",
+    generate_html_parser = subparsers.add_parser(
+        "generate-html",
         help=(
-            "Generate gh-pages/accgram/almost-errors.html: the editorial charities "
-            "the checker applies (geresh-muqdam/geresh, the telisha-gedola "
-            "companion-drop with its alternate-reading trees, helper fusions, the "
-            "lv25:20 lexical reclassification) plus the non-charity ek20:31 "
-            "mahapakh!azla. Live trees are regenerated from the grammar."
+            "Generate all three accgram HTML reports in one pass: "
+            "gh-pages/accgram/poetic.html (run run-ply-poetic first), "
+            "goerwitz.html, and almost-errors.html. Each runs with its default "
+            "paths; live trees are regenerated from the grammar."
         ),
     )
-    almost_errors.add_args(almost_errors_parser, repo_root=_repo_root())
-    almost_errors_parser.set_defaults(func=_run_almost_errors)
+    generate_html_parser.set_defaults(func=_run_generate_html)
 
     args = parser.parse_args()
     args.func(args)

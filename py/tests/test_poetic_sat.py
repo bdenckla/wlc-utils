@@ -7,7 +7,7 @@ build_enriched_row does not abort, and the focus-word filtering of diff rows
 (``_focus_only_diff``).
 
 These are data-free unit tests; the end-to-end corpus run is exercised by
-``generate-poetic-html`` itself.
+``generate-html`` itself.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_poetic_sat.py -v
