@@ -37,45 +37,53 @@ blocks identically.
 
 from __future__ import annotations
 
-# --- accent marks (their own Unicode codepoints) ------------------------------
+from mb_cmn import hebrew_accents as ha
+from mb_cmn import hebrew_points as hp
+from mb_cmn import hebrew_punctuation as hpu
 
-ATNAX = "֑"          # etnaḥta            (M-C 92)
-SEGOLTA = "֒"        # segol (accent)     (01)
-SHALSHELET = "֓"     # shalshelet         (65)
-ZAQEF_QATAN = "֔"    # zaqef qatan        (80)
-ZAQEF_GADOL = "֕"    # zaqef gadol        (85)
-TIPEXA = "֖"         # tipeḥa             (73)
-REVIA = "֗"          # revia              (81)
-TSINNORIT = "֘"      # zarqa stress-helper / tsinnorit (82)
-PASHTA = "֙"         # pashta             (03 main / 33 helper)
-YETIV = "֚"          # yetiv              (10)
-TEVIR = "֛"          # tevir              (91)
-GERESH = "֜"         # geresh             (61)
-GERESH_MUQDAM = "֝"  # geresh muqdam      (11)
-GERSHAYIM = "֞"      # gershayim          (62 main / 12 secondary)
-QARNEY_PARA = "֟"    # qarney para (pazer gadol) (84)
-TELISHA_GEDOLA = "֠"  # telisha gedola    (14 main / 44 secondary)
-PAZER = "֡"          # pazer              (83)
-MUNAX = "֣"          # munaḥ              (74)
-MAHAPAKH = "֤"       # mahapakh           (70)
-MERKHA = "֥"         # merkha             (71)
-MERKHA_KEFULA = "֦"  # merkha kefula      (72)
-DARGA = "֧"          # darga              (94)
-QADMA = "֨"          # qadma / azla       (63)
-TELISHA_QETANA = "֩"  # telisha qetana    (04 main / 24 helper)
-YERAX = "֪"          # yeraḥ ben yomo / galgal (93)
-OLE = "֫"            # ole                (60)
-ILUY = "֬"           # iluy               (64)
-DEXI = "֭"           # deḥi               (13)
-ZINOR = "֮"          # zinor (zarqa/tsinnor main) (02)
+# --- accent marks (their own Unicode codepoints) ------------------------------
+#
+# The codepoints themselves live in `mb_cmn.hebrew_accents` (named via `\N{...}`,
+# the single source of truth).  Here we only alias them to the descriptive
+# spellings the scanners use; the trailing comment is the legacy M-C 2-digit code.
+
+ATNAX = ha.ATN              # etnaḥta             (M-C 92)
+SEGOLTA = ha.SEG_A          # segol (accent)      (01)
+SHALSHELET = ha.SHA         # shalshelet          (65)
+ZAQEF_QATAN = ha.ZAQ_Q      # zaqef qatan         (80)
+ZAQEF_GADOL = ha.ZAQ_G      # zaqef gadol         (85)
+TIPEXA = ha.TIP             # tipeḥa              (73)
+REVIA = ha.REV              # revia               (81)
+TSINNORIT = ha.ZSH_OR_TSIT  # zarqa stress-helper / tsinnorit (82)
+PASHTA = ha.PASH            # pashta              (03 main / 33 helper)
+YETIV = ha.YET              # yetiv               (10)
+TEVIR = ha.TEV              # tevir               (91)
+GERESH = ha.GER             # geresh              (61)
+GERESH_MUQDAM = ha.GER_M    # geresh muqdam       (11)
+GERSHAYIM = ha.GER_2        # gershayim           (62 main / 12 secondary)
+QARNEY_PARA = ha.QAR        # qarney para (pazer gadol) (84)
+TELISHA_GEDOLA = ha.TEL_G   # telisha gedola      (14 main / 44 secondary)
+PAZER = ha.PAZ              # pazer               (83)
+MUNAX = ha.MUN              # munaḥ               (74)
+MAHAPAKH = ha.MAH           # mahapakh            (70)
+MERKHA = ha.MER             # merkha              (71)
+MERKHA_KEFULA = ha.MER_2    # merkha kefula       (72)
+DARGA = ha.DAR              # darga               (94)
+QADMA = ha.QOM              # qadma / azla        (63)
+TELISHA_QETANA = ha.TEL_Q   # telisha qetana      (04 main / 24 helper)
+YERAX = ha.YBY              # yeraḥ ben yomo / galgal (93)
+OLE = ha.OLE                # ole                 (60)
+ILUY = ha.ILU               # iluy                (64)
+DEXI = ha.DEX               # deḥi                (13)
+ZINOR = ha.Z_OR_TSOR        # zinor (zarqa/tsinnor main) (02)
 
 # --- non-accent marks ---------------------------------------------------------
 
-METEG = "ֽ"          # meteg / silluq     (35 / 75 / 95)
-PASEQ = "׀"          # paseq              (05)
-SOF_PASUQ = "׃"      # sof pasuq          (00)
-UPPER_DOT = "ׄ"      # upper punctum      (52)
-LOWER_DOT = "ׅ"      # lower punctum      (53)
+METEG = hp.MTGOSLQ          # meteg / silluq      (35 / 75 / 95)
+PASEQ = hpu.PASOLEG         # paseq               (05)
+SOF_PASUQ = hpu.SOPA        # sof pasuq           (00)
+UPPER_DOT = hpu.UPDOT       # upper punctum       (52)
+LOWER_DOT = hpu.LODOT       # lower punctum       (53)
 
 MAQAF = "-"               # word-internal boundary (joins one accent word)
 LETTER = "X"              # placeholder base consonant (opaque scanner filler)
