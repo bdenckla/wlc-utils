@@ -48,7 +48,7 @@ BY_REF: dict[str, dict[str, object]] = {
             "carries the azla alone; according to Breuer, the Aleppo Codex likewise has "
             "azla and Sassoon 1053 has merkha. The checker fuses the pair into one "
             "order-less merkha!azla bang-pair and flags the verse as a lexical anomaly: "
-            "only a few accent pairs (revia + geresh-muqdam, deḥi + munaḥ, oleh + yored) "
+            "only a few accent pairs (revia + geresh muqdam, deḥi + munaḥ, oleh + yored) "
             "may legitimately share one letter, and merkha + azla is not among them."
         ),
         "img": "LC-376B-col-2-line-5-Ps-56v10.png",
@@ -62,7 +62,7 @@ BY_REF: dict[str, dict[str, object]] = {
             "The upper mark (transcribed as the qadma/azla) is in any case oddly placed "
             "and oddly shaped; it could as easily be a misshapen part of the alef as a "
             "deliberate accent — so even the azla half of the supposed pair is uncertain, "
-            "much as the Job 31:15 geresh-muqdam is.",
+            "much as the Job 31:15 geresh muqdam is.",
             "The checker represents the cluster faithfully as one merkha!azla bang-pair "
             "but does NOT bless it grammatically (it is not a licit servus), so the verse is a "
             "NO_PARSE oddball rather than a silently-clean parse. Each of the four "

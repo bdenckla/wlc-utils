@@ -696,7 +696,7 @@ def p_legarmeh_clause(p):
 
 
 # --- shalshelet gedolah clause (#371) ------------------------------------------
-# A disjunctive in the second half before silluq (revia-mugrash rank); distinct from the
+# A disjunctive in the second half before silluq (revia mugrash rank); distinct from the
 # conjunctive shalshelet qetannah.  Its servant is merka: Breuer Ch 11 §30 (merka, with a
 # tarkha before it), confirmed by servi_xcheck (2026-06-17) -- all 3 poetic occurrences
 # carry a merka servant in both L and MAM (uniform, zero conflicts), like small revia'.

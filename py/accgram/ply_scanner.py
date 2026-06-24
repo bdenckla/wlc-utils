@@ -132,7 +132,7 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # read here as a geresh; and 2 Kings 17:13 (sharing a word with a telisha gedola),
     # where it is read as geresh and then dropped upstream as that telisha gedola's
     # companion (uni_to_marks.word_to_marks), so it never reaches this rule.  (The poetic
-    # scanner keeps its own revia-mugrash handling.)
+    # scanner keeps its own revia mugrash handling.)
     # See the tanach.us changes
     # Lev 1:3:       https://tanach.us/Changes/2020.10.19%20-%20Changes/2020.10.19%20-%20Changes.xml?2020.09.22-1
     # 2 Kings 17:13: https://tanach.us/Changes/2020.10.19%20-%20Changes/2020.10.19%20-%20Changes.xml?2020.09.22-2

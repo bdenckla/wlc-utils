@@ -63,12 +63,12 @@ _REPORT_TITLE = "Almost errors"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 # The geresh family (plain geresh U+059C, gershayim U+059D's plain sibling, and the
-# geresh-muqdam U+059D promoted/demoted form) the telisha gedola companion-drop concerns.
+# geresh muqdam U+059D promoted/demoted form) the telisha gedola companion-drop concerns.
 _GG = frozenset((am.GERESH, am.GERSHAYIM))
 
 # The five WLC words carrying BOTH telisha gedola and a geresh-family mark -- the
 # companions the checker drops to keep just the telg.  (gn5:29 / zp2:15 same-letter;
-# 2k17:13 same-letter with geresh-muqdam; lv10:4 / ek48:10 cross-letter, same word.)
+# 2k17:13 same-letter with geresh muqdam; lv10:4 / ek48:10 cross-letter, same word.)
 _TELG_EXHIBIT_REFS = ("gn5:29", "zp2:15", "2k17:13", "lv10:4", "ek48:10")
 
 # The two verses whose full alternate-reading trees the exhibit draws: one same-letter
@@ -319,22 +319,22 @@ def _charities_intro() -> tuple[object, ...]:
         H.para(
             "Each charity below names what the checker normalizes, the direction, and"
             " why, with a citation. Both reinterpret a mark the manuscript should not"
-            " have here — a prose geresh-muqdam read as a plain geresh, and a stray"
-            " poetic geresh promoted into a revia-mugrash."
+            " have here — a prose geresh muqdam read as a plain geresh, and a stray"
+            " poetic geresh promoted into a revia mugrash."
         ),
     )
 
 
 def _geresh_muqdam_section() -> tuple[object, ...]:
     return (
-        H.heading_level_3("Geresh-muqdam → geresh (prose)"),
+        H.heading_level_3("Geresh muqdam → geresh (prose)"),
         H.para(
             (
-                "Geresh-muqdam (U+059D) is a poetic-only sign. In the 21 prose books"
+                "Geresh muqdam (U+059D) is a poetic-only sign. In the 21 prose books"
                 " WLC uses it just twice — Leviticus 1:3 (alone) and 2 Kings 17:13 —"
                 " as a typographic device standing in for"
                 " a plain geresh. The checker reads it as a plain geresh, so the prose"
-                " grammar (which has no geresh-muqdam) sees the geresh it expects."
+                " grammar (which has no geresh muqdam) sees the geresh it expects."
                 " Direction: poetic-looking sign → its prose counterpart. tanach.us"
                 " itself made the same correction in both verses — changes ",
                 _uxlc_change_link("2020.10.19/2020.09.22-1"),
@@ -346,7 +346,7 @@ def _geresh_muqdam_section() -> tuple[object, ...]:
         H.para(
             (
                 "The two verses differ in what happens next. In Leviticus 1:3 the"
-                " geresh-muqdam stands alone, so the charity is the whole story. In 2"
+                " geresh muqdam stands alone, so the charity is the whole story. In 2"
                 " Kings 17:13 the converted geresh then sits on a word that also carries"
                 " a telisha gedola — so once the charity has run, what remains is one of"
                 " the telisha gedola + geresh oddities below (the only one of those five"
@@ -358,18 +358,18 @@ def _geresh_muqdam_section() -> tuple[object, ...]:
 
 def _ps124_section() -> tuple[object, ...]:
     return (
-        H.heading_level_3("Plain geresh → revia-mugrash (poetic): Psalms 124:4"),
+        H.heading_level_3("Plain geresh → revia mugrash (poetic): Psalms 124:4"),
         H.para(
             (
                 "A plain geresh in a poetic verse is otherwise a fail-fast lexical"
                 " error: the poetic grammar has no plain geresh. The sole charitable"
                 " exception is Psalms 124:4, where a revia and a plain geresh share"
                 " one letter. There the"
-                " checker reads the pair charitably as a single revia-mugrash — the"
+                " checker reads the pair charitably as a single revia mugrash — the"
                 " established poetic compound — by normalizing the two same-letter"
                 " marks into order (revia + geresh → geresh + revia) and promoting the"
-                " plain geresh to geresh-muqdam, so the existing geresh-muqdam + revia"
-                " → revia-mugrash rule consumes both as one token.",
+                " plain geresh to geresh muqdam, so the existing geresh muqdam + revia"
+                " → revia mugrash rule consumes both as one token.",
             )
         ),
         H.para(
@@ -394,7 +394,7 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
         H.para(
             "Five WLC words carry both a telisha gedola and a geresh-family companion"
             " (a plain geresh or gershayim — or, in 2 Kings 17:13, a geresh that the"
-            " geresh-muqdam charity above produced). This double-marking is not a quirk"
+            " geresh muqdam charity above produced). This double-marking is not a quirk"
             " to forgive: it is official masoretic tradition, attested in the standard"
             " witnesses. What the checker must decide is only how to represent it for"
             " parsing — and there it keeps the telisha gedola and drops the companion."

@@ -49,7 +49,7 @@ accent -> poetic reading (the accents that matter in the Three Books):
   fail-fast (Plan C): any other stray accent (U+0591..U+05AE) no rule consumes is
   emitted as STRAY_ACCENT (the grammar has no terminal for it -> NO_PARSE), never
   silently swallowed.  Zero live customers (the lone ps124:4 geresh is consumed by the
-  same-letter revia-mugrash charity).
+  same-letter revia mugrash charity).
 
 Note: "revia mugrash without geresh" (#367 = Breuer Ch 10 §17-18) -- a bare revia
 acting as the main verse divider when the verse has no atnaḥ -- is NOT a gap: it is
@@ -242,7 +242,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # accent match beats the equally-long `.`; the catch-all keeps swallowing the
     # structural junk (X placeholders, spaces, maqaf, `]N` note markers).  Zero live
     # customers today -- the only attested catch-all accent (the ps124:4 geresh) is
-    # consumed by the same-letter revia-mugrash charity above.
+    # consumed by the same-letter revia mugrash charity above.
     (re.compile("[֑-֮]"), pan.STRAY_ACCENT),
     (re.compile(r"\*\*"), None),
     (re.compile(r"\*[^* \r\n\-]+"), None),

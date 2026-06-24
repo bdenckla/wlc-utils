@@ -98,7 +98,7 @@ def word_to_marks(word: str) -> str:
     whether on the same letter or a different letter of the word.  This covers exactly
     five words, in each of which we keep the telisha gedola: Gen 5:29, 2 Kings 17:13 and
     Zeph 2:15 (same letter) and Lev 10:4 and Ezek 48:10 (different letters).  2 Kings
-    17:13 is the geresh-muqdam case: telg + geresh-muqdam -> telg + geresh -> telg.
+    17:13 is the geresh muqdam case: telg + geresh muqdam -> telg + geresh -> telg.
 
     The reading treats the (prepositive) telisha gedola as analogous to the (prepositive)
     geresh muqdam, and the geresh (or gershayim) as analogous to the revia of revia
@@ -109,7 +109,7 @@ def word_to_marks(word: str) -> str:
     muqdam word" -- geresh muqdam occurs only as part of a revia mugrash, even when the
     revia is not shown.)  The analogy is a little inverted -- one wants the geresh to be
     the analogue of geresh muqdam -- but the geresh/gershayim is not prepositive, so it is
-    the telisha gedola that plays the geresh-muqdam role.
+    the telisha gedola that plays the geresh muqdam role.
 
     Two other interpretations are equally grammatical (all five verses verified to parse
     either way): we could just as easily have dropped the telisha gedola and retained the

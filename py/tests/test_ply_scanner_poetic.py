@@ -3,7 +3,7 @@
 Pins the decoded token stream of a few real Psalms verses whose Michigan-Claremont
 encoding was checked by hand against the M-C accent table (wlc420/supplmt.wts,
 column II) and Yeivin ITM #358-374.  These exercise the tricky cases: the
-revia-mugrash geresh muqdam (11+81), oleh-we-yored (60 ole + 71 yored merka),
+revia mugrash geresh muqdam (11+81), oleh-we-yored (60 ole + 71 yored merka),
 azla/mahapakh legarmeh (63/70 + 05 paseq), the galgal servus of oleh-we-yored
 (93), and the revia gadol/qatan/mugrash disambiguation.
 

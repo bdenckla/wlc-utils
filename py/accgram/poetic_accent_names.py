@@ -68,7 +68,7 @@ SHALSHELET = "SHALSHELET"
 # emits this in place of silently swallowing it, and the grammar has no terminal for
 # it, so any verse carrying one becomes a NO_PARSE with the stray accent as its stall
 # locus.  Zero live customers today -- the lone attested catch-all accent (the ps124:4
-# geresh) is consumed by the same-letter revia-mugrash charity -- so this is a
+# geresh) is consumed by the same-letter revia mugrash charity -- so this is a
 # future-proofing guard, the poetic side of "nothing vanishes silently".
 STRAY_ACCENT = "STRAY_ACCENT"
 
