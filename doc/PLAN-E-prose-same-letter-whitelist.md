@@ -1,7 +1,12 @@
 # Plan E: prose same-letter whitelist — the prose analogue of Plan D's guard
 
-**Status (2026-06-23):** new, **not started** — investigation done, implementation pending
-the open question below. Spun off from **Plan D**
+**Status (2026-06-24):** **DONE** — the maintainer chose to **build the general guard**.
+`lexical_validation.illegal_below_pairs` was replaced by the general
+`illegal_same_letter_pairs` (whitelist = `{mahapakh+qadma}`); `run_ply` rewired and its
+static `_ILLEGAL_MARK_REP_CHAR` map folded into a `StrandedMark.rep_char` field. Tests
+extended and passing (136/136); corpus regenerated with an **empty diff** (output-neutral:
+lv25:20 still `illegal_mark mahapakh!tipexa`, ek20:31 still a clean tree). Spun off from
+**Plan D**
 (`doc/PLAN-D-faithful-same-letter-bangs.md`), which gave the *poetic* system a same-letter
 "only whitelisted pairs may share a letter; anything else is a bang → NO_PARSE oddball"
 guard. The maintainer asked whether the prose system has an equivalent (much stricter)
@@ -133,13 +138,17 @@ Read these to confirm exact signatures before editing (the Explore pass did not 
   clean tree with `mahapakh!azla`, nothing else changes).
 - Drive-one-verse / faithful-scan recipes: reuse Plan A's (`doc/PLAN-A-same-letter-accent-pairs.md`).
 
-## Open question for the maintainer (decide before implementing)
+## Open question for the maintainer — RESOLVED (build the general guard)
 
-The investigation is done and the rule is output-neutral. The choice is whether to
+The investigation was done and the rule output-neutral. The choice was whether to
 **build the general guard** (generalize `lexical_validation`; future-proofing + conceptual
 parity with poetic Plan D) or **leave the current piecemeal handling** (specific
 `illegal_below_pairs` for lv25:20 + the `MAHAPAKHAZLA` fuse for ek20:31) and just record
 the finding that the prose whitelist = {mahapakh+qadma}, MAM-confirmed.
+
+**Decision: build the general guard.** Implemented as `illegal_same_letter_pairs` with
+the `{mahapakh+qadma}` whitelist; the lv25:20 mahapakh+tipeḥa case is now a sub-case of
+the general rule. ek20:31 stays accepted (scanner fusion, whitelisted).
 
 Note either way: **ek20:31 stays accepted** (MAM confirms the double-marking), so the
 Plan D deferred item "revisit prose ek20:31 under the whitelist" resolves to **keep it** —

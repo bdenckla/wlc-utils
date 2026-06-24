@@ -16,12 +16,18 @@ simply vanishes -- so whether the verse becomes an oddball is left to downstream
 parse luck.  All 12 such prose verses (a stray zarqa mis-encoded before a lamed
 ascender) are equally wrong; this layer flags them uniformly.
 
-A second, sibling check (``illegal_below_pairs``) flags an impossible *same-letter*
-configuration rather than a stranded helper: two *below*-the-letter accents on one
-letter.  The sole attested pair is mahapakh + tipeḥa (lv25:20); two below-accents
-cannot share a letter, so the fault is intrinsic to the letter -- an alphabet error,
-not an illegal grammatical sequence (which the grammar would otherwise flag as
-``tipexa_phrase -> ERROR``, the wrong rationale).
+A second, sibling check (``illegal_same_letter_pairs``) flags an impossible
+*same-letter* configuration rather than a stranded helper: two accents stacked on one
+base letter.  This is a WHITELIST guard, the prose analogue of the poetic
+``ply_scanner_poetic`` bang guard (Plan D / Plan E): only the mahapakh + qadma cluster
+may legitimately share a letter -- the MAM-confirmed ek20:31 ``mahapakh!azla``, which
+the scanner fuses to one token and the grammar accepts -- so ANY other two adjacent
+accents (no base-letter ``X`` between -> same letter) is an alphabet error.  The sole
+attested illicit pair is mahapakh + tipeḥa (lv25:20); two accents stacked on one letter
+make the fault intrinsic to the letter -- an alphabet error, not an illegal grammatical
+sequence (which the grammar would otherwise flag as ``tipexa_phrase -> ERROR``, the
+wrong rationale).  The general guard supersedes the earlier mahapakh+tipeḥa-only check
+(output-neutral today, but future-proof; cf. memory parse-rate-not-a-goal).
 
 Prose-only is intentional and burns no bridge: a bare ``82`` is *valid* in the
 poetic accent system (tsinnorit, >200 uses), but the genre split already happens
@@ -46,7 +52,7 @@ from dataclasses import dataclass
 from accgram import accent_marks as am
 
 # Atoms are delimited by spaces and maqaf (``-``), mirroring the scanner's TEXT
-# class ``[^ \r\n-]*`` which keeps a fused tsinnorit...zinor pair inside one atom.
+# class ``[^ \r\n\-]*`` which keeps a fused tsinnorit...zinor pair inside one atom.
 _ATOM_SPLIT_RE = re.compile(r"[ \t\r\n\-]+")
 
 # stress-helper mark -> (fusion-partner mark, M-C code label) where the partner must
@@ -56,27 +62,62 @@ _ATOM_SPLIT_RE = re.compile(r"[ \t\r\n\-]+")
 # ``illegal_mark`` report reads identically to the pre-Phase-2 output.
 _STRESS_HELPER_PARTNER: dict[str, tuple[str, str]] = {am.TSINNORIT: (am.ZINOR, "82")}
 
-# Two *below*-the-letter accents cannot share a single letter: the fault is intrinsic
-# to the letter, independent of surrounding context, so it is an alphabet (lexical)
-# error rather than an illegal grammatical *sequence*.  The one attested pair is
-# mahapakh (U+05A4) + tipeḥa (U+0596) on one letter (lv25:20, word נֹּאכַל -- WLC keeps a
-# mahapakh MAM drops, and tags the word anomalous via ]n).  Scoped to this attested pair
-# only; deliberately NOT generalized to "any two below-accents" (see the plan / memory
-# parse-rate-not-a-goal).  The label uses the same-letter-pair bang convention.
-_ILLEGAL_BELOW_PAIR: frozenset[str] = frozenset((am.MAHAPAKH, am.TIPEXA))
-_ILLEGAL_BELOW_PAIR_CODE = "mahapakh!tipexa"
+# Cantillation accents occupy U+0591..U+05AE; meteg/silluq (U+05BD), paseq, sof pasuq
+# and the puncta are NOT accents and so never count toward a same-letter accent pair.
+_ACCENT_LO, _ACCENT_HI = "֑", "֮"  # U+0591, U+05AE
+
+
+def _is_accent(ch: str) -> bool:
+    return _ACCENT_LO <= ch <= _ACCENT_HI
+
+
+# Same-letter accent pairs are a WHITELIST, not a blacklist -- the prose analogue of the
+# poetic ``ply_scanner_poetic._WHITELISTED_ADJACENT_PAIRS`` (Plan D / Plan E).  Only the
+# mahapakh (U+05A4) + qadma (U+05A8) cluster may legitimately share one base letter: the
+# MAM-confirmed ek20:31 ``נִטְמְאִ֤֨ים`` (both witnesses keep both marks), which the scanner
+# fuses into one ``mahapakh!azla`` token and the grammar accepts.  ANY other two accents
+# on one letter is an alphabet error.  Order-less (a frozenset of frozensets): the
+# within-letter order of two stacked accents is not meaningful.  The sole attested
+# illicit pair is mahapakh (U+05A4) + tipeḥa (U+0596) (lv25:20, word נֹּאכַל -- WLC keeps a
+# mahapakh MAM drops, tagging the word anomalous via ]n), now flagged by this general
+# rule.  The label uses the order-preserving same-letter-pair bang convention.
+_WHITELISTED_SAME_LETTER: frozenset[frozenset[str]] = frozenset(
+    (frozenset((am.MAHAPAKH, am.QADMA)),)
+)
+
+# Per-accent prose leaf names, for building a same-letter pair's bang label; reuse the
+# scanner's spellings (ply_scanner._LEAF -- note qadma's leaf is "azla").  A codepoint
+# fallback (``U+XXXX``) covers any unforeseen mark so the label is always populated.
+_ACCENT_LEAF_NAME: dict[str, str] = {
+    am.ATNAX: "atnax", am.SEGOLTA: "segolta", am.SHALSHELET: "shalshelet",
+    am.ZAQEF_QATAN: "zaqef", am.ZAQEF_GADOL: "zaqefgadol", am.TIPEXA: "tipexa",
+    am.REVIA: "revia", am.PASHTA: "pashta", am.YETIV: "yetiv", am.TEVIR: "tevir",
+    am.GERESH: "geresh", am.GERESH_MUQDAM: "geresh", am.GERSHAYIM: "gershayim",
+    am.QARNEY_PARA: "pazergadol", am.TELISHA_GEDOLA: "telishagedola",
+    am.PAZER: "pazer", am.MUNAX: "munax", am.MAHAPAKH: "mahapakh",
+    am.MERKHA: "merkha", am.MERKHA_KEFULA: "merkhakefula", am.DARGA: "darga",
+    am.QADMA: "azla", am.TELISHA_QETANA: "telishaqetanna", am.YERAX: "galgal",
+    am.TSINNORIT: "tsinnorit", am.ZINOR: "zarqa",
+}
+
+
+def _accent_leaf(mark: str) -> str:
+    return _ACCENT_LEAF_NAME.get(mark, f"U+{ord(mark):04X}")
 
 
 @dataclass(frozen=True)
 class StrandedMark:
     """A lexically illegal mark configuration confined to one atom.
 
-    Covers both a stress-helper left without its fusion partner (stranded 82) and an
-    illegal same-letter below-pair (mahapakh!tipexa); ``code`` distinguishes them.
+    Covers both a stress-helper left without its fusion partner (stranded 82) and a
+    non-whitelisted same-letter accent pair (e.g. mahapakh!tipexa); ``code``
+    distinguishes them.  ``rep_char`` is a representative codepoint of the offending
+    word, used by run_ply to locate the pointed-Hebrew word for the report.
     """
 
     code: str  # M-C code label ("82") or bang-joined pair label ("mahapakh!tipexa")
     atom: str  # the maqaf/space-delimited atom that contains it
+    rep_char: str  # a mark of the offending word, for locating its Unicode word
 
 
 def stranded_stress_helpers(body: str) -> list[StrandedMark]:
@@ -97,23 +138,36 @@ def stranded_stress_helpers(body: str) -> list[StrandedMark]:
                 continue
             partner, code = entry
             if partner not in atom[i + 1 :]:
-                stranded.append(StrandedMark(code=code, atom=atom))
+                # The stranded helper itself locates the offending word (U+0598).
+                stranded.append(StrandedMark(code=code, atom=atom, rep_char=ch))
     return stranded
 
 
-def illegal_below_pairs(body: str) -> list[StrandedMark]:
-    """Return every illegal same-letter below-accent pair in a prose verse body.
+def illegal_same_letter_pairs(body: str) -> list[StrandedMark]:
+    """Return every non-whitelisted same-letter accent pair in a prose verse body.
 
-    Today the sole attested pair is mahapakh (U+05A4) + tipeḥa (U+0596) on one letter
-    (lv25:20).  Two marks are on one letter iff they are *adjacent* in the mark string
-    (no base-letter ``X`` between them); within-letter order is not meaningful, so the
-    pair is matched in either order.  Reported with the bang label ``mahapakh!tipexa``.
+    Two accents are on one base letter iff they are *adjacent* in the body (no
+    base-letter ``X`` -- nor any other non-accent -- between them).  Such a stacking is
+    an alphabet error unless it is the whitelisted mahapakh + qadma cluster (ek20:31,
+    MAM-confirmed; the scanner fuses it to one ``mahapakh!azla`` token before the grammar
+    and it never reaches here).  Everything else two-on-a-letter is illicit -- today only
+    mahapakh + tipeḥa (lv25:20), formerly handled by a pair-specific check, now flagged by
+    this general guard (the prose analogue of the poetic Plan D bang guard).
+
+    Reported with the order-preserving bang label ``a!b`` (body order; e.g.
+    ``mahapakh!tipexa``), keyed for word location on the first (here, distinguishing)
+    mark -- mahapakh, NOT the tipeḥa that recurs elsewhere in lv25:20.
     """
     illegal: list[StrandedMark] = []
     for atom in _ATOM_SPLIT_RE.split(body):
         if not atom:
             continue
         for i in range(len(atom) - 1):
-            if {atom[i], atom[i + 1]} == _ILLEGAL_BELOW_PAIR:
-                illegal.append(StrandedMark(code=_ILLEGAL_BELOW_PAIR_CODE, atom=atom))
+            a, b = atom[i], atom[i + 1]
+            if not (_is_accent(a) and _is_accent(b)):
+                continue
+            if frozenset((a, b)) in _WHITELISTED_SAME_LETTER:
+                continue
+            code = f"{_accent_leaf(a)}!{_accent_leaf(b)}"
+            illegal.append(StrandedMark(code=code, atom=atom, rep_char=a))
     return illegal

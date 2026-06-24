@@ -14,20 +14,24 @@ Run:
 from __future__ import annotations
 
 from accgram import accent_marks as am
-from accgram.lexical_validation import illegal_below_pairs, stranded_stress_helpers
+from accgram.lexical_validation import (
+    illegal_same_letter_pairs,
+    stranded_stress_helpers,
+)
 
 _TS = am.TSINNORIT  # M-C 82 (zarqa stress-helper)
 _ZI = am.ZINOR      # M-C 02 (zinor / zarqa main)
 _MA = am.MAHAPAKH   # U+05A4 (below)
 _TI = am.TIPEXA     # U+0596 (below)
+_QA = am.QADMA      # U+05A8 (above; "azla")
 
 
 def _codes(body: str) -> list[str]:
     return [m.code for m in stranded_stress_helpers(body)]
 
 
-def _below(body: str) -> list[str]:
-    return [m.code for m in illegal_below_pairs(body)]
+def _pairs(body: str) -> list[str]:
+    return [m.code for m in illegal_same_letter_pairs(body)]
 
 
 def test_bare_82_is_stranded():
@@ -67,29 +71,49 @@ def test_atom_with_both_returns_the_atom_text():
     assert mark.atom == body
 
 
-# --- illegal same-letter below-pair (mahapakh!tipexa, lv25:20) -----------------
+# --- non-whitelisted same-letter accent pair (general guard, Plan E) -----------
 
 
 def test_mahapakh_tipexa_same_letter_is_illegal():
-    # lv25:20 word נֹּאכַל: mahapakh + tipeḥa adjacent (one letter) -> illegal below-pair.
-    assert _below("XX-XXX" + _MA + _TI + "X]c]n") == ["mahapakh!tipexa"]
+    # lv25:20 (word na'akhal): mahapakh + tipexa adjacent (one letter) -> illegal pair,
+    # still flagged, now via the general rule.  Body order is mahapakh-then-tipexa.
+    assert _pairs("XX-XXX" + _MA + _TI + "X]c]n") == ["mahapakh!tipexa"]
 
 
-def test_below_pair_matches_either_within_letter_order():
-    # within-letter order is not meaningful; the reversed order is equally illegal.
-    assert _below("X" + _TI + _MA + "X") == ["mahapakh!tipexa"]
+def test_pair_label_follows_body_order():
+    # The bang label is order-preserving (body order), so the reversed stacking reads
+    # tipexa!mahapakh -- still flagged, just labeled in the order it appears.
+    assert _pairs("X" + _TI + _MA + "X") == ["tipexa!mahapakh"]
 
 
-def test_below_accents_on_different_letters_are_clean():
+def test_whitelisted_mahapakh_qadma_is_not_flagged():
+    # ek20:31 (word nitm'im): mahapakh + qadma is the sole whitelisted pair (MAM keeps
+    # both; the scanner fuses it to mahapakh!azla).  Not an alphabet error.
+    assert _pairs("XXXX" + _MA + _QA + "XX") == []
+    assert _pairs("XXXX" + _QA + _MA + "XX") == []  # whitelist is order-less
+
+
+def test_a_third_hypothetical_same_letter_pair_is_flagged():
+    # The guard is general, not pair-specific: any non-whitelisted stack flags, e.g.
+    # merkha + tipexa, with the reused prose leaf names.
+    assert _pairs("X" + am.MERKHA + _TI + "X") == ["merkha!tipexa"]
+
+
+def test_accents_on_different_letters_are_clean():
     # An X (base letter) between them => different letters => a legal sequence, not a pair.
-    assert _below("X" + _MA + "X" + _TI + "X") == []
+    assert _pairs("X" + _MA + "X" + _TI + "X") == []
 
 
-def test_below_accents_across_atom_boundary_are_clean():
-    assert _below("X" + _MA + "-X" + _TI + "X") == []
-    assert _below("X" + _MA + " X" + _TI + "X") == []
+def test_pair_across_atom_boundary_is_clean():
+    assert _pairs("X" + _MA + "-X" + _TI + "X") == []
+    assert _pairs("X" + _MA + " X" + _TI + "X") == []
 
 
-def test_no_below_pair_is_clean():
-    assert _below("XX" + _MA + "X XXX" + _TI + "X" + am.SOF_PASUQ) == []
-    assert _below("YISRA" + _TS + "L]s") == []  # a stranded 82 is not a below-pair
+def test_non_accent_between_marks_does_not_pair():
+    # A non-accent (meteg U+05BD) between two accents means they are not stacked.
+    assert _pairs("X" + _MA + am.METEG + _TI + "X") == []
+
+
+def test_no_pair_is_clean():
+    assert _pairs("XX" + _MA + "X XXX" + _TI + "X" + am.SOF_PASUQ) == []
+    assert _pairs("YISRA" + _TS + "L]s") == []  # a stranded 82 is not a same-letter pair
