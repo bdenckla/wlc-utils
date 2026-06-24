@@ -199,6 +199,26 @@ def parse_error_tree_from_text(tree_text: str) -> ErrorTree | None:
     return _extract_error_tree(tree_text.splitlines())
 
 
+def parse_tree_from_text(tree_text: str) -> ErrorTree | None:
+    """Parse a rendered ``print_tree`` -- clean OR ERROR -- into an ``ErrorTree``.
+
+    Unlike :func:`parse_error_tree_from_text` (which yields None for an
+    error-free tree), this returns the parsed tree regardless of whether it
+    holds an ERROR leaf, so a clean parse can still be rendered as a table by
+    ``ob_tree_table.render_error_tree_table`` (error cells are simply absent).
+    Returns None only when the text has no tree node lines at all.
+    """
+    lines = tree_text.splitlines()
+    if not lines:
+        return None
+    tree = ob_tree_parse.parse_verse_tree(
+        verse_lines=lines,
+        node_line_re=_NODE_LINE_RE,
+        error_token_re=_ERROR_TOKEN_RE,
+    )
+    return tree if tree.roots else None
+
+
 def _extract_error_tree(verse_lines: list[str]) -> ErrorTree | None:
     if not verse_lines:
         return None

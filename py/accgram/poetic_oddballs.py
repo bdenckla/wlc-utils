@@ -421,6 +421,15 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
             f"({n_silluq} missing-silluq, {n_noparse} NO_PARSE). Use the filter "
             "below to narrow the list."
         ),
+        wlc_utils_html.para(
+            (
+                "For the converse — the quirks the checker silently accepts rather "
+                "than flags, including the poetic ps124:4 geresh charity, with the "
+                "alternate readings shown as parse trees — see the ",
+                wlc_utils_html.anchor("Almost errors", {"href": "almost-errors.html"}),
+                " page.",
+            )
+        ),
         wlc_utils_html.para("Each verse falls into one of two documented kinds:"),
         wlc_utils_html.unordered_list(
             (

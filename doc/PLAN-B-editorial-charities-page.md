@@ -1,9 +1,37 @@
-# Plan B: generated "editorial charities" HTML page
+# Plan B: generated "almost errors" HTML page
 
-**Status (2026-06-23):** stub / not started. Companion to **Plan A**
-(`doc/PLAN-A-same-letter-accent-pairs.md`), which defines the charities this page
-documents and the taxonomy behind them. One-way dependency: Plan B consumes Plan A's
-content, so Plan A's definitions (and the lv25:20 verdict) should be settled first.
+**Status (2026-06-24):** **DONE** — implemented as `py/accgram/almost_errors.py`
+(subcommand `main_accgram.py generate-almost-errors-html`), output
+`gh-pages/accgram/almost-errors.html`, linked from `index.html` and cross-linked
+from both `goerwitz.html` (prose) and `poetic.html` (poetic) intros. Tests in
+`py/tests/test_almost_errors.py`. **Scope expanded** per the maintainer from
+"editorial charities" to **"almost errors"**: the page now also documents
+**ek20:31** (`mahapakh!azla`) — which is *not* a charity (not an LC/BHS/WLC leniency)
+but a puzzling-yet-standard masoretic tradition, MAM-confirmed (MAM keeps both marks;
+its doc-note calls it the only word in Scripture with two conjunctive accents on one
+letter, citing Yeivin Ch.1 p.232). The generated alternate-reading trees (telisha-
+gedola exhibit) plus the live ek20:31 / lv25:20 trees are regenerated from the grammar
+at build time via `ob_error_context.parse_tree_from_text` (a new clean-tree variant of
+`parse_error_tree_from_text`) + the shared `ob_tree_table` renderer.
+
+**Taxonomy corrected during implementation (maintainer, 2026-06-24):** the
+telisha-gedola + geresh/gershayim family (the "drop-to-telg" five) and the
+swallowed-helper fusions are **not charities** — they are *masoretically-blessed
+oddities*, 100% official tradition attested in the standard witnesses, not leniencies
+specific to LC/BHS/WLC. The checker isn't forgiving anything there; its only decision is
+**representation** (which mark to keep / how to fuse), and the telg exhibit shows that
+decision is a choice among grammatically-clean readings. So the page now has two H2s:
+**Editorial charities** (geresh-muqdam→geresh, ps124:4 geresh→revia-mugrash, and
+lv25:20's lexical re-classification of a genuine L anomaly) and **Masoretically-blessed
+oddities (not charities)** (the telg five with the exhibit, ek20:31, the helper fusions).
+One bridge case: **2 Kings 17:13** spans both — its prose geresh-muqdam first gets the
+*charity* conversion to plain geresh, and only then is the resulting telg+geresh a
+non-charity oddity like the other four.
+
+Companion to **Plan A** (`doc/PLAN-A-same-letter-accent-pairs.md`), which defines the
+charities this page documents and the taxonomy behind them. One-way dependency: Plan B
+consumes Plan A's content, so Plan A's definitions (and the lv25:20 verdict) were
+settled first.
 
 ## Goal
 

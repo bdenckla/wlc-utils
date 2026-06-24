@@ -38,6 +38,12 @@ Subcommands:
                 each with its matching wlc422-kq-u verse object and structured
                 XML-ish UXLC verse node and write out/accgram/research-oddballs.json
                 plus the HTML report gh-pages/accgram/goerwitz.html.
+    generate-almost-errors-html
+                Generate gh-pages/accgram/almost-errors.html: the "almost errors"
+                page documenting the editorial charities the checker applies and
+                the non-charity ek20:31 mahapakh!azla.  Live parse trees (the
+                telisha-gedola alternate readings, ek20:31, lv25:20) are
+                regenerated from the grammar at build time.
     test-fixes
                 For every annotated prose oddball, test whether adopting its
                 MAM-simple value clears the ERROR: substitute the MAM value into the
@@ -57,6 +63,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from accgram import almost_errors
 from accgram import fix_tester
 from accgram import poetic_oddballs
 from accgram import research_tao
@@ -97,6 +104,10 @@ def _run_poetic_oddballs(args: argparse.Namespace) -> None:
 
 def _run_fix_tester(args: argparse.Namespace) -> None:
     fix_tester.run(args)
+
+
+def _run_almost_errors(args: argparse.Namespace) -> None:
+    almost_errors.run(args)
 
 
 def main() -> None:
@@ -185,6 +196,19 @@ def main() -> None:
     )
     fix_tester.add_args(fix_tester_parser, repo_root=_repo_root())
     fix_tester_parser.set_defaults(func=_run_fix_tester)
+
+    almost_errors_parser = subparsers.add_parser(
+        "generate-almost-errors-html",
+        help=(
+            "Generate gh-pages/accgram/almost-errors.html: the editorial charities "
+            "the checker applies (geresh-muqdam/geresh, the telisha-gedola "
+            "companion-drop with its alternate-reading trees, helper fusions, the "
+            "lv25:20 lexical reclassification) plus the non-charity ek20:31 "
+            "mahapakh!azla. Live trees are regenerated from the grammar."
+        ),
+    )
+    almost_errors.add_args(almost_errors_parser, repo_root=_repo_root())
+    almost_errors_parser.set_defaults(func=_run_almost_errors)
 
     args = parser.parse_args()
     args.func(args)

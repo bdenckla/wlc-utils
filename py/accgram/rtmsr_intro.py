@@ -66,6 +66,13 @@ def build_intro_contents(
         " section at the end of this page, but you can also hover over"
         " their use in any verse to see these definitions.",
     )
+    almost_errors_text = (
+        "For the converse — the quirks the checker silently ‹accepts› rather than"
+        " flags, with the alternate readings it did not choose shown as parse trees"
+        " — see the ",
+        wlc_utils_html.anchor("Almost errors", {"href": "almost-errors.html"}),
+        " page.",
+    )
 
     return (
         wlc_utils_html.heading_level_2("Introduction"),
@@ -76,6 +83,7 @@ def build_intro_contents(
         wlc_utils_html.para(source_text),
         wlc_utils_html.para(and_text),
         wlc_utils_html.para(bracket_notes_text),
+        wlc_utils_html.para(almost_errors_text),
     )
 
 
