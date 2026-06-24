@@ -54,6 +54,32 @@ _TOKEN_ABBREV.update(_TOKEN_ABBREV_OVERRIDES)
 # This appears in parse output but is not a standalone Unicode accent name.
 _TOKEN_ABBREV["legarmeh"] = "lgm"
 
+# Accent tokens whose own name contains "_" (currently just "big_telisha").  A
+# branch label is tokenized on "_", so these must be re-merged greedily, longest
+# first, before lookup.
+_COMPOUND_TOKENS: list[str] = sorted(
+    (token for token in _TOKEN_ABBREV if "_" in token),
+    key=lambda token: token.count("_"),
+    reverse=True,
+)
+
+
+def _split_label_tokens(base_label: str) -> list[str]:
+    words = [word for word in base_label.split("_") if word]
+    tokens: list[str] = []
+    i = 0
+    while i < len(words):
+        for compound in _COMPOUND_TOKENS:
+            n = compound.count("_") + 1
+            if words[i : i + n] == compound.split("_"):
+                tokens.append(compound)
+                i += n
+                break
+        else:
+            tokens.append(words[i])
+            i += 1
+    return tokens
+
 
 def _abbreviate_acc_token(token: str) -> str | None:
     """Abbreviate one accent token, handling `!`-fused unitary tokens such as
@@ -75,7 +101,7 @@ def abbreviate_branch_label(label: str) -> str:
         base_label = base_label[: -len("_phrase")]
         suffix = "p"
 
-    tokens = [token for token in base_label.split("_") if token]
+    tokens = _split_label_tokens(base_label)
     abbrevs = [_abbreviate_acc_token(token) for token in tokens]
     if tokens and all(abbrev is not None for abbrev in abbrevs):
         short_base = "".join(abbrevs)
