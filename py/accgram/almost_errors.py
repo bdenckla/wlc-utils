@@ -506,7 +506,7 @@ def _ps124_section() -> tuple[object, ...]:
         H.heading_level_3("Plain geresh → revia mugrash (poetic): Psalms 124:4"),
         H.para(
             (
-                "A plain geresh in a poetic verse is otherwise a fail-fast lexical"
+                "A plain geresh in a poetic verse is otherwise a lexical"
                 " error: the poetic grammar has no plain geresh. The sole charitable"
                 " exception is Psalms 124:4, where a revia and a plain geresh share"
                 " one letter. There the"
