@@ -32,7 +32,7 @@ to each other*, not by a per-pair enumeration. Five readings:
 | **fuse (`!`)** | co-equal accents, **no natural order**, **and a licit combination** | one `a!b` token, accepted | `mahapakh!azla` (ek20:31, prose) |
 | **idiom** | an established compound accent | one named token | revia-mugrash, oleh-we-yored, methiga-zaqef |
 | **drop** | a redundant companion of a prepositive/postpositive | drop the secondary | telg + geresh/gershayim → telg |
-| **unlexical** | a same-letter combination that is positionally/grammatically **illicit** (even when each accent alone is fine) | flagged, not parsed: prose `lexical_validation` (skip grammar); poetic = no `conj` terminal → NO_PARSE oddball | `mahapakh!tipexa` (lv25:20, two below-accents); `merkha!azla` (ps56:10, two impositive accents) |
+| **unlexical** | a same-letter combination that is positionally/grammatically **illicit** (even when each accent alone is fine) — i.e. a same-letter accent pair **not on the whitelist** (revia+geresh-muqdam, deḥi+munaḥ, oleh+yored) | flagged, not parsed: prose `lexical_validation` (skip grammar); poetic = no `conj` terminal → NO_PARSE oddball | `mahapakh!tipexa` (lv25:20, two below-accents); `merkha!azla` (ps56:10) |
 
 The orthographic convention already encodes part of this: a single word (`zaqefgadol`,
 `merkhakefula`) = one accent with a traditional compound name; a **hyphen**
@@ -78,14 +78,14 @@ never under duress. The faithful-representation half of that — emitting **one
 `merkha!azla` bang** instead of a reorderable sequence — is spun off as **Plan D**
 (`doc/PLAN-D-faithful-same-letter-bangs.md`), **now DONE**. But Plan D's *verdict* landed
 on the opposite of "lift the gate to accept it": ps56:10 is treated as a **lexical
-anomaly** (two impositive accents cannot share a letter), faithfully represented as the
-bang yet flagged as a NO_PARSE oddball, with manuscript evidence (MAM carries azla alone
-and, according to Breuer, so does the Aleppo Codex, while Sassoon 1053 carries merkha
-alone — L conflates the two). The sweep
-confirmed ps56:10 is the *only* same-letter co-equal conjunctive pair in either genre
-beyond ek20:31. (Whether prose ek20:31's `mahapakh!azla` should likewise be reclassified
-unlexical under the same "two impositive accents" principle is deferred with the
-conjunctive-grammaticality work — see Plan D.)
+anomaly** (its merkha+azla is a same-letter pair *not on the whitelist* of legitimate
+same-letter pairs — revia+geresh-muqdam, deḥi+munaḥ, oleh+yored), faithfully represented
+as the bang yet flagged as a NO_PARSE oddball, with manuscript evidence (MAM carries azla
+alone and, according to Breuer, so does the Aleppo Codex, while Sassoon 1053 carries
+merkha alone — L conflates the two). The sweep confirmed ps56:10 is the *only* such
+non-whitelisted same-letter pair in either genre beyond ek20:31. (Whether prose ek20:31's
+`mahapakh!azla` should likewise be reclassified unlexical under the same whitelist is
+deferred with the conjunctive-grammaticality work — see Plan D.)
 
 The only poetic same-letter pairs that *can* matter touch the **disjunctive** skeleton:
 revia-mugrash (lexicalized), ps124:4 (geresh+revia — **charitable promotion** to

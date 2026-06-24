@@ -36,9 +36,10 @@ M-C code -> poetic accent (the codes that matter in the Three Books):
     82 sinnorit   fused onto its mahapakh (70) / merkha (71) partner in the same
                   chanted word -> one MAHAPAKH_METSUNNAR / MERKHA_METSUNNAR conjunctive
     65 (without following paseq) shalshelet qetannah -> emitted as a conjunctive servus
-    two impositive accents on one letter (Plan D) -> one order-less a!b bang-pair
-                  (e.g. 71 + 63 -> merkha!azla); faithfully emitted but NOT a grammar
-                  token (an impositive stack is a lexical anomaly -> NO_PARSE oddball)
+    two adjacent accents on one letter that are not a WHITELISTED pair (revia+geresh
+                  muqdam, ole+yored, deḥi+munaḥ) -> one order-less a!b bang-pair (e.g.
+                  71 + 63 -> merkha!azla); faithfully emitted but NOT a grammar token (a
+                  non-whitelisted same-letter stack is a lexical anomaly -> NO_PARSE)
 
   swallowed (secondary / ga`ya / separators, not structural accents)
     35|75|95 (not before sof pasuq) meteg   05 (plain) paseq   52|53 puncta
@@ -98,42 +99,54 @@ _VERSE_RE = re.compile(r"^([1-9][0-9]*):([1-9][0-9]*)[ \t](.*)$")
 # Disjunctive token types, for the revia gadol/qatan second-pass lookahead.
 _POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
 
-# Impositive accents (placed ON the stress), with their display names.  These are the
-# poetic accents that are neither prepositive (deḥi, geresh muqdam, telisha gedola),
-# postpositive (tsinnor), a secondary (tsinnorit, meteg), nor the always-consumed ole.
-# Two impositive accents on one base letter is a lexical anomaly (Plan D): every
-# LEGITIMATE same-letter pair instead couples an impositive with a NON-impositive partner
-# -- a prepositive (geresh muqdam -> revia mugrash) or a secondary (tsinnorit -> metsunnar)
-# -- and those are consumed by the specific fusion rules above.  Since every such legit
-# 2-mark fusion includes a non-impositive mark, the impositive-pair guard below is
-# *disjoint* from them by construction and fires only on an illicit impositive stack
-# (corpus-wide just ps56:10's merkha+azla; the rest are guards against future / other text).
-_IMPOSITIVE_MARK_NAME: dict[str, str] = {
-    am.ATNAX: "atnax",
-    am.SHALSHELET: "shalshelet",
-    am.TIPEHA: "tarxa",
-    am.REVIA: "revia",
-    am.PAZER: "pazer",
-    am.MUNAH: "munax",
-    am.MAHAPAKH: "mahapakh",
-    am.MERKHA: "merkha",
-    am.QADMA: "azla",
-    am.YERAH: "galgal",
-    am.ILUY: "illuy",
+# Same-letter accent pairs: a WHITELIST, not a blacklist (Plan D).  Only a few accent
+# pairs may legitimately share one base letter; ANY other two adjacent accents (no X
+# between -> same letter) is a lexical anomaly emitted as a bang.  The whitelist:
+#   - revia + geresh muqdam   -> revia mugrash      (fused by the rule above)
+#   - revia + (plain) geresh  -> revia mugrash      (the ps124:4 charity, fused above)
+#   - oleh   + yored (merkha) -> oleh-we-yored      (fused above; cross-letter in WLC,
+#                                                    same-letter in MAM)
+#   - deḥi   + munaḥ          -> a legit *sequence* (a prepositive deḥi visually on its
+#                                munaḥ servus's letter, not a shared syllable)
+# The first three are CONSUMED by the specific fusion rules above, so they never reach
+# the guard; only deḥi+munaḥ reaches it as two adjacent marks, and is spared by name
+# (_WHITELISTED_ADJACENT_PAIRS).  Everything else -> bang.  (This whitelist supersedes an
+# earlier "two impositive accents" blacklist, which leaned on contested positional
+# classifications of marks -- tsinnorit, ole -- that, per the corpus, never share a letter
+# anyway; the whitelist is the honest rule and is also stricter.)
+_ANY_ACCENT = "[֑-֮]"  # U+0591..U+05AE (as the stray-accent class; meteg U+05BD excluded)
+
+# Legit same-letter pairs that survive to the guard as two adjacent marks (i.e. are NOT
+# fused by an earlier rule), spared from the bang via negative lookahead.  Order is the
+# post-relocation body order (deḥi, a prepositive, is moved to the front).
+_WHITELISTED_ADJACENT_PAIRS = (am.DEHI + am.MUNAH,)
+
+# Display names for building a bang's per-pair (type, leaf); covers the poetic accents,
+# with a codepoint fallback for anything unforeseen.
+_ACCENT_LEAF_NAME: dict[str, str] = {
+    am.ATNAX: "atnax", am.SHALSHELET: "shalshelet", am.TIPEHA: "tarxa",
+    am.REVIA: "revia", am.PAZER: "pazer", am.MUNAH: "munax", am.MAHAPAKH: "mahapakh",
+    am.MERKHA: "merkha", am.QADMA: "azla", am.YERAH: "galgal", am.ILUY: "illuy",
+    am.OLE: "ole", am.DEHI: "dexi", am.ZINOR: "sinnor", am.GERESH: "geresh",
+    am.GERESH_MUQDAM: "geresh muqdam",
 }
-_IMPOSITIVE_CLASS = "[" + "".join(_IMPOSITIVE_MARK_NAME) + "]"
 
 
-def _impositive_pair_token(marks: str) -> tuple[str, str]:
-    """(token_type, leaf) for two adjacent impositive marks, in storage order.
+def _bang_pair_token(marks: str) -> tuple[str, str]:
+    """(token_type, leaf) for two adjacent same-letter accents not on the whitelist.
 
-    The leaf is the order-less bang ``a!b`` (e.g. ``merkha!azla``); the token type is
-    its uppercased ``A_B`` form (e.g. ``MERKHA_AZLA``) -- informative in the NO_PARSE
-    line and ParseError, and, for merkha+azla, exactly ``pan.MERKHA_AZLA``.  The grammar
-    has no terminal for any such type, so the verse dead-ends to NO_PARSE (the poetic
-    lexical-error surface)."""
-    a, b = _IMPOSITIVE_MARK_NAME[marks[0]], _IMPOSITIVE_MARK_NAME[marks[1]]
+    The leaf is the order-less bang ``a!b`` (e.g. ``merkha!azla``); the token type is its
+    uppercased ``A_B`` form (e.g. ``MERKHA_AZLA``) -- informative in the NO_PARSE line and
+    ParseError, and, for merkha+azla, exactly ``pan.MERKHA_AZLA``.  The grammar has no
+    terminal for any such type, so the verse dead-ends to NO_PARSE (the poetic lexical-
+    error surface)."""
+    a = _ACCENT_LEAF_NAME.get(marks[0], f"U+{ord(marks[0]):04X}")
+    b = _ACCENT_LEAF_NAME.get(marks[1], f"U+{ord(marks[1]):04X}")
     return f"{a}_{b}".upper(), f"{a}!{b}"
+
+
+# The guard regex: any two adjacent accents EXCEPT a whitelisted sequence pair.
+_BANG_GUARD = "(?!" + "|".join(_WHITELISTED_ADJACENT_PAIRS) + ")" + _ANY_ACCENT + _ANY_ACCENT
 
 # Rule table: (regex anchored at scan position, token type or None to swallow).
 # Longest match wins; ties broken by order (mirrors flex / the prose scanner).
@@ -196,18 +209,18 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + " " + _TEXT + am.MERKHA), pan.MERKHA_METSUNNAR),
     # revia (gadol/qatan) -- reclassified in the second pass.
     (re.compile(am.REVIA), pan.REVIA),
-    # impositive-pair bang = two adjacent impositive accents on one base letter (no X
-    # between -> same letter): fused into one order-less `a!b` token (Plan D) rather than
-    # emitted as a reorderable sequence.  The token type/leaf are computed per pair by
-    # _impositive_pair_token (merkha+qadma -> MERKHA_AZLA / merkha!azla, the poetic sibling
-    # of prose ek20:31's mahapakh!azla).  The 2-mark match beats the bare single-mark rules
-    # by longest-match; and because every LEGITIMATE same-letter pair includes a
-    # non-impositive partner consumed above (geresh muqdam, tsinnorit, ole, paseq), this
-    # guard is disjoint from those.  The bang is faithfully emitted but has no grammar
-    # terminal (two impositive accents on one letter is a lexical anomaly) -> NO_PARSE
-    # oddball.  Corpus-wide this fires only at Ps 56:10 (merkha+azla); the generality is a
-    # guard against any other / future impositive stack.
-    (re.compile(_IMPOSITIVE_CLASS + _IMPOSITIVE_CLASS), pan.IMPOSITIVE_PAIR),
+    # bang guard = any two adjacent accents on one base letter (no X between -> same
+    # letter) that are NOT a whitelisted pair: a lexical anomaly, fused into one order-less
+    # `a!b` bang (Plan D) rather than emitted as a reorderable sequence.  Type/leaf per
+    # pair via _bang_pair_token (merkha+qadma -> MERKHA_AZLA / merkha!azla, the poetic
+    # sibling of prose ek20:31's mahapakh!azla).  The 2-mark match beats the bare
+    # single-mark rules by longest-match.  The legit same-letter pairs are either FUSED by
+    # a rule above (revia+geresh muqdam / revia+geresh -> revia mugrash; ole+merkha ->
+    # oleh-we-yored) and so never reach here, or are the deḥi+munaḥ sequence, which
+    # _BANG_GUARD's lookahead spares.  The bang has no grammar terminal -> NO_PARSE oddball.
+    # Corpus-wide this fires only at Ps 56:10 (merkha+azla); the generality guards any
+    # other / future same-letter stack.
+    (re.compile(_BANG_GUARD), pan.BANG_PAIR),
     # conjunctive servi
     (re.compile(am.MUNAH), pan.MUNAX),
     (re.compile(am.MERKHA), pan.MERKHA),
@@ -355,8 +368,8 @@ def scan_accents(body: str) -> list[tuple[str, str]]:
                 matched = True
         assert matched, f"no rule matched at position {pos} in {body!r}"
         if best_type is not None:
-            if best_type == pan.IMPOSITIVE_PAIR:
-                bang_type, bang_leaf = _impositive_pair_token(body[pos : pos + best_len])
+            if best_type == pan.BANG_PAIR:
+                bang_type, bang_leaf = _bang_pair_token(body[pos : pos + best_len])
                 dyn_leaves[len(raw_types)] = bang_leaf
                 raw_types.append(bang_type)
             else:

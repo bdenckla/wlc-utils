@@ -121,12 +121,12 @@ tokens = (
     pan.MERKHA_METSUNNAR,
     pan.SHALSHELET_QETANNAH,
 )
-# NB: pan.MERKHA_AZLA (the same-letter merkha!azla bang, Plan D) is deliberately NOT a
-# grammar token.  The scanner still *emits* it (faithful representation), but two
-# impositive accents sharing one letter is treated as a lexical anomaly, not a licit servus:
-# with no terminal for it the parser dead-ends -> NO_PARSE (the poetic-native lexical-
-# error surface, as STRAY_ACCENT), so ps56:10 surfaces as a flagged oddball rather than a
-# silently-clean parse.  See poetic_ob_notes["ps 56:10"] for the manuscript rationale.
+# NB: a same-letter bang (e.g. pan.MERKHA_AZLA, Plan D) is deliberately NOT a grammar
+# token.  The scanner still *emits* it (faithful representation), but a same-letter accent
+# pair outside the whitelist (revia+geresh muqdam, ole+yored, deḥi+munaḥ) is a lexical
+# anomaly, not a licit servus: with no terminal for it the parser dead-ends -> NO_PARSE
+# (the poetic-native lexical-error surface, as STRAY_ACCENT), so ps56:10 surfaces as a
+# flagged oddball rather than a silently-clean parse.  See poetic_ob_notes["ps 56:10"].
 
 start = "pasuq"
 

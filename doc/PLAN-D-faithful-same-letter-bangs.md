@@ -3,8 +3,8 @@
 **Status (2026-06-23):** **DONE** — the sweep proved the worklist is a *single* poetic
 pair (ps56:10's `merkha+qadma`). It is now faithfully **represented** as one order-less
 **`merkha!azla`** bang but, after review (see *Revision* below), **not blessed
-grammatically**: two impositive accents sharing one letter is treated as a **lexical
-anomaly**, so the bang has no `conj` terminal and ps56:10 surfaces as a **NO_PARSE
+grammatically**: a same-letter accent pair outside a small **whitelist** is treated as a
+**lexical anomaly**, so the bang has no `conj` terminal and ps56:10 surfaces as a **NO_PARSE
 oddball** (the poetic lexical-error surface) annotated with manuscript evidence + the two
 images, rather than a silently-clean parse. Verified: `pytest` (128 pass), poetic regen
 diff is **one line** (`merkha azla` clean tree → `NO_PARSE` at ps56:10; nothing else
@@ -169,7 +169,7 @@ found these clusters; only one is an in-scope Plan D bang:
 | mahapakh + qadma | 1 prose (ek20:31) | co-equal under duress | **already `mahapakh!azla`** |
 | mahapakh + tipeha | 1 prose (lv25:20) | unlexical (two below-accents) | Plan A `illegal_below_pairs` |
 | revia + geresh | 1 poetic (ps124:4) | same-letter geresh charity | Plan A `REVIA+GERESH→revia mugrash` |
-| **merkha + qadma** | **1 poetic (ps56:10)** | **two impositive accents → unlexical** | **→ `merkha!azla` bang, flagged NO_PARSE (this plan)** |
+| **merkha + qadma** | **1 poetic (ps56:10)** | **same-letter pair, not whitelisted → unlexical** | **→ `merkha!azla` bang, flagged NO_PARSE (this plan)** |
 
 No single letter carries more than two accents (re-confirms Plan A's corpus-wide claim).
 
@@ -181,7 +181,7 @@ y does not make x stacked on y grammatical"** — the same point the codebase al
 for lv25:20's `mahapakh!tipexa` (a fine *sequence*, an impossible *stack*). Putting
 `MERKHA_AZLA` in `conj` silently encoded a grammaticality verdict that was never
 established. So Plan D's *representation* (the bang) is kept, but its *verdict* is flipped
-to **unlexical**: two impositive accents cannot share one letter.
+to **unlexical**: a same-letter accent pair outside a small **whitelist** is illicit.
 
 **Manuscript rationale (the maintainer's reading).** Across witnesses the two marks split
 cleanly one-each: **MAM carries azla alone** and, according to Breuer, so does the
@@ -201,29 +201,31 @@ maintainer flagged:** the poetic `conj` chain is fully permissive, so for an all
 conjunctive bang the measure is near-vacuous (it tends to 4/4 regardless). It only gains
 teeth once **conjunctive grammaticality is strengthened** — a noted, deferred direction
 (remaining levers: secondary/ga`ya positional rules; per-witness legality). The
-structural **"two impositive accents on one letter" rule is now implemented** as a
-general scanner guard (below), so this anomaly falls out of a principle rather than a
-special-cased pair. The module is in `py/accgram/bang_legality.py`, unwired pending the
-grammaticality work.
+**same-letter whitelist rule is now implemented** as a general scanner guard (below), so
+this anomaly falls out of a principle rather than a special-cased pair. The module is in
+`py/accgram/bang_legality.py`, unwired pending the grammaticality work.
 
 ## What landed (2026-06-23)
 
-- **scanner — a GENERAL impositive-pair guard.** One rule in
-  `ply_scanner_poetic._POETIC_GG_RULES` matches **any two adjacent impositive accents**
-  (`_IMPOSITIVE_CLASS`×2 — no X between → same letter) and fuses them into one order-less
-  `a!b` bang, the per-pair type/leaf computed by `_impositive_pair_token`
+- **scanner — a same-letter WHITELIST guard.** One rule in
+  `ply_scanner_poetic._POETIC_GG_RULES` (`_BANG_GUARD`) matches **any two adjacent accents**
+  (`_ANY_ACCENT`×2 — no X between → same letter) **except a whitelisted pair**, and fuses
+  them into one order-less `a!b` bang, the per-pair type/leaf computed by `_bang_pair_token`
   (merkha+qadma → `MERKHA_AZLA` / `merkha!azla`, exactly the prior output). It beats the
-  bare single-mark rules by longest-match, and is **disjoint by construction** from the
-  legitimate same-letter fusions (revia-mugrash, metsunnar, oleh-we-yored, legarmeh) —
-  each of those couples an impositive with a **non-impositive** partner (prepositive
-  geresh-muqdam, secondary tsinnorit, ole, paseq), so none is two impositives. The bang is
-  faithfully *emitted*. Corpus-wide it fires only at ps56:10; the generality guards any
-  other / future impositive stack.
+  bare single-mark rules by longest-match. The legitimate same-letter pairs are either
+  **fused upstream** (revia+geresh-muqdam / revia+geresh → revia mugrash; ole+merkha →
+  oleh-we-yored) and so never reach it, or are the **deḥi+munaḥ** sequence, spared by
+  `_WHITELISTED_ADJACENT_PAIRS` (a negative lookahead). Everything else → bang. This
+  whitelist supersedes the earlier "two impositive accents" blacklist, which leaned on
+  contested positional classifications (tsinnorit, ole) of marks that — per the corpus —
+  never share a letter anyway; the whitelist is the honest rule and is *stricter* (it also
+  flags a non-impositive-involving stack that isn't whitelisted). Corpus-wide it fires
+  only at ps56:10; the generality guards any other / future same-letter stack.
 - **grammar** the dynamic bang type (e.g. `MERKHA_AZLA`) is deliberately **NOT** a grammar
   token / not in `p_conj`: with no terminal the parser dead-ends → **NO_PARSE** (the
   poetic lexical-error surface, as `STRAY_ACCENT`), so ps56:10 is a flagged oddball.
-  `pan.MERKHA_AZLA` is kept as the named canonical instance; `pan.IMPOSITIVE_PAIR` is the
-  scanner-internal sentinel the rule emits before `_impositive_pair_token` resolves it.
+  `pan.MERKHA_AZLA` is kept as the named canonical instance; `pan.BANG_PAIR` is the
+  scanner-internal sentinel the rule emits before `_bang_pair_token` resolves it.
 - **oddball annotation** `poetic_ob_notes["ps 56:10"]` — `st-summary` + three `comment`
   paragraphs (the manuscript/conflation/paleography argument) + the two images
   (`img` = `LC-376B-col-2-line-5-Ps-56v10.png`, `Da-at Miqra img` =
@@ -237,8 +239,8 @@ grammaticality work.
   adjacent to any target), so `_servi_xcheck.txt` stays byte-identical.
 - **tests** `test_same_letter_merkha_azla_fuses_to_bang`,
   `test_cross_letter_merkha_then_azla_stays_a_sequence`,
-  `test_general_impositive_pair_fuses_to_bang` (a *different* pair, munah+merkha, proving
-  generality), `test_non_impositive_partner_not_a_bang` (deḥi+munah / tsinnorit+mahapakh
+  `test_non_whitelisted_pair_fuses_to_bang` (a *different* pair, munah+merkha, proving
+  generality), `test_whitelisted_pairs_not_flagged` (deḥi+munaḥ / tsinnorit+mahapakh
   do **not** fire the guard) (`test_ply_scanner_poetic.py`);
   `test_merkha_azla_bang_is_unparseable` (`test_ply_poetic_grammar.py`). 130 pass.
 
@@ -248,18 +250,21 @@ grammaticality work.
    (table above; the single in-scope pair is ps56:10).
 2. ~~Decide the canonical bang spelling.~~ **DONE** (`merkha!azla`, lower-codepoint-first).
 3. ~~Add scanner fusion rule + grammar terminal.~~ **DONE (revised twice)** — the scanner
-   rule was first the attested merkha+qadma, then **generalized to any two impositive
-   accents** (`_IMPOSITIVE_CLASS`×2); the grammar terminal was **removed** so the bang is
-   a lexical anomaly (NO_PARSE), not a blessed servus.
+   rule was first the attested merkha+qadma, then **generalized to a same-letter
+   whitelist guard** (`_BANG_GUARD`: any two adjacent accents except a whitelisted pair);
+   the grammar terminal was **removed** so the bang is a lexical anomaly (NO_PARSE), not a
+   blessed servus.
 4. ~~Verify.~~ **DONE** (130 pass; ps56:10 → NO_PARSE; the generalization is **output-
    neutral** — corpus and both cross-checks byte-identical; `poetic.html` shows the
    oddball + images).
 5. ~~Update Plan A's taxonomy~~ **DONE** (`merkha!azla` moved to the `unlexical` row; the
    `!` bang documented as a representation orthogonal to the verdict). Hand the bangs note
    to **Plan B** (still open — Plan B).
-6. ~~Make the structural "two impositive accents on one letter" rule.~~ **DONE** (the
-   general scanner guard).
+6. ~~Make the structural same-letter rule.~~ **DONE** — the general whitelist scanner
+   guard (`_BANG_GUARD`): only whitelisted pairs may share a letter; everything else is a
+   bang. (Supersedes the interim "two impositive accents" blacklist.)
 7. **Deferred (noted, not acted):** strengthen *conjunctive* grammaticality so the
    `bang_legality` measure stops being near-vacuous (levers: secondary/ga`ya positional
-   rules; per-witness legality); revisit prose ek20:31 under the impositive-pair principle;
-   wire `bang_legality` once it has teeth.
+   rules; per-witness legality); revisit prose ek20:31 under the same-letter whitelist;
+   wire `bang_legality` once it has teeth; confirm the whitelist membership (the maintainer
+   flagged it may be incomplete).
