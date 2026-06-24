@@ -200,21 +200,30 @@ it is a *maximally-legal anomaly*: flagged, but harmless however resolved. **Cav
 maintainer flagged:** the poetic `conj` chain is fully permissive, so for an all-
 conjunctive bang the measure is near-vacuous (it tends to 4/4 regardless). It only gains
 teeth once **conjunctive grammaticality is strengthened** — a noted, deferred direction
-(levers: secondary/ga`ya positional rules; per-witness legality; a structural "no two
-impositive accents on one letter" rule, which would make this very anomaly fall out of
-the grammar rather than a special case). The module is in `py/accgram/bang_legality.py`,
-unwired pending that work.
+(remaining levers: secondary/ga`ya positional rules; per-witness legality). The
+structural **"two impositive accents on one letter" rule is now implemented** as a
+general scanner guard (below), so this anomaly falls out of a principle rather than a
+special-cased pair. The module is in `py/accgram/bang_legality.py`, unwired pending the
+grammaticality work.
 
 ## What landed (2026-06-23)
 
-- **token** `pan.MERKHA_AZLA` (leaf `merkha!azla`) in `poetic_accent_names.py`.
-- **scanner** one fusion rule `am.MERKHA + am.QADMA → MERKHA_AZLA` in
-  `ply_scanner_poetic._POETIC_GG_RULES`, above the bare MERKHA / AZLA rules
-  (longest-match; adjacency = same-letter), plus its `_LEAF` entry. The bang is
-  faithfully *emitted*.
-- **grammar** `MERKHA_AZLA` is deliberately **NOT** a grammar token / not in `p_conj`:
-  with no terminal the parser dead-ends → **NO_PARSE** (the poetic lexical-error surface,
-  as `STRAY_ACCENT`), so ps56:10 is a flagged oddball.
+- **scanner — a GENERAL impositive-pair guard.** One rule in
+  `ply_scanner_poetic._POETIC_GG_RULES` matches **any two adjacent impositive accents**
+  (`_IMPOSITIVE_CLASS`×2 — no X between → same letter) and fuses them into one order-less
+  `a!b` bang, the per-pair type/leaf computed by `_impositive_pair_token`
+  (merkha+qadma → `MERKHA_AZLA` / `merkha!azla`, exactly the prior output). It beats the
+  bare single-mark rules by longest-match, and is **disjoint by construction** from the
+  legitimate same-letter fusions (revia-mugrash, metsunnar, oleh-we-yored, legarmeh) —
+  each of those couples an impositive with a **non-impositive** partner (prepositive
+  geresh-muqdam, secondary tsinnorit, ole, paseq), so none is two impositives. The bang is
+  faithfully *emitted*. Corpus-wide it fires only at ps56:10; the generality guards any
+  other / future impositive stack.
+- **grammar** the dynamic bang type (e.g. `MERKHA_AZLA`) is deliberately **NOT** a grammar
+  token / not in `p_conj`: with no terminal the parser dead-ends → **NO_PARSE** (the
+  poetic lexical-error surface, as `STRAY_ACCENT`), so ps56:10 is a flagged oddball.
+  `pan.MERKHA_AZLA` is kept as the named canonical instance; `pan.IMPOSITIVE_PAIR` is the
+  scanner-internal sentinel the rule emits before `_impositive_pair_token` resolves it.
 - **oddball annotation** `poetic_ob_notes["ps 56:10"]` — `st-summary` + three `comment`
   paragraphs (the manuscript/conflation/paleography argument) + the two images
   (`img` = `LC-376B-col-2-line-5-Ps-56v10.png`, `Da-at Miqra img` =
@@ -226,24 +235,31 @@ unwired pending that work.
 - **servant cross-check** `servi_xcheck._METSUNNAR_BASE` generalized to
   `_FUSED_SERVANT_BASE` with `MERKHA_AZLA → AZLA`; zero live customers (the bang is not
   adjacent to any target), so `_servi_xcheck.txt` stays byte-identical.
-- **tests** `test_same_letter_merkha_azla_fuses_to_bang` +
-  `test_cross_letter_merkha_then_azla_stays_a_sequence` (`test_ply_scanner_poetic.py`);
-  `test_merkha_azla_bang_is_unparseable` (`test_ply_poetic_grammar.py`).
+- **tests** `test_same_letter_merkha_azla_fuses_to_bang`,
+  `test_cross_letter_merkha_then_azla_stays_a_sequence`,
+  `test_general_impositive_pair_fuses_to_bang` (a *different* pair, munah+merkha, proving
+  generality), `test_non_impositive_partner_not_a_bang` (deḥi+munah / tsinnorit+mahapakh
+  do **not** fire the guard) (`test_ply_scanner_poetic.py`);
+  `test_merkha_azla_bang_is_unparseable` (`test_ply_poetic_grammar.py`). 130 pass.
 
 ## Remaining work
 
 1. ~~Run the same-letter two-accent sweep (both genres); produce the worklist.~~ **DONE**
    (table above; the single in-scope pair is ps56:10).
 2. ~~Decide the canonical bang spelling.~~ **DONE** (`merkha!azla`, lower-codepoint-first).
-3. ~~Add scanner fusion rule + grammar terminal.~~ **DONE (revised)** — scanner rule kept;
-   the grammar terminal was **removed** so the bang is a lexical anomaly (NO_PARSE), not a
-   blessed servus.
-4. ~~Verify.~~ **DONE** (128 pass; one-line corpus diff ps56:10 → NO_PARSE; both
-   cross-checks byte-identical; `poetic.html` shows the oddball + images).
+3. ~~Add scanner fusion rule + grammar terminal.~~ **DONE (revised twice)** — the scanner
+   rule was first the attested merkha+qadma, then **generalized to any two impositive
+   accents** (`_IMPOSITIVE_CLASS`×2); the grammar terminal was **removed** so the bang is
+   a lexical anomaly (NO_PARSE), not a blessed servus.
+4. ~~Verify.~~ **DONE** (130 pass; ps56:10 → NO_PARSE; the generalization is **output-
+   neutral** — corpus and both cross-checks byte-identical; `poetic.html` shows the
+   oddball + images).
 5. ~~Update Plan A's taxonomy~~ **DONE** (`merkha!azla` moved to the `unlexical` row; the
    `!` bang documented as a representation orthogonal to the verdict). Hand the bangs note
    to **Plan B** (still open — Plan B).
-6. **Deferred (noted, not acted):** strengthen conjunctive grammaticality so the
-   `bang_legality` measure is meaningful and so "two impositive accents on one letter"
-   becomes a structural rule; revisit prose ek20:31 under the same principle; wire
-   `bang_legality` once it has teeth.
+6. ~~Make the structural "two impositive accents on one letter" rule.~~ **DONE** (the
+   general scanner guard).
+7. **Deferred (noted, not acted):** strengthen *conjunctive* grammaticality so the
+   `bang_legality` measure stops being near-vacuous (levers: secondary/ga`ya positional
+   rules; per-witness legality); revisit prose ek20:31 under the impositive-pair principle;
+   wire `bang_legality` once it has teeth.

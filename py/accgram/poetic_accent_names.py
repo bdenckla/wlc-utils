@@ -106,14 +106,26 @@ SHALSHELET_QETANNAH = "SHALSHELET_QETANNAH"
 # `fused-impositive-cluster-token`).  The leaf `merkha!azla` follows the prose bang
 # convention (the lower-codepoint mark first; storage order U+05A5<U+05A8 matches it).
 #
-# Unlike the metsunnar / shalshelet-qetannah servi, MERKHA_AZLA is *not* a grammar token:
-# two impositive accents sharing one letter is a lexical anomaly, so the bang has no
-# `conj` terminal and the verse dead-ends to NO_PARSE (the poetic lexical-error surface),
+# Unlike the metsunnar / shalshelet-qetannah servi, this is *not* a grammar token: two
+# impositive accents sharing one letter is a lexical anomaly, so the bang has no `conj`
+# terminal and the verse dead-ends to NO_PARSE (the poetic lexical-error surface),
 # surfacing ps56:10 as a flagged oddball.  Manuscript rationale: MAM carries azla alone
 # and, according to Breuer, so does the Aleppo Codex, while Sassoon 1053 carries merkha
 # alone -- L's double-marking looks like a conflation of the two single-accent traditions
 # (see poetic_ob_notes["ps 56:10"]).
+#
+# MERKHA_AZLA is the canonical instance of the GENERAL impositive-pair guard
+# (ply_scanner_poetic): the scanner emits a bang for ANY two adjacent impositive accents,
+# deriving the type/leaf per pair (_impositive_pair_token) -- merkha+qadma yields exactly
+# this "MERKHA_AZLA" / "merkha!azla".  Kept as a named constant because it is the only
+# attested case and is referenced by tests and servi_xcheck; other pairs get their own
+# dynamic "A_B" type (none occur in the corpus).
 MERKHA_AZLA = "MERKHA_AZLA"
+
+# Scanner-internal sentinel: the impositive-pair rule emits this, and scan_accents
+# replaces it with the per-pair dynamic (type, leaf) from _impositive_pair_token.  Never
+# reaches the grammar (the dynamic type does, and is rejected -> NO_PARSE).
+IMPOSITIVE_PAIR = "IMPOSITIVE_PAIR"
 
 # The disjunctive token types, for the revia gadol/qatan/mugrash lookahead and the
 # WLC-vs-MAM cross-check.

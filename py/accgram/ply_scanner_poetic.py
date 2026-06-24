@@ -36,9 +36,9 @@ M-C code -> poetic accent (the codes that matter in the Three Books):
     82 sinnorit   fused onto its mahapakh (70) / merkha (71) partner in the same
                   chanted word -> one MAHAPAKH_METSUNNAR / MERKHA_METSUNNAR conjunctive
     65 (without following paseq) shalshelet qetannah -> emitted as a conjunctive servus
-    71 + 63 merkha + qadma on one letter (Plan D) -> one order-less MERKHA_AZLA bang
-                  (merkha!azla); faithfully emitted but NOT a grammar token (two primary
-                  conjunctives on one letter is a lexical anomaly -> NO_PARSE oddball)
+    two impositive accents on one letter (Plan D) -> one order-less a!b bang-pair
+                  (e.g. 71 + 63 -> merkha!azla); faithfully emitted but NOT a grammar
+                  token (an impositive stack is a lexical anomaly -> NO_PARSE oddball)
 
   swallowed (secondary / ga`ya / separators, not structural accents)
     35|75|95 (not before sof pasuq) meteg   05 (plain) paseq   52|53 puncta
@@ -97,6 +97,43 @@ _VERSE_RE = re.compile(r"^([1-9][0-9]*):([1-9][0-9]*)[ \t](.*)$")
 
 # Disjunctive token types, for the revia gadol/qatan second-pass lookahead.
 _POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
+
+# Impositive accents (placed ON the stress), with their display names.  These are the
+# poetic accents that are neither prepositive (deḥi, geresh muqdam, telisha gedola),
+# postpositive (tsinnor), a secondary (tsinnorit, meteg), nor the always-consumed ole.
+# Two impositive accents on one base letter is a lexical anomaly (Plan D): every
+# LEGITIMATE same-letter pair instead couples an impositive with a NON-impositive partner
+# -- a prepositive (geresh muqdam -> revia mugrash) or a secondary (tsinnorit -> metsunnar)
+# -- and those are consumed by the specific fusion rules above.  Since every such legit
+# 2-mark fusion includes a non-impositive mark, the impositive-pair guard below is
+# *disjoint* from them by construction and fires only on an illicit impositive stack
+# (corpus-wide just ps56:10's merkha+azla; the rest are guards against future / other text).
+_IMPOSITIVE_MARK_NAME: dict[str, str] = {
+    am.ATNAX: "atnax",
+    am.SHALSHELET: "shalshelet",
+    am.TIPEHA: "tarxa",
+    am.REVIA: "revia",
+    am.PAZER: "pazer",
+    am.MUNAH: "munax",
+    am.MAHAPAKH: "mahapakh",
+    am.MERKHA: "merkha",
+    am.QADMA: "azla",
+    am.YERAH: "galgal",
+    am.ILUY: "illuy",
+}
+_IMPOSITIVE_CLASS = "[" + "".join(_IMPOSITIVE_MARK_NAME) + "]"
+
+
+def _impositive_pair_token(marks: str) -> tuple[str, str]:
+    """(token_type, leaf) for two adjacent impositive marks, in storage order.
+
+    The leaf is the order-less bang ``a!b`` (e.g. ``merkha!azla``); the token type is
+    its uppercased ``A_B`` form (e.g. ``MERKHA_AZLA``) -- informative in the NO_PARSE
+    line and ParseError, and, for merkha+azla, exactly ``pan.MERKHA_AZLA``.  The grammar
+    has no terminal for any such type, so the verse dead-ends to NO_PARSE (the poetic
+    lexical-error surface)."""
+    a, b = _IMPOSITIVE_MARK_NAME[marks[0]], _IMPOSITIVE_MARK_NAME[marks[1]]
+    return f"{a}_{b}".upper(), f"{a}!{b}"
 
 # Rule table: (regex anchored at scan position, token type or None to swallow).
 # Longest match wins; ties broken by order (mirrors flex / the prose scanner).
@@ -159,17 +196,18 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + " " + _TEXT + am.MERKHA), pan.MERKHA_METSUNNAR),
     # revia (gadol/qatan) -- reclassified in the second pass.
     (re.compile(am.REVIA), pan.REVIA),
-    # merkha!azla bang = merkha (U+05A5) + qadma/azla (U+05A8) on one base letter
-    # (adjacent in the mark string, no X between -> same letter): fused into one
-    # order-less `!` token rather than emitted as a reorderable MERKHA AZLA *sequence*
-    # (Plan D; the poetic sibling of prose ek20:31's mahapakh!azla).  Must precede the
-    # bare MERKHA / AZLA rules so the 2-mark match wins (longest-match).  Stored
-    # merkha-then-qadma (U+05A5 < U+05A8); the genuine cross-letter merkha...qadma chain
-    # (an X between) still tokenizes as MERKHA then AZLA.  The bang is faithfully emitted
-    # but the grammar has no terminal for it (two impositive accents on one letter is a
-    # lexical anomaly), so the verse dead-ends to NO_PARSE -- an oddball, not silently
-    # clean.  Outside the (ungrammar-checked) decalogues this occurs only at Ps 56:10.
-    (re.compile(am.MERKHA + am.QADMA), pan.MERKHA_AZLA),
+    # impositive-pair bang = two adjacent impositive accents on one base letter (no X
+    # between -> same letter): fused into one order-less `a!b` token (Plan D) rather than
+    # emitted as a reorderable sequence.  The token type/leaf are computed per pair by
+    # _impositive_pair_token (merkha+qadma -> MERKHA_AZLA / merkha!azla, the poetic sibling
+    # of prose ek20:31's mahapakh!azla).  The 2-mark match beats the bare single-mark rules
+    # by longest-match; and because every LEGITIMATE same-letter pair includes a
+    # non-impositive partner consumed above (geresh muqdam, tsinnorit, ole, paseq), this
+    # guard is disjoint from those.  The bang is faithfully emitted but has no grammar
+    # terminal (two impositive accents on one letter is a lexical anomaly) -> NO_PARSE
+    # oddball.  Corpus-wide this fires only at Ps 56:10 (merkha+azla); the generality is a
+    # guard against any other / future impositive stack.
+    (re.compile(_IMPOSITIVE_CLASS + _IMPOSITIVE_CLASS), pan.IMPOSITIVE_PAIR),
     # conjunctive servi
     (re.compile(am.MUNAH), pan.MUNAX),
     (re.compile(am.MERKHA), pan.MERKHA),
@@ -213,10 +251,10 @@ _LEAF: dict[str, str] = {
     pan.SHALSHELET_QETANNAH: "shalshelet qetannah",
     pan.MAHAPAKH_METSUNNAR: "mahapakh metsunnar",
     pan.MERKHA_METSUNNAR: "merkha metsunnar",
-    # `!` (not a space) joins the bang: two distinct co-equal accents on one letter
-    # with no natural order, not one accent with a space in its name -- as the prose
-    # mahapakh!azla / mahapakh!tipexa (see accgram.ply_scanner._LEAF).
-    pan.MERKHA_AZLA: "merkha!azla",
+    # NB: the impositive-pair bang (e.g. merkha!azla) has no static entry here -- its
+    # `!`-joined leaf is computed per pair by _impositive_pair_token and supplied directly
+    # in scan_accents.  `!` (not a space) marks two distinct accents on one letter with no
+    # natural order, as the prose mahapakh!azla / mahapakh!tipexa (see ply_scanner._LEAF).
     pan.STRAY_ACCENT: "stray accent",
     pan.MUNAX: "munax",
     pan.MERKHA: "merkha",
@@ -296,6 +334,10 @@ def scan_accents(body: str) -> list[tuple[str, str]]:
     after the first 00.  REVIA tokens are reclassified to gadol/qatan afterward.
     """
     raw_types: list[str] = []
+    # Leaves for the impositive-pair bang tokens, whose type/leaf are computed per pair
+    # (not in the static _LEAF map); keyed by index in raw_types.  The reclassify passes
+    # below preserve length and index order, so these stay aligned.
+    dyn_leaves: dict[int, str] = {}
     pos = 0
     n = len(body)
     while pos < n:
@@ -313,13 +355,18 @@ def scan_accents(body: str) -> list[tuple[str, str]]:
                 matched = True
         assert matched, f"no rule matched at position {pos} in {body!r}"
         if best_type is not None:
-            raw_types.append(best_type)
-            if best_type == "SOFPASUQ":
-                break
+            if best_type == pan.IMPOSITIVE_PAIR:
+                bang_type, bang_leaf = _impositive_pair_token(body[pos : pos + best_len])
+                dyn_leaves[len(raw_types)] = bang_leaf
+                raw_types.append(bang_type)
+            else:
+                raw_types.append(best_type)
+                if best_type == "SOFPASUQ":
+                    break
         pos += max(best_len, 1)
 
     resolved = _reclassify_revia(_recover_unmarked_oleh(raw_types))
-    return [(t, _LEAF[t]) for t in resolved]
+    return [(t, dyn_leaves[i] if i in dyn_leaves else _LEAF[t]) for i, t in enumerate(resolved)]
 
 
 @dataclass(frozen=True)

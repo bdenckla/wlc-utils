@@ -232,6 +232,35 @@ def test_cross_letter_merkha_then_azla_stays_a_sequence():
     assert pan.MERKHA in cross and pan.AZLA in cross
 
 
+def test_general_impositive_pair_fuses_to_bang():
+    # Plan D guard is GENERAL: any two adjacent impositive accents on one letter fuse to
+    # an a!b bang (type/leaf derived per pair), not just merkha+qadma.  munah+merkha ->
+    # MUNAX_MERKHA / "munax!merkha".
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    toks = scan_accents("X" + am.MUNAH + am.MERKHA + "X" + tail)
+    leaves = [leaf for _t, leaf in toks]
+    assert "munax!merkha" in leaves
+    assert ("MUNAX_MERKHA", "munax!merkha") in toks
+    # the two bare servi are consumed into the one bang
+    types = [t for t, _ in toks]
+    assert pan.MUNAX not in types and pan.MERKHA not in types
+    # and it is unparseable (no grammar terminal for the dynamic bang type)
+    parser = build_parser()
+    assert parse_tokens(parser, scan_verse("t 1:1", "X" + am.MUNAH + am.MERKHA + "X" + tail).tokens) is None
+
+
+def test_non_impositive_partner_not_a_bang():
+    # A legitimate same-letter pair couples an impositive with a NON-impositive partner,
+    # so the guard must NOT fire: a prepositive deḥi + munah stays a deḥi/munax sequence
+    # (cf. the munah+deḥi sweep result), and a secondary tsinnorit + mahapakh is the
+    # metsunnar fusion, not a generic bang.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    dexi = _types_marks("X" + am.DEHI + am.MUNAH + "X" + tail)
+    assert pan.DEXI in dexi and pan.MUNAX in dexi
+    metsun = _types_marks("X" + am.TSINNORIT + "X" + am.MAHAPAKH + "X" + tail)
+    assert pan.MAHAPAKH_METSUNNAR in metsun
+
+
 def test_stray_accent_fails_fast_not_swallowed():
     # Plan C fail-fast guard: a prose-only accent (segolta, U+0592) has no poetic rule;
     # rather than let the catch-all swallow it silently, the scanner emits STRAY_ACCENT,
