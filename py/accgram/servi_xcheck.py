@@ -22,7 +22,7 @@ servant (the other reads a bare/divider word) is counted separately as such.  Th
 writes a git-tracked report and prints a one-line-per-target summary.
 
 Servi are read in the scanner's own vocabulary on both sides (mam_poetic_accents
-normalizes MAM's signs: qadma->AZLA, tipeha->TARXA, atnah-hafukh->GALGAL), so the
+normalizes MAM's signs: qadma->AZLA, tipeḥa->TARXA, atnaḥ-hafukh->GALGAL), so the
 comparison is apples-to-apples.
 """
 

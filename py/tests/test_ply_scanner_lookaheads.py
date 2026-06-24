@@ -42,22 +42,22 @@ def test_silluq_blocked_by_intervening_accent_is_swallowed():
 # --- mayela (tipexa / <ga`ya-only>* (sof-pasuq|atnax)) vs plain tipexa ----------
 def test_mayela_when_73_reaches_sof_pasuq_or_atnax():
     # tipexa followed (within the word) only by allowed chars up to sof-pasuq/atnax.
-    assert _types(am.TIPEHA + "NA" + am.SOF_PASUQ) == ["MAYELA", "SOFPASUQ"]
-    assert _types(am.TIPEHA + "NA" + am.ATNAX + "Z" + am.SOF_PASUQ) == [
+    assert _types(am.TIPEXA + "NA" + am.SOF_PASUQ) == ["MAYELA", "SOFPASUQ"]
+    assert _types(am.TIPEXA + "NA" + am.ATNAX + "Z" + am.SOF_PASUQ) == [
         "MAYELA", "ATNAX", "SOFPASUQ",
     ]
 
 
 def test_tipexa_when_a_blocking_accent_intervenes():
     # revia is a blocking mark (M-C 81 carries an '8'), so tipexa stays plain.
-    assert _types(am.TIPEHA + "NA" + am.REVIA + "C" + am.SOF_PASUQ) == [
+    assert _types(am.TIPEXA + "NA" + am.REVIA + "C" + am.SOF_PASUQ) == [
         "TIPEXA", "REVIA", "SOFPASUQ",
     ]
 
 
 # --- legarmeh (munax{TEXT}paseq / [^12368]*...revia) ---------------------------
 def test_legarmeh_when_munax_paseq_precedes_revia():
-    assert _types(am.MUNAH + "A" + am.PASEQ + "B" + am.REVIA + "C" + am.SOF_PASUQ) == [
+    assert _types(am.MUNAX + "A" + am.PASEQ + "B" + am.REVIA + "C" + am.SOF_PASUQ) == [
         "LEGARMEH", "REVIA", "SOFPASUQ",
     ]
 
@@ -65,7 +65,7 @@ def test_legarmeh_when_munax_paseq_precedes_revia():
 def test_munax_when_paseq_not_before_revia_outside_has_legarmeh_passage():
     # No following revia and an ordinary (non-listed) location -> plain munax.
     assert _types(
-        am.MUNAH + "A" + am.PASEQ + "B" + am.MAHAPAKH + "C" + am.SOF_PASUQ, "gn", 1, 1
+        am.MUNAX + "A" + am.PASEQ + "B" + am.MAHAPAKH + "C" + am.SOF_PASUQ, "gn", 1, 1
     ) == ["MUNAX", "MAHAPAKH", "SOFPASUQ"]
 
 
@@ -73,7 +73,7 @@ def test_munax_when_paseq_not_before_revia_outside_has_legarmeh_passage():
 # A synthetic munax+paseq that does NOT precede revia (so it is legarmeh only because
 # the ref is listed), followed by a plain accent and a terminating silluq+sof-pasuq.
 _RUTH_1_2 = (
-    am.MUNAH + "A" + am.PASEQ + "B" + am.MAHAPAKH + "C" + am.METEG + "D" + am.SOF_PASUQ
+    am.MUNAX + "A" + am.PASEQ + "B" + am.MAHAPAKH + "C" + am.METEG + "D" + am.SOF_PASUQ
 )
 
 

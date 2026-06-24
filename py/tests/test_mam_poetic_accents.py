@@ -35,8 +35,8 @@ def _verse(*nodes: dict) -> dict:
     return {"type": "verse", "osisID": "Ps.1.1", "contents": list(nodes)}
 
 
-def test_oleh_weyored_and_atnah_and_silluq():
-    # ole(+yored merka) -> oleh-we-yored; etnahta -> atnach; final word -> silluq.
+def test_oleh_weyored_and_atnax_and_silluq():
+    # ole(+yored merka) -> oleh-we-yored; etnaḥta -> atnach; final word -> silluq.
     node = _verse(
         {"type": "text", "text": B + ha.OLE + B + ha.MER},  # one word: ole + yored
         {"type": "text", "text": B + ha.ATN},
@@ -57,7 +57,7 @@ def test_revia_mugrash_geresh_muqdam():
     assert disjunctives_from_verse_node(node) == [pan.REVIA_MUGRASH, pan.SILLUQ]
 
 
-def test_generic_revia_reclassified_gadol_before_atnah():
+def test_generic_revia_reclassified_gadol_before_atnax():
     node = _verse(
         _text(ha.REV),
         _text(ha.ATN),
@@ -81,7 +81,7 @@ def test_generic_revia_before_oleh_is_qatan():
 
 
 def test_legarmeh_is_conjunctive_plus_paseq_node():
-    # mahpak word + lp-legarmeih paseq node -> legarmeh (not a bare conjunctive).
+    # mahapakh word + lp-legarmeih paseq node -> legarmeh (not a bare conjunctive).
     node = _verse(
         _text(ha.MAH),
         {"type": "lp-legarmeih"},
@@ -137,7 +137,7 @@ def test_base_consonants_strips_points_accents_and_punctuation():
 
 
 def test_word_disj_and_text_pairs_consonants_with_resolved_divider():
-    # mahpak word + lp-legarmeih -> legarmeh on that word; atnah; silluq.  Every word is
+    # mahapakh word + lp-legarmeih -> legarmeh on that word; atnaḥ; silluq.  Every word is
     # kept (not just divider-bearing ones), its base consonants paired with its fully
     # resolved disjunctive (None for a conjunctive) -- the datum word-aligned vs WLC.
     node = _verse(
@@ -162,7 +162,7 @@ def _silluq_word() -> dict:
 
 
 def test_word_accents_pairs_disjunctive_and_servus():
-    # merka(servus) | dehi(divider) | silluq -- exactly one of disj/servus per word, and
+    # merka(servus) | deḥi(divider) | silluq -- exactly one of disj/servus per word, and
     # no same-word servant here, so self_servus is None throughout.
     node = _verse(_text(ha.MER), _text(ha.DEX), _silluq_word())
     assert word_accents_from_verse_node(node) == [
@@ -173,7 +173,7 @@ def test_word_accents_pairs_disjunctive_and_servus():
 
 
 def test_word_accents_captures_same_word_galgal_before_pazer():
-    # A long word can host its own servant: galgal (yerah-ben-yomo) then pazer on one
+    # A long word can host its own servant: galgal (yeraḥ-ben-yomo) then pazer on one
     # word (e.g. Ps 32:5 אוֹדִ֪יעֲךָ֡).  The galgal is recorded as the pazer word's
     # self_servus, not lost -- and it is what stands adjacent to the pazer.
     node = _verse(_text(ha.MUN), {"type": "text", "text": B + ha.YBY + B + ha.PAZ}, _silluq_word())
@@ -182,21 +182,21 @@ def test_word_accents_captures_same_word_galgal_before_pazer():
         (pan.PAZER, None, pan.GALGAL),
         (pan.SILLUQ, None, None),
     ]
-    # The same-word galgal wins over the preceding munah word.
+    # The same-word galgal wins over the preceding munaḥ word.
     assert servi_before_from_verse_node(node, pan.PAZER) == [pan.GALGAL]
 
 
-def test_servi_before_dehi_merka_and_munah():
-    # The servant immediately before dehi is read in the L scanner's vocabulary.
+def test_servi_before_dexi_merka_and_munax():
+    # The servant immediately before deḥi is read in the L scanner's vocabulary.
     merka = _verse(_text(ha.MER), _text(ha.DEX), _silluq_word())
     assert servi_before_from_verse_node(merka, pan.DEXI) == [pan.MERKHA]
 
-    munah = _verse(_text(ha.MUN), _text(ha.DEX), _silluq_word())
-    assert servi_before_from_verse_node(munah, pan.DEXI) == [pan.MUNAX]
+    munax = _verse(_text(ha.MUN), _text(ha.DEX), _silluq_word())
+    assert servi_before_from_verse_node(munax, pan.DEXI) == [pan.MUNAX]
 
 
 def test_servi_before_is_none_when_target_is_bare():
-    # Verse-initial dehi (no preceding word) and dehi preceded by a divider both
+    # Verse-initial deḥi (no preceding word) and deḥi preceded by a divider both
     # count as servant-less -> None.
     initial = _verse(_text(ha.DEX), _text(ha.MUN), _silluq_word())
     assert servi_before_from_verse_node(initial, pan.DEXI) == [None]
@@ -212,9 +212,9 @@ def test_servi_before_in_words_operates_on_a_word_list():
         (None, pan.MAHAPAKH, None),   # distant servant
         (None, pan.MERKHA, None),     # adjacent servant
         (pan.REVIA_QATAN, None, None),
-        (pan.OLEH_WEYORED, None, None),  # a divider: the dehi-less target is bare here
+        (pan.OLEH_WEYORED, None, None),  # a divider: the deḥi-less target is bare here
         (None, pan.MUNAX, None),
-        (pan.DEXI, None, None),       # munah-served dehi
+        (pan.DEXI, None, None),       # munaḥ-served deḥi
         (pan.SILLUQ, None, None),
     ]
     assert servi_before_in_words(words, pan.REVIA_QATAN) == [pan.MERKHA]
@@ -233,8 +233,8 @@ def test_servi_before_in_words_prefers_same_word_self_servus():
     assert servi_before_in_words(words, pan.PAZER) == [pan.GALGAL]
 
 
-def test_servi_before_normalizes_atnah_hafukh_to_galgal():
-    # MAM writes the oleh-we-yored servus as atnah-hafukh (U+05A2); L codes it galgal.
+def test_servi_before_normalizes_atnax_hafukh_to_galgal():
+    # MAM writes the oleh-we-yored servus as atnaḥ-hafukh (U+05A2); L codes it galgal.
     # The extractor normalizes it so the same slot matches across witnesses.
     node = _verse(
         _text(ha.ATN_H),

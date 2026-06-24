@@ -46,7 +46,7 @@ BY_REF: dict[str, dict[str, object]] = {
         # The speculated reading to test: "segol" here is the *accent* segol
         # (segolta, U+0592), not the segol vowel -- the checker validates accents.
         # MAM equals WLC, so the fix-tester exercises this synth_fix: replace the
-        # munaH (U+05A3) with a segolta (U+0592).
+        # munaḥ (U+05A3) with a segolta (U+0592).
         "synth_fix": "לכ֒ורש",
         "st-summary": (
             "The checker requires a segol accent rather than a munaḥ."

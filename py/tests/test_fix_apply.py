@@ -24,7 +24,7 @@ def _types(body: str) -> list[str]:
 
 
 def test_swap_munax_to_merkha():
-    # 1c 1:53-style: munaH -> merkha on the first word.
+    # 1c 1:53-style: munaḥ -> merkha on the first word.
     verse = {"vels": ["אל֣וף", "בעם"]}
     result = apply_mam_fix(
         verse,
@@ -137,8 +137,8 @@ def test_section_marker_excluded_from_alignment():
 
 
 def test_adjacent_two_word_substitution():
-    # A wlc_focus spanning two adjacent words: munaH->merkha on the first and
-    # tipeHa->munaH on the second; both vels are substituted.
+    # A wlc_focus spanning two adjacent words: munaḥ->merkha on the first and
+    # tipeḥa->munaḥ on the second; both vels are substituted.
     result = apply_mam_fix(
         {"vels": ["א֣", "ב֖"]},
         ["א֣", "ב֖"],
@@ -229,7 +229,7 @@ def test_ambiguous_word_is_untestable():
 
 def test_synthetic_segolta_fix_applies():
     # is 45:1-style: the speculated fix is the segol *accent* (segolta, U+0592), not
-    # the segol vowel -- a real munaH -> segolta change the grammar sees.
+    # the segol vowel -- a real munaḥ -> segolta change the grammar sees.
     result = apply_mam_fix(
         {"vels": ["לכ֣ורש"]},
         ["לכ֣ורש"],

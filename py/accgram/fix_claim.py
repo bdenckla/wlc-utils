@@ -2,7 +2,7 @@
 
 The fix-tester cross-checks its mechanical verdict against what the hand-authored
 ``st-summary``/``comment`` *claims*.  Speculative claims ("I think the checker
-wants...", "the scanner prefers merkha rather than munaH") are the ones most worth
+wants...", "the scanner prefers merkha rather than munaḥ") are the ones most worth
 testing, so this module flags them and makes a best-effort guess at the claim's
 direction (does it expect adopting MAM to fix the verse?).  Direction inference
 from free prose is unreliable, so it is advisory only -- the report shows it next

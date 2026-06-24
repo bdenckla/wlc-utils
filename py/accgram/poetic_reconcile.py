@@ -5,7 +5,7 @@ The poetic scanner (``ply_scanner_poetic``) reads each verse from the M-C accent
 codes alone.  Two distinctions are simply not *in* that encoding, so the scanner
 makes a blanket guess that this module corrects before the grammar sees the tokens:
 
-1. **legarmeh vs paseq.**  A conjunctive (azla 63 / mehuppak 70) followed by a paseq
+1. **legarmeh vs paseq.**  A conjunctive (azla 63 / mahapakh 70) followed by a paseq
    (05) is written identically whether it is a legarmeh (a disjunctive) or a plain
    paseq (the conjunctive stays a servus and the bar is a bare pause).  The scanner
    emits ``LEGARMEH`` for *every* such sequence.  MAM-simple, by contrast, encodes the
@@ -41,7 +41,7 @@ from accgram import poetic_accent_names as pan
 from accgram.ply_grammar_poetic import parse_tokens
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 
-# A conjunctive (azla/qadma or mehuppak/mahapakh) followed eventually by a paseq within
+# A conjunctive (azla/qadma or mahapakh/mahapakh) followed eventually by a paseq within
 # one whitespace-delimited word -- the legarmeh the scanner emits.  Mirrors the
 # scanner's leftmost-longest legarmeh rule, so group(1) is the servus mark the legarmeh
 # sits on (issue #9, Phase 2: matched over the Unicode mark alphabet).

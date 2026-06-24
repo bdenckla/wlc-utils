@@ -19,13 +19,13 @@ from accgram import accent_marks as am
 
 _MAP: dict[str, str] = {
     "92": am.ATNAX, "01": am.SEGOLTA, "65": am.SHALSHELET, "80": am.ZAQEF_QATAN,
-    "85": am.ZAQEF_GADOL, "73": am.TIPEHA, "81": am.REVIA, "82": am.TSINNORIT,
+    "85": am.ZAQEF_GADOL, "73": am.TIPEXA, "81": am.REVIA, "82": am.TSINNORIT,
     "03": am.PASHTA, "33": am.PASHTA, "10": am.YETIV, "11": am.GERESH_MUQDAM,
     "91": am.TEVIR, "61": am.GERESH, "62": am.GERSHAYIM, "12": am.GERSHAYIM,
     "84": am.QARNEY_PARA, "14": am.TELISHA_GEDOLA, "44": "", "83": am.PAZER,
-    "74": am.MUNAH, "70": am.MAHAPAKH, "71": am.MERKHA, "72": am.MERKHA_KEFULA,
+    "74": am.MUNAX, "70": am.MAHAPAKH, "71": am.MERKHA, "72": am.MERKHA_KEFULA,
     "94": am.DARGA, "63": am.QADMA, "04": am.TELISHA_QETANA, "24": am.TELISHA_QETANA,
-    "93": am.YERAH, "60": am.OLE, "64": am.ILUY, "13": am.DEHI, "02": am.ZINOR,
+    "93": am.YERAX, "60": am.OLE, "64": am.ILUY, "13": am.DEXI, "02": am.ZINOR,
     "35": am.METEG, "75": am.METEG, "95": am.METEG, "05": am.PASEQ, "00": am.SOF_PASUQ,
     "52": am.UPPER_DOT, "53": am.LOWER_DOT,
 }

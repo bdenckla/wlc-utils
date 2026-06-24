@@ -39,12 +39,12 @@ from __future__ import annotations
 
 # --- accent marks (their own Unicode codepoints) ------------------------------
 
-ATNAX = "֑"          # etnahta            (M-C 92)
+ATNAX = "֑"          # etnaḥta            (M-C 92)
 SEGOLTA = "֒"        # segol (accent)     (01)
 SHALSHELET = "֓"     # shalshelet         (65)
 ZAQEF_QATAN = "֔"    # zaqef qatan        (80)
 ZAQEF_GADOL = "֕"    # zaqef gadol        (85)
-TIPEHA = "֖"         # tipeha             (73)
+TIPEXA = "֖"         # tipeḥa             (73)
 REVIA = "֗"          # revia              (81)
 TSINNORIT = "֘"      # zarqa stress-helper / tsinnorit (82)
 PASHTA = "֙"         # pashta             (03 main / 33 helper)
@@ -56,17 +56,17 @@ GERSHAYIM = "֞"      # gershayim          (62 main / 12 secondary)
 QARNEY_PARA = "֟"    # qarney para (pazer gadol) (84)
 TELISHA_GEDOLA = "֠"  # telisha gedola    (14 main / 44 secondary)
 PAZER = "֡"          # pazer              (83)
-MUNAH = "֣"          # munah              (74)
+MUNAX = "֣"          # munaḥ              (74)
 MAHAPAKH = "֤"       # mahapakh           (70)
 MERKHA = "֥"         # merkha             (71)
 MERKHA_KEFULA = "֦"  # merkha kefula      (72)
 DARGA = "֧"          # darga              (94)
 QADMA = "֨"          # qadma / azla       (63)
 TELISHA_QETANA = "֩"  # telisha qetana    (04 main / 24 helper)
-YERAH = "֪"          # yerah ben yomo / galgal (93)
+YERAX = "֪"          # yeraḥ ben yomo / galgal (93)
 OLE = "֫"            # ole                (60)
 ILUY = "֬"           # iluy               (64)
-DEHI = "֭"           # dehi               (13)
+DEXI = "֭"           # deḥi               (13)
 ZINOR = "֮"          # zinor (zarqa/tsinnor main) (02)
 
 # --- non-accent marks ---------------------------------------------------------
@@ -95,7 +95,7 @@ _MARK_DIGITS: dict[str, str] = {
     SHALSHELET: "65",
     ZAQEF_QATAN: "80",
     ZAQEF_GADOL: "85",
-    TIPEHA: "73",
+    TIPEXA: "73",
     REVIA: "81",
     TSINNORIT: "82",
     PASHTA: "03",          # helper 33 shares digit 3 -> same blocking set
@@ -107,17 +107,17 @@ _MARK_DIGITS: dict[str, str] = {
     QARNEY_PARA: "84",
     TELISHA_GEDOLA: "14",
     PAZER: "83",
-    MUNAH: "74",
+    MUNAX: "74",
     MAHAPAKH: "70",
     MERKHA: "71",
     MERKHA_KEFULA: "72",
     DARGA: "94",
     QADMA: "63",
     TELISHA_QETANA: "024",  # main 04 + helper 24
-    YERAH: "93",
+    YERAX: "93",
     OLE: "60",
     ILUY: "64",
-    DEHI: "13",
+    DEXI: "13",
     ZINOR: "02",
     METEG: "75",
     PASEQ: "05",

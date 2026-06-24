@@ -12,7 +12,7 @@ accent -> poetic reading (the accents that matter in the Three Books):
   disjunctives
     sof pasuq
     silluq        a meteg/silluq immediately before sof pasuq              II.1
-    atnah                                                                  II.3
+    atnaḥ                                                                  II.3
     oleh-we-yored ole sign (above, pre-stress) plus the yored = merkha     II.2
                   below the stress; the merkha is consumed into the one
                   OLEH_WEYORED token, not emitted as a servus
@@ -22,16 +22,16 @@ accent -> poetic reading (the accents that matter in the Three Books):
     revia         gadol or qatan -- same sign; disambiguated in a second   II.4=8
                   pass: a revia whose next disjunctive is oleh-we-yored
                   is qatan, otherwise gadol
-    dehi                                                                   II.9
+    deḥi                                                                   II.9
     tsinnor       (no zarqa exists in the poetic system)                   II.7
     pazer                                                                  II.10
     shalshelet gedolah  shalshelet sign + paseq                           II.6
     legarmeh      azla legarmeh / mehuppak legarmeh, i.e. a conjunctive    II.12
-                  (azla or mahapakh) followed by paseq, as prose munah+paseq
+                  (azla or mahapakh) followed by paseq, as prose munaḥ+paseq
 
   conjunctive servi
-    munah   merkha   mahapakh (mehuppak)   azla   illuy   tarha
-    galgal (yerah; also the servus of oleh-we-yored and of pazer)
+    munaḥ   merkha   mahapakh (mahapakh)   azla   illuy   tarḥa
+    galgal (yeraḥ; also the servus of oleh-we-yored and of pazer)
 
   fused / emitted (Plan C -- stop swallowing real accents)
     tsinnorit     fused onto its mahapakh / merkha partner in the same
@@ -52,10 +52,10 @@ accent -> poetic reading (the accents that matter in the Three Books):
   same-letter revia-mugrash charity).
 
 Note: "revia mugrash without geresh" (#367 = Breuer Ch 10 §17-18) -- a bare revia
-acting as the main verse divider when the verse has no atnah -- is NOT a gap: it is
+acting as the main verse divider when the verse has no atnaḥ -- is NOT a gap: it is
 the last disjunctive before silluq, so _reclassify_revia maps it to REVIA_MUGRASH
 (see that function's docstring), and the rich revia_mugrash_clause then carries its
-viceroys (dehi etc.), parsing Breuer's revia-substitute-for-ethnakhta verses (Ps
+viceroys (deḥi etc.), parsing Breuer's revia-substitute-for-atnaḥ verses (Ps
 105:45, 119:4, Job 14:4) without verse-level context.
 
 Known gaps (deferred to the validation pass, see the module's tests / notes):
@@ -121,15 +121,15 @@ _ANY_ACCENT = "[֑-֮]"  # U+0591..U+05AE (as the stray-accent class; meteg U+05
 # Legit same-letter pairs that survive to the guard as two adjacent marks (i.e. are NOT
 # fused by an earlier rule), spared from the bang via negative lookahead.  Order is the
 # post-relocation body order (deḥi, a prepositive, is moved to the front).
-_WHITELISTED_ADJACENT_PAIRS = (am.DEHI + am.MUNAH,)
+_WHITELISTED_ADJACENT_PAIRS = (am.DEXI + am.MUNAX,)
 
 # Display names for building a bang's per-pair (type, leaf); covers the poetic accents,
 # with a codepoint fallback for anything unforeseen.
 _ACCENT_LEAF_NAME: dict[str, str] = {
-    am.ATNAX: "atnax", am.SHALSHELET: "shalshelet", am.TIPEHA: "tarxa",
-    am.REVIA: "revia", am.PAZER: "pazer", am.MUNAH: "munax", am.MAHAPAKH: "mahapakh",
-    am.MERKHA: "merkha", am.QADMA: "azla", am.YERAH: "galgal", am.ILUY: "illuy",
-    am.OLE: "ole", am.DEHI: "dexi", am.ZINOR: "tsinnor", am.GERESH: "geresh",
+    am.ATNAX: "atnax", am.SHALSHELET: "shalshelet", am.TIPEXA: "tarxa",
+    am.REVIA: "revia", am.PAZER: "pazer", am.MUNAX: "munax", am.MAHAPAKH: "mahapakh",
+    am.MERKHA: "merkha", am.QADMA: "azla", am.YERAX: "galgal", am.ILUY: "illuy",
+    am.OLE: "ole", am.DEXI: "dexi", am.ZINOR: "tsinnor", am.GERESH: "geresh",
     am.GERESH_MUQDAM: "geresh muqdam",
 }
 
@@ -181,7 +181,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # same-letter only.  (Failing fast on any *other* stray accent is deferred to the
     # poetic "stop swallowing" work, Plan C; geresh is the only attested case.)
     (re.compile(am.REVIA + am.GERESH), pan.REVIA_MUGRASH),
-    (re.compile(am.DEHI), pan.DEXI),
+    (re.compile(am.DEXI), pan.DEXI),
     (re.compile(am.ZINOR), pan.TSINNOR),
     (re.compile(am.PAZER), pan.PAZER),
     # shalshelet gedolah = shalshelet followed by paseq.  Longer than the bare
@@ -190,7 +190,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # shalshelet qetannah = bare shalshelet (no following paseq): a real conjunctive
     # servus (#371) in eight verses, emitted rather than swallowed.
     (re.compile(am.SHALSHELET), pan.SHALSHELET_QETANNAH),
-    # legarmeh = azla (qadma) or mehuppak (mahapakh) followed by paseq.  Must precede
+    # legarmeh = azla (qadma) or mahapakh (mahapakh) followed by paseq.  Must precede
     # the bare AZLA / MAHAPAKH rules so the longer paseq-terminated match wins.
     (re.compile(r"(?:" + am.QADMA + r"|" + am.MAHAPAKH + r")" + _TEXT + am.PASEQ), pan.LEGARMEH),
     # mahapakh / merkha metsunnar = a tsinnorit (U+0598) fused onto its mahapakh /
@@ -224,13 +224,13 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # other / future same-letter stack.
     (re.compile(_BANG_GUARD), pan.BANG_PAIR),
     # conjunctive servi
-    (re.compile(am.MUNAH), pan.MUNAX),
+    (re.compile(am.MUNAX), pan.MUNAX),
     (re.compile(am.MERKHA), pan.MERKHA),
     (re.compile(am.MAHAPAKH), pan.MAHAPAKH),
     (re.compile(am.QADMA), pan.AZLA),
     (re.compile(am.ILUY), pan.ILLUY),
-    (re.compile(am.TIPEHA), pan.TARXA),
-    (re.compile(am.YERAH), pan.GALGAL),
+    (re.compile(am.TIPEXA), pan.TARXA),
+    (re.compile(am.YERAX), pan.GALGAL),
     # swallowed: meteg (ga`ya/silluq-helper), bare paseq (a separator), and the
     # upper/lower puncta -- genuine secondaries/separators, not structural accents.
     # (tsinnorit and bare shalshelet, formerly swallowed here, are now emitted above
@@ -291,7 +291,7 @@ def _recover_unmarked_oleh(types: list[str]) -> list[str]:
     the divider (the verse then fails to parse).
 
     The reliable, MAM-cross-checked signal is the oleh-we-yored's own servus: the
-    galgal (yerah-ben-yomo, the "v"-shaped sign) standing immediately before
+    galgal (yeraḥ-ben-yomo, the "v"-shaped sign) standing immediately before
     it.  A GALGAL directly followed by a bare MERKHA is that servus + an unmarked
     yored, so the MERKHA is reclassified to OLEH_WEYORED.  Validated against the MAM
     disjunctive oracle (accgram.xcheck_poetic): this recovers 9 Psalms/Job verses
@@ -323,7 +323,7 @@ def _reclassify_revia(types: list[str]) -> list[str]:
         disjunctive before silluq; when two revias precede silluq the first is
         gadol and the second mugrash, #391 -- handled automatically since the
         first revia's next disjunctive is the second revia, not silluq);
-      - otherwise (next is atnah, oleh, or another revia) -> revia gadol.
+      - otherwise (next is atnaḥ, oleh, or another revia) -> revia gadol.
     """
     out = list(types)
     for i, t in enumerate(out):

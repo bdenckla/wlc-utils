@@ -19,7 +19,7 @@ and `lexical_validation` actually read:
   and a geresh or gershayim sharing a word with a telisha-gedola -- are dropped here,
   keeping the telisha-gedola (a prose geresh muqdam is first read as the plain geresh it
   mis-encodes, then dropped under that rule; `word_to_marks`).
-* **Prepositive accents** (yetiv, geresh-muqdam, dehi, telisha-gedola) are relocated to
+* **Prepositive accents** (yetiv, geresh-muqdam, deḥi, telisha-gedola) are relocated to
   the front of the word's mark sequence, undoing `wlc_uword._PREPOS_PATT`'s move past an
   accent on the first consonant, so the scanner reads the accents in M-C order.
 * **Boundaries / punctuation** are reproduced exactly: maqaf -> ``-``, inter-word gaps
@@ -60,7 +60,7 @@ _KEPT_NON_ACCENT = frozenset(
 # (Gershayim 12 and the secondary telisha-gedola 44 are *also* prepositive in M-C but
 # are swallowed secondaries dropped below, so only these four reach the front.)
 _PREPOSITIVE_MARKS = frozenset(
-    (am.YETIV, am.GERESH_MUQDAM, am.DEHI, am.TELISHA_GEDOLA)
+    (am.YETIV, am.GERESH_MUQDAM, am.DEXI, am.TELISHA_GEDOLA)
 )
 
 # A geresh or gershayim that shares a *word* with a telisha gedola is dropped (keeping

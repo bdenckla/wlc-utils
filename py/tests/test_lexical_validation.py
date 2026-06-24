@@ -19,7 +19,7 @@ from accgram.lexical_validation import illegal_below_pairs, stranded_stress_help
 _TS = am.TSINNORIT  # M-C 82 (zarqa stress-helper)
 _ZI = am.ZINOR      # M-C 02 (zinor / zarqa main)
 _MA = am.MAHAPAKH   # U+05A4 (below)
-_TI = am.TIPEHA     # U+0596 (below)
+_TI = am.TIPEXA     # U+0596 (below)
 
 
 def _codes(body: str) -> list[str]:

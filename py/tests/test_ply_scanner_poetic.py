@@ -4,7 +4,7 @@ Pins the decoded token stream of a few real Psalms verses whose Michigan-Claremo
 encoding was checked by hand against the M-C accent table (wlc420/supplmt.wts,
 column II) and Yeivin ITM #358-374.  These exercise the tricky cases: the
 revia-mugrash geresh muqdam (11+81), oleh-we-yored (60 ole + 71 yored merka),
-azla/mehuppak legarmeh (63/70 + 05 paseq), the galgal servus of oleh-we-yored
+azla/mahapakh legarmeh (63/70 + 05 paseq), the galgal servus of oleh-we-yored
 (93), and the revia gadol/qatan/mugrash disambiguation.
 
 Token-type names come from accgram.poetic_accent_names (no re-typed literals).
@@ -57,7 +57,7 @@ def test_ps_2_2_azla_legarmeh():
     )
     types = _types(body)
     assert pan.LEGARMEH in types
-    # the revia after the legarmeh (81 on )EREC, next disjunctive atnah) is gadol
+    # the revia after the legarmeh (81 on )EREC, next disjunctive atnaḥ) is gadol
     assert pan.REVIA_GADOL in types
     assert pan.ATNAX in types
 
@@ -79,15 +79,15 @@ def test_ps_3_3_oleh_weyored_with_galgal_servus():
     assert pan.MERKHA not in types[g + 1 : o]
 
 
-def test_ps_37_28_revia_gadol_then_dehi_then_atnah():
-    # Yeivin's legarmeh-under-revia-gadol example; second half has dehi before atnah.
+def test_ps_37_28_revia_gadol_then_dexi_then_atnax():
+    # Yeivin's legarmeh-under-revia-gadol example; second half has deḥi before atnaḥ.
     body = (
         r"K.I70Y Y:HWF63H05 )O82H\"70B MI$:P.F81+ W:/LO)-YA(:AZO74B "
         r")ET-13X:ASIYDFY/W L:/(OWLF74M NI$:MF92RW. W:/ZE73RA( R:$F(I74YM NIK:RF75T00"
     )
     types = _types(body)
     assert pan.LEGARMEH in types  # 63+05 on YHWH
-    assert pan.REVIA_GADOL in types  # 81 on MI$:P.F+ (next disjunctive is atnah)
+    assert pan.REVIA_GADOL in types  # 81 on MI$:P.F+ (next disjunctive is atnaḥ)
     assert pan.DEXI in types  # 13
     assert pan.ATNAX in types
     assert types[-2:] == [pan.SILLUQ, pan.SOFPASUQ]
@@ -138,7 +138,7 @@ def test_ps124_4_plain_geresh_charity_to_revia_mugrash():
     # Body mirrors the real verse's shape: ... revia+geresh word (with a ]1 note) ...
     # then a meteg-before-sofpasuq silluq.
     body = (
-        "X" + am.DEHI + "XX XX" + am.MUNAH + "XX XXX" + am.ATNAX + "XXX "
+        "X" + am.DEXI + "XX XX" + am.MUNAX + "XX XXX" + am.ATNAX + "XXX "
         "X" + am.REVIA + am.GERESH + "XXX]1 XX" + am.MERKHA + "X "
         "XX-XXX" + am.METEG + "XX" + am.SOF_PASUQ
     )
@@ -151,7 +151,7 @@ def test_ps124_4_plain_geresh_charity_to_revia_mugrash():
 
 
 def test_revia_then_geresh_only_fuses_same_letter():
-    # The charity is same-letter only (adjacency, no X between).  Trailing atnah makes a
+    # The charity is same-letter only (adjacency, no X between).  Trailing atnaḥ makes a
     # *bare* revia reclassify to revia GADOL, so fusion (same-letter) vs swallow
     # (cross-letter) is visible in the output: were the trailing disjunctive silluq,
     # the bare revia would reclassify to mugrash too and hide the difference.
@@ -235,9 +235,9 @@ def test_cross_letter_merkha_then_azla_stays_a_sequence():
 def test_non_whitelisted_pair_fuses_to_bang():
     # Plan D guard is a WHITELIST: any two adjacent same-letter accents NOT on the
     # whitelist fuse to an a!b bang (type/leaf derived per pair), not just merkha+qadma.
-    # munah+merkha is not whitelisted -> MUNAX_MERKHA / "munax!merkha".
+    # munaḥ+merkha is not whitelisted -> MUNAX_MERKHA / "munax!merkha".
     tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
-    toks = scan_accents("X" + am.MUNAH + am.MERKHA + "X" + tail)
+    toks = scan_accents("X" + am.MUNAX + am.MERKHA + "X" + tail)
     leaves = [leaf for _t, leaf in toks]
     assert "munax!merkha" in leaves
     assert ("MUNAX_MERKHA", "munax!merkha") in toks
@@ -246,7 +246,7 @@ def test_non_whitelisted_pair_fuses_to_bang():
     assert pan.MUNAX not in types and pan.MERKHA not in types
     # and it is unparseable (no grammar terminal for the dynamic bang type)
     parser = build_parser()
-    assert parse_tokens(parser, scan_verse("t 1:1", "X" + am.MUNAH + am.MERKHA + "X" + tail).tokens) is None
+    assert parse_tokens(parser, scan_verse("t 1:1", "X" + am.MUNAX + am.MERKHA + "X" + tail).tokens) is None
 
 
 def test_whitelisted_pairs_not_flagged():
@@ -255,9 +255,9 @@ def test_whitelisted_pairs_not_flagged():
     # _WHITELISTED_ADJACENT_PAIRS), and tsinnorit+mahapakh is the metsunnar fusion (a
     # cross-letter pair consumed upstream), not a bang.
     tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
-    dexi = _types_marks("X" + am.DEHI + am.MUNAH + "X" + tail)
+    dexi = _types_marks("X" + am.DEXI + am.MUNAX + "X" + tail)
     assert pan.DEXI in dexi and pan.MUNAX in dexi
-    assert not any("!" in leaf for _t, leaf in scan_accents("X" + am.DEHI + am.MUNAH + "X" + tail))
+    assert not any("!" in leaf for _t, leaf in scan_accents("X" + am.DEXI + am.MUNAX + "X" + tail))
     metsun = _types_marks("X" + am.TSINNORIT + "X" + am.MAHAPAKH + "X" + tail)
     assert pan.MAHAPAKH_METSUNNAR in metsun
 

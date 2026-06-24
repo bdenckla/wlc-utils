@@ -8,7 +8,7 @@ trees' segmentation is correct -- not merely parseable -- we reduce each side to
 ordered list of disjunctive accents (the division points) and diff those.  Servus
 (conjunctive) signs are deliberately dropped: MAM and L often choose different
 conjunctive *signs* for the same slot (e.g. L codes the oleh-we-yored servus as
-galgal/yerah-ben-yomo while MAM writes atnah-hafukh), and Yeivin pins no exact
+galgal/yeraḥ-ben-yomo while MAM writes atnaḥ-hafukh), and Yeivin pins no exact
 servus chains, so only the disjunctive skeleton is a meaningful equality check.
 
 Disjunctive markers, MAM Unicode accent -> poetic token (same vocabulary the
@@ -28,12 +28,12 @@ scanner emits):
                             follows (otherwise it is the conjunctive shalshelet
                             qetannah, swallowed -- matching the scanner)
   ``lp-legarmeih`` node   -> LEGARMEH when it follows a conjunctive word (azla /
-                            mehuppak + paseq); promotes a preceding SHALSHELET to
+                            mahapakh + paseq); promotes a preceding SHALSHELET to
                             SHALSHELET_GEDOLAH
   SOF PASUQ (U+05C3)      -> SILLUQ (the final word's meteg; verse end)
 
-Other accents (munah, merka, mahpak, qadma/azla, illuy, tipeha/tarha, galgal,
-atnah-hafukh, zarqa=tsinnorit, telisha, plain meteg/ga'ya, plain paseq) are servi
+Other accents (munaḥ, merka, mahapakh, qadma/azla, illuy, tipeḥa/tarḥa, galgal,
+atnaḥ-hafukh, zarqa=tsinnorit, telisha, plain meteg/ga'ya, plain paseq) are servi
 or secondary marks and contribute no disjunctive.
 
 The *servant* of a disjunctive -- the conjunctive sign on the word immediately
@@ -42,7 +42,7 @@ preceding it -- IS extractable, via ``servi_before_from_verse_node`` /
 ADJACENCY rules (e.g. Breuer's "the servant next to [deḥi] is [munaḥ]"): MAM's servant
 *choice* per slot is read in the scanner's own servus vocabulary and compared
 word-for-word against L.  (The disjunctive cross-check above is silent on servi;
-this fills that gap.  The munah/merka *selection within* a slot is phonological and
+this fills that gap.  The munaḥ/merka *selection within* a slot is phonological and
 still out of a token grammar's scope -- the oracle tells you what L and MAM actually
 do, not why.)
 """
@@ -105,7 +105,7 @@ _DISJ_PRIORITY: list[tuple[str, str]] = [
 
 # MAM Unicode conjunctive sign -> poetic servus token (poetic_accent_names, the same
 # vocabulary the L scanner emits), so servant choices compare apples-to-apples across
-# the two witnesses.  The oleh-we-yored servus is written atnah-hafukh (U+05A2) in MAM
+# the two witnesses.  The oleh-we-yored servus is written atnaḥ-hafukh (U+05A2) in MAM
 # but coded galgal in L (see the disjunctive note above); it is normalized to GALGAL
 # so the same structural slot matches.  Priority only disambiguates a word carrying
 # more than one conjunctive mark (rare) -- the first match wins.
@@ -114,10 +114,10 @@ _SERVUS_SIGNS: list[tuple[str, str]] = [
     (ha.MER, pan.MERKHA),
     (ha.MAH, pan.MAHAPAKH),
     (ha.QOM, pan.AZLA),      # qadma = azla (the conjunctive)
-    (ha.YBY, pan.GALGAL),    # yerah-ben-yomo = galgal
-    (ha.ATN_H, pan.GALGAL),  # atnah-hafukh: MAM's oleh-we-yored servus (L codes galgal)
+    (ha.YBY, pan.GALGAL),    # yeraḥ-ben-yomo = galgal
+    (ha.ATN_H, pan.GALGAL),  # atnaḥ-hafukh: MAM's oleh-we-yored servus (L codes galgal)
     (ha.ILU, pan.ILLUY),
-    (ha.TIP, pan.TARXA),     # tipeha sign = the poetic tarha servant
+    (ha.TIP, pan.TARXA),     # tipeḥa sign = the poetic tarḥa servant
 ]
 
 # Node types whose subtree carries no cantillated text for our purposes.
@@ -159,7 +159,7 @@ def _word_marker_and_char(accents: str) -> tuple[str | None, str | None]:
 def _word_self_servus(accents: str, marker_char: str) -> str | None:
     """The conjunctive servus on the SAME word, standing before the disjunctive mark.
 
-    A long word can host its own servant: e.g. a yerah-ben-yomo (galgal) and a pazer on
+    A long word can host its own servant: e.g. a yeraḥ-ben-yomo (galgal) and a pazer on
     one word -- the galgal is pazer's adjacent servant, exactly as the L scanner emits it
     as a token right before the pazer.  Returns the servus sign closest before the
     disjunctive mark, or None.  Order matters here (not mere membership): a conjunctive

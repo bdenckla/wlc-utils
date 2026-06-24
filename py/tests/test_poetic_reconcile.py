@@ -3,7 +3,7 @@
 Two corrections the M-C source cannot express, applied before the grammar parses:
 
   1. legarmeh-vs-paseq: a scanner LEGARMEH MAM reads as a plain paseq is demoted to
-     its underlying conjunctive servus (azla 63 / mehuppak 70), the paseq swallowed.
+     its underlying conjunctive servus (azla 63 / mahapakh 70), the paseq swallowed.
   2. the unmarked oleh-we-yored (Yeivin #363): a charitable, parse-driven pass reads
      one ambiguous merka as a yored iff that uniquely makes the verse parse.
 
@@ -34,17 +34,17 @@ def _types(tokens):
 
 
 def test_underlying_servi_reads_the_conjunctive_under_each_legarmeh():
-    # azla(63)+paseq(05), then mehuppak(70)+paseq(05): azla then mehuppak servus.
+    # azla(63)+paseq(05), then mahapakh(70)+paseq(05): azla then mahapakh servus.
     assert pr._legarmeh_underlying_servi(mc_to_marks("QF63H05 HA70B05")) == [
         pan.AZLA, pan.MAHAPAKH,
     ]
 
 
 def test_demote_when_mam_reads_no_legarmeh():
-    # One mehuppak-legarmeh word; MAM reads no disjunctive there (a plain paseq).
+    # One mahapakh-legarmeh word; MAM reads no disjunctive there (a plain paseq).
     tokens = [(pan.TILDE, ""), (pan.LEGARMEH, "legarmeh"), (pan.SOFPASUQ, "sof pasuq")]
     out = pr._demote_mam_paseq(mc_to_marks("YO70WM05"), tokens, mam_disjunctives=[])
-    # The legarmeh becomes its underlying mehuppak servus; the paseq is dropped.
+    # The legarmeh becomes its underlying mahapakh servus; the paseq is dropped.
     assert _types(out) == [pan.TILDE, pan.MAHAPAKH, pan.SOFPASUQ]
 
 
@@ -58,7 +58,7 @@ def test_no_demotion_when_mam_also_reads_legarmeh():
 
 def test_demotion_keeps_the_legarmeh_mam_confirms_and_drops_the_one_it_does_not():
     # Pr 30:15 shape: first legarmeh (azla) is a real legarmeh in MAM; the second
-    # (mehuppak) is a paseq + an oleh-we-yored MAM puts on the next word.
+    # (mahapakh) is a paseq + an oleh-we-yored MAM puts on the next word.
     tokens = [
         (pan.TILDE, ""),
         (pan.LEGARMEH, "legarmeh"),
@@ -84,7 +84,7 @@ def test_demote_is_a_noop_when_verse_is_absent_from_mam():
 
 
 def test_charitable_oleh_uniquely_recovers_an_unmarked_yored():
-    # Ps 68:20 after legarmeh->mehuppak demotion: NO_PARSE until the bare merka of the
+    # Ps 68:20 after legarmeh->mahapakh demotion: NO_PARSE until the bare merka of the
     # unmarked oleh-we-yored is read as a yored.  Exactly one promotion parses.
     parser = build_parser()
     tokens = [

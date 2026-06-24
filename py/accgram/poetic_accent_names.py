@@ -46,7 +46,7 @@ SOFPASUQ = "SOFPASUQ"
 
 # --- disjunctives (greatest -> least) ------------------------------------------
 SILLUQ = "SILLUQ"
-ATNAX = "ATNAX"  # etnahta
+ATNAX = "ATNAX"  # etnaḥta
 OLEH_WEYORED = "OLEH_WEYORED"
 REVIA_GADOL = "REVIA_GADOL"
 REVIA_MUGRASH = "REVIA_MUGRASH"

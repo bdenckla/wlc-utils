@@ -63,7 +63,7 @@ _STRESS_HELPER_PARTNER: dict[str, tuple[str, str]] = {am.TSINNORIT: (am.ZINOR, "
 # mahapakh MAM drops, and tags the word anomalous via ]n).  Scoped to this attested pair
 # only; deliberately NOT generalized to "any two below-accents" (see the plan / memory
 # parse-rate-not-a-goal).  The label uses the same-letter-pair bang convention.
-_ILLEGAL_BELOW_PAIR: frozenset[str] = frozenset((am.MAHAPAKH, am.TIPEHA))
+_ILLEGAL_BELOW_PAIR: frozenset[str] = frozenset((am.MAHAPAKH, am.TIPEXA))
 _ILLEGAL_BELOW_PAIR_CODE = "mahapakh!tipexa"
 
 

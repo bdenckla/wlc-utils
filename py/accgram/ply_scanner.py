@@ -116,8 +116,8 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.ZAQEF_GADOL), "ZAQEFGADOL"),
     (re.compile(am.REVIA), "REVIA"),
     # mayela (trailing context): tipexa before sof-pasuq/atnax, only ga`ya intervening.
-    (re.compile(am.TIPEHA + _MAYELA_LA), "MAYELA"),
-    (re.compile(am.TIPEHA), "TIPEXA"),
+    (re.compile(am.TIPEXA + _MAYELA_LA), "MAYELA"),
+    (re.compile(am.TIPEXA), "TIPEXA"),
     # zarqa: optional tsinnorit stress-helper fused onto the zinor (one token).
     (re.compile(r"(?:" + am.TSINNORIT + _TEXT + r")?" + am.ZINOR), "ZARQA"),
     # pashta: a stress-helper pashta fused onto the main pashta (one token).
@@ -142,15 +142,15 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.QARNEY_PARA), "PAZERGADOL"),
     (re.compile(am.TELISHA_GEDOLA), "TELISHAGEDOLA"),
     # legarmeh (trailing context): munax+paseq before a subsequent revia.
-    (re.compile(am.MUNAH + _TEXT + am.PASEQ + _LEGARMEH_LA), "LEGARMEH"),
+    (re.compile(am.MUNAX + _TEXT + am.PASEQ + _LEGARMEH_LA), "LEGARMEH"),
     # munax+paseq NOT before revia: legarmeh only inside a has_legarmeh passage.
-    (re.compile(am.MUNAH + _TEXT + am.PASEQ), "_LEGARMEH_OR_MUNAX"),
-    (re.compile(am.MUNAH), "MUNAX"),
+    (re.compile(am.MUNAX + _TEXT + am.PASEQ), "_LEGARMEH_OR_MUNAX"),
+    (re.compile(am.MUNAX), "MUNAX"),
     # mahapakh + qadma/azla on one base letter (adjacent in the mark string, no X
     # between -> same letter): an impositive above-accent and below-accent share a
     # consonant, a cluster with no natural order.  Fused into one
     # unitary token rather than judged as a servus *sequence*; the genuine cross-
-    # letter `qadma...mehuppakh` chain still tokenizes as AZLA then MAHAPAKH.  Stored
+    # letter `qadma...mahapakhh` chain still tokenizes as AZLA then MAHAPAKH.  Stored
     # mahapakh-then-qadma (U+05A4 < U+05A8).  Outside the (ungrammar-checked)
     # decalogues this occurs only at Ezekiel 20:31.
     (re.compile(am.MAHAPAKH + am.QADMA), "MAHAPAKHAZLA"),
@@ -162,7 +162,7 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # telisha-qetanna: a stress-helper telisha fused onto the main (one token).
     (re.compile(am.TELISHA_QETANA + _TEXT + am.TELISHA_QETANA), "TELISHAQETANNA"),
     (re.compile(am.TELISHA_QETANA), "TELISHAQETANNA"),
-    (re.compile(am.YERAH), "GALGAL"),
+    (re.compile(am.YERAX), "GALGAL"),
     # leftover medial meteg/paseq/tsinnorit/puncta -> swallowed
     (
         re.compile(
