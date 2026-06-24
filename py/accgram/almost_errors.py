@@ -86,10 +86,26 @@ _TELG_MODES = (
 
 # The five ways to hand ek20:31's mahapakh + qadma pair to the grammar: the fused token
 # the checker actually emits, plus the four alternatives (drop one mark, or keep both as
-# a sequence in either order).  Only two parse cleanly -- the fused token and the
-# qadma-then-mahapakh sequence -- because the grammar's pashta_phrase has rules for
-# both MAHAPAKHAZLA and the cross-letter AZLA MAHAPAKH pair, but none for a bare mahapakh,
-# a bare azla, or a mahapakh-then-azla order.  The verdict table makes that visible.
+# a sequence in either order).  Only two parse cleanly: the fused token and the
+# qadma-then-mahapakh sequence.
+#
+# The reason is the *three*-servus context, which is easy to miss.  This pashta (on the
+# following word גִּלּוּלֵיכֶם) is served by three conjunctives: a telisha qetanna on the
+# preceding word אַתֶּם, then the azla (qadma) and mahapakh that share ek20:31's alef.  Every
+# pashta_phrase rule for a telisha-qetanna-headed chain puts AZLA directly after the
+# TELISHAQETANNA -- TELISHAQETANNA AZLA MAHAPAKH PASHTA, or its one-token analogue
+# TELISHAQETANNA MAHAPAKHAZLA PASHTA -- because the masoretic rule is that a telisha
+# qetanna is *always* followed by azla (Yeivin #246).  So here azla is an obligatory
+# bridge, not an optional mark:
+#   fused          TELISHAQETANNA MAHAPAKHAZLA PASHTA  -> clean
+#   seq_azla_mah   TELISHAQETANNA AZLA MAHAPAKH PASHTA -> clean (same reading, two letters)
+#   drop_azla      TELISHAQETANNA MAHAPAKH PASHTA      -> no rule (mahapakh can't follow telq)
+#   drop_mahapakh  TELISHAQETANNA AZLA PASHTA          -> no rule (azla needs mahapakh/merkha)
+#   seq_mah_azla   TELISHAQETANNA MAHAPAKH AZLA PASHTA -> wrong order
+# A *bare* MAHAPAKH PASHTA rule does exist (a one-servus pashta), so dropping the azla
+# would parse if this pashta stood alone -- but it never does here, because the telisha
+# qetanna makes the chain three deep.  The verdict table makes the clean/ERROR split
+# visible.
 _EK_MODES = (
     ("fused", "fuse into one mahapakh!azla token (what the checker does)"),
     ("drop_azla", "keep the mahapakh, drop the qadma"),
@@ -729,8 +745,34 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
                 " accepts the cross-letter ",
                 H.code("azla mahapakh"),
                 " pair, in exactly the reading order the MAM note describes (qadma before"
-                " mahapakh). Dropping either mark, or ordering them mahapakh-then-azla, is"
-                " ungrammatical.",
+                " mahapakh).",
+            )
+        ),
+        H.para(
+            (
+                "Why the other three readings fail is worth spelling out, because it is"
+                " not merely that “a word needs an accent.” The pashta here is served by"
+                " three conjunctives: a telisha qetanna on the preceding word ",
+                _hbo("אַתֶּם"),
+                ", then the qadma and mahapakh sharing this word’s alef. Once a"
+                " telisha qetanna heads the chain, the grammar admits only ",
+                H.code("telisha-qetanna azla mahapakh pashta"),
+                " (or its one-token analogue ",
+                H.code("telisha-qetanna mahapakh!azla pashta"),
+                ") — the azla is obligatory, because the masoretic rule (Yeivin §246) is"
+                " that a telisha qetanna is always followed by azla. So ",
+                H.bold("keep the mahapakh, drop the qadma"),
+                " leaves a telisha qetanna directly before a bare mahapakh — a sequence"
+                " the tradition never produces and the grammar has no rule for — and the"
+                " parse falls into error recovery (verdict ERROR, not even a clean"
+                " non-parse). Dropping the mahapakh instead leaves an azla with nothing"
+                " between it and the pashta, also unruled (azla must be followed by"
+                " mahapakh or merkha); and the mahapakh-then-qadma order is simply"
+                " backwards. A bare ",
+                H.code("mahapakh pashta"),
+                " is a perfectly legal one-servus pashta elsewhere, so dropping the qadma"
+                " would parse if this pashta stood alone — but it does not, because the"
+                " telisha qetanna makes the chain three deep.",
             )
         ),
         _ek_verdict_table(index, parser, has_legarmeh),
