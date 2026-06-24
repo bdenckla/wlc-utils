@@ -31,8 +31,8 @@ from py_html import wlc_utils_html as H
 _SAME_LETTER_BOTH = "א" + am.TELISHA_GEDOLA + am.GERESH
 
 
-def test_build_word_variant_chosen_drops_geresh_keeps_telg() -> None:
-    result = aet._build_word_variant(_SAME_LETTER_BOTH, "chosen")
+def test_build_word_variant_keep_telg_drops_geresh_keeps_telg() -> None:
+    result = aet._build_word_variant(_SAME_LETTER_BOTH, "keep_telg")
     assert am.TELISHA_GEDOLA in result
     assert am.GERESH not in result
 
@@ -53,8 +53,30 @@ def test_build_word_variant_only_touches_both_carrying_words() -> None:
     # A word with a telg but no geresh-family companion is transcoded untouched in
     # every mode (the variant only edits words holding BOTH marks).
     telg_only = "א" + am.TELISHA_GEDOLA
-    for mode in ("chosen", "keep_gerstar", "keep_both"):
+    for mode in ("keep_telg", "keep_gerstar", "keep_both"):
         assert am.TELISHA_GEDOLA in aet._build_word_variant(telg_only, mode)
+
+
+def test_telg_word_forms_same_letter_splits_marks() -> None:
+    forms = aet._telg_word_forms(_SAME_LETTER_BOTH)
+    assert forms.word == _SAME_LETTER_BOTH  # no geresh muqdam to charitably rewrite
+    assert am.TELISHA_GEDOLA in forms.keep_telg and am.GERESH not in forms.keep_telg
+    assert am.GERESH in forms.keep_gerstar and am.TELISHA_GEDOLA not in forms.keep_gerstar
+    assert forms.same_letter is True
+
+
+def test_telg_word_forms_cross_letter_is_not_same_letter() -> None:
+    cross = "א" + am.TELISHA_GEDOLA + "ב" + am.GERESH
+    assert aet._telg_word_forms(cross).same_letter is False
+
+
+def test_telg_word_forms_shows_geresh_muqdam_post_charity() -> None:
+    # 2k17:13's shape: a geresh muqdam companion, which the table shows as a plain geresh.
+    muqdam = "א" + am.TELISHA_GEDOLA + am.GERESH_MUQDAM
+    forms = aet._telg_word_forms(muqdam)
+    for form in (forms.word, forms.keep_gerstar):
+        assert am.GERESH in form and am.GERESH_MUQDAM not in form
+    assert forms.same_letter is True
 
 
 def test_parse_tree_from_text_renders_clean_tree() -> None:

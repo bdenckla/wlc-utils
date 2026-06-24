@@ -14,6 +14,7 @@ mutated permanently).
 from __future__ import annotations
 
 import contextlib
+from typing import NamedTuple
 
 from accgram import accent_marks as am
 from accgram import lexical_validation
@@ -41,7 +42,7 @@ _GG = frozenset((am.GERESH, am.GERSHAYIM))
 # --------------------------------------------------------------------------- #
 def _build_word_variant(word: str, mode: str) -> str:
     """``uni_to_marks.word_to_marks``, but for a word carrying BOTH a telisha gedola
-    and a geresh-family mark, apply ``mode`` (chosen / keep_gerstar / keep_both).
+    and a geresh-family mark, apply ``mode`` (keep_telg / keep_gerstar / keep_both).
 
     A faithful copy of the Plan B prototype: it rebuilds the mark skeleton, dropping
     the telg or the geresh-family companion per ``mode`` (or neither, for keep_both),
@@ -73,7 +74,7 @@ def _build_word_variant(word: str, mode: str) -> str:
             else:
                 as_geresh = am.GERESH if ch == am.GERESH_MUQDAM else ch
                 if as_geresh in _GG:
-                    if both and mode == "chosen":
+                    if both and mode == "keep_telg":
                         continue  # drop the geresh-family companion (current behaviour)
                     mark = as_geresh
                 else:
@@ -241,3 +242,48 @@ def _telg_gerstar_word(verse: object) -> str | None:
         if has_telg and has_gerstar:
             return word
     return None
+
+
+class TelgForms(NamedTuple):
+    """The Hebrew word forms the telg exhibit table displays for one word."""
+
+    word: str  # the real WLC word, both marks, shown post-charity (geresh muqdam -> geresh)
+    keep_telg: str  # the telisha gedola alone (geresh-family companion dropped)
+    keep_gerstar: str  # the geresh-family mark alone (telisha gedola dropped), post-charity
+    same_letter: bool  # both marks sit on one base letter, so the repeated-word seq is non-trivial
+
+
+def _telg_marks_share_letter(word: str) -> bool:
+    """True if ``word``'s telisha gedola and geresh-family mark hang on the *same* base
+    letter (gn5:29 / zp2:15 / 2k17:13) rather than on two letters of one word (lv10:4 /
+    ek48:10).  Only same-letter words get a synthesized repeated-word sequence in the
+    table; a cross-letter word already carries its two marks in sequence."""
+    telg_at: int | None = None
+    ger_at: int | None = None
+    letter_idx = -1
+    for ch in word:
+        if _is_base_letter(ch):
+            letter_idx += 1
+        elif ch == am.TELISHA_GEDOLA:
+            telg_at = letter_idx
+        elif (am.GERESH if ch == am.GERESH_MUQDAM else ch) in _GG:
+            ger_at = letter_idx
+    return telg_at is not None and telg_at == ger_at
+
+
+def _telg_word_forms(word: str) -> TelgForms:
+    """Derive the exhibit table's Hebrew word forms from a real WLC word carrying both a
+    telisha gedola and a geresh-family companion.
+
+    Every form is shown post-charity: a geresh muqdam (2k17:13) is rendered as a plain
+    geresh, matching the geresh muqdam charity above.  ``keep_telg`` drops the geresh-family
+    mark; ``keep_gerstar`` drops the telisha gedola."""
+    post_charity = word.replace(am.GERESH_MUQDAM, am.GERESH)
+    keep_telg = "".join(c for c in post_charity if c not in (am.GERESH, am.GERSHAYIM))
+    keep_gerstar = post_charity.replace(am.TELISHA_GEDOLA, "")
+    return TelgForms(
+        word=post_charity,
+        keep_telg=keep_telg,
+        keep_gerstar=keep_gerstar,
+        same_letter=_telg_marks_share_letter(word),
+    )

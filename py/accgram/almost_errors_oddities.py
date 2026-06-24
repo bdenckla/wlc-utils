@@ -39,7 +39,7 @@ _TELG_EXHIBIT_REFS = ("gn5:29", "zp2:15", "2k17:13", "lv10:4", "ek48:10")
 _TELG_TREE_REFS = ("zp2:15", "lv10:4")
 
 _TELG_MODES = (
-    ("chosen", "drop the geresh-family mark, keep the telisha gedola (what the checker does)"),
+    ("keep_telg", "drop the geresh-family mark, keep the telisha gedola (what the checker does)"),
     ("keep_gerstar", "drop the telisha gedola, keep the geresh-family mark"),
     ("keep_both", "keep both, as a telisha gedola then a geresh phrase"),
 )
@@ -140,9 +140,13 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
             " parsing — and there it keeps the telisha gedola and drops the companion."
             " That is a choice, but a choice among grammatically-clean options: the"
             " verses also parse cleanly if the telisha gedola is dropped instead, or if"
-            " both marks are kept as a sequence."
+            " both marks are kept as a sequence. The table below shows, for each word, the"
+            " real WLC form (both marks, post-charity) alongside the alternate forms each"
+            " reading would use: the telisha-gedola-only and geresh-only forms, and — for"
+            " the three same-letter words — a synthesized repeated-word sequence that"
+            " spreads the two marks across two copies of the word, in either order."
         ),
-        _telg_verdict_table(index, parser, has_legarmeh),
+        _telg_forms_table(index),
         H.para(
             "Every one of the five verses parses cleanly under all three readings"
             " (no ERROR, no NO_PARSE), so the choice is not forced by grammaticality —"
@@ -171,26 +175,35 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
                 " then a geresh"
                 " phrase, one tree level deeper — not as a fused same-letter cluster,"
                 " because the telisha gedola is prepositive (relocated to the front of"
-                " the word) and the scanner emits the two marks as separate tokens. So"
-                " the real word’s keep-both tree already makes the sequence visible; no"
-                " synthetic repeated-word illustration is needed.",
+                " the word) and the scanner emits the two marks as separate tokens. The"
+                " synthesized repeated-word columns in the table above make that same"
+                " sequence explicit on two separate stress units rather than crowded onto"
+                " one letter; the cross-letter words (Leviticus 10:4, Ezekiel 48:10)"
+                " already carry their two marks on two letters, so they need no such"
+                " illustration and the table leaves those cells blank.",
             )
         )
     )
     return tuple(items)
 
 
-def _telg_verdict_table(index, parser, has_legarmeh: HasLegarmeh) -> object:
+def _telg_forms_table(index) -> object:
+    """One row per telg-exhibit word: the real WLC word (both marks, post-charity) and the
+    alternate Hebrew forms the readings would use -- the two single-mark forms, plus, for
+    the same-letter words, a synthesized repeated-word sequence (the base word twice, each
+    copy carrying one mark) in either order.  No parse verdict: every reading parses cleanly,
+    as the trees below show, so the forms themselves are the point."""
     header = H.table_row_of_headers(
-        ("verse", "companion word", *(mode for mode, _label in _TELG_MODES))
+        ("verse", "word", "keep_telg", "keep_gerstar", "telg, then geresh", "geresh, then telg")
     )
     rows: list[object] = [header]
     for bcv in _TELG_EXHIBIT_REFS:
-        word = aet._telg_gerstar_word(index[bcv])
-        verdicts = tuple(
-            aet._telg_verdict_for(bcv, mode, index, parser, has_legarmeh)
-            for mode, _label in _TELG_MODES
-        )
+        forms = aet._telg_word_forms(aet._telg_gerstar_word(index[bcv]))
+        if forms.same_letter:
+            seq_tg = _hbo(f"{forms.keep_telg} {forms.keep_gerstar}")
+            seq_gt = _hbo(f"{forms.keep_gerstar} {forms.keep_telg}")
+        else:
+            seq_tg = seq_gt = "—"
         rows.append(
             H.table_row_of_data(
                 (
@@ -198,8 +211,11 @@ def _telg_verdict_table(index, parser, has_legarmeh: HasLegarmeh) -> object:
                         _ref_display(bcv),
                         {"href": my_wlc_bcv_str.get_tanach_dot_us_url(bcv)},
                     ),
-                    _hbo(word) if word else "—",
-                    *verdicts,
+                    _hbo(forms.word),
+                    _hbo(forms.keep_telg),
+                    _hbo(forms.keep_gerstar),
+                    seq_tg,
+                    seq_gt,
                 )
             )
         )
