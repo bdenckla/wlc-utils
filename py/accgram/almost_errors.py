@@ -91,6 +91,20 @@ _EK2031_MAM_NOTE_HE = (
     " במקום הראוי לגעיה והמהפך בהברת הטעם), כגון: ויקרא כה,מו; במדבר כא,א."
 )
 
+# The six places (besides ek20:31) where a qadma sits in a syllable fit for a ga'ya and
+# a mahapakh on the stressed syllable -- the pattern the MAM note above invokes.  The note
+# names only the first two as examples (and miscites Num 20:1 as "21:1"); the other four
+# are flagged ``bracketed`` so the page can mark them as our additions, not the note's.
+# (bb, chnu, vrnu, display, bracketed)
+_QADMA_GAYA_REFS = (
+    ("lv", 25, 46, "Lev. 25:46", False),
+    ("nu", 20, 1, "Num. 20:1", False),
+    ("ek", 43, 11, "Ezek. 43:11", True),
+    ("2c", 35, 25, "2 Chron. 35:25", True),
+    ("da", 3, 2, "Dan. 3:2", True),
+    ("er", 7, 24, "Ezra 7:24", True),
+)
+
 
 # --------------------------------------------------------------------------- #
 # Tree generation
@@ -237,6 +251,18 @@ def _render_tree(tree_text: str) -> object:
     )
 
 
+def _qadma_gaya_list() -> tuple[object, ...]:
+    """The six qadma-as-ga'ya + mahapakh places as a ``; ``-joined run of MAM-with-doc
+    links, with the four not named in the MAM note wrapped in square brackets."""
+    nodes: list[object] = []
+    for index, (bb, chnu, vrnu, display, bracketed) in enumerate(_QADMA_GAYA_REFS):
+        if index:
+            nodes.append("; ")
+        link = _link(display, rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu))
+        nodes.extend(("[", link, "]") if bracketed else (link,))
+    return tuple(nodes)
+
+
 def _hbo(text: str) -> object:
     return H.span(text, {"lang": "hbo"})
 
@@ -331,21 +357,21 @@ def _geresh_muqdam_section() -> tuple[object, ...]:
         H.para(
             (
                 "Geresh muqdam (U+059D) is a poetic-only sign. In the 21 prose books"
-                " WLC uses it just twice — Leviticus 1:3 (alone) and 2 Kings 17:13 —"
+                " WLC uses it just twice — Lev. 1:3 (alone) and 2 Kings 17:13 —"
                 " as a typographic device standing in for"
                 " a plain geresh. The checker reads it as a plain geresh, so the prose"
                 " grammar (which has no geresh muqdam) sees the geresh it expects."
                 " Direction: poetic-looking sign → its prose counterpart. tanach.us"
                 " itself made the same correction in both verses — changes ",
                 _uxlc_change_link("2020.10.19/2020.09.22-1"),
-                " (Leviticus 1:3) and ",
+                " (Lev. 1:3) and ",
                 _uxlc_change_link("2020.10.19/2020.09.22-2"),
                 " (2 Kings 17:13), each described “Change geresh muqdam to geresh.”",
             )
         ),
         H.para(
             (
-                "The two verses differ in what happens next. In Leviticus 1:3 the"
+                "The two verses differ in what happens next. In Lev. 1:3 the"
                 " geresh muqdam stands alone, so the charity is the whole story. In 2"
                 " Kings 17:13 the converted geresh then sits on a word that also carries"
                 " a telisha gedola — so once the charity has run, what remains is one of"
@@ -518,42 +544,49 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
                 " puzzling yet standard:",
             )
         ),
-        H.blockquote(_hbo(_EK2031_MAM_NOTE_HE)),
+        H.blockquote(_hbo(_EK2031_MAM_NOTE_HE), {"dir": "rtl"}),
         H.para(
             (
-                "That is: this is the only word in all of Tanakh with two"
-                " conjunctive accents on one letter; the qadma precedes the mahapakh in"
-                " reading, as in six other places where a qadma sits where a ga‘ya would"
-                " be expected and a mahapakh occupies the stressed syllable (e.g. Leviticus"
-                " 25:46; Numbers 21:1). See the full note on the ",
+                "That is:"
+                " this is the only word in all of Tanakh with two conjunctive accents on one letter;"
+                " the qadma precedes the mahapakh in reading,"
+                " as in six other places where"
+                " a qadma occupies a syllable suitable for a ga‘ya"
+                " and a mahapakh occupies the stressed syllable: ",
+                *_qadma_gaya_list(),
+                ". The note names only the first two as examples — and writes"
+                " “Num. 21:1” where it means Num. 20:1 (21:1 carries no qadma) —"
+                " so the four bracketed references are the remaining places,"
+                " supplied here rather than drawn from the note."
+                " See the full note on the ",
                 _link(
                     "MAM-with-doc Ezekiel page",
                     "https://bdenckla.github.io/MAM-with-doc/C3-Ezekiel.html#c20v31",
                 ),
-                ". Because the witnesses agree, ek20:31 is whitelisted,"
+                ". Because the witnesses agree, this double accent is whitelisted"
                 " rather than treated an error.",
             )
         ),
         H.para(
             (
-                "The instructive contrast is Leviticus 25:20, the ",
+                "The instructive contrast is Lev. 25:20, the ",
                 H.bold("only other"),
-                " prose word with two accents on one letter (a mahapakh + tipeḥa)."
+                " prose word with two accents on one letter (a mahapakh and a tipeḥa)."
                 " There the witnesses do ",
                 H.bold("not"),
                 " agree — MAM keeps only the tipeḥa and WLC tags the word anomalous —"
-                " so it is a genuine Leningrad slip, and the checker flags it (as a"
+                " so it may well be an error in the LC, and the checker flags it (as a"
                 " lexical error). Same surface shape, opposite verdict, decided by the"
                 " witnesses. Its full treatment is on the ",
                 _link("Goerwitz page", "goerwitz.html#oblv25v20"),
-                " (the poetic ",
+                ". The poetic ",
                 H.code("merkha!azla"),
-                " of Psalms 56:10 is the same story on the poetic side: L carries it"
-                " alone, so it too is flagged).",
+                " of Psalms 56:10 is the same story on the poetic side: the double accent in the LC has no"
+                " support from other manuscripts, so it, like Lev. 25:20, is flagged as an error.",
             )
         ),
         H.para(
-            "The checker’s live tree for the verse, with the fused token shown as"
+            "The checker’s parse tree for the verse, with the fused token shown as"
             " mahapakh!azla:"
         ),
         _render_tree(tree_text),
