@@ -119,6 +119,24 @@ def test_all_five_telg_verses_parse_clean_in_all_three_readings() -> None:
             assert verdict == "clean", f"{bcv} [{mode}] -> {verdict}"
 
 
+def test_same_letter_telg_words_parse_clean_in_either_sequence_order() -> None:
+    # The exhibit table's seq 1 / seq 2 columns: the kept-both reading spread across two
+    # copies of the word.  Both orderings (telg-then-geresh and the reverse) must parse
+    # cleanly for the three same-letter words, backing the "either order" claim on the page.
+    index = _load_index_or_skip()
+    parser, has_legarmeh = build_parser(), HasLegarmeh()
+    same_letter = 0
+    for bcv in aeo._TELG_EXHIBIT_REFS:
+        word = aet._telg_gerstar_word(index[bcv])
+        if not aet._telg_marks_share_letter(word):
+            continue
+        same_letter += 1
+        for order in ("telg_first", "geresh_first"):
+            verdict = aet._telg_seq_verdict_for(bcv, order, index, parser, has_legarmeh)
+            assert verdict == "clean", f"{bcv} [{order}] -> {verdict}"
+    assert same_letter == 3
+
+
 def test_ek2031_tree_fuses_mahapakh_azla() -> None:
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()

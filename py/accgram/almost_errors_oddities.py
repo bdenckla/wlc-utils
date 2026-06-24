@@ -18,9 +18,11 @@ from accgram import almost_errors_trees as aet
 from accgram import rtms_report
 from accgram import rtmsr_media
 from accgram.almost_errors_html_shared import (
+    _accents_and_letters,
     _hbo,
     _link,
     _ref_display,
+    _ref_short,
     _render_tree,
     _verse_links,
 )
@@ -148,12 +150,15 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
         ),
         _telg_forms_table(index),
         H.para(
-            "Every one of the five verses parses cleanly under all three readings"
-            " (no ERROR, no NO_PARSE), so the choice is not forced by grammaticality —"
-            " it is purely a representation preference for the telisha gedola. The two"
-            " verses below show the full parse tree under each reading (one same-letter"
-            " case, one cross-letter); the trees differ exactly at the companion word,"
-            " as expected."
+            "Every one of the five verses parses cleanly under each reading the table"
+            " shows (no ERROR, no NO_PARSE): the kept-both word, the telisha-gedola-only"
+            " form, and the geresh-only form — and, for the three same-letter words, the"
+            " kept-both sequence parses cleanly in either order, so both the seq 1 and"
+            " seq 2 columns are grammatical. The choice is therefore not forced by"
+            " grammaticality — it is purely a representation preference for the telisha"
+            " gedola. The two verses below show the full parse tree under the three"
+            " single-word readings (one same-letter case, one cross-letter); the trees"
+            " differ exactly at the companion word, as expected."
         ),
     ]
     for bcv in _TELG_TREE_REFS:
@@ -194,29 +199,34 @@ def _telg_forms_table(index) -> object:
     copy carrying one mark) in either order.  No parse verdict: every reading parses cleanly,
     as the trees below show, so the forms themselves are the point."""
     header = H.table_row_of_headers(
-        ("verse", "word", "keep_telg", "keep_gerstar", "telg, then geresh", "geresh, then telg")
+        ("verse", "word", "telg", "gerstar", "seq 1", "seq 2")
     )
     rows: list[object] = [header]
+    # All cells but the first (the LTR reference) hold right-to-left Hebrew.
+    tdattrs = (None, *(({"dir": "rtl"},) * 5))
     for bcv in _TELG_EXHIBIT_REFS:
         forms = aet._telg_word_forms(aet._telg_gerstar_word(index[bcv]))
+        keep_telg = _accents_and_letters(forms.keep_telg)
+        keep_gerstar = _accents_and_letters(forms.keep_gerstar)
         if forms.same_letter:
-            seq_tg = _hbo(f"{forms.keep_telg} {forms.keep_gerstar}")
-            seq_gt = _hbo(f"{forms.keep_gerstar} {forms.keep_telg}")
+            seq1 = _hbo(f"{keep_telg} {keep_gerstar}")
+            seq2 = _hbo(f"{keep_gerstar} {keep_telg}")
         else:
-            seq_tg = seq_gt = "—"
+            seq1 = seq2 = "—"
         rows.append(
             H.table_row_of_data(
                 (
                     H.anchor(
-                        _ref_display(bcv),
+                        _ref_short(bcv),
                         {"href": my_wlc_bcv_str.get_tanach_dot_us_url(bcv)},
                     ),
                     _hbo(forms.word),
-                    _hbo(forms.keep_telg),
-                    _hbo(forms.keep_gerstar),
-                    seq_tg,
-                    seq_gt,
-                )
+                    _hbo(keep_telg),
+                    _hbo(keep_gerstar),
+                    seq1,
+                    seq2,
+                ),
+                tdattrs,
             )
         )
     return H.table(tuple(rows), {"class": "limited-width"})

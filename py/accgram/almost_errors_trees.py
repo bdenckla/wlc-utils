@@ -133,6 +133,49 @@ def _telg_verdict_for(bcv: str, mode: str, index, parser, has_legarmeh: HasLegar
     return _telg_verdict(_scan_and_parse(bcv, body, parser, has_legarmeh))
 
 
+def _telg_seq_word_variant(word: str, order: str, base) -> str:
+    """``uni_to_marks.word_to_marks``, but for the telg+geresh word emit the synthesized
+    *repeated-word sequence* the exhibit table's ``seq 1`` / ``seq 2`` columns show: two
+    copies of the word, one carrying only the telisha gedola and one only the geresh-family
+    mark, space-joined in ``order`` (``telg_first`` -> seq 1, ``geresh_first`` -> seq 2).
+    Every other word transcodes normally via ``base``.
+
+    This spreads the two marks across two stress units, so the scanner reads the kept-both
+    reading as a genuine two-word sequence -- the way to run the checker on the reverse
+    (geresh-then-telg) order, which a single word can never express because the telisha
+    gedola is prepositive and always sorts to the front."""
+    has_telg = am.TELISHA_GEDOLA in word
+    has_gerstar = any((am.GERESH if c == am.GERESH_MUQDAM else c) in _GG for c in word)
+    if not (has_telg and has_gerstar):
+        return base(word)
+    telg_only = _build_word_variant(word, "keep_telg")
+    gerstar_only = _build_word_variant(word, "keep_gerstar")
+    first, second = (
+        (telg_only, gerstar_only) if order == "telg_first" else (gerstar_only, telg_only)
+    )
+    return f"{first} {second}"
+
+
+@contextlib.contextmanager
+def _telg_seq_mode(order: str):
+    """Temporarily swap ``uni_to_marks.word_to_marks`` for the repeated-word sequence
+    variant, restoring the original on exit (read-only: the module is never left mutated)."""
+    original = uni_to_marks.word_to_marks
+    uni_to_marks.word_to_marks = lambda w: _telg_seq_word_variant(w, order, original)
+    try:
+        yield
+    finally:
+        uni_to_marks.word_to_marks = original
+
+
+def _telg_seq_verdict_for(bcv: str, order: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
+    """``clean`` / ``ERROR`` / ``NO_PARSE`` for a same-letter telg word read as the
+    repeated-word sequence (``seq 1`` / ``seq 2``) in the given ``order``."""
+    with _telg_seq_mode(order):
+        body = uni_to_marks.verse_to_marks(index[bcv])
+    return _telg_verdict(_scan_and_parse(bcv, body, parser, has_legarmeh))
+
+
 def _prose_verse_tree_text(bcv: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
     """The checker's *live* tree text for a prose verse, exactly as run_ply renders it.
 
