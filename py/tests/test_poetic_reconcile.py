@@ -62,7 +62,7 @@ def test_demotion_keeps_the_legarmeh_mam_confirms_and_drops_the_one_it_does_not(
     tokens = [
         (pan.TILDE, ""),
         (pan.LEGARMEH, "legarmeh"),
-        (pan.TSINNOR, "sinnor"),
+        (pan.TSINNOR, "tsinnor"),
         (pan.LEGARMEH, "legarmeh"),
         (pan.SOFPASUQ, "sof pasuq"),
     ]
@@ -91,7 +91,7 @@ def test_charitable_oleh_uniquely_recovers_an_unmarked_yored():
         (pan.TILDE, ""),
         (pan.MAHAPAKH, "mahapakh"),
         (pan.MUNAX, "munax"),
-        (pan.TSINNOR, "sinnor"),
+        (pan.TSINNOR, "tsinnor"),
         (pan.MAHAPAKH, "mahapakh"),
         (pan.MERKHA, "merkha"),
         (pan.REVIA_MUGRASH, "revia mugrash"),

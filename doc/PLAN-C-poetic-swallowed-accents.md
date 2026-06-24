@@ -86,10 +86,10 @@ The prose side already *fuses* it; the poetic side wrongly *drops* it.
 
 **Sources agree on its partner.**
 
-- **Yeivin §372 ("Sinnorit")**: *"a secondary accent in words with conjunctive
+- **Yeivin §372 ("Tsinnorit")**: *"a secondary accent in words with conjunctive
   accents… marked on an open syllable immediately before the stress syllable… not used
   before a shewa or hatef shewa… generally used with mehuppak, and occurs rarely also
-  with merka."* Names the combination **"mehuppak mesunnar"** (mehuppak with sinnorit).
+  with merka."* Names the combination **"mehuppak mesunnar"** (mehuppak with tsinnorit).
 - **Breuer, *Cantillation of Scripture* Ch. 9, §22 + fn. 9** (transliterated
   **tzinnorit**, tz not ts; combination **"mahpakh metzunar" / "merkha metzunar"**): fn.
   9 *doubts it is even a servant* — *"it only serves as a secondary accent before a

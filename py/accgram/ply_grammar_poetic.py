@@ -18,7 +18,7 @@ ethnakhta/revia only (never under oleh-we-yored); tsinnor and small revia only
 under oleh-we-yored; and revia mugrash / big shalshelet as additional mafsiqim that
 "can only divide the left side of ethnakhta" (the silluq-near second part) -- which
 is exactly why a revia mugrash in atnah's own realm (Job 31:15, L-only) is rejected.
-Ch 10 §9 on the doubled tsinnor is cited at collapse_repeated_sinnor below.
+Ch 10 §9 on the doubled tsinnor is cited at collapse_repeated_tsinnor below.
 
 Design: rank-ordered clause hierarchy, permissive servus chains.
   The *clause* rules encode Yeivin's disjunctive hierarchy by RANK: a domain headed
@@ -51,16 +51,16 @@ when a unit is too short for the intermediate one):
       also dehi / pazer / legarmeh directly when the final unit is short
   oleh-we-yored (the main verse divider, #363)
     main subdivider: revia gadol; immediately preceded by revia qatan
-    (no servus) or sinnor (with servus)                          (#363, #365, #368)
+    (no servus) or tsinnor (with servus)                          (#363, #365, #368)
   atnah (#362)               -> dehi (near) / revia gadol (distant)  (#362, #364);
                                 also pazer / legarmeh directly
-  revia gadol (#363)         -> pazer / legarmeh; also dehi / sinnor directly
-  revia qatan (#368)         -> legarmeh; also sinnor (TSINNOR REVIA_QATAN OLEH)
+  revia gadol (#363)         -> pazer / legarmeh; also dehi / tsinnor directly
+  revia qatan (#368)         -> legarmeh; also tsinnor (TSINNOR REVIA_QATAN OLEH)
   revia mugrash (#366-367)   -> pazer / legarmeh (with geresh, tipeḥa-like);
                                 also dehi / revia gadol when "without geresh" it
                                 acts as the main verse divider like atnah (#367)
   dehi (#364)                -> pazer / legarmeh
-  sinnor (#365)              -> pazer / legarmeh
+  tsinnor (#365)              -> pazer / legarmeh
   pazer (#369)               -> legarmeh only
   legarmeh (#370)            -> (terminal lowest disjunctive)
 
@@ -298,10 +298,10 @@ def p_dexi_phrase(p):
 # Encoding MUNAX|MERKHA-only would fire on just these two -- one CoS-contested, one already
 # surfaced by the disjunctive xcheck -- while turning two clean L parses into NO_PARSE.  Not
 # encoded (confirmed-but-inert/redundant, like revia gadol).  See issue #18.
-def p_sinnor_phrase(p):
-    """sinnor_phrase : TSINNOR
+def p_tsinnor_phrase(p):
+    """tsinnor_phrase : TSINNOR
                      | servi TSINNOR"""
-    _phrase(p, "sinnor_phrase")
+    _phrase(p, "tsinnor_phrase")
 
 
 # Permissive servi before pazer.  NB: Breuer Ch 11 §7-9 says the servant before pazer is
@@ -429,12 +429,12 @@ def p_oleh_silluq_clause(p):
 
 
 # --- oleh-we-yored clause (#363, #365, #368) -----------------------------------
-# Immediately preceded by revia qatan (no servus) or sinnor (with servus); the
+# Immediately preceded by revia qatan (no servus) or tsinnor (with servus); the
 # main subdivider of its domain is revia gadol, standing before that.
 def p_oleh_clause(p):
     """oleh_clause : oleh_weyored_phrase
                    | revia_qatan_oleh_clause
-                   | sinnor_oleh_clause
+                   | tsinnor_oleh_clause
                    | revia_gadol_oleh_clause"""
     p[0] = p[1]
 
@@ -444,15 +444,15 @@ def p_revia_qatan_oleh_clause(p):
     p[0] = make_node("oleh_weyored_clause", p[1], p[2])
 
 
-def p_sinnor_oleh_clause(p):
-    "sinnor_oleh_clause : sinnor_clause oleh_weyored_phrase"
+def p_tsinnor_oleh_clause(p):
+    "tsinnor_oleh_clause : tsinnor_clause oleh_weyored_phrase"
     p[0] = make_node("oleh_weyored_clause", p[1], p[2])
 
 
 def p_revia_gadol_oleh_clause(p):
     """revia_gadol_oleh_clause : revia_gadol_clause oleh_weyored_phrase
                                | revia_gadol_clause revia_qatan_oleh_clause
-                               | revia_gadol_clause sinnor_oleh_clause
+                               | revia_gadol_clause tsinnor_oleh_clause
                                | revia_gadol_clause revia_gadol_oleh_clause"""
     p[0] = make_node("oleh_weyored_clause", p[1], p[2])
 
@@ -511,18 +511,18 @@ def p_revia_gadol_clause(p):
                           | legarmeh_revia_gadol_clause
                           | pazer_revia_gadol_clause
                           | dexi_revia_gadol_clause
-                          | sinnor_revia_gadol_clause"""
+                          | tsinnor_revia_gadol_clause"""
     p[0] = p[1]
 
 
-# Sinnor (a second-degree divider, rank with dehi) also subdivides revia gadol
+# Tsinnor (a second-degree divider, rank with dehi) also subdivides revia gadol
 # directly where L has no oleh-we-yored (e.g. Ps 55:20, TSINNOR REVIA_GADOL ATNAX;
 # MAM reads REVIA_QATAN OLEH_WEYORED there -- an L/MAM divergence the xcheck flags,
 # parsed faithfully to L here).
-def p_sinnor_revia_gadol_clause(p):
-    """sinnor_revia_gadol_clause : sinnor_clause revia_gadol_phrase
-                                 | sinnor_clause legarmeh_revia_gadol_clause
-                                 | sinnor_clause sinnor_revia_gadol_clause"""
+def p_tsinnor_revia_gadol_clause(p):
+    """tsinnor_revia_gadol_clause : tsinnor_clause revia_gadol_phrase
+                                 | tsinnor_clause legarmeh_revia_gadol_clause
+                                 | tsinnor_clause tsinnor_revia_gadol_clause"""
     p[0] = make_node("revia_gadol_clause", p[1], p[2])
 
 
@@ -548,15 +548,15 @@ def p_dexi_revia_gadol_clause(p):
 
 
 # --- revia qatan clause (#368) -------------------------------------------------
-# Its subdividers are sinnor (higher) and legarmeh.  Yeivin treats revia qatan and
-# sinnor as alternatives immediately before oleh-we-yored, but when both occur
+# Its subdividers are tsinnor (higher) and legarmeh.  Yeivin treats revia qatan and
+# tsinnor as alternatives immediately before oleh-we-yored, but when both occur
 # (TSINNOR REVIA_QATAN OLEH_WEYORED, ~12 verses) revia qatan is the one adjacent to
-# oleh and sinnor subdivides its remaining span -- so sinnor heads a clause within
+# oleh and tsinnor subdivides its remaining span -- so tsinnor heads a clause within
 # the revia qatan domain, with legarmeh below it.
 def p_revia_qatan_clause(p):
     """revia_qatan_clause : revia_qatan_phrase
                           | legarmeh_revia_qatan_clause
-                          | sinnor_revia_qatan_clause"""
+                          | tsinnor_revia_qatan_clause"""
     p[0] = p[1]
 
 
@@ -566,10 +566,10 @@ def p_legarmeh_revia_qatan_clause(p):
     p[0] = make_node("revia_qatan_clause", p[1], p[2])
 
 
-def p_sinnor_revia_qatan_clause(p):
-    """sinnor_revia_qatan_clause : sinnor_clause revia_qatan_phrase
-                                 | sinnor_clause legarmeh_revia_qatan_clause
-                                 | sinnor_clause sinnor_revia_qatan_clause"""
+def p_tsinnor_revia_qatan_clause(p):
+    """tsinnor_revia_qatan_clause : tsinnor_clause revia_qatan_phrase
+                                 | tsinnor_clause legarmeh_revia_qatan_clause
+                                 | tsinnor_clause tsinnor_revia_qatan_clause"""
     p[0] = make_node("revia_qatan_clause", p[1], p[2])
 
 
@@ -637,37 +637,37 @@ def p_pazer_dexi_clause(p):
     p[0] = make_node("dexi_clause", p[1], p[2])
 
 
-# --- sinnor clause (#365) ------------------------------------------------------
-def p_sinnor_clause(p):
-    """sinnor_clause : sinnor_phrase
-                     | legarmeh_sinnor_clause
-                     | pazer_sinnor_clause"""
+# --- tsinnor clause (#365) ------------------------------------------------------
+def p_tsinnor_clause(p):
+    """tsinnor_clause : tsinnor_phrase
+                     | legarmeh_tsinnor_clause
+                     | pazer_tsinnor_clause"""
     p[0] = p[1]
 
 
-# NOTE: sinnor may repeat before oleh-we-yored (Ps 17:14, ...TSINNOR TSINNOR GALGAL
+# NOTE: tsinnor may repeat before oleh-we-yored (Ps 17:14, ...TSINNOR TSINNOR GALGAL
 # OLEH_WEYORED; MAM-confirmed).  It is intentionally NOT modeled as a grammar
-# production: the repeated sinnor before an oleh that itself carries a servus is
-# beyond LALR(1) -- the servus is ambiguous between the next repeated sinnor's
+# production: the repeated tsinnor before an oleh that itself carries a servus is
+# beyond LALR(1) -- the servus is ambiguous between the next repeated tsinnor's
 # servi prefix and oleh's own servi, and the merged lookahead dead-ends.  Adding
 # it parsed no verse.  Instead the repeat is accepted at the parse boundary by
-# collapsing it to a single TSINNOR before parsing (collapse_repeated_sinnor /
+# collapsing it to a single TSINNOR before parsing (collapse_repeated_tsinnor /
 # parse_tokens_accepting_repeats, below): a repeated divider counts once, so the
-# existing sinnor productions parse it, with no LALR distortion of the servus
+# existing tsinnor productions parse it, with no LALR distortion of the servus
 # handling.  parse_tokens_diagnostic itself stays the raw, uncollapsed verdict.
 
 
-def p_legarmeh_sinnor_clause(p):
-    """legarmeh_sinnor_clause : legarmeh_clause sinnor_phrase
-                              | legarmeh_clause legarmeh_sinnor_clause"""
-    p[0] = make_node("sinnor_clause", p[1], p[2])
+def p_legarmeh_tsinnor_clause(p):
+    """legarmeh_tsinnor_clause : legarmeh_clause tsinnor_phrase
+                              | legarmeh_clause legarmeh_tsinnor_clause"""
+    p[0] = make_node("tsinnor_clause", p[1], p[2])
 
 
-def p_pazer_sinnor_clause(p):
-    """pazer_sinnor_clause : pazer_clause sinnor_phrase
-                           | pazer_clause legarmeh_sinnor_clause
-                           | pazer_clause pazer_sinnor_clause"""
-    p[0] = make_node("sinnor_clause", p[1], p[2])
+def p_pazer_tsinnor_clause(p):
+    """pazer_tsinnor_clause : pazer_clause tsinnor_phrase
+                           | pazer_clause legarmeh_tsinnor_clause
+                           | pazer_clause pazer_tsinnor_clause"""
+    p[0] = make_node("tsinnor_clause", p[1], p[2])
 
 
 # --- pazer clause (#369) -------------------------------------------------------
@@ -721,9 +721,9 @@ class ParseError:
 
     This is the stall point, not necessarily the root-cause accent: a hierarchy
     violation a few accents earlier can leave a still-valid prefix that only
-    dead-ends here.  Ps 17:14 is the canonical case -- its double sinnor (#7-8) plus
+    dead-ends here.  Ps 17:14 is the canonical case -- its double tsinnor (#7-8) plus
     galgal (#9) parse fine, and the parse only fails at the OLEH_WEYORED (#10) that
-    follows them, because that oleh has nowhere to attach after the repeated sinnor.
+    follows them, because that oleh has nowhere to attach after the repeated tsinnor.
     So the locus narrows the failure to a region ("valid through GALGAL, stalled at
     OLEH_WEYORED") rather than blaming the whole verse, even though the reader must
     still look just left of the stall for the cause.
@@ -864,14 +864,14 @@ def parse_tokens(parser, toks):
     return parse_tokens_diagnostic(parser, toks)[0]
 
 
-def collapse_repeated_sinnor(toks):
+def collapse_repeated_tsinnor(toks):
     """Return ``toks`` with each run of consecutive TSINNOR collapsed to one.
 
     A repeated disjunctive is the same divider written twice (Yeivin on the
     repeatable zarqa; Breuer Ch. 10 §9 on the doubled tsinnor, with Wickes p. 81
     n. 4) -- for grammaticality it counts once.  Collapsing the run lets the
-    existing sinnor productions parse it without a dedicated grammar rule the
-    LALR(1) table cannot express (see the sinnor-clause NOTE).
+    existing tsinnor productions parse it without a dedicated grammar rule the
+    LALR(1) table cannot express (see the tsinnor-clause NOTE).
 
     Motivated by, and ONLY by, Ps 17:14.  That verse is the sole place in the
     Three Books where two tsinnor occur consecutively (of the 250 tsinnor-bearing
@@ -904,7 +904,7 @@ def parse_tokens_accepting_repeats(parser, toks):
     First parses ``toks`` as-is -- the grammar's raw verdict, which keeps
     parse_tokens_diagnostic pure and the stall-locus diagnostics intact.  Only if
     that is a NO_PARSE *and* the verse repeats a TSINNOR does it retry on a copy
-    with the repeat collapsed (collapse_repeated_sinnor), returning that result
+    with the repeat collapsed (collapse_repeated_tsinnor), returning that result
     when it parses.  So Ps 17:14's double tsinnor (the lone case in the Three
     Books) is accepted without distorting the servus handling, while every other
     verse takes the raw verdict unchanged.
@@ -915,7 +915,7 @@ def parse_tokens_accepting_repeats(parser, toks):
     tree, error = parse_tokens_diagnostic(parser, toks)
     if tree is not None:
         return tree, error
-    collapsed = collapse_repeated_sinnor(toks)
+    collapsed = collapse_repeated_tsinnor(toks)
     if collapsed == toks:
         return tree, error
     tree2, error2 = parse_tokens_diagnostic(parser, collapsed)

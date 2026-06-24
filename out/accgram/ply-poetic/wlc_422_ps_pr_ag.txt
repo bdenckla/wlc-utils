@@ -112,8 +112,8 @@ Proverbs 1:10
 Proverbs 1:11
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      sinnor 
+    2 tsinnor_phrase
+      tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -238,8 +238,8 @@ Proverbs 1:21
 Proverbs 1:22
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      munax sinnor 
+    2 tsinnor_phrase
+      munax tsinnor 
     2 oleh_weyored_phrase
       oleh we-yored 
   1 silluq_clause
@@ -2296,8 +2296,8 @@ Proverbs 8:12
 Proverbs 8:13
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      munax sinnor 
+    2 tsinnor_phrase
+      munax tsinnor 
     2 oleh_weyored_phrase
       oleh we-yored 
   1 silluq_clause
@@ -2527,8 +2527,8 @@ Proverbs 8:33
 Proverbs 8:34
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      merkha sinnor 
+    2 tsinnor_phrase
+      merkha tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -7201,8 +7201,8 @@ Proverbs 23:30
 Proverbs 23:31
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      merkha sinnor 
+    2 tsinnor_phrase
+      merkha tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -7250,8 +7250,8 @@ Proverbs 23:35
 0 silluq_clause
   1 oleh_weyored_clause
     2 revia_qatan_clause
-      3 sinnor_phrase
-        merkha sinnor 
+      3 tsinnor_phrase
+        merkha tsinnor 
       3 revia_qatan_phrase
         revia qatan 
     2 oleh_weyored_phrase
@@ -7381,8 +7381,8 @@ Proverbs 24:12
     2 revia_gadol_phrase
       revia gadol 
     2 oleh_weyored_clause
-      3 sinnor_phrase
-        sinnor 
+      3 tsinnor_phrase
+        tsinnor 
       3 oleh_weyored_phrase
         galgal oleh we-yored 
   1 silluq_clause
@@ -7519,11 +7519,11 @@ Proverbs 24:23
 Proverbs 24:24
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         legarmeh 
-      3 sinnor_phrase
-        sinnor 
+      3 tsinnor_phrase
+        tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -9317,11 +9317,11 @@ Proverbs 30:9
 0 silluq_clause
   1 oleh_weyored_clause
     2 revia_qatan_clause
-      3 sinnor_clause
+      3 tsinnor_clause
         4 legarmeh_phrase
           merkha legarmeh 
-        4 sinnor_phrase
-          sinnor 
+        4 tsinnor_phrase
+          tsinnor 
       3 revia_qatan_phrase
         revia qatan 
     2 oleh_weyored_phrase
@@ -9382,11 +9382,11 @@ Proverbs 30:13
 Proverbs 30:14
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         legarmeh 
-      3 sinnor_phrase
-        munax sinnor 
+      3 tsinnor_phrase
+        munax tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -9400,11 +9400,11 @@ Proverbs 30:14
 Proverbs 30:15
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         legarmeh 
-      3 sinnor_phrase
-        merkha sinnor 
+      3 tsinnor_phrase
+        merkha tsinnor 
     2 oleh_weyored_phrase
       mahapakh oleh we-yored 
   1 silluq_clause
@@ -9421,8 +9421,8 @@ Proverbs 30:15
 Proverbs 30:16
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      sinnor 
+    2 tsinnor_phrase
+      tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -9439,11 +9439,11 @@ Proverbs 30:16
 Proverbs 30:17
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         legarmeh 
-      3 sinnor_phrase
-        munax sinnor 
+      3 tsinnor_phrase
+        munax tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -9467,11 +9467,11 @@ Proverbs 30:19
 0 silluq_clause
   1 oleh_weyored_clause
     2 revia_qatan_clause
-      3 sinnor_clause
+      3 tsinnor_clause
         4 legarmeh_phrase
           mahapakh legarmeh 
-        4 sinnor_phrase
-          sinnor 
+        4 tsinnor_phrase
+          tsinnor 
       3 revia_qatan_phrase
         merkha revia qatan 
     2 oleh_weyored_phrase

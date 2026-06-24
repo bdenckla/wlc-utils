@@ -43,7 +43,7 @@
         "SILLUQ"
       ],
       "stall": null,
-      "tree": "0 silluq_clause\n  1 oleh_weyored_clause\n    2 sinnor_phrase\n      mahapakh sinnor \n    2 oleh_weyored_phrase\n      galgal oleh we-yored \n  1 silluq_clause\n    2 atnax_clause\n      3 dexi_phrase\n        dexi \n      3 atnax_phrase\n        munax atnax \n    2 silluq_clause\n      3 revia_mugrash_phrase\n        revia mugrash \n      3 silluq_phrase\n        ERROR "
+      "tree": "0 silluq_clause\n  1 oleh_weyored_clause\n    2 tsinnor_phrase\n      mahapakh tsinnor \n    2 oleh_weyored_phrase\n      galgal oleh we-yored \n  1 silluq_clause\n    2 atnax_clause\n      3 dexi_phrase\n        dexi \n      3 atnax_phrase\n        munax atnax \n    2 silluq_clause\n      3 revia_mugrash_phrase\n        revia mugrash \n      3 silluq_phrase\n        ERROR "
     },
     {
       "ref": "Psalms 32:2",

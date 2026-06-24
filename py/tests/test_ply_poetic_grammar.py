@@ -6,7 +6,7 @@ The poetic grammar (accgram.ply_grammar_poetic) is derived from Yeivin ITM
   1. the LALR table builds with no shift/reduce or reduce/reduce conflicts;
   2. hand-built poetic verse token streams parse into trees whose nesting matches
      Yeivin's disjunctive hierarchy (oleh-we-yored > atnah > revia mugrash >
-     silluq; revia gadol / dehi / sinnor / revia qatan under them; pazer and
+     silluq; revia gadol / dehi / tsinnor / revia qatan under them; pazer and
      legarmeh as the lesser dividers).
 
 These are structural, not corpus-validated; they exercise the grammar, not a
@@ -20,7 +20,7 @@ Run:
 from accgram import poetic_accent_names as pan
 from accgram.ply_grammar_poetic import (
     build_parser,
-    collapse_repeated_sinnor,
+    collapse_repeated_tsinnor,
     parse_tokens,
     parse_tokens_accepting_repeats,
     parse_tokens_diagnostic,
@@ -103,8 +103,8 @@ def test_oleh_weyored_is_topmost_divider():
     assert "oleh_weyored_phrase" in out
 
 
-def test_full_hierarchy_pazer_legarmeh_dexi_sinnor():
-    """A verse exercising every rank: pazer/legarmeh under revia gadol, sinnor
+def test_full_hierarchy_pazer_legarmeh_dexi_tsinnor():
+    """A verse exercising every rank: pazer/legarmeh under revia gadol, tsinnor
     before oleh, dehi under atnah."""
     parser = build_parser()
     tree = parse_tokens(
@@ -120,7 +120,7 @@ def test_full_hierarchy_pazer_legarmeh_dexi_sinnor():
     out = print_tree(tree, 0)
     for label in (
         "pazer_phrase", "legarmeh_phrase", "revia_gadol_clause",
-        "sinnor_phrase", "oleh_weyored_phrase", "dexi_phrase",
+        "tsinnor_phrase", "oleh_weyored_phrase", "dexi_phrase",
         "atnax_phrase", "revia_mugrash_phrase", "silluq_phrase",
     ):
         assert label in out, label
@@ -245,9 +245,9 @@ def test_pazer_directly_before_silluq():
     assert out.index("pazer_phrase") < out.index("silluq_phrase")
 
 
-def test_sinnor_subdivides_revia_qatan_before_oleh():
-    """When sinnor and revia qatan both precede oleh-we-yored, revia qatan is the
-    near divider and sinnor subdivides its domain (Ps 13:6,
+def test_tsinnor_subdivides_revia_qatan_before_oleh():
+    """When tsinnor and revia qatan both precede oleh-we-yored, revia qatan is the
+    near divider and tsinnor subdivides its domain (Ps 13:6,
     LEGARMEH TSINNOR REVIA_QATAN OLEH_WEYORED ...)."""
     parser = build_parser()
     tree = parse_tokens(
@@ -259,10 +259,10 @@ def test_sinnor_subdivides_revia_qatan_before_oleh():
     )
     assert tree is not None
     out = print_tree(tree, 0)
-    # revia_qatan_clause contains a sinnor subdivision, which contains legarmeh
+    # revia_qatan_clause contains a tsinnor subdivision, which contains legarmeh
     assert "revia_qatan_clause" in out
-    assert out.index("sinnor_phrase") < out.index("revia_qatan_phrase")
-    assert out.index("legarmeh_phrase") < out.index("sinnor_phrase")
+    assert out.index("tsinnor_phrase") < out.index("revia_qatan_phrase")
+    assert out.index("legarmeh_phrase") < out.index("tsinnor_phrase")
 
 
 def test_revia_qatan_requires_merka_servant():
@@ -298,7 +298,7 @@ def test_missing_silluq_recovers_as_error_tree():
 
 
 def test_misplaced_disjunctive_stays_no_parse():
-    """The *raw* scanner reading of Ps 68:20 (sinnor before a legarmeh) is a hierarchy
+    """The *raw* scanner reading of Ps 68:20 (tsinnor before a legarmeh) is a hierarchy
     violation the grammar must NOT mask by error recovery -- parse_tokens returns None.
 
     In the live pipeline this verse no longer surfaces as NO_PARSE: poetic_reconcile
@@ -325,7 +325,7 @@ _PS_17_14_ACCENTS = [
 
 def test_diagnostic_pinpoints_the_stall_token():
     """parse_tokens_diagnostic reports WHERE a NO_PARSE verse dead-ends, not just
-    that it failed.  Ps 17:14's shape (double sinnor + galgal then oleh-we-yored)
+    that it failed.  Ps 17:14's shape (double tsinnor + galgal then oleh-we-yored)
     parses through the GALGAL and stalls at the OLEH_WEYORED that follows it -- the
     1-based ordinal among the verse's accents (TILDE excluded).
 
@@ -345,7 +345,7 @@ def test_diagnostic_pinpoints_the_stall_token():
 def test_repeated_tsinnor_accepted_as_single_divider():
     """Ps 17:14's double tsinnor is accepted by parse_tokens_accepting_repeats: a
     repeated divider counts once, so collapsing the run to a single TSINNOR lets the
-    existing sinnor productions parse it cleanly -- even though the raw grammar (the
+    existing tsinnor productions parse it cleanly -- even though the raw grammar (the
     test above) stalls at the following oleh-we-yored.  The canonical token list is
     left untouched (both tsinnor marks remain), so the disjunctive cross-check is
     unaffected."""
@@ -357,7 +357,7 @@ def test_repeated_tsinnor_accepted_as_single_divider():
     # the input is not mutated -- both tsinnor marks still present
     assert sum(1 for t, _ in toks if t == pan.TSINNOR) == 2
     # the mechanism: a run of consecutive TSINNOR collapses to one
-    collapsed = [t for t, _ in collapse_repeated_sinnor(toks)]
+    collapsed = [t for t, _ in collapse_repeated_tsinnor(toks)]
     assert collapsed.count(pan.TSINNOR) == 1
 
 

@@ -46,8 +46,8 @@ Job 3:5
 Job 3:6
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      merkha sinnor 
+    2 tsinnor_phrase
+      merkha tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -82,8 +82,8 @@ Job 3:8
 Job 3:9
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      sinnor 
+    2 tsinnor_phrase
+      tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -1198,8 +1198,8 @@ Job 7:10
 Job 7:11
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      sinnor 
+    2 tsinnor_phrase
+      tsinnor 
     2 oleh_weyored_phrase
       mahapakh oleh we-yored 
   1 silluq_clause
@@ -1294,14 +1294,14 @@ Job 7:19
 Job 7:20
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 pazer_phrase
         pazer 
-      3 sinnor_clause
+      3 tsinnor_clause
         4 legarmeh_phrase
           mahapakh legarmeh 
-        4 sinnor_phrase
-          sinnor 
+        4 tsinnor_phrase
+          tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -1312,11 +1312,11 @@ Job 7:20
 Job 7:21
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         legarmeh 
-      3 sinnor_phrase
-        munax sinnor 
+      3 tsinnor_phrase
+        munax tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -2212,11 +2212,11 @@ Job 11:5
 Job 11:6
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         legarmeh 
-      3 sinnor_phrase
-        munax sinnor 
+      3 tsinnor_phrase
+        munax tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -3565,11 +3565,11 @@ Job 16:3
 Job 16:4
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         legarmeh 
-      3 sinnor_phrase
-        sinnor 
+      3 tsinnor_phrase
+        tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -4750,8 +4750,8 @@ Job 20:24
 Job 20:25
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      sinnor 
+    2 tsinnor_phrase
+      tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -4765,8 +4765,8 @@ Job 20:25
 Job 20:26
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      sinnor 
+    2 tsinnor_phrase
+      tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -5764,11 +5764,11 @@ Job 24:12
 Job 24:13
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         legarmeh 
-      3 sinnor_phrase
-        sinnor 
+      3 tsinnor_phrase
+        tsinnor 
     2 oleh_weyored_phrase
       oleh we-yored 
   1 silluq_clause
@@ -6166,8 +6166,8 @@ Job 27:4
 Job 27:5
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      munax sinnor 
+    2 tsinnor_phrase
+      munax tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -6904,8 +6904,8 @@ Job 29:24
 Job 29:25
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      munax sinnor 
+    2 tsinnor_phrase
+      munax tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -6920,11 +6920,11 @@ Job 30:1
 0 silluq_clause
   1 oleh_weyored_clause
     2 revia_qatan_clause
-      3 sinnor_clause
+      3 tsinnor_clause
         4 legarmeh_phrase
           legarmeh 
-        4 sinnor_phrase
-          munax sinnor 
+        4 tsinnor_phrase
+          munax tsinnor 
       3 revia_qatan_phrase
         merkha revia qatan 
     2 oleh_weyored_phrase
@@ -7039,8 +7039,8 @@ Job 30:11
 Job 30:12
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      sinnor 
+    2 tsinnor_phrase
+      tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -7321,8 +7321,8 @@ Job 31:6
 Job 31:7
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      merkha munax sinnor 
+    2 tsinnor_phrase
+      merkha munax tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -7686,11 +7686,11 @@ Job 32:1
 Job 32:2
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         mahapakh legarmeh 
-      3 sinnor_phrase
-        munax munax sinnor 
+      3 tsinnor_phrase
+        munax munax tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -7707,8 +7707,8 @@ Job 32:2
 Job 32:3
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_phrase
-      munax sinnor 
+    2 tsinnor_phrase
+      munax tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause
@@ -8469,11 +8469,11 @@ Job 34:19
 Job 34:20
 0 silluq_clause
   1 oleh_weyored_clause
-    2 sinnor_clause
+    2 tsinnor_clause
       3 legarmeh_phrase
         legarmeh 
-      3 sinnor_phrase
-        sinnor 
+      3 tsinnor_phrase
+        tsinnor 
     2 oleh_weyored_phrase
       galgal oleh we-yored 
   1 silluq_clause

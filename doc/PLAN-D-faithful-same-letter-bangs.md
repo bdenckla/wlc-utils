@@ -146,7 +146,7 @@ same-letter co-equal *sequence* in either genre is in scope.
 - **Exact membership of "co-equal" — RESOLVED empirically: no same-letter two-*disjunctive*
   pair exists.** The sweep's only doubled-divider candidate, Ps 17:14's tsinnor+tsinnor,
   is **cross-letter** (two consecutive TSINNOR tokens, handled by
-  `collapse_repeated_sinnor`), not same-letter — so the collapse-vs-bang question never
+  `collapse_repeated_tsinnor`), not same-letter — so the collapse-vs-bang question never
   arises on one letter. Every same-letter two-accent cluster in the corpus is one of:
   revia-mugrash (idiom), munah+dehi (not co-equal — disjunctive+conjunctive), telg
   companions (drop), the lv25:20 illegal below-pair (unlexical), the ek20:31 /ps56:10
