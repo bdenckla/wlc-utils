@@ -15,7 +15,8 @@ from pathlib import Path
 import pytest
 
 from accgram import accent_marks as am
-from accgram import almost_errors as ae
+from accgram import almost_errors_html as aeh
+from accgram import almost_errors_trees as aet
 from accgram import ob_error_context
 from accgram import ob_tree_parse
 from accgram import rtms_data
@@ -29,19 +30,19 @@ _SAME_LETTER_BOTH = "א" + am.TELISHA_GEDOLA + am.GERESH
 
 
 def test_build_word_variant_chosen_drops_geresh_keeps_telg() -> None:
-    result = ae._build_word_variant(_SAME_LETTER_BOTH, "chosen")
+    result = aet._build_word_variant(_SAME_LETTER_BOTH, "chosen")
     assert am.TELISHA_GEDOLA in result
     assert am.GERESH not in result
 
 
 def test_build_word_variant_keep_gerstar_drops_telg_keeps_geresh() -> None:
-    result = ae._build_word_variant(_SAME_LETTER_BOTH, "keep_gerstar")
+    result = aet._build_word_variant(_SAME_LETTER_BOTH, "keep_gerstar")
     assert am.GERESH in result
     assert am.TELISHA_GEDOLA not in result
 
 
 def test_build_word_variant_keep_both_keeps_both() -> None:
-    result = ae._build_word_variant(_SAME_LETTER_BOTH, "keep_both")
+    result = aet._build_word_variant(_SAME_LETTER_BOTH, "keep_both")
     assert am.TELISHA_GEDOLA in result
     assert am.GERESH in result
 
@@ -51,7 +52,7 @@ def test_build_word_variant_only_touches_both_carrying_words() -> None:
     # every mode (the variant only edits words holding BOTH marks).
     telg_only = "א" + am.TELISHA_GEDOLA
     for mode in ("chosen", "keep_gerstar", "keep_both"):
-        assert am.TELISHA_GEDOLA in ae._build_word_variant(telg_only, mode)
+        assert am.TELISHA_GEDOLA in aet._build_word_variant(telg_only, mode)
 
 
 def test_parse_tree_from_text_renders_clean_tree() -> None:
@@ -65,7 +66,7 @@ def test_parse_tree_from_text_renders_clean_tree() -> None:
     assert ob_tree_parse.iter_leaf_texts(tree) == ["tipexa", "silluq"]
     assert ob_error_context.parse_error_tree_from_text(clean) is None
     # The shared table renderer accepts the error-free tree.
-    assert H.is_htel(ae._render_tree(clean))
+    assert H.is_htel(aeh._render_tree(clean))
 
 
 def test_parse_tree_from_text_empty_is_none() -> None:
@@ -88,16 +89,16 @@ def _load_index_or_skip():
 def test_all_five_telg_verses_parse_clean_in_all_three_readings() -> None:
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
-    for bcv in ae._TELG_EXHIBIT_REFS:
-        for mode, _label in ae._TELG_MODES:
-            verdict = ae._telg_verdict_for(bcv, mode, index, parser, has_legarmeh)
+    for bcv in aeh._TELG_EXHIBIT_REFS:
+        for mode, _label in aeh._TELG_MODES:
+            verdict = aet._telg_verdict_for(bcv, mode, index, parser, has_legarmeh)
             assert verdict == "clean", f"{bcv} [{mode}] -> {verdict}"
 
 
 def test_ek2031_tree_fuses_mahapakh_azla() -> None:
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
-    text = ae._prose_verse_tree_text("ek20:31", index, parser, has_legarmeh)
+    text = aet._prose_verse_tree_text("ek20:31", index, parser, has_legarmeh)
     assert "mahapakh!azla" in text
     assert "ERROR" not in text
 
@@ -110,8 +111,8 @@ def test_ek2031_verdict_table_only_fused_and_azla_mah_parse() -> None:
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
     verdicts = {
-        mode: ae._ek_verdict_for(mode, index, parser, has_legarmeh)
-        for mode, _label in ae._EK_MODES
+        mode: aet._ek_verdict_for(mode, index, parser, has_legarmeh)
+        for mode, _label in aeh._EK_MODES
     }
     assert verdicts["fused"] == "clean", verdicts
     assert verdicts["seq_azla_mah"] == "clean", verdicts
@@ -122,7 +123,7 @@ def test_ek2031_verdict_table_only_fused_and_azla_mah_parse() -> None:
 def test_lv2520_tree_is_illegal_mark() -> None:
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
-    text = ae._prose_verse_tree_text("lv25:20", index, parser, has_legarmeh)
+    text = aet._prose_verse_tree_text("lv25:20", index, parser, has_legarmeh)
     assert "illegal_mark" in text
     assert "mahapakh!tipexa" in text
 
@@ -130,7 +131,7 @@ def test_lv2520_tree_is_illegal_mark() -> None:
 def test_render_body_contents_smoke() -> None:
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
-    body = ae.render_body_contents(index, parser, has_legarmeh)
+    body = aeh.render_body_contents(index, parser, has_legarmeh)
     rendered = H.el_to_str_no_wbr(body[0])
     # The two framing kinds, the MAM-confirmed non-charity, the lv25:20 contrast
     # (delegated to goerwitz.html, not re-detailed), and the exhibit tables: the five
