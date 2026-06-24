@@ -41,8 +41,10 @@ _JOB_31_15_NOTE_URL = "https://tanach.us/Notes/Job/Job.31.15.1-t.html"
 BY_REF: dict[str, dict[str, object]] = {
     "ps 56:10": {
         "st-summary": (
-            "On the verse-initial word אָ֥֨ז, WLC (faithful to the LC) transcribes TWO "
-            "accents on the one alef — a merkha (below) and a qadma/azla (above). MAM "
+            "On the verse-initial word אָ֥֨ז, WLC transcribes TWO "
+            "accents on the one alef — a merkha (below) and a qadma/azla (above). "
+            "(This transcription is plausible but uncertain: see the LC image and its "
+            "discussion below.) MAM "
             "carries the azla alone; according to Breuer, the Aleppo Codex likewise has "
             "azla and Sassoon 1053 has merkha. The checker fuses the pair into one "
             "order-less merkha!azla bang-pair and flags the verse as a lexical anomaly: "
