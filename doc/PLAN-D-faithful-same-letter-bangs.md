@@ -263,8 +263,11 @@ this anomaly falls out of a principle rather than a special-cased pair. The modu
 6. ~~Make the structural same-letter rule.~~ **DONE** — the general whitelist scanner
    guard (`_BANG_GUARD`): only whitelisted pairs may share a letter; everything else is a
    bang. (Supersedes the interim "two impositive accents" blacklist.)
-7. **Deferred (noted, not acted):** strengthen *conjunctive* grammaticality so the
+7. ~~Confirm the whitelist membership.~~ **DONE / complete** — the body scan is
+   exhaustive: the *only* adjacent-accent pairs anywhere in the poetic corpus are
+   geresh-muqdam+revia, deḥi+munaḥ, merkha+qadma, and revia+geresh; every one except
+   merkha+qadma is whitelisted or fused, so no legitimate same-letter pair is omitted.
+8. **Deferred (noted, not acted):** strengthen *conjunctive* grammaticality so the
    `bang_legality` measure stops being near-vacuous (levers: secondary/ga`ya positional
    rules; per-witness legality); revisit prose ek20:31 under the same-letter whitelist;
-   wire `bang_legality` once it has teeth; confirm the whitelist membership (the maintainer
-   flagged it may be incomplete).
+   wire `bang_legality` once it has teeth.
