@@ -13,13 +13,13 @@ and `lexical_validation` actually read:
   so each base consonant becomes a single ``LETTER`` placeholder and vowels/points are
   dropped -- real reverse-transliteration is unnecessary.
 * **Accents** pass through as their own codepoint.  The five M-C codepoint conflations
-  no longer need distinct codes: pashta and telisha-qetana keep both their stress-helper
+  no longer need distinct codes: pashta and telisha qetana keep both their stress-helper
   and their main occurrence (the scanner merges an adjacent same-accent run into one
-  token), and the swallowed secondaries -- the non-first of a repeated telisha-gedola,
-  and a geresh or gershayim sharing a word with a telisha-gedola -- are dropped here,
-  keeping the telisha-gedola (a prose geresh muqdam is first read as the plain geresh it
+  token), and the swallowed secondaries -- the non-first of a repeated telisha gedola,
+  and a geresh or gershayim sharing a word with a telisha gedola -- are dropped here,
+  keeping the telisha gedola (a prose geresh muqdam is first read as the plain geresh it
   mis-encodes, then dropped under that rule; `word_to_marks`).
-* **Prepositive accents** (yetiv, geresh-muqdam, deḥi, telisha-gedola) are relocated to
+* **Prepositive accents** (yetiv, geresh muqdam, deḥi, telisha gedola) are relocated to
   the front of the word's mark sequence, undoing `wlc_uword._PREPOS_PATT`'s move past an
   accent on the first consonant, so the scanner reads the accents in M-C order.
 * **Boundaries / punctuation** are reproduced exactly: maqaf -> ``-``, inter-word gaps
@@ -57,7 +57,7 @@ _KEPT_NON_ACCENT = frozenset(
 # `wlc_uword._PREPOS_PATT` to just after the first consonant -- a move that can carry
 # them past an accent on that first consonant, inverting the accent order the scanner
 # reads.  We restore M-C order by emitting them at the front of the word's marks.
-# (Gershayim 12 and the secondary telisha-gedola 44 are *also* prepositive in M-C but
+# (Gershayim 12 and the secondary telisha gedola 44 are *also* prepositive in M-C but
 # are swallowed secondaries dropped below, so only these four reach the front.)
 _PREPOSITIVE_MARKS = frozenset(
     (am.YETIV, am.GERESH_MUQDAM, am.DEXI, am.TELISHA_GEDOLA)
@@ -114,11 +114,11 @@ def word_to_marks(word: str) -> str:
     Two other interpretations are equally grammatical (all five verses verified to parse
     either way): we could just as easily have dropped the telisha gedola and retained the
     geresh/gershayim; or retained BOTH accents and read the same-letter pairs as a
-    telisha-gedola-then-geresh sequence (the cross-word telisha-gedola -> geresh/gershayim
+    telg-then-geresh sequence (the cross-word telg -> geresh/gershayim
     bigram occurs ~165x, so the sequence parses cleanly too).  We deliberately choose
     neither -- in particular the sequential reading, though grammatical, is not the right
     way to think of these words, even the two whose accents fall on different letters.
-    See the telisha-gedola section of gh-pages/accgram/almost-errors.html (generator:
+    See the telisha gedola section of gh-pages/accgram/almost-errors.html (generator:
     accgram/almost_errors.py), which shows the parse trees of all three readings.
     """
     word_has_telg = am.TELISHA_GEDOLA in word

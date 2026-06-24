@@ -23,7 +23,7 @@ from accgram.ply_grammar import build_parser
 from accgram.ply_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
 
-# A synthetic same-letter word: one base letter carrying BOTH a telisha-gedola and a
+# A synthetic same-letter word: one base letter carrying BOTH a telisha gedola and a
 # plain geresh -- the shape the companion-drop charity concerns.
 _SAME_LETTER_BOTH = "א" + am.TELISHA_GEDOLA + am.GERESH
 

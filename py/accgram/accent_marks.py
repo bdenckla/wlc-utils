@@ -17,11 +17,11 @@ A "mark body" is a string of single-character marks, one per structural element:
   ``TEXT`` class and the lexical layer key on;
 * ketiv ``*``/``**`` markers and ``]N`` note markers are kept verbatim.
 
-The five M-C codepoint conflations (pashta ``33``/``03``, telisha-qetana ``24``/
-``04``, telisha-gedola ``14``/``44``, gershayim ``12``/``62``, meteg ``35``/``75``/
+The five M-C codepoint conflations (pashta ``33``/``03``, telisha qetana ``24``/
+``04``, telisha gedola ``14``/``44``, gershayim ``12``/``62``, meteg ``35``/``75``/
 ``95``) no longer need distinct codes: the helper/main *merge* is expressed natively
 in the scanner (adjacent same-accent within a word -> one token), and the swallowed
-secondaries (telisha-gedola ``44``, gershayim ``12``) are dropped by ``uni_to_marks``'
+secondaries (telisha gedola ``44``, gershayim ``12``) are dropped by ``uni_to_marks``'
 positional/cluster resolution.
 
 ``negated_class`` rebuilds the four trailing-context lookaheads (silluq, mayela,
@@ -95,8 +95,8 @@ TEXT = r"[^ \r\n\-]*"
 # Each mark -> the digit set of the M-C code it stands for, for `negated_class`.
 # Conflated marks list every code that maps to them, except where `uni_to_marks`
 # only ever emits one variant: meteg is always emitted as ``75`` (never ``35``/
-# ``95``), and the swallowed secondaries (telisha-gedola ``44``, gershayim ``12``)
-# are dropped, so telisha-gedola is always ``14`` and gershayim always ``62``.
+# ``95``), and the swallowed secondaries (telisha gedola ``44``, gershayim ``12``)
+# are dropped, so telisha gedola is always ``14`` and gershayim always ``62``.
 _MARK_DIGITS: dict[str, str] = {
     ATNAX: "92",
     SEGOLTA: "01",

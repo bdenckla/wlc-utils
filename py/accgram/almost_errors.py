@@ -14,11 +14,11 @@ It documents, in one place, both
 
 The unifying theme is "almost errors": features that a naive checker would flag,
 where the right call -- charity or acceptance -- is a *choice*, and this page makes
-those choices visible (with, for the telisha-gedola + geresh family, the parse
+those choices visible (with, for the telisha gedola + geresh family, the parse
 trees of the readings we did **not** choose).
 
 The page is **generated** rather than hand-authored for one reason: the alternate-
-reading parse trees in the telisha-gedola exhibit, and the live tree for ek20:31,
+reading parse trees in the telisha gedola exhibit, and the live tree for ek20:31,
 are produced from the actual grammar at build time (a mode-aware copy
 of ``uni_to_marks.word_to_marks`` drives the three alternate telg readings), so they
 can never drift from the checker's real behaviour. It shares goerwitz.html's
@@ -63,10 +63,10 @@ _REPORT_TITLE = "Almost errors"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 # The geresh family (plain geresh U+059C, gershayim U+059D's plain sibling, and the
-# geresh-muqdam U+059D promoted/demoted form) the telisha-gedola companion-drop concerns.
+# geresh-muqdam U+059D promoted/demoted form) the telisha gedola companion-drop concerns.
 _GG = frozenset((am.GERESH, am.GERSHAYIM))
 
-# The five WLC words carrying BOTH telisha-gedola and a geresh-family mark -- the
+# The five WLC words carrying BOTH telisha gedola and a geresh-family mark -- the
 # companions the checker drops to keep just the telg.  (gn5:29 / zp2:15 same-letter;
 # 2k17:13 same-letter with geresh-muqdam; lv10:4 / ek48:10 cross-letter, same word.)
 _TELG_EXHIBIT_REFS = ("gn5:29", "zp2:15", "2k17:13", "lv10:4", "ek48:10")
@@ -77,9 +77,9 @@ _TELG_EXHIBIT_REFS = ("gn5:29", "zp2:15", "2k17:13", "lv10:4", "ek48:10")
 _TELG_TREE_REFS = ("zp2:15", "lv10:4")
 
 _TELG_MODES = (
-    ("chosen", "drop the geresh-family mark, keep the telisha-gedola (what the checker does)"),
-    ("keep_gerstar", "drop the telisha-gedola, keep the geresh-family mark"),
-    ("keep_both", "keep both, as a telisha-gedola then a geresh phrase"),
+    ("chosen", "drop the geresh-family mark, keep the telisha gedola (what the checker does)"),
+    ("keep_gerstar", "drop the telisha gedola, keep the geresh-family mark"),
+    ("keep_both", "keep both, as a telisha gedola then a geresh phrase"),
 )
 
 # MAM's documentation note on ek20:31 (from MAM-parsed-plus / MAM-with-doc), the
@@ -96,7 +96,7 @@ _EK2031_MAM_NOTE_HE = (
 # Tree generation
 # --------------------------------------------------------------------------- #
 def _build_word_variant(word: str, mode: str) -> str:
-    """``uni_to_marks.word_to_marks``, but for a word carrying BOTH a telisha-gedola
+    """``uni_to_marks.word_to_marks``, but for a word carrying BOTH a telisha gedola
     and a geresh-family mark, apply ``mode`` (chosen / keep_gerstar / keep_both).
 
     A faithful copy of the Plan B prototype: it rebuilds the mark skeleton, dropping
@@ -293,7 +293,7 @@ def _intro() -> tuple[object, ...]:
                 " checker accepts these, and where it must pick how to represent one for"
                 " parsing — which mark to carry into the parse, or how to fuse a pair —"
                 " that choice is among readings that all parse cleanly (the"
-                " telisha-gedola exhibit below shows the alternatives). The headline case"
+                " telisha gedola exhibit below shows the alternatives). The headline case"
                 " is Ezekiel 20:31’s mahapakh + azla (",
                 H.code("mahapakh!azla"),
                 "), the only word in Tanakh with two conjunctive accents on"
@@ -348,8 +348,8 @@ def _geresh_muqdam_section() -> tuple[object, ...]:
                 "The two verses differ in what happens next. In Leviticus 1:3 the"
                 " geresh-muqdam stands alone, so the charity is the whole story. In 2"
                 " Kings 17:13 the converted geresh then sits on a word that also carries"
-                " a telisha-gedola — so once the charity has run, what remains is one of"
-                " the telisha-gedola + geresh oddities below (the only one of those five"
+                " a telisha gedola — so once the charity has run, what remains is one of"
+                " the telisha gedola + geresh oddities below (the only one of those five"
                 " whose geresh reaches the checker by way of a charity).",
             )
         ),
@@ -390,23 +390,23 @@ def _ps124_section() -> tuple[object, ...]:
 
 def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]:
     items: list[object] = [
-        H.heading_level_3("Telisha-gedola + geresh/gershayim (five words)"),
+        H.heading_level_3("telisha gedola + geresh/gershayim (five words)"),
         H.para(
-            "Five WLC words carry both a telisha-gedola and a geresh-family companion"
+            "Five WLC words carry both a telisha gedola and a geresh-family companion"
             " (a plain geresh or gershayim — or, in 2 Kings 17:13, a geresh that the"
             " geresh-muqdam charity above produced). This double-marking is not a quirk"
             " to forgive: it is official masoretic tradition, attested in the standard"
             " witnesses. What the checker must decide is only how to represent it for"
-            " parsing — and there it keeps the telisha-gedola and drops the companion."
+            " parsing — and there it keeps the telisha gedola and drops the companion."
             " That is a choice, but a choice among grammatically-clean options: the"
-            " verses also parse cleanly if the telisha-gedola is dropped instead, or if"
+            " verses also parse cleanly if the telisha gedola is dropped instead, or if"
             " both marks are kept as a sequence."
         ),
         _telg_verdict_table(index, parser, has_legarmeh),
         H.para(
             "Every one of the five verses parses cleanly under all three readings"
             " (no ERROR, no NO_PARSE), so the choice is not forced by grammaticality —"
-            " it is purely a representation preference for the telisha-gedola. The two"
+            " it is purely a representation preference for the telisha gedola. The two"
             " verses below show the full parse tree under each reading (one same-letter"
             " case, one cross-letter); the trees differ exactly at the companion word,"
             " as expected."
@@ -427,10 +427,10 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
         H.para(
             (
                 "A presentation note: even the same-letter keep-both case"
-                " (Zephaniah 2:15) renders as a sequence — a telisha-gedola phrase,"
+                " (Zephaniah 2:15) renders as a sequence — a telisha gedola phrase,"
                 " then a geresh"
                 " phrase, one tree level deeper — not as a fused same-letter cluster,"
-                " because the telisha-gedola is prepositive (relocated to the front of"
+                " because the telisha gedola is prepositive (relocated to the front of"
                 " the word) and the scanner emits the two marks as separate tokens. So"
                 " the real word’s keep-both tree already makes the sequence visible; no"
                 " synthetic repeated-word illustration is needed.",
@@ -485,7 +485,7 @@ def _oddities_intro() -> tuple[object, ...]:
             " official masoretic tradition, attested in the standard witnesses. The"
             " checker accepts them; its only real decision is one of representation —"
             " which mark to carry into the parse, or how to fuse a pair — and, as the"
-            " telisha-gedola exhibit shows, that decision is a choice among readings"
+            " telisha gedola exhibit shows, that decision is a choice among readings"
             " that all parse cleanly."
         ),
     )
@@ -506,7 +506,7 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
                 " checker accepts it outright: the scanner fuses the pair into one ",
                 H.code("mahapakh!azla"),
                 " token, which the grammar parses as an ordinary accent. Unlike the"
-                " telisha-gedola words, nothing is dropped: both marks survive into the"
+                " telisha gedola words, nothing is dropped: both marks survive into the"
                 " single fused token.",
             )
         ),

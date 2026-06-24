@@ -159,7 +159,7 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.MERKHA_KEFULA), "MERKHAKEFULA"),
     (re.compile(am.DARGA), "DARGA"),
     (re.compile(am.QADMA), "AZLA"),
-    # telisha-qetanna: a stress-helper telisha fused onto the main (one token).
+    # telisha qetanna: a stress-helper telisha fused onto the main (one token).
     (re.compile(am.TELISHA_QETANA + _TEXT + am.TELISHA_QETANA), "TELISHAQETANNA"),
     (re.compile(am.TELISHA_QETANA), "TELISHAQETANNA"),
     (re.compile(am.YERAX), "GALGAL"),

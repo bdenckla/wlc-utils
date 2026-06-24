@@ -15,7 +15,7 @@ four interpretations a reader could give the cluster (``a`` / ``b`` = the verse 
 suffix around it):
 
     a x b      -- keep only x, drop y          (the "choose one accent" reading, as the
-    a y b      -- keep only y, drop x            telisha-gedola + geresh family drops to telg)
+    a y b      -- keep only y, drop x           telg + geresh family drops to telg)
     a x y b    -- x then y, as an ordered sequence
     a y x b    -- y then x, the other ordering
 
