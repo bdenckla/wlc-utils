@@ -168,8 +168,7 @@ _TELG_PARA_2_CONTENTS = (
     #
     " In the three same-letter words, the LC has the gerstar first and the telg second.",
     #
-    " ",
-    *_SEE,
+    *(" ", *_SEE),
     #
     " So, the same-letter words have their accent swapped compared to the order in the cross-letter words."
     )
@@ -178,25 +177,33 @@ _TELG_PARA_3_CONTENTS = (
     " The checker treats a telg and a gerstar on a single letter as being in telg-first order,"
     " regardless of the order in which the accents appear in its input."
     #
-    " The checker allows a telg and a gerstar adjacent in either order."
+    " In other words the checker treats a telg and a gerstar on a single letter as being in “anti-manuscript” order."
     #
-    " (In the telg-then-gerstar direction, the pairing occurs about 165 times across separate words.)"
+    # XXX Study the order in WLC 4.22 in its original M-C encoding and in my Unicode conversion of WLC 4.22's M-C and perhaps comment upon it here.
+    #
+    " This choice is not important, because the checker allows a telg and a gerstar to appear in either order."
+    #
+    " I.e., either order is considered grammatical."
+    #
+    " The telg-then-gerstar order appears normally, i.e. across separate words, about MMM times in Tanakh."
+    # XXX fill in MMM
+    #
+    " The gerstar-then-telg order appears only about NNN times in Tanakh."
+    # XXX fill in NNN
 )
 _TELG_PARA_4_CONTENTS = (
-    "Each verse also parses cleanly if either accent is dropped."
-    " In the two"
-    " cross-letter words (L10:4, Ee48:10) the telg comes"
-    " first instead. So the same-letter and cross-letter cases run in opposite"
-    " orders, and the checker's telg-first sequence matches only the cross-letter words."
-    " Nothing rides on it for the checker in any case: it accepts either"
-    " order, and across the corpus a telg freely precedes or follows a"
-    " gerstar. The table below shows, for each word, the double accent form "
-    " alongside the two single-accent “thought experiments.”"
+    "Each verse continues to parse cleanly if either accent is dropped from these five telg + gerstar words."
+    #
+    " I mention this to show that the checker deems these verses grammatical no matter which of the various reasonable chanting interpretations are given to the two accents on these words:"
+    # XXX insert an unordered list of: perform both accents, in sequence, in either order; perform only the telg or only the gerstar (a choice, as in the Decalogues and G35:22).
+    #
+    " The table below shows, for each word,"
+    " the double accent form and the two single-accent “thought experiments.”"
+    #
+    " The same-letter words are shown with “anti-manuscript” accent order (telg-first)."
 )
 _TELG_PARA_5_CONTENTS = (
-    "So the choice is not forced by grammaticality — all three readings parse"
-    " cleanly — but only keeping both preserves both accents the manuscript wrote."
-    " The two verses below show the checker's actual parse tree (one same-letter"
+    " The tables further below show two examples of the checker's actual parse tree (one same-letter"
     " case, one cross-letter)."
 )
 
@@ -208,7 +215,7 @@ def telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]
         H.para(_TELG_PARA_2_CONTENTS),
         H.para(_TELG_PARA_3_CONTENTS),
         H.para(_TELG_PARA_4_CONTENTS),
-        _telg_forms_table(index),
+        _telg_forms_table(index),  # XXX center this table
         H.para(_TELG_PARA_5_CONTENTS),
     ]
     for bcv in _TELG_TREE_REFS:
