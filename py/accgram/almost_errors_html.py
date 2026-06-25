@@ -67,9 +67,9 @@ def _intro() -> tuple[object, ...]:
                 H.bold("not"),
                 " leniencies specific to LC, BHS, or WLC. Nothing here is forgiven; the"
                 " checker accepts these, and where it must pick how to represent one for"
-                " parsing — which mark to carry into the parse, or how to fuse a pair —"
-                " that choice is among readings that all parse cleanly (the"
-                " telisha gedola exhibit below shows the alternatives). The headline case"
+                " parsing — keep both marks as a sequence, fuse a pair into one token, or"
+                " carry a single mark — that choice is among readings that all parse"
+                " cleanly (the telisha gedola exhibit below shows the alternatives). The headline case"
                 " is Ezekiel 20:31’s mahapakh + azla (",
                 H.code("mahapakh!azla"),
                 "), the only word in Tanakh with two conjunctive accents on"

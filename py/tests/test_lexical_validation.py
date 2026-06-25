@@ -24,6 +24,10 @@ _ZI = am.ZINOR      # M-C 02 (zinor / zarqa main)
 _MA = am.MAHAPAKH   # U+05A4 (below)
 _TI = am.TIPEXA     # U+0596 (below)
 _QA = am.QADMA      # U+05A8 (above; "azla")
+_TG = am.TELISHA_GEDOLA  # U+05A0 (prepositive disjunctive)
+_G2 = am.GERSHAYIM       # U+059E (gn5:29, zp2:15 companion)
+_GE = am.GERESH          # U+059C
+_GM = am.GERESH_MUQDAM   # U+059D (2k17:13 companion, pre-scanner-normalization)
 
 
 def _codes(body: str) -> list[str]:
@@ -91,6 +95,27 @@ def test_whitelisted_mahapakh_qadma_is_not_flagged():
     # both; the scanner fuses it to mahapakh!azla).  Not an alphabet error.
     assert _pairs("XXXX" + _MA + _QA + "XX") == []
     assert _pairs("XXXX" + _QA + _MA + "XX") == []  # whitelist is order-less
+
+
+def test_whitelisted_telg_geresh_family_is_not_flagged():
+    # The telisha gedola + geresh-family same-letter pairs (gn5:29 / zp2:15 gershayim,
+    # 2k17:13 geresh muqdam, and plain geresh) are masoretically-blessed and kept as a
+    # telg-then-geresh sequence -- not an alphabet error.  Order-less, like every entry.
+    for companion in (_G2, _GE, _GM):
+        assert _pairs("XX" + _TG + companion + "X") == []
+        assert _pairs("XX" + companion + _TG + "X") == []
+
+
+def test_geresh_muqdam_whitelisted_separately_from_plain_geresh():
+    # The guard runs pre-scanner on raw codepoints, so 2k17:13's geresh muqdam (U+059D) is
+    # whitelisted as its own codepoint, before the scanner normalizes it to a plain geresh.
+    assert _pairs("X" + _TG + _GM + "X") == []
+
+
+def test_telg_with_non_geresh_neighbor_still_flagged():
+    # The whitelist is specific to the geresh family: a telisha gedola stacked on some other
+    # accent (e.g. tipeḥa) is still an alphabet error.
+    assert _pairs("X" + _TG + _TI + "X") == ["telishagedola!tipexa"]
 
 
 def test_a_third_hypothetical_same_letter_pair_is_flagged():

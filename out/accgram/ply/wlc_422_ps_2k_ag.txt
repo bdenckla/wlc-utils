@@ -12335,8 +12335,11 @@
         4 pashta_clause
           5 big_telisha_phrase
             telishagedola 
-          5 pashta_phrase
-            mahapakh pashta 
+          5 pashta_clause
+            6 geresh_phrase
+              geresh 
+            6 pashta_phrase
+              mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 

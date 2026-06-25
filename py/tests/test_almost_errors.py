@@ -119,21 +119,14 @@ def test_all_five_telg_verses_parse_clean_in_all_three_readings() -> None:
             assert verdict == "clean", f"{bcv} [{mode}] -> {verdict}"
 
 
-def test_same_letter_telg_words_parse_clean_in_either_sequence_order() -> None:
-    # The exhibit table's seq 1 / seq 2 columns: the kept-both reading spread across two
-    # copies of the word.  Both orderings (telg-then-geresh and the reverse) must parse
-    # cleanly for the three same-letter words, backing the "either order" claim on the page.
+def test_exactly_three_telg_exhibit_words_are_same_letter() -> None:
+    # gn5:29, zp2:15 (telg + gershayim) and 2k17:13 (telg + geresh muqdam) stack both marks
+    # on one base letter; lv10:4 and ek48:10 spread them across two letters of one word.
     index = _load_index_or_skip()
-    parser, has_legarmeh = build_parser(), HasLegarmeh()
-    same_letter = 0
-    for bcv in aeo._TELG_EXHIBIT_REFS:
-        word = aet._telg_gerstar_word(index[bcv])
-        if not aet._telg_marks_share_letter(word):
-            continue
-        same_letter += 1
-        for order in ("telg_first", "geresh_first"):
-            verdict = aet._telg_seq_verdict_for(bcv, order, index, parser, has_legarmeh)
-            assert verdict == "clean", f"{bcv} [{order}] -> {verdict}"
+    same_letter = sum(
+        aet._telg_marks_share_letter(aet._telg_gerstar_word(index[bcv]))
+        for bcv in aeo._TELG_EXHIBIT_REFS
+    )
     assert same_letter == 3
 
 
@@ -176,10 +169,10 @@ def test_render_body_contents_smoke() -> None:
     body = aeh.render_body_contents(index, parser, has_legarmeh)
     rendered = H.el_to_str_no_wbr(body[0])
     # The two framing kinds, the MAM-confirmed non-charity, the lv25:20 contrast
-    # (delegated to goerwitz.html, not re-detailed), and the exhibit tables: the five
-    # telg trees (zp2:15 + lv10:4 x 3 readings = 6) plus ek20:31 (1).
+    # (delegated to goerwitz.html, not re-detailed), and the exhibit trees: the two telg
+    # keep-both trees (zp2:15 + lv10:4, the checker's actual output) plus ek20:31 (1).
     assert "Editorial charities" in rendered
     assert "Masoretically-blessed oddities" in rendered
     assert "mahapakh!azla" in rendered
     assert "goerwitz.html#oblv25v20" in rendered
-    assert rendered.count("goerwitz-obs-error-table") == 7
+    assert rendered.count("goerwitz-obs-error-table") == 3

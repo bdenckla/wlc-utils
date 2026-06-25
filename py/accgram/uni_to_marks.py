@@ -15,10 +15,11 @@ and `lexical_validation` actually read:
 * **Accents** pass through as their own codepoint.  The five M-C codepoint conflations
   no longer need distinct codes: pashta and telisha qetana keep both their stress-helper
   and their main occurrence (the scanner merges an adjacent same-accent run into one
-  token), and the swallowed secondaries -- the non-first of a repeated telisha gedola,
-  and a geresh or gershayim sharing a word with a telisha gedola -- are dropped here,
-  keeping the telisha gedola (a prose geresh muqdam is first read as the plain geresh it
-  mis-encodes, then dropped under that rule; `word_to_marks`).
+  token), and the one swallowed secondary -- the non-first of a repeated telisha gedola
+  (M-C 44) -- is dropped here.  A telisha gedola that shares a word with a geresh or
+  gershayim keeps *both* marks: the scanner sequences them (telg then geresh) and, where
+  they share a base letter, `lexical_validation` whitelists the same-letter pair
+  (`word_to_marks`).
 * **Prepositive accents** (yetiv, geresh muqdam, deḥi, telisha gedola) are relocated to
   the front of the word's mark sequence, undoing `wlc_uword._PREPOS_PATT`'s move past an
   accent on the first consonant, so the scanner reads the accents in M-C order.
@@ -57,16 +58,14 @@ _KEPT_NON_ACCENT = frozenset(
 # `wlc_uword._PREPOS_PATT` to just after the first consonant -- a move that can carry
 # them past an accent on that first consonant, inverting the accent order the scanner
 # reads.  We restore M-C order by emitting them at the front of the word's marks.
-# (Gershayim 12 and the secondary telisha gedola 44 are *also* prepositive in M-C but
-# are swallowed secondaries dropped below, so only these four reach the front.)
+# Gershayim (M-C 12) is *also* prepositive in M-C, but is deliberately left out: in the
+# telg + gershayim words it always partners the (prepositive) telisha gedola, and keeping
+# gershayim in the non-prepositive bucket guarantees the front-loaded telg precedes it --
+# exactly the telg-then-gershayim order the scanner and grammar want.  (The secondary
+# telisha gedola 44 is prepositive too but is the dropped non-first of a repeat below.)
 _PREPOSITIVE_MARKS = frozenset(
     (am.YETIV, am.GERESH_MUQDAM, am.DEXI, am.TELISHA_GEDOLA)
 )
-
-# A geresh or gershayim that shares a *word* with a telisha gedola is dropped (keeping
-# the telisha gedola) -- see `word_to_marks`.  (A prose geresh muqdam is first read as
-# the plain geresh it mis-encodes, so it is dropped under this rule too.)
-_GERESH_OR_GERSHAYIM = frozenset((am.GERESH, am.GERSHAYIM))
 
 
 def _is_base_letter(ch: str) -> bool:
@@ -89,40 +88,30 @@ def word_to_marks(word: str) -> str:
     Prepositive accents are restored to the front of the mark sequence (see
     `_PREPOSITIVE_MARKS`).
 
-    Two secondaries are dropped here.  (1) The non-first of a *repeated* telisha gedola
-    (M-C 44).  (2) A geresh or gershayim that shares a word with a telisha gedola.  Think
-    of (2) as two conceptual steps in order: *first*, normalize away the abomination of a
-    prose geresh muqdam -- a poetic-only sign that WLC, in the 21 prose books, uses only
-    as a typographic device for a plain geresh (see ply_scanner) -- reading it as that
-    geresh; *then* drop a geresh or gershayim that shares a word with a telisha gedola,
-    whether on the same letter or a different letter of the word.  This covers exactly
-    five words, in each of which we keep the telisha gedola: Gen 5:29, 2 Kings 17:13 and
-    Zeph 2:15 (same letter) and Lev 10:4 and Ezek 48:10 (different letters).  2 Kings
-    17:13 is the geresh muqdam case: telg + geresh muqdam -> telg + geresh -> telg.
+    One secondary is dropped here: the non-first of a *repeated* telisha gedola (M-C 44).
 
-    The reading treats the (prepositive) telisha gedola as analogous to the (prepositive)
-    geresh muqdam, and the geresh (or gershayim) as analogous to the revia of revia
-    mugrash: a prepositive whose stress-helper is always written, even when -- the stress
-    being initial -- it is not needed.  (Manuscripts often DO drop that revia when the
-    stress is initial, but they cannot drop the geresh/gershayim, because the word would
-    then read as a plain telisha gedola; whereas there is no such thing as a plain "geresh
-    muqdam word" -- geresh muqdam occurs only as part of a revia mugrash, even when the
-    revia is not shown.)  The analogy is a little inverted -- one wants the geresh to be
-    the analogue of geresh muqdam -- but the geresh/gershayim is not prepositive, so it is
-    the telisha gedola that plays the geresh muqdam role.
+    A telisha gedola that shares a word with a geresh or gershayim keeps BOTH marks; this
+    is the prose analogue of the poetic deḥi + munax whitelist entry -- a legitimate
+    same-letter pair spared as a two-token *sequence*, not fused.  The scanner reads them
+    in order (the prepositive telisha gedola, relocated to the front, then the geresh), and
+    the grammar accepts the telg -> geresh/gershayim bigram (which occurs ~165x across
+    words, so the sequence parses cleanly).  Where the two marks share one base letter
+    (Gen 5:29, Zeph 2:15, and -- as a geresh muqdam -- 2 Kings 17:13), the resulting
+    same-letter pair is whitelisted in `lexical_validation._WHITELISTED_SAME_LETTER`
+    rather than flagged; the cross-letter words (Lev 10:4, Ezek 48:10) already sit on two
+    letters and need no whitelist.  A prose geresh muqdam (2 Kings 17:13's companion, and
+    the lone Lev 1:3 case) passes through as its own codepoint here and is normalized to a
+    plain geresh by the scanner (see ply_scanner); the whitelist therefore lists the raw
+    geresh muqdam codepoint alongside plain geresh.
 
-    Two other interpretations are equally grammatical (all five verses verified to parse
-    either way): we could just as easily have dropped the telisha gedola and retained the
-    geresh/gershayim; or retained BOTH accents and read the same-letter pairs as a
-    telg-then-geresh sequence (the cross-word telg -> geresh/gershayim
-    bigram occurs ~165x, so the sequence parses cleanly too).  We deliberately choose
-    neither -- in particular the sequential reading, though grammatical, is not the right
-    way to think of these words, even the two whose accents fall on different letters.
-    See the telisha gedola section of gh-pages/accgram/almost-errors.html (generator:
-    accgram/almost_errors.py), which shows the parse trees of all three readings.
+    Keeping both marks is the most faithful reading -- it preserves both accents the
+    manuscript wrote, where dropping either would discard one.  The telg-then-geresh order
+    is not a claim about precedence: the telisha gedola is prepositive and sorts to the
+    front, and the grammar permits either order (a big telisha freely precedes or follows a
+    geresh -- see ply_grammar's geresh_pashta_clause / big_telisha_pashta_clause).  See the
+    telisha gedola section of gh-pages/accgram/almost-errors.html (generator:
+    accgram/almost_errors.py).
     """
-    word_has_telg = am.TELISHA_GEDOLA in word
-
     # Build the ordered mark sequence and the skeleton of letters/maqaf, marking where
     # marks go.  Prepositive accent marks are pulled to the front.
     skeleton: list[str | None] = []  # str = literal char; None = "a mark slot here"
@@ -144,13 +133,6 @@ def word_to_marks(word: str) -> str:
                     continue  # non-first of a repeated telisha gedola (M-C 44)
                 mark = am.TELISHA_GEDOLA
             else:
-                # First read a prose geresh muqdam as the plain geresh it mis-encodes (a
-                # poetic geresh muqdam -- revia mugrash -- never shares a word with a
-                # telisha gedola, so this never mis-fires on real poetic text); then drop
-                # a geresh or gershayim that shares a word with a telisha gedola.
-                as_geresh = am.GERESH if ch == am.GERESH_MUQDAM else ch
-                if word_has_telg and as_geresh in _GERESH_OR_GERSHAYIM:
-                    continue
                 mark = ch  # the accent codepoint is its own mark
         elif ch in _KEPT_NON_ACCENT:
             mark = ch

@@ -128,11 +128,11 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # geresh muqdam (U+059D) is a poetic-only sign (the preposed geresh of revia
     # mugrash).  In WLC it appears in the 21 prose books only twice -- a property
     # (arguably a bug) of WLC, not a statement about the wider Masoretic tradition --
-    # both a typographic device for what is abstractly a plain geresh: Lev 1:3 (alone),
-    # read here as a geresh; and 2 Kings 17:13 (sharing a word with a telisha gedola),
-    # where it is read as geresh and then dropped upstream as that telisha gedola's
-    # companion (uni_to_marks.word_to_marks), so it never reaches this rule.  (The poetic
-    # scanner keeps its own revia mugrash handling.)
+    # both a typographic device for what is abstractly a plain geresh, normalized to one
+    # here: Lev 1:3 (alone); and 2 Kings 17:13 (sharing a word, and a base letter, with a
+    # telisha gedola), where the resulting telg + geresh same-letter pair is whitelisted by
+    # lexical_validation and parses as a telg-then-geresh sequence.  (The poetic scanner
+    # keeps its own revia mugrash handling.)
     # See the tanach.us changes
     # Lev 1:3:       https://tanach.us/Changes/2020.10.19%20-%20Changes/2020.10.19%20-%20Changes.xml?2020.09.22-1
     # 2 Kings 17:13: https://tanach.us/Changes/2020.10.19%20-%20Changes/2020.10.19%20-%20Changes.xml?2020.09.22-2
@@ -148,11 +148,12 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.MUNAX), "MUNAX"),
     # mahapakh + qadma/azla on one base letter (adjacent in the mark string, no X
     # between -> same letter): an impositive above-accent and below-accent share a
-    # consonant, a cluster with no natural order.  Fused into one
-    # unitary token rather than judged as a servus *sequence*; the genuine cross-
-    # letter `qadma...mahapakhh` chain still tokenizes as AZLA then MAHAPAKH.  Stored
-    # mahapakh-then-qadma (U+05A4 < U+05A8).  Outside the (ungrammar-checked)
-    # decalogues this occurs only at Ezekiel 20:31.
+    # consonant, so the pair has no right-to-left (graphical) order -- one sits above the
+    # letter and one below -- even though it has a chanting order (qadma before mahapakh;
+    # cf. the ek20:31 MAM note).  Fused into one unitary token rather than judged as a
+    # servus *sequence*; the genuine cross-letter `qadma...mahapakhh` chain still tokenizes
+    # as AZLA then MAHAPAKH.  Stored mahapakh-then-qadma (U+05A4 < U+05A8).  Outside the
+    # (ungrammar-checked) decalogues this occurs only at Ezekiel 20:31.
     (re.compile(am.MAHAPAKH + am.QADMA), "MAHAPAKHAZLA"),
     (re.compile(am.MAHAPAKH), "MAHAPAKH"),
     (re.compile(am.MERKHA), "MERKHA"),

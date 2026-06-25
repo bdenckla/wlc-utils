@@ -15,13 +15,15 @@ It documents, in one place, both
 The unifying theme is "almost errors": features that a naive checker would flag,
 where the right call -- charity or acceptance -- is a *choice*, and this page makes
 those choices visible (with, for the telisha gedola + geresh family, the parse
-trees of the readings we did **not** choose).
+trees of the chosen kept-both sequence alongside the single-mark readings we did
+**not** choose).
 
-The page is **generated** rather than hand-authored for one reason: the alternate-
-reading parse trees in the telisha gedola exhibit, and the live tree for ek20:31,
-are produced from the actual grammar at build time (a mode-aware copy
-of ``uni_to_marks.word_to_marks`` drives the three alternate telg readings), so they
-can never drift from the checker's real behaviour.
+The page is **generated** rather than hand-authored for one reason: the telisha
+gedola exhibit's parse trees, and the live tree for ek20:31, are produced from the
+actual grammar at build time (a mode-aware copy of ``uni_to_marks.word_to_marks``
+drives the three telg readings -- the kept-both sequence the checker emits and its
+two single-mark alternatives), so they can never drift from the checker's real
+behaviour.
 
 This module is the CLI shell.  The "real computing" (mode-aware parse trees and
 verdicts) lives in ``almost_errors_trees``; the HTML rendering (page sections and

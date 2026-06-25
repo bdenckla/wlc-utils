@@ -4,7 +4,7 @@ prose-corpus verses          : 203  (220 changes)
   validated                  : 189 verses (205 changes)
   unreliable (excluded)      : 14 verses (15 changes)
 
-  of validated: scanner-VISIBLE change 102, no-op 87
+  of validated: scanner-VISIBLE change 101, no-op 88
 
 2x2 over validated VERSES (all):
   WLC-gram    -> UXLC-gram   : 178
@@ -13,7 +13,7 @@ prose-corpus verses          : 203  (220 changes)
   WLC-ungram  -> UXLC-ungram : 1
 
 2x2 over scanner-VISIBLE verses (the meaningful denominator):
-  WLC-gram    -> UXLC-gram   : 91
+  WLC-gram    -> UXLC-gram   : 90
   WLC-gram    -> UXLC-ungram : 10
   WLC-ungram  -> UXLC-gram   : 0
   WLC-ungram  -> UXLC-ungram : 1

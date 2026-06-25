@@ -791,8 +791,11 @@ Tsefaniah 2:15
       3 pashta_clause
         4 big_telisha_phrase
           telishagedola 
-        4 pashta_phrase
-          mahapakh pashta 
+        4 pashta_clause
+          5 geresh_phrase
+            gershayim 
+          5 pashta_phrase
+            mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
