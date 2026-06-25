@@ -70,7 +70,7 @@ from accgram import rtmsr_verse
 from accgram import uni_to_marks
 from accgram.mam_poetic_accents import load_poetic_word_disj
 from accgram.mam_simple_verse import default_mam_simple_dir
-from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
+from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 from accgram.ply_grammar_poetic import (
     ParseError,
     build_parser,
@@ -80,7 +80,7 @@ from accgram.ply_scanner_poetic import scan_book
 from accgram.poetic_reconcile import reconcile_tokens
 from accgram.poetic_oddball_summary import derive_tentative_summary
 from accgram.ply_tree import print_tree
-from accgram.run_ply_poetic import _has_error_leaf, _no_parse_line
+from accgram.run_ply_poetic import has_error_leaf, no_parse_line
 from mb_cmn import provenance
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
@@ -156,15 +156,15 @@ def collect_poetic_oddballs(
             tree, error = parse_tokens_accepting_repeats(parser, tokens)
             if tree is None:
                 kind = KIND_NO_PARSE
-                tree_text = _no_parse_line(tokens, error).rstrip("\n")
-            elif _has_error_leaf(tree):
+                tree_text = no_parse_line(tokens, error).rstrip("\n")
+            elif has_error_leaf(tree):
                 kind = KIND_MISSING_SILLUQ
                 error = None
                 tree_text = print_tree(tree, 0).rstrip("\n")
             else:
                 continue
 
-            wlc = tuple(t for t, _ in tokens if t in _POETIC_DISJUNCTIVES)
+            wlc = tuple(t for t, _ in tokens if t in POETIC_DISJUNCTIVES)
             bcv = f"{bb}{verse.reference.rpartition(' ')[2]}"
             raw_verse = wlc_index.get(bcv)
             wlc_verse = (
@@ -689,7 +689,7 @@ def _no_parse_tree_text(
 
     No valid parse exists, so this is not a real tree: a single ``no_parse`` branch
     whose leaves are the accent token types (the TILDE/SOFPASUQ structural bookends
-    dropped, as in run_ply_poetic._no_parse_line), capped by an ``ERROR`` leaf. Fed
+    dropped, as in run_ply_poetic.no_parse_line), capped by an ``ERROR`` leaf. Fed
     through the shared error-tree table it puts each token in its own cell and
     highlights the ERROR cell -- more legible than the bare NO_PARSE token line, and
     visually consistent with the missing-silluq ERROR trees.

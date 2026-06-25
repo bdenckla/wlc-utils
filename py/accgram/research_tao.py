@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from accgram import mam_simple_verse
 from accgram import ply_classify
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
@@ -11,7 +12,6 @@ from accgram import rtms_report
 from accgram import rtms_rows
 from accgram import tm_changes
 from accgram import tm_descriptor
-from accgram.mam_simple_verse import default_mam_simple_dir as _default_mam_simple_dir
 from accgram.ob_notes import get_structured_text
 from accgram.tm_sanity import sanity_check_structured_text
 
@@ -33,7 +33,7 @@ def default_uxlc_dir(repo_root: Path) -> Path:
 
 
 def default_mam_simple_dir(repo_root: Path) -> Path:
-    return _default_mam_simple_dir(repo_root)
+    return mam_simple_verse.default_mam_simple_dir(repo_root)
 
 
 def default_all_changes_path(repo_root: Path) -> Path:

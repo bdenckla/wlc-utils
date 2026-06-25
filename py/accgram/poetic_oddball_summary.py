@@ -26,7 +26,7 @@ import difflib
 from typing import TYPE_CHECKING
 
 from accgram.mam_poetic_accents import base_consonants
-from accgram.poetic_accent_names import POETIC_DISJUNCTIVES as _POETIC_DISJUNCTIVES
+from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 from accgram.ply_scanner_poetic import scan_accents
 from mb_cmn import hebrew_punctuation as hpunc
 
@@ -168,7 +168,7 @@ def _wlc_disjunctives_per_word(body: str) -> list[tuple[str, ...]]:
         count = len(scan_accents(mc_word))
         segment = resolved[pos : pos + count]
         pos += count
-        words.append(tuple(t for t in segment if t in _POETIC_DISJUNCTIVES))
+        words.append(tuple(t for t in segment if t in POETIC_DISJUNCTIVES))
     return words
 
 

@@ -49,14 +49,14 @@ class BookRun:
     no_parse_count: int  # unrecoverable failures (NO_PARSE lines)
 
 
-def _has_error_leaf(tree: TN) -> bool:
+def has_error_leaf(tree: TN) -> bool:
     """True if the tree contains an ERROR leaf (a recovered missing-silluq verse)."""
     if tree.left is None:
         return "ERROR" in tree.leaves
-    return _has_error_leaf(tree.left) or _has_error_leaf(tree.right)
+    return has_error_leaf(tree.left) or has_error_leaf(tree.right)
 
 
-def _no_parse_line(
+def no_parse_line(
     tokens: list[tuple[str, str]], error: ParseError | None = None
 ) -> str:
     """A greppable placeholder for an unparseable verse, naming its token types.
@@ -112,9 +112,9 @@ def render_book(
         tree, error = parse_tokens_accepting_repeats(parser, tokens)
         if tree is None:
             no_parse += 1
-            out_lines.append(_no_parse_line(tokens, error))
+            out_lines.append(no_parse_line(tokens, error))
             continue
-        if _has_error_leaf(tree):
+        if has_error_leaf(tree):
             oddballs += 1
         else:
             parsed += 1

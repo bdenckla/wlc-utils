@@ -17,26 +17,26 @@ prose/poetic reports is mechanical.
 from __future__ import annotations
 
 from accgram.almost_errors_charities import (
-    _charities_intro,
-    _geresh_muqdam_section,
-    _ps124_section,
+    charities_intro,
+    geresh_muqdam_section,
+    ps124_section,
 )
-from accgram.almost_errors_html_shared import _link
+from accgram.almost_errors_html_shared import link
 from accgram.almost_errors_oddities import (
-    _ek2031_section,
-    _oddities_intro,
-    _telg_section,
+    ek2031_section,
+    oddities_intro,
+    telg_section,
 )
 from accgram.ply_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
 
-_REPORT_TITLE = "Almost errors"
+REPORT_TITLE = "Almost errors"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 
 def _intro() -> tuple[object, ...]:
     return (
-        H.heading_level_1(_REPORT_TITLE),
+        H.heading_level_1(REPORT_TITLE),
         H.heading_level_2("Introduction"),
         H.para(
             "This page documents the accent-grammar checker's “almost errors”:"
@@ -79,9 +79,9 @@ def _intro() -> tuple[object, ...]:
         H.para(
             (
                 "Companion pages: the prose ",
-                _link("Goerwitz checker run", "goerwitz.html"),
+                link("Goerwitz checker run", "goerwitz.html"),
                 " and the ",
-                _link("poetic checker run", "poetic.html"),
+                link("poetic checker run", "poetic.html"),
                 " list the verses the checker actually flags; this page is the"
                 " inventory of what it deliberately does not.",
             )
@@ -93,14 +93,14 @@ def render_body_contents(index, parser, has_legarmeh: HasLegarmeh) -> tuple[obje
     sections: list[object] = [
         *_intro(),
         # Charities: forgive a genuine LC/BHS/WLC quirk or anomaly.
-        *_charities_intro(),
-        *_geresh_muqdam_section(),
-        *_ps124_section(),
+        *charities_intro(),
+        *geresh_muqdam_section(),
+        *ps124_section(),
         # Masoretically-blessed oddities: legitimate tradition the checker accepts,
         # where the only decision is representation (which the telg exhibit makes visible).
-        *_oddities_intro(),
-        *_telg_section(index, parser, has_legarmeh),
-        *_ek2031_section(index, parser, has_legarmeh),
+        *oddities_intro(),
+        *telg_section(index, parser, has_legarmeh),
+        *ek2031_section(index, parser, has_legarmeh),
     ]
     wrapper = H.div(tuple(sections), {"class": _WIDTH_CLASS})
     return (wrapper,)

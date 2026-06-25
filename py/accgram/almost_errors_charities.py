@@ -7,11 +7,11 @@ Pure prose -- no parse trees -- so this module needs only the shared link helper
 
 from __future__ import annotations
 
-from accgram.almost_errors_html_shared import _link, _uxlc_change_link
+from accgram.almost_errors_html_shared import link, uxlc_change_link
 from py_html import wlc_utils_html as H
 
 
-def _charities_intro() -> tuple[object, ...]:
+def charities_intro() -> tuple[object, ...]:
     return (
         H.heading_level_2("Editorial charities"),
         H.para(
@@ -23,7 +23,7 @@ def _charities_intro() -> tuple[object, ...]:
     )
 
 
-def _geresh_muqdam_section() -> tuple[object, ...]:
+def geresh_muqdam_section() -> tuple[object, ...]:
     return (
         H.heading_level_3("Geresh muqdam → geresh (prose)"),
         H.para(
@@ -35,9 +35,9 @@ def _geresh_muqdam_section() -> tuple[object, ...]:
                 " grammar (which has no geresh muqdam) sees the geresh it expects."
                 " Direction: poetic-looking sign → its prose counterpart. tanach.us"
                 " itself made the same correction in both verses — changes ",
-                _uxlc_change_link("2020.10.19/2020.09.22-1"),
+                uxlc_change_link("2020.10.19/2020.09.22-1"),
                 " (Lev. 1:3) and ",
-                _uxlc_change_link("2020.10.19/2020.09.22-2"),
+                uxlc_change_link("2020.10.19/2020.09.22-2"),
                 " (2 Kings 17:13), each described “Change geresh muqdam to geresh.”",
             )
         ),
@@ -54,7 +54,7 @@ def _geresh_muqdam_section() -> tuple[object, ...]:
     )
 
 
-def _ps124_section() -> tuple[object, ...]:
+def ps124_section() -> tuple[object, ...]:
     return (
         H.heading_level_3("Plain geresh → revia mugrash (poetic): Psalms 124:4"),
         H.para(
@@ -76,7 +76,7 @@ def _ps124_section() -> tuple[object, ...]:
                 " stays within a single letter — we are liberal about mark order on one"
                 " letter (questionable penmanship is not our concern) but preserve order"
                 " across letters, which is meaningful reading order. See the ",
-                _link(
+                link(
                     "tanach.us Psalms 124:4 note",
                     "https://tanach.us/Notes/Psalms/Psalms.124.4.4-c.html",
                 ),

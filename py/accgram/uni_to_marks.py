@@ -45,12 +45,12 @@ from cmn.wlc_book_codes import wlc_bb_to_goerwitz_book_name
 
 # --- codepoint classification -------------------------------------------------
 
-_MAQAF = "־"  # U+05BE; emitted as the boundary mark ``-``
+MAQAF = "־"  # U+05BE; emitted as the boundary mark ``-``
 
 # Cantillation-accent codepoints other than the conflated/positional ones pass
 # straight through as their own mark.  Meteg, paseq, sof-pasuq and the puncta are
 # kept too (their codepoints are already their marks).
-_KEPT_NON_ACCENT = frozenset(
+KEPT_NON_ACCENT = frozenset(
     (am.METEG, am.PASEQ, am.SOF_PASUQ, am.UPPER_DOT, am.LOWER_DOT)
 )
 
@@ -63,16 +63,16 @@ _KEPT_NON_ACCENT = frozenset(
 # gershayim in the non-prepositive bucket guarantees the front-loaded telg precedes it --
 # exactly the telg-then-gershayim order the scanner and grammar want.  (The secondary
 # telisha gedola 44 is prepositive too but is the dropped non-first of a repeat below.)
-_PREPOSITIVE_MARKS = frozenset(
+PREPOSITIVE_MARKS = frozenset(
     (am.YETIV, am.GERESH_MUQDAM, am.DEXI, am.TELISHA_GEDOLA)
 )
 
 
-def _is_base_letter(ch: str) -> bool:
+def is_base_letter(ch: str) -> bool:
     return "א" <= ch <= "ת"
 
 
-def _is_accent(ch: str) -> bool:
+def is_accent(ch: str) -> bool:
     """A real cantillation accent (U+0591..U+05AE) -- meteg (U+05BD) excluded."""
     return "֑" <= ch <= "֮"
 
@@ -86,7 +86,7 @@ def word_to_marks(word: str) -> str:
     Letters become ``X`` placeholders, points are dropped, accents pass through as
     their codepoints, and maqaf / paseq / sof pasuq / puncta are emitted verbatim.
     Prepositive accents are restored to the front of the mark sequence (see
-    `_PREPOSITIVE_MARKS`).
+    `PREPOSITIVE_MARKS`).
 
     One secondary is dropped here: the non-first of a *repeated* telisha gedola (M-C 44).
 
@@ -119,14 +119,14 @@ def word_to_marks(word: str) -> str:
     other_marks: list[str] = []
     telg_seen = 0
     for ch in word:
-        if _is_base_letter(ch):
+        if is_base_letter(ch):
             skeleton.append(am.LETTER)
             continue
-        if ch == _MAQAF:
+        if ch == MAQAF:
             skeleton.append(am.MAQAF)
             continue
         mark: str | None = None
-        if _is_accent(ch):
+        if is_accent(ch):
             if ch == am.TELISHA_GEDOLA:
                 telg_seen += 1
                 if telg_seen > 1:
@@ -134,12 +134,12 @@ def word_to_marks(word: str) -> str:
                 mark = am.TELISHA_GEDOLA
             else:
                 mark = ch  # the accent codepoint is its own mark
-        elif ch in _KEPT_NON_ACCENT:
+        elif ch in KEPT_NON_ACCENT:
             mark = ch
         if mark is None:
             continue  # a point/vowel/dagesh/shin-dot/etc. -> dropped (scanner filler)
         skeleton.append(None)
-        if mark in _PREPOSITIVE_MARKS:
+        if mark in PREPOSITIVE_MARKS:
             prepos_marks.append(mark)
         else:
             other_marks.append(mark)

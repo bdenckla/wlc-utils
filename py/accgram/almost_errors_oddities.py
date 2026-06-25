@@ -18,14 +18,14 @@ from accgram import almost_errors_trees as aet
 from accgram import rtms_report
 from accgram import rtmsr_media
 from accgram.almost_errors_html_shared import (
-    _accents_and_letters,
-    _hbo,
-    _link,
-    _ref_display,
-    _ref_short,
-    _render_tree,
-    _uxlc_change_link,
-    _verse_links,
+    accents_and_letters,
+    hbo,
+    link,
+    ref_display,
+    ref_short,
+    render_tree,
+    uxlc_change_link,
+    verse_links,
 )
 from accgram.ply_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
@@ -111,11 +111,11 @@ def _qadma_gaya_links(*, supplied: bool) -> tuple[object, ...]:
             continue
         if nodes:
             nodes.append("; ")
-        nodes.append(_link(display, rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)))
+        nodes.append(link(display, rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)))
     return tuple(nodes)
 
 
-def _oddities_intro() -> tuple[object, ...]:
+def oddities_intro() -> tuple[object, ...]:
     return (
         H.heading_level_2("Masoretically-blessed oddities (not charities)"),
         H.para(
@@ -133,17 +133,17 @@ def _oddities_intro() -> tuple[object, ...]:
 _SEE = (
     "(See UXLC notes"
     " ",
-    _link(
+    link(
         "G5:29",
         "https://tanach.us/Notes/Genesis/Genesis.5.29.6-c.html",
     ),
     " and ",
-    _link(
+    link(
         "Ts2:15",
         "https://tanach.us/Notes/Zephaniah/Zephaniah.2.15.1-c.html",
     ),
     ", and the UXLC change record for 2K17:13, ",
-    _uxlc_change_link("2020.10.19/2020.09.22-2"),
+    uxlc_change_link("2020.10.19/2020.09.22-2"),
     ".)"
 )
 _TELG_PARA_1_CONTENTS = (
@@ -201,7 +201,7 @@ _TELG_PARA_5_CONTENTS = (
 )
 
 
-def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]:
+def telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]:
     items: list[object] = [
         H.heading_level_3("telisha gedola + geresh/gershayim (five words)"),
         H.para(_TELG_PARA_1_CONTENTS),
@@ -212,9 +212,9 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
         H.para(_TELG_PARA_5_CONTENTS),
     ]
     for bcv in _TELG_TREE_REFS:
-        items.append(H.htel_mk("h4", None, _ref_display(bcv)))
-        items.append(_verse_links(bcv))
-        items.append(_render_tree(aet._telg_tree_text(bcv, "keep_both", index, parser, has_legarmeh)))
+        items.append(H.htel_mk("h4", None, ref_display(bcv)))
+        items.append(verse_links(bcv))
+        items.append(render_tree(aet._telg_tree_text(bcv, "keep_both", index, parser, has_legarmeh)))
     items.append(
         H.para(
             (
@@ -242,18 +242,18 @@ def _telg_forms_table(index) -> object:
     tdattrs = (None, *(({"dir": "rtl"},) * 3), None)
     for bcv in _TELG_EXHIBIT_REFS:
         forms = aet._telg_word_forms(aet._telg_gerstar_word(index[bcv]))
-        keep_telg = _accents_and_letters(forms.keep_telg)
-        keep_gerstar = _accents_and_letters(forms.keep_gerstar)
+        keep_telg = accents_and_letters(forms.keep_telg)
+        keep_gerstar = accents_and_letters(forms.keep_gerstar)
         rows.append(
             H.table_row_of_data(
                 (
                     H.anchor(
-                        _ref_short(bcv),
+                        ref_short(bcv),
                         {"href": my_wlc_bcv_str.get_tanach_dot_us_url(bcv)},
                     ),
-                    _hbo(forms.word),
-                    _hbo(keep_telg),
-                    _hbo(keep_gerstar),
+                    hbo(forms.word),
+                    hbo(keep_telg),
+                    hbo(keep_gerstar),
                     "yes" if forms.same_letter else "no",
                 ),
                 tdattrs,
@@ -271,15 +271,15 @@ def _ek_verdict_table(index, parser, has_legarmeh: HasLegarmeh) -> object:
     return H.table(tuple(rows), {"class": "limited-width"})
 
 
-def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]:
+def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]:
     tree_text = aet._prose_verse_tree_text("ek20:31", index, parser, has_legarmeh)
     return (
         H.heading_level_3("Mahapakh + azla (Ezekiel 20:31)"),
-        _verse_links("ek20:31"),
+        verse_links("ek20:31"),
         H.para(
             (
                 "In Ezekiel 20:31, ",
-                _hbo("נִטְמְאִ֤֨ים"),
+                hbo("נִטְמְאִ֤֨ים"),
                 " carries both a mahapakh and a qadma on its"
                 " alef. It is the only word in"
                 " Tanakh with two conjunctive accents on one letter. The"
@@ -337,7 +337,7 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
                 " above are as follows, making six total: ",
                 *_qadma_gaya_links(supplied=True),
                 ". See the full note on the ",
-                _link(
+                link(
                     "MAM-with-doc Ezekiel page",
                     "https://bdenckla.github.io/MAM-with-doc/C3-Ezekiel.html#c20v31",
                 ),
@@ -356,7 +356,7 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
                 " so it may well be an error in the LC, and the checker flags it (as a"
                 " lexical error). Same surface shape, opposite verdict, decided by the"
                 " witnesses. Its full treatment is on the ",
-                _link("Goerwitz page", "goerwitz.html#oblv25v20"),
+                link("Goerwitz page", "goerwitz.html#oblv25v20"),
                 ". The poetic ",
                 H.code("merkha!azla"),
                 " of Psalms 56:10 is the same story on the poetic side: the double accent in the LC has no"
@@ -385,7 +385,7 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
                 "Why the other three readings fail is worth spelling out, because it is"
                 " not merely that “a word needs an accent.” The pashta here is served by"
                 " three conjunctives: a “telq” (telisha qetanna) on the preceding word ",
-                _hbo("אַתֶּם"),
+                hbo("אַתֶּם"),
                 ", then the qadma and mahapakh sharing this word’s alef. Once a"
                 " telq heads the chain, the grammar admits only ",
                 H.code("telq azla mahapakh pashta"),
@@ -412,5 +412,5 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
             "The checker’s parse tree for the verse, with the fused token shown as"
             " mahapakh!azla:"
         ),
-        _render_tree(tree_text),
+        render_tree(tree_text),
     )

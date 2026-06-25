@@ -25,11 +25,11 @@ from accgram.ply_grammar import LOCATION_ONLY, parse_tokens
 from accgram.ply_scanner import HasLegarmeh, Token, scan_accents
 from accgram.ply_tree import print_tree
 from accgram.uni_to_marks import (
-    _KEPT_NON_ACCENT,
-    _MAQAF,
-    _PREPOSITIVE_MARKS,
-    _is_accent,
-    _is_base_letter,
+    KEPT_NON_ACCENT,
+    MAQAF,
+    PREPOSITIVE_MARKS,
+    is_accent,
+    is_base_letter,
 )
 
 # The geresh family (plain geresh U+059C, gershayim U+059D's plain sibling, and the
@@ -59,14 +59,14 @@ def _build_word_variant(word: str, mode: str) -> str:
     other: list[str] = []
     telg_seen = 0
     for ch in word:
-        if _is_base_letter(ch):
+        if is_base_letter(ch):
             skeleton.append(am.LETTER)
             continue
-        if ch == _MAQAF:
+        if ch == MAQAF:
             skeleton.append(am.MAQAF)
             continue
         mark: str | None = None
-        if _is_accent(ch):
+        if is_accent(ch):
             if ch == am.TELISHA_GEDOLA:
                 telg_seen += 1
                 if telg_seen > 1:
@@ -82,12 +82,12 @@ def _build_word_variant(word: str, mode: str) -> str:
                     mark = as_geresh
                 else:
                     mark = ch
-        elif ch in _KEPT_NON_ACCENT:
+        elif ch in KEPT_NON_ACCENT:
             mark = ch
         if mark is None:
             continue
         skeleton.append(None)
-        (prepos if mark in _PREPOSITIVE_MARKS else other).append(mark)
+        (prepos if mark in PREPOSITIVE_MARKS else other).append(mark)
     marks = iter(prepos + other)
     return "".join(next(marks) if p is None else p for p in skeleton)
 
@@ -171,10 +171,10 @@ def _ek2031_word_variant(word: str, mode: str, base) -> str:
     prepos: list[str] = []
     other: list[str] = []
     for ch in word:
-        if _is_base_letter(ch):
+        if is_base_letter(ch):
             skeleton.append(am.LETTER)
             continue
-        if ch == _MAQAF:
+        if ch == MAQAF:
             skeleton.append(am.MAQAF)
             continue
         mark: str | None = None
@@ -186,14 +186,14 @@ def _ek2031_word_variant(word: str, mode: str, base) -> str:
             if mode == "drop_azla":
                 continue
             mark = am.QADMA
-        elif _is_accent(ch):
+        elif is_accent(ch):
             mark = ch
-        elif ch in _KEPT_NON_ACCENT:
+        elif ch in KEPT_NON_ACCENT:
             mark = ch
         if mark is None:
             continue
         skeleton.append(None)
-        (prepos if mark in _PREPOSITIVE_MARKS else other).append(mark)
+        (prepos if mark in PREPOSITIVE_MARKS else other).append(mark)
     if mode in ("seq_azla_mah", "seq_mah_azla"):
         mah_i, qad_i = other.index(am.MAHAPAKH), other.index(am.QADMA)
         want_qadma_first = mode == "seq_azla_mah"
@@ -265,7 +265,7 @@ def _telg_marks_share_letter(word: str) -> bool:
     ger_at: int | None = None
     letter_idx = -1
     for ch in word:
-        if _is_base_letter(ch):
+        if is_base_letter(ch):
             letter_idx += 1
         elif ch == am.TELISHA_GEDOLA:
             telg_at = letter_idx

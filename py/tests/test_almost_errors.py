@@ -90,7 +90,7 @@ def test_parse_tree_from_text_renders_clean_tree() -> None:
     assert ob_tree_parse.iter_leaf_texts(tree) == ["tipexa", "silluq"]
     assert ob_error_context.parse_error_tree_from_text(clean) is None
     # The shared table renderer accepts the error-free tree.
-    assert H.is_htel(aes._render_tree(clean))
+    assert H.is_htel(aes.render_tree(clean))
 
 
 def test_parse_tree_from_text_empty_is_none() -> None:

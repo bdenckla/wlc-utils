@@ -40,7 +40,7 @@ from pathlib import Path
 
 from accgram import rtms_data
 from accgram import rtms_report
-from accgram.almost_errors_html import _REPORT_TITLE, render_body_contents
+from accgram.almost_errors_html import REPORT_TITLE, render_body_contents
 from accgram.ply_grammar import build_parser
 from accgram.ply_scanner import HasLegarmeh
 from cmn.utf8_io import force_utf8_io
@@ -80,7 +80,7 @@ def run(args: argparse.Namespace) -> None:
     H.write_html_to_file(
         body_contents=render_body_contents(index, parser, has_legarmeh),
         write_ctx=H.WriteCtx(
-            title=_REPORT_TITLE,
+            title=REPORT_TITLE,
             path=str(html_out),
             html_comment=provenance.generated_html_comment(__file__),
         ),

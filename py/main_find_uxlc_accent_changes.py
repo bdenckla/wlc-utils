@@ -125,7 +125,7 @@ def _parse_uxlc_change(compact):
     """Parse a compact UXLC change ref into a (release, changeset, n) key.
 
     The compact ref "2021.04.01/2020.12.06-2" is release/changeset-n (the same
-    form `rtms_report._expand_uxlc_change_ref` expands to a tanach.us URL).
+    form `rtms_report.expand_uxlc_change_ref` expands to a tanach.us URL).
     Returns None for anything that is not a well-formed compact ref."""
     if not isinstance(compact, str):
         return None
