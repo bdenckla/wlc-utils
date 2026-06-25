@@ -255,6 +255,17 @@ def telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]
             )
         )
     )
+    items.append(
+        H.para(
+            (
+                "For MAM's own documentation notes on these five words — what"
+                " each manuscript and edition reads, and in which order the two"
+                " accents are taken — see the ",
+                link("deep-dive translation", "telg-doc-notes.html"),
+                ".",
+            )
+        )
+    )
     return tuple(items)
 
 

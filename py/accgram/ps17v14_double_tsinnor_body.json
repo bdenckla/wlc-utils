@@ -1,0 +1,359 @@
+{
+ "_provenance": "htel element body migrated byte-exactly from the former hand-authored gh-pages/accgram/ps17v14-double-tsinnor.html. Consumed by accgram/ps17v14_double_tsinnor.py; edit the generator/this data, not the generated HTML.",
+ "title": "Psalms 17:14 — the double tsinnor",
+ "body": [
+  "\n\n",
+  {
+   "_htel_tag": "h1",
+   "contents": [
+    "Psalms 17:14 — the double tsinnor"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "attr": {
+    "class": "lead"
+   },
+   "contents": [
+    "Psalms 17:14 carries a feature unique in the Three Books: two\n",
+    {
+     "_htel_tag": "span",
+     "attr": {
+      "lang": "hbo"
+     },
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "צנור"
+     ]
+    },
+    " (tsinnor) marks in a row. This page records what is\nknown about that doubled mark — its uniqueness, the manuscript evidence, the MAM\ndocumentation notes, and Breuer's analysis — and explains how the accent-grammar\nchecker treats it. The material formerly appeared in the Psalms 17:14 section of\nthe ",
+    {
+     "_htel_tag": "a",
+     "attr": {
+      "href": "poetic.html"
+     },
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "poetic oddball report"
+     ]
+    },
+    "; once the checker began\naccepting the verse (see below) that section disappeared, so the discussion is\npreserved here."
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "h2",
+   "contents": [
+    "The doubled mark and its uniqueness"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "contents": [
+    "A scan of the disjunctive accent stream of every poetic verse finds that these\ntwo adjacent tsinnor marks are unique in the Three Books: of the 250 poetic verses\ncarrying at least one tsinnor, Psalms 17:14 is the only one in which two tsinnor\noccur consecutively. Both arise from genuine Michigan-Claremont ",
+    {
+     "_htel_tag": "code",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "02"
+     ]
+    },
+    "\n(tsinnor) codes — not a swallowed ",
+    {
+     "_htel_tag": "code",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "82"
+     ]
+    },
+    " (tsinnorit) — on adjacent words:\n",
+    {
+     "_htel_tag": "span",
+     "attr": {
+      "lang": "hbo"
+     },
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "בַּחַיִּים"
+     ]
+    },
+    " and the qere ",
+    {
+     "_htel_tag": "span",
+     "attr": {
+      "lang": "hbo"
+     },
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "וּצְפוּנְךָ"
+     ]
+    },
+    "."
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "h2",
+   "contents": [
+    "Manuscript evidence"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "contents": [
+    "This verse is not extant in the Aleppo Codex."
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "contents": [
+    "Though in the Leningrad Codex (L) the first of the two tsinnor marks is a little\noddly shaped, S1 (Sassoon 1053) clearly shares these two adjacent tsinnor marks,\nwith no questions of penmanship."
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "figure",
+   "contents": [
+    "\n  ",
+    {
+     "_htel_tag": "img",
+     "attr": {
+      "src": "../img/LC-Ps-17v14.png",
+      "alt": "Leningrad Codex, Psalms 17:14"
+     },
+     "noclose": true
+    },
+    "\n  ",
+    {
+     "_htel_tag": "figcaption",
+     "contents": [
+      "Leningrad Codex"
+     ]
+    },
+    "\n"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "figure",
+   "contents": [
+    "\n  ",
+    {
+     "_htel_tag": "img",
+     "attr": {
+      "src": "../img/S1-Ps-17v14.png",
+      "alt": "Sassoon 1053 (S1), Psalms 17:14"
+     },
+     "noclose": true
+    },
+    "\n  ",
+    {
+     "_htel_tag": "figcaption",
+     "contents": [
+      "Sassoon 1053 (S1)"
+     ]
+    },
+    "\n"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "h2",
+   "contents": [
+    "How the checker treats it"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "contents": [
+    "The checker's underlying grammar still cannot parse this sequence directly, and\nnever could: a repeated tsinnor standing before an oleh-weyored that itself carries\na servus is beyond its LALR(1) power (the servus is ambiguous between the second\ntsinnor and the oleh). That limitation has not changed. What changed is that the\nverse used to be reported as ",
+    {
+     "_htel_tag": "code",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "NO_PARSE"
+     ]
+    },
+    " and no longer is."
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "contents": [
+    "The checker now ",
+    {
+     "_htel_tag": "em",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "accepts"
+     ]
+    },
+    " the verse, on a principled basis: a repeated\ndisjunctive is the same divider written twice — Yeivin notes that the zarqa (the\nprose counterpart of the tsinnor) may be repeated, and Breuer says the same of the\ndoubled tsinnor — so for grammaticality a repeated divider counts once. Rather than\nextend the grammar, the checker adds a step ahead of it: before parsing, it\ncollapses the run of two tsinnor marks to one, and the grammar then parses what\nremains. The verse's recorded accents — both tsinnor marks — are left untouched, so\nthe WLC-vs-MAM comparison still sees the doubled mark."
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "h2",
+   "contents": [
+    "MAM's documentation notes"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "contents": [
+    "This verse is heavily commented upon by MAM (see the\n",
+    {
+     "_htel_tag": "a",
+     "attr": {
+      "href": "ps17v14-mam-doc-notes.html"
+     },
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "translation of those notes"
+     ]
+    },
+    "), but the\ncomments either do not concern cantillation, or concern cantillation only in ways\nthat would not change the accent-grammar issue. The four notes turn on a secondary\nmerkha plus ga’ya, a ",
+    {
+     "_htel_tag": "span",
+     "attr": {
+      "lang": "hbo"
+     },
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "חטף"
+     ]
+    },
+    " [ḥataf], a missing shva, and\nthe placement of the silluq — none of which alters the disjunctive skeleton, and\nthe conjunctive servus chain the grammar parses is permissive enough that a\nsecondary conjunctive is absorbed harmlessly."
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "h2",
+   "contents": [
+    "Breuer's analysis"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "contents": [
+    "Breuer treats the doubled tsinnor in two places. In ",
+    {
+     "_htel_tag": "em",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "The Cantillation of\nScripture"
+     ]
+    },
+    ", Ch. 11 (footnote 11, attached to the Psalms 17:14 example\n",
+    {
+     "_htel_tag": "span",
+     "attr": {
+      "lang": "hbo"
+     },
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "חֶלְקָם בַּחַיִּים"
+     ]
+    },
+    "), he calls this\n",
+    {
+     "_htel_tag": "strong",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "“the sole example of two consecutive\n[tsinnor] marks”"
+     ]
+    },
+    " in Scripture. Following Wickes (p. 81 n. 4), he holds\nthat the servant's exceptional cantillation results from the exceptional (doubled)\n",
+    {
+     "_htel_tag": "em",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "mafsik"
+     ]
+    },
+    ", and he notes a parallel in the Twenty-One Books (Ch. 3 §16 III):\nthere too the servant of the zarqa changes where there are two consecutive zarqa\nmarks."
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "contents": [
+    "His structural account is in Ch. 10 §9, on the subdividers of the oleh-weyored\ndomain. (Breuer's English translation calls such a subdivider a\n“viceroy”; its default form is the big revia’ / revia gadol.)\nPsalms 17:14 is one of very few verses with ",
+    {
+     "_htel_tag": "em",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "three"
+     ]
+    },
+    " such subdividers in the\noleh-weyored realm, and its cantillation, he says, is exceptional:"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "blockquote",
+   "contents": [
+    "“In example II [Psalms 17:14], the final viceroy is [tsinnor],\nbecause it is not next to the oleh [weyored]. The penultimate viceroy is [tsinnor]\npreceded by a big revia’; but we would expect both these viceroys to be big\nrevia’ marks.”"
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "contents": [
+    "That is: where the rule would place a pair of big revia’ subdividers before\nthe oleh-weyored, Psalms 17:14 substitutes a ",
+    {
+     "_htel_tag": "em",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "tsinnor"
+     ]
+    },
+    " for each — and that\nsubstitution, applied to two adjacent subdividers at once, is precisely what yields\nthe unique run of two consecutive tsinnor marks. It is the same divider (the tsinnor)\nappearing twice, which is exactly why the accent-grammar checker can accept the\nsequence by counting the repeated divider once (above)."
+   ]
+  },
+  "\n\n",
+  {
+   "_htel_tag": "p",
+   "attr": {
+    "class": "src"
+   },
+   "contents": [
+    "Source: M. Breuer, ",
+    {
+     "_htel_tag": "em",
+     "lb1": "",
+     "lb2": "",
+     "contents": [
+      "The Cantillation of Scripture"
+     ]
+    },
+    ", Ch. 10 §9\nand Ch. 11 n. 11 (with Wickes p. 81 n. 4). The Hebrew of the scanned examples is not\nreproduced here, as the OCR of the pointed text is unreliable."
+   ]
+  },
+  "\n\n"
+ ]
+}

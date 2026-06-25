@@ -25,7 +25,7 @@ Subcommands:
                 for vetting Breuer servant-adjacency rules (it settled deḥi and
                 small revia).  Use --target to restrict.
     generate-html
-                Generate all three accgram HTML reports in one pass:
+                Generate the accgram HTML reports in one pass:
 
                   * gh-pages/accgram/poetic.html -- the residual poetic oddballs
                     (missing-silluq ERROR-leaf trees and NO_PARSE anomalies),
@@ -41,6 +41,13 @@ Subcommands:
                     page documenting the editorial charities the checker applies
                     and the non-charity ek20:31 mahapakh!azla, with live parse
                     trees regenerated from the grammar at build time.
+                  * gh-pages/accgram/telg-doc-notes.html -- a deep-dive
+                    translation of MAM's documentation notes on the five
+                    telisha-gedola + geresh/gershayim words (companion to the
+                    telg exhibit on the almost-errors page).
+                  * gh-pages/accgram/ps17v14-mam-doc-notes.html and
+                    ps17v14-double-tsinnor.html -- the Psalms 17:14 deep dives,
+                    generated from their committed htel bodies.
 
                 Each report runs with its default paths.
     test-fixes
@@ -65,10 +72,13 @@ from pathlib import Path
 from accgram import almost_errors
 from accgram import fix_tester
 from accgram import poetic_oddballs
+from accgram import ps17v14_double_tsinnor
+from accgram import ps17v14_doc_notes
 from accgram import research_tao
 from accgram import run_ply
 from accgram import run_ply_poetic
 from accgram import servi_xcheck
+from accgram import telg_doc_notes
 from accgram import xcheck_poetic
 from cmn.utf8_io import force_utf8_io
 
@@ -100,7 +110,14 @@ def _run_fix_tester(args: argparse.Namespace) -> None:
 def _run_generate_html(_args: argparse.Namespace) -> None:
     """Run all three HTML generators, each with its own default arguments."""
     repo_root = _repo_root()
-    for module in (poetic_oddballs, research_tao, almost_errors):
+    for module in (
+        poetic_oddballs,
+        research_tao,
+        almost_errors,
+        telg_doc_notes,
+        ps17v14_doc_notes,
+        ps17v14_double_tsinnor,
+    ):
         sub = argparse.ArgumentParser()
         module.add_args(sub, repo_root=repo_root)
         module.run(sub.parse_args([]))
@@ -173,10 +190,11 @@ def main() -> None:
     generate_html_parser = subparsers.add_parser(
         "generate-html",
         help=(
-            "Generate all three accgram HTML reports in one pass: "
+            "Generate the accgram HTML reports in one pass: "
             "gh-pages/accgram/poetic.html (run run-ply-poetic first), "
-            "goerwitz.html, and almost-errors.html. Each runs with its default "
-            "paths; live trees are regenerated from the grammar."
+            "goerwitz.html, almost-errors.html, and telg-doc-notes.html. Each "
+            "runs with its default paths; live trees are regenerated from the "
+            "grammar."
         ),
     )
     generate_html_parser.set_defaults(func=_run_generate_html)

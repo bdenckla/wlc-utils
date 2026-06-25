@@ -155,3 +155,13 @@ tr:nth-of-type(odd) td {
 img {
     max-width: 100%;
 }
+/* Psalms 17:14 deep-dive pages (ps17v14-mam-doc-notes.html,
+   ps17v14-double-tsinnor.html), generated from their former hand-authored
+   bodies.  These reuse the shared shell above; the few classes below preserve
+   the lead/lemma/source styling those pages carried inline. */
+.lemma { font-weight: bold; }
+p.note-lead { color: light-dark(#555, #aaa); }
+.src { font-size: 0.9em; color: light-dark(#555, #aaa); }
+figure { margin: 1.2em 0; text-align: center; }
+figure img { height: auto; border: 1px solid light-dark(#ccc, #555); }
+figcaption { font-size: 0.9em; color: light-dark(#555, #aaa); margin-top: 0.4em; }
