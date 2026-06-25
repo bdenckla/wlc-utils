@@ -9,7 +9,11 @@ trees from ``almost_errors_trees``:
     sequence) is the most faithful of several grammatically-clean options; and
   * **Ezekiel 20:31's mahapakh + azla**, the only word in Tanakh with two
     conjunctive accents on one letter, where the verdict table shows the fusion
-    is all but forced by the grammar.
+    is all but forced by the grammar; and
+  * **Psalms 17:14's double tsinnor**, the Three Books' only run of two
+    consecutive identical dividers, which the checker accepts by collapsing the
+    repeated divider to one before parsing (the full account links out to the
+    standalone deep-dive page).
 """
 
 from __future__ import annotations
@@ -119,14 +123,15 @@ def oddities_intro() -> tuple[object, ...]:
     return (
         H.heading_level_2("Masoretically-blessed oddities (not charities)"),
         H.para(
-            "The features below would make a naïve checker blink — two accents sharing"
-            " one letter or one word — but"
+            "The features below would make a naïve checker blink — two accents crowding"
+            " one letter or one word, or the same divider written twice in a row — but"
             " none of them is a quirk of LC, BHS, or WLC to be forgiven. They are"
             " official masoretic tradition, attested in the standard witnesses. The"
             " checker accepts them; its only real decision is one of representation —"
-            " whether to keep both accents as a sequence, fuse a pair into one token, or"
-            " carry a single accent — and, as the telisha gedola exhibit shows, that"
-            " decision is a choice among readings that all parse cleanly."
+            " whether to keep both accents as a sequence, fuse a pair into one token,"
+            " carry a single accent, or collapse a repeated divider to one — and, as the"
+            " telisha gedola exhibit shows, that decision is (for the multi-accent cases)"
+            " a choice among readings that all parse cleanly."
         ),
     )
 
@@ -453,4 +458,71 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
             " mahapakh!azla:"
         ),
         render_tree(tree_text),
+    )
+
+
+# The standalone Psalms 17:14 deep-dive (manuscript images, MAM documentation notes,
+# Breuer's structural analysis).  This page carries only the short summary and links out;
+# the verse left the poetic oddball report once the checker began accepting it.
+_PS17V14_DEEP_DIVE = "ps17v14-double-tsinnor.html"
+
+
+def double_tsinnor_section() -> tuple[object, ...]:
+    """The Psalms 17:14 double-tsinnor exhibit: a third representation choice (count a
+    repeated divider once), summarized here and linked to its standalone deep dive.
+
+    No parse tree, unlike the telg / ek20:31 exhibits: the underlying LALR(1) grammar
+    cannot parse the doubled mark directly, which is exactly why the checker collapses the
+    repeat in a pre-parse step rather than admitting it through a grammar rule -- so there
+    is no alternate-reading tree to show."""
+    return (
+        H.heading_level_3("Double tsinnor (Psalms 17:14)"),
+        verse_links("ps17:14"),
+        H.para(
+            (
+                "Psalms 17:14 carries two ",
+                hbo("צנור"),
+                " (tsinnor) marks in a row — on the adjacent words ",
+                hbo("בַּחַיִּים"),
+                " and the qere ",
+                hbo("וּצְפוּנְךָ"),
+                " — the only place in the Three Books where two tsinnor occur"
+                " consecutively. A disjunctive divider written twice in a row looks like"
+                " an error, but it is no quirk of LC, BHS, or WLC: Sassoon 1053 clearly"
+                " shares the doubled mark, and Breuer (following Wickes) calls it the sole"
+                " Scriptural example of two consecutive tsinnor — the poetic counterpart of"
+                " the doubled zarqa that Yeivin notes for the prose system. It is masoretic"
+                " tradition, not a leniency to be forgiven.",
+            )
+        ),
+        H.para(
+            (
+                "As with the telg and Ezekiel 20:31 exhibits, the checker accepts the verse"
+                " and the only question is one of representation — but here, instead of"
+                " keeping both accents (as a sequence or a fused token), it drops one. The"
+                " two marks are the ",
+                H.bold("same"),
+                " divider written twice, and the underlying LALR(1) grammar cannot parse"
+                " that repetition directly. Rather than extend the grammar for this single"
+                " verse, the checker just deletes one of the two tsinnor from the copy it"
+                " feeds the parser, and parses what remains. This is a hack for our own"
+                " convenience, not a more faithful reading: collapsing the repeat throws"
+                " away a mark the LC really does write. It is tolerable only because the"
+                " doubled mark is legitimate — so this is not a verse we would want to flag"
+                " in any case — and because the deletion touches only the parser's input:"
+                " the recorded accents are left untouched, so the WLC-vs-MAM comparison still"
+                " sees both marks. (That the workaround is a pre-parse deletion rather than a"
+                " grammar rule is also why there is no alternate-reading tree to show here.)",
+            )
+        ),
+        H.para(
+            (
+                "The full account — the Leningrad and Sassoon 1053 images, MAM's"
+                " documentation notes, and Breuer's structural analysis (the doubled tsinnor"
+                " as a substitution for the pair of big-revia subdividers the oleh-weyored"
+                " rule would otherwise place) — is on the ",
+                link("Psalms 17:14 double-tsinnor deep dive", _PS17V14_DEEP_DIVE),
+                ".",
+            )
+        ),
     )

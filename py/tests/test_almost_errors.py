@@ -175,4 +175,8 @@ def test_render_body_contents_smoke() -> None:
     assert "Masoretically-blessed oddities" in rendered
     assert "mahapakh!azla" in rendered
     assert "goerwitz.html#oblv25v20" in rendered
+    # The Psalms 17:14 double-tsinnor exhibit summarizes and links out to its deep dive;
+    # it carries no parse tree (the grammar can't parse the doubled mark directly), so the
+    # error-table count stays at 3 (two telg keep-both trees + ek20:31).
+    assert "ps17v14-double-tsinnor.html" in rendered
     assert rendered.count("goerwitz-obs-error-table") == 3

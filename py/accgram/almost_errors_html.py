@@ -23,6 +23,7 @@ from accgram.almost_errors_charities import (
 )
 from accgram.almost_errors_html_shared import link
 from accgram.almost_errors_oddities import (
+    double_tsinnor_section,
     ek2031_section,
     oddities_intro,
     telg_section,
@@ -61,15 +62,16 @@ def _intro() -> tuple[object, ...]:
                 "Second, the ",
                 H.bold("masoretically-blessed oddities"),
                 ": features that look error-like — two cantillation accents crowding"
-                " one letter or one word — but"
+                " one letter or one word, or one divider written twice in a row — but"
                 " that are 100% official masoretic tradition, attested in the standard"
                 " witnesses, ",
                 H.bold("not"),
                 " leniencies specific to LC, BHS, or WLC. Nothing here is forgiven; the"
                 " checker accepts these, and where it must pick how to represent one for"
-                " parsing — keep both marks as a sequence, fuse a pair into one token, or"
-                " carry a single mark — that choice is among readings that all parse"
-                " cleanly (the telisha gedola exhibit below shows the alternatives). The headline case"
+                " parsing — keep both marks as a sequence, fuse a pair into one token,"
+                " carry a single mark, or collapse a repeated divider to one — that choice"
+                " is, for the multi-accent cases, among readings that all parse cleanly (the"
+                " telisha gedola exhibit below shows the alternatives). The headline case"
                 " is Ezekiel 20:31’s mahapakh + azla (",
                 H.code("mahapakh!azla"),
                 "), the only word in Tanakh with two conjunctive accents on"
@@ -101,6 +103,7 @@ def render_body_contents(index, parser, has_legarmeh: HasLegarmeh) -> tuple[obje
         *oddities_intro(),
         *telg_section(index, parser, has_legarmeh),
         *ek2031_section(index, parser, has_legarmeh),
+        *double_tsinnor_section(),
     ]
     wrapper = H.div(tuple(sections), {"class": _WIDTH_CLASS})
     return (wrapper,)
