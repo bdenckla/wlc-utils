@@ -177,25 +177,44 @@ _TELG_PARA_3_CONTENTS = (
     " The checker treats a telg and a gerstar on a single letter as being in telg-first order,"
     " regardless of the order in which the accents appear in its input."
     #
-    " In other words the checker treats a telg and a gerstar on a single letter as being in “anti-manuscript” order."
+    " In other words, the checker treats a telg and a gerstar on a single letter as being in “anti-manuscript” order."
     #
-    # XXX Study the order in WLC 4.22 in its original M-C encoding and in my Unicode conversion of WLC 4.22's M-C and perhaps comment upon it here.
+    " A look at the source data shows where that “anti-manuscript” order comes from."
+    " In WLC 4.22's original Michigan-Claremont (M-C) encoding, the two accents stand in manuscript order:"
+    " gerstar-first in the three same-letter words, telg-first in the two cross-letter words."
+    " My conversion of that encoding to Unicode normalizes all five words to telg-first — so it preserves the order"
+    " of the two cross-letter words but swaps the three same-letter words into “anti-manuscript” order."
+    " (That swap is my conversion's own doing — it floats the prepositive telg to the front — not an effect of"
+    " Unicode normalization: telg, geresh, gershayim, and geresh muqdam all share canonical combining class 230,"
+    " so NFC leaves their relative order untouched.)"
+    " By the time these words reach the checker they are thus already telg-first; and the checker would float the"
+    " prepositive telg to the front in any case, so its input order does not matter."
     #
-    " This choice is not important, because the checker allows a telg and a gerstar to appear in either order."
+    " This choice is not important, because the checker allows a telg and a gerstar to appear in either order;"
+    " i.e., either order is considered grammatical."
     #
-    " I.e., either order is considered grammatical."
-    #
-    " The telg-then-gerstar order appears normally, i.e. across separate words, about MMM times in Tanakh."
-    # XXX fill in MMM
-    #
-    " The gerstar-then-telg order appears only about NNN times in Tanakh."
-    # XXX fill in NNN
+    " The telg-then-gerstar order appears normally, i.e. across separate words, about 175 times in Tanakh,"
+    " while the gerstar-then-telg order appears only about 18 times."
+)
+_TELG_PARA_3B_CONTENTS = (
+    "The checker also treats the cross-letter words as telg-first — and that, too, should not be taken for granted."
+    " It is no less arbitrary than the same-letter case: the telg leads there only because the telisha gedola is"
+    " prepositive and is written at the front of its word wherever it is chanted, so its position is visually"
+    " forced by prepositivity rather than chosen as a reading order."
 )
 _TELG_PARA_4_CONTENTS = (
     "Each verse continues to parse cleanly if either accent is dropped from these five telg + gerstar words."
     #
     " I mention this to show that the checker deems these verses grammatical no matter which of the various reasonable chanting interpretations are given to the two accents on these words:"
-    # XXX insert an unordered list of: perform both accents, in sequence, in either order; perform only the telg or only the gerstar (a choice, as in the Decalogues and G35:22).
+)
+_TELG_CHANT_OPTIONS = (
+    "perform both accents, in sequence, in either order;",
+    "perform only the telg; or",
+    "perform only the gerstar.",
+)
+_TELG_PARA_4B_CONTENTS = (
+    "Performing only one of two accents the manuscript writes is itself an accepted choice in the reading"
+    " tradition — compare the two accentuations of the Decalogue (Exodus 20 and Deuteronomy 5) and Genesis 35:22."
     #
     " The table below shows, for each word,"
     " the double accent form and the two single-accent “thought experiments.”"
@@ -214,8 +233,11 @@ def telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]
         H.para(_TELG_PARA_1_CONTENTS),
         H.para(_TELG_PARA_2_CONTENTS),
         H.para(_TELG_PARA_3_CONTENTS),
+        H.para(_TELG_PARA_3B_CONTENTS),
         H.para(_TELG_PARA_4_CONTENTS),
-        _telg_forms_table(index),  # XXX center this table
+        H.unordered_list(_TELG_CHANT_OPTIONS),
+        H.para(_TELG_PARA_4B_CONTENTS),
+        _telg_forms_table(index),
         H.para(_TELG_PARA_5_CONTENTS),
     ]
     for bcv in _TELG_TREE_REFS:
@@ -266,7 +288,7 @@ def _telg_forms_table(index) -> object:
                 tdattrs,
             )
         )
-    return H.table(tuple(rows), {"class": "limited-width"})
+    return H.table(tuple(rows), {"class": "limited-width centered-table"})
 
 
 def _ek_verdict_table(index, parser, has_legarmeh: HasLegarmeh) -> object:
