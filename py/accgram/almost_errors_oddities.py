@@ -24,13 +24,14 @@ from accgram.almost_errors_html_shared import (
     _ref_display,
     _ref_short,
     _render_tree,
+    _uxlc_change_link,
     _verse_links,
 )
 from accgram.ply_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
 from py_wlc import my_wlc_bcv_str
 
-# The five WLC words carrying BOTH telisha gedola and a geresh-family mark -- the checker
+# The five WLC words carrying BOTH a telg and a gerstar -- the checker
 # keeps both, reading them as a telg-then-geresh sequence.  (gn5:29 / zp2:15 same-letter;
 # 2k17:13 same-letter with geresh muqdam; lv10:4 / ek48:10 cross-letter, same word.)
 _TELG_EXHIBIT_REFS = ("gn5:29", "zp2:15", "2k17:13", "lv10:4", "ek48:10")
@@ -41,13 +42,13 @@ _TELG_EXHIBIT_REFS = ("gn5:29", "zp2:15", "2k17:13", "lv10:4", "ek48:10")
 _TELG_TREE_REFS = ("zp2:15", "lv10:4")
 
 _TELG_MODES = (
-    ("keep_both", "keep both, as a telisha gedola then geresh sequence (what the checker does)"),
-    ("keep_telg", "drop the geresh-family mark, keep the telisha gedola"),
-    ("keep_gerstar", "drop the telisha gedola, keep the geresh-family mark"),
+    ("keep_both", "keep both, as a telg-then-gershar sequence (what the checker does)"),
+    ("keep_telg", "drop the gerstar, keep the telg"),
+    ("keep_gerstar", "drop the telg, keep the gerstar"),
 )
 
 # The five ways to hand ek20:31's mahapakh + qadma pair to the grammar: the fused token
-# the checker actually emits, plus the four alternatives (drop one mark, or keep both as
+# the checker actually emits, plus the four alternatives (drop one accent, or keep both as
 # a sequence in either order).  Only two parse cleanly: the fused token and the
 # qadma-then-mahapakh sequence.
 #
@@ -58,7 +59,7 @@ _TELG_MODES = (
 # TELISHAQETANNA -- TELISHAQETANNA AZLA MAHAPAKH PASHTA, or its one-token analogue
 # TELISHAQETANNA MAHAPAKHAZLA PASHTA -- because the masoretic rule is that a telisha
 # qetanna is *always* followed by azla (Yeivin #246).  So here azla is an obligatory
-# bridge, not an optional mark:
+# bridge, not an optional accent:
 #   fused          TELISHAQETANNA MAHAPAKHAZLA PASHTA  -> clean
 #   seq_azla_mah   TELISHAQETANNA AZLA MAHAPAKH PASHTA -> clean (same reading, two letters)
 #   drop_azla      TELISHAQETANNA MAHAPAKH PASHTA      -> no rule (mahapakh can't follow telq)
@@ -77,7 +78,7 @@ _EK_MODES = (
 )
 
 # MAM's documentation note on ek20:31 (from MAM-parsed-plus / MAM-with-doc), the
-# witness that ek20:31's double-marking is standard masoretic tradition, not an L
+# witness that ek20:31's double accent is standard masoretic tradition, not an L
 # anomaly.  Quoted (Hebrew) and paraphrased (English) on the page.
 _EK2031_MAM_NOTE_HE = (
     "זאת התיבה היחידה בכל המקרא שיש בה שני טעמים מחברים בהברה אחת."
@@ -123,51 +124,92 @@ def _oddities_intro() -> tuple[object, ...]:
             " none of them is a quirk of LC, BHS, or WLC to be forgiven. They are"
             " official masoretic tradition, attested in the standard witnesses. The"
             " checker accepts them; its only real decision is one of representation —"
-            " whether to keep both marks as a sequence, fuse a pair into one token, or"
-            " carry a single mark — and, as the telisha gedola exhibit shows, that"
+            " whether to keep both accents as a sequence, fuse a pair into one token, or"
+            " carry a single accent — and, as the telisha gedola exhibit shows, that"
             " decision is a choice among readings that all parse cleanly."
         ),
     )
+
+_SEE = (
+    "(See UXLC notes"
+    " ",
+    _link(
+        "G5:29",
+        "https://tanach.us/Notes/Genesis/Genesis.5.29.6-c.html",
+    ),
+    " and ",
+    _link(
+        "Ts2:15",
+        "https://tanach.us/Notes/Zephaniah/Zephaniah.2.15.1-c.html",
+    ),
+    ", and the UXLC change record for 2K17:13, ",
+    _uxlc_change_link("2020.10.19/2020.09.22-2"),
+    ".)"
+)
+_TELG_PARA_1_CONTENTS = (
+    "Five WLC words carry both a “telg” (telisha gedola) and a “gerstar” (a geresh or gershayim)."
+    #
+    " (In 2K17:13, the geresh results from our charitable interpretation of a geresh muqdam.)"
+    #
+    " This double accent is not a quirk of WLC, BHS, or the LC:"
+    " it is attested in the standard witnesses."
+    #
+    " In three of the words, the two accents sit together on the first letter of the word"
+    " (G5:29, Ts2:15, and 2K17:13)."
+    #
+    " In the other two words, the telg sits on the first letter"
+    " but the gerstar sits on a later letter (L10:4 and Ee48:10)."
+    #
+    " Presumably this is because the stress is not initial in those two words,"
+    " and the naqdan (the pointing-scribe) wanted to preserve"
+    " the prepositive and impositive placement of telg and gerstar respectively."
+    )
+_TELG_PARA_2_CONTENTS = (
+    #
+    " In the three same-letter words, the LC has the gerstar first and the telg second.",
+    #
+    " ",
+    *_SEE,
+    #
+    " So, the same-letter words have their accent swapped compared to the order in the cross-letter words."
+    )
+_TELG_PARA_3_CONTENTS = (
+    #
+    " The checker treats a telg and a gerstar on a single letter as being in telg-first order,"
+    " regardless of the order in which the accents appear in its input."
+    #
+    " The checker allows a telg and a gerstar adjacent in either order."
+    #
+    " (In the telg-then-gerstar direction, the pairing occurs about 165 times across separate words.)"
+)
+_TELG_PARA_4_CONTENTS = (
+    "Each verse also parses cleanly if either accent is dropped."
+    " In the two"
+    " cross-letter words (L10:4, Ee48:10) the telg comes"
+    " first instead. So the same-letter and cross-letter cases run in opposite"
+    " orders, and the checker's telg-first sequence matches only the cross-letter words."
+    " Nothing rides on it for the checker in any case: it accepts either"
+    " order, and across the corpus a telg freely precedes or follows a"
+    " gerstar. The table below shows, for each word, the double accent form "
+    " alongside the two single-accent “thought experiments.”"
+)
+_TELG_PARA_5_CONTENTS = (
+    "So the choice is not forced by grammaticality — all three readings parse"
+    " cleanly — but only keeping both preserves both accents the manuscript wrote."
+    " The two verses below show the checker's actual parse tree (one same-letter"
+    " case, one cross-letter)."
+)
 
 
 def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]:
     items: list[object] = [
         H.heading_level_3("telisha gedola + geresh/gershayim (five words)"),
-        H.para(
-            "Five WLC words carry both a telisha gedola and a geresh-family companion"
-            " (a plain geresh or gershayim — or, in 2 Kings 17:13, a geresh that the"
-            " geresh muqdam charity above produced). This double-marking is not a quirk"
-            " to forgive: it is official masoretic tradition, attested in the standard"
-            " witnesses. The checker keeps both marks. The grammar — which constrains what"
-            " sequences of accents are well-formed — admits a telisha gedola alongside a"
-            " geresh (the pairing occurs about 165 times across separate words, so it parses"
-            " cleanly). In three of the words the two marks sit on one base letter (Genesis"
-            " 5:29, Zephaniah 2:15, and 2 Kings 17:13); there the same-letter pair is"
-            " whitelisted — the prose analogue of the poetic deḥi + munaḥ entry, a"
-            " legitimate same-letter pair kept as a sequence rather than fused — instead of"
-            " being flagged. The other two words (Leviticus 10:4, Ezekiel 48:10) carry their"
-            " two marks on two letters, so no same-letter question arises."
-        ),
-        H.para(
-            "Keeping both is a choice, not a forced move: each verse also parses cleanly"
-            " if either mark is dropped instead. We keep both simply because that is the"
-            " reading that preserves everything the manuscript wrote — dropping either mark"
-            " would discard a real masoretic accent. The checker happens to present the two"
-            " accents telisha gedola first, then geresh, but nothing rides on that order: it"
-            " is an artifact of how the marks are written, not a statement about which is"
-            " chanted first, and the grammar accepts the reverse order just as readily —"
-            " across the corpus a big telisha freely precedes or follows a geresh. The table"
-            " below shows, for each word, the real WLC form (both marks, post-charity)"
-            " alongside the two single-mark forms those alternate readings would use; whether"
-            " the two marks share a letter is noted in the last column."
-        ),
+        H.para(_TELG_PARA_1_CONTENTS),
+        H.para(_TELG_PARA_2_CONTENTS),
+        H.para(_TELG_PARA_3_CONTENTS),
+        H.para(_TELG_PARA_4_CONTENTS),
         _telg_forms_table(index),
-        H.para(
-            "So the choice is not forced by grammaticality — all three readings parse"
-            " cleanly — but only keeping both preserves both accents the manuscript wrote."
-            " The two verses below show the checker's actual parse tree (one same-letter"
-            " case, one cross-letter)."
-        ),
+        H.para(_TELG_PARA_5_CONTENTS),
     ]
     for bcv in _TELG_TREE_REFS:
         items.append(H.htel_mk("h4", None, _ref_display(bcv)))
@@ -178,7 +220,7 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
             (
                 "A note on the trees above: the same-letter words (here Zephaniah 2:15)"
                 " appear exactly like the cross-letter ones — the two accents are kept"
-                " distinct, a telisha gedola followed by a geresh, never merged into a"
+                " distinct, a telg followed by a gerstar, never merged into a"
                 " single unit, whether or not they share a letter. That is the contrast"
                 " with Ezekiel 20:31 below, whose two accents do merge.",
             )
@@ -188,9 +230,9 @@ def _telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...
 
 
 def _telg_forms_table(index) -> object:
-    """One row per telg-exhibit word: the real WLC word (both marks, post-charity), the two
-    single-mark Hebrew forms the alternate (drop-one) readings would use, and whether the
-    two marks share a base letter.  No parse verdict: every reading parses cleanly, as the
+    """One row per telg-exhibit word: the real WLC word (both accents, post-charity), the two
+    single-accent Hebrew forms the alternate (drop-one) readings would use, and whether the
+    two accents share a base letter.  No parse verdict: every reading parses cleanly, as the
     trees below show, so the forms themselves are the point."""
     header = H.table_row_of_headers(
         ("verse", "word", "telg", "gerstar", "same letter?")
@@ -244,12 +286,12 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
                 " checker accepts it outright: the scanner fuses the pair into one ",
                 H.code("mahapakh!azla"),
                 " token, which the grammar parses as an ordinary accent. As with the"
-                " telisha gedola words, both marks survive; only the representation"
-                " differs. The telisha gedola and its geresh are two disjunctives, which"
+                " telg words, both accents survive; only the representation"
+                " differs. The telg and its gerstar are two disjunctives, which"
                 " the grammar admits as a two-accent sequence, so the checker keeps them as"
                 " a sequence; the mahapakh and qadma are two conjunctives sharing one"
                 " letter, which the scanner instead fuses into a single token. Either way"
-                " both marks survive — the difference is sequence versus fused token. The"
+                " both accents survive — the difference is sequence versus fused token. The"
                 " two conjunctives do have a reading order — qadma before mahapakh, as the"
                 " MAM note below stresses — but the fused token does not try to encode it.",
             )
@@ -323,11 +365,11 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
         ),
         H.para(
             (
-                "How forced is the fusion? Unlike the telisha gedola readings above — where"
+                "How forced is the fusion? Unlike the telg readings above — where"
                 " every alternative parses cleanly and the choice is one of faithfulness —"
                 " here the grammar all but dictates it. The table below runs the verse through"
                 " the real checker under each of the five ways to present the pair: the"
-                " fused token, dropping either mark, and keeping both as a sequence in"
+                " fused token, dropping either accent, and keeping both as a sequence in"
                 " either order. Only two parse: the fused ",
                 H.code("mahapakh!azla"),
                 " token and the qadma-then-mahapakh sequence — and those coincide,"
@@ -342,17 +384,17 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
             (
                 "Why the other three readings fail is worth spelling out, because it is"
                 " not merely that “a word needs an accent.” The pashta here is served by"
-                " three conjunctives: a telisha qetanna on the preceding word ",
+                " three conjunctives: a “telq” (telisha qetanna) on the preceding word ",
                 _hbo("אַתֶּם"),
                 ", then the qadma and mahapakh sharing this word’s alef. Once a"
-                " telisha qetanna heads the chain, the grammar admits only ",
-                H.code("telisha-qetanna azla mahapakh pashta"),
+                " telq heads the chain, the grammar admits only ",
+                H.code("telq azla mahapakh pashta"),
                 " (or its one-token analogue ",
-                H.code("telisha-qetanna mahapakh!azla pashta"),
+                H.code("telq mahapakh!azla pashta"),
                 ") — the azla is obligatory, because the masoretic rule (Yeivin §246) is"
-                " that a telisha qetanna is always followed by azla. So ",
+                " that a telq is always followed by azla. So ",
                 H.bold("keep the mahapakh, drop the qadma"),
-                " leaves a telisha qetanna directly before a bare mahapakh — a sequence"
+                " leaves a telq directly before a bare mahapakh — a sequence"
                 " the tradition never produces and the grammar has no rule for — and the"
                 " parse falls into error recovery (verdict ERROR, not even a clean"
                 " non-parse). Dropping the mahapakh instead leaves an azla with nothing"
@@ -362,7 +404,7 @@ def _ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, .
                 H.code("mahapakh pashta"),
                 " is a perfectly legal one-servus pashta elsewhere, so dropping the qadma"
                 " would parse if this pashta stood alone — but it does not, because the"
-                " telisha qetanna makes the chain three deep.",
+                " telq makes the chain three deep.",
             )
         ),
         _ek_verdict_table(index, parser, has_legarmeh),
