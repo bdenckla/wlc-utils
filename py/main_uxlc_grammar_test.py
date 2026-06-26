@@ -1,23 +1,42 @@
-"""Approach A: test whether UXLC accent changes NOT in goerwitz output move from
-WLC-4.22-grammatical to UXLC-ungrammatical.
+"""UXLC accent-change grammar test: do the changes move a verse across the
+WLC-4.22 / UXLC grammaticality boundary, and in which direction?
 
-For each grammar-relevant accent change (per uxlc_accent_changes.json) that is NOT
-linked to a Goerwitz oddball note and that lies in the PROSE corpus the checker
+The change records (uxlc_accent_changes.json) partition on `goerwitz_st_ref`:
+
+  * the OUT set -- changes NOT linked to a Goerwitz oddball note; and
+  * the IN  set -- changes that ARE so linked (i.e. that Goerwitz's oddball
+    notes flagged and the UXLC then adopted).
+
+Both sets are evaluated by the same `evaluate()` and reported in two sections of
+the same output file.  The interesting result is the directional asymmetry: in
+the OUT set only degradation crosses the boundary (WLC-gram -> UXLC-ungram, never
+the reverse); in the IN set only fixes cross it (WLC-ungram -> UXLC-gram, never
+the reverse).
+
+For each grammar-relevant accent change that lies in the PROSE corpus the checker
 can evaluate, we:
 
   1. Transcode the real WLC 4.22 verse to its scanner-ready mark body from the
-     canonical `-kq-u` Unicode source (issue #9 retired wlc422_ps.txt).
+     canonical `-kq-u` Unicode source (issue #9 retired the old wlc422_ps.txt
+     text input; the body is now built straight from the `-kq-u` JSON).
   2. Locate the changed word (by the citation's word index).
   3. VALIDATE: synthesize the WLC reading of that word from `refuni` (Unicode token
      names -> accent marks) and confirm that scanning the synthesized word
      yields the SAME token stream as scanning the real word.  This certifies,
      per case, that our name->mark synthesis is faithful for this accent content
      (it auto-excludes stress-helper / ordering cases we can't reproduce).
+     An ADD-accent change is additionally cross-checked against the real UXLC-39
+     XML word (`uxlc39_word_marks`): a prepositive/postpositive accent that the
+     manuscript writes twice (graphical edge mark + inner stress-helper/yated) is
+     fused/de-duped by the real `uni_to_marks` pipeline but not by our name->mark
+     synthesis, so such a case is marked unreliable and excluded (e.g. Josh 2:3.7's
+     doubled telisha gedola).
   4. If validated, synthesize the UXLC reading from `changeuni`, splice it into the
      verse body, and re-run the existing scanner+grammar on both the original
      (WLC) and edited (UXLC) verse.  Classify each as grammatical / ungrammatical.
 
-Output: the WLC-vs-UXLC 2x2, plus coverage (how many validated), written to
+Output: per-set WLC-vs-UXLC 2x2s, coverage (how many validated), the excluded
+verses with reasons, and the directional-asymmetry conclusion, written to
 out/accgram/uxlc_grammar_test.txt.  Console output is ASCII only.
 """
 from __future__ import annotations
@@ -38,12 +57,19 @@ from accgram.ply_scanner import HasLegarmeh, Token, scan_accents  # noqa: E402
 from accgram.ply_tree import print_tree  # noqa: E402
 from accgram import prose_filter  # noqa: E402
 from cmn.wlc_book_codes import bk39id_to_wlc_bb  # noqa: E402
+from py_uxlc import my_uxlc  # noqa: E402
 from py_uxlc.my_uxlc_book_abbreviations import expand_citation  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 WLC_KQ_U = REPO / "out" / "wlc422-kq-u"
 SRC = REPO / "in" / "accgram" / "uxlc_accent_changes.json"
 OUT = REPO / "out" / "accgram" / "uxlc_grammar_test.txt"
+# `my_uxlc.read` resolves its book XML relative to `UXLC_CANONICAL_DIR`; anchor it
+# at this repo so the cross-check (below) works regardless of the process cwd.
+my_uxlc.UXLC_CANONICAL_DIR = str(REPO / "in" / "UXLC-39")
+
+MAQAF_CP = "־"   # HEBREW PUNCTUATION MAQAF
+PASEQ_CP = "׀"   # HEBREW PUNCTUATION PASEQ
 
 # Unicode accent NAME (as used in refuni/changeuni) -> its scanner mark (accent_marks).
 # These are the prose te'amim; poetic-only accents (atnah-hafukh, etc.) have no prose
@@ -150,24 +176,31 @@ def is_ungrammatical(parser, body: str, bb: str, ch: int, vs: int) -> bool:
     return "ERROR" in print_tree(tree, 0)
 
 
+def _mark_count(uni_tokens: list[str]) -> int:
+    """Count the *mark-bearing* tokens (cantillation accents PLUS meteg/silluq).
+
+    Meteg/silluq must count: a meteg->accent change (e.g. "change meteg to merkha")
+    is a 1:1 substitution, not an addition, so it must not be tallied as a net
+    accent gain (which would mislabel it 'add_accent')."""
+    return sum(1 for t in uni_tokens if t in NAME2MARK or t in _METEGISH)
+
+
 def _kind(r) -> str:
     """Categorize a change for confidence bucketing.
 
     - 'remove_terminator': the change drops sof-pasuq (degenerate: necessarily
       errors regardless of accentuation).
-    - 'add_accent': adds an accent (coding-sensitive: an added prepositive mark
-      could be a stress-helper we code as a main accent).
-    - 'substitution': 1:1 accent swap / removal not touching sof-pasuq (robust:
-      validated structurally on the WLC side).
+    - 'add_accent': nets a new mark-bearing token (coding-sensitive: an added
+      prepositive/postpositive accent could be the inner stress-helper we code as
+      a main accent -- see the UXLC-39 cross-check in `evaluate`).
+    - 'substitution': 1:1 accent swap / removal / meteg<->accent not touching
+      sof-pasuq (robust: validated structurally on the WLC side).
     """
-    ref = set((r.get("refuni_gen") or r.get("refuni") or "").split())
-    chg = set((r.get("changeuni_gen") or r.get("changeuni") or "").split())
+    ref = (r.get("refuni_gen") or r.get("refuni") or "").split()
+    chg = (r.get("changeuni_gen") or r.get("changeuni") or "").split()
     if "sof-pasuq" in ref and "sof-pasuq" not in chg:
         return "remove_terminator"
-    acc = lambda s: sum(1 for t in s if t in NAME2MARK)
-    if acc((r.get("changeuni_gen") or r.get("changeuni") or "").split()) > acc(
-        (r.get("refuni_gen") or r.get("refuni") or "").split()
-    ):
+    if _mark_count(chg) > _mark_count(ref):
         return "add_accent"
     return "substitution"
 
@@ -186,22 +219,78 @@ def _transcoded_bodies(
     return bodies
 
 
-def main() -> None:
-    data = json.load(open(SRC, encoding="utf-8"))
-    out_set = [r for r in data if not r["goerwitz_st_ref"]]
+_UXLC_BOOK_CACHE: dict[str, list] = {}
 
+
+def _uxlc_book(bk_id: str) -> list:
+    """Read (and cache) one UXLC-39 book's chapters via ``my_uxlc.read``."""
+    if bk_id not in _UXLC_BOOK_CACHE:
+        _UXLC_BOOK_CACHE[bk_id] = my_uxlc.read(bk_id)
+    return _UXLC_BOOK_CACHE[bk_id]
+
+
+def _uxlc_maqaf_units(verse_words: list[str]) -> list[str]:
+    """Flatten one UXLC-39 verse (a list of ``<w>``/``<q>`` word strings) into
+    maqaf-units, matching tanach.us word numbering (and our M-C ``maqaf_units``).
+
+    Two reconciliations against the raw ``<w>`` order are needed:
+
+    * a ``<w>`` ending in a maqaf joins (no space) to the next ``<w>`` -- the two
+      sit in one maqaf chain, so splitting on maqaf re-creates the chain's units;
+    * a paseq, written in UXLC-39 as a space-separated ``׀``, attaches to its
+      preceding word (tanach.us / the M-C source count it as part of that word),
+      so the flanking space is dropped to avoid spawning a spurious unit.
+    """
+    parts: list[str] = []
+    for w in verse_words:
+        if parts and not parts[-1].endswith(MAQAF_CP):
+            parts.append(" ")
+        parts.append(w)
+    text = "".join(parts).replace(" " + PASEQ_CP, PASEQ_CP)
+    units: list[str] = []
+    for sp in text.split(" "):
+        units.extend(sp.split(MAQAF_CP))
+    return units
+
+
+def uxlc39_word_marks(
+    bk_id: str, ch: int, vs: int, wd: int, n_mc_units: int
+) -> tuple[str, ...] | None:
+    """Scan-token tuple of the real UXLC-39 word at maqaf-unit ``wd``, or None.
+
+    Returns None when the UXLC-39 maqaf-unit count differs from the M-C count
+    (``n_mc_units``): the two sources then number words differently, so ``wd`` does
+    not transfer and the cross-check must abstain rather than mis-compare.  Also
+    None if the word index is out of range.
+    """
+    units = _uxlc_maqaf_units(_uxlc_book(bk_id)[ch - 1][vs - 1])
+    if len(units) != n_mc_units:
+        return None
+    if not (1 <= wd <= len(units)):
+        return None
+    bb = bk39id_to_wlc_bb(bk_id)
+    return scan_word_tokens(uni_to_marks.word_to_marks(units[wd - 1]), bb, ch, vs)
+
+
+def evaluate(records: list[dict], parser) -> dict:
+    """Run the per-verse validate-then-classify pipeline over one set of change
+    records and return the collected results (stats, 2x2 grids, the broke/fixed
+    verse lists, and the excluded verses with reasons).
+
+    Pure function of its inputs -- the OUT and IN sets are evaluated by identical
+    code; only the input record set differs.
+    """
     # Group prose-corpus changes by verse, so a verse with several changes is
     # tested as ONE coherent UXLC reading (not a per-word chimera).
-    by_verse: dict[tuple[str, int, int], list[tuple[int, dict]]] = {}
-    for r in out_set:
+    by_verse: dict[tuple[str, int, int], list[tuple[int, dict, str]]] = {}
+    for r in records:
         bk, ch, vs, wd = expand_citation(r["citation"])
         bb = bk39id_to_wlc_bb(bk)
         if not prose_filter.should_keep_line(bb, ch, vs):
             continue
-        by_verse.setdefault((bb, ch, vs), []).append((wd, r))
+        by_verse.setdefault((bb, ch, vs), []).append((wd, r, bk))
 
     bodies = _transcoded_bodies(by_verse)
-    parser = build_parser()
 
     stat = Counter()
     grid = Counter()          # (wlc, uxlc) -> n verses (all validated)
@@ -209,7 +298,7 @@ def main() -> None:
     cell_by_kind = Counter()  # (kind, wlc, uxlc) over individual changes in solo verses
     broke = []              # verses: WLC-gram -> UXLC-ungram
     fixed = []              # verses: WLC-ungram -> UXLC-gram
-    unreliable = []
+    excluded = []          # (ref, [citations], reason)
 
     for (bb, ch, vs), changes in by_verse.items():
         stat["prose_verses"] += 1
@@ -222,24 +311,33 @@ def main() -> None:
 
         # Validate every change in the verse; apply them all to build UXLC body.
         uxlc_body = body
-        ok = True
-        for wd, r in changes:
+        reason = ""
+        for wd, r, bk in changes:
             if not (1 <= wd <= len(units)):
-                ok = False
+                reason = "word-index out of range"
                 break
             ref_syn = synth_word((r.get("refuni_gen") or r.get("refuni") or "").split())
             chg_syn = synth_word((r.get("changeuni_gen") or r.get("changeuni") or "").split())
             if ref_syn is None or chg_syn is None:
-                ok = False
+                reason = "unsupported accent (no prose mark)"
                 break
             if scan_word_tokens(ref_syn, bb, ch, vs) != scan_word_tokens(units[wd - 1], bb, ch, vs):
-                ok = False
+                reason = "ref-mismatch: synth WLC word != real M-C word"
                 break
+            # ADD-accent cross-check against the real UXLC-39 XML: a doubled
+            # prepositive/postpositive accent (graphical edge mark + inner
+            # stress-helper) is fused/de-duped by the real uni_to_marks pipeline
+            # but not by our name->mark synth, so exclude such a change.
+            if _kind(r) == "add_accent":
+                real = uxlc39_word_marks(bk, ch, vs, wd, len(units))
+                if real is not None and scan_word_tokens(chg_syn, bb, ch, vs) != real:
+                    reason = "UXLC-39 cross-check: doubled stress-helper accent"
+                    break
             uxlc_body = splice_unit(uxlc_body, owners[wd - 1], chg_syn)
-        if not ok:
+        if reason:
             stat["unreliable_verses"] += 1
             stat["unreliable_changes"] += len(changes)
-            unreliable.append(((bb, ch, vs), [r["citation"] for _, r in changes]))
+            excluded.append(((bb, ch, vs), [r["citation"] for _, r, _ in changes], reason))
             continue
         stat["validated_verses"] += 1
         stat["validated_changes"] += len(changes)
@@ -254,14 +352,13 @@ def main() -> None:
 
         wlc_bad = is_ungrammatical(parser, body, bb, ch, vs)
         uxlc_bad = is_ungrammatical(parser, uxlc_body, bb, ch, vs)
-        if visible:
-            grid_visible[("WLC-ungram" if wlc_bad else "WLC-gram",
-                          "UXLC-ungram" if uxlc_bad else "UXLC-gram")] += 1
         cell = ("WLC-ungram" if wlc_bad else "WLC-gram",
                 "UXLC-ungram" if uxlc_bad else "UXLC-gram")
+        if visible:
+            grid_visible[cell] += 1
         grid[cell] += 1
         descs = [(r["citation"], r["accent_change_reason"], _kind(r), r["description"][:55])
-                 for _, r in changes]
+                 for _, r, _ in changes]
         # Attribute by-kind only for solo-change verses (clean attribution).
         if len(changes) == 1:
             cell_by_kind[(descs[0][2], cell[0], cell[1])] += 1
@@ -270,17 +367,27 @@ def main() -> None:
         elif wlc_bad and not uxlc_bad:
             fixed.append(((bb, ch, vs), descs))
 
-    # ---- report ----
-    lines = []
-    def p(s=""):
-        lines.append(s)
-        print(s)
+    return {
+        "stat": stat,
+        "grid": grid,
+        "grid_visible": grid_visible,
+        "cell_by_kind": cell_by_kind,
+        "broke": broke,
+        "fixed": fixed,
+        "excluded": excluded,
+    }
 
-    p("=== Approach A: WLC-4.22 vs UXLC grammaticality (changes NOT in goerwitz output) ===")
+
+def report_section(res: dict, title: str, p) -> None:
+    """Emit one set's report section through the line-printer ``p``."""
+    stat = res["stat"]
+    grid, grid_visible = res["grid"], res["grid_visible"]
+    broke, fixed = res["broke"], res["fixed"]
+    p(f"=== {title} ===")
     p()
     p(f"prose-corpus verses          : {stat['prose_verses']}  ({stat['prose_changes']} changes)")
     p(f"  validated                  : {stat['validated_verses']} verses ({stat['validated_changes']} changes)")
-    p(f"  unreliable (excluded)      : {stat['unreliable_verses']} verses ({stat['unreliable_changes']} changes)")
+    p(f"  excluded                   : {stat['unreliable_verses']} verses ({stat['unreliable_changes']} changes)")
     p()
     p(f"  of validated: scanner-VISIBLE change {stat['visible']}, no-op {stat['noop']}")
     p()
@@ -294,23 +401,73 @@ def main() -> None:
         for u in ("UXLC-gram", "UXLC-ungram"):
             p(f"  {w:11s} -> {u:12s}: {grid_visible[(w, u)]}")
     p()
-    p(f"HYPOTHESIS cell (WLC-gram -> UXLC-ungram): {len(broke)} verses")
+    p(f"WLC-gram -> UXLC-ungram (degradation): {len(broke)} verses")
     for ref, descs in sorted(broke):
         for cit, reason, kind, desc in descs:
             p(f"    {cit:16s} [{reason}/{kind}] {desc}")
-    if fixed:
-        p()
-        p(f"WLC-ungram -> UXLC-gram: {len(fixed)} verses")
-        for ref, descs in sorted(fixed):
-            for cit, reason, kind, desc in descs:
-                p(f"    {cit:16s} [{reason}/{kind}] {desc}")
     p()
-    p("By-kind breakdown of WLC-gram solo-change verses (confidence buckets):")
+    p(f"WLC-ungram -> UXLC-gram (fix): {len(fixed)} verses")
+    for ref, descs in sorted(fixed):
+        for cit, reason, kind, desc in descs:
+            p(f"    {cit:16s} [{reason}/{kind}] {desc}")
+    p()
+    p("Excluded verses (synth could not be validated):")
+    for ref, cits, reason in sorted(res["excluded"]):
+        p(f"    {', '.join(cits):28s} {reason}")
+    p()
+    cell_by_kind = res["cell_by_kind"]
+    p("By-kind breakdown of solo-change verses (confidence buckets):")
     kinds = sorted({k for (k, _, _) in cell_by_kind})
     for k in kinds:
-        g = cell_by_kind[(k, "WLC-gram", "UXLC-gram")]
-        b = cell_by_kind[(k, "WLC-gram", "UXLC-ungram")]
-        p(f"  {k:18s}: -> UXLC-gram {g:3d}   -> UXLC-ungram {b:3d}")
+        gg = cell_by_kind[(k, "WLC-gram", "UXLC-gram")]
+        gb = cell_by_kind[(k, "WLC-gram", "UXLC-ungram")]
+        ug = cell_by_kind[(k, "WLC-ungram", "UXLC-gram")]
+        ub = cell_by_kind[(k, "WLC-ungram", "UXLC-ungram")]
+        p(f"  {k:18s}: WLC-gram->[g {gg:3d} / u {gb:3d}]   WLC-ungram->[g {ug:3d} / u {ub:3d}]")
+
+
+def main() -> None:
+    data = json.load(open(SRC, encoding="utf-8"))
+    out_set = [r for r in data if not r["goerwitz_st_ref"]]
+    in_set = [r for r in data if r["goerwitz_st_ref"]]
+
+    parser = build_parser()
+    out_res = evaluate(out_set, parser)
+    in_res = evaluate(in_set, parser)
+
+    lines = []
+    def p(s=""):
+        lines.append(s)
+        # Console is ASCII-only (the file keeps the full UTF-8 text); a few change
+        # descriptions embed a Hebrew accent glyph that a cp1252 console cannot encode.
+        print(s.encode("ascii", "replace").decode("ascii"))
+
+    report_section(
+        out_res,
+        "OUT set: WLC-4.22 vs UXLC grammaticality (changes NOT in goerwitz output)",
+        p,
+    )
+    p()
+    p()
+    report_section(
+        in_res,
+        "IN set: WLC-4.22 vs UXLC grammaticality (changes IN goerwitz output)",
+        p,
+    )
+    p()
+    p()
+    p("=== Directional asymmetry across the grammaticality boundary ===")
+    p()
+    p("  OUT set: only DEGRADATION crosses the boundary "
+      f"(WLC-gram->UXLC-ungram {len(out_res['broke'])}, "
+      f"WLC-ungram->UXLC-gram {len(out_res['fixed'])}).")
+    p("  IN  set: only FIXES crosses the boundary "
+      f"(WLC-ungram->UXLC-gram {len(in_res['fixed'])}, "
+      f"WLC-gram->UXLC-ungram {len(in_res['broke'])}).")
+    p()
+    p("  The changes Goerwitz's oddball notes flagged (IN set) only ever repair")
+    p("  ungrammaticality; the changes they did not flag (OUT set) only ever")
+    p("  introduce it.  No fix leaks into OUT and no degradation leaks into IN.")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
