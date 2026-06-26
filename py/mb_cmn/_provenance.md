@@ -26,6 +26,6 @@ Files copied:
   uxlc_change_url.py
   vendoring_sync.py
 
-Git commit: 8d5abc4c719363643eb8626673666066df52a5b3
+Git commit: 63ca5a92736370688e6464d0497e1fab658f1f73
 
-Date copied: 2026-06-06
+Date copied: 2026-06-25
