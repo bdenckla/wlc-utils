@@ -153,7 +153,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "je 49:19": {
         "st-source": "bhs",
-        "st-summary": "BHS misses a pashta that is hard to see in the LC.",
+        "st-summary": "BHS misses a pashta on אריצנו, transcribing only its stress helper.",
         "wlc_focus": "אריצ֨נו",
         "uxlc_change": "2023.04.01/2022.12.10-60",
         "pending_uxlc_change": "2026.10.19/2026.04.10-3",
@@ -161,6 +161,10 @@ BY_REF: dict[str, dict[str, object]] = {
             "See the image in the UXLC change to which we link above."
             " BHS transcribes only the pashta stress helper, not the pashta itself."
             " So, understandably, WLC transcribes this mark as a qadma."
+            " The missing pashta is the cause, but the ERROR lands one phrase to the"
+            " left: with no zaqef clause forming, the tipeḥa phrase over"
+            " אל־נוה איתן כי־ארגיעה fails and אריצנו is absorbed as the"
+            " munaḥ of the following atnaḥ phrase."
         ),
     },
     "je 26:5": {

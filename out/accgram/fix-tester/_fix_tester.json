@@ -856,7 +856,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a syllable as having qadma rather than pashta."
+      "st_summary": "BHS transcribes an ambiguous mark as the pashta look-alike rather than as WLC’s qadma."
     },
     {
       "ref": "2s 6:20",
@@ -3689,7 +3689,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS misses a pashta that is hard to see in the LC."
+      "st_summary": "BHS misses a pashta on אריצנו, transcribing only its stress helper."
     },
     {
       "ref": "je 51:9",
@@ -4537,7 +4537,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a syllable as having qadma rather than pashta."
+      "st_summary": "BHS transcribes an ambiguous mark as the pashta look-alike rather than as WLC’s qadma."
     },
     {
       "ref": "ne 2:10",
