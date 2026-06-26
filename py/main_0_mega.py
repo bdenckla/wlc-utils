@@ -30,8 +30,16 @@ def _steps(repo_root: Path) -> tuple[Step, ...]:
             argv=(sys.executable, str(py_dir / "main_update_vendored_files.py")),
         ),
         Step(
+            name="wlc_json_and_unicode",
+            argv=(sys.executable, str(py_dir / "main_wlc_json_and_unicode.py")),
+        ),
+        Step(
             name="accgram_run_ply",
             argv=(sys.executable, str(py_dir / "main_accgram.py"), "run-ply-goerwitz"),
+        ),
+        Step(
+            name="accgram_run_ply_poetic",
+            argv=(sys.executable, str(py_dir / "main_accgram.py"), "run-ply-poetic"),
         ),
         Step(
             name="accgram_generate_html",
@@ -40,10 +48,6 @@ def _steps(repo_root: Path) -> tuple[Step, ...]:
                 str(py_dir / "main_accgram.py"),
                 "generate-html",
             ),
-        ),
-        Step(
-            name="wlc_json_and_unicode",
-            argv=(sys.executable, str(py_dir / "main_wlc_json_and_unicode.py")),
         ),
         Step(
             name="wlc_diffs_420422",
