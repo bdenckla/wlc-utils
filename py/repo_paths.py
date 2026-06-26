@@ -24,6 +24,12 @@ import os
 import re
 from pathlib import Path
 
+# This repo's stable logical name -- the top-level segment in generated-artifact
+# provenance breadcrumbs, so they read "wlc-utils/..." even when the checkout dir
+# is a git worktree (.../.claude/worktrees/agent-xxx) rather than literally
+# "wlc-utils".  Supplied to mb_cmn.provenance by the wlc_provenance wrapper.
+REPO_NAME = "wlc-utils"
+
 
 def repo_root() -> Path:
     """Path to this repo's root, anchored to this module's location.

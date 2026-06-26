@@ -25,7 +25,7 @@ from accgram import rtms_report
 from accgram import telg_mam_doc_notes
 from accgram.almost_errors_html_shared import hbo, link, ref_display, verse_links
 from cmn.utf8_io import force_utf8_io
-from mb_cmn import provenance
+import wlc_provenance as provenance
 from py_html import wlc_utils_html as H
 
 import repo_paths

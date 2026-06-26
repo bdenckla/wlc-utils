@@ -22,7 +22,7 @@ from accgram import oddballs
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_rows
-from mb_cmn import provenance
+import wlc_provenance as provenance
 
 _OUTPUT_FILE_BB_RE = re.compile(r"^wlc_422_ps_([A-Za-z0-9]+)_ag\.txt$")
 

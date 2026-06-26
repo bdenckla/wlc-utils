@@ -5,7 +5,7 @@ from pathlib import Path
 
 from accgram import rtms_meteg_witness
 from accgram import rtmsr_overview
-from mb_cmn import provenance
+import wlc_provenance as provenance
 
 
 def write_oddballs_payload(

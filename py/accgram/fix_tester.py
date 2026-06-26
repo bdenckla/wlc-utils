@@ -52,7 +52,7 @@ from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.ply_scanner import HasLegarmeh, Token, scan_accents
 from accgram.ply_tree import TN
 from accgram.ob_notes import get_structured_text
-from mb_cmn import provenance
+import wlc_provenance as provenance
 
 import repo_paths
 

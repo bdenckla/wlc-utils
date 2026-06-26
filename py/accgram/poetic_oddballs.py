@@ -81,7 +81,7 @@ from accgram.poetic_reconcile import reconcile_tokens
 from accgram.poetic_oddball_summary import derive_tentative_summary
 from accgram.ply_tree import print_tree
 from accgram.run_ply_poetic import has_error_leaf, no_parse_line
-from mb_cmn import provenance
+import wlc_provenance as provenance
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
 

@@ -76,3 +76,11 @@ def test_default_matches_legacy_repo_root_parent_formula(monkeypatch) -> None:
     monkeypatch.delenv("WLC_MAM_SIMPLE_DIR", raising=False)
     legacy = repo_paths.repo_root().parent / "MAM-simple" / "json-vtrad-bhs"
     assert repo_paths.mam_simple_dir() == legacy
+
+
+def test_data_path_accessors() -> None:
+    # The in-repo data-tree accessors (issue #33).
+    root = repo_paths.repo_root()
+    assert repo_paths.out_dir() == root / "out"
+    assert repo_paths.in_dir() == root / "in"
+    assert repo_paths.gh_pages_dir() == root / "gh-pages"

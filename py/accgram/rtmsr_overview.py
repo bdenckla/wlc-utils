@@ -14,7 +14,7 @@ from accgram import rtmsr_intro
 from accgram import rtmsr_sat
 from accgram import rtmsr_subsets
 from accgram import rtmsr_verse
-from mb_cmn import provenance
+import wlc_provenance as provenance
 from py_html import wlc_utils_html
 
 _REPORT_TITLE = "Goerwitz Run on WLC"

@@ -44,7 +44,7 @@ from accgram.almost_errors_html import REPORT_TITLE, render_body_contents
 from accgram.ply_grammar import build_parser
 from accgram.ply_scanner import HasLegarmeh
 from cmn.utf8_io import force_utf8_io
-from mb_cmn import provenance
+import wlc_provenance as provenance
 from py_html import wlc_utils_html as H
 
 import repo_paths
