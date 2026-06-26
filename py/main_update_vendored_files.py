@@ -10,8 +10,10 @@ from pathlib import Path
 from cmn.utf8_io import force_utf8_io
 from mb_cmn import vendoring_sync
 
+import repo_paths
+
 _REPO = Path(__file__).resolve().parents[1]
-_SOURCE_REPO = _REPO.parent / "MAM-basics"
+_SOURCE_REPO = repo_paths.mam_basics_dir()
 _SOURCE_PYCMN = _SOURCE_REPO / "py" / "mb_cmn"
 _DEST_PYCMN = _REPO / "py" / "mb_cmn"
 _SOURCE_PYMISC = _SOURCE_REPO / "py" / "mb_misc"
@@ -20,7 +22,7 @@ _SOURCE_MBDIFF = _SOURCE_REPO / "py" / "mb_diff_mpu"
 _DEST_MBDIFF = _REPO / "py" / "mb_diff_mpu"
 
 # UXLC data folders are vendored from the UXLC-utils sibling repo, not MAM-basics.
-_UXLC_SOURCE_REPO = _REPO.parent / "UXLC-utils"
+_UXLC_SOURCE_REPO = repo_paths.uxlc_utils_dir()
 _SOURCE_UXLC39 = _UXLC_SOURCE_REPO / "in" / "UXLC-39"
 _DEST_UXLC39 = _REPO / "in" / "UXLC-39"
 _SOURCE_UXLCMISC = _UXLC_SOURCE_REPO / "out" / "UXLC-misc"

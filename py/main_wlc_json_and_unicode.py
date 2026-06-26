@@ -1,6 +1,7 @@
 """WLC JSON and Unicode generation entrypoint."""
 
 from cmn.utf8_io import force_utf8_io
+import repo_paths
 import py_wlc_json_and_unicode.wlc_write_to_json as wlc_write_to_json
 import py_wlc_json_and_unicode.wlc_compare_mdc_with_uxlc as mx
 import py_wlc_json_and_unicode.wlc_compare_mdc_with_mdc as mm
@@ -50,7 +51,10 @@ def main():
 # (this repo, the run cwd). _root_for picks the right one per in/out item by name,
 # mirroring how the artifacts were partitioned between the repos.
 _PUBLIC = "."
-_PRIVATE = "../wlc-utils-private"
+# The private repo is a cross-repo sibling; route it through the repo-anchored,
+# env-overridable resolver (fixes worktree breakage and the old cwd-relative
+# fragility).  _PUBLIC / the local in/ dirs are in-repo and deliberately left as-is.
+_PRIVATE = str(repo_paths.wlc_utils_private_dir())
 
 
 def _root_for(name):

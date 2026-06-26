@@ -9,9 +9,15 @@ from mb_misc import osis_book_abbrevs as oba
 
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
+import repo_paths
+
 
 def default_mam_simple_dir(repo_root: Path) -> Path:
-    return repo_root.parent / "MAM-simple" / "json-vtrad-bhs"
+    # ``repo_root`` is retained so CLI ``--mam-simple-dir`` flags keep their
+    # signature; the sibling lookup is delegated to the env-overridable resolver,
+    # which anchors itself and so equals ``repo_root.parent / "MAM-simple" / ...``
+    # by default.
+    return repo_paths.mam_simple_dir()
 
 
 def load_mam_simple_for_refs(
