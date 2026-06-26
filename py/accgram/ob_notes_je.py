@@ -73,14 +73,20 @@ _JE_4417_03 = (
     " early, on the kaf rather than the yod. The Unicode conversion erases the 24-versus-04"
     " distinction (both become the single telisha-qetanna codepoint), so only the"
     " misplacement survives for the checker; but the M-C also carries the additional coding"
-    " error of a 24 stress helper with no 04 for it to help."
+    " error of a 24 stress helper with no 04 for it to help. An argument runs the other way,"
+    " though: given that the mark is misplaced onto a nonfinal letter, coding it 04 there"
+    " would arguably be worse, since as a 24 the word at least obeys the invariant that 04"
+    " falls only on a final letter and 24 only on a nonfinal one. It is not important to rank"
+    " exactly how flawed this word is."
 )
 
 
 _JE_4417_04 = (
-    "The UXLC change linked above fixes both faults at once: it recodes the 24 to 04 and"
-    " moves it forward one letter, from the kaf to the yod, leaving a normal postpositive"
-    " telisha qetanna on כִּי’s final letter."
+    "The UXLC change linked above moves the telisha qetanna forward one letter, from the kaf"
+    " to the yod, leaving a normal postpositive telisha qetanna on כִּי’s final letter. Being"
+    " Unicode rather than M-C, UXLC has only the one telisha-qetanna codepoint to begin with,"
+    " so there is no 24-versus-04 distinction for it to recode; relocating the mark is the"
+    " whole of the fix."
 )
 
 
