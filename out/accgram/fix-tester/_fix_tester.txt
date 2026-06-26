@@ -1,7 +1,7 @@
 # Fix-tester: do MAM-simple values resolve annotated prose oddballs?
 
 confirmed: 92  denied: 0  changed: 0  untestable: 0  (92 annotated oddballs tested)
-speculations: 16 total; 16 confirmed, 0 denied/changed, 0 untestable
+speculations: 15 total; 15 confirmed, 0 denied/changed, 0 untestable
 synthesized fixes (no MAM diff; tested the note's synth_fix): 1
 claim-vs-result: 83 agree, 0 disagree
 
@@ -301,7 +301,7 @@ claim-vs-result: 83 agree, 0 disagree
     transform: word "יד֥י־" -> "ידי־" ((mer) -> (none))
     before: MERKHA TIPEXA MUNAX ATNAX PASHTA MUNAX ZAQEF MERKHA MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
     after:  MERKHA TIPEXA MUNAX ATNAX PASHTA MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
-  je 26:5 [speculative] [claim: expects_fix] [AGREE]
+  je 26:5 [claim: expects_fix] [AGREE]
     fix: דבר֨י -> דברי֙
     transform: word "דבר֨י" -> "דברי֙" ((qom) -> (pash))
     before: REVIA QADMA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: zaqef_phrase]

@@ -208,7 +208,7 @@ BY_REF: dict[str, dict[str, object]] = {
                 ", another stranded stress helper — there a telisha qetanna helper (M-C 24)"
                 " sitting on the syllable where the real (postpositive) telisha qetanna belongs. There too the"
                 " word is finally stressed (a single-syllable word like כי counts as finally"
-                " stressed) and so wants no stress helper at all: the cure is to move the mark"
+                " stressed) and so needs no stress helper at all: the cure is to move the mark"
                 " onto the word’s final letter, where it becomes the real postpositive accent,"
                 " not to add a separate real accent alongside the helper.",
             ],

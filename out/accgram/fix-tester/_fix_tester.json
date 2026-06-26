@@ -7,8 +7,8 @@
     "denied": 0,
     "changed": 0,
     "untestable": 0,
-    "speculative_total": 16,
-    "speculative_confirmed": 16,
+    "speculative_total": 15,
+    "speculative_confirmed": 15,
     "synthesized": 1,
     "agree": 83,
     "disagree": 0
@@ -3325,7 +3325,7 @@
         "SILLUQ",
         "SOFPASUQ"
       ],
-      "speculative": true,
+      "speculative": false,
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",

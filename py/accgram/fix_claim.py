@@ -14,10 +14,14 @@ from __future__ import annotations
 # Substrings (case-insensitive) that mark a claim as genuinely speculative /
 # hedged.  Deliberately excludes "rather than" and "as a ": those appear in the
 # confident descriptive templates (SOMEWHERE, BHS_TRANSCRIBES) and are not hedges.
+# "wants" must keep its checker/scanner subject ("the checker wants merkha"):
+# bare "wants" also matches confident grammatical claims about the *word*
+# ("the word ... wants no stress helper"), which are not hedges.
 SPECULATIVE_MARKERS: tuple[str, ...] = (
     "i think",
     "i suspect",
-    "wants",
+    "checker wants",
+    "scanner wants",
     "prefer",  # prefer / prefers / may prefer
     "does not like",
     "doesn't like",
