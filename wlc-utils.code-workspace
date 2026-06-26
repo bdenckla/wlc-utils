@@ -4,7 +4,7 @@
 			"path": "."
 		},
 		{
-			"path": "../wlc-utils-io"
+			"path": "../wlc-utils-private"
 		}
 	],
 	"settings": {

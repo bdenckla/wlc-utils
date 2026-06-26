@@ -24,7 +24,7 @@ _IGNORED_WLC_MAM_DIFF_TOKEN_PAIRS: set[tuple[tuple[str, ...], tuple[str, ...]]] 
 
 def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
     """Directory of the WLC 4.22 ketiv/qere Unicode ``1verses_*.json`` files."""
-    return repo_root.parent / "wlc-utils-io" / "out" / "wlc422-kq-u"
+    return repo_root.parent / "wlc-utils-private" / "out" / "wlc422-kq-u"
 
 
 def load_wlc422_index(wlc422_kq_u_dir: Path) -> dict[str, dict[str, object]]:

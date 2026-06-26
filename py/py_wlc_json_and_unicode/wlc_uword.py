@@ -146,7 +146,7 @@ _TRANSLATION_DIC = {
     **_TRANSLATION_DIC_RETAINING_SLASH,
 }
 # Official documentation for these M-C 2-digit accent codes lives in two files
-# of the WLC distribution (see ../wlc-utils-io/in/wlc422/):
+# of the WLC distribution (see ../wlc-utils-private/in/wlc422/):
 #   - michigan.man : the Michigan coding manual. The seven same-graphic-form
 #     pairs (e.g. zarqa 02 / sinnorit 82, telisa qaton 04 / medial 24, telisa
 #     gadol 14 / medial 44) are defined in section 3.5.5; the "medial" variants

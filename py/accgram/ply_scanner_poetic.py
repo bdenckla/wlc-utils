@@ -3,7 +3,7 @@ r"""Hand-written scanner for the POETIC (Three Books) accent system.
 The poetic counterpart of accgram.ply_scanner.  Where the prose scanner ports
 tnk2acc.l's GG-state table verbatim, there is no poetic flex source, so the rule
 table here is built from the *poetic* (Tabula Accentuum column II) readings of the
-accents, as tabulated in ``wlc-utils-io/in/wlc420/supplmt.wts`` and cross-checked
+accents, as tabulated in ``wlc-utils-private/in/wlc420/supplmt.wts`` and cross-checked
 against decoded L verses.  The rule table matches over the Unicode mark alphabet
 (``accent_marks``, the ``am.*`` patterns below); each accent is its own codepoint.
 

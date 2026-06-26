@@ -42,7 +42,7 @@ def main():
     mm.compare(p420mdc, p321mdc, _mm_out_path)
 
 
-_TDIR = "../wlc-utils-io"
+_TDIR = "../wlc-utils-private"
 _UXLC_BOOKS_DIR = f"{_TDIR}/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
 
 

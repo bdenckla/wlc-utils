@@ -3,7 +3,7 @@
 Subcommands:
     run-ply-goerwitz
                 Run the Python PLY port over the WLC prose corpus
-                (wlc-utils-io/out/wlc422-kq-u, genre-filtered) and write
+                (wlc-utils-private/out/wlc422-kq-u, genre-filtered) and write
                 out/accgram/ply/*_ag.txt (mirrors `accents -p`).  A verse the
                 grammar cannot parse at all is a fatal error.  Use --book to
                 restrict to specific books (e.g. --book ob).
