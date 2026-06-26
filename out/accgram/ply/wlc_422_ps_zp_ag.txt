@@ -789,11 +789,11 @@ Tsefaniah 2:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_clause
-        4 big_telisha_phrase
-          telishagedola 
+        4 geresh_phrase
+          gershayim 
         4 pashta_clause
-          5 geresh_phrase
-            gershayim 
+          5 big_telisha_phrase
+            telishagedola 
           5 pashta_phrase
             mahapakh pashta 
       3 zaqef_phrase

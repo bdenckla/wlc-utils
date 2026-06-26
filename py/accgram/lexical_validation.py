@@ -22,7 +22,8 @@ base letter.  This is a WHITELIST guard, the prose analogue of the poetic
 ``ply_scanner_poetic`` bang guard (Plan D / Plan E): two masoretically-blessed clusters
 may legitimately share a letter -- the MAM-confirmed ek20:31 ``mahapakh!azla`` (fused to
 one token, grammar-accepted) and the telisha gedola + geresh-family pair (gn5:29, zp2:15,
-2k17:13), spared as a two-token telg-then-geresh *sequence* -- so ANY other two adjacent
+2k17:13), spared as a two-token *sequence* (the telg and the geresh, in manuscript order --
+gerstar-then-telg for these same-letter words) -- so ANY other two adjacent
 accents (no base-letter ``X`` between -> same letter) is an alphabet error.  The sole
 attested illicit pair is mahapakh + tipeḥa (lv25:20); two accents stacked on one letter
 make the fault intrinsic to the letter -- an alphabet error, not an illegal grammatical
@@ -166,7 +167,7 @@ def illegal_same_letter_pairs(body: str) -> list[StrandedMark]:
     an alphabet error unless it is a whitelisted cluster: mahapakh + qadma (ek20:31,
     MAM-confirmed; the scanner fuses it to one ``mahapakh!azla`` token before the grammar
     and it never reaches here) or telisha gedola + a geresh-family mark (gn5:29, zp2:15,
-    2k17:13; kept as a telg-then-geresh sequence).  Everything else two-on-a-letter is
+    2k17:13; kept as a two-token gerstar-then-telg sequence, the manuscript order).  Everything else two-on-a-letter is
     illicit -- today only mahapakh + tipeḥa (lv25:20), formerly handled by a pair-specific
     check, now flagged by this general guard (the prose analogue of the poetic Plan D bang
     guard).

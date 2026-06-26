@@ -131,8 +131,9 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # both a typographic device for what is abstractly a plain geresh, normalized to one
     # here: Lev 1:3 (alone); and 2 Kings 17:13 (sharing a word, and a base letter, with a
     # telisha gedola), where the resulting telg + geresh same-letter pair is whitelisted by
-    # lexical_validation and parses as a telg-then-geresh sequence.  (The poetic scanner
-    # keeps its own revia mugrash handling.)
+    # lexical_validation and parses as a two-token geresh-then-telg sequence (the manuscript
+    # order the scanner now preserves).  (The poetic scanner keeps its own revia mugrash
+    # handling.)
     # See the tanach.us changes
     # Lev 1:3:       https://tanach.us/Changes/2020.10.19%20-%20Changes/2020.10.19%20-%20Changes.xml?2020.09.22-1
     # 2 Kings 17:13: https://tanach.us/Changes/2020.10.19%20-%20Changes/2020.10.19%20-%20Changes.xml?2020.09.22-2

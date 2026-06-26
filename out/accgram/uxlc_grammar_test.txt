@@ -1,13 +1,13 @@
 === Approach A: WLC-4.22 vs UXLC grammaticality (changes NOT in goerwitz output) ===
 
 prose-corpus verses          : 203  (220 changes)
-  validated                  : 189 verses (205 changes)
-  unreliable (excluded)      : 14 verses (15 changes)
+  validated                  : 190 verses (206 changes)
+  unreliable (excluded)      : 13 verses (14 changes)
 
-  of validated: scanner-VISIBLE change 101, no-op 88
+  of validated: scanner-VISIBLE change 101, no-op 89
 
 2x2 over validated VERSES (all):
-  WLC-gram    -> UXLC-gram   : 178
+  WLC-gram    -> UXLC-gram   : 179
   WLC-gram    -> UXLC-ungram : 10
   WLC-ungram  -> UXLC-gram   : 0
   WLC-ungram  -> UXLC-ungram : 1
@@ -33,4 +33,4 @@ HYPOTHESIS cell (WLC-gram -> UXLC-ungram): 10 verses
 By-kind breakdown of WLC-gram solo-change verses (confidence buckets):
   add_accent        : -> UXLC-gram  27   -> UXLC-ungram   2
   remove_terminator : -> UXLC-gram   0   -> UXLC-ungram   2
-  substitution      : -> UXLC-gram 136   -> UXLC-ungram   6
+  substitution      : -> UXLC-gram 137   -> UXLC-ungram   6

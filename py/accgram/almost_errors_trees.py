@@ -44,12 +44,14 @@ def _build_word_variant(word: str, mode: str) -> str:
     """``uni_to_marks.word_to_marks``, but for a word carrying BOTH a telisha gedola
     and a geresh-family mark, apply ``mode`` (keep_both / keep_telg / keep_gerstar).
 
-    ``keep_both`` reproduces the checker's real reading (both marks kept, as a
-    telg-then-geresh sequence -- identical token stream to the live ``word_to_marks``);
+    ``keep_both`` reproduces the checker's real reading (both marks kept, in their Unicode
+    (manuscript) order -- identical token stream to the live ``word_to_marks``);
     ``keep_telg`` and ``keep_gerstar`` are the two counterfactual single-mark readings the
     exhibit shows also parse cleanly.  It rebuilds the mark skeleton, dropping the telg or
     the geresh-family companion per ``mode`` (or neither, for keep_both), scoped to words
-    holding *both*; every other word is transcoded normally.
+    holding *both*; every other word is transcoded normally.  As in ``word_to_marks``, the
+    telg's prepositive front-loading is suppressed in a telg + gerstar word, so the pair
+    keeps its document (manuscript) order.
     """
     has_telg = am.TELISHA_GEDOLA in word
     has_gerstar = any((am.GERESH if c == am.GERESH_MUQDAM else c) in _GG for c in word)
@@ -87,7 +89,12 @@ def _build_word_variant(word: str, mode: str) -> str:
         if mark is None:
             continue
         skeleton.append(None)
-        (prepos if mark in PREPOSITIVE_MARKS else other).append(mark)
+        # In a telg + gerstar word the telg is kept in document order (not front-loaded),
+        # preserving the Unicode mark order -- mirroring uni_to_marks.word_to_marks.
+        front_load = mark in PREPOSITIVE_MARKS and not (
+            both and mark == am.TELISHA_GEDOLA
+        )
+        (prepos if front_load else other).append(mark)
     marks = iter(prepos + other)
     return "".join(next(marks) if p is None else p for p in skeleton)
 

@@ -5,8 +5,8 @@ only decision is one of representation.  Two exhibits, each backed by live parse
 trees from ``almost_errors_trees``:
 
   * the **telisha gedola + geresh/gershayim** five-word exhibit, whose alternate-
-    reading trees show that the checker's choice (keep both, as a telg-then-geresh
-    sequence) is the most faithful of several grammatically-clean options; and
+    reading trees show that the checker's choice (keep both, in the manuscript's
+    mark order) is the most faithful of several grammatically-clean options; and
   * **Ezekiel 20:31's mahapakh + azla**, the only word in Tanakh with two
     conjunctive accents on one letter, where the verdict table shows the fusion
     is all but forced by the grammar; and
@@ -35,8 +35,8 @@ from accgram.ply_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
 from py_wlc import my_wlc_bcv_str
 
-# The five WLC words carrying BOTH a telg and a gerstar -- the checker
-# keeps both, reading them as a telg-then-geresh sequence.  (gn5:29 / zp2:15 same-letter;
+# The five WLC words carrying BOTH a telg and a gerstar -- the checker keeps both,
+# reading them in their Unicode (manuscript) mark order.  (gn5:29 / zp2:15 same-letter;
 # 2k17:13 same-letter with geresh muqdam; lv10:4 / ek48:10 cross-letter, same word.)
 _TELG_EXHIBIT_REFS = ("gn5:29", "zp2:15", "2k17:13", "lv10:4", "ek48:10")
 
@@ -46,7 +46,7 @@ _TELG_EXHIBIT_REFS = ("gn5:29", "zp2:15", "2k17:13", "lv10:4", "ek48:10")
 _TELG_TREE_REFS = ("zp2:15", "lv10:4")
 
 _TELG_MODES = (
-    ("keep_both", "keep both, as a telg-then-gershar sequence (what the checker does)"),
+    ("keep_both", "keep both, in the manuscript's mark order (what the checker does)"),
     ("keep_telg", "drop the gerstar, keep the telg"),
     ("keep_gerstar", "drop the telg, keep the gerstar"),
 )
@@ -179,30 +179,28 @@ _TELG_PARA_2_CONTENTS = (
     )
 _TELG_PARA_3_CONTENTS = (
     #
-    " The checker treats a telg and a gerstar on a single letter as being in telg-first order,"
-    " regardless of the order in which the accents appear in its input."
+    " The checker reads a telg and a gerstar on a single letter in the order the manuscript writes them —"
+    " gerstar-first in the three same-letter words."
     #
-    " In other words, the checker treats a telg and a gerstar on a single letter as being in “anti-manuscript” order."
-    #
-    " That “anti-manuscript” order is entirely the checker's own doing; it is not inherited from the source data."
+    " That order is not the checker's own invention; it is inherited from the source data."
     " In WLC 4.22's original Michigan-Claremont (M-C) encoding, the two accents stand in manuscript order:"
     " gerstar-first in the three same-letter words, telg-first in the two cross-letter words."
     " My conversion of that encoding to Unicode preserves that order, so the “word” column of the table below"
-    " shows all five words exactly as the manuscript orders them — gerstar-first in the three same-letter words."
-    " The checker then floats the prepositive telg to the front of its own reading regardless of input order,"
-    " so the order in which the two accents reach it does not matter."
+    " shows all five words exactly as the manuscript orders them — gerstar-first in the three same-letter words —"
+    " and the checker now reads them in that same order, rather than floating the prepositive telg to the front"
+    " of its own reading."
     #
-    " This choice is not important, because the checker allows a telg and a gerstar to appear in either order;"
+    " The checker can do this because it allows a telg and a gerstar to appear in either order;"
     " i.e., either order is considered grammatical."
     #
     " The telg-then-gerstar order appears normally, i.e. across separate words, about 175 times in Tanakh,"
     " while the gerstar-then-telg order appears only about 18 times."
 )
 _TELG_PARA_3B_CONTENTS = (
-    "The checker also treats the cross-letter words as telg-first — and that, too, should not be taken for granted."
-    " It is no less arbitrary than the same-letter case: the telg leads there only because the telisha gedola is"
-    " prepositive and is written at the front of its word wherever it is chanted, so its position is visually"
-    " forced by prepositivity rather than chosen as a reading order."
+    "In the two cross-letter words the telg leads instead — but there, too, that is simply the manuscript order."
+    " The telisha gedola is prepositive and is written at the front of its word wherever it is chanted, ahead of"
+    " the later letter that carries the gerstar, so the telg-first order is forced by prepositivity rather than"
+    " chosen by the checker. Either way, same-letter or cross, the checker preserves the order it finds."
 )
 _TELG_PARA_4_CONTENTS = (
     "Each verse continues to parse cleanly if either accent is dropped from these five telg + gerstar words."
@@ -249,11 +247,12 @@ def telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]
     items.append(
         H.para(
             (
-                "A note on the trees above: the same-letter words (here Zephaniah 2:15)"
-                " appear exactly like the cross-letter ones — the two accents are kept"
-                " distinct, a telg followed by a gerstar, never merged into a"
-                " single unit, whether or not they share a letter. That is the contrast"
-                " with Ezekiel 20:31 below, whose two accents do merge.",
+                "A note on the trees above: in both the same-letter word (here Zephaniah"
+                " 2:15, whose tree shows the gerstar before the telg) and the cross-letter"
+                " word (Leviticus 10:4, telg before gerstar), the two accents are kept"
+                " distinct — each read in the order the manuscript writes it — never merged"
+                " into a single unit, whether or not they share a letter. That is the"
+                " contrast with Ezekiel 20:31 below, whose two accents do merge.",
             )
         )
     )
