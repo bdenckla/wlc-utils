@@ -38,12 +38,27 @@ so within this prose pipeline a bare ``82`` is unconditionally illegal.  A futur
 poetic checker is expected to have its own lexer where ``82`` is a first-class
 token; this module therefore hard-codes prose semantics with no genre parameter.
 
-The module is self-contained: it re-derives the per-atom 2-digit accent-code stream
-straight from the verse body (the Michigan-Claremont transliteration with embedded
-2-digit codes), with no dependency on the scanner internals.  It is kept general
-enough that other stranded stress-helpers could be added later, but only ``82`` is
-wired up now (the siblings ``44``/lone ``24`` and the unknown codes ``11``/``12``
-need a separate scholarly call -- see the tracking GitHub issue).
+A third check (``nonfinal_telisha_qetannas``) flags the lone medial telisha qetanna
+(M-C ``24``) of je 44:17.  In M-C this is a stranded stress-helper exactly like ``82``:
+a ``24`` (medial telisha qetanna, written on a non-final letter) is well-formed only
+as the helper of a following ``04`` (the real, postpositive telisha qetanna), the pair
+``24{TEXT}04`` -- which the scanner fuses into one TELISHAQETANNA token.  But the
+grammar checker reads the *Unicode-converted* source, where M-C ``24`` and ``04`` are
+the **same** codepoint (telisha qetanna, U+05A9): the helper/main code distinction has
+been erased, so the only checker-visible defect is *placement* -- a telisha qetanna
+sitting on a non-final letter (here the kaf of כִּי) rather than on the word-final
+letter (the yod).  This is therefore phrased as a word-internal placement rule: a
+telisha qetanna on a non-final letter, with no following telisha qetanna to absorb it
+as a stress-helper, is illegal.  (It is one instance of a broader, not-yet-implemented
+family of word-level rules -- every postpositive accent must fall on the final letter,
+every prepositive on the first.)
+
+The module is self-contained: it reads the per-atom Unicode mark stream straight from
+the verse body (the scanner-ready marks ``uni_to_marks`` produces), with no dependency
+on the scanner internals.  It is kept general enough that other stranded stress-helpers
+could be added later; today ``82`` and the lone ``24`` are wired up (the remaining
+siblings -- standalone ``44`` and the codes ``11``/``12`` -- were judged moot after the
+Phase-2 Unicode port; see the tracking GitHub issue).
 """
 
 from __future__ import annotations
@@ -131,7 +146,8 @@ class StrandedMark:
     word, used by run_ply to locate the pointed-Hebrew word for the report.
     """
 
-    code: str  # M-C code label ("82") or bang-joined pair label ("mahapakh!tipexa")
+    code: str  # M-C code label ("82"), bang pair label ("mahapakh!tipexa"), or a
+    # placement descriptor ("medial telisha qetanna")
     atom: str  # the maqaf/space-delimited atom that contains it
     rep_char: str  # a mark of the offending word, for locating its Unicode word
 
@@ -189,3 +205,63 @@ def illegal_same_letter_pairs(body: str) -> list[StrandedMark]:
             code = f"{_accent_leaf(a)}!{_accent_leaf(b)}"
             illegal.append(StrandedMark(code=code, atom=atom, rep_char=a))
     return illegal
+
+
+def nonfinal_telisha_qetannas(body: str) -> list[StrandedMark]:
+    """Return every misplaced telisha qetanna in a prose verse body (today: je 44:17).
+
+    A telisha qetanna (U+05A9) is *postpositive*: it belongs on the word-final letter.
+    A copy on a non-final letter is the medial stress-helper variant (M-C ``24``), which
+    is well-formed *only* when a second telisha qetanna (the real, postpositive ``04``)
+    follows it in the same atom -- the ``24{TEXT}04`` pair the scanner fuses into one
+    token.  A non-final telisha qetanna with **no** following telisha qetanna is the
+    stranded helper of je 44:17 (כִּי, the mark on the kaf with nothing on the yod) -- an
+    intrinsic word-internal error independent of surrounding context.
+
+    "Non-final" is read positionally: a base letter (``X``) follows the mark later in the
+    atom.  This is the only checker-visible defect, because in the Unicode source M-C
+    ``24`` and ``04`` collapse to one codepoint -- the helper/main distinction is gone and
+    only the placement (kaf vs. yod) survives.
+    """
+    stranded: list[StrandedMark] = []
+    for atom in _ATOM_SPLIT_RE.split(body):
+        if not atom:
+            continue
+        for i, ch in enumerate(atom):
+            if ch != am.TELISHA_QETANA:
+                continue
+            rest = atom[i + 1 :]
+            if am.LETTER not in rest:
+                continue  # word-final -> a legitimate (postpositive) telisha qetanna
+            if am.TELISHA_QETANA in rest:
+                continue  # the medial helper of a well-formed 24...04 pair (fused)
+            # The telisha qetanna itself (U+05A9) locates the offending word.
+            stranded.append(
+                StrandedMark(code="medial telisha qetanna", atom=atom, rep_char=ch)
+            )
+    return stranded
+
+
+def lexical_oddballs(body: str) -> list[StrandedMark]:
+    """Every prose lexical / word-placement oddball in ``body``, in one pass.
+
+    The union of this module's three checks, each an ``illegal_mark`` ERROR that diverges
+    from the goerwitz C oracle in the documented MISSING_SOFPASUQ spirit:
+
+      * a stranded stress-helper (`stranded_stress_helpers`, M-C ``82``);
+      * a non-whitelisted same-letter accent pair (`illegal_same_letter_pairs`,
+        mahapakh!tipexa, lv25:20); and
+      * a telisha qetanna misplaced on a non-final letter (`nonfinal_telisha_qetannas`,
+        the lone M-C ``24`` of je 44:17).
+
+    This is the single entry point the prose consumers share -- run_ply (the corpus
+    output), almost_errors_trees (the exhibit page), and fix_tester (the fix harness) --
+    so a verse is classified identically everywhere and the set can never drift between
+    them.  A verse with any result here is flagged with a fixed ERROR tree and the grammar
+    is skipped entirely.
+    """
+    return (
+        stranded_stress_helpers(body)
+        + illegal_same_letter_pairs(body)
+        + nonfinal_telisha_qetannas(body)
+    )

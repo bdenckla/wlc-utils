@@ -16,6 +16,7 @@ from __future__ import annotations
 from accgram import accent_marks as am
 from accgram.lexical_validation import (
     illegal_same_letter_pairs,
+    nonfinal_telisha_qetannas,
     stranded_stress_helpers,
 )
 
@@ -28,6 +29,8 @@ _TG = am.TELISHA_GEDOLA  # U+05A0 (prepositive disjunctive)
 _G2 = am.GERSHAYIM       # U+059E (gn5:29, zp2:15 companion)
 _GE = am.GERESH          # U+059C
 _GM = am.GERESH_MUQDAM   # U+059D (2k17:13 companion, pre-scanner-normalization)
+_TQ = am.TELISHA_QETANA  # U+05A9 (M-C 04 main / 24 medial helper)
+_LT = am.LETTER          # "X" consonant filler
 
 
 def _codes(body: str) -> list[str]:
@@ -36,6 +39,10 @@ def _codes(body: str) -> list[str]:
 
 def _pairs(body: str) -> list[str]:
     return [m.code for m in illegal_same_letter_pairs(body)]
+
+
+def _telq(body: str) -> list[str]:
+    return [m.code for m in nonfinal_telisha_qetannas(body)]
 
 
 def test_bare_82_is_stranded():
@@ -142,3 +149,35 @@ def test_non_accent_between_marks_does_not_pair():
 def test_no_pair_is_clean():
     assert _pairs("XX" + _MA + "X XXX" + _TI + "X" + am.SOF_PASUQ) == []
     assert _pairs("YISRA" + _TS + "L]s") == []  # a stranded 82 is not a same-letter pair
+
+
+# --- misplaced (non-final) telisha qetanna, M-C lone 24 (je 44:17) -------------
+
+
+def test_nonfinal_telisha_qetanna_is_flagged():
+    # je 44:17 (כִּי): a telisha qetanna on the kaf (a base letter still follows) with no
+    # second telisha qetanna to absorb it as a stress-helper -> misplaced postpositive.
+    assert _telq(_LT + _TQ + _LT) == ["medial telisha qetanna"]
+
+
+def test_word_final_telisha_qetanna_is_clean():
+    # The normal, postpositive 04: on the word's final letter, no base letter follows.
+    assert _telq(_LT + _LT + _TQ) == []
+
+
+def test_fused_24_04_pair_is_clean():
+    # A well-formed 24...04 stress-helper pair: the medial telq is followed by a second
+    # (postpositive) telq, which the scanner fuses -> not stranded.
+    assert _telq(_LT + _TQ + _LT + _LT + _TQ) == []
+
+
+def test_nonfinal_telq_rescued_only_within_its_atom():
+    # A second telisha qetanna across a maqaf/space boundary cannot rescue the medial one.
+    assert _telq(_LT + _TQ + _LT + "-" + _LT + _TQ) == ["medial telisha qetanna"]
+    assert _telq(_LT + _TQ + _LT + " " + _LT + _TQ) == ["medial telisha qetanna"]
+
+
+def test_nonfinal_telq_followed_only_by_non_letters_is_clean():
+    # "Non-final" means a base letter follows; a telq trailed only by punctuation
+    # (sof pasuq) is still word-final and legitimate.
+    assert _telq(_LT + _LT + _TQ + am.SOF_PASUQ) == []

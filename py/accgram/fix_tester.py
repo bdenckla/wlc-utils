@@ -125,8 +125,10 @@ def _evaluate(body: str, bb: str, chnu: int, vrnu: int, guard: _ParseGuard) -> _
     tokens = [Token("TILDE", "")] + scan_accents(body, bb, chnu, vrnu, HasLegarmeh())
     token_types = tuple(tok.type for tok in tokens if tok.type != "TILDE")
 
-    # Prose lexical layer fires first and skips the grammar (as in run_ply).
-    stranded = lexical_validation.stranded_stress_helpers(body)
+    # Prose lexical layer fires first and skips the grammar (the same single entry point
+    # run_ply uses, so an annotated lexical oddball -- e.g. je 44:17's misplaced telisha
+    # qetanna or lv25:20's same-letter pair -- is classified here, not via the grammar).
+    stranded = lexical_validation.lexical_oddballs(body)
     if stranded:
         labels = frozenset(f"illegal_mark:{mark.code}" for mark in stranded)
         return _Eval("ODDBALL", labels, token_types)
@@ -591,9 +593,11 @@ def render_text_report(results: list[FixTestResult]) -> str:
         if name == "UNTESTABLE" and group:
             lines.append(
                 "  (note: a *medial* 'vowel_only'/'meteg_only' mark is grammar-inert, "
-                "the scanner swallowing it; 'merge_target_missing' means the named "
-                "merge_next verse was not found in the source.  Neither is a verdict "
-                "on the oddball.)"
+                "the scanner swallowing it; an 'accent_moved' mark IS grammar-visible -- it "
+                "shifts to a different letter -- but fix_apply tests by accent multiset, "
+                "which the move leaves unchanged; 'merge_target_missing' means the named "
+                "merge_next verse was not found in the source.  None is a verdict on the "
+                "oddball.)"
             )
         for r in group:
             lines.extend(_render_entry(r))

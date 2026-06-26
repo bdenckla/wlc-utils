@@ -21,6 +21,7 @@ _SAT_ROW_SUPPRESSIONS_BY_REF: dict[str, set[str]] = {
     "2s 23:9": {"diff_wlc_mam[1]"},
     "ex 28:1": {"diff_wlc_mam[1]"},
     "gn 32:24": {"diff_wlc_mam[1]"},
+    "je 44:17": {"diff_wlc_mam[2]"},  # secondary tsinnorit diff on השמים, unrelated to the telisha
     "js 4:8": {"diff_wlc_mam[2]"},
     "mi 2:7": {"diff_wlc_mam[2]"},
 }

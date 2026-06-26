@@ -7,6 +7,7 @@ from accgram.ob_notes_shared import (
     TIP_LIKE_INCL,
     ambiguous_mark_context_comment,
 )
+from py_html import wlc_utils_html
 
 
 def _je_0910_and_11_comment(adjacent_verse_phrase: str):
@@ -45,6 +46,58 @@ _JE_1003_02 = (
 
 
 _JE_1003_03 = "Finally, it should be noted that the mark preceding this word’s yod is assumed to be a spacer."
+
+
+_JE_4417_01 = (
+    "A telisha qetanna is a postpositive accent: it belongs on the final letter of its"
+    " word. Here, though, it sits on the first letter, the kaf of כִּי, with nothing on the"
+    " final yod. Because the grammar checker reads the Unicode-converted source, this"
+    " misplacement of the mark is the only defect it can see."
+)
+
+
+_JE_4417_02 = (
+    "We detect this in the lexical phase, alongside the stranded zarqa/tsinnorit stress"
+    " helpers, but the violation is really one of intra-word grammar: a rule about where"
+    " within a word a postpositive accent may fall, not about the alphabet of marks."
+    " It is one instance of a broader family of word-level rules we have not yet"
+    " implemented in general — every postpositive accent must fall on its word’s final"
+    " letter, every prepositive on its first."
+)
+
+
+_JE_4417_03 = (
+    "In the Michigan-Claremont source the defect is actually compound. The mark is coded"
+    " 24 — the medial telisha qetanna, properly a stress helper to a following 04 — rather"
+    " than 04, the real, postpositive telisha qetanna; and it is written one letter too"
+    " early, on the kaf rather than the yod. The Unicode conversion erases the 24-versus-04"
+    " distinction (both become the single telisha-qetanna codepoint), so only the"
+    " misplacement survives for the checker; but the M-C also carries the additional coding"
+    " error of a 24 stress helper with no 04 for it to help."
+)
+
+
+_JE_4417_04 = (
+    "The UXLC change linked above fixes both faults at once: it recodes the 24 to 04 and"
+    " moves it forward one letter, from the kaf to the yod, leaving a normal postpositive"
+    " telisha qetanna on כִּי’s final letter."
+)
+
+
+_JE_4417_05 = [
+    "Compare ",
+    wlc_utils_html.anchor("je 26:5", {"href": "#obje26v5"}),
+    ", a closely analogous case: a stranded pashta stress helper with no real pashta to"
+    " accompany it. There, too, the underlying fault is a stress helper left without its"
+    " partner.",
+]
+
+
+_JE_4417_06 = (
+    "It remains to be determined whether this error originates in BHS — the more likely"
+    " source, as with most errors discussed in this document — or is original to WLC,"
+    " which is less likely but not unheard of."
+)
 
 
 BY_REF: dict[str, dict[str, object]] = {
@@ -136,6 +189,29 @@ BY_REF: dict[str, dict[str, object]] = {
                 " since it may have had no code for a pashta stress helper at the time."
                 " In any case, the serious error is BHS’s transcription, not WLC’s transcription of BHS."
             ],
+            [
+                "Compare ",
+                wlc_utils_html.anchor("je 44:17", {"href": "#obje44v17"}),
+                ", another stranded stress helper — there a telisha qetanna helper (M-C 24)"
+                " with no real (postpositive) telisha qetanna to accompany it.",
+            ],
+        ),
+    },
+    "je 44:17": {
+        "st-source": "tbd",
+        "st-summary": (
+            "A telisha qetanna is placed on a non-final letter rather than on its word’s"
+            " final letter."
+        ),
+        "wlc_focus": "כ֩י",
+        "uxlc_change": "2023.04.01/2022.12.10-53",
+        "comment": (
+            _JE_4417_01,
+            _JE_4417_02,
+            _JE_4417_03,
+            _JE_4417_04,
+            _JE_4417_05,
+            _JE_4417_06,
         ),
     },
     "je 28:2": {

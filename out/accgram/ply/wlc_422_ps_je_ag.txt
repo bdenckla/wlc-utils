@@ -28121,53 +28121,8 @@ Jeremiah 44:16
     2 silluq_phrase
       silluq 
 Jeremiah 44:17
-0 silluq_clause
-  1 atnax_clause
-    2 segolta_clause
-      3 revia_clause
-        4 geresh_phrase
-          telishaqetanna azla geresh 
-        4 revia_clause
-          5 legarmeh_phrase
-            legarmeh 
-          5 revia_phrase
-            munax revia 
-      3 segolta_clause
-        4 zarqa_clause
-          5 geresh_phrase
-            gershayim 
-          5 zarqa_phrase
-            munax zarqa 
-        4 segolta_phrase
-          munax segolta 
-    2 atnax_clause
-      3 zaqef_clause
-        4 pashta_clause
-          5 geresh_phrase
-            azla geresh 
-          5 pashta_phrase
-            mahapakh pashta 
-        4 zaqef_phrase
-          munax zaqef 
-      3 atnax_clause
-        4 zaqef_phrase
-          munax zaqef 
-        4 atnax_clause
-          5 tipexa_phrase
-            tipexa 
-          5 atnax_phrase
-            atnax 
-  1 silluq_clause
-    2 zaqef_clause
-      3 pashta_phrase
-        pashta 
-      3 zaqef_phrase
-        munax zaqef 
-    2 silluq_clause
-      3 tipexa_phrase
-        tipexa 
-      3 silluq_phrase
-        merkha silluq 
+0 illegal_mark medial telisha qetanna in כִּ֩י
+  ERROR 
 Jeremiah 44:18
 0 silluq_clause
   1 atnax_clause

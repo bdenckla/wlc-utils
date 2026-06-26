@@ -1,6 +1,6 @@
 # Fix-tester: do MAM-simple values resolve annotated prose oddballs?
 
-confirmed: 91  denied: 0  changed: 0  untestable: 0  (91 annotated oddballs tested)
+confirmed: 91  denied: 0  changed: 0  untestable: 1  (92 annotated oddballs tested)
 speculations: 15 total; 15 confirmed, 0 denied/changed, 0 untestable
 synthesized fixes (no MAM diff; tested the note's synth_fix): 1
 claim-vs-result: 82 agree, 0 disagree
@@ -399,7 +399,7 @@ claim-vs-result: 82 agree, 0 disagree
   lv 25:20
     fix: נאכ֤֖ל -> נאכ֖ל
     transform: word "נאכ֤֖ל" -> "נאכ֖ל" ((mah) -> (none))
-    before: MUNAX ZAQEF MAHAPAKH TIPEXA MUNAX ATNAX YETIV MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: tipexa_phrase]
+    before: MUNAX ZAQEF MAHAPAKH TIPEXA MUNAX ATNAX YETIV MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:mahapakh!tipexa]
     after:  MUNAX ZAQEF TIPEXA MUNAX ATNAX YETIV MUNAX ZAQEF MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   lv 26:7 [claim: expects_fix] [AGREE]
     fix: לחֽרב -> לחֽרב׃
@@ -466,7 +466,11 @@ claim-vs-result: 82 agree, 0 disagree
 
 ## CHANGED -- a different error appears after the fix  (0)
 
-## UNTESTABLE -- fix could not be applied mechanically  (0)
+## UNTESTABLE -- fix could not be applied mechanically  (1)
+  (note: a *medial* 'vowel_only'/'meteg_only' mark is grammar-inert, the scanner swallowing it; an 'accent_moved' mark IS grammar-visible -- it shifts to a different letter -- but fix_apply tests by accent multiset, which the move leaves unchanged; 'merge_target_missing' means the named merge_next verse was not found in the source.  None is a verdict on the oddball.)
+  je 44:17 [claim: expects_fix]
+    fix: כ֩י -> כי֩
+    reason: accent_moved (accents unchanged as a multiset but one sits on a different letter -- grammar-visible (lexical_validation flags the move), but fix_apply tests by whole-word substitution keyed on that multiset, so the move is not tested here)
 
 ## Review queue: speculative claims whose result disagrees  (0)
 

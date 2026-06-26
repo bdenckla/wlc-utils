@@ -116,12 +116,16 @@ def apply_mam_fix(
             ad = " ".join(added) or "(none)"
             extra_transforms.append(f'word "{wlc_tok}" -> "{mam_tok}" ({rm} -> {ad})')
     if not any_visible:
-        # A vowel- or (medial) meteg-only change cannot reach the grammar (the
-        # scanner swallows vowels and meteg), so the speculated fix is grammar-inert.
-        return UntestableFix(
-            _no_accent_change_reason(wlc_tokens, mam_tokens),
-            "no accent/punctuation difference -- invisible to the grammar",
-        )
+        # The per-word accent-name multiset is unchanged, so the name diff sees nothing.
+        # Usually that means a vowel- or (medial) meteg-only edit, which truly cannot reach
+        # the grammar (the scanner swallows vowels and meteg) -- a grammar-inert fix.  But a
+        # mark that *moved* to a different letter (je 44:17: a telisha qetanna shifting from
+        # the kaf to the yod) keeps the multiset yet IS grammar-visible -- it is exactly what
+        # lexical_validation flags -- and fix_apply, which tests by a whole-word substitution
+        # keyed on that multiset, cannot mechanically confirm the move.  Either way untestable
+        # here, but the reason distinguishes them.
+        reason = _no_accent_change_reason(wlc_tokens, mam_tokens)
+        return UntestableFix(reason, _NO_CHANGE_MESSAGE[reason])
 
     # --- locate the changed run, by index, in the WLC word list ---
     span = len(wlc_tokens)
@@ -227,9 +231,38 @@ def _accent_name_diff(wlc_word: str, mam_word: str) -> tuple[list[str], list[str
     return removed, added
 
 
+_NO_CHANGE_MESSAGE = {
+    "vowel_only": "no accent/punctuation difference -- invisible to the grammar",
+    "meteg_only": "no accent/punctuation difference -- invisible to the grammar",
+    "accent_moved": (
+        "accents unchanged as a multiset but one sits on a different letter -- "
+        "grammar-visible (lexical_validation flags the move), but fix_apply tests by "
+        "whole-word substitution keyed on that multiset, so the move is not tested here"
+    ),
+}
+
+
+def _letters_and_accents(word: str) -> str:
+    """Base letters and real accents (U+0591..U+05AE) in document order; vowels, points
+    and meteg dropped.  Two words with the same accent multiset but a different skeleton
+    differ by an accent's *position* -- which letter the mark sits on (je 44:17)."""
+    return "".join(
+        c
+        for c in word
+        if uni_to_marks.is_base_letter(c) or uni_to_marks.is_accent(c)
+    )
+
+
 def _no_accent_change_reason(wlc_tokens: list[str], mam_tokens: list[str]) -> str:
-    """Distinguish a meteg/silluq-only change from a pure niqqud change; both are
-    invisible to the grammar, but the label tells which mark moved."""
+    """Classify a change the accent-name multiset cannot see: an accent that *moved* to a
+    different letter (``accent_moved`` -- grammar-visible but not mechanically testable
+    here), a meteg/silluq-only change, or a pure niqqud change (the last two grammar-inert).
+    """
+    if any(
+        _letters_and_accents(w) != _letters_and_accents(m)
+        for w, m in zip(wlc_tokens, mam_tokens)
+    ):
+        return "accent_moved"
     wlc_mos = sum(
         Counter(uni_heb.accent_names(w))[_MOS_ABBREV] for w in wlc_tokens
     )

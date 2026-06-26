@@ -121,14 +121,12 @@ def render_book(
     out_lines: list[str] = []
     parsed = 0
     for verse in verses:
-        # Prose lexical layer (divergence from the goerwitz C oracle): a stranded
-        # stress-helper (e.g. a `82` with no fused `02`), or a non-whitelisted
-        # same-letter accent pair (mahapakh!tipexa, lv25:20), is an alphabet error.
-        # Flag it uniformly with a fixed ERROR tree and skip the grammar entirely --
-        # the context need not be parsed, and all such verses must read identically.
-        stranded = lexical_validation.stranded_stress_helpers(
-            verse.body
-        ) + lexical_validation.illegal_same_letter_pairs(verse.body)
+        # Prose lexical layer (divergence from the goerwitz C oracle): an alphabet /
+        # word-placement error -- a stranded stress-helper, a same-letter accent pair, or
+        # a misplaced telisha qetanna (full enumeration in lexical_validation.lexical_
+        # oddballs).  Flag it uniformly with a fixed ERROR tree and skip the grammar
+        # entirely -- the context need not be parsed, and all such verses read identically.
+        stranded = lexical_validation.lexical_oddballs(verse.body)
         if stranded:
             parsed += 1
             out_lines.append(verse.reference + "\n")

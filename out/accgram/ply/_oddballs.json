@@ -3,7 +3,7 @@
   "artifacts_description": "oddball verses with ERROR nodes in PLY *_ag.txt outputs",
   "payload_provenance_note": "These verses are parsed by the PLY port into a tree containing at least one line with the token ERROR, drawn from out/accgram/ply/. The output_file field on each row names which book file holds that verse's ERROR tree.",
   "summary": {
-    "oddballs": 91,
+    "oddballs": 92,
     "books_with_oddballs": 24
   },
   "oddballs": [
@@ -315,6 +315,11 @@
     {
       "ref": "je 31:32",
       "content": "ל֣א כבר֗ית אש֤ר כר֙תי֙ את־ אבות֔ם ביום֙ החזיק֣י ביד֔ם להוציא֖ם מא֖רץ מצר֑ים אשר־ ה֜מה הפ֣רו את־ ברית֗י ואנכ֛י בע֥לתי ב֖ם נאם־ יהוֽה׃",
+      "output_file": "wlc_422_ps_je_ag.txt"
+    },
+    {
+      "ref": "je 44:17",
+      "content": "כ֩י עש֨ה נעש֜ה את־ כל־ הדב֣ר׀ אשר־ יצ֣א מפ֗ינו לקט֞ר למל֣כת השמים֮ והסיך־ ל֣ה נסכים֒ כאש֨ר עש֜ינו אנ֤חנו ואבת֙ינו֙ מלכ֣ינו ושר֔ינו בער֣י יהוד֔ה ובחצ֖ות ירושל֑ם ונשבע־ ל֙חם֙ ונהי֣ה טוב֔ים ורע֖ה ל֥א ראֽינו׃",
       "output_file": "wlc_422_ps_je_ag.txt"
     },
     {

@@ -151,9 +151,7 @@ def _prose_verse_tree_text(bcv: str, index, parser, has_legarmeh: HasLegarmeh) -
     the corpus output."""
     verse = index[bcv]
     body = uni_to_marks.verse_to_marks(verse)
-    stranded = lexical_validation.stranded_stress_helpers(
-        body
-    ) + lexical_validation.illegal_same_letter_pairs(body)
+    stranded = lexical_validation.lexical_oddballs(body)
     if stranded:
         words = run_ply._stranded_unicode_words(stranded, verse)
         return print_tree(run_ply._illegal_mark_tree(stranded, words), 0).rstrip("\n")
