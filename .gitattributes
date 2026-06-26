@@ -6,6 +6,12 @@
 # text=auto keeps git's text/binary auto-detection; eol=crlf forces CRLF in the workdir.
 * text=auto eol=crlf
 
+# Vendored verbatim (byte-for-byte) from the UXLC-utils sibling repo, which
+# stores LF. Pin LF in the workdir too (not just storage) so the vendoring copy
+# does not perpetually show as modified against the global eol=crlf policy.
+in/UXLC-39/**     text eol=lf
+in/UXLC-misc/**   text eol=lf
+
 # Binary assets: never convert.
 *.png  binary
 *.jpg  binary
