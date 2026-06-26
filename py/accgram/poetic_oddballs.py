@@ -85,6 +85,8 @@ from mb_cmn import provenance
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
 
+import repo_paths
+
 KIND_MISSING_SILLUQ = "missing_silluq"
 KIND_NO_PARSE = "no_parse"
 
@@ -775,11 +777,11 @@ def _counts(oddballs: list[PoeticOddball]) -> dict[str, int]:
 
 
 def default_oddballs_out_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply-poetic" / "_oddballs.json"
+    return repo_paths.out_dir() / "accgram" / "ply-poetic" / "_oddballs.json"
 
 
 def default_html_out_path(repo_root: Path) -> Path:
-    return repo_root / "gh-pages" / "accgram" / "poetic.html"
+    return repo_paths.gh_pages_dir() / "accgram" / "poetic.html"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

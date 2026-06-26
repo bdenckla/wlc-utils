@@ -28,6 +28,8 @@ from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.ply_scanner import scan_book
 from accgram.ply_tree import add_leaves, print_tree
 
+import repo_paths
+
 
 def _illegal_mark_tree(
     marks: list[lexical_validation.StrandedMark], words: list[str]
@@ -149,11 +151,11 @@ def render_book(
 
 
 def default_input_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "wlc422-kq-u"
+    return repo_paths.out_dir() / "wlc422-kq-u"
 
 
 def default_out_dir(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply"
+    return repo_paths.out_dir() / "accgram" / "ply"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

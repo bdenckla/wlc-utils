@@ -13,6 +13,8 @@ from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
 
+import repo_paths
+
 _SELF_LINK_SYMBOL = "🔗"
 
 StructuredTextLookup = Callable[[dict[str, object], str], object]
@@ -38,7 +40,7 @@ def expand_uxlc_change_ref(compact: object) -> object:
 
 
 def default_html_out_path(repo_root: Path) -> Path:
-    return repo_root / "gh-pages" / "accgram" / "goerwitz.html"
+    return repo_paths.gh_pages_dir() / "accgram" / "goerwitz.html"
 
 
 def resolve_html_out_path(args: object, repo_root: Path) -> Path:

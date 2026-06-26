@@ -54,6 +54,8 @@ from accgram.ply_tree import TN
 from accgram.ob_notes import get_structured_text
 from mb_cmn import provenance
 
+import repo_paths
+
 
 @dataclass(frozen=True)
 class FixTestResult:
@@ -673,15 +675,15 @@ def build_json_report(results: list[FixTestResult]) -> dict:
 
 
 def _repo_root() -> Path:
-    return Path(__file__).resolve().parent.parent.parent
+    return repo_paths.repo_root()
 
 
 def default_report_txt_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "fix-tester" / "_fix_tester.txt"
+    return repo_paths.out_dir() / "accgram" / "fix-tester" / "_fix_tester.txt"
 
 
 def default_report_json_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "fix-tester" / "_fix_tester.json"
+    return repo_paths.out_dir() / "accgram" / "fix-tester" / "_fix_tester.json"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

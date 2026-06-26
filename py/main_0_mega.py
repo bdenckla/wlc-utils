@@ -11,6 +11,8 @@ from pathlib import Path
 
 from cmn.utf8_io import force_utf8_io
 
+import repo_paths
+
 
 @dataclass(frozen=True)
 class Step:
@@ -19,7 +21,7 @@ class Step:
 
 
 def _repo_root() -> Path:
-    return Path(__file__).resolve().parent.parent
+    return repo_paths.repo_root()
 
 
 def _steps(repo_root: Path) -> tuple[Step, ...]:

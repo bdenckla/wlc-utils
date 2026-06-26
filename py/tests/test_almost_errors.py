@@ -26,6 +26,8 @@ from accgram.ply_grammar import build_parser
 from accgram.ply_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
 
+import repo_paths
+
 # A synthetic same-letter word: one base letter carrying BOTH a telisha gedola and a
 # plain geresh -- the shape the companion-drop charity concerns.
 _SAME_LETTER_BOTH = "א" + am.TELISHA_GEDOLA + am.GERESH
@@ -100,7 +102,7 @@ def test_parse_tree_from_text_empty_is_none() -> None:
 # --------------------------------------------------------------------------- #
 # Corpus-backed end-to-end generation (skips when the kq-u corpus is absent).
 # --------------------------------------------------------------------------- #
-_REPO_ROOT = Path(__file__).resolve().parents[2]
+_REPO_ROOT = repo_paths.repo_root()
 
 
 def _load_index_or_skip():

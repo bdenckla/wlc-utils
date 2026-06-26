@@ -41,6 +41,8 @@ from accgram.mam_poetic_accents import load_word_accents, servi_before_in_words
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.ply_scanner_poetic import scan_book
 
+import repo_paths
+
 # The poetic conjunctive servi, in the scanner's vocabulary.
 _SERVI = frozenset(
     {pan.MUNAX, pan.MERKHA, pan.MAHAPAKH, pan.AZLA, pan.GALGAL, pan.ILLUY, pan.TARXA}
@@ -198,7 +200,7 @@ def default_input_path(repo_root: Path) -> Path:
 
 
 def default_report_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply-poetic" / "_servi_xcheck.txt"
+    return repo_paths.out_dir() / "accgram" / "ply-poetic" / "_servi_xcheck.txt"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

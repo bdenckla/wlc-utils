@@ -59,14 +59,14 @@ from accgram import prose_filter  # noqa: E402
 from cmn.wlc_book_codes import bk39id_to_wlc_bb  # noqa: E402
 from py_uxlc import my_uxlc  # noqa: E402
 from py_uxlc.my_uxlc_book_abbreviations import expand_citation  # noqa: E402
+import repo_paths  # noqa: E402
 
-REPO = Path(__file__).resolve().parent.parent
-WLC_KQ_U = REPO / "out" / "wlc422-kq-u"
-SRC = REPO / "in" / "accgram" / "uxlc_accent_changes.json"
-OUT = REPO / "out" / "accgram" / "uxlc_grammar_test.txt"
+WLC_KQ_U = repo_paths.out_dir() / "wlc422-kq-u"
+SRC = repo_paths.in_dir() / "accgram" / "uxlc_accent_changes.json"
+OUT = repo_paths.out_dir() / "accgram" / "uxlc_grammar_test.txt"
 # `my_uxlc.read` resolves its book XML relative to `UXLC_CANONICAL_DIR`; anchor it
 # at this repo so the cross-check (below) works regardless of the process cwd.
-my_uxlc.UXLC_CANONICAL_DIR = str(REPO / "in" / "UXLC-39")
+my_uxlc.UXLC_CANONICAL_DIR = str(repo_paths.in_dir() / "UXLC-39")
 
 MAQAF_CP = "־"   # HEBREW PUNCTUATION MAQAF
 PASEQ_CP = "׀"   # HEBREW PUNCTUATION PASEQ

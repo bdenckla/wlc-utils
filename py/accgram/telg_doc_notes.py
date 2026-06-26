@@ -28,6 +28,8 @@ from cmn.utf8_io import force_utf8_io
 from mb_cmn import provenance
 from py_html import wlc_utils_html as H
 
+import repo_paths
+
 REPORT_TITLE = "MAM documentation notes on the telg + geresh/gershayim words"
 
 # The five words, in the order almost-errors.html presents them: three
@@ -322,7 +324,7 @@ def render_body_contents() -> tuple[object, ...]:
 # CLI
 # --------------------------------------------------------------------------- #
 def default_html_out_path(repo_root: Path) -> Path:
-    return repo_root / "gh-pages" / "accgram" / "telg-doc-notes.html"
+    return repo_paths.gh_pages_dir() / "accgram" / "telg-doc-notes.html"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
@@ -351,7 +353,7 @@ def run(args: argparse.Namespace) -> None:
 
 def main() -> None:
     force_utf8_io()
-    repo_root = Path(__file__).resolve().parent.parent.parent
+    repo_root = repo_paths.repo_root()
     parser = argparse.ArgumentParser(description=__doc__)
     add_args(parser, repo_root=repo_root)
     run(parser.parse_args())

@@ -39,6 +39,8 @@ from accgram.ply_scanner_poetic import scan_book
 from accgram.ply_tree import TN, print_tree
 from accgram.poetic_reconcile import reconcile_tokens
 
+import repo_paths
+
 
 @dataclass(frozen=True)
 class BookRun:
@@ -129,11 +131,11 @@ def render_book(
 
 
 def default_input_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "wlc422-kq-u"
+    return repo_paths.out_dir() / "wlc422-kq-u"
 
 
 def default_out_dir(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply-poetic"
+    return repo_paths.out_dir() / "accgram" / "ply-poetic"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

@@ -17,11 +17,13 @@ from pathlib import Path
 from accgram import ps17v14_double_tsinnor_body as _body
 from accgram import ps17v14_replay
 
+import repo_paths
+
 _OUT_NAME = "ps17v14-double-tsinnor.html"
 
 
 def default_html_out_path(repo_root: Path) -> Path:
-    return repo_root / "gh-pages" / "accgram" / _OUT_NAME
+    return repo_paths.gh_pages_dir() / "accgram" / _OUT_NAME
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

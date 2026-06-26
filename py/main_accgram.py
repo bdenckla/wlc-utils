@@ -82,9 +82,11 @@ from accgram import telg_doc_notes
 from accgram import xcheck_poetic
 from cmn.utf8_io import force_utf8_io
 
+import repo_paths
+
 
 def _repo_root() -> Path:
-    return Path(__file__).resolve().parent.parent
+    return repo_paths.repo_root()
 
 
 def _run_run_ply(args: argparse.Namespace) -> None:

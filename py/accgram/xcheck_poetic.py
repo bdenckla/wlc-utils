@@ -46,6 +46,8 @@ from accgram.ply_grammar_poetic import build_parser, parse_tokens
 from accgram.ply_scanner_poetic import scan_book
 from accgram.poetic_reconcile import reconcile_tokens
 
+import repo_paths
+
 
 @dataclass(frozen=True)
 class Divergence:
@@ -169,7 +171,7 @@ def default_input_path(repo_root: Path) -> Path:
 
 
 def default_report_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply-poetic" / "_mam_xcheck.txt"
+    return repo_paths.out_dir() / "accgram" / "ply-poetic" / "_mam_xcheck.txt"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

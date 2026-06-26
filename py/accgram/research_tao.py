@@ -15,13 +15,15 @@ from accgram import tm_descriptor
 from accgram.ob_notes import get_structured_text
 from accgram.tm_sanity import sanity_check_structured_text
 
+import repo_paths
+
 
 def default_oddballs_in(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply" / "_oddballs.json"
+    return repo_paths.out_dir() / "accgram" / "ply" / "_oddballs.json"
 
 
 def default_ply_dir(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply"
+    return repo_paths.out_dir() / "accgram" / "ply"
 
 
 def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
@@ -29,7 +31,7 @@ def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
 
 
 def default_uxlc_dir(repo_root: Path) -> Path:
-    return repo_root / "in" / "UXLC-39"
+    return repo_paths.in_dir() / "UXLC-39"
 
 
 def default_mam_simple_dir(repo_root: Path) -> Path:
@@ -37,11 +39,11 @@ def default_mam_simple_dir(repo_root: Path) -> Path:
 
 
 def default_all_changes_path(repo_root: Path) -> Path:
-    return repo_root / "in" / "UXLC-misc" / "all_changes.json"
+    return repo_paths.in_dir() / "UXLC-misc" / "all_changes.json"
 
 
 def default_oddballs_out_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "research-oddballs.json"
+    return repo_paths.out_dir() / "accgram" / "research-oddballs.json"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
@@ -96,7 +98,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 
 def run(args: argparse.Namespace) -> None:
-    repo_root = Path(__file__).resolve().parent.parent.parent
+    repo_root = repo_paths.repo_root()
 
     all_changes_path = getattr(args, "all_changes", None)
     if not isinstance(all_changes_path, Path):

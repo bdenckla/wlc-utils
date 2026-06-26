@@ -48,6 +48,8 @@ from accgram.ply_scanner_poetic import scan_verse
 from accgram.ply_tree import print_tree
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
+import repo_paths
+
 # Each bang token -> the two co-equal accents it fuses, in storage order: a
 # (token, leaf) pair for x and for y, plus the (mark_x, mark_y) codepoints used to
 # locate the bearing word in the raw -kq-u text.  Poetic-first: only merkha!azla.
@@ -215,7 +217,7 @@ def default_input_path(repo_root: Path) -> Path:
 
 
 def default_report_path(repo_root: Path) -> Path:
-    return repo_root / "out" / "accgram" / "ply-poetic" / "_bang_legality.txt"
+    return repo_paths.out_dir() / "accgram" / "ply-poetic" / "_bang_legality.txt"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

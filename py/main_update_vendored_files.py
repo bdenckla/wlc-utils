@@ -12,7 +12,7 @@ from mb_cmn import vendoring_sync
 
 import repo_paths
 
-_REPO = Path(__file__).resolve().parents[1]
+_REPO = repo_paths.repo_root()
 _SOURCE_REPO = repo_paths.mam_basics_dir()
 _SOURCE_PYCMN = _SOURCE_REPO / "py" / "mb_cmn"
 _DEST_PYCMN = _REPO / "py" / "mb_cmn"
@@ -24,9 +24,9 @@ _DEST_MBDIFF = _REPO / "py" / "mb_diff_mpu"
 # UXLC data folders are vendored from the UXLC-utils sibling repo, not MAM-basics.
 _UXLC_SOURCE_REPO = repo_paths.uxlc_utils_dir()
 _SOURCE_UXLC39 = _UXLC_SOURCE_REPO / "in" / "UXLC-39"
-_DEST_UXLC39 = _REPO / "in" / "UXLC-39"
+_DEST_UXLC39 = repo_paths.in_dir() / "UXLC-39"
 _SOURCE_UXLCMISC = _UXLC_SOURCE_REPO / "out" / "UXLC-misc"
-_DEST_UXLCMISC = _REPO / "in" / "UXLC-misc"
+_DEST_UXLCMISC = repo_paths.in_dir() / "UXLC-misc"
 
 
 def main() -> None:
