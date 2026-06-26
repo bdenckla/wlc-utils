@@ -7535,8 +7535,8 @@
     "changeuni_erbs": false,
     "bhla": false,
     "accent_change_reason": "accent",
-    "goerwitz_st_ref": null,
-    "goerwitz_st_pending": null
+    "goerwitz_st_ref": "je 44:17",
+    "goerwitz_st_pending": false
   },
   {
     "release": "2023.04.01",
