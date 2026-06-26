@@ -41,7 +41,7 @@ def _intro() -> tuple[object, ...]:
         H.heading_level_2("Introduction"),
         H.para(
             "This page documents the accent-grammar checker's “almost errors”:"
-            " cantillation features that a naïve checker would flag, but that we"
+            " cantillation features that a naïve checker would flag, but that we"
             " do not flag — and, in each case, the reading we chose is a choice,"
             " not a forced move. Two kinds appear here."
         ),

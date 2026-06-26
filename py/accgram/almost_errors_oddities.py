@@ -123,7 +123,7 @@ def oddities_intro() -> tuple[object, ...]:
     return (
         H.heading_level_2("Masoretically-blessed oddities (not charities)"),
         H.para(
-            "The features below would make a naïve checker blink — two accents crowding"
+            "The features below would make a naïve checker blink — two accents crowding"
             " one letter or one word, or the same divider written twice in a row — but"
             " none of them is a quirk of LC, BHS, or WLC to be forgiven. They are"
             " official masoretic tradition, attested in the standard witnesses. The"
@@ -390,10 +390,10 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
             (
                 "The instructive contrast is Lev. 25:20, the ",
                 H.bold("only other"),
-                " prose word with two accents on one letter (a mahapakh and a tipeḥa)."
+                " prose word with two accents on one letter (a mahapakh and a tipeḥa)."
                 " There the witnesses do ",
                 H.bold("not"),
-                " agree — MAM keeps only the tipeḥa and WLC tags the word anomalous —"
+                " agree — MAM keeps only the tipeḥa and WLC tags the word anomalous —"
                 " so it may well be an error in the LC, and the checker flags it (as a"
                 " lexical error). Same surface shape, opposite verdict, decided by the"
                 " witnesses. Its full treatment is on the ",

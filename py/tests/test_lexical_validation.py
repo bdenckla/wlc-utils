@@ -121,7 +121,7 @@ def test_geresh_muqdam_whitelisted_separately_from_plain_geresh():
 
 def test_telg_with_non_geresh_neighbor_still_flagged():
     # The whitelist is specific to the geresh family: a telisha gedola stacked on some other
-    # accent (e.g. tipeḥa) is still an alphabet error.
+    # accent (e.g. tipeḥa) is still an alphabet error.
     assert _pairs("X" + _TG + _TI + "X") == ["telishagedola!tipexa"]
 
 

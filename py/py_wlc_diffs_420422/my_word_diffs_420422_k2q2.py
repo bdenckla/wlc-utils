@@ -109,7 +109,7 @@ _JOB_38_1_and_40_6_INTRO = [
     " letters, " "pointing the מן of the ",
     rmn("qere"),
     " with ",
-    rmn("ḥiriq"),
+    rmn("ḥiriq"),
     ", ",
     *_GAYA_PAREN_METEG,
     ", and ",
@@ -272,7 +272,7 @@ EZRA_4_12 = [
             "a configuration we sometimes abbreviate as k1q1×2."
             " "
             "(There is a ",
-            rmn("ḥaser/malei"),
+            rmn("ḥaser/malei"),
             " issue later in the second word, "
             "but the primary issue is the word boundary issue.)"
             " "
@@ -427,7 +427,7 @@ EZRA_4_12 = [
             "to come from nowhere, not from the end of הייתה."
             " "
             "Note that in ל, the ",
-            rmn("pataḥ"),
+            rmn("pataḥ"),
             " intended for this ה is an orphan, floating out in "
             "a lonely fashion before the ",
             rmn("ketiv"),
@@ -464,7 +464,7 @@ EZRA_4_12 = [
     wlc_utils_html.unordered_list(
         [
             "היית rather than הייתה are the qere letters",
-            "the final ה of הייתה is pointed with pataḥ, i.e. הייתהַ",
+            "the final ה of הייתה is pointed with pataḥ, i.e. הייתהַ",
             ["the ", rmn("qere"), " words היית המוציא are grouped together"],
         ]
     ),

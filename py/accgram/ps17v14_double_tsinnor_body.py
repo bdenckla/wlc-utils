@@ -132,7 +132,7 @@ BODY = ['\n\n',
                 'lb1': '',
                 'lb2': '',
                 'contents': ['חטף']},
-               ' [ḥataf], a missing shva, and\n'
+               ' [ḥataf], a missing shva, and\n'
                'the placement of the silluq — none of which alters the disjunctive skeleton, and\n'
                'the conjunctive servus chain the grammar parses is permissive enough that a\n'
                'secondary conjunctive is absorbed harmlessly.']},

@@ -15,8 +15,10 @@ def names(string):
 def name(string_len_1):
     """Return the UXLC name for the given Unicode code point."""
     my_un = legacy_names.legacy_name(string_len_1)
-    my_un_ndb = my_un.replace("ḥ", "h")  # ndb: no dot below [h]
-    # E.g. etnaḥta becomes just etnahta
+    # ndb: no dot below.  The search literal is the *decomposed* ḥ (h +
+    # U+0323), matching legacy_name's already-decomposed output, so this
+    # actually strips the dot.  E.g. etnaḥta becomes just etnahta.
+    my_un_ndb = my_un.replace("ḥ", "h")
     my_un_ndb_fn = my_un_ndb.split("/")[0]  # first name in a slash seq
     # E.g., meteg/siluq becomes just meteg
     uxlc_un = _UXLC_UNS.get(my_un_ndb_fn) or my_un_ndb_fn

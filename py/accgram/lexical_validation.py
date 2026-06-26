@@ -25,10 +25,10 @@ one token, grammar-accepted) and the telisha gedola + geresh-family pair (gn5:29
 2k17:13), spared as a two-token *sequence* (the telg and the geresh, in manuscript order --
 gerstar-then-telg for these same-letter words) -- so ANY other two adjacent
 accents (no base-letter ``X`` between -> same letter) is an alphabet error.  The sole
-attested illicit pair is mahapakh + tipeḥa (lv25:20); two accents stacked on one letter
+attested illicit pair is mahapakh + tipeḥa (lv25:20); two accents stacked on one letter
 make the fault intrinsic to the letter -- an alphabet error, not an illegal grammatical
 sequence (which the grammar would otherwise flag as ``tipexa_phrase -> ERROR``, the
-wrong rationale).  The general guard supersedes the earlier mahapakh+tipeḥa-only check
+wrong rationale).  The general guard supersedes the earlier mahapakh+tipeḥa-only check
 (output-neutral today, but future-proof; cf. memory parse-rate-not-a-goal).
 
 Prose-only is intentional and burns no bridge: a bare ``82`` is *valid* in the
@@ -97,14 +97,14 @@ def _is_accent(ch: str) -> bool:
 #     and the grammar accepts (a fused-legal-token entry); and
 #   * telisha gedola (U+05A0) + a geresh-family mark -- gershayim (U+059E; gn5:29, zp2:15)
 #     or a prose geresh muqdam (U+059D; 2k17:13, which the scanner normalizes to a plain
-#     geresh).  This is the prose analogue of poetic's deḥi + munax whitelist entry: a
+#     geresh).  This is the prose analogue of poetic's deḥi + munax whitelist entry: a
 #     legitimate same-letter pair spared as a two-token *sequence* (telg then geresh), not
 #     fused.  Plain geresh (U+059C) is whitelisted alongside the muqdam codepoint because
 #     the guard runs on raw codepoints, pre-scanner, before muqdam->geresh normalization.
 #
 # ANY other two accents on one letter is an alphabet error.  Order-less (a frozenset of
 # frozensets): the within-letter order of two stacked accents is not meaningful.  The sole
-# attested illicit pair is mahapakh (U+05A4) + tipeḥa (U+0596) (lv25:20, word נֹּאכַל -- WLC
+# attested illicit pair is mahapakh (U+05A4) + tipeḥa (U+0596) (lv25:20, word נֹּאכַל -- WLC
 # keeps a mahapakh MAM drops, tagging the word anomalous via ]n), flagged by this general
 # rule.  The label uses the order-preserving same-letter-pair bang convention.
 _WHITELISTED_SAME_LETTER: frozenset[frozenset[str]] = frozenset(
@@ -184,13 +184,13 @@ def illegal_same_letter_pairs(body: str) -> list[StrandedMark]:
     MAM-confirmed; the scanner fuses it to one ``mahapakh!qadma`` token before the grammar
     and it never reaches here) or telisha gedola + a geresh-family mark (gn5:29, zp2:15,
     2k17:13; kept as a two-token gerstar-then-telg sequence, the manuscript order).  Everything else two-on-a-letter is
-    illicit -- today only mahapakh + tipeḥa (lv25:20), formerly handled by a pair-specific
+    illicit -- today only mahapakh + tipeḥa (lv25:20), formerly handled by a pair-specific
     check, now flagged by this general guard (the prose analogue of the poetic Plan D bang
     guard).
 
     Reported with the order-preserving bang label ``a!b`` (body order; e.g.
     ``mahapakh!tipexa``), keyed for word location on the first (here, distinguishing)
-    mark -- mahapakh, NOT the tipeḥa that recurs elsewhere in lv25:20.
+    mark -- mahapakh, NOT the tipeḥa that recurs elsewhere in lv25:20.
     """
     illegal: list[StrandedMark] = []
     for atom in _ATOM_SPLIT_RE.split(body):

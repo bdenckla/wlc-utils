@@ -63,6 +63,11 @@ _XOLAM_PATT1 = "O" + _paren(_NON_LETT_STAR) + _paren(_XOLAM_PATT1_END)
 _XOLAM_REPL1 = r"o\1\2"
 _XOLAM_PATT2 = "O" + _paren(_NON_LETT_STAR) + "W"
 _XOLAM_REPL2 = r"\1WO"
+# The precomposed "ḥ" (U+1E25) here and at the _TRANSLATION_DIC entry below is a
+# private single-codepoint *sentinel* for XOLAM_XFV, not transliteration: it must
+# stay precomposed because it is used as a str.maketrans() key, and maketrans keys
+# must be length 1 (a decomposed h+U+0323 would raise ValueError at import).  The
+# tree-wide precomposed-char guard allowlists this one file for that reason.
 _XOLAM_PATT3 = "W" + _paren(_NON_LETT_STAR) + "o"
 _XOLAM_REPL3 = r"W\1ḥ"
 _FINAL_PATT = r"[KMNPC]" + _NON_LETT_STAR_DOLL
@@ -134,7 +139,7 @@ _TRANSLATION_DIC_RETAINING_SLASH = {
     "I": hpo.XIRIQ,
     "O": hpo.XOLAM,
     "o": hpo.XOLAM,
-    "ḥ": hpo.XOLAM_XFV,
+    "ḥ": hpo.XOLAM_XFV,  # precomposed sentinel (maketrans key); see _XOLAM_REPL3 note
     "U": hpo.QUBUTS,
     ":": hpo.SHEVA,
     ".": hpo.DAGOMOSD,
