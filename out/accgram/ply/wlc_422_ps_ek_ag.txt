@@ -54,7 +54,7 @@ Ezekiel 1:3
         4 big_telisha_phrase
           munax munax telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -207,7 +207,7 @@ Ezekiel 1:10
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -260,7 +260,7 @@ Ezekiel 1:12
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        munax telishaqetanna azla mahapakh pashta 
+        munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -320,7 +320,7 @@ Ezekiel 1:15
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla merkha tevir 
+        telishaqetanna qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -330,7 +330,7 @@ Ezekiel 1:16
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -414,7 +414,7 @@ Ezekiel 1:20
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        munax telishaqetanna azla mahapakh pashta 
+        munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -537,7 +537,7 @@ Ezekiel 1:24
         4 pazer_phrase
           munax munax pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -726,7 +726,7 @@ Ezekiel 2:3
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -1017,7 +1017,7 @@ Ezekiel 3:5
         4 pazer_phrase
           pazer 
         4 tevir_phrase
-          telishaqetanna azla merkha tevir 
+          telishaqetanna qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -1089,7 +1089,7 @@ Ezekiel 3:8
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -1149,7 +1149,7 @@ Ezekiel 3:11
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -1359,7 +1359,7 @@ Ezekiel 3:20
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -1497,7 +1497,7 @@ Ezekiel 3:25
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -1607,7 +1607,7 @@ Ezekiel 4:2
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -1910,7 +1910,7 @@ Ezekiel 4:14
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -1953,7 +1953,7 @@ Ezekiel 4:16
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -2118,7 +2118,7 @@ Ezekiel 5:6
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -2412,7 +2412,7 @@ Ezekiel 5:16
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax munax zaqef 
     2 atnax_clause
@@ -2816,7 +2816,7 @@ Ezekiel 6:13
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -3777,7 +3777,7 @@ Ezekiel 8:12
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -4011,7 +4011,7 @@ Ezekiel 9:2
               munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -4152,7 +4152,7 @@ Ezekiel 9:6
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -4242,7 +4242,7 @@ Ezekiel 9:9
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -4368,7 +4368,7 @@ Ezekiel 10:2
               munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -4548,7 +4548,7 @@ Ezekiel 10:9
         revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
         4 segolta_phrase
           munax segolta 
     2 atnax_clause
@@ -4791,7 +4791,7 @@ Ezekiel 10:19
         4 big_telisha_phrase
           munax munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -4842,7 +4842,7 @@ Ezekiel 10:21
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -4902,7 +4902,7 @@ Ezekiel 11:1
           5 big_telisha_phrase
             munax telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -5498,7 +5498,7 @@ Ezekiel 12:2
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -5661,7 +5661,7 @@ Ezekiel 12:9
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -5741,7 +5741,7 @@ Ezekiel 12:12
           revia 
         4 tipexa_clause
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
           5 tipexa_phrase
             tipexa 
       3 silluq_phrase
@@ -5762,7 +5762,7 @@ Ezekiel 12:13
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -5775,7 +5775,7 @@ Ezekiel 12:14
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla merkha tevir 
+        telishaqetanna qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -6024,7 +6024,7 @@ Ezekiel 12:25
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -6101,7 +6101,7 @@ Ezekiel 12:28
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -6417,7 +6417,7 @@ Ezekiel 13:14
         4 geresh_phrase
           azla geresh 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -6594,7 +6594,7 @@ Ezekiel 13:20
             6 big_telisha_phrase
               munax telishagedola 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -6975,7 +6975,7 @@ Ezekiel 14:11
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -7047,7 +7047,7 @@ Ezekiel 14:14
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -7092,7 +7092,7 @@ Ezekiel 14:16
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -7149,7 +7149,7 @@ Ezekiel 14:18
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -7187,7 +7187,7 @@ Ezekiel 14:19
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -7200,7 +7200,7 @@ Ezekiel 14:20
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -7316,7 +7316,7 @@ Ezekiel 14:23
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax munax zaqef 
     2 silluq_clause
@@ -7515,7 +7515,7 @@ Ezekiel 16:3
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -7542,7 +7542,7 @@ Ezekiel 16:4
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -7800,7 +7800,7 @@ Ezekiel 16:14
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -8064,7 +8064,7 @@ Ezekiel 16:27
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -8189,7 +8189,7 @@ Ezekiel 16:33
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -8208,7 +8208,7 @@ Ezekiel 16:34
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -8277,7 +8277,7 @@ Ezekiel 16:37
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax munax zaqef 
     2 atnax_clause
@@ -8520,7 +8520,7 @@ Ezekiel 16:46
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -8856,7 +8856,7 @@ Ezekiel 16:60
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -8891,7 +8891,7 @@ Ezekiel 16:61
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -8922,7 +8922,7 @@ Ezekiel 16:63
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -9221,7 +9221,7 @@ Ezekiel 17:12
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             mahapakh pashta 
@@ -9354,7 +9354,7 @@ Ezekiel 17:17
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -9377,7 +9377,7 @@ Ezekiel 17:18
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -9390,7 +9390,7 @@ Ezekiel 17:19
         4 geresh_phrase
           gershayim 
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -9444,7 +9444,7 @@ Ezekiel 17:21
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -9501,7 +9501,7 @@ Ezekiel 17:23
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -10134,7 +10134,7 @@ Ezekiel 18:24
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -10464,7 +10464,7 @@ Ezekiel 19:8
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -10730,7 +10730,7 @@ Ezekiel 20:5
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -10850,7 +10850,7 @@ Ezekiel 20:9
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -10886,7 +10886,7 @@ Ezekiel 20:11
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -10935,7 +10935,7 @@ Ezekiel 20:13
             munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -10949,7 +10949,7 @@ Ezekiel 20:13
         4 geresh_phrase
           gershayim 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -11130,7 +11130,7 @@ Ezekiel 20:21
               munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -11283,7 +11283,7 @@ Ezekiel 20:27
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -11421,7 +11421,7 @@ Ezekiel 20:31
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 pashta_phrase
-            telishaqetanna mahapakh!azla pashta 
+            telishaqetanna mahapakh!qadma pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -11861,7 +11861,7 @@ Ezekiel 21:3
           5 pazer_phrase
             munax munax pazer 
           5 pashta_phrase
-            munax munax telishaqetanna azla mahapakh pashta 
+            munax munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -11984,7 +11984,7 @@ Ezekiel 21:9
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -12111,7 +12111,7 @@ Ezekiel 21:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -12420,7 +12420,7 @@ Ezekiel 21:28
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -13016,7 +13016,7 @@ Ezekiel 22:18
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -13065,7 +13065,7 @@ Ezekiel 22:20
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -13296,7 +13296,7 @@ Ezekiel 22:30
         4 pazer_phrase
           munax pazer 
         4 tevir_phrase
-          munax telishaqetanna azla darga tevir 
+          munax telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -13563,7 +13563,7 @@ Ezekiel 23:12
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -13662,7 +13662,7 @@ Ezekiel 23:17
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -13779,7 +13779,7 @@ Ezekiel 23:22
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -14403,7 +14403,7 @@ Ezekiel 23:47
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -14772,7 +14772,7 @@ Ezekiel 24:14
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -14805,7 +14805,7 @@ Ezekiel 24:16
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -14925,7 +14925,7 @@ Ezekiel 24:21
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -14991,7 +14991,7 @@ Ezekiel 24:24
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -15021,7 +15021,7 @@ Ezekiel 24:25
           revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
       3 atnax_clause
@@ -15471,7 +15471,7 @@ Ezekiel 25:16
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -15537,7 +15537,7 @@ Ezekiel 26:2
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -15609,7 +15609,7 @@ Ezekiel 26:5
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -15921,7 +15921,7 @@ Ezekiel 26:17
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -15938,7 +15938,7 @@ Ezekiel 26:17
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -16215,7 +16215,7 @@ Ezekiel 27:9
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -16226,7 +16226,7 @@ Ezekiel 27:9
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -16239,7 +16239,7 @@ Ezekiel 27:10
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -16388,7 +16388,7 @@ Ezekiel 27:16
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -16415,7 +16415,7 @@ Ezekiel 27:17
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -16743,7 +16743,7 @@ Ezekiel 27:32
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -16968,7 +16968,7 @@ Ezekiel 28:7
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -17091,7 +17091,7 @@ Ezekiel 28:13
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 revia_clause
             6 geresh_phrase
@@ -17114,7 +17114,7 @@ Ezekiel 28:13
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -17138,7 +17138,7 @@ Ezekiel 28:14
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -17180,7 +17180,7 @@ Ezekiel 28:16
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -17444,7 +17444,7 @@ Ezekiel 28:26
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -17625,7 +17625,7 @@ Ezekiel 29:7
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -17751,7 +17751,7 @@ Ezekiel 29:12
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -17844,7 +17844,7 @@ Ezekiel 29:16
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        munax telishaqetanna azla mahapakh pashta 
+        munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -17912,7 +17912,7 @@ Ezekiel 29:18
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -18165,7 +18165,7 @@ Ezekiel 30:9
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -18176,7 +18176,7 @@ Ezekiel 30:9
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -18936,7 +18936,7 @@ Ezekiel 31:15
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_clause
             6 geresh_phrase
@@ -19023,7 +19023,7 @@ Ezekiel 31:18
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -19037,7 +19037,7 @@ Ezekiel 31:18
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -19170,7 +19170,7 @@ Ezekiel 32:6
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -19337,7 +19337,7 @@ Ezekiel 32:13
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -19448,7 +19448,7 @@ Ezekiel 32:18
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -19527,7 +19527,7 @@ Ezekiel 32:23
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -19574,7 +19574,7 @@ Ezekiel 32:24
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -19590,7 +19590,7 @@ Ezekiel 32:25
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -19866,7 +19866,7 @@ Ezekiel 33:5
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -19974,7 +19974,7 @@ Ezekiel 33:9
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -20148,7 +20148,7 @@ Ezekiel 33:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -20276,7 +20276,7 @@ Ezekiel 33:21
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -20412,7 +20412,7 @@ Ezekiel 33:27
         4 geresh_phrase
           azla geresh 
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -20720,7 +20720,7 @@ Ezekiel 34:6
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -20936,7 +20936,7 @@ Ezekiel 34:15
 0 silluq_clause
   1 zaqef_clause
     2 pashta_phrase
-      azla mahapakh pashta 
+      qadma mahapakh pashta 
     2 zaqef_phrase
       munax zaqef 
   1 silluq_clause
@@ -21246,7 +21246,7 @@ Ezekiel 34:28
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -21632,7 +21632,7 @@ Ezekiel 35:15
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -21755,7 +21755,7 @@ Ezekiel 36:4
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 silluq_clause
@@ -21780,7 +21780,7 @@ Ezekiel 36:5
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -21830,7 +21830,7 @@ Ezekiel 36:6
                 munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -22026,7 +22026,7 @@ Ezekiel 36:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -22634,7 +22634,7 @@ Ezekiel 37:2
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -22929,7 +22929,7 @@ Ezekiel 37:14
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -23100,7 +23100,7 @@ Ezekiel 37:21
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -23127,7 +23127,7 @@ Ezekiel 37:22
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -23147,7 +23147,7 @@ Ezekiel 37:22
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 silluq_phrase
@@ -23649,7 +23649,7 @@ Ezekiel 38:13
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -23705,7 +23705,7 @@ Ezekiel 38:14
           munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
     2 silluq_phrase
@@ -23823,7 +23823,7 @@ Ezekiel 38:18
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -23907,7 +23907,7 @@ Ezekiel 38:21
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -24050,7 +24050,7 @@ Ezekiel 39:4
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -24156,7 +24156,7 @@ Ezekiel 39:9
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -24291,7 +24291,7 @@ Ezekiel 39:14
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -24413,7 +24413,7 @@ Ezekiel 39:18
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -24659,7 +24659,7 @@ Ezekiel 39:29
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -24885,7 +24885,7 @@ Ezekiel 40:7
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_clause
           5 pashta_phrase
             mahapakh pashta 
@@ -24902,7 +24902,7 @@ Ezekiel 40:7
         4 big_telisha_phrase
           munax telishagedola 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -25086,7 +25086,7 @@ Ezekiel 40:16
         4 pazer_phrase
           munax munax pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -25164,7 +25164,7 @@ Ezekiel 40:19
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -25311,7 +25311,7 @@ Ezekiel 40:25
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -25370,7 +25370,7 @@ Ezekiel 40:27
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -25710,10 +25710,10 @@ Ezekiel 40:42
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -25730,7 +25730,7 @@ Ezekiel 40:42
           mahapakh pashta 
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             tipexa 
     2 silluq_phrase
@@ -25955,7 +25955,7 @@ Ezekiel 41:1
         munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 silluq_phrase
@@ -26070,7 +26070,7 @@ Ezekiel 41:6
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 atnax_phrase
@@ -26252,7 +26252,7 @@ Ezekiel 41:14
 0 silluq_clause
   1 tipexa_clause
     2 tevir_phrase
-      telishaqetanna azla darga tevir 
+      telishaqetanna qadma darga tevir 
     2 tipexa_phrase
       tipexa 
   1 silluq_phrase
@@ -26268,7 +26268,7 @@ Ezekiel 41:15
           5 geresh_phrase
             azla geresh 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -26327,7 +26327,7 @@ Ezekiel 41:17
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
     2 tipexa_phrase
       merkha tipexa 
   1 silluq_phrase
@@ -26355,7 +26355,7 @@ Ezekiel 41:19
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -26499,7 +26499,7 @@ Ezekiel 41:26
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -26534,7 +26534,7 @@ Ezekiel 42:1
         munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 silluq_phrase
@@ -26589,7 +26589,7 @@ Ezekiel 42:4
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          telishaqetanna azla merkha pashta 
+          telishaqetanna qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -26820,7 +26820,7 @@ Ezekiel 42:13
             munax revia 
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             merkha tipexa 
       3 atnax_phrase
@@ -27273,7 +27273,7 @@ Ezekiel 43:11
                 8 pazer_phrase
                   munax pazer 
                 8 pashta_phrase
-                  munax telishaqetanna azla mahapakh pashta 
+                  munax telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -27321,7 +27321,7 @@ Ezekiel 43:13
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -27338,7 +27338,7 @@ Ezekiel 43:13
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -27614,7 +27614,7 @@ Ezekiel 43:24
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -27680,7 +27680,7 @@ Ezekiel 43:27
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -27764,7 +27764,7 @@ Ezekiel 44:3
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -27995,7 +27995,7 @@ Ezekiel 44:11
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -28014,7 +28014,7 @@ Ezekiel 44:12
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -28524,7 +28524,7 @@ Ezekiel 45:1
           revia 
       3 segolta_clause
         4 zarqa_phrase
-          telishaqetanna azla merkha zarqa 
+          telishaqetanna qadma merkha zarqa 
         4 segolta_phrase
           segolta 
     2 atnax_clause
@@ -28533,7 +28533,7 @@ Ezekiel 45:1
           revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla merkha pashta 
+            qadma merkha pashta 
           5 zaqef_phrase
             zaqef 
       3 atnax_clause
@@ -28622,7 +28622,7 @@ Ezekiel 45:4
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -28635,7 +28635,7 @@ Ezekiel 45:5
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -28649,7 +28649,7 @@ Ezekiel 45:5
         4 pazer_phrase
           pazer 
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -28742,7 +28742,7 @@ Ezekiel 45:8
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -28905,7 +28905,7 @@ Ezekiel 45:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -29058,7 +29058,7 @@ Ezekiel 45:21
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -29112,7 +29112,7 @@ Ezekiel 45:23
           5 big_telisha_phrase
             munax telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -29154,7 +29154,7 @@ Ezekiel 45:25
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -29553,7 +29553,7 @@ Ezekiel 46:15
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -29574,7 +29574,7 @@ Ezekiel 46:16
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -29775,7 +29775,7 @@ Ezekiel 46:23
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -29823,7 +29823,7 @@ Ezekiel 47:1
           munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
       3 atnax_clause
@@ -30009,7 +30009,7 @@ Ezekiel 47:9
         4 pazer_phrase
           munax munax munax pazer 
         4 pashta_phrase
-          munax telishaqetanna azla mahapakh pashta 
+          munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -30252,7 +30252,7 @@ Ezekiel 47:18
           5 geresh_phrase
             munax munax telishaqetanna azla geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -30410,7 +30410,7 @@ Ezekiel 48:1
           5 pazer_phrase
             munax munax pazer 
           5 pashta_phrase
-            munax telishaqetanna azla mahapakh pashta 
+            munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -30660,7 +30660,7 @@ Ezekiel 48:12
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -30684,7 +30684,7 @@ Ezekiel 48:13
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -30735,7 +30735,7 @@ Ezekiel 48:15
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -30837,7 +30837,7 @@ Ezekiel 48:18
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             mahapakh pashta 
@@ -30915,7 +30915,7 @@ Ezekiel 48:21
         4 pazer_phrase
           munax munax munax munax munax galgal pazergadol 
         4 zarqa_phrase
-          munax telishaqetanna azla merkha zarqa 
+          munax telishaqetanna qadma merkha zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -30927,7 +30927,7 @@ Ezekiel 48:21
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              azla merkha pashta 
+              qadma merkha pashta 
           5 zaqef_phrase
             munax zaqef 
       3 atnax_clause

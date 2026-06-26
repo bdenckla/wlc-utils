@@ -144,7 +144,7 @@ Nehemiah 1:6
           5 pazer_phrase
             munax munax pazer 
           5 pashta_phrase
-            munax telishaqetanna azla mahapakh pashta 
+            munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -528,7 +528,7 @@ Nehemiah 2:8
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -720,7 +720,7 @@ Nehemiah 2:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -1428,7 +1428,7 @@ Nehemiah 3:20
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -1485,7 +1485,7 @@ Nehemiah 3:23
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -1703,7 +1703,7 @@ Nehemiah 3:32
 0 silluq_clause
   1 zaqef_clause
     2 pashta_phrase
-      azla mahapakh pashta 
+      qadma mahapakh pashta 
     2 zaqef_phrase
       munax zaqef 
   1 silluq_clause
@@ -1766,7 +1766,7 @@ Nehemiah 3:34
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -1913,7 +1913,7 @@ Nehemiah 4:3
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -2292,7 +2292,7 @@ Nehemiah 5:1
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -2387,7 +2387,7 @@ Nehemiah 5:5
             revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax munax zaqef 
     2 silluq_clause
@@ -2534,7 +2534,7 @@ Nehemiah 5:11
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -2649,7 +2649,7 @@ Nehemiah 5:14
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
       3 atnax_clause
@@ -2766,7 +2766,7 @@ Nehemiah 5:18
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -2835,7 +2835,7 @@ Nehemiah 6:2
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -2865,7 +2865,7 @@ Nehemiah 6:3
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -3164,7 +3164,7 @@ Nehemiah 6:14
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -3378,7 +3378,7 @@ Nehemiah 7:3
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -3728,7 +3728,7 @@ Nehemiah 7:29
 0 silluq_clause
   1 zaqef_clause
     2 pashta_phrase
-      azla mahapakh pashta 
+      qadma mahapakh pashta 
     2 zaqef_phrase
       munax zaqef 
   1 silluq_clause
@@ -4323,7 +4323,7 @@ Nehemiah 7:72
         4 pazer_phrase
           munax munax pazer 
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -4482,7 +4482,7 @@ Nehemiah 8:5
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4551,7 +4551,7 @@ Nehemiah 8:7
                   9 pazer_phrase
                     pazer 
                   9 pashta_phrase
-                    munax telishaqetanna azla mahapakh pashta 
+                    munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -4730,13 +4730,13 @@ Nehemiah 8:14
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 silluq_phrase
@@ -4749,7 +4749,7 @@ Nehemiah 8:15
         munax revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
         4 segolta_phrase
           munax segolta 
     2 atnax_clause
@@ -4821,7 +4821,7 @@ Nehemiah 8:17
         4 big_telisha_phrase
           munax telishagedola 
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -4830,7 +4830,7 @@ Nehemiah 8:17
           5 pazer_phrase
             munax pazer 
           5 pashta_phrase
-            telishaqetanna azla merkha pashta 
+            telishaqetanna qadma merkha pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -4851,7 +4851,7 @@ Nehemiah 8:18
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4938,7 +4938,7 @@ Nehemiah 9:3
           revia 
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             tipexa 
       3 atnax_phrase
@@ -5408,13 +5408,13 @@ Nehemiah 9:19
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 silluq_clause
@@ -5472,7 +5472,7 @@ Nehemiah 9:22
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -5742,7 +5742,7 @@ Nehemiah 9:30
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -5796,7 +5796,7 @@ Nehemiah 9:32
             6 big_telisha_phrase
               munax munax telishagedola 
             6 tevir_phrase
-              azla darga tevir 
+              qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -5865,7 +5865,7 @@ Nehemiah 9:35
           munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 atnax_phrase
@@ -6360,7 +6360,7 @@ Nehemiah 10:35
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -6474,7 +6474,7 @@ Nehemiah 10:39
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -6485,7 +6485,7 @@ Nehemiah 10:39
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -6656,7 +6656,7 @@ Nehemiah 11:5
       3 big_telisha_phrase
         munax munax telishagedola 
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
     2 tipexa_phrase
       tipexa 
   1 silluq_phrase
@@ -6698,7 +6698,7 @@ Nehemiah 11:7
             6 pazer_phrase
               pazer 
             6 tevir_phrase
-              telishaqetanna azla darga tevir 
+              telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -7226,7 +7226,7 @@ Nehemiah 12:9
 0 silluq_clause
   1 tipexa_clause
     2 tevir_phrase
-      azla darga tevir 
+      qadma darga tevir 
     2 tipexa_phrase
       tipexa 
   1 silluq_phrase
@@ -7505,7 +7505,7 @@ Nehemiah 12:27
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -7601,7 +7601,7 @@ Nehemiah 12:31
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          munax telishaqetanna azla mahapakh pashta 
+          munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -7902,7 +7902,7 @@ Nehemiah 12:44
           revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
         4 segolta_phrase
           munax segolta 
     2 atnax_clause
@@ -8030,7 +8030,7 @@ Nehemiah 13:1
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 silluq_phrase
@@ -8048,7 +8048,7 @@ Nehemiah 13:2
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -8174,7 +8174,7 @@ Nehemiah 13:7
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -8411,7 +8411,7 @@ Nehemiah 13:17
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax munax zaqef 
     2 silluq_clause
@@ -8424,7 +8424,7 @@ Nehemiah 13:18
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -8556,7 +8556,7 @@ Nehemiah 13:22
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -8721,7 +8721,7 @@ Nehemiah 13:28
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause

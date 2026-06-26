@@ -360,7 +360,7 @@ Judges 1:16
         4 geresh_phrase
           munax telishaqetanna azla geresh 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -995,7 +995,7 @@ Judges 2:7
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -1268,7 +1268,7 @@ Judges 2:17
           5 geresh_phrase
             geresh 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 silluq_phrase
@@ -1278,7 +1278,7 @@ Judges 2:18
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla merkha zarqa 
+        qadma merkha zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -1569,7 +1569,7 @@ Judges 3:6
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -1587,7 +1587,7 @@ Judges 3:7
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -1641,7 +1641,7 @@ Judges 3:9
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -1662,7 +1662,7 @@ Judges 3:10
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla merkha zarqa 
+        qadma merkha zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -1796,7 +1796,7 @@ Judges 3:15
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -1926,7 +1926,7 @@ Judges 3:20
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -2102,7 +2102,7 @@ Judges 3:27
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -2118,7 +2118,7 @@ Judges 3:28
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -2264,7 +2264,7 @@ Judges 4:3
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -2556,7 +2556,7 @@ Judges 4:14
           munax mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -2586,7 +2586,7 @@ Judges 4:15
         4 big_telisha_phrase
           munax telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -3456,7 +3456,7 @@ Judges 5:28
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla darga tevir 
+        telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -3602,7 +3602,7 @@ Judges 6:3
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -3831,7 +3831,7 @@ Judges 6:13
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -3969,7 +3969,7 @@ Judges 6:18
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4122,7 +4122,7 @@ Judges 6:23
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -4137,7 +4137,7 @@ Judges 6:24
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -4380,7 +4380,7 @@ Judges 6:31
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -4589,7 +4589,7 @@ Judges 6:39
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 silluq_clause
@@ -4673,7 +4673,7 @@ Judges 7:2
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -4851,7 +4851,7 @@ Judges 7:7
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -4878,7 +4878,7 @@ Judges 7:8
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -4971,7 +4971,7 @@ Judges 7:12
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -5040,7 +5040,7 @@ Judges 7:14
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -5108,7 +5108,7 @@ Judges 7:16
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -5129,7 +5129,7 @@ Judges 7:17
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -5211,7 +5211,7 @@ Judges 7:20
         4 big_telisha_phrase
           telishagedola 
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -5370,7 +5370,7 @@ Judges 7:25
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -5660,7 +5660,7 @@ Judges 8:10
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 silluq_phrase
@@ -5915,7 +5915,7 @@ Judges 8:20
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -6120,7 +6120,7 @@ Judges 8:27
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -6309,7 +6309,7 @@ Judges 9:1
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -6336,7 +6336,7 @@ Judges 9:2
         4 geresh_phrase
           gershayim 
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -6663,7 +6663,7 @@ Judges 9:15
           5 pazer_phrase
             pazer 
           5 pashta_phrase
-            munax telishaqetanna azla mahapakh pashta 
+            munax telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -6738,7 +6738,7 @@ Judges 9:18
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -6768,7 +6768,7 @@ Judges 9:19
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -7076,7 +7076,7 @@ Judges 9:31
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -7215,7 +7215,7 @@ Judges 9:37
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -7251,7 +7251,7 @@ Judges 9:38
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -7262,7 +7262,7 @@ Judges 9:38
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax munax zaqef 
     2 silluq_clause
@@ -8058,7 +8058,7 @@ Judges 10:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -8358,7 +8358,7 @@ Judges 11:9
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -8412,7 +8412,7 @@ Judges 11:11
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -8420,7 +8420,7 @@ Judges 11:11
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -8457,7 +8457,7 @@ Judges 11:13
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -8522,7 +8522,7 @@ Judges 11:16
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -8547,7 +8547,7 @@ Judges 11:17
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -8622,7 +8622,7 @@ Judges 11:20
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -8825,7 +8825,7 @@ Judges 11:27
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -8889,7 +8889,7 @@ Judges 11:30
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -8985,7 +8985,7 @@ Judges 11:34
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -9288,7 +9288,7 @@ Judges 12:3
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -9371,7 +9371,7 @@ Judges 12:5
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 silluq_phrase
@@ -9597,7 +9597,7 @@ Judges 13:2
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla darga tevir 
+        telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -9830,7 +9830,7 @@ Judges 13:10
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 silluq_clause
@@ -10101,7 +10101,7 @@ Judges 13:23
         darga munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             mahapakh pashta 
@@ -10215,7 +10215,7 @@ Judges 14:3
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -10232,7 +10232,7 @@ Judges 14:3
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -10355,7 +10355,7 @@ Judges 14:8
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -10403,7 +10403,7 @@ Judges 14:10
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -10451,7 +10451,7 @@ Judges 14:12
         4 geresh_phrase
           munax telishaqetanna azla geresh 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -10476,7 +10476,7 @@ Judges 14:13
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -10586,7 +10586,7 @@ Judges 14:16
         munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 silluq_phrase
@@ -10725,7 +10725,7 @@ Judges 15:1
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -10760,7 +10760,7 @@ Judges 15:2
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -10811,7 +10811,7 @@ Judges 15:4
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 silluq_phrase
@@ -10902,7 +10902,7 @@ Judges 15:8
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -11208,7 +11208,7 @@ Judges 15:19
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -11498,7 +11498,7 @@ Judges 16:9
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 silluq_clause
@@ -11700,7 +11700,7 @@ Judges 16:16
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -11760,7 +11760,7 @@ Judges 16:18
           5 pazer_phrase
             pazer 
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -11930,7 +11930,7 @@ Judges 16:24
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -11985,7 +11985,7 @@ Judges 16:26
         4 geresh_phrase
           azla geresh 
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -12662,7 +12662,7 @@ Judges 18:7
               revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -13070,7 +13070,7 @@ Judges 18:21
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -13131,7 +13131,7 @@ Judges 18:24
         4 pazer_phrase
           pazer 
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -13583,7 +13583,7 @@ Judges 19:9
           5 geresh_phrase
             gershayim 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             merkha pashta 
@@ -13796,7 +13796,7 @@ Judges 19:17
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -13872,7 +13872,7 @@ Judges 19:20
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -14246,7 +14246,7 @@ Judges 20:2
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -14559,7 +14559,7 @@ Judges 20:15
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -14625,7 +14625,7 @@ Judges 20:17
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -14696,7 +14696,7 @@ Judges 20:20
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -14717,7 +14717,7 @@ Judges 20:21
           munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
     2 silluq_phrase
@@ -14793,7 +14793,7 @@ Judges 20:25
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        telishaqetanna azla merkha zarqa 
+        telishaqetanna qadma merkha zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -14805,7 +14805,7 @@ Judges 20:25
             revia 
         4 tipexa_clause
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
           5 tipexa_phrase
             tipexa 
       3 atnax_phrase
@@ -15045,7 +15045,7 @@ Judges 20:34
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -15069,19 +15069,19 @@ Judges 20:35
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla merkha zarqa 
+        qadma merkha zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
           5 tipexa_phrase
             tipexa 
         4 atnax_phrase
@@ -15101,7 +15101,7 @@ Judges 20:36
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -15173,7 +15173,7 @@ Judges 20:39
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -15182,7 +15182,7 @@ Judges 20:39
       3 silluq_clause
         4 zaqef_clause
           5 pashta_phrase
-            telishaqetanna azla merkha pashta 
+            telishaqetanna qadma merkha pashta 
           5 zaqef_phrase
             zaqef 
         4 silluq_clause
@@ -15246,7 +15246,7 @@ Judges 20:42
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -15348,7 +15348,7 @@ Judges 20:46
           revia 
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla merkha tevir 
+          telishaqetanna qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 atnax_phrase
@@ -15525,7 +15525,7 @@ Judges 21:5
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -15542,7 +15542,7 @@ Judges 21:5
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           tipexa 
     2 silluq_phrase
@@ -15674,7 +15674,7 @@ Judges 21:10
             6 geresh_phrase
               gershayim 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -15728,7 +15728,7 @@ Judges 21:12
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -15921,7 +15921,7 @@ Judges 21:21
           5 big_telisha_phrase
             telishagedola 
           5 zarqa_phrase
-            azla merkha zarqa 
+            qadma merkha zarqa 
         4 segolta_phrase
           munax segolta 
     2 atnax_clause
@@ -16023,7 +16023,7 @@ Judges 21:24
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause

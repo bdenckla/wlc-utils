@@ -20,7 +20,7 @@ A second, sibling check (``illegal_same_letter_pairs``) flags an impossible
 *same-letter* configuration rather than a stranded helper: two accents stacked on one
 base letter.  This is a WHITELIST guard, the prose analogue of the poetic
 ``ply_scanner_poetic`` bang guard (Plan D / Plan E): two masoretically-blessed clusters
-may legitimately share a letter -- the MAM-confirmed ek20:31 ``mahapakh!azla`` (fused to
+may legitimately share a letter -- the MAM-confirmed ek20:31 ``mahapakh!qadma`` (fused to
 one token, grammar-accepted) and the telisha gedola + geresh-family pair (gn5:29, zp2:15,
 2k17:13), spared as a two-token *sequence* (the telg and the geresh, in manuscript order --
 gerstar-then-telg for these same-letter words) -- so ANY other two adjacent
@@ -93,7 +93,7 @@ def _is_accent(ch: str) -> bool:
 # masoretically-blessed configurations may legitimately share one base letter:
 #
 #   * mahapakh (U+05A4) + qadma (U+05A8) -- the MAM-confirmed ek20:31 ``נִטְמְאִ֤֨ים`` (both
-#     witnesses keep both marks), which the scanner fuses into one ``mahapakh!azla`` token
+#     witnesses keep both marks), which the scanner fuses into one ``mahapakh!qadma`` token
 #     and the grammar accepts (a fused-legal-token entry); and
 #   * telisha gedola (U+05A0) + a geresh-family mark -- gershayim (U+059E; gn5:29, zp2:15)
 #     or a prose geresh muqdam (U+059D; 2k17:13, which the scanner normalizes to a plain
@@ -117,7 +117,7 @@ _WHITELISTED_SAME_LETTER: frozenset[frozenset[str]] = frozenset(
 )
 
 # Per-accent prose leaf names, for building a same-letter pair's bang label; reuse the
-# scanner's spellings (ply_scanner._LEAF -- note qadma's leaf is "azla").  A codepoint
+# scanner's spellings (ply_scanner._LEAF -- qadma's standalone prose leaf is "qadma").  A codepoint
 # fallback (``U+XXXX``) covers any unforeseen mark so the label is always populated.
 _ACCENT_LEAF_NAME: dict[str, str] = {
     am.ATNAX: "atnax", am.SEGOLTA: "segolta", am.SHALSHELET: "shalshelet",
@@ -127,7 +127,7 @@ _ACCENT_LEAF_NAME: dict[str, str] = {
     am.QARNEY_PARA: "pazergadol", am.TELISHA_GEDOLA: "telishagedola",
     am.PAZER: "pazer", am.MUNAX: "munax", am.MAHAPAKH: "mahapakh",
     am.MERKHA: "merkha", am.MERKHA_KEFULA: "merkhakefula", am.DARGA: "darga",
-    am.QADMA: "azla", am.TELISHA_QETANA: "telishaqetanna", am.YERAX: "galgal",
+    am.QADMA: "qadma", am.TELISHA_QETANA: "telishaqetanna", am.YERAX: "galgal",
     am.TSINNORIT: "tsinnorit", am.ZINOR: "zarqa",
 }
 
@@ -181,7 +181,7 @@ def illegal_same_letter_pairs(body: str) -> list[StrandedMark]:
     Two accents are on one base letter iff they are *adjacent* in the body (no
     base-letter ``X`` -- nor any other non-accent -- between them).  Such a stacking is
     an alphabet error unless it is a whitelisted cluster: mahapakh + qadma (ek20:31,
-    MAM-confirmed; the scanner fuses it to one ``mahapakh!azla`` token before the grammar
+    MAM-confirmed; the scanner fuses it to one ``mahapakh!qadma`` token before the grammar
     and it never reaches here) or telisha gedola + a geresh-family mark (gn5:29, zp2:15,
     2k17:13; kept as a two-token gerstar-then-telg sequence, the manuscript order).  Everything else two-on-a-letter is
     illicit -- today only mahapakh + tipeḥa (lv25:20), formerly handled by a pair-specific

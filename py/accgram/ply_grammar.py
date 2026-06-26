@@ -68,10 +68,11 @@ tokens = (
     "LEGARMEH",
     "MUNAX",
     "MAHAPAKH",
-    "MAHAPAKHAZLA",
+    "MAHAPAKHQADMA",
     "MERKHA",
     "MERKHAKEFULA",
     "DARGA",
+    "QADMA",
     "AZLA",
     "TELISHAQETANNA",
     "GALGAL",
@@ -199,7 +200,7 @@ def p_zaqef_phrase_zaqef(p):
 
 
 def p_zaqef_phrase_methigazaqef(p):
-    # Methiga zaqef looks just like AZLA ZAQEF in the M-C BHS text.
+    # Methiga zaqef looks just like QADMA ZAQEF in the M-C BHS text.
     "zaqef_phrase : METHIGAZAQEF"
     p[0] = add_leaves("zaqef_phrase", p[1])
 
@@ -313,7 +314,7 @@ def p_tipexa_phrase_darga_merkhakefula(p):
 
 
 # Mayela is a variant of tipexa: it can take a tevir before it (Jer 2:31) and
-# azla before it (Dan 4:9,18), unlike a plain conjunctive.
+# qadma before it (Dan 4:9,18), unlike a plain conjunctive.
 def p_tipexa_phrase_mayela(p):
     "tipexa_phrase : MAYELA"
     p[0] = add_leaves("tipexa_phrase", p[1])
@@ -324,8 +325,8 @@ def p_tipexa_phrase_merkha_mayela(p):
     p[0] = add_leaves("tipexa_phrase", p[1], p[2])
 
 
-def p_tipexa_phrase_azla_mayela(p):
-    "tipexa_phrase : AZLA MAYELA"
+def p_tipexa_phrase_qadma_mayela(p):
+    "tipexa_phrase : QADMA MAYELA"
     p[0] = add_leaves("tipexa_phrase", p[1], p[2])
 
 
@@ -375,13 +376,13 @@ def p_tevir_phrase_merkha(p):
     p[0] = add_leaves("tevir_phrase", p[1], p[2])
 
 
-def p_tevir_phrase_azla_darga(p):
-    "tevir_phrase : AZLA DARGA TEVIR"
+def p_tevir_phrase_qadma_darga(p):
+    "tevir_phrase : QADMA DARGA TEVIR"
     p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3])
 
 
-def p_tevir_phrase_azla_merkha(p):
-    "tevir_phrase : AZLA MERKHA TEVIR"
+def p_tevir_phrase_qadma_merkha(p):
+    "tevir_phrase : QADMA MERKHA TEVIR"
     p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3])
 
 
@@ -395,23 +396,23 @@ def p_tevir_phrase_munax_merkha(p):
     p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3])
 
 
-def p_tevir_phrase_telq_azla_darga(p):
-    "tevir_phrase : TELISHAQETANNA AZLA DARGA TEVIR"
+def p_tevir_phrase_telq_qadma_darga(p):
+    "tevir_phrase : TELISHAQETANNA QADMA DARGA TEVIR"
     p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3], p[4])
 
 
-def p_tevir_phrase_telq_azla_merkha(p):
-    "tevir_phrase : TELISHAQETANNA AZLA MERKHA TEVIR"
+def p_tevir_phrase_telq_qadma_merkha(p):
+    "tevir_phrase : TELISHAQETANNA QADMA MERKHA TEVIR"
     p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3], p[4])
 
 
-def p_tevir_phrase_munax_telq_azla_darga(p):
-    "tevir_phrase : MUNAX TELISHAQETANNA AZLA DARGA TEVIR"
+def p_tevir_phrase_munax_telq_qadma_darga(p):
+    "tevir_phrase : MUNAX TELISHAQETANNA QADMA DARGA TEVIR"
     p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3], p[4], p[5])
 
 
-def p_tevir_phrase_munax_telq_azla_merkha(p):
-    "tevir_phrase : MUNAX TELISHAQETANNA AZLA MERKHA TEVIR"
+def p_tevir_phrase_munax_telq_qadma_merkha(p):
+    "tevir_phrase : MUNAX TELISHAQETANNA QADMA MERKHA TEVIR"
     p[0] = add_leaves("tevir_phrase", p[1], p[2], p[3], p[4], p[5])
 
 
@@ -497,33 +498,33 @@ def p_zarqa_phrase_munax_merkha(p):
     p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
 
 
-def p_zarqa_phrase_azla_munax(p):
-    "zarqa_phrase : AZLA MUNAX ZARQA"
+def p_zarqa_phrase_qadma_munax(p):
+    "zarqa_phrase : QADMA MUNAX ZARQA"
     p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
 
 
-def p_zarqa_phrase_azla_merkha(p):
-    "zarqa_phrase : AZLA MERKHA ZARQA"
+def p_zarqa_phrase_qadma_merkha(p):
+    "zarqa_phrase : QADMA MERKHA ZARQA"
     p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3])
 
 
-def p_zarqa_phrase_telq_azla_munax(p):
-    "zarqa_phrase : TELISHAQETANNA AZLA MUNAX ZARQA"
+def p_zarqa_phrase_telq_qadma_munax(p):
+    "zarqa_phrase : TELISHAQETANNA QADMA MUNAX ZARQA"
     p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3], p[4])
 
 
-def p_zarqa_phrase_telq_azla_merkha(p):
-    "zarqa_phrase : TELISHAQETANNA AZLA MERKHA ZARQA"
+def p_zarqa_phrase_telq_qadma_merkha(p):
+    "zarqa_phrase : TELISHAQETANNA QADMA MERKHA ZARQA"
     p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3], p[4])
 
 
-def p_zarqa_phrase_munax_telq_azla_munax(p):
-    "zarqa_phrase : MUNAX TELISHAQETANNA AZLA MUNAX ZARQA"
+def p_zarqa_phrase_munax_telq_qadma_munax(p):
+    "zarqa_phrase : MUNAX TELISHAQETANNA QADMA MUNAX ZARQA"
     p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3], p[4], p[5])
 
 
-def p_zarqa_phrase_munax_telq_azla_merkha(p):
-    "zarqa_phrase : MUNAX TELISHAQETANNA AZLA MERKHA ZARQA"
+def p_zarqa_phrase_munax_telq_qadma_merkha(p):
+    "zarqa_phrase : MUNAX TELISHAQETANNA QADMA MERKHA ZARQA"
     p[0] = add_leaves("zarqa_phrase", p[1], p[2], p[3], p[4], p[5])
 
 
@@ -605,13 +606,13 @@ def p_pashta_phrase_munax_merkha(p):
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
-def p_pashta_phrase_azla_mahapakh(p):
-    "pashta_phrase : AZLA MAHAPAKH PASHTA"
+def p_pashta_phrase_qadma_mahapakh(p):
+    "pashta_phrase : QADMA MAHAPAKH PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
-def p_pashta_phrase_azla_merkha(p):
-    "pashta_phrase : AZLA MERKHA PASHTA"
+def p_pashta_phrase_qadma_merkha(p):
+    "pashta_phrase : QADMA MERKHA PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
@@ -631,54 +632,54 @@ def p_pashta_phrase_mahapakh_merkha(p):
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
-def p_pashta_phrase_telq_azla_mahapakh(p):
-    "pashta_phrase : TELISHAQETANNA AZLA MAHAPAKH PASHTA"
+def p_pashta_phrase_telq_qadma_mahapakh(p):
+    "pashta_phrase : TELISHAQETANNA QADMA MAHAPAKH PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4])
 
 
-def p_pashta_phrase_telq_azla_merkha(p):
-    "pashta_phrase : TELISHAQETANNA AZLA MERKHA PASHTA"
+def p_pashta_phrase_telq_qadma_merkha(p):
+    "pashta_phrase : TELISHAQETANNA QADMA MERKHA PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4])
 
 
-def p_pashta_phrase_telq_mahapakhazla(p):
-    # Ezekiel 20:31: mahapakh and qadma/azla fused on one letter (see the scanner's
-    # MAHAPAKHAZLA rule).  The fused cluster fills the single servus slot before
-    # pashta -- the same slot the AZLA MAHAPAKH *pair* fills on separate letters --
-    # so this is the one-token analogue of TELISHAQETANNA AZLA MAHAPAKH PASHTA.  Only
-    # this exact context is attested; the MUNAX-prefixed siblings of the AZLA MAHAPAKH
+def p_pashta_phrase_telq_mahapakhqadma(p):
+    # Ezekiel 20:31: mahapakh and qadma fused on one letter (see the scanner's
+    # MAHAPAKHQADMA rule).  The fused cluster fills the single servus slot before
+    # pashta -- the same slot the QADMA MAHAPAKH *pair* fills on separate letters --
+    # so this is the one-token analogue of TELISHAQETANNA QADMA MAHAPAKH PASHTA.  Only
+    # this exact context is attested; the MUNAX-prefixed siblings of the QADMA MAHAPAKH
     # family are deliberately not mirrored until a real occurrence calls for one.
-    "pashta_phrase : TELISHAQETANNA MAHAPAKHAZLA PASHTA"
+    "pashta_phrase : TELISHAQETANNA MAHAPAKHQADMA PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
-def p_pashta_phrase_m_telq_azla_mahapakh(p):
-    "pashta_phrase : MUNAX TELISHAQETANNA AZLA MAHAPAKH PASHTA"
+def p_pashta_phrase_m_telq_qadma_mahapakh(p):
+    "pashta_phrase : MUNAX TELISHAQETANNA QADMA MAHAPAKH PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5])
 
 
-def p_pashta_phrase_m_telq_azla_merkha(p):
-    "pashta_phrase : MUNAX TELISHAQETANNA AZLA MERKHA PASHTA"
+def p_pashta_phrase_m_telq_qadma_merkha(p):
+    "pashta_phrase : MUNAX TELISHAQETANNA QADMA MERKHA PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5])
 
 
-def p_pashta_phrase_m2_telq_azla_mahapakh(p):
-    "pashta_phrase : MUNAX MUNAX TELISHAQETANNA AZLA MAHAPAKH PASHTA"
+def p_pashta_phrase_m2_telq_qadma_mahapakh(p):
+    "pashta_phrase : MUNAX MUNAX TELISHAQETANNA QADMA MAHAPAKH PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5], p[6])
 
 
-def p_pashta_phrase_m2_telq_azla_merkha(p):
-    "pashta_phrase : MUNAX MUNAX TELISHAQETANNA AZLA MERKHA PASHTA"
+def p_pashta_phrase_m2_telq_qadma_merkha(p):
+    "pashta_phrase : MUNAX MUNAX TELISHAQETANNA QADMA MERKHA PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5], p[6])
 
 
-def p_pashta_phrase_m3_telq_azla_mahapakh(p):
-    "pashta_phrase : MUNAX MUNAX MUNAX TELISHAQETANNA AZLA MAHAPAKH PASHTA"
+def p_pashta_phrase_m3_telq_qadma_mahapakh(p):
+    "pashta_phrase : MUNAX MUNAX MUNAX TELISHAQETANNA QADMA MAHAPAKH PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5], p[6], p[7])
 
 
-def p_pashta_phrase_m3_telq_azla_merkha(p):
-    "pashta_phrase : MUNAX MUNAX MUNAX TELISHAQETANNA AZLA MERKHA PASHTA"
+def p_pashta_phrase_m3_telq_qadma_merkha(p):
+    "pashta_phrase : MUNAX MUNAX MUNAX TELISHAQETANNA QADMA MERKHA PASHTA"
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3], p[4], p[5], p[6], p[7])
 
 
@@ -694,9 +695,9 @@ def p_pashta_phrase_munax_telq(p):
     p[0] = add_leaves("pashta_phrase", p[1], p[2], p[3])
 
 
-# Problem: if azla is mistaken for pashta, Accents will not pick up the problem
+# Problem: if qadma is mistaken for pashta, Accents will not pick up the problem
 # when a geresh comes next and then eventually a revia and a zaqef; rather, it
-# parses the azla as a well-formed pashta clause/phrase.  See, e.g., Ezek 38:4.
+# parses the qadma as a well-formed pashta clause/phrase.  See, e.g., Ezek 38:4.
 def p_pashta_clause(p):
     """pashta_clause : pashta_phrase
                      | legarmeh_pashta_clause
@@ -997,8 +998,8 @@ def p_legarmeh_phrase_merkha(p):
     p[0] = add_leaves("legarmeh_phrase", p[1], p[2])
 
 
-def p_legarmeh_phrase_azla_merkha(p):
-    "legarmeh_phrase : AZLA MERKHA LEGARMEH"
+def p_legarmeh_phrase_qadma_merkha(p):
+    "legarmeh_phrase : QADMA MERKHA LEGARMEH"
     p[0] = add_leaves("legarmeh_phrase", p[1], p[2], p[3])
 
 

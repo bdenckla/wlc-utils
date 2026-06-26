@@ -284,7 +284,7 @@ Nahum 1:14
         4 geresh_phrase
           azla geresh 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -311,7 +311,7 @@ Nahum 2:1
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla merkha tevir 
+        telishaqetanna qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -542,7 +542,7 @@ Nahum 2:12
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        munax telishaqetanna azla merkha tevir 
+        munax telishaqetanna qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -876,7 +876,7 @@ Nahum 3:13
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause

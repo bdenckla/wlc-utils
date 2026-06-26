@@ -45,7 +45,7 @@ Defeatmatchforjob 1:3
             darga munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax munax zaqef 
     2 atnax_clause
@@ -170,7 +170,7 @@ Defeatmatchforjob 1:7
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -311,7 +311,7 @@ Defeatmatchforjob 1:13
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -356,7 +356,7 @@ Defeatmatchforjob 1:15
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -395,7 +395,7 @@ Defeatmatchforjob 1:16
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -437,7 +437,7 @@ Defeatmatchforjob 1:17
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -458,7 +458,7 @@ Defeatmatchforjob 1:18
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -494,7 +494,7 @@ Defeatmatchforjob 1:19
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -602,7 +602,7 @@ Defeatmatchforjob 2:2
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -849,7 +849,7 @@ Defeatmatchforjob 2:12
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -921,7 +921,7 @@ Defeatmatchforjob 42:7
         revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 atnax_phrase
@@ -935,7 +935,7 @@ Defeatmatchforjob 42:7
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -1068,7 +1068,7 @@ Defeatmatchforjob 42:11
             munax revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
         4 segolta_phrase
           segolta 
     2 atnax_clause
@@ -1181,7 +1181,7 @@ Defeatmatchforjob 42:15
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase

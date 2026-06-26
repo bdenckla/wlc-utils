@@ -130,19 +130,19 @@ def test_exactly_three_telg_exhibit_words_are_same_letter() -> None:
     assert same_letter == 3
 
 
-def test_ek2031_tree_fuses_mahapakh_azla() -> None:
+def test_ek2031_tree_fuses_mahapakh_qadma() -> None:
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
     text = aet._prose_verse_tree_text("ek20:31", index, parser, has_legarmeh)
-    assert "mahapakh!azla" in text
+    assert "mahapakh!qadma" in text
     assert "ERROR" not in text
 
 
-def test_ek2031_verdict_table_only_fused_and_azla_mah_parse() -> None:
+def test_ek2031_verdict_table_only_fused_and_qadma_mah_parse() -> None:
     # The five readings of ek20:31's mahapakh + qadma pair: only the fused token and the
-    # qadma/azla-then-mahapakh sequence parse (the grammar's pashta_phrase has rules for
-    # MAHAPAKHAZLA and the cross-letter AZLA MAHAPAKH pair, but not for a bare mahapakh, a
-    # bare azla, or a mahapakh-then-azla order).
+    # qadma-then-mahapakh sequence parse (the grammar's pashta_phrase has rules for
+    # MAHAPAKHQADMA and the cross-letter QADMA MAHAPAKH pair, but not for a bare mahapakh, a
+    # bare qadma, or a mahapakh-then-qadma order).
     index = _load_index_or_skip()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
     verdicts = {
@@ -150,8 +150,8 @@ def test_ek2031_verdict_table_only_fused_and_azla_mah_parse() -> None:
         for mode, _label in aeo._EK_MODES
     }
     assert verdicts["fused"] == "clean", verdicts
-    assert verdicts["seq_azla_mah"] == "clean", verdicts
-    for mode in ("drop_azla", "drop_mahapakh", "seq_mah_azla"):
+    assert verdicts["seq_qadma_mah"] == "clean", verdicts
+    for mode in ("drop_qadma", "drop_mahapakh", "seq_mah_qadma"):
         assert verdicts[mode] != "clean", verdicts
 
 
@@ -173,7 +173,7 @@ def test_render_body_contents_smoke() -> None:
     # keep-both trees (zp2:15 + lv10:4, the checker's actual output) plus ek20:31 (1).
     assert "Editorial charities" in rendered
     assert "Masoretically-blessed oddities" in rendered
-    assert "mahapakh!azla" in rendered
+    assert "mahapakh!qadma" in rendered
     assert "goerwitz.html#oblv25v20" in rendered
     # The Psalms 17:14 double-tsinnor exhibit summarizes and links out to its deep dive;
     # it carries no parse tree (the grammar can't parse the doubled mark directly), so the

@@ -27,7 +27,7 @@ illegal, in between is partial.
 
 Genre note: built poetic-first (the only attested poetic bang is ps56:10).  The splice
 is genre-agnostic, so the same measure can later cover the prose bangs (ek20:31's
-mahapakh!azla, lv25:20's mahapakh!tipexa) under one notion.  This is a *report*, not a
+mahapakh!qadma, lv25:20's mahapakh!tipexa) under one notion.  This is a *report*, not a
 verdict: it writes out/accgram/ply-poetic/_bang_legality.txt and leaves the corpus
 output untouched -- regenerate and diff it after any scanner/grammar change.
 """

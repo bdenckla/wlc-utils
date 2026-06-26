@@ -166,9 +166,9 @@ def _ek2031_word_variant(word: str, mode: str, base) -> str:
     ``fused`` and for every word not carrying both marks.
 
     For ``fused`` (and any non-matching word) the scanner fuses the pair as it normally
-    would.  The two ``seq_*`` modes only set the mark *order*; ``seq_mah_azla`` still
+    would.  The two ``seq_*`` modes only set the mark *order*; ``seq_mah_qadma`` still
     scans as the fused token unless the caller also suppresses the fuse rule (see
-    ``_no_mahapakh_azla_fuse``)."""
+    ``_no_mahapakh_qadma_fuse``)."""
     both = am.MAHAPAKH in word and am.QADMA in word
     if mode == "fused" or not both:
         return base(word)
@@ -188,7 +188,7 @@ def _ek2031_word_variant(word: str, mode: str, base) -> str:
                 continue
             mark = am.MAHAPAKH
         elif ch == am.QADMA:
-            if mode == "drop_azla":
+            if mode == "drop_qadma":
                 continue
             mark = am.QADMA
         elif is_accent(ch):
@@ -199,9 +199,9 @@ def _ek2031_word_variant(word: str, mode: str, base) -> str:
             continue
         skeleton.append(None)
         (prepos if mark in PREPOSITIVE_MARKS else other).append(mark)
-    if mode in ("seq_azla_mah", "seq_mah_azla"):
+    if mode in ("seq_qadma_mah", "seq_mah_qadma"):
         mah_i, qad_i = other.index(am.MAHAPAKH), other.index(am.QADMA)
-        want_qadma_first = mode == "seq_azla_mah"
+        want_qadma_first = mode == "seq_qadma_mah"
         if (qad_i < mah_i) != want_qadma_first:
             other[mah_i], other[qad_i] = other[qad_i], other[mah_i]
     marks = iter(prepos + other)
@@ -221,12 +221,12 @@ def _ek_word_to_marks_mode(mode: str):
 
 
 @contextlib.contextmanager
-def _no_mahapakh_azla_fuse():
-    """Temporarily drop the scanner's ``MAHAPAKHAZLA`` fuse rule so a mahapakh-then-qadma
-    adjacency scans as two tokens (``MAHAPAKH AZLA``) instead of re-fusing -- the only way
-    to observe the ``seq_mah_azla`` reading as a genuine sequence.  Restored on exit."""
+def _no_mahapakh_qadma_fuse():
+    """Temporarily drop the scanner's ``MAHAPAKHQADMA`` fuse rule so a mahapakh-then-qadma
+    adjacency scans as two tokens (``MAHAPAKH QADMA``) instead of re-fusing -- the only way
+    to observe the ``seq_mah_qadma`` reading as a genuine sequence.  Restored on exit."""
     original = ply_scanner._GG_RULES
-    ply_scanner._GG_RULES = [r for r in original if r[1] != "MAHAPAKHAZLA"]
+    ply_scanner._GG_RULES = [r for r in original if r[1] != "MAHAPAKHQADMA"]
     try:
         yield
     finally:
@@ -237,8 +237,8 @@ def _ek_verdict_for(mode: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
     """``clean`` / ``ERROR`` / ``NO_PARSE`` for ek20:31 under one ``_EK_MODES`` reading."""
     with contextlib.ExitStack() as stack:
         stack.enter_context(_ek_word_to_marks_mode(mode))
-        if mode == "seq_mah_azla":
-            stack.enter_context(_no_mahapakh_azla_fuse())
+        if mode == "seq_mah_qadma":
+            stack.enter_context(_no_mahapakh_qadma_fuse())
         body = uni_to_marks.verse_to_marks(index["ek20:31"])
         return _telg_verdict(_scan_and_parse("ek20:31", body, parser, has_legarmeh))
 

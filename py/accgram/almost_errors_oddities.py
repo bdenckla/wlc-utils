@@ -7,7 +7,7 @@ trees from ``almost_errors_trees``:
   * the **telisha gedola + geresh/gershayim** five-word exhibit, whose alternate-
     reading trees show that the checker's choice (keep both, in the manuscript's
     mark order) is the most faithful of several grammatically-clean options; and
-  * **Ezekiel 20:31's mahapakh + azla**, the only word in Tanakh with two
+  * **Ezekiel 20:31's mahapakh + qadma**, the only word in Tanakh with two
     conjunctive accents on one letter, where the verdict table shows the fusion
     is all but forced by the grammar; and
   * **Psalms 17:14's double tsinnor**, the Three Books' only run of two
@@ -58,27 +58,27 @@ _TELG_MODES = (
 #
 # The reason is the *three*-servus context, which is easy to miss.  This pashta (on the
 # following word גִּלּוּלֵיכֶם) is served by three conjunctives: a telisha qetanna on the
-# preceding word אַתֶּם, then the azla (qadma) and mahapakh that share ek20:31's alef.  Every
-# pashta_phrase rule for a telisha-qetanna-headed chain puts AZLA directly after the
-# TELISHAQETANNA -- TELISHAQETANNA AZLA MAHAPAKH PASHTA, or its one-token analogue
-# TELISHAQETANNA MAHAPAKHAZLA PASHTA -- because the masoretic rule is that a telisha
-# qetanna is *always* followed by azla (Yeivin #246).  So here azla is an obligatory
+# preceding word אַתֶּם, then the qadma and mahapakh that share ek20:31's alef.  Every
+# pashta_phrase rule for a telisha-qetanna-headed chain puts QADMA directly after the
+# TELISHAQETANNA -- TELISHAQETANNA QADMA MAHAPAKH PASHTA, or its one-token analogue
+# TELISHAQETANNA MAHAPAKHQADMA PASHTA -- because the masoretic rule is that a telisha
+# qetanna is *always* followed by qadma (Yeivin #246).  So here qadma is an obligatory
 # bridge, not an optional accent:
-#   fused          TELISHAQETANNA MAHAPAKHAZLA PASHTA  -> clean
-#   seq_azla_mah   TELISHAQETANNA AZLA MAHAPAKH PASHTA -> clean (same reading, two letters)
-#   drop_azla      TELISHAQETANNA MAHAPAKH PASHTA      -> no rule (mahapakh can't follow telq)
-#   drop_mahapakh  TELISHAQETANNA AZLA PASHTA          -> no rule (azla needs mahapakh/merkha)
-#   seq_mah_azla   TELISHAQETANNA MAHAPAKH AZLA PASHTA -> wrong order
-# A *bare* MAHAPAKH PASHTA rule does exist (a one-servus pashta), so dropping the azla
+#   fused          TELISHAQETANNA MAHAPAKHQADMA PASHTA  -> clean
+#   seq_qadma_mah  TELISHAQETANNA QADMA MAHAPAKH PASHTA -> clean (same reading, two letters)
+#   drop_qadma     TELISHAQETANNA MAHAPAKH PASHTA       -> no rule (mahapakh can't follow telq)
+#   drop_mahapakh  TELISHAQETANNA QADMA PASHTA          -> no rule (qadma needs mahapakh/merkha)
+#   seq_mah_qadma  TELISHAQETANNA MAHAPAKH QADMA PASHTA -> wrong order
+# A *bare* MAHAPAKH PASHTA rule does exist (a one-servus pashta), so dropping the qadma
 # would parse if this pashta stood alone -- but it never does here, because the telisha
 # qetanna makes the chain three deep.  The verdict table makes the clean/ERROR split
 # visible.
 _EK_MODES = (
-    ("fused", "fuse into one mahapakh!azla token (what the checker does)"),
-    ("drop_azla", "keep the mahapakh, drop the qadma"),
+    ("fused", "fuse into one mahapakh!qadma token (what the checker does)"),
+    ("drop_qadma", "keep the mahapakh, drop the qadma"),
     ("drop_mahapakh", "keep the qadma, drop the mahapakh"),
-    ("seq_azla_mah", "keep both, as a qadma then mahapakh sequence"),
-    ("seq_mah_azla", "keep both, as a mahapakh then qadma sequence"),
+    ("seq_qadma_mah", "keep both, as a qadma then mahapakh sequence"),
+    ("seq_mah_qadma", "keep both, as a mahapakh then qadma sequence"),
 )
 
 # MAM's documentation note on ek20:31 (from MAM-parsed-plus / MAM-with-doc), the
@@ -315,7 +315,7 @@ def _ek_verdict_table(index, parser, has_legarmeh: HasLegarmeh) -> object:
 def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]:
     tree_text = aet._prose_verse_tree_text("ek20:31", index, parser, has_legarmeh)
     return (
-        H.heading_level_3("Mahapakh + azla (Ezekiel 20:31)"),
+        H.heading_level_3("Mahapakh + qadma (Ezekiel 20:31)"),
         verse_links("ek20:31"),
         H.para(
             (
@@ -325,7 +325,7 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
                 " alef. It is the only word in"
                 " Tanakh with two conjunctive accents on one letter. The"
                 " checker accepts it outright: the scanner fuses the pair into one ",
-                H.code("mahapakh!azla"),
+                H.code("mahapakh!qadma"),
                 " token, which the grammar parses as an ordinary accent. As with the"
                 " telg words, both accents survive; only the representation"
                 " differs. The telg and its gerstar are two disjunctives, which"
@@ -412,11 +412,11 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
                 " the real checker under each of the five ways to present the pair: the"
                 " fused token, dropping either accent, and keeping both as a sequence in"
                 " either order. Only two parse: the fused ",
-                H.code("mahapakh!azla"),
+                H.code("mahapakh!qadma"),
                 " token and the qadma-then-mahapakh sequence — and those coincide,"
                 " because the same pashta phrase rule that accepts the fused cluster also"
                 " accepts the cross-letter ",
-                H.code("azla mahapakh"),
+                H.code("qadma mahapakh"),
                 " pair, in exactly the reading order the MAM note describes (qadma before"
                 " mahapakh).",
             )
@@ -429,17 +429,17 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
                 hbo("אַתֶּם"),
                 ", then the qadma and mahapakh sharing this word’s alef. Once a"
                 " telq heads the chain, the grammar admits only ",
-                H.code("telq azla mahapakh pashta"),
+                H.code("telq qadma mahapakh pashta"),
                 " (or its one-token analogue ",
-                H.code("telq mahapakh!azla pashta"),
-                ") — the azla is obligatory, because the masoretic rule (Yeivin §246) is"
-                " that a telq is always followed by azla. So ",
+                H.code("telq mahapakh!qadma pashta"),
+                ") — the qadma is obligatory, because the masoretic rule (Yeivin §246) is"
+                " that a telq is always followed by qadma. So ",
                 H.bold("keep the mahapakh, drop the qadma"),
                 " leaves a telq directly before a bare mahapakh — a sequence"
                 " the tradition never produces and the grammar has no rule for — and the"
                 " parse falls into error recovery (verdict ERROR, not even a clean"
-                " non-parse). Dropping the mahapakh instead leaves an azla with nothing"
-                " between it and the pashta, also unruled (azla must be followed by"
+                " non-parse). Dropping the mahapakh instead leaves a qadma with nothing"
+                " between it and the pashta, also unruled (qadma must be followed by"
                 " mahapakh or merkha); and the mahapakh-then-qadma order is simply"
                 " backwards. A bare ",
                 H.code("mahapakh pashta"),
@@ -451,7 +451,7 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
         _ek_verdict_table(index, parser, has_legarmeh),
         H.para(
             "The checker’s parse tree for the verse, with the fused token shown as"
-            " mahapakh!azla:"
+            " mahapakh!qadma:"
         ),
         render_tree(tree_text),
     )

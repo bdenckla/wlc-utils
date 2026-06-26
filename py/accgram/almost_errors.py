@@ -8,7 +8,7 @@ It documents, in one place, both
     rather than flagging it; and
 
   * one **almost-error that is NOT a charity** -- Ezekiel 20:31's
-    ``mahapakh!azla`` same-letter pair, which looks like an error (two cantillation
+    ``mahapakh!qadma`` same-letter pair, which looks like an error (two cantillation
     accents on one letter) but is a genuine, MAM-confirmed masoretic tradition, not
     a leniency specific to LC/BHS/WLC.
 

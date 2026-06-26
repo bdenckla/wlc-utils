@@ -60,7 +60,7 @@ Joshua 1:3
         revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
     2 atnax_phrase
@@ -110,7 +110,7 @@ Joshua 1:5
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -327,7 +327,7 @@ Joshua 1:13
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -360,7 +360,7 @@ Joshua 1:14
         4 atnax_clause
           5 tipexa_clause
             6 tevir_phrase
-              azla merkha tevir 
+              qadma merkha tevir 
             6 tipexa_phrase
               tipexa 
           5 atnax_phrase
@@ -390,7 +390,7 @@ Joshua 1:15
         4 big_telisha_phrase
           telishagedola 
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -578,7 +578,7 @@ Joshua 2:3
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -773,7 +773,7 @@ Joshua 2:10
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -792,7 +792,7 @@ Joshua 2:11
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -1017,7 +1017,7 @@ Joshua 2:19
         4 pazer_phrase
           pazer 
         4 tevir_phrase
-          munax telishaqetanna azla darga tevir 
+          munax telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -1028,7 +1028,7 @@ Joshua 2:19
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -1782,7 +1782,7 @@ Joshua 4:5
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -1817,7 +1817,7 @@ Joshua 4:6
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -1862,7 +1862,7 @@ Joshua 4:7
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -1923,7 +1923,7 @@ Joshua 4:10
           5 big_telisha_phrase
             munax munax telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -1968,7 +1968,7 @@ Joshua 4:12
           5 geresh_phrase
             azla geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -2085,7 +2085,7 @@ Joshua 4:18
           5 geresh_phrase
             azla geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -2145,7 +2145,7 @@ Joshua 4:20
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -2171,7 +2171,7 @@ Joshua 4:21
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -2213,7 +2213,7 @@ Joshua 4:23
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        munax telishaqetanna azla darga tevir 
+        munax telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -2282,7 +2282,7 @@ Joshua 5:1
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -2375,7 +2375,7 @@ Joshua 5:5
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -2411,7 +2411,7 @@ Joshua 5:6
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -2423,7 +2423,7 @@ Joshua 5:6
             munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
       3 silluq_clause
@@ -2522,7 +2522,7 @@ Joshua 5:10
         4 pazer_phrase
           munax pazer 
         4 tevir_phrase
-          telishaqetanna azla merkha tevir 
+          telishaqetanna qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -2612,7 +2612,7 @@ Joshua 5:13
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -2639,7 +2639,7 @@ Joshua 5:14
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla merkha pashta 
+        telishaqetanna qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -2751,7 +2751,7 @@ Joshua 6:4
         4 pazer_phrase
           munax pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -2886,7 +2886,7 @@ Joshua 6:8
           5 pazer_phrase
             munax pazer 
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -3122,7 +3122,7 @@ Joshua 6:16
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -3138,7 +3138,7 @@ Joshua 6:17
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -3245,7 +3245,7 @@ Joshua 6:20
             revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
       3 silluq_clause
@@ -3275,7 +3275,7 @@ Joshua 6:21
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -3299,7 +3299,7 @@ Joshua 6:22
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -3324,7 +3324,7 @@ Joshua 6:23
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -3375,7 +3375,7 @@ Joshua 6:25
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -3489,7 +3489,7 @@ Joshua 7:2
           5 geresh_phrase
             gershayim 
           5 pashta_phrase
-            azla merkha pashta 
+            qadma merkha pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -3618,7 +3618,7 @@ Joshua 7:6
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -3689,7 +3689,7 @@ Joshua 7:8
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 silluq_phrase
@@ -4059,7 +4059,7 @@ Joshua 7:21
             darga munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             mahapakh pashta 
@@ -4073,7 +4073,7 @@ Joshua 7:21
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -4140,7 +4140,7 @@ Joshua 7:24
               7 pazer_phrase
                 pazer 
               7 pashta_phrase
-                telishaqetanna azla mahapakh pashta 
+                telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -4169,7 +4169,7 @@ Joshua 7:25
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -4224,7 +4224,7 @@ Joshua 8:1
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4269,7 +4269,7 @@ Joshua 8:2
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -4301,7 +4301,7 @@ Joshua 8:3
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -4725,7 +4725,7 @@ Joshua 8:19
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4761,7 +4761,7 @@ Joshua 8:20
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -4809,7 +4809,7 @@ Joshua 8:22
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -5054,7 +5054,7 @@ Joshua 8:31
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -5255,7 +5255,7 @@ Joshua 9:3
         revia 
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla darga tevir 
+        telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
   1 silluq_phrase
@@ -5298,7 +5298,7 @@ Joshua 9:5
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -5375,7 +5375,7 @@ Joshua 9:8
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -5388,7 +5388,7 @@ Joshua 9:9
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -5451,7 +5451,7 @@ Joshua 9:11
             revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -5508,7 +5508,7 @@ Joshua 9:13
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax munax zaqef 
     2 atnax_clause
@@ -5547,7 +5547,7 @@ Joshua 9:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -5711,7 +5711,7 @@ Joshua 9:21
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -5744,7 +5744,7 @@ Joshua 9:22
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -5784,7 +5784,7 @@ Joshua 9:24
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_clause
             6 geresh_phrase
@@ -5810,7 +5810,7 @@ Joshua 9:24
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -5828,7 +5828,7 @@ Joshua 9:25
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -5886,13 +5886,13 @@ Joshua 10:1
           munax revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
         4 segolta_phrase
           segolta 
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -5933,7 +5933,7 @@ Joshua 10:2
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -6018,7 +6018,7 @@ Joshua 10:6
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        munax telishaqetanna azla mahapakh pashta 
+        munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -6072,7 +6072,7 @@ Joshua 10:8
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -6156,7 +6156,7 @@ Joshua 10:11
             6 pazer_phrase
               pazer 
             6 tevir_phrase
-              munax telishaqetanna azla darga tevir 
+              munax telishaqetanna qadma darga tevir 
           5 tipexa_phrase
             tipexa 
     2 atnax_phrase
@@ -6405,7 +6405,7 @@ Joshua 10:21
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla darga tevir 
+        telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -6564,7 +6564,7 @@ Joshua 10:26
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -6969,7 +6969,7 @@ Joshua 10:42
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -7131,7 +7131,7 @@ Joshua 11:6
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -7167,7 +7167,7 @@ Joshua 11:7
         4 pazer_phrase
           munax pazer 
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -7182,7 +7182,7 @@ Joshua 11:8
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla merkha zarqa 
+        qadma merkha zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -7266,7 +7266,7 @@ Joshua 11:11
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -7368,7 +7368,7 @@ Joshua 11:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -7491,7 +7491,7 @@ Joshua 11:20
         4 pazer_phrase
           munax munax munax pazer 
         4 pashta_phrase
-          munax telishaqetanna azla mahapakh pashta 
+          munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -7581,13 +7581,13 @@ Joshua 11:23
           5 big_telisha_phrase
             telishagedola 
           5 zarqa_phrase
-            azla munax zarqa 
+            qadma munax zarqa 
         4 segolta_phrase
           segolta 
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -7608,7 +7608,7 @@ Joshua 12:1
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -7725,7 +7725,7 @@ Joshua 12:5
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -8100,7 +8100,7 @@ Joshua 13:3
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -8279,7 +8279,7 @@ Joshua 13:9
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
     2 tipexa_phrase
       merkha tipexa 
   1 silluq_phrase
@@ -8318,7 +8318,7 @@ Joshua 13:11
         darga munax revia 
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
   1 silluq_phrase
@@ -8363,7 +8363,7 @@ Joshua 13:13
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -8423,7 +8423,7 @@ Joshua 13:16
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
       3 tipexa_phrase
         tipexa 
   1 silluq_phrase
@@ -8825,7 +8825,7 @@ Joshua 14:2
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -8841,7 +8841,7 @@ Joshua 14:3
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -8892,7 +8892,7 @@ Joshua 14:5
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -8910,7 +8910,7 @@ Joshua 14:6
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -8952,7 +8952,7 @@ Joshua 14:7
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 atnax_phrase
@@ -9009,13 +9009,13 @@ Joshua 14:9
             pashta 
           5 zaqef_clause
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
             6 zaqef_phrase
               zaqef 
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             tipexa 
         4 atnax_phrase
@@ -9036,7 +9036,7 @@ Joshua 14:10
         revia 
       3 segolta_clause
         4 zarqa_phrase
-          telishaqetanna azla munax zarqa 
+          telishaqetanna qadma munax zarqa 
         4 segolta_phrase
           munax segolta 
     2 atnax_clause
@@ -9087,7 +9087,7 @@ Joshua 14:11
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -9131,7 +9131,7 @@ Joshua 14:12
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 silluq_clause
@@ -9162,7 +9162,7 @@ Joshua 14:14
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -9189,7 +9189,7 @@ Joshua 14:15
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -9221,7 +9221,7 @@ Joshua 15:1
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -9354,7 +9354,7 @@ Joshua 15:7
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla merkha zarqa 
+        qadma merkha zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -9462,7 +9462,7 @@ Joshua 15:10
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla merkha pashta 
+        telishaqetanna qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -10290,7 +10290,7 @@ Joshua 16:8
         4 geresh_phrase
           geresh 
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -10392,7 +10392,7 @@ Joshua 17:2
         4 big_telisha_phrase
           telishagedola 
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -10418,7 +10418,7 @@ Joshua 17:2
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -11021,7 +11021,7 @@ Joshua 18:6
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -11108,7 +11108,7 @@ Joshua 18:8
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 silluq_phrase
@@ -11142,7 +11142,7 @@ Joshua 18:10
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla darga tevir 
+        telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -11150,7 +11150,7 @@ Joshua 18:10
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -11190,7 +11190,7 @@ Joshua 18:12
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -11268,7 +11268,7 @@ Joshua 18:14
           pashta 
         4 segolta_clause
           5 zarqa_phrase
-            azla merkha zarqa 
+            qadma merkha zarqa 
           5 segolta_phrase
             segolta 
     2 atnax_clause
@@ -11447,7 +11447,7 @@ Joshua 18:20
         4 pazer_phrase
           pazer 
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -11529,7 +11529,7 @@ Joshua 18:28
           5 geresh_phrase
             geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -11709,7 +11709,7 @@ Joshua 19:11
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -11877,7 +11877,7 @@ Joshua 19:22
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -11958,7 +11958,7 @@ Joshua 19:27
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -11967,7 +11967,7 @@ Joshua 19:27
           5 big_telisha_phrase
             munax telishagedola 
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -12093,7 +12093,7 @@ Joshua 19:34
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -12308,7 +12308,7 @@ Joshua 19:49
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -12348,7 +12348,7 @@ Joshua 19:51
           5 pazer_phrase
             munax munax munax munax galgal pazergadol 
           5 pashta_phrase
-            munax munax telishaqetanna azla mahapakh pashta 
+            munax munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -12452,7 +12452,7 @@ Joshua 20:4
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -12696,7 +12696,7 @@ Joshua 21:3
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -12755,7 +12755,7 @@ Joshua 21:5
           5 geresh_phrase
             gershayim 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
       3 tipexa_phrase
         tipexa 
   1 silluq_phrase
@@ -12776,7 +12776,7 @@ Joshua 21:6
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
   1 silluq_clause
@@ -12794,7 +12794,7 @@ Joshua 21:7
         revia 
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
   1 silluq_clause
@@ -12818,7 +12818,7 @@ Joshua 21:8
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -12879,7 +12879,7 @@ Joshua 21:11
         4 geresh_phrase
           azla geresh 
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -13059,7 +13059,7 @@ Joshua 21:21
         4 geresh_phrase
           azla geresh 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -13272,7 +13272,7 @@ Joshua 21:32
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             merkha pashta 
@@ -13509,7 +13509,7 @@ Joshua 21:44
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -13520,7 +13520,7 @@ Joshua 21:44
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -13635,7 +13635,7 @@ Joshua 22:4
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -13686,7 +13686,7 @@ Joshua 22:5
           munax revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
         4 segolta_clause
           5 zarqa_phrase
             munax munax zarqa 
@@ -13862,7 +13862,7 @@ Joshua 22:10
         4 pazer_phrase
           munax munax pazer 
         4 pashta_phrase
-          munax telishaqetanna azla mahapakh pashta 
+          munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -13967,7 +13967,7 @@ Joshua 22:14
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -14100,7 +14100,7 @@ Joshua 22:19
           5 geresh_phrase
             azla geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             mahapakh pashta 
@@ -14261,7 +14261,7 @@ Joshua 22:24
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -14351,7 +14351,7 @@ Joshua 22:27
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -14448,7 +14448,7 @@ Joshua 22:30
           5 geresh_phrase
             azla geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -14598,7 +14598,7 @@ Joshua 23:1
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -14768,7 +14768,7 @@ Joshua 23:7
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -14952,7 +14952,7 @@ Joshua 23:14
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -15057,7 +15057,7 @@ Joshua 23:16
         4 big_telisha_phrase
           telishagedola 
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
       3 segolta_phrase
         munax munax segolta 
     2 atnax_clause
@@ -15270,7 +15270,7 @@ Joshua 24:7
               munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -15311,7 +15311,7 @@ Joshua 24:8
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -15324,7 +15324,7 @@ Joshua 24:9
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -15492,7 +15492,7 @@ Joshua 24:15
           munax revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
         4 segolta_phrase
           munax segolta 
     2 atnax_clause
@@ -15558,7 +15558,7 @@ Joshua 24:17
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -15662,7 +15662,7 @@ Joshua 24:20
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -15762,7 +15762,7 @@ Joshua 24:25
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -15819,7 +15819,7 @@ Joshua 24:27
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -15923,7 +15923,7 @@ Joshua 24:31
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -15948,7 +15948,7 @@ Joshua 24:32
         4 big_telisha_phrase
           munax telishagedola 
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -15957,7 +15957,7 @@ Joshua 24:32
           munax revia 
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_clause
             6 tevir_phrase
               tevir 

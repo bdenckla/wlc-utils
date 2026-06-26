@@ -31,6 +31,7 @@ _TOKEN_TO_ACC_CHAR: dict[str, str] = {
     "merkha": ha.MER,
     "mahapakh": ha.MAH,
     "darga": ha.DAR,
+    "qadma": ha.QOM,
     "azla": ha.QOM,
     "telishagedola": ha.TEL_G,
     "big_telisha": ha.TEL_G,
@@ -83,7 +84,7 @@ def _split_label_tokens(base_label: str) -> list[str]:
 
 def _abbreviate_acc_token(token: str) -> str | None:
     """Abbreviate one accent token, handling `!`-fused unitary tokens such as
-    "mahapakh!azla" -> "mah!qom". Returns None if any `!`-separated part is
+    "mahapakh!qadma" -> "mah!qom". Returns None if any `!`-separated part is
     not a known accent token."""
     parts = token.split("!")
     if all(part in _TOKEN_ABBREV for part in parts):

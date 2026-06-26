@@ -422,7 +422,7 @@ Ruth 1:17
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla merkha pashta 
+        telishaqetanna qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -540,7 +540,7 @@ Ruth 1:22
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -821,7 +821,7 @@ Ruth 2:10
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -909,7 +909,7 @@ Ruth 2:13
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -1047,7 +1047,7 @@ Ruth 2:19
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -1073,7 +1073,7 @@ Ruth 2:19
             mahapakh pashta 
           5 tipexa_clause
             6 tevir_phrase
-              azla darga tevir 
+              qadma darga tevir 
             6 tipexa_phrase
               tipexa 
       3 silluq_phrase
@@ -1323,7 +1323,7 @@ Ruth 3:7
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -1398,7 +1398,7 @@ Ruth 3:10
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -1494,7 +1494,7 @@ Ruth 3:13
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -1641,13 +1641,13 @@ Ruth 4:1
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -1928,7 +1928,7 @@ Ruth 4:11
           mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 silluq_clause
@@ -1958,7 +1958,7 @@ Ruth 4:12
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -1971,7 +1971,7 @@ Ruth 4:13
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -1982,7 +1982,7 @@ Ruth 4:13
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -2048,7 +2048,7 @@ Ruth 4:16
 0 silluq_clause
   1 zaqef_clause
     2 pashta_phrase
-      azla mahapakh pashta 
+      qadma mahapakh pashta 
     2 zaqef_phrase
       munax zaqef 
   1 silluq_clause
@@ -2061,7 +2061,7 @@ Ruth 4:17
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla merkha pashta 
+        telishaqetanna qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause

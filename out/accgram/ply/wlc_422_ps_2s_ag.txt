@@ -36,7 +36,7 @@
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -84,7 +84,7 @@
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -648,7 +648,7 @@
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_clause
           5 revia_phrase
             revia 
@@ -930,7 +930,7 @@
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla merkha tevir 
+          telishaqetanna qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -1256,7 +1256,7 @@
         4 pazer_phrase
           pazer 
         4 tevir_phrase
-          munax telishaqetanna azla darga tevir 
+          munax telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -1686,7 +1686,7 @@
           pashta 
         4 segolta_clause
           5 zarqa_phrase
-            azla merkha zarqa 
+            qadma merkha zarqa 
           5 segolta_phrase
             munax segolta 
     2 atnax_clause
@@ -1736,7 +1736,7 @@
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -1788,7 +1788,7 @@
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla darga tevir 
+        telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -1832,7 +1832,7 @@
         4 pazer_phrase
           munax munax pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -1919,7 +1919,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -2022,7 +2022,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -2033,7 +2033,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -2079,7 +2079,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -2256,7 +2256,7 @@
           revia 
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             merkha tipexa 
       3 atnax_phrase
@@ -2508,7 +2508,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -2733,7 +2733,7 @@
         4 big_telisha_phrase
           telishagedola 
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -2762,7 +2762,7 @@
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -2846,7 +2846,7 @@
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -2876,7 +2876,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -2916,7 +2916,7 @@
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -2939,7 +2939,7 @@
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -2958,13 +2958,13 @@
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          munax telishaqetanna azla merkha tevir 
+          munax telishaqetanna qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -3024,7 +3024,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -3035,7 +3035,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -3153,7 +3153,7 @@
         4 big_telisha_phrase
           telishagedola 
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -3261,7 +3261,7 @@
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -3294,7 +3294,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -3311,7 +3311,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -3327,7 +3327,7 @@
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla merkha zarqa 
+        qadma merkha zarqa 
       3 segolta_phrase
         munax munax segolta 
     2 atnax_clause
@@ -3336,7 +3336,7 @@
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             tipexa 
         4 atnax_phrase
@@ -3461,7 +3461,7 @@
 0 silluq_clause
   1 tipexa_clause
     2 tevir_phrase
-      azla merkha tevir 
+      qadma merkha tevir 
     2 tipexa_phrase
       merkha tipexa 
   1 silluq_phrase
@@ -3645,7 +3645,7 @@
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -3744,7 +3744,7 @@
           munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
       3 atnax_clause
@@ -3761,7 +3761,7 @@
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 silluq_phrase
@@ -3845,7 +3845,7 @@
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             mahapakh pashta 
@@ -3881,7 +3881,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -3965,7 +3965,7 @@
               munax revia 
           5 zaqef_clause
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
             6 zaqef_phrase
               ERROR 
       3 silluq_clause
@@ -3987,13 +3987,13 @@
           munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
           5 tipexa_phrase
             merkha tipexa 
         4 atnax_phrase
@@ -4293,7 +4293,7 @@
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4320,7 +4320,7 @@
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -4437,7 +4437,7 @@
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -4506,7 +4506,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4622,7 +4622,7 @@
           munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
       3 silluq_clause
@@ -4638,7 +4638,7 @@
         4 big_telisha_phrase
           munax telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -4665,7 +4665,7 @@
           revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
       3 atnax_clause
@@ -4683,7 +4683,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -4947,7 +4947,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -5049,7 +5049,7 @@
             revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -5259,7 +5259,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -5270,7 +5270,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -5283,7 +5283,7 @@
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -5355,7 +5355,7 @@
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -5385,7 +5385,7 @@
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          munax telishaqetanna azla merkha pashta 
+          munax telishaqetanna qadma merkha pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -5444,7 +5444,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -5466,7 +5466,7 @@
             revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -5610,13 +5610,13 @@
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -5643,7 +5643,7 @@
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -5795,7 +5795,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -5931,7 +5931,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -6056,7 +6056,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -6413,7 +6413,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -6690,7 +6690,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -6734,7 +6734,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -6834,7 +6834,7 @@
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -7095,7 +7095,7 @@
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -7211,7 +7211,7 @@
           5 geresh_phrase
             geresh 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           tipexa 
     2 silluq_phrase
@@ -7298,7 +7298,7 @@
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 silluq_phrase
@@ -7322,7 +7322,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -7590,7 +7590,7 @@
         4 geresh_phrase
           munax telishaqetanna azla geresh 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -7811,7 +7811,7 @@
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 revia_clause
             6 geresh_phrase
@@ -7868,7 +7868,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -8133,7 +8133,7 @@
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -8141,7 +8141,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -8154,7 +8154,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -8397,7 +8397,7 @@
           5 big_telisha_phrase
             munax telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -8547,7 +8547,7 @@
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -9081,7 +9081,7 @@
           5 geresh_phrase
             geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -9119,7 +9119,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -9177,7 +9177,7 @@
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -9303,7 +9303,7 @@
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla merkha tevir 
+        telishaqetanna qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -9317,7 +9317,7 @@
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -9399,7 +9399,7 @@
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -9492,7 +9492,7 @@
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -9579,7 +9579,7 @@
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -9591,7 +9591,7 @@
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             tipexa 
         4 atnax_phrase
@@ -9653,7 +9653,7 @@
             revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 revia_phrase
             revia 
@@ -9809,7 +9809,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -9945,7 +9945,7 @@
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -10356,7 +10356,7 @@
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -10488,7 +10488,7 @@
           mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -10836,7 +10836,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -10893,7 +10893,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -10934,7 +10934,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -11073,7 +11073,7 @@
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            telishaqetanna azla darga tevir 
+            telishaqetanna qadma darga tevir 
           5 tipexa_phrase
             merkha tipexa 
         4 atnax_phrase
@@ -11394,7 +11394,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -11466,7 +11466,7 @@
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -12063,7 +12063,7 @@
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -12489,7 +12489,7 @@
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -12579,7 +12579,7 @@
         darga munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -12845,7 +12845,7 @@
             6 big_telisha_phrase
               telishagedola 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -12974,7 +12974,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -13079,7 +13079,7 @@
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 silluq_clause
@@ -13160,7 +13160,7 @@
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -13281,7 +13281,7 @@
           5 big_telisha_phrase
             telishagedola 
           5 zarqa_phrase
-            azla merkha zarqa 
+            qadma merkha zarqa 
         4 segolta_phrase
           segolta 
     2 atnax_clause
@@ -13449,7 +13449,7 @@
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -13464,7 +13464,7 @@
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
           5 tipexa_phrase
             merkha tipexa 
         4 atnax_phrase
@@ -13572,7 +13572,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -13715,7 +13715,7 @@
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -13958,7 +13958,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla merkha pashta 
+        telishaqetanna qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -14069,7 +14069,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -14126,7 +14126,7 @@
             munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -14181,7 +14181,7 @@
           revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
         4 segolta_clause
           5 zarqa_phrase
             zarqa 
@@ -14196,7 +14196,7 @@
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
           5 tipexa_phrase
             tipexa 
         4 atnax_phrase
@@ -14283,7 +14283,7 @@
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -14496,7 +14496,7 @@
           5 geresh_phrase
             telishaqetanna azla geresh 
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 atnax_phrase
@@ -14534,7 +14534,7 @@
         revia 
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 silluq_phrase
@@ -14558,7 +14558,7 @@
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             mahapakh pashta 
@@ -14714,7 +14714,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -14741,7 +14741,7 @@
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -14823,7 +14823,7 @@
           5 geresh_phrase
             gershayim 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -15114,7 +15114,7 @@
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax munax zaqef 
     2 atnax_clause
@@ -15180,7 +15180,7 @@
         4 geresh_phrase
           munax telishaqetanna azla geresh 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -15254,13 +15254,13 @@
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla merkha pashta 
+          qadma merkha pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 silluq_phrase
@@ -15392,7 +15392,7 @@
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -15545,7 +15545,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla merkha tevir 
+        telishaqetanna qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -16716,7 +16716,7 @@
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -17027,7 +17027,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -17210,7 +17210,7 @@
         4 geresh_phrase
           geresh 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -17231,7 +17231,7 @@
         4 pazer_phrase
           munax pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -17357,7 +17357,7 @@
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla merkha pashta 
+            qadma merkha pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -17397,7 +17397,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -17424,7 +17424,7 @@
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        telishaqetanna azla merkha zarqa 
+        telishaqetanna qadma merkha zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -17481,7 +17481,7 @@
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -17492,7 +17492,7 @@
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -17658,7 +17658,7 @@
           yetiv 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -17672,7 +17672,7 @@
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -17685,7 +17685,7 @@
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause

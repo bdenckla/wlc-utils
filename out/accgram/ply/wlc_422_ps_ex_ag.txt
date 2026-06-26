@@ -254,7 +254,7 @@ Exodus 1:15
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -356,7 +356,7 @@ Exodus 1:19
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 silluq_phrase
@@ -735,7 +735,7 @@ Exodus 2:14
           5 geresh_phrase
             munax gershayim 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -1020,7 +1020,7 @@ Exodus 3:2
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -1320,7 +1320,7 @@ Exodus 3:13
           revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
         4 segolta_phrase
           munax segolta 
     2 atnax_clause
@@ -1596,7 +1596,7 @@ Exodus 3:22
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -1857,7 +1857,7 @@ Exodus 4:10
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -1959,7 +1959,7 @@ Exodus 4:14
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -2079,7 +2079,7 @@ Exodus 4:19
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -2538,7 +2538,7 @@ Exodus 5:7
         4 geresh_phrase
           munax gershayim 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -2562,7 +2562,7 @@ Exodus 5:8
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          munax telishaqetanna azla mahapakh pashta 
+          munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -2640,7 +2640,7 @@ Exodus 5:11
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -2711,7 +2711,7 @@ Exodus 5:14
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -2982,7 +2982,7 @@ Exodus 6:4
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -3030,7 +3030,7 @@ Exodus 6:7
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -3080,7 +3080,7 @@ Exodus 6:8
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -3213,7 +3213,7 @@ Exodus 6:15
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -3231,7 +3231,7 @@ Exodus 6:16
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -3414,7 +3414,7 @@ Exodus 6:25
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -3443,7 +3443,7 @@ Exodus 6:26
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -3485,7 +3485,7 @@ Exodus 6:28
       revia 
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
   1 silluq_phrase
@@ -3650,7 +3650,7 @@ Exodus 7:6
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -3690,7 +3690,7 @@ Exodus 7:9
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -3714,7 +3714,7 @@ Exodus 7:10
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -4008,7 +4008,7 @@ Exodus 7:21
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4473,7 +4473,7 @@ Exodus 8:13
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -4503,7 +4503,7 @@ Exodus 8:14
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -5327,7 +5327,7 @@ Exodus 9:18
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -5445,7 +5445,7 @@ Exodus 9:23
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -5522,7 +5522,7 @@ Exodus 9:25
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -5724,7 +5724,7 @@ Exodus 9:34
         munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
     2 atnax_phrase
@@ -5820,7 +5820,7 @@ Exodus 10:3
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -5858,7 +5858,7 @@ Exodus 10:4
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -5913,7 +5913,7 @@ Exodus 10:6
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -5949,7 +5949,7 @@ Exodus 10:7
           pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla merkha pashta 
+            qadma merkha pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -6027,7 +6027,7 @@ Exodus 10:10
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -6111,7 +6111,7 @@ Exodus 10:13
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -6170,7 +6170,7 @@ Exodus 10:14
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 silluq_clause
@@ -6209,7 +6209,7 @@ Exodus 10:15
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -6279,7 +6279,7 @@ Exodus 10:19
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -7085,7 +7085,7 @@ Exodus 12:13
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -7098,7 +7098,7 @@ Exodus 12:14
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -7230,7 +7230,7 @@ Exodus 12:18
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -7316,7 +7316,7 @@ Exodus 12:21
         revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
     2 silluq_phrase
@@ -7416,7 +7416,7 @@ Exodus 12:25
           munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
     2 atnax_phrase
@@ -7484,7 +7484,7 @@ Exodus 12:28
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -7593,7 +7593,7 @@ Exodus 12:32
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -7668,7 +7668,7 @@ Exodus 12:36
         4 geresh_phrase
           gershayim 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -7691,7 +7691,7 @@ Exodus 12:37
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -7719,7 +7719,7 @@ Exodus 12:39
         4 geresh_phrase
           azla geresh 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -7943,7 +7943,7 @@ Exodus 12:50
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -8013,7 +8013,7 @@ Exodus 13:3
             mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
     2 atnax_clause
@@ -8064,7 +8064,7 @@ Exodus 13:5
               munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -8243,7 +8243,7 @@ Exodus 13:12
           munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
     2 silluq_phrase
@@ -8264,7 +8264,7 @@ Exodus 13:13
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -8310,7 +8310,7 @@ Exodus 13:15
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -8403,7 +8403,7 @@ Exodus 13:18
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -8438,7 +8438,7 @@ Exodus 13:19
     2 silluq_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 silluq_clause
@@ -8612,7 +8612,7 @@ Exodus 14:5
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -8787,7 +8787,7 @@ Exodus 14:12
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -8811,7 +8811,7 @@ Exodus 14:13
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -8834,7 +8834,7 @@ Exodus 14:13
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -9018,7 +9018,7 @@ Exodus 14:21
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -9027,7 +9027,7 @@ Exodus 14:21
           5 big_telisha_phrase
             munax munax telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -9288,7 +9288,7 @@ Exodus 14:31
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -9573,7 +9573,7 @@ Exodus 15:16
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -9699,7 +9699,7 @@ Exodus 15:22
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -9869,7 +9869,7 @@ Exodus 16:1
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -9900,7 +9900,7 @@ Exodus 16:3
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -9939,7 +9939,7 @@ Exodus 16:4
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -9947,7 +9947,7 @@ Exodus 16:4
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -10250,7 +10250,7 @@ Exodus 16:15
       3 silluq_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             tipexa 
         4 silluq_phrase
@@ -10347,7 +10347,7 @@ Exodus 16:20
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -10643,7 +10643,7 @@ Exodus 16:32
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -10746,7 +10746,7 @@ Exodus 17:1
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -10800,7 +10800,7 @@ Exodus 17:3
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -10868,7 +10868,7 @@ Exodus 17:5
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -10881,7 +10881,7 @@ Exodus 17:6
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        munax telishaqetanna azla merkha zarqa 
+        munax telishaqetanna qadma merkha zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -10928,7 +10928,7 @@ Exodus 17:7
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -10956,7 +10956,7 @@ Exodus 17:9
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -11013,7 +11013,7 @@ Exodus 17:11
         revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
     2 atnax_phrase
@@ -11082,7 +11082,7 @@ Exodus 17:14
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -11142,13 +11142,13 @@ Exodus 18:1
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -11195,7 +11195,7 @@ Exodus 18:3
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -11235,7 +11235,7 @@ Exodus 18:5
         4 geresh_phrase
           gershayim 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -11310,7 +11310,7 @@ Exodus 18:8
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -11364,7 +11364,7 @@ Exodus 18:10
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
           5 tipexa_phrase
             merkha tipexa 
         4 atnax_phrase
@@ -11406,7 +11406,7 @@ Exodus 18:12
         4 geresh_phrase
           gershayim 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -11477,7 +11477,7 @@ Exodus 18:14
           mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 silluq_clause
@@ -11517,7 +11517,7 @@ Exodus 18:16
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -11748,7 +11748,7 @@ Exodus 18:25
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -11852,7 +11852,7 @@ Exodus 19:3
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -11906,7 +11906,7 @@ Exodus 19:5
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -11964,7 +11964,7 @@ Exodus 19:8
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -12027,7 +12027,7 @@ Exodus 19:10
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -12183,7 +12183,7 @@ Exodus 19:17
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -12207,7 +12207,7 @@ Exodus 19:18
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -12257,7 +12257,7 @@ Exodus 19:20
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -12336,7 +12336,7 @@ Exodus 19:24
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -12435,7 +12435,7 @@ Exodus 20:20
   1 atnax_clause
     2 segolta_clause
       3 zarqa_phrase
-        azla munax zarqa 
+        qadma munax zarqa 
       3 segolta_phrase
         segolta 
     2 atnax_clause
@@ -12719,7 +12719,7 @@ Exodus 21:6
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -12869,7 +12869,7 @@ Exodus 21:16
 0 silluq_clause
   1 tipexa_clause
     2 tevir_phrase
-      azla darga tevir 
+      qadma darga tevir 
     2 tipexa_phrase
       merkha tipexa 
   1 silluq_phrase
@@ -12989,7 +12989,7 @@ Exodus 21:22
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -13092,7 +13092,7 @@ Exodus 21:28
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -13292,7 +13292,7 @@ Exodus 21:36
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -13530,7 +13530,7 @@ Exodus 22:9
         4 geresh_phrase
           telishaqetanna azla geresh 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -13856,7 +13856,7 @@ Exodus 22:30
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -14096,7 +14096,7 @@ Exodus 23:13
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -14568,7 +14568,7 @@ Exodus 24:2
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -14744,7 +14744,7 @@ Exodus 24:8
           mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 silluq_clause
@@ -14882,7 +14882,7 @@ Exodus 24:14
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -15026,7 +15026,7 @@ Exodus 25:5
 0 silluq_clause
   1 tipexa_clause
     2 tevir_phrase
-      azla darga tevir 
+      qadma darga tevir 
     2 tipexa_phrase
       merkha tipexa 
   1 silluq_phrase
@@ -15300,7 +15300,7 @@ Exodus 25:19
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -15438,7 +15438,7 @@ Exodus 25:25
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -16817,7 +16817,7 @@ Exodus 27:8
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -16875,7 +16875,7 @@ Exodus 27:11
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -16938,7 +16938,7 @@ Exodus 27:14
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -17010,7 +17010,7 @@ Exodus 27:17
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -17106,7 +17106,7 @@ Exodus 27:21
           munax revia 
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
     2 atnax_phrase
@@ -17637,7 +17637,7 @@ Exodus 28:25
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -17697,7 +17697,7 @@ Exodus 28:27
           5 pazer_phrase
             munax pazer 
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -17792,7 +17792,7 @@ Exodus 28:30
         4 big_telisha_phrase
           munax telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -18284,7 +18284,7 @@ Exodus 29:10
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -18473,7 +18473,7 @@ Exodus 29:19
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -18495,7 +18495,7 @@ Exodus 29:20
               7 geresh_phrase
                 telishaqetanna azla geresh 
               7 pashta_phrase
-                azla mahapakh pashta 
+                qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -18525,7 +18525,7 @@ Exodus 29:21
         4 geresh_phrase
           gershayim 
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
       3 segolta_phrase
         munax segolta 
     2 atnax_clause
@@ -18573,7 +18573,7 @@ Exodus 29:22
               munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 revia_clause
             6 legarmeh_phrase
@@ -18609,7 +18609,7 @@ Exodus 29:23
           revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
     2 atnax_phrase
@@ -18755,7 +18755,7 @@ Exodus 29:28
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -18825,7 +18825,7 @@ Exodus 29:32
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -18999,7 +18999,7 @@ Exodus 29:40
         4 geresh_phrase
           azla geresh 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -19031,7 +19031,7 @@ Exodus 29:41
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -19058,7 +19058,7 @@ Exodus 29:42
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -19125,7 +19125,7 @@ Exodus 29:46
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           merkha tipexa 
       3 atnax_phrase
@@ -19293,7 +19293,7 @@ Exodus 30:8
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -19475,7 +19475,7 @@ Exodus 30:16
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -19568,7 +19568,7 @@ Exodus 30:21
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -19721,7 +19721,7 @@ Exodus 30:31
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -20055,7 +20055,7 @@ Exodus 31:11
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -20079,7 +20079,7 @@ Exodus 31:13
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -20604,7 +20604,7 @@ Exodus 32:13
             revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
         4 segolta_phrase
           segolta 
     2 atnax_clause
@@ -20793,7 +20793,7 @@ Exodus 32:20
         4 geresh_phrase
           gershayim 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -21003,7 +21003,7 @@ Exodus 32:29
         munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -21168,7 +21168,7 @@ Exodus 33:1
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax munax zaqef 
     2 atnax_clause
@@ -21188,7 +21188,7 @@ Exodus 33:1
           5 big_telisha_phrase
             munax telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -21447,7 +21447,7 @@ Exodus 33:11
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -21594,7 +21594,7 @@ Exodus 33:16
           munax revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 atnax_clause
@@ -21660,7 +21660,7 @@ Exodus 33:19
         revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 atnax_clause
@@ -21846,7 +21846,7 @@ Exodus 34:4
             revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             pashta 
@@ -21892,7 +21892,7 @@ Exodus 34:6
     2 atnax_clause
       3 segolta_clause
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
         4 segolta_phrase
           segolta 
       3 atnax_clause
@@ -21969,7 +21969,7 @@ Exodus 34:9
         4 pazer_phrase
           pazer 
         4 pashta_phrase
-          telishaqetanna azla mahapakh pashta 
+          telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -22479,7 +22479,7 @@ Exodus 34:29
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
       3 atnax_clause
@@ -22553,7 +22553,7 @@ Exodus 34:32
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          telishaqetanna azla darga tevir 
+          telishaqetanna qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 silluq_phrase
@@ -22622,7 +22622,7 @@ Exodus 34:35
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -22668,7 +22668,7 @@ Exodus 35:2
           munax revia 
         4 tipexa_clause
           5 tevir_phrase
-            azla merkha tevir 
+            qadma merkha tevir 
           5 tipexa_phrase
             merkha tipexa 
       3 atnax_phrase
@@ -22719,7 +22719,7 @@ Exodus 35:5
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -22754,7 +22754,7 @@ Exodus 35:7
 0 silluq_clause
   1 tipexa_clause
     2 tevir_phrase
-      azla darga tevir 
+      qadma darga tevir 
     2 tipexa_phrase
       merkha tipexa 
   1 silluq_phrase
@@ -23006,7 +23006,7 @@ Exodus 35:21
             6 geresh_phrase
               azla geresh 
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
     2 silluq_clause
@@ -23069,7 +23069,7 @@ Exodus 35:23
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -23136,7 +23136,7 @@ Exodus 35:26
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -23196,7 +23196,7 @@ Exodus 35:29
         munax revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla munax zarqa 
+          qadma munax zarqa 
         4 segolta_phrase
           segolta 
     2 atnax_clause
@@ -23208,7 +23208,7 @@ Exodus 35:29
       3 atnax_clause
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             tipexa 
         4 atnax_phrase
@@ -23411,7 +23411,7 @@ Exodus 36:3
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -23469,7 +23469,7 @@ Exodus 36:6
         munax revia 
       3 segolta_clause
         4 zarqa_phrase
-          azla merkha zarqa 
+          qadma merkha zarqa 
         4 segolta_phrase
           segolta 
     2 atnax_clause
@@ -24450,7 +24450,7 @@ Exodus 37:12
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla merkha tevir 
+        qadma merkha tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -25415,7 +25415,7 @@ Exodus 38:24
     2 silluq_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 silluq_phrase
@@ -25463,7 +25463,7 @@ Exodus 38:26
           revia 
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           zaqef 
     2 silluq_clause
@@ -25589,7 +25589,7 @@ Exodus 38:31
   1 silluq_clause
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -25884,7 +25884,7 @@ Exodus 39:14
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla merkha tevir 
+          qadma merkha tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -25971,7 +25971,7 @@ Exodus 39:18
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -26031,7 +26031,7 @@ Exodus 39:20
           5 pazer_phrase
             pazer 
           5 pashta_phrase
-            telishaqetanna azla mahapakh pashta 
+            telishaqetanna qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -26303,7 +26303,7 @@ Exodus 39:32
           5 big_telisha_phrase
             telishagedola 
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 silluq_phrase
@@ -26804,7 +26804,7 @@ Exodus 40:15
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 silluq_phrase
@@ -26822,7 +26822,7 @@ Exodus 40:16
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 silluq_phrase
@@ -27267,7 +27267,7 @@ Exodus 40:38
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause

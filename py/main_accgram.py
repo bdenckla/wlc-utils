@@ -39,7 +39,7 @@ Subcommands:
                     node (plus out/accgram/research-oddballs.json).
                   * gh-pages/accgram/almost-errors.html -- the "almost errors"
                     page documenting the editorial charities the checker applies
-                    and the non-charity ek20:31 mahapakh!azla, with live parse
+                    and the non-charity ek20:31 mahapakh!qadma, with live parse
                     trees regenerated from the grammar at build time.
                   * gh-pages/accgram/telg-doc-notes.html -- a deep-dive
                     translation of MAM's documentation notes on the five

@@ -99,7 +99,7 @@ def test_pair_label_follows_body_order():
 
 def test_whitelisted_mahapakh_qadma_is_not_flagged():
     # ek20:31 (word nitm'im): mahapakh + qadma is the sole whitelisted pair (MAM keeps
-    # both; the scanner fuses it to mahapakh!azla).  Not an alphabet error.
+    # both; the scanner fuses it to mahapakh!qadma).  Not an alphabet error.
     assert _pairs("XXXX" + _MA + _QA + "XX") == []
     assert _pairs("XXXX" + _QA + _MA + "XX") == []  # whitelist is order-less
 

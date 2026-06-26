@@ -103,6 +103,32 @@ _LEGARMEH_LA = (
 )
 # methiga-zaqef body:  63 [^01234680]* 80
 _METHIGA_MID = am.negated_class("", "0123468")
+# qadma-before-geresh lookahead: U+05A8 is named AZLA when a geresh is the *next
+# accent token* (cross-letter), QADMA otherwise.  Like METHIGAZAQEF, the span is the
+# cross-letter run between the two -- NOT a literal X/letter separator -- so a
+# (non-occurring, non-whitelisted) same-letter qadma+geresh adjacency can't accidentally
+# depend on letter-adjacency.  But unlike METHIGAZAQEF (which never crosses a paseq), an
+# azla-geresh pair can be separated by scanner-*swallowed* marks (paseq, meteg, tsinnorit,
+# puncta) and even a word boundary -- e.g. 1Chr 12:19's ``qadma X X paseq SPACE X X geresh``,
+# where the swallowed paseq leaves AZLA and GERESH token-adjacent.  So the intervening class
+# is "anything that is not itself a tokenizing accent": it permits the swallowed marks and the
+# structural filler (letter X, maqaf, space, ``]N`` note, ``*`` ketiv) but stops at any accent
+# -- the geresh that follows, or any other accent that would mean geresh is NOT the next token.
+# geresh-muqdam edge cases (lv1:3, 2k17:13) normalize to plain geresh and never co-occur with
+# a preceding qadma.
+# The marks the scanner swallows between two accent tokens (see the swallow rule near the
+# end of _GG_RULES): meteg/silluq, paseq, tsinnorit, and the upper/lower puncta.
+_SWALLOWED_MARKS = am.METEG + am.PASEQ + am.TSINNORIT + am.UPPER_DOT + am.LOWER_DOT
+# Everything that is NOT a tokenizing accent: the swallowed marks plus structural filler.
+# Built as the negation of the accent codepoints (every _MARK_DIGITS key that is not a
+# swallowed mark -- this still blocks at sof pasuq and at any other accent), so the run
+# halts at the geresh (or any accent) ahead.
+_GERESH_MID = "[^" + "".join(
+    am._escape_in_class(mark)
+    for mark in am._MARK_DIGITS
+    if mark not in _SWALLOWED_MARKS
+) + "]"
+_GERESH_LA = r"(?=" + _GERESH_MID + r"*" + am.GERESH + r")"
 
 _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.SOF_PASUQ), "SOFPASUQ"),
@@ -147,20 +173,26 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # munax+paseq NOT before revia: legarmeh only inside a has_legarmeh passage.
     (re.compile(am.MUNAX + _TEXT + am.PASEQ), "_LEGARMEH_OR_MUNAX"),
     (re.compile(am.MUNAX), "MUNAX"),
-    # mahapakh + qadma/azla on one base letter (adjacent in the mark string, no X
+    # mahapakh + qadma on one base letter (adjacent in the mark string, no X
     # between -> same letter): an impositive above-accent and below-accent share a
     # consonant, so the pair has no right-to-left (graphical) order -- one sits above the
     # letter and one below -- even though it has a chanting order (qadma before mahapakh;
     # cf. the ek20:31 MAM note).  Fused into one unitary token rather than judged as a
     # servus *sequence*; the genuine cross-letter `qadma...mahapakhh` chain still tokenizes
-    # as AZLA then MAHAPAKH.  Stored mahapakh-then-qadma (U+05A4 < U+05A8).  Outside the
-    # (ungrammar-checked) decalogues this occurs only at Ezekiel 20:31.
-    (re.compile(am.MAHAPAKH + am.QADMA), "MAHAPAKHAZLA"),
+    # as QADMA then MAHAPAKH.  Stored mahapakh-then-qadma (U+05A4 < U+05A8).  Outside the
+    # (ungrammar-checked) decalogues this occurs only at Ezekiel 20:31; the qadma is not
+    # before a geresh, so it stays qadma (not azla).
+    (re.compile(am.MAHAPAKH + am.QADMA), "MAHAPAKHQADMA"),
     (re.compile(am.MAHAPAKH), "MAHAPAKH"),
     (re.compile(am.MERKHA), "MERKHA"),
     (re.compile(am.MERKHA_KEFULA), "MERKHAKEFULA"),
     (re.compile(am.DARGA), "DARGA"),
-    (re.compile(am.QADMA), "AZLA"),
+    # U+05A8: AZLA before a (cross-letter, within-word) geresh -- the azla-geresh
+    # pairing -- else QADMA (the standalone prose name).  Both rules match the single
+    # U+05A8 mark (the lookahead consumes nothing), so rule order breaks the tie:
+    # the geresh-context AZLA rule is listed first.
+    (re.compile(am.QADMA + _GERESH_LA), "AZLA"),
+    (re.compile(am.QADMA), "QADMA"),
     # telisha qetanna: a stress-helper telisha fused onto the main (one token).
     (re.compile(am.TELISHA_QETANA + _TEXT + am.TELISHA_QETANA), "TELISHAQETANNA"),
     (re.compile(am.TELISHA_QETANA), "TELISHAQETANNA"),
@@ -210,10 +242,11 @@ _LEAF: dict[str, str] = {
     # ``!`` (not ``_``) joins the fused cluster: these are two distinct accents under
     # duress on one letter, not one accent with a space in its name -- and the cluster
     # is extraordinary, sometimes even illegal (cf. the mahapakh!tipexa of Lev 25:20).
-    "MAHAPAKHAZLA": "mahapakh!azla",
+    "MAHAPAKHQADMA": "mahapakh!qadma",
     "MERKHA": "merkha",
     "MERKHAKEFULA": "merkhakefula",
     "DARGA": "darga",
+    "QADMA": "qadma",
     "AZLA": "azla",
     "TELISHAQETANNA": "telishaqetanna",
     "GALGAL": "galgal",

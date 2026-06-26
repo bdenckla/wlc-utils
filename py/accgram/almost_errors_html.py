@@ -72,8 +72,8 @@ def _intro() -> tuple[object, ...]:
                 " carry a single mark, or collapse a repeated divider to one — that choice"
                 " is, for the multi-accent cases, among readings that all parse cleanly (the"
                 " telisha gedola exhibit below shows the alternatives). The headline case"
-                " is Ezekiel 20:31’s mahapakh + azla (",
-                H.code("mahapakh!azla"),
+                " is Ezekiel 20:31’s mahapakh + qadma (",
+                H.code("mahapakh!qadma"),
                 "), the only word in Tanakh with two conjunctive accents on"
                 " one letter.",
             )

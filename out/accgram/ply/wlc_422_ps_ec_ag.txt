@@ -291,7 +291,7 @@ Ecclesiastes 1:16
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -300,7 +300,7 @@ Ecclesiastes 1:16
           revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
       3 atnax_clause
@@ -494,7 +494,7 @@ Ecclesiastes 2:7
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        munax telishaqetanna azla mahapakh pashta 
+        munax telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -599,7 +599,7 @@ Ecclesiastes 2:11
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -711,7 +711,7 @@ Ecclesiastes 2:16
   1 atnax_clause
     2 tipexa_clause
       3 tevir_phrase
-        telishaqetanna azla darga tevir 
+        telishaqetanna qadma darga tevir 
       3 tipexa_phrase
         tipexa 
     2 atnax_phrase
@@ -1094,7 +1094,7 @@ Ecclesiastes 3:10
       munax revia 
     2 tipexa_clause
       3 tevir_phrase
-        azla darga tevir 
+        qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
   1 silluq_phrase
@@ -1176,7 +1176,7 @@ Ecclesiastes 3:14
           5 big_telisha_phrase
             telishagedola 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
         4 zaqef_clause
           5 pashta_phrase
             yetiv 
@@ -1319,7 +1319,7 @@ Ecclesiastes 3:19
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -1383,7 +1383,7 @@ Ecclesiastes 3:22
           munax merkha pashta 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             zaqef 
     2 atnax_clause
@@ -1914,7 +1914,7 @@ Ecclesiastes 5:7
         4 big_telisha_phrase
           munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -2154,7 +2154,7 @@ Ecclesiastes 5:18
           5 geresh_phrase
             munax munax telishaqetanna azla geresh 
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -2218,7 +2218,7 @@ Ecclesiastes 6:2
             telishaqetanna azla geresh 
           5 revia_clause
             6 legarmeh_phrase
-              azla merkha legarmeh 
+              qadma merkha legarmeh 
             6 revia_phrase
               munax revia 
       3 zaqef_clause
@@ -2678,7 +2678,7 @@ Ecclesiastes 7:14
           revia 
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             tipexa 
       3 silluq_phrase
@@ -2850,7 +2850,7 @@ Ecclesiastes 7:25
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -2883,7 +2883,7 @@ Ecclesiastes 7:26
           pashta 
         4 tipexa_clause
           5 tevir_phrase
-            azla darga tevir 
+            qadma darga tevir 
           5 tipexa_phrase
             tipexa 
     2 atnax_phrase
@@ -2955,7 +2955,7 @@ Ecclesiastes 7:29
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -3137,7 +3137,7 @@ Ecclesiastes 8:9
         revia 
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
     2 silluq_phrase
@@ -3264,7 +3264,7 @@ Ecclesiastes 8:14
             munax revia 
         4 zaqef_clause
           5 pashta_phrase
-            azla mahapakh pashta 
+            qadma mahapakh pashta 
           5 zaqef_phrase
             munax zaqef 
       3 atnax_clause
@@ -3294,7 +3294,7 @@ Ecclesiastes 8:15
     2 atnax_clause
       3 zaqef_clause
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
         4 zaqef_phrase
           munax zaqef 
       3 atnax_clause
@@ -3324,7 +3324,7 @@ Ecclesiastes 8:16
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -3381,7 +3381,7 @@ Ecclesiastes 8:17
             6 big_telisha_phrase
               telishagedola 
             6 tevir_phrase
-              azla darga tevir 
+              qadma darga tevir 
           5 tipexa_phrase
             tipexa 
         4 atnax_phrase
@@ -3389,7 +3389,7 @@ Ecclesiastes 8:17
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -3411,7 +3411,7 @@ Ecclesiastes 9:1
     2 atnax_clause
       3 tipexa_clause
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
         4 tipexa_phrase
           tipexa 
       3 atnax_phrase
@@ -3497,7 +3497,7 @@ Ecclesiastes 9:3
         4 big_telisha_phrase
           munax munax telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -3569,7 +3569,7 @@ Ecclesiastes 9:6
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         zaqef 
     2 silluq_clause
@@ -3660,7 +3660,7 @@ Ecclesiastes 9:10
         4 big_telisha_phrase
           telishagedola 
         4 tevir_phrase
-          azla darga tevir 
+          qadma darga tevir 
       3 tipexa_phrase
         merkha tipexa 
     2 atnax_phrase
@@ -3668,7 +3668,7 @@ Ecclesiastes 9:10
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        telishaqetanna azla mahapakh pashta 
+        telishaqetanna qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
@@ -3702,7 +3702,7 @@ Ecclesiastes 9:11
               munax merkha pashta 
           5 zaqef_clause
             6 pashta_phrase
-              azla mahapakh pashta 
+              qadma mahapakh pashta 
             6 zaqef_phrase
               zaqef 
     2 atnax_clause
@@ -4251,7 +4251,7 @@ Ecclesiastes 11:3
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla merkha pashta 
+        qadma merkha pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4287,7 +4287,7 @@ Ecclesiastes 11:5
   1 atnax_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 atnax_clause
@@ -4458,7 +4458,7 @@ Ecclesiastes 12:2
         4 big_telisha_phrase
           telishagedola 
         4 pashta_phrase
-          azla mahapakh pashta 
+          qadma mahapakh pashta 
       3 zaqef_phrase
         zaqef 
     2 atnax_clause
@@ -4673,7 +4673,7 @@ Ecclesiastes 12:12
   1 silluq_clause
     2 zaqef_clause
       3 pashta_phrase
-        azla mahapakh pashta 
+        qadma mahapakh pashta 
       3 zaqef_phrase
         munax zaqef 
     2 silluq_clause
