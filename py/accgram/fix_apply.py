@@ -11,15 +11,23 @@ section markers), and re-transcodes the modified verse to a mark body
 transcoder owns the helper/main split and every mark emission.
 
 An adjacent run of words (a multi-word ``wlc_focus``) is substituted word by word.
-A change the grammar cannot see -- a vowel- or meteg-only edit -- is returned as an
-``UntestableFix`` (it would re-transcode to the same body), as is a non-adjacent /
+A change the grammar cannot see -- a vowel- or medial-meteg-only edit -- is returned
+as an ``UntestableFix`` (it would re-transcode to the same body), as is a non-adjacent /
 mismatched-count multi-word diff or a word/atom misalignment.  Nothing is guessed.
+
+An accent that *moves* to a different letter (je 44:17: a telisha qetanna shifting from
+the kaf to the yod) keeps the per-word accent multiset but is grammar-visible -- it is
+exactly what ``lexical_validation`` keys on -- so it is treated as a real, testable
+change: the whole-word substitution carries the mark to its new letter and the
+re-transcoded body re-scans with the move applied (``AppliedFix.moved_accents`` records
+the from/to letters for the report).
 """
 
 from __future__ import annotations
 
 import copy
 import re
+import unicodedata
 from collections import Counter
 from dataclasses import dataclass
 
@@ -48,14 +56,26 @@ class AppliedFix:
     new_word: str  # the MAM Unicode word it was replaced with
     removed_accents: tuple[str, ...]  # accent abbreviations, WLC side
     added_accents: tuple[str, ...]  # accent abbreviations, MAM side
+    # Pre-formatted descriptions of any accent that *moved* to a different letter
+    # (same accent multiset, different skeleton -- je 44:17's telisha qetanna shifting
+    # from the kaf to the yod).  Empty unless this fix is a pure/partial move.
+    moved_accents: tuple[str, ...] = ()
     # Pre-formatted transform descriptions for any *additional* changed words in a
     # multi-word (adjacent wlc_focus) splice; empty for the common single-word case.
     extra_transforms: tuple[str, ...] = ()
 
     def transformation(self) -> str:
-        rm = " ".join(self.removed_accents) or "(none)"
-        ad = " ".join(self.added_accents) or "(none)"
-        base = f'word "{self.old_word}" -> "{self.new_word}" ({rm} -> {ad})'
+        # A pure accent move has empty removed/added multisets; describe it as a move
+        # rather than "(none) -> (none)".
+        if self.moved_accents and not self.removed_accents and not self.added_accents:
+            inner = "; ".join(self.moved_accents)
+            base = f'word "{self.old_word}" -> "{self.new_word}" ({inner})'
+        else:
+            rm = " ".join(self.removed_accents) or "(none)"
+            ad = " ".join(self.added_accents) or "(none)"
+            base = f'word "{self.old_word}" -> "{self.new_word}" ({rm} -> {ad})'
+            if self.moved_accents:
+                base = f"{base} [moved: {'; '.join(self.moved_accents)}]"
         if self.extra_transforms:
             return "; ".join((base, *self.extra_transforms))
         return base
@@ -100,6 +120,7 @@ def apply_mam_fix(
     # --- grammar visibility gate (per word) ---
     removed_first: list[str] = []
     added_first: list[str] = []
+    moved_first: list[str] = []
     extra_transforms: list[str] = []
     any_visible = False
     for offset, (wlc_tok, mam_tok) in enumerate(zip(wlc_tokens, mam_tokens)):
@@ -107,23 +128,30 @@ def apply_mam_fix(
         sof_added = _SOF_PASUQ in mam_tok and _SOF_PASUQ not in wlc_tok
         if sof_added:
             added = [*added, "(sof pasuq)"]
-        if removed or added:
+        # An accent that moves to a different letter keeps the name multiset (so the
+        # name diff is empty) yet IS grammar-visible (je 44:17: lexical_validation keys
+        # on which letter the telisha qetanna sits on).  Treat such a move as visible.
+        moved = _accent_moves(wlc_tok, mam_tok)
+        if removed or added or moved:
             any_visible = True
         if offset == 0:
-            removed_first, added_first = removed, added
-        elif removed or added:
+            removed_first, added_first, moved_first = removed, added, moved
+        elif removed or added or moved:
             rm = " ".join(removed) or "(none)"
             ad = " ".join(added) or "(none)"
-            extra_transforms.append(f'word "{wlc_tok}" -> "{mam_tok}" ({rm} -> {ad})')
+            if moved and not removed and not added:
+                desc = "; ".join(moved)
+            else:
+                desc = f"{rm} -> {ad}"
+                if moved:
+                    desc = f"{desc} [moved: {'; '.join(moved)}]"
+            extra_transforms.append(f'word "{wlc_tok}" -> "{mam_tok}" ({desc})')
     if not any_visible:
-        # The per-word accent-name multiset is unchanged, so the name diff sees nothing.
-        # Usually that means a vowel- or (medial) meteg-only edit, which truly cannot reach
-        # the grammar (the scanner swallows vowels and meteg) -- a grammar-inert fix.  But a
-        # mark that *moved* to a different letter (je 44:17: a telisha qetanna shifting from
-        # the kaf to the yod) keeps the multiset yet IS grammar-visible -- it is exactly what
-        # lexical_validation flags -- and fix_apply, which tests by a whole-word substitution
-        # keyed on that multiset, cannot mechanically confirm the move.  Either way untestable
-        # here, but the reason distinguishes them.
+        # The per-word accent-name multiset is unchanged AND every accent sits on the
+        # same letter as before, so the change is a vowel- or (medial) meteg-only edit:
+        # truly invisible to the grammar (the scanner swallows vowels and meteg).  A
+        # mark that *moved* letters (je 44:17) is handled above as visible and falls
+        # through to the substitution path below.
         reason = _no_accent_change_reason(wlc_tokens, mam_tokens)
         return UntestableFix(reason, _NO_CHANGE_MESSAGE[reason])
 
@@ -159,6 +187,7 @@ def apply_mam_fix(
         new_word=mam_tokens[0],
         removed_accents=tuple(removed_first),
         added_accents=tuple(added_first),
+        moved_accents=tuple(moved_first),
         extra_transforms=tuple(extra_transforms),
     )
 
@@ -234,35 +263,79 @@ def _accent_name_diff(wlc_word: str, mam_word: str) -> tuple[list[str], list[str
 _NO_CHANGE_MESSAGE = {
     "vowel_only": "no accent/punctuation difference -- invisible to the grammar",
     "meteg_only": "no accent/punctuation difference -- invisible to the grammar",
-    "accent_moved": (
-        "accents unchanged as a multiset but one sits on a different letter -- "
-        "grammar-visible (lexical_validation flags the move), but fix_apply tests by "
-        "whole-word substitution keyed on that multiset, so the move is not tested here"
-    ),
 }
 
 
-def _letters_and_accents(word: str) -> str:
-    """Base letters and real accents (U+0591..U+05AE) in document order; vowels, points
-    and meteg dropped.  Two words with the same accent multiset but a different skeleton
-    differ by an accent's *position* -- which letter the mark sits on (je 44:17)."""
-    return "".join(
-        c
-        for c in word
-        if uni_to_marks.is_base_letter(c) or uni_to_marks.is_accent(c)
-    )
+def _accent_associations(word: str) -> list[tuple[str, str | None]]:
+    """Each real accent paired with the base letter it sits on, in document order.
+
+    The base letter is the most recent one preceding the mark (``None`` if a word
+    somehow opens with an accent).  Vowels, points and meteg are ignored.
+    """
+    associations: list[tuple[str, str | None]] = []
+    current: str | None = None
+    for char in word:
+        if uni_to_marks.is_base_letter(char):
+            current = char
+        elif uni_to_marks.is_accent(char):
+            associations.append((char, current))
+    return associations
+
+
+def _accent_moves(wlc_word: str, mam_word: str) -> list[str]:
+    """Descriptions of every accent that *moved* to a different letter.
+
+    The two words share an accent multiset (the name diff is empty) but an accent's
+    letter changed -- je 44:17's telisha qetanna shifting from the kaf to the yod.
+    Pairs each removed ``(accent, letter)`` with an added one of the same accent and
+    formats it ``"telisha qetana: kaf -> yod"``; only genuine moves (the accent stays,
+    only its letter changes) are reported, so a vowel/meteg-only edit yields none.
+    """
+    wlc_assoc = Counter(_accent_associations(wlc_word))
+    mam_assoc = Counter(_accent_associations(mam_word))
+    removed = list((wlc_assoc - mam_assoc).elements())
+    added = list((mam_assoc - wlc_assoc).elements())
+    moves: list[str] = []
+    for accent, from_letter in removed:
+        match = next(
+            (i for i, (acc, _) in enumerate(added) if acc == accent), None
+        )
+        if match is None:
+            continue
+        _, to_letter = added.pop(match)
+        if to_letter == from_letter:
+            continue
+        moves.append(
+            f"{_accent_label(accent)}: "
+            f"{_letter_label(from_letter)} -> {_letter_label(to_letter)}"
+        )
+    return moves
+
+
+def _accent_label(char: str) -> str:
+    """A readable accent name, e.g. ``"telisha qetana"`` (the unicode name minus its
+    ``HEBREW ACCENT`` prefix), falling back to the codepoint if unnamed."""
+    name = unicodedata.name(char, "")
+    return name.removeprefix("HEBREW ACCENT ").lower() if name else f"U+{ord(char):04X}"
+
+
+def _letter_label(char: str | None) -> str:
+    """A readable base-letter name, e.g. ``"kaf"`` (the unicode name minus its
+    ``HEBREW LETTER`` prefix)."""
+    if char is None:
+        return "(word start)"
+    name = unicodedata.name(char, "")
+    return name.removeprefix("HEBREW LETTER ").lower() if name else f"U+{ord(char):04X}"
 
 
 def _no_accent_change_reason(wlc_tokens: list[str], mam_tokens: list[str]) -> str:
-    """Classify a change the accent-name multiset cannot see: an accent that *moved* to a
-    different letter (``accent_moved`` -- grammar-visible but not mechanically testable
-    here), a meteg/silluq-only change, or a pure niqqud change (the last two grammar-inert).
+    """Classify a grammar-inert change the accent-name multiset cannot see.
+
+    Reached only when the accent-name diff is empty *and* no accent moved to a different
+    letter (an accent move is grammar-visible -- je 44:17 -- and is handled by the
+    substitution path before we get here).  What remains is a niqqud-only edit or a
+    *medial* meteg-only edit, both invisible to the grammar; we label which.
     """
-    if any(
-        _letters_and_accents(w) != _letters_and_accents(m)
-        for w, m in zip(wlc_tokens, mam_tokens)
-    ):
-        return "accent_moved"
     wlc_mos = sum(
         Counter(uni_heb.accent_names(w))[_MOS_ABBREV] for w in wlc_tokens
     )

@@ -185,19 +185,27 @@ def test_meteg_only_is_untestable():
     assert result.reason == "meteg_only"
 
 
-def test_accent_moved_is_untestable():
+def test_accent_move_applies_and_clears_misplaced_telisha():
     # je 44:17: a telisha qetanna (U+05A9) shifts from the kaf to the yod.  The accent
-    # multiset is unchanged (one telisha qetanna either way), so fix_apply -- which tests
-    # by whole-word substitution keyed on that multiset -- cannot mechanically confirm the
-    # move; but it IS grammar-visible (lexical_validation flags it), so it is labeled
-    # distinctly from a grammar-inert vowel/meteg edit.
+    # multiset is unchanged (one telisha qetanna either way), but the move IS
+    # grammar-visible -- lexical_validation flags a non-final telisha qetanna on the WLC
+    # value and clears it on the MAM value.  fix_apply now treats the move as a real
+    # change: the substitution carries the mark to the yod, and the re-scanned body has
+    # no misplaced telisha qetanna.
+    wlc_body = fix_apply.uni_to_marks.verse_to_marks({"vels": ["כ֩י"]})
+    assert lexical_validation.nonfinal_telisha_qetannas(wlc_body)  # the WLC defect
     result = apply_mam_fix(
         {"vels": ["כ֩י"]},
         ["כ֩י"],
         {"wlc422": "כ֩י", "mam_simple": "כי֩"},
     )
-    assert isinstance(result, UntestableFix)
-    assert result.reason == "accent_moved"
+    assert isinstance(result, AppliedFix)
+    assert not lexical_validation.nonfinal_telisha_qetannas(result.new_body)
+    # The move is recorded for the report (kaf -> yod), not framed as a name diff.
+    assert result.moved_accents == ("telisha qetana: kaf -> yod",)
+    assert result.removed_accents == ()
+    assert result.added_accents == ()
+    assert "kaf -> yod" in result.transformation()
 
 
 def test_multi_word_diff_list_is_untestable():

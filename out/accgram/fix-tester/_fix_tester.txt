@@ -1,11 +1,11 @@
 # Fix-tester: do MAM-simple values resolve annotated prose oddballs?
 
-confirmed: 91  denied: 0  changed: 0  untestable: 1  (92 annotated oddballs tested)
+confirmed: 92  denied: 0  changed: 0  untestable: 0  (92 annotated oddballs tested)
 speculations: 15 total; 15 confirmed, 0 denied/changed, 0 untestable
 synthesized fixes (no MAM diff; tested the note's synth_fix): 1
-claim-vs-result: 82 agree, 0 disagree
+claim-vs-result: 83 agree, 0 disagree
 
-## CONFIRMED -- MAM fix clears the oddball  (91)
+## CONFIRMED -- MAM fix clears the oddball  (92)
   1c 1:53 [claim: expects_fix] [AGREE]
     fix: אל֣וף -> אל֥וף
     transform: word "אל֣וף" -> "אל֥וף" ((mun) -> (mer))
@@ -316,6 +316,11 @@ claim-vs-result: 82 agree, 0 disagree
     transform: word "מא֖רץ" -> "מא֣רץ" ((tip) -> (mun))
     before: MUNAX REVIA MAHAPAKH PASHTA ZAQEF PASHTA MUNAX ZAQEF TIPEXA TIPEXA ATNAX GERESH MUNAX REVIA TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [ODDBALL: atnax_phrase]
     after:  MUNAX REVIA MAHAPAKH PASHTA ZAQEF PASHTA MUNAX ZAQEF TIPEXA MUNAX ATNAX GERESH MUNAX REVIA TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
+  je 44:17 [claim: expects_fix] [AGREE]
+    fix: כ֩י -> כי֩
+    transform: word "כ֩י" -> "כי֩" (telisha qetana: kaf -> yod)
+    before: TELISHAQETANNA AZLA GERESH LEGARMEH MUNAX REVIA GERSHAYIM MUNAX ZARQA MUNAX SEGOLTA AZLA GERESH MAHAPAKH PASHTA MUNAX ZAQEF MUNAX ZAQEF TIPEXA ATNAX PASHTA MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [ODDBALL: illegal_mark:medial telisha qetanna]
+    after:  TELISHAQETANNA AZLA GERESH LEGARMEH MUNAX REVIA GERSHAYIM MUNAX ZARQA MUNAX SEGOLTA AZLA GERESH MAHAPAKH PASHTA MUNAX ZAQEF MUNAX ZAQEF TIPEXA ATNAX PASHTA MUNAX ZAQEF TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
   je 46:4 [claim: expects_fix] [AGREE]
     fix: בכ֥ובע֑ים -> בכובע֑ים
     transform: word "בכ֥ובע֑ים" -> "בכובע֑ים" ((mer) -> (none))
@@ -466,11 +471,7 @@ claim-vs-result: 82 agree, 0 disagree
 
 ## CHANGED -- a different error appears after the fix  (0)
 
-## UNTESTABLE -- fix could not be applied mechanically  (1)
-  (note: a *medial* 'vowel_only'/'meteg_only' mark is grammar-inert, the scanner swallowing it; an 'accent_moved' mark IS grammar-visible -- it shifts to a different letter -- but fix_apply tests by accent multiset, which the move leaves unchanged; 'merge_target_missing' means the named merge_next verse was not found in the source.  None is a verdict on the oddball.)
-  je 44:17 [claim: expects_fix]
-    fix: כ֩י -> כי֩
-    reason: accent_moved (accents unchanged as a multiset but one sits on a different letter -- grammar-visible (lexical_validation flags the move), but fix_apply tests by whole-word substitution keyed on that multiset, so the move is not tested here)
+## UNTESTABLE -- fix could not be applied mechanically  (0)
 
 ## Review queue: speculative claims whose result disagrees  (0)
 

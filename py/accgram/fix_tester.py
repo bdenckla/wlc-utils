@@ -593,9 +593,7 @@ def render_text_report(results: list[FixTestResult]) -> str:
         if name == "UNTESTABLE" and group:
             lines.append(
                 "  (note: a *medial* 'vowel_only'/'meteg_only' mark is grammar-inert, "
-                "the scanner swallowing it; an 'accent_moved' mark IS grammar-visible -- it "
-                "shifts to a different letter -- but fix_apply tests by accent multiset, "
-                "which the move leaves unchanged; 'merge_target_missing' means the named "
+                "the scanner swallowing it; 'merge_target_missing' means the named "
                 "merge_next verse was not found in the source.  None is a verdict on the "
                 "oddball.)"
             )
