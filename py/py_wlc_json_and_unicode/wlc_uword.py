@@ -145,6 +145,16 @@ _TRANSLATION_DIC = {
     "/": None,
     **_TRANSLATION_DIC_RETAINING_SLASH,
 }
+# Official documentation for these M-C 2-digit accent codes lives in two files
+# of the WLC distribution (see ../wlc-utils-io/in/wlc422/):
+#   - michigan.man : the Michigan coding manual. The seven same-graphic-form
+#     pairs (e.g. zarqa 02 / sinnorit 82, telisa qaton 04 / medial 24, telisa
+#     gadol 14 / medial 44) are defined in section 3.5.5; the "medial" variants
+#     24/44 are introduced in the list of code modifications near the top.
+#   - supplmt.wts  : the WTS supplement accent table, one line per code with a
+#     name and a glyph sketch (e.g. "24  -&-- telisha parvum (med)").
+# The per-code comments below record observed usage in the corpus, not the
+# official gloss; consult those two files for the authoritative definitions.
 _ACCENTS = {
     "00": hpu.SOPA,
     "01": ha.SEG_A,
