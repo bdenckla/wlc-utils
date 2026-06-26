@@ -1,6 +1,6 @@
 """Driver for the Python PLY port: mirrors `accents -p` on the WLC prose corpus.
 
-Reads the canonical `-kq-u` Unicode source `wlc-utils-private/out/wlc422-kq-u/`, transcodes
+Reads the canonical `-kq-u` Unicode source `out/wlc422-kq-u/`, transcodes
 each verse into per-book scanner-ready mark text (uni_to_marks, applying the genre
 filter so poetic books never reach the prose grammar), scans each verse into a token
 stream
@@ -149,7 +149,7 @@ def render_book(
 
 
 def default_input_path(repo_root: Path) -> Path:
-    return repo_root.parent / "wlc-utils-private" / "out" / "wlc422-kq-u"
+    return repo_root / "out" / "wlc422-kq-u"
 
 
 def default_out_dir(repo_root: Path) -> Path:

@@ -1,7 +1,7 @@
 """Driver for the POETIC (Three Books) PLY scanner + grammar over the corpus.
 
 The poetic counterpart of accgram.run_ply.  Reads the canonical `-kq-u` Unicode source
-``wlc-utils-private/out/wlc422-kq-u/`` (transcoded to scanner-ready M-C text by
+``out/wlc422-kq-u/`` (transcoded to scanner-ready M-C text by
 uni_to_marks), keeps only the poetic verses (Psalms and Proverbs wholesale plus
 poetically-cantillated Job, via poetic_filter), scans each
 verse with ply_scanner_poetic, reconciles the tokens against MAM (poetic_reconcile:
@@ -129,7 +129,7 @@ def render_book(
 
 
 def default_input_path(repo_root: Path) -> Path:
-    return repo_root.parent / "wlc-utils-private" / "out" / "wlc422-kq-u"
+    return repo_root / "out" / "wlc422-kq-u"
 
 
 def default_out_dir(repo_root: Path) -> Path:

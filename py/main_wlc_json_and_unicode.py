@@ -8,25 +8,28 @@ import py_wlc_json_and_unicode.wlc_compare_uni_with_uni as uu
 
 
 def _mx_out_path(wlc_id):
-    return f"{_TDIR}/out/diff_mx_{wlc_id}_uxlc.json"
+    name = f"diff_mx_{wlc_id}_uxlc.json"
+    return f"{_root_for(name)}/out/{name}"
 
 
 def _mm_out_path(ww_diff_ids):
     wlc_ida, wlc_idb = ww_diff_ids
-    return f"{_TDIR}/out/diff_mm_{wlc_ida}_{wlc_idb}.json"
+    name = f"diff_mm_{wlc_ida}_{wlc_idb}.json"
+    return f"{_root_for(name)}/out/{name}"
 
 
 def _uu_out_path(ww_diff_ids):
     wlc_ida, wlc_idb = ww_diff_ids
-    return f"{_TDIR}/out/diff_uu_{wlc_ida}_{wlc_idb}.json"
+    name = f"diff_uu_{wlc_ida}_{wlc_idb}.json"
+    return f"{_root_for(name)}/out/{name}"
 
 
 def _out_path(wlc_id, suffix):
-    return f"{_TDIR}/out/{wlc_id}{suffix}"
+    return f"{_root_for(wlc_id)}/out/{wlc_id}{suffix}"
 
 
 def _in_path(wlc_id):
-    return f"{_TDIR}/in/{wlc_id}"
+    return f"{_root_for(wlc_id)}/in/{wlc_id}"
 
 
 def main():
@@ -42,8 +45,19 @@ def main():
     mm.compare(p420mdc, p321mdc, _mm_out_path)
 
 
-_TDIR = "../wlc-utils-private"
-_UXLC_BOOKS_DIR = f"{_TDIR}/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
+# The dated 2025-03-21-* sources and their outputs stay in the private repo; the
+# wlc420/wlc422 trees, the UXLC source, and their diffs live in the public repo
+# (this repo, the run cwd). _root_for picks the right one per in/out item by name,
+# mirroring how the artifacts were partitioned between the repos.
+_PUBLIC = "."
+_PRIVATE = "../wlc-utils-private"
+
+
+def _root_for(name):
+    return _PRIVATE if "2025-03-21" in name else _PUBLIC
+
+
+_UXLC_BOOKS_DIR = f"{_PUBLIC}/in/Tanach-26.0--UXLC-1.0--2020-04-01/Books"
 
 
 if __name__ == "__main__":

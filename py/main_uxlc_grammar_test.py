@@ -41,7 +41,7 @@ from cmn.wlc_book_codes import bk39id_to_wlc_bb  # noqa: E402
 from py_uxlc.my_uxlc_book_abbreviations import expand_citation  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
-WLC_KQ_U = REPO.parent / "wlc-utils-private" / "out" / "wlc422-kq-u"
+WLC_KQ_U = REPO / "out" / "wlc422-kq-u"
 SRC = REPO / "in" / "accgram" / "uxlc_accent_changes.json"
 OUT = REPO / "out" / "accgram" / "uxlc_grammar_test.txt"
 
