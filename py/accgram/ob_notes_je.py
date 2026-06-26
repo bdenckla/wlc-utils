@@ -93,9 +93,12 @@ _JE_4417_04 = (
 _JE_4417_05 = [
     "Compare ",
     wlc_utils_html.anchor("je 26:5", {"href": "#obje26v5"}),
-    ", a closely analogous case: a stranded pashta stress helper with no real pashta to"
-    " accompany it. There, too, the underlying fault is a stress helper left without its"
-    " partner.",
+    ", a closely analogous case: there a stranded pashta stress helper sits on the syllable where the real"
+    " pashta belongs. In both verses the word is finally stressed (and a single-syllable word"
+    " like כי counts as finally stressed), so it needs — and should have — no stress helper at"
+    " all. The cure is therefore not to supply the helper a “missing partner” accent, but to"
+    " move the mark onto the word’s final letter, where it stops being a stress helper and"
+    " simply becomes the real postpositive accent.",
 ]
 
 
@@ -203,7 +206,11 @@ BY_REF: dict[str, dict[str, object]] = {
                 "Compare ",
                 wlc_utils_html.anchor("je 44:17", {"href": "#obje44v17"}),
                 ", another stranded stress helper — there a telisha qetanna helper (M-C 24)"
-                " with no real (postpositive) telisha qetanna to accompany it.",
+                " sitting on the syllable where the real (postpositive) telisha qetanna belongs. There too the"
+                " word is finally stressed (a single-syllable word like כי counts as finally"
+                " stressed) and so wants no stress helper at all: the cure is to move the mark"
+                " onto the word’s final letter, where it becomes the real postpositive accent,"
+                " not to add a separate real accent alongside the helper.",
             ],
         ),
     },
