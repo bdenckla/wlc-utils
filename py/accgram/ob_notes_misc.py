@@ -65,7 +65,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "2k 23:36": {
         "st-source": "bhs",
-        "st-summary": "BHS transcribes an ambiguous mark as the pashta look-alike rather than as WLC’s qadma.",
+        "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "wlc_focus": "שנ֨ה",
         "uxlc_change": "2022.12.07/2022.09.01-24",
         "comment": "See the image in the UXLC change to which we link above.",
@@ -80,11 +80,22 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "mi 2:7": {
         "st-source": "bhs",
-        "st-summary": "BHS transcribes an ambiguous mark as the pashta look-alike rather than as WLC’s qadma.",
+        "st-summary": "BHS transcribes a syllable as having qadma rather than pashta.",
         "wlc_focus": "דבר֨י",
         "BHQ": "?",
         "uxlc_change": "2023.04.01/2022.12.12-10",
-        "comment": "See the image in the UXLC change to which we link above.",
+        "comment": (
+            "See the image in the UXLC change to which we link above."
+            " The qadma (rather than pashta) on דברי is the cause, but the ERROR does not"
+            " land there: with no pashta to head it, the zaqef clause over"
+            " הלוא דברי ייטיבו never forms, so the failure surfaces later, on the"
+            " enclosing tipeḥa phrase over הלוא דברי ייטיבו עם."
+            " The defect itself, though, is fundamentally a pashta-vs-qadma confusion on"
+            " the single mark on דברי; the malformed tipeḥa phrase"
+            " (tipexa_phrase → ERROR) is only a surface artifact of how the LALR parse"
+            " fails, not a problem with the tipeḥa or the words that phrase spans"
+            " — flipping that one mark (qadma → pashta) clears the error entirely."
+        ),
     },
     "lm 5:5": {
         "st-source": "tbd",
