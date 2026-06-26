@@ -35,6 +35,21 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
+def out_dir() -> Path:
+    """This repo's generated-output tree (``<repo_root>/out``)."""
+    return repo_root() / "out"
+
+
+def in_dir() -> Path:
+    """This repo's committed-input tree (``<repo_root>/in``)."""
+    return repo_root() / "in"
+
+
+def gh_pages_dir() -> Path:
+    """This repo's published-HTML tree (``<repo_root>/gh-pages``)."""
+    return repo_root() / "gh-pages"
+
+
 def siblings_root() -> Path:
     """Base directory under which sibling repos are looked up.
 

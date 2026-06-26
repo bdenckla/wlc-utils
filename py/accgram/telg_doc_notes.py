@@ -12,17 +12,17 @@ Following MAM-with-doc's published sigil policy, manuscript sigils and technical
 accent names are kept in Hebrew and explained (see the key) rather than replaced
 with a Latin-letter system, and the implicit subject "MAM" is supplied where a
 note opens with "=".  The verbatim Hebrew of each note is shown too, drawn
-byte-exactly from MAM-with-doc via telg_mam_doc_notes.json, so the English
-rendering can be checked against the original.
+byte-exactly from MAM-with-doc via the ``telg_mam_doc_notes`` data module, so the
+English rendering can be checked against the original.
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 
 from accgram import rtms_report
+from accgram import telg_mam_doc_notes
 from accgram.almost_errors_html_shared import hbo, link, ref_display, verse_links
 from cmn.utf8_io import force_utf8_io
 from mb_cmn import provenance
@@ -306,8 +306,7 @@ def _note_section(bcv: str, note_he: dict) -> tuple[object, ...]:
 
 
 def _load_notes() -> dict:
-    path = Path(__file__).with_name("telg_mam_doc_notes.json")
-    return json.loads(path.read_text(encoding="utf-8"))["notes"]
+    return telg_mam_doc_notes.NOTES
 
 
 def render_body_contents() -> tuple[object, ...]:

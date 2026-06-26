@@ -1,19 +1,20 @@
 """Shared helper for the two generated Psalms 17:14 deep-dive pages.
 
 Both pages were formerly hand-authored HTML.  Their bodies are now committed as
-htel JSON (parsed byte-exactly from the originals), and these generators replay
-that body through the shared (style.css + provenance) shell so the pages match
-the look and feel of the other accgram reports.  The per-page modules
-(``ps17v14_doc_notes``, ``ps17v14_double_tsinnor``) are thin CLI shells over
-``write_replayed`` here.
+Python data modules (``TITLE`` + ``BODY``, migrated byte-exactly from the original
+JSON sidecars), and these generators replay that body through the shared
+(style.css + provenance) shell so the pages match the look and feel of the other
+accgram reports.  The per-page modules (``ps17v14_doc_notes``,
+``ps17v14_double_tsinnor``) are thin CLI shells over ``write_replayed`` here, each
+passing its own body module.
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 
+import repo_paths
 from accgram import rtms_report
 from cmn.utf8_io import force_utf8_io
 from mb_cmn import provenance
@@ -31,15 +32,9 @@ def add_html_out_arg(parser: argparse.ArgumentParser, default_out: Path) -> None
     )
 
 
-def _load(json_name: str) -> tuple[str, list]:
-    path = Path(__file__).with_name(json_name)
-    data = json.loads(path.read_text(encoding="utf-8"))
-    return data["title"], data["body"]
-
-
-def write_replayed(html_out: Path, json_name: str, generator_file: str) -> None:
-    """Render the committed htel body ``json_name`` into ``html_out``."""
-    title, body = _load(json_name)
+def write_replayed(html_out: Path, body_module, generator_file: str) -> None:
+    """Render the committed htel body module (``TITLE``/``BODY``) into ``html_out``."""
+    title, body = body_module.TITLE, body_module.BODY
     wrapper = H.div(tuple(body), {"class": _WIDTH_CLASS})
     html_out.parent.mkdir(parents=True, exist_ok=True)
     H.write_html_to_file(
@@ -55,12 +50,11 @@ def write_replayed(html_out: Path, json_name: str, generator_file: str) -> None:
 
 
 def main_for(
-    *, json_name: str, out_name: str, generator_file: str, description: str
+    *, body_module, out_name: str, generator_file: str, description: str
 ) -> None:
     force_utf8_io()
-    repo_root = Path(__file__).resolve().parent.parent.parent
-    default_out = repo_root / "gh-pages" / "accgram" / out_name
+    default_out = repo_paths.gh_pages_dir() / "accgram" / out_name
     parser = argparse.ArgumentParser(description=description)
     add_html_out_arg(parser, default_out)
     args = parser.parse_args()
-    write_replayed(args.html_out, json_name, generator_file)
+    write_replayed(args.html_out, body_module, generator_file)
