@@ -54,8 +54,8 @@ _LETT = _sqbrac(_LETT_GUTS)
 _NON_LETT = _sqbrac_not(_LETT_GUTS)
 _NON_LETT_STAR = _NON_LETT + "*"
 _NON_LETT_STAR_DOLL = _NON_LETT_STAR + "$"
-_PREPOS_PATT = r"^(\*\*|)(10|11|12|13|14)" + _paren(_LETT + _NON_LETT_STAR)
-_PREPOS_REPL = r"\1\3\2"
+_NON_LETT_NO_DIGIT = _sqbrac_not(_LETT_GUTS + "0123456789")
+# _PREPOS_PATT / _PREPOS_REPL are defined below, after _OVER_ACCENTS.
 _EARLY_MTG_PATT = '([afeAFE"I:U])95'
 _EARLY_MTG_REPL = r"95\1"
 _XOLAM_PATT1_END = _sqbrac(_LETT_GUTS_NO_VAV) + '|W[AFE"I:U]'
@@ -201,6 +201,15 @@ _LAOY_PATT = r"L([AF])" + _OA_PM_PATT + r"([I:])"
 _LAOY_REPL = r"L\1\3\2"
 _DD75_PATT = r"(\d\d)75"
 _OACCENTS_PATT = _paren("|".join(_OVER_ACCENTS))
+# BIL ("before-its-letter") accent relocation. A BIL code (10-14) floats
+# rightward past its letter and the letter's points, meteg, and below-accents,
+# but STOPS before a co-located over-accent (e.g. telisha gedola 44). Stopping
+# there preserves the source order of two over-accents sharing one letter, so the
+# three same-letter telg!gerstar words (gn5:29, zp2:15, 2k17:13) stay
+# gerstar-then-telg (manuscript order) instead of being permuted to telg-first.
+_PREPOS_FLOAT = "(?:" + _NON_LETT_NO_DIGIT + r"|(?!" + "|".join(_OVER_ACCENTS) + r")\d\d)*"
+_PREPOS_PATT = r"^(\*\*|)(10|11|12|13|14)" + _paren(_LETT + _PREPOS_FLOAT)
+_PREPOS_REPL = r"\1\3\2"
 _UACCENTS_PATT = _paren("|".join(_UNDER_ACCENTS))
 _OVER_UNDER_PATT = _OACCENTS_PATT + _UACCENTS_PATT
 _OVER_UNDER_REPL = r"\2\1"

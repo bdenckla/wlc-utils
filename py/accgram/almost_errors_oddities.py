@@ -184,16 +184,13 @@ _TELG_PARA_3_CONTENTS = (
     #
     " In other words, the checker treats a telg and a gerstar on a single letter as being in “anti-manuscript” order."
     #
-    " A look at the source data shows where that “anti-manuscript” order comes from."
+    " That “anti-manuscript” order is entirely the checker's own doing; it is not inherited from the source data."
     " In WLC 4.22's original Michigan-Claremont (M-C) encoding, the two accents stand in manuscript order:"
     " gerstar-first in the three same-letter words, telg-first in the two cross-letter words."
-    " My conversion of that encoding to Unicode normalizes all five words to telg-first — so it preserves the order"
-    " of the two cross-letter words but swaps the three same-letter words into “anti-manuscript” order."
-    " (That swap is my conversion's own doing — it floats the prepositive telg to the front — not an effect of"
-    " Unicode normalization: telg, geresh, gershayim, and geresh muqdam all share canonical combining class 230,"
-    " so NFC leaves their relative order untouched.)"
-    " By the time these words reach the checker they are thus already telg-first; and the checker would float the"
-    " prepositive telg to the front in any case, so its input order does not matter."
+    " My conversion of that encoding to Unicode preserves that order, so the “word” column of the table below"
+    " shows all five words exactly as the manuscript orders them — gerstar-first in the three same-letter words."
+    " The checker then floats the prepositive telg to the front of its own reading regardless of input order,"
+    " so the order in which the two accents reach it does not matter."
     #
     " This choice is not important, because the checker allows a telg and a gerstar to appear in either order;"
     " i.e., either order is considered grammatical."
@@ -224,7 +221,7 @@ _TELG_PARA_4B_CONTENTS = (
     " The table below shows, for each word,"
     " the double accent form and the two single-accent “thought experiments.”"
     #
-    " The same-letter words are shown with “anti-manuscript” accent order (telg-first)."
+    " The same-letter words are shown in manuscript accent order (gerstar-first)."
 )
 _TELG_PARA_5_CONTENTS = (
     " The tables further below show two examples of the checker's actual parse tree (one same-letter"

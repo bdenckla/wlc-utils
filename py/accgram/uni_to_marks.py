@@ -144,6 +144,17 @@ def word_to_marks(word: str) -> str:
         else:
             other_marks.append(mark)
 
+    # 2k17:13 carries a telisha gedola and a geresh muqdam on one base letter, and BOTH
+    # are prepositive, so they both land in prepos_marks -- in whatever order the converter
+    # emitted them.  (The converter now emits the same-letter telg + gerstar words in
+    # manuscript order, gerstar-first.)  Force the telisha gedola ahead of the geresh
+    # muqdam: the telg-then-geresh order the scanner and grammar want, matching the telg +
+    # gershayim words where gershayim is the non-prepositive partner.  This keeps the
+    # checker's reading independent of the Unicode mark order.
+    if am.TELISHA_GEDOLA in prepos_marks and am.GERESH_MUQDAM in prepos_marks:
+        prepos_marks.remove(am.TELISHA_GEDOLA)
+        prepos_marks.insert(0, am.TELISHA_GEDOLA)
+
     marks = iter(prepos_marks + other_marks)
     return "".join(next(marks) if part is None else part for part in skeleton)
 
