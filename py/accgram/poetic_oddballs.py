@@ -26,8 +26,10 @@ The HTML deliberately shares the prose ``goerwitz.html`` shell -- the same
 verse list (``poetic-filter.js``), per-verse permalinks + Mwd/UXLC links, the
 parse tree rendered as an HTML table via ``ob_tree_table``, and the SAT
 focus-word table via ``poetic_sat`` (which reuses the prose ``rtmsr_sat``
-renderer) -- so the two reports can later be merged into one generator (see
-issue #10). It keeps one poetic-only display the prose
+renderer). With issue #22 the two reports now share one page-assembly core,
+``ob_page`` (the filter controls, the per-verse ``<section>`` wrapper, and the
+page shell), each front-end supplying a ``CorpusDescriptor`` (see also issue
+#10). It keeps one poetic-only display the prose
 page has no analogue for: the WLC-vs-MAM disjunctive compare. The verse-final NO_PARSE cases,
 having no valid parse, render a flat best-effort tree (each token a cell, capped
 by an ERROR leaf) so they too display through the shared error-tree table.
@@ -55,6 +57,7 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 
 from accgram import ob_error_context
+from accgram import ob_page
 from accgram import ob_report
 from accgram import ob_tree_table
 from accgram import poetic_filter
@@ -333,19 +336,15 @@ def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, 
 
 # The poetic page shares goerwitz.html's stylesheet + width-limited shell and
 # the same single flat, client-side-filterable verse list (see
-# gh-pages/accgram/poetic-filter.js), so a later merge of the two reports is
-# mostly mechanical. It keeps one poetic-only data display the prose page has no
+# gh-pages/accgram/poetic-filter.js); the shared page-assembly now lives in
+# ob_page (issue #22). It keeps one poetic-only data display the prose page has no
 # analogue for: the WLC-vs-MAM disjunctive compare (the relevant oracle for
 # accent-structure oddballs). The verse text is shown as pointed Hebrew (issue #9
 # retired the Michigan-Claremont body from the reports).
 _REPORT_TITLE = "Poetic checker run on WLC"
 _REPORT_HEADING = "Poetic checker run on WLC"
-_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _FILTER_SCRIPT_NAME = "poetic-filter.js"
 _SELF_LINK_SYMBOL = "🔗"
-# The class every live count span carries, shared with goerwitz-filter.js so the
-# poetic filter script reuses the same per-option count machinery.
-_COUNT_CLASS = "gf-opt-count"
 
 _KIND_LABEL = {
     KIND_MISSING_SILLUQ: "Missing silluq (ERROR-leaf recovery)",
@@ -399,16 +398,18 @@ def render_body_contents(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
         oddballs, key=lambda ob: rtms_ref.reading_order_key(_bb_ref(ob))
     )
 
-    sections: list[object] = [
-        *_build_intro(oddballs),
-        _build_filter_controls(counts),
-    ]
-    for index, ob in enumerate(ordered):
-        sections.append(_render_oddball_section(ob, is_first=index == 0))
-
-    wrapper = wlc_utils_html.div(tuple(sections), {"class": _WIDTH_CLASS})
-    script = wlc_utils_html.htel_mk("script", {"src": _FILTER_SCRIPT_NAME})
-    return (wrapper, script)
+    descriptor = ob_page.CorpusDescriptor(
+        heading_blocks=_build_intro(oddballs),
+        facets=_build_facets(counts),
+        count_para_class="pf-count",
+        verse_sections=tuple(
+            _render_oddball_section(ob, is_first=index == 0)
+            for index, ob in enumerate(ordered)
+        ),
+        tail_blocks=(),
+        filter_script_name=_FILTER_SCRIPT_NAME,
+    )
+    return ob_page.build_page_body(descriptor)
 
 
 def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
@@ -468,12 +469,9 @@ def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
     bb, chnu, vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(ob))
     anchor_id = ob_report.oddball_anchor_id(bcv)
 
-    items: list[object] = []
-    # The separating rule lives inside the section (omitted on the first one) so
-    # it hides with its verse when the filter removes it -- as in goerwitz.html.
-    if not is_first:
-        items.append(wlc_utils_html.horizontal_rule())
-    items.append(wlc_utils_html.heading_level_2(ob.reference, {"id": anchor_id}))
+    items: list[object] = [
+        wlc_utils_html.heading_level_2(ob.reference, {"id": anchor_id})
+    ]
     items.extend(_render_ref_links(ob, bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, anchor_id=anchor_id))
     items.append(_render_summary(ob))
     hebrew_verse = _render_hebrew_verse(ob)
@@ -501,15 +499,14 @@ def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
         )
     )
 
-    return wlc_utils_html.htel_mk(
-        "section",
-        {
-            "class": "goerwitz-verse",
+    return ob_page.render_verse_section(
+        items,
+        is_first=is_first,
+        data_attrs={
             "data-kind": ob.kind,
             "data-book": ob.bb,
             "data-agree": _agree_slug(ob),
         },
-        tuple(items),
     )
 
 
@@ -707,58 +704,34 @@ def _no_parse_tree_text(
     return f"0 no_parse\n{leaf_lines}  ERROR\n"
 
 
-def _build_filter_controls(counts: dict[str, int]) -> object:
-    kind_fieldset = _fieldset(
-        "Oddball kind",
-        tuple(
-            _checkbox("pf-kind", slug, label, counts[f"kind_{slug}"])
-            for slug, label in _KIND_FILTER_LABEL.items()
+def _build_facets(counts: dict[str, int]) -> tuple[ob_page.Facet, ...]:
+    """The poetic filter facets, in display order (see ob_page.build_filter_controls)."""
+    return (
+        ob_page.CheckboxFacet(
+            "Oddball kind",
+            "pf-kind",
+            tuple(
+                (slug, label, counts[f"kind_{slug}"])
+                for slug, label in _KIND_FILTER_LABEL.items()
+            ),
+        ),
+        ob_page.CheckboxFacet(
+            "Book",
+            "pf-book",
+            tuple(
+                (slug, label, counts[f"book_{slug}"])
+                for slug, label in _BOOK_LABEL.items()
+            ),
+        ),
+        ob_page.CheckboxFacet(
+            "MAM compare",
+            "pf-agree",
+            tuple(
+                (slug, label, counts[f"agree_{slug}"])
+                for slug, label in _AGREE_LABEL.items()
+            ),
         ),
     )
-    book_fieldset = _fieldset(
-        "Book",
-        tuple(
-            _checkbox("pf-book", slug, label, counts[f"book_{slug}"])
-            for slug, label in _BOOK_LABEL.items()
-        ),
-    )
-    agree_fieldset = _fieldset(
-        "MAM compare",
-        tuple(
-            _checkbox("pf-agree", slug, label, counts[f"agree_{slug}"])
-            for slug, label in _AGREE_LABEL.items()
-        ),
-    )
-    count_para = wlc_utils_html.para("", {"class": "pf-count"})
-    return wlc_utils_html.div(
-        (kind_fieldset, book_fieldset, agree_fieldset, count_para),
-        {"class": "goerwitz-filter"},
-    )
-
-
-def _fieldset(legend_text: str, labels: tuple[object, ...]) -> object:
-    legend = wlc_utils_html.htel_mk("legend", None, legend_text)
-    return wlc_utils_html.htel_mk("fieldset", None, (legend, *labels))
-
-
-def _checkbox(css_class: str, value: str, label_text: str, count: int) -> object:
-    input_el = wlc_utils_html.htel_mk_inline_nc(
-        "input",
-        {
-            "type": "checkbox",
-            "class": css_class,
-            "value": value,
-            "checked": "checked",
-        },
-    )
-    return wlc_utils_html.htel_mk_inline(
-        "label", None, (input_el, f" {label_text}", _count_span(count))
-    )
-
-
-def _count_span(count: int) -> object:
-    # A zero count renders empty (no "(0)"); the filter script keeps it live.
-    return wlc_utils_html.span_c(f" ({count})" if count else "", _COUNT_CLASS)
 
 
 def _counts(oddballs: list[PoeticOddball]) -> dict[str, int]:

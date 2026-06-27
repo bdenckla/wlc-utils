@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from accgram import ob_error_context
+from accgram import ob_page
 from accgram import ob_report
 from accgram import rtms_missing_sof_pasuq_descriptions
 from accgram import rtms_ref
@@ -19,7 +20,6 @@ from py_html import wlc_utils_html
 
 _REPORT_TITLE = "Goerwitz Run on WLC"
 _REPORT_HEADING = "Goerwitz Run on WLC"
-_WIDTH_CLASS = "goerwitz-tms-width-limited"
 _FILTER_SCRIPT_NAME = "goerwitz-filter.js"
 
 StructuredTextLookup = Callable[[dict[str, object], str], object]
@@ -163,54 +163,48 @@ def _build_body_contents(entries: list[_Entry]) -> tuple[object, ...]:
     counts = _counts(entries)
     all_rows = [entry.row for entry in entries]
 
-    sections: list[object] = [
-        wlc_utils_html.heading_level_1(_REPORT_HEADING),
-        *rtmsr_intro.build_intro_contents(counts["total"]),
-        *rtmsr_intro.checker_article_citation_contents(),
-        _build_filter_controls(counts),
-    ]
-
-    for index, entry in enumerate(entries):
-        sections.append(_render_verse_section(entry, is_first=index == 0))
-
-    sections.extend(rtmsr_bracket_notes.build_wlc_bracket_notes_section(all_rows))
-
-    wrapper = wlc_utils_html.div(tuple(sections), {"class": _WIDTH_CLASS})
-    script = wlc_utils_html.htel_mk("script", {"src": _FILTER_SCRIPT_NAME})
-    return (wrapper, script)
+    descriptor = ob_page.CorpusDescriptor(
+        heading_blocks=(
+            wlc_utils_html.heading_level_1(_REPORT_HEADING),
+            *rtmsr_intro.build_intro_contents(counts["total"]),
+            *rtmsr_intro.checker_article_citation_contents(),
+        ),
+        facets=_build_facets(counts),
+        count_para_class="gf-count",
+        verse_sections=tuple(
+            _render_verse_section(entry, is_first=index == 0)
+            for index, entry in enumerate(entries)
+        ),
+        tail_blocks=tuple(
+            rtmsr_bracket_notes.build_wlc_bracket_notes_section(all_rows)
+        ),
+        filter_script_name=_FILTER_SCRIPT_NAME,
+    )
+    return ob_page.build_page_body(descriptor)
 
 
 def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
-    inner = list(
+    items = list(
         rtms_report.render_row_section_with_anchor_id(
             entry.row,
             section_anchor_id=entry.anchor_id,
             structured_text_lookup=entry.structured_text_lookup,
         )
     )
-    inner.extend(
+    items.extend(
         ob_report.render_error_context_section(
             entry.row, error_tree=entry.error_tree
         )
     )
-
-    items: list[object] = []
-    # The separating rule lives inside the section (omitted on the first one) so it
-    # hides with its verse when the filter removes it.
-    if not is_first:
-        items.append(wlc_utils_html.horizontal_rule())
-    items.extend(inner)
-
-    return wlc_utils_html.htel_mk(
-        "section",
-        {
-            "class": "goerwitz-verse",
+    return ob_page.render_verse_section(
+        items,
+        is_first=is_first,
+        data_attrs={
             "data-category": entry.category,
             "data-source": entry.source,
             "data-uchange": _flag_attr(entry.has_uxlc_change),
             "data-wnote": _flag_attr(entry.has_wlc_note),
         },
-        tuple(items),
     )
 
 
@@ -218,128 +212,39 @@ def _flag_attr(value: bool) -> str:
     return "1" if value else "0"
 
 
-def _build_filter_controls(counts: dict[str, int]) -> object:
+def _build_facets(counts: dict[str, int]) -> tuple[ob_page.Facet, ...]:
+    """The prose filter facets, in display order (see ob_page.build_filter_controls).
+
+    The "has"/"doesn't have" tristate counts are the no-JS fallback; the filter
+    script recomputes them live to the number of currently-visible matching verses
+    (see goerwitz-filter.js)."""
     total = counts["total"]
-    category_fieldset = _fieldset(
-        "Grammar error",
-        (
-            _checkbox("gf-category", "msp", "missing sof pasuq", counts["msp"]),
-            _checkbox("gf-category", "msl", "missing silluq", counts["msl"]),
-            _checkbox("gf-category", "zwhim", "zarqa whim", counts["zwhim"]),
-            _checkbox("gf-category", "other", "other", counts["other"]),
-        ),
-    )
-    source_fieldset = _fieldset(
-        "Source",
-        tuple(
-            _checkbox("gf-source", slug, label, counts["src_" + slug])
-            for slug, label in _SOURCE_LABELS.items()
-        ),
-    )
-    uchange_fieldset = _tristate_fieldset(
-        "UXLC change", "gf-uchange", counts["uchange_has"], total
-    )
-    wnote_fieldset = _tristate_fieldset(
-        "WLC bracket-note", "gf-wnote", counts["wnote_has"], total
-    )
-    count_para = wlc_utils_html.para("", {"class": "gf-count"})
-    return wlc_utils_html.div(
-        (
-            category_fieldset,
-            source_fieldset,
-            uchange_fieldset,
-            wnote_fieldset,
-            count_para,
-        ),
-        {"class": "goerwitz-filter"},
-    )
-
-
-def _fieldset(legend_text: str, labels: tuple[object, ...]) -> object:
-    legend = wlc_utils_html.htel_mk("legend", None, legend_text)
-    return wlc_utils_html.htel_mk("fieldset", None, (legend, *labels))
-
-
-def _tristate_fieldset(
-    legend_text: str, group_name: str, has_count: int, total: int
-) -> object:
-    """A has / doesn't-have / don't-care radio group, ANDed with the category
-    filter. Defaults to "don't care" so the page opens unfiltered on this axis.
-
-    The "has"/"doesn't have" counts are wrapped in spans the filter script
-    recomputes live to the number of currently-visible verses matching each
-    option (see goerwitz-filter.js). The numbers written here are the no-JS
-    fallback. "don't care" carries no count."""
-    return _fieldset(
-        legend_text,
-        (
-            _radio_with_count(group_name, "yes", "has", has_count),
-            _radio_with_count(
-                group_name, "no", "doesn't have", total - has_count
+    return (
+        ob_page.CheckboxFacet(
+            "Grammar error",
+            "gf-category",
+            (
+                ("msp", "missing sof pasuq", counts["msp"]),
+                ("msl", "missing silluq", counts["msl"]),
+                ("zwhim", "zarqa whim", counts["zwhim"]),
+                ("other", "other", counts["other"]),
             ),
-            _radio(group_name, "any", "don't care", checked=True),
+        ),
+        ob_page.CheckboxFacet(
+            "Source",
+            "gf-source",
+            tuple(
+                (slug, label, counts["src_" + slug])
+                for slug, label in _SOURCE_LABELS.items()
+            ),
+        ),
+        ob_page.TristateFacet(
+            "UXLC change", "gf-uchange", counts["uchange_has"], total
+        ),
+        ob_page.TristateFacet(
+            "WLC bracket-note", "gf-wnote", counts["wnote_has"], total
         ),
     )
-
-
-def _checkbox(
-    css_class: str, value: str, label_text: str, count: int
-) -> object:
-    input_el = wlc_utils_html.htel_mk_inline_nc(
-        "input",
-        {
-            "type": "checkbox",
-            "class": css_class,
-            "value": value,
-            "checked": "checked",
-        },
-    )
-    return wlc_utils_html.htel_mk_inline(
-        "label", None, (input_el, f" {label_text}", _count_span(count))
-    )
-
-
-def _radio(
-    group_name: str, value: str, label_text: str, *, checked: bool
-) -> object:
-    input_el = _radio_input(group_name, value, checked=checked)
-    return wlc_utils_html.htel_mk_inline("label", None, (input_el, f" {label_text}"))
-
-
-def _radio_with_count(
-    group_name: str, value: str, prefix_text: str, count: int
-) -> object:
-    """A radio whose label ends in a "(N)" count the filter script keeps live."""
-    input_el = _radio_input(group_name, value, checked=False)
-    return wlc_utils_html.htel_mk_inline(
-        "label", None, (input_el, f" {prefix_text}", _count_span(count))
-    )
-
-
-# The class every live count span carries, so the filter script can find the
-# count span inside any control's <label> and rewrite it (see
-# goerwitz-filter.js). A zero count renders empty (no "(0)").
-_COUNT_CLASS = "gf-opt-count"
-
-
-def _count_span(count: int) -> object:
-    return wlc_utils_html.span_c(_count_text(count), _COUNT_CLASS)
-
-
-def _count_text(count: int) -> str:
-    return f" ({count})" if count else ""
-
-
-def _radio_input(group_name: str, value: str, *, checked: bool) -> object:
-    attrs: dict[str, str] = {
-        "type": "radio",
-        "class": group_name,
-        "name": group_name,
-        "value": value,
-    }
-    if checked:
-        attrs["checked"] = "checked"
-    return wlc_utils_html.htel_mk_inline_nc("input", attrs)
 
 
 def _counts(entries: list[_Entry]) -> dict[str, int]:
