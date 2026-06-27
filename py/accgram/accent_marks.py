@@ -75,7 +75,7 @@ YERAX = ha.YBY              # yeraḥ ben yomo / galgal (93)
 OLE = ha.OLE                # ole                 (60)
 ILUY = ha.ILU               # iluy                (64)
 DEXI = ha.DEX               # deḥi                (13)
-ZINOR = ha.Z_OR_TSOR        # zinor (zarqa/tsinnor main) (02)
+TSINNOR = ha.Z_OR_TSOR      # tsinnor (zarqa/tsinnor main) (02)
 
 # --- non-accent marks ---------------------------------------------------------
 
@@ -126,7 +126,7 @@ _MARK_DIGITS: dict[str, str] = {
     OLE: "60",
     ILUY: "64",
     DEXI: "13",
-    ZINOR: "02",
+    TSINNOR: "02",
     METEG: "75",
     PASEQ: "05",
     SOF_PASUQ: "00",

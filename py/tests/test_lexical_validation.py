@@ -1,7 +1,7 @@
 """Unit tests for the prose lexical-validation layer (stranded stress-helpers).
 
 Pin the pure-function semantics of `stranded_stress_helpers`: a prose tsinnorit
-(M-C ``82``) is an alphabet error unless it is fused with a later zinor (M-C ``02``)
+(M-C ``82``) is an alphabet error unless it is fused with a later tsinnor (M-C ``02``)
 in the *same* maqaf/space-delimited atom.  These guard the fuse-vs-strand and
 atom-boundary logic so a regression fails here rather than silently shifting the
 oddball corpus.  Bodies are written over the Unicode mark alphabet (issue #9, Phase
@@ -21,7 +21,7 @@ from accgram.lexical_validation import (
 )
 
 _TS = am.TSINNORIT  # M-C 82 (zarqa stress-helper)
-_ZI = am.ZINOR      # M-C 02 (zinor / zarqa main)
+_ZI = am.TSINNOR    # M-C 02 (tsinnor / zarqa main)
 _MA = am.MAHAPAKH   # U+05A4 (below)
 _TI = am.TIPEXA     # U+0596 (below)
 _QA = am.QADMA      # U+05A8 (above; "azla")
@@ -46,28 +46,28 @@ def _telq(body: str) -> list[str]:
 
 
 def test_bare_82_is_stranded():
-    # gn 47:29-style: a tsinnorit with no later zinor anywhere -> stranded.
+    # gn 47:29-style: a tsinnorit with no later tsinnor anywhere -> stranded.
     assert _codes("YISRA" + _TS + "L]s") == ["82"]
 
 
 def test_82_fused_with_later_02_same_atom_is_clean():
-    # A real zarqa stress-helper: tsinnorit{TEXT}zinor on one atom fuses into one ZARQA.
+    # A real zarqa stress-helper: tsinnorit{TEXT}tsinnor on one atom fuses into one ZARQA.
     assert _codes("X" + _TS + "Y" + _ZI + "Z") == []
 
 
 def test_82_two_letters_back_still_stranded():
-    # gn 17:20: the tsinnorit sits two letters before the lamed; still no zinor -> stranded.
+    # gn 17:20: the tsinnorit sits two letters before the lamed; still no tsinnor -> stranded.
     assert _codes("W" + am.METEG + "LYISMA" + _TS + ")L]S]s") == ["82"]
 
 
 def test_02_in_a_different_atom_does_not_rescue_82():
-    # Maqaf/space ends the atom, so a zinor across the boundary cannot fuse.
+    # Maqaf/space ends the atom, so a tsinnor across the boundary cannot fuse.
     assert _codes("A" + _TS + "B-C" + _ZI + "D") == ["82"]
     assert _codes("A" + _TS + "B C" + _ZI + "D") == ["82"]
 
 
 def test_02_before_82_does_not_fuse():
-    # Fusion requires the zinor to follow the tsinnorit; an earlier zinor leaves it stranded.
+    # Fusion requires the tsinnor to follow the tsinnorit; an earlier tsinnor leaves it stranded.
     assert _codes("A" + _ZI + "B" + _TS + "C") == ["82"]
 
 

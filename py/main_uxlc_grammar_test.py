@@ -76,7 +76,7 @@ PASEQ_CP = "׀"   # HEBREW PUNCTUATION PASEQ
 # mark and simply will not validate if they appear.
 NAME2MARK = {
     "etnachta": am.ATNAX, "etnahta": am.ATNAX,
-    "zarqa": am.ZINOR, "zinor": am.ZINOR,
+    "zarqa": am.TSINNOR, "zinor": am.TSINNOR,
     "pashta": am.PASHTA,
     "yetiv": am.YETIV,
     "tevir": am.TEVIR,

@@ -25,7 +25,7 @@ _MAP: dict[str, str] = {
     "84": am.QARNEY_PARA, "14": am.TELISHA_GEDOLA, "44": "", "83": am.PAZER,
     "74": am.MUNAX, "70": am.MAHAPAKH, "71": am.MERKHA, "72": am.MERKHA_KEFULA,
     "94": am.DARGA, "63": am.QADMA, "04": am.TELISHA_QETANA, "24": am.TELISHA_QETANA,
-    "93": am.YERAX, "60": am.OLE, "64": am.ILUY, "13": am.DEXI, "02": am.ZINOR,
+    "93": am.YERAX, "60": am.OLE, "64": am.ILUY, "13": am.DEXI, "02": am.TSINNOR,
     "35": am.METEG, "75": am.METEG, "95": am.METEG, "05": am.PASEQ, "00": am.SOF_PASUQ,
     "52": am.UPPER_DOT, "53": am.LOWER_DOT,
 }

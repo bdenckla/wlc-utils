@@ -144,8 +144,8 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # mayela (trailing context): tipexa before sof-pasuq/atnax, only ga`ya intervening.
     (re.compile(am.TIPEXA + _MAYELA_LA), "MAYELA"),
     (re.compile(am.TIPEXA), "TIPEXA"),
-    # zarqa: optional tsinnorit stress-helper fused onto the zinor (one token).
-    (re.compile(r"(?:" + am.TSINNORIT + _TEXT + r")?" + am.ZINOR), "ZARQA"),
+    # zarqa: optional tsinnorit stress-helper fused onto the tsinnor (one token).
+    (re.compile(r"(?:" + am.TSINNORIT + _TEXT + r")?" + am.TSINNOR), "ZARQA"),
     # pashta: a stress-helper pashta fused onto the main pashta (one token).
     (re.compile(r"(?:" + am.PASHTA + _TEXT + r")?" + am.PASHTA), "PASHTA"),
     (re.compile(am.YETIV), "YETIV"),

@@ -69,15 +69,15 @@ from dataclasses import dataclass
 from accgram import accent_marks as am
 
 # Atoms are delimited by spaces and maqaf (``-``), mirroring the scanner's TEXT
-# class ``[^ \r\n\-]*`` which keeps a fused tsinnorit...zinor pair inside one atom.
+# class ``[^ \r\n\-]*`` which keeps a fused tsinnorit...tsinnor pair inside one atom.
 _ATOM_SPLIT_RE = re.compile(r"[ \t\r\n\-]+")
 
 # stress-helper mark -> (fusion-partner mark, M-C code label) where the partner must
 # follow the helper later in the same atom for the helper to be well-formed.  Only the
-# zarqa stress-helper (tsinnorit, U+0598, M-C 82) -- whose partner is the zinor (U+05AE,
+# zarqa stress-helper (tsinnorit, U+0598, M-C 82) -- whose partner is the tsinnor (U+05AE,
 # M-C 02) -- is active today.  The label is the original M-C code, kept so the
 # ``illegal_mark`` report reads identically to the pre-Phase-2 output.
-_STRESS_HELPER_PARTNER: dict[str, tuple[str, str]] = {am.TSINNORIT: (am.ZINOR, "82")}
+_STRESS_HELPER_PARTNER: dict[str, tuple[str, str]] = {am.TSINNORIT: (am.TSINNOR, "82")}
 
 # Cantillation accents occupy U+0591..U+05AE; meteg/silluq (U+05BD), paseq, sof pasuq
 # and the puncta are NOT accents and so never count toward a same-letter accent pair.
@@ -128,7 +128,7 @@ _ACCENT_LEAF_NAME: dict[str, str] = {
     am.PAZER: "pazer", am.MUNAX: "munax", am.MAHAPAKH: "mahapakh",
     am.MERKHA: "merkha", am.MERKHA_KEFULA: "merkhakefula", am.DARGA: "darga",
     am.QADMA: "qadma", am.TELISHA_QETANA: "telishaqetanna", am.YERAX: "galgal",
-    am.TSINNORIT: "tsinnorit", am.ZINOR: "zarqa",
+    am.TSINNORIT: "tsinnorit", am.TSINNOR: "zarqa",
 }
 
 
@@ -156,7 +156,7 @@ def stranded_stress_helpers(body: str) -> list[StrandedMark]:
     """Return every stranded stress-helper in a prose verse body.
 
     A stress-helper (today only the tsinnorit, M-C ``82``) is *stranded* when its
-    fusion partner (the zinor, M-C ``02``) does not occur later in the same maqaf/
+    fusion partner (the tsinnor, M-C ``02``) does not occur later in the same maqaf/
     space-delimited atom.  Such a mark is an intrinsic lexical ("alphabet") error
     independent of surrounding context.
     """

@@ -129,7 +129,7 @@ _ACCENT_LEAF_NAME: dict[str, str] = {
     am.ATNAX: "atnax", am.SHALSHELET: "shalshelet", am.TIPEXA: "tarxa",
     am.REVIA: "revia", am.PAZER: "pazer", am.MUNAX: "munax", am.MAHAPAKH: "mahapakh",
     am.MERKHA: "merkha", am.QADMA: "azla", am.YERAX: "galgal", am.ILUY: "illuy",
-    am.OLE: "ole", am.DEXI: "dexi", am.ZINOR: "tsinnor", am.GERESH: "geresh",
+    am.OLE: "ole", am.DEXI: "dexi", am.TSINNOR: "tsinnor", am.GERESH: "geresh",
     am.GERESH_MUQDAM: "geresh muqdam",
 }
 
@@ -182,7 +182,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # poetic "stop swallowing" work, Plan C; geresh is the only attested case.)
     (re.compile(am.REVIA + am.GERESH), pan.REVIA_MUGRASH),
     (re.compile(am.DEXI), pan.DEXI),
-    (re.compile(am.ZINOR), pan.TSINNOR),
+    (re.compile(am.TSINNOR), pan.TSINNOR),
     (re.compile(am.PAZER), pan.PAZER),
     # shalshelet gedolah = shalshelet followed by paseq.  Longer than the bare
     # shalshelet (qetannah) rule below, so the paseq case wins by longest-match.

@@ -60,7 +60,7 @@ _SOURCE = {
     "OLE": ha.OLE,
     "ILUY": ha.ILU,
     "DEXI": ha.DEX,
-    "ZINOR": ha.Z_OR_TSOR,
+    "TSINNOR": ha.Z_OR_TSOR,
     "METEG": hp.MTGOSLQ,
     "PASEQ": hpu.PASOLEG,
     "SOF_PASUQ": hpu.SOPA,
