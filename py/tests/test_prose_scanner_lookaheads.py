@@ -1,19 +1,19 @@
 """Unit tests for the four trailing-context scanner rules + has_legarmeh.
 
 Stage 1 / Phase D hardening.  These pin the lex *trailing-context* semantics
-that PLY's lexer cannot express (silluq, mayela, legarmeh, plus the new-format
+that a generated lexer cannot express (silluq, mayela, legarmeh, plus the new-format
 chapter lookahead via scan_book) and the stateful `has_legarmeh` counter, so a
 regression in any one rule fails here rather than silently across thousands of
 verses.
 
 Run:
-    .venv/Scripts/python.exe -m pytest py/tests/test_prose_ply_scanner_lookaheads.py -v
+    .venv/Scripts/python.exe -m pytest py/tests/test_prose_scanner_lookaheads.py -v
 """
 
 from __future__ import annotations
 
 from accgram import accent_marks as am
-from accgram.prose_ply_scanner import HasLegarmeh, scan_accents, scan_book
+from accgram.prose_scanner import HasLegarmeh, scan_accents, scan_book
 
 
 def _types(

@@ -53,8 +53,8 @@ from accgram import rtms_data  # noqa: E402
 from accgram import rtms_rows  # noqa: E402
 from accgram import uni_to_marks  # noqa: E402
 from accgram.prose_ply_grammar import LOCATION_ONLY, build_parser, parse_tokens  # noqa: E402
-from accgram.prose_ply_scanner import HasLegarmeh, Token, scan_accents  # noqa: E402
-from accgram.ply_tree import print_tree  # noqa: E402
+from accgram.prose_scanner import HasLegarmeh, Token, scan_accents  # noqa: E402
+from accgram.tree import print_tree  # noqa: E402
 from accgram import prose_filter  # noqa: E402
 from cmn.wlc_book_codes import bk39id_to_wlc_bb  # noqa: E402
 from py_uxlc import my_uxlc  # noqa: E402

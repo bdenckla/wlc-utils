@@ -1,14 +1,14 @@
-"""Driver for the POETIC (Three Books) PLY scanner + grammar over the corpus.
+"""Driver for the POETIC (Three Books) scanner + grammar over the corpus.
 
-The poetic counterpart of accgram.prose_run_ply.  Reads the canonical `-kq-u` Unicode source
+The poetic counterpart of accgram.prose_run.  Reads the canonical `-kq-u` Unicode source
 ``out/wlc422-kq-u/`` (transcoded to scanner-ready M-C text by
 uni_to_marks), keeps only the poetic verses (Psalms and Proverbs wholesale plus
 poetically-cantillated Job, via poetic_filter), scans each
-verse with poetic_ply_scanner, reconciles the tokens against MAM (poetic_reconcile:
+verse with poetic_scanner, reconciles the tokens against MAM (poetic_reconcile:
 the legarmeh-vs-paseq and unmarked-oleh corrections the M-C source cannot express),
 parses the result with poetic_ply_grammar, then writes the reference line followed by
-the indented tree -- the same shape prose_run_ply writes for the prose books.  Output goes
-to out/accgram/ply-poetic/.
+the indented tree -- the same shape prose_run writes for the prose books.  Output goes
+to out/accgram/poetic/.
 
 Unlike the prose driver, an unparseable verse is NOT fatal.  The poetic grammar is
 derived from Yeivin (no C oracle) and a small fraction of verses are known
@@ -35,8 +35,8 @@ from accgram.poetic_ply_grammar import (
     build_parser,
     parse_tokens_accepting_repeats,
 )
-from accgram.poetic_ply_scanner import scan_book
-from accgram.ply_tree import TN, print_tree
+from accgram.poetic_scanner import scan_book
+from accgram.tree import TN, print_tree
 from accgram.poetic_reconcile import reconcile_tokens
 
 import repo_paths
@@ -135,7 +135,7 @@ def default_input_path(repo_root: Path) -> Path:
 
 
 def default_out_dir(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply-poetic"
+    return repo_paths.out_dir() / "accgram" / "poetic"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
@@ -149,7 +149,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--out-dir",
         type=Path,
         default=default_out_dir(repo_root),
-        help="Directory for poetic PLY outputs named wlc_422_ps_<bb>_ag.txt.",
+        help="Directory for poetic outputs named wlc_422_ps_<bb>_ag.txt.",
     )
     parser.add_argument(
         "--mam-simple-dir",

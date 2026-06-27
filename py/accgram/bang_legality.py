@@ -28,7 +28,7 @@ illegal, in between is partial.
 Genre note: built poetic-first (the only attested poetic bang is ps56:10).  The splice
 is genre-agnostic, so the same measure can later cover the prose bangs (ek20:31's
 mahapakh!qadma, lv25:20's mahapakh!tipexa) under one notion.  This is a *report*, not a
-verdict: it writes out/accgram/ply-poetic/_bang_legality.txt and leaves the corpus
+verdict: it writes out/accgram/poetic/_bang_legality.txt and leaves the corpus
 output untouched -- regenerate and diff it after any scanner/grammar change.
 """
 
@@ -44,8 +44,8 @@ from accgram import poetic_accent_names as pan
 from accgram import rtms_data
 from accgram import uni_to_marks
 from accgram.poetic_ply_grammar import build_parser, parse_tokens_accepting_repeats
-from accgram.poetic_ply_scanner import scan_verse
-from accgram.ply_tree import print_tree
+from accgram.poetic_scanner import scan_verse
+from accgram.tree import print_tree
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 import repo_paths
@@ -217,7 +217,7 @@ def default_input_path(repo_root: Path) -> Path:
 
 
 def default_report_path(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply-poetic" / "_bang_legality.txt"
+    return repo_paths.out_dir() / "accgram" / "poetic" / "_bang_legality.txt"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

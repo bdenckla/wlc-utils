@@ -19,7 +19,7 @@ clause the C action builds and calls p.parser.errok() to mirror yacc's
 return the LOCATION_ONLY sentinel; they do not fire on the parity corpus (all 51
 oddballs reduce via `TILDE silluq_clause SOFPASUQ` with ERROR leaves inside).
 
-Grammar actions build trees with ply_tree.make_node / add_leaves, exactly as the
+Grammar actions build trees with tree.make_node / add_leaves, exactly as the
 C actions call make_node / add_leaves.  Token values carry the leaf-name string
 (yylval.leaf), so add_leaves uses p[i] verbatim.
 
@@ -36,8 +36,8 @@ import sys
 
 from ply import yacc
 
-from accgram.prose_ply_scanner import Token
-from accgram.ply_tree import TN, add_leaves, make_node
+from accgram.prose_scanner import Token
+from accgram.tree import TN, add_leaves, make_node
 
 # All 33 grammar tokens (declared even when unused by subsets, to mirror
 # acc2tre.y's %token list and keep the token namespace stable).

@@ -1,27 +1,27 @@
 """Accent grammar utilities.
 
 Subcommands:
-    run-ply-prose
-                Run the Python PLY port over the WLC prose corpus
+    run-prose
+                Run the Python port over the WLC prose corpus
                 (out/wlc422-kq-u, genre-filtered) and write
-                out/accgram/ply-prose/*_ag.txt (mirrors `accents -p`).  A verse the
+                out/accgram/prose/*_ag.txt (mirrors `accents -p`).  A verse the
                 grammar cannot parse at all is a fatal error.  Use --book to
                 restrict to specific books (e.g. --book ob).
-    run-ply-poetic
-                Run the POETIC (Three Books) PLY scanner + grammar over the
+    run-poetic
+                Run the POETIC (Three Books) scanner + grammar over the
                 poetic corpus (Psalms, Proverbs, poetically-cantillated Job) and
-                write out/accgram/ply-poetic/*_ag.txt.  Unparseable verses are
+                write out/accgram/poetic/*_ag.txt.  Unparseable verses are
                 emitted as NO_PARSE lines and tallied, not fatal.  Use --book to
                 restrict (ps, pr, jb).
     xcheck-poetic
                 Cross-check the poetic scanner's disjunctive segmentation against
-                MAM-simple and write out/accgram/ply-poetic/_mam_xcheck.txt (a
+                MAM-simple and write out/accgram/poetic/_mam_xcheck.txt (a
                 per-book agreement tally plus every divergence grouped by edit
                 signature).  The Phase 2 validation surface.
     servi-xcheck
                 Cross-check, per disjunctive, the servant (conjunctive) the WLC
                 scanner and MAM-simple put immediately before it, and write
-                out/accgram/ply-poetic/_servi_xcheck.txt.  The second-witness gate
+                out/accgram/poetic/_servi_xcheck.txt.  The second-witness gate
                 for vetting Breuer servant-adjacency rules (it settled deḥi and
                 small revia).  Use --target to restrict.
     generate-html
@@ -31,10 +31,10 @@ Subcommands:
                     (missing-silluq ERROR-leaf trees and NO_PARSE anomalies),
                     each enriched with its pointed-Hebrew text, scanned token
                     sequence, rendered tree, and WLC-vs-MAM-simple disjunctive
-                    comparison (plus out/accgram/ply-poetic/_oddballs.json).
-                    Run run-ply-poetic first.
-                  * gh-pages/accgram/goerwitz.html -- the PLY-based prose oddball
-                    set (from out/accgram/ply-prose), enriched with its matching
+                    comparison (plus out/accgram/poetic/_oddballs.json).
+                    Run run-poetic first.
+                  * gh-pages/accgram/goerwitz.html -- the prose oddball
+                    set (from out/accgram/prose), enriched with its matching
                     wlc422-kq-u verse object and structured XML-ish UXLC verse
                     node (plus out/accgram/research-oddballs.json).
                   * gh-pages/accgram/almost-errors.html -- the "almost errors"
@@ -56,11 +56,11 @@ Subcommands:
                 verse, re-transcode + re-scan + re-parse, and classify CONFIRMED / DENIED /
                 CHANGED / UNTESTABLE.  Cross-checks each verdict against the
                 prose_ob_notes claim and writes out/accgram/fix-tester/_fix_tester.{txt,json}.
-                Run run-ply-prose first.
+                Run run-prose first.
 
 Examples:
-    .venv/Scripts/python.exe py/main_accgram.py run-ply-prose
-    .venv/Scripts/python.exe py/main_accgram.py run-ply-prose --book ob
+    .venv/Scripts/python.exe py/main_accgram.py run-prose
+    .venv/Scripts/python.exe py/main_accgram.py run-prose --book ob
     .venv/Scripts/python.exe py/main_accgram.py generate-html
 """
 
@@ -75,8 +75,8 @@ from accgram import poetic_oddballs
 from accgram import ps17v14_double_tsinnor
 from accgram import ps17v14_doc_notes
 from accgram import research_tao
-from accgram import prose_run_ply
-from accgram import poetic_run_ply
+from accgram import prose_run
+from accgram import poetic_run
 from accgram import servi_xcheck
 from accgram import telg_doc_notes
 from accgram import poetic_xcheck
@@ -89,12 +89,12 @@ def _repo_root() -> Path:
     return repo_paths.repo_root()
 
 
-def _run_run_ply(args: argparse.Namespace) -> None:
-    prose_run_ply.run(args)
+def _run_run_prose(args: argparse.Namespace) -> None:
+    prose_run.run(args)
 
 
-def _run_run_ply_poetic(args: argparse.Namespace) -> None:
-    poetic_run_ply.run(args)
+def _run_run_poetic(args: argparse.Namespace) -> None:
+    poetic_run.run(args)
 
 
 def _run_xcheck_poetic(args: argparse.Namespace) -> None:
@@ -133,34 +133,34 @@ def main() -> None:
     subparsers = parser.add_subparsers(dest="subcommand", metavar="SUBCOMMAND")
     subparsers.required = True
 
-    run_ply_parser = subparsers.add_parser(
-        "run-ply-prose",
+    run_prose_parser = subparsers.add_parser(
+        "run-prose",
         help=(
-            "Run the Python PLY port over the WLC prose corpus and write "
-            "out/accgram/ply-prose/*_ag.txt (mirrors `accents -p`). Use --book to "
+            "Run the Python port over the WLC prose corpus and write "
+            "out/accgram/prose/*_ag.txt (mirrors `accents -p`). Use --book to "
             "restrict (e.g. --book ob)."
         ),
     )
-    prose_run_ply.add_args(run_ply_parser, repo_root=_repo_root())
-    run_ply_parser.set_defaults(func=_run_run_ply)
+    prose_run.add_args(run_prose_parser, repo_root=_repo_root())
+    run_prose_parser.set_defaults(func=_run_run_prose)
 
-    run_ply_poetic_parser = subparsers.add_parser(
-        "run-ply-poetic",
+    run_poetic_parser = subparsers.add_parser(
+        "run-poetic",
         help=(
-            "Run the poetic (Three Books) PLY scanner + grammar over Psalms, "
+            "Run the poetic (Three Books) scanner + grammar over Psalms, "
             "Proverbs, and poetically-cantillated Job and write "
-            "out/accgram/ply-poetic/*_ag.txt. Unparseable verses become NO_PARSE "
+            "out/accgram/poetic/*_ag.txt. Unparseable verses become NO_PARSE "
             "lines (not fatal). Use --book to restrict (ps, pr, jb)."
         ),
     )
-    poetic_run_ply.add_args(run_ply_poetic_parser, repo_root=_repo_root())
-    run_ply_poetic_parser.set_defaults(func=_run_run_ply_poetic)
+    poetic_run.add_args(run_poetic_parser, repo_root=_repo_root())
+    run_poetic_parser.set_defaults(func=_run_run_poetic)
 
     xcheck_poetic_parser = subparsers.add_parser(
         "xcheck-poetic",
         help=(
             "Cross-check the poetic scanner's disjunctive segmentation against "
-            "MAM-simple and write out/accgram/ply-poetic/_mam_xcheck.txt."
+            "MAM-simple and write out/accgram/poetic/_mam_xcheck.txt."
         ),
     )
     poetic_xcheck.add_args(xcheck_poetic_parser, repo_root=_repo_root())
@@ -172,7 +172,7 @@ def main() -> None:
             "Cross-check, per disjunctive, the servant (conjunctive) the WLC scanner "
             "and MAM-simple put immediately before it -- the second-witness gate for "
             "vetting Breuer servant-adjacency rules. Writes "
-            "out/accgram/ply-poetic/_servi_xcheck.txt. Use --target to restrict."
+            "out/accgram/poetic/_servi_xcheck.txt. Use --target to restrict."
         ),
     )
     servi_xcheck.add_args(servi_xcheck_parser, repo_root=_repo_root())
@@ -183,7 +183,7 @@ def main() -> None:
         help=(
             "Test whether adopting each annotated prose oddball's MAM-simple value "
             "clears its ERROR; write out/accgram/fix-tester/_fix_tester.{txt,json}. "
-            "Run run-ply-prose first."
+            "Run run-prose first."
         ),
     )
     fix_tester.add_args(fix_tester_parser, repo_root=_repo_root())
@@ -193,7 +193,7 @@ def main() -> None:
         "generate-html",
         help=(
             "Generate the accgram HTML reports in one pass: "
-            "gh-pages/accgram/poetic.html (run run-ply-poetic first), "
+            "gh-pages/accgram/poetic.html (run run-poetic first), "
             "goerwitz.html, almost-errors.html, and telg-doc-notes.html. Each "
             "runs with its default paths; live trees are regenerated from the "
             "grammar."

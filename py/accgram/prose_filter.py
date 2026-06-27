@@ -1,6 +1,6 @@
 """Genre filter for the prose accent grammar.
 
-The PLY prose grammar cannot parse the 3-poetic-accent system, so verses using
+The prose grammar cannot parse the 3-poetic-accent system, so verses using
 poetic cantillation must be excluded before they reach the parser: Psalms and
 Proverbs wholesale, poetically-cantillated Job verses, and a few verses the BHS
 versification hard-codes (the Decalogue ranges and Gn 35:22). This is the genre

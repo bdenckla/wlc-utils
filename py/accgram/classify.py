@@ -1,10 +1,10 @@
-"""Derive the PLY-based oddball set for the goerwitz.html report (generate-html).
+"""Derive the oddball set for the goerwitz.html report (generate-html).
 
-This module classifies oddball verses from the **PLY** port outputs. An oddball
-is any verse whose PLY parse tree contains at least one ``ERROR`` leaf. Since
-``run-ply-prose`` now processes the full prose corpus (including the 49 verses the C
+This module classifies oddball verses from the Python port outputs. An oddball
+is any verse whose parse tree contains at least one ``ERROR`` leaf. Since
+``run-prose`` now processes the full prose corpus (including the 49 verses the C
 binary emitted no output for), every such ERROR verse lives in
-``out/accgram/ply-prose/`` directly -- there is no separate troublemaker pass.
+``out/accgram/prose/`` directly -- there is no separate troublemaker pass.
 
 The resulting ``_oddballs.json`` uses the same schema ``rtms_rows`` parses: one
 row per oddball with ``ref``, ``content`` (the verse's pointed-Hebrew text, drawn
@@ -33,15 +33,15 @@ def _ref_to_tuple(ref: str) -> tuple[str, int, int]:
     return (bb, int(chnu), int(vrnu))
 
 
-def write_ply_oddballs(
-    ply_dir: Path,
+def write_oddballs(
+    prose_dir: Path,
     wlc422_kq_u_dir: Path,
     oddballs_out: Path,
 ) -> None:
-    """(Re)generate the PLY-derived ``_oddballs.json`` from ``out/accgram/ply-prose/``."""
+    """(Re)generate the ``_oddballs.json`` from ``out/accgram/prose/``."""
     refs_with_files: list[tuple[str, int, int, str]] = []
     output_paths = sorted(
-        p for p in ply_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt"
+        p for p in prose_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt"
     )
     for output_path in output_paths:
         match = _OUTPUT_FILE_BB_RE.match(output_path.name)
@@ -65,10 +65,10 @@ def write_ply_oddballs(
 
     books_with_oddballs = {_ref_to_tuple(str(row["ref"]))[0] for row in oddball_rows}
     oddballs_payload: dict[str, object] = {
-        "artifacts_description": "oddball verses with ERROR nodes in PLY *_ag.txt outputs",
+        "artifacts_description": "oddball verses with ERROR nodes in *_ag.txt outputs",
         "payload_provenance_note": (
-            "These verses are parsed by the PLY port into a tree containing at least "
-            "one line with the token ERROR, drawn from out/accgram/ply-prose/. The "
+            "These verses are parsed by the Python port into a tree containing at least "
+            "one line with the token ERROR, drawn from out/accgram/prose/. The "
             "output_file field on each row names which book file holds that verse's "
             "ERROR tree."
         ),

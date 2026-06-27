@@ -1,14 +1,14 @@
-"""Golden test: output contract for ply_tree.print_tree().
+"""Golden test: output contract for tree.print_tree().
 
 Pins the exact byte output for Obadiah 1:2 — the simplest multi-level tree
 in the oracle — so any change to indentation, label format, or leaf trailing-
 space is caught immediately.
 
 Run:
-    .venv/Scripts/python.exe -m pytest py/tests/test_ply_tree_golden.py -v
+    .venv/Scripts/python.exe -m pytest py/tests/test_tree_golden.py -v
 """
 
-from accgram.ply_tree import add_leaves, make_node, print_tree
+from accgram.tree import add_leaves, make_node, print_tree
 
 
 def _ob_1_2_tree():

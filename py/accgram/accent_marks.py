@@ -1,4 +1,4 @@
-r"""The Unicode mark alphabet the PLY scanners consume (issue #9, Phase 2).
+r"""The Unicode mark alphabet the scanners consume (issue #9, Phase 2).
 
 Phase 1 transcoded each ``-kq-u`` Unicode verse into a Michigan-Claremont (M-C)
 2-digit-accent *body* and fed it to scanners written against that legacy code

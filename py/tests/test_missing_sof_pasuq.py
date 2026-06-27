@@ -7,7 +7,7 @@ terminator; the grammar then flags the verse with a distinct sof_pasuq_phrase ER
 leaf.  Clean verses (which end in code 00) are untouched.
 
 Run:
-    .venv/Scripts/python.exe -m pytest py/tests/test_ply_missing_sof_pasuq.py -v
+    .venv/Scripts/python.exe -m pytest py/tests/test_missing_sof_pasuq.py -v
 """
 
 from __future__ import annotations
@@ -15,8 +15,8 @@ from __future__ import annotations
 import pytest
 
 from accgram.prose_ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
-from accgram.prose_ply_scanner import scan_book
-from accgram.ply_tree import print_tree
+from accgram.prose_scanner import scan_book
+from accgram.tree import print_tree
 from tests.mc_marks import mc_to_marks
 
 

@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from accgram import fix_apply, lexical_validation
 from accgram.fix_apply import AppliedFix, UntestableFix, apply_mam_fix
-from accgram.prose_ply_scanner import HasLegarmeh, scan_accents
+from accgram.prose_scanner import HasLegarmeh, scan_accents
 
 
 def _types(body: str) -> list[str]:

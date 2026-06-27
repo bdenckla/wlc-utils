@@ -26,7 +26,7 @@ def build_intro_contents(
 ) -> tuple[object, ...]:
     intro_text = (
         f"This page lists the {oddball_count} WLC 4.22 verses that are considered ungrammatical"
-        " by the PLY port of the Goerwitz accent checker."
+        " by the Python port of the Goerwitz accent checker."
     )
     oddballs_text = (
         f"These verses are considered ungrammatical because they parse into a tree"

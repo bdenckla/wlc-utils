@@ -3,7 +3,7 @@ r"""Hand-written scanner: reproduces the GG-state token stream of tnk2acc.l.
 Stage 1 / Phase D (full scanner including the four trailing-context rules).
 Handles the new-format verse structure (bookname -> chapter -> verse -> accent
 scan) and the complete GG-state accent table, including the four lex
-*trailing-context* rules that PLY's lexer cannot express.  Phase 2 of issue #9
+*trailing-context* rules that a generated lexer cannot express.  Phase 2 of issue #9
 retired the Michigan-Claremont 2-digit-code alphabet: the rule table now matches
 directly over the Unicode mark alphabet (`accent_marks`), and the trailing-context
 digit classes are rebuilt onto it by `am.negated_class`.  The original M-C-code
@@ -50,7 +50,7 @@ from accgram import accent_marks as am
 
 @dataclass(frozen=True)
 class Token:
-    """A grammar token: PLY token type plus the leaf-name string (yylval.leaf)."""
+    """A grammar token: parser token type plus the leaf-name string (yylval.leaf)."""
 
     type: str
     leaf: str

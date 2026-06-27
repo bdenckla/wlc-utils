@@ -18,12 +18,12 @@ from typing import NamedTuple
 
 from accgram import accent_marks as am
 from accgram import lexical_validation
-from accgram import prose_ply_scanner
-from accgram import prose_run_ply
+from accgram import prose_scanner
+from accgram import prose_run
 from accgram import uni_to_marks
 from accgram.prose_ply_grammar import LOCATION_ONLY, parse_tokens
-from accgram.prose_ply_scanner import HasLegarmeh, Token, scan_accents
-from accgram.ply_tree import print_tree
+from accgram.prose_scanner import HasLegarmeh, Token, scan_accents
+from accgram.tree import print_tree
 from accgram.uni_to_marks import (
     KEPT_NON_ACCENT,
     MAQAF,
@@ -144,17 +144,17 @@ def _telg_verdict_for(bcv: str, mode: str, index, parser, has_legarmeh: HasLegar
 
 
 def _prose_verse_tree_text(bcv: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
-    """The checker's *live* tree text for a prose verse, exactly as prose_run_ply renders it.
+    """The checker's *live* tree text for a prose verse, exactly as prose_run renders it.
 
-    Reuses the prose_run_ply lexical layer (so lv25:20 reads as its ``illegal_mark`` tree,
+    Reuses the prose_run lexical layer (so lv25:20 reads as its ``illegal_mark`` tree,
     grammar skipped) and the same illegal-mark label, so the page can never drift from
     the corpus output."""
     verse = index[bcv]
     body = uni_to_marks.verse_to_marks(verse)
     stranded = lexical_validation.lexical_oddballs(body)
     if stranded:
-        words = prose_run_ply._stranded_unicode_words(stranded, verse)
-        return print_tree(prose_run_ply._illegal_mark_tree(stranded, words), 0).rstrip("\n")
+        words = prose_run._stranded_unicode_words(stranded, verse)
+        return print_tree(prose_run._illegal_mark_tree(stranded, words), 0).rstrip("\n")
     return _tree_text(_scan_and_parse(bcv, body, parser, has_legarmeh))
 
 
@@ -225,12 +225,12 @@ def _no_mahapakh_qadma_fuse():
     """Temporarily drop the scanner's ``MAHAPAKHQADMA`` fuse rule so a mahapakh-then-qadma
     adjacency scans as two tokens (``MAHAPAKH QADMA``) instead of re-fusing -- the only way
     to observe the ``seq_mah_qadma`` reading as a genuine sequence.  Restored on exit."""
-    original = prose_ply_scanner._GG_RULES
-    prose_ply_scanner._GG_RULES = [r for r in original if r[1] != "MAHAPAKHQADMA"]
+    original = prose_scanner._GG_RULES
+    prose_scanner._GG_RULES = [r for r in original if r[1] != "MAHAPAKHQADMA"]
     try:
         yield
     finally:
-        prose_ply_scanner._GG_RULES = original
+        prose_scanner._GG_RULES = original
 
 
 def _ek_verdict_for(mode: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
@@ -244,7 +244,7 @@ def _ek_verdict_for(mode: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
 
 
 def _telg_gerstar_word(verse: object) -> str | None:
-    for word in prose_run_ply._verse_display_words(verse):
+    for word in prose_run._verse_display_words(verse):
         has_telg = am.TELISHA_GEDOLA in word
         has_gerstar = any((am.GERESH if c == am.GERESH_MUQDAM else c) in _GG for c in word)
         if has_telg and has_gerstar:

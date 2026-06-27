@@ -4,7 +4,7 @@ Phase 2 of ``doc/PLAN-poetic-accent-grammar.md``: confirm the trees' division
 points are *correct*, not merely parseable.  For every poetic verse we compare two
 ordered disjunctive sequences:
 
-  * WLC side -- the disjunctive tokens the scanner (``poetic_ply_scanner``) reads
+  * WLC side -- the disjunctive tokens the scanner (``poetic_scanner``) reads
     from the Michigan-Claremont codes, in order.
   * MAM side -- the disjunctive sequence extracted from MAM-simple's pointed
     Unicode text by ``mam_poetic_accents.disjunctives_from_verse_node``.
@@ -21,7 +21,7 @@ this check is therefore agree-by-construction, not an independent witness.  Ever
 disjunctive (silluq, atnaḥ, oleh-we-yored, the revias, deḥi, tsinnor, pazer) is still
 derived from WLC alone, so the check remains a meaningful Phase-2 surface for them.
 
-The run writes a git-tracked report ``out/accgram/ply-poetic/_mam_xcheck.txt``: a
+The run writes a git-tracked report ``out/accgram/poetic/_mam_xcheck.txt``: a
 per-book agreement tally, then every divergence grouped by its edit signature
 (the difflib opcodes turning the WLC sequence into the MAM one), each annotated
 with whether the WLC verse currently parses.  This file is the Phase 2 verification
@@ -43,7 +43,7 @@ from accgram.mam_poetic_accents import load_poetic_disjunctives
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 from accgram.poetic_ply_grammar import build_parser, parse_tokens
-from accgram.poetic_ply_scanner import scan_book
+from accgram.poetic_scanner import scan_book
 from accgram.poetic_reconcile import reconcile_tokens
 
 import repo_paths
@@ -171,7 +171,7 @@ def default_input_path(repo_root: Path) -> Path:
 
 
 def default_report_path(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply-poetic" / "_mam_xcheck.txt"
+    return repo_paths.out_dir() / "accgram" / "poetic" / "_mam_xcheck.txt"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

@@ -1,13 +1,13 @@
 """Canonical token-type names for the POETIC (Three Books) accent grammar.
 
-Single source of truth for the poetic PLY *token type* strings, so the (variable,
+Single source of truth for the poetic accent grammar's *token type* strings, so the (variable,
 dot-losing) ASCII transliterations are spelled exactly once instead of as bare
-string literals scattered across poetic_ply_grammar, poetic_ply_scanner,
+string literals scattered across poetic_ply_grammar, poetic_scanner,
 mam_poetic_accents, poetic_xcheck and their tests.  Import these and compare/use
 the constants; never re-type the literal.
 
-One unavoidable exception: PLY builds the grammar from the *docstrings* of the
-``p_*`` rule functions, which it parses textually -- the terminal names there must
+One unavoidable exception: the grammar is built from the *docstrings* of the
+``p_*`` rule functions, which are parsed textually -- the terminal names there must
 be written literally and cannot be constants.  The ``tokens`` tuple is built from
 these constants, and the grammar's parse / zero-conflict tests fail loudly if a
 docstring terminal ever drifts from a constant, so the literal docstrings stay
@@ -114,7 +114,7 @@ SHALSHELET_QETANNAH = "SHALSHELET_QETANNAH"
 # so does the Aleppo Codex, while Sassoon 1053 carries merkha alone -- L's double-marking
 # looks like a conflation of the two single-accent traditions (see poetic_ob_notes["ps 56:10"]).
 #
-# MERKHA_AZLA is the canonical instance of the general bang guard (poetic_ply_scanner): the
+# MERKHA_AZLA is the canonical instance of the general bang guard (poetic_scanner): the
 # scanner emits a bang for any two adjacent same-letter accents NOT on the whitelist,
 # deriving the type/leaf per pair (_bang_pair_token) -- merkha+qadma yields exactly this
 # "MERKHA_AZLA" / "merkha!azla".  Kept as a named constant because it is the only attested

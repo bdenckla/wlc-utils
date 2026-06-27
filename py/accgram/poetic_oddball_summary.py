@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 
 from accgram.mam_poetic_accents import base_consonants
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
-from accgram.poetic_ply_scanner import scan_accents
+from accgram.poetic_scanner import scan_accents
 from mb_cmn import hebrew_punctuation as hpunc
 
 if TYPE_CHECKING:

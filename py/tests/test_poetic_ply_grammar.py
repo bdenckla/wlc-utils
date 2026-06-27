@@ -25,7 +25,7 @@ from accgram.poetic_ply_grammar import (
     parse_tokens_accepting_repeats,
     parse_tokens_diagnostic,
 )
-from accgram.ply_tree import print_tree
+from accgram.tree import print_tree
 
 
 def _verse(*accents):

@@ -19,7 +19,7 @@ Run:
 from accgram import poetic_accent_names as pan
 from accgram import poetic_reconcile as pr
 from accgram.poetic_ply_grammar import build_parser, parse_tokens
-from accgram.poetic_ply_scanner import scan_verse
+from accgram.poetic_scanner import scan_verse
 from tests.mc_marks import mc_to_marks
 
 # Bodies are written in the legacy M-C encoding for readability and converted to the

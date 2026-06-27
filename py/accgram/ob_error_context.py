@@ -24,7 +24,7 @@ def collect_error_trees_by_ref(
     rows: list[dict[str, object]],
     base_dir: Path,
 ) -> dict[str, ErrorTree | None]:
-    # All oddball ERROR trees live in a single PLY output dir (base_dir).
+    # All oddball ERROR trees live in a single output dir (base_dir).
     refs_by_file: dict[str, set[str]] = {}
     for row in rows:
         ref = _row_ref(row)

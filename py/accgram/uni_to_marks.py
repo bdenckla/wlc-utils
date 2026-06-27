@@ -1,6 +1,6 @@
-r"""Extract the Unicode **mark sequence** the PLY scanners consume (issue #9, Phase 2).
+r"""Extract the Unicode **mark sequence** the scanners consume (issue #9, Phase 2).
 
-The PLY prose/poetic scanners (`prose_ply_scanner` / `poetic_ply_scanner`) read each verse
+The prose/poetic scanners (`prose_scanner` / `poetic_scanner`) read each verse
 as a stream of single-character *marks* -- one Unicode codepoint per cantillation
 accent (plus meteg/paseq/sof-pasuq/puncta), placeholder ``X`` per base consonant, and
 maqaf (``-``) / space word boundaries -- as defined in `accent_marks`.  This module
@@ -111,7 +111,7 @@ def word_to_marks(word: str) -> str:
     whitelisted in `lexical_validation._WHITELISTED_SAME_LETTER` rather than flagged; the
     cross-letter words already sit on two letters and need no whitelist.  A prose geresh
     muqdam (2 Kings 17:13's companion, and the lone Lev 1:3 case) passes through as its own
-    codepoint here and is normalized to a plain geresh by the scanner (see prose_ply_scanner); the
+    codepoint here and is normalized to a plain geresh by the scanner (see prose_scanner); the
     whitelist therefore lists the raw geresh muqdam codepoint alongside plain geresh.
 
     Keeping both marks is the most faithful reading -- it preserves both accents the

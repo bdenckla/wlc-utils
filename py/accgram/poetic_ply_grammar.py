@@ -64,14 +64,14 @@ when a unit is too short for the intermediate one):
   pazer (#369)               -> legarmeh only
   legarmeh (#370)            -> (terminal lowest disjunctive)
 
-Token disambiguation that the scanner (accgram.poetic_ply_scanner) performs and
+Token disambiguation that the scanner (accgram.poetic_scanner) performs and
 this grammar relies on: the three revias share signs but are distinct tokens here
 (REVIA_GADOL / REVIA_QATAN / REVIA_MUGRASH); the scanner separates them by the
 geresh muqdam (mugrash) and by position (qatan only before oleh-we-yored, a bare
 revia before silluq = mugrash without geresh, #391).
 
-Grammar actions build trees with ply_tree.make_node / add_leaves, as the prose
-grammar does, so accgram.ply_tree.print_tree renders poetic trees identically.
+Grammar actions build trees with tree.make_node / add_leaves, as the prose
+grammar does, so accgram.tree.print_tree renders poetic trees identically.
 """
 
 from __future__ import annotations
@@ -82,7 +82,7 @@ from dataclasses import dataclass
 from ply import yacc
 
 from accgram import poetic_accent_names as pan
-from accgram.ply_tree import add_leaves, make_node
+from accgram.tree import add_leaves, make_node
 
 # Token-type names come from poetic_accent_names (the single source of truth).  The
 # terminals are still spelled literally in the p_* rule docstrings below because
@@ -836,7 +836,7 @@ def build_parser(*, capture_warnings: bool = False):
 def parse_tokens_diagnostic(parser, toks):
     """Parse one poetic verse, returning ``(tree, error)``.
 
-    On success ``tree`` is the parse tree (ply_tree.TN) -- including a missing-silluq
+    On success ``tree`` is the parse tree (tree.TN) -- including a missing-silluq
     ERROR-leaf tree for category A -- and ``error`` is None.  On an unrecoverable
     failure (NO_PARSE) ``tree`` is None and ``error`` is a ParseError naming the
     offending token and its accent ordinal, so the caller can pinpoint the stall

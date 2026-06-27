@@ -1,12 +1,12 @@
-"""Driver for the Python PLY port: mirrors `accents -p` on the WLC prose corpus.
+"""Driver for the Python port: mirrors `accents -p` on the WLC prose corpus.
 
 Reads the canonical `-kq-u` Unicode source `out/wlc422-kq-u/`, transcodes
 each verse into per-book scanner-ready mark text (uni_to_marks, applying the genre
 filter so poetic books never reach the prose grammar), scans each verse into a token
 stream
-(prose_ply_scanner), parses it into a tree (prose_ply_grammar), and writes the reference line
-followed by the indented tree (ply_tree.print_tree) -- the same stdout the C
-"goerwitz" binary produced with `-p`. Output goes to out/accgram/ply-prose/.
+(prose_scanner), parses it into a tree (prose_ply_grammar), and writes the reference line
+followed by the indented tree (tree.print_tree) -- the same stdout the C
+"goerwitz" binary produced with `-p`. Output goes to out/accgram/prose/.
 
 A verse the grammar cannot parse at all (parse_tokens returns None) is a fatal
 error: it signals a residual prose-grammar gap that must be surfaced, not silently
@@ -25,8 +25,8 @@ from accgram import prose_filter
 from accgram import rtms_data
 from accgram import uni_to_marks
 from accgram.prose_ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
-from accgram.prose_ply_scanner import scan_book
-from accgram.ply_tree import add_leaves, print_tree
+from accgram.prose_scanner import scan_book
+from accgram.tree import add_leaves, print_tree
 
 import repo_paths
 
@@ -139,7 +139,7 @@ def render_book(
             continue
         tree = parse_tokens(parser, verse.tokens)
         if tree is None:
-            raise RuntimeError(f"PLY produced no output for {verse.reference}")
+            raise RuntimeError(f"parser produced no output for {verse.reference}")
         parsed += 1
         out_lines.append(verse.reference + "\n")
         # pasuq-level error verses print the reference line only (no tree); the C
@@ -155,7 +155,7 @@ def default_input_path(repo_root: Path) -> Path:
 
 
 def default_out_dir(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply-prose"
+    return repo_paths.out_dir() / "accgram" / "prose"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
@@ -169,7 +169,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--out-dir",
         type=Path,
         default=default_out_dir(repo_root),
-        help="Directory for PLY outputs named wlc_422_ps_<bb>_ag.txt.",
+        help="Directory for outputs named wlc_422_ps_<bb>_ag.txt.",
     )
     parser.add_argument(
         "--book",

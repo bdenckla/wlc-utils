@@ -1,6 +1,6 @@
 """Poetic oddball report -- the optional Phase 4 analogue of the goerwitz.html report.
 
-The poetic corpus run (``run-ply-poetic``) parses 99.69% of the Three Books
+The poetic corpus run (``run-poetic``) parses 99.69% of the Three Books
 cleanly; the residual splits into two documented oddball kinds:
 
   * ``missing_silluq`` -- the 13 verses whose sof pasuq arrives with no silluq
@@ -76,11 +76,11 @@ from accgram.poetic_ply_grammar import (
     build_parser,
     parse_tokens_accepting_repeats,
 )
-from accgram.poetic_ply_scanner import scan_book
+from accgram.poetic_scanner import scan_book
 from accgram.poetic_reconcile import reconcile_tokens
 from accgram.poetic_oddball_summary import derive_tentative_summary
-from accgram.ply_tree import print_tree
-from accgram.poetic_run_ply import has_error_leaf, no_parse_line
+from accgram.tree import print_tree
+from accgram.poetic_run import has_error_leaf, no_parse_line
 import wlc_provenance as provenance
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
@@ -150,7 +150,7 @@ def collect_poetic_oddballs(
                 else None
             )
             # Apply the legarmeh-vs-paseq and unmarked-oleh corrections before parsing,
-            # exactly as poetic_run_ply does, so this report agrees with the driver's
+            # exactly as poetic_run does, so this report agrees with the driver's
             # trees (and the two resolved NO_PARSE verses no longer surface here).
             tokens = reconcile_tokens(
                 verse.reference, verse.body, list(verse.tokens), mam, parser
@@ -309,7 +309,7 @@ def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, 
     payload: dict[str, object] = {
         "artifacts_description": "poetic (Three Books) oddball verses for review",
         "payload_provenance_note": (
-            "Each row is a poetic verse the PLY port could not parse cleanly: either "
+            "Each row is a poetic verse the checker could not parse cleanly: either "
             "a missing-silluq verse recovered into an ERROR-leaf tree "
             f"('{KIND_MISSING_SILLUQ}') or a structural L anomaly -- the disjunctive "
             "hierarchy is violated or a token is lexically illicit -- emitted as "
@@ -419,7 +419,7 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
         wlc_utils_html.heading_level_2("Introduction"),
         wlc_utils_html.para(
             f"This page lists the {len(oddballs)} poetic (Three Books) WLC 4.22 "
-            f"verses the PLY accent grammar cannot parse cleanly "
+            f"verses the poetic accent grammar cannot parse cleanly "
             f"({n_silluq} missing-silluq, {n_noparse} NO_PARSE). Use the filter "
             "below to narrow the list."
         ),
@@ -691,7 +691,7 @@ def _no_parse_tree_text(
 
     No valid parse exists, so this is not a real tree: a single ``no_parse`` branch
     whose leaves are the accent token types (the TILDE/SOFPASUQ structural bookends
-    dropped, as in poetic_run_ply.no_parse_line), capped by an ``ERROR`` leaf. Fed
+    dropped, as in poetic_run.no_parse_line), capped by an ``ERROR`` leaf. Fed
     through the shared error-tree table it puts each token in its own cell and
     highlights the ERROR cell -- more legible than the bare NO_PARSE token line, and
     visually consistent with the missing-silluq ERROR trees.
@@ -777,7 +777,7 @@ def _counts(oddballs: list[PoeticOddball]) -> dict[str, int]:
 
 
 def default_oddballs_out_path(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply-poetic" / "_oddballs.json"
+    return repo_paths.out_dir() / "accgram" / "poetic" / "_oddballs.json"
 
 
 def default_html_out_path(repo_root: Path) -> Path:

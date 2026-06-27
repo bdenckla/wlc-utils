@@ -2,7 +2,7 @@ r"""Extract the ordered POETIC *disjunctive* sequence from MAM-simple verses.
 
 This is the cross-check oracle for the poetic scanner+grammar (Phase 2 of
 ``doc/PLAN-poetic-accent-grammar.md``).  The WLC poetic scanner
-(``accgram.poetic_ply_scanner``) matches over a Unicode accent-mark alphabet; MAM-simple
+(``accgram.poetic_scanner``) matches over a Unicode accent-mark alphabet; MAM-simple
 stores fully-pointed Unicode Hebrew with combining accent marks.  To confirm the
 trees' segmentation is correct -- not merely parseable -- we reduce each side to its
 ordered list of disjunctive accents (the division points) and diff those.  Servus
@@ -286,7 +286,7 @@ def _build_word_accents(events: list[_Event]) -> list[list[str | None]]:
     LP_PASEQ promote the preceding word (legarmeh, or shalshelet -> shalshelet
     gedolah); bare shalshelet (qetannah) is swallowed to a None disjunctive; generic
     REVIA is reclassified to gadol/qatan/mugrash by the next disjunctive-bearing word
-    (the same rule as ``poetic_ply_scanner._reclassify_revia``).  The servus,
+    (the same rule as ``poetic_scanner._reclassify_revia``).  The servus,
     self_servus, and text (base-consonant alignment key) columns are carried through
     untouched.
     """
@@ -406,7 +406,7 @@ def servi_before_from_verse_node(verse_node: dict, target: str) -> list[str | No
 
     ``target`` is a poetic disjunctive token name (e.g. ``pan.DEXI``).  This is the MAM
     side of a servant-adjacency check; the LC side is the servus that stands right before
-    the same ``target`` in ``poetic_ply_scanner``'s token stream.
+    the same ``target`` in ``poetic_scanner``'s token stream.
     """
     return servi_before_in_words(word_accents_from_verse_node(verse_node), target)
 
@@ -437,7 +437,7 @@ def _iter_book_verses(mam_simple_dir: Path, books: tuple[str, ...]):
     """Yield ``(ref, verse_node)`` for the poetic books, ``ref`` like ``"Psalms 1:1"``.
 
     Shared corpus walk for the ``load_*`` functions (reference strings match
-    ``poetic_ply_scanner``'s).
+    ``poetic_scanner``'s).
     """
     if not mam_simple_dir.is_dir():
         raise FileNotFoundError(f"MAM-simple directory not found: {mam_simple_dir}")
@@ -465,7 +465,7 @@ def load_poetic_disjunctives(
 ) -> dict[str, list[str]]:
     """Map ``"<book> <ch>:<vs>"`` -> MAM disjunctive sequence for the poetic books.
 
-    The reference string matches ``poetic_ply_scanner``'s (e.g. ``"Psalms 1:1"``).
+    The reference string matches ``poetic_scanner``'s (e.g. ``"Psalms 1:1"``).
     """
     return {
         ref: disjunctives_from_verse_node(vn)
@@ -517,7 +517,7 @@ def load_servi_before(
     = bare/verse-initial) per occurrence of ``target`` in that verse.  Verses with no
     ``target`` map to an empty list.  This is the second-witness oracle for vetting
     Breuer's servant-adjacency rules against MAM; compare to the LC servus that
-    precedes the same ``target`` in ``poetic_ply_scanner``'s token stream.
+    precedes the same ``target`` in ``poetic_scanner``'s token stream.
     """
     return {
         ref: servi_before_from_verse_node(vn, target)

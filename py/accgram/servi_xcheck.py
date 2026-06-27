@@ -39,7 +39,7 @@ from accgram import rtms_data
 from accgram import uni_to_marks
 from accgram.mam_poetic_accents import load_word_accents, servi_before_in_words
 from accgram.mam_simple_verse import default_mam_simple_dir
-from accgram.poetic_ply_scanner import scan_book
+from accgram.poetic_scanner import scan_book
 
 import repo_paths
 
@@ -200,7 +200,7 @@ def default_input_path(repo_root: Path) -> Path:
 
 
 def default_report_path(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply-poetic" / "_servi_xcheck.txt"
+    return repo_paths.out_dir() / "accgram" / "poetic" / "_servi_xcheck.txt"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

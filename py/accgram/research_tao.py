@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 
 from accgram import mam_simple_verse
-from accgram import ply_classify
+from accgram import classify
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_output
@@ -19,11 +19,11 @@ import repo_paths
 
 
 def default_oddballs_in(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply-prose" / "_oddballs.json"
+    return repo_paths.out_dir() / "accgram" / "prose" / "_oddballs.json"
 
 
-def default_ply_dir(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply-prose"
+def default_prose_dir(repo_root: Path) -> Path:
+    return repo_paths.out_dir() / "accgram" / "prose"
 
 
 def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
@@ -75,13 +75,13 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--oddballs-in",
         type=Path,
         default=default_oddballs_in(repo_root),
-        help="Path to _oddballs.json input (PLY-derived; regenerated each run).",
+        help="Path to _oddballs.json input (regenerated each run).",
     )
     parser.add_argument(
-        "--ply-dir",
+        "--prose-dir",
         type=Path,
-        default=default_ply_dir(repo_root),
-        help="Directory of PLY *_ag.txt outputs for the oddball corpus.",
+        default=default_prose_dir(repo_root),
+        help="Directory of *_ag.txt outputs for the oddball corpus.",
     )
     parser.add_argument(
         "--oddballs-out",
@@ -108,12 +108,12 @@ def run(args: argparse.Namespace) -> None:
 
     oddballs_in_path = args.oddballs_in
     oddballs_out_path = args.oddballs_out
-    ply_dir = getattr(args, "ply_dir", None) or default_ply_dir(repo_root)
+    prose_dir = getattr(args, "prose_dir", None) or default_prose_dir(repo_root)
 
-    # (Re)derive the PLY-based oddball set from out/accgram/ply-prose only. Every ERROR
+    # (Re)derive the oddball set from out/accgram/prose only. Every ERROR
     # verse -- including the 49 the C binary emitted nothing for -- now lives there.
-    ply_classify.write_ply_oddballs(
-        ply_dir=ply_dir,
+    classify.write_oddballs(
+        prose_dir=prose_dir,
         wlc422_kq_u_dir=args.wlc422_kq_u_dir,
         oddballs_out=oddballs_in_path,
     )
@@ -182,11 +182,11 @@ def run(args: argparse.Namespace) -> None:
         source_file=__file__,
     )
 
-    # The oddball report locates each row's ERROR tree by output_file under ply_dir.
+    # The oddball report locates each row's ERROR tree by output_file under prose_dir.
     combined_html_out_path = rtms_output.write_html_reports(
         html_out_path,
         enriched_oddball_rows=enriched_oddball_rows,
-        base_dir=ply_dir,
+        base_dir=prose_dir,
     )
 
     rtms_output.print_run_summary(
