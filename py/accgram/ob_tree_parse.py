@@ -66,6 +66,47 @@ def parse_verse_tree(
     return ErrorTree(roots=roots, has_error_leaf=has_error_leaf)
 
 
+def error_tree_from_obj(tree_obj: dict | None) -> ErrorTree | None:
+    """Build an ``ErrorTree`` from a ``tree.tree_to_obj`` nested dict (issue #20).
+
+    Each node dict carries a ``label``; an internal node has ``children`` (a
+    nested ``tree_to_obj`` image), a leaf node has ``leaves`` (a list of
+    leaf-names).  A TN leaf node maps to a ``TreeBranch`` whose single child is
+    a ``TreeLeaf`` holding the space-joined leaves -- the same shape the old
+    indented-text parser produced (the leaf line printed under its label).
+    ``depth`` mirrors print_tree's indent level (root 0, children +1).
+
+    Returns ``None`` for a missing tree (location-only verse) or one with no
+    ERROR leaf, matching the text-era ``_extract_error_tree`` contract.
+    """
+    if tree_obj is None:
+        return None
+    root = _branch_from_obj(tree_obj, depth=0)
+    tree = ErrorTree(roots=[root], has_error_leaf=_branch_has_error(root))
+    return tree if tree.has_error_leaf else None
+
+
+def _branch_from_obj(node: dict, depth: int) -> TreeBranch:
+    branch = TreeBranch(depth=depth, label=node["label"], children=[])
+    children = node.get("children")
+    if children is not None:
+        for child in children:
+            branch.children.append(_branch_from_obj(child, depth + 1))
+    else:
+        leaves = node.get("leaves", [])
+        branch.children.append(
+            TreeLeaf(text=" ".join(leaves), has_error="ERROR" in leaves)
+        )
+    return branch
+
+
+def _branch_has_error(branch: TreeBranch) -> bool:
+    return any(
+        child.has_error if isinstance(child, TreeLeaf) else _branch_has_error(child)
+        for child in branch.children
+    )
+
+
 def iter_leaf_texts(tree: ErrorTree) -> list[str]:
     out: list[str] = []
 

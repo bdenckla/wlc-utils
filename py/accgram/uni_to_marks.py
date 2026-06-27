@@ -33,7 +33,7 @@ and `lexical_validation` actually read:
   key on).
 
 Parity with the Phase-1 outputs is verified by a zero-diff of the git-tracked
-``*_ag.txt`` outputs (issue #9, Phase 2).
+``*_ag`` outputs (issue #9, Phase 2; prose became per-verse JSON in #20).
 """
 
 from __future__ import annotations

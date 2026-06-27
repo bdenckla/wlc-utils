@@ -16,7 +16,7 @@ class TN:
     label: str
     left: TN | None = None
     right: TN | None = None
-    leaves: str = ""
+    leaves: tuple[str, ...] = ()
 
 
 def make_node(label: str, left: TN, right: TN) -> TN:
@@ -24,12 +24,13 @@ def make_node(label: str, left: TN, right: TN) -> TN:
 
 
 def add_leaves(label: str, *leaf_names: str) -> TN:
-    """Build a leaf node whose leaves string mirrors C add_leaves().
+    """Build a leaf node holding its leaf-names verbatim.
 
-    Each name gets a trailing space appended, matching the C strcat loop.
+    The names are kept as a tuple (faithful, even for a multi-word leaf such as
+    "sof pasuq"); print_tree re-appends the trailing space per name that the C
+    strcat loop produced, and tree_to_obj serializes the tuple as a JSON list.
     """
-    leaves = "".join(name + " " for name in leaf_names)
-    return TN(label=label, left=None, right=None, leaves=leaves)
+    return TN(label=label, left=None, right=None, leaves=tuple(leaf_names))
 
 
 def print_tree(tree: TN | None, indent_level: int = 0) -> str:
@@ -47,5 +48,24 @@ def print_tree(tree: TN | None, indent_level: int = 0) -> str:
         out.append(print_tree(tree.right, indent_level + 1))
     else:
         leaf_indent = INDENT_STRING * (indent_level + 1)
-        out.append(f"{leaf_indent}{tree.leaves}\n")
+        leaves = "".join(name + " " for name in tree.leaves)
+        out.append(f"{leaf_indent}{leaves}\n")
     return "".join(out)
+
+
+def tree_to_obj(tree: TN | None) -> dict | None:
+    """Serialize a TN into a JSON-ready nested dict (issue #20).
+
+    Internal node -> ``{"label", "children": [left, right]}``; leaf node ->
+    ``{"label", "leaves": [name, ...]}``.  Mirrors print_tree's internal/leaf
+    split (``left is not None`` == internal) so the JSON is a lossless image of
+    the binary tree.  ``None`` (a location-only verse) serializes to ``None``.
+    """
+    if tree is None:
+        return None
+    if tree.left is not None:
+        return {
+            "label": tree.label,
+            "children": [tree_to_obj(tree.left), tree_to_obj(tree.right)],
+        }
+    return {"label": tree.label, "leaves": list(tree.leaves)}

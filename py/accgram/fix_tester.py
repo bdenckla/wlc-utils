@@ -715,7 +715,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--prose-dir",
         type=Path,
         default=research_tao.default_prose_dir(repo_root),
-        help="Directory of *_ag.txt outputs for the oddball corpus.",
+        help="Directory of *_ag.json outputs for the oddball corpus.",
     )
     parser.add_argument(
         "--report-txt",

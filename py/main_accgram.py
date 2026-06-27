@@ -4,9 +4,9 @@ Subcommands:
     run-prose
                 Run the Python port over the WLC prose corpus
                 (out/wlc422-kq-u, genre-filtered) and write
-                out/accgram/prose/*_ag.txt (mirrors `accents -p`).  A verse the
-                grammar cannot parse at all is a fatal error.  Use --book to
-                restrict to specific books (e.g. --book ob).
+                out/accgram/prose/*_ag.json (mirrors `accents -p`, one JSON record
+                per verse).  A verse the grammar cannot parse at all is a fatal
+                error.  Use --book to restrict to specific books (e.g. --book ob).
     run-poetic
                 Run the POETIC (Three Books) scanner + grammar over the
                 poetic corpus (Psalms, Proverbs, poetically-cantillated Job) and
@@ -137,7 +137,7 @@ def main() -> None:
         "run-prose",
         help=(
             "Run the Python port over the WLC prose corpus and write "
-            "out/accgram/prose/*_ag.txt (mirrors `accents -p`). Use --book to "
+            "out/accgram/prose/*_ag.json (mirrors `accents -p`). Use --book to "
             "restrict (e.g. --book ob)."
         ),
     )

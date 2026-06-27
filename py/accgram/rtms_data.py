@@ -48,6 +48,24 @@ def prepare_wlc422_verse_for_render(verse: dict[str, object]) -> dict[str, objec
     return verse
 
 
+def verse_unicode_text(
+    wlc_index: dict[str, dict[str, object]], bb: str, chnu: int, vrnu: int
+) -> str:
+    """The verse's normalized pointed-Hebrew text (qere interpolated), or "" if
+    the verse is absent from the ``-kq-u`` index.
+
+    The single source for the pointed-Hebrew rendering of a verse: the oddball
+    ``content`` field (classify) and the per-verse ``input.unicode`` field of the
+    prose JSON outputs (prose_run, issue #20) both draw from it.
+    """
+    bcv = rtms_rows.to_compact_bcv(bb, chnu, vrnu)
+    verse = wlc_index.get(bcv)
+    if not isinstance(verse, dict):
+        return ""
+    prepared = prepare_wlc422_verse_for_render(verse)
+    return rtms_focus_diff_expand.normalized_wlc_verse_text_from_payload(prepared)
+
+
 def load_source_indexes(
     *,
     wlc422_kq_u_dir: Path,
