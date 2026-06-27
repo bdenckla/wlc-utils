@@ -21,6 +21,14 @@ MAM-simple disjunctive sequences (what L's accents say versus what the MAM oracl
 reads). It writes a git-tracked ``_oddballs.json`` next to the corpus outputs and
 ``gh-pages/accgram/poetic.html`` for review.
 
+Each oddball is one ``dict[str, object]`` row -- the single representation that
+flows from collection through render to JSON serialization, sharing the prose
+front-end's row shape so the shared leaf renderers consume it directly (issues
+#40, #41). It carries the shared prose-shaped keys the shared renderers read
+(``ref``/``output_file``/``wlc422_kq_u_verse``/``wlc_focus``, plus the SAT
+``enriched_row`` payload) alongside the poetic-only keys (``kind``/``token_types``/
+``wlc_disjunctives``/``mam_disjunctives``/``mam_words``/``tree_text``/``error``).
+
 The HTML deliberately shares the prose ``goerwitz.html`` shell -- the same
 ``../style.css``, width-limited wrapper, single flat client-side-filterable
 verse list (``poetic-filter.js``), per-verse permalinks + Mwd/UXLC links, the
@@ -53,7 +61,6 @@ import argparse
 import json
 import re
 from collections.abc import Callable
-from dataclasses import dataclass, replace
 from pathlib import Path
 
 from accgram import ob_error_context
@@ -75,7 +82,6 @@ from accgram.mam_poetic_accents import load_poetic_word_disj
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 from accgram.poetic_ply_grammar import (
-    ParseError,
     build_parser,
     parse_tokens_accepting_repeats,
 )
@@ -98,42 +104,41 @@ KIND_NO_PARSE = "no_parse"
 # oddball's hand-authored poetic_ob_notes entry (see _structured_text_lookup).
 StructuredTextLookup = Callable[[dict[str, object], str], object]
 
-
-@dataclass(frozen=True)
-class PoeticOddball:
-    reference: str  # clean book-name form, e.g. "Psalms 31:21"
-    bb: str
-    kind: str  # KIND_MISSING_SILLUQ | KIND_NO_PARSE
-    body: str  # the Unicode mark body (source content after "ch:vr ")
-    output_file: str  # the *_ag.json holding this verse's parse record
-    token_types: tuple[str, ...]  # full scanned token-type sequence
-    wlc_disjunctives: tuple[str, ...]  # WLC disjunctive skeleton (scanner)
-    mam_disjunctives: tuple[str, ...] | None  # MAM oracle skeleton (None if absent)
-    # MAM per-word (base_consonants, disjunctive_or_None), the word-aligned counterpart
-    # of mam_disjunctives used to derive the summary; None if the verse is absent from
-    # MAM-simple.  Not written to _oddballs.json (the skeletons are the persisted datum).
-    mam_words: tuple[tuple[str, str | None], ...] | None
-    tree_text: str  # rendered ERROR tree, or the NO_PARSE line
-    # The parse stall locus for a NO_PARSE verse (None for missing-silluq): the
-    # offending accent's token type and its 1-based ordinal among the verse's
-    # accents, so the report can pinpoint where the parse dead-ended.
-    error: ParseError | None
-    # WLC 4.22 pointed-Hebrew verse (qere-interpolated + sanitized), for the
-    # HTML report's verse paragraph; None if the verse is absent from the index.
-    # Not written to _oddballs.json (the disjunctive skeletons are the datum).
-    wlc_verse: dict[str, object] | None
-    # The build_enriched_row payload (WLC/UXLC/MAM focus-word verses + diffs)
-    # feeding the SAT focus-word table; built only for missing-silluq verses with a
-    # unique verse-final focus word, None otherwise. Rebuilt at collection time, never
-    # persisted to _oddballs.json.
-    enriched_row: dict[str, object] | None
+# Each poetic oddball is one dict[str, object] row (issue #41), carrying:
+#   ref               clean book-name reference, e.g. "Psalms 31:21"
+#   bb                two-letter book code
+#   kind              KIND_MISSING_SILLUQ | KIND_NO_PARSE
+#   body              the Unicode mark body (source content after "ch:vr ")
+#   output_file       the *_ag.json holding this verse's parse record
+#   token_types       full scanned token-type sequence (tuple[str, ...])
+#   wlc_disjunctives  WLC disjunctive skeleton, scanner (tuple[str, ...])
+#   mam_disjunctives  MAM oracle skeleton (tuple[str, ...] | None if absent)
+#   mam_words         MAM per-word (base_consonants, disjunctive_or_None), the
+#                     word-aligned counterpart of mam_disjunctives used to derive
+#                     the summary; None if the verse is absent from MAM-simple.
+#                     Not written to _oddballs.json (the skeletons are the datum).
+#   tree_text         rendered ERROR tree, or the NO_PARSE line
+#   error             the parse stall locus for a NO_PARSE verse (ParseError) --
+#                     the offending accent's token type and its 1-based ordinal
+#                     among the verse's accents; None for missing-silluq.
+#   wlc422_kq_u_verse WLC 4.22 pointed-Hebrew verse (qere-interpolated +
+#                     sanitized), the shared key the verse-paragraph renderer
+#                     reads; None if the verse is absent from the index. Not
+#                     written to _oddballs.json (the skeletons are the datum).
+#   wlc_focus         the verse-final focus word to highlight (missing-silluq
+#                     only, None otherwise), the shared key the verse-paragraph
+#                     renderer reads.
+#   enriched_row      the build_enriched_row payload (WLC/UXLC/MAM focus-word
+#                     verses + diffs) feeding the SAT focus-word table; built
+#                     only for missing-silluq verses with a unique verse-final
+#                     focus word, None otherwise. Not persisted to _oddballs.json.
 
 
 def collect_poetic_oddballs(
     mam_simple_dir: Path,
     wlc422_kq_u_dir: Path,
     uxlc_dir: Path,
-) -> list[PoeticOddball]:
+) -> list[dict[str, object]]:
     """Re-scan + re-parse the poetic corpus and return every oddball verse."""
     mam_words_by_ref = load_poetic_word_disj(mam_simple_dir)
     wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
@@ -142,7 +147,7 @@ def collect_poetic_oddballs(
         wlc422_kq_u_dir, keep_line_fn=poetic_filter.should_keep_line
     )
 
-    oddballs: list[PoeticOddball] = []
+    oddballs: list[dict[str, object]] = []
     for bb, text in book_texts.items():
         output_file = f"wlc_422_ps_{bb}_ag.json"
         for verse in scan_book(text, bb):
@@ -177,23 +182,25 @@ def collect_poetic_oddballs(
                 if isinstance(raw_verse, dict)
                 else None
             )
-            oddballs.append(
-                PoeticOddball(
-                    reference=verse.reference,
-                    bb=bb,
-                    kind=kind,
-                    body=verse.body,
-                    output_file=output_file,
-                    token_types=tuple(t for t, _ in tokens),
-                    wlc_disjunctives=wlc,
-                    mam_disjunctives=tuple(mam) if mam is not None else None,
-                    mam_words=tuple(mam_words) if mam_words is not None else None,
-                    tree_text=tree_text,
-                    error=error,
-                    wlc_verse=wlc_verse,
-                    enriched_row=None,
-                )
+            row: dict[str, object] = {
+                "ref": verse.reference,
+                "bb": bb,
+                "kind": kind,
+                "body": verse.body,
+                "output_file": output_file,
+                "token_types": tuple(t for t, _ in tokens),
+                "wlc_disjunctives": wlc,
+                "mam_disjunctives": tuple(mam) if mam is not None else None,
+                "mam_words": tuple(mam_words) if mam_words is not None else None,
+                "tree_text": tree_text,
+                "error": error,
+                "wlc422_kq_u_verse": wlc_verse,
+                "enriched_row": None,
+            }
+            row["wlc_focus"] = (
+                _final_word_focus(row) if kind == KIND_MISSING_SILLUQ else None
             )
+            oddballs.append(row)
 
     return _attach_enriched_rows(
         oddballs,
@@ -204,20 +211,20 @@ def collect_poetic_oddballs(
 
 
 def _attach_enriched_rows(
-    oddballs: list[PoeticOddball],
+    oddballs: list[dict[str, object]],
     *,
     wlc422_kq_u_dir: Path,
     uxlc_dir: Path,
     mam_simple_dir: Path,
-) -> list[PoeticOddball]:
+) -> list[dict[str, object]]:
     """Enrich each missing-silluq oddball with the WLC/UXLC/MAM focus-word payload
     the SAT table needs, leaving NO_PARSE verses (no localized focus) untouched."""
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
-    for ob in oddballs:
-        if ob.kind != KIND_MISSING_SILLUQ:
+    for row in oddballs:
+        if row["kind"] != KIND_MISSING_SILLUQ:
             continue
-        _bb, chnu, vrnu, _bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(ob))
-        refs_by_book.setdefault(ob.bb, set()).add((chnu, vrnu))
+        _bb, chnu, vrnu, _bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(row))
+        refs_by_book.setdefault(row["bb"], set()).add((chnu, vrnu))
 
     wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = rtms_data.load_source_indexes(
         wlc422_kq_u_dir=wlc422_kq_u_dir,
@@ -226,25 +233,21 @@ def _attach_enriched_rows(
         refs_by_book=refs_by_book,
     )
 
-    return [
-        replace(
-            ob,
-            enriched_row=_enriched_row_for(
-                ob,
-                wlc422_by_bcv=wlc422_by_bcv,
-                uxlc_by_bcv=uxlc_by_bcv,
-                mam_simple_by_bcv=mam_simple_by_bcv,
-                wlc422_kq_u_dir=wlc422_kq_u_dir,
-                uxlc_dir=uxlc_dir,
-                mam_simple_dir=mam_simple_dir,
-            ),
+    for row in oddballs:
+        row["enriched_row"] = _enriched_row_for(
+            row,
+            wlc422_by_bcv=wlc422_by_bcv,
+            uxlc_by_bcv=uxlc_by_bcv,
+            mam_simple_by_bcv=mam_simple_by_bcv,
+            wlc422_kq_u_dir=wlc422_kq_u_dir,
+            uxlc_dir=uxlc_dir,
+            mam_simple_dir=mam_simple_dir,
         )
-        for ob in oddballs
-    ]
+    return oddballs
 
 
 def _enriched_row_for(
-    ob: PoeticOddball,
+    row: dict[str, object],
     *,
     wlc422_by_bcv: dict[str, dict[str, object]],
     uxlc_by_bcv: dict[str, dict[str, object]],
@@ -253,24 +256,24 @@ def _enriched_row_for(
     uxlc_dir: Path,
     mam_simple_dir: Path,
 ) -> dict[str, object] | None:
-    """The poetic_sat focus-word payload for ob's SAT table, or None.
+    """The poetic_sat focus-word payload for row's SAT table, or None.
 
     Only missing-silluq verses get one (their locus is the verse-final focus word);
     a missing UXLC/MAM witness or a non-unique focus degrades to None, in which case
     the verse simply renders no SAT table -- the run stays non-fatal."""
-    if ob.kind != KIND_MISSING_SILLUQ:
+    if row["kind"] != KIND_MISSING_SILLUQ:
         return None
     wlc_focus = poetic_sat.focus_word(
-        final_word=_final_word_focus(ob), wlc_verse=ob.wlc_verse
+        final_word=_final_word_focus(row), wlc_verse=row["wlc422_kq_u_verse"]
     )
     if not wlc_focus:
         return None
-    bb_ref = _bb_ref(ob)
+    bb_ref = _bb_ref(row)
     _bb, _chnu, _vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(bb_ref)
     return poetic_sat.build_focus_enriched_row(
         bb_ref=bb_ref,
         bcv=bcv,
-        output_file=ob.output_file,
+        output_file=row["output_file"],
         wlc_focus=wlc_focus,
         wlc422_by_bcv=wlc422_by_bcv,
         uxlc_by_bcv=uxlc_by_bcv,
@@ -281,34 +284,40 @@ def _enriched_row_for(
     )
 
 
-def _oddball_to_row(ob: PoeticOddball) -> dict[str, object]:
+def _oddball_to_row(row: dict[str, object]) -> dict[str, object]:
+    error = row["error"]
     return {
-        "ref": ob.reference,
-        "bb": ob.bb,
-        "kind": ob.kind,
-        "content": _unicode_text(ob),
-        "output_file": ob.output_file,
-        "token_types": list(ob.token_types),
-        "wlc_disjunctives": list(ob.wlc_disjunctives),
+        "ref": row["ref"],
+        "bb": row["bb"],
+        "kind": row["kind"],
+        "content": _unicode_text(row),
+        "output_file": row["output_file"],
+        "token_types": list(row["token_types"]),
+        "wlc_disjunctives": list(row["wlc_disjunctives"]),
         "mam_disjunctives": (
-            list(ob.mam_disjunctives) if ob.mam_disjunctives is not None else None
+            list(row["mam_disjunctives"])
+            if row["mam_disjunctives"] is not None
+            else None
         ),
         # For a NO_PARSE verse, where the parse dead-ended (the offending accent's
         # token type and its 1-based ordinal among the verse's accents); null for a
         # missing-silluq verse, which has a full ERROR-leaf tree instead.
         "stall": (
-            {"accent_index": ob.error.accent_index, "token_type": ob.error.token_type}
-            if ob.error is not None
+            {"accent_index": error.accent_index, "token_type": error.token_type}
+            if error is not None
             else None
         ),
-        "tree": ob.tree_text,
+        "tree": row["tree_text"],
     }
 
 
-def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, object]:
+def build_payload(
+    oddballs: list[dict[str, object]], source_file: str
+) -> dict[str, object]:
     kinds: dict[str, int] = {}
-    for ob in oddballs:
-        kinds[ob.kind] = kinds.get(ob.kind, 0) + 1
+    for row in oddballs:
+        kind = row["kind"]
+        kinds[kind] = kinds.get(kind, 0) + 1
     payload: dict[str, object] = {
         "artifacts_description": "poetic (Three Books) oddball verses for review",
         "payload_provenance_note": (
@@ -329,7 +338,7 @@ def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, 
             "missing_silluq": kinds.get(KIND_MISSING_SILLUQ, 0),
             "no_parse": kinds.get(KIND_NO_PARSE, 0),
         },
-        "oddballs": [_oddball_to_row(ob) for ob in oddballs],
+        "oddballs": [_oddball_to_row(row) for row in oddballs],
     }
     return provenance.with_json_provenance(payload, source_file)
 
@@ -366,36 +375,36 @@ _AGREE_LABEL = {
 }
 
 
-def _agree_slug(ob: PoeticOddball) -> str:
+def _agree_slug(row: dict[str, object]) -> str:
     """Filter facet for the WLC-vs-MAM disjunctive compare (see _AGREE_LABEL)."""
-    if ob.mam_disjunctives is None:
+    if row["mam_disjunctives"] is None:
         return "na"
-    return "agree" if ob.wlc_disjunctives == ob.mam_disjunctives else "differ"
+    return "agree" if row["wlc_disjunctives"] == row["mam_disjunctives"] else "differ"
 
 
-def _bb_ref(ob: PoeticOddball) -> str:
+def _bb_ref(row: dict[str, object]) -> str:
     """Rebuild the two-letter bb form ("ps 31:20") the shared rtms_ref/url
     helpers expect from the clean book-name reference ("Psalms 31:20")."""
-    _name, _sep, chv = ob.reference.rpartition(" ")
-    return f"{ob.bb} {chv}"
+    _name, _sep, chv = str(row["ref"]).rpartition(" ")
+    return f"{row['bb']} {chv}"
 
 
-def _structured_text_lookup(ob: PoeticOddball) -> StructuredTextLookup:
+def _structured_text_lookup(row: dict[str, object]) -> StructuredTextLookup:
     """A ``(row, key) -> value`` lookup over this oddball's hand-authored notes.
 
     Returns the prose-report-shaped callable the shared rtmsr_media/ rtmsr_verse
     helpers expect; ``row`` is ignored (the notes are keyed by the oddball's bb
     reference, not carried on a row). Yields ``None`` for every key when the
     oddball has no hand-authored entry."""
-    notes = poetic_ob_notes.get_structured_text().get(_bb_ref(ob))
+    notes = poetic_ob_notes.get_structured_text().get(_bb_ref(row))
     notes = notes if isinstance(notes, dict) else {}
     return lambda _row, key: notes.get(key)
 
 
-def render_body_contents(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
+def render_body_contents(oddballs: list[dict[str, object]]) -> tuple[object, ...]:
     counts = _counts(oddballs)
     ordered = sorted(
-        oddballs, key=lambda ob: rtms_ref.reading_order_key(_bb_ref(ob))
+        oddballs, key=lambda row: rtms_ref.reading_order_key(_bb_ref(row))
     )
 
     descriptor = ob_page.CorpusDescriptor(
@@ -403,8 +412,8 @@ def render_body_contents(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
         facets=_build_facets(counts),
         count_para_class="pf-count",
         verse_sections=tuple(
-            _render_oddball_section(ob, is_first=index == 0)
-            for index, ob in enumerate(ordered)
+            _render_oddball_section(row, is_first=index == 0)
+            for index, row in enumerate(ordered)
         ),
         tail_blocks=(),
         filter_script_name=_FILTER_SCRIPT_NAME,
@@ -412,9 +421,9 @@ def render_body_contents(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
     return ob_page.build_page_body(descriptor)
 
 
-def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
-    n_silluq = sum(1 for o in oddballs if o.kind == KIND_MISSING_SILLUQ)
-    n_noparse = sum(1 for o in oddballs if o.kind == KIND_NO_PARSE)
+def _build_intro(oddballs: list[dict[str, object]]) -> tuple[object, ...]:
+    n_silluq = sum(1 for row in oddballs if row["kind"] == KIND_MISSING_SILLUQ)
+    n_noparse = sum(1 for row in oddballs if row["kind"] == KIND_NO_PARSE)
     return (
         wlc_utils_html.heading_level_1(_REPORT_HEADING),
         wlc_utils_html.heading_level_2("Introduction"),
@@ -465,40 +474,37 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
     )
 
 
-def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
-    bb, chnu, vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(ob))
+def _render_oddball_section(row: dict[str, object], *, is_first: bool) -> object:
+    bb, chnu, vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(row))
     anchor_id = ob_report.oddball_anchor_id(bcv)
-    # The shared, prose-shaped core row every shared leaf renderer consumes (issue
-    # #40); ob.enriched_row is its SAT-enriched layer, fed to the SAT table below.
-    shared_row = _shared_row(ob)
 
     items: list[object] = [
-        wlc_utils_html.heading_level_2(ob.reference, {"id": anchor_id})
+        wlc_utils_html.heading_level_2(str(row["ref"]), {"id": anchor_id})
     ]
-    items.extend(_render_ref_links(ob, bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, anchor_id=anchor_id))
-    items.append(_render_summary(ob))
-    hebrew_verse = _render_hebrew_verse(ob, shared_row)
+    items.extend(_render_ref_links(row, bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, anchor_id=anchor_id))
+    items.append(_render_summary(row))
+    hebrew_verse = _render_hebrew_verse(row)
     if hebrew_verse is not None:
         items.append(hebrew_verse)
     items.append(
         wlc_utils_html.para(
-            wlc_utils_html.span(_unicode_text(ob), {"lang": "hbo"}),
+            wlc_utils_html.span(_unicode_text(row), {"lang": "hbo"}),
             {"class": "poetic-src"},
         )
     )
-    sat_table = poetic_sat.render_table(ob.enriched_row, row_ref=_bb_ref(ob))
+    sat_table = poetic_sat.render_table(row["enriched_row"], row_ref=_bb_ref(row))
     if sat_table is not None:
         items.append(sat_table)
-    items.append(_render_meta(ob))
-    items.append(_render_tree(ob))
+    items.append(_render_meta(row))
+    items.append(_render_tree(row))
     items.extend(
         rtmsr_media.render_comment_paragraphs(
-            shared_row, structured_text_lookup=_structured_text_lookup(ob)
+            row, structured_text_lookup=_structured_text_lookup(row)
         )
     )
     items.extend(
         rtmsr_media.render_image_paragraphs(
-            shared_row, structured_text_lookup=_structured_text_lookup(ob)
+            row, structured_text_lookup=_structured_text_lookup(row)
         )
     )
 
@@ -506,15 +512,15 @@ def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
         items,
         is_first=is_first,
         data_attrs={
-            "data-kind": ob.kind,
-            "data-book": ob.bb,
-            "data-agree": _agree_slug(ob),
+            "data-kind": row["kind"],
+            "data-book": row["bb"],
+            "data-agree": _agree_slug(row),
         },
     )
 
 
 def _render_ref_links(
-    ob: PoeticOddball,
+    row: dict[str, object],
     *,
     bb: str,
     chnu: int,
@@ -522,7 +528,7 @@ def _render_ref_links(
     bcv: str,
     anchor_id: str,
 ) -> tuple[object, ...]:
-    lookup = _structured_text_lookup(ob)
+    lookup = _structured_text_lookup(row)
     permalink = wlc_utils_html.anchor(
         _SELF_LINK_SYMBOL,
         {
@@ -531,7 +537,7 @@ def _render_ref_links(
             "aria-label": "Permalink to this section",
         },
     )
-    perma_contents: list[object] = [permalink, f" Kind: {_KIND_LABEL[ob.kind]}."]
+    perma_contents: list[object] = [permalink, f" Kind: {_KIND_LABEL[row['kind']]}."]
     summary = lookup({}, "st-summary")
     if isinstance(summary, str) and summary.strip():
         perma_contents.append(" Summary: ")
@@ -554,7 +560,7 @@ def _render_ref_links(
     return (perma_para, links_para)
 
 
-def _render_summary(ob: PoeticOddball) -> object:
+def _render_summary(row: dict[str, object]) -> object:
     """A tentative, mechanically auto-derived summary (NOT hand-authored).
 
     It is computed by aligning the WLC and MAM-simple verses word-for-word (the
@@ -571,7 +577,7 @@ def _render_summary(ob: PoeticOddball) -> object:
             wlc_utils_html.span_c(
                 "Auto-derived summary (tentative): ", "poetic-auto-summary-label"
             ),
-            *_wrap_hebrew_runs(derive_tentative_summary(ob)),
+            *_wrap_hebrew_runs(derive_tentative_summary(row)),
         ),
         {"class": "poetic-auto-summary"},
     )
@@ -604,32 +610,33 @@ def _wrap_hebrew_runs(text: str) -> tuple[object, ...]:
     return tuple(pieces)
 
 
-def _render_hebrew_verse(
-    ob: PoeticOddball, shared_row: dict[str, object]
-) -> object | None:
+def _render_hebrew_verse(row: dict[str, object]) -> object | None:
     """Pointed-Hebrew (RTL) verse paragraph via the shared goerwitz renderer.
 
     For a missing-silluq verse the locus is the verse-final word (the word that
     arrives with no silluq), so highlight it; NO_PARSE is not localized to one
     word, so render the plain verse. A non-unique/absent focus degrades to no
     highlight (the renderer falls back gracefully). The renderer reads the verse
-    payload and focus from the shared core row (wlc422_kq_u_verse / wlc_focus)."""
-    if not isinstance(ob.wlc_verse, dict):
+    payload and focus from the row (wlc422_kq_u_verse / wlc_focus)."""
+    if not isinstance(row["wlc422_kq_u_verse"], dict):
         return None
     return rtmsr_verse.render_wlc_verse_paragraph(
-        shared_row, structured_text_lookup=lambda r, key: r.get(key)
+        row, structured_text_lookup=lambda r, key: r.get(key)
     )
 
 
-def _unicode_text(ob: PoeticOddball) -> str:
+def _unicode_text(row: dict[str, object]) -> str:
     """The verse's normalized pointed-Hebrew text (qere interpolated), from the
     ``-kq-u`` verse; "" if the verse is absent from the index.  Issue #9 replaced the
     Michigan-Claremont source body with this in the report display and ``content``."""
-    return rtms_focus_diff_expand.normalized_wlc_verse_text_from_payload(ob.wlc_verse)
+    return rtms_focus_diff_expand.normalized_wlc_verse_text_from_payload(
+        row["wlc422_kq_u_verse"]
+    )
 
 
-def _final_word_focus(ob: PoeticOddball) -> str | None:
-    vels = ob.wlc_verse.get("vels") if isinstance(ob.wlc_verse, dict) else None
+def _final_word_focus(row: dict[str, object]) -> str | None:
+    wlc_verse = row["wlc422_kq_u_verse"]
+    vels = wlc_verse.get("vels") if isinstance(wlc_verse, dict) else None
     if not isinstance(vels, list) or not vels:
         return None
     return _token_text(vels[-1]) or None
@@ -646,56 +653,33 @@ def _token_text(token: object) -> str:
     return ""
 
 
-def _shared_row(ob: PoeticOddball) -> dict[str, object]:
-    """The oddball's core row dict -- the single prose-shaped representation the
-    shared leaf renderers consume, so the poetic front-end feeds the shared layer the
-    same row shape the prose front-end does rather than ad-hoc throwaway dicts
-    (issue #40).
-
-    It carries what those renderers read: the pointed-Hebrew verse payload
-    (``wlc422_kq_u_verse``) and the highlight focus (``wlc_focus``, the verse-final
-    word for missing-silluq verses, ``None`` otherwise), plus ``ref``/``output_file``
-    for parity with the prose row. ``ob.enriched_row`` is the SAT-enriched layer over
-    this core -- the WLC/UXLC/MAM focus-word witnesses + diffs, built only for
-    missing-silluq verses with a unique focus -- the poetic analogue of prose's
-    classified-row -> build_enriched_row pipeline; the SAT table renders from that
-    enriched row, while this core row feeds the verse paragraph + comment/image
-    blocks. ``wlc422_kq_u_verse`` stays ``ob.wlc_verse`` (the render-prepared verse),
-    not the enriched row's separately-sanitized copy."""
-    return {
-        "ref": _bb_ref(ob),
-        "output_file": ob.output_file,
-        "wlc422_kq_u_verse": ob.wlc_verse,
-        "wlc_focus": (
-            _final_word_focus(ob) if ob.kind == KIND_MISSING_SILLUQ else None
-        ),
-    }
-
-
-def _render_meta(ob: PoeticOddball) -> object:
-    contents: list[object] = [f"tokens: {' '.join(ob.token_types)} · "]
-    if ob.error is not None:
+def _render_meta(row: dict[str, object]) -> object:
+    token_types = row["token_types"]
+    error = row["error"]
+    contents: list[object] = [f"tokens: {' '.join(token_types)} · "]
+    if error is not None:
         n_accents = sum(
-            1 for t in ob.token_types if t not in ("TILDE", "SOFPASUQ")
+            1 for t in token_types if t not in ("TILDE", "SOFPASUQ")
         )
         contents.append(
-            f"parser stalled at accent {ob.error.accent_index}/{n_accents} "
-            f"({ob.error.token_type}) · "
+            f"parser stalled at accent {error.accent_index}/{n_accents} "
+            f"({error.token_type}) · "
         )
-    contents.append(wlc_utils_html.code(ob.output_file))
+    contents.append(wlc_utils_html.code(str(row["output_file"])))
     return wlc_utils_html.para(tuple(contents), {"class": "poetic-meta"})
 
 
-def _render_tree(ob: PoeticOddball) -> object:
+def _render_tree(row: dict[str, object]) -> object:
     # missing_silluq carries a real ERROR-leaf tree; NO_PARSE has no valid tree, so
     # synthesize a flat best-effort one (each token a cell, capped by an ERROR leaf)
     # -- both render through the shared error-tree table.
+    error = row["error"]
     tree_text = (
-        ob.tree_text
-        if ob.kind == KIND_MISSING_SILLUQ
+        row["tree_text"]
+        if row["kind"] == KIND_MISSING_SILLUQ
         else _no_parse_tree_text(
-            ob.token_types,
-            stall_index=ob.error.accent_index if ob.error is not None else None,
+            row["token_types"],
+            stall_index=error.accent_index if error is not None else None,
         )
     )
     tree = ob_error_context.parse_error_tree_from_text(tree_text)
@@ -706,7 +690,7 @@ def _render_tree(ob: PoeticOddball) -> object:
         )
     # Last-resort fallback: show the raw tree/NO_PARSE line verbatim.
     return wlc_utils_html.div(
-        (wlc_utils_html.htel_mk_inline("pre", None, ob.tree_text),),
+        (wlc_utils_html.htel_mk_inline("pre", None, str(row["tree_text"])),),
         {"class": "goerwitz-obs-tree-wrap"},
     )
 
@@ -764,7 +748,7 @@ def _build_facets(counts: dict[str, int]) -> tuple[ob_page.Facet, ...]:
     )
 
 
-def _counts(oddballs: list[PoeticOddball]) -> dict[str, int]:
+def _counts(oddballs: list[dict[str, object]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for slug in _KIND_FILTER_LABEL:
         counts[f"kind_{slug}"] = 0
@@ -772,10 +756,10 @@ def _counts(oddballs: list[PoeticOddball]) -> dict[str, int]:
         counts[f"book_{slug}"] = 0
     for slug in _AGREE_LABEL:
         counts[f"agree_{slug}"] = 0
-    for ob in oddballs:
-        counts[f"kind_{ob.kind}"] += 1
-        counts[f"book_{ob.bb}"] += 1
-        counts[f"agree_{_agree_slug(ob)}"] += 1
+    for row in oddballs:
+        counts[f"kind_{row['kind']}"] += 1
+        counts[f"book_{row['bb']}"] += 1
+        counts[f"agree_{_agree_slug(row)}"] += 1
     return counts
 
 
@@ -845,8 +829,8 @@ def run(args: argparse.Namespace) -> None:
         path_to_style=rtms_report.path_to_gh_pages_style(html_out),
     )
 
-    n_silluq = sum(1 for o in oddballs if o.kind == KIND_MISSING_SILLUQ)
-    n_noparse = sum(1 for o in oddballs if o.kind == KIND_NO_PARSE)
+    n_silluq = sum(1 for row in oddballs if row["kind"] == KIND_MISSING_SILLUQ)
+    n_noparse = sum(1 for row in oddballs if row["kind"] == KIND_NO_PARSE)
     print(
         f"Poetic oddballs: {len(oddballs)} "
         f"({n_silluq} missing-silluq, {n_noparse} NO_PARSE)"

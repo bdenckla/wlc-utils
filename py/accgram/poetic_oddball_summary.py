@@ -23,24 +23,20 @@ the weaker comparison.
 from __future__ import annotations
 
 import difflib
-from typing import TYPE_CHECKING
 
 from accgram.mam_poetic_accents import base_consonants
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 from accgram.poetic_scanner import scan_accents
 from mb_cmn import hebrew_punctuation as hpunc
 
-if TYPE_CHECKING:
-    from accgram.poetic_oddballs import PoeticOddball
 
-
-def derive_tentative_summary(ob: PoeticOddball) -> str:
-    if ob.mam_disjunctives is None:
+def derive_tentative_summary(row: dict[str, object]) -> str:
+    if row["mam_disjunctives"] is None:
         return (
             "Not in MAM-simple, so no disjunctive oracle is available "
             "for comparison."
         )
-    if ob.wlc_disjunctives == ob.mam_disjunctives:
+    if row["wlc_disjunctives"] == row["mam_disjunctives"]:
         return (
             "WLC and MAM-simple agree on the disjunctive skeleton, yet the verse does "
             "not parse — so the anomaly is below the disjunctive skeleton (a conjunctive "
@@ -48,12 +44,14 @@ def derive_tentative_summary(ob: PoeticOddball) -> str:
             "does not look beneath the skeleton, so it cannot say whether WLC and MAM "
             "diverge there (they may well: e.g. Ps 56:10's extra merkha)."
         )
-    clauses = _word_aligned_clauses(ob)
+    clauses = _word_aligned_clauses(row)
     if clauses is None:
         # Word-level alignment could not be reconciled (e.g. the WLC accent-word and
         # wlc422 consonant-word counts disagree); fall back to the conjunctive-stripped
         # skeleton diff, flagged so the reader knows it is the weaker comparison.
-        skeleton = _describe_disjunctive_diff(ob.wlc_disjunctives, ob.mam_disjunctives)
+        skeleton = _describe_disjunctive_diff(
+            row["wlc_disjunctives"], row["mam_disjunctives"]
+        )
         return (
             "Relative to the MAM-simple oracle (disjunctive skeleton only — words could "
             "not be aligned), " + "; ".join(skeleton) + "."
@@ -67,7 +65,7 @@ def derive_tentative_summary(ob: PoeticOddball) -> str:
     return "Word-aligned against MAM-simple, " + "; ".join(clauses) + "."
 
 
-def _word_aligned_clauses(ob: PoeticOddball) -> list[str] | None:
+def _word_aligned_clauses(row: dict[str, object]) -> list[str] | None:
     """Per-word divider differences between WLC and MAM, or None if unalignable.
 
     Aligns the two verses *by word* (consonantal skeleton as the key, the same
@@ -76,12 +74,12 @@ def _word_aligned_clauses(ob: PoeticOddball) -> list[str] | None:
     dropped every conjunctive and so conflated a divider that merely *shifted to the
     neighbouring word* into a phantom like-for-like substitution (see Ps 68:20 / Pr
     30:15: WLC's legarmeh and MAM's oleh-we-yored sit on different words)."""
-    if ob.mam_words is None:
+    if row["mam_words"] is None:
         return None
-    wlc_words = _wlc_accent_words(ob)
+    wlc_words = _wlc_accent_words(row)
     if wlc_words is None:
         return None
-    mam_words = [(cons, (d,) if d else ()) for cons, d in ob.mam_words]
+    mam_words = [(cons, (d,) if d else ()) for cons, d in row["mam_words"]]
 
     # The WLC word strings keep their maqaf for display ("הלא־בבטן"); the MAM side's
     # base_consonants drops it, so strip it back out for the alignment key only -- the
@@ -106,15 +104,17 @@ def _word_aligned_clauses(ob: PoeticOddball) -> list[str] | None:
     return clauses
 
 
-def _wlc_accent_words(ob: PoeticOddball) -> list[tuple[str, tuple[str, ...]]] | None:
+def _wlc_accent_words(
+    row: dict[str, object],
+) -> list[tuple[str, tuple[str, ...]]] | None:
     """Per-word ``(base_consonants, disjunctives)`` for the WLC verse, accent-word by
     accent-word: the wlc422 Unicode consonants (the shared alignment key) zipped with
     the M-C scanner's resolved disjunctives.  None if the two cannot be reconciled
     1:1 (different accent-word counts)."""
-    cons_words = _wlc_consonant_words(ob.wlc_verse)
+    cons_words = _wlc_consonant_words(row["wlc422_kq_u_verse"])
     if cons_words is None:
         return None
-    disj_words = _wlc_disjunctives_per_word(ob.body)
+    disj_words = _wlc_disjunctives_per_word(row["body"])
     if len(cons_words) != len(disj_words):
         return None
     return list(zip(cons_words, disj_words))
