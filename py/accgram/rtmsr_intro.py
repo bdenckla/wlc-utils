@@ -25,29 +25,29 @@ def build_intro_contents(
     oddball_count: int,
 ) -> tuple[object, ...]:
     intro_text = (
-        f"This page lists the {oddball_count} WLC 4.22 verses are considered ungrammatical"
+        f"This page lists the {oddball_count} WLC 4.22 verses that are considered ungrammatical"
         " by the PLY port of the Goerwitz accent checker."
     )
     oddballs_text = (
-        f"These {oddball_count} verses are considered ungrammatical because they parse into a tree"
+        f"These verses are considered ungrammatical because they parse into a tree"
         " containing the string \u201cERROR\u201d; each section below includes one such"
         " tree. Potential causes of \u201cERROR\u201d include"
         " WLC issues,"
         " BHS issues,"
         " LC issues, and"
         " checker issues."
-        " (Issues include clear errors but also mere quirks.)"
+        " (Issues include errors but also mere quirks.)"
     )
     msp_text = "The issues can be filtered by their category:"
     msp_categories = (
         "“Missing sof pasuq.”",
         "“Missing silluq,” where a sof pasuq is present but the verse-final word has no accent.",
-        "“Zarqa whim,” where WLC turns a scribal zarqa whim into an outright error.",
+        "“Zarqa whim,” where WLC turns a scribal zarqa whim into an error.",
         "“Other,” for everything else.",
     )
     source_text = (
-        "The issues can also be filtered based on “who is to blame”:"
-        " WLC, BHS/BHQ, the LC, or “unclear/TBD”."
+        "The issues can also be filtered based on the source of the issue:"
+        " WLC, BHS/BHQ, the LC, or unclear/TBD."
         "This \u201cSource\u201d filter is ANDed with the category filter."
     )
     and_text = (
@@ -67,9 +67,7 @@ def build_intro_contents(
         " their use in any verse to see these definitions.",
     )
     almost_errors_text = (
-        "For the converse — the quirks the checker silently ‹accepts› rather than"
-        " flags, with the alternate readings it did not choose shown as parse trees"
-        " — see the ",
+        "For a discussion of quirks that the checker silently accepts, see the ",
         wlc_utils_html.anchor("Almost errors", {"href": "almost-errors.html"}),
         " page.",
     )

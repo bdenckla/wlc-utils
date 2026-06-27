@@ -13,23 +13,23 @@ Goerwitz Run on WLC</title>
 Goerwitz Run on WLC</h1>
 <h2>
 Introduction</h2>
-<p>This page lists the 92 WLC 4.22 verses are considered ungrammatical by the PLY port of the Goerwitz accent checker.</p>
-<p>These 92 verses are considered ungrammatical because they parse into a tree containing the string “ERROR”; each section below includes one such tree. Potential causes of “ERROR” include WLC issues, BHS issues, LC issues, and checker issues. (Issues include clear errors but also mere quirks.)</p>
-<p>The filter sorts each issue into one of four grammar-error categories:</p>
+<p>This page lists the 92 WLC 4.22 verses that are considered ungrammatical by the PLY port of the Goerwitz accent checker.</p>
+<p>These verses are considered ungrammatical because they parse into a tree containing the string “ERROR”; each section below includes one such tree. Potential causes of “ERROR” include WLC issues, BHS issues, LC issues, and checker issues. (Issues include errors but also mere quirks.)</p>
+<p>The issues can be filtered by their category:</p>
 <ul>
 <li>
 “Missing sof pasuq.”</li>
 <li>
 “Missing silluq,” where a sof pasuq is present but the verse-final word has no accent.</li>
 <li>
-“Zarqa whim,” where WLC turns a scribal zarqa whim into an outright error.</li>
+“Zarqa whim,” where WLC turns a scribal zarqa whim into an error.</li>
 <li>
 “Other,” for everything else.</li>
 </ul>
-<p>A filter called “Source”, operates on “who is to blame” for the issue: WLC, BHS/BHQ, the LC, or “unclear/TBD”.This “Source” filter is ANDed with the grammar error category filter.</p>
-<p>Two further toggles narrow the list, each ANDed with the filters above: whether the verse has a UXLC change, and whether its table displays a WLC bracket-note. Each toggle is three-state: has, doesn’t have, or don’t care (the default).</p>
+<p>The issues can also be filtered based on the source of the issue: WLC, BHS/BHQ, the LC, or unclear/TBD.This “Source” filter is ANDed with the category filter.</p>
+<p>There are two further filters, each ANDed with the filters above: whether the issue has an associated UXLC change, and whether the word in question has a bracket-note in WLC. Each toggle is three-state: has, doesn’t have, or don’t care (the default).</p>
 <p>We define the bracket-note codes in the <a href="#wlc-bracket-notes">WLC Bracket Notes</a> section at the end of this page, but you can also hover over their use in any verse to see these definitions.</p>
-<p>For the converse — the quirks the checker silently ‹accepts› rather than flags, with the alternate readings it did not choose shown as parse trees — see the <a href="almost-errors.html">Almost errors</a> page.</p>
+<p>For a discussion of quirks that the checker silently accepts, see the <a href="almost-errors.html">Almost errors</a> page.</p>
 <p>The Goerwitz accent grammar checker is described in the following article:</p>
 <p>Goerwitz, Richard. ‹A New Masoretic “Spell Checker” or A Fast, Practical Method For Checking the Accentual Structure and Integrity Of Tiberian-Pointed Biblical Texts.› In Studies in Semitic and Afroasiatic Linguistics Presented to Gene B. Gragg (pp. 111-122). (<a href="https://isac.uchicago.edu/research/publications/saoc/saoc-60-studies-semitic-and-afroasiatic-linguistics-presented-gene-b">Studies in Ancient Oriental Civilization 60</a>). The Oriental Institute, Chicago, 2007. ISBN 978-1-885923-41-7.</p>
 <div class="goerwitz-filter">
