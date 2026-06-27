@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from accgram import ob_error_context
-from accgram import ob_notes
+from accgram import prose_ob_notes
 from accgram import ob_tree_table
 from accgram import rtms_ref
 from accgram import rtmsr_sat
@@ -30,7 +30,7 @@ def render_error_context_section(
 
 def structured_text_dict(row: dict[str, object]) -> dict[str, object] | None:
     row_ref = _row_ref(row)
-    structured_text = ob_notes.get_structured_text().get(row_ref)
+    structured_text = prose_ob_notes.get_structured_text().get(row_ref)
     if not isinstance(structured_text, dict):
         return None
     return structured_text

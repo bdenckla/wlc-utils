@@ -1,6 +1,6 @@
 """PLY yacc grammar for the POETIC (Three Books) accent system.
 
-This is the poetic counterpart of accgram.ply_grammar (which ports acc2tre.y, the
+This is the poetic counterpart of accgram.prose_ply_grammar (which ports acc2tre.y, the
 prose / Twenty-One Books grammar).  There is no Goerwitz C oracle for the poetic
 books; the productions here are derived from Yeivin, *Introduction to the Tiberian
 Masorah* (ITM), the section "The Accents of the Three Books" (Psalms, Proverbs,
@@ -64,7 +64,7 @@ when a unit is too short for the intermediate one):
   pazer (#369)               -> legarmeh only
   legarmeh (#370)            -> (terminal lowest disjunctive)
 
-Token disambiguation that the scanner (accgram.ply_scanner_poetic) performs and
+Token disambiguation that the scanner (accgram.poetic_ply_scanner) performs and
 this grammar relies on: the three revias share signs but are distinct tokens here
 (REVIA_GADOL / REVIA_QATAN / REVIA_MUGRASH); the scanner separates them by the
 geresh muqdam (mugrash) and by position (qatan only before oleh-we-yored, a bare
@@ -183,7 +183,7 @@ def p_silluq_phrase_error(p):
     # Category A: 13 verses lack any silluq code in L (e.g. Ps 37:31,
     # "...):A$URFY/W00" -- the sof pasuq directly follows the last servus, no
     # silluq).  Mirror the prose grammar's missing-silluq recovery
-    # (ply_grammar.p_silluq_phrase_error): on the syntax error PLY reduces the
+    # (prose_ply_grammar.p_silluq_phrase_error): on the syntax error PLY reduces the
     # absent silluq to a silluq_phrase whose mark is ERROR and errok() resumes
     # normal reporting, so the verse becomes a flagged oddball *tree* (the rest of
     # its structure preserved and visible) instead of a no-output NO_PARSE line.
@@ -356,7 +356,7 @@ def _phrase(p, label):
 # the silluq domain admits a rank-ordered chain of near dividers --
 # revia_mugrash / shalshelet (highest), then deḥi, then pazer, then legarmeh --
 # each of which may be followed (toward silluq) by any lower one.  This is the
-# poetic analogue of the prose tipeḥa/zaqef_silluq cascade in ply_grammar.py.
+# poetic analogue of the prose tipeḥa/zaqef_silluq cascade in prose_ply_grammar.py.
 def p_silluq_clause(p):
     """silluq_clause : silluq_phrase
                      | revia_mugrash_silluq_clause
@@ -765,7 +765,7 @@ def p_error(p):  # noqa: D401  (PLY callback)
 
 
 class _LexToken:
-    """Minimal PLY-compatible token object (mirrors ply_grammar._LexToken)."""
+    """Minimal PLY-compatible token object (mirrors prose_ply_grammar._LexToken)."""
 
     __slots__ = ("type", "value", "lineno", "lexpos", "lexer")
 
@@ -815,7 +815,7 @@ def build_parser(*, capture_warnings: bool = False):
 
         buf = io.StringIO()
         handler = logging.StreamHandler(buf)
-        log = logging.getLogger("ply_grammar_poetic")
+        log = logging.getLogger("poetic_ply_grammar")
         log.handlers = [handler]
         log.setLevel(logging.WARNING)
         parser = yacc.yacc(

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_generated_descriptions
-from accgram.ob_notes import get_structured_text
-from accgram.ob_notes_shared import ZARQA_WHIM_SUMMARY
+from accgram.prose_ob_notes import get_structured_text
+from accgram.prose_ob_notes_shared import ZARQA_WHIM_SUMMARY
 
 _MISSING_SOF_PASUQ_TOKENS = {
     "silluq-no_sof_pasuq",
@@ -61,7 +61,7 @@ def _generated_descriptions(
     structured_text: object,
 ) -> list[str | None]:
     # The structured text is only needed to derive the WLC focus. It lives in the
-    # by-book ob_notes set (the default lookup below); callers that already have a
+    # by-book prose_ob_notes set (the default lookup below); callers that already have a
     # row's structured text pass it in explicitly.
     if structured_text is None:
         ref = row.get("ref")

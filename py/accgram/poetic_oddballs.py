@@ -10,7 +10,7 @@ cleanly; the residual splits into two documented oddball kinds:
     exists (the disjunctive hierarchy is violated or a token is lexically
     illicit); emitted as a ``NO_PARSE`` token line by the driver.  (Ps
     17:14's double tsinnor was a second such case until the parser began accepting
-    a repeated divider as one; see ply_grammar_poetic.parse_tokens_accepting_repeats
+    a repeated divider as one; see poetic_ply_grammar.parse_tokens_accepting_repeats
     and gh-pages/accgram/ps17v14-double-tsinnor.html.)
 
 This module re-scans + re-parses the poetic corpus (the same source of truth the
@@ -71,16 +71,16 @@ from accgram import uni_to_marks
 from accgram.mam_poetic_accents import load_poetic_word_disj
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
-from accgram.ply_grammar_poetic import (
+from accgram.poetic_ply_grammar import (
     ParseError,
     build_parser,
     parse_tokens_accepting_repeats,
 )
-from accgram.ply_scanner_poetic import scan_book
+from accgram.poetic_ply_scanner import scan_book
 from accgram.poetic_reconcile import reconcile_tokens
 from accgram.poetic_oddball_summary import derive_tentative_summary
 from accgram.ply_tree import print_tree
-from accgram.run_ply_poetic import has_error_leaf, no_parse_line
+from accgram.poetic_run_ply import has_error_leaf, no_parse_line
 import wlc_provenance as provenance
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
@@ -150,7 +150,7 @@ def collect_poetic_oddballs(
                 else None
             )
             # Apply the legarmeh-vs-paseq and unmarked-oleh corrections before parsing,
-            # exactly as run_ply_poetic does, so this report agrees with the driver's
+            # exactly as poetic_run_ply does, so this report agrees with the driver's
             # trees (and the two resolved NO_PARSE verses no longer surface here).
             tokens = reconcile_tokens(
                 verse.reference, verse.body, list(verse.tokens), mam, parser
@@ -691,7 +691,7 @@ def _no_parse_tree_text(
 
     No valid parse exists, so this is not a real tree: a single ``no_parse`` branch
     whose leaves are the accent token types (the TILDE/SOFPASUQ structural bookends
-    dropped, as in run_ply_poetic.no_parse_line), capped by an ``ERROR`` leaf. Fed
+    dropped, as in poetic_run_ply.no_parse_line), capped by an ``ERROR`` leaf. Fed
     through the shared error-tree table it puts each token in its own cell and
     highlights the ERROR cell -- more legible than the bare NO_PARSE token line, and
     visually consistent with the missing-silluq ERROR trees.

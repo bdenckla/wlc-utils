@@ -1,7 +1,7 @@
 """Prose lexical validation: flag stranded stress-helper accents (alphabet errors).
 
 This is a *prose-only* layer that sits on top of the faithful C-port scanner/
-grammar (ply_scanner / ply_grammar) and intentionally **diverges from the
+grammar (prose_ply_scanner / prose_ply_grammar) and intentionally **diverges from the
 goerwitz C oracle**, in the same documented spirit as the MISSING_SOFPASUQ and
 tevir/tipexa recoveries: where the C lexer silently swallows a malformed accent,
 we surface it as an oddball.
@@ -9,7 +9,7 @@ we surface it as an oddball.
 The one helper handled today is accent ``82``.  In the prose accent system, ``82``
 is well-formed *only* as the left half of a ``82{TEXT}02`` pair fused onto a single
 maqaf/space-delimited atom, where the scanner reads it as one ZARQA token
-(ply_scanner ``(?:82{TEXT}02)?02``; TEXT = ``[^ \\r\\n-]*`` keeps the pair inside
+(prose_ply_scanner ``(?:82{TEXT}02)?02``; TEXT = ``[^ \\r\\n-]*`` keeps the pair inside
 one atom).  When there is no ``02`` later in the same atom, the C lexer's
 ``35|75|95|44|05|82|52 -> None`` rule swallows the ``82`` and the intended accent
 simply vanishes -- so whether the verse becomes an oddball is left to downstream
@@ -19,7 +19,7 @@ ascender) are equally wrong; this layer flags them uniformly.
 A second, sibling check (``illegal_same_letter_pairs``) flags an impossible
 *same-letter* configuration rather than a stranded helper: two accents stacked on one
 base letter.  This is a WHITELIST guard, the prose analogue of the poetic
-``ply_scanner_poetic`` bang guard (Plan D / Plan E): two masoretically-blessed clusters
+``poetic_ply_scanner`` bang guard (Plan D / Plan E): two masoretically-blessed clusters
 may legitimately share a letter -- the MAM-confirmed ek20:31 ``mahapakh!qadma`` (fused to
 one token, grammar-accepted) and the telisha gedola + geresh-family pair (gn5:29, zp2:15,
 2k17:13), spared as a two-token *sequence* (the telg and the geresh, in manuscript order --
@@ -89,7 +89,7 @@ def _is_accent(ch: str) -> bool:
 
 
 # Same-letter accent pairs are a WHITELIST, not a blacklist -- the prose analogue of the
-# poetic ``ply_scanner_poetic._WHITELISTED_ADJACENT_PAIRS`` (Plan D / Plan E).  Two
+# poetic ``poetic_ply_scanner._WHITELISTED_ADJACENT_PAIRS`` (Plan D / Plan E).  Two
 # masoretically-blessed configurations may legitimately share one base letter:
 #
 #   * mahapakh (U+05A4) + qadma (U+05A8) -- the MAM-confirmed ek20:31 ``נִטְמְאִ֤֨ים`` (both
@@ -117,7 +117,7 @@ _WHITELISTED_SAME_LETTER: frozenset[frozenset[str]] = frozenset(
 )
 
 # Per-accent prose leaf names, for building a same-letter pair's bang label; reuse the
-# scanner's spellings (ply_scanner._LEAF -- qadma's standalone prose leaf is "qadma").  A codepoint
+# scanner's spellings (prose_ply_scanner._LEAF -- qadma's standalone prose leaf is "qadma").  A codepoint
 # fallback (``U+XXXX``) covers any unforeseen mark so the label is always populated.
 _ACCENT_LEAF_NAME: dict[str, str] = {
     am.ATNAX: "atnax", am.SEGOLTA: "segolta", am.SHALSHELET: "shalshelet",
@@ -143,7 +143,7 @@ class StrandedMark:
     Covers both a stress-helper left without its fusion partner (stranded 82) and a
     non-whitelisted same-letter accent pair (e.g. mahapakh!tipexa); ``code``
     distinguishes them.  ``rep_char`` is a representative codepoint of the offending
-    word, used by run_ply to locate the pointed-Hebrew word for the report.
+    word, used by prose_run_ply to locate the pointed-Hebrew word for the report.
     """
 
     code: str  # M-C code label ("82"), bang pair label ("mahapakh!tipexa"), or a
@@ -254,7 +254,7 @@ def lexical_oddballs(body: str) -> list[StrandedMark]:
       * a telisha qetanna misplaced on a non-final letter (`nonfinal_telisha_qetannas`,
         the lone M-C ``24`` of je 44:17).
 
-    This is the single entry point the prose consumers share -- run_ply (the corpus
+    This is the single entry point the prose consumers share -- prose_run_ply (the corpus
     output), almost_errors_trees (the exhibit page), and fix_tester (the fix harness) --
     so a verse is classified identically everywhere and the set can never drift between
     them.  A verse with any result here is flagged with a fixed ERROR tree and the grammar

@@ -14,8 +14,8 @@ from __future__ import annotations
 
 import pytest
 
-from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
-from accgram.ply_scanner import scan_book
+from accgram.prose_ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
+from accgram.prose_ply_scanner import scan_book
 from accgram.ply_tree import print_tree
 from tests.mc_marks import mc_to_marks
 

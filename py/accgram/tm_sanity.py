@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from accgram import tm_changes
-from accgram.ob_notes import get_structured_text
+from accgram.prose_ob_notes import get_structured_text
 
 
 def sanity_check_structured_text(

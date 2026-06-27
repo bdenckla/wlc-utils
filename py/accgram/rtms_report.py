@@ -7,7 +7,7 @@ from accgram import rtmsr_media
 from accgram import rtmsr_sat
 from accgram import rtmsr_verse
 from accgram import rtms_ref
-from accgram.ob_notes import get_structured_text
+from accgram.prose_ob_notes import get_structured_text
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_cmn import bib_locales as tbn
 from py_html import wlc_utils_html

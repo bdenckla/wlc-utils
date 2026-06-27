@@ -37,7 +37,7 @@ def _steps(repo_root: Path) -> tuple[Step, ...]:
         ),
         Step(
             name="accgram_run_ply",
-            argv=(sys.executable, str(py_dir / "main_accgram.py"), "run-ply-goerwitz"),
+            argv=(sys.executable, str(py_dir / "main_accgram.py"), "run-ply-prose"),
         ),
         Step(
             name="accgram_run_ply_poetic",

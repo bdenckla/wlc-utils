@@ -28,7 +28,7 @@ from accgram.almost_errors_oddities import (
     oddities_intro,
     telg_section,
 )
-from accgram.ply_scanner import HasLegarmeh
+from accgram.prose_ply_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
 
 REPORT_TITLE = "Almost errors"

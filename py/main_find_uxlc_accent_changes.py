@@ -37,7 +37,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from accgram import ob_notes  # noqa: E402
+from accgram import prose_ob_notes  # noqa: E402
 
 ACC = {
     'etnachta', 'etnahta', 'atnah-hafukh', 'zarqa', 'zinor', 'pashta', 'yetiv',  # translit-ok: UXLC accent names
@@ -144,7 +144,7 @@ def goerwitz_uxlc_change_keys():
     entry. `is_pending` is True when the ref came from `pending_uxlc_change`
     (a change accepted upstream but not yet in a stable release)."""
     keys = {}
-    for ref, entry in ob_notes.STRUCTURED_TEXT_BY_REF.items():
+    for ref, entry in prose_ob_notes.STRUCTURED_TEXT_BY_REF.items():
         for field, pending in (('uxlc_change', False), ('pending_uxlc_change', True)):
             key = _parse_uxlc_change(entry.get(field))
             if key is not None:

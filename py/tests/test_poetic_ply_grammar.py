@@ -1,6 +1,6 @@
 """Smoke tests for the poetic (Three Books) PLY grammar.
 
-The poetic grammar (accgram.ply_grammar_poetic) is derived from Yeivin ITM
+The poetic grammar (accgram.poetic_ply_grammar) is derived from Yeivin ITM
 #358-374, not from a C oracle, so these tests pin two things:
 
   1. the LALR table builds with no shift/reduce or reduce/reduce conflicts;
@@ -14,11 +14,11 @@ golden oracle output.  Token-type names come from accgram.poetic_accent_names so
 the (variable) transliterations are never re-typed as literals here.
 
 Run:
-    .venv/Scripts/python.exe -m pytest py/tests/test_ply_poetic_grammar.py -v
+    .venv/Scripts/python.exe -m pytest py/tests/test_poetic_ply_grammar.py -v
 """
 
 from accgram import poetic_accent_names as pan
-from accgram.ply_grammar_poetic import (
+from accgram.poetic_ply_grammar import (
     build_parser,
     collapse_repeated_tsinnor,
     parse_tokens,

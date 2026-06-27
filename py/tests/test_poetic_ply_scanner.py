@@ -10,14 +10,14 @@ azla/mahapakh legarmeh (63/70 + 05 paseq), the galgal servus of oleh-we-yored
 Token-type names come from accgram.poetic_accent_names (no re-typed literals).
 
 Run:
-    .venv/Scripts/python.exe -m pytest py/tests/test_ply_scanner_poetic.py -v
+    .venv/Scripts/python.exe -m pytest py/tests/test_poetic_ply_scanner.py -v
 """
 
 from accgram import accent_marks as am
 from accgram import poetic_accent_names as pan
-from accgram.ply_scanner_poetic import scan_accents
-from accgram.ply_grammar_poetic import build_parser, parse_tokens
-from accgram.ply_scanner_poetic import scan_verse
+from accgram.poetic_ply_scanner import scan_accents
+from accgram.poetic_ply_grammar import build_parser, parse_tokens
+from accgram.poetic_ply_scanner import scan_verse
 from tests.mc_marks import mc_to_marks
 
 # The fixtures are written in the legacy M-C encoding (checked by hand against the

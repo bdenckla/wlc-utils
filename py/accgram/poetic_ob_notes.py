@@ -5,7 +5,7 @@ annotation: the mechanically auto-derived WLC-vs-MAM-simple summary
 (``poetic_oddball_summary.derive_tentative_summary``) is the relevant datum.
 This module is the optional prose-style annotation layer for the few oddballs
 that warrant more — the poetic analogue of the per-book ``ob_notes_*`` modules
-the prose ``goerwitz.html`` report consumes via ``ob_notes.get_structured_text``.
+the prose ``goerwitz.html`` report consumes via ``prose_ob_notes.get_structured_text``.
 
 Entries are keyed by the two-letter ``bb`` reference form ("jb 31:15") that
 ``poetic_oddballs._bb_ref`` produces, and may carry the same fields the prose
@@ -33,7 +33,7 @@ _JOB_31_15_NOTE_URL = "https://tanach.us/Notes/Job/Job.31.15.1-t.html"
 
 
 # NOTE: Ps 17:14 (the unique double tsinnor) once had an entry here, but the
-# checker now accepts that verse (ply_grammar_poetic.parse_tokens_accepting_repeats
+# checker now accepts that verse (poetic_ply_grammar.parse_tokens_accepting_repeats
 # collapses the repeated divider), so it no longer surfaces as a poetic oddball and
 # this layer can no longer render notes for it.  Its manuscript / MAM / Breuer
 # discussion, plus the LC and S1 images, now live on the hand-authored page

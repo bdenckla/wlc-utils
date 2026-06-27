@@ -1,10 +1,10 @@
 """Accent grammar utilities.
 
 Subcommands:
-    run-ply-goerwitz
+    run-ply-prose
                 Run the Python PLY port over the WLC prose corpus
                 (out/wlc422-kq-u, genre-filtered) and write
-                out/accgram/ply/*_ag.txt (mirrors `accents -p`).  A verse the
+                out/accgram/ply-prose/*_ag.txt (mirrors `accents -p`).  A verse the
                 grammar cannot parse at all is a fatal error.  Use --book to
                 restrict to specific books (e.g. --book ob).
     run-ply-poetic
@@ -34,7 +34,7 @@ Subcommands:
                     comparison (plus out/accgram/ply-poetic/_oddballs.json).
                     Run run-ply-poetic first.
                   * gh-pages/accgram/goerwitz.html -- the PLY-based prose oddball
-                    set (from out/accgram/ply), enriched with its matching
+                    set (from out/accgram/ply-prose), enriched with its matching
                     wlc422-kq-u verse object and structured XML-ish UXLC verse
                     node (plus out/accgram/research-oddballs.json).
                   * gh-pages/accgram/almost-errors.html -- the "almost errors"
@@ -55,12 +55,12 @@ Subcommands:
                 MAM-simple value clears the ERROR: substitute the MAM value into the
                 verse, re-transcode + re-scan + re-parse, and classify CONFIRMED / DENIED /
                 CHANGED / UNTESTABLE.  Cross-checks each verdict against the
-                ob_notes claim and writes out/accgram/fix-tester/_fix_tester.{txt,json}.
-                Run run-ply-goerwitz first.
+                prose_ob_notes claim and writes out/accgram/fix-tester/_fix_tester.{txt,json}.
+                Run run-ply-prose first.
 
 Examples:
-    .venv/Scripts/python.exe py/main_accgram.py run-ply-goerwitz
-    .venv/Scripts/python.exe py/main_accgram.py run-ply-goerwitz --book ob
+    .venv/Scripts/python.exe py/main_accgram.py run-ply-prose
+    .venv/Scripts/python.exe py/main_accgram.py run-ply-prose --book ob
     .venv/Scripts/python.exe py/main_accgram.py generate-html
 """
 
@@ -75,11 +75,11 @@ from accgram import poetic_oddballs
 from accgram import ps17v14_double_tsinnor
 from accgram import ps17v14_doc_notes
 from accgram import research_tao
-from accgram import run_ply
-from accgram import run_ply_poetic
+from accgram import prose_run_ply
+from accgram import poetic_run_ply
 from accgram import servi_xcheck
 from accgram import telg_doc_notes
-from accgram import xcheck_poetic
+from accgram import poetic_xcheck
 from cmn.utf8_io import force_utf8_io
 
 import repo_paths
@@ -90,15 +90,15 @@ def _repo_root() -> Path:
 
 
 def _run_run_ply(args: argparse.Namespace) -> None:
-    run_ply.run(args)
+    prose_run_ply.run(args)
 
 
 def _run_run_ply_poetic(args: argparse.Namespace) -> None:
-    run_ply_poetic.run(args)
+    poetic_run_ply.run(args)
 
 
 def _run_xcheck_poetic(args: argparse.Namespace) -> None:
-    xcheck_poetic.run(args)
+    poetic_xcheck.run(args)
 
 
 def _run_servi_xcheck(args: argparse.Namespace) -> None:
@@ -134,14 +134,14 @@ def main() -> None:
     subparsers.required = True
 
     run_ply_parser = subparsers.add_parser(
-        "run-ply-goerwitz",
+        "run-ply-prose",
         help=(
             "Run the Python PLY port over the WLC prose corpus and write "
-            "out/accgram/ply/*_ag.txt (mirrors `accents -p`). Use --book to "
+            "out/accgram/ply-prose/*_ag.txt (mirrors `accents -p`). Use --book to "
             "restrict (e.g. --book ob)."
         ),
     )
-    run_ply.add_args(run_ply_parser, repo_root=_repo_root())
+    prose_run_ply.add_args(run_ply_parser, repo_root=_repo_root())
     run_ply_parser.set_defaults(func=_run_run_ply)
 
     run_ply_poetic_parser = subparsers.add_parser(
@@ -153,7 +153,7 @@ def main() -> None:
             "lines (not fatal). Use --book to restrict (ps, pr, jb)."
         ),
     )
-    run_ply_poetic.add_args(run_ply_poetic_parser, repo_root=_repo_root())
+    poetic_run_ply.add_args(run_ply_poetic_parser, repo_root=_repo_root())
     run_ply_poetic_parser.set_defaults(func=_run_run_ply_poetic)
 
     xcheck_poetic_parser = subparsers.add_parser(
@@ -163,7 +163,7 @@ def main() -> None:
             "MAM-simple and write out/accgram/ply-poetic/_mam_xcheck.txt."
         ),
     )
-    xcheck_poetic.add_args(xcheck_poetic_parser, repo_root=_repo_root())
+    poetic_xcheck.add_args(xcheck_poetic_parser, repo_root=_repo_root())
     xcheck_poetic_parser.set_defaults(func=_run_xcheck_poetic)
 
     servi_xcheck_parser = subparsers.add_parser(
@@ -183,7 +183,7 @@ def main() -> None:
         help=(
             "Test whether adopting each annotated prose oddball's MAM-simple value "
             "clears its ERROR; write out/accgram/fix-tester/_fix_tester.{txt,json}. "
-            "Run run-ply-goerwitz first."
+            "Run run-ply-prose first."
         ),
     )
     fix_tester.add_args(fix_tester_parser, repo_root=_repo_root())

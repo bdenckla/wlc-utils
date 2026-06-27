@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from accgram.ob_notes_shared import (
+from accgram.prose_ob_notes_shared import (
     ZARQA_WHIM,
 )
 

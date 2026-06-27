@@ -111,7 +111,7 @@ def _category(row: dict[str, object], structured_text: object) -> str:
 
 
 # Display label for each "Source" slug (the slug is stored per oddball in its
-# ob_notes "st-source" field, and used as the filter checkbox's value and the
+# prose_ob_notes "st-source" field, and used as the filter checkbox's value and the
 # verse's data-source attribute), in filter-display order.
 _SOURCE_LABELS = {
     "wlc": "WLC",
@@ -124,7 +124,7 @@ _SOURCE_LABELS = {
 def _source(structured_text: object, ref: str) -> str:
     """Return the oddball's hardcoded source slug (see _SOURCE_LABELS).
 
-    The attribution lives beside the prose in each ob_notes entry's "st-source"
+    The attribution lives beside the prose in each prose_ob_notes entry's "st-source"
     field rather than being re-derived from the summary, so editing a summary
     never silently changes a verse's source. Every oddball must carry a valid
     st-source; a missing or unknown value is a hard error.

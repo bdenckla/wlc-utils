@@ -1,7 +1,7 @@
-"""Smoke tests for the by-book ob_notes structured-text dataset.
+"""Smoke tests for the by-book prose_ob_notes structured-text dataset.
 
 The structured-text notes live in per-book ob_notes_* modules and are aggregated
-by ob_notes.get_structured_text(). These tests check that the aggregator wiring is
+by prose_ob_notes.get_structured_text(). These tests check that the aggregator wiring is
 intact (every consumer still imports) and that the dataset is populated.
 """
 
@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import importlib
 
-from accgram import ob_notes
+from accgram import prose_ob_notes
 
 # Every module that consumes the structured-text dataset; importing them all is a smoke
 # test that the aggregator wiring is intact.
@@ -23,7 +23,7 @@ _CONSUMERS = (
 
 
 def test_ob_notes_dataset_is_populated() -> None:
-    assert len(ob_notes.get_structured_text()) == 92
+    assert len(prose_ob_notes.get_structured_text()) == 92
 
 
 def test_consumers_import() -> None:

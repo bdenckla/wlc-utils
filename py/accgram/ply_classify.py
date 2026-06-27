@@ -2,9 +2,9 @@
 
 This module classifies oddball verses from the **PLY** port outputs. An oddball
 is any verse whose PLY parse tree contains at least one ``ERROR`` leaf. Since
-``run-ply-goerwitz`` now processes the full prose corpus (including the 49 verses the C
+``run-ply-prose`` now processes the full prose corpus (including the 49 verses the C
 binary emitted no output for), every such ERROR verse lives in
-``out/accgram/ply/`` directly -- there is no separate troublemaker pass.
+``out/accgram/ply-prose/`` directly -- there is no separate troublemaker pass.
 
 The resulting ``_oddballs.json`` uses the same schema ``rtms_rows`` parses: one
 row per oddball with ``ref``, ``content`` (the verse's pointed-Hebrew text, drawn
@@ -18,7 +18,7 @@ import json
 import re
 from pathlib import Path
 
-from accgram import oddballs
+from accgram import prose_oddballs
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_rows
@@ -38,7 +38,7 @@ def write_ply_oddballs(
     wlc422_kq_u_dir: Path,
     oddballs_out: Path,
 ) -> None:
-    """(Re)generate the PLY-derived ``_oddballs.json`` from ``out/accgram/ply/``."""
+    """(Re)generate the PLY-derived ``_oddballs.json`` from ``out/accgram/ply-prose/``."""
     refs_with_files: list[tuple[str, int, int, str]] = []
     output_paths = sorted(
         p for p in ply_dir.iterdir() if p.is_file() and p.suffix.lower() == ".txt"
@@ -48,7 +48,7 @@ def write_ply_oddballs(
         if match is None:
             continue
         bb = match.group(1).lower()
-        for chnu, vrnu in sorted(oddballs._collect_oddball_refs(output_path)):
+        for chnu, vrnu in sorted(prose_oddballs._collect_oddball_refs(output_path)):
             refs_with_files.append((bb, chnu, vrnu, output_path.name))
 
     wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
@@ -68,7 +68,7 @@ def write_ply_oddballs(
         "artifacts_description": "oddball verses with ERROR nodes in PLY *_ag.txt outputs",
         "payload_provenance_note": (
             "These verses are parsed by the PLY port into a tree containing at least "
-            "one line with the token ERROR, drawn from out/accgram/ply/. The "
+            "one line with the token ERROR, drawn from out/accgram/ply-prose/. The "
             "output_file field on each row names which book file holds that verse's "
             "ERROR tree."
         ),

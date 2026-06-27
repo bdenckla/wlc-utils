@@ -43,8 +43,8 @@ from accgram import poetic_filter
 from accgram import poetic_accent_names as pan
 from accgram import rtms_data
 from accgram import uni_to_marks
-from accgram.ply_grammar_poetic import build_parser, parse_tokens_accepting_repeats
-from accgram.ply_scanner_poetic import scan_verse
+from accgram.poetic_ply_grammar import build_parser, parse_tokens_accepting_repeats
+from accgram.poetic_ply_scanner import scan_verse
 from accgram.ply_tree import print_tree
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 

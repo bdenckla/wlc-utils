@@ -1,6 +1,6 @@
 r"""Hand-written scanner for the POETIC (Three Books) accent system.
 
-The poetic counterpart of accgram.ply_scanner.  Where the prose scanner ports
+The poetic counterpart of accgram.prose_ply_scanner.  Where the prose scanner ports
 tnk2acc.l's GG-state table verbatim, there is no poetic flex source, so the rule
 table here is built from the *poetic* (Tabula Accentuum column II) readings of the
 accents, as tabulated in ``in/wlc420/supplmt.wts`` and cross-checked
@@ -65,7 +65,7 @@ Known gaps (deferred to the validation pass, see the module's tests / notes):
     variant is still read as a servus (its signal is ambiguous -- see that helper).
 
 The scanner returns a list of (token_type, leaf_name) pairs ready for
-accgram.ply_grammar_poetic.parse_tokens; the verse begins with ('TILDE','') and
+accgram.poetic_ply_grammar.parse_tokens; the verse begins with ('TILDE','') and
 ends with ('SOFPASUQ', 'sof pasuq').
 """
 
@@ -88,11 +88,11 @@ _TEXT = am.TEXT  # within one maqqef/space-delimited word (as in prose)
 # main accent of its own -- the cue that the chanted word continues across the hyphen).
 _TSINNORIT_ATOM_TAIL = r"[^ \r\n֑-֮-]*"
 
-# silluq right context (as in prose ply_scanner): meteg/silluq immediately before
+# silluq right context (as in prose prose_ply_scanner): meteg/silluq immediately before
 # sof pasuq, rebuilt over the mark alphabet (issue #9, Phase 2).
 _SILLUQ_LA = r"(?=" + am.negated_class(" \r\n-?~", "379") + r"*" + am.SOF_PASUQ + r")"
 
-# Verse-structure line patterns, as in accgram.ply_scanner.scan_book: a verse line
+# Verse-structure line patterns, as in accgram.prose_ply_scanner.scan_book: a verse line
 # is "ch:vr <accent codes>"; a lone capitalized word is a chapter/book header we
 # skip (the poetic reference is built from the WLC book code, not the header).
 _BOOKNAME_RE = re.compile(r"^([1234][ \t]*)?[A-Z][a-z]+[ \t]*$")
@@ -269,7 +269,7 @@ _LEAF: dict[str, str] = {
     # NB: the impositive-pair bang (e.g. merkha!azla) has no static entry here -- its
     # `!`-joined leaf is computed per pair by _impositive_pair_token and supplied directly
     # in scan_accents.  `!` (not a space) marks two distinct accents on one letter with no
-    # natural order, as the prose mahapakh!azla / mahapakh!tipexa (see ply_scanner._LEAF).
+    # natural order, as the prose mahapakh!azla / mahapakh!tipexa (see prose_ply_scanner._LEAF).
     pan.STRAY_ACCENT: "stray accent",
     pan.MUNAX: "munax",
     pan.MERKHA: "merkha",
@@ -294,7 +294,7 @@ def _recover_unmarked_oleh(types: list[str]) -> list[str]:
     galgal (yeraḥ-ben-yomo, the "v"-shaped sign) standing immediately before
     it.  A GALGAL directly followed by a bare MERKHA is that servus + an unmarked
     yored, so the MERKHA is reclassified to OLEH_WEYORED.  Validated against the MAM
-    disjunctive oracle (accgram.xcheck_poetic): this recovers 9 Psalms/Job verses
+    disjunctive oracle (accgram.poetic_xcheck): this recovers 9 Psalms/Job verses
     and introduces no new disagreements across the corpus.
 
     The other unmarked-ole context #363 notes -- a *revia* preceding the yored --
@@ -401,7 +401,7 @@ def scan_verse(reference: str, body: str) -> Verse:
 def scan_book(text: str, bb: str) -> list[Verse]:
     """Scan a whole split_wlc book text into per-verse poetic token streams.
 
-    Mirrors accgram.ply_scanner.scan_book's line walk -- header lines are skipped,
+    Mirrors accgram.prose_ply_scanner.scan_book's line walk -- header lines are skipped,
     each ``ch:vr <accents>`` line becomes one Verse via scan_verse -- but the
     reference uses the clean book name (the WLC code's bk39id: "Psalms",
     "Proverbs", "Job") rather than the goerwitz header word, since the poetic

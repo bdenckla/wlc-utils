@@ -1,7 +1,7 @@
 r"""Reconcile the poetic scanner's token stream with two corrections WLC's
 Michigan-Claremont source cannot express on its own.
 
-The poetic scanner (``ply_scanner_poetic``) reads each verse from the M-C accent
+The poetic scanner (``poetic_ply_scanner``) reads each verse from the M-C accent
 codes alone.  Two distinctions are simply not *in* that encoding, so the scanner
 makes a blanket guess that this module corrects before the grammar sees the tokens:
 
@@ -19,7 +19,7 @@ makes a blanket guess that this module corrects before the grammar sees the toke
 
 2. **the unmarked oleh-we-yored** (Yeivin ITM #363).  L sometimes writes the yored of
    an oleh-we-yored as a bare merkha (71) with the upper ole sign dropped, so the
-   scanner reads a conjunctive merkha and misses the divider.  ``ply_scanner_poetic``
+   scanner reads a conjunctive merkha and misses the divider.  ``poetic_ply_scanner``
    already recovers the cases its galgal-servus heuristic can see; the rest are
    recovered here by *charitable parsing*: if a verse does not parse, but reinterpreting
    exactly one of its merkhas as an (unmarked) yored makes it parse, adopt that reading.
@@ -38,7 +38,7 @@ import re
 
 from accgram import accent_marks as am
 from accgram import poetic_accent_names as pan
-from accgram.ply_grammar_poetic import parse_tokens
+from accgram.poetic_ply_grammar import parse_tokens
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 
 # A conjunctive (azla/qadma or mahapakh/mahapakh) followed eventually by a paseq within
@@ -79,7 +79,7 @@ def _demote_mam_paseq(
     """Demote each scanner ``LEGARMEH`` MAM does not read as a legarmeh.
 
     A WLC legarmeh that the disjunctive-skeleton alignment (the same ``difflib`` engine
-    ``xcheck_poetic`` uses) does not pair with a MAM legarmeh is, per MAM, a plain
+    ``poetic_xcheck`` uses) does not pair with a MAM legarmeh is, per MAM, a plain
     paseq: replace the ``LEGARMEH`` token with its underlying conjunctive servus (the
     paseq is dropped).  No-op when the verse is absent from MAM or carries no legarmeh.
     """
@@ -156,6 +156,6 @@ def _charitable_oleh(
 
 
 # Display leaf names for the tokens this module introduces, matching
-# ply_scanner_poetic._LEAF (kept local to avoid importing the scanner's private map).
+# poetic_ply_scanner._LEAF (kept local to avoid importing the scanner's private map).
 _SERVUS_LEAF = {pan.AZLA: "azla", pan.MAHAPAKH: "mahapakh"}
 _OLEH_LEAF = "oleh we-yored"

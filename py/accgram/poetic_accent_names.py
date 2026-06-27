@@ -2,8 +2,8 @@
 
 Single source of truth for the poetic PLY *token type* strings, so the (variable,
 dot-losing) ASCII transliterations are spelled exactly once instead of as bare
-string literals scattered across ply_grammar_poetic, ply_scanner_poetic,
-mam_poetic_accents, xcheck_poetic and their tests.  Import these and compare/use
+string literals scattered across poetic_ply_grammar, poetic_ply_scanner,
+mam_poetic_accents, poetic_xcheck and their tests.  Import these and compare/use
 the constants; never re-type the literal.
 
 One unavoidable exception: PLY builds the grammar from the *docstrings* of the
@@ -20,7 +20,7 @@ Spellings follow the canonical display names in ``py/mb_diff_mpu/describe_diff.p
   - tsinnor -> TSINNOR (describe_diff "tsinnor", doubled n).
   - merkha -> MERKHA, mahapakh -> MAHAPAKH (cf. Unicode names; the kaf-dropping
     Goerwitz "MEREKA"/"MAHPAK" lose to the full forms).  # translit-ok: cites Goerwitz forms
-  - names describe_diff spells plainly keep the plain Goerwitz form (ply_grammar.py):
+  - names describe_diff spells plainly keep the plain Goerwitz form (prose_ply_grammar.py):
     SILLUQ, PAZER, LEGARMEH, AZLA, GALGAL, REVIA, SHALSHELET.
 
 Maintainer overrides of describe_diff:
@@ -114,7 +114,7 @@ SHALSHELET_QETANNAH = "SHALSHELET_QETANNAH"
 # so does the Aleppo Codex, while Sassoon 1053 carries merkha alone -- L's double-marking
 # looks like a conflation of the two single-accent traditions (see poetic_ob_notes["ps 56:10"]).
 #
-# MERKHA_AZLA is the canonical instance of the general bang guard (ply_scanner_poetic): the
+# MERKHA_AZLA is the canonical instance of the general bang guard (poetic_ply_scanner): the
 # scanner emits a bang for any two adjacent same-letter accents NOT on the whitelist,
 # deriving the type/leaf per pair (_bang_pair_token) -- merkha+qadma yields exactly this
 # "MERKHA_AZLA" / "merkha!azla".  Kept as a named constant because it is the only attested

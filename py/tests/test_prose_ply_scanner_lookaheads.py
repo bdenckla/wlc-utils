@@ -7,13 +7,13 @@ regression in any one rule fails here rather than silently across thousands of
 verses.
 
 Run:
-    .venv/Scripts/python.exe -m pytest py/tests/test_ply_scanner_lookaheads.py -v
+    .venv/Scripts/python.exe -m pytest py/tests/test_prose_ply_scanner_lookaheads.py -v
 """
 
 from __future__ import annotations
 
 from accgram import accent_marks as am
-from accgram.ply_scanner import HasLegarmeh, scan_accents, scan_book
+from accgram.prose_ply_scanner import HasLegarmeh, scan_accents, scan_book
 
 
 def _types(

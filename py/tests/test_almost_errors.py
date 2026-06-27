@@ -22,8 +22,8 @@ from accgram import almost_errors_trees as aet
 from accgram import ob_error_context
 from accgram import ob_tree_parse
 from accgram import rtms_data
-from accgram.ply_grammar import build_parser
-from accgram.ply_scanner import HasLegarmeh
+from accgram.prose_ply_grammar import build_parser
+from accgram.prose_ply_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
 
 import repo_paths

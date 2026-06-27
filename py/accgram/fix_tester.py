@@ -4,8 +4,8 @@ For every *annotated* prose oddball (one carrying an ob_notes_* note), the
 goerwitz.html report suggests a fix -- almost always "adopt the MAM-simple value
 instead of the wlc_focus value".  This tool tests that suggestion mechanically:
 it splices the MAM value into the verse's Michigan-Claremont body
-(``fix_apply``), re-scans + re-parses it (the real ``ply_scanner`` /
-``ply_grammar``), and classifies the outcome:
+(``fix_apply``), re-scans + re-parses it (the real ``prose_ply_scanner`` /
+``prose_ply_grammar``), and classifies the outcome:
 
   * CONFIRMED  -- the oddball's ERROR cleared (the verse now parses clean);
   * DENIED     -- the same error remains;
@@ -28,7 +28,7 @@ writes a standalone text + JSON report under ``out/accgram/fix-tester/``.  It
 never edits goerwitz.html or the ob_notes_* prose; a human applies prose edits
 from the report.
 
-Depends on ``out/accgram/ply/`` -- run ``run-ply-goerwitz`` first.
+Depends on ``out/accgram/ply-prose/`` -- run ``run-ply-prose`` first.
 """
 
 from __future__ import annotations
@@ -48,10 +48,10 @@ from accgram import rtms_focus_diff_expand
 from accgram import rtms_rows
 from accgram import uni_to_marks
 from accgram import lexical_validation
-from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
-from accgram.ply_scanner import HasLegarmeh, Token, scan_accents
+from accgram.prose_ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
+from accgram.prose_ply_scanner import HasLegarmeh, Token, scan_accents
 from accgram.ply_tree import TN
-from accgram.ob_notes import get_structured_text
+from accgram.prose_ob_notes import get_structured_text
 import wlc_provenance as provenance
 
 import repo_paths
@@ -120,7 +120,7 @@ class _ParseGuard:
         return "ok", box.get("tree")
 
 
-# --- per-verse evaluation (mirrors run_ply.render_book) -----------------------
+# --- per-verse evaluation (mirrors prose_run_ply.render_book) -----------------------
 
 
 def _evaluate(body: str, bb: str, chnu: int, vrnu: int, guard: _ParseGuard) -> _Eval:
@@ -128,7 +128,7 @@ def _evaluate(body: str, bb: str, chnu: int, vrnu: int, guard: _ParseGuard) -> _
     token_types = tuple(tok.type for tok in tokens if tok.type != "TILDE")
 
     # Prose lexical layer fires first and skips the grammar (the same single entry point
-    # run_ply uses, so an annotated lexical oddball -- e.g. je 44:17's misplaced telisha
+    # prose_run_ply uses, so an annotated lexical oddball -- e.g. je 44:17's misplaced telisha
     # qetanna or lv25:20's same-letter pair -- is classified here, not via the grammar).
     stranded = lexical_validation.lexical_oddballs(body)
     if stranded:

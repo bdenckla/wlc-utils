@@ -12,18 +12,18 @@ from accgram import rtms_report
 from accgram import rtms_rows
 from accgram import tm_changes
 from accgram import tm_descriptor
-from accgram.ob_notes import get_structured_text
+from accgram.prose_ob_notes import get_structured_text
 from accgram.tm_sanity import sanity_check_structured_text
 
 import repo_paths
 
 
 def default_oddballs_in(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply" / "_oddballs.json"
+    return repo_paths.out_dir() / "accgram" / "ply-prose" / "_oddballs.json"
 
 
 def default_ply_dir(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply"
+    return repo_paths.out_dir() / "accgram" / "ply-prose"
 
 
 def default_wlc422_kq_u_dir(repo_root: Path) -> Path:
@@ -110,7 +110,7 @@ def run(args: argparse.Namespace) -> None:
     oddballs_out_path = args.oddballs_out
     ply_dir = getattr(args, "ply_dir", None) or default_ply_dir(repo_root)
 
-    # (Re)derive the PLY-based oddball set from out/accgram/ply only. Every ERROR
+    # (Re)derive the PLY-based oddball set from out/accgram/ply-prose only. Every ERROR
     # verse -- including the 49 the C binary emitted nothing for -- now lives there.
     ply_classify.write_ply_oddballs(
         ply_dir=ply_dir,
@@ -121,7 +121,7 @@ def run(args: argparse.Namespace) -> None:
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
     parsed_oddball_rows = rtms_rows.parse_oddball_rows(oddballs_in_path, refs_by_book)
 
-    # Annotated oddballs (those carrying hand-authored ob_notes structured text) get the
+    # Annotated oddballs (those carrying hand-authored prose_ob_notes structured text) get the
     # UXLC/changetext validation the old troublemaker rows used to get; each validation
     # step self-skips on records lacking its field (uxlc_change/assessment). Unannotated
     # oddballs get plain enrichment.
@@ -202,7 +202,7 @@ def run(args: argparse.Namespace) -> None:
 
 
 def _ob_wlc_focus_by_ref() -> dict[str, str | None]:
-    # Every annotated oddball's WLC focus now comes from the single by-book ob_notes set.
+    # Every annotated oddball's WLC focus now comes from the single by-book prose_ob_notes set.
     return {
         ref: _structured_wlc_focus(structured_text)
         for ref, structured_text in get_structured_text().items()

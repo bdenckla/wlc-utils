@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import TypedDict
 
-from accgram import oddballs
+from accgram import prose_oddballs
 from accgram import ob_tree_parse
 
 _OUTPUT_FILE_BB_RE = re.compile(r"^wlc_422_ps_([A-Za-z0-9]+)_ag\.txt$")
@@ -141,7 +141,7 @@ def _collect_verse_lines_by_ref(
         for raw_line in f_in:
             line = raw_line.rstrip("\r\n")
             stripped = line.strip()
-            heading_match = oddballs._OUTPUT_VERSE_LABEL_RE.match(stripped)
+            heading_match = prose_oddballs._OUTPUT_VERSE_LABEL_RE.match(stripped)
             if heading_match is not None:
                 chnu = int(heading_match.group(1))
                 vrnu = int(heading_match.group(2))

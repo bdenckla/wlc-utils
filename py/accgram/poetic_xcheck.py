@@ -4,7 +4,7 @@ Phase 2 of ``doc/PLAN-poetic-accent-grammar.md``: confirm the trees' division
 points are *correct*, not merely parseable.  For every poetic verse we compare two
 ordered disjunctive sequences:
 
-  * WLC side -- the disjunctive tokens the scanner (``ply_scanner_poetic``) reads
+  * WLC side -- the disjunctive tokens the scanner (``poetic_ply_scanner``) reads
     from the Michigan-Claremont codes, in order.
   * MAM side -- the disjunctive sequence extracted from MAM-simple's pointed
     Unicode text by ``mam_poetic_accents.disjunctives_from_verse_node``.
@@ -42,8 +42,8 @@ from accgram import uni_to_marks
 from accgram.mam_poetic_accents import load_poetic_disjunctives
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
-from accgram.ply_grammar_poetic import build_parser, parse_tokens
-from accgram.ply_scanner_poetic import scan_book
+from accgram.poetic_ply_grammar import build_parser, parse_tokens
+from accgram.poetic_ply_scanner import scan_book
 from accgram.poetic_reconcile import reconcile_tokens
 
 import repo_paths

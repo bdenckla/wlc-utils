@@ -4,9 +4,9 @@ Reads the canonical `-kq-u` Unicode source `out/wlc422-kq-u/`, transcodes
 each verse into per-book scanner-ready mark text (uni_to_marks, applying the genre
 filter so poetic books never reach the prose grammar), scans each verse into a token
 stream
-(ply_scanner), parses it into a tree (ply_grammar), and writes the reference line
+(prose_ply_scanner), parses it into a tree (prose_ply_grammar), and writes the reference line
 followed by the indented tree (ply_tree.print_tree) -- the same stdout the C
-"goerwitz" binary produced with `-p`. Output goes to out/accgram/ply/.
+"goerwitz" binary produced with `-p`. Output goes to out/accgram/ply-prose/.
 
 A verse the grammar cannot parse at all (parse_tokens returns None) is a fatal
 error: it signals a residual prose-grammar gap that must be surfaced, not silently
@@ -24,8 +24,8 @@ from accgram import lexical_validation
 from accgram import prose_filter
 from accgram import rtms_data
 from accgram import uni_to_marks
-from accgram.ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
-from accgram.ply_scanner import scan_book
+from accgram.prose_ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
+from accgram.prose_ply_scanner import scan_book
 from accgram.ply_tree import add_leaves, print_tree
 
 import repo_paths
@@ -155,7 +155,7 @@ def default_input_path(repo_root: Path) -> Path:
 
 
 def default_out_dir(repo_root: Path) -> Path:
-    return repo_paths.out_dir() / "accgram" / "ply"
+    return repo_paths.out_dir() / "accgram" / "ply-prose"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

@@ -36,7 +36,7 @@ import sys
 
 from ply import yacc
 
-from accgram.ply_scanner import Token
+from accgram.prose_ply_scanner import Token
 from accgram.ply_tree import TN, add_leaves, make_node
 
 # All 33 grammar tokens (declared even when unused by subsets, to mirror

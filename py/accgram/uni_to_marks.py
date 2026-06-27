@@ -1,6 +1,6 @@
 r"""Extract the Unicode **mark sequence** the PLY scanners consume (issue #9, Phase 2).
 
-The PLY prose/poetic scanners (`ply_scanner` / `ply_scanner_poetic`) read each verse
+The PLY prose/poetic scanners (`prose_ply_scanner` / `poetic_ply_scanner`) read each verse
 as a stream of single-character *marks* -- one Unicode codepoint per cantillation
 accent (plus meteg/paseq/sof-pasuq/puncta), placeholder ``X`` per base consonant, and
 maqaf (``-``) / space word boundaries -- as defined in `accent_marks`.  This module
@@ -106,12 +106,12 @@ def word_to_marks(word: str) -> str:
     telg-then-gerstar in the two cross-letter words (Lev 10:4, Ezek 48:10, where the telg
     leads only because it is prepositive and written at the word's front).  The grammar
     accepts both orders (a big telisha freely precedes or follows a geresh -- see
-    ply_grammar's geresh_pashta_clause / big_telisha_pashta_clause), so each sequence parses
+    prose_ply_grammar's geresh_pashta_clause / big_telisha_pashta_clause), so each sequence parses
     cleanly.  Where the two marks share one base letter, the resulting same-letter pair is
     whitelisted in `lexical_validation._WHITELISTED_SAME_LETTER` rather than flagged; the
     cross-letter words already sit on two letters and need no whitelist.  A prose geresh
     muqdam (2 Kings 17:13's companion, and the lone Lev 1:3 case) passes through as its own
-    codepoint here and is normalized to a plain geresh by the scanner (see ply_scanner); the
+    codepoint here and is normalized to a plain geresh by the scanner (see prose_ply_scanner); the
     whitelist therefore lists the raw geresh muqdam codepoint alongside plain geresh.
 
     Keeping both marks is the most faithful reading -- it preserves both accents the

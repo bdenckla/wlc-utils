@@ -31,7 +31,7 @@ from accgram.almost_errors_html_shared import (
     uxlc_change_link,
     verse_links,
 )
-from accgram.ply_scanner import HasLegarmeh
+from accgram.prose_ply_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
 from py_wlc import my_wlc_bcv_str
 

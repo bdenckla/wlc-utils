@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from accgram.ob_notes_shared import (
+from accgram.prose_ob_notes_shared import (
     BHS_TRANSCRIBES,
     MISSING_SOF_PASUQ_COMMENT,
     MISSING_SOF_PASUQ_SUMMARY,

@@ -1,6 +1,6 @@
 r"""Cross-check, per disjunctive, the SERVANT (conjunctive) L and MAM put before it.
 
-The disjunctive cross-check (``xcheck_poetic``) compares only the division *points*
+The disjunctive cross-check (``poetic_xcheck``) compares only the division *points*
 and is silent on servi.  This tool fills that gap: for each poetic disjunctive it
 tabulates the servus standing immediately before it in the WLC scanner's token stream
 (L) and in MAM-simple (via ``mam_poetic_accents.servi_before_in_words``), then reports
@@ -39,7 +39,7 @@ from accgram import rtms_data
 from accgram import uni_to_marks
 from accgram.mam_poetic_accents import load_word_accents, servi_before_in_words
 from accgram.mam_simple_verse import default_mam_simple_dir
-from accgram.ply_scanner_poetic import scan_book
+from accgram.poetic_ply_scanner import scan_book
 
 import repo_paths
 

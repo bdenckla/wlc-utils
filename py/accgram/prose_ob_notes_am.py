@@ -1,32 +1,33 @@
-"""Oddball structured research notes — ho."""
+"""Oddball structured research notes — am."""
 
 from __future__ import annotations
 
-from accgram.ob_notes_shared import (
+from accgram.prose_ob_notes_shared import (
     MISSING_SOF_PASUQ_COMMENT,
     MISSING_SOF_PASUQ_SUMMARY,
-    SOMEWHERE,
 )
 
 
 BY_REF: dict[str, dict[str, object]] = {
-    "ho 4:19": {
+    "am 1:14": {
         "st-source": "tbd",
         "st-summary": MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "מזבחותֽם",
-        "BHQ": "?",
+        "wlc_focus": "סופֽה",
         "comment": MISSING_SOF_PASUQ_COMMENT,
+        "BHQ": "?",
     },
-    "ho 8:9": {
+    "am 6:6": {
         "st-source": "tbd",
         "st-summary": MISSING_SOF_PASUQ_SUMMARY,
-        "wlc_focus": "אהבֽים",
-        "BHQ": "?",
+        "wlc_focus": "יוסֽף",
         "comment": MISSING_SOF_PASUQ_COMMENT,
+        "BHQ": "?",
     },
-    "ho 11:7": {
+    "am 9:5": {
         "st-source": "tbd",
-        "wlc_focus": "ירומם׃",
-        "st-summary": SOMEWHERE,
+        "st-summary": MISSING_SOF_PASUQ_SUMMARY,
+        "wlc_focus": "מצרֽים",
+        "comment": MISSING_SOF_PASUQ_COMMENT,
+        "BHQ": "?",
     },
 }
