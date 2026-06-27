@@ -468,13 +468,16 @@ def _build_intro(oddballs: list[PoeticOddball]) -> tuple[object, ...]:
 def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
     bb, chnu, vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(ob))
     anchor_id = ob_report.oddball_anchor_id(bcv)
+    # The shared, prose-shaped core row every shared leaf renderer consumes (issue
+    # #40); ob.enriched_row is its SAT-enriched layer, fed to the SAT table below.
+    shared_row = _shared_row(ob)
 
     items: list[object] = [
         wlc_utils_html.heading_level_2(ob.reference, {"id": anchor_id})
     ]
     items.extend(_render_ref_links(ob, bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, anchor_id=anchor_id))
     items.append(_render_summary(ob))
-    hebrew_verse = _render_hebrew_verse(ob)
+    hebrew_verse = _render_hebrew_verse(ob, shared_row)
     if hebrew_verse is not None:
         items.append(hebrew_verse)
     items.append(
@@ -490,12 +493,12 @@ def _render_oddball_section(ob: PoeticOddball, *, is_first: bool) -> object:
     items.append(_render_tree(ob))
     items.extend(
         rtmsr_media.render_comment_paragraphs(
-            {}, structured_text_lookup=_structured_text_lookup(ob)
+            shared_row, structured_text_lookup=_structured_text_lookup(ob)
         )
     )
     items.extend(
         rtmsr_media.render_image_paragraphs(
-            {}, structured_text_lookup=_structured_text_lookup(ob)
+            shared_row, structured_text_lookup=_structured_text_lookup(ob)
         )
     )
 
@@ -601,19 +604,20 @@ def _wrap_hebrew_runs(text: str) -> tuple[object, ...]:
     return tuple(pieces)
 
 
-def _render_hebrew_verse(ob: PoeticOddball) -> object | None:
+def _render_hebrew_verse(
+    ob: PoeticOddball, shared_row: dict[str, object]
+) -> object | None:
     """Pointed-Hebrew (RTL) verse paragraph via the shared goerwitz renderer.
 
     For a missing-silluq verse the locus is the verse-final word (the word that
     arrives with no silluq), so highlight it; NO_PARSE is not localized to one
     word, so render the plain verse. A non-unique/absent focus degrades to no
-    highlight (the renderer falls back gracefully)."""
+    highlight (the renderer falls back gracefully). The renderer reads the verse
+    payload and focus from the shared core row (wlc422_kq_u_verse / wlc_focus)."""
     if not isinstance(ob.wlc_verse, dict):
         return None
-    focus = _final_word_focus(ob) if ob.kind == KIND_MISSING_SILLUQ else None
-    row = {"wlc422_kq_u_verse": ob.wlc_verse, "wlc_focus": focus}
     return rtmsr_verse.render_wlc_verse_paragraph(
-        row, structured_text_lookup=lambda r, key: r.get(key)
+        shared_row, structured_text_lookup=lambda r, key: r.get(key)
     )
 
 
@@ -640,6 +644,32 @@ def _token_text(token: object) -> str:
             if isinstance(value, str):
                 return value
     return ""
+
+
+def _shared_row(ob: PoeticOddball) -> dict[str, object]:
+    """The oddball's core row dict -- the single prose-shaped representation the
+    shared leaf renderers consume, so the poetic front-end feeds the shared layer the
+    same row shape the prose front-end does rather than ad-hoc throwaway dicts
+    (issue #40).
+
+    It carries what those renderers read: the pointed-Hebrew verse payload
+    (``wlc422_kq_u_verse``) and the highlight focus (``wlc_focus``, the verse-final
+    word for missing-silluq verses, ``None`` otherwise), plus ``ref``/``output_file``
+    for parity with the prose row. ``ob.enriched_row`` is the SAT-enriched layer over
+    this core -- the WLC/UXLC/MAM focus-word witnesses + diffs, built only for
+    missing-silluq verses with a unique focus -- the poetic analogue of prose's
+    classified-row -> build_enriched_row pipeline; the SAT table renders from that
+    enriched row, while this core row feeds the verse paragraph + comment/image
+    blocks. ``wlc422_kq_u_verse`` stays ``ob.wlc_verse`` (the render-prepared verse),
+    not the enriched row's separately-sanitized copy."""
+    return {
+        "ref": _bb_ref(ob),
+        "output_file": ob.output_file,
+        "wlc422_kq_u_verse": ob.wlc_verse,
+        "wlc_focus": (
+            _final_word_focus(ob) if ob.kind == KIND_MISSING_SILLUQ else None
+        ),
+    }
 
 
 def _render_meta(ob: PoeticOddball) -> object:
