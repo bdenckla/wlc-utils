@@ -138,9 +138,9 @@ def _parse_uxlc_change(compact):
     return (release, changeset, int(n_str))
 
 
-def goerwitz_uxlc_change_keys():
+def prose_st_uxlc_change_keys():
     """Map (release, changeset, n) -> (structured-text ref, is_pending) for every
-    `uxlc_change` / `pending_uxlc_change` named by a Goerwitz structured-text
+    `uxlc_change` / `pending_uxlc_change` named by a prose structured-text
     entry. `is_pending` is True when the ref came from `pending_uxlc_change`
     (a change accepted upstream but not yet in a stable release)."""
     keys = {}
@@ -156,16 +156,16 @@ def main():
     src = 'in/UXLC-misc/all_changes.json'
     out = 'in/accgram/uxlc_accent_changes.json'
     data = json.load(open(src, encoding='utf-8'))
-    gw_keys = goerwitz_uxlc_change_keys()
+    prose_st_keys = prose_st_uxlc_change_keys()
     result = []
     for d in data:
         reason = classify(d)
         if reason:
             rec = dict(d)
             rec['accent_change_reason'] = reason
-            ref, pending = gw_keys.get(record_key(d), (None, None))
-            rec['goerwitz_st_ref'] = ref
-            rec['goerwitz_st_pending'] = pending
+            ref, pending = prose_st_keys.get(record_key(d), (None, None))
+            rec['prose_st_ref'] = ref
+            rec['prose_st_pending'] = pending
             result.append(rec)
     if '--audit' in sys.argv:
         print('total records:', len(data))
@@ -174,12 +174,12 @@ def main():
         # bug check: no flagged record may have identical ref/chg representations
         bug = [r for r in result if ref_chg(r)[0] == ref_chg(r)[1] and r['accent_change_reason'] != 'maqaf']
         print('BUG (identical ref/chg yet flagged non-maqaf):', len(bug))
-        # Goerwitz structured-text coverage
-        matched = {record_key(r) for r in result if r['goerwitz_st_ref']}
-        pending = sum(1 for r in result if r['goerwitz_st_pending'])
-        print('goerwitz uxlc_change refs:', len(gw_keys))
+        # prose structured-text coverage
+        matched = {record_key(r) for r in result if r['prose_st_ref']}
+        pending = sum(1 for r in result if r['prose_st_pending'])
+        print('prose uxlc_change refs:', len(prose_st_keys))
         print('  matched to a flagged accent change:', len(matched), f'({pending} pending)')
-        unmatched = {k: v for k, v in gw_keys.items() if k not in matched}
+        unmatched = {k: v for k, v in prose_st_keys.items() if k not in matched}
         if unmatched:
             print('  NOT matched (ref not an accent change / not in data):')
             for k, (ref, is_pending) in sorted(unmatched.items(), key=lambda kv: kv[1][0]):

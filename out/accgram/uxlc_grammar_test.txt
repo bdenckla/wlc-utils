@@ -1,13 +1,13 @@
-=== OUT set: WLC-4.22 vs UXLC grammaticality (changes NOT in goerwitz output) ===
+=== OUT set: WLC-4.22 vs UXLC grammaticality (changes NOT in prose output) ===
 
-prose-corpus verses          : 203  (220 changes)
-  validated                  : 189 verses (205 changes)
+prose-corpus verses          : 202  (219 changes)
+  validated                  : 188 verses (204 changes)
   excluded                   : 14 verses (15 changes)
 
-  of validated: scanner-VISIBLE change 100, no-op 89
+  of validated: scanner-VISIBLE change 100, no-op 88
 
 2x2 over validated VERSES (all):
-  WLC-gram    -> UXLC-gram   : 178
+  WLC-gram    -> UXLC-gram   : 177
   WLC-gram    -> UXLC-ungram : 10
   WLC-ungram  -> UXLC-gram   : 0
   WLC-ungram  -> UXLC-ungram : 1
@@ -51,19 +51,19 @@ Excluded verses (synth could not be validated):
 By-kind breakdown of solo-change verses (confidence buckets):
   add_accent        : WLC-gram->[g  13 / u   2]   WLC-ungram->[g   0 / u   0]
   remove_terminator : WLC-gram->[g   0 / u   2]   WLC-ungram->[g   0 / u   0]
-  substitution      : WLC-gram->[g 150 / u   6]   WLC-ungram->[g   0 / u   1]
+  substitution      : WLC-gram->[g 149 / u   6]   WLC-ungram->[g   0 / u   1]
 
 
-=== IN set: WLC-4.22 vs UXLC grammaticality (changes IN goerwitz output) ===
+=== IN set: WLC-4.22 vs UXLC grammaticality (changes IN prose output) ===
 
-prose-corpus verses          : 43  (44 changes)
-  validated                  : 30 verses (30 changes)
+prose-corpus verses          : 44  (45 changes)
+  validated                  : 31 verses (31 changes)
   excluded                   : 13 verses (14 changes)
 
-  of validated: scanner-VISIBLE change 30, no-op 0
+  of validated: scanner-VISIBLE change 30, no-op 1
 
 2x2 over validated VERSES (all):
-  WLC-gram    -> UXLC-gram   : 0
+  WLC-gram    -> UXLC-gram   : 1
   WLC-gram    -> UXLC-ungram : 0
   WLC-ungram  -> UXLC-gram   : 28
   WLC-ungram  -> UXLC-ungram : 2
@@ -123,7 +123,7 @@ Excluded verses (synth could not be validated):
 
 By-kind breakdown of solo-change verses (confidence buckets):
   add_accent        : WLC-gram->[g   0 / u   0]   WLC-ungram->[g   1 / u   0]
-  substitution      : WLC-gram->[g   0 / u   0]   WLC-ungram->[g  27 / u   2]
+  substitution      : WLC-gram->[g   1 / u   0]   WLC-ungram->[g  27 / u   2]
 
 
 === Directional asymmetry across the grammaticality boundary ===
@@ -131,6 +131,6 @@ By-kind breakdown of solo-change verses (confidence buckets):
   OUT set: only DEGRADATION crosses the boundary (WLC-gram->UXLC-ungram 10, WLC-ungram->UXLC-gram 0).
   IN  set: only FIXES crosses the boundary (WLC-ungram->UXLC-gram 28, WLC-gram->UXLC-ungram 0).
 
-  The changes Goerwitz's oddball notes flagged (IN set) only ever repair
+  The changes the prose oddball notes flagged (IN set) only ever repair
   ungrammaticality; the changes they did not flag (OUT set) only ever
   introduce it.  No fix leaks into OUT and no degradation leaks into IN.

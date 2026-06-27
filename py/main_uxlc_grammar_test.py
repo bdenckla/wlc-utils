@@ -1,10 +1,10 @@
 """UXLC accent-change grammar test: do the changes move a verse across the
 WLC-4.22 / UXLC grammaticality boundary, and in which direction?
 
-The change records (uxlc_accent_changes.json) partition on `goerwitz_st_ref`:
+The change records (uxlc_accent_changes.json) partition on `prose_st_ref`:
 
-  * the OUT set -- changes NOT linked to a Goerwitz oddball note; and
-  * the IN  set -- changes that ARE so linked (i.e. that Goerwitz's oddball
+  * the OUT set -- changes NOT linked to a prose oddball note; and
+  * the IN  set -- changes that ARE so linked (i.e. that the prose oddball
     notes flagged and the UXLC then adopted).
 
 Both sets are evaluated by the same `evaluate()` and reported in two sections of
@@ -428,8 +428,8 @@ def report_section(res: dict, title: str, p) -> None:
 
 def main() -> None:
     data = json.load(open(SRC, encoding="utf-8"))
-    out_set = [r for r in data if not r["goerwitz_st_ref"]]
-    in_set = [r for r in data if r["goerwitz_st_ref"]]
+    out_set = [r for r in data if not r["prose_st_ref"]]
+    in_set = [r for r in data if r["prose_st_ref"]]
 
     parser = build_parser()
     out_res = evaluate(out_set, parser)
@@ -444,14 +444,14 @@ def main() -> None:
 
     report_section(
         out_res,
-        "OUT set: WLC-4.22 vs UXLC grammaticality (changes NOT in goerwitz output)",
+        "OUT set: WLC-4.22 vs UXLC grammaticality (changes NOT in prose output)",
         p,
     )
     p()
     p()
     report_section(
         in_res,
-        "IN set: WLC-4.22 vs UXLC grammaticality (changes IN goerwitz output)",
+        "IN set: WLC-4.22 vs UXLC grammaticality (changes IN prose output)",
         p,
     )
     p()
@@ -465,7 +465,7 @@ def main() -> None:
       f"(WLC-ungram->UXLC-gram {len(in_res['fixed'])}, "
       f"WLC-gram->UXLC-ungram {len(in_res['broke'])}).")
     p()
-    p("  The changes Goerwitz's oddball notes flagged (IN set) only ever repair")
+    p("  The changes the prose oddball notes flagged (IN set) only ever repair")
     p("  ungrammaticality; the changes they did not flag (OUT set) only ever")
     p("  introduce it.  No fix leaks into OUT and no degradation leaks into IN.")
 
