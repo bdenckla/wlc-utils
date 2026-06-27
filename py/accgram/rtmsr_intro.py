@@ -25,35 +25,35 @@ def build_intro_contents(
     oddball_count: int,
 ) -> tuple[object, ...]:
     intro_text = (
-        f"This page lists the {oddball_count} WLC 4.22 verses that produce \u201cERROR\u201d"
-        " when run through the PLY port of the Goerwitz accent checker."
-        " Use the filter below to narrow the list."
+        f"This page lists the {oddball_count} WLC 4.22 verses are considered ungrammatical"
+        " by the PLY port of the Goerwitz accent checker."
     )
     oddballs_text = (
-        f"These {oddball_count} verses parse into a tree"
+        f"These {oddball_count} verses are considered ungrammatical because they parse into a tree"
         " containing the string \u201cERROR\u201d; each section below includes one such"
         " tree. Potential causes of \u201cERROR\u201d include"
-        " WLC quirks,"
-        " BHS quirks,"
-        " LC quirks, and"
-        " checker quirks."
+        " WLC issues,"
+        " BHS issues,"
+        " LC issues, and"
+        " checker issues."
+        " (Issues include clear errors but also mere quirks.)"
     )
-    msp_text = "The filter sorts each verse into one of four grammar-error categories:"
+    msp_text = "The issues can be filtered by their category:"
     msp_categories = (
-        "“missing sof pasuq”",
-        "“missing silluq,” where a sof pasuq is present"
-        " but the verse-final word has no accent",
-        "“zarqa whim,” where WLC turns a scribal zarqa whim into an outright error",
-        "“other,” for everything else",
+        "“Missing sof pasuq.”",
+        "“Missing silluq,” where a sof pasuq is present but the verse-final word has no accent.",
+        "“Zarqa whim,” where WLC turns a scribal zarqa whim into an outright error.",
+        "“Other,” for everything else.",
     )
     source_text = (
-        "A Source filter, ANDed with the grammar error, attributes each verse to"
+        "The issues can also be filtered based on “who is to blame”:"
         " WLC, BHS/BHQ, the LC, or “unclear/TBD”."
+        "This \u201cSource\u201d filter is ANDed with the category filter."
     )
     and_text = (
-        "Two further toggles narrow the list, each ANDed with the filters above:"
-        " whether the verse has a UXLC change, and"
-        " whether its table displays a WLC bracket-note."
+        "There are two further filters, each ANDed with the filters above:"
+        " whether the issue has an associated UXLC change, and"
+        " whether the word in question has a bracket-note in WLC."
         " Each toggle is three-state: has, doesn’t have, or don’t care"
         " (the default)."
     )
