@@ -5,7 +5,7 @@ Two corrections the M-C source cannot express, applied before the grammar parses
   1. legarmeh-vs-paseq: a scanner LEGARMEH MAM reads as a narrow-sense paseq is demoted to
      its underlying conjunctive servus (azla 63 / mahapakh 70), the paseq swallowed.
   2. the unmarked oleh-we-yored (Yeivin #363): a charitable, parse-driven pass reads
-     one ambiguous merka as a yored iff that uniquely makes the verse parse.
+     one ambiguous merkha as a yored iff that uniquely makes the verse parse.
 
 The two named oddballs (Ps 68:20, Pr 30:15) need *both* corrections; the two unrelated
 NO_PARSE verses (Ps 17:14, Job 31:15) must stay NO_PARSE under reconciliation.  (Ps
@@ -84,7 +84,7 @@ def test_demote_is_a_noop_when_verse_is_absent_from_mam():
 
 
 def test_charitable_oleh_uniquely_recovers_an_unmarked_yored():
-    # Ps 68:20 after legarmeh->mahapakh demotion: NO_PARSE until the bare merka of the
+    # Ps 68:20 after legarmeh->mahapakh demotion: NO_PARSE until the bare merkha of the
     # unmarked oleh-we-yored is read as a yored.  Exactly one promotion parses.
     parser = build_parser()
     tokens = [
@@ -109,7 +109,7 @@ def test_charitable_oleh_uniquely_recovers_an_unmarked_yored():
 
 def test_charitable_oleh_is_none_when_no_promotion_parses():
     parser = build_parser()
-    # A verse with no merka cannot be repaired by promoting a merka.
+    # A verse with no merkha cannot be repaired by promoting a merkha.
     tokens = [(pan.TILDE, ""), (pan.ATNAX, "atnax"), (pan.SILLUQ, "silluq"), (pan.SOFPASUQ, "")]
     assert pr._charitable_oleh(tokens, parser) is None
 

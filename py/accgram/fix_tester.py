@@ -414,9 +414,9 @@ def _test_merge_next(
 
     Unlike every other fix (a single-word accent edit inside one verse via
     ``fix_apply``), nu 25:19's fix is versification: BHS strands a verse number
-    mid-chanted-verse, so the "verse" ends on an atnach with no silluq/sof-pasuq.
+    mid-chanted-verse, so the "verse" ends on an atnaḥ with no silluq/sof-pasuq.
     Appending the body BHS labels as the next verse supplies the second half, the
-    atnach bisects a complete verse, and the parse comes out CLEAN.
+    atnaḥ bisects a complete verse, and the parse comes out CLEAN.
     """
     nbb, nchnu, nvrnu = rtms_rows.parse_ref(merge_ref, row_kind="oddball")
     next_bcv = rtms_rows.to_compact_bcv(nbb, nchnu, nvrnu)

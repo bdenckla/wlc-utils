@@ -18,16 +18,16 @@ makes a blanket guess that this module corrects before the grammar sees the toke
    needs only a small hardcoded exception list -- see doc / the issue.)
 
 2. **the unmarked oleh-we-yored** (Yeivin ITM #363).  L sometimes writes the yored of
-   an oleh-we-yored as a bare merka (71) with the upper ole sign dropped, so the
-   scanner reads a conjunctive merka and misses the divider.  ``ply_scanner_poetic``
+   an oleh-we-yored as a bare merkha (71) with the upper ole sign dropped, so the
+   scanner reads a conjunctive merkha and misses the divider.  ``ply_scanner_poetic``
    already recovers the cases its galgal-servus heuristic can see; the rest are
    recovered here by *charitable parsing*: if a verse does not parse, but reinterpreting
-   exactly one of its merkas as an (unmarked) yored makes it parse, adopt that reading.
+   exactly one of its merkhas as an (unmarked) yored makes it parse, adopt that reading.
    This consults no oracle -- only the grammar -- and touches only verses that would
    otherwise be NO_PARSE, so it can never change a verse that already parses.
 
 The two passes run in order (demotion first, then charitable parsing): at Ps 68:20 and
-Pr 30:15 both corrections are needed, and the merka the charitable pass promotes is the
+Pr 30:15 both corrections are needed, and the merkha the charitable pass promotes is the
 word immediately after the demoted legarmeh -- independently reproducing MAM's reading.
 """
 
@@ -137,7 +137,7 @@ def _legarmeh_underlying_servi(body: str) -> list[str]:
 def _charitable_oleh(
     tokens: list[tuple[str, str]], parser: object
 ) -> list[tuple[str, str]] | None:
-    """Reinterpret one ambiguous merka as an unmarked yored if that uniquely parses.
+    """Reinterpret one ambiguous merkha as an unmarked yored if that uniquely parses.
 
     Tries promoting each ``MERKHA`` to ``OLEH_WEYORED`` in turn; returns the promoted
     token list iff exactly one such promotion yields a parse (an ambiguous or empty

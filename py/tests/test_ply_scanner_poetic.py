@@ -3,7 +3,7 @@
 Pins the decoded token stream of a few real Psalms verses whose Michigan-Claremont
 encoding was checked by hand against the M-C accent table (wlc420/supplmt.wts,
 column II) and Yeivin ITM #358-374.  These exercise the tricky cases: the
-revia mugrash geresh muqdam (11+81), oleh-we-yored (60 ole + 71 yored merka),
+revia mugrash geresh muqdam (11+81), oleh-we-yored (60 ole + 71 yored merkha),
 azla/mahapakh legarmeh (63/70 + 05 paseq), the galgal servus of oleh-we-yored
 (93), and the revia gadol/qatan/mugrash disambiguation.
 
@@ -63,7 +63,7 @@ def test_ps_2_2_azla_legarmeh():
 
 
 def test_ps_3_3_oleh_weyored_with_galgal_servus():
-    # )OM:RI93YM = galgal servus; L:/NA60P:$/I71Y = ole (60) + yored merka (71).
+    # )OM:RI93YM = galgal servus; L:/NA60P:$/I71Y = ole (60) + yored merkha (71).
     body = (
         r"RAB.IYM02 )OM:RI93YM L:/NA60P:$/I71Y )\"70YN "
         r"Y:75$W.(F65T/FH L./O64W B\"75/)LOHI64YM SE75LFH00"
@@ -73,7 +73,7 @@ def test_ps_3_3_oleh_weyored_with_galgal_servus():
     assert pan.TSINNOR in types  # 02 on RAB.IYM
     # the galgal (93) precedes oleh-we-yored as its servus
     assert types.index(pan.GALGAL) < types.index(pan.OLEH_WEYORED)
-    # the yored merka (71) is folded into OLEH_WEYORED, not emitted separately just
+    # the yored merkha (71) is folded into OLEH_WEYORED, not emitted separately just
     # before it: no MERKHA sits between GALGAL and OLEH_WEYORED
     g, o = types.index(pan.GALGAL), types.index(pan.OLEH_WEYORED)
     assert pan.MERKHA not in types[g + 1 : o]
@@ -94,8 +94,8 @@ def test_ps_37_28_revia_gadol_then_dexi_then_atnax():
 
 
 def test_unmarked_oleh_recovered_after_galgal():
-    # Ps 30:12: L omits the ole (#363), writing only the yored merka (L/I71Y);
-    # the galgal servus (93) immediately precedes it, so the bare merka is
+    # Ps 30:12: L omits the ole (#363), writing only the yored merkha (L/I71Y);
+    # the galgal servus (93) immediately precedes it, so the bare merkha is
     # recovered as oleh-we-yored rather than read as a servus.  MAM-cross-checked.
     body = (
         r"HFPA74K:T.F MIS:P.:D/IY02 L:/MFXO93WL L/I71Y P.IT.A71X:T.F "

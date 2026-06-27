@@ -59,7 +59,7 @@ viceroys (deḥi etc.), parsing Breuer's revia-substitute-for-atnaḥ verses (Ps
 105:45, 119:4, Job 14:4) without verse-level context.
 
 Known gaps (deferred to the validation pass, see the module's tests / notes):
-  - oleh-we-yored whose ole is unmarked (only the yored merka is written -- #363):
+  - oleh-we-yored whose ole is unmarked (only the yored merkha is written -- #363):
     recovered when the galgal servus immediately precedes it (see
     _recover_unmarked_oleh, MAM-cross-checked); the rarer "when a revia precedes"
     variant is still read as a servus (its signal is ambiguous -- see that helper).
@@ -160,7 +160,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # silluq: meteg/silluq sign immediately before sof pasuq.
     (re.compile(am.METEG + _SILLUQ_LA), pan.SILLUQ),
     (re.compile(am.ATNAX), pan.ATNAX),
-    # oleh-we-yored: ole plus its yored merka in the same word; the merka is
+    # oleh-we-yored: ole plus its yored merkha in the same word; the merkha is
     # consumed here so it is not also emitted as a servus.  Bare ole (yored on
     # the next word, or unmarked) still yields the accent.
     (re.compile(am.OLE + _TEXT + am.MERKHA), pan.OLEH_WEYORED),
@@ -285,9 +285,9 @@ def _recover_unmarked_oleh(types: list[str]) -> list[str]:
     """Recover an oleh-we-yored whose ole sign L leaves unmarked (ITM #363).
 
     In the Leningrad codex the ole (the upper sign of oleh-we-yored) is sometimes
-    omitted, leaving only the yored -- a merka -- written below the stress;
+    omitted, leaving only the yored -- a merkha -- written below the stress;
     MAM-simple always supplies the ole, and the user confirms L/LC drops it.  Read
-    literally the lone merka looks like a conjunctive servus, so the scanner misses
+    literally the lone merkha looks like a conjunctive servus, so the scanner misses
     the divider (the verse then fails to parse).
 
     The reliable, MAM-cross-checked signal is the oleh-we-yored's own servus: the
@@ -298,7 +298,7 @@ def _recover_unmarked_oleh(types: list[str]) -> list[str]:
     and introduces no new disagreements across the corpus.
 
     The other unmarked-ole context #363 notes -- a *revia* preceding the yored --
-    is deliberately NOT recovered here: a revia followed by a merka servus is an
+    is deliberately NOT recovered here: a revia followed by a merkha servus is an
     extremely common ordinary sequence, so that signal is unusable without
     word-level information (it breaks ~1400 verses against the oracle).  Those few
     verses remain flagged divergences for a later, narrower pass.

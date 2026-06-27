@@ -72,11 +72,11 @@ MAQAF_CP = "־"   # HEBREW PUNCTUATION MAQAF
 PASEQ_CP = "׀"   # HEBREW PUNCTUATION PASEQ
 
 # Unicode accent NAME (as used in refuni/changeuni) -> its scanner mark (accent_marks).
-# These are the prose te'amim; poetic-only accents (atnah-hafukh, etc.) have no prose
+# These are the prose te'amim; poetic-only accents (atnaḥ-hafukh, etc.) have no prose
 # mark and simply will not validate if they appear.
 NAME2MARK = {
-    "etnachta": am.ATNAX, "etnahta": am.ATNAX,
-    "zarqa": am.TSINNOR, "zinor": am.TSINNOR,
+    "etnachta": am.ATNAX, "etnahta": am.ATNAX,  # translit-ok: UXLC name
+    "zarqa": am.TSINNOR, "zinor": am.TSINNOR,  # translit-ok: UXLC name
     "pashta": am.PASHTA,
     "yetiv": am.YETIV,
     "tevir": am.TEVIR,
@@ -85,19 +85,19 @@ NAME2MARK = {
     "telisha-gedola": am.TELISHA_GEDOLA,
     "telisha-qetana": am.TELISHA_QETANA,
     "pazer": am.PAZER,
-    "munah": am.MUNAX,
+    "munah": am.MUNAX,  # translit-ok: UXLC name
     "mahapakh": am.MAHAPAKH, "makhapakh": am.MAHAPAKH,
     "merkha": am.MERKHA,
     "darga": am.DARGA,
     "qadma": am.QADMA,
-    "yerah-ben-yomo": am.YERAX,
+    "yerah-ben-yomo": am.YERAX,  # translit-ok: UXLC name
     "ole": am.OLE,
     "iluy": am.ILUY,
-    "dehi": am.DEXI,
+    "dehi": am.DEXI,  # translit-ok: UXLC name
     "revia": am.REVIA,
     "zaqef-qatan": am.ZAQEF_QATAN,
     "zaqef-gadol": am.ZAQEF_GADOL,
-    "tipeha": am.TIPEXA,
+    "tipeha": am.TIPEXA,  # translit-ok: UXLC name
     "shalshelet": am.SHALSHELET,
 }
 # Non-accent tokens that still carry meaning for the scanner.

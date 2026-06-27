@@ -40,11 +40,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from accgram import ob_notes  # noqa: E402
 
 ACC = {
-    'etnachta', 'etnahta', 'atnah-hafukh', 'zarqa', 'zinor', 'pashta', 'yetiv',
+    'etnachta', 'etnahta', 'atnah-hafukh', 'zarqa', 'zinor', 'pashta', 'yetiv',  # translit-ok: UXLC accent names
     'tevir', 'geresh', 'geresh-muqdam', 'gereshayim', 'gershayim',
-    'telisha-gedola', 'telisha-qetana', 'pazer', 'munah', 'mahapakh',
-    'makhapakh', 'merkha', 'darga', 'qadma', 'yerah-ben-yomo', 'ole', 'iluy',
-    'dehi', 'revia', 'zaqef-qatan', 'zaqef-gadol', 'tipeha', 'shalshelet',
+    'telisha-gedola', 'telisha-qetana', 'pazer', 'munah', 'mahapakh',  # translit-ok: UXLC accent names
+    'makhapakh', 'merkha', 'darga', 'qadma', 'yerah-ben-yomo', 'ole', 'iluy',  # translit-ok: UXLC accent names
+    'dehi', 'revia', 'zaqef-qatan', 'zaqef-gadol', 'tipeha', 'shalshelet',  # translit-ok: UXLC accent names
 }
 CONS = {
     'alef', 'ayin', 'bet', 'dalet', 'final-kaf', 'final-mem', 'final-nun',

@@ -19,13 +19,13 @@ Spellings follow the canonical display names in ``py/mb_diff_mpu/describe_diff.p
   - deḥi -> DEXI, munaḥ -> MUNAX (ḥ -> X; cf. mb_cmn ``DEX``).
   - tsinnor -> TSINNOR (describe_diff "tsinnor", doubled n).
   - merkha -> MERKHA, mahapakh -> MAHAPAKH (cf. Unicode names; the kaf-dropping
-    Goerwitz "MEREKA"/"MAHPAK" lose to the full forms).
+    Goerwitz "MEREKA"/"MAHPAK" lose to the full forms).  # translit-ok: cites Goerwitz forms
   - names describe_diff spells plainly keep the plain Goerwitz form (ply_grammar.py):
     SILLUQ, PAZER, LEGARMEH, AZLA, GALGAL, REVIA, SHALSHELET.
 
 Maintainer overrides of describe_diff:
   - ATNAX, not ETNAXTA (describe_diff calls the accent "etnaḥta").
-  - TARXA, not TARHA: describe_diff's plain "tarha" is a bug; the ḥet takes X.
+  - TARXA, not TARHA: describe_diff's plain "tarha" is a bug; the ḥet takes X.  # translit-ok: cites describe_diff bug
   - ILLUY, not ILUY: doubled L preferred.
   - OLEH_WEYORED keeps "we-" (no "veyored" precedent in the tree).
 
@@ -52,7 +52,7 @@ REVIA_GADOL = "REVIA_GADOL"
 REVIA_MUGRASH = "REVIA_MUGRASH"
 REVIA_QATAN = "REVIA_QATAN"
 DEXI = "DEXI"  # deḥi
-TSINNOR = "TSINNOR"  # tsinnor (Unicode "zinor")
+TSINNOR = "TSINNOR"  # tsinnor (Unicode "zinor")  # translit-ok: Unicode name
 PAZER = "PAZER"
 LEGARMEH = "LEGARMEH"
 SHALSHELET_GEDOLAH = "SHALSHELET_GEDOLAH"
@@ -80,11 +80,11 @@ AZLA = "AZLA"
 GALGAL = "GALGAL"
 ILLUY = "ILLUY"  # doubled L preferred over describe_diff's "iluy"
 TARXA = "TARXA"  # tarḥa (poetic name for the tipeḥa-shaped sign; describe_diff's
-# plain "tarha" is a bug per the maintainer -- the ḥet takes X like MUNAX/DEXI)
+# plain "tarha" is a bug per the maintainer -- the ḥet takes X like MUNAX/DEXI)  # translit-ok: cites describe_diff bug
 
 # --- fused tsinnorit servi and the conjunctive shalshelet ----------------------
 # A mahapakh / merkha carrying a tsinnorit (U+0598) secondary on the open syllable
-# before the stress: Yeivin §372's "mehuppak mesunnar", Breuer Ch. 9 §22's "mahpakh
+# before the stress: Yeivin §372's "mehuppak mesunnar", Breuer Ch. 9 §22's "mahpakh  # translit-ok: cites Yeivin/Breuer
 # metzunar" / "merkha metzunar".  The scanner fuses the tsinnorit onto its mahapakh /
 # merkha partner (in the same chanted word) into one of these tokens instead of
 # dropping it.  Functionally still the conjunctive (the tsinnorit is only a secondary),

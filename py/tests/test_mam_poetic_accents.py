@@ -2,7 +2,7 @@
 
 These pin the disjunctive sequence ``mam_poetic_accents`` extracts from a few
 hand-built MAM-simple verse nodes, exercising the tricky encodings: oleh-we-yored
-(ole + yored merka), revia mugrash (geresh muqdam + revia), legarmeh vs shalshelet
+(ole + yored merkha), revia mugrash (geresh muqdam + revia), legarmeh vs shalshelet
 gedolah (both ``lp-legarmeih`` paseq nodes, told apart by the preceding sign), the
 generic-revia reclassification, and bare shalshelet (qetannah, swallowed).
 
@@ -36,7 +36,7 @@ def _verse(*nodes: dict) -> dict:
 
 
 def test_oleh_weyored_and_atnax_and_silluq():
-    # ole(+yored merka) -> oleh-we-yored; etnaḥta -> atnach; final word -> silluq.
+    # ole(+yored merkha) -> oleh-we-yored; etnaḥta -> atnaḥ; final word -> silluq.
     node = _verse(
         {"type": "text", "text": B + ha.OLE + B + ha.MER},  # one word: ole + yored
         {"type": "text", "text": B + ha.ATN},
@@ -162,7 +162,7 @@ def _silluq_word() -> dict:
 
 
 def test_word_accents_pairs_disjunctive_and_servus():
-    # merka(servus) | deḥi(divider) | silluq -- exactly one of disj/servus per word, and
+    # merkha(servus) | deḥi(divider) | silluq -- exactly one of disj/servus per word, and
     # no same-word servant here, so self_servus is None throughout.
     node = _verse(_text(ha.MER), _text(ha.DEX), _silluq_word())
     assert word_accents_from_verse_node(node) == [
@@ -186,10 +186,10 @@ def test_word_accents_captures_same_word_galgal_before_pazer():
     assert servi_before_from_verse_node(node, pan.PAZER) == [pan.GALGAL]
 
 
-def test_servi_before_dexi_merka_and_munax():
+def test_servi_before_dexi_merkha_and_munax():
     # The servant immediately before deḥi is read in the L scanner's vocabulary.
-    merka = _verse(_text(ha.MER), _text(ha.DEX), _silluq_word())
-    assert servi_before_from_verse_node(merka, pan.DEXI) == [pan.MERKHA]
+    merkha = _verse(_text(ha.MER), _text(ha.DEX), _silluq_word())
+    assert servi_before_from_verse_node(merkha, pan.DEXI) == [pan.MERKHA]
 
     munax = _verse(_text(ha.MUN), _text(ha.DEX), _silluq_word())
     assert servi_before_from_verse_node(munax, pan.DEXI) == [pan.MUNAX]

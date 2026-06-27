@@ -33,7 +33,7 @@ Design: rank-ordered clause hierarchy, permissive servus chains.
   servi", "various combinations", "governed by intricate rules" -- and there is no
   oracle to pin exact patterns against.  So every ``D_phrase`` is just ``D``
   optionally preceded by a ``servi`` chain; the particular servus counts/orders
-  Yeivin documents (munaḥ/merka before silluq, galgal+mahapakh/azla before pazer, the
+  Yeivin documents (munaḥ/merkha before silluq, galgal+mahapakh/azla before pazer, the
   galgal "v"-servus of oleh-we-yored, etc.) are admitted but not required.
 
   Error recovery is limited to one rule (p_silluq_phrase_error): a verse missing
@@ -199,8 +199,8 @@ def p_oleh_weyored_phrase(p):
     """oleh_weyored_phrase : OLEH_WEYORED
                            | servi OLEH_WEYORED"""
     # The characteristic servus is the "v"-shaped sign, coded as galgal in L (the
-    # same sign as pazer's servus; #363); mahapakh/merka also occur.  The yored
-    # (merka below the stress) is part of the oleh-we-yored sign and is folded into
+    # same sign as pazer's servus; #363); mahapakh/merkha also occur.  The yored
+    # (merkha below the stress) is part of the oleh-we-yored sign and is folded into
     # the OLEH_WEYORED token by the scanner, not a servus.
     _phrase(p, "oleh_weyored_phrase")
 
@@ -219,14 +219,14 @@ def p_atnax_phrase(p):
 
 
 # Permissive servi before REVIA_GADOL.  Breuer Ch 11 §32-33 gives a phonology-dependent
-# 3-set -- mahapakh | merka | illuy -- and servi_xcheck (2026-06-17) confirms it: L's
+# 3-set -- mahapakh | merkha | illuy -- and servi_xcheck (2026-06-17) confirms it: L's
 # distribution is exactly those three (108 / 65 / 32) with ZERO servant-type conflicts vs
 # MAM.  The only out-of-set L servant is AZLA in three verses (Ps 72:17, Job 32:11, 34:33),
 # and those are NOT a two-witness azla servant: L has a bare azla (no paseq) where MAM marks
 # azla-LEGARMEH (azla + paseq), i.e. a near-divider, not a servant.  The disjunctive cross-
 # check already flags all three (MAM carries an extra LEGARMEH that L lacks), so a servant-
 # set constraint here would be redundant -- and, by requiring the adjacent servant in
-# {mahapakh, merka, illuy}, would turn three clean parses into NO_PARSE for a paseq-omission
+# {mahapakh, merkha, illuy}, would turn three clean parses into NO_PARSE for a paseq-omission
 # divergence already surfaced elsewhere.  Not encoded.  See issue #18.
 def p_revia_gadol_phrase(p):
     """revia_gadol_phrase : REVIA_GADOL
@@ -257,12 +257,12 @@ def p_revia_qatan_phrase(p):
     _phrase(p, "revia_qatan_phrase")
 
 
-# Permissive servi before REVIA_MUGRASH.  NB: Breuer Ch 11 §35 says the servant is merka
+# Permissive servi before REVIA_MUGRASH.  NB: Breuer Ch 11 §35 says the servant is merkha
 # (with a mahapakh before it).  Vetted via servi_xcheck (2026-06-17) and REFUTED at the
-# token level: against 1185 merka, L marks MAHAPAKH in 9 verses (Ps 31:16, 34:8, 68:15,
+# token level: against 1185 merkha, L marks MAHAPAKH in 9 verses (Ps 31:16, 34:8, 68:15,
 # 79:3, 116:19, 135:21, Prov 7:7, 27:1, 27:19) and ILLUY in 1 (Ps 137:9), and MAM agrees in
 # every one -- genuine two-witness constructions of the same phonological servant-type family
-# that refuted DEXI / PAZER / TSINNOR.  A merka-only constraint would flag 10 correct verses.
+# that refuted DEXI / PAZER / TSINNOR.  A merkha-only constraint would flag 10 correct verses.
 # Not encoded.  See issue #18.
 def p_revia_mugrash_phrase(p):
     """revia_mugrash_phrase : REVIA_MUGRASH
@@ -309,14 +309,14 @@ def p_tsinnor_phrase(p):
 # GALGAL.  REFUTED by the servant cross-check (servi_xcheck) once it learned to read a
 # SAME-WORD servant: galgal often sits on the pazer's own word (e.g. Ps 32:5, 65:10), and
 # those "GALGAL vs MAM-qadma" mismatches were a measurement artifact -- they actually
-# CONFIRM galgal.  But three verses keep a primary merka on the word right before pazer in
+# CONFIRM galgal.  But three verses keep a primary merkha on the word right before pazer in
 # BOTH witnesses -- Ps 4:3, 59:6, 71:3 -- and MAM's own FOI catalog does NOT flag those as
-# secondary merka, so merka-served pazer is a real two-witness construction (the same
-# shape as the refuted deḥi<-munaḥ rule; the galgal/merka choice is phonological, hence out
+# secondary merkha, so merkha-served pazer is a real two-witness construction (the same
+# shape as the refuted deḥi<-munaḥ rule; the galgal/merkha choice is phonological, hence out
 # of a token grammar's scope).  Two further non-galgal cases are not counter-evidence but
 # also not galgal: Ps 28:5 is a plain L-vs-MAM sign divergence (L mahapakh, MAM galgal), and
-# Ps 89:20's merka is a CoS-contested secondary merka (stays non-galgal even if dropped).
-# Enforcing galgal-only would flag the three correct merka verses.  See issue #18.
+# Ps 89:20's merkha is a CoS-contested secondary merkha (stays non-galgal even if dropped).
+# Enforcing galgal-only would flag the three correct merkha verses.  See issue #18.
 def p_pazer_phrase(p):
     """pazer_phrase : PAZER
                     | servi PAZER"""
@@ -697,11 +697,11 @@ def p_legarmeh_clause(p):
 
 # --- shalshelet gedolah clause (#371) ------------------------------------------
 # A disjunctive in the second half before silluq (revia mugrash rank); distinct from the
-# conjunctive shalshelet qetannah.  Its servant is merka: Breuer Ch 11 §30 (merka, with a
+# conjunctive shalshelet qetannah.  Its servant is merkha: Breuer Ch 11 §30 (merkha, with a
 # tarkha before it), confirmed by servi_xcheck (2026-06-17) -- all 3 poetic occurrences
-# carry a merka servant in both L and MAM (uniform, zero conflicts), like small revia'.
+# carry a merkha servant in both L and MAM (uniform, zero conflicts), like small revia'.
 # (This corrects an earlier "as a rule it has no servi" note, which holds for the prose
-# shalshelet gedolah but not the poetic one.)  Left permissive; a merka constraint would
+# shalshelet gedolah but not the poetic one.)  Left permissive; a merkha constraint would
 # fire on nothing.  See issue #18.
 def p_shalshelet_gedolah_clause(p):
     "shalshelet_gedolah_clause : shalshelet_gedolah_phrase"
