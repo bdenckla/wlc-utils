@@ -43,7 +43,6 @@ from pathlib import Path
 
 from accgram import accent_marks as am
 from accgram import rtms_data
-from cmn.wlc_book_codes import wlc_bb_to_goerwitz_book_name
 
 # --- codepoint classification -------------------------------------------------
 
@@ -256,9 +255,9 @@ def build_book_texts(
     """Per-book scanner-ready text from the ``-kq-u`` JSON, mirroring the shape
     `split_wlc.split_wlc_to_book_texts` returned from ``wlc422_ps.txt``.
 
-    Each value is a goerwitz book-name header line followed by normalized
-    ``ch:vr <body>`` lines (the 2-char WLC book code dropped), in source order.
-    ``keep_line_fn(bb, chnu, vrnu)`` (the genre filter) may exclude verses.
+    Each value is normalized ``ch:vr <body>`` lines (the 2-char WLC book code
+    dropped), in source order.  ``keep_line_fn(bb, chnu, vrnu)`` (the genre
+    filter) may exclude verses.
     """
     index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
 
@@ -272,8 +271,7 @@ def build_book_texts(
 
     book_texts: OrderedDict[str, str] = OrderedDict()
     for bb, lines in per_book.items():
-        header = wlc_bb_to_goerwitz_book_name(bb)
-        book_texts[bb] = "".join([f"{header}\n", *(f"{ln}\n" for ln in lines)])
+        book_texts[bb] = "".join(f"{ln}\n" for ln in lines)
     return book_texts
 
 

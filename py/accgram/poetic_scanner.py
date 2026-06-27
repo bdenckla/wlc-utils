@@ -92,10 +92,8 @@ _TSINNORIT_ATOM_TAIL = r"[^ \r\n֑-֮-]*"
 # sof pasuq, rebuilt over the mark alphabet (issue #9, Phase 2).
 _SILLUQ_LA = r"(?=" + am.negated_class(" \r\n-?~", "379") + r"*" + am.SOF_PASUQ + r")"
 
-# Verse-structure line patterns, as in accgram.prose_scanner.scan_book: a verse line
-# is "ch:vr <accent codes>"; a lone capitalized word is a chapter/book header we
-# skip (the poetic reference is built from the WLC book code, not the header).
-_BOOKNAME_RE = re.compile(r"^([1234][ \t]*)?[A-Z][a-z]+[ \t]*$")
+# Verse-structure line pattern, as in accgram.prose_scanner.scan_book: a verse line
+# is "ch:vr <accent codes>".
 _VERSE_RE = re.compile(r"^([1-9][0-9]*):([1-9][0-9]*)[ \t](.*)$")
 
 # Disjunctive token types, for the revia gadol/qatan second-pass lookahead.
@@ -399,14 +397,12 @@ def scan_verse(reference: str, body: str) -> Verse:
 
 
 def scan_book(text: str, bb: str) -> list[Verse]:
-    """Scan a whole split_wlc book text into per-verse poetic token streams.
+    """Scan a whole book text into per-verse poetic token streams.
 
-    Mirrors accgram.prose_scanner.scan_book's line walk -- header lines are skipped,
-    each ``ch:vr <accents>`` line becomes one Verse via scan_verse -- but the
-    reference uses the clean book name (the WLC code's bk39id: "Psalms",
-    "Proverbs", "Job") rather than the goerwitz header word, since the poetic
-    output has no C oracle to match and the header carries a binary-dodging
-    placeholder for Job ("Defeatmatchforjob").
+    Mirrors accgram.prose_scanner.scan_book's line walk -- each ``ch:vr <accents>``
+    line becomes one Verse via scan_verse.  The reference's book label comes from
+    the WLC code's bk39id ("Psalms", "Proverbs", "Job"), since the poetic output
+    has no C oracle to match.
     """
     book = wlc_bb_to_bk39id(bb)
     verses: list[Verse] = []
@@ -416,8 +412,4 @@ def scan_book(text: str, bb: str) -> list[Verse]:
         if mv is not None:
             ch, vs, rest = mv.group(1), mv.group(2), mv.group(3)
             verses.append(scan_verse(f"{book} {ch}:{vs}", rest))
-            continue
-        # Non-verse lines are book/chapter headers (or blank); ignore them.
-        if not line.strip() or _BOOKNAME_RE.match(line):
-            continue
     return verses

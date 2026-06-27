@@ -112,10 +112,10 @@ def test_has_legarmeh_old_i_is_monotonic():
 
 # --- new-format chapter/verse lookahead (via scan_book) ------------------------
 def test_scan_book_builds_reference_and_delimits_verses():
-    text = (
-        f"Genesis\n1:1 {am.MERKHA}A{am.SOF_PASUQ}\n1:2 {am.REVIA}B{am.SOF_PASUQ}\n"
-    )
+    text = f"1:1 {am.MERKHA}A{am.SOF_PASUQ}\n1:2 {am.REVIA}B{am.SOF_PASUQ}\n"
     verses = scan_book(text, "gn")
+    # The reference's book label comes from the WLC code ("gn" -> "Genesis"),
+    # not from any header line in the text.
     assert [v.reference for v in verses] == ["Genesis 1:1", "Genesis 1:2"]
     # Each verse opens with TILDE and closes with SOFPASUQ.
     assert verses[0].tokens[0].type == "TILDE"

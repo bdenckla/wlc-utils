@@ -46,6 +46,7 @@ import re
 from dataclasses import dataclass
 
 from accgram import accent_marks as am
+from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 
 @dataclass(frozen=True)
@@ -57,8 +58,6 @@ class Token:
 
 
 # --- verse-structure line patterns (new format), from tnk2acc.l ----------------
-# Bookname at the head of a chapter: ^([1234][ \t]*)?[A-Z][a-z]+[ \t]*$
-_BOOKNAME_RE = re.compile(r"^([1234][ \t]*)?[A-Z][a-z]+[ \t]*$")
 # A verse line: chapter ':' verse ' ' accent-codes.  The flex lexer splits this
 # across the EE (chapter, returns TILDE) and FF (verse number) start states; in
 # the line-oriented new format we can recover chapter/verse directly.  Note the
@@ -378,10 +377,10 @@ def scan_book(text: str, bb: str) -> list[Verse]:
     resets per process (the harness runs one process per book file).
 
     `bb` is the `cmn.wlc_book_codes` 2-char code for this book; it (with the
-    parsed chapter/verse numbers) is what `has_legarmeh` keys on -- the
-    chapter-head bookname only spells the human-readable `Verse.reference`.
+    parsed chapter/verse numbers) is what `has_legarmeh` keys on, and its
+    `bk39id` ("Genesis", "Job", ...) spells the human-readable `Verse.reference`.
     """
-    book = ""
+    book = wlc_bb_to_bk39id(bb)
     has_legarmeh = HasLegarmeh()
     verses: list[Verse] = []
     for raw_line in text.splitlines():
@@ -394,7 +393,4 @@ def scan_book(text: str, bb: str) -> list[Verse]:
                 rest, bb, int(ch), int(vs), has_legarmeh
             )
             verses.append(Verse(reference=reference, tokens=tokens, body=rest))
-            continue
-        if _BOOKNAME_RE.match(line):
-            book = line.strip()
     return verses
