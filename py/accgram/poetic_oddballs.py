@@ -105,7 +105,7 @@ class PoeticOddball:
     bb: str
     kind: str  # KIND_MISSING_SILLUQ | KIND_NO_PARSE
     body: str  # the Unicode mark body (source content after "ch:vr ")
-    output_file: str  # the *_ag.txt holding this verse's tree/NO_PARSE line
+    output_file: str  # the *_ag.json holding this verse's parse record
     token_types: tuple[str, ...]  # full scanned token-type sequence
     wlc_disjunctives: tuple[str, ...]  # WLC disjunctive skeleton (scanner)
     mam_disjunctives: tuple[str, ...] | None  # MAM oracle skeleton (None if absent)
@@ -144,7 +144,7 @@ def collect_poetic_oddballs(
 
     oddballs: list[PoeticOddball] = []
     for bb, text in book_texts.items():
-        output_file = f"wlc_422_ps_{bb}_ag.txt"
+        output_file = f"wlc_422_ps_{bb}_ag.json"
         for verse in scan_book(text, bb):
             mam_words = mam_words_by_ref.get(verse.reference)
             mam = (
@@ -322,7 +322,7 @@ def build_payload(oddballs: list[PoeticOddball], source_file: str) -> dict[str, 
             "1-based ordinal among the verse's accents and its token type) -- where "
             "the LALR(1) parse dead-ended, i.e. every accent before it was consumable "
             "(the stall point, not necessarily the root-cause accent). output_file "
-            "names the *_ag.txt holding the tree/NO_PARSE line."
+            "names the *_ag.json holding the verse's parse record."
         ),
         "summary": {
             "oddballs": len(oddballs),

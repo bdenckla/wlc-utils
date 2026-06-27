@@ -10,9 +10,9 @@ Subcommands:
     run-poetic
                 Run the POETIC (Three Books) scanner + grammar over the
                 poetic corpus (Psalms, Proverbs, poetically-cantillated Job) and
-                write out/accgram/poetic/*_ag.txt.  Unparseable verses are
-                emitted as NO_PARSE lines and tallied, not fatal.  Use --book to
-                restrict (ps, pr, jb).
+                write out/accgram/poetic/*_ag.json (one JSON record per verse).
+                Unparseable verses are recorded as no_parse and tallied, not
+                fatal.  Use --book to restrict (ps, pr, jb).
     xcheck-poetic
                 Cross-check the poetic scanner's disjunctive segmentation against
                 MAM-simple and write out/accgram/poetic/_mam_xcheck.txt (a
@@ -149,8 +149,9 @@ def main() -> None:
         help=(
             "Run the poetic (Three Books) scanner + grammar over Psalms, "
             "Proverbs, and poetically-cantillated Job and write "
-            "out/accgram/poetic/*_ag.txt. Unparseable verses become NO_PARSE "
-            "lines (not fatal). Use --book to restrict (ps, pr, jb)."
+            "out/accgram/poetic/*_ag.json (one JSON record per verse). "
+            "Unparseable verses become no_parse records (not fatal). Use "
+            "--book to restrict (ps, pr, jb)."
         ),
     )
     poetic_run.add_args(run_poetic_parser, repo_root=_repo_root())
