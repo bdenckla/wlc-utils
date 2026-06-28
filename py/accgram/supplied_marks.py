@@ -78,7 +78,8 @@ def _intro() -> tuple[object, ...]:
                 link("detangles", "goerwitz.html"),
                 " each into its two single-cantillation readings, guided by MAM’s"
                 " already-separated threads, and feeds each reading’s chanted verses to"
-                " the ordinary prose grammar. The accents checked are WLC’s own.",
+                " the ordinary prose grammar. The accents checked are WLC’s own, except for"
+                " the cases described below.",
             )
         ),
         H.para(
@@ -92,8 +93,8 @@ def _intro() -> tuple[object, ...]:
                 " records it below. This is a third kind of charity, distinct from the"
                 " two reinterpretations on the ",
                 link("almost-errors page", "almost-errors.html"),
-                ": those reread a mark the manuscript already wrote, whereas a supplied"
-                " mark adds one WLC never wrote.",
+                ": those reread a mark present in WLC, whereas a supplied"
+                " mark adds a mark not present in WLC.",
             )
         ),
         H.para(
