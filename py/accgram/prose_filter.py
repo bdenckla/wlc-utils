@@ -34,9 +34,33 @@ _BHS_RANGE_EXCLUSIONS: frozenset[tuple[str, int, int, int]] = frozenset(
 )
 
 
+# Within the Decalogue ranges, these verses are single-cantillation in WLC *and* MAM
+# (their only doubled marks are pashta stress-helpers, not dual cantillation), so they
+# are ordinary prose: they route through the normal checker rather than the
+# dual-cantillation detangler (issue #36; verified via
+# ``.novc/novc_dualcant_survey.py`` and cross-checked against MAM in
+# ``tests/test_dual_cant_detangle.py``).  Everything else in the ranges is dual and
+# stays excluded for the detangler.
+_BHS_SINGLE_CANT_IN_RANGE: frozenset[tuple[str, int, int]] = frozenset(
+    {
+        ("ex", 20, 7),
+        ("ex", 20, 11),
+        ("ex", 20, 12),
+        ("ex", 20, 16),
+        ("ex", 20, 17),
+        ("dt", 5, 11),
+        ("dt", 5, 16),
+        ("dt", 5, 20),
+        ("dt", 5, 21),
+    }
+)
+
+
 def _is_excluded_bhs_ref(bb: str, chnu: int, vrnu: int) -> bool:
     if (bb, chnu, vrnu) in _BHS_SINGLE_VERSE_EXCLUSIONS:
         return True
+    if (bb, chnu, vrnu) in _BHS_SINGLE_CANT_IN_RANGE:
+        return False  # ordinary single-cant verse; let the normal prose path keep it
     for ex_bb, ex_chnu, ex_start, ex_end in _BHS_RANGE_EXCLUSIONS:
         if bb == ex_bb and chnu == ex_chnu and ex_start <= vrnu <= ex_end:
             return True

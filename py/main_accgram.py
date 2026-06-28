@@ -13,6 +13,15 @@ Subcommands:
                 write out/accgram/poetic/*_ag.json (one JSON record per verse).
                 Unparseable verses are recorded as no_parse and tallied, not
                 fatal.  Use --book to restrict (ps, pr, jb).
+    run-dual-cant
+                Detangle WLC's three dually-cantillated prose loci (Gen 35:22 and
+                the two Decalogues) into two single-cantillation readings each,
+                guided by MAM's cant-alef/cant-bet threads, and write
+                out/accgram/dual-cant/_dual_cant.json (each reading's chanted-verse
+                trees, the supplied-mark inventory, and candidate-WLC-error
+                anomalies).  The oddity chanted verses are separately folded into
+                the prose oddball report by run-prose; supplied-marks.html is
+                rendered by generate-html.  Run after run-prose (issue #36).
     xcheck-poetic
                 Cross-check the poetic scanner's disjunctive segmentation against
                 MAM-simple and write out/accgram/poetic/_mam_xcheck.txt (a
@@ -41,6 +50,9 @@ Subcommands:
                     page documenting the editorial charities the checker applies
                     and the non-charity ek20:31 mahapakh!qadma, with live parse
                     trees regenerated from the grammar at build time.
+                  * gh-pages/accgram/supplied-marks.html -- the dual-cantillation
+                    supplied-mark inventory (issue #36), generated live from the
+                    detangling run and linked from almost-errors.html.
                   * gh-pages/accgram/telg-doc-notes.html -- a deep-dive
                     translation of MAM's documentation notes on the five
                     telisha-gedola + geresh/gershayim words (companion to the
@@ -80,6 +92,7 @@ import argparse
 from pathlib import Path
 
 from accgram import almost_errors
+from accgram import dual_cant_run
 from accgram import fix_tester
 from accgram import grammaticality
 from accgram import poetic_oddballs
@@ -88,6 +101,7 @@ from accgram import ps17v14_doc_notes
 from accgram import research_tao
 from accgram import prose_run
 from accgram import poetic_run
+from accgram import supplied_marks
 from accgram import servi_xcheck
 from accgram import telg_doc_notes
 from accgram import poetic_xcheck
@@ -106,6 +120,10 @@ def _run_run_prose(args: argparse.Namespace) -> None:
 
 def _run_run_poetic(args: argparse.Namespace) -> None:
     poetic_run.run(args)
+
+
+def _run_run_dual_cant(args: argparse.Namespace) -> None:
+    dual_cant_run.run(args)
 
 
 def _run_xcheck_poetic(args: argparse.Namespace) -> None:
@@ -131,6 +149,7 @@ def _run_generate_html(_args: argparse.Namespace) -> None:
         poetic_oddballs,
         research_tao,
         almost_errors,
+        supplied_marks,
         telg_doc_notes,
         ps17v14_doc_notes,
         ps17v14_double_tsinnor,
@@ -171,6 +190,18 @@ def main() -> None:
     )
     poetic_run.add_args(run_poetic_parser, repo_root=_repo_root())
     run_poetic_parser.set_defaults(func=_run_run_poetic)
+
+    run_dual_cant_parser = subparsers.add_parser(
+        "run-dual-cant",
+        help=(
+            "Detangle the dually-cantillated prose loci (Gen 35:22 + the two "
+            "Decalogues) into two single-cantillation readings each and write "
+            "out/accgram/dual-cant/_dual_cant.json (chanted-verse trees + supplied "
+            "marks + anomalies). Run after run-prose."
+        ),
+    )
+    dual_cant_run.add_args(run_dual_cant_parser, repo_root=_repo_root())
+    run_dual_cant_parser.set_defaults(func=_run_run_dual_cant)
 
     xcheck_poetic_parser = subparsers.add_parser(
         "xcheck-poetic",

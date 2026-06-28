@@ -23,8 +23,9 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-from accgram import accent_marks as am
+from accgram import dual_cant_detangle
 from accgram import lexical_validation
+from accgram import mam_simple_verse
 from accgram import prose_filter
 from accgram import rtms_data
 from accgram import uni_to_marks
@@ -34,13 +35,6 @@ from accgram.tree import TN, add_leaves, tree_to_obj
 import wlc_provenance as provenance
 
 import repo_paths
-
-# Base letter the JSON ``input.marks`` field hangs each accent on.  The scanner's
-# own mark body uses the opaque ``am.LETTER`` ("X") placeholder, but a Hebrew accent
-# combining mark sitting on a Latin X renders unpredictably across fonts, so the
-# display copy substitutes alef -- a true Hebrew base.  Display only: the scanned
-# ``verse.body`` keeps "X" for the grammar/lexical layers.
-_MARKS_BASE_LETTER = "א"  # alef (א)
 
 
 def _illegal_mark_tree(
@@ -141,8 +135,8 @@ def _verse_record(
     tree), ``location_only`` (a pasuq-level error, no tree), ``oddball`` (a parse
     tree carrying an ERROR leaf), or ``clean``.  The ``input`` block carries the
     pointed-Hebrew ``unicode`` (from the -kq-u source), the ``marks`` body (the scan
-    body with its accents re-based onto alef for font safety, see _MARKS_BASE_LETTER),
-    and the ``tokens`` stream, for every verse -- not just the illegal-mark cases.
+    body, whose base-letter placeholder is alef -- see ``accent_marks.LETTER``), and the
+    ``tokens`` stream, for every verse -- not just the illegal-mark cases.
     """
     tail = verse.reference.rpartition(" ")[2]
     chnu_str, _, vrnu_str = tail.partition(":")
@@ -156,7 +150,7 @@ def _verse_record(
             )
             if wlc_index
             else "",
-            "marks": verse.body.replace(am.LETTER, _MARKS_BASE_LETTER),
+            "marks": verse.body,
             "tokens": [token.type for token in verse.tokens],
         },
     }
@@ -250,6 +244,7 @@ def run(args: argparse.Namespace) -> None:
         input_path, keep_line_fn=prose_filter.should_keep_line
     )
     wlc_index = rtms_data.load_wlc422_index(input_path)
+    mam_by_bcv = _load_dual_cant_mam()  # None if MAM-simple is absent
 
     total_parsed = 0
     total_verses = 0
@@ -257,15 +252,45 @@ def run(args: argparse.Namespace) -> None:
         if only is not None and bb not in only:
             continue
         records, stats = render_book(text, parser, bb, wlc_index)
+        folded = _fold_dual_cant_oddities(bb, wlc_index, mam_by_bcv, parser)
+        records.extend(folded)
         out_path = out_dir / f"wlc_422_ps_{bb}_ag.json"
         _write_book_json(out_path, records)
         total_parsed += stats.parsed_count
         total_verses += stats.verse_count
+        folded_note = f" (+{len(folded)} detangled dual-cant oddity)" if folded else ""
         print(
-            f"{bb}: parsed {stats.parsed_count}/{stats.verse_count} verses -> {out_path}"
+            f"{bb}: parsed {stats.parsed_count}/{stats.verse_count} verses"
+            f"{folded_note} -> {out_path}"
         )
 
     print(f"\nTotal: parsed {total_parsed}/{total_verses} verses across selected books.")
+
+
+def _load_dual_cant_mam() -> dict[str, dict] | None:
+    """Load the MAM-simple threads for the dual-cantillation loci, or None if the
+    sibling MAM-simple corpus is absent (the normal prose run does not require it; the
+    detangled dual-cant fold-in is then simply skipped)."""
+    mam_dir = mam_simple_verse.default_mam_simple_dir(repo_paths.repo_root())
+    if not mam_dir.is_dir():
+        return None
+    return mam_simple_verse.load_mam_simple_for_refs(
+        mam_dir, dual_cant_detangle.all_refs_by_book(), include_threads=True
+    )
+
+
+def _fold_dual_cant_oddities(
+    bb: str, wlc_index: dict[str, dict], mam_by_bcv: dict[str, dict] | None, parser
+) -> list[dict[str, object]]:
+    """Detangled dual-cantillation oddity records to fold into book ``bb`` (issue #36).
+
+    A dual-cant book's WLC dual verses are excluded from the normal scan; the detangler
+    parses each strand's chanted verses and a genuine WLC dual-cant bug surfaces as an
+    oddball.  Those oddball chanted verses are folded in here so they appear in the
+    existing prose oddball report (goerwitz.html), keyed by their numbered verse."""
+    if mam_by_bcv is None or dual_cant_detangle.passage_for_book(bb) is None:
+        return []
+    return dual_cant_detangle.folded_oddball_records(bb, wlc_index, mam_by_bcv, parser)
 
 
 def _book_summary(records: list[dict[str, object]]) -> dict[str, int]:

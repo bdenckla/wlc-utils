@@ -11,6 +11,23 @@ from accgram.prose_ob_notes_shared import (
 
 
 BY_REF: dict[str, dict[str, object]] = {
+    "dt 5:8": {
+        # Dual-cantillation detangling (issue #36). dt 5:8 is one of the two-reading
+        # Decalogue verses excluded from the normal scan; the detangler parses each
+        # reading's chanted verses, and the taxton (lower) reading does not parse: the
+        # WLC 4.22 text carries a merkha on תעשה where that reading is due a qadma -- an
+        # accent belonging to neither reading. It is flagged as a candidate
+        # dual-cantillation error rather than charitably supplied, but whether the merkha
+        # originates in LC, BHS, BHQ, or is a WLC reading has not been checked -> tbd.
+        "st-source": "tbd",
+        "st-summary": (
+            "Dual cantillation (Decalogue): in the taxton (lower) reading the WLC 4.22"
+            " text carries a merkha on תעשה where that reading is due a qadma — an accent"
+            " neither reading explains — so the detangled taxton chanted verse does not"
+            " parse. Flagged as a candidate dual-cantillation error (source not yet"
+            " checked against LC/BHS/BHQ); issue #36."
+        ),
+    },
     "dt 9:20": {
         "st-source": "tbd",
         "st-summary": MISSING_SOF_PASUQ_SUMMARY,

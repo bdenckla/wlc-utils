@@ -3,7 +3,7 @@
   "artifacts_description": "oddball verses with ERROR leaves in *_ag.json outputs",
   "payload_provenance_note": "These verses are parsed by the Python port into a tree containing at least one ERROR leaf (status oddball or illegal_mark), drawn from out/accgram/prose/. The output_file field on each row names which book JSON file holds that verse's parse tree.",
   "summary": {
-    "oddballs": 92,
+    "oddballs": 93,
     "books_with_oddballs": 24
   },
   "oddballs": [
@@ -116,6 +116,11 @@
       "ref": "da 2:41",
       "content": "ודי־ חז֜יתה רגלי֣א ואצבעת֗א מנה֞ן חס֤ף די־ פחר֙ ומנה֣ין פרז֔ל מלכ֤ו פליגה֙ תהו֔ה ומן־ נצבת֥א ד֥י פרזל֖א להוא־ ב֑ה כל־ קבל֙ ד֣י חז֔יתה פ֨רזל֔א מער֖ב בחס֥ף טינֽא׃",
       "output_file": "wlc_422_ps_da_ag.json"
+    },
+    {
+      "ref": "dt 5:8",
+      "content": "ל֣א־ תעש֥ה־ לך֥֣ פ֣֙סל֙׀ כל־ תמונ֔֡ה אש֤֣ר בשמ֣֙ים֙׀ ממ֔֡על ואש֥ר֩ בא֖֨רץ מת֑֜חת ואש֥ר במ֖֣ים׀ מת֥֣חת לאֽ֗רץ׃",
+      "output_file": "wlc_422_ps_dt_ag.json"
     },
     {
       "ref": "dt 9:20",

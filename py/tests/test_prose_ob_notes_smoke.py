@@ -23,7 +23,7 @@ _CONSUMERS = (
 
 
 def test_ob_notes_dataset_is_populated() -> None:
-    assert len(prose_ob_notes.get_structured_text()) == 92
+    assert len(prose_ob_notes.get_structured_text()) == 93
 
 
 def test_consumers_import() -> None:

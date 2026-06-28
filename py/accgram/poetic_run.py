@@ -27,7 +27,6 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-from accgram import accent_marks as am
 from accgram import poetic_filter
 from accgram import rtms_data
 from accgram import uni_to_marks
@@ -44,12 +43,6 @@ from accgram.poetic_reconcile import reconcile_tokens
 import wlc_provenance as provenance
 
 import repo_paths
-
-# Base letter the JSON ``input.marks`` field hangs each accent on -- alef, a true Hebrew
-# base, since a Hebrew accent combining mark sitting on the scanner's opaque "X" placeholder
-# (am.LETTER) renders unpredictably across fonts.  Display only: the scanned ``verse.body``
-# keeps "X" for the grammar layer (this mirrors prose_run._MARKS_BASE_LETTER).
-_MARKS_BASE_LETTER = "א"  # alef (א)
 
 
 @dataclass(frozen=True)
@@ -110,7 +103,7 @@ def _verse_record(
     M-C source cannot express -- so the recorded ``input.tokens`` and ``tree`` are what
     the grammar actually consumed and produced.  The ``input`` block also carries the
     pointed-Hebrew ``unicode`` (from the -kq-u source) and the ``marks`` body (the scan
-    body with its accents re-based onto alef for font safety, see _MARKS_BASE_LETTER).
+    body, whose base-letter placeholder is alef -- see ``accent_marks.LETTER``).
     ``status`` is ``clean`` (parsed, no ERROR leaf), ``oddball`` (a missing-silluq
     ERROR-leaf recovery tree), or ``no_parse`` (no valid tree exists).
     """
@@ -133,7 +126,7 @@ def _verse_record(
             )
             if wlc_index
             else "",
-            "marks": verse.body.replace(am.LETTER, _MARKS_BASE_LETTER),
+            "marks": verse.body,
             "tokens": [token_type for token_type, _ in tokens],
         },
     }

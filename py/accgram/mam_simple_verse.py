@@ -12,6 +12,18 @@ from cmn.wlc_book_codes import wlc_bb_to_bk39id
 import repo_paths
 
 
+# The three single-cantillation projections of a dually-cantillated span (issue #36).
+# A ``cant-all-three`` node carries one child of each type: ``cant-combined`` (the
+# dual/merged form, analogous to what WLC stores) and the two detangled threads
+# ``cant-alef`` / ``cant-bet``.  ``_normalize_mam_simple_node`` is parameterized by which
+# of these to descend into, so the loader can expose each thread as its own
+# position-correct token stream (interleaved with the single-cant ``text`` around it).
+CANT_COMBINED = "cant-combined"
+CANT_ALEF = "cant-alef"
+CANT_BET = "cant-bet"
+_CANT_ALL_THREE = "cant-all-three"
+
+
 def default_mam_simple_dir(repo_root: Path) -> Path:
     # ``repo_root`` is retained so CLI ``--mam-simple-dir`` flags keep their
     # signature; the sibling lookup is delegated to the env-overridable resolver,
@@ -23,7 +35,15 @@ def default_mam_simple_dir(repo_root: Path) -> Path:
 def load_mam_simple_for_refs(
     mam_simple_dir: Path,
     refs_by_book: dict[str, set[tuple[int, int]]],
+    *,
+    include_threads: bool = False,
 ) -> dict[str, dict[str, object]]:
+    """Load the requested MAM-simple verses, keyed by compact bcv.
+
+    ``include_threads`` (issue #36) additionally exposes each dually-cantillated span's
+    two detangled threads as ``vels_cant_alef`` / ``vels_cant_bet`` streams (for the
+    dual-cantillation detangler).  It is off by default so existing consumers keep
+    receiving the plain ``{"vels": ...}`` shape unchanged."""
     if not mam_simple_dir.is_dir():
         raise FileNotFoundError(f"MAM-simple directory not found: {mam_simple_dir}")
 
@@ -59,7 +79,9 @@ def load_mam_simple_for_refs(
             bcv = f"{bb}{chnu}:{vrnu}"
             by_bcv[bcv] = {
                 "mam_simple_json_file": json_path.name,
-                "mam_simple_verse": _normalize_mam_simple_verse(verse_node),
+                "mam_simple_verse": _normalize_mam_simple_verse(
+                    verse_node, include_threads=include_threads
+                ),
             }
 
     return by_bcv
@@ -121,12 +143,30 @@ def _parse_osis_id(osis_id: str) -> tuple[int, int]:
     return chnu, vrnu
 
 
-def _normalize_mam_simple_verse(verse_node: dict[str, object]) -> dict[str, object]:
-    vels = _normalize_mam_simple_node(verse_node)
-    return {"vels": vels}
+def _normalize_mam_simple_verse(
+    verse_node: dict[str, object], *, include_threads: bool = False
+) -> dict[str, object]:
+    """Normalize a verse into ``vels`` (and, when requested, the two detangled threads).
+
+    ``vels`` uses the ``cant-combined`` projection of any dual span (the single,
+    WLC-analogous representation) -- so the default shape is unchanged for every
+    consumer.  With ``include_threads`` it also carries ``vels_cant_alef`` /
+    ``vels_cant_bet``, the ``cant-alef`` / ``cant-bet`` threads (issue #36).  In a verse
+    with no dual span all three are identical, so a single-cantillation verse in a
+    Decalogue range yields a shared stream automatically.
+    """
+    verse: dict[str, object] = {
+        "vels": _normalize_mam_simple_node(verse_node, CANT_COMBINED),
+    }
+    if include_threads:
+        verse["vels_cant_alef"] = _normalize_mam_simple_node(verse_node, CANT_ALEF)
+        verse["vels_cant_bet"] = _normalize_mam_simple_node(verse_node, CANT_BET)
+    return verse
 
 
-def _normalize_mam_simple_node(node: object) -> list[object]:
+def _normalize_mam_simple_node(
+    node: object, cant_thread: str = CANT_COMBINED
+) -> list[object]:
     if not isinstance(node, dict):
         return []
 
@@ -145,8 +185,18 @@ def _normalize_mam_simple_node(node: object) -> list[object]:
             return [hpunc.PASOLEG]
         if node_type == "implicit-maqaf":
             return [hpunc.MAQ]
+        if node_type == _CANT_ALL_THREE:
+            # A dual-cantillation span: descend into the requested thread only, so each
+            # projection (combined / alef / bet) is a complete, position-correct word
+            # sequence interleaved with the surrounding single-cant ``text``.
+            contents = node.get("contents")
+            if isinstance(contents, list):
+                for child in contents:
+                    if isinstance(child, dict) and child.get("type") == cant_thread:
+                        return _normalize_mam_simple_node(child, cant_thread)
+            return []
         if node_type in {"kq", "kq-trivial", "kq-q-velo-k"}:
-            return _normalize_mam_simple_kq_qere(node)
+            return _normalize_mam_simple_kq_qere(node, cant_thread)
         if node_type in {"kq-k", "ketiv", "kq-k-velo-q"}:
             return []
 
@@ -154,7 +204,7 @@ def _normalize_mam_simple_node(node: object) -> list[object]:
     if isinstance(contents, list):
         out_tokens: list[object] = []
         for child in contents:
-            out_tokens.extend(_normalize_mam_simple_node(child))
+            out_tokens.extend(_normalize_mam_simple_node(child, cant_thread))
         return out_tokens
 
     text = node.get("text")
@@ -164,7 +214,9 @@ def _normalize_mam_simple_node(node: object) -> list[object]:
     return []
 
 
-def _normalize_mam_simple_kq_qere(node: dict[str, object]) -> list[object]:
+def _normalize_mam_simple_kq_qere(
+    node: dict[str, object], cant_thread: str = CANT_COMBINED
+) -> list[object]:
     contents = node.get("contents")
     if not isinstance(contents, list):
         text = node.get("text")
@@ -178,14 +230,14 @@ def _normalize_mam_simple_kq_qere(node: dict[str, object]) -> list[object]:
     if qere_nodes:
         out_tokens: list[object] = []
         for qere_node in qere_nodes:
-            out_tokens.extend(_normalize_mam_simple_node(qere_node))
+            out_tokens.extend(_normalize_mam_simple_node(qere_node, cant_thread))
         return out_tokens
 
     out_tokens: list[object] = []
     for child in contents:
         if isinstance(child, dict) and _is_ketiv_node(child):
             continue
-        out_tokens.extend(_normalize_mam_simple_node(child))
+        out_tokens.extend(_normalize_mam_simple_node(child, cant_thread))
     return out_tokens
 
 

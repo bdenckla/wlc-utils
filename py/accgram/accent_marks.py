@@ -86,7 +86,11 @@ UPPER_DOT = hpu.UPDOT       # upper punctum       (52)
 LOWER_DOT = hpu.LODOT       # lower punctum       (53)
 
 MAQAF = "-"               # word-internal boundary (joins one accent word)
-LETTER = "X"              # placeholder base consonant (opaque scanner filler)
+# Placeholder base consonant (opaque scanner filler).  Alef -- a real Hebrew base, so a
+# combining accent sits on it legibly and the scan body needs no re-basing for display.
+# (It was a Latin "X" through issue #9; nothing keys on its identity -- every rule treats
+# it as filler consumed by the catch-all -- so the mark bodies now read as Hebrew throughout.)
+LETTER = "א"
 
 # `TEXT` = a run that stays within one maqaf/space-delimited word (as in tnk2acc.l's
 # `{TEXT}` = `[^ \r\n\-]*`): everything except the two word boundaries.

@@ -20,6 +20,19 @@ def charities_intro() -> tuple[object, ...]:
             " have here — a prose geresh muqdam read as a plain geresh, and a stray"
             " poetic geresh promoted into a revia mugrash."
         ),
+        H.para(
+            (
+                "A third kind of charity, ",
+                H.bold("supplying"),
+                " a mark, arises only in detangling the dually-cantillated passages (the"
+                " two Decalogues and Genesis 35:22): where WLC drops one reading’s accent"
+                " on a word, that one mark is supplied from MAM so the reading parses."
+                " Because it adds a mark rather than rereading one, it is inventoried"
+                " separately at ",
+                link("supplied-marks.html", "supplied-marks.html"),
+                ".",
+            )
+        ),
     )
 
 
