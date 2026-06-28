@@ -15,7 +15,10 @@ accent -> poetic reading (the accents that matter in the Three Books):
     atnaḥ                                                                  II.3
     oleh-we-yored ole sign (above, pre-stress) plus the yored = merkha     II.2
                   below the stress; the merkha is consumed into the one
-                  OLEH_WEYORED token, not emitted as a servus
+                  OLEH_WEYORED token, not emitted as a servus.  WLC 4.22 writes
+                  the pair cross-letter (ole then, later, the yored merkha);
+                  MAM stacks both on one base letter (stored merkha-then-ole)
+                  when the stress is word-initial -- both shapes fuse here.
     revia mugrash geresh muqdam (preposed) plus revia; if the revia dot    II.5
                   is omitted because it would fall on the same letter as
                   the geresh muqdam, it is implied
@@ -104,8 +107,10 @@ _POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
 # between -> same letter) is a lexical anomaly emitted as a bang.  The whitelist:
 #   - revia + geresh muqdam   -> revia mugrash      (fused by the rule above)
 #   - revia + (plain) geresh  -> revia mugrash      (the ps124:4 charity, fused above)
-#   - oleh   + yored (merkha) -> oleh-we-yored      (fused above; cross-letter in WLC,
-#                                                    same-letter in MAM)
+#   - oleh   + yored (merkha) -> oleh-we-yored      (fused above; cross-letter in WLC
+#                                                    as ole...merkha, same-letter in MAM
+#                                                    as merkha+ole -- each consumed by its
+#                                                    own fusion rule, neither reaches here)
 #   - deḥi   + munaḥ          -> a legit *sequence* (a prepositive deḥi visually on its
 #                                munaḥ servus's letter, not a shared syllable)
 # The first three are CONSUMED by the specific fusion rules above, so they never reach
@@ -160,8 +165,23 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.ATNAX), pan.ATNAX),
     # oleh-we-yored: ole plus its yored merkha in the same word; the merkha is
     # consumed here so it is not also emitted as a servus.  Bare ole (yored on
-    # the next word, or unmarked) still yields the accent.
+    # the next word, or unmarked) still yields the accent.  Two graphical shapes:
+    #   - cross-letter (WLC 4.22): the ole sits on the pre-stress letter and the yored
+    #     merkha on a later (stress) letter of the same word, so the ole's codepoint comes
+    #     first -> OLE ... MERKHA, matched by the first rule (its _TEXT spans the letters
+    #     between).  This is the ONLY shape WLC 4.22 uses (corpus-wide: 0 same-letter).
+    #   - same-letter (MAM, and any edition that stacks the pair): when the stress is on the
+    #     word's first syllable the yored merkha and the ole land on ONE base letter, stored
+    #     merkha-THEN-ole (no X between) -> matched by the MERKHA+OLE rule.  13 verses across
+    #     Ps/Prov/Job in MAM-simple (e.g. Ps 30:12 לִ֥֫י), none in WLC 4.22.
+    # Both shapes fuse to the one OLEH_WEYORED disjunctive -- the merkha is the yored, not a
+    # servus.  Without the same-letter rule MAM's merkha+ole would fall through to the bang
+    # guard and be flagged merkha!ole -> NO_PARSE; this keeps the checker faithful to a wider
+    # range of texts (issue #42) while leaving WLC 4.22 output unchanged (the rule never fires
+    # there).  The MERKHA+OLE rule must precede both the bare MERKHA servus rule and the bang
+    # guard, which it does (longest-match ties to the bang guard but wins by earlier order).
     (re.compile(am.OLE + _TEXT + am.MERKHA), pan.OLEH_WEYORED),
+    (re.compile(am.MERKHA + am.OLE), pan.OLEH_WEYORED),
     (re.compile(am.OLE), pan.OLEH_WEYORED),
     # revia mugrash: geresh muqdam plus revia in the same word; the revia is
     # consumed.  Bare geresh muqdam = implied revia (omitted because it would share
@@ -215,8 +235,8 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # pair via _bang_pair_token (merkha+qadma -> MERKHA_AZLA / merkha!azla, the poetic
     # sibling of prose ek20:31's mahapakh!azla).  The 2-mark match beats the bare
     # single-mark rules by longest-match.  The legit same-letter pairs are either FUSED by
-    # a rule above (revia+geresh muqdam / revia+geresh -> revia mugrash; ole+merkha ->
-    # oleh-we-yored) and so never reach here, or are the deḥi+munaḥ sequence, which
+    # a rule above (revia+geresh muqdam / revia+geresh -> revia mugrash; ole+merkha and
+    # the MAM same-letter merkha+ole -> oleh-we-yored) and so never reach here, or are the deḥi+munaḥ sequence, which
     # _BANG_GUARD's lookahead spares.  The bang has no grammar terminal -> NO_PARSE oddball.
     # Corpus-wide this fires only at Ps 56:10 (merkha+azla); the generality guards any
     # other / future same-letter stack.

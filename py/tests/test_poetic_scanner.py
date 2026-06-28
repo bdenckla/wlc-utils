@@ -262,6 +262,36 @@ def test_whitelisted_pairs_not_flagged():
     assert pan.MAHAPAKH_METSUNNAR in metsun
 
 
+def test_same_letter_oleh_weyored_fuses_not_banged():
+    # Issue #42: MAM stacks oleh-we-yored on ONE base letter (stress word-initial), stored
+    # merkha-THEN-ole (e.g. Ps 30:12 לִ֥֫י), where WLC 4.22 writes it cross-letter (ole on
+    # the pre-stress letter, yored merkha on the stress letter -- 0 same-letter in WLC).
+    # The same-letter merkha+ole must fuse to the one OLEH_WEYORED disjunctive, not fall
+    # through to the bang guard as merkha!ole -> NO_PARSE.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    same = _types_marks("X" + am.MERKHA + am.OLE + "X " + tail)
+    assert pan.OLEH_WEYORED in same
+    assert pan.MERKHA not in same  # the yored merkha is consumed, not a servus
+    assert "MERKHA_OLE" not in same  # not banged
+    assert not any("!" in leaf for _t, leaf in scan_accents("X" + am.MERKHA + am.OLE + "X " + tail))
+    # and the verse parses cleanly
+    parser = build_parser()
+    toks = scan_verse("test 1:1", "X" + am.MERKHA + am.OLE + "X " + tail).tokens
+    assert parse_tokens(parser, toks) is not None
+    # the ole-first same-letter order (already handled by the OLE...MERKHA rule) also fuses
+    same2 = _types_marks("X" + am.OLE + am.MERKHA + "X " + tail)
+    assert pan.OLEH_WEYORED in same2 and pan.MERKHA not in same2
+
+
+def test_cross_letter_merkha_then_oleh_not_fused():
+    # The same-letter merkha+ole fusion is adjacency-only: a merkha servus on one letter
+    # followed by an ole (a separate oleh-we-yored) on the NEXT letter (an X between them)
+    # must stay a MERKHA servus + OLEH_WEYORED, never collapse into one token.
+    tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
+    cross = _types_marks("X" + am.MERKHA + "X" + am.OLE + "X " + tail)
+    assert pan.MERKHA in cross and pan.OLEH_WEYORED in cross
+
+
 def test_stray_accent_fails_fast_not_swallowed():
     # Plan C fail-fast guard: a prose-only accent (segolta, U+0592) has no poetic rule;
     # rather than let the catch-all swallow it silently, the scanner emits STRAY_ACCENT,
