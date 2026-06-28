@@ -5,6 +5,7 @@ from pathlib import Path
 
 from accgram import mam_simple_verse
 from accgram import classify
+from accgram import dual_cant_readings
 from accgram import rtms_data
 from accgram import rtms_focus_diff_expand
 from accgram import rtms_output
@@ -144,6 +145,12 @@ def run(args: argparse.Namespace) -> None:
         refs_by_book=refs_by_book,
     )
 
+    # Dually-cantillated oddballs (only dt 5:8 today) show their detangled per-thread
+    # readings in place of the combined verse line (issue #36).
+    dual_cant_readings_by_bcv = dual_cant_readings.load_readings_by_bcv(
+        args.wlc422_kq_u_dir, args.mam_simple_dir
+    )
+
     enriched_oddball_rows: list[dict[str, object]] = []
     diff_wlc_uxlc_for_checks_by_ref: dict[str, object] = {}
     rich_parsed_rows: list[tuple[dict[str, object], str, str]] = []
@@ -160,6 +167,9 @@ def run(args: argparse.Namespace) -> None:
             mam_simple_dir=args.mam_simple_dir,
             wlc_focus=wlc_focus_by_ref.get(ref),
         )
+        readings = dual_cant_readings_by_bcv.get(bcv)
+        if readings:
+            enriched_row["dual_cant_readings"] = readings
         enriched_oddball_rows.append(enriched_row)
         if ref in structured_text_by_ref:
             diff_wlc_uxlc_for_checks_by_ref[ref] = diff_wlc_uxlc_for_checks

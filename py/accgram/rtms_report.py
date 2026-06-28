@@ -94,7 +94,7 @@ def _render_row_section_with_anchor_id(
             section_anchor_id=section_anchor_id,
             structured_text_lookup=structured_text_lookup,
         ),
-        _render_wlc_verse_paragraph(row, structured_text_lookup=structured_text_lookup),
+        *_render_verse_paragraphs(row, structured_text_lookup=structured_text_lookup),
         _render_sat_table(row, structured_text_lookup=structured_text_lookup),
         *_render_image_paragraphs(row, structured_text_lookup=structured_text_lookup),
         *_render_comment_paragraphs(
@@ -191,6 +191,19 @@ def _render_image_paragraphs(
         row,
         structured_text_lookup=structured_text_lookup,
     )
+
+
+def _render_verse_paragraphs(
+    row: dict[str, object],
+    *,
+    structured_text_lookup: StructuredTextLookup,
+) -> tuple[object, ...]:
+    # Dually-cantillated verses (issue #36) show one labelled line per reading
+    # (e.g. taḥton + elyon) in place of the single combined WLC verse line.
+    readings = row.get("dual_cant_readings")
+    if isinstance(readings, list) and readings:
+        return rtmsr_verse.render_dual_cant_reading_paragraphs(readings)
+    return (_render_wlc_verse_paragraph(row, structured_text_lookup=structured_text_lookup),)
 
 
 def _render_wlc_verse_paragraph(

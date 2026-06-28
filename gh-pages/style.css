@@ -65,6 +65,11 @@ p.goerwitz-tms-verse {
     margin-bottom: 0.6em;
     text-align: right;
 }
+p.goerwitz-tms-reading-label {
+    margin-top: 0.6em;
+    margin-bottom: 0;
+    font-weight: bold;
+}
 span.goerwitz-tms-focus-highlight {
     color: light-dark(#0b57d0, #7bb4ff);
 }

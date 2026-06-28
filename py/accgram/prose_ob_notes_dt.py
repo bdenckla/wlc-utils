@@ -13,20 +13,29 @@ from accgram.prose_ob_notes_shared import (
 BY_REF: dict[str, dict[str, object]] = {
     "dt 5:8": {
         # Dual-cantillation detangling (issue #36). dt 5:8 is one of the two-reading
-        # Decalogue verses excluded from the normal scan; the detangler parses each
-        # reading's chanted verses, and the taxton (lower) reading does not parse: the
-        # WLC 4.22 text carries a merkha on תעשה where that reading is due a qadma -- an
-        # accent belonging to neither reading. It is flagged as a candidate
-        # dual-cantillation error rather than charitably supplied, but whether the merkha
+        # Decalogue verses excluded from the normal scan. The anomaly is on the ש of
+        # תעשה: in the taḥton (lower) reading that ש is due a qadma (MAM's taḥton
+        # reading has one), but WLC carries a merkha there, so the detangled taḥton
+        # chanted verse does not parse. More charitably, that single WLC mark is best
+        # read as the meteg the elyon (upper) reading attests -- MAM's elyon has a meteg
+        # on this ש, which the scanner swallows, which is why the elyon parses cleanly --
+        # leaving the taḥton simply lacking its due qadma rather than bearing a wrong
+        # merkha. Flagged as a candidate dual-cantillation error; whether the mark
         # originates in LC, BHS, BHQ, or is a WLC reading has not been checked -> tbd.
+        # Current UXLC carries a pashta on this word (also an error, again not the due
+        # qadma); see the linked UXLC note page (its `-t` te'amim note).
         "st-source": "tbd",
+        "wlc_focus": "תעש֥ה־",
         "st-summary": (
-            "Dual cantillation (Decalogue): in the taxton (lower) reading the WLC 4.22"
-            " text carries a merkha on תעשה where that reading is due a qadma — an accent"
-            " neither reading explains — so the detangled taxton chanted verse does not"
-            " parse. Flagged as a candidate dual-cantillation error (source not yet"
-            " checked against LC/BHS/BHQ); issue #36."
+            "Dual cantillation (Decalogue): in the taḥton (lower) reading the ש of תעשה"
+            " is due a qadma, but WLC carries a merkha there — better read as the meteg"
+            " the elyon reading attests, leaving the taḥton with no accent on this word"
+            " — so the detangled taḥton chanted verse does not parse. (Current UXLC"
+            " instead carries a pashta there: also an error, again not the due qadma —"
+            " see the UXLC note page.) Flagged as a candidate dual-cantillation error"
+            " (source not yet checked against LC/BHS/BHQ); issue #36."
         ),
+        "uxlc_note_page": "https://tanach.us/Notes/Deuteronomy/Deuteronomy.5.8.2-t.html",
     },
     "dt 9:20": {
         "st-source": "tbd",

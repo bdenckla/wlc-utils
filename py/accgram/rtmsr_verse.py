@@ -8,8 +8,42 @@ from py_html import wlc_utils_html
 
 _GOERWITZ_TMS_VERSE_CLASS = "goerwitz-tms-verse"
 _GOERWITZ_TMS_FOCUS_HIGHLIGHT_CLASS = "goerwitz-tms-focus-highlight"
+_GOERWITZ_TMS_READING_LABEL_CLASS = "goerwitz-tms-reading-label"
 
 StructuredTextLookup = Callable[[dict[str, object], str], object]
+
+
+def render_dual_cant_reading_paragraphs(
+    readings: list[dict[str, object]],
+) -> tuple[object, ...]:
+    """For a dually-cantillated verse, one labelled Hebrew line per reading (issue #36),
+    replacing the combined WLC verse line (e.g. taḥton + elyon)."""
+    paragraphs: list[object] = []
+    for reading in readings:
+        label = reading.get("display_label")
+        span = reading.get("span_label")
+        words = reading.get("words")
+        verse_text = " ".join(w for w in words if w) if isinstance(words, list) else ""
+        label_text = str(label) if isinstance(label, str) else ""
+        if isinstance(span, str) and span:
+            label_text = f"{label_text} ({span})"
+        paragraphs.append(
+            wlc_utils_html.para(
+                label_text,
+                {"class": _GOERWITZ_TMS_READING_LABEL_CLASS},
+            )
+        )
+        paragraphs.append(
+            wlc_utils_html.para(
+                verse_text,
+                {
+                    "class": _GOERWITZ_TMS_VERSE_CLASS,
+                    "lang": "hbo",
+                    "dir": "rtl",
+                },
+            )
+        )
+    return tuple(paragraphs)
 
 
 def render_wlc_verse_paragraph(
