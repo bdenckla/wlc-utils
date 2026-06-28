@@ -50,6 +50,16 @@ Subcommands:
                     generated from their committed htel bodies.
 
                 Each report runs with its default paths.
+    grammaticality
+                Estimate a PCFG over the committed prose + poetic parse trees
+                (one production per tree node) and score each verse's
+                log-likelihood -- a continuous companion to the binary
+                clean/oddball verdict (issue #11).  Reports the learned grammar,
+                the rarest-but-legal verses (per-accent log-likelihood, with the
+                least-probable production drilled out), and a validation that the
+                flagged oddballs score at the bottom; an n-gram baseline is kept
+                as a sanity check.  Writes out/accgram/_grammaticality.txt.  Run
+                run-prose + run-poetic first (it reads their committed JSON).
     test-fixes
                 For every annotated prose oddball, test whether adopting its
                 MAM-simple value clears the ERROR: substitute the MAM value into the
@@ -71,6 +81,7 @@ from pathlib import Path
 
 from accgram import almost_errors
 from accgram import fix_tester
+from accgram import grammaticality
 from accgram import poetic_oddballs
 from accgram import ps17v14_double_tsinnor
 from accgram import ps17v14_doc_notes
@@ -107,6 +118,10 @@ def _run_servi_xcheck(args: argparse.Namespace) -> None:
 
 def _run_fix_tester(args: argparse.Namespace) -> None:
     fix_tester.run(args)
+
+
+def _run_grammaticality(args: argparse.Namespace) -> None:
+    grammaticality.run(args)
 
 
 def _run_generate_html(_args: argparse.Namespace) -> None:
@@ -189,6 +204,18 @@ def main() -> None:
     )
     fix_tester.add_args(fix_tester_parser, repo_root=_repo_root())
     fix_tester_parser.set_defaults(func=_run_fix_tester)
+
+    grammaticality_parser = subparsers.add_parser(
+        "grammaticality",
+        help=(
+            "Estimate a PCFG over the committed prose + poetic parse trees and "
+            "score every verse's log-likelihood -- a continuous companion to the "
+            "binary clean/oddball verdict (issue #11). Writes "
+            "out/accgram/_grammaticality.txt. Run run-prose + run-poetic first."
+        ),
+    )
+    grammaticality.add_args(grammaticality_parser, repo_root=_repo_root())
+    grammaticality_parser.set_defaults(func=_run_grammaticality)
 
     generate_html_parser = subparsers.add_parser(
         "generate-html",
