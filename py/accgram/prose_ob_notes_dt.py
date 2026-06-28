@@ -21,8 +21,10 @@ BY_REF: dict[str, dict[str, object]] = {
         # ungrammatical. (MAM's taḥton has the qadma and its elyon has the meteg, which
         # the scanner swallows, which is why MAM's elyon parses cleanly.) UXLC corrects
         # the merkha to a meteg but supplies a pashta rather than the due qadma; see the
-        # linked UXLC note page (its `-t` te'amim note). Whether the error originates in
-        # LC, BHS, or BHQ has not been confirmed -> tbd.
+        # linked UXLC note page (its `-t` te'amim note). UXLC has since proposed a pending
+        # change (for UXLC 2.6) to change that pashta to the qadma -- exactly the
+        # correction this note argues for. Whether the error originates in LC, BHS, or BHQ
+        # has not been confirmed -> tbd.
         "st-source": "tbd",
         "wlc_focus": "תעש֥ה־",
         "st-summary": (
@@ -31,7 +33,8 @@ BY_REF: dict[str, dict[str, object]] = {
             " plus a qadma (taḥton) — the consensus pointing, under which both the"
             " taḥton and elyon chanted verses are grammatical, where the merkha makes"
             " both ungrammatical. UXLC corrects the merkha to a meteg but supplies a"
-            " pashta rather than the due qadma."
+            " pashta rather than the due qadma; a pending UXLC change would correct that"
+            " pashta to the qadma."
         ),
         "comment": [
             "WLC represents dual cantillation in manuscript style, which I call a"
@@ -57,9 +60,13 @@ BY_REF: dict[str, dict[str, object]] = {
             "UXLC goes most of the way towards correcting WLC here. While UXLC does"
             " correct the merkha to be a meteg, unfortunately UXLC adds a pashta rather"
             " than a qadma.",
+            "UXLC has now proposed a pending change (slated for UXLC 2.6) that changes"
+            " this pashta over the ש to a qadma — exactly the correction we advocate"
+            " here. See the “Pending UXLC change” link above.",
             "This error in WLC probably has its source in BHS and/or BHQ, i.e. this error is"
             " unlikely original to WLC, but we have not confirmed that.",
         ],
+        "pending_uxlc_change": "2026.10.19/2026.04.10-10",
         "uxlc_note_page": "https://tanach.us/Notes/Deuteronomy/Deuteronomy.5.8.2-t.html",
     },
     "dt 9:20": {
