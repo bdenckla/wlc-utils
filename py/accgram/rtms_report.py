@@ -200,9 +200,14 @@ def _render_verse_paragraphs(
 ) -> tuple[object, ...]:
     # Dually-cantillated verses (issue #36) show one labelled line per reading
     # (e.g. taḥton + elyon) in place of the single combined WLC verse line.
+    # The row's own numbered verse is the focus, so an elyon line's words from neighbouring
+    # verses are grayed as context.
     readings = row.get("dual_cant_readings")
     if isinstance(readings, list) and readings:
-        return rtmsr_verse.render_dual_cant_reading_paragraphs(readings)
+        _bb, _chnu, _vrnu, focus_bcv = parse_ref_to_wlc_bcv(_row_ref(row))
+        return rtmsr_verse.render_dual_cant_reading_paragraphs(
+            readings, focus_bcv=focus_bcv
+        )
     return (_render_wlc_verse_paragraph(row, structured_text_lookup=structured_text_lookup),)
 
 

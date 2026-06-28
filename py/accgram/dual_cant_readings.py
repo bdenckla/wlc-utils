@@ -7,8 +7,12 @@ line per reading (e.g. taḥton + elyon). The elyon reading groups several numbe
 verses into one chanted verse, so a reading's span label can differ from the row's own
 verse (e.g. the elyon line for dt 5:8 spans dt 5:7–10).
 
-Each reading is a plain dict (``display_label``, ``span_label``, ``words``) so the
-renderer stays dumb. ``display_label`` carries the Unicode ḥ (the cant-thread ASCII
+Each reading is a plain dict (``display_label``, ``span_label``, ``words``, and a
+``word_bcvs`` list giving each word's numbered verse) so the renderer stays dumb. The
+``word_bcvs`` let the renderer gray the words that fall outside the row's own verse: an
+elyon reading groups several numbered verses, so on the dt 5:8 row its 5:7 / 5:9 / 5:10
+words are de-emphasized, spotlighting the 5:8 part where the oddball lives.
+``display_label`` carries the Unicode ḥ (the cant-thread ASCII
 label spells ḥet as "x", per the repo transliteration standard).
 """
 
@@ -39,6 +43,7 @@ def load_readings_by_bcv(
                     "display_label": _display_label(thread.thread_label),
                     "span_label": _span_label(span),
                     "words": list(cv.words),
+                    "word_bcvs": list(cv.word_bcvs),
                 }
                 for bcv in _bcvs_in_span(span):
                     by_bcv.setdefault(bcv, []).append(reading)

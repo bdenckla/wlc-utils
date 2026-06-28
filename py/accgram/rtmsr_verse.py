@@ -9,12 +9,15 @@ from py_html import wlc_utils_html
 _GOERWITZ_TMS_VERSE_CLASS = "goerwitz-tms-verse"
 _GOERWITZ_TMS_FOCUS_HIGHLIGHT_CLASS = "goerwitz-tms-focus-highlight"
 _GOERWITZ_TMS_READING_LABEL_CLASS = "goerwitz-tms-reading-label"
+_GOERWITZ_TMS_CONTEXT_CLASS = "goerwitz-tms-context"
 
 StructuredTextLookup = Callable[[dict[str, object], str], object]
 
 
 def render_dual_cant_reading_paragraphs(
     readings: list[dict[str, object]],
+    *,
+    focus_bcv: str | None = None,
 ) -> tuple[object, ...]:
     """For a dually-cantillated verse, one labelled Hebrew line per reading (issue #36),
     replacing the combined WLC verse line (e.g. taḥton + elyon)."""
@@ -22,8 +25,11 @@ def render_dual_cant_reading_paragraphs(
     for reading in readings:
         label = reading.get("display_label")
         span = reading.get("span_label")
-        words = reading.get("words")
-        verse_text = " ".join(w for w in words if w) if isinstance(words, list) else ""
+        contents = _dual_cant_verse_contents(
+            words=reading.get("words"),
+            word_bcvs=reading.get("word_bcvs"),
+            focus_bcv=focus_bcv,
+        )
         label_text = str(label) if isinstance(label, str) else ""
         if isinstance(span, str) and span:
             label_text = f"{label_text} ({span})"
@@ -35,7 +41,7 @@ def render_dual_cant_reading_paragraphs(
         )
         paragraphs.append(
             wlc_utils_html.para(
-                verse_text,
+                contents,
                 {
                     "class": _GOERWITZ_TMS_VERSE_CLASS,
                     "lang": "hbo",
@@ -44,6 +50,61 @@ def render_dual_cant_reading_paragraphs(
             )
         )
     return tuple(paragraphs)
+
+
+def _dual_cant_verse_contents(
+    *, words: object, word_bcvs: object, focus_bcv: str | None
+) -> object:
+    """The verse-line contents for one reading: a plain space-joined string, or — when a
+    focus verse and a parallel per-word bcv list are available — a sequence in which each
+    run of words from a numbered verse other than ``focus_bcv`` is wrapped in a gray
+    context span (issue #36).
+
+    An elyon chanted verse groups several numbered verses, so on the dt 5:8 row its 5:7 /
+    5:9 / 5:10 words become context and only the 5:8 part stays in normal color.  Runs of
+    same-emphasis words are coalesced into one span and single spaces are interleaved
+    between runs, so the visible spacing is identical to the plain join."""
+    if not isinstance(words, list):
+        return ""
+    nonempty = [(i, w) for i, w in enumerate(words) if w]
+    plain = " ".join(w for _, w in nonempty)
+    if not focus_bcv or not isinstance(word_bcvs, list) or len(word_bcvs) != len(words):
+        return plain
+
+    pieces: list[object] = []
+    run_words: list[str] = []
+    run_is_context = False
+
+    def flush() -> None:
+        if not run_words:
+            return
+        text = " ".join(run_words)
+        if run_is_context:
+            pieces.append(
+                wlc_utils_html.span(text, {"class": _GOERWITZ_TMS_CONTEXT_CLASS})
+            )
+        else:
+            pieces.append(text)
+        run_words.clear()
+
+    for i, word in nonempty:
+        is_context = word_bcvs[i] != focus_bcv
+        if run_words and is_context != run_is_context:
+            flush()
+        run_is_context = is_context
+        run_words.append(word)
+    flush()
+
+    if not pieces:
+        return ""
+    if len(pieces) == 1 and isinstance(pieces[0], str):
+        return pieces[0]
+    spaced: list[object] = []
+    for idx, piece in enumerate(pieces):
+        if idx:
+            spaced.append(" ")
+        spaced.append(piece)
+    return tuple(spaced)
 
 
 def render_wlc_verse_paragraph(

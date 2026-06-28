@@ -136,6 +136,7 @@ class ChantedVerseResult:
     thread_label: str
     bcv_span: tuple[str, str]  # the BHS numbered verse(s) this chanted verse touches
     words: tuple[str, ...]  # emitted (pointed-Hebrew) stream words
+    word_bcvs: tuple[str, ...]  # the numbered verse each word falls in (parallel to words)
     body: str  # scanner mark body
     tokens: tuple[str, ...]  # token type stream
     status: str  # clean / oddball / location_only / no_parse
@@ -529,6 +530,7 @@ def _parse_chanted_verse(
         thread_label=label,
         bcv_span=(cv[0].bcv, cv[-1].bcv),
         words=tuple(v.text for v in cv),
+        word_bcvs=tuple(v.bcv for v in cv),
         body=body,
         tokens=tuple(t.type for t in tokens),
         status=status,

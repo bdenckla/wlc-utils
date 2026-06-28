@@ -73,6 +73,9 @@ p.goerwitz-tms-reading-label {
 span.goerwitz-tms-focus-highlight {
     color: light-dark(#0b57d0, #7bb4ff);
 }
+span.goerwitz-tms-context {
+    color: light-dark(#999, #777);
+}
 p.goerwitz-tms-image {
     text-align: center;
 }
