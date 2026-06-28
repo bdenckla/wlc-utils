@@ -6,7 +6,8 @@ corpus or MAM-simple is absent.
 
 The fixed expectations come from the verified survey (``.novc/novc_dualcant_survey.py``):
 
-  * exactly 4 supplied marks (clean charities) and 1 anomaly (a candidate WLC bug);
+  * exactly 4 supplied marks (clean charities) and 2 anomalies -- the one dt 5:8 merkha
+    breaking both readings (the taḥton's qadma substitute and the elyon's stray);
   * Gen 35:22 detangles into pashut = 2 chanted verses, midrashit = 1, all parsing;
   * supplied-mark words parse clean (the charity is what lets them parse);
   * the dt 5:8 anomaly surfaces as an attributed oddball, not a crash.
@@ -69,14 +70,20 @@ def test_supplied_marks_are_exactly_the_four_clean_supplies() -> None:
     }
 
 
-def test_single_anomaly_is_dt58_alef_and_is_a_candidate_wlc_bug() -> None:
+def test_dt58_merkha_is_an_anomaly_in_both_readings() -> None:
+    # WLC's single tangled merkha breaks both readings: in the taḥton it stands in for the
+    # due qadma (a substitution anomaly), and in the elyon -- which is due no cantillation
+    # accent there, only a meteg -- it is a stray (no-accent-due anomaly).  One WLC mark,
+    # two anomalies, no other anomaly anywhere in the three loci.
     results = _detangle_or_skip()
     anomalies = [a for pr in results for a in pr.anomalies]
-    assert len(anomalies) == 1
-    anomaly = anomalies[0]
-    assert (anomaly.bcv, anomaly.strand) == ("dt5:8", "alef")
-    assert anomaly.expected == am.QADMA  # MAM is due a qadma
-    assert anomaly.found == am.MERKHA  # WLC wrote a merkha instead
+    by_strand = {a.strand: a for a in anomalies}
+    assert len(anomalies) == 2
+    assert {a.bcv for a in anomalies} == {"dt5:8"}
+    assert by_strand["alef"].expected == am.QADMA  # taḥton is due a qadma
+    assert by_strand["alef"].found == am.MERKHA  # WLC wrote a merkha instead
+    assert by_strand["bet"].expected == ""  # elyon is due no cantillation accent
+    assert by_strand["bet"].found == am.MERKHA  # yet WLC's merkha lands here too
 
 
 def test_supplied_mark_words_parse_clean() -> None:
@@ -102,12 +109,18 @@ def test_dt58_anomaly_surfaces_as_attributed_oddball_not_crash() -> None:
 
 
 def test_every_chanted_verse_parses_or_is_attributed_only_dt58_is_an_oddity() -> None:
+    # The lone dt 5:8 merkha is the only oddity, but it spoils both readings' chanted
+    # verses: the taḥton's 5:8 and the elyon's 5:7-10 (which contains 5:8).  Nothing else
+    # is non-clean.
     results = _detangle_or_skip()
     cvs = _all_chanted_verses(results)
     bad = [cv.ref for cv in cvs if cv.status not in ("clean", "oddball")]
     assert not bad, f"unexpected no_parse/location_only: {bad}"
-    oddballs = [cv.bcv_span[0] for cv in cvs if cv.status == "oddball"]
-    assert oddballs == ["dt5:8"]
+    oddball_spans = {(cv.strand, cv.bcv_span) for cv in cvs if cv.status == "oddball"}
+    assert oddball_spans == {
+        ("alef", ("dt5:8", "dt5:8")),
+        ("bet", ("dt5:7", "dt5:10")),
+    }
 
 
 # --------------------------------------------------------------------------- #

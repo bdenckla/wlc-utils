@@ -1812,10 +1812,12 @@
       },
       "dual_cant_readings": [
         {
+          "strand": "alef",
+          "strand_label": "taxton",
           "display_label": "taḥton",
           "span_label": "5:8",
           "words": [
-            "לֽא־",
+            "לא־",
             "תעש֥ה",
             "לך֥",
             "פ֙סל",
@@ -1849,21 +1851,129 @@
             "dt5:8",
             "dt5:8",
             "dt5:8"
+          ],
+          "status": "oddball",
+          "tree": {
+            "label": "silluq_clause",
+            "children": [
+              {
+                "label": "atnax_clause",
+                "children": [
+                  {
+                    "label": "zaqef_clause",
+                    "children": [
+                      {
+                        "label": "pashta_phrase",
+                        "leaves": [
+                          "ERROR"
+                        ]
+                      },
+                      {
+                        "label": "zaqef_phrase",
+                        "leaves": [
+                          "zaqef"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "atnax_clause",
+                    "children": [
+                      {
+                        "label": "zaqef_clause",
+                        "children": [
+                          {
+                            "label": "pashta_phrase",
+                            "leaves": [
+                              "mahapakh",
+                              "pashta"
+                            ]
+                          },
+                          {
+                            "label": "zaqef_phrase",
+                            "leaves": [
+                              "zaqef"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "label": "atnax_clause",
+                        "children": [
+                          {
+                            "label": "tipexa_phrase",
+                            "leaves": [
+                              "merkha",
+                              "tipexa"
+                            ]
+                          },
+                          {
+                            "label": "atnax_phrase",
+                            "leaves": [
+                              "atnax"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "silluq_clause",
+                "children": [
+                  {
+                    "label": "tipexa_phrase",
+                    "leaves": [
+                      "merkha",
+                      "tipexa"
+                    ]
+                  },
+                  {
+                    "label": "silluq_phrase",
+                    "leaves": [
+                      "merkha",
+                      "silluq"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "word_leaf_counts": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
           ]
         },
         {
+          "strand": "bet",
+          "strand_label": "elyon",
           "display_label": "elyon",
           "span_label": "5:7–10",
           "words": [
             "ל֣א",
-            "יהיֽה־",
+            "יהיה־",
             "לך֩",
             "אלה֨ים",
             "אחר֜ים",
             "על־",
             "פנ֗י",
             "ל֣א",
-            "תעשֽה־",
+            "תעש֥ה־",
             "לך֣",
             "פ֣סל׀",
             "כל־",
@@ -1901,7 +2011,7 @@
             "לשנא֑י",
             "וע֤שה",
             "ח֙סד",
-            "לֽאלפ֔ים",
+            "לאלפ֔ים",
             "לאהב֖י",
             "ולשמר֥י",
             "מצותֽי׃"
@@ -1957,6 +2067,293 @@
             "dt5:10",
             "dt5:10",
             "dt5:10"
+          ],
+          "status": "oddball",
+          "tree": {
+            "label": "silluq_clause",
+            "children": [
+              {
+                "label": "atnax_clause",
+                "children": [
+                  {
+                    "label": "segolta_clause",
+                    "children": [
+                      {
+                        "label": "revia_clause",
+                        "children": [
+                          {
+                            "label": "geresh_phrase",
+                            "leaves": [
+                              "munax",
+                              "telishaqetanna",
+                              "azla",
+                              "geresh"
+                            ]
+                          },
+                          {
+                            "label": "revia_phrase",
+                            "leaves": [
+                              "revia"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "label": "segolta_clause",
+                        "children": [
+                          {
+                            "label": "revia_clause",
+                            "children": [
+                              {
+                                "label": "pazer_phrase",
+                                "leaves": [
+                                  "ERROR"
+                                ]
+                              },
+                              {
+                                "label": "revia_clause",
+                                "children": [
+                                  {
+                                    "label": "pazer_phrase",
+                                    "leaves": [
+                                      "munax",
+                                      "munax",
+                                      "pazer"
+                                    ]
+                                  },
+                                  {
+                                    "label": "revia_clause",
+                                    "children": [
+                                      {
+                                        "label": "geresh_phrase",
+                                        "leaves": [
+                                          "telishaqetanna",
+                                          "azla",
+                                          "geresh"
+                                        ]
+                                      },
+                                      {
+                                        "label": "revia_clause",
+                                        "children": [
+                                          {
+                                            "label": "legarmeh_phrase",
+                                            "leaves": [
+                                              "merkha",
+                                              "legarmeh"
+                                            ]
+                                          },
+                                          {
+                                            "label": "revia_phrase",
+                                            "leaves": [
+                                              "munax",
+                                              "revia"
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "label": "segolta_clause",
+                            "children": [
+                              {
+                                "label": "zarqa_phrase",
+                                "leaves": [
+                                  "munax",
+                                  "zarqa"
+                                ]
+                              },
+                              {
+                                "label": "segolta_phrase",
+                                "leaves": [
+                                  "munax",
+                                  "segolta"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "atnax_clause",
+                    "children": [
+                      {
+                        "label": "zaqef_clause",
+                        "children": [
+                          {
+                            "label": "pashta_clause",
+                            "children": [
+                              {
+                                "label": "geresh_phrase",
+                                "leaves": [
+                                  "munax",
+                                  "gershayim"
+                                ]
+                              },
+                              {
+                                "label": "pashta_phrase",
+                                "leaves": [
+                                  "mahapakh",
+                                  "pashta"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "label": "zaqef_phrase",
+                            "leaves": [
+                              "munax",
+                              "zaqef"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "label": "atnax_clause",
+                        "children": [
+                          {
+                            "label": "tipexa_clause",
+                            "children": [
+                              {
+                                "label": "tevir_clause",
+                                "children": [
+                                  {
+                                    "label": "big_telisha_phrase",
+                                    "leaves": [
+                                      "telishagedola"
+                                    ]
+                                  },
+                                  {
+                                    "label": "tevir_phrase",
+                                    "leaves": [
+                                      "qadma",
+                                      "darga",
+                                      "tevir"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "label": "tipexa_phrase",
+                                "leaves": [
+                                  "merkha",
+                                  "tipexa"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "label": "atnax_phrase",
+                            "leaves": [
+                              "atnax"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "silluq_clause",
+                "children": [
+                  {
+                    "label": "zaqef_clause",
+                    "children": [
+                      {
+                        "label": "pashta_phrase",
+                        "leaves": [
+                          "mahapakh",
+                          "pashta"
+                        ]
+                      },
+                      {
+                        "label": "zaqef_phrase",
+                        "leaves": [
+                          "zaqef"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "silluq_clause",
+                    "children": [
+                      {
+                        "label": "tipexa_phrase",
+                        "leaves": [
+                          "tipexa"
+                        ]
+                      },
+                      {
+                        "label": "silluq_phrase",
+                        "leaves": [
+                          "merkha",
+                          "silluq"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "word_leaf_counts": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
           ]
         }
       ]

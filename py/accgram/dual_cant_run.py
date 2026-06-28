@@ -132,6 +132,7 @@ def _chanted_verse_obj(cv: dcd.ChantedVerseResult) -> dict[str, object]:
         "marks": cv.body,
         "tokens": list(cv.tokens),
         "tree": cv.tree,
+        "word_leaf_counts": list(cv.word_leaf_counts),
     }
 
 

@@ -184,6 +184,28 @@ def _build_body_contents(entries: list[_Entry]) -> tuple[object, ...]:
 
 
 def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
+    # A dually-cantillated oddball (dt 5:8) is laid out by reading -- its own section
+    # builder emits both readings' verse lines, per-strand focus/diff tables, and parse
+    # trees -- so it bypasses the generic single-table / single-tree flow (issue #36).
+    if entry.row.get("dual_cant_readings"):
+        items = list(
+            rtms_report.render_dual_cant_section(
+                entry.row,
+                section_anchor_id=entry.anchor_id,
+                structured_text_lookup=entry.structured_text_lookup,
+            )
+        )
+        return ob_page.render_verse_section(
+            items,
+            is_first=is_first,
+            data_attrs={
+                "data-category": entry.category,
+                "data-source": entry.source,
+                "data-uchange": _flag_attr(entry.has_uxlc_change),
+                "data-wnote": _flag_attr(entry.has_wlc_note),
+            },
+        )
+
     items = list(
         rtms_report.render_row_section_with_anchor_id(
             entry.row,

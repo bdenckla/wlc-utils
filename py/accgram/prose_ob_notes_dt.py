@@ -66,6 +66,26 @@ BY_REF: dict[str, dict[str, object]] = {
             "This error in WLC probably has its source in BHS and/or BHQ, i.e. this error is"
             " unlikely original to WLC, but we have not confirmed that.",
         ],
+        # The detangled focus word תעשה in each reading, across the three transcriptions
+        # (issue #36). One per-strand table replaces the old combined focus/diff table:
+        # the merkha breaks both readings, but the two readings disagree on what is due
+        # (taḥton: a qadma; elyon: no accent, just a meteg), so splitting clarifies that
+        # the elyon correction (merkha→meteg) is agreed by MAM and UXLC while only the
+        # taḥton correction (qadma vs pashta) is where they part. Keyed by strand_label;
+        # each row is (value, desc, source). The WLC value is cross-checked against the
+        # detangled stream at render time, so it cannot silently drift.
+        "dual_cant_tables": {
+            "taxton": [
+                {"value": "תעש֥ה", "desc": "merkha (a qadma is due here)", "source": "WLC"},
+                {"value": "תעש֨ה", "desc": "qadma", "source": "MAM"},
+                {"value": "תעש֙ה", "desc": "pashta (UXLC supplies a pashta, not the due qadma)", "source": "UXLC"},
+            ],
+            "elyon": [
+                {"value": "תעש֥ה־", "desc": "merkha (no accent is due here, only a meteg)", "source": "WLC"},
+                {"value": "תעשֽה־", "desc": "meteg", "source": "MAM"},
+                {"value": "תעשֽה־", "desc": "meteg", "source": "UXLC"},
+            ],
+        },
         "pending_uxlc_change": "2026.10.19/2026.04.10-10",
         "uxlc_note_page": "https://tanach.us/Notes/Deuteronomy/Deuteronomy.5.8.2-t.html",
     },

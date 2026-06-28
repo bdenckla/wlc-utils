@@ -113,6 +113,9 @@ td.goerwitz-obs-error-cell {
     font-weight: 700;
     color: light-dark(#8b0000, #ff9b9b);
 }
+td.goerwitz-obs-context-cell {
+    color: light-dark(#999, #777);
+}
 table.goerwitz-obs-error-table td.goerwitz-obs-depth-cell {
     text-align: center;
     font-weight: 700;

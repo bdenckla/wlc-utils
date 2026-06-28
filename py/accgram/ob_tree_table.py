@@ -16,7 +16,16 @@ class _Cell:
     class_name: str | None = None
 
 
-def render_error_tree_table(tree: ob_tree_parse.ErrorTree) -> object:
+def render_error_tree_table(
+    tree: ob_tree_parse.ErrorTree,
+    *,
+    gray_leaf_cols: frozenset[int] | None = None,
+) -> object:
+    """Render the parse tree as an HTML table.
+
+    ``gray_leaf_cols`` (leaf-column indices, left-to-right) de-emphasizes those leaf cells
+    and any internal cell whose whole leaf span lies within them -- used by the dt 5:8
+    dual-cant display to spotlight the in-focus verse's columns of the elyon tree."""
     if not tree.roots:
         raise ValueError("Cannot render an empty parse tree")
 
@@ -41,6 +50,7 @@ def render_error_tree_table(tree: ob_tree_parse.ErrorTree) -> object:
             leaf_row_index=leaf_row_index,
             spans_by_branch=spans_by_branch,
             rows_by_index=rows_by_index,
+            gray_leaf_cols=gray_leaf_cols,
         )
         current_col += spans_by_branch[id(root)]
 
@@ -103,6 +113,7 @@ def _emit_branch_cells(
     leaf_row_index: int,
     spans_by_branch: dict[int, int],
     rows_by_index: dict[int, list[_Cell]],
+    gray_leaf_cols: frozenset[int] | None,
 ) -> None:
     branch_span = spans_by_branch[id(branch)]
     _append_cell(
@@ -113,6 +124,7 @@ def _emit_branch_cells(
             colspan=branch_span,
             text=ob_tree_abbrev.abbreviate_branch_label(branch.label),
             title_text=branch.label,
+            class_name=_gray_class(start_col, branch_span, gray_leaf_cols),
         ),
     )
 
@@ -127,7 +139,11 @@ def _emit_branch_cells(
                     colspan=1,
                     text=ob_tree_abbrev.abbreviate_leaf_text(child.text),
                     title_text=child.text,
-                    class_name="goerwitz-obs-error-cell" if child.has_error else None,
+                    class_name=(
+                        "goerwitz-obs-error-cell"
+                        if child.has_error
+                        else _gray_class(child_col, 1, gray_leaf_cols)
+                    ),
                 ),
             )
             child_col += 1
@@ -139,8 +155,20 @@ def _emit_branch_cells(
             leaf_row_index=leaf_row_index,
             spans_by_branch=spans_by_branch,
             rows_by_index=rows_by_index,
+            gray_leaf_cols=gray_leaf_cols,
         )
         child_col += spans_by_branch[id(child)]
+
+
+def _gray_class(
+    start_col: int, span: int, gray_leaf_cols: frozenset[int] | None
+) -> str | None:
+    """``goerwitz-obs-context-cell`` when this cell's whole leaf span is out of focus."""
+    if not gray_leaf_cols:
+        return None
+    if all((start_col + i) in gray_leaf_cols for i in range(span)):
+        return "goerwitz-obs-context-cell"
+    return None
 
 
 def _append_cell(

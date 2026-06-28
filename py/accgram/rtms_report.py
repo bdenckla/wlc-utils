@@ -3,6 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 from collections.abc import Callable
 
+from accgram import ob_tree_parse
+from accgram import ob_tree_table
 from accgram import rtmsr_media
 from accgram import rtmsr_sat
 from accgram import rtmsr_verse
@@ -103,6 +105,165 @@ def _render_row_section_with_anchor_id(
         ),
     ]
     return tuple(section_items)
+
+
+def render_dual_cant_section(
+    row: dict[str, object],
+    *,
+    section_anchor_id: str,
+    structured_text_lookup: StructuredTextLookup,
+) -> tuple[object, ...]:
+    """The whole goerwitz section for a dually-cantillated oddball (dt 5:8), laid out by
+    reading (issue #36): heading + links, then a taḥton block and an elyon block (each its
+    own labelled verse line, per-strand focus/diff table, and parse tree), then the shared
+    images and commentary.  The elyon's tree spans 5:7-10; its non-5:8 columns are grayed
+    to spotlight the overlap.  Replaces the generic single-table / single-tree flow for
+    this row (which the caller therefore does not also append)."""
+    ref = _row_ref(row)
+    bb, chnu, vrnu, bcv = parse_ref_to_wlc_bcv(ref)
+    readings = row.get("dual_cant_readings")
+    tables = structured_text_lookup(row, "dual_cant_tables")
+
+    items: list[object] = [
+        wlc_utils_html.heading_level_2(ref, {"id": section_anchor_id}),
+        *_render_ref_links(
+            bb=bb,
+            chnu=chnu,
+            vrnu=vrnu,
+            bcv=bcv,
+            row=row,
+            section_anchor_id=section_anchor_id,
+            structured_text_lookup=structured_text_lookup,
+        ),
+    ]
+    if isinstance(readings, list):
+        for reading in readings:
+            if isinstance(reading, dict):
+                items.extend(
+                    _render_dual_cant_strand_block(reading, tables=tables, focus_bcv=bcv)
+                )
+    items.extend(_render_image_paragraphs(row, structured_text_lookup=structured_text_lookup))
+    items.extend(_render_comment_paragraphs(row, structured_text_lookup=structured_text_lookup))
+    return tuple(items)
+
+
+def _render_dual_cant_strand_block(
+    reading: dict[str, object], *, tables: object, focus_bcv: str
+) -> list[object]:
+    block: list[object] = list(
+        rtmsr_verse.render_dual_cant_reading_paragraphs([reading], focus_bcv=focus_bcv)
+    )
+    table = _render_dual_cant_strand_table(reading, tables)
+    if table is not None:
+        block.append(table)
+    tree = _render_dual_cant_strand_tree(reading, focus_bcv=focus_bcv)
+    if tree is not None:
+        block.append(tree)
+    return block
+
+
+def _render_dual_cant_strand_table(
+    reading: dict[str, object], tables: object
+) -> object | None:
+    if not isinstance(tables, dict):
+        return None
+    rows = tables.get(reading.get("strand_label"))
+    if not isinstance(rows, list) or not rows:
+        return None
+
+    words = reading.get("words") if isinstance(reading.get("words"), list) else []
+    table_rows: list[object] = []
+    for entry in rows:
+        value = str(entry.get("value", ""))
+        # Cross-check: the WLC form shown must be the one the detangler actually emitted
+        # for this reading, so a hand-authored table cannot drift from the stream.
+        if entry.get("source") == "WLC" and value not in words:
+            raise ValueError(
+                f"dual_cant_tables WLC value {value!r} for strand "
+                f"{reading.get('strand_label')!r} is not the detangled focus word "
+                f"(words={words})."
+            )
+        table_rows.append(
+            wlc_utils_html.table_row_of_data(
+                (value, str(entry.get("desc", "")), str(entry.get("source", ""))),
+                tdattrs=({"lang": "hbo", "dir": "rtl"}, None, None),
+            )
+        )
+    return wlc_utils_html.table(tuple(table_rows), {"class": "goerwitz-tms-sat"})
+
+
+def _render_dual_cant_strand_tree(
+    reading: dict[str, object], *, focus_bcv: str
+) -> object | None:
+    tree_obj = reading.get("tree")
+    if not isinstance(tree_obj, dict):
+        return None
+    error_tree = ob_tree_parse.error_tree_from_obj(tree_obj)
+    if error_tree is None:  # a clean reading has no ERROR tree to show
+        return None
+    gray_cols = _dual_cant_gray_leaf_cols(reading, tree_obj, focus_bcv)
+    return wlc_utils_html.div(
+        (ob_tree_table.render_error_tree_table(error_tree, gray_leaf_cols=gray_cols),),
+        {"class": "goerwitz-obs-tree-wrap"},
+    )
+
+
+def _dual_cant_gray_leaf_cols(
+    reading: dict[str, object], tree_obj: dict, focus_bcv: str
+) -> frozenset[int] | None:
+    """Tree leaf-columns to gray for a reading spanning several numbered verses: the run of
+    columns wholly before the focus verse, and the run wholly after it.
+
+    A parse ERROR can fold several accents into one leaf, so the middle (focus-verse) span
+    is not column-mappable -- but it is in focus and stays ungrayed anyway, and the two
+    flanks (the other verses) are error-free, so their per-word leaf counts are exact.  We
+    gray a flank column only while a whole leaf node fits inside the flank's leaf run; a
+    node straddling the boundary stays in focus.  Returns None (no graying) when the inputs
+    are missing or inconsistent."""
+    word_bcvs = reading.get("word_bcvs")
+    counts = reading.get("word_leaf_counts")
+    if not (isinstance(word_bcvs, list) and isinstance(counts, list)):
+        return None
+    if len(word_bcvs) != len(counts):
+        return None
+    focus_idxs = [i for i, b in enumerate(word_bcvs) if b == focus_bcv]
+    if not focus_idxs:
+        return None
+
+    node_counts = _leaf_node_name_counts(tree_obj)
+    total_names = sum(node_counts)
+    leading_names = sum(counts[: focus_idxs[0]])
+    trailing_names = sum(counts[focus_idxs[-1] + 1 :])
+    if leading_names + trailing_names > total_names:
+        return None  # error recovery reached into a flank; don't risk mis-graying
+
+    gray: set[int] = set()
+    consumed = 0
+    for col, k in enumerate(node_counts):
+        if consumed + k > leading_names:
+            break
+        gray.add(col)
+        consumed += k
+    consumed = 0
+    for col in range(len(node_counts) - 1, -1, -1):
+        k = node_counts[col]
+        if consumed + k > trailing_names:
+            break
+        gray.add(col)
+        consumed += k
+    return frozenset(gray)
+
+
+def _leaf_node_name_counts(node: dict) -> list[int]:
+    """Per leaf node (tree column), left-to-right, its number of leaf names."""
+    children = node.get("children")
+    if children is None:
+        return [len(node.get("leaves", ()))]
+    out: list[int] = []
+    for child in children:
+        if isinstance(child, dict):
+            out.extend(_leaf_node_name_counts(child))
+    return out
 
 
 def _render_ref_links(

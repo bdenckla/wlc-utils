@@ -33,11 +33,17 @@ Design (all four points verified against the data, see issue #36):
   oddball.  Where WLC instead carries an accent *neither* strand explains (Deut 5:8
   ``תעשה``: a merkha where qadma is due), that is a candidate WLC error: WLC's actual mark
   is emitted (so the grammar reacts) and the discrepancy is flagged (``Anomaly``), never
-  silently supplied.
+  silently supplied.  Because WLC's single tangled mark serves *both* readings, such a
+  rogue accent is routed into both strands -- as the short strand's substitution where it
+  is due an accent, and as a *stray* in the strand that is due none (only a meteg).  The
+  one Deut 5:8 merkha is thus the taḥton's qadma substitute and the elyon's stray, so it
+  surfaces as an oddball in *both* readings (two anomalies, one underlying WLC mark).
 
 MAM stress-helpers (zarqa/tsinnorit U+0598, and the doubled telisha / segol / pashta
 helpers) are never imposed on the WLC streams: ``_emit_word`` drops the tsinnorit and the
-second of any doubled accent.
+second of any doubled accent.  MAM's metegs are likewise stripped from the emitted
+stream (``_strip_nonfinal_meteg``), keeping only the verse-final meteg the scanner reads
+as silluq -- the rest are swallowed by the scanner, so dropping them is parse-neutral.
 
 This module is pure computation (no I/O); the driver (``dual_cant_run``) loads the inputs,
 writes the trees, and renders the supplied-marks page.
@@ -63,9 +69,10 @@ _PASEQ = am.PASEQ
 _SRC_MAQAF = uni_to_marks.MAQAF  # the Unicode maqaf U+05BE in the source words
 
 # Characters of a strand word that survive into the emitted WLC-stream word: base
-# consonants and the word-division / final marks (the spine), plus meteg (the scanner
-# swallows it but recovers a verse-final silluq from it).  Accents are handled
-# separately (matched/substituted/supplied); points/dagesh/CGJ are dropped.
+# consonants and the word-division / final marks (the spine), plus meteg (kept here so the
+# scanner can recover a verse-final silluq from it; the non-final metegs are stripped
+# afterwards by ``_strip_nonfinal_meteg``).  Accents are handled separately
+# (matched/substituted/supplied); points/dagesh/CGJ are dropped.
 _KEEP_NON_ACCENT = frozenset((_SRC_MAQAF, _SOF_PASUQ, _PASEQ, _METEG))
 
 
@@ -141,6 +148,10 @@ class ChantedVerseResult:
     tokens: tuple[str, ...]  # token type stream
     status: str  # clean / oddball / location_only / no_parse
     tree: dict | None
+    word_leaf_counts: tuple[int, ...]  # parse-tree leaves each word contributes (parallel
+    # to words); lets the renderer gray a chanted verse's out-of-focus numbered verses by
+    # column.  Exact in error-free spans; an ERROR may absorb tokens, but only within the
+    # focus verse, so the leading/trailing flanks the renderer grays stay exact.
 
 
 @dataclass(frozen=True)
@@ -198,6 +209,14 @@ def _accent_name(ch: str) -> str:
         except ValueError:
             spelling = "?"
     return f"{spelling} (U+{ord(ch):04X})"
+
+
+def _no_accent_due_name(mam_word: str) -> str:
+    """The ``expected`` description for a stray anomaly: this strand is due no cantillation
+    accent here (it carries only a meteg, where MAM's word has one)."""
+    if _METEG in mam_word:
+        return "no cantillation accent (only a meteg is due)"
+    return "no cantillation accent"
 
 
 @dataclass(frozen=True)
@@ -315,6 +334,7 @@ class _Assign:
     substitutions: dict[str, str]  # mam accent -> wlc accent (anomaly only)
     supplies: tuple[SuppliedMark, ...]
     anomalies: tuple[Anomaly, ...]
+    strays: tuple[str, ...] = ()  # WLC accents this strand has no slot for, emitted anyway
 
 
 _NO_ASSIGN = _Assign({}, (), ())
@@ -335,12 +355,18 @@ def _assign_word(
     Match the strand's (deduped, helper-free) accents against WLC's accents by identity.
     A strand accent absent from WLC is either a clean *supply* (WLC carries only the other
     strand's reading here) or, if WLC carries an accent neither strand explains, an
-    *anomaly* (emit WLC's mark, flag it)."""
+    *anomaly* (emit WLC's mark, flag it).
+
+    A WLC accent belonging to *neither* strand (a true leftover) is the candidate WLC bug.
+    Where this strand is short an accent, the leftover substitutes for it (its position is
+    the missing accent's slot).  Where this strand needs no accent here (it takes only a
+    meteg), the leftover has no slot, yet WLC still wrote it, so this reading must confront
+    the rogue mark too: it is emitted as a *stray* (so the grammar reacts) and flagged as a
+    no-accent-due anomaly.  The single dt 5:8 merkha is thus the taḥton's qadma substitute
+    AND the elyon's stray -- one WLC mark that breaks both readings."""
     need = _real_accents_ordered(mam_word)
     have = set(_accents(wlc_word))
     missing = [a for a in need if a not in have]
-    if not missing:
-        return _NO_ASSIGN
 
     # WLC accents this word carries that belong to neither strand's reading here.
     leftover = sorted(have - set(need) - other_real, key=ord)
@@ -348,9 +374,11 @@ def _assign_word(
     substitutions: dict[str, str] = {}
     supplies: list[SuppliedMark] = []
     anomalies: list[Anomaly] = []
+    used_leftover: set[str] = set()
     for i, accent in enumerate(missing):
         if i < len(leftover):
             found = leftover[i]
+            used_leftover.add(found)
             substitutions[accent] = found
             anomalies.append(
                 Anomaly(
@@ -378,7 +406,34 @@ def _assign_word(
                     reason=_supply_reason(wlc_word, have, other_label),
                 )
             )
-    return _Assign(substitutions, tuple(supplies), tuple(anomalies))
+
+    # A leftover WLC accent this strand has no slot for becomes a *stray* only when the
+    # OTHER strand is itself short an accent here -- i.e. the leftover is the rogue mark
+    # WLC wrote *instead of* the proper pointing, which the other strand absorbs as a
+    # substitution.  (A leftover where neither strand is missing anything is a benign extra
+    # mark -- a meteg the strands don't track -- and is dropped, as before.)  Emit such a
+    # stray so this reading is confronted with the rogue mark too, and flag it as a
+    # no-accent-due anomaly.
+    other_short = bool(other_real - have)
+    strays = tuple(a for a in leftover if a not in used_leftover) if other_short else ()
+    for accent in strays:
+        anomalies.append(
+            Anomaly(
+                bcv=bcv,
+                strand=strand,
+                strand_label=strand_label,
+                mam_word=mam_word,
+                wlc_word=wlc_word,
+                expected="",
+                expected_name=_no_accent_due_name(mam_word),
+                found=accent,
+                found_name=_accent_name(accent),
+            )
+        )
+
+    if not missing and not strays:
+        return _NO_ASSIGN
+    return _Assign(substitutions, tuple(supplies), tuple(anomalies), strays)
 
 
 def _supply_reason(wlc_word: str, wlc_have: set[str], other_label: str) -> str:
@@ -433,14 +488,22 @@ def _assign_pooled(
 # --------------------------------------------------------------------------- #
 # Emission + segmentation + parsing
 # --------------------------------------------------------------------------- #
-def _emit_word(text: str, substitutions: dict[str, str]) -> str:
+def _emit_word(text: str, substitutions: dict[str, str], strays: tuple[str, ...] = ()) -> str:
     """Build one WLC-stream word on the MAM strand word's spine.
 
     Keep base letters and the spine marks (maqaf / paseq / sof pasuq / meteg); drop the
     tsinnorit stress-helper and the second of any doubled accent (a stress-helper); apply
-    anomaly substitutions (MAM accent -> WLC's actual accent); drop points/dagesh/CGJ."""
+    anomaly substitutions (MAM accent -> WLC's actual accent); drop points/dagesh/CGJ.
+
+    Any ``strays`` (WLC accents this strand has no slot for) are spliced in at the strand
+    word's stress: right after its meteg if it has one (the stress marker, e.g. dt
+    5:8 elyon's meteg on the ש), else after the last base letter.  Their letter position is
+    immaterial to the grammar (one accent per word -> one token) but matters to the verse
+    line, so we place them where WLC's mark would sit."""
     out: list[str] = []
     seen: set[str] = set()
+    last_letter_idx = -1
+    meteg_idx = -1
     for ch in text:
         if uni_to_marks.is_accent(ch):
             if ch == _TSINNORIT or ch in seen:
@@ -449,6 +512,13 @@ def _emit_word(text: str, substitutions: dict[str, str]) -> str:
             out.append(substitutions.get(ch, ch))
         elif uni_to_marks.is_base_letter(ch) or ch in _KEEP_NON_ACCENT:
             out.append(ch)
+            if uni_to_marks.is_base_letter(ch):
+                last_letter_idx = len(out) - 1
+            elif ch == _METEG:
+                meteg_idx = len(out) - 1
+    insert_at = (meteg_idx if meteg_idx >= 0 else last_letter_idx) + 1
+    if strays and insert_at >= 1:
+        out[insert_at:insert_at] = list(strays)
     return "".join(out)
 
 
@@ -458,8 +528,10 @@ def _emit_stream(strand: list[_Tok], assigns: dict[int, _Assign]) -> list[_Tok]:
     vels: list[_Tok] = []
     for i, tok in enumerate(strand):
         if tok.skel:
-            sub = assigns.get(i, _NO_ASSIGN).substitutions
-            vels.append(_Tok(tok.bcv, _emit_word(tok.text, sub)))
+            assign = assigns.get(i, _NO_ASSIGN)
+            vels.append(
+                _Tok(tok.bcv, _emit_word(tok.text, assign.substitutions, assign.strays))
+            )
         else:
             attach = _emit_word(tok.text, {})
             if vels and attach:
@@ -483,12 +555,51 @@ def _segment(vels: list[_Tok]) -> list[list[_Tok]]:
     return chanted_verses
 
 
+def _strip_nonfinal_meteg(chanted_verse: list[_Tok]) -> list[_Tok]:
+    """Drop metegs from a chanted verse, keeping only the verse-final silluq.
+
+    The scanner swallows every meteg except the one adjacent to the sof pasuq, which it
+    promotes to SILLUQ; that meteg lives in the chanted verse's last word (the sof-pasuq
+    bearer).  Stripping the others is therefore parse-neutral, and it keeps WLC's emitted
+    strand from carrying MAM's metegs -- marks that are not WLC's own here and bear
+    on no accent grammar (e.g. dt 5:8's elyon תעשה, where MAM's swallowed meteg would
+    otherwise mask WLC's actual merkha)."""
+    if len(chanted_verse) <= 1:
+        return chanted_verse
+    return [
+        vel if i == len(chanted_verse) - 1 else _Tok(vel.bcv, vel.text.replace(_METEG, ""))
+        for i, vel in enumerate(chanted_verse)
+    ]
+
+
 def _tree_has_error(tree: TN | None) -> bool:
     if tree is None:
         return False
     if tree.left is not None:
         return _tree_has_error(tree.left) or _tree_has_error(tree.right)
     return "ERROR" in tree.leaves
+
+
+_NON_LEAF_TOKENS = frozenset(("TILDE", "SOFPASUQ", "MISSING_SOFPASUQ"))
+
+
+def _word_leaf_counts(
+    words: list[_Tok], bb: str, chnu: int, vrnu: int
+) -> tuple[int, ...]:
+    """How many parse-tree leaves each word contributes, by re-scanning the word alone.
+
+    Each scanner accent token (including a verse-final silluq) is one leaf; the sof-pasuq
+    terminator is not.  We count tokens *the scanner emits* -- not raw accent codepoints,
+    which include marks the scanner swallows -- and a single-word divider context only
+    renames a token (munax vs legarmeh), never changes the count.  (A parse ERROR can fold
+    several tokens into one leaf, but only inside the offending verse, so these per-word
+    counts stay exact in the error-free flanks the renderer actually grays.)"""
+    out: list[int] = []
+    for tok in words:
+        word_body = uni_to_marks.verse_to_marks({"vels": [tok.text]})
+        word_tokens = scan_accents(word_body, bb, chnu, vrnu, HasLegarmeh())
+        out.append(sum(1 for t in word_tokens if t.type not in _NON_LEAF_TOKENS))
+    return tuple(out)
 
 
 def _bcv_span_ref(cv: list[_Tok], label: str, ordinal: str) -> str:
@@ -535,6 +646,7 @@ def _parse_chanted_verse(
         tokens=tuple(t.type for t in tokens),
         status=status,
         tree=tree_obj,
+        word_leaf_counts=_word_leaf_counts(cv, passage.bb, chnu, vrnu),
     )
 
 
@@ -584,7 +696,7 @@ def _process_strand(
                 supplies.extend(res.supplies)
 
     vels = _emit_stream(strand_toks, assigns)
-    chanted_verses = _segment(vels)
+    chanted_verses = [_strip_nonfinal_meteg(cv) for cv in _segment(vels)]
     n = len(chanted_verses)
     results: list[ChantedVerseResult] = []
     for idx, cv in enumerate(chanted_verses, start=1):
@@ -690,16 +802,29 @@ def folded_oddball_records(
     Only non-clean chanted verses (a genuine WLC dual-cant bug -> oddball / no_parse /
     location_only) are folded; clean and supplied-mark chanted verses are not oddballs.
     A supplied-mark chanted verse parses clean, so it never appears here (the issue's
-    reporting requirement)."""
+    reporting requirement).
+
+    One rogue WLC mark breaks *both* readings (dt 5:8's merkha: the taḥton's oddball and
+    the elyon's), but it is a single phenomenon and gets a single numbered-verse row -- the
+    taḥton's, at the verse where the mark lives.  The elyon chanted verse that the same
+    anomaly spoils is therefore NOT folded as its own (5:7-10 -> dt 5:7) row; it is shown
+    inside that one row as the second reading (its tree rides along on the row's
+    ``dual_cant_readings``).  We skip a non-clean chanted verse when every anomaly it
+    carries already has a folded row from the strand processed before it (alef/taḥton)."""
     passage = passage_for_book(bb)
     if passage is None:
         return []
     result = detangle_passage(passage, wlc_index, mam_by_bcv, parser)
+    anomaly_bcvs = {a.bcv for a in result.anomalies}
     records: list[dict[str, object]] = []
     seen: dict[str, str] = {}
+    folded_anomaly_bcvs: set[str] = set()
     for strand in result.strands:
         for cv in strand.chanted_verses:
             if cv.status == "clean":
+                continue
+            cv_anomaly_bcvs = anomaly_bcvs & set(cv.word_bcvs)
+            if cv_anomaly_bcvs and cv_anomaly_bcvs <= folded_anomaly_bcvs:
                 continue
             record = chanted_verse_to_prose_record(cv, bb)
             bcv = str(record["bcv"])
@@ -711,4 +836,5 @@ def folded_oddball_records(
                 )
             seen[bcv] = cv.ref
             records.append(record)
+            folded_anomaly_bcvs |= cv_anomaly_bcvs
     return records
