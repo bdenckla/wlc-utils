@@ -19,7 +19,7 @@ tested (adjacent multi-word foci are spliced word by word).  When MAM equals WLC
 the fix is not a word splice: if the note carries a hand-authored ``synth_fix``
 value, that speculated reading is tested instead (flagged ``synthesized``); if it
 carries a ``merge_next`` ref (the lone versification oddball nu 25:19, where BHS
-strands a verse number mid-chanted-verse), the named next verse's M-C body is
+maroons a verse number mid-chanted-verse), the named next verse's M-C body is
 *appended* and the joined verse re-parsed (``_test_merge_next``).
 
 It then cross-checks the verdict against the note's claim, flagging speculative
@@ -130,9 +130,9 @@ def _evaluate(body: str, bb: str, chnu: int, vrnu: int, guard: _ParseGuard) -> _
     # Prose lexical layer fires first and skips the grammar (the same single entry point
     # prose_run uses, so an annotated lexical oddball -- e.g. je 44:17's misplaced telisha
     # qetanna or lv25:20's same-letter pair -- is classified here, not via the grammar).
-    stranded = lexical_validation.lexical_oddballs(body)
-    if stranded:
-        labels = frozenset(f"illegal_mark:{mark.code}" for mark in stranded)
+    oddballs = lexical_validation.lexical_oddballs(body)
+    if oddballs:
+        labels = frozenset(f"illegal_mark:{mark.code}" for mark in oddballs)
         return _Eval("ODDBALL", labels, token_types)
 
     status, tree = guard.parse(tokens)
@@ -413,7 +413,7 @@ def _test_merge_next(
     """The lone *verse*-level splice: append the named next verse's M-C body.
 
     Unlike every other fix (a single-word accent edit inside one verse via
-    ``fix_apply``), nu 25:19's fix is versification: BHS strands a verse number
+    ``fix_apply``), nu 25:19's fix is versification: BHS maroons a verse number
     mid-chanted-verse, so the "verse" ends on an atnaḥ with no silluq/sof-pasuq.
     Appending the body BHS labels as the next verse supplies the second half, the
     atnaḥ bisects a complete verse, and the parse comes out CLEAN.

@@ -77,7 +77,7 @@ def _intro() -> tuple[object, ...]:
                 " checker ",
                 link("detangles", "goerwitz.html"),
                 " each into its two single-cantillation readings, guided by MAM’s"
-                " already-separated threads, and feeds each reading’s chanted verses to"
+                " already-separated strands, and feeds each reading’s chanted verses to"
                 " the ordinary prose grammar. The accents checked are WLC’s own, except for"
                 " the cases described below.",
             )
@@ -123,7 +123,7 @@ def _table(supplies: list) -> object:
             H.table_row_of_data(
                 (
                     ref_display(s.bcv),
-                    s.thread_label,
+                    s.strand_label,
                     hbo(accents_and_letters(s.mam_word)),
                     s.accent_name,
                     wlc_cell,
@@ -137,8 +137,8 @@ def _table(supplies: list) -> object:
 def _reading_order_key(s) -> tuple:
     bb = s.bcv[:2]
     chnu, vrnu = (int(p) for p in s.bcv[2:].split(":"))
-    # alef thread (taxton/pashut) before bet (elyon/midrashit) within a verse
-    return (bb, chnu, vrnu, 0 if s.thread == "alef" else 1)
+    # alef strand (taxton/pashut) before bet (elyon/midrashit) within a verse
+    return (bb, chnu, vrnu, 0 if s.strand == "alef" else 1)
 
 
 def render_body_contents(supplies: list) -> tuple[object, ...]:

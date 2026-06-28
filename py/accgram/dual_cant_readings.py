@@ -1,4 +1,4 @@
-"""Map each dually-cantillated passage verse to its detangled per-thread readings,
+"""Map each dually-cantillated passage verse to its detangled per-strand readings,
 for the goerwitz verse display (issue #36).
 
 For a verse in one of the three dually-cantillated prose loci (Gen 35:22 and the two
@@ -12,7 +12,7 @@ Each reading is a plain dict (``display_label``, ``span_label``, ``words``, and 
 ``word_bcvs`` let the renderer gray the words that fall outside the row's own verse: an
 elyon reading groups several numbered verses, so on the dt 5:8 row its 5:7 / 5:9 / 5:10
 words are de-emphasized, spotlighting the 5:8 part where the oddball lives.
-``display_label`` carries the Unicode ḥ (the cant-thread ASCII
+``display_label`` carries the Unicode ḥ (the cant-strand ASCII
 label spells ḥet as "x", per the repo transliteration standard).
 """
 
@@ -32,15 +32,15 @@ _BCV_RE = re.compile(r"(\d+):(\d+)$")
 def load_readings_by_bcv(
     wlc422_kq_u_dir: Path, mam_simple_dir: Path
 ) -> dict[str, list[dict[str, object]]]:
-    """Compact-bcv -> ordered per-thread readings (alef/taḥton first, then bet/elyon)."""
+    """Compact-bcv -> ordered per-strand readings (alef/taḥton first, then bet/elyon)."""
     results = dual_cant_run.detangle_results(wlc422_kq_u_dir, mam_simple_dir)
     by_bcv: dict[str, list[dict[str, object]]] = {}
     for passage in results:
-        for thread in passage.threads:
-            for cv in thread.chanted_verses:
+        for strand in passage.strands:
+            for cv in strand.chanted_verses:
                 span = list(cv.bcv_span)
                 reading: dict[str, object] = {
-                    "display_label": _display_label(thread.thread_label),
+                    "display_label": _display_label(strand.strand_label),
                     "span_label": _span_label(span),
                     "words": list(cv.words),
                     "word_bcvs": list(cv.word_bcvs),
@@ -50,9 +50,9 @@ def load_readings_by_bcv(
     return by_bcv
 
 
-def _display_label(thread_label: str) -> str:
-    # The cant-thread ASCII label spells ḥet as "x" (taxton); display uses ḥ.
-    return thread_label.replace("x", _HET_UNI)
+def _display_label(strand_label: str) -> str:
+    # The cant-strand ASCII label spells ḥet as "x" (taxton); display uses ḥ.
+    return strand_label.replace("x", _HET_UNI)
 
 
 def _parse_bcv(bcv: str) -> tuple[str, int, int]:

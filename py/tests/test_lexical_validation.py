@@ -1,8 +1,8 @@
-"""Unit tests for the prose lexical-validation layer (stranded stress-helpers).
+"""Unit tests for the prose lexical-validation layer (unpaired stress-helpers).
 
-Pin the pure-function semantics of `stranded_stress_helpers`: a prose tsinnorit
+Pin the pure-function semantics of `unpaired_stress_helpers`: a prose tsinnorit
 (M-C ``82``) is an alphabet error unless it is fused with a later tsinnor (M-C ``02``)
-in the *same* maqaf/space-delimited atom.  These guard the fuse-vs-strand and
+in the *same* maqaf/space-delimited atom.  These guard the fuse-vs-unpaired and
 atom-boundary logic so a regression fails here rather than silently shifting the
 oddball corpus.  Bodies are written over the Unicode mark alphabet (issue #9, Phase
 2); arbitrary capital letters stand in for consonant filler.
@@ -17,7 +17,7 @@ from accgram import accent_marks as am
 from accgram.lexical_validation import (
     illegal_same_letter_pairs,
     nonfinal_telisha_qetannas,
-    stranded_stress_helpers,
+    unpaired_stress_helpers,
 )
 
 _TS = am.TSINNORIT  # M-C 82 (zarqa stress-helper)
@@ -34,7 +34,7 @@ _LT = am.LETTER          # "X" consonant filler
 
 
 def _codes(body: str) -> list[str]:
-    return [m.code for m in stranded_stress_helpers(body)]
+    return [m.code for m in unpaired_stress_helpers(body)]
 
 
 def _pairs(body: str) -> list[str]:
@@ -45,8 +45,8 @@ def _telq(body: str) -> list[str]:
     return [m.code for m in nonfinal_telisha_qetannas(body)]
 
 
-def test_bare_82_is_stranded():
-    # gn 47:29-style: a tsinnorit with no later tsinnor anywhere -> stranded.
+def test_bare_82_is_unpaired():
+    # gn 47:29-style: a tsinnorit with no later tsinnor anywhere -> unpaired.
     assert _codes("YISRA" + _TS + "L]s") == ["82"]
 
 
@@ -55,8 +55,8 @@ def test_82_fused_with_later_02_same_atom_is_clean():
     assert _codes("X" + _TS + "Y" + _ZI + "Z") == []
 
 
-def test_82_two_letters_back_still_stranded():
-    # gn 17:20: the tsinnorit sits two letters before the lamed; still no tsinnor -> stranded.
+def test_82_two_letters_back_still_unpaired():
+    # gn 17:20: the tsinnorit sits two letters before the lamed; still no tsinnor -> unpaired.
     assert _codes("W" + am.METEG + "LYISMA" + _TS + ")L]S]s") == ["82"]
 
 
@@ -67,7 +67,7 @@ def test_02_in_a_different_atom_does_not_rescue_82():
 
 
 def test_02_before_82_does_not_fuse():
-    # Fusion requires the tsinnor to follow the tsinnorit; an earlier tsinnor leaves it stranded.
+    # Fusion requires the tsinnor to follow the tsinnorit; an earlier tsinnor leaves it unpaired.
     assert _codes("A" + _ZI + "B" + _TS + "C") == ["82"]
 
 
@@ -77,7 +77,7 @@ def test_no_82_anywhere_is_clean():
 
 def test_atom_with_both_returns_the_atom_text():
     body = "YISRA" + _TS + "L]s"
-    [mark] = stranded_stress_helpers(body)
+    [mark] = unpaired_stress_helpers(body)
     assert mark.code == "82"
     assert mark.atom == body
 
@@ -148,7 +148,7 @@ def test_non_accent_between_marks_does_not_pair():
 
 def test_no_pair_is_clean():
     assert _pairs("XX" + _MA + "X XXX" + _TI + "X" + am.SOF_PASUQ) == []
-    assert _pairs("YISRA" + _TS + "L]s") == []  # a stranded 82 is not a same-letter pair
+    assert _pairs("YISRA" + _TS + "L]s") == []  # an unpaired 82 is not a same-letter pair
 
 
 # --- misplaced (non-final) telisha qetanna, M-C lone 24 (je 44:17) -------------
@@ -167,7 +167,7 @@ def test_word_final_telisha_qetanna_is_clean():
 
 def test_fused_24_04_pair_is_clean():
     # A well-formed 24...04 stress-helper pair: the medial telq is followed by a second
-    # (postpositive) telq, which the scanner fuses -> not stranded.
+    # (postpositive) telq, which the scanner fuses -> not unpaired.
     assert _telq(_LT + _TQ + _LT + _LT + _TQ) == []
 
 

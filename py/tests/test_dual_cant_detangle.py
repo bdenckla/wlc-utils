@@ -38,19 +38,19 @@ def _detangle_or_skip() -> list[dcd.PassageResult]:
     if not mam_dir.is_dir():
         pytest.skip(f"MAM-simple not present at {mam_dir}")
     wlc_index = rtms_data.load_wlc422_index(kq_u_dir)
-    mam = load_mam_simple_for_refs(mam_dir, dcd.all_refs_by_book(), include_threads=True)
+    mam = load_mam_simple_for_refs(mam_dir, dcd.all_refs_by_book(), include_strands=True)
     return dcd.detangle_all(wlc_index, mam, build_parser())
 
 
 def _all_chanted_verses(results: list[dcd.PassageResult]) -> list[dcd.ChantedVerseResult]:
-    return [cv for pr in results for tr in pr.threads for cv in tr.chanted_verses]
+    return [cv for pr in results for tr in pr.strands for cv in tr.chanted_verses]
 
 
 def test_gen3522_splits_into_two_and_one_chanted_verse_all_parsing() -> None:
     results = _detangle_or_skip()
     gen = next(pr for pr in results if pr.passage.bb == "gn")
-    alef, bet = gen.threads
-    assert alef.thread_label == "pashut" and bet.thread_label == "midrashit"
+    alef, bet = gen.strands
+    assert alef.strand_label == "pashut" and bet.strand_label == "midrashit"
     assert len(alef.chanted_verses) == 2
     assert len(bet.chanted_verses) == 1
     assert all(cv.status == "clean" for cv in alef.chanted_verses + bet.chanted_verses)
@@ -59,7 +59,7 @@ def test_gen3522_splits_into_two_and_one_chanted_verse_all_parsing() -> None:
 def test_supplied_marks_are_exactly_the_four_clean_supplies() -> None:
     results = _detangle_or_skip()
     supplies = [s for pr in results for s in pr.supplied_marks]
-    keyed = {(s.bcv, s.thread, s.accent) for s in supplies}  # one row per supply
+    keyed = {(s.bcv, s.strand, s.accent) for s in supplies}  # one row per supply
     assert len(supplies) == 4
     assert keyed == {
         ("ex20:3", "alef", am.MERKHA),
@@ -74,7 +74,7 @@ def test_single_anomaly_is_dt58_alef_and_is_a_candidate_wlc_bug() -> None:
     anomalies = [a for pr in results for a in pr.anomalies]
     assert len(anomalies) == 1
     anomaly = anomalies[0]
-    assert (anomaly.bcv, anomaly.thread) == ("dt5:8", "alef")
+    assert (anomaly.bcv, anomaly.strand) == ("dt5:8", "alef")
     assert anomaly.expected == am.QADMA  # MAM is due a qadma
     assert anomaly.found == am.MERKHA  # WLC wrote a merkha instead
 
@@ -83,19 +83,19 @@ def test_supplied_mark_words_parse_clean() -> None:
     # The supply is precisely what lets the chanted verse parse: a supplied-mark word's
     # chanted verse must be clean and NOT an oddball (the issue's reporting requirement).
     results = _detangle_or_skip()
-    supply_bcvs = {(s.bcv, s.thread) for pr in results for s in pr.supplied_marks}
+    supply_bcvs = {(s.bcv, s.strand) for pr in results for s in pr.supplied_marks}
     for pr in results:
-        for tr in pr.threads:
+        for tr in pr.strands:
             for cv in tr.chanted_verses:
                 for bcv in {b for b in cv.bcv_span}:
-                    if (bcv, tr.thread) in supply_bcvs:
+                    if (bcv, tr.strand) in supply_bcvs:
                         assert cv.status == "clean", f"{cv.ref} -> {cv.status}"
 
 
 def test_dt58_anomaly_surfaces_as_attributed_oddball_not_crash() -> None:
     results = _detangle_or_skip()
     dt = next(pr for pr in results if pr.passage.bb == "dt")
-    taxton = next(tr for tr in dt.threads if tr.thread == "alef")
+    taxton = next(tr for tr in dt.strands if tr.strand == "alef")
     dt58 = [cv for cv in taxton.chanted_verses if cv.bcv_span[0] == "dt5:8"]
     assert dt58 and dt58[0].status == "oddball"
     assert dt58[0].tree is not None  # a real (ERROR-bearing) tree, not a None crash
@@ -113,12 +113,12 @@ def test_every_chanted_verse_parses_or_is_attributed_only_dt58_is_an_oddity() ->
 # --------------------------------------------------------------------------- #
 # Stage 3: routing (prose_filter) and fold-in / supplied-marks surfaces.
 # --------------------------------------------------------------------------- #
-def _mam_with_threads_or_skip() -> dict[str, dict]:
+def _mam_with_strands_or_skip() -> dict[str, dict]:
     mam_dir = repo_paths.mam_simple_dir()
     if not mam_dir.is_dir():
         pytest.skip(f"MAM-simple not present at {mam_dir}")
     return load_mam_simple_for_refs(
-        mam_dir, dcd.all_refs_by_book(), include_threads=True
+        mam_dir, dcd.all_refs_by_book(), include_strands=True
     )
 
 
@@ -132,7 +132,7 @@ def _range_verses() -> list[tuple[str, int, int]]:
 def test_prose_filter_single_cant_exceptions_match_mam_and_routing() -> None:
     # The hardcoded "un-exclude these 9" set must equal exactly the in-range verses MAM
     # marks single-cantillation (no cant-all-three) -- so it can't silently drift.
-    mam = _mam_with_threads_or_skip()
+    mam = _mam_with_strands_or_skip()
     derived_single_cant = set()
     for bb, chnu, vrnu in _range_verses():
         verse = mam[f"{bb}{chnu}:{vrnu}"]["mam_simple_verse"]
@@ -155,7 +155,7 @@ def test_fold_in_yields_one_dt58_oddball_record() -> None:
     if not kq_u_dir.is_dir():
         pytest.skip("WLC 4.22 kq-u corpus not present")
     wlc_index = rtms_data.load_wlc422_index(kq_u_dir)
-    mam = _mam_with_threads_or_skip()
+    mam = _mam_with_strands_or_skip()
     parser = build_parser()
 
     # Genesis 35:22 and the Exodus Decalogue fold in nothing (no oddities).

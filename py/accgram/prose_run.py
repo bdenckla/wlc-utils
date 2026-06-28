@@ -38,17 +38,17 @@ import repo_paths
 
 
 def _illegal_mark_tree(
-    marks: list[lexical_validation.StrandedMark], words: list[str]
+    marks: list[lexical_validation.LexicalOddballMark], words: list[str]
 ):
-    """Degenerate ERROR tree for a verse carrying stranded stress-helper(s).
+    """Degenerate ERROR tree for a verse carrying lexical oddball mark(s).
 
     The branch label names each offending code and the pointed-Hebrew word it was
     found in (e.g. ``illegal_mark 82 in יִשְׂרָאֵ֘ל``), so the oddball reports pinpoint
     the word; the single terminal leaf is the bare ``ERROR`` token that
     accgram.oddballs keys on.  ``words`` is the offending Unicode word per mark, in
-    order (see `_stranded_unicode_words`).  The *structure* is uniform across all such
+    order (see `_oddball_unicode_words`).  The *structure* is uniform across all such
     verses (one branch + one ERROR leaf) -- only the descriptive label varies -- so the
-    error is attributed to the stranded mark itself rather than to whatever the rest of
+    error is attributed to the oddball mark itself rather than to whatever the rest of
     the accent sequence would have parsed into.
     """
     detail = "; ".join(
@@ -57,11 +57,11 @@ def _illegal_mark_tree(
     return add_leaves(f"illegal_mark {detail}", "ERROR")
 
 
-def _stranded_unicode_words(
-    marks: list[lexical_validation.StrandedMark],
+def _oddball_unicode_words(
+    marks: list[lexical_validation.LexicalOddballMark],
     verse: object,
 ) -> list[str]:
-    """The pointed-Hebrew word bearing each stranded mark, aligned to ``marks``.
+    """The pointed-Hebrew word bearing each oddball mark, aligned to ``marks``.
 
     Each illegal mark carries a ``rep_char`` -- a codepoint of the offending word unique
     enough to locate it (``82`` = the zarqa stress-helper U+0598; a same-letter pair =
@@ -156,20 +156,20 @@ def _verse_record(
     }
 
     # Prose lexical layer (divergence from the goerwitz C oracle): an alphabet /
-    # word-placement error -- a stranded stress-helper, a same-letter accent pair, or
+    # word-placement error -- an unpaired stress-helper, a same-letter accent pair, or
     # a misplaced telisha qetanna (full enumeration in lexical_validation.lexical_
     # oddballs).  Flag it uniformly with a fixed ERROR tree and skip the grammar
     # entirely -- the context need not be parsed, and all such verses read identically.
-    stranded = lexical_validation.lexical_oddballs(verse.body)
-    if stranded:
+    oddballs = lexical_validation.lexical_oddballs(verse.body)
+    if oddballs:
         kq_verse = wlc_index.get(bcv) if wlc_index else None
-        words = _stranded_unicode_words(stranded, kq_verse)
+        words = _oddball_unicode_words(oddballs, kq_verse)
         record["status"] = "illegal_mark"
         record["errors"] = [
             {"code": mark.code, "word": word, "atom": mark.atom}
-            for mark, word in zip(stranded, words)
+            for mark, word in zip(oddballs, words)
         ]
-        record["tree"] = tree_to_obj(_illegal_mark_tree(stranded, words))
+        record["tree"] = tree_to_obj(_illegal_mark_tree(oddballs, words))
         return record
 
     tree = parse_tokens(parser, verse.tokens)
@@ -268,14 +268,14 @@ def run(args: argparse.Namespace) -> None:
 
 
 def _load_dual_cant_mam() -> dict[str, dict] | None:
-    """Load the MAM-simple threads for the dual-cantillation loci, or None if the
+    """Load the MAM-simple strands for the dual-cantillation loci, or None if the
     sibling MAM-simple corpus is absent (the normal prose run does not require it; the
     detangled dual-cant fold-in is then simply skipped)."""
     mam_dir = mam_simple_verse.default_mam_simple_dir(repo_paths.repo_root())
     if not mam_dir.is_dir():
         return None
     return mam_simple_verse.load_mam_simple_for_refs(
-        mam_dir, dual_cant_detangle.all_refs_by_book(), include_threads=True
+        mam_dir, dual_cant_detangle.all_refs_by_book(), include_strands=True
     )
 
 

@@ -50,10 +50,10 @@ def test_delete_accent():
     assert "MERKHA" not in _types(result.new_body)
 
 
-def test_stranded_zarshit_swapped_to_zarqa():
-    # The stranded-82 family (ex 6:6 etc.): a medial zarqa stress-helper (zarshit,
+def test_unpaired_zarshit_swapped_to_zarqa():
+    # The unpaired-82 family (ex 6:6 etc.): a medial zarqa stress-helper (zarshit,
     # U+0598) with no fusion partner is the WLC error; MAM has a proper zarqa
-    # (zarnor, U+05AE).  Substituting the whole MAM word clears the stranded mark and
+    # (zarnor, U+05AE).  Substituting the whole MAM word clears the unpaired mark and
     # the word now scans as a real ZARQA.
     wlc = "ישרא" + "֘" + "ל"  # medial zarqa stress-helper (zarshit)
     mam = "ישראל" + "֮"  # postpositive zarqa (zarnor)
@@ -64,7 +64,7 @@ def test_stranded_zarshit_swapped_to_zarqa():
     )
     assert isinstance(result, AppliedFix)
     assert "ZARQA" in _types(result.new_body)
-    assert not lexical_validation.stranded_stress_helpers(result.new_body)
+    assert not lexical_validation.unpaired_stress_helpers(result.new_body)
 
 
 def test_missing_sof_pasuq_append():

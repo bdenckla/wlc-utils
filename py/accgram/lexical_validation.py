@@ -1,4 +1,4 @@
-"""Prose lexical validation: flag stranded stress-helper accents (alphabet errors).
+"""Prose lexical validation: flag unpaired stress-helper accents (alphabet errors).
 
 This is a *prose-only* layer that sits on top of the faithful C-port scanner/
 grammar (prose_scanner / prose_ply_grammar) and intentionally **diverges from the
@@ -17,7 +17,7 @@ parse luck.  All 12 such prose verses (a stray zarqa mis-encoded before a lamed
 ascender) are equally wrong; this layer flags them uniformly.
 
 A second, sibling check (``illegal_same_letter_pairs``) flags an impossible
-*same-letter* configuration rather than a stranded helper: two accents stacked on one
+*same-letter* configuration rather than an unpaired helper: two accents stacked on one
 base letter.  This is a WHITELIST guard, the prose analogue of the poetic
 ``poetic_scanner`` bang guard (Plan D / Plan E): two masoretically-blessed clusters
 may legitimately share a letter -- the MAM-confirmed ek20:31 ``mahapakh!qadma`` (fused to
@@ -39,7 +39,7 @@ poetic checker is expected to have its own lexer where ``82`` is a first-class
 token; this module therefore hard-codes prose semantics with no genre parameter.
 
 A third check (``nonfinal_telisha_qetannas``) flags the lone medial telisha qetanna
-(M-C ``24``) of je 44:17.  In M-C this is a stranded stress-helper exactly like ``82``:
+(M-C ``24``) of je 44:17.  In M-C this is an unpaired stress-helper exactly like ``82``:
 a ``24`` (medial telisha qetanna, written on a non-final letter) is well-formed only
 as the helper of a following ``04`` (the real, postpositive telisha qetanna), the pair
 ``24{TEXT}04`` -- which the scanner fuses into one TELISHAQETANNA token.  But the
@@ -55,7 +55,7 @@ every prepositive on the first.)
 
 The module is self-contained: it reads the per-atom Unicode mark stream straight from
 the verse body (the scanner-ready marks ``uni_to_marks`` produces), with no dependency
-on the scanner internals.  It is kept general enough that other stranded stress-helpers
+on the scanner internals.  It is kept general enough that other unpaired stress-helpers
 could be added later; today ``82`` and the lone ``24`` are wired up (the remaining
 siblings -- standalone ``44`` and the codes ``11``/``12`` -- were judged moot after the
 Phase-2 Unicode port; see the tracking GitHub issue).
@@ -137,10 +137,10 @@ def _accent_leaf(mark: str) -> str:
 
 
 @dataclass(frozen=True)
-class StrandedMark:
+class LexicalOddballMark:
     """A lexically illegal mark configuration confined to one atom.
 
-    Covers both a stress-helper left without its fusion partner (stranded 82) and a
+    Covers both a stress-helper left without its fusion partner (unpaired 82) and a
     non-whitelisted same-letter accent pair (e.g. mahapakh!tipexa); ``code``
     distinguishes them.  ``rep_char`` is a representative codepoint of the offending
     word, used by prose_run to locate the pointed-Hebrew word for the report.
@@ -152,15 +152,15 @@ class StrandedMark:
     rep_char: str  # a mark of the offending word, for locating its Unicode word
 
 
-def stranded_stress_helpers(body: str) -> list[StrandedMark]:
-    """Return every stranded stress-helper in a prose verse body.
+def unpaired_stress_helpers(body: str) -> list[LexicalOddballMark]:
+    """Return every unpaired stress-helper in a prose verse body.
 
-    A stress-helper (today only the tsinnorit, M-C ``82``) is *stranded* when its
+    A stress-helper (today only the tsinnorit, M-C ``82``) is *unpaired* when its
     fusion partner (the tsinnor, M-C ``02``) does not occur later in the same maqaf/
     space-delimited atom.  Such a mark is an intrinsic lexical ("alphabet") error
     independent of surrounding context.
     """
-    stranded: list[StrandedMark] = []
+    unpaired: list[LexicalOddballMark] = []
     for atom in _ATOM_SPLIT_RE.split(body):
         if not atom:
             continue
@@ -170,12 +170,12 @@ def stranded_stress_helpers(body: str) -> list[StrandedMark]:
                 continue
             partner, code = entry
             if partner not in atom[i + 1 :]:
-                # The stranded helper itself locates the offending word (U+0598).
-                stranded.append(StrandedMark(code=code, atom=atom, rep_char=ch))
-    return stranded
+                # The unpaired helper itself locates the offending word (U+0598).
+                unpaired.append(LexicalOddballMark(code=code, atom=atom, rep_char=ch))
+    return unpaired
 
 
-def illegal_same_letter_pairs(body: str) -> list[StrandedMark]:
+def illegal_same_letter_pairs(body: str) -> list[LexicalOddballMark]:
     """Return every non-whitelisted same-letter accent pair in a prose verse body.
 
     Two accents are on one base letter iff they are *adjacent* in the body (no
@@ -192,7 +192,7 @@ def illegal_same_letter_pairs(body: str) -> list[StrandedMark]:
     ``mahapakh!tipexa``), keyed for word location on the first (here, distinguishing)
     mark -- mahapakh, NOT the tipeḥa that recurs elsewhere in lv25:20.
     """
-    illegal: list[StrandedMark] = []
+    illegal: list[LexicalOddballMark] = []
     for atom in _ATOM_SPLIT_RE.split(body):
         if not atom:
             continue
@@ -203,11 +203,11 @@ def illegal_same_letter_pairs(body: str) -> list[StrandedMark]:
             if frozenset((a, b)) in _WHITELISTED_SAME_LETTER:
                 continue
             code = f"{_accent_leaf(a)}!{_accent_leaf(b)}"
-            illegal.append(StrandedMark(code=code, atom=atom, rep_char=a))
+            illegal.append(LexicalOddballMark(code=code, atom=atom, rep_char=a))
     return illegal
 
 
-def nonfinal_telisha_qetannas(body: str) -> list[StrandedMark]:
+def nonfinal_telisha_qetannas(body: str) -> list[LexicalOddballMark]:
     """Return every misplaced telisha qetanna in a prose verse body (today: je 44:17).
 
     A telisha qetanna (U+05A9) is *postpositive*: it belongs on the word-final letter.
@@ -215,7 +215,7 @@ def nonfinal_telisha_qetannas(body: str) -> list[StrandedMark]:
     is well-formed *only* when a second telisha qetanna (the real, postpositive ``04``)
     follows it in the same atom -- the ``24{TEXT}04`` pair the scanner fuses into one
     token.  A non-final telisha qetanna with **no** following telisha qetanna is the
-    stranded helper of je 44:17 (כִּי, the mark on the kaf with nothing on the yod) -- an
+    unpaired helper of je 44:17 (כִּי, the mark on the kaf with nothing on the yod) -- an
     intrinsic word-internal error independent of surrounding context.
 
     "Non-final" is read positionally: a base letter (``X``) follows the mark later in the
@@ -223,7 +223,7 @@ def nonfinal_telisha_qetannas(body: str) -> list[StrandedMark]:
     ``24`` and ``04`` collapse to one codepoint -- the helper/main distinction is gone and
     only the placement (kaf vs. yod) survives.
     """
-    stranded: list[StrandedMark] = []
+    unpaired: list[LexicalOddballMark] = []
     for atom in _ATOM_SPLIT_RE.split(body):
         if not atom:
             continue
@@ -236,19 +236,19 @@ def nonfinal_telisha_qetannas(body: str) -> list[StrandedMark]:
             if am.TELISHA_QETANA in rest:
                 continue  # the medial helper of a well-formed 24...04 pair (fused)
             # The telisha qetanna itself (U+05A9) locates the offending word.
-            stranded.append(
-                StrandedMark(code="medial telisha qetanna", atom=atom, rep_char=ch)
+            unpaired.append(
+                LexicalOddballMark(code="medial telisha qetanna", atom=atom, rep_char=ch)
             )
-    return stranded
+    return unpaired
 
 
-def lexical_oddballs(body: str) -> list[StrandedMark]:
+def lexical_oddballs(body: str) -> list[LexicalOddballMark]:
     """Every prose lexical / word-placement oddball in ``body``, in one pass.
 
     The union of this module's three checks, each an ``illegal_mark`` ERROR that diverges
     from the goerwitz C oracle in the documented MISSING_SOFPASUQ spirit:
 
-      * a stranded stress-helper (`stranded_stress_helpers`, M-C ``82``);
+      * an unpaired stress-helper (`unpaired_stress_helpers`, M-C ``82``);
       * a non-whitelisted same-letter accent pair (`illegal_same_letter_pairs`,
         mahapakh!tipexa, lv25:20); and
       * a telisha qetanna misplaced on a non-final letter (`nonfinal_telisha_qetannas`,
@@ -261,7 +261,7 @@ def lexical_oddballs(body: str) -> list[StrandedMark]:
     is skipped entirely.
     """
     return (
-        stranded_stress_helpers(body)
+        unpaired_stress_helpers(body)
         + illegal_same_letter_pairs(body)
         + nonfinal_telisha_qetannas(body)
     )

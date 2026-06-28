@@ -2,9 +2,9 @@
 
 Every other fix the tester applies is a single-word accent edit inside one
 verse's M-C body (see ``test_fix_apply``).  nu 25:19 is the lone exception: MAM
-equals WLC word-for-word and the only difference is versification -- BHS strands
+equals WLC word-for-word and the only difference is versification -- BHS maroons
 a verse number mid-chanted-verse.  The fix is to append the M-C body BHS labels
-as the *next* verse and re-parse; the stranded atnax then bisects a complete
+as the *next* verse and re-parse; the marooned atnax then bisects a complete
 verse ending in silluq + sof-pasuq.  See doc/fix-tester-remaining-untestables.md.
 
 Run:

@@ -63,7 +63,7 @@ def detangle_results(
 ) -> list[dcd.PassageResult]:
     wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
     mam_by_bcv = load_mam_simple_for_refs(
-        mam_simple_dir, dcd.all_refs_by_book(), include_threads=True
+        mam_simple_dir, dcd.all_refs_by_book(), include_strands=True
     )
     return dcd.detangle_all(wlc_index, mam_by_bcv, build_parser())
 
@@ -88,7 +88,7 @@ def run(args: argparse.Namespace) -> None:
 
 
 def _payload(results: list[dcd.PassageResult]) -> dict[str, object]:
-    chanted_verses = [cv for pr in results for tr in pr.threads for cv in tr.chanted_verses]
+    chanted_verses = [cv for pr in results for tr in pr.strands for cv in tr.chanted_verses]
     return {
         "summary": {
             "passages": len(results),
@@ -108,16 +108,16 @@ def _passage_obj(pr: dcd.PassageResult) -> dict[str, object]:
         "bb": pr.passage.bb,
         "alef_label": pr.passage.alef_label,
         "bet_label": pr.passage.bet_label,
-        "threads": [_thread_obj(tr) for tr in pr.threads],
+        "strands": [_strand_obj(tr) for tr in pr.strands],
         "supplied_marks": [_supply_obj(s) for s in pr.supplied_marks],
         "anomalies": [_anomaly_obj(a) for a in pr.anomalies],
     }
 
 
-def _thread_obj(tr: dcd.ThreadResult) -> dict[str, object]:
+def _strand_obj(tr: dcd.StrandResult) -> dict[str, object]:
     return {
-        "thread": tr.thread,
-        "thread_label": tr.thread_label,
+        "strand": tr.strand,
+        "strand_label": tr.strand_label,
         "chanted_verses": [_chanted_verse_obj(cv) for cv in tr.chanted_verses],
     }
 
@@ -138,8 +138,8 @@ def _chanted_verse_obj(cv: dcd.ChantedVerseResult) -> dict[str, object]:
 def _supply_obj(s: dcd.SuppliedMark) -> dict[str, object]:
     return {
         "bcv": s.bcv,
-        "thread": s.thread,
-        "thread_label": s.thread_label,
+        "strand": s.strand,
+        "strand_label": s.strand_label,
         "mam_word": s.mam_word,
         "wlc_word": s.wlc_word,
         "accent": s.accent,
@@ -151,8 +151,8 @@ def _supply_obj(s: dcd.SuppliedMark) -> dict[str, object]:
 def _anomaly_obj(a: dcd.Anomaly) -> dict[str, object]:
     return {
         "bcv": a.bcv,
-        "thread": a.thread,
-        "thread_label": a.thread_label,
+        "strand": a.strand,
+        "strand_label": a.strand_label,
         "mam_word": a.mam_word,
         "wlc_word": a.wlc_word,
         "expected": a.expected,

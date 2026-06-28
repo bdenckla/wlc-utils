@@ -14,10 +14,10 @@
       "bb": "gn",
       "alef_label": "pashut",
       "bet_label": "midrashit",
-      "threads": [
+      "strands": [
         {
-          "thread": "alef",
-          "thread_label": "pashut",
+          "strand": "alef",
+          "strand_label": "pashut",
           "chanted_verses": [
             {
               "ref": "gn35:22 [pashut] (chanted verse 1/2)",
@@ -228,8 +228,8 @@
           ]
         },
         {
-          "thread": "bet",
-          "thread_label": "midrashit",
+          "strand": "bet",
+          "strand_label": "midrashit",
           "chanted_verses": [
             {
               "ref": "gn35:22 [midrashit]",
@@ -436,10 +436,10 @@
       "bb": "ex",
       "alef_label": "taxton",
       "bet_label": "elyon",
-      "threads": [
+      "strands": [
         {
-          "thread": "alef",
-          "thread_label": "taxton",
+          "strand": "alef",
+          "strand_label": "taxton",
           "chanted_verses": [
             {
               "ref": "ex20:2–3 [taxton] (chanted verse 1/12)",
@@ -2076,8 +2076,8 @@
           ]
         },
         {
-          "thread": "bet",
-          "thread_label": "elyon",
+          "strand": "bet",
+          "strand_label": "elyon",
           "chanted_verses": [
             {
               "ref": "ex20:2 [elyon] (chanted verse 1/10)",
@@ -3633,8 +3633,8 @@
       "supplied_marks": [
         {
           "bcv": "ex20:3",
-          "thread": "alef",
-          "thread_label": "taxton",
+          "strand": "alef",
+          "strand_label": "taxton",
           "mam_word": "יִהְיֶ֥ה",
           "wlc_word": "יִהְיֶֽה־",
           "accent": "֥",
@@ -3649,10 +3649,10 @@
       "bb": "dt",
       "alef_label": "taxton",
       "bet_label": "elyon",
-      "threads": [
+      "strands": [
         {
-          "thread": "alef",
-          "thread_label": "taxton",
+          "strand": "alef",
+          "strand_label": "taxton",
           "chanted_verses": [
             {
               "ref": "dt5:6–7 [taxton] (chanted verse 1/12)",
@@ -5499,8 +5499,8 @@
           ]
         },
         {
-          "thread": "bet",
-          "thread_label": "elyon",
+          "strand": "bet",
+          "strand_label": "elyon",
           "chanted_verses": [
             {
               "ref": "dt5:6 [elyon] (chanted verse 1/10)",
@@ -7244,8 +7244,8 @@
       "supplied_marks": [
         {
           "bcv": "dt5:17",
-          "thread": "alef",
-          "thread_label": "taxton",
+          "strand": "alef",
+          "strand_label": "taxton",
           "mam_word": "תִרְצָ֖ח",
           "wlc_word": "תִּרְצָֽח׃",
           "accent": "֖",
@@ -7254,30 +7254,30 @@
         },
         {
           "bcv": "dt5:6",
-          "thread": "bet",
-          "thread_label": "elyon",
+          "strand": "bet",
+          "strand_label": "elyon",
           "mam_word": "אָֽנֹכִ֖י",
           "wlc_word": "אָֽנֹכִי֙",
           "accent": "֖",
           "accent_name": "tipexa (U+0596)",
-          "reason": "WLC writes only the taxton reading here (pashta (U+0599)), so this thread's mark is supplied from MAM."
+          "reason": "WLC writes only the taxton reading here (pashta (U+0599)), so this strand's mark is supplied from MAM."
         },
         {
           "bcv": "dt5:6",
-          "thread": "bet",
-          "thread_label": "elyon",
+          "strand": "bet",
+          "strand_label": "elyon",
           "mam_word": "אֱלֹהֶ֑יךָ",
           "wlc_word": "אֱלֹהֶ֔יךָ",
           "accent": "֑",
           "accent_name": "atnax (U+0591)",
-          "reason": "WLC writes only the taxton reading here (zaqef qatan (U+0594)), so this thread's mark is supplied from MAM."
+          "reason": "WLC writes only the taxton reading here (zaqef qatan (U+0594)), so this strand's mark is supplied from MAM."
         }
       ],
       "anomalies": [
         {
           "bcv": "dt5:8",
-          "thread": "alef",
-          "thread_label": "taxton",
+          "strand": "alef",
+          "strand_label": "taxton",
           "mam_word": "תַעֲשֶׂ֨ה",
           "wlc_word": "תַעֲשֶׂ֥ה־",
           "expected": "֨",

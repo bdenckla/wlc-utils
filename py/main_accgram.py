@@ -16,7 +16,7 @@ Subcommands:
     run-dual-cant
                 Detangle WLC's three dually-cantillated prose loci (Gen 35:22 and
                 the two Decalogues) into two single-cantillation readings each,
-                guided by MAM's cant-alef/cant-bet threads, and write
+                guided by MAM's cant-alef/cant-bet strands, and write
                 out/accgram/dual-cant/_dual_cant.json (each reading's chanted-verse
                 trees, the supplied-mark inventory, and candidate-WLC-error
                 anomalies).  The oddity chanted verses are separately folded into

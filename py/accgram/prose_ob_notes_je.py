@@ -57,7 +57,7 @@ _JE_4417_01 = (
 
 
 _JE_4417_02 = (
-    "We detect this in the lexical phase, alongside the stranded zarqa/tsinnorit stress"
+    "We detect this in the lexical phase, alongside the unpaired zarqa/tsinnorit stress"
     " helpers, but the violation is really one of intra-word grammar: a rule about where"
     " within a word a postpositive accent may fall, not about the alphabet of marks."
     " It is one instance of a broader family of word-level rules we have not yet"
@@ -93,7 +93,7 @@ _JE_4417_04 = (
 _JE_4417_05 = [
     "Compare ",
     wlc_utils_html.anchor("je 26:5", {"href": "#obje26v5"}),
-    ", a closely analogous case: there a stranded pashta stress helper sits on the syllable where the real"
+    ", a closely analogous case: there an unpaired pashta stress helper sits on the syllable where the real"
     " pashta belongs. In both verses the word is finally stressed (and a single-syllable word"
     " like כי counts as finally stressed), so it needs — and should have — no stress helper at"
     " all. The cure is therefore not to supply the helper a “missing partner” accent, but to"
@@ -181,7 +181,7 @@ BY_REF: dict[str, dict[str, object]] = {
                 " If it were really a qadma, we would expect it to be centered on the ר."
             ],
             [
-                " Instead, it looks like a stranded pashta stress helper."
+                " Instead, it looks like an unpaired pashta stress helper."
                 " (Some typography centers a pashta stress helper,"
                 " making it indistinguishable from a qadma, but BHS aligns them distinctly.)"
                 " I.e. in BHS, the mark looks like a pashta stress helper with no real (end-of-word) pashta to accompany it."
@@ -191,21 +191,21 @@ BY_REF: dict[str, dict[str, object]] = {
                 "So, though above I said “BHS transcribes a syllable as having qadma rather than pashta”,"
                 " a more detailed account would be "
                 "“BHS transcribes a syllable as having"
-                " a stranded pashta stress helper on its first letter rather than a pashta on its last letter,"
-                " and WLC transcribes BHS’s stranded stress helper as a qadma.”"
+                " an unpaired pashta stress helper on its first letter rather than a pashta on its last letter,"
+                " and WLC transcribes BHS’s unpaired stress helper as a qadma.”"
             ],
             [
                 "Note that originally WLC had no distinction between a qadma and a pashta stress helper,"
                 " using code 63 for both,"
                 " but later WLC added a separate code for the pashta stress helper, code 33."
-                " So WLC may have had no choice but to transcribe BHS’s stranded stress helper as a qadma,"
+                " So WLC may have had no choice but to transcribe BHS’s unpaired stress helper as a qadma,"
                 " since it may have had no code for a pashta stress helper at the time."
                 " In any case, the serious error is BHS’s transcription, not WLC’s transcription of BHS."
             ],
             [
                 "Compare ",
                 wlc_utils_html.anchor("je 44:17", {"href": "#obje44v17"}),
-                ", another stranded stress helper — there a telisha qetanna helper (M-C 24)"
+                ", another unpaired stress helper — there a telisha qetanna helper (M-C 24)"
                 " sitting on the syllable where the real (postpositive) telisha qetanna belongs. There too the"
                 " word is finally stressed (a single-syllable word like כי counts as finally"
                 " stressed) and so needs no stress helper at all: the cure is to move the mark"
