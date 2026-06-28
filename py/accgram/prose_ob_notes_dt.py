@@ -13,28 +13,53 @@ from accgram.prose_ob_notes_shared import (
 BY_REF: dict[str, dict[str, object]] = {
     "dt 5:8": {
         # Dual-cantillation detangling (issue #36). dt 5:8 is one of the two-reading
-        # Decalogue verses excluded from the normal scan. The anomaly is on the ש of
-        # תעשה: in the taḥton (lower) reading that ש is due a qadma (MAM's taḥton
-        # reading has one), but WLC carries a merkha there, so the detangled taḥton
-        # chanted verse does not parse. More charitably, that single WLC mark is best
-        # read as the meteg the elyon (upper) reading attests -- MAM's elyon has a meteg
-        # on this ש, which the scanner swallows, which is why the elyon parses cleanly --
-        # leaving the taḥton simply lacking its due qadma rather than bearing a wrong
-        # merkha. Flagged as a candidate dual-cantillation error; whether the mark
-        # originates in LC, BHS, BHQ, or is a WLC reading has not been checked -> tbd.
-        # Current UXLC carries a pashta on this word (also an error, again not the due
-        # qadma); see the linked UXLC note page (its `-t` te'amim note).
+        # Decalogue verses excluded from the normal scan. WLC's "tangled" form for
+        # תעשה carries only a merkha on the ש; a better LC transcription reads that
+        # vertical bar as a meteg (belonging to the elyon) and supplies a qadma
+        # (belonging to the taḥton) -- the consensus pointing, under which both the
+        # taḥton and elyon chanted verses are grammatical, where the merkha makes both
+        # ungrammatical. (MAM's taḥton has the qadma and its elyon has the meteg, which
+        # the scanner swallows, which is why MAM's elyon parses cleanly.) UXLC corrects
+        # the merkha to a meteg but supplies a pashta rather than the due qadma; see the
+        # linked UXLC note page (its `-t` te'amim note). Whether the error originates in
+        # LC, BHS, or BHQ has not been confirmed -> tbd.
         "st-source": "tbd",
         "wlc_focus": "תעש֥ה־",
         "st-summary": (
-            "Dual cantillation (Decalogue): in the taḥton (lower) reading the ש of תעשה"
-            " is due a qadma, but WLC carries a merkha there — better read as the meteg"
-            " the elyon reading attests, leaving the taḥton with no accent on this word"
-            " — so the detangled taḥton chanted verse does not parse. (Current UXLC"
-            " instead carries a pashta there: also an error, again not the due qadma —"
-            " see the UXLC note page.) Flagged as a candidate dual-cantillation error"
-            " (source not yet checked against LC/BHS/BHQ); issue #36."
+            "Dual cantillation (Decalogue): WLC’s “tangled” form for תעשה carries only"
+            " a merkha on the ש, but a better LC transcription reads a meteg (elyon)"
+            " plus a qadma (taḥton) — the consensus pointing, under which both the"
+            " taḥton and elyon chanted verses are grammatical, where the merkha makes"
+            " both ungrammatical. UXLC corrects the merkha to a meteg but supplies a"
+            " pashta rather than the due qadma."
         ),
+        "comment": [
+            "WLC represents dual cantillation in manuscript style, which I call a"
+            " “tangled” style, where both taḥton and elyon marks appear superimposed"
+            " on the same set of letters.",
+            "WLC’s tangled form for תעשה has only a merkha. This could be interpreted"
+            " as both taḥton and elyon having merkha, or one having merkha and the"
+            " other having nothing.",
+            "Although the LC is not in great shape here (see the image in the UXLC"
+            " note), a better transcription of the"
+            " LC here would interpret the vertical bar under ש as meteg rather than"
+            " merkha, and would add a qadma over the ש. Admittedly, this is a"
+            " transcription somewhat influenced by the fact that this is the consensus"
+            " pointing of this word. Not surprisingly, this consensus pointing makes"
+            " both the taḥton chanted verse and the elyon chanted verse grammatical, if"
+            " the qadma is taken to belong to the taḥton and the meteg is taken to"
+            " belong to the elyon.",
+            "In contrast, the merkha makes both chanted verses ungrammatical.",
+            "We do not shy away from transcriptions that, while grounded in manuscript"
+            " evidence, use context (consensus and grammar) to supplement manuscript"
+            " evidence when the manuscript evidence is ambiguous, for example when the"
+            " manuscript image is blurry or the manuscript itself is in bad shape.",
+            "UXLC goes most of the way towards correcting WLC here. While UXLC does"
+            " correct the merkha to be a meteg, unfortunately UXLC adds a pashta rather"
+            " than a qadma.",
+            "This error in WLC probably has its source in BHS and/or BHQ, i.e. this error is"
+            " unlikely original to WLC, but we have not confirmed that.",
+        ],
         "uxlc_note_page": "https://tanach.us/Notes/Deuteronomy/Deuteronomy.5.8.2-t.html",
     },
     "dt 9:20": {
