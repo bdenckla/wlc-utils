@@ -30,48 +30,51 @@ BY_REF: dict[str, dict[str, object]] = {
         "st-source": "tbd",
         "wlc_focus": "תעש֥ה־",
         "st-summary": (
-            "Dual cantillation (Decalogue): WLC’s “tangled” form for תעשה carries only"
-            " a merkha on the ש, but a better LC transcription reads a meteg (elyon)"
-            " plus a qadma (taḥton) — the consensus pointing, under which both the"
-            " taḥton and elyon chanted verses are grammatical, where the merkha makes"
-            " both ungrammatical, so the checker supplies the taḥton its due qadma"
-            " (that reading then parses clean) and leaves WLC’s merkha in the elyon,"
-            " where only a meteg is due, so the elyon is the oddball. UXLC corrects the"
-            " merkha to a meteg but supplies a"
-            " pashta rather than the due qadma; a pending UXLC change would correct that"
-            " pashta to the qadma."
+            "WLC’s “tangled” form for תעשה carries only"
+            " a merkha on the ש, but a better LC transcription would be a meteg (elyon)"
+            " and a qadma (taḥton)."
         ),
         "comment": [
-            "WLC represents dual cantillation in manuscript style, which I call a"
-            " “tangled” style, where both taḥton and elyon marks appear superimposed"
+            "WLC represents dual cantillation in manuscript (“tangled”) style,"
+            " where both taḥton and elyon marks are superimposed"
             " on the same set of letters.",
+            #
             "WLC’s tangled form for תעשה has only a merkha. This could be interpreted"
             " as both taḥton and elyon having merkha, or one having merkha and the"
-            " other having nothing.",
-            "Although the LC is not in great shape here (see the image in the UXLC"
-            " note), a better transcription of the"
-            " LC here would interpret the vertical bar under ש as meteg rather than"
-            " merkha, and would add a qadma over the ש. Admittedly, this is a"
-            " transcription somewhat influenced by the fact that this is the consensus"
-            " pointing of this word. Not surprisingly, this consensus pointing makes"
+            " other having nothing."
+            " We interpret it as elyon having merkha and taḥton having nothing.",
+            #
+            "Although the LC is in poor shape here"
+            " (see the image in the UXLC note),"
+            " a better transcription of the LC would have"
+            " meteg rather than merkha under the ש,"
+            " and would add a qadma over the ש."
+            " Admittedly, this is a transcription influenced by the fact that this is the consensus"
+            " pointing of this word."
+            " Not surprisingly, this consensus pointing makes"
             " both the taḥton chanted verse and the elyon chanted verse grammatical, if"
             " the qadma is taken to belong to the taḥton and the meteg is taken to"
             " belong to the elyon.",
-            "In contrast, WLC’s actual merkha makes both chanted verses"
-            " ungrammatical. The checker adopts the qadma for the taḥton — supplying"
-            " it, so that reading parses clean (inventoried on the supplied-marks page) —"
-            " but leaves WLC’s actual merkha in the elyon, which is therefore this"
-            " oddball.",
-            "We do not shy away from transcriptions that, while grounded in manuscript"
+            #
+            "In contrast, WLC’s merkha is ungrammatical in both the taḥton and the elyon."
+            " The checker supplies a qadma for the taḥton, "
+            " making that strand grammatical (see the supplied-marks page) —"  # XXX give a link to the supplied marks page
+            " but leaves WLC’s merkha in the elyon, which is therefore listed here among"
+            " other verses deemed ungrammatical.",
+            #
+            "Note that we do not shy away from transcriptions that, while grounded in manuscript"
             " evidence, use context (consensus and grammar) to supplement manuscript"
             " evidence when the manuscript evidence is ambiguous, for example when the"
             " manuscript image is blurry or the manuscript itself is in bad shape.",
+            #
             "UXLC goes most of the way towards correcting WLC here. While UXLC does"
             " correct the merkha to be a meteg, unfortunately UXLC adds a pashta rather"
             " than a qadma.",
+            #
             "UXLC has now proposed a pending change (slated for UXLC 2.6) that changes"
             " this pashta over the ש to a qadma — exactly the correction we advocate"
             " here. See the “Pending UXLC change” link above.",
+            #
             "This error in WLC probably has its source in BHS and/or BHQ, i.e. this error is"
             " unlikely original to WLC, but we have not confirmed that.",
         ],
@@ -85,12 +88,12 @@ BY_REF: dict[str, dict[str, object]] = {
         # detangled stream at render time, so it cannot silently drift.
         "dual_cant_tables": {
             "taxton": [
-                {"value": "תעש֥ה", "desc": "merkha (a qadma is due here)", "source": "WLC"},
+                {"value": "תעשה", "desc": "no accent", "source": "WLC"},
                 {"value": "תעש֨ה", "desc": "qadma", "source": "MAM"},
-                {"value": "תעש֙ה", "desc": "pashta (UXLC supplies a pashta, not the due qadma)", "source": "UXLC"},
+                {"value": "תעש֙ה", "desc": "pashta", "source": "UXLC"},
             ],
             "elyon": [
-                {"value": "תעש֥ה־", "desc": "merkha (no accent is due here, only a meteg)", "source": "WLC"},
+                {"value": "תעש֥ה־", "desc": "merkha", "source": "WLC"},
                 {"value": "תעשֽה־", "desc": "meteg", "source": "MAM"},
                 {"value": "תעשֽה־", "desc": "meteg", "source": "UXLC"},
             ],

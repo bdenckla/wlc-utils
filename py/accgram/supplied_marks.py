@@ -194,7 +194,7 @@ def _case_extra(s) -> tuple[object, ...]:
     if key == ("ex20:3", "alef", am.MERKHA):
         return (
             _comment(
-                f"WLC’s lone mark here is itself a meteg — a valid form for the {_ELYON} —"
+                f"WLC’s lone mark here is itself a meteg — a valid mark for the {_ELYON} —"
                 f" so supplying the {_TAXTON}’s merkha contradicts nothing WLC wrote: a clean"
                 " charity."
             ),
