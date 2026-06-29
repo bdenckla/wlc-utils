@@ -18,7 +18,7 @@ The page has two inventories, both generated live from the detangling run
 (accgram.dual_cant_run) so they can never drift from the checker's real behaviour:
 
   * "Supplied accents": each of the five supplied accents in turn -- its reading, the
-    accent supplied, what WLC writes instead, and the LC manuscript image; and
+    accent supplied, what WLC has instead, and the LC manuscript image; and
   * "Erased and added maqaf and sof pasuq marks": the word-division marks each reading
     adds or erases relative to WLC's tangled form (narrow-sense paseq is not part of the
     accent grammar and is not tracked).
@@ -126,7 +126,7 @@ def _intro() -> tuple[object, ...]:
                 " Before attempting to grammar-check one of these passages we",
                 *[" ", link("detangle", "goerwitz.html")],
                 " it into its two single-cantillation strands, guided by MAM’s"
-                " already-separated strands."
+                " strands."
                 " After detangling a passage, we feed each strand’s chanted verses to"
                 " the ordinary prose accent grammar checker."
                 " The accents checked are WLC’s own, except for the cases described below.",
@@ -134,7 +134,7 @@ def _intro() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "Sometimes WLC leaves a strand without an accent."
+                "Sometimes WLC leaves a word without an accent in one strand."
                 " In these cases, the detangler ",
                 H.bold("supplies"),
                 " that one accent from MAM, making that strand’s chanted verse grammatical."
@@ -147,14 +147,12 @@ def _intro() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "A supplied-mark word parses clean — the supply is what lets it parse —"
-                " so it is inventoried here and ",
-                H.bold("not"),
-                " counted as an oddball. A genuine WLC dual-cantillation error (WLC"
-                " writing an accent neither reading explains) is the opposite: it is not"
-                " supplied but flagged in the ",
-                link("prose checker run", "goerwitz.html"),
-                ".",
+                "A verse with a supplied mark parses cleanly,"
+                " so it is listed here since it will not be"
+                " listed among the ungrammatical verses."
+                f" One verse, Deuteronomy 5:8, gets a supplied accent that fixes the {_TAXTON} strand, but the {_ELYON} strand’s accent is ungrammatical."
+                " Therefore, the beleaguered word of that verse is listed both here and among",
+                *[" ", link("the ungrammatical verses", "goerwitz.html#obdt5v8"), "."],
             )
         ),
     )
@@ -232,10 +230,10 @@ def _supplied_case(s) -> tuple[object, ...]:
         {"class": "goerwitz-tms-reading-label"},
     )
     if any(is_accent(ch) for ch in s.wlc_word):
-        wlc_part = ("WLC writes ", hbo(accents_and_letters(s.wlc_word)), ".")
+        wlc_part = ("WLC has ", hbo(accents_and_letters(s.wlc_word)), ".")
     else:
         wlc_part = (
-            "WLC writes ",
+            "WLC has ",
             hbo(accents_and_letters(s.wlc_word)),
             " (no cantillation accent of its own).",
         )
@@ -342,7 +340,7 @@ def _legarmeh_para() -> object:
         (
             "Legarmeh is neither added nor erased. The three passages carry nine legarmeh"
             f" accents (a {_MUNAX} with a following paseq, before a revia), but every one sits"
-            f" on a word WLC itself writes with that {_MUNAX} and paseq — the paseq is never"
+            f" on a word WLC itself has with that {_MUNAX} and paseq — the paseq is never"
             " supplied from MAM. A legarmeh therefore surfaces only in the strand that takes"
             " WLC’s ",
             _MUNAX,
