@@ -20,7 +20,7 @@ Subcommands:
                 out/accgram/dual-cant/_dual_cant.json (each reading's chanted-verse
                 trees, the supplied-mark inventory, and candidate-WLC-error
                 anomalies).  The oddity chanted verses are separately folded into
-                the prose oddball report by run-prose; supplied-marks.html is
+                the prose ungrammatical-verse report by run-prose; supplied-marks.html is
                 rendered by generate-html.  Run after run-prose (issue #36).
     xcheck-poetic
                 Cross-check the poetic scanner's disjunctive segmentation against
@@ -36,13 +36,13 @@ Subcommands:
     generate-html
                 Generate the accgram HTML reports in one pass:
 
-                  * gh-pages/accgram/poetic.html -- the residual poetic oddballs
+                  * gh-pages/accgram/poetic.html -- the residual poetic ungrammatical
                     (missing-silluq ERROR-leaf trees and NO_PARSE anomalies),
                     each enriched with its pointed-Hebrew text, scanned token
                     sequence, rendered tree, and WLC-vs-MAM-simple disjunctive
                     comparison (plus out/accgram/poetic/_oddballs.json).
                     Run run-poetic first.
-                  * gh-pages/accgram/goerwitz.html -- the prose oddball
+                  * gh-pages/accgram/goerwitz.html -- the prose ungrammatical
                     set (from out/accgram/prose), enriched with its matching
                     wlc422-kq-u verse object and structured XML-ish UXLC verse
                     node (plus out/accgram/research-oddballs.json).
@@ -68,14 +68,14 @@ Subcommands:
                 Estimate a PCFG over the committed prose + poetic parse trees
                 (one production per tree node) and score each verse's
                 log-likelihood -- a continuous companion to the binary
-                clean/oddball verdict (issue #11).  Reports the learned grammar,
+                clean/ungrammatical verdict (issue #11).  Reports the learned grammar,
                 the rarest-but-legal verses (per-accent log-likelihood, with the
                 least-probable production drilled out), and a validation that the
-                flagged oddballs score at the bottom; an n-gram baseline is kept
+                flagged ungrammatical score at the bottom; an n-gram baseline is kept
                 as a sanity check.  Writes out/accgram/_grammaticality.txt.  Run
                 run-prose + run-poetic first (it reads their committed JSON).
     test-fixes
-                For every annotated prose oddball, test whether adopting its
+                For every annotated prose ungrammatical verse, test whether adopting its
                 MAM-simple value clears the ERROR: substitute the MAM value into the
                 verse, re-transcode + re-scan + re-parse, and classify CONFIRMED / DENIED /
                 CHANGED / UNTESTABLE.  Cross-checks each verdict against the
@@ -230,7 +230,7 @@ def main() -> None:
     fix_tester_parser = subparsers.add_parser(
         "test-fixes",
         help=(
-            "Test whether adopting each annotated prose oddball's MAM-simple value "
+            "Test whether adopting each annotated prose ungrammatical's MAM-simple value "
             "clears its ERROR; write out/accgram/fix-tester/_fix_tester.{txt,json}. "
             "Run run-prose first."
         ),
@@ -243,7 +243,7 @@ def main() -> None:
         help=(
             "Estimate a PCFG over the committed prose + poetic parse trees and "
             "score every verse's log-likelihood -- a continuous companion to the "
-            "binary clean/oddball verdict (issue #11). Writes "
+            "binary clean/ungrammatical verdict (issue #11). Writes "
             "out/accgram/_grammaticality.txt. Run run-prose + run-poetic first."
         ),
     )

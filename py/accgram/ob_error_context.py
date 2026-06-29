@@ -18,12 +18,12 @@ def collect_error_trees_by_ref(
     rows: list[dict[str, object]],
     base_dir: Path,
 ) -> dict[str, ErrorTree | None]:
-    """Map each oddball row's ref to its ERROR tree, read from the JSON outputs.
+    """Map each ungrammatical row's ref to its ERROR tree, read from the JSON outputs.
 
     Each row carries an ``output_file`` (a ``wlc_422_ps_<bb>_ag.json`` under
     ``base_dir``, issue #20); the per-verse ``tree`` field is the nested image
     written by ``tree.tree_to_obj``, converted here to an ``ErrorTree`` (or None
-    when the verse has no ERROR leaf -- e.g. a row that is no longer an oddball).
+    when the verse has no ERROR leaf -- e.g. a row that is no longer an ungrammatical verse).
     """
     refs_by_file: dict[str, set[str]] = {}
     for row in rows:
@@ -49,7 +49,7 @@ def _book_tree_objs_by_ref(output_path: Path, bb: str) -> dict[str, dict | None]
     out: dict[str, dict | None] = {}
     for verse in payload.get("verses", []):
         bcv = verse.get("bcv", "")
-        # bcv ("ob1:2") -> the row-style ref ("ob 1:2") the oddball rows key on.
+        # bcv ("ob1:2") -> the row-style ref ("ob 1:2") the ungrammatical rows key on.
         out[f"{bb} {bcv[len(bb):]}"] = verse.get("tree")
     return out
 
@@ -108,12 +108,12 @@ def _bb_from_output_file(output_file: str) -> str | None:
 def _row_ref(row: dict[str, object]) -> str:
     ref = row.get("ref")
     if not isinstance(ref, str) or not ref.strip():
-        raise ValueError("Oddball row is missing non-empty string field 'ref'")
+        raise ValueError("Ungrammatical row is missing non-empty string field 'ref'")
     return ref.strip()
 
 
 def _row_output_file(row: dict[str, object]) -> str:
     output_file = row.get("output_file")
     if not isinstance(output_file, str) or not output_file.strip():
-        raise ValueError("Oddball row is missing non-empty string field 'output_file'")
+        raise ValueError("Ungrammatical row is missing non-empty string field 'output_file'")
     return output_file.strip()

@@ -23,7 +23,7 @@ def row_category(
     *,
     structured_text: object = None,
 ) -> str:
-    """Classify an oddball verse along the sof-pasuq/silluq dimension.
+    """Classify an ungrammatical verse along the sof-pasuq/silluq dimension.
 
     Returns one of "msp" (missing sof pasuq), "msl" (missing silluq, i.e. a sof
     pasuq present but no accent on the word), "zwhim" (a scribal zarqa whim that

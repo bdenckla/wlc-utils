@@ -151,10 +151,10 @@ def _prose_verse_tree_text(bcv: str, index, parser, has_legarmeh: HasLegarmeh) -
     the corpus output."""
     verse = index[bcv]
     body = uni_to_marks.verse_to_marks(verse)
-    oddballs = lexical_validation.lexical_oddballs(body)
-    if oddballs:
-        words = prose_run._oddball_unicode_words(oddballs, verse)
-        return print_tree(prose_run._illegal_mark_tree(oddballs, words), 0).rstrip("\n")
+    ungrammatical = lexical_validation.lexical_ungrammatical(body)
+    if ungrammatical:
+        words = prose_run._ungrammatical_unicode_words(ungrammatical, verse)
+        return print_tree(prose_run._illegal_mark_tree(ungrammatical, words), 0).rstrip("\n")
     return _tree_text(_scan_and_parse(bcv, body, parser, has_legarmeh))
 
 

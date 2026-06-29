@@ -4,7 +4,7 @@ A bang ``a x!y b`` is one base letter carrying two accents ``x`` and ``y`` with 
 natural order (e.g. ps56:10's ``merkha!azla`` -- merkha U+05A5 + qadma U+05A8 on one
 alef).  The poetic scanner *represents* such a cluster faithfully as one order-less
 token (Plan D), but treats the same-letter co-occurrence as a lexical anomaly: the bang
-has no ``conj`` terminal, so the verse dead-ends to NO_PARSE and surfaces as an oddball
+has no ``conj`` terminal, so the verse dead-ends to NO_PARSE and surfaces as an ungrammatical verse
 rather than a silently-clean parse.  That a verse "parses with x and y as a sequence"
 does NOT establish that x stacked on y is a legal Masoretic configuration -- exactly as
 lv25:20's ``mahapakh!tipexa`` (two *below* accents) parses as a sequence yet is
@@ -188,7 +188,7 @@ def render_report(verdicts: list[BangVerdict]) -> str:
     lines.append(
         "How legal each same-letter `a x!y b` cluster is, measured by which of its four "
         "interpretations parse grammatically (no ERROR / NO_PARSE).  The bang itself is a "
-        "flagged lexical anomaly (NO_PARSE oddball); this measure records how the cluster "
+        "flagged lexical anomaly (NO_PARSE ungrammatical verse); this measure records how the cluster "
         "WOULD read if resolved.  NB: the poetic conjunctive grammar is permissive, so for "
         "an all-conjunctive bang every interpretation tends to be legal -- the measure only "
         "gains discriminating power once conjunctive grammaticality is strengthened."

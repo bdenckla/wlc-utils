@@ -10,10 +10,10 @@ verse to out/accgram/poetic/wlc_422_ps_<bb>_ag.json (issue #39, the poetic analo
 prose #20 cutover, replacing the legacy bespoke indented-tree text).  Each record pairs the
 verse's ``input`` (pointed-Hebrew unicode + raw mark body + reconciled token stream) with
 the full parse ``tree`` -- so "how the input parses" is shown for every verse, not just the
-handful of oddball cases the old text format named.
+handful of ungrammatical cases the old text format named.
 
 Unlike the prose driver, an unparseable verse is NOT fatal.  The poetic grammar is derived
-from Yeivin (no C oracle) and a small fraction of verses are known structural oddballs;
+from Yeivin (no C oracle) and a small fraction of verses are known to be structurally ungrammatical;
 making each one fatal would block the whole corpus run.  So a verse the grammar cannot parse
 (parse_tokens returns None) is recorded with status ``no_parse`` and a ``stall`` locus (the
 offending accent's token type and its 1-based ordinal) in place of a tree, and the run
@@ -50,7 +50,7 @@ class BookRun:
     bb: str
     verse_count: int
     parsed_count: int  # clean parses (no ERROR leaf)
-    oddball_count: int  # missing-silluq ERROR-leaf trees
+    error_count: int  # missing-silluq ERROR-leaf trees
     no_parse_count: int  # unrecoverable failures (no_parse records)
 
 
@@ -104,7 +104,7 @@ def _verse_record(
     the grammar actually consumed and produced.  The ``input`` block also carries the
     pointed-Hebrew ``unicode`` (from the -kq-u source) and the ``marks`` body (the scan
     body, whose base-letter placeholder is alef -- see ``accent_marks.LETTER``).
-    ``status`` is ``clean`` (parsed, no ERROR leaf), ``oddball`` (a missing-silluq
+    ``status`` is ``clean`` (parsed, no ERROR leaf), ``ungrammatical`` (a missing-silluq
     ERROR-leaf recovery tree), or ``no_parse`` (no valid tree exists).
     """
     tail = verse.reference.rpartition(" ")[2]
@@ -144,17 +144,17 @@ def _verse_record(
         )
         record["tree"] = None
     else:
-        record["status"] = "oddball" if has_error_leaf(tree) else "clean"
+        record["status"] = "error" if has_error_leaf(tree) else "clean"
         record["tree"] = tree_to_obj(tree)
     return record
 
 
 def _status_counts(records: list[dict[str, object]]) -> dict[str, int]:
-    counts = {"clean": 0, "oddball": 0, "no_parse": 0}
+    counts = {"clean": 0, "error": 0, "no_parse": 0}
     for record in records:
         status = record["status"]
-        if status == "oddball":
-            counts["oddball"] += 1
+        if status == "error":
+            counts["error"] += 1
         elif status == "no_parse":
             counts["no_parse"] += 1
         else:
@@ -172,7 +172,7 @@ def render_book(
     """Return (verse_records, stats) for one book's scanner-ready text.
 
     Each verse's scanned tokens are reconciled (poetic_reconcile) against the MAM
-    disjunctive skeleton before parsing, exactly as collect_poetic_oddballs does, so the
+    disjunctive skeleton before parsing, exactly as collect_poetic_ungrammatical does, so the
     driver's records agree with the report's trees.  ``wlc_index`` (the kq-u verse index,
     keyed by bcv) supplies each verse's pointed-Hebrew ``input.unicode``; omit it to leave
     unicode empty.
@@ -187,7 +187,7 @@ def render_book(
         bb=bb,
         verse_count=len(records),
         parsed_count=counts["clean"],
-        oddball_count=counts["oddball"],
+        error_count=counts["error"],
         no_parse_count=counts["no_parse"],
     )
     return records, stats
@@ -235,7 +235,7 @@ def _book_summary(records: list[dict[str, object]]) -> dict[str, int]:
     counts = _status_counts(records)
     return {
         "verses": len(records),
-        "oddballs": counts["oddball"],
+        "oddballs": counts["error"],
         "no_parse": counts["no_parse"],
     }
 
@@ -266,7 +266,7 @@ def run(args: argparse.Namespace) -> None:
     wlc_index = rtms_data.load_wlc422_index(input_path)
 
     total_parsed = 0
-    total_oddballs = 0
+    total_ungrammatical = 0
     total_no_parse = 0
     total_verses = 0
     for bb, text in book_texts.items():
@@ -276,19 +276,19 @@ def run(args: argparse.Namespace) -> None:
         out_path = out_dir / f"wlc_422_ps_{bb}_ag.json"
         _write_book_json(out_path, records)
         total_parsed += stats.parsed_count
-        total_oddballs += stats.oddball_count
+        total_ungrammatical += stats.error_count
         total_no_parse += stats.no_parse_count
         total_verses += stats.verse_count
         rate = 100.0 * stats.parsed_count / stats.verse_count if stats.verse_count else 0.0
         print(
             f"{bb}: parsed {stats.parsed_count}/{stats.verse_count} ({rate:.1f}%) clean"
-            f"; {stats.oddball_count} missing-silluq oddball(s), "
+            f"; {stats.error_count} missing-silluq ungrammatical verse(s), "
             f"{stats.no_parse_count} no_parse -> {out_path}"
         )
 
     total_rate = 100.0 * total_parsed / total_verses if total_verses else 0.0
     print(
         f"\nTotal: {total_parsed}/{total_verses} ({total_rate:.2f}%) clean parses"
-        f"; {total_oddballs} missing-silluq ERROR-leaf oddball(s); "
+        f"; {total_ungrammatical} missing-silluq ERROR-leaf ungrammatical verse(s); "
         f"{total_no_parse} no_parse across selected poetic books."
     )

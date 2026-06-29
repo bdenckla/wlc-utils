@@ -126,7 +126,7 @@ tokens = (
 # pair outside the whitelist (revia+geresh muqdam, ole+yored, deḥi+munaḥ) is a lexical
 # anomaly, not a licit servus: with no terminal for it the parser dead-ends -> NO_PARSE
 # (the poetic-native lexical-error surface, as STRAY_ACCENT), so ps56:10 surfaces as a
-# flagged oddball rather than a silently-clean parse.  See poetic_ob_notes["ps 56:10"].
+# flagged ungrammatical rather than a silently-clean parse.  See poetic_ob_notes["ps 56:10"].
 
 start = "pasuq"
 
@@ -185,7 +185,7 @@ def p_silluq_phrase_error(p):
     # silluq).  Mirror the prose grammar's missing-silluq recovery
     # (prose_ply_grammar.p_silluq_phrase_error): on the syntax error PLY reduces the
     # absent silluq to a silluq_phrase whose mark is ERROR and errok() resumes
-    # normal reporting, so the verse becomes a flagged oddball *tree* (the rest of
+    # normal reporting, so the verse becomes a flagged ungrammatical *tree* (the rest of
     # its structure preserved and visible) instead of a no-output NO_PARSE line.
     # This is the only poetic error-recovery rule: there is no poetic C oracle, so
     # recovery is deliberately limited to this one well-understood shape.
@@ -210,7 +210,7 @@ def p_oleh_weyored_phrase(p):
 # REFUTED at the token level: the seven L outliers are MAHAPAKH (Ps 14:3, 53:4, Prov
 # 6:3, 24:29) and ILLUY (Prov 1:9, 6:27) -- all MAM-confirmed two-witness constructions
 # -- plus the one genuine servant-type conflict Prov 3:4 (L TARXA -> MAM MERKHA), where
-# L alone uses an out-of-set tarkha (a sign-choice oddball, not rule material).  A
+# L alone uses an out-of-set tarkha (a sign-choice illegality, not rule material).  A
 # MERKHA|MUNAX-only constraint would flag six correct verses, so it is not encoded.  See issue #18.
 def p_atnax_phrase(p):
     """atnax_phrase : ATNAX
@@ -711,7 +711,7 @@ def p_shalshelet_gedolah_clause(p):
 # --- error callback ------------------------------------------------------------
 @dataclass(frozen=True)
 class ParseError:
-    """Where a NO_PARSE verse's parse dead-ended -- the pinpoint for an oddball.
+    """Where a NO_PARSE verse's parse dead-ended -- the pinpoint for an ungrammatical verse.
 
     ``token_type`` is the offending lookahead: the first token the LALR(1) parser
     could not shift onto any valid prefix.  ``accent_index`` is its 1-based position

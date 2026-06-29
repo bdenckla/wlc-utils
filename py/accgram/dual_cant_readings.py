@@ -14,7 +14,7 @@ numbered verse), and -- for the group-by-reading dt 5:8 display -- ``status`` / 
 ``word_leaf_counts`` (parse-tree leaves per word). The ``word_bcvs`` / ``word_leaf_counts``
 let the renderer gray the words and tree columns that fall outside the row's own verse: an
 elyon reading groups several numbered verses, so on the dt 5:8 row its 5:7 / 5:9 / 5:10
-material is de-emphasized, spotlighting the 5:8 part where the oddball lives.
+material is de-emphasized, spotlighting the 5:8 part where the ungrammatical lives.
 ``display_label`` carries the Unicode ḥ (the cant-strand ASCII
 label spells ḥet as "x", per the repo transliteration standard).
 """
@@ -49,7 +49,7 @@ def load_readings_by_bcv(
                     "span_label": _span_label(span),
                     "words": list(cv.words),
                     "word_bcvs": list(cv.word_bcvs),
-                    "status": cv.status,  # clean / oddball -> whether to show a parse tree
+                    "status": cv.status,  # clean / ungrammatical -> whether to show a parse tree
                     "tree": cv.tree,  # the parse-tree image (None when location-only)
                     "word_leaf_counts": list(cv.word_leaf_counts),  # per-word leaf count, for graying
                 }

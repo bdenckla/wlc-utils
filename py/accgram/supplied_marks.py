@@ -10,9 +10,9 @@ verse parses.  Because it is a new kind of charity, it gets its own page rather 
 in "Editorial charities".
 
 A supplied-mark word parses clean -- the supply is exactly what lets it parse -- so it is
-surfaced ONLY here, never counted as a prose oddball.  (A genuine WLC dual-cantillation
+surfaced ONLY here, never counted as a prose ungrammatical verse.  (A genuine WLC dual-cantillation
 *error*, where WLC wrote an accent neither reading explains, is the opposite case: it is
-not supplied but flagged, and appears in the prose oddball report.)
+not supplied but flagged, and appears in the prose ungrammatical-verse report.)
 
 The page has two inventories, both generated live from the detangling run
 (accgram.dual_cant_run) so they can never drift from the checker's real behaviour:
@@ -212,7 +212,7 @@ def _case_extra(s) -> tuple[object, ...]:
                 (
                     f"So the checker supplies the {_TAXTON}’s qadma (and the {_TAXTON} then"
                     f" parses clean), but lets WLC’s merkha stand in the {_ELYON}, where it"
-                    " surfaces as an oddball in the ",
+                    " surfaces as an ungrammatical verse in the ",
                     link("checker run", "goerwitz.html"),
                     ". UXLC, too, corrects the merkha to a meteg, but supplies a pashta"
                     " rather than the due qadma; a pending UXLC change would correct that"

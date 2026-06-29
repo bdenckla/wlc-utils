@@ -1,4 +1,4 @@
-// Client-side filtering for the Goerwitz oddball report (goerwitz.html).
+// Client-side filtering for the Goerwitz ungrammatical-verse report (goerwitz.html).
 //
 // Each verse is a <section class="goerwitz-verse"> tagged with data-category
 // ("msp" = missing sof pasuq, "msl" = missing silluq, "zwhim" = zarqa whim,

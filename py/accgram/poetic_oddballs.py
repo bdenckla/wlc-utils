@@ -1,7 +1,7 @@
-"""Poetic oddball report -- the optional Phase 4 analogue of the goerwitz.html report.
+"""Poetic ungrammatical-verse report -- the optional Phase 4 analogue of the goerwitz.html report.
 
 The poetic corpus run (``run-poetic``) parses 99.69% of the Three Books
-cleanly; the residual splits into two documented oddball kinds:
+cleanly; the residual splits into two documented ungrammatical kinds:
 
   * ``missing_silluq`` -- the 13 verses whose sof pasuq arrives with no silluq
     code, recovered by the grammar into an ERROR-leaf tree (structure preserved,
@@ -14,14 +14,14 @@ cleanly; the residual splits into two documented oddball kinds:
     and gh-pages/accgram/ps17v14-double-tsinnor.html.)
 
 This module re-scans + re-parses the poetic corpus (the same source of truth the
-driver writes from), collects every oddball verse, and enriches each with: the
+driver writes from), collects every ungrammatical verse, and enriches each with: the
 verse's pointed-Hebrew text, the full scanned token sequence, the rendered ERROR
-tree or NO_PARSE line, and -- the key review datum for accent oddballs -- the WLC vs
+tree or NO_PARSE line, and -- the key review datum for accent ungrammatical verses -- the WLC vs
 MAM-simple disjunctive sequences (what L's accents say versus what the MAM oracle
 reads). It writes a git-tracked ``_oddballs.json`` next to the corpus outputs and
 ``gh-pages/accgram/poetic.html`` for review.
 
-Each oddball is one ``dict[str, object]`` row -- the single representation that
+Each ungrammatical is one ``dict[str, object]`` row -- the single representation that
 flows from collection through render to JSON serialization, sharing the prose
 front-end's row shape so the shared leaf renderers consume it directly (issues
 #40, #41). It carries the shared prose-shaped keys the shared renderers read
@@ -43,12 +43,12 @@ having no valid parse, render a flat best-effort tree (each token a cell, capped
 by an ERROR leaf) so they too display through the shared error-tree table.
 
 The mechanically auto-derived WLC-vs-MAM-simple summary is the relevant oracle
-for these accent-structure oddballs (the prose UXLC change-text enrichment
+for these accent-structure ungrammatical (the prose UXLC change-text enrichment
 targets vowel/consonant text changes, which these do not concern); it -- with
 the client-side "MAM compare" filter facet -- now carries the WLC-vs-MAM
 disjunctive comparison that an earlier standalone skeleton table showed. On top
 of it there is an optional hand-authored annotation layer -- the poetic analogue
-of the prose ``ob_notes_*`` modules -- in ``poetic_ob_notes``: a per-oddball
+of the prose ``ob_notes_*`` modules -- in ``poetic_ob_notes``: a per-ungrammatical
 ``st-summary`` / ``comment`` plus external links (a tanach.us ``uxlc_note_page``,
 a ``github-issue``), shown only for the few cases that warrant it. The SAT
 focus-word table is reproduced for missing-silluq verses (whose locus is the
@@ -101,10 +101,10 @@ KIND_NO_PARSE = "no_parse"
 
 # The prose-report-shaped (row, key) -> value lookup the shared rtmsr_* helpers
 # expect; for the poetic page the row is ignored and the value comes from the
-# oddball's hand-authored poetic_ob_notes entry (see _structured_text_lookup).
+# ungrammatical's hand-authored poetic_ob_notes entry (see _structured_text_lookup).
 StructuredTextLookup = Callable[[dict[str, object], str], object]
 
-# Each poetic oddball is one dict[str, object] row (issue #41), carrying:
+# Each poetic ungrammatical is one dict[str, object] row (issue #41), carrying:
 #   ref               clean book-name reference, e.g. "Psalms 31:21"
 #   bb                two-letter book code
 #   kind              KIND_MISSING_SILLUQ | KIND_NO_PARSE
@@ -134,12 +134,12 @@ StructuredTextLookup = Callable[[dict[str, object], str], object]
 #                     focus word, None otherwise. Not persisted to _oddballs.json.
 
 
-def collect_poetic_oddballs(
+def collect_poetic_ungrammatical(
     mam_simple_dir: Path,
     wlc422_kq_u_dir: Path,
     uxlc_dir: Path,
 ) -> list[dict[str, object]]:
-    """Re-scan + re-parse the poetic corpus and return every oddball verse."""
+    """Re-scan + re-parse the poetic corpus and return every ungrammatical verse."""
     mam_words_by_ref = load_poetic_word_disj(mam_simple_dir)
     wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
     parser = build_parser()
@@ -147,7 +147,7 @@ def collect_poetic_oddballs(
         wlc422_kq_u_dir, keep_line_fn=poetic_filter.should_keep_line
     )
 
-    oddballs: list[dict[str, object]] = []
+    ungrammatical: list[dict[str, object]] = []
     for bb, text in book_texts.items():
         output_file = f"wlc_422_ps_{bb}_ag.json"
         for verse in scan_book(text, bb):
@@ -200,10 +200,10 @@ def collect_poetic_oddballs(
             row["wlc_focus"] = (
                 _final_word_focus(row) if kind == KIND_MISSING_SILLUQ else None
             )
-            oddballs.append(row)
+            ungrammatical.append(row)
 
     return _attach_enriched_rows(
-        oddballs,
+        ungrammatical,
         wlc422_kq_u_dir=wlc422_kq_u_dir,
         uxlc_dir=uxlc_dir,
         mam_simple_dir=mam_simple_dir,
@@ -211,16 +211,16 @@ def collect_poetic_oddballs(
 
 
 def _attach_enriched_rows(
-    oddballs: list[dict[str, object]],
+    ungrammatical: list[dict[str, object]],
     *,
     wlc422_kq_u_dir: Path,
     uxlc_dir: Path,
     mam_simple_dir: Path,
 ) -> list[dict[str, object]]:
-    """Enrich each missing-silluq oddball with the WLC/UXLC/MAM focus-word payload
+    """Enrich each missing-silluq ungrammatical with the WLC/UXLC/MAM focus-word payload
     the SAT table needs, leaving NO_PARSE verses (no localized focus) untouched."""
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
-    for row in oddballs:
+    for row in ungrammatical:
         if row["kind"] != KIND_MISSING_SILLUQ:
             continue
         _bb, chnu, vrnu, _bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(row))
@@ -233,7 +233,7 @@ def _attach_enriched_rows(
         refs_by_book=refs_by_book,
     )
 
-    for row in oddballs:
+    for row in ungrammatical:
         row["enriched_row"] = _enriched_row_for(
             row,
             wlc422_by_bcv=wlc422_by_bcv,
@@ -243,7 +243,7 @@ def _attach_enriched_rows(
             uxlc_dir=uxlc_dir,
             mam_simple_dir=mam_simple_dir,
         )
-    return oddballs
+    return ungrammatical
 
 
 def _enriched_row_for(
@@ -284,7 +284,7 @@ def _enriched_row_for(
     )
 
 
-def _oddball_to_row(row: dict[str, object]) -> dict[str, object]:
+def _ungrammatical_to_row(row: dict[str, object]) -> dict[str, object]:
     error = row["error"]
     return {
         "ref": row["ref"],
@@ -312,14 +312,14 @@ def _oddball_to_row(row: dict[str, object]) -> dict[str, object]:
 
 
 def build_payload(
-    oddballs: list[dict[str, object]], source_file: str
+    ungrammatical: list[dict[str, object]], source_file: str
 ) -> dict[str, object]:
     kinds: dict[str, int] = {}
-    for row in oddballs:
+    for row in ungrammatical:
         kind = row["kind"]
         kinds[kind] = kinds.get(kind, 0) + 1
     payload: dict[str, object] = {
-        "artifacts_description": "poetic (Three Books) oddball verses for review",
+        "artifacts_description": "poetic (Three Books) ungrammatical verses for review",
         "payload_provenance_note": (
             "Each row is a poetic verse the checker could not parse cleanly: either "
             "a missing-silluq verse recovered into an ERROR-leaf tree "
@@ -334,11 +334,11 @@ def build_payload(
             "names the *_ag.json holding the verse's parse record."
         ),
         "summary": {
-            "oddballs": len(oddballs),
+            "oddballs": len(ungrammatical),
             "missing_silluq": kinds.get(KIND_MISSING_SILLUQ, 0),
             "no_parse": kinds.get(KIND_NO_PARSE, 0),
         },
-        "oddballs": [_oddball_to_row(row) for row in oddballs],
+        "oddballs": [_ungrammatical_to_row(row) for row in ungrammatical],
     }
     return provenance.with_json_provenance(payload, source_file)
 
@@ -348,7 +348,7 @@ def build_payload(
 # gh-pages/accgram/poetic-filter.js); the shared page-assembly now lives in
 # ob_page (issue #22). It keeps one poetic-only data display the prose page has no
 # analogue for: the WLC-vs-MAM disjunctive compare (the relevant oracle for
-# accent-structure oddballs). The verse text is shown as pointed Hebrew (issue #9
+# accent-structure ungrammatical verses). The verse text is shown as pointed Hebrew (issue #9
 # retired the Michigan-Claremont body from the reports).
 _REPORT_TITLE = "Poetic checker run on WLC"
 _REPORT_HEADING = "Poetic checker run on WLC"
@@ -390,29 +390,29 @@ def _bb_ref(row: dict[str, object]) -> str:
 
 
 def _structured_text_lookup(row: dict[str, object]) -> StructuredTextLookup:
-    """A ``(row, key) -> value`` lookup over this oddball's hand-authored notes.
+    """A ``(row, key) -> value`` lookup over this ungrammatical's hand-authored notes.
 
     Returns the prose-report-shaped callable the shared rtmsr_media/ rtmsr_verse
-    helpers expect; ``row`` is ignored (the notes are keyed by the oddball's bb
+    helpers expect; ``row`` is ignored (the notes are keyed by the ungrammatical's bb
     reference, not carried on a row). Yields ``None`` for every key when the
-    oddball has no hand-authored entry."""
+    ungrammatical has no hand-authored entry."""
     notes = poetic_ob_notes.get_structured_text().get(_bb_ref(row))
     notes = notes if isinstance(notes, dict) else {}
     return lambda _row, key: notes.get(key)
 
 
-def render_body_contents(oddballs: list[dict[str, object]]) -> tuple[object, ...]:
-    counts = _counts(oddballs)
+def render_body_contents(ungrammatical: list[dict[str, object]]) -> tuple[object, ...]:
+    counts = _counts(ungrammatical)
     ordered = sorted(
-        oddballs, key=lambda row: rtms_ref.reading_order_key(_bb_ref(row))
+        ungrammatical, key=lambda row: rtms_ref.reading_order_key(_bb_ref(row))
     )
 
     descriptor = ob_page.CorpusDescriptor(
-        heading_blocks=_build_intro(oddballs),
+        heading_blocks=_build_intro(ungrammatical),
         facets=_build_facets(counts),
         count_para_class="pf-count",
         verse_sections=tuple(
-            _render_oddball_section(row, is_first=index == 0)
+            _render_ungrammatical_section(row, is_first=index == 0)
             for index, row in enumerate(ordered)
         ),
         tail_blocks=(),
@@ -421,14 +421,14 @@ def render_body_contents(oddballs: list[dict[str, object]]) -> tuple[object, ...
     return ob_page.build_page_body(descriptor)
 
 
-def _build_intro(oddballs: list[dict[str, object]]) -> tuple[object, ...]:
-    n_silluq = sum(1 for row in oddballs if row["kind"] == KIND_MISSING_SILLUQ)
-    n_noparse = sum(1 for row in oddballs if row["kind"] == KIND_NO_PARSE)
+def _build_intro(ungrammatical: list[dict[str, object]]) -> tuple[object, ...]:
+    n_silluq = sum(1 for row in ungrammatical if row["kind"] == KIND_MISSING_SILLUQ)
+    n_noparse = sum(1 for row in ungrammatical if row["kind"] == KIND_NO_PARSE)
     return (
         wlc_utils_html.heading_level_1(_REPORT_HEADING),
         wlc_utils_html.heading_level_2("Introduction"),
         wlc_utils_html.para(
-            f"This page lists the {len(oddballs)} poetic (Three Books) WLC 4.22 "
+            f"This page lists the {len(ungrammatical)} poetic (Three Books) WLC 4.22 "
             f"verses the poetic accent grammar cannot parse cleanly "
             f"({n_silluq} missing-silluq, {n_noparse} NO_PARSE). Use the filter "
             "below to narrow the list."
@@ -474,9 +474,9 @@ def _build_intro(oddballs: list[dict[str, object]]) -> tuple[object, ...]:
     )
 
 
-def _render_oddball_section(row: dict[str, object], *, is_first: bool) -> object:
+def _render_ungrammatical_section(row: dict[str, object], *, is_first: bool) -> object:
     bb, chnu, vrnu, bcv = rtms_report.parse_ref_to_wlc_bcv(_bb_ref(row))
-    anchor_id = ob_report.oddball_anchor_id(bcv)
+    anchor_id = ob_report.ungrammatical_anchor_id(bcv)
 
     items: list[object] = [
         wlc_utils_html.heading_level_2(str(row["ref"]), {"id": anchor_id})
@@ -722,7 +722,7 @@ def _build_facets(counts: dict[str, int]) -> tuple[ob_page.Facet, ...]:
     """The poetic filter facets, in display order (see ob_page.build_filter_controls)."""
     return (
         ob_page.CheckboxFacet(
-            "Oddball kind",
+            "Kind",
             "pf-kind",
             tuple(
                 (slug, label, counts[f"kind_{slug}"])
@@ -748,7 +748,7 @@ def _build_facets(counts: dict[str, int]) -> tuple[ob_page.Facet, ...]:
     )
 
 
-def _counts(oddballs: list[dict[str, object]]) -> dict[str, int]:
+def _counts(ungrammatical: list[dict[str, object]]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for slug in _KIND_FILTER_LABEL:
         counts[f"kind_{slug}"] = 0
@@ -756,14 +756,14 @@ def _counts(oddballs: list[dict[str, object]]) -> dict[str, int]:
         counts[f"book_{slug}"] = 0
     for slug in _AGREE_LABEL:
         counts[f"agree_{slug}"] = 0
-    for row in oddballs:
+    for row in ungrammatical:
         counts[f"kind_{row['kind']}"] += 1
         counts[f"book_{row['bb']}"] += 1
         counts[f"agree_{_agree_slug(row)}"] += 1
     return counts
 
 
-def default_oddballs_out_path(repo_root: Path) -> Path:
+def default_ungrammatical_out_path(repo_root: Path) -> Path:
     return repo_paths.out_dir() / "accgram" / "poetic" / "_oddballs.json"
 
 
@@ -792,35 +792,35 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         help="Directory of UXLC-39 book XML files (for the SAT focus-word table).",
     )
     parser.add_argument(
-        "--oddballs-out",
+        "--ungrammatical-out",
         type=Path,
-        default=default_oddballs_out_path(repo_root),
-        help="Output JSON path for the poetic oddball records.",
+        default=default_ungrammatical_out_path(repo_root),
+        help="Output JSON path for the poetic ungrammatical records.",
     )
     parser.add_argument(
         "--html-out",
         type=Path,
         default=default_html_out_path(repo_root),
-        help="Output HTML path for the poetic oddball report.",
+        help="Output HTML path for the poetic ungrammatical-verse report.",
     )
 
 
 def run(args: argparse.Namespace) -> None:
-    oddballs = collect_poetic_oddballs(
+    ungrammatical = collect_poetic_ungrammatical(
         args.mam_simple_dir, args.wlc422_kq_u_dir, args.uxlc_dir
     )
 
-    payload = build_payload(oddballs, __file__)
-    oddballs_out: Path = args.oddballs_out
-    oddballs_out.parent.mkdir(parents=True, exist_ok=True)
-    with oddballs_out.open("w", encoding="utf-8") as f_out:
+    payload = build_payload(ungrammatical, __file__)
+    ungrammatical_out: Path = args.ungrammatical_out
+    ungrammatical_out.parent.mkdir(parents=True, exist_ok=True)
+    with ungrammatical_out.open("w", encoding="utf-8") as f_out:
         json.dump(payload, f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")
 
     html_out: Path = args.html_out
     html_out.parent.mkdir(parents=True, exist_ok=True)
     wlc_utils_html.write_html_to_file(
-        body_contents=render_body_contents(oddballs),
+        body_contents=render_body_contents(ungrammatical),
         write_ctx=wlc_utils_html.WriteCtx(
             title=_REPORT_TITLE,
             path=str(html_out),
@@ -829,11 +829,11 @@ def run(args: argparse.Namespace) -> None:
         path_to_style=rtms_report.path_to_gh_pages_style(html_out),
     )
 
-    n_silluq = sum(1 for row in oddballs if row["kind"] == KIND_MISSING_SILLUQ)
-    n_noparse = sum(1 for row in oddballs if row["kind"] == KIND_NO_PARSE)
+    n_silluq = sum(1 for row in ungrammatical if row["kind"] == KIND_MISSING_SILLUQ)
+    n_noparse = sum(1 for row in ungrammatical if row["kind"] == KIND_NO_PARSE)
     print(
-        f"Poetic oddballs: {len(oddballs)} "
+        f"Poetic ungrammatical: {len(ungrammatical)} "
         f"({n_silluq} missing-silluq, {n_noparse} NO_PARSE)"
     )
-    print(f"JSON: {oddballs_out}")
+    print(f"JSON: {ungrammatical_out}")
     print(f"HTML: {html_out}")

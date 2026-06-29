@@ -1,4 +1,4 @@
-"""Oddball structured research notes — js."""
+"""Ungrammatical structured research notes — js."""
 
 from __future__ import annotations
 

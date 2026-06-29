@@ -113,7 +113,7 @@ def render_dual_cant_section(
     section_anchor_id: str,
     structured_text_lookup: StructuredTextLookup,
 ) -> tuple[object, ...]:
-    """The whole goerwitz section for a dually-cantillated oddball (dt 5:8), laid out by
+    """The whole goerwitz section for a dually-cantillated ungrammatical (dt 5:8), laid out by
     reading (issue #36): heading + links, then a taḥton block and an elyon block (each its
     own labelled verse line, per-strand focus/diff table, and parse tree), then the shared
     images and commentary.  The elyon's tree spans 5:7-10; its non-5:8 columns are grayed
@@ -172,10 +172,10 @@ def _render_dual_cant_strand_table(
         return None
 
     words = reading.get("words") if isinstance(reading.get("words"), list) else []
-    # The form the detangler emitted for this reading: an oddball reading carries WLC's own
+    # The form the detangler emitted for this reading: an ungrammatical reading carries WLC's own
     # mark (the flagged stray/substitution), while a clean reading carries the supplied (MAM)
     # mark.  (dt 5:8: the elyon emits WLC's merkha; the taxton emits its supplied qadma.)
-    emitted_source = "WLC" if reading.get("status") == "oddball" else "MAM"
+    emitted_source = "WLC" if reading.get("status") == "error" else "MAM"
     table_rows: list[object] = []
     for entry in rows:
         value = str(entry.get("value", ""))
@@ -409,7 +409,7 @@ def parse_ref_to_wlc_bcv(ref: str) -> tuple[str, int, int, str]:
 
 
 def mam_with_doc_url(*, bb: str, chnu: int, vrnu: int) -> str:
-    """Public MAM-with-doc verse URL, shared with the poetic oddball report."""
+    """Public MAM-with-doc verse URL, shared with the poetic ungrammatical-verse report."""
     return _mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)
 
 

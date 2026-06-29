@@ -1,7 +1,7 @@
 """Apply a MAM-simple fix to a WLC verse at the Unicode-word level, for re-testing.
 
 The fix-tester wants to ask: *if we adopt the MAM-simple value here, does the
-oddball clear?*  The fix is a Unicode word-diff (``diff_wlc_mam``) and the scanner
+ungrammatical clear?*  The fix is a Unicode word-diff (``diff_wlc_mam``) and the scanner
 reads a Unicode mark body, so this module bridges the two the
 direct way (issue #9): it locates the single changed word in the verse's
 ``vels`` by index-aligning to the WLC word tokens, substitutes the MAM Unicode word

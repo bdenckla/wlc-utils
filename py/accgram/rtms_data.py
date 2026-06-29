@@ -54,7 +54,7 @@ def verse_unicode_text(
     """The verse's normalized pointed-Hebrew text (qere interpolated), or "" if
     the verse is absent from the ``-kq-u`` index.
 
-    The single source for the pointed-Hebrew rendering of a verse: the oddball
+    The single source for the pointed-Hebrew rendering of a verse: the ungrammatical
     ``content`` field (classify) and the per-verse ``input.unicode`` field of the
     prose JSON outputs (prose_run, issue #20) both draw from it.
     """

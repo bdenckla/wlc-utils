@@ -27,13 +27,13 @@ StructuredTextLookup = Callable[[dict[str, object], str], object]
 
 @dataclass
 class _Entry:
-    """One oddball verse on the page, tagged along the filter dimensions."""
+    """One ungrammatical verse on the page, tagged along the filter dimensions."""
 
     ref: str
     # "msp" (missing sof pasuq), "msl" (missing silluq), "zwhim" (zarqa whim),
     # or "other"
     category: str
-    # Which witness in the LC->BHS->WLC pipeline the oddball is blamed on,
+    # Which witness in the LC->BHS->WLC pipeline the ungrammatical is blamed on,
     # inferred from the prose summary: "wlc", "bhs", "lc", or "tbd" (unclear/TBD).
     source: str
     # Independent boolean dimensions, ANDed with the category filter.
@@ -47,21 +47,21 @@ class _Entry:
 
 def write_goerwitz_combined_html_report(
     main_html_out_path: Path,
-    enriched_oddball_rows: list[dict[str, object]],
+    enriched_ungrammatical_rows: list[dict[str, object]],
     base_dir: Path | None,
 ) -> Path:
-    """Write goerwitz.html: every oddball verse in one flat,
+    """Write goerwitz.html: every ungrammatical verse in one flat,
     client-side-filterable list (see goerwitz-filter.js)."""
     html_out_path = rtmsr_subsets.overview_html_out_path(main_html_out_path)
     html_out_path.parent.mkdir(parents=True, exist_ok=True)
 
     error_trees_by_ref: dict[str, ob_error_context.ErrorTree | None] = {}
-    if enriched_oddball_rows and isinstance(base_dir, Path):
+    if enriched_ungrammatical_rows and isinstance(base_dir, Path):
         error_trees_by_ref = ob_error_context.collect_error_trees_by_ref(
-            enriched_oddball_rows, base_dir
+            enriched_ungrammatical_rows, base_dir
         )
 
-    entries = _build_entries(enriched_oddball_rows, error_trees_by_ref)
+    entries = _build_entries(enriched_ungrammatical_rows, error_trees_by_ref)
     body_contents = _build_body_contents(entries)
 
     wlc_utils_html.write_html_to_file(
@@ -77,12 +77,12 @@ def write_goerwitz_combined_html_report(
 
 
 def _build_entries(
-    enriched_oddball_rows: list[dict[str, object]],
+    enriched_ungrammatical_rows: list[dict[str, object]],
     error_trees_by_ref: dict[str, ob_error_context.ErrorTree | None],
 ) -> list[_Entry]:
     entries: list[_Entry] = []
 
-    for row in enriched_oddball_rows:
+    for row in enriched_ungrammatical_rows:
         ref = _row_ref(row)
         bcv = ob_report.ref_bcv(ref)
         structured_text = ob_report.structured_text_dict(row)
@@ -93,7 +93,7 @@ def _build_entries(
                 source=_source(structured_text, ref),
                 has_uxlc_change=_has_uxlc_change(structured_text),
                 has_wlc_note=_has_wlc_note(row, ref),
-                anchor_id=ob_report.oddball_anchor_id(bcv),
+                anchor_id=ob_report.ungrammatical_anchor_id(bcv),
                 structured_text_lookup=ob_report.structured_text_value,
                 row=row,
                 error_tree=error_trees_by_ref.get(ref),
@@ -110,7 +110,7 @@ def _category(row: dict[str, object], structured_text: object) -> str:
     )
 
 
-# Display label for each "Source" slug (the slug is stored per oddball in its
+# Display label for each "Source" slug (the slug is stored per ungrammatical in its
 # prose_ob_notes "st-source" field, and used as the filter checkbox's value and the
 # verse's data-source attribute), in filter-display order.
 _SOURCE_LABELS = {
@@ -122,17 +122,17 @@ _SOURCE_LABELS = {
 
 
 def _source(structured_text: object, ref: str) -> str:
-    """Return the oddball's hardcoded source slug (see _SOURCE_LABELS).
+    """Return the ungrammatical's hardcoded source slug (see _SOURCE_LABELS).
 
     The attribution lives beside the prose in each prose_ob_notes entry's "st-source"
     field rather than being re-derived from the summary, so editing a summary
-    never silently changes a verse's source. Every oddball must carry a valid
+    never silently changes a verse's source. Every ungrammatical must carry a valid
     st-source; a missing or unknown value is a hard error.
     """
     source = structured_text.get("st-source") if isinstance(structured_text, dict) else None
     if source not in _SOURCE_LABELS:
         raise ValueError(
-            f"Oddball {ref!r} has a missing or invalid 'st-source' (got "
+            f"Ungrammatical {ref!r} has a missing or invalid 'st-source' (got "
             f"{source!r}); expected one of {sorted(_SOURCE_LABELS)}."
         )
     return source
@@ -184,7 +184,7 @@ def _build_body_contents(entries: list[_Entry]) -> tuple[object, ...]:
 
 
 def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
-    # A dually-cantillated oddball (dt 5:8) is laid out by reading -- its own section
+    # A dually-cantillated ungrammatical (dt 5:8) is laid out by reading -- its own section
     # builder emits both readings' verse lines, per-strand focus/diff tables, and parse
     # trees -- so it bypasses the generic single-table / single-tree flow (issue #36).
     if entry.row.get("dual_cant_readings"):

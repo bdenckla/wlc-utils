@@ -16,7 +16,7 @@ def render_error_context_section(
 ) -> tuple[object, ...]:
     if error_tree is None:
         raise ValueError(
-            "Oddball row is missing a parsed ERROR tree; oddballs must include at "
+            "Ungrammatical row is missing a parsed ERROR tree; ungrammatical must include at "
             f"least one ERROR leaf (ref={_row_ref(row)!r})."
         )
 
@@ -62,14 +62,14 @@ def structured_text_value(row: dict[str, object], key: str) -> object:
 def _row_ref(row: dict[str, object]) -> str:
     ref = row.get("ref")
     if not isinstance(ref, str) or not ref.strip():
-        raise ValueError("Oddball row is missing non-empty string field 'ref'")
+        raise ValueError("Ungrammatical row is missing non-empty string field 'ref'")
     return ref.strip()
 
 
 def ref_bcv(ref: str) -> str:
-    bb, chnu, vrnu = rtms_ref.parse_ref(ref, row_kind="oddball")
+    bb, chnu, vrnu = rtms_ref.parse_ref(ref, row_kind="ungrammatical")
     return rtms_ref.to_compact_bcv(bb, chnu, vrnu)
 
 
-def oddball_anchor_id(bcv: str) -> str:
+def ungrammatical_anchor_id(bcv: str) -> str:
     return f"ob{bcv.replace(':', 'v')}"

@@ -1,9 +1,9 @@
-"""Hand-authored structured research notes for poetic oddballs.
+"""Hand-authored structured research notes for poetic ungrammatical verses.
 
-The poetic oddball set is small and closed, and most cases need no hand
+The poetic ungrammatical set is small and closed, and most cases need no hand
 annotation: the mechanically auto-derived WLC-vs-MAM-simple summary
 (``poetic_oddball_summary.derive_tentative_summary``) is the relevant datum.
-This module is the optional prose-style annotation layer for the few oddballs
+This module is the optional prose-style annotation layer for the few ungrammatical verses
 that warrant more — the poetic analogue of the per-book ``ob_notes_*`` modules
 the prose ``goerwitz.html`` report consumes via ``prose_ob_notes.get_structured_text``.
 
@@ -39,7 +39,7 @@ _JOB_31_15_NOTE_URL = "https://tanach.us/Notes/Job/Job.31.15.1-t.html"
 
 # NOTE: Ps 17:14 (the unique double tsinnor) once had an entry here, but the
 # checker now accepts that verse (poetic_ply_grammar.parse_tokens_accepting_repeats
-# collapses the repeated divider), so it no longer surfaces as a poetic oddball and
+# collapses the repeated divider), so it no longer surfaces as a poetic ungrammatical and
 # this layer can no longer render notes for it.  Its manuscript / MAM / Breuer
 # discussion, plus the LC and S1 images, now live on the hand-authored page
 # gh-pages/accgram/ps17v14-double-tsinnor.html.
@@ -70,7 +70,7 @@ BY_REF: dict[str, dict[str, object]] = {
             "much as the Job 31:15 geresh muqdam is.",
             "The checker represents the cluster faithfully as one merkha!azla bang-pair "
             "but does NOT bless it grammatically (it is not a licit servus), so the verse is a "
-            "NO_PARSE oddball rather than a silently-clean parse. Each of the four "
+            "NO_PARSE ungrammatical verse rather than a silently-clean parse. Each of the four "
             "interpretations — merkha alone, azla alone, and the two orderings as a "
             "sequence — does parse, but only weakly: our poetic conjunctive grammar is "
             "permissive, so it cannot yet make “both options are well-formed” a strong "

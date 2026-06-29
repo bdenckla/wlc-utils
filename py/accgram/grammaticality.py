@@ -1,7 +1,7 @@
 r"""A continuous notion of "grammaticality": a PCFG over the parse trees (issue #11).
 
 The checkers give a *binary* verdict -- a verse parses (clean), parses with an
-ERROR-leaf recovery (oddball), or dead-ends (no_parse).  Issue #11 asks for a
+ERROR-leaf recovery (ungrammatical), or dead-ends (no_parse).  Issue #11 asks for a
 *continuous* companion: among the grammatical verses, which configurations are
 common and which are rare-but-legal?  That is exactly the log-likelihood of a
 verse under a probabilistic grammar estimated from the corpus.
@@ -22,8 +22,8 @@ PCFGs -- one over ``out/accgram/prose/*_ag.json`` (all prose books), one over
 corpus only under its own.
 
 **Estimate from clean, score everything.**  The PCFG is estimated from ``clean``
-verses only (the grammatical population).  We then score clean *and* oddball verses
-against it: the oddballs -- whose trees carry productions the clean grammar rarely or
+verses only (the grammatical population).  We then score clean *and* ungrammatical verses
+against it: the ungrammatical -- whose trees carry productions the clean grammar rarely or
 never emits -- fall to the bottom, which validates that the score tracks real
 anomaly.  Smoothing is add-lambda (lambda=0.5) so a never-attested-but-grammatical
 production (e.g. a synthesized repair) scores low-but-finite rather than -inf, which
@@ -292,7 +292,7 @@ def render_checker(checker: str, pcfg: Pcfg, scores: list[VerseScore]) -> str:
     mean, sd = _mean_sd(per_acc)
     lines.append(
         f"{len(scores)} treed verses ({len(clean)} clean estimate the grammar, "
-        f"{len(odd)} oddball scored against it)."
+        f"{len(odd)} ungrammatical scored against it)."
     )
     lines.append(
         f"Clean per-accent log-likelihood: mean {mean:.3f}, sd {sd:.3f}, "
@@ -308,10 +308,10 @@ def render_checker(checker: str, pcfg: Pcfg, scores: list[VerseScore]) -> str:
         below_p5 = sum(1 for s in odd if s.percentile <= 5.0)
         worst = max(s.percentile for s in odd)
         lines.append(
-            "## Validation: flagged oddballs scored against the clean grammar"
+            "## Validation: flagged ungrammatical scored against the clean grammar"
         )
         lines.append(
-            f"All {len(odd)} oddballs land at percentile <= {worst:.1f} among same-length "
+            f"All {len(odd)} ungrammatical land at percentile <= {worst:.1f} among same-length "
             f"clean verses; {below_p1} sit at <= 1st percentile, {below_p5} at <= 5th. "
             f"The score recovers the binary verdict from the bottom up. "
             f"Showing the {min(_LEADERBOARD_N, len(odd))} rarest:"
@@ -326,7 +326,7 @@ def render_checker(checker: str, pcfg: Pcfg, scores: list[VerseScore]) -> str:
         rarest_clean,
     )
 
-    # n-gram baseline: does the token-bigram separate oddballs from clean as sharply
+    # n-gram baseline: does the token-bigram separate ungrammatical from clean as sharply
     # as the structural PCFG?  (Ben's call: PCFG is the model, n-gram a sanity check.)
     lines.append("## n-gram baseline (sanity check, not the model)")
     if odd:
@@ -337,15 +337,15 @@ def render_checker(checker: str, pcfg: Pcfg, scores: list[VerseScore]) -> str:
         pcfg_gap = (c_pcfg_m - o_pcfg_m) / c_pcfg_sd if c_pcfg_sd else float("nan")
         bg_gap = (c_bg_m - o_bg_m) / c_bg_sd if c_bg_sd else float("nan")
         lines.append(
-            f"Oddball vs clean separation (clean-mean minus oddball-mean, in clean sd):"
+            f"Ungrammatical vs clean separation (clean-mean minus ungrammatical-mean, in clean sd):"
         )
         lines.append(
             f"  PCFG  per-accent:  clean {c_pcfg_m:6.3f}+-{c_pcfg_sd:.3f}  "
-            f"oddball {o_pcfg_m:6.3f}  -> {pcfg_gap:4.1f} sd"
+            f"ungrammatical {o_pcfg_m:6.3f}  -> {pcfg_gap:4.1f} sd"
         )
         lines.append(
             f"  bigram per-token:  clean {c_bg_m:6.3f}+-{c_bg_sd:.3f}  "
-            f"oddball {o_bg_m:6.3f}  -> {bg_gap:4.1f} sd"
+            f"ungrammatical {o_bg_m:6.3f}  -> {bg_gap:4.1f} sd"
         )
         lines.append(
             "Structure (PCFG) separates anomalies far more sharply than sequence "

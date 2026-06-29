@@ -36,12 +36,12 @@ def test_merge_next_extracted_from_note():
     assert fix_tester._merge_next("not a dict") is None
 
 
-def test_nu_2519_alone_is_the_oddball():
+def test_nu_2519_alone_is_ungrammatical():
     # Standalone, the BHS "verse" ends on an atnax with nothing after it, so both
     # the silluq and the sof-pasuq phrases are missing.
     guard = fix_tester._ParseGuard()
     before = fix_tester._evaluate(_NU_2519, "nu", 25, 19, guard)
-    assert before.status == "ODDBALL"
+    assert before.status == "ERROR"
     assert before.labels == frozenset({"silluq_phrase", "sof_pasuq_phrase"})
     assert before.token_types[-2:] == ("ATNAX", "MISSING_SOFPASUQ")
 

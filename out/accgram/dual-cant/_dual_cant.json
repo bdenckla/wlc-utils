@@ -4,7 +4,7 @@
     "passages": 3,
     "chanted_verses": 47,
     "clean": 46,
-    "oddball": 1,
+    "ungrammatical": 1,
     "supplied_marks": 5,
     "anomalies": 1,
     "division_changes": 32
@@ -6423,7 +6423,7 @@
                 "dt5:7",
                 "dt5:10"
               ],
-              "status": "oddball",
+              "status": "error",
               "words": [
                 "ל֣א",
                 "יהיה־",

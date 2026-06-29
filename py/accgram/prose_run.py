@@ -13,7 +13,7 @@ of illegal-mark cases the old text format named.
 A verse the grammar cannot parse at all (parse_tokens returns None) is a fatal
 error: it signals a residual prose-grammar gap that must be surfaced, not silently
 skipped. ERROR-trees and location-only (pasuq-level error) verses are not None --
-they still emit a record and remain "oddballs".
+they still emit a record and remain "ungrammatical".
 """
 
 from __future__ import annotations
@@ -38,17 +38,17 @@ import repo_paths
 
 
 def _illegal_mark_tree(
-    marks: list[lexical_validation.LexicalOddballMark], words: list[str]
+    marks: list[lexical_validation.LexicalUngrammaticalMark], words: list[str]
 ):
-    """Degenerate ERROR tree for a verse carrying lexical oddball mark(s).
+    """Degenerate ERROR tree for a verse carrying lexical ungrammatical mark(s).
 
     The branch label names each offending code and the pointed-Hebrew word it was
-    found in (e.g. ``illegal_mark 82 in יִשְׂרָאֵ֘ל``), so the oddball reports pinpoint
+    found in (e.g. ``illegal_mark 82 in יִשְׂרָאֵ֘ל``), so the ungrammatical-verse reports pinpoint
     the word; the single terminal leaf is the bare ``ERROR`` token that
-    accgram.oddballs keys on.  ``words`` is the offending Unicode word per mark, in
-    order (see `_oddball_unicode_words`).  The *structure* is uniform across all such
+    accgram.ungrammatical keys on.  ``words`` is the offending Unicode word per mark, in
+    order (see `_ungrammatical_unicode_words`).  The *structure* is uniform across all such
     verses (one branch + one ERROR leaf) -- only the descriptive label varies -- so the
-    error is attributed to the oddball mark itself rather than to whatever the rest of
+    error is attributed to the ungrammatical mark itself rather than to whatever the rest of
     the accent sequence would have parsed into.
     """
     detail = "; ".join(
@@ -57,11 +57,11 @@ def _illegal_mark_tree(
     return add_leaves(f"illegal_mark {detail}", "ERROR")
 
 
-def _oddball_unicode_words(
-    marks: list[lexical_validation.LexicalOddballMark],
+def _ungrammatical_unicode_words(
+    marks: list[lexical_validation.LexicalUngrammaticalMark],
     verse: object,
 ) -> list[str]:
-    """The pointed-Hebrew word bearing each oddball mark, aligned to ``marks``.
+    """The pointed-Hebrew word bearing each ungrammatical mark, aligned to ``marks``.
 
     Each illegal mark carries a ``rep_char`` -- a codepoint of the offending word unique
     enough to locate it (``82`` = the zarqa stress-helper U+0598; a same-letter pair =
@@ -118,7 +118,7 @@ class BookRun:
 
 
 def _tree_has_error(tree: TN | None) -> bool:
-    """True if any leaf of ``tree`` carries the ERROR token (an oddball verse)."""
+    """True if any leaf of ``tree`` carries the ERROR token (an ungrammatical verse)."""
     if tree is None:
         return False
     if tree.left is not None:
@@ -132,7 +132,7 @@ def _verse_record(
     """Build one verse's JSON record: ref, bcv, status, input, tree, [errors].
 
     ``status`` is one of ``illegal_mark`` (a lexical/alphabet error, fixed ERROR
-    tree), ``location_only`` (a pasuq-level error, no tree), ``oddball`` (a parse
+    tree), ``location_only`` (a pasuq-level error, no tree), ``ungrammatical`` (a parse
     tree carrying an ERROR leaf), or ``clean``.  The ``input`` block carries the
     pointed-Hebrew ``unicode`` (from the -kq-u source), the ``marks`` body (the scan
     body, whose base-letter placeholder is alef -- see ``accent_marks.LETTER``), and the
@@ -158,18 +158,18 @@ def _verse_record(
     # Prose lexical layer (divergence from the goerwitz C oracle): an alphabet /
     # word-placement error -- an unpaired stress-helper, a same-letter accent pair, or
     # a misplaced telisha qetanna (full enumeration in lexical_validation.lexical_
-    # oddballs).  Flag it uniformly with a fixed ERROR tree and skip the grammar
+    # ungrammatical).  Flag it uniformly with a fixed ERROR tree and skip the grammar
     # entirely -- the context need not be parsed, and all such verses read identically.
-    oddballs = lexical_validation.lexical_oddballs(verse.body)
-    if oddballs:
+    ungrammatical = lexical_validation.lexical_ungrammatical(verse.body)
+    if ungrammatical:
         kq_verse = wlc_index.get(bcv) if wlc_index else None
-        words = _oddball_unicode_words(oddballs, kq_verse)
+        words = _ungrammatical_unicode_words(ungrammatical, kq_verse)
         record["status"] = "illegal_mark"
         record["errors"] = [
             {"code": mark.code, "word": word, "atom": mark.atom}
-            for mark, word in zip(oddballs, words)
+            for mark, word in zip(ungrammatical, words)
         ]
-        record["tree"] = tree_to_obj(_illegal_mark_tree(oddballs, words))
+        record["tree"] = tree_to_obj(_illegal_mark_tree(ungrammatical, words))
         return record
 
     tree = parse_tokens(parser, verse.tokens)
@@ -181,7 +181,7 @@ def _verse_record(
         record["status"] = "location_only"
         record["tree"] = None
     else:
-        record["status"] = "oddball" if _tree_has_error(tree) else "clean"
+        record["status"] = "error" if _tree_has_error(tree) else "clean"
         record["tree"] = tree_to_obj(tree)
     return record
 
@@ -286,17 +286,17 @@ def _fold_dual_cant_oddities(
 
     A dual-cant book's WLC dual verses are excluded from the normal scan; the detangler
     parses each strand's chanted verses and a genuine WLC dual-cant bug surfaces as an
-    oddball.  Those oddball chanted verses are folded in here so they appear in the
-    existing prose oddball report (goerwitz.html), keyed by their numbered verse."""
+    ungrammatical verse.  Those ungrammatical chanted verses are folded in here so they appear in the
+    existing prose ungrammatical-verse report (goerwitz.html), keyed by their numbered verse."""
     if mam_by_bcv is None or dual_cant_detangle.passage_for_book(bb) is None:
         return []
-    return dual_cant_detangle.folded_oddball_records(bb, wlc_index, mam_by_bcv, parser)
+    return dual_cant_detangle.folded_ungrammatical_records(bb, wlc_index, mam_by_bcv, parser)
 
 
 def _book_summary(records: list[dict[str, object]]) -> dict[str, int]:
     counts = {"verses": len(records), "oddballs": 0, "illegal_marks": 0, "location_only": 0}
     for record in records:
-        if record["status"] == "oddball":
+        if record["status"] == "error":
             counts["oddballs"] += 1
         elif record["status"] == "illegal_mark":
             counts["illegal_marks"] += 1

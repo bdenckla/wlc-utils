@@ -180,12 +180,12 @@ def render_summary_template_from_sat_descriptors(
         if not isinstance(missing_name, str):
             missing_name = str(missing_name)
         raise ValueError(
-            "Oddball st-summary template has unresolved placeholder "
+            "Ungrammatical st-summary template has unresolved placeholder "
             f"${missing_name} (ref={row_ref!r})."
         ) from exc
     except ValueError as exc:
         raise ValueError(
-            f"Oddball st-summary template is invalid (ref={row_ref!r}): {exc}"
+            f"Ungrammatical st-summary template is invalid (ref={row_ref!r}): {exc}"
         ) from exc
 
 

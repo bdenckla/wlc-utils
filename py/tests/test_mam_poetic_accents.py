@@ -130,7 +130,7 @@ def test_ketiv_skipped_qere_read():
 
 
 def test_base_consonants_strips_points_accents_and_punctuation():
-    # Only the Hebrew letters survive -- the alignment key the oddball report uses to
+    # Only the Hebrew letters survive -- the alignment key the ungrammatical-verse report uses to
     # pair a MAM word with its WLC counterpart despite differing points/accents.
     assert base_consonants(B + ha.OLE + B + ha.MER) == "בב"
     assert base_consonants(B + ha.ATN + SOF) == "ב"

@@ -1,13 +1,13 @@
 r"""Test whether the suggested fixes in the goerwitz.html report actually work.
 
-For every *annotated* prose oddball (one carrying an ob_notes_* note), the
+For every *annotated* prose ungrammatical (one carrying an ob_notes_* note), the
 goerwitz.html report suggests a fix -- almost always "adopt the MAM-simple value
 instead of the wlc_focus value".  This tool tests that suggestion mechanically:
 it splices the MAM value into the verse's Michigan-Claremont body
 (``fix_apply``), re-scans + re-parses it (the real ``prose_scanner`` /
 ``prose_ply_grammar``), and classifies the outcome:
 
-  * CONFIRMED  -- the oddball's ERROR cleared (the verse now parses clean);
+  * CONFIRMED  -- the ungrammatical's ERROR cleared (the verse now parses clean);
   * DENIED     -- the same error remains;
   * CHANGED    -- a *different* error appears;
   * UNTESTABLE -- the fix could not be applied mechanically (vowel-/meteg-only,
@@ -18,7 +18,7 @@ For a multi-entry diff, the entry matching the note's ``wlc_focus`` is the one
 tested (adjacent multi-word foci are spliced word by word).  When MAM equals WLC
 the fix is not a word splice: if the note carries a hand-authored ``synth_fix``
 value, that speculated reading is tested instead (flagged ``synthesized``); if it
-carries a ``merge_next`` ref (the lone versification oddball nu 25:19, where BHS
+carries a ``merge_next`` ref (the lone versification ungrammatical nu 25:19, where BHS
 maroons a verse number mid-chanted-verse), the named next verse's M-C body is
 *appended* and the joined verse re-parsed (``_test_merge_next``).
 
@@ -81,7 +81,7 @@ class FixTestResult:
 
 @dataclass
 class _Eval:
-    status: str  # CLEAN | ODDBALL | NO_PARSE | LOCATION_ONLY
+    status: str  # CLEAN | ERROR | NO_PARSE | LOCATION_ONLY
     labels: frozenset[str]
     token_types: tuple[str, ...]
 
@@ -128,12 +128,12 @@ def _evaluate(body: str, bb: str, chnu: int, vrnu: int, guard: _ParseGuard) -> _
     token_types = tuple(tok.type for tok in tokens if tok.type != "TILDE")
 
     # Prose lexical layer fires first and skips the grammar (the same single entry point
-    # prose_run uses, so an annotated lexical oddball -- e.g. je 44:17's misplaced telisha
+    # prose_run uses, so an annotated lexical ungrammatical -- e.g. je 44:17's misplaced telisha
     # qetanna or lv25:20's same-letter pair -- is classified here, not via the grammar).
-    oddballs = lexical_validation.lexical_oddballs(body)
-    if oddballs:
-        labels = frozenset(f"illegal_mark:{mark.code}" for mark in oddballs)
-        return _Eval("ODDBALL", labels, token_types)
+    ungrammatical = lexical_validation.lexical_ungrammatical(body)
+    if ungrammatical:
+        labels = frozenset(f"illegal_mark:{mark.code}" for mark in ungrammatical)
+        return _Eval("ERROR", labels, token_types)
 
     status, tree = guard.parse(tokens)
     if status == "timeout":
@@ -144,7 +144,7 @@ def _evaluate(body: str, bb: str, chnu: int, vrnu: int, guard: _ParseGuard) -> _
         return _Eval("LOCATION_ONLY", frozenset({"LOCATION_ONLY"}), token_types)
     labels = _error_labels(tree)
     if labels:
-        return _Eval("ODDBALL", frozenset(labels), token_types)
+        return _Eval("ERROR", frozenset(labels), token_types)
     return _Eval("CLEAN", frozenset(), token_types)
 
 
@@ -208,7 +208,7 @@ def _synth_fix(structured_text: object) -> str | None:
 def _merge_next(structured_text: object) -> str | None:
     """The note's adjacent-verse merge target (``merge_next``), if present.
 
-    For the lone versification oddball (nu 25:19) MAM equals WLC word-for-word --
+    For the lone versification ungrammatical (nu 25:19) MAM equals WLC word-for-word --
     BHS merely puts a verse number mid-chanted-verse.  The fix is not a word splice
     but a *verse* splice: append the named next verse's M-C body and re-parse.  See
     ``doc/fix-tester-remaining-untestables.md``.
@@ -244,7 +244,7 @@ def _side_repr(value: object) -> str:
     return repr(value)
 
 
-# --- one oddball -------------------------------------------------------------
+# --- one ungrammatical verse -------------------------------------------------------------
 
 
 def _test_one(
@@ -261,7 +261,7 @@ def _test_one(
     speculative = fix_claim.is_speculative(structured_text)
     claimed = fix_claim.claimed_outcome(structured_text)
     st_summary = _summary_text(structured_text)
-    bb, chnu, vrnu = rtms_rows.parse_ref(ref, row_kind="oddball")
+    bb, chnu, vrnu = rtms_rows.parse_ref(ref, row_kind="ungrammatical")
 
     def result(
         classification: str,
@@ -297,7 +297,7 @@ def _test_one(
 
     wlc422_by_bcv, uxlc_by_bcv, mam_simple_by_bcv = source_indexes
     # The scanned body is transcoded from the canonical -kq-u verse (issue #9: M-C
-    # dropped as an input), not read from the oddball row's stored content.
+    # dropped as an input), not read from the ungrammatical row's stored content.
     raw_verse = wlc422_by_bcv.get(bcv)
     body = (
         uni_to_marks.verse_to_marks(raw_verse)
@@ -418,7 +418,7 @@ def _test_merge_next(
     Appending the body BHS labels as the next verse supplies the second half, the
     atnaḥ bisects a complete verse, and the parse comes out CLEAN.
     """
-    nbb, nchnu, nvrnu = rtms_rows.parse_ref(merge_ref, row_kind="oddball")
+    nbb, nchnu, nvrnu = rtms_rows.parse_ref(merge_ref, row_kind="ungrammatical")
     next_bcv = rtms_rows.to_compact_bcv(nbb, nchnu, nvrnu)
     next_verse = wlc422_by_bcv.get(next_bcv)
     next_body = (
@@ -495,14 +495,14 @@ def _agreement(claimed: str, classification: str) -> str:
 def run_tests(args: argparse.Namespace) -> list[FixTestResult]:
     repo_root = _repo_root()
 
-    classify.write_oddballs(
+    classify.write_ungrammatical(
         prose_dir=getattr(args, "prose_dir", None) or research_tao.default_prose_dir(repo_root),
         wlc422_kq_u_dir=args.wlc422_kq_u_dir,
-        oddballs_out=args.oddballs_in,
+        ungrammatical_out=args.ungrammatical_in,
     )
 
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
-    parsed_rows = rtms_rows.parse_oddball_rows(args.oddballs_in, refs_by_book)
+    parsed_rows = rtms_rows.parse_ungrammatical_rows(args.ungrammatical_in, refs_by_book)
     structured_text_by_ref = get_structured_text()
 
     source_indexes = rtms_data.load_source_indexes(
@@ -536,14 +536,14 @@ def run_tests(args: argparse.Namespace) -> list[FixTestResult]:
 
 
 def _ref_sort_key(ref: str) -> tuple[str, int, int]:
-    bb, chnu, vrnu = rtms_rows.parse_ref(ref, row_kind="oddball")
+    bb, chnu, vrnu = rtms_rows.parse_ref(ref, row_kind="ungrammatical")
     return (bb, chnu, vrnu)
 
 
 # --- reports -----------------------------------------------------------------
 
 _SECTIONS = (
-    ("CONFIRMED", "MAM fix clears the oddball"),
+    ("CONFIRMED", "MAM fix clears the error"),
     ("DENIED", "same error remains after the fix"),
     ("CHANGED", "a different error appears after the fix"),
     ("UNTESTABLE", "fix could not be applied mechanically"),
@@ -568,12 +568,12 @@ def render_text_report(results: list[FixTestResult]) -> str:
     synth = sum(1 for r in results if r.synthesized)
 
     lines: list[str] = []
-    lines.append("# Fix-tester: do MAM-simple values resolve annotated prose oddballs?")
+    lines.append("# Fix-tester: do MAM-simple values resolve annotated prose ungrammatical?")
     lines.append("")
     lines.append(
         f"confirmed: {counts['CONFIRMED']}  denied: {counts['DENIED']}  "
         f"changed: {counts['CHANGED']}  untestable: {counts['UNTESTABLE']}  "
-        f"({len(results)} annotated oddballs tested)"
+        f"({len(results)} annotated ungrammatical tested)"
     )
     lines.append(
         f"speculations: {len(specs)} total; {spec_conf} confirmed, "
@@ -597,7 +597,7 @@ def render_text_report(results: list[FixTestResult]) -> str:
                 "  (note: a *medial* 'vowel_only'/'meteg_only' mark is grammar-inert, "
                 "the scanner swallowing it; 'merge_target_missing' means the named "
                 "merge_next verse was not found in the source.  None is a verdict on the "
-                "oddball.)"
+                "ungrammatical verse.)"
             )
         for r in group:
             lines.extend(_render_entry(r))
@@ -652,7 +652,7 @@ def build_json_report(results: list[FixTestResult]) -> dict:
     specs = [r for r in results if r.speculative]
     payload = {
         "artifacts_description": (
-            "fix-tester verdicts: whether adopting each annotated prose oddball's "
+            "fix-tester verdicts: whether adopting each annotated prose ungrammatical's "
             "MAM-simple value clears its grammar/lexical error"
         ),
         "summary": {
@@ -706,16 +706,16 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         help="Directory containing MAM-simple json-vtrad-bhs book files.",
     )
     parser.add_argument(
-        "--oddballs-in",
+        "--ungrammatical-in",
         type=Path,
-        default=research_tao.default_oddballs_in(repo_root),
+        default=research_tao.default_ungrammatical_in(repo_root),
         help="Path to _oddballs.json (regenerated each run).",
     )
     parser.add_argument(
         "--prose-dir",
         type=Path,
         default=research_tao.default_prose_dir(repo_root),
-        help="Directory of *_ag.json outputs for the oddball corpus.",
+        help="Directory of *_ag.json outputs for the ungrammatical corpus.",
     )
     parser.add_argument(
         "--report-txt",

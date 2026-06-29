@@ -1,4 +1,4 @@
-"""Oddball structured research notes — nu."""
+"""Ungrammatical structured research notes — nu."""
 
 from __future__ import annotations
 
@@ -44,7 +44,7 @@ _NU_2509_04 = (
 
 _NU_2019_01 = (
     "This is one of 12 cases involving zarqa on lamed in which WLC made not only poor decisions but also outright errors."
-    " All 12 cases are flagged as oddballs (report “ERROR”), treated uniformly as the lexical (“alphabet”) errors they are,"
+    " All 12 cases are flagged as ungrammatical (report “ERROR”), treated uniformly as the lexical (“alphabet”) errors they are,"
     " independent of surrounding context."
 )
 
@@ -84,7 +84,7 @@ _NU_2019_06 = (
 
 
 _NU_2019_07 = (
-    "This is one of twelve oddballs of this same type,"
+    "This is one of twelve ungrammatical of this same type,"
     " in which WLC turned a scribal zarqa whim into an outright error."
 )
 

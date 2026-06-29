@@ -1,6 +1,6 @@
-"""Aggregated oddball structured research notes, organized by book.
+"""Aggregated ungrammatical structured research notes, organized by book.
 
-The former tm_data/ob_data split is retired; every annotated oddball lives in a
+The former tm_data/ob_data split is retired; every annotated ungrammatical lives in a
 per-book ob_notes_* module (small books collected in prose_ob_notes_misc).
 """
 

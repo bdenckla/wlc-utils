@@ -9,7 +9,7 @@ candidate-WLC-error anomalies.
 This is the complete record of the detangled trees (the analogue of prose_run's
 ``*_ag.json``).  Two derived surfaces consume the *same* detangling separately:
 
-  * the oddity chanted verses are folded into the prose oddball report (goerwitz.html)
+  * the oddity chanted verses are folded into the prose ungrammatical-verse report (goerwitz.html)
     by prose_run, keyed by their numbered verse; and
   * the supplied-mark inventory is rendered to gh-pages/accgram/supplied-marks.html by
     accgram.supplied_marks.
@@ -82,7 +82,7 @@ def run(args: argparse.Namespace) -> None:
     s = payload["summary"]
     print(
         f"dual-cant: {s['passages']} passages, {s['chanted_verses']} chanted verses "
-        f"({s['oddball']} oddball), {s['supplied_marks']} supplied marks, "
+        f"({s['ungrammatical']} ungrammatical verses), {s['supplied_marks']} supplied marks, "
         f"{s['anomalies']} anomalies, {s['division_changes']} division changes -> {out_path}"
     )
 
@@ -94,7 +94,7 @@ def _payload(results: list[dcd.PassageResult]) -> dict[str, object]:
             "passages": len(results),
             "chanted_verses": len(chanted_verses),
             "clean": sum(1 for cv in chanted_verses if cv.status == "clean"),
-            "oddball": sum(1 for cv in chanted_verses if cv.status != "clean"),
+            "ungrammatical": sum(1 for cv in chanted_verses if cv.status != "clean"),
             "supplied_marks": sum(len(pr.supplied_marks) for pr in results),
             "anomalies": sum(len(pr.anomalies) for pr in results),
             "division_changes": sum(len(pr.division_changes) for pr in results),

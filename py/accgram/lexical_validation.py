@@ -4,7 +4,7 @@ This is a *prose-only* layer that sits on top of the faithful C-port scanner/
 grammar (prose_scanner / prose_ply_grammar) and intentionally **diverges from the
 goerwitz C oracle**, in the same documented spirit as the MISSING_SOFPASUQ and
 tevir/tipexa recoveries: where the C lexer silently swallows a malformed accent,
-we surface it as an oddball.
+we surface it as an ungrammatical verse.
 
 The one helper handled today is accent ``82``.  In the prose accent system, ``82``
 is well-formed *only* as the left half of a ``82{TEXT}02`` pair fused onto a single
@@ -12,7 +12,7 @@ maqaf/space-delimited atom, where the scanner reads it as one ZARQA token
 (prose_scanner ``(?:82{TEXT}02)?02``; TEXT = ``[^ \\r\\n-]*`` keeps the pair inside
 one atom).  When there is no ``02`` later in the same atom, the C lexer's
 ``35|75|95|44|05|82|52 -> None`` rule swallows the ``82`` and the intended accent
-simply vanishes -- so whether the verse becomes an oddball is left to downstream
+simply vanishes -- so whether the verse becomes an ungrammatical verse is left to downstream
 parse luck.  All 12 such prose verses (a stray zarqa mis-encoded before a lamed
 ascender) are equally wrong; this layer flags them uniformly.
 
@@ -137,7 +137,7 @@ def _accent_leaf(mark: str) -> str:
 
 
 @dataclass(frozen=True)
-class LexicalOddballMark:
+class LexicalUngrammaticalMark:
     """A lexically illegal mark configuration confined to one atom.
 
     Covers both a stress-helper left without its fusion partner (unpaired 82) and a
@@ -152,7 +152,7 @@ class LexicalOddballMark:
     rep_char: str  # a mark of the offending word, for locating its Unicode word
 
 
-def unpaired_stress_helpers(body: str) -> list[LexicalOddballMark]:
+def unpaired_stress_helpers(body: str) -> list[LexicalUngrammaticalMark]:
     """Return every unpaired stress-helper in a prose verse body.
 
     A stress-helper (today only the tsinnorit, M-C ``82``) is *unpaired* when its
@@ -160,7 +160,7 @@ def unpaired_stress_helpers(body: str) -> list[LexicalOddballMark]:
     space-delimited atom.  Such a mark is an intrinsic lexical ("alphabet") error
     independent of surrounding context.
     """
-    unpaired: list[LexicalOddballMark] = []
+    unpaired: list[LexicalUngrammaticalMark] = []
     for atom in _ATOM_SPLIT_RE.split(body):
         if not atom:
             continue
@@ -171,11 +171,11 @@ def unpaired_stress_helpers(body: str) -> list[LexicalOddballMark]:
             partner, code = entry
             if partner not in atom[i + 1 :]:
                 # The unpaired helper itself locates the offending word (U+0598).
-                unpaired.append(LexicalOddballMark(code=code, atom=atom, rep_char=ch))
+                unpaired.append(LexicalUngrammaticalMark(code=code, atom=atom, rep_char=ch))
     return unpaired
 
 
-def illegal_same_letter_pairs(body: str) -> list[LexicalOddballMark]:
+def illegal_same_letter_pairs(body: str) -> list[LexicalUngrammaticalMark]:
     """Return every non-whitelisted same-letter accent pair in a prose verse body.
 
     Two accents are on one base letter iff they are *adjacent* in the body (no
@@ -192,7 +192,7 @@ def illegal_same_letter_pairs(body: str) -> list[LexicalOddballMark]:
     ``mahapakh!tipexa``), keyed for word location on the first (here, distinguishing)
     mark -- mahapakh, NOT the tipeḥa that recurs elsewhere in lv25:20.
     """
-    illegal: list[LexicalOddballMark] = []
+    illegal: list[LexicalUngrammaticalMark] = []
     for atom in _ATOM_SPLIT_RE.split(body):
         if not atom:
             continue
@@ -203,11 +203,11 @@ def illegal_same_letter_pairs(body: str) -> list[LexicalOddballMark]:
             if frozenset((a, b)) in _WHITELISTED_SAME_LETTER:
                 continue
             code = f"{_accent_leaf(a)}!{_accent_leaf(b)}"
-            illegal.append(LexicalOddballMark(code=code, atom=atom, rep_char=a))
+            illegal.append(LexicalUngrammaticalMark(code=code, atom=atom, rep_char=a))
     return illegal
 
 
-def nonfinal_telisha_qetannas(body: str) -> list[LexicalOddballMark]:
+def nonfinal_telisha_qetannas(body: str) -> list[LexicalUngrammaticalMark]:
     """Return every misplaced telisha qetanna in a prose verse body (today: je 44:17).
 
     A telisha qetanna (U+05A9) is *postpositive*: it belongs on the word-final letter.
@@ -223,7 +223,7 @@ def nonfinal_telisha_qetannas(body: str) -> list[LexicalOddballMark]:
     ``24`` and ``04`` collapse to one codepoint -- the helper/main distinction is gone and
     only the placement (kaf vs. yod) survives.
     """
-    unpaired: list[LexicalOddballMark] = []
+    unpaired: list[LexicalUngrammaticalMark] = []
     for atom in _ATOM_SPLIT_RE.split(body):
         if not atom:
             continue
@@ -237,13 +237,13 @@ def nonfinal_telisha_qetannas(body: str) -> list[LexicalOddballMark]:
                 continue  # the medial helper of a well-formed 24...04 pair (fused)
             # The telisha qetanna itself (U+05A9) locates the offending word.
             unpaired.append(
-                LexicalOddballMark(code="medial telisha qetanna", atom=atom, rep_char=ch)
+                LexicalUngrammaticalMark(code="medial telisha qetanna", atom=atom, rep_char=ch)
             )
     return unpaired
 
 
-def lexical_oddballs(body: str) -> list[LexicalOddballMark]:
-    """Every prose lexical / word-placement oddball in ``body``, in one pass.
+def lexical_ungrammatical(body: str) -> list[LexicalUngrammaticalMark]:
+    """Every prose lexical / word-placement ungrammatical in ``body``, in one pass.
 
     The union of this module's three checks, each an ``illegal_mark`` ERROR that diverges
     from the goerwitz C oracle in the documented MISSING_SOFPASUQ spirit:

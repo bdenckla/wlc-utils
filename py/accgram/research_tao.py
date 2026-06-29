@@ -19,7 +19,7 @@ from accgram.tm_sanity import sanity_check_structured_text
 import repo_paths
 
 
-def default_oddballs_in(repo_root: Path) -> Path:
+def default_ungrammatical_in(repo_root: Path) -> Path:
     return repo_paths.out_dir() / "accgram" / "prose" / "_oddballs.json"
 
 
@@ -43,7 +43,7 @@ def default_all_changes_path(repo_root: Path) -> Path:
     return repo_paths.in_dir() / "UXLC-misc" / "all_changes.json"
 
 
-def default_oddballs_out_path(repo_root: Path) -> Path:
+def default_ungrammatical_out_path(repo_root: Path) -> Path:
     return repo_paths.out_dir() / "accgram" / "research-oddballs.json"
 
 
@@ -73,22 +73,22 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         help="Path to in/UXLC-misc/all_changes.json for sanity checks.",
     )
     parser.add_argument(
-        "--oddballs-in",
+        "--ungrammatical-in",
         type=Path,
-        default=default_oddballs_in(repo_root),
+        default=default_ungrammatical_in(repo_root),
         help="Path to _oddballs.json input (regenerated each run).",
     )
     parser.add_argument(
         "--prose-dir",
         type=Path,
         default=default_prose_dir(repo_root),
-        help="Directory of *_ag.json outputs for the oddball corpus.",
+        help="Directory of *_ag.json outputs for the ungrammatical corpus.",
     )
     parser.add_argument(
-        "--oddballs-out",
+        "--ungrammatical-out",
         type=Path,
-        default=default_oddballs_out_path(repo_root),
-        help="Output JSON path for enriched oddball research artifact.",
+        default=default_ungrammatical_out_path(repo_root),
+        help="Output JSON path for enriched ungrammatical research artifact.",
     )
     parser.add_argument(
         "--html-out",
@@ -107,28 +107,28 @@ def run(args: argparse.Namespace) -> None:
 
     html_out_path = rtms_report.resolve_html_out_path(args, repo_root)
 
-    oddballs_in_path = args.oddballs_in
-    oddballs_out_path = args.oddballs_out
+    ungrammatical_in_path = args.ungrammatical_in
+    ungrammatical_out_path = args.ungrammatical_out
     prose_dir = getattr(args, "prose_dir", None) or default_prose_dir(repo_root)
 
-    # (Re)derive the oddball set from out/accgram/prose only. Every ERROR
+    # (Re)derive the ungrammatical set from out/accgram/prose only. Every ERROR
     # verse -- including the 49 the C binary emitted nothing for -- now lives there.
-    classify.write_oddballs(
+    classify.write_ungrammatical(
         prose_dir=prose_dir,
         wlc422_kq_u_dir=args.wlc422_kq_u_dir,
-        oddballs_out=oddballs_in_path,
+        ungrammatical_out=ungrammatical_in_path,
     )
 
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
-    parsed_oddball_rows = rtms_rows.parse_oddball_rows(oddballs_in_path, refs_by_book)
+    parsed_ungrammatical_rows = rtms_rows.parse_ungrammatical_rows(ungrammatical_in_path, refs_by_book)
 
-    # Annotated oddballs (those carrying hand-authored prose_ob_notes structured text) get the
+    # Annotated ungrammatical (those carrying hand-authored prose_ob_notes structured text) get the
     # UXLC/changetext validation the old troublemaker rows used to get; each validation
     # step self-skips on records lacking its field (uxlc_change/assessment). Unannotated
-    # oddballs get plain enrichment.
+    # ungrammatical get plain enrichment.
     structured_text_by_ref = get_structured_text()
     rich_refs = [
-        ref for _row, _bcv, ref in parsed_oddball_rows if ref in structured_text_by_ref
+        ref for _row, _bcv, ref in parsed_ungrammatical_rows if ref in structured_text_by_ref
     ]
     sanity_check_structured_text(
         refs=rich_refs,
@@ -145,16 +145,16 @@ def run(args: argparse.Namespace) -> None:
         refs_by_book=refs_by_book,
     )
 
-    # Dually-cantillated oddballs (only dt 5:8 today) show their detangled per-strand
+    # Dually-cantillated ungrammatical (only dt 5:8 today) show their detangled per-strand
     # readings in place of the combined verse line (issue #36).
     dual_cant_readings_by_bcv = dual_cant_readings.load_readings_by_bcv(
         args.wlc422_kq_u_dir, args.mam_simple_dir
     )
 
-    enriched_oddball_rows: list[dict[str, object]] = []
+    enriched_ungrammatical_rows: list[dict[str, object]] = []
     diff_wlc_uxlc_for_checks_by_ref: dict[str, object] = {}
     rich_parsed_rows: list[tuple[dict[str, object], str, str]] = []
-    for row, bcv, ref in parsed_oddball_rows:
+    for row, bcv, ref in parsed_ungrammatical_rows:
         enriched_row, diff_wlc_uxlc_for_checks = _build_enriched_row(
             row=row,
             bcv=bcv,
@@ -170,7 +170,7 @@ def run(args: argparse.Namespace) -> None:
         readings = dual_cant_readings_by_bcv.get(bcv)
         if readings:
             enriched_row["dual_cant_readings"] = readings
-        enriched_oddball_rows.append(enriched_row)
+        enriched_ungrammatical_rows.append(enriched_row)
         if ref in structured_text_by_ref:
             diff_wlc_uxlc_for_checks_by_ref[ref] = diff_wlc_uxlc_for_checks
             rich_parsed_rows.append((row, bcv, ref))
@@ -182,20 +182,20 @@ def run(args: argparse.Namespace) -> None:
         all_changes_by_url=all_changes_by_url,
     )
 
-    rtms_output.write_oddballs_payload(
-        oddballs_out_path=oddballs_out_path,
-        oddballs_in_path=oddballs_in_path,
+    rtms_output.write_ungrammatical_payload(
+        ungrammatical_out_path=ungrammatical_out_path,
+        ungrammatical_in_path=ungrammatical_in_path,
         wlc422_kq_u_dir=args.wlc422_kq_u_dir,
         uxlc_dir=args.uxlc_dir,
         mam_simple_dir=args.mam_simple_dir,
-        enriched_oddball_rows=enriched_oddball_rows,
+        enriched_ungrammatical_rows=enriched_ungrammatical_rows,
         source_file=__file__,
     )
 
-    # The oddball report locates each row's ERROR tree by output_file under prose_dir.
+    # The ungrammatical-verse report locates each row's ERROR tree by output_file under prose_dir.
     combined_html_out_path = rtms_output.write_html_reports(
         html_out_path,
-        enriched_oddball_rows=enriched_oddball_rows,
+        enriched_ungrammatical_rows=enriched_ungrammatical_rows,
         base_dir=prose_dir,
     )
 
@@ -205,14 +205,14 @@ def run(args: argparse.Namespace) -> None:
         mam_simple_dir=args.mam_simple_dir,
         all_changes_path=all_changes_path,
         combined_html_out_path=combined_html_out_path,
-        oddballs_in_path=oddballs_in_path,
-        oddballs_out_path=oddballs_out_path,
-        oddball_rows_count=len(enriched_oddball_rows),
+        ungrammatical_in_path=ungrammatical_in_path,
+        ungrammatical_out_path=ungrammatical_out_path,
+        ungrammatical_rows_count=len(enriched_ungrammatical_rows),
     )
 
 
 def _ob_wlc_focus_by_ref() -> dict[str, str | None]:
-    # Every annotated oddball's WLC focus now comes from the single by-book prose_ob_notes set.
+    # Every annotated ungrammatical's WLC focus now comes from the single by-book prose_ob_notes set.
     return {
         ref: _structured_wlc_focus(structured_text)
         for ref, structured_text in get_structured_text().items()

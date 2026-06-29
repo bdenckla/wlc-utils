@@ -1,7 +1,7 @@
 """PLY yacc grammar: full port of acc2tre.y (Phase E — error recovery included).
 
 Stage 1.  Translates every production of acc2tre.y one-to-one, including the
-`error`-token recovery rules that build the 51 oddball ERROR-node trees.
+`error`-token recovery rules that build the 51 ungrammatical ERROR-node trees.
 
 Non-error productions (Phases B–D) cover all clean verses:
   - segolta family (segolta_phrase incl. SHALSHELET, segolta_clause, zarqa/
@@ -17,7 +17,7 @@ section below): every `error`-token rule builds the same ERROR leaf / ERROR
 clause the C action builds and calls p.parser.errok() to mirror yacc's
 `yyerrok`.  The three pasuq-level `error` rules (no tree, location line only)
 return the LOCATION_ONLY sentinel; they do not fire on the parity corpus (all 51
-oddballs reduce via `TILDE silluq_clause SOFPASUQ` with ERROR leaves inside).
+ungrammatical reduce via `TILDE silluq_clause SOFPASUQ` with ERROR leaves inside).
 
 Grammar actions build trees with tree.make_node / add_leaves, exactly as the
 C actions call make_node / add_leaves.  Token values carry the leaf-name string
@@ -93,7 +93,7 @@ def p_pasuq_missing_sofpasuq(p):
     "pasuq : TILDE silluq_clause MISSING_SOFPASUQ"
     # Extension beyond acc2tre.y: a verse missing its sof pasuq (Unicode SOF PASUQ /
     # code 00) parses normally, but is flagged distinctly with a sof_pasuq_phrase
-    # ERROR leaf -- making it an oddball rather than a no-output troublemaker.  The
+    # ERROR leaf -- making it an ungrammatical verse rather than a no-output troublemaker.  The
     # ERROR is separate from the silluq_phrase ERROR used for a missing silluq, so
     # the marker correctly identifies the sof pasuq as the absent mark.
     p[0] = make_node("silluq_clause", p[2], add_leaves("sof_pasuq_phrase", "ERROR"))
@@ -1019,7 +1019,7 @@ def p_legarmeh_phrase_munax_munax(p):
 # recovery action builds, and calls p.parser.errok() to mirror yacc's `yyerrok`
 # (resume normal error reporting immediately, so a second error in the same verse
 # can also be recovered).  These rules fire only on a genuine syntax error, so
-# clean verses reduce via the normal rules unchanged; on the 51 oddballs they
+# clean verses reduce via the normal rules unchanged; on the 51 ungrammatical they
 # reproduce the C binary's ERROR-node trees byte-for-byte.
 #
 # The three pasuq-level rules build no tree (the C actions print the location and
@@ -1093,7 +1093,7 @@ def p_tevir_tipexa_clause_error(p):
     # production, tipexa_phrase : error TIPEXA, needs a TIPEXA that never comes)
     # and the verse yields no output -- a troublemaker.  Completing the
     # tipexa_clause with an ERROR leaf lets tipexa_silluq_clause consume the
-    # trailing silluq, so the verse becomes an ERROR-tree oddball instead.
+    # trailing silluq, so the verse becomes an ERROR-tree ungrammatical instead.
     "tevir_tipexa_clause : tevir_clause error"
     p.parser.errok()
     p[0] = make_node("tipexa_clause", p[1], add_leaves("tipexa_phrase", "ERROR"))

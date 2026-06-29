@@ -1,13 +1,13 @@
-"""Derive the oddball set for the goerwitz.html report (generate-html).
+"""Derive the ungrammatical-verse set for the goerwitz.html report (generate-html).
 
-This module classifies oddball verses from the Python port outputs. An oddball
-is any verse whose parse tree contains at least one ``ERROR`` leaf. Since
+This module classifies ungrammatical verses from the Python port outputs. A verse is ungrammatical if its
+parse tree contains at least one ``ERROR`` leaf. Since
 ``run-prose`` now processes the full prose corpus (including the 49 verses the C
 binary emitted no output for), every such ERROR verse lives in
 ``out/accgram/prose/`` directly -- there is no separate troublemaker pass.
 
 The resulting ``_oddballs.json`` uses the same schema ``rtms_rows`` parses: one
-row per oddball with ``ref``, ``content`` (the verse's pointed-Hebrew text, drawn
+row per ungrammatical verse with ``ref``, ``content`` (the verse's pointed-Hebrew text, drawn
 from the canonical ``-kq-u`` Unicode source -- issue #9 retired the M-C body as an
 input), and ``output_file`` (the ``*_ag.json`` holding its parse tree).
 """
@@ -31,10 +31,10 @@ def _ref_to_tuple(ref: str) -> tuple[str, int, int]:
     return (bb, int(chnu), int(vrnu))
 
 
-def write_oddballs(
+def write_ungrammatical(
     prose_dir: Path,
     wlc422_kq_u_dir: Path,
-    oddballs_out: Path,
+    ungrammatical_out: Path,
 ) -> None:
     """(Re)generate the ``_oddballs.json`` from ``out/accgram/prose/``."""
     refs_with_files: list[tuple[str, int, int, str]] = []
@@ -46,12 +46,12 @@ def write_oddballs(
         if match is None:
             continue
         bb = match.group(1).lower()
-        for chnu, vrnu in sorted(prose_oddballs._collect_oddball_refs(output_path)):
+        for chnu, vrnu in sorted(prose_oddballs._collect_ungrammatical_refs(output_path)):
             refs_with_files.append((bb, chnu, vrnu, output_path.name))
 
     wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
 
-    oddball_rows: list[dict[str, object]] = [
+    ungrammatical_rows: list[dict[str, object]] = [
         {
             "ref": f"{bb} {chnu}:{vrnu}",
             "content": rtms_data.verse_unicode_text(wlc_index, bb, chnu, vrnu),
@@ -59,26 +59,26 @@ def write_oddballs(
         }
         for bb, chnu, vrnu, output_file in refs_with_files
     ]
-    oddball_rows.sort(key=lambda row: _ref_to_tuple(str(row["ref"])))
+    ungrammatical_rows.sort(key=lambda row: _ref_to_tuple(str(row["ref"])))
 
-    books_with_oddballs = {_ref_to_tuple(str(row["ref"]))[0] for row in oddball_rows}
-    oddballs_payload: dict[str, object] = {
-        "artifacts_description": "oddball verses with ERROR leaves in *_ag.json outputs",
+    books_with_ungrammatical = {_ref_to_tuple(str(row["ref"]))[0] for row in ungrammatical_rows}
+    ungrammatical_payload: dict[str, object] = {
+        "artifacts_description": "ungrammatical verses with ERROR leaves in *_ag.json outputs",
         "payload_provenance_note": (
             "These verses are parsed by the Python port into a tree containing at least "
-            "one ERROR leaf (status oddball or illegal_mark), drawn from "
+            "one ERROR leaf (status ungrammatical or illegal_mark), drawn from "
             "out/accgram/prose/. The output_file field on each row names which book "
             "JSON file holds that verse's parse tree."
         ),
         "summary": {
-            "oddballs": len(oddball_rows),
-            "books_with_oddballs": len(books_with_oddballs),
+            "oddballs": len(ungrammatical_rows),
+            "books_with_oddballs": len(books_with_ungrammatical),
         },
-        "oddballs": oddball_rows,
+        "oddballs": ungrammatical_rows,
     }
-    oddballs_payload = provenance.with_json_provenance(oddballs_payload, __file__)
+    ungrammatical_payload = provenance.with_json_provenance(ungrammatical_payload, __file__)
 
-    _write_json(oddballs_out, oddballs_payload)
+    _write_json(ungrammatical_out, ungrammatical_payload)
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:

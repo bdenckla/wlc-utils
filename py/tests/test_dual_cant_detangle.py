@@ -11,7 +11,7 @@ The fixed expectations come from the verified survey (``.novc/novc_dualcant_surv
     where only a meteg is due) while the taxton's omitted qadma is supplied;
   * Gen 35:22 detangles into pashut = 2 chanted verses, midrashit = 1, all parsing;
   * supplied-mark words parse clean (the charity is what lets them parse);
-  * the dt 5:8 elyon anomaly surfaces as an attributed oddball, not a crash.
+  * the dt 5:8 elyon anomaly surfaces as an attributed ungrammatical verse, not a crash.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_dual_cant_detangle.py -v
@@ -92,7 +92,7 @@ def test_dt58_merkha_is_a_stray_anomaly_in_the_elyon() -> None:
 
 def test_supplied_mark_words_parse_clean() -> None:
     # The supply is precisely what lets the chanted verse parse: a supplied-mark word's
-    # chanted verse must be clean and NOT an oddball (the issue's reporting requirement).
+    # chanted verse must be clean and NOT an ungrammatical verse (the issue's reporting requirement).
     results = _detangle_or_skip()
     supply_bcvs = {(s.bcv, s.strand) for pr in results for s in pr.supplied_marks}
     for pr in results:
@@ -103,12 +103,12 @@ def test_supplied_mark_words_parse_clean() -> None:
                         assert cv.status == "clean", f"{cv.ref} -> {cv.status}"
 
 
-def test_dt58_anomaly_surfaces_as_attributed_oddball_not_crash() -> None:
+def test_dt58_anomaly_surfaces_as_attributed_error_not_crash() -> None:
     results = _detangle_or_skip()
     dt = next(pr for pr in results if pr.passage.bb == "dt")
     elyon = next(tr for tr in dt.strands if tr.strand == "bet")  # the merkha breaks the elyon
     dt58 = [cv for cv in elyon.chanted_verses if "dt5:8" in cv.word_bcvs]
-    assert dt58 and dt58[0].status == "oddball"
+    assert dt58 and dt58[0].status == "error"
     assert dt58[0].tree is not None  # a real (ERROR-bearing) tree, not a None crash
     # The taxton's dt 5:8 chanted verse is now clean -- its omitted qadma is supplied.
     taxton = next(tr for tr in dt.strands if tr.strand == "alef")
@@ -121,10 +121,10 @@ def test_every_chanted_verse_parses_or_is_attributed_only_dt58_is_an_oddity() ->
     # 5:8); the taxton's 5:8 is rescued by supplying its qadma.  Nothing else is non-clean.
     results = _detangle_or_skip()
     cvs = _all_chanted_verses(results)
-    bad = [cv.ref for cv in cvs if cv.status not in ("clean", "oddball")]
+    bad = [cv.ref for cv in cvs if cv.status not in ("clean", "error")]
     assert not bad, f"unexpected no_parse/location_only: {bad}"
-    oddball_spans = {(cv.strand, cv.bcv_span) for cv in cvs if cv.status == "oddball"}
-    assert oddball_spans == {("bet", ("dt5:7", "dt5:10"))}
+    ungrammatical_spans = {(cv.strand, cv.bcv_span) for cv in cvs if cv.status == "error"}
+    assert ungrammatical_spans == {("bet", ("dt5:7", "dt5:10"))}
 
 
 # --------------------------------------------------------------------------- #
@@ -167,7 +167,7 @@ def test_prose_filter_single_cant_exceptions_match_mam_and_routing() -> None:
     assert prose_filter.should_keep_line("gn", 35, 22) is False
 
 
-def test_fold_in_yields_one_dt58_oddball_record() -> None:
+def test_fold_in_yields_one_dt58_ungrammatical_record() -> None:
     kq_u_dir = rtms_data.default_wlc422_kq_u_dir(repo_paths.repo_root())
     if not kq_u_dir.is_dir():
         pytest.skip("WLC 4.22 kq-u corpus not present")
@@ -176,17 +176,17 @@ def test_fold_in_yields_one_dt58_oddball_record() -> None:
     parser = build_parser()
 
     # Genesis 35:22 and the Exodus Decalogue fold in nothing (no oddities).
-    assert dcd.folded_oddball_records("gn", wlc_index, mam, parser) == []
-    assert dcd.folded_oddball_records("ex", wlc_index, mam, parser) == []
+    assert dcd.folded_ungrammatical_records("gn", wlc_index, mam, parser) == []
+    assert dcd.folded_ungrammatical_records("ex", wlc_index, mam, parser) == []
     # Deuteronomy folds in exactly the dt 5:8 elyon oddity, keyed at the verse where the
     # rogue merkha lives (dt 5:8), though the elyon reading itself spans dt 5:7-10.
-    dt = dcd.folded_oddball_records("dt", wlc_index, mam, parser)
+    dt = dcd.folded_ungrammatical_records("dt", wlc_index, mam, parser)
     assert len(dt) == 1
     assert dt[0]["bcv"] == "dt5:8"
-    assert dt[0]["dual_cant_strand"] == "bet"  # the elyon is the oddball reading now
-    assert dt[0]["status"] == "oddball"
+    assert dt[0]["dual_cant_strand"] == "bet"  # the elyon is the ungrammatical reading now
+    assert dt[0]["status"] == "error"
     assert dt[0]["dual_cant"] is True
-    assert dt[0]["ref"].endswith("5:8")  # so the oddball collector reads (5, 8)
+    assert dt[0]["ref"].endswith("5:8")  # so the ungrammatical collector reads (5, 8)
 
 
 def test_supplied_marks_page_renders_all_five_cases_and_division_inventory() -> None:

@@ -1,7 +1,7 @@
 """Shared page-assembly core for the prose (goerwitz.html) and poetic (poetic.html)
-oddball reports.
+ungrammatical-verse reports.
 
-Both reports are a single flat, client-side-filterable list of oddball verses under a
+Both reports are a single flat, client-side-filterable list of ungrammatical verses under a
 width-limited wrapper, with a per-option-count filter-control block and a trailing
 filter ``<script>``. They differ only in their *acquisition* (prose reads classified
 rows from disk; poetic re-scans live) and in each verse section's content/shape -- which

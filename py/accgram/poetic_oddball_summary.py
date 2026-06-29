@@ -1,7 +1,7 @@
-"""Auto-derive the tentative WLC-vs-MAM-simple summary for one poetic oddball.
+"""Auto-derive the tentative WLC-vs-MAM-simple summary for one poetic ungrammatical verse.
 
-Split out of ``poetic_oddballs`` (which owns the oddball collection + HTML shell);
-this module is just the per-verse summary line shown under each oddball.
+Split out of ``poetic_oddballs`` (which owns the ungrammatical collection + HTML shell);
+this module is just the per-verse summary line shown under each ungrammatical verse.
 
 The summary is computed by aligning the two verses *word-for-word* -- the
 consonantal skeleton as the key, via the same ``difflib`` engine ``mb_cmn.my_diffs``

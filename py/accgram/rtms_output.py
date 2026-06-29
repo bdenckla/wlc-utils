@@ -8,26 +8,26 @@ from accgram import rtmsr_overview
 import wlc_provenance as provenance
 
 
-def write_oddballs_payload(
+def write_ungrammatical_payload(
     *,
-    oddballs_out_path: Path,
-    oddballs_in_path: Path,
+    ungrammatical_out_path: Path,
+    ungrammatical_in_path: Path,
     wlc422_kq_u_dir: Path,
     uxlc_dir: Path,
     mam_simple_dir: Path,
-    enriched_oddball_rows: list[dict[str, object]],
+    enriched_ungrammatical_rows: list[dict[str, object]],
     source_file: str,
 ) -> None:
     serializable_rows = rtms_meteg_witness.strip_internal_witness_fields_from_rows(
-        enriched_oddball_rows
+        enriched_ungrammatical_rows
     )
-    oddballs_payload: dict[str, object] = {
-        "artifacts_description": "enriched oddball verse research records",
+    ungrammatical_payload: dict[str, object] = {
+        "artifacts_description": "enriched ungrammatical verse research records",
         "payload_provenance_note": (
-            "This artifact augments existing oddball rows with linked verse payloads "
+            "This artifact augments existing ungrammatical rows with linked verse payloads "
             "from wlc422-kq-u, XML-ish UXLC verse nodes, and normalized MAM-simple verses."
         ),
-        "input": str(oddballs_in_path),
+        "input": str(ungrammatical_in_path),
         "wlc422_kq_u_dir": str(wlc422_kq_u_dir),
         "uxlc_dir": str(uxlc_dir),
         "mam_simple_dir": str(mam_simple_dir),
@@ -36,21 +36,21 @@ def write_oddballs_payload(
         },
         "oddballs": serializable_rows,
     }
-    oddballs_payload = provenance.with_json_provenance(oddballs_payload, source_file)
-    _write_json(oddballs_out_path, oddballs_payload)
+    ungrammatical_payload = provenance.with_json_provenance(ungrammatical_payload, source_file)
+    _write_json(ungrammatical_out_path, ungrammatical_payload)
 
 
 def write_html_reports(
     html_out_path: Path,
     *,
-    enriched_oddball_rows: list[dict[str, object]],
+    enriched_ungrammatical_rows: list[dict[str, object]],
     base_dir: Path | None = None,
 ) -> Path:
     # The page (rtmsr_overview) sorts its rows into reading order itself, so no
     # per-list sort is needed here.
     return rtmsr_overview.write_goerwitz_combined_html_report(
         html_out_path,
-        enriched_oddball_rows,
+        enriched_ungrammatical_rows,
         base_dir,
     )
 
@@ -62,17 +62,17 @@ def print_run_summary(
     mam_simple_dir: Path,
     all_changes_path: Path,
     combined_html_out_path: Path,
-    oddballs_in_path: Path,
-    oddballs_out_path: Path,
-    oddball_rows_count: int,
+    ungrammatical_in_path: Path,
+    ungrammatical_out_path: Path,
+    ungrammatical_rows_count: int,
 ) -> None:
     print(f"wlc422-kq-u dir: {wlc422_kq_u_dir}")
     print(f"UXLC dir: {uxlc_dir}")
     print(f"MAM-simple dir: {mam_simple_dir}")
     print(f"All changes: {all_changes_path}")
-    print(f"Input oddballs: {oddballs_in_path}")
-    print(f"Oddballs output: {oddballs_out_path}")
-    print(f"Oddball rows: {oddball_rows_count}")
+    print(f"Input ungrammatical: {ungrammatical_in_path}")
+    print(f"Ungrammatical output: {ungrammatical_out_path}")
+    print(f"Ungrammatical rows: {ungrammatical_rows_count}")
     print(f"Combined HTML output: {combined_html_out_path}")
 
 

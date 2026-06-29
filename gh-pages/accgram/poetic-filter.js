@@ -1,4 +1,4 @@
-// Client-side filtering for the poetic oddball report (poetic.html).
+// Client-side filtering for the poetic ungrammatical-verse report (poetic.html).
 //
 // Each verse is a <section class="goerwitz-verse"> tagged with data-kind
 // ("missing_silluq" | "no_parse"), data-book ("ps" | "pr" | "jb"), and

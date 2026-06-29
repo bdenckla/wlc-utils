@@ -366,7 +366,7 @@ def word_disj_and_text_from_verse_node(
     The disjunctive is the fully resolved one (legarmeh / shalshelet gedolah / revia
     classified, as in ``word_accents_from_verse_node``); the consonants are the word-
     alignment key (see ``base_consonants``).  This is the per-word datum the poetic
-    oddball report aligns against its WLC counterpart to describe divider differences
+    ungrammatical-verse report aligns against its WLC counterpart to describe divider differences
     word-for-word rather than over the conjunctive-stripped disjunctive skeleton.
     """
     events: list[_Event] = []
@@ -481,7 +481,7 @@ def load_poetic_word_disj(
 
     The word-aligned counterpart of ``load_poetic_disjunctives``: it keeps every word
     (with its consonant alignment key), not just the disjunctive-bearing ones, so the
-    poetic oddball summary can pair each WLC word against its MAM word.
+    poetic ungrammatical summary can pair each WLC word against its MAM word.
     """
     return {
         ref: word_disj_and_text_from_verse_node(vn)

@@ -3,8 +3,8 @@ WLC-4.22 / UXLC grammaticality boundary, and in which direction?
 
 The change records (uxlc_accent_changes.json) partition on `prose_st_ref`:
 
-  * the OUT set -- changes NOT linked to a prose oddball note; and
-  * the IN  set -- changes that ARE so linked (i.e. that the prose oddball
+  * the OUT set -- changes NOT linked to a prose ungrammatical note; and
+  * the IN  set -- changes that ARE so linked (i.e. that the prose ungrammatical
     notes flagged and the UXLC then adopted).
 
 Both sets are evaluated by the same `evaluate()` and reported in two sections of
@@ -465,7 +465,7 @@ def main() -> None:
       f"(WLC-ungram->UXLC-gram {len(in_res['fixed'])}, "
       f"WLC-gram->UXLC-ungram {len(in_res['broke'])}).")
     p()
-    p("  The changes the prose oddball notes flagged (IN set) only ever repair")
+    p("  The changes the prose ungrammatical notes flagged (IN set) only ever repair")
     p("  ungrammaticality; the changes they did not flag (OUT set) only ever")
     p("  introduce it.  No fix leaks into OUT and no degradation leaks into IN.")
 

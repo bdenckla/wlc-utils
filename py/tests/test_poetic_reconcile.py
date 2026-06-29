@@ -7,7 +7,7 @@ Two corrections the M-C source cannot express, applied before the grammar parses
   2. the unmarked oleh-we-yored (Yeivin #363): a charitable, parse-driven pass reads
      one ambiguous merkha as a yored iff that uniquely makes the verse parse.
 
-The two named oddballs (Ps 68:20, Pr 30:15) need *both* corrections; the two unrelated
+The two named ungrammatical (Ps 68:20, Pr 30:15) need *both* corrections; the two unrelated
 NO_PARSE verses (Ps 17:14, Job 31:15) must stay NO_PARSE under reconciliation.  (Ps
 17:14's double tsinnor is separately accepted one layer up, at the parse boundary, by
 parse_tokens_accepting_repeats -- not here; reconcile leaves it NO_PARSE.)
@@ -116,7 +116,7 @@ def test_charitable_oleh_is_none_when_no_promotion_parses():
 
 # --- end to end ---------------------------------------------------------------
 
-# The bodies of the two named oddballs (M-C source, converted to marks) and their MAM
+# The bodies of the two named ungrammatical (M-C source, converted to marks) and their MAM
 # disjunctive skeletons.
 _PS_68_20 = mc_to_marks(
     "B.F70R74W.K: ):ADON/FY02 YO70WM05 YO71WM YA75(:AMFS-L/F81NW. "

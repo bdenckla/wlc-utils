@@ -17,10 +17,10 @@ A parity-focused Python port as the first milestone.
 Status:
 - **Prose: done.** `py/accgram/ply_grammar.py` is a faithful one-to-one PLY port
   of `acc2tre.y`, including yacc-style `error`-token recovery that reproduces the
-  ERROR-node oddball trees.
+  ERROR-node ungrammatical trees.
 - **Poetic: done, and past bare parity.** The PLY grammar/scanner (Phases 1–4)
   reproduces the expected trees and adds capabilities the C program never had —
-  a lexical-validation layer, MAM cross-checks, oddball flagging, and the Breuer
+  a lexical-validation layer, MAM cross-checks, ungrammatical-verse flagging, and the Breuer
   servant rules.
 
 Outcome:

@@ -54,8 +54,8 @@ BHS_TRANSCRIBES = "BHS transcribes a $diff_wlc_mam_desc as a $wlc_focus_desc."
 ZARQA_WHIM_SUMMARY = "WLC turns a scribal zarqa whim into an outright error."
 
 
-# In-page link to the nu 20:19 oddball section. The href must match that
-# section's anchor id (see ob_report.oddball_anchor_id: "ob" + bcv with ":"->"v").
+# In-page link to the nu 20:19 ungrammatical section. The href must match that
+# section's anchor id (see ob_report.ungrammatical_anchor_id: "ob" + bcv with ":"->"v").
 ZARQA_WHIM = {
     "st-summary": ZARQA_WHIM_SUMMARY,
     "comment": (

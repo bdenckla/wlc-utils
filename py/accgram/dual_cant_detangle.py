@@ -30,14 +30,14 @@ Design (all four points verified against the data, see issue #36):
 * **Charity, two kinds.**  Where WLC genuinely lacks one strand's accent (it wrote only
   the other reading, e.g. a maqaf-join compaction), that one mark is *supplied* from MAM
   and inventoried (``SuppliedMark``) -- a supplied-mark word parses clean and is NOT an
-  oddball.  Where WLC instead carries an accent *neither* strand explains (Deut 5:8
+  ungrammatical verse.  Where WLC instead carries an accent *neither* strand explains (Deut 5:8
   ``תעשה``: a merkha where qadma is due), that is a candidate WLC error: WLC's actual mark
   is emitted (so the grammar reacts) and the discrepancy is flagged (``Anomaly``), never
   silently supplied.  Because WLC's single tangled mark serves *both* readings, such a
   rogue accent is routed into both strands -- as the short strand's substitution where it
   is due an accent, and as a *stray* in the strand that is due none (only a meteg).  The
   one Deut 5:8 merkha is thus the taḥton's qadma substitute and the elyon's stray, so it
-  surfaces as an oddball in *both* readings (two anomalies, one underlying WLC mark).
+  surfaces as an ungrammatical verse in *both* readings (two anomalies, one underlying WLC mark).
 
 MAM stress-helpers (zarqa/tsinnorit U+0598, and the doubled telisha / segol / pashta
 helpers) are never imposed on the WLC streams: ``_emit_word`` drops the tsinnorit and the
@@ -167,7 +167,7 @@ class ChantedVerseResult:
     word_bcvs: tuple[str, ...]  # the numbered verse each word falls in (parallel to words)
     body: str  # scanner mark body
     tokens: tuple[str, ...]  # token type stream
-    status: str  # clean / oddball / location_only / no_parse
+    status: str  # clean / ungrammatical / location_only / no_parse
     tree: dict | None
     word_leaf_counts: tuple[int, ...]  # parse-tree leaves each word contributes (parallel
     # to words); lets the renderer gray a chanted verse's out-of-focus numbered verses by
@@ -472,7 +472,7 @@ def _assign_word(
     When THIS strand is the meteg slot, the leftover has no real-accent slot here yet WLC
     wrote it, so this reading must confront the rogue mark: it is emitted as a *stray* (the
     grammar reacts) and flagged as a no-accent-due anomaly.  dt 5:8's merkha thus *supplies*
-    the omitted qadma in the taxton (clean) AND is the elyon's *stray* (oddball) -- one WLC
+    the omitted qadma in the taxton (clean) AND is the elyon's *stray* (ungrammatical) -- one WLC
     mark, charitably read in the taxton and flagged in the elyon."""
     need = _real_accents_ordered(mam_word)
     have = set(_accents(wlc_word))
@@ -761,7 +761,7 @@ def _parse_chanted_verse(
     elif tree is LOCATION_ONLY:
         status, tree_obj = "location_only", None
     else:
-        status = "oddball" if _tree_has_error(tree) else "clean"
+        status = "error" if _tree_has_error(tree) else "clean"
         tree_obj = tree_to_obj(tree)
     return ChantedVerseResult(
         ref=_bcv_span_ref(cv, label, ordinal),
@@ -884,7 +884,7 @@ def detangle_all(
 
 
 # --------------------------------------------------------------------------- #
-# Folding detangled oddities into the (numbered-verse-keyed) prose oddball reports
+# Folding detangled oddities into the (numbered-verse-keyed) prose ungrammatical-verse reports
 # --------------------------------------------------------------------------- #
 _PASSAGE_BY_BOOK: dict[str, Passage] = {p.bb: p for p in PASSAGES}
 
@@ -909,10 +909,10 @@ def chanted_verse_to_prose_record(
 ) -> dict[str, object]:
     """Shape one detangled chanted verse as a prose ``*_ag.json`` record.
 
-    The prose oddball pipeline is keyed by the BHS numbered verse (``bcv``) and looks the
+    The prose ungrammatical pipeline is keyed by the BHS numbered verse (``bcv``) and looks the
     parse tree up by that key.  ``key_bcv`` sets that key; it defaults to the chanted verse's
     first numbered verse, but a multi-verse reading is keyed at the verse where its rogue
-    mark lives (e.g. the elyon dt 5:7-10 oddball is keyed dt 5:8, where WLC's stray sits), so
+    mark lives (e.g. the elyon dt 5:7-10 ungrammatical is keyed dt 5:8, where WLC's stray sits), so
     the note and goerwitz row land on that verse.  The strand and the full chanted-verse span
     are kept in ``dual_cant_*`` fields for provenance (the goerwitz row re-derives its visible
     ref from the bcv); the ``dual_cant`` flag marks the record so a re-run replaces it."""
@@ -935,13 +935,13 @@ def chanted_verse_to_prose_record(
     }
 
 
-def folded_oddball_records(
+def folded_ungrammatical_records(
     bb: str, wlc_index: dict[str, dict], mam_by_bcv: dict[str, dict], parser
 ) -> list[dict[str, object]]:
     """The detangled *oddity* records for one book, to fold into its prose output.
 
-    Only non-clean chanted verses (a genuine WLC dual-cant bug -> oddball / no_parse /
-    location_only) are folded; clean and supplied-mark chanted verses are not oddballs.
+    Only non-clean chanted verses (a genuine WLC dual-cant bug -> ungrammatical / no_parse /
+    location_only) are folded; clean and supplied-mark chanted verses are not ungrammatical.
     A supplied-mark chanted verse parses clean, so it never appears here (the issue's
     reporting requirement).
 
@@ -969,14 +969,14 @@ def folded_oddball_records(
                 continue
             # Key the row at the verse where the rogue mark lives (its anomaly's verse), not
             # the chanted verse's first verse: an elyon reading groups several verses
-            # (dt 5:7-10), but its oddball belongs to dt 5:8, where WLC's stray mark sits.
+            # (dt 5:7-10), but its ungrammatical belongs to dt 5:8, where WLC's stray mark sits.
             key_bcv = min(cv_anomaly_bcvs) if cv_anomaly_bcvs else None
             record = chanted_verse_to_prose_record(cv, bb, key_bcv)
             bcv = str(record["bcv"])
             if bcv in seen:
                 raise ValueError(
                     f"Two folded dual-cant oddities share bcv {bcv} ({seen[bcv]} and "
-                    f"{cv.ref}); the numbered-verse-keyed prose oddball pipeline cannot "
+                    f"{cv.ref}); the numbered-verse-keyed prose ungrammatical pipeline cannot "
                     "represent both -- revisit the fold-in attribution."
                 )
             seen[bcv] = cv.ref

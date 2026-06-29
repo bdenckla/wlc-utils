@@ -1,4 +1,4 @@
-"""Read the human claim in an oddball's structured-text note (ob_notes_*).
+"""Read the human claim in an ungrammatical verse's structured-text note (ob_notes_*).
 
 The fix-tester cross-checks its mechanical verdict against what the hand-authored
 ``st-summary``/``comment`` *claims*.  Speculative claims ("I think the checker

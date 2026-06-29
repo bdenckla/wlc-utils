@@ -237,7 +237,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # single-mark rules by longest-match.  The legit same-letter pairs are either FUSED by
     # a rule above (revia+geresh muqdam / revia+geresh -> revia mugrash; ole+merkha and
     # the MAM same-letter merkha+ole -> oleh-we-yored) and so never reach here, or are the deḥi+munaḥ sequence, which
-    # _BANG_GUARD's lookahead spares.  The bang has no grammar terminal -> NO_PARSE oddball.
+    # _BANG_GUARD's lookahead spares.  The bang has no grammar terminal -> NO_PARSE ungrammatical verse.
     # Corpus-wide this fires only at Ps 56:10 (merkha+azla); the generality guards any
     # other / future same-letter stack.
     (re.compile(_BANG_GUARD), pan.BANG_PAIR),

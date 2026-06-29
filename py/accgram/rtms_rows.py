@@ -25,19 +25,19 @@ def to_ref(bb: str, chnu: int, vrnu: int) -> str:
     return rtms_ref.to_ref(bb, chnu, vrnu)
 
 
-def parse_oddball_rows(
-    oddballs_in_path: Path,
+def parse_ungrammatical_rows(
+    ungrammatical_in_path: Path,
     refs_by_book: dict[str, set[tuple[int, int]]],
 ) -> list[ParsedRow]:
     return _parse_rows(
-        in_path=oddballs_in_path,
+        in_path=ungrammatical_in_path,
         payload_key="oddballs",
-        row_kind="oddball",
+        row_kind="ungrammatical",
         invalid_payload_message=(
-            f"Expected list at oddballs payload key 'oddballs': {oddballs_in_path}"
+            f"Expected list at ungrammatical payload key 'ungrammatical': {ungrammatical_in_path}"
         ),
-        row_object_message="Oddball rows must be JSON objects",
-        missing_ref_message="Oddball row is missing string field 'ref'",
+        row_object_message="Ungrammatical rows must be JSON objects",
+        missing_ref_message="Ungrammatical row is missing string field 'ref'",
         refs_by_book=refs_by_book,
     )
 

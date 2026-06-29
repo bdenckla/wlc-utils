@@ -1,4 +1,4 @@
-"""Regression test: a verse missing its sof pasuq is a flagged oddball, not a
+"""Regression test: a verse missing its sof pasuq is a flagged ungrammatical verse, not a
 no-output troublemaker.
 
 The scanner recovers the verse-final silluq (so the anomaly is attributed to the

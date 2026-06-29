@@ -22,13 +22,13 @@ _GC_BOOK_URL = (
 
 
 def build_intro_contents(
-    oddball_count: int,
+    ungrammatical_count: int,
 ) -> tuple[object, ...]:
     intro_text = (
-        f"This page lists the {oddball_count} WLC 4.22 verses that are considered ungrammatical"
+        f"This page lists the {ungrammatical_count} WLC 4.22 verses that are considered ungrammatical"
         " by the Python port of the Goerwitz accent checker."
     )
-    oddballs_text = (
+    ungrammatical_text = (
         f"These verses are considered ungrammatical because they parse into a tree"
         " containing the string \u201cERROR\u201d; each section below includes one such"
         " tree. Potential causes of \u201cERROR\u201d include"
@@ -75,7 +75,7 @@ def build_intro_contents(
     return (
         wlc_utils_html.heading_level_2("Introduction"),
         wlc_utils_html.para(intro_text),
-        wlc_utils_html.para(oddballs_text),
+        wlc_utils_html.para(ungrammatical_text),
         wlc_utils_html.para(msp_text),
         wlc_utils_html.unordered_list(msp_categories),
         wlc_utils_html.para(source_text),

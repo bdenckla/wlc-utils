@@ -459,7 +459,7 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
 
 # The standalone Psalms 17:14 deep-dive (manuscript images, MAM documentation notes,
 # Breuer's structural analysis).  This page carries only the short summary and links out;
-# the verse left the poetic oddball report once the checker began accepting it.
+# the verse left the poetic ungrammatical-verse report once the checker began accepting it.
 _PS17V14_DEEP_DIVE = "ps17v14-double-tsinnor.html"
 
 

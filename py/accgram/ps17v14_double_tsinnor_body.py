@@ -29,7 +29,7 @@ BODY = ['\n\n',
                 'attr': {'href': 'poetic.html'},
                 'lb1': '',
                 'lb2': '',
-                'contents': ['poetic oddball report']},
+                'contents': ['poetic ungrammatical-verse report']},
                '; once the checker began\n'
                'accepting the verse (see below) that section disappeared, so the discussion is\n'
                'preserved here.']},
