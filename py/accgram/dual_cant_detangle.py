@@ -523,7 +523,7 @@ def _assign_word(
                     mam_word=mam_word,
                     wlc_word=wlc_word,
                     accent=accent,
-                    accent_name=_accent_name(accent),
+                    accent_name=_accent_spelling(accent),
                     reason=_supply_reason(
                         wlc_word,
                         have,
@@ -575,7 +575,7 @@ def _supply_reason(
     ceded: tuple[str, ...] = (),
 ) -> str:
     if ceded:
-        names = ", ".join(_accent_name(a) for a in ceded)
+        names = ", ".join(_accent_spelling(a) for a in ceded)
         return (
             f"WLC has a {names} here that belongs to the {other_label} strand (where it"
             f" mis-transcribes a meteg); the {this_label}'s own {accent_spelling} is omitted"
@@ -592,7 +592,7 @@ def _supply_reason(
             f"WLC has only the {other_label} strand here ({form}, with no"
             f" accent of its own), so the {this_label}'s {accent_spelling} is supplied from MAM."
         )
-    others = ", ".join(_accent_name(a) for a in sorted(wlc_have, key=ord))
+    others = ", ".join(_accent_spelling(a) for a in sorted(wlc_have, key=ord))
     return (
         f"WLC has only the {other_label} strand here ({others}), so the {this_label}'s"
         f" {accent_spelling} is supplied from MAM."
@@ -620,7 +620,7 @@ def _assign_pooled(
                     mam_word=mam_word,
                     wlc_word="",
                     accent=accent,
-                    accent_name=_accent_name(accent),
+                    accent_name=_accent_spelling(accent),
                     reason=(
                         "WLC tokenizes this span differently (word-division taken from"
                         " MAM); the mark is supplied from MAM."
