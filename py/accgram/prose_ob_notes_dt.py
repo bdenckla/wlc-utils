@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from py_html import wlc_utils_html
+
 from accgram.prose_ob_notes_shared import (
     MISSING_SOF_PASUQ_COMMENT,
     MISSING_SOF_PASUQ_SUMMARY,
@@ -56,11 +58,15 @@ BY_REF: dict[str, dict[str, object]] = {
             " the qadma is taken to belong to the taḥton and the meteg is taken to"
             " belong to the elyon.",
             #
-            "In contrast, WLC’s merkha is ungrammatical in both the taḥton and the elyon."
-            " The checker supplies a qadma for the taḥton, "
-            " making that strand grammatical (see the supplied-marks page) —"  # XXX give a link to the supplied marks page
-            " but leaves WLC’s merkha in the elyon, which is therefore listed here among"
-            " other verses deemed ungrammatical.",
+            [
+                "In contrast, as WLC stands neither reading is grammatical: the taḥton"
+                " lacks its due qadma, and the elyon carries a merkha where only a meteg"
+                " belongs. The checker supplies the qadma for the taḥton, making that"
+                " strand grammatical (see the ",
+                wlc_utils_html.anchor("supplied-marks page", {"href": "supplied-marks.html"}),
+                ") — but leaves WLC’s merkha in the elyon, so the elyon is listed here"
+                " among other verses deemed ungrammatical.",
+            ],
             #
             "Note that we do not shy away from transcriptions that, while grounded in manuscript"
             " evidence, use context (consensus and grammar) to supplement manuscript"
