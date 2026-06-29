@@ -6,7 +6,8 @@
     "clean": 46,
     "oddball": 1,
     "supplied_marks": 5,
-    "anomalies": 1
+    "anomalies": 1,
+    "division_changes": 32
   },
   "passages": [
     {
@@ -473,7 +474,18 @@
         }
       ],
       "supplied_marks": [],
-      "anomalies": []
+      "anomalies": [],
+      "division_changes": [
+        {
+          "bcv": "gn35:22",
+          "strand": "alef",
+          "strand_label": "pashut",
+          "mark": "sof pasuq",
+          "delta": "added",
+          "wlc_word": "יִשְׂרָאֵֽ֑ל",
+          "mam_word": "יִשְׂרָאֵֽל׃"
+        }
+      ]
     },
     {
       "name": "ex 20:2-17",
@@ -4075,7 +4087,153 @@
           "source": "mam"
         }
       ],
-      "anomalies": []
+      "anomalies": [],
+      "division_changes": [
+        {
+          "bcv": "ex20:2",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "עֲבָדִֽ֑ים׃",
+          "mam_word": "עֲבָדִ֑ים"
+        },
+        {
+          "bcv": "ex20:3",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "maqaf",
+          "delta": "added",
+          "wlc_word": "לֹֽ֣א",
+          "mam_word": "לֹֽא־"
+        },
+        {
+          "bcv": "ex20:3",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "maqaf",
+          "delta": "erased",
+          "wlc_word": "יִהְיֶֽה־",
+          "mam_word": "יִהְיֶ֥ה"
+        },
+        {
+          "bcv": "ex20:3",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "added",
+          "wlc_word": "פָּנַָֽ֗י",
+          "mam_word": "פָּנָֽי׃"
+        },
+        {
+          "bcv": "ex20:4",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "maqaf",
+          "delta": "added",
+          "wlc_word": "לֹֽ֣א",
+          "mam_word": "לֹֽא־"
+        },
+        {
+          "bcv": "ex20:4",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "maqaf",
+          "delta": "erased",
+          "wlc_word": "תַֽעֲשֶׂ֨ה־",
+          "mam_word": "תַעֲשֶׂ֨ה"
+        },
+        {
+          "bcv": "ex20:4",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "added",
+          "wlc_word": "לָאָֽ֗רֶץ",
+          "mam_word": "לָאָֽרֶץ׃"
+        },
+        {
+          "bcv": "ex20:8",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "added",
+          "wlc_word": "לְקַדְּשֽׁ֗וֹ",
+          "mam_word": "לְקַדְּשֽׁוֹ׃"
+        },
+        {
+          "bcv": "ex20:9",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "added",
+          "wlc_word": "מְלַאכְתֶּֽךָ֒",
+          "mam_word": "מְלַאכְתֶּֽךָ׃"
+        },
+        {
+          "bcv": "ex20:10",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "maqaf",
+          "delta": "erased",
+          "wlc_word": "וּבִנְךָֽ֣־",
+          "mam_word": "וּבִנְךָ֣"
+        },
+        {
+          "bcv": "ex20:10",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "added",
+          "wlc_word": "בִּשְׁעָרֶֽ֔יךָ",
+          "mam_word": "בִּשְׁעָרֶֽיךָ׃"
+        },
+        {
+          "bcv": "ex20:13",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "תִּרְצָֽ֖ח׃",
+          "mam_word": "תִרְצָ֖ח"
+        },
+        {
+          "bcv": "ex20:14",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "תִּנְאָֽ֑ף׃",
+          "mam_word": "תִנְאָ֑ף"
+        },
+        {
+          "bcv": "ex20:15",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "תִּגְנֹֽ֔ב׃",
+          "mam_word": "תִגְנֹ֔ב"
+        },
+        {
+          "bcv": "ex20:5",
+          "strand": "bet",
+          "strand_label": "elyon",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "לְשֹׂנְאָֽ֑י׃",
+          "mam_word": "לְשֹׂנְאָ֑י"
+        },
+        {
+          "bcv": "ex20:10",
+          "strand": "bet",
+          "strand_label": "elyon",
+          "mark": "maqaf",
+          "delta": "erased",
+          "wlc_word": "לֹֽ֣א־",
+          "mam_word": "לֹ֣א"
+        }
+      ]
     },
     {
       "name": "dt 5:6-21",
@@ -8153,6 +8311,143 @@
           "expected_name": "no cantillation accent (only a meteg is due)",
           "found": "֥",
           "found_name": "merkha (U+05A5)"
+        }
+      ],
+      "division_changes": [
+        {
+          "bcv": "dt5:6",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "עֲבָדִֽ֑ים׃",
+          "mam_word": "עֲבָדִ֑ים"
+        },
+        {
+          "bcv": "dt5:7",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "maqaf",
+          "delta": "added",
+          "wlc_word": "לֹ֣א",
+          "mam_word": "לֹא־"
+        },
+        {
+          "bcv": "dt5:7",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "maqaf",
+          "delta": "erased",
+          "wlc_word": "יִהְיֶ֥ה־",
+          "mam_word": "יִהְיֶ֥ה"
+        },
+        {
+          "bcv": "dt5:8",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "maqaf",
+          "delta": "erased",
+          "wlc_word": "תַעֲשֶׂ֥ה־",
+          "mam_word": "תַעֲשֶׂ֨ה"
+        },
+        {
+          "bcv": "dt5:12",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "added",
+          "wlc_word": "אֱלֹהֶֽ֗יךָ",
+          "mam_word": "אֱלֹהֶֽיךָ׃"
+        },
+        {
+          "bcv": "dt5:15",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "maqaf",
+          "delta": "erased",
+          "wlc_word": "כִּ֣י־",
+          "mam_word": "כִּ֣י"
+        },
+        {
+          "bcv": "dt5:17",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "תִּרְצָֽח׃",
+          "mam_word": "תִרְצָ֖ח"
+        },
+        {
+          "bcv": "dt5:18",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "תִּנְאָֽ֑ף׃",
+          "mam_word": "תִנְאָ֑ף"
+        },
+        {
+          "bcv": "dt5:19",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "תִּגְנֹֽ֔ב׃",
+          "mam_word": "תִגְנֹ֔ב"
+        },
+        {
+          "bcv": "dt5:7",
+          "strand": "bet",
+          "strand_label": "elyon",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "פָּנָֽ֗יַ׃",
+          "mam_word": "פָּנַ֗י"
+        },
+        {
+          "bcv": "dt5:8",
+          "strand": "bet",
+          "strand_label": "elyon",
+          "mark": "maqaf",
+          "delta": "erased",
+          "wlc_word": "לֹֽ֣א־",
+          "mam_word": "לֹ֣א"
+        },
+        {
+          "bcv": "dt5:8",
+          "strand": "bet",
+          "strand_label": "elyon",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "לָאָֽ֗רֶץ׃",
+          "mam_word": "לָאָ֗רֶץ"
+        },
+        {
+          "bcv": "dt5:9",
+          "strand": "bet",
+          "strand_label": "elyon",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "לְשֹׂנְאָֽ֑י׃",
+          "mam_word": "לְשֹׂנְאָ֑י"
+        },
+        {
+          "bcv": "dt5:13",
+          "strand": "bet",
+          "strand_label": "elyon",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "מְלַאכְתֶּֽךָ֒׃",
+          "mam_word": "מְלַאכְתֶּ֒ךָ֒"
+        },
+        {
+          "bcv": "dt5:14",
+          "strand": "bet",
+          "strand_label": "elyon",
+          "mark": "sof pasuq",
+          "delta": "erased",
+          "wlc_word": "כָּמֽ֑וֹךָ׃",
+          "mam_word": "כָּמ֑וֹךָ"
         }
       ]
     }

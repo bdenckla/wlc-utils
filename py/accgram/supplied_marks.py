@@ -14,8 +14,14 @@ surfaced ONLY here, never counted as a prose oddball.  (A genuine WLC dual-canti
 *error*, where WLC wrote an accent neither reading explains, is the opposite case: it is
 not supplied but flagged, and appears in the prose oddball report.)
 
-The page is generated live from the detangling run (accgram.dual_cant_run), so the
-inventory can never drift from the checker's real behaviour.
+The page has two inventories, both generated live from the detangling run
+(accgram.dual_cant_run) so they can never drift from the checker's real behaviour:
+
+  * "Supplied accents": each of the five supplied accents in turn -- its reading, the
+    accent supplied, what WLC writes instead, and the LC manuscript image; and
+  * "Erased and added maqaf and sof pasuq marks": the word-division marks each reading
+    adds or erases relative to WLC's tangled form (narrow-sense paseq is not part of the
+    accent grammar and is not tracked).
 
 Run via ``main_accgram.py generate-html``.
 """
@@ -25,19 +31,51 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from accgram import accent_marks as am
 from accgram import dual_cant_run
 from accgram import rtms_report
+from accgram import rtmsr_media
 from accgram.almost_errors_html_shared import accents_and_letters, hbo, link, ref_display
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram import rtms_data
+from accgram.uni_to_marks import is_accent
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
+from py_html import my_html_for_img
 from py_html import wlc_utils_html as H
 
 import repo_paths
 
 REPORT_TITLE = "Supplied and erased marks"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
+
+# ḥet is transliterated X in the detangler's ASCII labels and ḥ (h + combining dot below,
+# never plain h) in the page's Unicode prose -- see the repo transliteration standard.
+_HET = "ḥ"
+_TAXTON = "ta" + _HET + "ton"
+_ELYON = "elyon"
+_MUNAX = "muna" + _HET
+_TIPEXA = "tipe" + _HET + "a"
+
+# X-form (ASCII) label -> the page's Unicode ḥ display form.
+_TRANSLIT = {"taxton": _TAXTON, "tipexa": _TIPEXA, "atnax": "atna" + _HET}
+
+_UXLC_DT58_NOTE = "https://tanach.us/Notes/Deuteronomy/Deuteronomy.5.8.2-t.html"
+
+# Each supplied accent, paired with its manuscript image.  Keyed by (bcv, strand, accent
+# codepoint) and cross-checked at render time against the live supplies, so it cannot drift.
+# Four are LC crops (the LC-... names carry their own Sefaria source link/caption); dt 5:8
+# has no clean LC line of its own here, so we borrow the crop from its UXLC note.
+_LC, _UXLC_NOTE = "lc", "uxlc-note"
+_CASE_IMAGE: dict[tuple[str, str, str], tuple[str, str]] = {
+    ("dt5:6", "bet", am.TIPEXA): ("LC-102A-col-3-line-19-Deut-5v6.png", _LC),
+    ("dt5:6", "bet", am.ATNAX): ("LC-102A-col-3-line-20-Deut-5v6.png", _LC),
+    ("dt5:8", "alef", am.QADMA): ("Deut-5v8-uxlc-note.jpg", _UXLC_NOTE),
+    ("dt5:17", "alef", am.TIPEXA): ("LC-102B-col-2-line-9-Deut-5v17.png", _LC),
+    ("ex20:3", "alef", am.MERKHA): ("LC-043A-col-2-line-19-Exod-20-v3.png", _LC),
+}
+
+_PASSAGE_RANK = {"gn": 0, "ex": 1, "dt": 2}
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -65,61 +103,46 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
     )
 
 
+def _translit(text: str) -> str:
+    """Render the detangler's ASCII ḥet (X) labels in the page's Unicode ḥ form."""
+    for ascii_form, uni_form in _TRANSLIT.items():
+        text = text.replace(ascii_form, uni_form)
+    return text
+
+
+def _comment(contents) -> object:
+    return H.para(contents, {"class": "goerwitz-tms-comment"})
+
+
 def _intro() -> tuple[object, ...]:
     return (
         H.heading_level_1(REPORT_TITLE),
         H.heading_level_2("Introduction"),
         H.para(
             (
-                "WLC’s three dually-cantillated prose passages — the two Decalogues"
-                " (Exodus 20, Deuteronomy 5) and the Reuben/Bilhah verse (Genesis 35:22)"
-                " — carry two cantillation readings at once. To grammar-check them, the"
-                " checker ",
-                link("detangles", "goerwitz.html"),
-                " each into its two single-cantillation readings, guided by MAM’s"
-                " already-separated strands, and feeds each reading’s chanted verses to"
-                " the ordinary prose grammar. The accents checked are WLC’s own, except for"
-                " the cases described below.",
+                "WLC, like the LC itself, has three dually-cantillated prose passages:"
+                " the two Decalogues (Exodus 20, Deuteronomy 5)"
+                " and the Reuben/Bilhah verse (Genesis 35:22)."
+                " Before attempting to grammar-check one of these passages we",
+                *[" ", link("detangle", "goerwitz.html")],
+                " it into its two single-cantillation strands, guided by MAM’s"
+                " already-separated strands."
+                " After detangling a passage, we feed each strand’s chanted verses to"
+                " the ordinary prose accent grammar checker."
+                " The accents checked are WLC’s own, except for the cases described below.",
             )
         ),
         H.para(
             (
-                "Sometimes WLC commits to one reading’s word-division and thereby writes"
-                " no distinct accent for the other reading on a word (most often a"
-                " maqaf-join, or a verse-final silluq that belongs to only one reading)."
-                " There the detangler ",
+                "Sometimes WLC leaves a strand without an accent."
+                " In these cases, the detangler ",
                 H.bold("supplies"),
-                " that one accent from MAM so the reading’s chanted verse parses, and"
-                " records it below. This is a third kind of charity, distinct from the"
-                " two reinterpretations on the ",
-                link("almost-errors page", "almost-errors.html"),
-                ": those reread a mark present in WLC, whereas a supplied"
-                " mark adds a mark not present in WLC.",
-            )
-        ),
-        H.para(
-            (
-                "Detangling also re-divides the words. Each reading’s word-division — its"
-                " maqaf joins and its sof-pasuq verse breaks — is taken from MAM, so relative"
-                " to WLC’s single tangled form the checker both adds and removes these marks"
-                " (WLC commits to a mix of the two readings’ divisions; it is not simply"
-                " “maqaf-maximalist”). Only the resulting cantillation accents are itemized"
-                " below.",
-            )
-        ),
-        H.para(
-            (
-                "A meteg is what guides a supply. A medial meteg is transcription-ambiguous —"
-                " it can stand in for, or be mis-transcribed as, a real accent like a merkha —"
-                " so the reading whose MAM mark here is a sole meteg is the slot that absorbs"
-                " WLC’s actual mark, while the other reading’s distinct accent is the omitted"
-                " one, supplied from MAM. At Exodus 20:3 WLC’s mark is itself a meteg (a valid"
-                " form for that reading), so the supply is a clean charity. At Deuteronomy 5:8"
-                " WLC’s mark is instead a real merkha where a meteg is due: the qadma the other"
-                " reading omits is supplied here (with non-definitive LC support), but WLC’s"
-                " merkha is left to stand and surfaces as an oddball in the ",
-                link("checker run", "goerwitz.html"),
-                ".",
+                " that one accent from MAM, making that strand’s chanted verse grammatical."
+                " These charitably-supplied accents are recorded below."
+                " This is a third kind of charity, distinct from the two reinterpretations on the",
+                *[" ", link("almost-errors page", "almost-errors.html"), ":"],
+                " those reinterpret the type of geresh present in WLC,"
+                " whereas a supplied mark adds a mark not present in WLC.",
             )
         ),
         H.para(
@@ -142,42 +165,229 @@ def _source_label(source: str) -> str:
     return "LC (non-definitive)" if source == "lc" else "MAM"
 
 
-def _table(supplies: list) -> object:
-    header = H.table_row_of_headers(
-        ("Verse", "Reading", "Word", "Supplied accent", "WLC writes", "Source", "Why")
-    )
-    rows = [header]
-    for s in supplies:
-        wlc_cell = hbo(accents_and_letters(s.wlc_word)) if s.wlc_word else "—"
-        rows.append(
-            H.table_row_of_data(
-                (
-                    ref_display(s.bcv),
-                    s.strand_label,
-                    hbo(accents_and_letters(s.mam_word)),
-                    s.accent_name,
-                    wlc_cell,
-                    _source_label(s.source),
-                    s.reason,
-                )
-            )
+# --------------------------------------------------------------------------- #
+# "Supplied accents": each supply in turn, with explanatory text and its image.
+# --------------------------------------------------------------------------- #
+def _image_block(img_file: str, kind: str) -> object:
+    if kind == _LC:
+        # rtmsr_media builds the "Image source: <page> column N line N" caption + Sefaria link.
+        figures = rtmsr_media.render_image_paragraphs(
+            {"img": img_file}, structured_text_lookup=lambda row, key: row.get(key)
         )
-    return H.table(tuple(rows), {"class": "goerwitz-obs-tree-table"})
+        return figures[0]
+    # The UXLC-note crop: credit the note (an LC image, served via Sefaria).
+    para = my_html_for_img.html_for_single_img(
+        img_file, img_para_attr={"class": "goerwitz-tms-image"}
+    )
+    caption = H.figcaption(
+        (
+            "Image source: ",
+            H.anchor("tanach.us note", {"href": _UXLC_DT58_NOTE}),
+            " (Leningrad Codex, via Sefaria.org).",
+        ),
+        {"class": "goerwitz-tms-image-caption"},
+    )
+    return H.figure((para, caption), {"class": "goerwitz-tms-figure"})
+
+
+def _case_extra(s) -> tuple[object, ...]:
+    """The meteg-grounded paragraphs for the two cases where a meteg decides the supply."""
+    key = (s.bcv, s.strand, s.accent)
+    if key == ("ex20:3", "alef", am.MERKHA):
+        return (
+            _comment(
+                f"WLC’s lone mark here is itself a meteg — a valid form for the {_ELYON} —"
+                f" so supplying the {_TAXTON}’s merkha contradicts nothing WLC wrote: a clean"
+                " charity."
+            ),
+        )
+    if key == ("dt5:8", "alef", am.QADMA):
+        return (
+            _comment(
+                "WLC’s lone mark here is not a meteg but a real merkha, and it belongs to"
+                f" the {_ELYON}, where only a meteg is due. The LC is in poor shape at this"
+                " word (see the image): a better transcription reads that faint, broken"
+                f" vertical line as a meteg and adds the qadma the {_TAXTON} is due — the"
+                " consensus pointing, under which both strands parse."
+            ),
+            _comment(
+                (
+                    f"So the checker supplies the {_TAXTON}’s qadma (and the {_TAXTON} then"
+                    f" parses clean), but lets WLC’s merkha stand in the {_ELYON}, where it"
+                    " surfaces as an oddball in the ",
+                    link("checker run", "goerwitz.html"),
+                    ". UXLC, too, corrects the merkha to a meteg, but supplies a pashta"
+                    " rather than the due qadma; a pending UXLC change would correct that"
+                    " pashta to the qadma.",
+                )
+            ),
+        )
+    return ()
+
+
+def _supplied_case(s) -> tuple[object, ...]:
+    img_file, kind = _CASE_IMAGE[(s.bcv, s.strand, s.accent)]
+    header = H.para(
+        f"{ref_display(s.bcv)}, {_translit(s.strand_label)}: supplies {_translit(s.accent_name)}",
+        {"class": "goerwitz-tms-reading-label"},
+    )
+    if any(is_accent(ch) for ch in s.wlc_word):
+        wlc_part = ("WLC writes ", hbo(accents_and_letters(s.wlc_word)), ".")
+    else:
+        wlc_part = (
+            "WLC writes ",
+            hbo(accents_and_letters(s.wlc_word)),
+            " (no cantillation accent of its own).",
+        )
+    forms = _comment(
+        (
+            f"Supplied from {_source_label(s.source)}: MAM’s ",
+            hbo(accents_and_letters(s.mam_word)),
+            "; ",
+            *wlc_part,
+        )
+    )
+    return (header, _comment(_translit(s.reason)), *_case_extra(s), forms, _image_block(img_file, kind))
+
+
+def _supplied_section(supplies: list) -> tuple[object, ...]:
+    blocks: list[object] = [H.heading_level_2("Supplied accents")]
+    if not supplies:
+        blocks.append(H.para("No marks were supplied."))
+        return tuple(blocks)
+    for s in supplies:
+        if (s.bcv, s.strand, s.accent) not in _CASE_IMAGE:
+            raise KeyError(
+                f"supplied-marks page has no image/case for {s.bcv} {s.strand}"
+                f" {s.accent_name}; add it to _CASE_IMAGE."
+            )
+    for s in sorted(supplies, key=_reading_order_key):
+        blocks.extend(_supplied_case(s))
+    return tuple(blocks)
 
 
 def _reading_order_key(s) -> tuple:
     bb = s.bcv[:2]
     chnu, vrnu = (int(p) for p in s.bcv[2:].split(":"))
     # alef strand (taxton/pashut) before bet (elyon/midrashit) within a verse
-    return (bb, chnu, vrnu, 0 if s.strand == "alef" else 1)
+    return (_PASSAGE_RANK.get(bb, 9), chnu, vrnu, 0 if s.strand == "alef" else 1)
 
 
-def render_body_contents(supplies: list) -> tuple[object, ...]:
-    sections: list[object] = [*_intro()]
-    if supplies:
-        sections.append(_table(sorted(supplies, key=_reading_order_key)))
-    else:
-        sections.append(H.para("No marks were supplied."))
+# --------------------------------------------------------------------------- #
+# "Erased and added maqaf and sof pasuq marks": the word-division inventory.
+# --------------------------------------------------------------------------- #
+def _carrying_form(changes: list, bcv: str, mark: str, delta: str, strand: str) -> object:
+    """The pointed form (as an hbo span) that carries a given division change in one strand:
+    WLC's word when the mark is erased, MAM's strand word when it is added."""
+    for d in changes:
+        if (d.bcv, d.mark, d.delta, d.strand) == (bcv, mark, delta, strand):
+            return hbo(d.wlc_word if delta == "erased" else d.mam_word)
+    return "?"
+
+
+def _division_prose(changes: list) -> tuple[object, ...]:
+    yihye = _carrying_form(changes, "ex20:3", "maqaf", "erased", "alef")  # taḥton drops WLC's יִהְיֶה־
+    lo_added = _carrying_form(changes, "ex20:3", "maqaf", "added", "alef")  # the taḥton's added לֹא־
+    lo_elyon = _carrying_form(changes, "ex20:10", "maqaf", "erased", "bet")  # elyon drops WLC's לֹא־
+    return (
+        _comment(
+            "Genesis 35:22: the pashut strand breaks the verse in two, adding a mid-verse"
+            " sof pasuq that WLC — and the midrashit strand — do not have."
+        ),
+        _comment(
+            f"The Decalogues (Exodus 20, Deuteronomy 5): the {_TAXTON} subdivides into short"
+            " chanted verses, adding a sof pasuq inside several numbered verses (Exodus 20:3,"
+            " 20:4, 20:8, 20:9, 20:10; Deuteronomy 5:12) and erasing WLC’s verse-final one"
+            " where the commandment runs on (Exodus 20:2 and the short prohibitions 20:13–15;"
+            f" Deuteronomy 5:6, 5:17–19). The {_ELYON} does the reverse, grouping the"
+            " commandments into long chanted verses and so erasing WLC’s internal sof pasuqs"
+            " (Exodus 20:5; Deuteronomy 5:7, 5:8, 5:9, 5:13, 5:14)."
+        ),
+        _comment(
+            (
+                f"The maqaf joins are re-cut to match. At Exodus 20:3 the {_TAXTON} drops"
+                " WLC’s join ",
+                yihye,
+                " — the supplied merkha makes that word stand on its own — and instead joins ",
+                lo_added,
+                f"; the {_ELYON}, conversely, drops WLC’s join ",
+                lo_elyon,
+                " at Exodus 20:10 (and likewise at Deuteronomy 5:8).",
+            )
+        ),
+    )
+
+
+def _division_sort_key(d) -> tuple:
+    chnu, vrnu = (int(p) for p in d.bcv[2:].split(":"))
+    return (_PASSAGE_RANK.get(d.bcv[:2], 9), 0 if d.strand == "alef" else 1, chnu, vrnu, d.mark, d.delta)
+
+
+def _division_table(changes: list) -> object:
+    header = H.table_row_of_headers(("Verse", "Reading", "Mark", "Change", "Word"))
+    rows = [header]
+    for d in sorted(changes, key=_division_sort_key):
+        carrier = d.wlc_word if d.delta == "erased" else d.mam_word
+        rows.append(
+            H.table_row_of_data(
+                (ref_display(d.bcv), _translit(d.strand_label), d.mark, d.delta, hbo(carrier))
+            )
+        )
+    return H.table(tuple(rows), {"class": "goerwitz-obs-tree-table"})
+
+
+def _legarmeh_para() -> object:
+    bamayim = hbo(accents_and_letters("בַּמַּ֖֣יִם"))  # WLC's tangled tipeḥa+munaḥ form
+    return _comment(
+        (
+            "Legarmeh is neither added nor erased. The three passages carry nine legarmeh"
+            f" accents (a {_MUNAX} with a following paseq, before a revia), but every one sits"
+            f" on a word WLC itself writes with that {_MUNAX} and paseq — the paseq is never"
+            " supplied from MAM. A legarmeh therefore surfaces only in the strand that takes"
+            " WLC’s ",
+            _MUNAX,
+            ": WLC’s tangled ",
+            bamayim,
+            f" (Exodus 20:4), for instance, carries both a {_TIPEXA} and a {_MUNAX}, so the"
+            f" {_ELYON} (taking the {_MUNAX}) reads a legarmeh there while the {_TAXTON}"
+            f" (taking the {_TIPEXA}) does not. That split is the ordinary accent assignment,"
+            " not a word-division change, so the inventory above is maqaf and sof pasuq only.",
+        )
+    )
+
+
+def _division_section(changes: list) -> tuple[object, ...]:
+    if not changes:
+        return (
+            H.heading_level_2("Erased and added maqaf and sof pasuq marks"),
+            H.para("No maqaf or sof pasuq marks were added or erased."),
+        )
+    return (
+        H.heading_level_2("Erased and added maqaf and sof pasuq marks"),
+        H.para(
+            (
+                "Detangling also re-joins atoms into chanted words."
+                " Each strand’s maqaf marks (or lack thereof, i.e. spaces) are taken from MAM,"
+                " so, relative to WLC’s tangled form, the checker both adds and removes maqaf marks."
+                " (WLC has a mix of the two strands’ maqaf marks; it is not simply “maqaf-maximalist”.)"
+                " A similar situation exists for sof pasuq marks."
+                " (Narrow-sense paseq is not part of the accent grammar, so it is not tracked.)"
+                f" The {len(changes)} additions and erasures are itemized in the table below;"
+                " the pattern in each passage is as follows."
+            )
+        ),
+        *_division_prose(changes),
+        _division_table(changes),
+        _legarmeh_para(),
+    )
+
+
+def render_body_contents(supplies: list, division_changes: list) -> tuple[object, ...]:
+    sections: list[object] = [
+        *_intro(),
+        *_supplied_section(supplies),
+        *_division_section(division_changes),
+    ]
     wrapper = H.div(tuple(sections), {"class": _WIDTH_CLASS})
     return (wrapper,)
 
@@ -185,11 +395,12 @@ def render_body_contents(supplies: list) -> tuple[object, ...]:
 def run(args: argparse.Namespace) -> None:
     results = dual_cant_run.detangle_results(args.wlc422_kq_u_dir, args.mam_simple_dir)
     supplies = [s for pr in results for s in pr.supplied_marks]
+    division_changes = [d for pr in results for d in pr.division_changes]
 
     html_out: Path = args.html_out
     html_out.parent.mkdir(parents=True, exist_ok=True)
     H.write_html_to_file(
-        body_contents=render_body_contents(supplies),
+        body_contents=render_body_contents(supplies, division_changes),
         write_ctx=H.WriteCtx(
             title=REPORT_TITLE,
             path=str(html_out),
@@ -197,7 +408,10 @@ def run(args: argparse.Namespace) -> None:
         ),
         path_to_style=rtms_report.path_to_gh_pages_style(html_out),
     )
-    print(f"HTML: {html_out} ({len(supplies)} supplied marks)")
+    print(
+        f"HTML: {html_out} ({len(supplies)} supplied marks, "
+        f"{len(division_changes)} division changes)"
+    )
 
 
 def main() -> None:

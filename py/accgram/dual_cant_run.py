@@ -83,7 +83,7 @@ def run(args: argparse.Namespace) -> None:
     print(
         f"dual-cant: {s['passages']} passages, {s['chanted_verses']} chanted verses "
         f"({s['oddball']} oddball), {s['supplied_marks']} supplied marks, "
-        f"{s['anomalies']} anomalies -> {out_path}"
+        f"{s['anomalies']} anomalies, {s['division_changes']} division changes -> {out_path}"
     )
 
 
@@ -97,6 +97,7 @@ def _payload(results: list[dcd.PassageResult]) -> dict[str, object]:
             "oddball": sum(1 for cv in chanted_verses if cv.status != "clean"),
             "supplied_marks": sum(len(pr.supplied_marks) for pr in results),
             "anomalies": sum(len(pr.anomalies) for pr in results),
+            "division_changes": sum(len(pr.division_changes) for pr in results),
         },
         "passages": [_passage_obj(pr) for pr in results],
     }
@@ -111,6 +112,7 @@ def _passage_obj(pr: dcd.PassageResult) -> dict[str, object]:
         "strands": [_strand_obj(tr) for tr in pr.strands],
         "supplied_marks": [_supply_obj(s) for s in pr.supplied_marks],
         "anomalies": [_anomaly_obj(a) for a in pr.anomalies],
+        "division_changes": [_division_change_obj(d) for d in pr.division_changes],
     }
 
 
@@ -147,6 +149,18 @@ def _supply_obj(s: dcd.SuppliedMark) -> dict[str, object]:
         "accent_name": s.accent_name,
         "reason": s.reason,
         "source": s.source,
+    }
+
+
+def _division_change_obj(d: dcd.DivisionChange) -> dict[str, object]:
+    return {
+        "bcv": d.bcv,
+        "strand": d.strand,
+        "strand_label": d.strand_label,
+        "mark": d.mark,
+        "delta": d.delta,
+        "wlc_word": d.wlc_word,
+        "mam_word": d.mam_word,
     }
 
 

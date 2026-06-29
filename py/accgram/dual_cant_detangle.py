@@ -136,6 +136,26 @@ class Anomaly:
 
 
 @dataclass(frozen=True)
+class DivisionChange:
+    """A word-division mark (maqaf or sof pasuq) a reading adds or erases relative to WLC's
+    single tangled form.
+
+    Each reading takes its word-division from its MAM strand, so against WLC's one compromise
+    division it both adds marks (where this reading divides and WLC did not) and erases them
+    (where WLC divided for the other reading).  Narrow-sense paseq is not part of the accent
+    grammar and is not tracked; a legarmeh's paseq is always WLC's own (see the page), so no
+    accent-bearing division mark beyond maqaf and sof pasuq changes here."""
+
+    bcv: str
+    strand: str  # "alef" / "bet"
+    strand_label: str  # pashut / taxton / ...
+    mark: str  # "maqaf" / "sof pasuq"
+    delta: str  # "added" (strand has, WLC lacks) / "erased" (WLC has, strand lacks)
+    wlc_word: str  # the aligned WLC word
+    mam_word: str  # the aligned MAM strand word
+
+
+@dataclass(frozen=True)
 class ChantedVerseResult:
     """One detangled chanted verse (sof-pasuq-delimited), fed to the prose grammar."""
 
@@ -168,6 +188,7 @@ class PassageResult:
     strands: tuple[StrandResult, StrandResult]  # alef, bet
     supplied_marks: tuple[SuppliedMark, ...]
     anomalies: tuple[Anomaly, ...]
+    division_changes: tuple[DivisionChange, ...] = ()
 
 
 # --------------------------------------------------------------------------- #
@@ -328,6 +349,71 @@ def _equal_acc_by_wlc(
             for wi, ti in zip(block.wlc_idxs, block.tok_idxs):
                 out[wi] = set(_real_accents_ordered(strand[ti].text))
     return out
+
+
+# Word-division marks that ARE accent-relevant (the inventory tracks these); narrow-sense
+# paseq is not part of the accent grammar, so it is deliberately excluded.
+_DIVISION_MARKS: tuple[tuple[str, str], ...] = (
+    (_SRC_MAQAF, "maqaf"),
+    (_SOF_PASUQ, "sof pasuq"),
+)
+
+
+def _trailing_division(word: str) -> set[str]:
+    """The maqaf / sof pasuq a word itself carries."""
+    return {ch for ch, _ in _DIVISION_MARKS if ch in word}
+
+
+def _strand_division_after(strand: list[_Tok], i: int) -> set[str]:
+    """The division marks the strand carries after word-token ``i``: trailing marks on the
+    word plus any immediately following non-word tokens (a standalone sof pasuq)."""
+    marks = _trailing_division(strand[i].text)
+    j = i + 1
+    while j < len(strand) and not strand[j].skel:
+        marks |= _trailing_division(strand[j].text)
+        j += 1
+    return marks
+
+
+def _division_changes(
+    wlc: list[_Tok],
+    strand_toks: list[_Tok],
+    blocks: list[_Block],
+    strand: str,
+    label: str,
+) -> list[DivisionChange]:
+    """The maqaf / sof-pasuq marks this strand adds or erases vs WLC's tangled division.
+
+    Compares each 1:1-aligned WLC word's trailing division against the strand's at the same
+    position (the strand's word-division is MAM's).  ``added`` = the strand divides where WLC
+    did not; ``erased`` = WLC divided for the other reading and this strand does not."""
+    changes: list[DivisionChange] = []
+    for block in blocks:
+        if block.tag != "equal":
+            continue
+        for wi, ti in zip(block.wlc_idxs, block.tok_idxs):
+            wlc_marks = _trailing_division(wlc[wi].text)
+            strand_marks = _strand_division_after(strand_toks, ti)
+            for ch, name in _DIVISION_MARKS:
+                in_wlc, in_strand = ch in wlc_marks, ch in strand_marks
+                if in_strand and not in_wlc:
+                    delta = "added"
+                elif in_wlc and not in_strand:
+                    delta = "erased"
+                else:
+                    continue
+                changes.append(
+                    DivisionChange(
+                        bcv=strand_toks[ti].bcv,
+                        strand=strand,
+                        strand_label=label,
+                        mark=name,
+                        delta=delta,
+                        wlc_word=wlc[wi].text,
+                        mam_word=strand_toks[ti].text,
+                    )
+                )
+    return changes
 
 
 def _equal_meteg_by_wlc(
@@ -778,11 +864,16 @@ def detangle_passage(
         passage, "bet", passage.bet_label, passage.alef_label,
         wlc, bet, bet_blocks, alef_acc, alef_meteg, parser,
     )
+    division_changes = tuple(
+        _division_changes(wlc, alef, alef_blocks, "alef", passage.alef_label)
+        + _division_changes(wlc, bet, bet_blocks, "bet", passage.bet_label)
+    )
     return PassageResult(
         passage=passage,
         strands=(alef_result, bet_result),
         supplied_marks=tuple(alef_sup + bet_sup),
         anomalies=tuple(alef_anom + bet_anom),
+        division_changes=division_changes,
     )
 
 

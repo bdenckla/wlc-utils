@@ -189,15 +189,19 @@ def test_fold_in_yields_one_dt58_oddball_record() -> None:
     assert dt[0]["ref"].endswith("5:8")  # so the oddball collector reads (5, 8)
 
 
-def test_supplied_marks_page_renders_all_five() -> None:
+def test_supplied_marks_page_renders_all_five_cases_and_division_inventory() -> None:
     results = _detangle_or_skip()
     supplies = [s for pr in results for s in pr.supplied_marks]
-    body = supplied_marks.render_body_contents(supplies)
-    # One <table> with a header row + 5 data rows.
+    division_changes = [d for pr in results for d in pr.division_changes]
+    body = supplied_marks.render_body_contents(supplies, division_changes)
     from py_html import wlc_utils_html as H
 
     html = H.el_to_str_no_wbr(body[0])
-    assert html.count("<tr") == 6
+    # Each of the five supplied accents is its own case, with a heading and an image.
+    assert html.count("goerwitz-tms-reading-label") == len(supplies) == 5
+    assert html.count("<img") == 5
+    # The lone division-change table: a header row + one row per add/erase change.
+    assert html.count("<tr") == 1 + len(division_changes)
 
 
 if __name__ == "__main__":  # pragma: no cover
