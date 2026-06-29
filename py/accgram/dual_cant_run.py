@@ -146,6 +146,7 @@ def _supply_obj(s: dcd.SuppliedMark) -> dict[str, object]:
         "accent": s.accent,
         "accent_name": s.accent_name,
         "reason": s.reason,
+        "source": s.source,
     }
 
 

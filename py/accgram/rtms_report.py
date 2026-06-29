@@ -172,15 +172,19 @@ def _render_dual_cant_strand_table(
         return None
 
     words = reading.get("words") if isinstance(reading.get("words"), list) else []
+    # The form the detangler emitted for this reading: an oddball reading carries WLC's own
+    # mark (the flagged stray/substitution), while a clean reading carries the supplied (MAM)
+    # mark.  (dt 5:8: the elyon emits WLC's merkha; the taxton emits its supplied qadma.)
+    emitted_source = "WLC" if reading.get("status") == "oddball" else "MAM"
     table_rows: list[object] = []
     for entry in rows:
         value = str(entry.get("value", ""))
-        # Cross-check: the WLC form shown must be the one the detangler actually emitted
-        # for this reading, so a hand-authored table cannot drift from the stream.
-        if entry.get("source") == "WLC" and value not in words:
+        # Cross-check: the emitted form must appear in the stream, so a hand-authored table
+        # cannot drift from it.
+        if entry.get("source") == emitted_source and value not in words:
             raise ValueError(
-                f"dual_cant_tables WLC value {value!r} for strand "
-                f"{reading.get('strand_label')!r} is not the detangled focus word "
+                f"dual_cant_tables {emitted_source} value {value!r} for strand "
+                f"{reading.get('strand_label')!r} is not in the detangled stream "
                 f"(words={words})."
             )
         table_rows.append(

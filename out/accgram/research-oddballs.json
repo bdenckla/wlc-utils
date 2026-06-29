@@ -1818,7 +1818,7 @@
           "span_label": "5:8",
           "words": [
             "לא־",
-            "תעש֥ה",
+            "תעש֨ה",
             "לך֥",
             "פ֙סל",
             "כל־",
@@ -1852,7 +1852,7 @@
             "dt5:8",
             "dt5:8"
           ],
-          "status": "oddball",
+          "status": "clean",
           "tree": {
             "label": "silluq_clause",
             "children": [
@@ -1865,7 +1865,9 @@
                       {
                         "label": "pashta_phrase",
                         "leaves": [
-                          "ERROR"
+                          "qadma",
+                          "merkha",
+                          "pashta"
                         ]
                       },
                       {

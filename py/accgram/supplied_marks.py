@@ -36,7 +36,7 @@ from py_html import wlc_utils_html as H
 
 import repo_paths
 
-REPORT_TITLE = "Supplied marks"
+REPORT_TITLE = "Supplied and erased marks"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 
@@ -99,6 +99,31 @@ def _intro() -> tuple[object, ...]:
         ),
         H.para(
             (
+                "Detangling also re-divides the words. Each reading’s word-division — its"
+                " maqaf joins and its sof-pasuq verse breaks — is taken from MAM, so relative"
+                " to WLC’s single tangled form the checker both adds and removes these marks"
+                " (WLC commits to a mix of the two readings’ divisions; it is not simply"
+                " “maqaf-maximalist”). Only the resulting cantillation accents are itemized"
+                " below.",
+            )
+        ),
+        H.para(
+            (
+                "A meteg is what guides a supply. A medial meteg is transcription-ambiguous —"
+                " it can stand in for, or be mis-transcribed as, a real accent like a merkha —"
+                " so the reading whose MAM mark here is a sole meteg is the slot that absorbs"
+                " WLC’s actual mark, while the other reading’s distinct accent is the omitted"
+                " one, supplied from MAM. At Exodus 20:3 WLC’s mark is itself a meteg (a valid"
+                " form for that reading), so the supply is a clean charity. At Deuteronomy 5:8"
+                " WLC’s mark is instead a real merkha where a meteg is due: the qadma the other"
+                " reading omits is supplied here (with non-definitive LC support), but WLC’s"
+                " merkha is left to stand and surfaces as an oddball in the ",
+                link("checker run", "goerwitz.html"),
+                ".",
+            )
+        ),
+        H.para(
+            (
                 "A supplied-mark word parses clean — the supply is what lets it parse —"
                 " so it is inventoried here and ",
                 H.bold("not"),
@@ -112,9 +137,14 @@ def _intro() -> tuple[object, ...]:
     )
 
 
+def _source_label(source: str) -> str:
+    """Provenance of the supplied accent: MAM only, or with non-definitive LC support."""
+    return "LC (non-definitive)" if source == "lc" else "MAM"
+
+
 def _table(supplies: list) -> object:
     header = H.table_row_of_headers(
-        ("Verse", "Reading", "Word", "Supplied accent", "WLC writes", "Why")
+        ("Verse", "Reading", "Word", "Supplied accent", "WLC writes", "Source", "Why")
     )
     rows = [header]
     for s in supplies:
@@ -127,6 +157,7 @@ def _table(supplies: list) -> object:
                     hbo(accents_and_letters(s.mam_word)),
                     s.accent_name,
                     wlc_cell,
+                    _source_label(s.source),
                     s.reason,
                 )
             )

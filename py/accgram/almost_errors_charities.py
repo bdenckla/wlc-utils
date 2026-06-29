@@ -30,7 +30,7 @@ def charities_intro() -> tuple[object, ...]:
                 " on a word, that one mark is supplied from MAM so the reading parses."
                 " Because it adds a mark rather than rereading one, it is inventoried"
                 " separately at ",
-                link("supplied-marks.html", "supplied-marks.html"),
+                link("Supplied and erased marks", "supplied-marks.html"),
                 ".",
             )
         ),

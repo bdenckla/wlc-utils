@@ -109562,25 +109562,54 @@
       "ref": "Deuter 5:8",
       "bcv": "dt5:8",
       "dual_cant": true,
-      "dual_cant_strand": "alef",
-      "dual_cant_strand_label": "taxton",
-      "dual_cant_ref": "dt5:8 [taxton] (chanted verse 2/12)",
+      "dual_cant_strand": "bet",
+      "dual_cant_strand_label": "elyon",
+      "dual_cant_ref": "dt5:7–10 [elyon] (chanted verse 2/10)",
       "input": {
-        "unicode": "לא־תעש֥ה לך֥ פ֙סל כל־תמונ֔ה אש֤ר בשמ֙ים ממ֔על ואש֥ר בא֖רץ מת֑חת ואש֥ר במ֖ים מת֥חת לאֽרץ׃",
-        "marks": "אא-אאא֥א אא֥ א֙אא אא-אאאא֔א אא֤א אאא֙אא אא֔אא אאא֥א אא֖אא אא֑אא אאא֥א אא֖אא אא֥אא אאֽאא׃",
+        "unicode": "ל֣א יהיה־לך֩ אלה֨ים אחר֜ים על־פנ֗י ל֣א תעש֥ה־לך֣ פ֣סל׀ כל־תמונ֡ה אש֣ר בשמ֣ים׀ ממ֡על ואשר֩ בא֨רץ מת֜חת ואש֥ר במ֣ים׀ מת֣חת לא֗רץ לא־תשתחו֣ה להם֮ ול֣א תעבדם֒ כ֣י אנכ֞י יהו֤ה אלה֙יך א֣ל קנ֔א פ֠קד עו֨ן אב֧ות על־בנ֛ים ועל־שלש֥ים ועל־רבע֖ים לשנא֑י וע֤שה ח֙סד לאלפ֔ים לאהב֖י ולשמר֥י מצותֽי׃",
+        "marks": "א֣א אאאא-אא֩ אאא֨אא אאא֜אא אא-אא֗א א֣א אאא֥א-אא֣ א֣אא׀ אא-אאאא֡א אא֣א אאא֣אא׀ אא֡אא אאאא֩ אא֨אא אא֜אא אאא֥א אא֣אא׀ אא֣אא אא֗אא אא-אאאאא֣א אאא֮ אא֣א אאאאא֒ א֣א אאא֞א אאא֤א אאא֙אא א֣א אא֔א א֠אא אא֨א אא֧אא אא-אא֛אא אאא-אאא֥אא אאא-אאא֖אא אאאא֑א אא֤אא א֙אא אאאא֔אא אאאא֖א אאאאא֥א אאאאֽא׃",
         "tokens": [
           "TILDE",
+          "MUNAX",
+          "TELISHAQETANNA",
+          "AZLA",
+          "GERESH",
+          "REVIA",
+          "MUNAX",
           "MERKHA",
+          "MUNAX",
+          "MUNAX",
+          "PAZER",
+          "MUNAX",
+          "MUNAX",
+          "PAZER",
+          "TELISHAQETANNA",
+          "AZLA",
+          "GERESH",
           "MERKHA",
-          "PASHTA",
-          "ZAQEF",
+          "LEGARMEH",
+          "MUNAX",
+          "REVIA",
+          "MUNAX",
+          "ZARQA",
+          "MUNAX",
+          "SEGOLTA",
+          "MUNAX",
+          "GERSHAYIM",
           "MAHAPAKH",
           "PASHTA",
+          "MUNAX",
           "ZAQEF",
+          "TELISHAGEDOLA",
+          "QADMA",
+          "DARGA",
+          "TEVIR",
           "MERKHA",
           "TIPEXA",
           "ATNAX",
-          "MERKHA",
+          "MAHAPAKH",
+          "PASHTA",
+          "ZAQEF",
           "TIPEXA",
           "MERKHA",
           "SILLUQ",
@@ -109595,18 +109624,106 @@
             "label": "atnax_clause",
             "children": [
               {
-                "label": "zaqef_clause",
+                "label": "segolta_clause",
                 "children": [
                   {
-                    "label": "pashta_phrase",
-                    "leaves": [
-                      "ERROR"
+                    "label": "revia_clause",
+                    "children": [
+                      {
+                        "label": "geresh_phrase",
+                        "leaves": [
+                          "munax",
+                          "telishaqetanna",
+                          "azla",
+                          "geresh"
+                        ]
+                      },
+                      {
+                        "label": "revia_phrase",
+                        "leaves": [
+                          "revia"
+                        ]
+                      }
                     ]
                   },
                   {
-                    "label": "zaqef_phrase",
-                    "leaves": [
-                      "zaqef"
+                    "label": "segolta_clause",
+                    "children": [
+                      {
+                        "label": "revia_clause",
+                        "children": [
+                          {
+                            "label": "pazer_phrase",
+                            "leaves": [
+                              "ERROR"
+                            ]
+                          },
+                          {
+                            "label": "revia_clause",
+                            "children": [
+                              {
+                                "label": "pazer_phrase",
+                                "leaves": [
+                                  "munax",
+                                  "munax",
+                                  "pazer"
+                                ]
+                              },
+                              {
+                                "label": "revia_clause",
+                                "children": [
+                                  {
+                                    "label": "geresh_phrase",
+                                    "leaves": [
+                                      "telishaqetanna",
+                                      "azla",
+                                      "geresh"
+                                    ]
+                                  },
+                                  {
+                                    "label": "revia_clause",
+                                    "children": [
+                                      {
+                                        "label": "legarmeh_phrase",
+                                        "leaves": [
+                                          "merkha",
+                                          "legarmeh"
+                                        ]
+                                      },
+                                      {
+                                        "label": "revia_phrase",
+                                        "leaves": [
+                                          "munax",
+                                          "revia"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "label": "segolta_clause",
+                        "children": [
+                          {
+                            "label": "zarqa_phrase",
+                            "leaves": [
+                              "munax",
+                              "zarqa"
+                            ]
+                          },
+                          {
+                            "label": "segolta_phrase",
+                            "leaves": [
+                              "munax",
+                              "segolta"
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -109618,15 +109735,28 @@
                     "label": "zaqef_clause",
                     "children": [
                       {
-                        "label": "pashta_phrase",
-                        "leaves": [
-                          "mahapakh",
-                          "pashta"
+                        "label": "pashta_clause",
+                        "children": [
+                          {
+                            "label": "geresh_phrase",
+                            "leaves": [
+                              "munax",
+                              "gershayim"
+                            ]
+                          },
+                          {
+                            "label": "pashta_phrase",
+                            "leaves": [
+                              "mahapakh",
+                              "pashta"
+                            ]
+                          }
                         ]
                       },
                       {
                         "label": "zaqef_phrase",
                         "leaves": [
+                          "munax",
                           "zaqef"
                         ]
                       }
@@ -109636,10 +109766,34 @@
                     "label": "atnax_clause",
                     "children": [
                       {
-                        "label": "tipexa_phrase",
-                        "leaves": [
-                          "merkha",
-                          "tipexa"
+                        "label": "tipexa_clause",
+                        "children": [
+                          {
+                            "label": "tevir_clause",
+                            "children": [
+                              {
+                                "label": "big_telisha_phrase",
+                                "leaves": [
+                                  "telishagedola"
+                                ]
+                              },
+                              {
+                                "label": "tevir_phrase",
+                                "leaves": [
+                                  "qadma",
+                                  "darga",
+                                  "tevir"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "label": "tipexa_phrase",
+                            "leaves": [
+                              "merkha",
+                              "tipexa"
+                            ]
+                          }
                         ]
                       },
                       {
@@ -109658,17 +109812,39 @@
             "label": "silluq_clause",
             "children": [
               {
-                "label": "tipexa_phrase",
-                "leaves": [
-                  "merkha",
-                  "tipexa"
+                "label": "zaqef_clause",
+                "children": [
+                  {
+                    "label": "pashta_phrase",
+                    "leaves": [
+                      "mahapakh",
+                      "pashta"
+                    ]
+                  },
+                  {
+                    "label": "zaqef_phrase",
+                    "leaves": [
+                      "zaqef"
+                    ]
+                  }
                 ]
               },
               {
-                "label": "silluq_phrase",
-                "leaves": [
-                  "merkha",
-                  "silluq"
+                "label": "silluq_clause",
+                "children": [
+                  {
+                    "label": "tipexa_phrase",
+                    "leaves": [
+                      "tipexa"
+                    ]
+                  },
+                  {
+                    "label": "silluq_phrase",
+                    "leaves": [
+                      "merkha",
+                      "silluq"
+                    ]
+                  }
                 ]
               }
             ]

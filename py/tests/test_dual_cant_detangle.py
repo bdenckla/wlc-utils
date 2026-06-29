@@ -6,11 +6,12 @@ corpus or MAM-simple is absent.
 
 The fixed expectations come from the verified survey (``.novc/novc_dualcant_survey.py``):
 
-  * exactly 4 supplied marks (clean charities) and 2 anomalies -- the one dt 5:8 merkha
-    breaking both readings (the taḥton's qadma substitute and the elyon's stray);
+  * exactly 5 supplied marks (clean charities; dt 5:8's taxton qadma has non-definitive
+    LC support) and 1 anomaly -- WLC's dt 5:8 merkha, a stray in the elyon (a real accent
+    where only a meteg is due) while the taxton's omitted qadma is supplied;
   * Gen 35:22 detangles into pashut = 2 chanted verses, midrashit = 1, all parsing;
   * supplied-mark words parse clean (the charity is what lets them parse);
-  * the dt 5:8 anomaly surfaces as an attributed oddball, not a crash.
+  * the dt 5:8 elyon anomaly surfaces as an attributed oddball, not a crash.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_dual_cant_detangle.py -v
@@ -57,33 +58,36 @@ def test_gen3522_splits_into_two_and_one_chanted_verse_all_parsing() -> None:
     assert all(cv.status == "clean" for cv in alef.chanted_verses + bet.chanted_verses)
 
 
-def test_supplied_marks_are_exactly_the_four_clean_supplies() -> None:
+def test_supplied_marks_are_exactly_the_five_clean_supplies() -> None:
     results = _detangle_or_skip()
     supplies = [s for pr in results for s in pr.supplied_marks]
     keyed = {(s.bcv, s.strand, s.accent) for s in supplies}  # one row per supply
-    assert len(supplies) == 4
+    assert len(supplies) == 5
     assert keyed == {
         ("ex20:3", "alef", am.MERKHA),
+        ("dt5:8", "alef", am.QADMA),  # the taxton's omitted qadma, supplied (LC-supported)
         ("dt5:17", "alef", am.TIPEXA),
         ("dt5:6", "bet", am.TIPEXA),
         ("dt5:6", "bet", am.ATNAX),
     }
+    # The dt 5:8 qadma is the one supply with manuscript (LC) support; the rest are MAM-only.
+    dt58 = next(s for s in supplies if (s.bcv, s.accent) == ("dt5:8", am.QADMA))
+    assert dt58.source == "lc"
+    assert all(s.source == "mam" for s in supplies if s is not dt58)
 
 
-def test_dt58_merkha_is_an_anomaly_in_both_readings() -> None:
-    # WLC's single tangled merkha breaks both readings: in the taḥton it stands in for the
-    # due qadma (a substitution anomaly), and in the elyon -- which is due no cantillation
-    # accent there, only a meteg -- it is a stray (no-accent-due anomaly).  One WLC mark,
-    # two anomalies, no other anomaly anywhere in the three loci.
+def test_dt58_merkha_is_a_stray_anomaly_in_the_elyon() -> None:
+    # WLC's single tangled merkha belongs to the elyon's meteg slot, where a real accent
+    # is not due: it is emitted as a stray and flagged (a no-accent-due anomaly).  The
+    # taxton's omitted qadma is supplied instead (no taxton anomaly).  This is the only
+    # anomaly across the three loci.
     results = _detangle_or_skip()
     anomalies = [a for pr in results for a in pr.anomalies]
-    by_strand = {a.strand: a for a in anomalies}
-    assert len(anomalies) == 2
-    assert {a.bcv for a in anomalies} == {"dt5:8"}
-    assert by_strand["alef"].expected == am.QADMA  # taḥton is due a qadma
-    assert by_strand["alef"].found == am.MERKHA  # WLC wrote a merkha instead
-    assert by_strand["bet"].expected == ""  # elyon is due no cantillation accent
-    assert by_strand["bet"].found == am.MERKHA  # yet WLC's merkha lands here too
+    assert len(anomalies) == 1
+    anomaly = anomalies[0]
+    assert (anomaly.bcv, anomaly.strand) == ("dt5:8", "bet")  # the elyon
+    assert anomaly.expected == ""  # the elyon is due no cantillation accent (only a meteg)
+    assert anomaly.found == am.MERKHA  # yet WLC wrote a merkha here
 
 
 def test_supplied_mark_words_parse_clean() -> None:
@@ -102,25 +106,25 @@ def test_supplied_mark_words_parse_clean() -> None:
 def test_dt58_anomaly_surfaces_as_attributed_oddball_not_crash() -> None:
     results = _detangle_or_skip()
     dt = next(pr for pr in results if pr.passage.bb == "dt")
-    taxton = next(tr for tr in dt.strands if tr.strand == "alef")
-    dt58 = [cv for cv in taxton.chanted_verses if cv.bcv_span[0] == "dt5:8"]
+    elyon = next(tr for tr in dt.strands if tr.strand == "bet")  # the merkha breaks the elyon
+    dt58 = [cv for cv in elyon.chanted_verses if "dt5:8" in cv.word_bcvs]
     assert dt58 and dt58[0].status == "oddball"
     assert dt58[0].tree is not None  # a real (ERROR-bearing) tree, not a None crash
+    # The taxton's dt 5:8 chanted verse is now clean -- its omitted qadma is supplied.
+    taxton = next(tr for tr in dt.strands if tr.strand == "alef")
+    tax58 = [cv for cv in taxton.chanted_verses if cv.bcv_span[0] == "dt5:8"]
+    assert tax58 and tax58[0].status == "clean"
 
 
 def test_every_chanted_verse_parses_or_is_attributed_only_dt58_is_an_oddity() -> None:
-    # The lone dt 5:8 merkha is the only oddity, but it spoils both readings' chanted
-    # verses: the taḥton's 5:8 and the elyon's 5:7-10 (which contains 5:8).  Nothing else
-    # is non-clean.
+    # The lone dt 5:8 merkha spoils only the elyon's 5:7-10 chanted verse (which contains
+    # 5:8); the taxton's 5:8 is rescued by supplying its qadma.  Nothing else is non-clean.
     results = _detangle_or_skip()
     cvs = _all_chanted_verses(results)
     bad = [cv.ref for cv in cvs if cv.status not in ("clean", "oddball")]
     assert not bad, f"unexpected no_parse/location_only: {bad}"
     oddball_spans = {(cv.strand, cv.bcv_span) for cv in cvs if cv.status == "oddball"}
-    assert oddball_spans == {
-        ("alef", ("dt5:8", "dt5:8")),
-        ("bet", ("dt5:7", "dt5:10")),
-    }
+    assert oddball_spans == {("bet", ("dt5:7", "dt5:10"))}
 
 
 # --------------------------------------------------------------------------- #
@@ -174,24 +178,26 @@ def test_fold_in_yields_one_dt58_oddball_record() -> None:
     # Genesis 35:22 and the Exodus Decalogue fold in nothing (no oddities).
     assert dcd.folded_oddball_records("gn", wlc_index, mam, parser) == []
     assert dcd.folded_oddball_records("ex", wlc_index, mam, parser) == []
-    # Deuteronomy folds in exactly the dt 5:8 taxton oddity, keyed by its numbered verse.
+    # Deuteronomy folds in exactly the dt 5:8 elyon oddity, keyed at the verse where the
+    # rogue merkha lives (dt 5:8), though the elyon reading itself spans dt 5:7-10.
     dt = dcd.folded_oddball_records("dt", wlc_index, mam, parser)
     assert len(dt) == 1
     assert dt[0]["bcv"] == "dt5:8"
+    assert dt[0]["dual_cant_strand"] == "bet"  # the elyon is the oddball reading now
     assert dt[0]["status"] == "oddball"
     assert dt[0]["dual_cant"] is True
     assert dt[0]["ref"].endswith("5:8")  # so the oddball collector reads (5, 8)
 
 
-def test_supplied_marks_page_renders_all_four() -> None:
+def test_supplied_marks_page_renders_all_five() -> None:
     results = _detangle_or_skip()
     supplies = [s for pr in results for s in pr.supplied_marks]
     body = supplied_marks.render_body_contents(supplies)
-    # One <table> with a header row + 4 data rows.
+    # One <table> with a header row + 5 data rows.
     from py_html import wlc_utils_html as H
 
     html = H.el_to_str_no_wbr(body[0])
-    assert html.count("<tr") == 5
+    assert html.count("<tr") == 6
 
 
 if __name__ == "__main__":  # pragma: no cover

@@ -3,10 +3,10 @@
   "summary": {
     "passages": 3,
     "chanted_verses": 47,
-    "clean": 45,
-    "oddball": 2,
-    "supplied_marks": 4,
-    "anomalies": 2
+    "clean": 46,
+    "oddball": 1,
+    "supplied_marks": 5,
+    "anomalies": 1
   },
   "passages": [
     {
@@ -4071,7 +4071,8 @@
           "wlc_word": "יִהְיֶֽה־",
           "accent": "֥",
           "accent_name": "merkha (U+05A5)",
-          "reason": "WLC writes no cantillation accent on this word (it is maqaf-joined in the elyon reading), so the mark is supplied from MAM."
+          "reason": "WLC writes only the elyon reading here (maqaf-joined, carrying a meteg, with no cantillation accent of its own), so this reading's mark is supplied from MAM.",
+          "source": "mam"
         }
       ],
       "anomalies": []
@@ -4262,10 +4263,10 @@
                 "dt5:8",
                 "dt5:8"
               ],
-              "status": "oddball",
+              "status": "clean",
               "words": [
                 "לא־",
-                "תעש֥ה",
+                "תעש֨ה",
                 "לך֥",
                 "פ֙סל",
                 "כל־",
@@ -4299,10 +4300,10 @@
                 "dt5:8",
                 "dt5:8"
               ],
-              "marks": "אא-אאא֥א אא֥ א֙אא אא-אאאא֔א אא֤א אאא֙אא אא֔אא אאא֥א אא֖אא אא֑אא אאא֥א אא֖אא אא֥אא אאֽאא׃",
+              "marks": "אא-אאא֨א אא֥ א֙אא אא-אאאא֔א אא֤א אאא֙אא אא֔אא אאא֥א אא֖אא אא֑אא אאא֥א אא֖אא אא֥אא אאֽאא׃",
               "tokens": [
                 "TILDE",
-                "MERKHA",
+                "QADMA",
                 "MERKHA",
                 "PASHTA",
                 "ZAQEF",
@@ -4330,7 +4331,9 @@
                           {
                             "label": "pashta_phrase",
                             "leaves": [
-                              "ERROR"
+                              "qadma",
+                              "merkha",
+                              "pashta"
                             ]
                           },
                           {
@@ -8095,6 +8098,17 @@
       ],
       "supplied_marks": [
         {
+          "bcv": "dt5:8",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mam_word": "תַעֲשֶׂ֨ה",
+          "wlc_word": "תַעֲשֶׂ֥ה־",
+          "accent": "֨",
+          "accent_name": "qadma (U+05A8)",
+          "reason": "WLC writes a merkha (U+05A5) here that belongs to the elyon reading (where it mis-transcribes a meteg); this reading's own accent is omitted by WLC and supplied from MAM.",
+          "source": "lc"
+        },
+        {
           "bcv": "dt5:17",
           "strand": "alef",
           "strand_label": "taxton",
@@ -8102,7 +8116,8 @@
           "wlc_word": "תִּרְצָֽח׃",
           "accent": "֖",
           "accent_name": "tipexa (U+0596)",
-          "reason": "WLC ends a chanted verse here in the elyon reading (silluq + sof pasuq), so this reading's continuing accent is supplied from MAM."
+          "reason": "WLC ends a chanted verse here in the elyon reading (silluq + sof pasuq), so this reading's continuing accent is supplied from MAM.",
+          "source": "mam"
         },
         {
           "bcv": "dt5:6",
@@ -8112,7 +8127,8 @@
           "wlc_word": "אָֽנֹכִי֙",
           "accent": "֖",
           "accent_name": "tipexa (U+0596)",
-          "reason": "WLC writes only the taxton reading here (pashta (U+0599)), so this strand's mark is supplied from MAM."
+          "reason": "WLC writes only the taxton reading here (pashta (U+0599)), so this strand's mark is supplied from MAM.",
+          "source": "mam"
         },
         {
           "bcv": "dt5:6",
@@ -8122,21 +8138,11 @@
           "wlc_word": "אֱלֹהֶ֔יךָ",
           "accent": "֑",
           "accent_name": "atnax (U+0591)",
-          "reason": "WLC writes only the taxton reading here (zaqef qatan (U+0594)), so this strand's mark is supplied from MAM."
+          "reason": "WLC writes only the taxton reading here (zaqef qatan (U+0594)), so this strand's mark is supplied from MAM.",
+          "source": "mam"
         }
       ],
       "anomalies": [
-        {
-          "bcv": "dt5:8",
-          "strand": "alef",
-          "strand_label": "taxton",
-          "mam_word": "תַעֲשֶׂ֨ה",
-          "wlc_word": "תַעֲשֶׂ֥ה־",
-          "expected": "֨",
-          "expected_name": "qadma (U+05A8)",
-          "found": "֥",
-          "found_name": "merkha (U+05A5)"
-        },
         {
           "bcv": "dt5:8",
           "strand": "bet",

@@ -19,7 +19,9 @@ BY_REF: dict[str, dict[str, object]] = {
         # (belonging to the taḥton) -- the consensus pointing, under which both the
         # taḥton and elyon chanted verses are grammatical, where the merkha makes both
         # ungrammatical. (MAM's taḥton has the qadma and its elyon has the meteg, which
-        # the scanner swallows, which is why MAM's elyon parses cleanly.) UXLC corrects
+        # the scanner swallows, which is why MAM's elyon parses cleanly.) The checker supplies
+        # the taḥton's qadma (clean, on the supplied-marks page) and emits WLC's actual
+        # merkha in the elyon, so only the elyon is a dt 5:8 oddity now. UXLC corrects
         # the merkha to a meteg but supplies a pashta rather than the due qadma; see the
         # linked UXLC note page (its `-t` te'amim note). UXLC has since proposed a pending
         # change (for UXLC 2.6) to change that pashta to the qadma -- exactly the
@@ -32,7 +34,10 @@ BY_REF: dict[str, dict[str, object]] = {
             " a merkha on the ש, but a better LC transcription reads a meteg (elyon)"
             " plus a qadma (taḥton) — the consensus pointing, under which both the"
             " taḥton and elyon chanted verses are grammatical, where the merkha makes"
-            " both ungrammatical. UXLC corrects the merkha to a meteg but supplies a"
+            " both ungrammatical, so the checker supplies the taḥton its due qadma"
+            " (that reading then parses clean) and leaves WLC’s merkha in the elyon,"
+            " where only a meteg is due, so the elyon is the oddball. UXLC corrects the"
+            " merkha to a meteg but supplies a"
             " pashta rather than the due qadma; a pending UXLC change would correct that"
             " pashta to the qadma."
         ),
@@ -52,7 +57,11 @@ BY_REF: dict[str, dict[str, object]] = {
             " both the taḥton chanted verse and the elyon chanted verse grammatical, if"
             " the qadma is taken to belong to the taḥton and the meteg is taken to"
             " belong to the elyon.",
-            "In contrast, the merkha makes both chanted verses ungrammatical.",
+            "In contrast, WLC’s actual merkha makes both chanted verses"
+            " ungrammatical. The checker adopts the qadma for the taḥton — supplying"
+            " it, so that reading parses clean (inventoried on the supplied-marks page) —"
+            " but leaves WLC’s actual merkha in the elyon, which is therefore this"
+            " oddball.",
             "We do not shy away from transcriptions that, while grounded in manuscript"
             " evidence, use context (consensus and grammar) to supplement manuscript"
             " evidence when the manuscript evidence is ambiguous, for example when the"
