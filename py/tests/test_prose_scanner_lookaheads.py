@@ -39,7 +39,7 @@ def test_silluq_blocked_by_intervening_accent_is_swallowed():
     assert _types(am.METEG + am.ATNAX + ")" + am.SOF_PASUQ) == ["ATNAX", "SOFPASUQ"]
 
 
-# --- mayela (tipexa / <ga`ya-only>* (sof-pasuq|atnax)) vs plain tipexa ----------
+# --- mayela (tipexa / <meteg-only>* (sof-pasuq|atnax)) vs plain tipexa ----------
 def test_mayela_when_73_reaches_sof_pasuq_or_atnax():
     # tipexa followed (within the word) only by allowed chars up to sof-pasuq/atnax.
     assert _types(am.TIPEXA + "NA" + am.SOF_PASUQ) == ["MAYELA", "SOFPASUQ"]

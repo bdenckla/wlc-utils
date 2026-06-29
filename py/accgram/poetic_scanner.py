@@ -46,7 +46,7 @@ accent -> poetic reading (the accents that matter in the Three Books):
                   token (a non-whitelisted same-letter stack is a lexical anomaly ->
                   NO_PARSE)
 
-  swallowed (secondary / ga`ya / separators, not structural accents)
+  swallowed (secondary / meteg / separators, not structural accents)
     meteg (not before sof pasuq)   narrow-sense paseq   upper/lower puncta
 
   fail-fast (Plan C): any other stray accent (U+0591..U+05AE) no rule consumes is
@@ -249,7 +249,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.ILUY), pan.ILLUY),
     (re.compile(am.TIPEXA), pan.TARXA),
     (re.compile(am.YERAX), pan.GALGAL),
-    # swallowed: meteg (ga`ya/silluq-helper), narrow-sense paseq (a separator), and the
+    # swallowed: meteg, narrow-sense paseq (a separator), and the
     # upper/lower puncta -- genuine secondaries/separators, not structural accents.
     # (tsinnorit and bare shalshelet, formerly swallowed here, are now emitted above
     # as metsunnar / shalshelet qetannah.)

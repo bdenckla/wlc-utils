@@ -140,7 +140,7 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.ZAQEF_QATAN), "ZAQEF"),
     (re.compile(am.ZAQEF_GADOL), "ZAQEFGADOL"),
     (re.compile(am.REVIA), "REVIA"),
-    # mayela (trailing context): tipexa before sof-pasuq/atnax, only ga`ya intervening.
+    # mayela (trailing context): tipexa before sof-pasuq/atnax, only meteg intervening.
     (re.compile(am.TIPEXA + _MAYELA_LA), "MAYELA"),
     (re.compile(am.TIPEXA), "TIPEXA"),
     # zarqa: optional tsinnorit stress-helper fused onto the tsinnor (one token).
