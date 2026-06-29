@@ -4083,7 +4083,7 @@
           "wlc_word": "יִהְיֶֽה־",
           "accent": "֥",
           "accent_name": "merkha (U+05A5)",
-          "reason": "WLC writes only the elyon reading here (maqaf-joined, carrying a meteg, with no cantillation accent of its own), so this reading's mark is supplied from MAM.",
+          "reason": "WLC has only the elyon reading here (maqaf-joined, carrying a meteg, with no accent of its own), so this reading's mark is supplied from MAM.",
           "source": "mam"
         }
       ],
@@ -8263,7 +8263,7 @@
           "wlc_word": "תַעֲשֶׂ֥ה־",
           "accent": "֨",
           "accent_name": "qadma (U+05A8)",
-          "reason": "WLC writes a merkha (U+05A5) here that belongs to the elyon reading (where it mis-transcribes a meteg); this reading's own accent is omitted by WLC and supplied from MAM.",
+          "reason": "WLC has a merkha (U+05A5) here that belongs to the elyon reading (where it mis-transcribes a meteg); this reading's own accent is omitted by WLC and supplied from MAM.",
           "source": "lc"
         },
         {
@@ -8285,7 +8285,7 @@
           "wlc_word": "אָֽנֹכִי֙",
           "accent": "֖",
           "accent_name": "tipexa (U+0596)",
-          "reason": "WLC writes only the taxton reading here (pashta (U+0599)), so this strand's mark is supplied from MAM.",
+          "reason": "WLC has only the taxton reading here (pashta (U+0599)), so this strand's mark is supplied from MAM.",
           "source": "mam"
         },
         {
@@ -8296,7 +8296,7 @@
           "wlc_word": "אֱלֹהֶ֔יךָ",
           "accent": "֑",
           "accent_name": "atnax (U+0591)",
-          "reason": "WLC writes only the taxton reading here (zaqef qatan (U+0594)), so this strand's mark is supplied from MAM.",
+          "reason": "WLC has only the taxton reading here (zaqef qatan (U+0594)), so this strand's mark is supplied from MAM.",
           "source": "mam"
         }
       ],
@@ -8308,7 +8308,7 @@
           "mam_word": "תַעֲשֶֽׂה־",
           "wlc_word": "תַעֲשֶׂ֥ה־",
           "expected": "",
-          "expected_name": "no cantillation accent (only a meteg is due)",
+          "expected_name": "no accent (only a meteg is due)",
           "found": "֥",
           "found_name": "merkha (U+05A5)"
         }

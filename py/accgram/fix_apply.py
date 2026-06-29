@@ -235,7 +235,7 @@ def _diff_side_word(diff_entry: object, key: str) -> object:
 
 
 def _accent_name_diff(wlc_word: str, mam_word: str) -> tuple[list[str], list[str]]:
-    """The cantillation accents the fix removes vs adds, by abbreviation.
+    """The accents the fix removes vs adds, by abbreviation.
 
     Used only as the grammar-visibility gate and for the human-readable transform
     description; the actual fix is the whole-word substitution.  A *medial* meteg

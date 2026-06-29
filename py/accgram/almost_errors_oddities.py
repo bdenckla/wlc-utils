@@ -179,7 +179,7 @@ _TELG_PARA_2_CONTENTS = (
     )
 _TELG_PARA_3_CONTENTS = (
     #
-    " The checker reads a telg and a gerstar on a single letter in the order the manuscript writes them —"
+    " The checker reads a telg and a gerstar on a single letter in the order they are written in the manuscript —"
     " gerstar-first in the three same-letter words."
     #
     " That order is not the checker's own invention; it is inherited from the source data."
@@ -213,7 +213,7 @@ _TELG_CHANT_OPTIONS = (
     "perform only the gerstar.",
 )
 _TELG_PARA_4B_CONTENTS = (
-    "Performing only one of two accents the manuscript writes is itself an accepted choice in the reading"
+    "Performing only one of two accents the manuscript has is itself an accepted choice in the reading"
     " tradition — compare the two accentuations of the Decalogue (Exodus 20 and Deuteronomy 5) and Genesis 35:22."
     #
     " The table below shows, for each word,"
@@ -250,7 +250,7 @@ def telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]
                 "A note on the trees above: in both the same-letter word (here Zephaniah"
                 " 2:15, whose tree shows the gerstar before the telg) and the cross-letter"
                 " word (Leviticus 10:4, telg before gerstar), the two accents are kept"
-                " distinct — each read in the order the manuscript writes it — never merged"
+                " distinct — each read in the order it is written in the manuscript — never merged"
                 " into a single unit, whether or not they share a letter. That is the"
                 " contrast with Ezekiel 20:31 below, whose two accents do merge.",
             )

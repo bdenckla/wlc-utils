@@ -1,9 +1,9 @@
 r"""Generate gh-pages/accgram/supplied-marks.html -- the supplied-mark inventory (#36).
 
 A *supplied mark* is a third kind of editorial charity, distinct from the two on the
-almost-errors page.  Those *reinterpret* a mark the manuscript already wrote (a prose
+almost-errors page.  Those *reinterpret* a mark the manuscript already has (a prose
 geresh muqdam read as a plain geresh; a poetic plain geresh promoted to revia mugrash).
-A supplied mark instead *adds* a mark WLC never wrote: when WLC's dual cantillation drops
+A supplied mark instead *adds* a mark WLC lacks: when WLC's dual cantillation drops
 one reading's accent on a word (it committed to the other reading's word-division), the
 dual-cantillation detangler supplies that one accent from MAM so the reading's chanted
 verse parses.  Because it is a new kind of charity, it gets its own page rather than a row
@@ -11,7 +11,7 @@ in "Editorial charities".
 
 A supplied-mark word parses clean -- the supply is exactly what lets it parse -- so it is
 surfaced ONLY here, never counted as a prose ungrammatical verse.  (A genuine WLC dual-cantillation
-*error*, where WLC wrote an accent neither reading explains, is the opposite case: it is
+*error*, where WLC has an accent neither reading explains, is the opposite case: it is
 not supplied but flagged, and appears in the prose ungrammatical-verse report.)
 
 The page has two inventories, both generated live from the detangling run
@@ -195,7 +195,7 @@ def _case_extra(s) -> tuple[object, ...]:
         return (
             _comment(
                 f"WLC’s lone mark here is itself a meteg — a valid mark for the {_ELYON} —"
-                f" so supplying the {_TAXTON}’s merkha contradicts nothing WLC wrote: a clean"
+                f" so supplying the {_TAXTON}’s merkha contradicts nothing WLC has: a clean"
                 " charity."
             ),
         )
@@ -235,7 +235,7 @@ def _supplied_case(s) -> tuple[object, ...]:
         wlc_part = (
             "WLC has ",
             hbo(accents_and_letters(s.wlc_word)),
-            " (no cantillation accent of its own).",
+            " (no accent of its own).",
         )
     forms = _comment(
         (

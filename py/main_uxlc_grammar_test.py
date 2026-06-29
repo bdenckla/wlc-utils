@@ -26,8 +26,8 @@ can evaluate, we:
      per case, that our name->mark synthesis is faithful for this accent content
      (it auto-excludes stress-helper / ordering cases we can't reproduce).
      An ADD-accent change is additionally cross-checked against the real UXLC-39
-     XML word (`uxlc39_word_marks`): a prepositive/postpositive accent that the
-     manuscript writes twice (graphical edge mark + inner stress-helper/yated) is
+     XML word (`uxlc39_word_marks`): a prepositive/postpositive accent that is
+     written twice in the manuscript (graphical edge mark + inner stress-helper/yated) is
      fused/de-duped by the real `uni_to_marks` pipeline but not by our name->mark
      synthesis, so such a case is marked unreliable and excluded (e.g. Josh 2:3.7's
      doubled telisha gedola).
@@ -177,7 +177,7 @@ def is_ungrammatical(parser, body: str, bb: str, ch: int, vs: int) -> bool:
 
 
 def _mark_count(uni_tokens: list[str]) -> int:
-    """Count the *mark-bearing* tokens (cantillation accents PLUS meteg/silluq).
+    """Count the *mark-bearing* tokens (accents PLUS meteg/silluq).
 
     Meteg/silluq must count: a meteg->accent change (e.g. "change meteg to merkha")
     is a 1:1 substitution, not an addition, so it must not be tallied as a net

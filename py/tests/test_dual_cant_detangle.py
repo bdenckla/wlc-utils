@@ -86,8 +86,8 @@ def test_dt58_merkha_is_a_stray_anomaly_in_the_elyon() -> None:
     assert len(anomalies) == 1
     anomaly = anomalies[0]
     assert (anomaly.bcv, anomaly.strand) == ("dt5:8", "bet")  # the elyon
-    assert anomaly.expected == ""  # the elyon is due no cantillation accent (only a meteg)
-    assert anomaly.found == am.MERKHA  # yet WLC wrote a merkha here
+    assert anomaly.expected == ""  # the elyon is due no accent (only a meteg)
+    assert anomaly.found == am.MERKHA  # yet WLC has a merkha here
 
 
 def test_supplied_mark_words_parse_clean() -> None:

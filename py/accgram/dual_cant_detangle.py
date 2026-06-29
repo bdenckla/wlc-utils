@@ -1,6 +1,6 @@
 r"""Detangle WLC's dually-cantillated prose passages into two single-cant streams (#36).
 
-WLC 4.22 carries three prose loci where each word can bear *two* cantillation accents
+WLC 4.22 carries three prose loci where each word can bear *two* accents
 -- the two readings (תחתון / עליון in the Decalogues, פשוטה / מדרשית in Gen 35:22) merged
 into one ``cant-combined``-style stream.  The prose grammar cannot parse two accents per
 word, so these verses are excluded from the normal run.  This module *detangles* them:
@@ -199,7 +199,7 @@ def _skel(word: str) -> str:
 
 
 def _accents(word: str) -> list[str]:
-    """All cantillation accents in a word (meteg excluded), in order."""
+    """All accents in a word (meteg excluded), in order."""
     return [c for c in word if uni_to_marks.is_accent(c)]
 
 
@@ -234,11 +234,11 @@ def _accent_name(ch: str) -> str:
 
 
 def _no_accent_due_name(mam_word: str) -> str:
-    """The ``expected`` description for a stray anomaly: this strand is due no cantillation
+    """The ``expected`` description for a stray anomaly: this strand is due no
     accent here (it carries only a meteg, where MAM's word has one)."""
     if _METEG in mam_word:
-        return "no cantillation accent (only a meteg is due)"
-    return "no cantillation accent"
+        return "no accent (only a meteg is due)"
+    return "no accent"
 
 
 @dataclass(frozen=True)
@@ -483,7 +483,7 @@ def _assign_word(
 
     # A leftover that belongs to the OTHER strand's sole-meteg slot is ceded to it (that
     # strand emits it as its stray); this strand then supplies its own omitted accent, which
-    # has some manuscript support -- WLC wrote the other reading's mark, not this reading's.
+    # has some manuscript support -- WLC carries the other reading's mark, not this reading's.
     ceded = tuple(leftover) if (other_meteg and not other_real and leftover) else ()
     if ceded:
         leftover = []
@@ -527,7 +527,7 @@ def _assign_word(
 
     # A leftover WLC accent this strand has no slot for becomes a *stray* only when the
     # OTHER strand is itself short an accent here -- i.e. the leftover is the rogue mark
-    # WLC wrote *instead of* the proper pointing, which the other strand absorbs as a
+    # WLC has *instead of* the proper pointing, which the other strand absorbs as a
     # substitution.  (A leftover where neither strand is missing anything is a benign extra
     # mark -- a meteg the strands don't track -- and is dropped, as before.)  Emit such a
     # stray so this reading is confronted with the rogue mark too, and flag it as a
@@ -560,7 +560,7 @@ def _supply_reason(
     if ceded:
         names = ", ".join(_accent_name(a) for a in ceded)
         return (
-            f"WLC writes a {names} here that belongs to the {other_label} reading (where it"
+            f"WLC has a {names} here that belongs to the {other_label} reading (where it"
             " mis-transcribes a meteg); this reading's own accent is omitted by WLC and"
             " supplied from MAM."
         )
@@ -572,12 +572,12 @@ def _supply_reason(
     if not wlc_have:
         form = "maqaf-joined, carrying a meteg" if _METEG in wlc_word else "maqaf-joined"
         return (
-            f"WLC writes only the {other_label} reading here ({form}, with no cantillation"
+            f"WLC has only the {other_label} reading here ({form}, with no"
             " accent of its own), so this reading's mark is supplied from MAM."
         )
     others = ", ".join(_accent_name(a) for a in sorted(wlc_have, key=ord))
     return (
-        f"WLC writes only the {other_label} reading here ({others}), so this strand's"
+        f"WLC has only the {other_label} reading here ({others}), so this strand's"
         " mark is supplied from MAM."
     )
 

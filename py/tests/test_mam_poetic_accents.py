@@ -234,7 +234,7 @@ def test_servi_before_in_words_prefers_same_word_self_servus():
 
 
 def test_servi_before_normalizes_atnax_hafukh_to_galgal():
-    # MAM writes the oleh-we-yored servus as atnaḥ-hafukh (U+05A2); L codes it galgal.
+    # MAM has the oleh-we-yored servus as atnaḥ-hafukh (U+05A2); L has it as galgal.
     # The extractor normalizes it so the same slot matches across witnesses.
     node = _verse(
         _text(ha.ATN_H),

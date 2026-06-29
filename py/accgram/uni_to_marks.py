@@ -79,7 +79,7 @@ def is_base_letter(ch: str) -> bool:
 
 
 def is_accent(ch: str) -> bool:
-    """A real cantillation accent (U+0591..U+05AE) -- meteg (U+05BD) excluded."""
+    """A real accent (U+0591..U+05AE) -- meteg (U+05BD) excluded."""
     return "֑" <= ch <= "֮"
 
 
@@ -114,9 +114,9 @@ def word_to_marks(word: str) -> str:
     whitelist therefore lists the raw geresh muqdam codepoint alongside plain geresh.
 
     Keeping both marks is the most faithful reading -- it preserves both accents the
-    manuscript wrote, where dropping either would discard one.  Preserving the Unicode order
+    manuscript has, where dropping either would discard one.  Preserving the Unicode order
     (rather than floating the prepositive telg to the front) keeps the checker's reading
-    faithful to the manuscript, which writes the same-letter pairs gerstar-first.  See the
+    faithful to the manuscript, which has the same-letter pairs gerstar-first.  See the
     telisha gedola section of gh-pages/accgram/almost-errors.html (generator:
     accgram/almost_errors.py).
     """

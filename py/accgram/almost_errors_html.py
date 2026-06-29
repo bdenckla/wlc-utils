@@ -61,7 +61,7 @@ def _intro() -> tuple[object, ...]:
             (
                 "Second, the ",
                 H.bold("masoretically-blessed oddities"),
-                ": features that look error-like — two cantillation accents crowding"
+                ": features that look error-like — two accents crowding"
                 " one letter or one word, or one divider written twice in a row — but"
                 " that are 100% official masoretic tradition, attested in the standard"
                 " witnesses, ",

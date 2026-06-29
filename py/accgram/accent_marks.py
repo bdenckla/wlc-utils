@@ -3,12 +3,12 @@ r"""The Unicode mark alphabet the scanners consume (issue #9, Phase 2).
 Phase 1 transcoded each ``-kq-u`` Unicode verse into a Michigan-Claremont (M-C)
 2-digit-accent *body* and fed it to scanners written against that legacy code
 vocabulary.  Phase 2 retires the M-C codes: the extraction layer
-(``uni_to_marks``) now emits each cantillation accent as its own Unicode codepoint,
+(``uni_to_marks``) now emits each accent as its own Unicode codepoint,
 and the scanners match directly over that **mark sequence**.
 
 A "mark body" is a string of single-character marks, one per structural element:
 
-* each cantillation **accent** is its own Unicode codepoint (U+0591..U+05AE);
+* each **accent** is its own Unicode codepoint (U+0591..U+05AE);
 * **meteg/silluq** (U+05BD), **paseq** (U+05C0), **sof pasuq** (U+05C3) and the
   upper/lower **puncta** (U+05C4/U+05C5) are likewise their own codepoints;
 * every base consonant becomes a single placeholder ``LETTER`` (``X``) -- opaque

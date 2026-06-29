@@ -7,8 +7,8 @@ stores fully-pointed Unicode Hebrew with combining accent marks.  To confirm the
 trees' segmentation is correct -- not merely parseable -- we reduce each side to its
 ordered list of disjunctive accents (the division points) and diff those.  Servus
 (conjunctive) signs are deliberately dropped: MAM and the LC often choose different
-conjunctive *signs* for the same slot (e.g. the LC codes the oleh-weyored servus as
-galgal/yeraḥ-ben-yomo while MAM writes atnaḥ-hafukh), and Yeivin pins no exact
+conjunctive *signs* for the same slot (e.g. the LC has the oleh-weyored servus as
+galgal/yeraḥ-ben-yomo while MAM has atnaḥ-hafukh), and Yeivin pins no exact
 servus chains, so only the disjunctive skeleton is a meaningful equality check.
 
 Disjunctive markers, MAM Unicode accent -> poetic token (same vocabulary the
@@ -16,7 +16,7 @@ scanner emits):
 
   ETNAHTA (U+0591)        -> ATNAX
   OLE (U+05AB)            -> OLEH_WEYORED  (its yored merkha is folded in, as in the LC)
-  GERESH MUQDAM (U+059D)  -> REVIA_MUGRASH (MAM always writes the revia dot too,
+  GERESH MUQDAM (U+059D)  -> REVIA_MUGRASH (MAM always has the revia dot too,
                             even where the LC omits it under the geresh muqdam -- the
                             geresh muqdam alone is the reliable marker)
   REVIA (U+0597) alone    -> REVIA (generic; reclassified gadol/qatan/mugrash by
@@ -118,7 +118,7 @@ _SERVUS_SIGNS: list[tuple[str, str]] = [
     (ha.MAH, pan.MAHAPAKH),
     (ha.QOM, pan.AZLA),      # qadma = azla (the conjunctive)
     (ha.YBY, pan.GALGAL),    # yeraḥ-ben-yomo = galgal
-    (ha.ATN_H, pan.GALGAL),  # atnaḥ-hafukh: MAM's oleh-weyored servus (the LC codes galgal)
+    (ha.ATN_H, pan.GALGAL),  # atnaḥ-hafukh: MAM's oleh-weyored servus (the LC has galgal)
     (ha.ILU, pan.ILLUY),
     (ha.TIP, pan.TARXA),     # U+0596 (tipeḥa in prose) is the poetic tarḥa servant
 ]
