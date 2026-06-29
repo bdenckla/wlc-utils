@@ -61,9 +61,9 @@ BY_REF: dict[str, dict[str, object]] = {
             " belong to the elyon.",
             #
             [
-                f"In contrast, as WLC stands neither reading is grammatical: the {TAXTON}"
+                f"In contrast, as WLC stands neither strand is grammatical: the {TAXTON}"
                 " lacks its due qadma, and the elyon carries a merkha where only a meteg"
-                f" belongs. The checker supplies the qadma for the {TAXTON}, making that"
+                f" belongs. The detangler supplies the qadma for the {TAXTON}, making that"
                 " strand grammatical (see the ",
                 wlc_utils_html.anchor("supplied-marks page", {"href": "supplied-marks.html"}),
                 ") — but leaves WLC’s merkha in the elyon, so the elyon is listed here"

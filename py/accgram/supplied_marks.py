@@ -210,7 +210,7 @@ def _case_extra(s) -> tuple[object, ...]:
             ),
             _comment(
                 (
-                    f"So the checker supplies the {_TAXTON}’s qadma (and the {_TAXTON} then"
+                    f"So the detangler supplies the {_TAXTON}’s qadma (and the {_TAXTON} then"
                     f" parses clean), but lets WLC’s merkha stand in the {_ELYON}, where it"
                     " surfaces as an ungrammatical verse in the ",
                     link("checker run", "goerwitz.html"),
@@ -226,7 +226,8 @@ def _case_extra(s) -> tuple[object, ...]:
 def _supplied_case(s) -> tuple[object, ...]:
     img_file, kind = _CASE_IMAGE[(s.bcv, s.strand, s.accent)]
     header = H.para(
-        f"{ref_display(s.bcv)}, {_translit(s.strand_label)}: supplies {_translit(s.accent_name)}",
+        f"{ref_display(s.bcv)}, {_translit(s.strand_label)}: the detangler supplies"
+        f" {_translit(s.accent_name)}",
         {"class": "goerwitz-tms-reading-label"},
     )
     if any(is_accent(ch) for ch in s.wlc_word):
@@ -322,7 +323,7 @@ def _division_sort_key(d) -> tuple:
 
 
 def _division_table(changes: list) -> object:
-    header = H.table_row_of_headers(("Verse", "Reading", "Mark", "Change", "Word"))
+    header = H.table_row_of_headers(("Verse", "Strand", "Mark", "Change", "Word"))
     rows = [header]
     for d in sorted(changes, key=_division_sort_key):
         carrier = d.wlc_word if d.delta == "erased" else d.mam_word

@@ -223,14 +223,18 @@ for _name, _val in vars(am).items():
         _ACCENT_SPELLING.setdefault(_val, _name.lower().replace("_", " "))
 
 
-def _accent_name(ch: str) -> str:
+def _accent_spelling(ch: str) -> str:
     spelling = _ACCENT_SPELLING.get(ch)
     if spelling is None:
         try:
             spelling = unicodedata.name(ch).replace("HEBREW ACCENT ", "").lower()
         except ValueError:
             spelling = "?"
-    return f"{spelling} (U+{ord(ch):04X})"
+    return spelling
+
+
+def _accent_name(ch: str) -> str:
+    return f"{_accent_spelling(ch)} (U+{ord(ch):04X})"
 
 
 def _no_accent_due_name(mam_word: str) -> str:
@@ -520,7 +524,14 @@ def _assign_word(
                     wlc_word=wlc_word,
                     accent=accent,
                     accent_name=_accent_name(accent),
-                    reason=_supply_reason(wlc_word, have, other_label, ceded=ceded),
+                    reason=_supply_reason(
+                        wlc_word,
+                        have,
+                        other_label,
+                        strand_label,
+                        _accent_spelling(accent),
+                        ceded=ceded,
+                    ),
                     source="lc" if ceded else "mam",
                 )
             )
@@ -555,30 +566,36 @@ def _assign_word(
 
 
 def _supply_reason(
-    wlc_word: str, wlc_have: set[str], other_label: str, *, ceded: tuple[str, ...] = ()
+    wlc_word: str,
+    wlc_have: set[str],
+    other_label: str,
+    this_label: str,
+    accent_spelling: str,
+    *,
+    ceded: tuple[str, ...] = (),
 ) -> str:
     if ceded:
         names = ", ".join(_accent_name(a) for a in ceded)
         return (
-            f"WLC has a {names} here that belongs to the {other_label} reading (where it"
-            " mis-transcribes a meteg); this reading's own accent is omitted by WLC and"
-            " supplied from MAM."
+            f"WLC has a {names} here that belongs to the {other_label} strand (where it"
+            f" mis-transcribes a meteg); the {this_label}'s own {accent_spelling} is omitted"
+            " by WLC and supplied from MAM."
         )
     if _SOF_PASUQ in wlc_word:
         return (
-            f"WLC ends a chanted verse here in the {other_label} reading (silluq + sof"
-            " pasuq), so this reading's continuing accent is supplied from MAM."
+            f"WLC ends a chanted verse here in the {other_label} strand (silluq + sof"
+            f" pasuq), so the {this_label}'s continuing {accent_spelling} is supplied from MAM."
         )
     if not wlc_have:
-        form = "maqaf-joined, carrying a meteg" if _METEG in wlc_word else "maqaf-joined"
+        form = "ending in maqaf, carrying a meteg" if _METEG in wlc_word else "ending in maqaf"
         return (
-            f"WLC has only the {other_label} reading here ({form}, with no"
-            " accent of its own), so this reading's mark is supplied from MAM."
+            f"WLC has only the {other_label} strand here ({form}, with no"
+            f" accent of its own), so the {this_label}'s {accent_spelling} is supplied from MAM."
         )
     others = ", ".join(_accent_name(a) for a in sorted(wlc_have, key=ord))
     return (
-        f"WLC has only the {other_label} reading here ({others}), so this strand's"
-        " mark is supplied from MAM."
+        f"WLC has only the {other_label} strand here ({others}), so the {this_label}'s"
+        f" {accent_spelling} is supplied from MAM."
     )
 
 
