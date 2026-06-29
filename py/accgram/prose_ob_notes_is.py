@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from accgram.prose_ob_notes_shared import (
+    MUNAX,
     SOMEWHERE,
 )
 from py_html import wlc_utils_html
@@ -20,7 +21,7 @@ _FOI_CATEGORY_URL = (
 BY_REF: dict[str, dict[str, object]] = {
     "is 36:2": {
         "st-source": "tbd",
-        "st-summary": "The checker rejects munaḥ serving munaḥ legarmeh; the servus must be merkha.",
+        "st-summary": f"The checker rejects {MUNAX} serving {MUNAX} legarmeh; the servus must be merkha.",
         "wlc_focus": "וישל֣ח",
         "comment": [
             (
@@ -31,7 +32,7 @@ BY_REF: dict[str, dict[str, object]] = {
                 "”.",
             ),
             "Verified by re-running the checker on a fixed verse: substituting"
-            " merkha for the munaḥ servus (the MAM-simple reading) clears the"
+            f" merkha for the {MUNAX} servus (the MAM-simple reading) clears the"
             " checker error.",
         ],
     },
@@ -49,12 +50,12 @@ BY_REF: dict[str, dict[str, object]] = {
         # munaḥ (U+05A3) with a segolta (U+0592).
         "synth_fix": "לכ֒ורש",
         "st-summary": (
-            "The checker requires a segol accent rather than a munaḥ."
+            f"The checker requires a segol accent rather than a {MUNAX}."
         ),
         "comment": [
             "Verified by re-running the checker on a fixed verse: replacing the"
-            " munaḥ with a segol accent clears the segolta_phrase error. Note that"
-            " MAM, like WLC, has a munaḥ here, so this is a checker-vs-consensus tension,"
+            f" {MUNAX} with a segol accent clears the segolta_phrase error. Note that"
+            f" MAM, like WLC, has a {MUNAX} here, so this is a checker-vs-consensus tension,"
             " not a quirk in the LC, BHS, or WLC.",
             " The question of whether there should be a legarmeh after לכ֣ורש"
             " (see MAM’s doc-note)"

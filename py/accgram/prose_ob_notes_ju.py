@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from accgram.prose_ob_notes_shared import (
+    MUNAX,
+)
+
 
 _JU_1318_01 = (
     "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink."
@@ -42,28 +46,28 @@ BY_REF: dict[str, dict[str, object]] = {
     "ju 1:2": {
         "st-source": "lc",
         "wlc_focus": "וי֣אמר",
-        "st-summary": "The LC has munaḥ where a merkha is expected.",
+        "st-summary": f"The LC has {MUNAX} where a merkha is expected.",
         "img": "LC-136A-col-1-line-7-Ju-1v2.png",
     },
     "ju 11:24": {
         "st-source": "bhs",
         "wlc_focus": "אות֥ו תיר֑ש",
-        "st-summary": "BHS transcribes a faded, ambiguous mark as merkha rather than munaḥ.",
+        "st-summary": f"BHS transcribes a faded, ambiguous mark as merkha rather than {MUNAX}.",
         "img": "LC-144A-col-1-line-17-Ju-11v24.png",
         "edited img": "LC-144A-col-1-line-17-Ju-11v24-edited.png",
         "pending_uxlc_change": "2026.10.19/2026.04.10-7",
         "comment": (
             [
                 "Ignoring the grammar of accents, the faded remains of the mark in question are slightly more plausibly"
-                " interpreted as a munaḥ than a merkha."
-                " But the “upright” part of the munaḥ is very faint, if it is even there are all and I am not kidding myself,"
+                f" interpreted as a {MUNAX} than a merkha."
+                f" But the “upright” part of the {MUNAX} is very faint, if it is even there are all and I am not kidding myself,"
                 " seeing what I want to see rather than what is actually there."
             ],
             [
-                "Note that a geresh from הוריש on the line below complicates the colliding with the elbow of the proposed munaḥ."
+                f"Note that a geresh from הוריש on the line below complicates the colliding with the elbow of the proposed {MUNAX}."
             ],
             [
-                "In an image above, I have outlined the proposed munaḥ and the colliding geresh."
+                f"In an image above, I have outlined the proposed {MUNAX} and the colliding geresh."
             ],
             [
                 "One of the most extraordinary things about BHS (continued by BHQ) is that, to my knowledge, it never acknowledges"
@@ -72,7 +76,7 @@ BY_REF: dict[str, dict[str, object]] = {
                 " Although space constraints are extreme in any single-volume Tanakh like BHS,"
                 " really the only responsible thing to do for a word like this is to acknowledge the uncertainty somehow,"
                 " and either transcribe no accent at all or use context (grammar) combined with the (faint) evidence"
-                " to make a good guess, which in this case would be munaḥ."
+                f" to make a good guess, which in this case would be {MUNAX}."
             ],
             [
                 "To transcribe this word as (illegally) accented with merkha"

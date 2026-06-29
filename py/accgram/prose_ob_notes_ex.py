@@ -6,6 +6,7 @@ from accgram.prose_ob_notes_shared import (
     BHS_TRANSCRIBES,
     MISSING_SOF_PASUQ_COMMENT,
     MISSING_SOF_PASUQ_SUMMARY,
+    MUNAX,
     ZARQA_WHIM,
 )
 
@@ -74,7 +75,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "ex 38:12": {
         "st-source": "lc",
         "wlc_focus": "עמודיה֥ם",
-        "st-summary": "The LC has something like a merkha where a munaḥ is expected.",
+        "st-summary": f"The LC has something like a merkha where a {MUNAX} is expected.",
         "img": "LC-055A-col-1-line-3-Ex-38v12.png",
     },
 }

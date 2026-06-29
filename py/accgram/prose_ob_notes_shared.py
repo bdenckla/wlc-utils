@@ -5,15 +5,34 @@ from __future__ import annotations
 from py_html import wlc_utils_html
 
 
+# Transliteration term constants.  Several accent/term names contain het, which
+# the repo writes decomposed -- ASCII "h" plus U+0323 (combining dot below).
+# Defining each term once here, via chr() so this file stays pure ASCII, lets the
+# ob_notes_* modules interpolate the glyph (e.g. f"...{TIPEXA}...") instead of
+# embedding it inline.  An inline decomposed het makes a module hard to Edit: a
+# typed het normalizes to its composed form (U+1E25) and fails to match the
+# decomposed bytes on disk.  The X in each name is the repo's ASCII stand-in for
+# het (TIPEXA -> "tipeXa" -> "tipe" + het + "a").  Issue #36 review follow-up.
+_HET = "h" + chr(0x0323)
+TAXTON = "ta" + _HET + "ton"
+TIPEXA = "tipe" + _HET + "a"
+MUNAX = "muna" + _HET
+DEXI = "de" + _HET + "i"
+ATNAX = "atna" + _HET
+ETNAXTA = "etna" + _HET + "ta"
+PETUXAH = "petu" + _HET + "ah"
+MINXAT = "Min" + _HET + "at"
+
+
 def ambiguous_mark_context_comment(marked_word: str) -> str:
     return (
-        "In the LC, inclination does not reliably identify a mark as a merkha, a tipeḥa, or a meteg."
+        f"In the LC, inclination does not reliably identify a mark as a merkha, a {TIPEXA}, or a meteg."
         " Yet, from context, we can usually determine the most likely intended meaning,"
         f" and that is the case here with {marked_word}."
     )
 
 
-TIP_LIKE_INCL = "The slightly northwest-to-southeast (tipeḥa-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
+TIP_LIKE_INCL = f"The slightly northwest-to-southeast ({TIPEXA}-like) inclination of the mark in question is, while not irrelevant, hardly definitive."
 
 
 MISSING_SOF_PASUQ_SUMMARY = (

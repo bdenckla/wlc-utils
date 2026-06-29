@@ -8,6 +8,8 @@ from accgram.prose_ob_notes_shared import (
     MISSING_SOF_PASUQ_COMMENT,
     MISSING_SOF_PASUQ_SUMMARY,
     SOMEWHERE,
+    TAXTON,
+    TIPEXA,
     ZARQA_WHIM,
 )
 
@@ -34,17 +36,17 @@ BY_REF: dict[str, dict[str, object]] = {
         "st-summary": (
             "WLC’s “tangled” form for תעשה carries only"
             " a merkha on the ש, but a better LC transcription would be a meteg (elyon)"
-            " and a qadma (taḥton)."
+            f" and a qadma ({TAXTON})."
         ),
         "comment": [
             "WLC represents dual cantillation in manuscript (“tangled”) style,"
-            " where both taḥton and elyon marks are superimposed"
+            f" where both {TAXTON} and elyon marks are superimposed"
             " on the same set of letters.",
             #
             "WLC’s tangled form for תעשה has only a merkha. This could be interpreted"
-            " as both taḥton and elyon having merkha, or one having merkha and the"
+            f" as both {TAXTON} and elyon having merkha, or one having merkha and the"
             " other having nothing."
-            " We interpret it as elyon having merkha and taḥton having nothing.",
+            f" We interpret it as elyon having merkha and {TAXTON} having nothing.",
             #
             "Although the LC is in poor shape here"
             " (see the image in the UXLC note),"
@@ -54,14 +56,14 @@ BY_REF: dict[str, dict[str, object]] = {
             " Admittedly, this is a transcription influenced by the fact that this is the consensus"
             " pointing of this word."
             " Not surprisingly, this consensus pointing makes"
-            " both the taḥton chanted verse and the elyon chanted verse grammatical, if"
-            " the qadma is taken to belong to the taḥton and the meteg is taken to"
+            f" both the {TAXTON} chanted verse and the elyon chanted verse grammatical, if"
+            f" the qadma is taken to belong to the {TAXTON} and the meteg is taken to"
             " belong to the elyon.",
             #
             [
-                "In contrast, as WLC stands neither reading is grammatical: the taḥton"
+                f"In contrast, as WLC stands neither reading is grammatical: the {TAXTON}"
                 " lacks its due qadma, and the elyon carries a merkha where only a meteg"
-                " belongs. The checker supplies the qadma for the taḥton, making that"
+                f" belongs. The checker supplies the qadma for the {TAXTON}, making that"
                 " strand grammatical (see the ",
                 wlc_utils_html.anchor("supplied-marks page", {"href": "supplied-marks.html"}),
                 ") — but leaves WLC’s merkha in the elyon, so the elyon is listed here"
@@ -145,15 +147,15 @@ BY_REF: dict[str, dict[str, object]] = {
     "dt 24:10": {
         "st-source": "lc",
         "wlc_focus": "ברעך",
-        "st-summary": "The LC has only meteg where meteg-tipeḥa is expected.",
+        "st-summary": f"The LC has only meteg where meteg-{TIPEXA} is expected.",
         "img": "LC-113A-col-3-line-27-Dt-24v10.png",
         "comment": (
             [
-                "We could also interpret the LC’s mark under the resh as a tipeḥa that comes unexpectedly early in the word."
+                f"We could also interpret the LC’s mark under the resh as a {TIPEXA} that comes unexpectedly early in the word."
             ],
             [
                 "We could also speculate that what seems to be the long descender of the final kaf"
-                " includes a tipeḥa placed too early relative to the kaf."
+                f" includes a {TIPEXA} placed too early relative to the kaf."
             ],
             [
                 "Yet, just as I have criticized some transcriptions as aggresively uncharitable,"
@@ -163,7 +165,7 @@ BY_REF: dict[str, dict[str, object]] = {
                 " may be examples of that."
             ],
             [
-                "The most likely explanation is that the LC simply does not have the expected tipeḥa anywhere in the word."
+                f"The most likely explanation is that the LC simply does not have the expected {TIPEXA} anywhere in the word."
             ]
         ),
     },

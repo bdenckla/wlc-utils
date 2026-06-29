@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from accgram.prose_ob_notes_shared import (
+    TIPEXA,
+)
+
 
 BY_REF: dict[str, dict[str, object]] = {
     "ec 7:21": {
@@ -14,7 +18,7 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "ec 9:18": {
         "st-source": "wlc",
-        "st-summary": "WLC transcribes a tipeḥa as a merkha.",
+        "st-summary": f"WLC transcribes a {TIPEXA} as a merkha.",
         "wlc_focus": "יאב֥ד טוב֥ה",
         "BHQ": "?",
         "img": "LC-429A-col-1-line-23-Eccl-9v18.png",
@@ -25,7 +29,7 @@ BY_REF: dict[str, dict[str, object]] = {
                 " Perhaps WLC agrees with an older BHS? I have only checked the 1984 and 1997 editions of BHS."
             ),
             (
-                "The LC diverges from consensus here by having merkha tipeḥa rather than tipeḥa merkha,"
+                f"The LC diverges from consensus here by having merkha {TIPEXA} rather than {TIPEXA} merkha,"
                 " but that is still accent-grammatical, so that divergence is not relevant here."
             ),
         ),

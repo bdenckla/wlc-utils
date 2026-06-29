@@ -27,6 +27,11 @@ report understands. The poetic report currently renders:
 
 from __future__ import annotations
 
+from accgram.prose_ob_notes_shared import (
+    DEXI,
+    MUNAX,
+)
+
 from py_html import wlc_utils_html
 
 _JOB_31_15_NOTE_URL = "https://tanach.us/Notes/Job/Job.31.15.1-t.html"
@@ -48,7 +53,7 @@ BY_REF: dict[str, dict[str, object]] = {
             "carries the azla alone; according to Breuer, the Aleppo Codex likewise has "
             "azla and Sassoon 1053 has merkha. The checker fuses the pair into one "
             "order-less merkha!azla bang-pair and flags the verse as a lexical anomaly: "
-            "only a few accent pairs (revia + geresh muqdam, deḥi + munaḥ, oleh + yored) "
+            f"only a few accent pairs (revia + geresh muqdam, {DEXI} + {MUNAX}, oleh + yored) "
             "may legitimately share one letter, and merkha + azla is not among them."
         ),
         "img": "LC-376B-col-2-line-5-Ps-56v10.png",

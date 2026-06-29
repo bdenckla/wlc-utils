@@ -6,6 +6,7 @@ from accgram.prose_ob_notes_shared import (
     MISSING_SOF_PASUQ_COMMENT,
     MISSING_SOF_PASUQ_SUMMARY,
     SOMEWHERE,
+    TIPEXA,
     ZARQA_WHIM,
 )
 
@@ -47,7 +48,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "lv 25:20": {
         "st-source": "lc",
         "wlc_focus": "נאכ֤֖ל",
-        "st-summary": "The LC has something like a mahapakh in addition to the expected tipeḥa.",
+        "st-summary": f"The LC has something like a mahapakh in addition to the expected {TIPEXA}.",
         # The UXLC change here only changes note 'n' to note 'c' (no text
         # change), so we link the note itself rather than the change.
         "uxlc_note_page": "https://tanach.us/Notes/Leviticus/Leviticus.25.20.4-c.html",

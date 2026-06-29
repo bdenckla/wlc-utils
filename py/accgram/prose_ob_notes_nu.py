@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from accgram.prose_ob_notes_shared import (
+    ETNAXTA,
     MISSING_SOF_PASUQ_COMMENT,
     MISSING_SOF_PASUQ_SUMMARY,
+    PETUXAH,
     SOMEWHERE,
     ZARQA_WHIM_SUMMARY,
 )
@@ -12,7 +14,7 @@ from accgram.prose_ob_notes_shared import (
 
 _NU_2509_01 = (
     "Compared to MAM, BHS starts chapter 26 “late”."
-    " It only starts chapter 26 after the etnaḥta of what MAM calls 26:1."
+    f" It only starts chapter 26 after the {ETNAXTA} of what MAM calls 26:1."
     " It labels the first part of what MAM calls 26:1 as 25:19, a verse number that does not exist in MAM."
 )
 
@@ -34,7 +36,7 @@ _NU_2509_03 = (
 _NU_2509_04 = (
     " As to where BHS got this versification, I suspect it is not original to BHS."
     " This versification’s rather extraordinary mid-chanted-verse verse number does correspond to"
-    " a rather extraordinary mid-chanted-verse parashah petuḥah break."
+    f" a rather extraordinary mid-chanted-verse parashah {PETUXAH} break."
     " So, while this verse number is not at the boundary of a chanted verse,"
     " it is at a boundary deemed quite significant in the layout of both cantillated and letter-only Hebrew texts."
 )

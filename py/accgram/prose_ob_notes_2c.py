@@ -4,13 +4,16 @@ from __future__ import annotations
 
 from accgram.prose_ob_notes_shared import (
     BHS_TRANSCRIBES,
+    ETNAXTA,
+    MUNAX,
+    TIPEXA,
 )
 
 
 BY_REF: dict[str, dict[str, object]] = {
     "2c 22:12": {
         "st-source": "bhs",
-        "st-summary": "BHS transcribes an etnaḥta as a tipeḥa.",
+        "st-summary": f"BHS transcribes an {ETNAXTA} as a {TIPEXA}.",
         "wlc_focus": "שנ֖ים",
         "uxlc_change": "2024.04.01/2023.09.16-12",
         "comment": "See the image in the UXLC change to which we link above.",
@@ -18,10 +21,10 @@ BY_REF: dict[str, dict[str, object]] = {
     "2c 7:5": {
         "st-source": "bhs",
         "wlc_focus": "ז֣בח הבק֗ר",
-        "st-summary": "BHS accents a word with munaḥ rather than segol.",
+        "st-summary": f"BHS accents a word with {MUNAX} rather than segol.",
         "uxlc_change": "2024.04.01/2023.09.16-3",
         "comment": (
-            "MAM has munaḥ segol whereas the LC has segol revia."
+            f"MAM has {MUNAX} segol whereas the LC has segol revia."
         )
     },
     "2c 8:10": {

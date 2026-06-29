@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 from accgram.prose_ob_notes_shared import (
+    ATNAX,
     BHS_TRANSCRIBES,
+    MUNAX,
+    TIPEXA,
     TIP_LIKE_INCL,
     ambiguous_mark_context_comment,
 )
@@ -17,8 +20,8 @@ def _je_0910_and_11_comment(adjacent_verse_phrase: str):
         ],
         [ambiguous_mark_context_comment("מבלי")],
         [
-            " It is aggressively uncharitable to transcribe the mark on מבלי as tipeḥa:"
-            " tipeḥa is the least likely of the three possible meanings of this mark."
+            f" It is aggressively uncharitable to transcribe the mark on מבלי as {TIPEXA}:"
+            f" {TIPEXA} is the least likely of the three possible meanings of this mark."
             " Merkha is by far the most likely. If the mark were meteg, we would have to uncharitably"
             " assume that a maqaf is missing."
         ],
@@ -40,7 +43,7 @@ _JE_1003_02 = (
     " Thus our degree of certainty that an accent is “illegal”"
     " depends on our degree of certainty about the surrounding accent-context."
     " At times, our degree of certainty about the context is not high,"
-    " for example due to ambiguity between merkha and tipeḥa."
+    f" for example due to ambiguity between merkha and {TIPEXA}."
     " I don’t think that is the case here, but I thought I would bring up the general point anyway."
 )
 
@@ -112,14 +115,14 @@ _JE_4417_06 = (
 BY_REF: dict[str, dict[str, object]] = {
     "je 9:10": {
         "st-source": "bhs",
-        "st-summary": "BHS transcribes a merkha as a tipeḥa.",
+        "st-summary": f"BHS transcribes a merkha as a {TIPEXA}.",
         "wlc_focus": "מבל֖י",
         "uxlc_change": "2023.04.01/2022.12.10-15",
         "comment": _je_0910_and_11_comment("next verse (11)"),
     },
     "je 9:11": {
         "st-source": "bhs",
-        "st-summary": "BHS transcribes a merkha as a tipeḥa.",
+        "st-summary": f"BHS transcribes a merkha as a {TIPEXA}.",
         "wlc_focus": "מבל֖י",
         "uxlc_change": "2023.04.01/2022.12.10-16",
         "comment": _je_0910_and_11_comment("previous verse (10)"),
@@ -138,14 +141,14 @@ BY_REF: dict[str, dict[str, object]] = {
     },
     "je 31:32": {
         "st-source": "bhs",
-        "st-summary": "BHS transcribes a munaḥ as a tipeḥa.",
+        "st-summary": f"BHS transcribes a {MUNAX} as a {TIPEXA}.",
         "wlc_focus": "מא֖רץ",
         "uxlc_change": "2023.04.01/2022.12.10-41",
         "comment": "See the image in the UXLC change to which we link above.",
     },
     "je 48:12": {
         "st-source": "bhs",
-        "st-summary": "BHS transcribes a meteg as a tipeḥa.",
+        "st-summary": f"BHS transcribes a meteg as a {TIPEXA}.",
         "wlc_focus": "הנ֖ה־",
         "img": "LC-272A-col-3-line-3-Je-48v12.png",
         "comment": (
@@ -165,9 +168,9 @@ BY_REF: dict[str, dict[str, object]] = {
             " BHS transcribes only the pashta stress helper, not the pashta itself."
             " So, understandably, WLC transcribes this mark as a qadma."
             " The missing pashta is the cause, but the ERROR lands one phrase to the"
-            " left: with no zaqef clause forming, the tipeḥa phrase over"
+            f" left: with no zaqef clause forming, the {TIPEXA} phrase over"
             " אל־נוה איתן כי־ארגיעה fails and אריצנו is absorbed as the"
-            " munaḥ of the following atnaḥ phrase."
+            f" {MUNAX} of the following {ATNAX} phrase."
         ),
     },
     "je 26:5": {

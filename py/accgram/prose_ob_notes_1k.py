@@ -4,13 +4,15 @@ from __future__ import annotations
 
 from accgram.prose_ob_notes_shared import (
     BHS_TRANSCRIBES,
+    MUNAX,
+    TIPEXA,
 )
 
 
 BY_REF: dict[str, dict[str, object]] = {
     "1k 6:2": {
         "st-source": "bhs",
-        "st-summary": "BHS transcribes a munaḥ as a mahapakh.",
+        "st-summary": f"BHS transcribes a {MUNAX} as a mahapakh.",
         "wlc_focus": "ועשר֤ים",
         "uxlc_change": "2022.12.07/2022.08.31-9",
         "comment": "See the image in the UXLC change to which we link above.",
@@ -47,7 +49,7 @@ BY_REF: dict[str, dict[str, object]] = {
                 " I wonder whether, because it is so rare, we lack a good sense of"
                 " the “legality” of sequences involving it."
                 " The sequence in question is"
-                " darga, merkha kefula, something on נכח (the atom in question), and then tipeḥa."
+                f" darga, merkha kefula, something on נכח (the atom in question), and then {TIPEXA}."
             ),
         ),
     },
@@ -66,7 +68,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "1k 20:25": {
         "st-source": "tbd",
         "wlc_focus": "וס֣וס",
-        "st-summary": "The checker may prefer merkha to LC’s munaḥ. Or it may not like either.",
+        "st-summary": f"The checker may prefer merkha to LC’s {MUNAX}. Or it may not like either.",
         "img": "LC-200A-col-2-line-19-1K-20v25.png",
         "Aleppo img": "AC-1K-20v25.png",
     },

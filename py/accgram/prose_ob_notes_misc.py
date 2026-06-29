@@ -4,8 +4,12 @@ from __future__ import annotations
 
 from accgram.prose_ob_notes_shared import (
     BHS_TRANSCRIBES,
+    ETNAXTA,
+    MINXAT,
     MISSING_SOF_PASUQ_COMMENT,
     MISSING_SOF_PASUQ_SUMMARY,
+    MUNAX,
+    TIPEXA,
     TIP_LIKE_INCL,
 )
 
@@ -26,22 +30,22 @@ _LM_0505_02 = (
 _LM_0505_03 = (
     "Nonetheless, BHQ opts to make הונח “locally legal” by giving it an accent."
     " It gives it an accent by transcribing the second mark"
-    " as a second tipeḥa rather than as a meteg. WLC follows BHQ in this, as it explicitly notes with a bracket-Q note."
+    f" as a second {TIPEXA} rather than as a meteg. WLC follows BHQ in this, as it explicitly notes with a bracket-Q note."
     " (Hover over the letters of the bracket notes above to decode them.)"
 )
 
 
 _LM_0505_04 = (
     "This makes the word הונח locally legal while rendering the second half of the verse illegal"
-    " by giving the silluq segment two words accented with tipeḥa."
-    " (This (short) verse has no etnaḥta segment.)"
+    f" by giving the silluq segment two words accented with {TIPEXA}."
+    f" (This (short) verse has no {ETNAXTA} segment.)"
 )
 
 
 _LM_0505_05 = (
-    "It is uncharitable to transcribe this mark as a tipeḥa."
+    f"It is uncharitable to transcribe this mark as a {TIPEXA}."
     " Most likely what happened here is that the scribe forgot to add a maqaf."
-    " It is far less likely that the scribe intended to add a second tipeḥa,"
+    f" It is far less likely that the scribe intended to add a second {TIPEXA},"
     " and a second merkha seems equally implausible."
 )
 
@@ -52,7 +56,7 @@ _LM_0505_06 = TIP_LIKE_INCL
 _LM_0505_07 = (
     "Side note: there also seems to be some question of whether the נ in הונח should have a dagesh."
     " BHQ claims that manuscripts L34 and Y (in its sigil vocabulary) have this dagesh."
-    " Breuer (in Da-at Miqra) claims that Minḥat Shai asserts this dagesh."
+    f" Breuer (in Da-at Miqra) claims that {MINXAT} Shai asserts this dagesh."
 )
 
 
@@ -89,17 +93,17 @@ BY_REF: dict[str, dict[str, object]] = {
             " The qadma (rather than pashta) on דברי is the cause, but the ERROR does not"
             " land there: with no pashta to head it, the zaqef clause over"
             " הלוא דברי ייטיבו never forms, so the failure surfaces later, on the"
-            " enclosing tipeḥa phrase over הלוא דברי ייטיבו עם."
+            f" enclosing {TIPEXA} phrase over הלוא דברי ייטיבו עם."
             " The defect itself, though, is fundamentally a pashta-vs-qadma confusion on"
-            " the single mark on דברי; the malformed tipeḥa phrase"
+            f" the single mark on דברי; the malformed {TIPEXA} phrase"
             " (tipexa_phrase → ERROR) is only a surface artifact of how the LALR parse"
-            " fails, not a problem with the tipeḥa or the words that phrase spans"
+            f" fails, not a problem with the {TIPEXA} or the words that phrase spans"
             " — flipping that one mark (qadma → pashta) clears the error entirely."
         ),
     },
     "lm 5:5": {
         "st-source": "tbd",
-        "st-summary": "BHQ transcribes a meteg as a tipeḥa due to the LC’s missing maqaf.",
+        "st-summary": f"BHQ transcribes a meteg as a {TIPEXA} due to the LC’s missing maqaf.",
         "wlc_focus": "הונ֖ח",
         "img": "LC-432A-col-3-line-17-Lam-5v5.png",
         "comment": (
@@ -128,7 +132,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "1c 1:53": {
         "st-source": "lc",
         "wlc_focus": "אל֣וף",
-        "st-summary": "The LC has a munaḥ where a merkha is expected.",
+        "st-summary": f"The LC has a {MUNAX} where a merkha is expected.",
         "img": "LC-328A-col-1-line-27-1C-1v53.png",
     },
 }

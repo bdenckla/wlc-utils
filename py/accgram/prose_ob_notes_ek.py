@@ -5,6 +5,7 @@ from __future__ import annotations
 from accgram.prose_ob_notes_shared import (
     MISSING_SOF_PASUQ_COMMENT,
     MISSING_SOF_PASUQ_SUMMARY,
+    TIPEXA,
     ambiguous_mark_context_comment,
 )
 
@@ -12,13 +13,13 @@ from accgram.prose_ob_notes_shared import (
 BY_REF: dict[str, dict[str, object]] = {
     "ek 11:1": {
         "st-source": "bhs",
-        "st-summary": "BHS transcribes a merkha as a tipeḥa.",
+        "st-summary": f"BHS transcribes a merkha as a {TIPEXA}.",
         "wlc_focus": "שר֖י",
         "img": "LC-280B-col-3-line-2-Ezek-11v1.png",
         "comment": (
             ambiguous_mark_context_comment("שרי")
-            + " It is aggressively uncharitable to transcribe the mark on שרי as tipeḥa:"
-            + " tipeḥa is the least likely of the three possible meanings of this mark."
+            + f" It is aggressively uncharitable to transcribe the mark on שרי as {TIPEXA}:"
+            + f" {TIPEXA} is the least likely of the three possible meanings of this mark."
             + " Merkha is by far the most likely. If the mark were meteg, we would have to"
             + " assume that a maqaf is missing."
         ),
