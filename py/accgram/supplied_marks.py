@@ -189,16 +189,10 @@ def _image_block(img_file: str, kind: str) -> object:
 
 
 def _case_extra(s) -> tuple[object, ...]:
-    """The meteg-grounded paragraphs for the two cases where a meteg decides the supply."""
+    """Extra prose for Deuteronomy 5:8 -- the one supply whose lone WLC mark is a
+    mis-transcribed accent (a merkha where only a meteg is due) rather than a true meteg,
+    leaving its elyon ungrammatical."""
     key = (s.bcv, s.strand, s.accent)
-    if key == ("ex20:3", "alef", am.MERKHA):
-        return (
-            _comment(
-                f"WLC’s lone mark here is itself a meteg — a valid mark for the {_ELYON} —"
-                f" so supplying the {_TAXTON}’s merkha contradicts nothing WLC has: a clean"
-                " charity."
-            ),
-        )
     if key == ("dt5:8", "alef", am.QADMA):
         return (
             _comment(
