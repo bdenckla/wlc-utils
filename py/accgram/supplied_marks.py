@@ -338,7 +338,7 @@ def _punct_table(changes: list) -> object:
 
 def _punct_observation(changes: list) -> object:
     """An observation drawn from the table: WLC's Decalogue punctuation sits far closer to
-    the elyon (only suppressions needed) than to the taḥton (supplies plus suppressions).  The
+    the elyon (only suppressions needed) than to the taḥton (supplies plus suppressions).  The
     counts are tallied live from the changes so they track the checker, not a hard-coded number."""
     elyon_suppressed = sum(1 for d in changes if d.strand_label == "elyon" and d.delta == "suppressed")
     taxton_supplied = sum(1 for d in changes if d.strand_label == "taxton" and d.delta == "supplied")
