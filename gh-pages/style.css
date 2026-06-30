@@ -121,8 +121,11 @@ table.goerwitz-obs-error-table td.goerwitz-obs-depth-cell {
     font-weight: 700;
 }
 table.goerwitz-obs-tree-table th.goerwitz-tms-sortable { cursor: pointer; user-select: none; }
-table.goerwitz-obs-tree-table th.goerwitz-tms-sortable[aria-sort="ascending"]::after  { content: " \25B2"; }
-table.goerwitz-obs-tree-table th.goerwitz-tms-sortable[aria-sort="descending"]::after { content: " \25BC"; }
+/* Inactive sortable column: a faded up/down pair hinting that it can be clicked to sort. */
+table.goerwitz-obs-tree-table th.goerwitz-tms-sortable::after { content: " \25B4\25BE"; color: light-dark(#bbb, #666); }
+/* Active sort column: a single arrow in the normal text colour for the current direction. */
+table.goerwitz-obs-tree-table th.goerwitz-tms-sortable[aria-sort="ascending"]::after  { content: " \25B2"; color: inherit; }
+table.goerwitz-obs-tree-table th.goerwitz-tms-sortable[aria-sort="descending"]::after { content: " \25BC"; color: inherit; }
 p.goerwitz-obs-error-note {
     margin-top: 0.35em;
     margin-bottom: 0.35em;

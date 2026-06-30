@@ -34,12 +34,10 @@ from pathlib import Path
 from accgram import accent_marks as am
 from accgram import dual_cant_run
 from accgram import uni_to_marks
-from accgram.dual_cant_detangle import display_form, display_real_marks
+from accgram.dual_cant_detangle import display_real_marks
 from accgram import rtms_report
 from accgram import rtmsr_media
 from accgram.almost_errors_html_shared import (
-    accents_and_letters,
-    hbo,
     link,
     ref_display,
     ref_short,
@@ -62,7 +60,6 @@ _WIDTH_CLASS = "goerwitz-tms-width-limited"
 _HET = "ḥ"
 _TAXTON = "ta" + _HET + "ton"
 _ELYON = "elyon"
-_MUNAX = "muna" + _HET
 _TIPEXA = "tipe" + _HET + "a"
 
 # X-form (ASCII) label -> the page's Unicode ḥ display form.
@@ -95,6 +92,9 @@ _MARK_GLYPH = {
 }
 
 _SORTABLE_TH_CLASS = "goerwitz-tms-sortable"
+# The table ships in canonical (Verse-ascending) order, so the Verse header carries this
+# initial aria-sort to show its arrow on load; the JS toggles it from there.
+_DEFAULT_SORT_COL = "Verse"
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -255,122 +255,21 @@ def _reading_order_key(s) -> tuple:
 # --------------------------------------------------------------------------- #
 # "Supplied and suppressed punctuation": the maqaf / sof pasuq / legarmeh inventory.
 # --------------------------------------------------------------------------- #
-def _carrying_form(changes: list, bcv: str, mark: str, delta: str, strand: str) -> object:
-    """The stripped form (as an hbo span) that carries a given punctuation change in one
-    strand: WLC's word when the mark is suppressed, MAM's strand word when it is supplied
-    (the prose deliberately shows "WLC's join ..." for a suppression)."""
-    for d in changes:
-        if (d.bcv, d.mark, d.delta, d.strand) == (bcv, mark, delta, strand):
-            if delta == "suppressed":
-                return hbo(display_form(d.wlc_word))  # WLC's word carries the mark as-is
-            return hbo(display_real_marks(d.mam_word, d.wlc_word))  # strand word, MAM helpers stripped
-    return "?"
-
-
-def _punct_intro(n_changes: int) -> tuple[object, ...]:
-    """The three-paragraph intro: the unified accent-tracking principle (with one bullet per
-    mark), the legarmeh-maximalist note, and a pointer to the table."""
-    bamayim = hbo(accents_and_letters("בַּמַּ֖֣יִם"))  # WLC's tangled tipeḥa + munaḥ form
-    principle = H.unordered_list(
-        (
-            (
-                H.bold("Maqaf tracks the absence of an accent."),
-                " An unaccented atom leans on the next, joined to it by a maqaf; an atom that"
-                " bears an accent stands on its own, followed by a space. So a strand’s maqaf"
-                " follows from its accents: where the strand bears no accent on an atom it has a"
-                " maqaf, supplied where WLC has a space there; where it bears an accent it has a"
-                " space, suppressing WLC’s maqaf.",
-            ),
-            (
-                H.bold("Sof pasuq tracks the silluq."),
-                " A sof pasuq ends a chanted verse, paired with the silluq on its last word."
-                " Where a strand ends a chanted verse it bears a sof pasuq, supplied where WLC,"
-                " holding the other strand’s reading, runs on; where the strand runs on it bears"
-                " none, suppressing the sof pasuq WLC has for the other strand.",
-            ),
-            (
-                H.bold(f"Legarmeh tracks the {_MUNAX}."),
-                f" A legarmeh is a {_MUNAX} followed by a broad-sense paseq (the Unicode PASEQ"
-                " bar), before a revia. It comes and goes with its"
-                f" {_MUNAX}, just as a sof pasuq comes and goes with its silluq: where a strand"
-                f" reads the {_MUNAX} it has the legarmeh; where it reads the word’s other accent"
-                " the legarmeh is suppressed. WLC’s tangled ",
-                bamayim,
-                f" (Exodus 20:4), for instance, carries both a {_TIPEXA} and a {_MUNAX}, so the"
-                f" {_ELYON} (reading the {_MUNAX}) has a legarmeh there while the {_TAXTON}"
-                f" (reading the {_TIPEXA}) does not.",
-            ),
-        )
-    )
+def _punct_intro() -> tuple[object, ...]:
+    """The two-paragraph intro: punctuation detangling flows directly from accent
+    detangling, then a pointer to the table."""
     return (
         H.para(
-            (
-                "Detangling shares one consonantal skeleton between a passage’s two strands;"
-                " what differs is the accent each atom carries, and three punctuation marks"
-                " follow from those accents. Each strand takes its punctuation from its MAM"
-                " strand, so, relative to WLC’s tangled form, the detangler both ",
-                H.bold("supplies"),
-                " a mark (it fits this strand’s accents, but WLC lacks it) and ",
-                H.bold("suppresses"),
-                " one (WLC has it, for the other strand’s reading). Each mark tracks an accent —"
-                " or, for maqaf, the lack of one:",
-            )
-        ),
-        principle,
-        H.para(
-            "WLC’s tangled form is neither maqaf-maximalist nor sof-pasuq-maximalist: it"
-            " carries a mix of the two strands’ maqafs and sof pasuqs, so detangling both"
-            " supplies and suppresses them. But it is legarmeh-maximalist — it keeps every"
-            " legarmeh of both readings, because a legarmeh’s broad-sense paseq is always WLC’s"
-            " own and is never supplied from MAM — so a legarmeh is only ever suppressed, never"
-            " supplied. (A narrow-sense paseq — a Unicode PASEQ that forms no legarmeh — is not"
-            " part of the accent grammar and is not tracked.)"
+            "In addition to suppressing (and sometimes supplying) accents, the detangler also"
+            " suppresses and supplies three accent-coupled punctuation marks: maqaf, sof pasuq,"
+            " and legarmeh. This punctuation work flows directly from the accent detangling."
+            " Indeed, these marks are so tightly coupled to their accents — or, in the case of"
+            " maqaf, to the lack of an accent — that detangling accents and detangling"
+            " punctuation can be regarded as one and the same activity."
         ),
         H.para(
-            f"The {n_changes} supplies and suppressions are itemized in the table below; the"
-            " pattern in each passage is as follows."
-        ),
-    )
-
-
-def _punct_prose(changes: list) -> tuple[object, ...]:
-    yihye = _carrying_form(changes, "ex20:3", "maqaf", "suppressed", "alef")  # taḥton drops WLC's יִהְיֶה־
-    lo_supplied = _carrying_form(changes, "ex20:3", "maqaf", "supplied", "alef")  # the taḥton's לֹא־
-    lo_elyon = _carrying_form(changes, "ex20:10", "maqaf", "suppressed", "bet")  # elyon drops WLC's לֹא־
-    return (
-        _comment(
-            "Genesis 35:22: the pashut strand breaks the verse in two, supplying a mid-verse"
-            " sof pasuq that WLC — and the midrashit strand — do not have."
-        ),
-        _comment(
-            f"The Decalogues (Exodus 20, Deuteronomy 5): the {_TAXTON} subdivides into short"
-            " chanted verses, supplying a sof pasuq inside several numbered verses (Exodus 20:3,"
-            " 20:4, 20:8, 20:9, 20:10; Deuteronomy 5:12) and suppressing WLC’s verse-final one"
-            " where the commandment runs on (Exodus 20:2 and the short prohibitions 20:13–15;"
-            f" Deuteronomy 5:6, 5:17–19). The {_ELYON} does the reverse, grouping the"
-            " commandments into long chanted verses and so suppressing WLC’s internal sof pasuqs"
-            " (Exodus 20:5; Deuteronomy 5:7, 5:8, 5:9, 5:13, 5:14)."
-        ),
-        _comment(
-            (
-                f"The maqaf joins are re-cut to match. At Exodus 20:3 the {_TAXTON} drops"
-                " WLC’s join ",
-                yihye,
-                " — the supplied merkha makes that word stand on its own — and instead joins ",
-                lo_supplied,
-                f"; the {_ELYON}, conversely, drops WLC’s join ",
-                lo_elyon,
-                " at Exodus 20:10 (and likewise at Deuteronomy 5:8).",
-            )
-        ),
-        _comment(
-            f"Legarmeh is only ever suppressed. In each of the ten cases the {_TAXTON} reads a"
-            f" {_TIPEXA} or pashta where WLC’s tangle carries the {_ELYON}’s"
-            f" {_MUNAX}-legarmeh, so all ten drop from the {_TAXTON} (Exodus 20:4, 20:10;"
-            " Deuteronomy 5:8, 5:12, 5:14, 5:15). Two further"
-            f" {_MUNAX}-plus-PASEQ words — Exodus 20:10 and Deuteronomy 5:16 — carry the"
-            f" {_MUNAX} in both strands, so their legarmeh belongs to both readings and is"
-            " neither supplied nor suppressed."
+            "The table below — sortable by clicking its header cells — lists every punctuation"
+            " change the detangler makes, both suppressed and supplied."
         ),
     )
 
@@ -394,21 +293,29 @@ def _verse_sort_key(bcv: str) -> str:
 def _word_cell(d) -> object:
     """The Word cell: the strand word (MAM stress-helpers stripped) with only the changed
     punctuation coloured.  A supplied mark sits inside normal-colour square brackets (the
-    editorial-supply convention); a suppressed mark is appended, coloured, after the clean word."""
+    editorial-supply convention), the brackets wrapping just the mark; a suppressed mark is
+    appended, coloured, after the clean word."""
     cls = _delta_class(d.delta)
     body = display_real_marks(d.mam_word, d.wlc_word)
     glyph = _MARK_GLYPH[d.mark]
     if d.delta == "supplied":
         before, _, after = body.partition(glyph)
-        pieces = ("[", before, H.span_c(glyph, cls), after, "]")
+        pieces = (before, "[", H.span_c(glyph, cls), "]", after)
     else:
         pieces = (body, H.span_c(glyph, cls))
     return H.span(pieces, {"lang": "hbo"})
 
 
+def _sortable_th_attrs(name: str) -> dict:
+    attrs = {"class": _SORTABLE_TH_CLASS, "scope": "col"}
+    if name == _DEFAULT_SORT_COL:
+        attrs["aria-sort"] = "ascending"
+    return attrs
+
+
 def _punct_table(changes: list) -> object:
     sortable = tuple(
-        H.table_header(name, {"class": _SORTABLE_TH_CLASS, "scope": "col"})
+        H.table_header(name, _sortable_th_attrs(name))
         for name in ("Verse", "Strand", "Mark", "Change")
     )
     header = H.table_row(sortable + (H.table_header("Word", {"scope": "col"}),))
@@ -435,8 +342,7 @@ def _punct_section(changes: list) -> tuple[object, ...]:
         return (heading, H.para("No punctuation was supplied or suppressed."))
     return (
         heading,
-        *_punct_intro(len(changes)),
-        *_punct_prose(changes),
+        *_punct_intro(),
         _punct_table(changes),
     )
 
