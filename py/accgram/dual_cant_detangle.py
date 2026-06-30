@@ -595,12 +595,23 @@ def _assign_word(
     return _Assign(substitutions, tuple(supplies), tuple(anomalies), strays)
 
 
+def _display_keep(word: str) -> tuple[str, ...]:
+    """The non-accent marks the display helpers keep: maqaf and sof pasuq always, plus the
+    meteg -- but only on an accent-less atom.  On an atom that carries a real accent the meteg
+    is MAM's secondary-stress mark, not WLC's own grammar, so it is dropped (cf.
+    ``_strip_nonfinal_meteg``); a verse-final silluq survives because its word has no real
+    accent of its own, as does the meteg on a maqaf-ending word with no accent."""
+    if _real_accents_ordered(word):
+        return (_SRC_MAQAF, _SOF_PASUQ)
+    return (_METEG, _SRC_MAQAF, _SOF_PASUQ)
+
+
 def display_form(word: str) -> str:
     """A word reduced to its base letters, accents, and the meteg / maqaf / sof pasuq the
     supply note describes -- vowels and dagesh dropped (the note illustrates accent and
     punctuation placement, not vocalization).  Inlined into the reason so the marks named
     in prose are actually shown; also used by the supplied-marks page's punctuation table."""
-    keep = (_METEG, _SRC_MAQAF, _SOF_PASUQ)
+    keep = _display_keep(word)
     return "".join(
         ch
         for ch in word
@@ -626,7 +637,7 @@ def display_real_marks(strand_word: str, wlc_word: str) -> str:
             continue  # not a MAM-only doubling -> leave as-is
         kept = occ[0] if accent in uni_to_marks.PREPOSITIVE_MARKS else occ[-1]
         drop_idx.update(j for j in occ if j != kept)
-    keep = (_METEG, _SRC_MAQAF, _SOF_PASUQ)
+    keep = _display_keep(strand_word)
     return "".join(
         ch
         for i, ch in enumerate(strand_word)
