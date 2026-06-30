@@ -530,6 +530,7 @@ def _assign_word(
                         other_label,
                         strand_label,
                         _accent_spelling(accent),
+                        mam_word,
                         ceded=ceded,
                     ),
                     source="lc" if ceded else "mam",
@@ -565,37 +566,58 @@ def _assign_word(
     return _Assign(substitutions, tuple(supplies), tuple(anomalies), strays)
 
 
+def _display_form(word: str) -> str:
+    """A word reduced to its base letters, accents, and the meteg / maqaf / sof pasuq the
+    supply note describes -- vowels and dagesh dropped (the note illustrates accent and
+    word-division placement, not vocalization).  Inlined into the reason so the marks named
+    in prose are actually shown."""
+    keep = (_METEG, _SRC_MAQAF, _SOF_PASUQ)
+    return "".join(
+        ch
+        for ch in word
+        if uni_to_marks.is_base_letter(ch) or uni_to_marks.is_accent(ch) or ch in keep
+    )
+
+
 def _supply_reason(
     wlc_word: str,
     wlc_have: set[str],
     other_label: str,
     this_label: str,
     accent_spelling: str,
+    mam_word: str,
     *,
     ceded: tuple[str, ...] = (),
 ) -> str:
+    """One self-contained sentence per supply: WLC's strand word shown inline where it is
+    described, then the accent supplied from MAM (or its non-definitive LC support) shown at
+    the supply.  The Hebrew runs are wrapped in ``lang="hbo"`` spans by the page renderer."""
+    wlc = _display_form(wlc_word)
+    mam = _display_form(mam_word)
     if ceded:
         names = ", ".join(_accent_spelling(a) for a in ceded)
         return (
-            f"WLC has a {names} here that belongs to the {other_label} strand (where it"
-            f" mis-transcribes a meteg); the {this_label}'s own {accent_spelling} is omitted"
-            " by WLC and supplied from MAM."
+            f"WLC has a {names} here: {wlc}, belonging to the {other_label} strand (where it"
+            f" mis-transcribes a meteg); the {this_label}’s own {accent_spelling} is omitted"
+            f" by WLC and supplied from LC (non-definitive): {mam}."
         )
     if _SOF_PASUQ in wlc_word:
         return (
-            f"WLC ends a chanted verse here in the {other_label} strand (silluq + sof"
-            f" pasuq), so the {this_label}'s continuing {accent_spelling} is supplied from MAM."
+            f"WLC ends a chanted verse here in the {other_label} strand: {wlc} (silluq + sof"
+            f" pasuq), so the detangler supplies the {this_label}’s continuing {accent_spelling}"
+            f" from MAM: {mam}."
         )
     if not wlc_have:
         form = "ending in maqaf, carrying a meteg" if _METEG in wlc_word else "ending in maqaf"
         return (
-            f"WLC has only the {other_label} strand here ({form}, with no"
-            f" accent of its own), so the {this_label}'s {accent_spelling} is supplied from MAM."
+            f"WLC has only the {other_label} strand here: {wlc} ({form}, with no accent of its"
+            f" own), so the detangler supplies the {this_label}’s {accent_spelling} from MAM:"
+            f" {mam}."
         )
     others = ", ".join(_accent_spelling(a) for a in sorted(wlc_have, key=ord))
     return (
-        f"WLC has only the {other_label} strand here ({others}), so the {this_label}'s"
-        f" {accent_spelling} is supplied from MAM."
+        f"WLC has only the {other_label} strand here: {wlc} ({others}), so the detangler"
+        f" supplies the {this_label}’s {accent_spelling} from MAM: {mam}."
     )
 
 

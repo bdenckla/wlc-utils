@@ -4082,8 +4082,8 @@
           "mam_word": "יִהְיֶ֥ה",
           "wlc_word": "יִהְיֶֽה־",
           "accent": "֥",
-          "accent_name": "merkha (U+05A5)",
-          "reason": "WLC has only the elyon strand here (ending in maqaf, carrying a meteg, with no accent of its own), so the taxton's merkha is supplied from MAM.",
+          "accent_name": "merkha",
+          "reason": "WLC has only the elyon strand here: יהיֽה־ (ending in maqaf, carrying a meteg, with no accent of its own), so the detangler supplies the taxton’s merkha from MAM: יהי֥ה.",
           "source": "mam"
         }
       ],
@@ -8262,8 +8262,8 @@
           "mam_word": "תַעֲשֶׂ֨ה",
           "wlc_word": "תַעֲשֶׂ֥ה־",
           "accent": "֨",
-          "accent_name": "qadma (U+05A8)",
-          "reason": "WLC has a merkha (U+05A5) here that belongs to the elyon strand (where it mis-transcribes a meteg); the taxton's own qadma is omitted by WLC and supplied from MAM.",
+          "accent_name": "qadma",
+          "reason": "WLC has a merkha here: תעש֥ה־, belonging to the elyon strand (where it mis-transcribes a meteg); the taxton’s own qadma is omitted by WLC and supplied from LC (non-definitive): תעש֨ה.",
           "source": "lc"
         },
         {
@@ -8273,8 +8273,8 @@
           "mam_word": "תִרְצָ֖ח",
           "wlc_word": "תִּרְצָֽח׃",
           "accent": "֖",
-          "accent_name": "tipexa (U+0596)",
-          "reason": "WLC ends a chanted verse here in the elyon strand (silluq + sof pasuq), so the taxton's continuing tipexa is supplied from MAM.",
+          "accent_name": "tipexa",
+          "reason": "WLC ends a chanted verse here in the elyon strand: תרצֽח׃ (silluq + sof pasuq), so the detangler supplies the taxton’s continuing tipexa from MAM: תרצ֖ח.",
           "source": "mam"
         },
         {
@@ -8284,8 +8284,8 @@
           "mam_word": "אָֽנֹכִ֖י",
           "wlc_word": "אָֽנֹכִי֙",
           "accent": "֖",
-          "accent_name": "tipexa (U+0596)",
-          "reason": "WLC has only the taxton strand here (pashta (U+0599)), so the elyon's tipexa is supplied from MAM.",
+          "accent_name": "tipexa",
+          "reason": "WLC has only the taxton strand here: אֽנכי֙ (pashta), so the detangler supplies the elyon’s tipexa from MAM: אֽנכ֖י.",
           "source": "mam"
         },
         {
@@ -8295,8 +8295,8 @@
           "mam_word": "אֱלֹהֶ֑יךָ",
           "wlc_word": "אֱלֹהֶ֔יךָ",
           "accent": "֑",
-          "accent_name": "atnax (U+0591)",
-          "reason": "WLC has only the taxton strand here (zaqef qatan (U+0594)), so the elyon's atnax is supplied from MAM.",
+          "accent_name": "atnax",
+          "reason": "WLC has only the taxton strand here: אלה֔יך (zaqef qatan), so the detangler supplies the elyon’s atnax from MAM: אלה֑יך.",
           "source": "mam"
         }
       ],

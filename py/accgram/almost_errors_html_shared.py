@@ -8,6 +8,8 @@ modules (``almost_errors_charities``, ``almost_errors_oddities``) and the
 
 from __future__ import annotations
 
+import re
+
 from accgram import ob_error_context
 from accgram import ob_tree_table
 from accgram import rtms_report
@@ -62,6 +64,30 @@ def render_tree(tree_text: str) -> object:
 
 def hbo(text: str) -> object:
     return H.span(text, {"lang": "hbo"})
+
+
+# A run of Hebrew-block characters -- letters, points, accents, and the maqaf / sof pasuq
+# that join or end an accent-word.  Covers both bare consonantal skeletons and fully-pointed
+# words, so the whole word stays in one hbo span rather than being split at its marks.
+_HEBREW_RUN_RE = re.compile(r"[֐-׿]+")
+
+
+def wrap_hebrew_runs(text: str) -> tuple[object, ...]:
+    """Split ``text`` into a flat (string | hbo-span) sequence, wrapping each Hebrew run.
+
+    Wrapping the Hebrew words in ``lang="hbo"`` spans gives them the Hebrew font and
+    (via the stylesheet) keeps them upright -- Hebrew is never italicized."""
+    pieces: list[object] = []
+    cursor = 0
+    for match in _HEBREW_RUN_RE.finditer(text):
+        start, end = match.span()
+        if start > cursor:
+            pieces.append(text[cursor:start])
+        pieces.append(hbo(match.group(0)))
+        cursor = end
+    if cursor < len(text):
+        pieces.append(text[cursor:])
+    return tuple(pieces)
 
 
 def link(text: str, href: str) -> object:

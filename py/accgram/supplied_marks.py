@@ -35,10 +35,15 @@ from accgram import accent_marks as am
 from accgram import dual_cant_run
 from accgram import rtms_report
 from accgram import rtmsr_media
-from accgram.almost_errors_html_shared import accents_and_letters, hbo, link, ref_display
+from accgram.almost_errors_html_shared import (
+    accents_and_letters,
+    hbo,
+    link,
+    ref_display,
+    wrap_hebrew_runs,
+)
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram import rtms_data
-from accgram.uni_to_marks import is_accent
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 from py_html import my_html_for_img
@@ -158,11 +163,6 @@ def _intro() -> tuple[object, ...]:
     )
 
 
-def _source_label(source: str) -> str:
-    """Provenance of the supplied accent: MAM only, or with non-definitive LC support."""
-    return "LC (non-definitive)" if source == "lc" else "MAM"
-
-
 # --------------------------------------------------------------------------- #
 # "Supplied accents": each supply in turn, with explanatory text and its image.
 # --------------------------------------------------------------------------- #
@@ -220,27 +220,12 @@ def _case_extra(s) -> tuple[object, ...]:
 def _supplied_case(s) -> tuple[object, ...]:
     img_file, kind = _CASE_IMAGE[(s.bcv, s.strand, s.accent)]
     header = H.para(
-        f"{ref_display(s.bcv)}, {_translit(s.strand_label)}: the detangler supplies"
+        f"{ref_display(s.bcv)}: the detangler supplies the {_translit(s.strand_label)}’s"
         f" {_translit(s.accent_name)}",
         {"class": "goerwitz-tms-reading-label"},
     )
-    if any(is_accent(ch) for ch in s.wlc_word):
-        wlc_part = ("WLC has ", hbo(accents_and_letters(s.wlc_word)), ".")
-    else:
-        wlc_part = (
-            "WLC has ",
-            hbo(accents_and_letters(s.wlc_word)),
-            " (no accent of its own).",
-        )
-    forms = _comment(
-        (
-            f"Supplied from {_source_label(s.source)}: MAM’s ",
-            hbo(accents_and_letters(s.mam_word)),
-            "; ",
-            *wlc_part,
-        )
-    )
-    return (header, _comment(_translit(s.reason)), *_case_extra(s), forms, _image_block(img_file, kind))
+    reason = _comment(wrap_hebrew_runs(_translit(s.reason)))
+    return (header, reason, *_case_extra(s), _image_block(img_file, kind))
 
 
 def _supplied_section(supplies: list) -> tuple[object, ...]:

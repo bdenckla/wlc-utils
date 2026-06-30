@@ -59,7 +59,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 from collections.abc import Callable
 from pathlib import Path
 
@@ -78,6 +77,7 @@ from accgram import rtms_report
 from accgram import rtmsr_media
 from accgram import rtmsr_verse
 from accgram import uni_to_marks
+from accgram.almost_errors_html_shared import wrap_hebrew_runs
 from accgram.mam_poetic_accents import load_poetic_word_disj
 from accgram.mam_simple_verse import default_mam_simple_dir
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
@@ -542,7 +542,7 @@ def _render_ref_links(
     if isinstance(summary, str) and summary.strip():
         perma_contents.append(" Summary: ")
         # Wrap any Hebrew word (e.g. ps56:10's אָ֥֨ז) in an hbo span for the Hebrew font.
-        perma_contents.extend(_wrap_hebrew_runs(summary.strip()))
+        perma_contents.extend(wrap_hebrew_runs(summary.strip()))
     perma_para = wlc_utils_html.para(tuple(perma_contents))
 
     links: list[object] = [
@@ -577,37 +577,10 @@ def _render_summary(row: dict[str, object]) -> object:
             wlc_utils_html.span_c(
                 "Auto-derived summary (tentative): ", "poetic-auto-summary-label"
             ),
-            *_wrap_hebrew_runs(derive_tentative_summary(row)),
+            *wrap_hebrew_runs(derive_tentative_summary(row)),
         ),
         {"class": "poetic-auto-summary"},
     )
-
-
-# A run of Hebrew-block characters -- letters, points, accents, and the maqaf that
-# joins them into one accent-word.  Covers both the consonantal skeletons the
-# auto-derived summary embeds and a fully-pointed word a hand-authored note may carry
-# (e.g. ps56:10's אָ֥֨ז), so the whole word stays in one hbo span rather than being
-# split at its vowel/accent marks.
-_HEBREW_RUN_RE = re.compile(r"[֐-׿]+")
-
-
-def _wrap_hebrew_runs(text: str) -> tuple[object, ...]:
-    """Split ``text`` into a flat (string | hbo-span) sequence, wrapping each Hebrew run.
-
-    Wrapping the Hebrew words in ``lang="hbo"`` spans gives them the Hebrew font and
-    (via the stylesheet) keeps them upright -- Hebrew is never italicized, and in the
-    auto-summary's italic paragraph this matters."""
-    pieces: list[object] = []
-    cursor = 0
-    for match in _HEBREW_RUN_RE.finditer(text):
-        start, end = match.span()
-        if start > cursor:
-            pieces.append(text[cursor:start])
-        pieces.append(wlc_utils_html.span(match.group(0), {"lang": "hbo"}))
-        cursor = end
-    if cursor < len(text):
-        pieces.append(text[cursor:])
-    return tuple(pieces)
 
 
 def _render_hebrew_verse(row: dict[str, object]) -> object | None:
