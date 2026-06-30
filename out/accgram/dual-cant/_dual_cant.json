@@ -4083,7 +4083,7 @@
           "wlc_word": "יִהְיֶֽה־",
           "accent": "֥",
           "accent_name": "merkha",
-          "reason": "WLC has only the elyon strand here: יהיֽה־ (ending in maqaf, carrying a meteg, with no accent of its own), so the detangler supplies the taxton’s merkha from MAM: יהי֥ה.",
+          "reason": "WLC has only the elyon strand here: יהיֽה־ (meteg + maqaf, with no accent of its own), so the detangler supplies the taxton’s merkha from MAM: יהי֥ה.",
           "source": "mam"
         }
       ],
@@ -8299,7 +8299,7 @@
           "wlc_word": "תַעֲשֶׂ֥ה־",
           "accent": "֨",
           "accent_name": "qadma",
-          "reason": "WLC has only a mis-transcription of the elyon strand here: תעש֥ה־ (ending in maqaf, carrying a merkha), so the detangler supplies the taxton’s qadma from MAM: תעש֨ה. Unlike other supplied accents, there is support from the LC for this qadma, although the LC is in poor shape here, so the support is not unequivocal.",
+          "reason": "WLC has only a mis-transcription of the elyon strand here: תעש֥ה־ (merkha + maqaf), so the detangler supplies the taxton’s qadma from MAM: תעש֨ה. Unlike other supplied accents, there is support from the LC for this qadma, although the LC is in poor shape here, so the support is not unequivocal.",
           "source": "lc"
         },
         {
@@ -8310,7 +8310,7 @@
           "wlc_word": "תִּרְצָֽח׃",
           "accent": "֖",
           "accent_name": "tipexa",
-          "reason": "WLC ends a chanted verse here in the elyon strand: תרצֽח׃ (silluq + sof pasuq), so the detangler supplies the taxton’s mid-verse tipexa from MAM: תרצ֖ח.",
+          "reason": "WLC has only the elyon strand here: תרצֽח׃ (silluq + sof pasuq), so the detangler supplies the taxton’s tipexa from MAM: תרצ֖ח.",
           "source": "mam"
         },
         {

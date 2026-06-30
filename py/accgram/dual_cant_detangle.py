@@ -666,19 +666,18 @@ def _supply_reason(
         names = ", ".join(_accent_spelling(a) for a in ceded)
         return (
             f"WLC has only a mis-transcription of the {other_label} strand here: {wlc}"
-            f" (ending in maqaf, carrying a {names}), so the detangler supplies the"
+            f" ({names} + maqaf), so the detangler supplies the"
             f" {this_label}’s {accent_spelling} from MAM: {mam}. Unlike other supplied"
             f" accents, there is support from the LC for this {accent_spelling}, although"
             f" the LC is in poor shape here, so the support is not unequivocal."
         )
     if _SOF_PASUQ in wlc_word:
         return (
-            f"WLC ends a chanted verse here in the {other_label} strand: {wlc} (silluq + sof"
-            f" pasuq), so the detangler supplies the {this_label}’s mid-verse {accent_spelling}"
-            f" from MAM: {mam}."
+            f"WLC has only the {other_label} strand here: {wlc} (silluq + sof pasuq), so the"
+            f" detangler supplies the {this_label}’s {accent_spelling} from MAM: {mam}."
         )
     if not wlc_have:
-        form = "ending in maqaf, carrying a meteg" if _METEG in wlc_word else "ending in maqaf"
+        form = "meteg + maqaf" if _METEG in wlc_word else "maqaf"
         return (
             f"WLC has only the {other_label} strand here: {wlc} ({form}, with no accent of its"
             f" own), so the detangler supplies the {this_label}’s {accent_spelling} from MAM:"
