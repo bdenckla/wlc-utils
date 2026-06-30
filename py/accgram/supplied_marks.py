@@ -340,11 +340,15 @@ def _punct_observation(changes: list) -> object:
     """An observation drawn from the table: WLC's Decalogue punctuation sits far closer to
     the elyon (only suppressions needed) than to the taḥton (supplies plus suppressions).  The
     counts are tallied live from the changes so they track the checker, not a hard-coded number."""
+    elyon_supplied = sum(1 for d in changes if d.strand_label == "elyon" and d.delta == "supplied")
     elyon_suppressed = sum(1 for d in changes if d.strand_label == "elyon" and d.delta == "suppressed")
     taxton_supplied = sum(1 for d in changes if d.strand_label == "taxton" and d.delta == "supplied")
     taxton_suppressed = sum(1 for d in changes if d.strand_label == "taxton" and d.delta == "suppressed")
+    # The prose claims the elyon needs only suppressions ("all that is needed is to suppress");
+    # check that against the live counts so the text can't drift from the checker.
+    assert elyon_supplied == 0, f"prose says no elyon marks are supplied, but {elyon_supplied} are"
     return H.para(
-        "Sorting by “Change” reveals that the Decalogues are largely punctuated according to the"
+        "Sorting by “Strand” reveals that the Decalogues are largely punctuated according to the"
         f" {_ELYON}: to correctly punctuate the {_ELYON} all that is needed is to suppress"
         f" {elyon_suppressed} punctuation marks that are {_TAXTON}-only. Correctly punctuating the"
         f" {_TAXTON}, by contrast, takes much more work: {taxton_supplied} marks must be supplied"
