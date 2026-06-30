@@ -336,6 +336,22 @@ def _punct_table(changes: list) -> object:
     return H.table(tuple(rows), {"class": "goerwitz-obs-tree-table"})
 
 
+def _punct_observation(changes: list) -> object:
+    """An observation drawn from the table: WLC's Decalogue punctuation sits far closer to
+    the elyon (only suppressions needed) than to the taḥton (supplies plus suppressions).  The
+    counts are tallied live from the changes so they track the checker, not a hard-coded number."""
+    elyon_suppressed = sum(1 for d in changes if d.strand_label == "elyon" and d.delta == "suppressed")
+    taxton_supplied = sum(1 for d in changes if d.strand_label == "taxton" and d.delta == "supplied")
+    taxton_suppressed = sum(1 for d in changes if d.strand_label == "taxton" and d.delta == "suppressed")
+    return H.para(
+        "Sorting by “Change” reveals that the Decalogues are largely punctuated according to the"
+        f" {_ELYON}: to correctly punctuate the {_ELYON} all that is needed is to suppress"
+        f" {elyon_suppressed} punctuation marks that are {_TAXTON}-only. Correctly punctuating the"
+        f" {_TAXTON}, by contrast, takes much more work: {taxton_supplied} marks must be supplied"
+        f" and {taxton_suppressed} {_ELYON}-only marks suppressed."
+    )
+
+
 def _punct_section(changes: list) -> tuple[object, ...]:
     heading = H.heading_level_2("Supplied and suppressed punctuation")
     if not changes:
@@ -343,6 +359,7 @@ def _punct_section(changes: list) -> tuple[object, ...]:
     return (
         heading,
         *_punct_intro(),
+        _punct_observation(changes),
         _punct_table(changes),
     )
 
