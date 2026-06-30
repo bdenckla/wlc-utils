@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from accgram import dual_cant_readings
 from accgram import rtms_meteg_witness
 from accgram import rtmsr_overview
 import wlc_provenance as provenance
@@ -21,6 +22,7 @@ def write_ungrammatical_payload(
     serializable_rows = rtms_meteg_witness.strip_internal_witness_fields_from_rows(
         enriched_ungrammatical_rows
     )
+    serializable_rows = dual_cant_readings.without_heavy_reading_fields(serializable_rows)
     ungrammatical_payload: dict[str, object] = {
         "artifacts_description": "enriched ungrammatical verse research records",
         "payload_provenance_note": (

@@ -17,6 +17,11 @@ elyon reading groups several numbered verses, so on the dt 5:8 row its 5:7 / 5:9
 material is de-emphasized, spotlighting the 5:8 part where the ungrammatical lives.
 ``display_label`` carries the Unicode ḥ (the cant-strand ASCII
 label spells ḥet as "x", per the repo transliteration standard).
+
+The heavy ``tree`` / ``word_leaf_counts`` fields are dropped from serialized research
+artifacts via :func:`without_heavy_reading_fields` (issue #44): they live canonically in
+``out/accgram/dual-cant/_dual_cant.json``, and the goerwitz HTML renders from the in-memory
+rows, which keep them.
 """
 
 from __future__ import annotations
@@ -30,6 +35,33 @@ from accgram import dual_cant_run
 _HET_UNI = "h" + chr(0x0323)
 _EN_DASH = chr(0x2013)
 _BCV_RE = re.compile(r"(\d+):(\d+)$")
+
+# The heavy parse tree + its per-word leaf counts live canonically in
+# out/accgram/dual-cant/_dual_cant.json; drop them from serialized research artifacts
+# (the goerwitz HTML renders from the in-memory rows, which keep these). Issue #44.
+_HEAVY_READING_FIELDS = ("tree", "word_leaf_counts")
+
+
+def without_heavy_reading_fields(
+    rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    """Return copies of ``rows`` with each ``dual_cant_readings`` entry's heavy fields
+    (``tree``, ``word_leaf_counts``) dropped. Non-mutating: callers' rows keep their trees."""
+    out: list[dict[str, object]] = []
+    for row in rows:
+        readings = row.get("dual_cant_readings")
+        if not isinstance(readings, list):
+            out.append(row)
+            continue
+        new_row = dict(row)
+        new_row["dual_cant_readings"] = [
+            {k: v for k, v in reading.items() if k not in _HEAVY_READING_FIELDS}
+            if isinstance(reading, dict)
+            else reading
+            for reading in readings
+        ]
+        out.append(new_row)
+    return out
 
 
 def load_readings_by_bcv(
