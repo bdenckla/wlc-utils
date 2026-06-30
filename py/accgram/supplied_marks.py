@@ -128,8 +128,8 @@ def _intro() -> tuple[object, ...]:
                 "WLC, like the LC itself, has three dually-cantillated prose passages:"
                 " the two Decalogues (Exodus 20, Deuteronomy 5)"
                 " and the Reuben/Bilhah verse (Genesis 35:22)."
-                " Before attempting to grammar-check one of these passages we",
-                *[" ", link("detangle", "goerwitz.html")],
+                " Before attempting to grammar-check one of these passages we"
+                " detangle"
                 " it into its two single-cantillation strands, guided by MAM’s"
                 " strands."
                 " After detangling a passage, we feed each strand’s chanted verses to"
@@ -189,28 +189,15 @@ def _image_block(img_file: str, kind: str) -> object:
 
 
 def _case_extra(s) -> tuple[object, ...]:
-    """Extra prose for Deuteronomy 5:8 -- the one supply whose lone WLC mark is a
-    mis-transcribed accent (a merkha where only a meteg is due) rather than a true meteg,
-    leaving its elyon ungrammatical."""
+    """Extra prose for Deuteronomy 5:8."""
     key = (s.bcv, s.strand, s.accent)
     if key == ("dt5:8", "alef", am.QADMA):
         return (
             _comment(
-                "WLC’s lone mark here is not a meteg but a real merkha, and it belongs to"
-                f" the {_ELYON}, where only a meteg is due. The LC is in poor shape at this"
-                " word (see the image): a better transcription reads that faint, broken"
-                f" vertical line as a meteg and adds the qadma the {_TAXTON} is due — the"
-                " consensus pointing, under which both strands parse."
-            ),
-            _comment(
                 (
-                    f"So the detangler supplies the {_TAXTON}’s qadma (and the {_TAXTON} then"
-                    f" parses clean), but lets WLC’s merkha stand in the {_ELYON}, where it"
-                    " surfaces as an ungrammatical verse in the ",
-                    link("checker run", "goerwitz.html"),
-                    ". UXLC, too, corrects the merkha to a meteg, but supplies a pashta"
-                    " rather than the due qadma; a pending UXLC change would correct that"
-                    " pashta to the qadma.",
+                    f"This word is further discussed",
+                    *[" ", link("here", "goerwitz.html#obdt5v8"), ","],
+                    " among the ungrammatical verses."
                 )
             ),
         )
@@ -321,15 +308,17 @@ def _legarmeh_para() -> object:
             "Legarmeh is neither added nor erased. The three passages carry nine legarmeh"
             f" accents (a {_MUNAX} with a following paseq, before a revia), but every one sits"
             f" on a word WLC itself has with that {_MUNAX} and paseq — the paseq is never"
-            " supplied from MAM. A legarmeh therefore surfaces only in the strand that takes"
+            " supplied from MAM. A legarmeh comes and goes with its corresponding"
+            f" {_MUNAX}, just as a sof pasuq comes and goes with its corresponding silluq,"
+            " so a legarmeh surfaces only in the strand that takes"
             " WLC’s ",
             _MUNAX,
             ": WLC’s tangled ",
             bamayim,
             f" (Exodus 20:4), for instance, carries both a {_TIPEXA} and a {_MUNAX}, so the"
             f" {_ELYON} (taking the {_MUNAX}) reads a legarmeh there while the {_TAXTON}"
-            f" (taking the {_TIPEXA}) does not. That split is the ordinary accent assignment,"
-            " not a word-division change, so the inventory above is maqaf and sof pasuq only.",
+            f" (taking the {_TIPEXA}) does not. So the inventory above is maqaf and sof"
+            " pasuq only.",
         )
     )
 
@@ -344,11 +333,10 @@ def _division_section(changes: list) -> tuple[object, ...]:
         H.heading_level_2("Erased and added maqaf and sof pasuq marks"),
         H.para(
             (
-                "Detangling also re-joins atoms into chanted words."
+                "Detangling also reconfigures the way that atoms are joined into chanted words."
                 " Each strand’s maqaf marks (or lack thereof, i.e. spaces) are taken from MAM,"
                 " so, relative to WLC’s tangled form, the checker both adds and removes maqaf marks."
                 " (WLC has a mix of the two strands’ maqaf marks; it is not simply “maqaf-maximalist”.)"
-                " A similar situation exists for sof pasuq marks."
                 " (Narrow-sense paseq is not part of the accent grammar, so it is not tracked.)"
                 f" The {len(changes)} additions and erasures are itemized in the table below;"
                 " the pattern in each passage is as follows."

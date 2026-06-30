@@ -601,7 +601,7 @@ def _supply_reason(
             f" (ending in maqaf, carrying a {names}), so the detangler supplies the"
             f" {this_label}’s {accent_spelling} from MAM: {mam}. Unlike other supplied"
             f" accents, there is support from the LC for this {accent_spelling}, although"
-            f" the LC is not in great shape here, so the support is not unequivocal."
+            f" the LC is in poor shape here, so the support is not unequivocal."
         )
     if _SOF_PASUQ in wlc_word:
         return (
