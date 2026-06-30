@@ -608,6 +608,34 @@ def display_form(word: str) -> str:
     )
 
 
+def display_real_marks(strand_word: str, wlc_word: str) -> str:
+    """``display_form`` for a *strand* word, with MAM's notational stress helpers removed so the
+    inventory shows what the detangler did to WLC, not MAM's own marking conventions.
+
+    MAM doubles an accent -- once at the word's grammatical edge (the real mark) and once as an
+    inner stress-helper -- and adds a tsinnorit helper; neither belongs to WLC.  So drop the
+    tsinnorit (U+0598) and collapse each doubled accent to its real edge occurrence (first for a
+    prepositive accent, last otherwise -- e.g. a postpositive segol/pashta).  But a stress helper
+    WLC *itself* carries (then doubled in ``wlc_word`` too, most often a pashta) is genuine and is
+    left intact.  The kept-character set matches ``display_form``."""
+    drop_idx: set[int] = set()
+    accents = {ch for ch in strand_word if uni_to_marks.is_accent(ch) and ch != _TSINNORIT}
+    for accent in accents:
+        occ = [j for j, ch in enumerate(strand_word) if ch == accent]
+        if len(occ) < 2 or wlc_word.count(accent) >= 2:
+            continue  # not a MAM-only doubling -> leave as-is
+        kept = occ[0] if accent in uni_to_marks.PREPOSITIVE_MARKS else occ[-1]
+        drop_idx.update(j for j in occ if j != kept)
+    keep = (_METEG, _SRC_MAQAF, _SOF_PASUQ)
+    return "".join(
+        ch
+        for i, ch in enumerate(strand_word)
+        if i not in drop_idx
+        and ch != _TSINNORIT
+        and (uni_to_marks.is_base_letter(ch) or uni_to_marks.is_accent(ch) or ch in keep)
+    )
+
+
 def _supply_reason(
     wlc_word: str,
     wlc_have: set[str],
@@ -622,7 +650,7 @@ def _supply_reason(
     described, then the accent supplied from MAM (or its non-definitive LC support) shown at
     the supply.  The Hebrew runs are wrapped in ``lang="hbo"`` spans by the page renderer."""
     wlc = display_form(wlc_word)
-    mam = display_form(mam_word)
+    mam = display_real_marks(mam_word, wlc_word)
     if ceded:
         names = ", ".join(_accent_spelling(a) for a in ceded)
         return (

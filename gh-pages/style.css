@@ -120,6 +120,9 @@ table.goerwitz-obs-error-table td.goerwitz-obs-depth-cell {
     text-align: center;
     font-weight: 700;
 }
+table.goerwitz-obs-tree-table th.goerwitz-tms-sortable { cursor: pointer; user-select: none; }
+table.goerwitz-obs-tree-table th.goerwitz-tms-sortable[aria-sort="ascending"]::after  { content: " \25B2"; }
+table.goerwitz-obs-tree-table th.goerwitz-tms-sortable[aria-sort="descending"]::after { content: " \25BC"; }
 p.goerwitz-obs-error-note {
     margin-top: 0.35em;
     margin-bottom: 0.35em;

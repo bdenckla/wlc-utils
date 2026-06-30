@@ -33,7 +33,8 @@ from pathlib import Path
 
 from accgram import accent_marks as am
 from accgram import dual_cant_run
-from accgram.dual_cant_detangle import display_form
+from accgram import uni_to_marks
+from accgram.dual_cant_detangle import display_form, display_real_marks
 from accgram import rtms_report
 from accgram import rtmsr_media
 from accgram.almost_errors_html_shared import (
@@ -41,6 +42,7 @@ from accgram.almost_errors_html_shared import (
     hbo,
     link,
     ref_display,
+    ref_short,
     wrap_hebrew_runs,
 )
 from accgram.mam_simple_verse import default_mam_simple_dir
@@ -82,6 +84,17 @@ _CASE_IMAGE: dict[tuple[str, str, str], tuple[str, str]] = {
 }
 
 _PASSAGE_RANK = {"gn": 0, "ex": 1, "dt": 2}
+
+# The punctuation glyph each tracked mark contributes -- coloured in the Word column to show what
+# was supplied or suppressed.  A legarmeh is shown by its broad-sense paseq bar -- the visible
+# punctuation it adds over its bare accent.
+_MARK_GLYPH = {
+    "maqaf": uni_to_marks.MAQAF,
+    "sof pasuq": am.SOF_PASUQ,
+    "legarmeh": am.PASEQ,
+}
+
+_SORTABLE_TH_CLASS = "goerwitz-tms-sortable"
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -248,7 +261,9 @@ def _carrying_form(changes: list, bcv: str, mark: str, delta: str, strand: str) 
     (the prose deliberately shows "WLC's join ..." for a suppression)."""
     for d in changes:
         if (d.bcv, d.mark, d.delta, d.strand) == (bcv, mark, delta, strand):
-            return hbo(display_form(d.wlc_word if delta == "suppressed" else d.mam_word))
+            if delta == "suppressed":
+                return hbo(display_form(d.wlc_word))  # WLC's word carries the mark as-is
+            return hbo(display_real_marks(d.mam_word, d.wlc_word))  # strand word, MAM helpers stripped
     return "?"
 
 
@@ -365,21 +380,50 @@ def _punct_sort_key(d) -> tuple:
     return (_PASSAGE_RANK.get(d.bcv[:2], 9), 0 if d.strand == "alef" else 1, chnu, vrnu, d.mark, d.delta)
 
 
+def _delta_class(delta: str) -> str:
+    return "goerwitz-tms-supplied" if delta == "supplied" else "goerwitz-tms-suppressed"
+
+
+def _verse_sort_key(bcv: str) -> str:
+    """A canonical, lexically-sortable verse key (passage rank + zero-padded chapter:verse) for the
+    table's client-side sort, e.g. ``gn35:22`` -> ``0-035-022``."""
+    chnu, vrnu = (int(p) for p in bcv[2:].split(":"))
+    return f"{_PASSAGE_RANK.get(bcv[:2], 9)}-{chnu:03d}-{vrnu:03d}"
+
+
+def _word_cell(d) -> object:
+    """The Word cell: the strand word (MAM stress-helpers stripped) with only the changed
+    punctuation coloured.  A supplied mark sits inside normal-colour square brackets (the
+    editorial-supply convention); a suppressed mark is appended, coloured, after the clean word."""
+    cls = _delta_class(d.delta)
+    body = display_real_marks(d.mam_word, d.wlc_word)
+    glyph = _MARK_GLYPH[d.mark]
+    if d.delta == "supplied":
+        before, _, after = body.partition(glyph)
+        pieces = ("[", before, H.span_c(glyph, cls), after, "]")
+    else:
+        pieces = (body, H.span_c(glyph, cls))
+    return H.span(pieces, {"lang": "hbo"})
+
+
 def _punct_table(changes: list) -> object:
-    header = H.table_row_of_headers(("Verse", "Strand", "Mark", "Change", "Word"))
+    sortable = tuple(
+        H.table_header(name, {"class": _SORTABLE_TH_CLASS, "scope": "col"})
+        for name in ("Verse", "Strand", "Mark", "Change")
+    )
+    header = H.table_row(sortable + (H.table_header("Word", {"scope": "col"}),))
     rows = [header]
     for d in sorted(changes, key=_punct_sort_key):
-        cls = "goerwitz-tms-supplied" if d.delta == "supplied" else "goerwitz-tms-suppressed"
-        word = H.span_c(hbo(display_form(d.mam_word)), cls)
         rows.append(
             H.table_row_of_data(
                 (
-                    ref_display(d.bcv),
+                    ref_short(d.bcv),
                     _translit(d.strand_label),
                     d.mark,
-                    H.span_c(d.delta, cls),
-                    word,
-                )
+                    H.span_c(d.delta, _delta_class(d.delta)),
+                    _word_cell(d),
+                ),
+                tdattrs=({"data-sort": _verse_sort_key(d.bcv)}, None, None, None, None),
             )
         )
     return H.table(tuple(rows), {"class": "goerwitz-obs-tree-table"})
@@ -404,7 +448,8 @@ def render_body_contents(supplies: list, punctuation_changes: list) -> tuple[obj
         *_punct_section(punctuation_changes),
     ]
     wrapper = H.div(tuple(sections), {"class": _WIDTH_CLASS})
-    return (wrapper,)
+    script = H.htel_mk("script", {"src": "supplied-marks-sort.js"})
+    return (wrapper, script)
 
 
 def run(args: argparse.Namespace) -> None:
