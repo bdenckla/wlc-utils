@@ -4,13 +4,13 @@
 <head>
 <meta charset="utf-8">
 <title>
-Supplied and erased marks</title>
+Supplied and suppressed marks</title>
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <div class="goerwitz-tms-width-limited">
 <h1>
-Supplied and erased marks</h1>
+Supplied and suppressed marks</h1>
 <h2>
 Introduction</h2>
 <p>WLC, like the LC itself, has three dually-cantillated prose passages: the two Decalogues (Exodus 20, Deuteronomy 5) and the Reuben/Bilhah verse (Genesis 35:22). Before attempting to grammar-check one of these passages we detangle it into its two single-cantillation strands, guided by MAM’s strands. After detangling a passage, we feed each strand’s chanted verses to the ordinary prose accent grammar checker. The accents checked are WLC’s own, except for the cases described below.</p>
@@ -50,47 +50,67 @@ Supplied accents</h2>
 <figcaption class="goerwitz-tms-image-caption">Image source: <a href="https://manuscripts.sefaria.org/leningrad-color/BIB_LENCDX_F102B.jpg">102B</a> column 2 line 9</figcaption>
 </figure>
 <h2>
-Erased and added maqaf and sof pasuq marks</h2>
-<p>Detangling also reconfigures the way that atoms are joined into chanted words. Each strand’s maqaf marks (or lack thereof, i.e. spaces) are taken from MAM, so, relative to WLC’s tangled form, the checker both adds and removes maqaf marks. (WLC has a mix of the two strands’ maqaf marks; it is not simply “maqaf-maximalist”.) (Narrow-sense paseq is not part of the accent grammar, so it is not tracked.) The 32 additions and erasures are itemized in the table below; the pattern in each passage is as follows.</p>
-<p class="goerwitz-tms-comment">Genesis 35:22: the pashut strand breaks the verse in two, adding a mid-verse sof pasuq that WLC — and the midrashit strand — do not have.</p>
-<p class="goerwitz-tms-comment">The Decalogues (Exodus 20, Deuteronomy 5): the taḥton subdivides into short chanted verses, adding a sof pasuq inside several numbered verses (Exodus 20:3, 20:4, 20:8, 20:9, 20:10; Deuteronomy 5:12) and erasing WLC’s verse-final one where the commandment runs on (Exodus 20:2 and the short prohibitions 20:13–15; Deuteronomy 5:6, 5:17–19). The elyon does the reverse, grouping the commandments into long chanted verses and so erasing WLC’s internal sof pasuqs (Exodus 20:5; Deuteronomy 5:7, 5:8, 5:9, 5:13, 5:14).</p>
-<p class="goerwitz-tms-comment">The maqaf joins are re-cut to match. At Exodus 20:3 the taḥton drops WLC’s join <span lang="hbo">יִהְיֶֽה־</span> — the supplied merkha makes that word stand on its own — and instead joins <span lang="hbo">לֹֽא־</span>; the elyon, conversely, drops WLC’s join <span lang="hbo">לֹֽ֣א־</span> at Exodus 20:10 (and likewise at Deuteronomy 5:8).</p>
+Supplied and suppressed punctuation</h2>
+<p>Detangling shares one consonantal skeleton between a passage’s two strands; what differs is the accent each atom carries, and three punctuation marks follow from those accents. Each strand takes its punctuation from its MAM strand, so, relative to WLC’s tangled form, the detangler both <b>supplies</b> a mark (it fits this strand’s accents, but WLC lacks it) and <b>suppresses</b> one (WLC has it, for the other strand’s reading). Each mark tracks an accent — or, for maqaf, the lack of one:</p>
+<ul>
+<li>
+<b>Maqaf tracks the absence of an accent.</b> An unaccented atom leans on the next, joined to it by a maqaf; an atom that bears an accent stands on its own, followed by a space. So a strand’s maqaf follows from its accents: where the strand bears no accent on an atom it has a maqaf, supplied where WLC has a space there; where it bears an accent it has a space, suppressing WLC’s maqaf.</li>
+<li>
+<b>Sof pasuq tracks the silluq.</b> A sof pasuq ends a chanted verse, paired with the silluq on its last word. Where a strand ends a chanted verse it bears a sof pasuq, supplied where WLC, holding the other strand’s reading, runs on; where the strand runs on it bears none, suppressing the sof pasuq WLC has for the other strand.</li>
+<li>
+<b>Legarmeh tracks the munaḥ.</b> A legarmeh is a munaḥ followed by a broad-sense paseq (the Unicode PASEQ bar), before a revia. It comes and goes with its munaḥ, just as a sof pasuq comes and goes with its silluq: where a strand reads the munaḥ it has the legarmeh; where it reads the word’s other accent the legarmeh is suppressed. WLC’s tangled <span lang="hbo">במ֖֣ים</span> (Exodus 20:4), for instance, carries both a tipeḥa and a munaḥ, so the elyon (reading the munaḥ) has a legarmeh there while the taḥton (reading the tipeḥa) does not.</li>
+</ul>
+<p>WLC’s tangled form is neither maqaf-maximalist nor sof-pasuq-maximalist: it carries a mix of the two strands’ maqafs and sof pasuqs, so detangling both supplies and suppresses them. But it is legarmeh-maximalist — it keeps every legarmeh of both readings, because a legarmeh’s broad-sense paseq is always WLC’s own and is never supplied from MAM — so a legarmeh is only ever suppressed, never supplied. (A narrow-sense paseq — a Unicode PASEQ that forms no legarmeh — is not part of the accent grammar and is not tracked.)</p>
+<p>The 42 supplies and suppressions are itemized in the table below; the pattern in each passage is as follows.</p>
+<p class="goerwitz-tms-comment">Genesis 35:22: the pashut strand breaks the verse in two, supplying a mid-verse sof pasuq that WLC — and the midrashit strand — do not have.</p>
+<p class="goerwitz-tms-comment">The Decalogues (Exodus 20, Deuteronomy 5): the taḥton subdivides into short chanted verses, supplying a sof pasuq inside several numbered verses (Exodus 20:3, 20:4, 20:8, 20:9, 20:10; Deuteronomy 5:12) and suppressing WLC’s verse-final one where the commandment runs on (Exodus 20:2 and the short prohibitions 20:13–15; Deuteronomy 5:6, 5:17–19). The elyon does the reverse, grouping the commandments into long chanted verses and so suppressing WLC’s internal sof pasuqs (Exodus 20:5; Deuteronomy 5:7, 5:8, 5:9, 5:13, 5:14).</p>
+<p class="goerwitz-tms-comment">The maqaf joins are re-cut to match. At Exodus 20:3 the taḥton drops WLC’s join <span lang="hbo">יהיֽה־</span> — the supplied merkha makes that word stand on its own — and instead joins <span lang="hbo">לֽא־</span>; the elyon, conversely, drops WLC’s join <span lang="hbo">לֽ֣א־</span> at Exodus 20:10 (and likewise at Deuteronomy 5:8).</p>
+<p class="goerwitz-tms-comment">Legarmeh is only ever suppressed. In each of the ten cases the taḥton reads a tipeḥa or pashta where WLC’s tangle carries the elyon’s munaḥ-legarmeh, so all ten drop from the taḥton (Exodus 20:4, 20:10; Deuteronomy 5:8, 5:12, 5:14, 5:15). Two further munaḥ-plus-PASEQ words — Exodus 20:10 and Deuteronomy 5:16 — carry the munaḥ in both strands, so their legarmeh belongs to both readings and is neither supplied nor suppressed.</p>
 <table class="goerwitz-obs-tree-table">
 <tr><th>Verse</th><th>Strand</th><th>Mark</th><th>Change</th><th>Word</th></tr>
-<tr><td>Genesis 35:22</td><td>pashut</td><td>sof pasuq</td><td>added</td><td><span lang="hbo">יִשְׂרָאֵֽל׃</span></td></tr>
-<tr><td>Exodus 20:2</td><td>taḥton</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">עֲבָדִֽ֑ים׃</span></td></tr>
-<tr><td>Exodus 20:3</td><td>taḥton</td><td>maqaf</td><td>added</td><td><span lang="hbo">לֹֽא־</span></td></tr>
-<tr><td>Exodus 20:3</td><td>taḥton</td><td>maqaf</td><td>erased</td><td><span lang="hbo">יִהְיֶֽה־</span></td></tr>
-<tr><td>Exodus 20:3</td><td>taḥton</td><td>sof pasuq</td><td>added</td><td><span lang="hbo">פָּנָֽי׃</span></td></tr>
-<tr><td>Exodus 20:4</td><td>taḥton</td><td>maqaf</td><td>added</td><td><span lang="hbo">לֹֽא־</span></td></tr>
-<tr><td>Exodus 20:4</td><td>taḥton</td><td>maqaf</td><td>erased</td><td><span lang="hbo">תַֽעֲשֶׂ֨ה־</span></td></tr>
-<tr><td>Exodus 20:4</td><td>taḥton</td><td>sof pasuq</td><td>added</td><td><span lang="hbo">לָאָֽרֶץ׃</span></td></tr>
-<tr><td>Exodus 20:8</td><td>taḥton</td><td>sof pasuq</td><td>added</td><td><span lang="hbo">לְקַדְּשֽׁוֹ׃</span></td></tr>
-<tr><td>Exodus 20:9</td><td>taḥton</td><td>sof pasuq</td><td>added</td><td><span lang="hbo">מְלַאכְתֶּֽךָ׃</span></td></tr>
-<tr><td>Exodus 20:10</td><td>taḥton</td><td>maqaf</td><td>erased</td><td><span lang="hbo">וּבִנְךָֽ֣־</span></td></tr>
-<tr><td>Exodus 20:10</td><td>taḥton</td><td>sof pasuq</td><td>added</td><td><span lang="hbo">בִּשְׁעָרֶֽיךָ׃</span></td></tr>
-<tr><td>Exodus 20:13</td><td>taḥton</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">תִּרְצָֽ֖ח׃</span></td></tr>
-<tr><td>Exodus 20:14</td><td>taḥton</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">תִּנְאָֽ֑ף׃</span></td></tr>
-<tr><td>Exodus 20:15</td><td>taḥton</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">תִּגְנֹֽ֔ב׃</span></td></tr>
-<tr><td>Exodus 20:5</td><td>elyon</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">לְשֹׂנְאָֽ֑י׃</span></td></tr>
-<tr><td>Exodus 20:10</td><td>elyon</td><td>maqaf</td><td>erased</td><td><span lang="hbo">לֹֽ֣א־</span></td></tr>
-<tr><td>Deuter 5:6</td><td>taḥton</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">עֲבָדִֽ֑ים׃</span></td></tr>
-<tr><td>Deuter 5:7</td><td>taḥton</td><td>maqaf</td><td>added</td><td><span lang="hbo">לֹא־</span></td></tr>
-<tr><td>Deuter 5:7</td><td>taḥton</td><td>maqaf</td><td>erased</td><td><span lang="hbo">יִהְיֶ֥ה־</span></td></tr>
-<tr><td>Deuter 5:8</td><td>taḥton</td><td>maqaf</td><td>erased</td><td><span lang="hbo">תַעֲשֶׂ֥ה־</span></td></tr>
-<tr><td>Deuter 5:12</td><td>taḥton</td><td>sof pasuq</td><td>added</td><td><span lang="hbo">אֱלֹהֶֽיךָ׃</span></td></tr>
-<tr><td>Deuter 5:15</td><td>taḥton</td><td>maqaf</td><td>erased</td><td><span lang="hbo">כִּ֣י־</span></td></tr>
-<tr><td>Deuter 5:17</td><td>taḥton</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">תִּרְצָֽח׃</span></td></tr>
-<tr><td>Deuter 5:18</td><td>taḥton</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">תִּנְאָֽ֑ף׃</span></td></tr>
-<tr><td>Deuter 5:19</td><td>taḥton</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">תִּגְנֹֽ֔ב׃</span></td></tr>
-<tr><td>Deuter 5:7</td><td>elyon</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">פָּנָֽ֗יַ׃</span></td></tr>
-<tr><td>Deuter 5:8</td><td>elyon</td><td>maqaf</td><td>erased</td><td><span lang="hbo">לֹֽ֣א־</span></td></tr>
-<tr><td>Deuter 5:8</td><td>elyon</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">לָאָֽ֗רֶץ׃</span></td></tr>
-<tr><td>Deuter 5:9</td><td>elyon</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">לְשֹׂנְאָֽ֑י׃</span></td></tr>
-<tr><td>Deuter 5:13</td><td>elyon</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">מְלַאכְתֶּֽךָ֒׃</span></td></tr>
-<tr><td>Deuter 5:14</td><td>elyon</td><td>sof pasuq</td><td>erased</td><td><span lang="hbo">כָּמֽ֑וֹךָ׃</span></td></tr>
+<tr><td>Genesis 35:22</td><td>pashut</td><td>sof pasuq</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">ישראֽל׃</span></span></td></tr>
+<tr><td>Exodus 20:2</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">עבד֑ים</span></span></td></tr>
+<tr><td>Exodus 20:3</td><td>taḥton</td><td>maqaf</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">לֽא־</span></span></td></tr>
+<tr><td>Exodus 20:3</td><td>taḥton</td><td>maqaf</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">יהי֥ה</span></span></td></tr>
+<tr><td>Exodus 20:3</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">פנֽי׃</span></span></td></tr>
+<tr><td>Exodus 20:4</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">פ֙סל֙</span></span></td></tr>
+<tr><td>Exodus 20:4</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">בשמ֙ים֙</span></span></td></tr>
+<tr><td>Exodus 20:4</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">במ֖ים</span></span></td></tr>
+<tr><td>Exodus 20:4</td><td>taḥton</td><td>maqaf</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">לֽא־</span></span></td></tr>
+<tr><td>Exodus 20:4</td><td>taḥton</td><td>maqaf</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">תעש֨ה</span></span></td></tr>
+<tr><td>Exodus 20:4</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">לאֽרץ׃</span></span></td></tr>
+<tr><td>Exodus 20:8</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">לקדשֽו׃</span></span></td></tr>
+<tr><td>Exodus 20:9</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">מלאכתֽך׃</span></span></td></tr>
+<tr><td>Exodus 20:10</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">שב֖ת</span></span></td></tr>
+<tr><td>Exodus 20:10</td><td>taḥton</td><td>maqaf</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">ובנך֣</span></span></td></tr>
+<tr><td>Exodus 20:10</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">בשערֽיך׃</span></span></td></tr>
+<tr><td>Exodus 20:13</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">תרצ֖ח</span></span></td></tr>
+<tr><td>Exodus 20:14</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">תנא֑ף</span></span></td></tr>
+<tr><td>Exodus 20:15</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">תגנ֔ב</span></span></td></tr>
+<tr><td>Exodus 20:5</td><td>elyon</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">לשנא֑י</span></span></td></tr>
+<tr><td>Exodus 20:10</td><td>elyon</td><td>maqaf</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">ל֣א</span></span></td></tr>
+<tr><td>Deuter 5:6</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">עבד֑ים</span></span></td></tr>
+<tr><td>Deuter 5:7</td><td>taḥton</td><td>maqaf</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">לא־</span></span></td></tr>
+<tr><td>Deuter 5:7</td><td>taḥton</td><td>maqaf</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">יהי֥ה</span></span></td></tr>
+<tr><td>Deuter 5:8</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">פ֙סל֙</span></span></td></tr>
+<tr><td>Deuter 5:8</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">בשמ֙ים֙</span></span></td></tr>
+<tr><td>Deuter 5:8</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">במ֖ים</span></span></td></tr>
+<tr><td>Deuter 5:8</td><td>taḥton</td><td>maqaf</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">תעש֨ה</span></span></td></tr>
+<tr><td>Deuter 5:12</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">צוך֖</span></span></td></tr>
+<tr><td>Deuter 5:12</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-supplied">supplied</span></td><td><span class="goerwitz-tms-supplied"><span lang="hbo">אלהֽיך׃</span></span></td></tr>
+<tr><td>Deuter 5:14</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">שב֖ת</span></span></td></tr>
+<tr><td>Deuter 5:15</td><td>taḥton</td><td>legarmeh</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">הי֙ית֙</span></span></td></tr>
+<tr><td>Deuter 5:15</td><td>taḥton</td><td>maqaf</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">כ֣י</span></span></td></tr>
+<tr><td>Deuter 5:17</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">תרצ֖ח</span></span></td></tr>
+<tr><td>Deuter 5:18</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">תנא֑ף</span></span></td></tr>
+<tr><td>Deuter 5:19</td><td>taḥton</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">תגנ֔ב</span></span></td></tr>
+<tr><td>Deuter 5:7</td><td>elyon</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">פנ֗י</span></span></td></tr>
+<tr><td>Deuter 5:8</td><td>elyon</td><td>maqaf</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">ל֣א</span></span></td></tr>
+<tr><td>Deuter 5:8</td><td>elyon</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">לא֗רץ</span></span></td></tr>
+<tr><td>Deuter 5:9</td><td>elyon</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">לשנא֑י</span></span></td></tr>
+<tr><td>Deuter 5:13</td><td>elyon</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">מלאכת֒ך֒</span></span></td></tr>
+<tr><td>Deuter 5:14</td><td>elyon</td><td>sof pasuq</td><td><span class="goerwitz-tms-suppressed">suppressed</span></td><td><span class="goerwitz-tms-suppressed"><span lang="hbo">כמ֑וך</span></span></td></tr>
 </table>
-<p class="goerwitz-tms-comment">Legarmeh is neither added nor erased. The three passages carry nine legarmeh accents (a munaḥ with a following paseq, before a revia), but every one sits on a word WLC itself has with that munaḥ and paseq — the paseq is never supplied from MAM. A legarmeh comes and goes with its corresponding munaḥ, just as a sof pasuq comes and goes with its corresponding silluq, so a legarmeh surfaces only in the strand that takes WLC’s munaḥ: WLC’s tangled <span lang="hbo">במ֖֣ים</span> (Exodus 20:4), for instance, carries both a tipeḥa and a munaḥ, so the elyon (taking the munaḥ) reads a legarmeh there while the taḥton (taking the tipeḥa) does not. So the inventory above is maqaf and sof pasuq only.</p>
 </div>
 </body>
 </html>

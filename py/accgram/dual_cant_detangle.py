@@ -20,7 +20,7 @@ Design (all four points verified against the data, see issue #36):
   strand and where each strand's chanted verses break.  The emitted accent on a word is WLC's
   own codepoint -- so a WLC-specific accent bug still surfaces -- *matched by identity*
   against the accent MAM's strand carries there, never by stored order.
-* **Word-division (maqaf / paseq / sof pasuq) comes from each MAM strand**, which is why
+* **Punctuation (maqaf, paseq, sof pasuq) comes from each MAM strand**, which is why
   the loader (``mam_simple_verse``) exposes the strands as their own token streams.  WLC's
   one compromise maqaf pattern fits neither strand; the grammar is boundary-sensitive.
 * **Alignment is pairwise** (WLC↔alef and WLC↔bet) on the consonant skeleton, so spelling
@@ -66,10 +66,11 @@ _TSINNORIT = am.TSINNORIT
 _METEG = am.METEG
 _SOF_PASUQ = am.SOF_PASUQ
 _PASEQ = am.PASEQ
+_MUNAX = am.MUNAX
 _SRC_MAQAF = uni_to_marks.MAQAF  # the Unicode maqaf U+05BE in the source words
 
 # Characters of a strand word that survive into the emitted WLC-stream word: base
-# consonants and the word-division / final marks (the spine), plus meteg (kept here so the
+# consonants and the punctuation / final marks (the spine), plus meteg (kept here so the
 # scanner can recover a verse-final silluq from it; the non-final metegs are stripped
 # afterwards by ``_strip_nonfinal_meteg``).  Accents are handled separately
 # (matched/substituted/supplied); points/dagesh/CGJ are dropped.
@@ -136,21 +137,24 @@ class Anomaly:
 
 
 @dataclass(frozen=True)
-class DivisionChange:
-    """A word-division mark (maqaf or sof pasuq) a reading adds or erases relative to WLC's
-    single tangled form.
+class PunctuationChange:
+    """A punctuation mark (maqaf, sof pasuq, or legarmeh) a reading supplies or suppresses
+    relative to WLC's single tangled form.
 
-    Each reading takes its word-division from its MAM strand, so against WLC's one compromise
-    division it both adds marks (where this reading divides and WLC did not) and erases them
-    (where WLC divided for the other reading).  Narrow-sense paseq is not part of the accent
-    grammar and is not tracked; a legarmeh's paseq is always WLC's own (see the page), so no
-    accent-bearing division mark beyond maqaf and sof pasuq changes here."""
+    Each mark tracks an accent -- maqaf the *absence* of an accent (an unaccented atom leans
+    forward on a maqaf), sof pasuq the silluq, legarmeh the munaḥ -- and each reading takes its
+    punctuation from its MAM strand.  So against WLC's one tangled form a reading both
+    *supplies* a mark (it fits this strand's accents but WLC lacks it) and *suppresses* one (WLC
+    carries it for the other reading).  WLC's tangle is neither maqaf- nor sof-pasuq-maximalist
+    (a mix of both, so those are supplied and suppressed), but it *is* legarmeh-maximalist -- a
+    legarmeh's broad-sense paseq is always WLC's own, never supplied from MAM -- so legarmeh is
+    only ever suppressed.  A narrow-sense paseq is not part of the accent grammar, not tracked."""
 
     bcv: str
     strand: str  # "alef" / "bet"
     strand_label: str  # pashut / taxton / ...
-    mark: str  # "maqaf" / "sof pasuq"
-    delta: str  # "added" (strand has, WLC lacks) / "erased" (WLC has, strand lacks)
+    mark: str  # "maqaf" / "sof pasuq" / "legarmeh"
+    delta: str  # "supplied" (strand has, WLC lacks) / "suppressed" (WLC has, strand lacks)
     wlc_word: str  # the aligned WLC word
     mam_word: str  # the aligned MAM strand word
 
@@ -188,7 +192,7 @@ class PassageResult:
     strands: tuple[StrandResult, StrandResult]  # alef, bet
     supplied_marks: tuple[SuppliedMark, ...]
     anomalies: tuple[Anomaly, ...]
-    division_changes: tuple[DivisionChange, ...] = ()
+    punctuation_changes: tuple[PunctuationChange, ...] = ()
 
 
 # --------------------------------------------------------------------------- #
@@ -355,64 +359,89 @@ def _equal_acc_by_wlc(
     return out
 
 
-# Word-division marks that ARE accent-relevant (the inventory tracks these); narrow-sense
-# paseq is not part of the accent grammar, so it is deliberately excluded.
-_DIVISION_MARKS: tuple[tuple[str, str], ...] = (
+# The trailing punctuation marks that ARE accent-relevant (the inventory tracks these);
+# narrow-sense paseq is not part of the accent grammar, so it is deliberately excluded.
+_PUNCT_MARKS: tuple[tuple[str, str], ...] = (
     (_SRC_MAQAF, "maqaf"),
     (_SOF_PASUQ, "sof pasuq"),
 )
 
 
-def _trailing_division(word: str) -> set[str]:
+def _trailing_punct(word: str) -> set[str]:
     """The maqaf / sof pasuq a word itself carries."""
-    return {ch for ch, _ in _DIVISION_MARKS if ch in word}
+    return {ch for ch, _ in _PUNCT_MARKS if ch in word}
 
 
-def _strand_division_after(strand: list[_Tok], i: int) -> set[str]:
-    """The division marks the strand carries after word-token ``i``: trailing marks on the
+def _strand_punct_after(strand: list[_Tok], i: int) -> set[str]:
+    """The punctuation marks the strand carries after word-token ``i``: trailing marks on the
     word plus any immediately following non-word tokens (a standalone sof pasuq)."""
-    marks = _trailing_division(strand[i].text)
+    marks = _trailing_punct(strand[i].text)
     j = i + 1
     while j < len(strand) and not strand[j].skel:
-        marks |= _trailing_division(strand[j].text)
+        marks |= _trailing_punct(strand[j].text)
         j += 1
     return marks
 
 
-def _division_changes(
+def _punctuation_changes(
     wlc: list[_Tok],
     strand_toks: list[_Tok],
     blocks: list[_Block],
     strand: str,
     label: str,
-) -> list[DivisionChange]:
-    """The maqaf / sof-pasuq marks this strand adds or erases vs WLC's tangled division.
+) -> list[PunctuationChange]:
+    """The maqaf / sof-pasuq / legarmeh marks this strand supplies or suppresses vs WLC's
+    tangled form.
 
-    Compares each 1:1-aligned WLC word's trailing division against the strand's at the same
-    position (the strand's word-division is MAM's).  ``added`` = the strand divides where WLC
-    did not; ``erased`` = WLC divided for the other reading and this strand does not."""
-    changes: list[DivisionChange] = []
+    Maqaf and sof pasuq are compared 1:1 by trailing mark against the strand's (whose
+    punctuation is MAM's): ``supplied`` = the strand has the mark where WLC did not;
+    ``suppressed`` = WLC has it for the other reading and this strand does not.
+
+    Legarmeh (a munaḥ + a following broad-sense paseq, before a revia) is only ever
+    suppressed: WLC's tangle is legarmeh-maximalist -- the broad-sense paseq is always WLC's
+    own, never supplied from MAM -- so a strand reading the word's *other* accent suppresses
+    WLC's legarmeh.  The rule (WLC carries munaḥ + paseq, this strand lacks the munaḥ) relies
+    on a verified property of these three loci: a narrow-sense paseq never reaches a strand
+    short the munaḥ here (the two WLC munaḥ+paseq words shared by both strands -- ex 20:10
+    אַתָּה, dt 5:16 לְמַעַן -- carry the munaḥ in both, so no row is emitted)."""
+    changes: list[PunctuationChange] = []
     for block in blocks:
         if block.tag != "equal":
             continue
         for wi, ti in zip(block.wlc_idxs, block.tok_idxs):
-            wlc_marks = _trailing_division(wlc[wi].text)
-            strand_marks = _strand_division_after(strand_toks, ti)
-            for ch, name in _DIVISION_MARKS:
+            wlc_marks = _trailing_punct(wlc[wi].text)
+            strand_marks = _strand_punct_after(strand_toks, ti)
+            for ch, name in _PUNCT_MARKS:
                 in_wlc, in_strand = ch in wlc_marks, ch in strand_marks
                 if in_strand and not in_wlc:
-                    delta = "added"
+                    delta = "supplied"
                 elif in_wlc and not in_strand:
-                    delta = "erased"
+                    delta = "suppressed"
                 else:
                     continue
                 changes.append(
-                    DivisionChange(
+                    PunctuationChange(
                         bcv=strand_toks[ti].bcv,
                         strand=strand,
                         strand_label=label,
                         mark=name,
                         delta=delta,
+                        wlc_word=wlc[wi].text,
+                        mam_word=strand_toks[ti].text,
+                    )
+                )
+            if (
+                _MUNAX in wlc[wi].text  # WLC's tangle carries a munaḥ …
+                and _PASEQ in wlc[wi].text  # … + a broad-sense paseq (a legarmeh) …
+                and _MUNAX not in _real_accents_ordered(strand_toks[ti].text)  # this strand reads the other accent
+            ):
+                changes.append(
+                    PunctuationChange(
+                        bcv=strand_toks[ti].bcv,
+                        strand=strand,
+                        strand_label=label,
+                        mark="legarmeh",
+                        delta="suppressed",
                         wlc_word=wlc[wi].text,
                         mam_word=strand_toks[ti].text,
                     )
@@ -566,11 +595,11 @@ def _assign_word(
     return _Assign(substitutions, tuple(supplies), tuple(anomalies), strays)
 
 
-def _display_form(word: str) -> str:
+def display_form(word: str) -> str:
     """A word reduced to its base letters, accents, and the meteg / maqaf / sof pasuq the
     supply note describes -- vowels and dagesh dropped (the note illustrates accent and
-    word-division placement, not vocalization).  Inlined into the reason so the marks named
-    in prose are actually shown."""
+    punctuation placement, not vocalization).  Inlined into the reason so the marks named
+    in prose are actually shown; also used by the supplied-marks page's punctuation table."""
     keep = (_METEG, _SRC_MAQAF, _SOF_PASUQ)
     return "".join(
         ch
@@ -592,8 +621,8 @@ def _supply_reason(
     """One self-contained sentence per supply: WLC's strand word shown inline where it is
     described, then the accent supplied from MAM (or its non-definitive LC support) shown at
     the supply.  The Hebrew runs are wrapped in ``lang="hbo"`` spans by the page renderer."""
-    wlc = _display_form(wlc_word)
-    mam = _display_form(mam_word)
+    wlc = display_form(wlc_word)
+    mam = display_form(mam_word)
     if ceded:
         names = ", ".join(_accent_spelling(a) for a in ceded)
         return (
@@ -646,7 +675,7 @@ def _assign_pooled(
                     accent=accent,
                     accent_name=_accent_spelling(accent),
                     reason=(
-                        "WLC tokenizes this span differently (word-division taken from"
+                        "WLC tokenizes this span differently (grouping taken from"
                         " MAM); the mark is supplied from MAM."
                     ),
                 )
@@ -905,16 +934,16 @@ def detangle_passage(
         passage, "bet", passage.bet_label, passage.alef_label,
         wlc, bet, bet_blocks, alef_acc, alef_meteg, parser,
     )
-    division_changes = tuple(
-        _division_changes(wlc, alef, alef_blocks, "alef", passage.alef_label)
-        + _division_changes(wlc, bet, bet_blocks, "bet", passage.bet_label)
+    punctuation_changes = tuple(
+        _punctuation_changes(wlc, alef, alef_blocks, "alef", passage.alef_label)
+        + _punctuation_changes(wlc, bet, bet_blocks, "bet", passage.bet_label)
     )
     return PassageResult(
         passage=passage,
         strands=(alef_result, bet_result),
         supplied_marks=tuple(alef_sup + bet_sup),
         anomalies=tuple(alef_anom + bet_anom),
-        division_changes=division_changes,
+        punctuation_changes=punctuation_changes,
     )
 
 

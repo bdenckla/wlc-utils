@@ -146,6 +146,8 @@ table.poetic-disj td {
 }
 span.poetic-agree { color: light-dark(#178017, #6fcf6f); }
 span.poetic-differ { color: light-dark(#b00000, #ff9b9b); }
+span.goerwitz-tms-supplied   { color: light-dark(#178017, #6fcf6f); }
+span.goerwitz-tms-suppressed { color: light-dark(#b00000, #ff9b9b); }
 p.poetic-auto-summary {
     margin: 0.3em 0;
     font-style: italic;

@@ -7,7 +7,7 @@
     "ungrammatical": 1,
     "supplied_marks": 5,
     "anomalies": 1,
-    "division_changes": 32
+    "punctuation_changes": 42
   },
   "passages": [
     {
@@ -475,13 +475,13 @@
       ],
       "supplied_marks": [],
       "anomalies": [],
-      "division_changes": [
+      "punctuation_changes": [
         {
           "bcv": "gn35:22",
           "strand": "alef",
           "strand_label": "pashut",
           "mark": "sof pasuq",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "יִשְׂרָאֵֽ֑ל",
           "mam_word": "יִשְׂרָאֵֽל׃"
         }
@@ -4088,13 +4088,13 @@
         }
       ],
       "anomalies": [],
-      "division_changes": [
+      "punctuation_changes": [
         {
           "bcv": "ex20:2",
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "עֲבָדִֽ֑ים׃",
           "mam_word": "עֲבָדִ֑ים"
         },
@@ -4103,7 +4103,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "maqaf",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "לֹֽ֣א",
           "mam_word": "לֹֽא־"
         },
@@ -4112,7 +4112,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "maqaf",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "יִהְיֶֽה־",
           "mam_word": "יִהְיֶ֥ה"
         },
@@ -4121,7 +4121,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "פָּנַָֽ֗י",
           "mam_word": "פָּנָֽי׃"
         },
@@ -4130,7 +4130,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "maqaf",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "לֹֽ֣א",
           "mam_word": "לֹֽא־"
         },
@@ -4139,7 +4139,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "maqaf",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "תַֽעֲשֶׂ֨ה־",
           "mam_word": "תַעֲשֶׂ֨ה"
         },
@@ -4147,8 +4147,35 @@
           "bcv": "ex20:4",
           "strand": "alef",
           "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "פֶ֣֙סֶל֙׀",
+          "mam_word": "פֶ֙סֶל֙"
+        },
+        {
+          "bcv": "ex20:4",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "בַּשָּׁמַ֣֙יִם֙׀",
+          "mam_word": "בַּשָּׁמַ֙יִם֙"
+        },
+        {
+          "bcv": "ex20:4",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "בַּמַּ֖֣יִם׀",
+          "mam_word": "בַּמַּ֖יִם"
+        },
+        {
+          "bcv": "ex20:4",
+          "strand": "alef",
+          "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "לָאָֽ֗רֶץ",
           "mam_word": "לָאָֽרֶץ׃"
         },
@@ -4157,7 +4184,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "לְקַדְּשֽׁ֗וֹ",
           "mam_word": "לְקַדְּשֽׁוֹ׃"
         },
@@ -4166,7 +4193,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "מְלַאכְתֶּֽךָ֒",
           "mam_word": "מְלַאכְתֶּֽךָ׃"
         },
@@ -4174,8 +4201,17 @@
           "bcv": "ex20:10",
           "strand": "alef",
           "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "שַׁבָּ֖֣ת׀",
+          "mam_word": "שַׁבָּ֖ת"
+        },
+        {
+          "bcv": "ex20:10",
+          "strand": "alef",
+          "strand_label": "taxton",
           "mark": "maqaf",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "וּבִנְךָֽ֣־",
           "mam_word": "וּבִנְךָ֣"
         },
@@ -4184,7 +4220,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "בִּשְׁעָרֶֽ֔יךָ",
           "mam_word": "בִּשְׁעָרֶֽיךָ׃"
         },
@@ -4193,7 +4229,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "תִּרְצָֽ֖ח׃",
           "mam_word": "תִרְצָ֖ח"
         },
@@ -4202,7 +4238,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "תִּנְאָֽ֑ף׃",
           "mam_word": "תִנְאָ֑ף"
         },
@@ -4211,7 +4247,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "תִּגְנֹֽ֔ב׃",
           "mam_word": "תִגְנֹ֔ב"
         },
@@ -4220,7 +4256,7 @@
           "strand": "bet",
           "strand_label": "elyon",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "לְשֹׂנְאָֽ֑י׃",
           "mam_word": "לְשֹׂנְאָ֑י"
         },
@@ -4229,7 +4265,7 @@
           "strand": "bet",
           "strand_label": "elyon",
           "mark": "maqaf",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "לֹֽ֣א־",
           "mam_word": "לֹ֣א"
         }
@@ -8263,7 +8299,7 @@
           "wlc_word": "תַעֲשֶׂ֥ה־",
           "accent": "֨",
           "accent_name": "qadma",
-          "reason": "WLC has only a mis-transcription of the elyon strand here: תעש֥ה־ (ending in maqaf, carrying a merkha), so the detangler supplies the taxton’s qadma from MAM: תעש֨ה. Unlike other supplied accents, there is support from the LC for this qadma, although the LC is not in great shape here, so the support is not unequivocal.",
+          "reason": "WLC has only a mis-transcription of the elyon strand here: תעש֥ה־ (ending in maqaf, carrying a merkha), so the detangler supplies the taxton’s qadma from MAM: תעש֨ה. Unlike other supplied accents, there is support from the LC for this qadma, although the LC is in poor shape here, so the support is not unequivocal.",
           "source": "lc"
         },
         {
@@ -8313,13 +8349,13 @@
           "found_name": "merkha (U+05A5)"
         }
       ],
-      "division_changes": [
+      "punctuation_changes": [
         {
           "bcv": "dt5:6",
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "עֲבָדִֽ֑ים׃",
           "mam_word": "עֲבָדִ֑ים"
         },
@@ -8328,7 +8364,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "maqaf",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "לֹ֣א",
           "mam_word": "לֹא־"
         },
@@ -8337,7 +8373,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "maqaf",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "יִהְיֶ֥ה־",
           "mam_word": "יִהְיֶ֥ה"
         },
@@ -8346,34 +8382,88 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "maqaf",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "תַעֲשֶׂ֥ה־",
           "mam_word": "תַעֲשֶׂ֨ה"
+        },
+        {
+          "bcv": "dt5:8",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "פֶ֣֙סֶל֙׀",
+          "mam_word": "פֶ֙סֶל֙"
+        },
+        {
+          "bcv": "dt5:8",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "בַּשָּׁמַ֣֙יִם֙׀",
+          "mam_word": "בַּשָּׁמַ֙יִם֙"
+        },
+        {
+          "bcv": "dt5:8",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "בַּמַּ֖֣יִם׀",
+          "mam_word": "בַּמַּ֖יִם"
+        },
+        {
+          "bcv": "dt5:12",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "צִוְּךָ֖֣׀",
+          "mam_word": "צִוְּךָ֖"
         },
         {
           "bcv": "dt5:12",
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "added",
+          "delta": "supplied",
           "wlc_word": "אֱלֹהֶֽ֗יךָ",
           "mam_word": "אֱלֹהֶֽיךָ׃"
+        },
+        {
+          "bcv": "dt5:14",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "שַׁבָּ֖֣ת׀",
+          "mam_word": "שַׁבָּ֖ת"
         },
         {
           "bcv": "dt5:15",
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "maqaf",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "כִּ֣י־",
           "mam_word": "כִּ֣י"
+        },
+        {
+          "bcv": "dt5:15",
+          "strand": "alef",
+          "strand_label": "taxton",
+          "mark": "legarmeh",
+          "delta": "suppressed",
+          "wlc_word": "הָיִ֣֙יתָ֙׀",
+          "mam_word": "הָיִ֙יתָ֙"
         },
         {
           "bcv": "dt5:17",
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "תִּרְצָֽח׃",
           "mam_word": "תִרְצָ֖ח"
         },
@@ -8382,7 +8472,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "תִּנְאָֽ֑ף׃",
           "mam_word": "תִנְאָ֑ף"
         },
@@ -8391,7 +8481,7 @@
           "strand": "alef",
           "strand_label": "taxton",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "תִּגְנֹֽ֔ב׃",
           "mam_word": "תִגְנֹ֔ב"
         },
@@ -8400,7 +8490,7 @@
           "strand": "bet",
           "strand_label": "elyon",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "פָּנָֽ֗יַ׃",
           "mam_word": "פָּנַ֗י"
         },
@@ -8409,7 +8499,7 @@
           "strand": "bet",
           "strand_label": "elyon",
           "mark": "maqaf",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "לֹֽ֣א־",
           "mam_word": "לֹ֣א"
         },
@@ -8418,7 +8508,7 @@
           "strand": "bet",
           "strand_label": "elyon",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "לָאָֽ֗רֶץ׃",
           "mam_word": "לָאָ֗רֶץ"
         },
@@ -8427,7 +8517,7 @@
           "strand": "bet",
           "strand_label": "elyon",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "לְשֹׂנְאָֽ֑י׃",
           "mam_word": "לְשֹׂנְאָ֑י"
         },
@@ -8436,7 +8526,7 @@
           "strand": "bet",
           "strand_label": "elyon",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "מְלַאכְתֶּֽךָ֒׃",
           "mam_word": "מְלַאכְתֶּ֒ךָ֒"
         },
@@ -8445,7 +8535,7 @@
           "strand": "bet",
           "strand_label": "elyon",
           "mark": "sof pasuq",
-          "delta": "erased",
+          "delta": "suppressed",
           "wlc_word": "כָּמֽ֑וֹךָ׃",
           "mam_word": "כָּמ֑וֹךָ"
         }

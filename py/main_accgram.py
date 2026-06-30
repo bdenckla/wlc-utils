@@ -51,8 +51,8 @@ Subcommands:
                     and the non-charity ek20:31 mahapakh!qadma, with live parse
                     trees regenerated from the grammar at build time.
                   * gh-pages/accgram/supplied-marks.html -- the dual-cantillation
-                    "Supplied and erased marks" page (issue #36): the supplied-mark
-                    inventory plus the per-strand word-division (maqaf/sof-pasuq)
+                    "Supplied and suppressed marks" page (issue #36): the supplied-mark
+                    inventory plus the per-strand punctuation (maqaf/sof-pasuq/legarmeh)
                     restructuring, generated live from the detangling run and linked
                     from almost-errors.html.
                   * gh-pages/accgram/telg-doc-notes.html -- a deep-dive

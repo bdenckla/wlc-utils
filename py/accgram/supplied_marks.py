@@ -4,7 +4,7 @@ A *supplied mark* is a third kind of editorial charity, distinct from the two on
 almost-errors page.  Those *reinterpret* a mark the manuscript already has (a prose
 geresh muqdam read as a plain geresh; a poetic plain geresh promoted to revia mugrash).
 A supplied mark instead *adds* a mark WLC lacks: when WLC's dual cantillation drops
-one reading's accent on a word (it committed to the other reading's word-division), the
+one reading's accent on a word (it committed to the other reading's grouping), the
 dual-cantillation detangler supplies that one accent from MAM so the reading's chanted
 verse parses.  Because it is a new kind of charity, it gets its own page rather than a row
 in "Editorial charities".
@@ -19,9 +19,9 @@ The page has two inventories, both generated live from the detangling run
 
   * "Supplied accents": each of the five supplied accents in turn -- its reading, the
     accent supplied, what WLC has instead, and the LC manuscript image; and
-  * "Erased and added maqaf and sof pasuq marks": the word-division marks each reading
-    adds or erases relative to WLC's tangled form (narrow-sense paseq is not part of the
-    accent grammar and is not tracked).
+  * "Supplied and suppressed punctuation": the punctuation marks (maqaf, sof pasuq,
+    legarmeh) each reading supplies or suppresses relative to WLC's tangled form
+    (narrow-sense paseq is not part of the accent grammar and is not tracked).
 
 Run via ``main_accgram.py generate-html``.
 """
@@ -33,6 +33,7 @@ from pathlib import Path
 
 from accgram import accent_marks as am
 from accgram import dual_cant_run
+from accgram.dual_cant_detangle import display_form
 from accgram import rtms_report
 from accgram import rtmsr_media
 from accgram.almost_errors_html_shared import (
@@ -51,7 +52,7 @@ from py_html import wlc_utils_html as H
 
 import repo_paths
 
-REPORT_TITLE = "Supplied and erased marks"
+REPORT_TITLE = "Supplied and suppressed marks"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 # ḥet is transliterated X in the detangler's ASCII labels and ḥ (h + combining dot below,
@@ -239,33 +240,100 @@ def _reading_order_key(s) -> tuple:
 
 
 # --------------------------------------------------------------------------- #
-# "Erased and added maqaf and sof pasuq marks": the word-division inventory.
+# "Supplied and suppressed punctuation": the maqaf / sof pasuq / legarmeh inventory.
 # --------------------------------------------------------------------------- #
 def _carrying_form(changes: list, bcv: str, mark: str, delta: str, strand: str) -> object:
-    """The pointed form (as an hbo span) that carries a given division change in one strand:
-    WLC's word when the mark is erased, MAM's strand word when it is added."""
+    """The stripped form (as an hbo span) that carries a given punctuation change in one
+    strand: WLC's word when the mark is suppressed, MAM's strand word when it is supplied
+    (the prose deliberately shows "WLC's join ..." for a suppression)."""
     for d in changes:
         if (d.bcv, d.mark, d.delta, d.strand) == (bcv, mark, delta, strand):
-            return hbo(d.wlc_word if delta == "erased" else d.mam_word)
+            return hbo(display_form(d.wlc_word if delta == "suppressed" else d.mam_word))
     return "?"
 
 
-def _division_prose(changes: list) -> tuple[object, ...]:
-    yihye = _carrying_form(changes, "ex20:3", "maqaf", "erased", "alef")  # taḥton drops WLC's יִהְיֶה־
-    lo_added = _carrying_form(changes, "ex20:3", "maqaf", "added", "alef")  # the taḥton's added לֹא־
-    lo_elyon = _carrying_form(changes, "ex20:10", "maqaf", "erased", "bet")  # elyon drops WLC's לֹא־
+def _punct_intro(n_changes: int) -> tuple[object, ...]:
+    """The three-paragraph intro: the unified accent-tracking principle (with one bullet per
+    mark), the legarmeh-maximalist note, and a pointer to the table."""
+    bamayim = hbo(accents_and_letters("בַּמַּ֖֣יִם"))  # WLC's tangled tipeḥa + munaḥ form
+    principle = H.unordered_list(
+        (
+            (
+                H.bold("Maqaf tracks the absence of an accent."),
+                " An unaccented atom leans on the next, joined to it by a maqaf; an atom that"
+                " bears an accent stands on its own, followed by a space. So a strand’s maqaf"
+                " follows from its accents: where the strand bears no accent on an atom it has a"
+                " maqaf, supplied where WLC has a space there; where it bears an accent it has a"
+                " space, suppressing WLC’s maqaf.",
+            ),
+            (
+                H.bold("Sof pasuq tracks the silluq."),
+                " A sof pasuq ends a chanted verse, paired with the silluq on its last word."
+                " Where a strand ends a chanted verse it bears a sof pasuq, supplied where WLC,"
+                " holding the other strand’s reading, runs on; where the strand runs on it bears"
+                " none, suppressing the sof pasuq WLC has for the other strand.",
+            ),
+            (
+                H.bold(f"Legarmeh tracks the {_MUNAX}."),
+                f" A legarmeh is a {_MUNAX} followed by a broad-sense paseq (the Unicode PASEQ"
+                " bar), before a revia. It comes and goes with its"
+                f" {_MUNAX}, just as a sof pasuq comes and goes with its silluq: where a strand"
+                f" reads the {_MUNAX} it has the legarmeh; where it reads the word’s other accent"
+                " the legarmeh is suppressed. WLC’s tangled ",
+                bamayim,
+                f" (Exodus 20:4), for instance, carries both a {_TIPEXA} and a {_MUNAX}, so the"
+                f" {_ELYON} (reading the {_MUNAX}) has a legarmeh there while the {_TAXTON}"
+                f" (reading the {_TIPEXA}) does not.",
+            ),
+        )
+    )
+    return (
+        H.para(
+            (
+                "Detangling shares one consonantal skeleton between a passage’s two strands;"
+                " what differs is the accent each atom carries, and three punctuation marks"
+                " follow from those accents. Each strand takes its punctuation from its MAM"
+                " strand, so, relative to WLC’s tangled form, the detangler both ",
+                H.bold("supplies"),
+                " a mark (it fits this strand’s accents, but WLC lacks it) and ",
+                H.bold("suppresses"),
+                " one (WLC has it, for the other strand’s reading). Each mark tracks an accent —"
+                " or, for maqaf, the lack of one:",
+            )
+        ),
+        principle,
+        H.para(
+            "WLC’s tangled form is neither maqaf-maximalist nor sof-pasuq-maximalist: it"
+            " carries a mix of the two strands’ maqafs and sof pasuqs, so detangling both"
+            " supplies and suppresses them. But it is legarmeh-maximalist — it keeps every"
+            " legarmeh of both readings, because a legarmeh’s broad-sense paseq is always WLC’s"
+            " own and is never supplied from MAM — so a legarmeh is only ever suppressed, never"
+            " supplied. (A narrow-sense paseq — a Unicode PASEQ that forms no legarmeh — is not"
+            " part of the accent grammar and is not tracked.)"
+        ),
+        H.para(
+            f"The {n_changes} supplies and suppressions are itemized in the table below; the"
+            " pattern in each passage is as follows."
+        ),
+    )
+
+
+def _punct_prose(changes: list) -> tuple[object, ...]:
+    yihye = _carrying_form(changes, "ex20:3", "maqaf", "suppressed", "alef")  # taḥton drops WLC's יִהְיֶה־
+    lo_supplied = _carrying_form(changes, "ex20:3", "maqaf", "supplied", "alef")  # the taḥton's לֹא־
+    lo_elyon = _carrying_form(changes, "ex20:10", "maqaf", "suppressed", "bet")  # elyon drops WLC's לֹא־
     return (
         _comment(
-            "Genesis 35:22: the pashut strand breaks the verse in two, adding a mid-verse"
+            "Genesis 35:22: the pashut strand breaks the verse in two, supplying a mid-verse"
             " sof pasuq that WLC — and the midrashit strand — do not have."
         ),
         _comment(
             f"The Decalogues (Exodus 20, Deuteronomy 5): the {_TAXTON} subdivides into short"
-            " chanted verses, adding a sof pasuq inside several numbered verses (Exodus 20:3,"
-            " 20:4, 20:8, 20:9, 20:10; Deuteronomy 5:12) and erasing WLC’s verse-final one"
+            " chanted verses, supplying a sof pasuq inside several numbered verses (Exodus 20:3,"
+            " 20:4, 20:8, 20:9, 20:10; Deuteronomy 5:12) and suppressing WLC’s verse-final one"
             " where the commandment runs on (Exodus 20:2 and the short prohibitions 20:13–15;"
             f" Deuteronomy 5:6, 5:17–19). The {_ELYON} does the reverse, grouping the"
-            " commandments into long chanted verses and so erasing WLC’s internal sof pasuqs"
+            " commandments into long chanted verses and so suppressing WLC’s internal sof pasuqs"
             " (Exodus 20:5; Deuteronomy 5:7, 5:8, 5:9, 5:13, 5:14)."
         ),
         _comment(
@@ -274,85 +342,66 @@ def _division_prose(changes: list) -> tuple[object, ...]:
                 " WLC’s join ",
                 yihye,
                 " — the supplied merkha makes that word stand on its own — and instead joins ",
-                lo_added,
+                lo_supplied,
                 f"; the {_ELYON}, conversely, drops WLC’s join ",
                 lo_elyon,
                 " at Exodus 20:10 (and likewise at Deuteronomy 5:8).",
             )
         ),
+        _comment(
+            f"Legarmeh is only ever suppressed. In each of the ten cases the {_TAXTON} reads a"
+            f" {_TIPEXA} or pashta where WLC’s tangle carries the {_ELYON}’s"
+            f" {_MUNAX}-legarmeh, so all ten drop from the {_TAXTON} (Exodus 20:4, 20:10;"
+            " Deuteronomy 5:8, 5:12, 5:14, 5:15). Two further"
+            f" {_MUNAX}-plus-PASEQ words — Exodus 20:10 and Deuteronomy 5:16 — carry the"
+            f" {_MUNAX} in both strands, so their legarmeh belongs to both readings and is"
+            " neither supplied nor suppressed."
+        ),
     )
 
 
-def _division_sort_key(d) -> tuple:
+def _punct_sort_key(d) -> tuple:
     chnu, vrnu = (int(p) for p in d.bcv[2:].split(":"))
     return (_PASSAGE_RANK.get(d.bcv[:2], 9), 0 if d.strand == "alef" else 1, chnu, vrnu, d.mark, d.delta)
 
 
-def _division_table(changes: list) -> object:
+def _punct_table(changes: list) -> object:
     header = H.table_row_of_headers(("Verse", "Strand", "Mark", "Change", "Word"))
     rows = [header]
-    for d in sorted(changes, key=_division_sort_key):
-        carrier = d.wlc_word if d.delta == "erased" else d.mam_word
+    for d in sorted(changes, key=_punct_sort_key):
+        cls = "goerwitz-tms-supplied" if d.delta == "supplied" else "goerwitz-tms-suppressed"
+        word = H.span_c(hbo(display_form(d.mam_word)), cls)
         rows.append(
             H.table_row_of_data(
-                (ref_display(d.bcv), _translit(d.strand_label), d.mark, d.delta, hbo(carrier))
+                (
+                    ref_display(d.bcv),
+                    _translit(d.strand_label),
+                    d.mark,
+                    H.span_c(d.delta, cls),
+                    word,
+                )
             )
         )
     return H.table(tuple(rows), {"class": "goerwitz-obs-tree-table"})
 
 
-def _legarmeh_para() -> object:
-    bamayim = hbo(accents_and_letters("בַּמַּ֖֣יִם"))  # WLC's tangled tipeḥa+munaḥ form
-    return _comment(
-        (
-            "Legarmeh is neither added nor erased. The three passages carry nine legarmeh"
-            f" accents (a {_MUNAX} with a following paseq, before a revia), but every one sits"
-            f" on a word WLC itself has with that {_MUNAX} and paseq — the paseq is never"
-            " supplied from MAM. A legarmeh comes and goes with its corresponding"
-            f" {_MUNAX}, just as a sof pasuq comes and goes with its corresponding silluq,"
-            " so a legarmeh surfaces only in the strand that takes"
-            " WLC’s ",
-            _MUNAX,
-            ": WLC’s tangled ",
-            bamayim,
-            f" (Exodus 20:4), for instance, carries both a {_TIPEXA} and a {_MUNAX}, so the"
-            f" {_ELYON} (taking the {_MUNAX}) reads a legarmeh there while the {_TAXTON}"
-            f" (taking the {_TIPEXA}) does not. So the inventory above is maqaf and sof"
-            " pasuq only.",
-        )
-    )
-
-
-def _division_section(changes: list) -> tuple[object, ...]:
+def _punct_section(changes: list) -> tuple[object, ...]:
+    heading = H.heading_level_2("Supplied and suppressed punctuation")
     if not changes:
-        return (
-            H.heading_level_2("Erased and added maqaf and sof pasuq marks"),
-            H.para("No maqaf or sof pasuq marks were added or erased."),
-        )
+        return (heading, H.para("No punctuation was supplied or suppressed."))
     return (
-        H.heading_level_2("Erased and added maqaf and sof pasuq marks"),
-        H.para(
-            (
-                "Detangling also reconfigures the way that atoms are joined into chanted words."
-                " Each strand’s maqaf marks (or lack thereof, i.e. spaces) are taken from MAM,"
-                " so, relative to WLC’s tangled form, the checker both adds and removes maqaf marks."
-                " (WLC has a mix of the two strands’ maqaf marks; it is not simply “maqaf-maximalist”.)"
-                " (Narrow-sense paseq is not part of the accent grammar, so it is not tracked.)"
-                f" The {len(changes)} additions and erasures are itemized in the table below;"
-                " the pattern in each passage is as follows."
-            )
-        ),
-        *_division_prose(changes),
-        _division_table(changes),
-        _legarmeh_para(),
+        heading,
+        *_punct_intro(len(changes)),
+        *_punct_prose(changes),
+        _punct_table(changes),
     )
 
 
-def render_body_contents(supplies: list, division_changes: list) -> tuple[object, ...]:
+def render_body_contents(supplies: list, punctuation_changes: list) -> tuple[object, ...]:
     sections: list[object] = [
         *_intro(),
         *_supplied_section(supplies),
-        *_division_section(division_changes),
+        *_punct_section(punctuation_changes),
     ]
     wrapper = H.div(tuple(sections), {"class": _WIDTH_CLASS})
     return (wrapper,)
@@ -361,12 +410,12 @@ def render_body_contents(supplies: list, division_changes: list) -> tuple[object
 def run(args: argparse.Namespace) -> None:
     results = dual_cant_run.detangle_results(args.wlc422_kq_u_dir, args.mam_simple_dir)
     supplies = [s for pr in results for s in pr.supplied_marks]
-    division_changes = [d for pr in results for d in pr.division_changes]
+    punctuation_changes = [d for pr in results for d in pr.punctuation_changes]
 
     html_out: Path = args.html_out
     html_out.parent.mkdir(parents=True, exist_ok=True)
     H.write_html_to_file(
-        body_contents=render_body_contents(supplies, division_changes),
+        body_contents=render_body_contents(supplies, punctuation_changes),
         write_ctx=H.WriteCtx(
             title=REPORT_TITLE,
             path=str(html_out),
@@ -376,7 +425,7 @@ def run(args: argparse.Namespace) -> None:
     )
     print(
         f"HTML: {html_out} ({len(supplies)} supplied marks, "
-        f"{len(division_changes)} division changes)"
+        f"{len(punctuation_changes)} punctuation changes)"
     )
 
 
