@@ -146,6 +146,40 @@ def p_conj(p):
     p[0] = p[1]  # the leaf-name string
 
 
+# #46 -- chain STRUCTURE (servus count + order) stays permissive BY DESIGN.
+# Issue #18 closed servant ADJACENCY (which one conjunctive sits immediately before
+# each disjunctive); the slice it left open was the CHAIN itself: how many servi, in
+# what order, may stack before a disjunctive.  Richter's poetic-conjunctive prose
+# (#24; syntax.htm, "Conjunctive Marks In The 3 Books" -- note he gives the poetic
+# servi as PROSE, not the per-rank charts the issue title hoped for; only the
+# distinctive marks are charted) is the natural oracle: he names TARXA, AZLA (=qadma)
+# and MAHAPAKH as the conjunctives that "precede other conjunctive marks", his only
+# chain examples being the 2-servus MAHAPAKH-MUNAX before DEXI and TARXA-MUNAX before
+# SILLUQ.  Read strictly that is a chartable restriction: a NON-FINAL chain slot (one
+# followed by another conjunctive) admits only {TARXA, AZLA, MAHAPAKH (+ the metsunnar
+# variant)}, never the generic servi.
+#
+# REFUTED -- by the #18 disqualifier, and at the first gate (L itself).  The strict
+# reading is contradicted in L directly (1028 of 2267 multi-servus chains carry an
+# out-of-set non-final servus) and MAM agrees verse-for-verse, so these are genuine
+# two-witness constructions, not L quirks.  The bulk is the utterly ordinary
+# double-MUNAX before ATNAX (MUNAX non-final 874x in L / 853x in MAM -- e.g. Ps 2:4,
+# 2:11, 2:12, 3:8, marked identically on both witnesses), plus MERKHA-MERKHA (102/137)
+# and ILLUY-headed chains (42/39).  Richter himself hedges ("among those marks"; "not
+# very frequent"; the 3-books rules are "fuzzier ... cover a smaller portion"), so his
+# list is illustrative, not exhaustive.  Encoding non-final-subset-{TARXA,AZLA,MAHAPAKH}
+# would NO_PARSE ~1000 clean verses; the escape hatch is again the generic MUNAX / MERKHA
+# family standing where the loose rule did not enumerate it.  So the chain remains
+# any-conj-in-any-order, exactly as the module docstring's permissive-chain paragraph says.
+#
+# Two facts noted for the record but deliberately NOT encoded, by #46's own criterion
+# (encode only a restriction that flags REAL divergences):
+#   * GALGAL is never a chain-PRECEDER (0 of 236 non-final in L, 0 in MAM) -- always the
+#     adjacent servus, matching Richter "Galgal serves Pazer".  A "GALGAL never non-final"
+#     guard would flag nothing (inert, like revia_qatan_servi), so it is left out.
+#   * Chain LENGTH stays uncapped: Richter charts no maximum and the corpus max is 5
+#     (L: len2 2055, len3 198, len4 13, len5 1), so any cap would be arbitrary, not
+#     Richter-grounded.  Measured via scratchpad chain_measure.py / chain_measure_mam.py.
 def p_servi_one(p):
     "servi : conj"
     p[0] = [p[1]]
