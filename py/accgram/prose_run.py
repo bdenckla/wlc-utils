@@ -65,7 +65,7 @@ def _ungrammatical_unicode_words(
 
     Each illegal mark carries a ``rep_char`` -- a codepoint of the offending word unique
     enough to locate it (``82`` = the zarqa stress-helper U+0598; a same-letter pair =
-    its first/distinguishing mark, e.g. mahapakh U+05A4, NOT the tipeḥa that recurs
+    its first/distinguishing mark, e.g. mahapakh U+05A4, NOT the tipexa that recurs
     elsewhere in lv25:20).  Collect the words carrying each rep_char in order and pair
     them with ``marks``.  Falls back to a mark's raw M-C atom if the Unicode word cannot
     be located (so the label is always populated)."""

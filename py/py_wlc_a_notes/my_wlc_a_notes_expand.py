@@ -43,7 +43,7 @@ _AT_ISSUE_MAP = {
     ("+dg", "צּ"): " to tsadi",
     ("+shrq dt", "וּ"): " to the initial vav",
     #
-    ("+ḥlm dt", "וֹ"): " to vav",
+    ("+ḥlm dt", "וֹ"): " to vav",
     ("+shva", "ךְ"): " to kaf sofit",
     ("+shva", "נְ"): " to nun",
     #
@@ -60,8 +60,8 @@ _SUMMARY_MAP = {
     "-dg": "removed a dagesh",
     "הּ": "added a mapiq to he",
     "+shrq dt": "added a shuruq dot",
-    "+ḥlm dt": "added a ḥolam malei dot",
+    "+ḥlm dt": "added a ḥolam malei dot",
     "+shva": "added a sheva",
-    "עֲ/עַ": "changed a ḥataf pataḥ to a pataḥ",
+    "עֲ/עַ": "changed a ḥataf pataḥ to a pataḥ",
     "?": "",
 }

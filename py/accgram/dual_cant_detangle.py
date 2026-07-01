@@ -36,7 +36,7 @@ Design (all four points verified against the data, see issue #36):
   silently supplied.  Because WLC's single tangled mark serves *both* readings, such a
   rogue accent is routed into both strands -- as the short strand's substitution where it
   is due an accent, and as a *stray* in the strand that is due none (only a meteg).  The
-  one Deut 5:8 merkha is thus the taḥton's qadma substitute and the elyon's stray, so it
+  one Deut 5:8 merkha is thus the taxton's qadma substitute and the elyon's stray, so it
   surfaces as an ungrammatical verse in *both* readings (two anomalies, one underlying WLC mark).
 
 MAM stress-helpers (zarqa/tsinnorit U+0598, and the doubled telisha / segol / pashta
@@ -142,7 +142,7 @@ class PunctuationChange:
     relative to WLC's single tangled form.
 
     Each mark tracks an accent -- maqaf the *absence* of an accent (an unaccented atom leans
-    forward on a maqaf), sof pasuq the silluq, legarmeh the munaḥ -- and each reading takes its
+    forward on a maqaf), sof pasuq the silluq, legarmeh the munax -- and each reading takes its
     punctuation from its MAM strand.  So against WLC's one tangled form a reading both
     *supplies* a mark (it fits this strand's accents but WLC lacks it) and *suppresses* one (WLC
     carries it for the other reading).  WLC's tangle is neither maqaf- nor sof-pasuq-maximalist
@@ -397,13 +397,13 @@ def _punctuation_changes(
     punctuation is MAM's): ``supplied`` = the strand has the mark where WLC did not;
     ``suppressed`` = WLC has it for the other reading and this strand does not.
 
-    Legarmeh (a munaḥ + a following broad-sense paseq, before a revia) is only ever
+    Legarmeh (a munax + a following broad-sense paseq, before a revia) is only ever
     suppressed: WLC's tangle is legarmeh-maximalist -- the broad-sense paseq is always WLC's
     own, never supplied from MAM -- so a strand reading the word's *other* accent suppresses
-    WLC's legarmeh.  The rule (WLC carries munaḥ + paseq, this strand lacks the munaḥ) relies
+    WLC's legarmeh.  The rule (WLC carries munax + paseq, this strand lacks the munax) relies
     on a verified property of these three loci: a narrow-sense paseq never reaches a strand
-    short the munaḥ here (the two WLC munaḥ+paseq words shared by both strands -- ex 20:10
-    אַתָּה, dt 5:16 לְמַעַן -- carry the munaḥ in both, so no row is emitted)."""
+    short the munax here (the two WLC munax+paseq words shared by both strands -- ex 20:10
+    אַתָּה, dt 5:16 לְמַעַן -- carry the munax in both, so no row is emitted)."""
     changes: list[PunctuationChange] = []
     for block in blocks:
         if block.tag != "equal":
@@ -431,7 +431,7 @@ def _punctuation_changes(
                     )
                 )
             if (
-                _MUNAX in wlc[wi].text  # WLC's tangle carries a munaḥ …
+                _MUNAX in wlc[wi].text  # WLC's tangle carries a munax …
                 and _PASEQ in wlc[wi].text  # … + a broad-sense paseq (a legarmeh) …
                 and _MUNAX not in _real_accents_ordered(strand_toks[ti].text)  # this strand reads the other accent
             ):

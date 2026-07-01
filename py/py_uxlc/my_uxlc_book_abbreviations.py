@@ -45,8 +45,8 @@ BKNA_MAP_UXLC_TO_STD = {  # not a two-way map! (E.g. 1Chr & 1 Chr)
     "Ob": tbn.BK_OVADIAH,
     "Jon": tbn.BK_JONAH,
     "Mic": tbn.BK_MIKHAH,
-    # Naḥum
-    # Ḥabaqquq
+    # Naxum
+    # Xabaqquq
     "Zeph": tbn.BK_TSEF,
     "Hag": tbn.BK_XAGGAI,
     "Zech": tbn.BK_ZEKHAR,

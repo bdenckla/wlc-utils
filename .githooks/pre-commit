@@ -1,0 +1,10 @@
+#!/bin/sh
+# Pre-commit source-hygiene guard (issues #49, #26): block a commit that
+# reintroduces a decomposed canonical composite (e.g. h + U+0323 instead of
+# precomposed het, U+1E25) or a retired transliteration spelling.
+# Enable once, from the repo root:  git config core.hooksPath .githooks
+if   [ -x ".venv/Scripts/python.exe" ]; then py=".venv/Scripts/python.exe"
+elif [ -x ".venv/bin/python" ];         then py=".venv/bin/python"
+else py="python"; fi
+exec "$py" -m pytest -q \
+    py/tests/test_transliterations.py py/tests/test_accent_marks_source.py

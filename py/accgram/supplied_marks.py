@@ -55,15 +55,15 @@ import repo_paths
 REPORT_TITLE = "Supplied and suppressed marks"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
-# ḥet is transliterated X in the detangler's ASCII labels and ḥ (h + combining dot below,
-# never plain h) in the page's Unicode prose -- see the repo transliteration standard.
-_HET = "ḥ"
-_TAXTON = "ta" + _HET + "ton"
+# het is transliterated X in the detangler's ASCII labels and precomposed U+1E25
+# (never plain h) in the page's Unicode prose -- see the repo transliteration standard.
+_XET = "ḥ"
+_TAXTON = "ta" + _XET + "ton"
 _ELYON = "elyon"
-_TIPEXA = "tipe" + _HET + "a"
+_TIPEXA = "tipe" + _XET + "a"
 
-# X-form (ASCII) label -> the page's Unicode ḥ display form.
-_TRANSLIT = {"taxton": _TAXTON, "tipexa": _TIPEXA, "atnax": "atna" + _HET}
+# X-form (ASCII) label -> the page's real-glyph display form.
+_TRANSLIT = {"taxton": _TAXTON, "tipexa": _TIPEXA, "atnax": "atna" + _XET}
 
 _UXLC_DT58_NOTE = "https://tanach.us/Notes/Deuteronomy/Deuteronomy.5.8.2-t.html"
 
@@ -123,7 +123,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 
 def _translit(text: str) -> str:
-    """Render the detangler's ASCII ḥet (X) labels in the page's Unicode ḥ form."""
+    """Render the detangler's ASCII het (X) labels in the page's real-glyph form."""
     for ascii_form, uni_form in _TRANSLIT.items():
         text = text.replace(ascii_form, uni_form)
     return text
@@ -338,7 +338,7 @@ def _punct_table(changes: list) -> object:
 
 def _punct_observation(changes: list) -> object:
     """An observation drawn from the table: WLC's Decalogue punctuation sits far closer to
-    the elyon (only suppressions needed) than to the taḥton (supplies plus suppressions).  The
+    the elyon (only suppressions needed) than to the taxton (supplies plus suppressions).  The
     counts are tallied live from the changes so they track the checker, not a hard-coded number."""
     elyon_supplied = sum(1 for d in changes if d.strand_label == "elyon" and d.delta == "supplied")
     elyon_suppressed = sum(1 for d in changes if d.strand_label == "elyon" and d.delta == "suppressed")

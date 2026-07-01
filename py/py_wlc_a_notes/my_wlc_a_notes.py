@@ -209,7 +209,7 @@ RECORD_06 = {
     ),
     "at issue": "בּ",
     "summary": "+dg",
-    "remarks": [_has_no_letters_at_all("ב", "sheva, tsere, and munaḥ")],
+    "remarks": [_has_no_letters_at_all("ב", "sheva, tsere, and munaḥ")],
     "side-notes": [
         "Why in the margin does it say not only «בני קר ולא כת» but also «בני ק»?",
         #
@@ -344,20 +344,20 @@ RECORD_13 = {
     "MPK": "מִמַּעֲרְ֣וֹת",
     "at issue": "עַ",
     "summary": "עֲ/עַ",
-    "remarks": ["The MPK’s ע has a ḥataf pataḥ where the qere has a pataḥ."],
+    "remarks": ["The MPK’s ע has a ḥataf pataḥ where the qere has a pataḥ."],
     "side-notes": [
-        "Unexpected ḥataf vowels are a known feature (bug?) of ל. "
+        "Unexpected ḥataf vowels are a known feature (bug?) of ל. "
         "I.e. this is rare but hardly unique. "
-        "This unexpected ḥataf may well be unrelated "
+        "This unexpected ḥataf may well be unrelated "
         "to the ketiv/qere differences in this word. "
         "If it is unrelated, "
         "this should have been a bracket-1 or bracket-U note in WLC, not a bracket-a note.",
         #
-        "Breuer notes that א and ק have the expected pataḥ under ע. "
+        "Breuer notes that א and ק have the expected pataḥ under ע. "
         "(א is the Aleppo Codex and ק is the Cairo Codex of The Prophets.)",
         #
         "Dotan notes that strictly speaking, the implied qere is "
-        "@מִמַּעֲרְכ֣וֹת# (ḥataf pataḥ under ע).",
+        "@מִמַּעֲרְכ֣וֹת# (ḥataf pataḥ under ע).",
     ],
 }
 RECORD_14 = {
@@ -373,7 +373,7 @@ RECORD_14 = {
     "at issue": "וָּ",
     "summary": "+dg",
     "remarks": [_has_no_letter_to_carry("וָּ")],
-    "side-notes": [_unlike("qamats", _between("ḥiriq", "sheva", "yod", "ל"))],
+    "side-notes": [_unlike("qamats", _between("ḥiriq", "sheva", "yod", "ל"))],
 }
 RECORD_15 = {
     "wlc-index": 15,
@@ -446,7 +446,7 @@ RECORD_17 = {
     "at issue": "בּ",
     "summary": "+dg",
     "remarks": [_has_no_letter_to_carry("ב")],
-    "side-notes": [_unlike("ḥiriq", "before the sheva of the initial ת")],
+    "side-notes": [_unlike("ḥiriq", "before the sheva of the initial ת")],
 }
 RECORD_18 = {
     "wlc-index": 18,
@@ -462,7 +462,7 @@ RECORD_18 = {
     "at issue": "יּ",
     "summary": "+dg",
     "remarks": [_has_no_letter_to_carry("yod")],
-    "side-notes": [_unlike("ḥiriq", _between("pataḥ", "sheva", "vav", "ת"))],
+    "side-notes": [_unlike("ḥiriq", _between("pataḥ", "sheva", "vav", "ת"))],
 }
 RECORD_19 = {
     "wlc-index": 19,
@@ -557,7 +557,7 @@ RECORD_23 = {
     "summary": "+dg",
     "remarks": [_does_not_carry_pi("ח", "ד")],
     "side-notes": [
-        "The ḥolam malei dot on the qere’s vav comes from the (illegal) ḥolam (ḥaser?) dot on the second yod of the MPK!",
+        "The ḥolam malei dot on the qere’s vav comes from the (illegal) ḥolam (ḥaser?) dot on the second yod of the MPK!",
         #
         "Instead of being on the second yod of the MPK, why isn’t this dot on the vav of the MPK?",
         #
@@ -592,9 +592,9 @@ RECORD_24 = {
         "\N{DOTTED CIRCLE}"
     ),
     "at issue": "וֹ",
-    "summary": "+ḥlm dt",
+    "summary": "+ḥlm dt",
     "remarks": [
-        _has_no_letters_at_all("vav", "sheva, qamats, and tipeḥa", "ḥolam dot")
+        _has_no_letters_at_all("vav", "sheva, qamats, and tipeḥa", "ḥolam dot")
     ],
 }
 RECORD_25 = {
@@ -679,7 +679,7 @@ RECORD_29 = {
     "column": 3,
     "line-excluding-blanks": 5,
     "line-including-blanks": 6,
-    "line-remark": "the line at issue isn’t exactly blank; it as a פ with a dot above, indicating a petuḥah division between columns",
+    "line-remark": "the line at issue isn’t exactly blank; it as a פ with a dot above, indicating a petuḥah division between columns",
     "qere": "וְהִנֵּה־ה֛וּא",
     "qere-atom-at-issue": "וְהִנֵּה־",
     "MPK": "וְהִנֵּה֛וּ",
@@ -704,7 +704,7 @@ RECORD_30 = {
     ),
     "at issue": "בּ",
     "summary": "+dg",
-    "remarks": [_has_no_letters_at_all("ב", "qamats, ḥiriq, and tipeḥa")],
+    "remarks": [_has_no_letters_at_all("ב", "qamats, ḥiriq, and tipeḥa")],
 }
 RECORD_31 = {
     "wlc-index": 31,
@@ -798,11 +798,11 @@ RECORD_35 = {
         "and in terms of what marks ended up on what letters.",
         #
         "The below-marks make sense, though one has to sort of squint to see what one expects to see. "
-        "I.e. the below marks follow the expected order, i.e. the qere order: ḥiriq, siluq, sheva, qamats.",
+        "I.e. the below marks follow the expected order, i.e. the qere order: ḥiriq, siluq, sheva, qamats.",
         #
-        "The above-marks is where it gets weird, since the qere צ’s ḥolam ḥaser dot "
+        "The above-marks is where it gets weird, since the qere צ’s ḥolam ḥaser dot "
         "is already present on the צ of the MPK. "
-        "I would expect the ḥolam ḥaser dot to be on the ר of the MPK, i.e. I would expect it to be "
+        "I would expect the ḥolam ḥaser dot to be on the ר of the MPK, i.e. I would expect it to be "
         "in its qere POSITION, not on its qere LETTER. I.e. I would expect @תִּרֹֽצְנָה׃#.",
         #
         "Avi, in the MAM documentation, reports that the MPK of א follows this pattern more completely: "
@@ -813,7 +813,7 @@ RECORD_35 = {
         "I.e. to form the pointed qere from the pointed ketiv, all that needs to be done is to "
         "transpose the ר and the צ ALONG with their marks!",
         #
-        "Dotan’s Appendix A notes, as I have noted above, that the ḥolam ḥaser dot would be expected "
+        "Dotan’s Appendix A notes, as I have noted above, that the ḥolam ḥaser dot would be expected "
         "on (the left side of) the ר of the MPK, whereas it is on (the left side of) the צ. "
         "Dotan does not note anything about the creation ex nihilo of the dagesh on the qere’s צ.",
         #
@@ -862,7 +862,7 @@ RECORD_38 = {
     "at issue": "דּ",
     "summary": "+dg",
     "remarks": [_has_no_letter_to_carry("ד")],
-    "side-notes": [_unlike("sheva", _between("sheva", "ḥiriq", "ז", "מ"))],
+    "side-notes": [_unlike("sheva", _between("sheva", "ḥiriq", "ז", "מ"))],
 }
 RECORD_39 = {
     "wlc-index": 39,

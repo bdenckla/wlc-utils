@@ -57,7 +57,7 @@ def test_ps_2_2_azla_legarmeh():
     )
     types = _types(body)
     assert pan.LEGARMEH in types
-    # the revia after the legarmeh (81 on )EREC, next disjunctive atnaḥ) is gadol
+    # the revia after the legarmeh (81 on )EREC, next disjunctive atnax) is gadol
     assert pan.REVIA_GADOL in types
     assert pan.ATNAX in types
 
@@ -80,14 +80,14 @@ def test_ps_3_3_oleh_weyored_with_galgal_servus():
 
 
 def test_ps_37_28_revia_gadol_then_dexi_then_atnax():
-    # Yeivin's legarmeh-under-revia-gadol example; second half has deḥi before atnaḥ.
+    # Yeivin's legarmeh-under-revia-gadol example; second half has dexi before atnax.
     body = (
         r"K.I70Y Y:HWF63H05 )O82H\"70B MI$:P.F81+ W:/LO)-YA(:AZO74B "
         r")ET-13X:ASIYDFY/W L:/(OWLF74M NI$:MF92RW. W:/ZE73RA( R:$F(I74YM NIK:RF75T00"
     )
     types = _types(body)
     assert pan.LEGARMEH in types  # 63+05 on YHWH
-    assert pan.REVIA_GADOL in types  # 81 on MI$:P.F+ (next disjunctive is atnaḥ)
+    assert pan.REVIA_GADOL in types  # 81 on MI$:P.F+ (next disjunctive is atnax)
     assert pan.DEXI in types  # 13
     assert pan.ATNAX in types
     assert types[-2:] == [pan.SILLUQ, pan.SOFPASUQ]
@@ -151,7 +151,7 @@ def test_ps124_4_plain_geresh_charity_to_revia_mugrash():
 
 
 def test_revia_then_geresh_only_fuses_same_letter():
-    # The charity is same-letter only (adjacency, no X between).  Trailing atnaḥ makes a
+    # The charity is same-letter only (adjacency, no X between).  Trailing atnax makes a
     # *bare* revia reclassify to revia GADOL, so fusion (same-letter) vs swallow
     # (cross-letter) is visible in the output: were the trailing disjunctive silluq,
     # the bare revia would reclassify to mugrash too and hide the difference.
@@ -235,7 +235,7 @@ def test_cross_letter_merkha_then_azla_stays_a_sequence():
 def test_non_whitelisted_pair_fuses_to_bang():
     # Plan D guard is a WHITELIST: any two adjacent same-letter accents NOT on the
     # whitelist fuse to an a!b bang (type/leaf derived per pair), not just merkha+qadma.
-    # munaḥ+merkha is not whitelisted -> MUNAX_MERKHA / "munax!merkha".
+    # munax+merkha is not whitelisted -> MUNAX_MERKHA / "munax!merkha".
     tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
     toks = scan_accents("X" + am.MUNAX + am.MERKHA + "X" + tail)
     leaves = [leaf for _t, leaf in toks]
@@ -250,8 +250,8 @@ def test_non_whitelisted_pair_fuses_to_bang():
 
 
 def test_whitelisted_pairs_not_flagged():
-    # The whitelisted same-letter pairs must NOT become a bang: deḥi+munaḥ stays a
-    # deḥi/munax sequence (the lone whitelisted pair that reaches the guard, spared by
+    # The whitelisted same-letter pairs must NOT become a bang: dexi+munax stays a
+    # dexi/munax sequence (the lone whitelisted pair that reaches the guard, spared by
     # _WHITELISTED_ADJACENT_PAIRS), and tsinnorit+mahapakh is the metsunnar fusion (a
     # cross-letter pair consumed upstream), not a bang.
     tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ

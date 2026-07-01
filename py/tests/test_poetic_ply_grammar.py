@@ -5,8 +5,8 @@ The poetic grammar (accgram.poetic_ply_grammar) is derived from Yeivin ITM
 
   1. the LALR table builds with no shift/reduce or reduce/reduce conflicts;
   2. hand-built poetic verse token streams parse into trees whose nesting matches
-     Yeivin's disjunctive hierarchy (oleh-we-yored > atnaḥ > revia mugrash >
-     silluq; revia gadol / deḥi / tsinnor / revia qatan under them; pazer and
+     Yeivin's disjunctive hierarchy (oleh-we-yored > atnax > revia mugrash >
+     silluq; revia gadol / dexi / tsinnor / revia qatan under them; pazer and
      legarmeh as the lesser dividers).
 
 These are structural, not corpus-validated; they exercise the grammar, not a
@@ -53,7 +53,7 @@ def test_silluq_only():
 
 
 def test_atnax_divided_verse():
-    """A short verse: atnaḥ is the great divider, silluq ends it."""
+    """A short verse: atnax is the great divider, silluq ends it."""
     parser = build_parser()
     tree = parse_tokens(parser, _verse(pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.SILLUQ))
     assert tree is not None
@@ -67,7 +67,7 @@ def test_atnax_divided_verse():
 
 
 def test_revia_mugrash_before_silluq():
-    """Revia mugrash is the near divider before silluq, under atnaḥ (#366)."""
+    """Revia mugrash is the near divider before silluq, under atnax (#366)."""
     parser = build_parser()
     tree = parse_tokens(
         parser,
@@ -79,12 +79,12 @@ def test_revia_mugrash_before_silluq():
     assert tree is not None
     out = print_tree(tree, 0)
     assert "revia_mugrash_phrase" in out
-    # revia mugrash nests inside the second-half silluq_clause, below atnaḥ
+    # revia mugrash nests inside the second-half silluq_clause, below atnax
     assert out.index("atnax_phrase") < out.index("revia_mugrash_phrase")
 
 
 def test_oleh_weyored_is_topmost_divider():
-    """oleh-we-yored divides the whole verse; atnaḥ divides its second half (#361)."""
+    """oleh-we-yored divides the whole verse; atnax divides its second half (#361)."""
     parser = build_parser()
     tree = parse_tokens(
         parser,
@@ -105,7 +105,7 @@ def test_oleh_weyored_is_topmost_divider():
 
 def test_full_hierarchy_pazer_legarmeh_dexi_tsinnor():
     """A verse exercising every rank: pazer/legarmeh under revia gadol, tsinnor
-    before oleh, deḥi under atnaḥ."""
+    before oleh, dexi under atnax."""
     parser = build_parser()
     tree = parse_tokens(
         parser,
@@ -140,7 +140,7 @@ def test_conj_absorbs_metsunnar_and_shalshelet_qetannah():
     )
     assert tree is not None
     out = print_tree(tree, 0)
-    # the three new servi sit inside the atnaḥ phrase; skeleton is still atnaḥ | silluq
+    # the three new servi sit inside the atnax phrase; skeleton is still atnax | silluq
     assert "atnax_phrase" in out
     assert tree.label == "silluq_clause"
     # dropping the three servi leaves the same disjunctive skeleton (servus-neutral)
@@ -183,12 +183,12 @@ def test_shalshelet_gedolah_before_silluq():
 
 # --- Phase 3: lower disjunctives directly subdividing higher domains ------------
 # L (MAM-confirmed) uses a lower disjunctive directly within a higher domain when
-# the unit is short, exactly as the prose silluq/atnaḥ domains admit their lower
+# the unit is short, exactly as the prose silluq/atnax domains admit their lower
 # dividers.  These pin the rank-ordered near-divider cascades added in Phase 3.
 
 
 def test_legarmeh_directly_under_atnax():
-    """legarmeh subdivides the atnaḥ domain directly (Ps 31:15)."""
+    """legarmeh subdivides the atnax domain directly (Ps 31:15)."""
     parser = build_parser()
     tree = parse_tokens(
         parser,
@@ -199,7 +199,7 @@ def test_legarmeh_directly_under_atnax():
     )
     assert tree is not None
     out = print_tree(tree, 0)
-    # legarmeh nests as a subdivider inside the atnaḥ clause, above atnaḥ's phrase
+    # legarmeh nests as a subdivider inside the atnax clause, above atnax's phrase
     assert "atnax_clause" in out
     assert out.index("legarmeh_phrase") < out.index("atnax_phrase")
 
@@ -223,7 +223,7 @@ def test_legarmeh_directly_before_silluq_under_revia_mugrash():
 
 
 def test_dexi_directly_before_silluq():
-    """deḥi may stand directly before silluq (Ps, ATNAX DEXI SILLUQ -- faithful to
+    """dexi may stand directly before silluq (Ps, ATNAX DEXI SILLUQ -- faithful to
     L; an L/MAM divergence the xcheck flags separately)."""
     parser = build_parser()
     tree = parse_tokens(
@@ -268,7 +268,7 @@ def test_tsinnor_subdivides_revia_qatan_before_oleh():
 def test_revia_qatan_requires_merkha_servant():
     """Breuer Ch 11 §16, confirmed by both witnesses (servi_before oracle): the
     servant adjacent to a small revia' is merkha (a mahapakh may precede it).  A
-    merkha-served small revia parses; a non-merkha adjacent servant (here munaḥ) does
+    merkha-served small revia parses; a non-merkha adjacent servant (here munax) does
     not, even though the position is otherwise valid.  This rule is faithful but
     currently inert on the corpus (L marks merkha in 125/125 cases)."""
     parser = build_parser()
@@ -277,7 +277,7 @@ def test_revia_qatan_requires_merkha_servant():
     ok = parse_tokens(parser, _verse(pan.MAHAPAKH, pan.MERKHA, pan.REVIA_QATAN, *tail))
     assert ok is not None
     assert "revia_qatan_phrase" in print_tree(ok, 0)
-    # munaḥ adjacent to the small revia -> rejected (no parse)
+    # munax adjacent to the small revia -> rejected (no parse)
     bad = parse_tokens(parser, _verse(pan.MUNAX, pan.REVIA_QATAN, *tail))
     assert bad is None
 
@@ -383,7 +383,7 @@ def test_diagnostic_returns_no_error_on_clean_parse():
 
 
 def test_pazer_directly_under_atnax():
-    """pazer subdivides the atnaḥ domain directly, with legarmeh below it
+    """pazer subdivides the atnax domain directly, with legarmeh below it
     (LEGARMEH PAZER ATNAX REVIA_MUGRASH SILLUQ)."""
     parser = build_parser()
     tree = parse_tokens(

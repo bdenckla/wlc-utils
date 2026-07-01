@@ -72,7 +72,7 @@ MAQAF_CP = "־"   # HEBREW PUNCTUATION MAQAF
 PASEQ_CP = "׀"   # HEBREW PUNCTUATION PASEQ
 
 # Unicode accent NAME (as used in refuni/changeuni) -> its scanner mark (accent_marks).
-# These are the prose te'amim; poetic-only accents (atnaḥ-hafukh, etc.) have no prose
+# These are the prose te'amim; poetic-only accents (atnax-hafukh, etc.) have no prose
 # mark and simply will not validate if they appear.
 NAME2MARK = {
     "etnachta": am.ATNAX, "etnahta": am.ATNAX,  # translit-ok: UXLC name

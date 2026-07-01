@@ -20,11 +20,11 @@ BY_REF: dict[str, dict[str, object]] = {
         # Decalogue verses excluded from the normal scan. WLC's "tangled" form for
         # תעשה carries only a merkha on the ש; a better LC transcription reads that
         # vertical bar as a meteg (belonging to the elyon) and supplies a qadma
-        # (belonging to the taḥton) -- the consensus pointing, under which both the
-        # taḥton and elyon chanted verses are grammatical, where the merkha makes both
-        # ungrammatical. (MAM's taḥton has the qadma and its elyon has the meteg, which
+        # (belonging to the taxton) -- the consensus pointing, under which both the
+        # taxton and elyon chanted verses are grammatical, where the merkha makes both
+        # ungrammatical. (MAM's taxton has the qadma and its elyon has the meteg, which
         # the scanner swallows, which is why MAM's elyon parses cleanly.) The checker supplies
-        # the taḥton's qadma (clean, on the supplied-marks page) and emits WLC's actual
+        # the taxton's qadma (clean, on the supplied-marks page) and emits WLC's actual
         # merkha in the elyon, so only the elyon is a dt 5:8 oddity now. UXLC corrects
         # the merkha to a meteg but supplies a pashta rather than the due qadma; see the
         # linked UXLC note page (its `-t` te'amim note). UXLC has since proposed a pending
@@ -89,9 +89,9 @@ BY_REF: dict[str, dict[str, object]] = {
         # The detangled focus word תעשה in each reading, across the three transcriptions
         # (issue #36). One per-strand table replaces the old combined focus/diff table:
         # the merkha breaks both readings, but the two readings disagree on what is due
-        # (taḥton: a qadma; elyon: no accent, just a meteg), so splitting clarifies that
+        # (taxton: a qadma; elyon: no accent, just a meteg), so splitting clarifies that
         # the elyon correction (merkha→meteg) is agreed by MAM and UXLC while only the
-        # taḥton correction (qadma vs pashta) is where they part. Keyed by strand_label;
+        # taxton correction (qadma vs pashta) is where they part. Keyed by strand_label;
         # each row is (value, desc, source). The WLC value is cross-checked against the
         # detangled stream at render time, so it cannot silently drift.
         "dual_cant_tables": {

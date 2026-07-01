@@ -20,7 +20,7 @@ def render_dual_cant_reading_paragraphs(
     focus_bcv: str | None = None,
 ) -> tuple[object, ...]:
     """For a dually-cantillated verse, one labelled Hebrew line per reading (issue #36),
-    replacing the combined WLC verse line (e.g. taḥton + elyon)."""
+    replacing the combined WLC verse line (e.g. taxton + elyon)."""
     paragraphs: list[object] = []
     for reading in readings:
         label = reading.get("display_label")

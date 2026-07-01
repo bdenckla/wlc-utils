@@ -8,7 +8,7 @@ trees' segmentation is correct -- not merely parseable -- we reduce each side to
 ordered list of disjunctive accents (the division points) and diff those.  Servus
 (conjunctive) signs are deliberately dropped: MAM and the LC often choose different
 conjunctive *signs* for the same slot (e.g. the LC has the oleh-weyored servus as
-galgal/yeraḥ-ben-yomo while MAM has atnaḥ-hafukh), and Yeivin pins no exact
+galgal/yerax-ben-yomo while MAM has atnax-hafukh), and Yeivin pins no exact
 servus chains, so only the disjunctive skeleton is a meaningful equality check.
 
 Disjunctive markers, MAM Unicode accent -> poetic token (same vocabulary the
@@ -33,8 +33,8 @@ scanner emits):
   SOF PASUQ (U+05C3)      -> SILLUQ (the final word's meteg; verse end)
 
 Every other mark a poetic word can carry contributes no disjunctive to this
-skeleton: the conjunctive accents (servi) -- munaḥ, merkha, mahapakh, azla,
-illuy, tarḥa, galgal, atnaḥ-hafukh -- and the non-accent marks meteg
+skeleton: the conjunctive accents (servi) -- munax, merkha, mahapakh, azla,
+illuy, tarxa, galgal, atnax-hafukh -- and the non-accent marks meteg
 and narrow-sense paseq.  (Narrow-sense paseq -- paseq as distinct from
 legarmeh -- is the residual ``lp-paseq`` node; the legarmeh-forming paseq is the
 ``lp-legarmeih`` node resolved above.)
@@ -42,10 +42,10 @@ legarmeh -- is the residual ``lp-paseq`` node; the legarmeh-forming paseq is the
 The *servant* of a disjunctive -- the conjunctive sign on the word immediately
 preceding it -- IS extractable, via ``servi_before_from_verse_node`` /
 ``load_servi_before``.  That is the second-witness oracle for vetting servant-
-ADJACENCY rules (e.g. Breuer's "the servant next to [deḥi] is [munaḥ]"): MAM's servant
+ADJACENCY rules (e.g. Breuer's "the servant next to [dexi] is [munax]"): MAM's servant
 *choice* per slot is read in the scanner's own servus vocabulary and compared
 word-for-word against the LC.  (The disjunctive cross-check above is silent on servi;
-this fills that gap.  The munaḥ/merkha *selection within* a slot is phonological and
+this fills that gap.  The munax/merkha *selection within* a slot is phonological and
 still out of a token grammar's scope -- the oracle tells you what the LC and MAM actually
 do, not why.)
 """
@@ -108,7 +108,7 @@ _DISJ_PRIORITY: list[tuple[str, str]] = [
 
 # MAM Unicode conjunctive sign -> poetic servus token (poetic_accent_names, the same
 # vocabulary the scanner emits), so servant choices compare apples-to-apples across
-# the two witnesses.  The oleh-weyored servus is written atnaḥ-hafukh (U+05A2) in MAM
+# the two witnesses.  The oleh-weyored servus is written atnax-hafukh (U+05A2) in MAM
 # but coded galgal in the LC (see the disjunctive note above); it is normalized to GALGAL
 # so the same structural slot matches.  Priority only disambiguates a word carrying
 # more than one conjunctive mark (rare) -- the first match wins.
@@ -117,10 +117,10 @@ _SERVUS_SIGNS: list[tuple[str, str]] = [
     (ha.MER, pan.MERKHA),
     (ha.MAH, pan.MAHAPAKH),
     (ha.QOM, pan.AZLA),      # qadma = azla (the conjunctive)
-    (ha.YBY, pan.GALGAL),    # yeraḥ-ben-yomo = galgal
-    (ha.ATN_H, pan.GALGAL),  # atnaḥ-hafukh: MAM's oleh-weyored servus (the LC has galgal)
+    (ha.YBY, pan.GALGAL),    # yerax-ben-yomo = galgal
+    (ha.ATN_H, pan.GALGAL),  # atnax-hafukh: MAM's oleh-weyored servus (the LC has galgal)
     (ha.ILU, pan.ILLUY),
-    (ha.TIP, pan.TARXA),     # U+0596 (tipeḥa in prose) is the poetic tarḥa servant
+    (ha.TIP, pan.TARXA),     # U+0596 (tipexa in prose) is the poetic tarxa servant
 ]
 
 # Node types whose subtree carries no cantillated text for our purposes.
@@ -162,7 +162,7 @@ def _word_marker_and_char(accents: str) -> tuple[str | None, str | None]:
 def _word_self_servus(accents: str, marker_char: str) -> str | None:
     """The conjunctive servus on the SAME word, standing before the disjunctive mark.
 
-    A long word can host its own servant: e.g. a yeraḥ-ben-yomo (galgal) and a pazer on
+    A long word can host its own servant: e.g. a yerax-ben-yomo (galgal) and a pazer on
     one word -- the galgal is pazer's adjacent servant, exactly as the scanner emits it
     as a token right before the pazer.  Returns the servus sign closest before the
     disjunctive mark, or None.  Order matters here (not mere membership): a conjunctive

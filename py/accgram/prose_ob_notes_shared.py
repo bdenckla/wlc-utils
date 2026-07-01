@@ -6,22 +6,19 @@ from py_html import wlc_utils_html
 
 
 # Transliteration term constants.  Several accent/term names contain het, which
-# the repo writes decomposed -- ASCII "h" plus U+0323 (combining dot below).
-# Defining each term once here, via chr() so this file stays pure ASCII, lets the
-# ob_notes_* modules interpolate the glyph (e.g. f"...{TIPEXA}...") instead of
-# embedding it inline.  An inline decomposed het makes a module hard to Edit: a
-# typed het normalizes to its composed form (U+1E25) and fails to match the
-# decomposed bytes on disk.  The X in each name is the repo's ASCII stand-in for
+# the repo writes precomposed (U+1E25).  Defining each term once here lets
+# the ob_notes_* modules interpolate the glyph (e.g. f"...{TIPEXA}...") instead
+# of embedding it inline.  The X in each name is the repo's ASCII stand-in for
 # het (TIPEXA -> "tipeXa" -> "tipe" + het + "a").  Issue #36 review follow-up.
-_HET = "h" + chr(0x0323)
-TAXTON = "ta" + _HET + "ton"
-TIPEXA = "tipe" + _HET + "a"
-MUNAX = "muna" + _HET
-DEXI = "de" + _HET + "i"
-ATNAX = "atna" + _HET
-ETNAXTA = "etna" + _HET + "ta"
-PETUXAH = "petu" + _HET + "ah"
-MINXAT = "Min" + _HET + "at"
+_XET = "ḥ"
+TAXTON = "ta" + _XET + "ton"
+TIPEXA = "tipe" + _XET + "a"
+MUNAX = "muna" + _XET
+DEXI = "de" + _XET + "i"
+ATNAX = "atna" + _XET
+ETNAXTA = "etna" + _XET + "ta"
+PETUXAH = "petu" + _XET + "ah"
+MINXAT = "Min" + _XET + "at"
 
 
 def ambiguous_mark_context_comment(marked_word: str) -> str:

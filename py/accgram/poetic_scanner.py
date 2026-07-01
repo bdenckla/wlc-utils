@@ -12,7 +12,7 @@ accent -> poetic reading (the accents that matter in the Three Books):
   disjunctives
     sof pasuq
     silluq        a meteg/silluq immediately before sof pasuq              II.1
-    atnaḥ                                                                  II.3
+    atnax                                                                  II.3
     oleh-we-yored ole sign (above, pre-stress) plus the yored = merkha     II.2
                   below the stress; the merkha is consumed into the one
                   OLEH_WEYORED token, not emitted as a servus.  WLC 4.22 writes
@@ -25,23 +25,23 @@ accent -> poetic reading (the accents that matter in the Three Books):
     revia         gadol or qatan -- same sign; disambiguated in a second   II.4=8
                   pass: a revia whose next disjunctive is oleh-we-yored
                   is qatan, otherwise gadol
-    deḥi                                                                   II.9
+    dexi                                                                   II.9
     tsinnor       (no zarqa exists in the poetic system)                   II.7
     pazer                                                                  II.10
     shalshelet gedolah  shalshelet sign + paseq                           II.6
     legarmeh      azla legarmeh / mahapakh legarmeh, i.e. a conjunctive    II.12
-                  (azla or mahapakh) followed by paseq, as prose munaḥ+paseq
+                  (azla or mahapakh) followed by paseq, as prose munax+paseq
 
   conjunctive servi
-    munaḥ   merkha   mahapakh   azla   illuy   tarḥa
-    galgal (yeraḥ; also the servus of oleh-we-yored and of pazer)
+    munax   merkha   mahapakh   azla   illuy   tarxa
+    galgal (yerax; also the servus of oleh-we-yored and of pazer)
 
   fused / emitted (Plan C -- stop swallowing real accents)
     tsinnorit     fused onto its mahapakh / merkha partner in the same
                   chanted word -> one MAHAPAKH_METSUNNAR / MERKHA_METSUNNAR conjunctive
     shalshelet qetannah  bare shalshelet (no following paseq) -> emitted as a servus
     two adjacent accents on one letter that are not a WHITELISTED pair (revia+geresh
-                  muqdam, ole+yored, deḥi+munaḥ) -> one order-less a!b bang-pair (e.g.
+                  muqdam, ole+yored, dexi+munax) -> one order-less a!b bang-pair (e.g.
                   merkha + azla -> merkha!azla); faithfully emitted but NOT a grammar
                   token (a non-whitelisted same-letter stack is a lexical anomaly ->
                   NO_PARSE)
@@ -55,10 +55,10 @@ accent -> poetic reading (the accents that matter in the Three Books):
   same-letter revia mugrash charity).
 
 Note: "revia mugrash without geresh" (#367 = Breuer Ch 10 §17-18) -- a bare revia
-acting as the main verse divider when the verse has no atnaḥ -- is NOT a gap: it is
+acting as the main verse divider when the verse has no atnax -- is NOT a gap: it is
 the last disjunctive before silluq, so _reclassify_revia maps it to REVIA_MUGRASH
 (see that function's docstring), and the rich revia_mugrash_clause then carries its
-viceroys (deḥi etc.), parsing Breuer's revia-substitute-for-atnaḥ verses (Ps
+viceroys (dexi etc.), parsing Breuer's revia-substitute-for-atnax verses (Ps
 105:45, 119:4, Job 14:4) without verse-level context.
 
 Known gaps (deferred to the validation pass, see the module's tests / notes):
@@ -111,10 +111,10 @@ _POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
 #                                                    as ole...merkha, same-letter in MAM
 #                                                    as merkha+ole -- each consumed by its
 #                                                    own fusion rule, neither reaches here)
-#   - deḥi   + munaḥ          -> a legit *sequence* (a prepositive deḥi visually on its
-#                                munaḥ servus's letter, not a shared syllable)
+#   - dexi   + munax          -> a legit *sequence* (a prepositive dexi visually on its
+#                                munax servus's letter, not a shared syllable)
 # The first three are CONSUMED by the specific fusion rules above, so they never reach
-# the guard; only deḥi+munaḥ reaches it as two adjacent marks, and is spared by name
+# the guard; only dexi+munax reaches it as two adjacent marks, and is spared by name
 # (_WHITELISTED_ADJACENT_PAIRS).  Everything else -> bang.  (This whitelist supersedes an
 # earlier "two impositive accents" blacklist, which leaned on contested positional
 # classifications of marks -- tsinnorit, ole -- that, per the corpus, never share a letter
@@ -123,7 +123,7 @@ _ANY_ACCENT = "[֑-֮]"  # U+0591..U+05AE (as the stray-accent class; meteg U+05
 
 # Legit same-letter pairs that survive to the guard as two adjacent marks (i.e. are NOT
 # fused by an earlier rule), spared from the bang via negative lookahead.  Order is the
-# post-relocation body order (deḥi, a prepositive, is moved to the front).
+# post-relocation body order (dexi, a prepositive, is moved to the front).
 _WHITELISTED_ADJACENT_PAIRS = (am.DEXI + am.MUNAX,)
 
 # Display names for building a bang's per-pair (type, leaf); covers the poetic accents,
@@ -236,7 +236,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # sibling of prose ek20:31's mahapakh!azla).  The 2-mark match beats the bare
     # single-mark rules by longest-match.  The legit same-letter pairs are either FUSED by
     # a rule above (revia+geresh muqdam / revia+geresh -> revia mugrash; ole+merkha and
-    # the MAM same-letter merkha+ole -> oleh-we-yored) and so never reach here, or are the deḥi+munaḥ sequence, which
+    # the MAM same-letter merkha+ole -> oleh-we-yored) and so never reach here, or are the dexi+munax sequence, which
     # _BANG_GUARD's lookahead spares.  The bang has no grammar terminal -> NO_PARSE ungrammatical verse.
     # Corpus-wide this fires only at Ps 56:10 (merkha+azla); the generality guards any
     # other / future same-letter stack.
@@ -309,7 +309,7 @@ def _recover_unmarked_oleh(types: list[str]) -> list[str]:
     the divider (the verse then fails to parse).
 
     The reliable, MAM-cross-checked signal is the oleh-we-yored's own servus: the
-    galgal (yeraḥ-ben-yomo, the "v"-shaped sign) standing immediately before
+    galgal (yerax-ben-yomo, the "v"-shaped sign) standing immediately before
     it.  A GALGAL directly followed by a bare MERKHA is that servus + an unmarked
     yored, so the MERKHA is reclassified to OLEH_WEYORED.  Validated against the MAM
     disjunctive oracle (accgram.poetic_xcheck): this recovers 9 Psalms/Job verses
@@ -341,7 +341,7 @@ def _reclassify_revia(types: list[str]) -> list[str]:
         disjunctive before silluq; when two revias precede silluq the first is
         gadol and the second mugrash, #391 -- handled automatically since the
         first revia's next disjunctive is the second revia, not silluq);
-      - otherwise (next is atnaḥ, oleh, or another revia) -> revia gadol.
+      - otherwise (next is atnax, oleh, or another revia) -> revia gadol.
     """
     out = list(types)
     for i, t in enumerate(out):

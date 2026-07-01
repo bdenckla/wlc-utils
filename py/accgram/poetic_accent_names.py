@@ -15,8 +15,8 @@ pinned to this file.
 
 Transliteration choices (avoid proliferating spellings; follow existing precedent):
 Spellings follow the canonical display names in ``py/mb_diff_mpu/describe_diff.py``
-(ACCENT_NAMES / POETIC_ACCENTS), uppercased with its ``ḥ`` written **X** for ASCII:
-  - deḥi -> DEXI, munaḥ -> MUNAX (ḥ -> X; cf. mb_cmn ``DEX``).
+(ACCENT_NAMES / POETIC_ACCENTS), uppercased with het written **X** for ASCII:
+  - dexi -> DEXI, munax -> MUNAX (cf. mb_cmn ``DEX``).
   - tsinnor -> TSINNOR (describe_diff "tsinnor", doubled n).
   - merkha -> MERKHA, mahapakh -> MAHAPAKH (cf. Unicode names; the kaf-dropping
     Goerwitz "MEREKA"/"MAHPAK" lose to the full forms).  # translit-ok: cites Goerwitz forms
@@ -24,8 +24,8 @@ Spellings follow the canonical display names in ``py/mb_diff_mpu/describe_diff.p
     SILLUQ, PAZER, LEGARMEH, AZLA, GALGAL, REVIA, SHALSHELET.
 
 Maintainer overrides of describe_diff:
-  - ATNAX, not ETNAXTA (describe_diff calls the accent "etnaḥta").
-  - TARXA, not TARHA: describe_diff's plain "tarha" is a bug; the ḥet takes X.  # translit-ok: cites describe_diff bug
+  - ATNAX, not ETNAXTA (describe_diff calls the accent "etnaxta").
+  - TARXA, not TARHA: describe_diff's plain "tarha" is a bug; the het takes X.  # translit-ok: cites describe_diff bug
   - ILLUY, not ILUY: doubled L preferred.
   - OLEH_WEYORED keeps "we-" (no "veyored" precedent in the tree).
 
@@ -33,8 +33,8 @@ NOTE: the prose grammar (a port of the Goerwitz C oracle acc2tre.y) now adopts t
 shared spellings ATNAX / MUNAX / MERKHA / MAHAPAKH, so there is one transliteration
 per use case across prose and poetic; see issue #13.  (Byte-for-byte parity with the
 Goerwitz C output is no longer a goal.)  TARXA stays poetic-only: the tifcha-shaped
-sign is a *distinct accent* in each system -- prose tipeḥa (TIPEXA, with mayela as
-its variant) vs poetic tarḥa (TARXA) -- that merely shares one Unicode code point, so
+sign is a *distinct accent* in each system -- prose tipexa (TIPEXA, with mayela as
+its variant) vs poetic tarxa (TARXA) -- that merely shares one Unicode code point, so
 the two keep separate names.
 """
 
@@ -46,12 +46,12 @@ SOFPASUQ = "SOFPASUQ"
 
 # --- disjunctives (greatest -> least) ------------------------------------------
 SILLUQ = "SILLUQ"
-ATNAX = "ATNAX"  # etnaḥta
+ATNAX = "ATNAX"  # etnaxta
 OLEH_WEYORED = "OLEH_WEYORED"
 REVIA_GADOL = "REVIA_GADOL"
 REVIA_MUGRASH = "REVIA_MUGRASH"
 REVIA_QATAN = "REVIA_QATAN"
-DEXI = "DEXI"  # deḥi
+DEXI = "DEXI"  # dexi
 TSINNOR = "TSINNOR"  # tsinnor (Unicode "zinor")  # translit-ok: Unicode name
 PAZER = "PAZER"
 LEGARMEH = "LEGARMEH"
@@ -73,14 +73,14 @@ SHALSHELET = "SHALSHELET"
 STRAY_ACCENT = "STRAY_ACCENT"
 
 # --- conjunctive servi ---------------------------------------------------------
-MUNAX = "MUNAX"  # munaḥ
+MUNAX = "MUNAX"  # munax
 MERKHA = "MERKHA"
 MAHAPAKH = "MAHAPAKH"
 AZLA = "AZLA"
 GALGAL = "GALGAL"
 ILLUY = "ILLUY"  # doubled L preferred over describe_diff's "iluy"
-TARXA = "TARXA"  # tarḥa (poetic name for the tipeḥa-shaped sign; describe_diff's
-# plain "tarha" is a bug per the maintainer -- the ḥet takes X like MUNAX/DEXI)  # translit-ok: cites describe_diff bug
+TARXA = "TARXA"  # tarxa (poetic name for the tipexa-shaped sign; describe_diff's
+# plain "tarha" is a bug per the maintainer -- the het takes X like MUNAX/DEXI)  # translit-ok: cites describe_diff bug
 
 # --- fused tsinnorit servi and the conjunctive shalshelet ----------------------
 # A mahapakh / merkha carrying a tsinnorit (U+0598) secondary on the open syllable
@@ -108,7 +108,7 @@ SHALSHELET_QETANNAH = "SHALSHELET_QETANNAH"
 #
 # Unlike the metsunnar / shalshelet-qetannah servi, this is *not* a grammar token: two
 # accents sharing one letter is a lexical anomaly UNLESS the pair is whitelisted (revia +
-# geresh muqdam, ole + yored, deḥi + munaḥ), so the bang has no `conj` terminal and the
+# geresh muqdam, ole + yored, dexi + munax), so the bang has no `conj` terminal and the
 # verse dead-ends to NO_PARSE (the poetic lexical-error surface), surfacing ps56:10 as a
 # flagged ungrammatical.  Manuscript rationale: MAM carries azla alone and, according to Breuer,
 # so does the Aleppo Codex, while Sassoon 1053 carries merkha alone -- L's double-marking

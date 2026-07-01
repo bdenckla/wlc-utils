@@ -3,7 +3,7 @@ for the goerwitz verse display (issue #36).
 
 For a verse in one of the three dually-cantillated prose loci (Gen 35:22 and the two
 Decalogues), the goerwitz report replaces the single combined WLC verse line with one
-line per reading (e.g. taḥton + elyon). The elyon reading groups several numbered
+line per reading (e.g. taxton + elyon). The elyon reading groups several numbered
 verses into one chanted verse, so a reading's span label can differ from the row's own
 verse (e.g. the elyon line for dt 5:8 spans dt 5:7–10).
 
@@ -15,8 +15,8 @@ numbered verse), and -- for the group-by-reading dt 5:8 display -- ``status`` / 
 let the renderer gray the words and tree columns that fall outside the row's own verse: an
 elyon reading groups several numbered verses, so on the dt 5:8 row its 5:7 / 5:9 / 5:10
 material is de-emphasized, spotlighting the 5:8 part where the ungrammatical lives.
-``display_label`` carries the Unicode ḥ (the cant-strand ASCII
-label spells ḥet as "x", per the repo transliteration standard).
+``display_label`` carries the actual Unicode het (as opposed to the cant-strand
+ASCII label, which spells it "x"), per the repo transliteration standard.
 
 The heavy ``tree`` / ``word_leaf_counts`` fields are dropped from serialized research
 artifacts via :func:`without_heavy_reading_fields` (issue #44): they live canonically in
@@ -31,8 +31,8 @@ from pathlib import Path
 
 from accgram import dual_cant_run
 
-# ḥ as h + COMBINING DOT BELOW (decomposed het), per the repo transliteration standard.
-_HET_UNI = "h" + chr(0x0323)
+# The real het glyph, precomposed U+1E25, per the repo transliteration standard.
+_XET_UNI = "ḥ"
 _EN_DASH = chr(0x2013)
 _BCV_RE = re.compile(r"(\d+):(\d+)$")
 
@@ -67,7 +67,7 @@ def without_heavy_reading_fields(
 def load_readings_by_bcv(
     wlc422_kq_u_dir: Path, mam_simple_dir: Path
 ) -> dict[str, list[dict[str, object]]]:
-    """Compact-bcv -> ordered per-strand readings (alef/taḥton first, then bet/elyon)."""
+    """Compact-bcv -> ordered per-strand readings (alef/taxton first, then bet/elyon)."""
     results = dual_cant_run.detangle_results(wlc422_kq_u_dir, mam_simple_dir)
     by_bcv: dict[str, list[dict[str, object]]] = {}
     for passage in results:
@@ -91,8 +91,8 @@ def load_readings_by_bcv(
 
 
 def _display_label(strand_label: str) -> str:
-    # The cant-strand ASCII label spells ḥet as "x" (taxton); display uses ḥ.
-    return strand_label.replace("x", _HET_UNI)
+    # The cant-strand ASCII label spells het as "x" (taxton); display uses the real glyph.
+    return strand_label.replace("x", _XET_UNI)
 
 
 def _parse_bcv(bcv: str) -> tuple[str, int, int]:

@@ -6,14 +6,12 @@ truth) and puts unreadable bare combining marks in quotes.  Two checks:
 
 * every accent/mark constant is value-identical to its `mb_cmn` source;
 * the module's *own* source text carries no raw Hebrew combining mark inside a
-  string literal (force `\\N{...}` or an `mb_cmn` alias instead);
-* nor any NFC-only precomposed letter (e.g. ``ḥ`` U+1E25): transliteration in
-  comments must use the repo-standard decomposed form (``h`` + U+0323), so this
-  module never silently reintroduces a normalization variant.
+  string literal (force `\\N{...}` or an `mb_cmn` alias instead).
 
 This only guards `accent_marks.py`; textual fixtures elsewhere (note bodies,
-diff corpora) legitimately contain real Hebrew text and are out of scope, as is
-the wider precomposed-``ḥ`` cleanup still pending across the tree (issue #13).
+diff corpora) legitimately contain real Hebrew text and are out of scope. The
+tree-wide NFC/precomposed guard (#49) covers this file too, via
+`test_transliterations.py::test_no_decomposed_composites_tree_wide`.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_accent_marks_source.py -v
@@ -23,7 +21,6 @@ from __future__ import annotations
 
 import inspect
 import re
-import unicodedata
 
 from accgram import accent_marks as am
 from mb_cmn import hebrew_accents as ha
@@ -87,22 +84,4 @@ def test_no_raw_diacritics_in_source() -> None:
     assert not offenders, (
         "accent_marks.py must alias mb_cmn / use \\N{...}, not raw diacritics: "
         f"{offenders}"
-    )
-
-
-def test_no_precomposed_chars_in_source() -> None:
-    """No NFC-only letter (e.g. precomposed ``ḥ`` U+1E25) may appear: the repo
-    standard is the decomposed form (``h`` + U+0323).  A char is precomposed iff
-    NFD changes it.  (The ``ḥ`` in this assertion's own message is decomposed.)"""
-    src = inspect.getsource(am)
-    offenders = sorted(
-        {
-            f"U+{ord(ch):04X} {unicodedata.name(ch, '?')}"
-            for ch in src
-            if ch != unicodedata.normalize("NFD", ch)
-        }
-    )
-    assert not offenders, (
-        "accent_marks.py must use decomposed forms (e.g. ḥ as h+U+0323), not "
-        f"precomposed: {offenders}"
     )

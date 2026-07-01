@@ -9,8 +9,8 @@ where the two witnesses agree or differ.
 It is the second-witness gate for vetting Breuer's servant-ADJACENCY rules before
 encoding any of them in the grammar.  It already settled two:
 
-  * deḥi: Breuer Ch 11 §11 says "always [munaḥ]", but L marks merkha in 16/19 cases and
-    MAM agrees (munaḥ in 0) -- REFUTED.
+  * dexi: Breuer Ch 11 §11 says "always [munax]", but L marks merkha in 16/19 cases and
+    MAM agrees (munax in 0) -- REFUTED.
   * small revia': Breuer §16 says "[merkha]", and L is 125/125 merkha with MAM agreeing and
     zero servant-type conflicts -- CONFIRMED (encoded, though it then fires on nothing).
 
@@ -22,7 +22,7 @@ servant (the other reads a bare/divider word) is counted separately as such.  Th
 writes a git-tracked report and prints a one-line-per-target summary.
 
 Servi are read in the scanner's own vocabulary on both sides (mam_poetic_accents
-normalizes MAM's signs: qadma->AZLA, tipeḥa->TARXA, atnaḥ-hafukh->GALGAL), so the
+normalizes MAM's signs: qadma->AZLA, tipexa->TARXA, atnax-hafukh->GALGAL), so the
 comparison is apples-to-apples.
 """
 

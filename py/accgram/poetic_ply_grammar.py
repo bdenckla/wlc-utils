@@ -10,14 +10,14 @@ inline.  See also mb_cmn.hebrew_accents, whose poetic conjunctive list cites ITM
 
 Breuer, *Ta'amei ha-Miqra*, Ch 10 (English trans. "Cantillation of Scripture,
 Ch 10", the systematic theory of the Eme"t hierarchy: Emperor siluk -> Kings
-[oleh-we-yored, atnaḥ, revia'] -> additional mafsiqim [revia mugrash, big
-shalshelet, mahapakh legarmeih] -> Viceroys [big revia, tsinnor, small revia, deḥi]
+[oleh-we-yored, atnax, revia'] -> additional mafsiqim [revia mugrash, big
+shalshelet, mahapakh legarmeih] -> Viceroys [big revia, tsinnor, small revia, dexi]
 -> military secretaries [pazer, legarmeih]) is the parallel systematic source, and
-confirms this same skeleton term-for-term: deḥi as the final viceroy of
-atnaḥ/revia only (never under oleh-we-yored); tsinnor and small revia only
+confirms this same skeleton term-for-term: dexi as the final viceroy of
+atnax/revia only (never under oleh-we-yored); tsinnor and small revia only
 under oleh-we-yored; and revia mugrash / big shalshelet as additional mafsiqim that
-"can only divide the left side of [atnaḥ]" (the silluq-near second part) -- which
-is exactly why a revia mugrash in atnaḥ's own realm (Job 31:15, L-only) is rejected.
+"can only divide the left side of [atnax]" (the silluq-near second part) -- which
+is exactly why a revia mugrash in atnax's own realm (Job 31:15, L-only) is rejected.
 Ch 10 §9 on the doubled tsinnor is cited at collapse_repeated_tsinnor below.
 
 Design: rank-ordered clause hierarchy, permissive servus chains.
@@ -25,15 +25,15 @@ Design: rank-ordered clause hierarchy, permissive servus chains.
   by disjunctive D admits, as its near subdividers, the disjunctives of any lower
   rank -- not merely the one rank immediately below.  (Phase 3 relaxed an earlier
   "immediate-sub only" form: L freely uses a lower divider directly when a unit is
-  too short for the intermediate one -- legarmeh straight under atnaḥ, deḥi or
-  legarmeh straight before silluq -- exactly as the prose grammar's silluq/atnaḥ
+  too short for the intermediate one -- legarmeh straight under atnax, dexi or
+  legarmeh straight before silluq -- exactly as the prose grammar's silluq/atnax
   domains admit their lower dividers.  Every such case here is MAM-confirmed.)  The
   *phrase* rules, by contrast, accept any run of conjunctive servi before a
   disjunctive, because Yeivin describes the poetic servi only loosely -- "up to N
   servi", "various combinations", "governed by intricate rules" -- and there is no
   oracle to pin exact patterns against.  So every ``D_phrase`` is just ``D``
   optionally preceded by a ``servi`` chain; the particular servus counts/orders
-  Yeivin documents (munaḥ/merkha before silluq, galgal+mahapakh/azla before pazer, the
+  Yeivin documents (munax/merkha before silluq, galgal+mahapakh/azla before pazer, the
   galgal "v"-servus of oleh-we-yored, etc.) are admitted but not required.
 
   Error recovery is limited to one rule (p_silluq_phrase_error): a verse missing
@@ -46,20 +46,20 @@ rank-ordered design above, a domain also admits any lower-ranked divider directl
 when a unit is too short for the intermediate one):
 
   silluq (verse end, #359)
-    great division: oleh-we-yored (distant) OR atnaḥ (close)             (#361)
+    great division: oleh-we-yored (distant) OR atnax (close)             (#361)
     near division before silluq: revia mugrash / shalshelet gedolah  (#366, #371);
-      also deḥi / pazer / legarmeh directly when the final unit is short
+      also dexi / pazer / legarmeh directly when the final unit is short
   oleh-we-yored (the main verse divider, #363)
     main subdivider: revia gadol; immediately preceded by revia qatan
     (no servus) or tsinnor (with servus)                          (#363, #365, #368)
-  atnaḥ (#362)               -> deḥi (near) / revia gadol (distant)  (#362, #364);
+  atnax (#362)               -> dexi (near) / revia gadol (distant)  (#362, #364);
                                 also pazer / legarmeh directly
-  revia gadol (#363)         -> pazer / legarmeh; also deḥi / tsinnor directly
+  revia gadol (#363)         -> pazer / legarmeh; also dexi / tsinnor directly
   revia qatan (#368)         -> legarmeh; also tsinnor (TSINNOR REVIA_QATAN OLEH)
-  revia mugrash (#366-367)   -> pazer / legarmeh (with geresh, tipeḥa-like);
-                                also deḥi / revia gadol when "without geresh" it
-                                acts as the main verse divider like atnaḥ (#367)
-  deḥi (#364)                -> pazer / legarmeh
+  revia mugrash (#366-367)   -> pazer / legarmeh (with geresh, tipexa-like);
+                                also dexi / revia gadol when "without geresh" it
+                                acts as the main verse divider like atnax (#367)
+  dexi (#364)                -> pazer / legarmeh
   tsinnor (#365)              -> pazer / legarmeh
   pazer (#369)               -> legarmeh only
   legarmeh (#370)            -> (terminal lowest disjunctive)
@@ -123,7 +123,7 @@ tokens = (
 )
 # NB: a same-letter bang (e.g. pan.MERKHA_AZLA, Plan D) is deliberately NOT a grammar
 # token.  The scanner still *emits* it (faithful representation), but a same-letter accent
-# pair outside the whitelist (revia+geresh muqdam, ole+yored, deḥi+munaḥ) is a lexical
+# pair outside the whitelist (revia+geresh muqdam, ole+yored, dexi+munax) is a lexical
 # anomaly, not a licit servus: with no terminal for it the parser dead-ends -> NO_PARSE
 # (the poetic-native lexical-error surface, as STRAY_ACCENT), so ps56:10 surfaces as a
 # flagged ungrammatical rather than a silently-clean parse.  See poetic_ob_notes["ps 56:10"].
@@ -271,7 +271,7 @@ def p_revia_gadol_phrase(p):
 # Breuer Ch 11 §16: "the servant next to a small revia' is [merkha], and a [mahapakh]
 # precedes it."  So the servus immediately adjacent to REVIA_QATAN must be MERKHA;
 # any earlier servi (e.g. the preceding mahapakh) are free.  Unlike the refuted
-# deḥi<-munaḥ rule, this is CONFIRMED by both witnesses via the servi_before oracle
+# dexi<-munax rule, this is CONFIRMED by both witnesses via the servi_before oracle
 # (mam_poetic_accents): L marks merkha before small revia in 125/125 cases and MAM
 # agrees on merkha wherever it too has a servant there, with ZERO servant-type
 # conflicts.  NOTE: precisely because both witnesses already agree, this rule does
@@ -304,15 +304,15 @@ def p_revia_mugrash_phrase(p):
     _phrase(p, "revia_mugrash_phrase")
 
 
-# Permissive servi before deḥi (same shape as the other phrases).  NB: Breuer
-# Ch 11 §11 states "the servant next to the [deḥi] is ALWAYS a [munaḥ]", which would
+# Permissive servi before dexi (same shape as the other phrases).  NB: Breuer
+# Ch 11 §11 states "the servant next to the [dexi] is ALWAYS a [munax]", which would
 # justify forcing the adjacent servus to MUNAX.  That tightening was tried (commit
 # fc9c0d7) and REFUTED: a MAM-simple cross-check of the servant sign (not just the
-# disjunctive skeleton) shows MAM independently agrees with L on *merkha* before deḥi
-# in all 16 merkha cases and has munaḥ in NONE of them -- so merkha-served deḥi is a
+# disjunctive skeleton) shows MAM independently agrees with L on *merkha* before dexi
+# in all 16 merkha cases and has munax in NONE of them -- so merkha-served dexi is a
 # real, two-witness construction and Breuer's flat "always" is an oversimplification
-# (the munaḥ/merkha choice is phonological, hence out of scope for a token grammar).
-# Enforcing munaḥ-only would flag 16 correct verses.  See issue #18.
+# (the munax/merkha choice is phonological, hence out of scope for a token grammar).
+# Enforcing munax-only would flag 16 correct verses.  See issue #18.
 def p_dexi_phrase(p):
     """dexi_phrase : DEXI
                    | servi DEXI"""
@@ -339,14 +339,14 @@ def p_tsinnor_phrase(p):
 
 
 # Permissive servi before pazer.  NB: Breuer Ch 11 §7-9 says the servant before pazer is
-# "always galgal" (yeraḥ-ben-yomo), which would justify forcing the adjacent servus to
+# "always galgal" (yerax-ben-yomo), which would justify forcing the adjacent servus to
 # GALGAL.  REFUTED by the servant cross-check (servi_xcheck) once it learned to read a
 # SAME-WORD servant: galgal often sits on the pazer's own word (e.g. Ps 32:5, 65:10), and
 # those "GALGAL vs MAM-qadma" mismatches were a measurement artifact -- they actually
 # CONFIRM galgal.  But three verses keep a primary merkha on the word right before pazer in
 # BOTH witnesses -- Ps 4:3, 59:6, 71:3 -- and MAM's own FOI catalog does NOT flag those as
 # secondary merkha, so merkha-served pazer is a real two-witness construction (the same
-# shape as the refuted deḥi<-munaḥ rule; the galgal/merkha choice is phonological, hence out
+# shape as the refuted dexi<-munax rule; the galgal/merkha choice is phonological, hence out
 # of a token grammar's scope).  Two further non-galgal cases are not counter-evidence but
 # also not galgal: Ps 28:5 is a plain L-vs-MAM sign divergence (L mahapakh, MAM galgal), and
 # Ps 89:20's merkha is a CoS-contested secondary merkha (stays non-galgal even if dropped).
@@ -378,19 +378,19 @@ def _phrase(p, label):
 
 
 # --- silluq clause (#359, #361, #366, #371) ------------------------------------
-# The silluq domain is the whole verse.  Its great divider is atnaḥ or
+# The silluq domain is the whole verse.  Its great divider is atnax or
 # oleh-we-yored; oleh-we-yored, when present, is the topmost divider and may
-# contain an atnaḥ-divided remainder before silluq.
+# contain an atnax-divided remainder before silluq.
 #
 # Below the great dividers, the near divider before silluq is most often revia
 # mugrash or shalshelet gedolah, but L (faithful to it, MAM-confirmed) freely uses
-# a *lower* disjunctive directly when the final unit is short: deḥi, pazer, or
+# a *lower* disjunctive directly when the final unit is short: dexi, pazer, or
 # legarmeh may stand immediately before silluq with no revia mugrash, exactly as
-# the prose silluq domain admits its lower dividers (tipeḥa -> ... directly).  So
+# the prose silluq domain admits its lower dividers (tipexa -> ... directly).  So
 # the silluq domain admits a rank-ordered chain of near dividers --
-# revia_mugrash / shalshelet (highest), then deḥi, then pazer, then legarmeh --
+# revia_mugrash / shalshelet (highest), then dexi, then pazer, then legarmeh --
 # each of which may be followed (toward silluq) by any lower one.  This is the
-# poetic analogue of the prose tipeḥa/zaqef_silluq cascade in prose_ply_grammar.py.
+# poetic analogue of the prose tipexa/zaqef_silluq cascade in prose_ply_grammar.py.
 def p_silluq_clause(p):
     """silluq_clause : silluq_phrase
                      | revia_mugrash_silluq_clause
@@ -491,12 +491,12 @@ def p_revia_gadol_oleh_clause(p):
     p[0] = make_node("oleh_weyored_clause", p[1], p[2])
 
 
-# --- atnaḥ clause (#362, #364) -------------------------------------------------
-# Subdivided by revia gadol (distant) or deḥi (near); and, like the silluq domain
+# --- atnax clause (#362, #364) -------------------------------------------------
+# Subdivided by revia gadol (distant) or dexi (near); and, like the silluq domain
 # (and as L attests, MAM-confirmed), directly by a lower disjunctive -- pazer or
-# legarmeh -- when the unit is too short for a deḥi.  Rank order of near dividers:
-# revia gadol (highest), deḥi, pazer, legarmeh; each may be followed (toward
-# atnaḥ) by any lower one.
+# legarmeh -- when the unit is too short for a dexi.  Rank order of near dividers:
+# revia gadol (highest), dexi, pazer, legarmeh; each may be followed (toward
+# atnax) by any lower one.
 def p_atnax_clause(p):
     """atnax_clause : atnax_phrase
                      | dexi_atnax_clause
@@ -537,9 +537,9 @@ def p_revia_gadol_atnax_clause(p):
 
 
 # --- revia gadol clause (#363) -------------------------------------------------
-# Its subdividers, in rank order: deḥi (highest), pazer, legarmeh.  Yeivin names
-# pazer and legarmeh; L also attests deḥi directly subdividing revia gadol (e.g.
-# DEXI REVIA_GADOL ATNAX ...), the same near-divider relation deḥi has under atnaḥ.
+# Its subdividers, in rank order: dexi (highest), pazer, legarmeh.  Yeivin names
+# pazer and legarmeh; L also attests dexi directly subdividing revia gadol (e.g.
+# DEXI REVIA_GADOL ATNAX ...), the same near-divider relation dexi has under atnax.
 def p_revia_gadol_clause(p):
     """revia_gadol_clause : revia_gadol_phrase
                           | legarmeh_revia_gadol_clause
@@ -549,7 +549,7 @@ def p_revia_gadol_clause(p):
     p[0] = p[1]
 
 
-# Tsinnor (a second-degree divider, rank with deḥi) also subdivides revia gadol
+# Tsinnor (a second-degree divider, rank with dexi) also subdivides revia gadol
 # directly where L has no oleh-we-yored (e.g. Ps 55:20, TSINNOR REVIA_GADOL ATNAX;
 # MAM reads REVIA_QATAN OLEH_WEYORED there -- an L/MAM divergence the xcheck flags,
 # parsed faithfully to L here).
@@ -608,10 +608,10 @@ def p_tsinnor_revia_qatan_clause(p):
 
 
 # --- revia mugrash clause (#366-367) -------------------------------------------
-# With the geresh stroke: the last disjunctive before silluq, like prose tipeḥa,
+# With the geresh stroke: the last disjunctive before silluq, like prose tipexa,
 # subdivided by the lesser dividers pazer / legarmeh.  "Without the geresh" (a bare
-# revia before silluq when the verse has no atnaḥ) it acts as the main verse
-# divider "like atnaḥ", so it is also subdivided by deḥi (near) and revia gadol
+# revia before silluq when the verse has no atnax) it acts as the main verse
+# divider "like atnax", so it is also subdivided by dexi (near) and revia gadol
 # (distant).  Both roles share the REVIA_MUGRASH token, so all four are allowed.
 def p_revia_mugrash_clause(p):
     """revia_mugrash_clause : revia_mugrash_phrase
@@ -650,7 +650,7 @@ def p_revia_gadol_revia_mugrash_clause(p):
     p[0] = make_node("revia_mugrash_clause", p[1], p[2])
 
 
-# --- deḥi clause (#364) --------------------------------------------------------
+# --- dexi clause (#364) --------------------------------------------------------
 def p_dexi_clause(p):
     """dexi_clause : dexi_phrase
                    | legarmeh_dexi_clause

@@ -31,7 +31,7 @@ Subcommands:
                 Cross-check, per disjunctive, the servant (conjunctive) the WLC
                 scanner and MAM-simple put immediately before it, and write
                 out/accgram/poetic/_servi_xcheck.txt.  The second-witness gate
-                for vetting Breuer servant-adjacency rules (it settled deḥi and
+                for vetting Breuer servant-adjacency rules (it settled dexi and
                 small revia).  Use --target to restrict.
     generate-html
                 Generate the accgram HTML reports in one pass:

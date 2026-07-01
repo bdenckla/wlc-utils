@@ -20,7 +20,7 @@ and `lexical_validation` actually read:
   gershayim keeps *both* marks, sequenced in their Unicode (manuscript) order --
   gerstar-then-telg where the pair shares a base letter -- and, where they share a base
   letter, `lexical_validation` whitelists the same-letter pair (`word_to_marks`).
-* **Prepositive accents** (yetiv, geresh muqdam, deḥi, telisha gedola) are relocated to
+* **Prepositive accents** (yetiv, geresh muqdam, dexi, telisha gedola) are relocated to
   the front of the word's mark sequence, undoing `wlc_uword._PREPOS_PATT`'s move past an
   accent on the first consonant, so the scanner reads the accents in M-C order.  The one
   exception is a telg + gerstar word, where the telg stays in document order so the pair
@@ -97,7 +97,7 @@ def word_to_marks(word: str) -> str:
     One secondary is dropped here: the non-first of a *repeated* telisha gedola (M-C 44).
 
     A telisha gedola that shares a word with a geresh or gershayim keeps BOTH marks; this
-    is the prose analogue of the poetic deḥi + munax whitelist entry -- a legitimate
+    is the prose analogue of the poetic dexi + munax whitelist entry -- a legitimate
     same-letter pair spared as a two-token *sequence*, not fused.  For such a telg + gerstar
     word the telisha gedola's prepositive front-loading is **suppressed**, so the scanner
     reads the two marks in their Unicode (manuscript) order: gerstar-then-telg in the three

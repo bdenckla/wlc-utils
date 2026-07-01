@@ -217,7 +217,7 @@ RECORDS = [
             wlc_utils_html.para(
                 [
                     "Both WLC & UXLC needed to move the ",
-                    rmn("pataḥ"),
+                    rmn("pataḥ"),
                     " back from the ",
                     rmn("yod"),
                     " to the ",
@@ -265,9 +265,9 @@ RECORDS = [
                     "I.e., UXLC somehow already had QUPO mark order. "
                     "In terms of Michigan-Claremont encoding, we might call this FUAO mark order, "
                     "since in M-C, F is qamats and A is ",
-                    rmn("pataḥ"),
+                    rmn("pataḥ"),
                     ". " "So FUAO here is F92A61: " "U (under-accent) is 92 (",
-                    rmn("atnaḥ"),
+                    rmn("atnaḥ"),
                     ") and " "O (over-accent) is 61 (",
                     rmn("geresh"),
                     ").",
