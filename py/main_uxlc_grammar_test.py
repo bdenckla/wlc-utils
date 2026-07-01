@@ -470,7 +470,7 @@ def main() -> None:
     p("  introduce it.  No fix leaks into OUT and no degradation leaks into IN.")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     print(f"\nWrote report to {OUT}")
 
 

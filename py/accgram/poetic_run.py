@@ -246,7 +246,7 @@ def _write_book_json(out_path: Path, records: list[dict[str, object]]) -> None:
         "verses": records,
     }
     payload = provenance.with_json_provenance(payload, __file__)
-    with out_path.open("w", encoding="utf-8") as f_out:
+    with out_path.open("w", encoding="utf-8", newline="\n") as f_out:
         # Dedented (indent=0): drop the indentation to keep the committed
         # corpus small, but keep newlines (one element per line) so git diffs
         # stay per-line rather than collapsing to one giant line.

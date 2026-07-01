@@ -83,6 +83,6 @@ def write_ungrammatical(
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as f_out:
+    with path.open("w", encoding="utf-8", newline="\n") as f_out:
         json.dump(payload, f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")

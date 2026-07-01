@@ -388,6 +388,6 @@ def run(args: argparse.Namespace) -> None:
     report = render_report(per_checker)
     report_path: Path = args.report
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(report, encoding="utf-8")
+    report_path.write_text(report, encoding="utf-8", newline="\n")
     n = sum(len(scores) for _, _, scores in per_checker)
     print(f"Grammaticality: scored {n} treed verses (prose+poetic) -> {report_path}")

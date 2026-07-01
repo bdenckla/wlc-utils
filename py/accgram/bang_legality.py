@@ -240,7 +240,7 @@ def run(args: argparse.Namespace) -> None:
     report = render_report(verdicts)
     report_path: Path = args.report
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(report, encoding="utf-8")
+    report_path.write_text(report, encoding="utf-8", newline="\n")
     fully = sum(1 for v in verdicts if v.category == "fully legal")
     print(
         f"Bang-pair legality: {len(verdicts)} occurrence(s), {fully} fully legal "

@@ -786,7 +786,7 @@ def run(args: argparse.Namespace) -> None:
     payload = build_payload(ungrammatical, __file__)
     ungrammatical_out: Path = args.ungrammatical_out
     ungrammatical_out.parent.mkdir(parents=True, exist_ok=True)
-    with ungrammatical_out.open("w", encoding="utf-8") as f_out:
+    with ungrammatical_out.open("w", encoding="utf-8", newline="\n") as f_out:
         json.dump(payload, f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")
 

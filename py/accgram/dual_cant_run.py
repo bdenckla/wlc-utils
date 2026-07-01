@@ -75,7 +75,7 @@ def run(args: argparse.Namespace) -> None:
 
     out_path: Path = args.out
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    with out_path.open("w", encoding="utf-8") as f_out:
+    with out_path.open("w", encoding="utf-8", newline="\n") as f_out:
         json.dump(payload, f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")
 
