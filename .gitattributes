@@ -1,16 +1,10 @@
-# Line-ending policy (see issue #14):
+# Line-ending policy (see issue #50, supersedes #14):
 #   - Git storage: LF for all text files.
-#   - Workdir: CRLF, produced by automatic conversion on checkout.
+#   - Workdir: LF everywhere, regardless of each clone's core.autocrlf/core.eol.
 # Pinned here so the policy holds regardless of each clone's core.autocrlf/core.eol.
 
-# text=auto keeps git's text/binary auto-detection; eol=crlf forces CRLF in the workdir.
-* text=auto eol=crlf
-
-# Vendored verbatim (byte-for-byte) from the UXLC-utils sibling repo, which
-# stores LF. Pin LF in the workdir too (not just storage) so the vendoring copy
-# does not perpetually show as modified against the global eol=crlf policy.
-in/UXLC-39/**     text eol=lf
-in/UXLC-misc/**   text eol=lf
+# text=auto keeps git's text/binary auto-detection; eol=lf forces LF in the workdir.
+* text=auto eol=lf
 
 # Binary assets: never convert.
 *.png  binary
