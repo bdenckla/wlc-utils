@@ -51,6 +51,16 @@ Run repository tests from the repo root with:
 .venv\Scripts\python.exe -m pytest py/tests
 ```
 
+Routine repo hygiene -- wipe the gitignored `.novc/` scratch dir, run the
+pytest suite, then run `py\main_0_mega.py` -- is bundled in one script:
+
+```powershell
+.venv\Scripts\python.exe py\main_repo_maintenance.py
+```
+
+`--skip-novc`, `--skip-tests`, `--skip-rebuild`, and `--continue-on-test-failure`
+narrow it; see the script's module docstring for details.
+
 ## GitHub Pages
 
 The static site content for this repository lives under `gh-pages/` and is deployed by the GitHub Actions workflow in `.github/workflows/pages.yml`.
