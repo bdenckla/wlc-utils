@@ -119,6 +119,7 @@ class SuppliedMark:
     accent_name: str
     reason: str
     source: str = "mam"  # "mam" (MAM only) or "lc" (the LC gives non-definitive support)
+    aside: str = ""  # optional follow-on paragraph, e.g. an under-bar dual-purpose note
 
 
 @dataclass(frozen=True)
@@ -544,6 +545,15 @@ def _assign_word(
                 )
             )
         else:
+            reason, aside = _supply_reason(
+                wlc_word,
+                have,
+                other_label,
+                strand_label,
+                _accent_spelling(accent),
+                mam_word,
+                ceded=ceded,
+            )
             supplies.append(
                 SuppliedMark(
                     bcv=bcv,
@@ -553,15 +563,8 @@ def _assign_word(
                     wlc_word=wlc_word,
                     accent=accent,
                     accent_name=_accent_spelling(accent),
-                    reason=_supply_reason(
-                        wlc_word,
-                        have,
-                        other_label,
-                        strand_label,
-                        _accent_spelling(accent),
-                        mam_word,
-                        ceded=ceded,
-                    ),
+                    reason=reason,
+                    aside=aside,
                     source="lc" if ceded else "mam",
                 )
             )
@@ -647,6 +650,21 @@ def display_real_marks(strand_word: str, wlc_word: str) -> str:
     )
 
 
+def _under_bar_note(x: str, y: str, other_label: str, this_label: str) -> str:
+    """Follow-on aside paragraph for the two supplies whose WLC mark is itself one of the
+    identity-ambiguous under-bar family (meteg / tipexa / tarxa / merkha / yored / silluq --
+    design doc §2, UXLC-utils repo): since both strands' relevant accent here is an
+    under-bar mark, not a distinctly-shaped one, a single stroke could plausibly serve
+    both readings at once, rather than belonging to only the {other_label} strand."""
+    return (
+        f"(Aside: though WLC’s transcription of the LC’s vertical under-bar as {x} is"
+        f" reasonable, since the {other_label} and {this_label} both have under-bar marks,"
+        f" it would also be reasonable to transcribe the LC’s vertical under-bar as {y}."
+        f" Indeed, perhaps the naqdan (pointing-scribe) of the LC intended a single"
+        f" under-bar to serve both purposes!)"
+    )
+
+
 def _supply_reason(
     wlc_word: str,
     wlc_have: set[str],
@@ -656,37 +674,52 @@ def _supply_reason(
     mam_word: str,
     *,
     ceded: tuple[str, ...] = (),
-) -> str:
+) -> tuple[str, str]:
     """One self-contained sentence per supply: WLC's strand word shown inline where it is
     described, then the accent supplied from MAM (or its non-definitive LC support) shown at
-    the supply.  The Hebrew runs are wrapped in ``lang="hbo"`` spans by the page renderer."""
+    the supply.  The Hebrew runs are wrapped in ``lang="hbo"`` spans by the page renderer.
+
+    Returns ``(reason, aside)`` -- ``aside`` is a separate follow-on paragraph
+    (``_under_bar_note``), "" unless WLC's own mark here is itself one of the
+    identity-ambiguous under-bar family."""
     wlc = display_form(wlc_word)
     mam = display_real_marks(mam_word, wlc_word)
     if ceded:
         names = ", ".join(_accent_spelling(a) for a in ceded)
         return (
-            f"WLC has only a mis-transcription of the {other_label} strand here: {wlc}"
+            f"WLC has only a mis-transcription of the LC’s {other_label} strand here: {wlc}"
             f" ({names} + maqaf), so the detangler supplies the"
             f" {this_label}’s {accent_spelling} from MAM: {mam}. Unlike other supplied"
             f" accents, there is support from the LC for this {accent_spelling}, although"
-            f" the LC is in poor shape here, so the support is not unequivocal."
+            f" the LC is in poor shape here, so the support is not unequivocal.",
+            "",
         )
     if _SOF_PASUQ in wlc_word:
-        return (
-            f"WLC has only the {other_label} strand here: {wlc} (silluq + sof pasuq), so the"
+        reason = (
+            f"WLC has a reasonable transcription of the LC here, having only the"
+            f" {other_label} strand: {wlc} (silluq + sof pasuq), so the"
             f" detangler supplies the {this_label}’s {accent_spelling} from MAM: {mam}."
         )
+        return reason, _under_bar_note("silluq", accent_spelling, other_label, this_label)
     if not wlc_have:
         form = "meteg + maqaf" if _METEG in wlc_word else "maqaf"
-        return (
-            f"WLC has only the {other_label} strand here: {wlc} ({form}, with no accent of its"
+        reason = (
+            f"WLC has a reasonable transcription of the LC here, having only the"
+            f" {other_label} strand: {wlc} ({form}, with no accent of its"
             f" own), so the detangler supplies the {this_label}’s {accent_spelling} from MAM:"
             f" {mam}."
         )
+        aside = (
+            _under_bar_note("meteg", accent_spelling, other_label, this_label)
+            if _METEG in wlc_word else ""
+        )
+        return reason, aside
     others = ", ".join(_accent_spelling(a) for a in sorted(wlc_have, key=ord))
     return (
-        f"WLC has only the {other_label} strand here: {wlc} ({others}), so the detangler"
-        f" supplies the {this_label}’s {accent_spelling} from MAM: {mam}."
+        f"WLC has a reasonable transcription of the LC here, having only the"
+        f" {other_label} strand: {wlc} ({others}), so the detangler"
+        f" supplies the {this_label}’s {accent_spelling} from MAM: {mam}.",
+        "",
     )
 
 

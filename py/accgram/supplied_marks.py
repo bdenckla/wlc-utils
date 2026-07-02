@@ -226,7 +226,8 @@ def _supplied_case(s) -> tuple[object, ...]:
         {"class": "goerwitz-tms-reading-label"},
     )
     reason = _comment(wrap_hebrew_runs(_translit(s.reason)))
-    return (header, reason, *_case_extra(s), _image_block(img_file, kind))
+    aside = (_comment(wrap_hebrew_runs(_translit(s.aside))),) if s.aside else ()
+    return (header, reason, *aside, *_case_extra(s), _image_block(img_file, kind))
 
 
 def _supplied_section(supplies: list) -> tuple[object, ...]:

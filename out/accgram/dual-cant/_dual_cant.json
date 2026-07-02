@@ -4083,8 +4083,9 @@
           "wlc_word": "יִהְיֶֽה־",
           "accent": "֥",
           "accent_name": "merkha",
-          "reason": "WLC has only the elyon strand here: יהיֽה־ (meteg + maqaf, with no accent of its own), so the detangler supplies the taxton’s merkha from MAM: יהי֥ה.",
-          "source": "mam"
+          "reason": "WLC has a reasonable transcription of the LC here, having only the elyon strand: יהיֽה־ (meteg + maqaf, with no accent of its own), so the detangler supplies the taxton’s merkha from MAM: יהי֥ה.",
+          "source": "mam",
+          "aside": "(Aside: though WLC’s transcription of the LC’s vertical under-bar as meteg is reasonable, since the elyon and taxton both have under-bar marks, it would also be reasonable to transcribe the LC’s vertical under-bar as merkha. Indeed, perhaps the naqdan (pointing-scribe) of the LC intended a single under-bar to serve both purposes!)"
         }
       ],
       "anomalies": [],
@@ -8299,8 +8300,9 @@
           "wlc_word": "תַעֲשֶׂ֥ה־",
           "accent": "֨",
           "accent_name": "qadma",
-          "reason": "WLC has only a mis-transcription of the elyon strand here: תעש֥ה־ (merkha + maqaf), so the detangler supplies the taxton’s qadma from MAM: תעש֨ה. Unlike other supplied accents, there is support from the LC for this qadma, although the LC is in poor shape here, so the support is not unequivocal.",
-          "source": "lc"
+          "reason": "WLC has only a mis-transcription of the LC’s elyon strand here: תעש֥ה־ (merkha + maqaf), so the detangler supplies the taxton’s qadma from MAM: תעש֨ה. Unlike other supplied accents, there is support from the LC for this qadma, although the LC is in poor shape here, so the support is not unequivocal.",
+          "source": "lc",
+          "aside": ""
         },
         {
           "bcv": "dt5:17",
@@ -8310,8 +8312,9 @@
           "wlc_word": "תִּרְצָֽח׃",
           "accent": "֖",
           "accent_name": "tipexa",
-          "reason": "WLC has only the elyon strand here: תרצֽח׃ (silluq + sof pasuq), so the detangler supplies the taxton’s tipexa from MAM: תרצ֖ח.",
-          "source": "mam"
+          "reason": "WLC has a reasonable transcription of the LC here, having only the elyon strand: תרצֽח׃ (silluq + sof pasuq), so the detangler supplies the taxton’s tipexa from MAM: תרצ֖ח.",
+          "source": "mam",
+          "aside": "(Aside: though WLC’s transcription of the LC’s vertical under-bar as silluq is reasonable, since the elyon and taxton both have under-bar marks, it would also be reasonable to transcribe the LC’s vertical under-bar as tipexa. Indeed, perhaps the naqdan (pointing-scribe) of the LC intended a single under-bar to serve both purposes!)"
         },
         {
           "bcv": "dt5:6",
@@ -8321,8 +8324,9 @@
           "wlc_word": "אָֽנֹכִי֙",
           "accent": "֖",
           "accent_name": "tipexa",
-          "reason": "WLC has only the taxton strand here: אנכי֙ (pashta), so the detangler supplies the elyon’s tipexa from MAM: אנכ֖י.",
-          "source": "mam"
+          "reason": "WLC has a reasonable transcription of the LC here, having only the taxton strand: אנכי֙ (pashta), so the detangler supplies the elyon’s tipexa from MAM: אנכ֖י.",
+          "source": "mam",
+          "aside": ""
         },
         {
           "bcv": "dt5:6",
@@ -8332,8 +8336,9 @@
           "wlc_word": "אֱלֹהֶ֔יךָ",
           "accent": "֑",
           "accent_name": "atnax",
-          "reason": "WLC has only the taxton strand here: אלה֔יך (zaqef qatan), so the detangler supplies the elyon’s atnax from MAM: אלה֑יך.",
-          "source": "mam"
+          "reason": "WLC has a reasonable transcription of the LC here, having only the taxton strand: אלה֔יך (zaqef qatan), so the detangler supplies the elyon’s atnax from MAM: אלה֑יך.",
+          "source": "mam",
+          "aside": ""
         }
       ],
       "anomalies": [
