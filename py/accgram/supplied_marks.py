@@ -202,20 +202,34 @@ def _image_block(img_file: str, kind: str) -> object:
     return H.figure((para, caption), {"class": "goerwitz-tms-figure"})
 
 
+_DUAL_UNDER_BARS_PAGE = "dual-under-bars-in-leningrad-decalogues.html"
+_DUAL_UNDER_BARS_CASES = {("ex20:3", "alef", am.MERKHA), ("dt5:17", "alef", am.TIPEXA)}
+
+
 def _case_extra(s) -> tuple[object, ...]:
-    """Extra prose for Deuteronomy 5:8."""
+    """Extra prose for Deuteronomy 5:8 and the two under-bar Aside cases."""
     key = (s.bcv, s.strand, s.accent)
+    extra: list[object] = []
     if key == ("dt5:8", "alef", am.QADMA):
-        return (
+        extra.append(
             _comment(
                 (
                     f"This word is further discussed",
                     *[" ", link("here", "goerwitz.html#obdt5v8"), ","],
                     " among the ungrammatical verses."
                 )
-            ),
+            )
         )
-    return ()
+    if key in _DUAL_UNDER_BARS_CASES:
+        extra.append(
+            _comment(
+                (
+                    "For evidence bearing on this Aside's speculation, see",
+                    *[" ", link("Dual Under-Bars in the Leningrad Decalogues", _DUAL_UNDER_BARS_PAGE), "."],
+                )
+            )
+        )
+    return tuple(extra)
 
 
 def _supplied_case(s) -> tuple[object, ...]:

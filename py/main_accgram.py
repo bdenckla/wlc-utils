@@ -95,6 +95,7 @@ from pathlib import Path
 
 from accgram import almost_errors
 from accgram import dual_cant_run
+from accgram import dual_under_bars_page
 from accgram import fix_tester
 from accgram import grammaticality
 from accgram import poetic_oddballs
@@ -152,6 +153,7 @@ def _run_generate_html(_args: argparse.Namespace) -> None:
         research_tao,
         almost_errors,
         supplied_marks,
+        dual_under_bars_page,
         telg_doc_notes,
         ps17v14_doc_notes,
         ps17v14_double_tsinnor,
