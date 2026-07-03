@@ -37,18 +37,20 @@ _IMAGES: tuple[tuple[str, str, str], ...] = (
     (
         "LC-043A-Exod-20v13-lo.png",
         "Exodus 20:13 לא",
-        "Two under-bar marks (merkha, tipeḥa) stacked near the ל.",
+        "Merkha and  tipeḥa under the ל.",
     ),
     (
         "LC-043A-Exod-20v13-tirtsach.png",
         "Exodus 20:13 תרצח",
-        "Two under-bar marks (tipeḥa, meteg/silluq) stacked near the צ --"
-        " the direct twin of Deuteronomy 5:17's own תרצח, below.",
+        "Tipeḥa and silluq under the צ --"
+        " the twin of Deuteronomy 5:17's own תרצח."
+        " The tipeḥa's angle here is weirdly close to horizontal,"
+        " probably because of the lack of vertical space.",
     ),
     (
         "LC-102B-Deut-5v17-lo.png",
         "Deuteronomy 5:17 לא",
-        "Two under-bar marks (merkha, tipeḥa) stacked near the ל, matching Exodus 20:13's own לא above.",
+        "Merkha and  tipeḥa under the ל, matching Exodus 20:13's own לא above.",
     ),
 )
 

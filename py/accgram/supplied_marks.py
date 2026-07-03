@@ -207,7 +207,7 @@ _DUAL_UNDER_BARS_CASES = {("ex20:3", "alef", am.MERKHA), ("dt5:17", "alef", am.T
 
 
 def _case_extra(s) -> tuple[object, ...]:
-    """Extra prose for Deuteronomy 5:8 and the two under-bar Aside cases."""
+    """Extra prose for Deuteronomy 5:8's ungrammatical-verse cross-reference."""
     key = (s.bcv, s.strand, s.accent)
     extra: list[object] = []
     if key == ("dt5:8", "alef", am.QADMA):
@@ -220,16 +220,22 @@ def _case_extra(s) -> tuple[object, ...]:
                 )
             )
         )
-    if key in _DUAL_UNDER_BARS_CASES:
-        extra.append(
-            _comment(
-                (
-                    "For evidence bearing on this Aside's speculation, see",
-                    *[" ", link("Dual Under-Bars in the Leningrad Decalogues", _DUAL_UNDER_BARS_PAGE), "."],
-                )
-            )
-        )
     return tuple(extra)
+
+
+def _aside_paragraph(s) -> object:
+    """The under-bar Aside paragraph for the two cases (dt5:17, ex20:3) whose WLC mark is
+    itself part of the identity-ambiguous under-bar family: ``dual_cant_detangle``'s
+    ``_under_bar_note`` leaves the sentence open, and this closes it with a link to the
+    "Dual Under-Bars" evidence page."""
+    assert (s.bcv, s.strand, s.accent) in _DUAL_UNDER_BARS_CASES
+    pieces = list(wrap_hebrew_runs(_translit(s.aside)))
+    pieces += [
+        " ",
+        link("Dual Under-Bars in the Leningrad Decalogues", _DUAL_UNDER_BARS_PAGE),
+        ".)",
+    ]
+    return _comment(tuple(pieces))
 
 
 def _supplied_case(s) -> tuple[object, ...]:
@@ -240,8 +246,8 @@ def _supplied_case(s) -> tuple[object, ...]:
         {"class": "goerwitz-tms-reading-label"},
     )
     reason = _comment(wrap_hebrew_runs(_translit(s.reason)))
-    aside = (_comment(wrap_hebrew_runs(_translit(s.aside))),) if s.aside else ()
-    return (header, reason, *aside, *_case_extra(s), _image_block(img_file, kind))
+    aside = (_aside_paragraph(s),) if s.aside else ()
+    return (header, _image_block(img_file, kind), reason, *aside, *_case_extra(s))
 
 
 def _supplied_section(supplies: list) -> tuple[object, ...]:

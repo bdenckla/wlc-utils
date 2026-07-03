@@ -655,13 +655,16 @@ def _under_bar_note(x: str, y: str, other_label: str, this_label: str) -> str:
     identity-ambiguous under-bar family (meteg / tipexa / tarxa / merkha / yored / silluq --
     design doc §2, UXLC-utils repo): since both strands' relevant accent here is an
     under-bar mark, not a distinctly-shaped one, a single stroke could plausibly serve
-    both readings at once, rather than belonging to only the {other_label} strand."""
+    both readings at once, rather than belonging to only the {other_label} strand.
+
+    Left open (no closing paren): ``supplied_marks.py`` always completes the sentence with
+    a link to the "Dual Under-Bars" evidence page before closing the parenthetical."""
     return (
-        f"(Aside: though WLC’s transcription of the LC’s vertical under-bar as {x} is"
-        f" reasonable, since the {other_label} and {this_label} both have under-bar marks,"
-        f" it would also be reasonable to transcribe the LC’s vertical under-bar as {y}."
-        f" Indeed, perhaps the naqdan (pointing-scribe) of the LC intended a single"
-        f" under-bar to serve both purposes!)"
+        f"(Aside: though WLC’s transcription of the LC’s vertical under-bar as the"
+        f" {other_label}’s {x} is reasonable, it would also be reasonable to transcribe it"
+        f" as the {this_label}’s {y}. Indeed, perhaps the naqdan (pointing-scribe) of the LC"
+        f" intended a single under-bar to serve both purposes! Then again, we do have"
+        f" examples of the naqdan explicitly writing two under-bar marks: see"
     )
 
 
