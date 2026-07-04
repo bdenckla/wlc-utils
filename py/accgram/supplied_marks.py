@@ -238,12 +238,23 @@ def _aside_paragraph(s) -> object:
     return _comment(tuple(pieces))
 
 
+def _anchor_id(s) -> str:
+    """A stable ASCII fragment id for this supplied-accent block, so other pages can
+    deep-link straight to one case -- notably UXLC-utils's CLC long-notes, whose
+    grammar-checker-corroborated notes point here.  Keyed by the same (bcv, strand, accent)
+    triple as ``_CASE_IMAGE``, so it is unique per block even when a verse has two supplies
+    (Deuteronomy 5:6 supplies both a tipeḥa and an atnaḥ).  The bcv's colon becomes ``v``
+    (``dt5:6`` -> ``dt5v6``); the accent keeps the repo's ASCII het-as-X spelling
+    (``tipexa``, ``atnax``), so the whole id stays plain ASCII."""
+    return f"supplied-{s.bcv.replace(':', 'v')}-{s.strand}-{s.accent_name}"
+
+
 def _supplied_case(s) -> tuple[object, ...]:
     img_file, kind = _CASE_IMAGE[(s.bcv, s.strand, s.accent)]
     header = H.para(
         f"{ref_display(s.bcv)}: the detangler supplies the {_translit(s.strand_label)}’s"
         f" {_translit(s.accent_name)}",
-        {"class": "goerwitz-tms-reading-label"},
+        {"class": "goerwitz-tms-reading-label", "id": _anchor_id(s)},
     )
     reason = _comment(wrap_hebrew_runs(_translit(s.reason)))
     aside = (_aside_paragraph(s),) if s.aside else ()

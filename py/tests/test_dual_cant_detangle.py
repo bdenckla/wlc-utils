@@ -200,6 +200,17 @@ def test_supplied_marks_page_renders_all_five_cases_and_punctuation_inventory() 
     # Each of the five supplied accents is its own case, with a heading and an image.
     assert html.count("goerwitz-tms-reading-label") == len(supplies) == 5
     assert html.count("<img") == 5
+    # Each case's heading carries a stable anchor id (supplied_marks._anchor_id) that
+    # UXLC-utils's CLC long-notes deep-links to -- keep these in sync with that repo's
+    # clc_render._SUPPLIED_MARKS_ANCHOR if the id scheme ever changes.
+    for anchor in (
+        'id="supplied-ex20v3-alef-merkha"',
+        'id="supplied-dt5v6-bet-tipexa"',
+        'id="supplied-dt5v6-bet-atnax"',
+        'id="supplied-dt5v8-alef-qadma"',
+        'id="supplied-dt5v17-alef-tipexa"',
+    ):
+        assert anchor in html, anchor
     # The lone punctuation-change table: a header row + one row per supply/suppress change.
     assert html.count("<tr") == 1 + len(punctuation_changes)
 
