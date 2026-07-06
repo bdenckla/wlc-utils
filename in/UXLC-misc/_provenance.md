@@ -7,6 +7,6 @@ These files were copied from a sibling source repository at:
 Files copied:
   all_changes.json
 
-Git commit: 419ebef853a184efac181ca29b4ba45b5f2e4fc5
+Git commit: 52de493f4709ac1da5302b57310130858ca821f7
 
-Date copied: 2026-07-01
+Date copied: 2026-07-06

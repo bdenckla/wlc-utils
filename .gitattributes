@@ -9,4 +9,5 @@
 # Binary assets: never convert.
 *.png  binary
 *.jpg  binary
+*.pdf  binary
 *.woff2 binary

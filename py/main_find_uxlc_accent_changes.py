@@ -186,7 +186,8 @@ def main():
                 tag = ' [pending]' if is_pending else ''
                 print(f'    {ref}{tag}: {k[0]}/{k[1]}-{k[2]}')
         return
-    json.dump(result, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+    with open(out, 'w', encoding='utf-8', newline='') as out_fp:
+        json.dump(result, out_fp, ensure_ascii=False, indent=2)
     print(f'Wrote {len(result)} accent-change records to {out}')
 
 
