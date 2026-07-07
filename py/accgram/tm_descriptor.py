@@ -8,7 +8,10 @@ from mb_cmn import hebrew_punctuation as hpunc
 _HEBREW_LETTER_START = ord("\u05d0")
 _HEBREW_LETTER_END = ord("\u05ea")
 _HEBREW_ACCENT_START = ord("\u0591")
-_HEBREW_ACCENT_END = ord("\u05af")
+# Accents end at U+05AE: U+05AF (MASORA CIRCLE) is an editorial mark, not an
+# accent, so it is excluded. Matches mb_cmn.hebrew_accents.ACCENTS_AND_MTG and
+# the mb_cmn.hebrew_accent_strip kernel.
+_HEBREW_ACCENT_END = ord("\u05ae")
 
 _SIMPLE_ACCENT_DESCRIPTORS = tm_mark_descriptor.SIMPLE_ACCENT_DESCRIPTORS
 

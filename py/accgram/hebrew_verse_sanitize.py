@@ -1,13 +1,11 @@
 from __future__ import annotations
 
+from mb_cmn import hebrew_accent_strip as has
 from mb_cmn import hebrew_accents as ha
-from mb_cmn import hebrew_points as hp
 from mb_cmn import hebrew_punctuation as hpunc
 
 _HEBREW_LETTER_START = ord("\u05d0")
 _HEBREW_LETTER_END = ord("\u05ea")
-_HEBREW_ACCENT_START = ord("\u0591")
-_HEBREW_ACCENT_END = ord("\u05af")
 
 # MAM marks word stress by duplicating a word's disjunctive accent onto the
 # stressed syllable.  The canonical accent sits at one edge of the word and the
@@ -102,22 +100,17 @@ def _sanitize_hebrew_token(
     keep_all_meteg: bool,
     remove_mam_stress_helper_duplicates: bool,
 ) -> str:
-    last_meteg_idx = text.rfind(hp.MTGOSLQ) if keep_last_meteg else -1
-    out_chars: list[str] = []
-    for idx, ch in enumerate(text):
-        codepoint = ord(ch)
-        if _HEBREW_LETTER_START <= codepoint <= _HEBREW_LETTER_END:
-            out_chars.append(ch)
-            continue
-        if _HEBREW_ACCENT_START <= codepoint <= _HEBREW_ACCENT_END:
-            out_chars.append(ch)
-            continue
-        if ch in {hpunc.MAQ, hpunc.PASOLEG, hpunc.SOPA}:
-            out_chars.append(ch)
-            continue
-        if ch == hp.MTGOSLQ and (keep_all_meteg or idx == last_meteg_idx):
-            out_chars.append(ch)
-    sanitized = "".join(out_chars)
+    # Delegate the generic "strip to consonants + accents + accent-coupled
+    # punctuation" kernel to the vendored mb_cmn.hebrew_accent_strip; our two
+    # booleans map onto its three-valued meteg policy.  The MAM stress-helper
+    # dedup below is WLC-specific and stays local.
+    if keep_all_meteg:
+        keep_meteg = has.METEG_ALL
+    elif keep_last_meteg:
+        keep_meteg = has.METEG_SILLUQ
+    else:
+        keep_meteg = has.METEG_DROP
+    sanitized = has.strip_to_accents(text, keep_meteg=keep_meteg)
     if remove_mam_stress_helper_duplicates:
         sanitized = _drop_mam_stress_helper_duplicates(sanitized)
     return sanitized

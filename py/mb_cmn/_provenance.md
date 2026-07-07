@@ -8,6 +8,7 @@ Files copied:
   bib_locales.py
   cantsys.py
   file_io.py
+  hebrew_accent_strip.py
   hebrew_accents.py
   hebrew_letters.py
   hebrew_points.py
