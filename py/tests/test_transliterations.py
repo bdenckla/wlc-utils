@@ -62,6 +62,13 @@ _DENYLIST: list[tuple[re.Pattern[str], str, str]] = [
     (re.compile(r"\b[dD]ehi"), "deḥi (U+1E25)", "dehi"),
     (re.compile(r"\b[yY]erah"), "yeraḥ (U+1E25)", "yerah"),
     (re.compile(r"\b[tT]ipeha"), "tipeḥa (U+1E25)", "tipeha"),
+    # "kh"-for-xet forms (Wengrov/Breuer-style): xet takes x, never kh (kh is kaf only).
+    (re.compile(r"\b[tT]arkha\b"), "tarxa / TARXA", "tarkha"),
+    (re.compile(r"\b[mM]unakh\b"), "munaḥ / MUNAX", "munakh"),
+    (re.compile(r"\b[aA]tnakh\b"), "atnaḥ / ATNAX", "atnakh"),
+    (re.compile(r"\b[tT]ipekha\b"), "tipeḥa / TIPEXA", "tipekha"),
+    (re.compile(r"\b[dD]ekhi\b"), "deḥi / DEXI", "dekhi"),
+    (re.compile(r"\b[yY]erakh\b"), "yeraḥ / YERAX", "yerakh"),
     (re.compile(r"\b[mM]unaH\b"), "munaḥ (U+1E25)", "munaH"),
     (re.compile(r"\b[tT]ipeHa\b"), "tipeḥa (U+1E25)", "tipeHa"),
     (re.compile(r"\bmehuppak\b"), "mahapakh", "mehuppak"),

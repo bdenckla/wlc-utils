@@ -244,7 +244,7 @@ def p_oleh_weyored_phrase(p):
 # REFUTED at the token level: the seven L outliers are MAHAPAKH (Ps 14:3, 53:4, Prov
 # 6:3, 24:29) and ILLUY (Prov 1:9, 6:27) -- all MAM-confirmed two-witness constructions
 # -- plus the one genuine servant-type conflict Prov 3:4 (L TARXA -> MAM MERKHA), where
-# L alone uses an out-of-set tarkha (a sign-choice illegality, not rule material).  A
+# L alone uses an out-of-set tarxa (a sign-choice illegality, not rule material).  A
 # MERKHA|MUNAX-only constraint would flag six correct verses, so it is not encoded.  See issue #18.
 def p_atnax_phrase(p):
     """atnax_phrase : ATNAX
@@ -732,7 +732,7 @@ def p_legarmeh_clause(p):
 # --- shalshelet gedolah clause (#371) ------------------------------------------
 # A disjunctive in the second half before silluq (revia mugrash rank); distinct from the
 # conjunctive shalshelet qetannah.  Its servant is merkha: Breuer Ch 11 §30 (merkha, with a
-# tarkha before it), confirmed by servi_xcheck (2026-06-17) -- all 3 poetic occurrences
+# tarxa before it), confirmed by servi_xcheck (2026-06-17) -- all 3 poetic occurrences
 # carry a merkha servant in both L and MAM (uniform, zero conflicts), like small revia'.
 # (This corrects an earlier "as a rule it has no servi" note, which holds for the prose
 # shalshelet gedolah but not the poetic one.)  Left permissive; a merkha constraint would
