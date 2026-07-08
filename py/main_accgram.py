@@ -104,6 +104,8 @@ from accgram import ps17v14_doc_notes
 from accgram import research_tao
 from accgram import prose_run
 from accgram import poetic_run
+from accgram import printed_decalogue
+from accgram import printed_decalogue_page
 from accgram import supplied_marks
 from accgram import servi_xcheck
 from accgram import telg_doc_notes
@@ -127,6 +129,10 @@ def _run_run_poetic(args: argparse.Namespace) -> None:
 
 def _run_run_dual_cant(args: argparse.Namespace) -> None:
     dual_cant_run.run(args)
+
+
+def _run_run_printed_decalogue(args: argparse.Namespace) -> None:
+    printed_decalogue.run(args)
 
 
 def _run_xcheck_poetic(args: argparse.Namespace) -> None:
@@ -153,6 +159,7 @@ def _run_generate_html(_args: argparse.Namespace) -> None:
         research_tao,
         almost_errors,
         supplied_marks,
+        printed_decalogue_page,
         dual_under_bars_page,
         telg_doc_notes,
         ps17v14_doc_notes,
@@ -206,6 +213,18 @@ def main() -> None:
     )
     dual_cant_run.add_args(run_dual_cant_parser, repo_root=_repo_root())
     run_dual_cant_parser.set_defaults(func=_run_run_dual_cant)
+
+    run_printed_decalogue_parser = subparsers.add_parser(
+        "run-printed-decalogue",
+        help=(
+            "Grammar-check the printed-tradition (דפוסים) Decalogue accentuations "
+            "against the manuscript baseline -- both books, taxton and elyon -- and write "
+            "out/accgram/printed-decalogue/_printed_decalogue.json (issue #52). Reads the "
+            "vendored in/accgram/printed_decalogue_teamim.json."
+        ),
+    )
+    printed_decalogue.add_args(run_printed_decalogue_parser, repo_root=_repo_root())
+    run_printed_decalogue_parser.set_defaults(func=_run_run_printed_decalogue)
 
     xcheck_poetic_parser = subparsers.add_parser(
         "xcheck-poetic",

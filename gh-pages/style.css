@@ -178,6 +178,10 @@ img {
    ps17v14-double-tsinnor.html), generated from their former hand-authored
    bodies.  These reuse the shared shell above; the few classes below preserve
    the lead/lemma/source styling those pages carried inline. */
+/* Printed-Decalogue grammaticality report (printed-decalogue.html): the verdict matrix. */
+table.printed-decalogue-verdict td.clean { color: light-dark(#1a7f37, #4ac26b); }
+table.printed-decalogue-verdict td.ungrammatical { color: light-dark(#b3261e, #ff7b72); font-weight: bold; }
+
 .lemma { font-weight: bold; }
 p.note-lead { color: light-dark(#555, #aaa); }
 .src { font-size: 0.9em; color: light-dark(#555, #aaa); }
