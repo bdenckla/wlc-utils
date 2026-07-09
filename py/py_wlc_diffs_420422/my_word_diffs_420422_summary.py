@@ -17,7 +17,7 @@ def write(records, path, title, intro=None):
     rows = [_row_for_header(), *rows_for_data]
     table_of_records = wlc_utils_html.table(rows)
     body_contents = [*intro, link_to_toa, table_of_records, table_of_abbrev]
-    write_ctx = wlc_utils_html.WriteCtx(title, f"gh-pages/420422/{path}")
+    write_ctx = wlc_utils_html.WriteCtx(title, f"gh-pages/420422/{path}", centered=True)
     wlc_utils_html.write_html_to_file(body_contents, write_ctx, "../")
 
 

@@ -49,7 +49,7 @@ _PASEQ = "\N{HEBREW PUNCTUATION PASEQ}"
 _SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
 
 # The traditional-name and English gloss for each strand (report labels only).
-READING_LABELS: dict[str, str] = {"taxton": "taxton (lower)", "elyon": "elyon (upper)"}
+READING_LABELS: dict[str, str] = {"taxton": "taḥton (lower)", "elyon": "elyon (upper)"}
 TRADITION_LABELS: dict[str, str] = {"manuscript": "Tiberian manuscript", "printed": "printed editions"}
 BOOK_LABELS: dict[str, str] = {"ex": "Exodus 20", "dt": "Deuteronomy 5"}
 

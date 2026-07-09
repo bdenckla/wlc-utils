@@ -6,6 +6,23 @@ body {
     color: light-dark(black, white);
     background-color: light-dark(white, black);
 }
+/* Centered page layout (issue #57): center the content column on the page, but let wide
+   tables break out of the text measure and be as wide as they want, still centered. Opt-in
+   via <body class="centered-page"> (WriteCtx.centered) — used by printed-decalogue,
+   wlc-a-notes, and 420422 and their sub-pages. The body content box is centered
+   (margin-inline:auto) at the text measure; a table then puts its left edge at that box's
+   center (margin-left:50%) and translateX(-50%) pulls it back by half its own width, so it
+   re-centers on the page however wide it grows (width:max-content, no cap). */
+body.centered-page {
+    max-width: 40em;
+    margin-inline: auto;
+}
+body.centered-page table {
+    width: max-content;
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
 *[lang="hbo"] {
     font-family: "Taamey D WOFF2";
     font-size: 140%;
@@ -181,6 +198,39 @@ img {
 /* Printed-Decalogue grammaticality report (printed-decalogue.html): the verdict matrix. */
 table.printed-decalogue-verdict td.clean { color: light-dark(#1a7f37, #4ac26b); }
 table.printed-decalogue-verdict td.ungrammatical { color: light-dark(#b3261e, #ff7b72); font-weight: bold; }
+
+/* The merged-verse table (printed-decalogue.html, issue #59): a range-divided, accent-stripped
+   view of the ungrammatical merged first verse, ported from MAM-simple's TEMBte tables. It is
+   transposed (rows = strands + verse numbers; columns = the taḥton verse ranges) and grows as
+   wide as its cells want, re-centered on the page: margin-left:50% + translateX(-50%). */
+table.printed-decalogue-merged {
+    border-collapse: collapse;
+    width: max-content;
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+table.printed-decalogue-merged th,
+table.printed-decalogue-merged td {
+    border: 1px solid light-dark(#ccc, #444);
+    padding: 0.3rem 0.6rem;
+    text-align: start;
+}
+table.printed-decalogue-merged th {
+    text-align: center;
+    background-color: light-dark(#f5f5f5, #242424);
+}
+table.printed-decalogue-merged th abbr[title] { text-decoration: underline dotted; cursor: help; }
+/* Neutralize the shared odd-row zebra-striping (see tr:nth-of-type(odd) td above) so it does
+   not tint the range-label cells; the gradient cells re-assert their own fill below. */
+table.printed-decalogue-merged tr td { background-color: transparent; }
+table.printed-decalogue-merged .vc-start { color: light-dark(#0a7a0a, #57c957); }
+table.printed-decalogue-merged .vc-stop  { color: light-dark(#c11414, #ff7a7a); }
+/* Schematic gradient bars (rtl: green start at right → red stop at left). */
+table.printed-decalogue-merged td.vc-grad {
+    height: 1.2rem;
+    background: linear-gradient(to left, light-dark(#0a7a0a, #1f6b1f), light-dark(#c11414, #8a2020));
+}
 
 .lemma { font-weight: bold; }
 p.note-lead { color: light-dark(#555, #aaa); }

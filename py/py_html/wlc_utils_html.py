@@ -20,6 +20,9 @@ class WriteCtx:
     style: Union[str, None] = None
     add_wbr: bool = False
     html_comment: Union[str, None] = None
+    # When set, the <body> gets class="centered-page": the content column is centered on the
+    # page and wide tables break out of the text measure but stay centered (issue #57).
+    centered: bool = False
 
 
 def write_html_to_file(body_contents, write_ctx: WriteCtx, path_to_style):
@@ -30,7 +33,9 @@ def write_html_to_file(body_contents, write_ctx: WriteCtx, path_to_style):
             * a title
             * an output path
     """
-    html_el = html_el2(write_ctx.title, body_contents, f"{path_to_style}style.css")
+    html_el = html_el2(
+        write_ctx.title, body_contents, f"{path_to_style}style.css", centered=write_ctx.centered
+    )
     file_io.with_tmp_openw(
         write_ctx.path,
         {},
@@ -102,7 +107,7 @@ def add_htel_to_etxml(etxml_parent, htel):
             add_htel_to_etxml(xml_elem, contents_el)
 
 
-def html_el2(title_text, body_contents, flex_css_hrefs):
+def html_el2(title_text, body_contents, flex_css_hrefs, centered=False):
     """Make an <html> element."""
     meta = htel_mk_nlb2_nc("meta", attr={"charset": "utf-8"})
     title = htel_mk("title", flex_contents=(title_text,))
@@ -110,7 +115,8 @@ def html_el2(title_text, body_contents, flex_css_hrefs):
     links_to_css = tuple(map(_link_to_css, strict_css_hrefs))
     head_cont = meta, title, *links_to_css
     _head = htel_mk("head", flex_contents=head_cont)
-    _body = htel_mk("body", flex_contents=body_contents)
+    body_attr = {"class": "centered-page"} if centered else None
+    _body = htel_mk("body", attr=body_attr, flex_contents=body_contents)
     return _html_el1({"lang": "en"}, (_head, _body))
 
 

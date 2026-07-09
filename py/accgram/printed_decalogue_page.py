@@ -17,7 +17,8 @@ from pathlib import Path
 
 from accgram import printed_decalogue as pd
 from accgram import rtms_report
-from accgram.almost_errors_html_shared import hbo, link, wrap_hebrew_runs
+from accgram.almost_errors_html_shared import hbo, link
+from accgram.uni_to_marks import is_accent
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 
@@ -25,13 +26,20 @@ from py_html import wlc_utils_html as H
 
 import repo_paths
 
-REPORT_TITLE = "Are the printed Decalogue cantillations grammatical?"
-_WIDTH_CLASS = "goerwitz-narrow"
+REPORT_TITLE = "In the printed tradition, are the accents of the Decalogue grammatical?"
 
 _ISSUE_36 = "https://github.com/bdenckla/wlc-utils/issues/36"
 _ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
-_GOERWITZ = "goerwitz.html"
 _SOURCE_URL = "https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים"
+
+
+def _heb(text: str) -> object:
+    """Unpointed Hebrew: rendered in the default font, *not* the Taamey pointed-text font.
+
+    Only genuinely pointed Hebrew is wrapped in ``hbo()`` (lang="hbo", which the stylesheet
+    styles with the pointed-text font); bare consonantal terms such as the reading names or
+    section references get this plain-``lang="he"`` span instead (issue #58)."""
+    return H.span(text, {"lang": "he"})
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -58,24 +66,30 @@ def _intro() -> tuple[object, ...]:
             (
                 "The two Decalogues (Exodus 20 and Deuteronomy 5) are each chanted two ways: "
                 "the ",
-                hbo("טעם תחתון"),
-                " (taxton, “lower”) division into ordinary-length verses, and the ",
-                hbo("טעם עליון"),
+                _heb("טעם תחתון"),
+                " (taḥton, “lower”) division into ordinary-length verses, and the ",
+                _heb("טעם עליון"),
                 " (elyon, “upper”) division by commandment, which makes the short "
-                "prohibitions (murder, adultery, theft) their own tiny verses and folds long "
+                "prohibitions (",
+                _heb("לא תרצח"),
+                ", ",
+                _heb("לא תנאף"),
+                ", ",
+                _heb("לא תגנב"),
+                ") their own tiny verses and folds long "
                 "passages into single long ones. ",
                 link("Issue #36", _ISSUE_36),
                 " grammar-checked the ",
                 H.bold("Tiberian-manuscript"),
-                " (WLC / MAM) taxton and elyon threads by detangling WLC’s dual "
+                " (WLC / MAM) taḥton and elyon threads by detangling WLC’s dual "
                 "cantillation. This page (",
                 link("issue #52", _ISSUE_52),
                 ") asks the companion question for the ",
                 H.bold("printed editions"),
                 " (",
-                hbo("דפוסים"),
+                _heb("דפוסים"),
                 ", also Koren and Simanim): fed through the very same prose grammar checker, "
-                "are their taxton and elyon accentuations grammatical too?",
+                "are their taḥton and elyon accentuations grammatical too?",
             )
         ),
         H.para(
@@ -128,16 +142,18 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
         _verdict_table(by_key),
         H.para(
             (
-                H.bold("taxton"),
+                H.bold("taḥton"),
                 " is grammatical everywhere — both books, both traditions. The printed "
-                "taxton differs from the manuscript only in details that do not touch the "
+                "taḥton differs from the manuscript only in details that do not touch the "
                 "accent grammar (vocalization such as ",
                 hbo("תִּרְצַח"),
                 " vs ",
                 hbo("תִּרְצָח"),
-                " at “you shall not murder,” and where a maqaf or ga‘ya falls), and "
-                "in one verse boundary: the printed taxton ends its first verse at ",
-                hbo("מבית עבדים"),
+                " at ",
+                _heb("לא תרצח"),
+                ", and where a maqaf or ga‘ya falls), and "
+                "in one verse boundary: the printed taḥton ends its first verse at ",
+                _heb("מבית עבדים"),
                 " (so it has one more verse than the manuscript, which runs the first two "
                 "commandments together). Both parse clean.",
             )
@@ -155,17 +171,76 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
     )
 
 
-def _accent_backbone(cv: pd.ChantedVerseResult) -> str:
-    """The disjunctive backbone of a chanted verse: its accent tokens, lower-cased, with the
-    non-accent framing tokens dropped."""
-    skip = {"TILDE", "SOFPASUQ", "MISSING_SOFPASUQ"}
-    return " · ".join(t.lower() for t in cv.tokens if t not in skip)
+# --------------------------------------------------------------------------- #
+# The merged-verse table (issue #59)
+# --------------------------------------------------------------------------- #
+# A range-divided, accent-stripped view of the one ungrammatical printed-elyon verse. The
+# printed tradition merges the first two commandments into a single chanted verse, which the
+# printed taxton instead keeps as five ordinary verses. Modeled on MAM-simple's
+# versification-and-cantillation "TEMBte" tables, but: no M/B verse-number rows, the *printed*
+# strands rather than the manuscript ones, and the cantillation accents stripped — this table
+# is about the range division, not the accents. (The M/B numbering is dropped because the
+# printed taxton splits the first commandment from the second where the MAM taxton merges them
+# into one chanted verse, so a single "MAM verse number" row cannot align 1:1 with the printed
+# columns; issue #59.)
+_ELYON_TITLE = "elyon (upper cantillation strand)"
+_TAXTON_TITLE = "taḥton (lower cantillation strand)"
+_ELYON_GRAD_TITLE = "schematic color gradient for the elyon verse"
+_TAXTON_GRAD_TITLE = "schematic color gradient for the taḥton verse(s)"
+
+
+def _strip_teamim(word: str) -> str:
+    """Pointed text (consonants + vowels) with the cantillation accents removed. Meteg, maqaf,
+    paseq and sof pasuq are not cantillation accents (``uni_to_marks.is_accent``) and stay."""
+    return "".join(ch for ch in word if not is_accent(ch))
+
+
+def _abbr(letter: str, title: str) -> object:
+    return H.htel_mk_inline("abbr", {"title": title}, letter)
+
+
+def _range_cell(words: tuple[str, ...], *, attr=None) -> object:
+    """A ``first … last`` range label (accent-stripped): each range is a complete verse, so its
+    first word is tinted green (start) and its last word red (stop), as the TEMBte tables do."""
+    first = H.span_c(_strip_teamim(words[0]), "vc-start")
+    last = H.span_c(_strip_teamim(words[-1]), "vc-stop")
+    return H.table_datum((first, "…", last), attr)
+
+
+def _taxton_columns(tax: pd.VersionResult, n_words: int) -> list[pd.ChantedVerseResult]:
+    """The leading printed-taḥton chanted verses whose words together make up the merged
+    printed-elyon verse. Aligned by word count: the two strands are the same word sequence,
+    differing only in vocalization/accents."""
+    cols: list[pd.ChantedVerseResult] = []
+    total = 0
+    for cv in tax.chanted_verses:
+        cols.append(cv)
+        total += len(cv.words)
+        if total >= n_words:
+            break
+    return cols
+
+
+def _merged_verse_table(by_key: dict) -> object:
+    merged = by_key[("ex", "elyon", "printed")].ungrammatical[0]
+    cols = _taxton_columns(by_key[("ex", "taxton", "printed")], len(merged.words))
+    n = len(cols)
+
+    def row(letter: str, title: str, cells: tuple[object, ...]) -> object:
+        return H.table_row((H.table_header(_abbr(letter, title)), *cells))
+
+    # E: the printed elyon — one verse spanning all the taxton columns.
+    e_row = row("E", _ELYON_TITLE, (_range_cell(merged.words, attr={"colspan": str(n)}),))
+    # T: the printed taxton — each column a complete ordinary verse.
+    t_row = row("T", _TAXTON_TITLE, tuple(_range_cell(cv.words) for cv in cols))
+    # e / t: the schematic gradient bars — one span for the merged elyon verse, one per taxton.
+    e_grad = row("e", _ELYON_GRAD_TITLE, (H.table_datum("", {"class": "vc-grad", "colspan": str(n)}),))
+    t_grad = row("t", _TAXTON_GRAD_TITLE, tuple(H.table_datum("", {"class": "vc-grad"}) for _ in cols))
+    return H.table((e_row, t_row, e_grad, t_grad), {"class": "printed-decalogue-merged", "dir": "rtl"})
 
 
 def _finding_section(by_key: dict) -> tuple[object, ...]:
-    ex_printed = by_key[("ex", "elyon", "printed")]
     ex_ms = by_key[("ex", "elyon", "manuscript")]
-    offender = ex_printed.ungrammatical[0]
     ms_cmd1, ms_cmd2 = ex_ms.chanted_verses[0], ex_ms.chanted_verses[1]
     return (
         H.heading_level_2("Why the printed elyon fails: the merged first verse"),
@@ -173,20 +248,21 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
             (
                 "In the manuscript elyon, the first commandment ",
                 hbo("אָנֹכִי … עֲבָדִים"),
-                " is its own chanted verse, and “you shall have no other gods …” begins "
-                "the next — two separate verses, ",
+                " is its own chanted verse, and ",
+                _heb("לא יהיה לך אלהים אחרים"),
+                " begins the next — two separate verses, ",
                 H.bold("both of which parse clean"),
                 ". The printed editions instead merge the first two commandments into a single "
                 "verse (nine chanted verses in all, against the manuscript’s ten). That one "
-                "merged verse is what the grammar rejects:",
+                "merged verse is what the grammar rejects. Shown accent-stripped and divided at "
+                "the printed taḥton’s verse boundaries — one elyon verse (E) spanning the five "
+                "ordinary taḥton verses (T) it merges:",
             )
         ),
-        H.blockquote(wrap_hebrew_runs(" ".join(offender.words)), {"lang": "hbo"}),
+        _merged_verse_table(by_key),
         H.para(
             (
-                "Its accent backbone is ",
-                H.code(_accent_backbone(offender)),
-                ". The single etnaḥta falls at ",
+                "The single etnaḥta falls at ",
                 hbo("לְשֹׂנְאָי"),
                 ", leaving an over-long first half that carries a segolta plus three separate "
                 "revia domains (at ",
@@ -211,14 +287,6 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
                 "is exactly what lets them parse.",
             )
         ),
-        H.para(
-            (
-                "The manuscript elyon’s own single ungrammatical verse — Deuteronomy 5:8, a "
-                "WLC-specific accent bug — is unrelated; it is discussed among the ",
-                link("ungrammatical verses", _GOERWITZ),
-                ". Here MAM’s manuscript elyon parses clean throughout.",
-            )
-        ),
     )
 
 
@@ -230,7 +298,7 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
         H.heading_level_2("Source"),
         H.para(
             (
-                "All eight readings (two books × taxton/elyon × manuscript/printed) are "
+                "All eight readings (two books × taḥton/elyon × manuscript/printed) are "
                 "taken from the Wikisource base page ",
                 link("עשרת הדברות בסיס/טעמים", _SOURCE_URL),
                 f" (revision {oldid}, {ts[:10]}), which every printed-vs-manuscript comparison "
@@ -244,14 +312,12 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
 
 def render_body_contents(results: list[pd.VersionResult], source: dict) -> tuple[object, ...]:
     by_key = _by_key(results)
-    sections: list[object] = [
+    return (
         *_intro(),
         *_verdict_section(by_key),
         *_finding_section(by_key),
         *_provenance_section(source),
-    ]
-    wrapper = H.div(tuple(sections), {"class": _WIDTH_CLASS})
-    return (wrapper,)
+    )
 
 
 def run(args: argparse.Namespace) -> None:
@@ -265,6 +331,7 @@ def run(args: argparse.Namespace) -> None:
         write_ctx=H.WriteCtx(
             title=REPORT_TITLE,
             path=str(html_out),
+            centered=True,
             html_comment=provenance.generated_html_comment(__file__),
         ),
         path_to_style=rtms_report.path_to_gh_pages_style(html_out),

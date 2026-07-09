@@ -47,7 +47,7 @@ def _write_record(record):
     wlc_index = record["wlc-index"]
     title = f"WLC a-note {wlc_index}"
     path = f"full-record/wlc_a_note_{wlc_index:02}.html"
-    write_ctx = wlc_utils_html.WriteCtx(title, f"gh-pages/wlc-a-notes/{path}")
+    write_ctx = wlc_utils_html.WriteCtx(title, f"gh-pages/wlc-a-notes/{path}", centered=True)
     wlc_utils_html.write_html_to_file(body_contents, write_ctx, "../../")
     return path
 
