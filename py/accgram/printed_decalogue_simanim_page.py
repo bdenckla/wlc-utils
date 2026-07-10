@@ -1,5 +1,5 @@
-r"""Generate gh-pages/accgram/printed-decalogue-simanim.html -- two marginal notes from
-Simanim's Tiqqun that independently witness the printed Decalogue tradition (issue #62).
+r"""Generate gh-pages/accgram/printed-decalogue-simanim.html -- does Simanim's Tiqqun follow
+the printed or the manuscript Decalogue tradition?  Answer: the printed tradition (issue #62).
 
 Companion to ``printed_decalogue_page`` (issue #52, which grammar-checks the printed vs
 manuscript Decalogue accentuations).  This page ports two research notes -- formerly issue
@@ -13,8 +13,10 @@ manuscript Decalogue accentuations).  This page ports two research notes -- form
     taḥton: אנכי...עבדים as its own verse, *sof pasuq* at עבדים) with כתר אר״ץ (= manuscript
     taḥton: pashta...etnaḥta, merged).
 
-Together they show Simanim carries the **printed** elyon in its main text and the **printed**
-taḥton in its appendix, so the Simanim scans are independent printed-tradition witnesses.
+Together they show Simanim's Exodus Decalogue has the **printed** elyon in its main text and
+the **printed** taḥton in its appendix -- so Simanim follows the printed tradition, not the
+manuscript one (the two diverge only at the opening commandment).  We assume its Deuteronomy
+Decalogue follows suit; only the Exodus notes were examined.
 
 The two Simanim *transcriptions* are the only hand-set Hebrew (they differ from MAM; they are
 double-checked against the committed scans).  The shared **four-readings** table is sourced
@@ -41,7 +43,7 @@ from py_html import wlc_utils_html as H
 
 import repo_paths
 
-REPORT_TITLE = "Simanim's Tiqqun independently witnesses the printed Decalogue tradition"
+REPORT_TITLE = "Simanim's Tiqqun follows the printed Decalogue tradition"
 
 _ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
 _ISSUE_56 = "https://github.com/bdenckla/wlc-utils/issues/56"
@@ -172,32 +174,28 @@ def _intro() -> tuple[object, ...]:
                 link("The companion page", _PRINTED_DECALOGUE_PAGE),
                 " (",
                 link("issue #52", _ISSUE_52),
-                ") grammar-checks all four printed-vs-manuscript readings; this page ports two "
-                "marginal notes from ",
+                ") grammar-checks all four printed-vs-manuscript readings; this page asks a "
+                "simpler question of ",
                 H.bold("Simanim's Tiqqun"),
-                " that independently attest which tradition Simanim follows (formerly two "
-                "comments on ",
+                ", from two of its marginal notes (formerly two comments on ",
                 link("issue #56", _ISSUE_56),
-                ").",
+                "): which of the two traditions does it follow?",
             )
         ),
         H.para(
             (
-                "The two notes mirror each other. The ",
-                H.bold("main-text"),
-                " note (p. 83) sits beside the elyon Decalogue and, on its own testimony, "
-                "gives the merged nine-verse ",
-                H.bold("printed elyon"),
-                " as its default; the ",
-                H.bold("appendix"),
-                " note (p. 246) sits beside the taḥton Decalogue and prints the ",
-                H.bold("printed taḥton"),
-                " (in which ",
+                "The answer is the ",
+                H.bold("printed"),
+                " tradition. In its ",
+                H.bold("Exodus"),
+                " (Yitro) Decalogue, Simanim's main text (p. 83) has the printed ",
+                H.bold("elyon"),
+                ", and its appendix (p. 246) has the printed ",
+                H.bold("taḥton"),
+                " — both differing from the Tiberian manuscript only at this first commandment "
+                "(the ",
                 _heb("אנכי…עבדים"),
-                " is its own verse). Each even points at the other. Taken together they show "
-                "Simanim carrying "
-                "the printed tradition on both strands -- so the Simanim scans are independent "
-                "printed-tradition witnesses, not merely an echo of MAM's own note.",
+                " unit). The two notes mirror each other, and each even points at the other.",
             )
         ),
     )
@@ -609,19 +607,35 @@ def _conclusion() -> tuple[object, ...]:
         H.heading_level_2("Conclusion"),
         H.para(
             (
-                "Simanim's Tiqqun carries the ",
-                H.bold("printed elyon"),
-                " in the main text of its Decalogues and the ",
-                H.bold("printed taḥton"),
-                " in its appendix. Both marginal notes are independent printed-tradition "
-                "witnesses to the reading in which ",
-                _heb("עבדים"),
-                " carries silluq + sof pasuq (",
+                "Simanim's Tiqqun follows the ",
+                H.bold("printed"),
+                " Decalogue tradition, not the Tiberian manuscript one. The two traditions "
+                "diverge only at the opening commandment ",
                 _heb("אנכי…עבדים"),
-                " as its own verse) — the reading the printed tradition itself "
-                "labels “taḥton,” which is what lets the ",
-                link("issue #52 finding", _PRINTED_DECALOGUE_PAGE),
-                " rest on more than MAM's own note alone.",
+                ", and Simanim lands on the printed side of that divergence on both strands: "
+                "the printed ",
+                H.bold("elyon"),
+                " in its ",
+                H.bold("Exodus"),
+                " main text (p. 83), and the printed ",
+                H.bold("taḥton"),
+                " in its appendix (p. 246).",
+            )
+        ),
+        H.para(
+            (
+                "Both notes examined here are of the ",
+                H.bold("Exodus"),
+                " (Yitro) Decalogue; we did not examine Simanim's ",
+                H.bold("Deuteronomy"),
+                " (Vaetḥanan) Decalogue and ",
+                H.bold("assume it follows suit"),
+                ". The opening unit ",
+                _heb("אנכי…עבדים"),
+                " is textually identical in the two Decalogues, so the same "
+                "elyon-vs-taḥton choice applies to it — but that Simanim accents its "
+                "Deuteronomy Decalogue the same way is an assumption, not something these "
+                "two Exodus notes attest.",
             )
         ),
     )
