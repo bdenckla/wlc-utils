@@ -283,9 +283,10 @@ def _intro() -> tuple[object, ...]:
                 " and its appendix (p. 246) is the p-trad ",
                 _TAHTON,
                 " — both differing from the m-trad only at this first commandment "
-                "(the אנכי…עבדים unit). Since no digital Simanim exists, I established this by visually spot-checking Simanim "
-                "against Hebrew Wikisource's p-trad. I have not reproduced Simanim's body text here — you'll just have to take "
-                "it on my word.",
+                "(the אנכי…עבדים unit). Since no digital Simanim exists, I established "
+                "this by visually spot-checking Simanim against Hebrew Wikisource's "
+                "p-trad. I have not reproduced Simanim's body text here — you'll just "
+                "have to take it on my word.",
             )
         ),
         H.para(
@@ -294,7 +295,8 @@ def _intro() -> tuple[object, ...]:
                 "further down. They are ",
                 H.bold("not"),
                 " what establishes the finding (the body text is); they are worth reading"
-                " to get a sense of how conscious Simanim is of having made their choice of the p-trad.",
+                " to get a sense of how conscious Simanim is of having made their choice "
+                "of the p-trad.",
             )
         ),
     )
@@ -739,9 +741,8 @@ def _conclusion() -> tuple[object, ...]:
         H.heading_level_2("Conclusion", {"id": "simanim-conclusion"}),
         H.para(
             (
-                "Simanim's Tiqqun follows the ",
-                " p-trad for the Decalogues, not the m-trad. The two "
-                "traditions diverge only at the opening commandment ",
+                "Simanim's Tiqqun follows the p-trad for the Decalogues, not the m-trad. "
+                "The two traditions diverge only at the opening commandment ",
                 "אנכי…עבדים",
                 ", and Simanim lands on the p-trad side of that divergence on both strands: "
                 "the p-trad ",
