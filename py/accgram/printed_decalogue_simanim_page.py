@@ -123,11 +123,6 @@ _ACCENT_NAMES: dict[str, str] = {
 _AVADIM = "עבדים"
 
 
-def _heb(text: str) -> object:
-    """Unpointed (consonantal) Hebrew: default font, not the pointed-text font (issue #58)."""
-    return H.span(text, {"lang": "he"})
-
-
 def _path(path: str) -> object:
     """A repo path as plain body text (no monospace <code>, whose optical size clashes with
     the surrounding font) that may still line-break after each slash (issue #62)."""
@@ -249,7 +244,7 @@ _PARA_1 = (
     "Each Decalogue — the one in",
     *[" ", H.bold("Exodus"), " and the one in ", H.bold("Deuteronomy")],
     " — has two strands of cantillation, the",
-    *[" ", _heb("טעם תחתון"), " and the ", _heb("טעם עליון"), "."],
+    *[" ", "טעם תחתון", " and the ", "טעם עליון", "."],
     " Each strand (of the Exodus Decalogue, for example)",
     " varies not only in where it puts chanted verse boundaries,",
     " but also in how many such boundaries there are.",
@@ -311,7 +306,7 @@ _STRAND_LETTER: dict[str, str] = {"m-trad taḥton": "א", "m-trad elyon": "ב"}
 
 def _structure_content(name: str) -> tuple[object, ...]:
     if name == "m-trad taḥton":
-        return ("merges ", _heb("אנכי…פני"), " into one verse")
+        return ("merges ", "אנכי…פני", " into one verse")
     if name == "m-trad elyon":
         return ("אנכי…עבדים", " its own verse → 10 verses")
     if name == "p-trad taḥton":
@@ -323,13 +318,13 @@ def _reading_label(r: _Reading) -> tuple[object, ...]:
     letter = _STRAND_LETTER.get(r.name)
     base = _render_reading_name(r.name)
     if letter:
-        return (*base, " ", H.small(("MAM ", _heb(letter))))
+        return (*base, " ", H.small(("MAM ", letter)))
     return base
 
 
 def _four_readings_table(readings: list[_Reading]) -> object:
     header = H.table_row_of_headers(
-        ("reading", _heb("אנכי"), _heb("עבדים"), "structure")
+        ("reading", "אנכי", "עבדים", "structure")
     )
     rows = [header]
     for r in readings:
@@ -353,15 +348,15 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
             (
                 "The m-trad and the p-trad accent the Decalogue's אנכי…עבדים unit ",
                 "differently, and the two ",
-                _heb("טעמים"),
+                "טעמים",
                 " are effectively reassigned by one notch at the first commandment. Reading "
                 "each Exodus version's first chanted verse straight from the vendored data and "
                 "deriving the accent on its first word (",
-                _heb("אנכי"),
+                "אנכי",
                 ") and on ",
-                _heb("עבדים"),
+                "עבדים",
                 ". The accent on ",
-                _heb("עבדים"),
+                "עבדים",
                 " is what decides the structure: a ",
                 H.bold(_ROM_SILLUQ_SOF_PASUQ),
                 " there ends the verse, so ",
@@ -404,7 +399,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                     " puts ",
                     H.bold(_ROM_REVIA),
                     " on ",
-                    _heb("עבדים"),
+                    "עבדים",
                     " and runs the first two commandments together into one verse (→ ",
                     H.bold("9"),
                     " total), where the m-trad ",
@@ -421,15 +416,15 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                     " does not give ",
                     "אנכי…עבדים",
                     " its own verse either — it runs ",
-                    _heb("אנכי…פני"),
+                    "אנכי…פני",
                     " together (",
                     _ROM_ETNAHTA,
                     " at ",
-                    _heb("עבדים"),
+                    "עבדים",
                     ", ",
                     _ROM_SOF_PASUQ,
                     " at ",
-                    _heb("פני"),
+                    "פני",
                     "), a third structure again.",
                 ),
             )
@@ -516,7 +511,7 @@ def _p83_section() -> tuple[object, ...]:
                 " {Regarding} the first verse — it is the custom of some to chant it as ",
                 H.bold(("ending on a ", _ROM_REVIA)),
                 ", as given in the main text (",
-                _heb("בפנים"),
+                "בפנים",
                 "); {but} there are editions that call for it to be chanted as in the ",
                 _TAHTON,
                 " {i.e. giving ",
@@ -528,7 +523,7 @@ def _p83_section() -> tuple[object, ...]:
                 " as its own verse, shown above, with ",
                 _ROM_SILLUQ_SOF_PASUQ,
                 " at ",
-                _heb("עבדים"),
+                "עבדים",
                 "}. [The Ten Commandments without the ",
                 _ELYON,
                 " appear at the end of the Ḥumash.]",
@@ -553,7 +548,7 @@ def _p83_section() -> tuple[object, ...]:
                 "The note is worth reading for what it reveals about Simanim's own stance: its ",
                 H.bold("default"),
                 " (",
-                _heb("בפנים"),
+                "בפנים",
                 ") ",
                 _ELYON,
                 " reading ends the אנכי…עבדים unit on a ",
@@ -562,7 +557,7 @@ def _p83_section() -> tuple[object, ...]:
                 "ten-dibrot reading (",
                 _ROM_SILLUQ_SOF_PASUQ,
                 " at ",
-                _heb("עבדים"),
+                "עבדים",
                 ") under what merely “some books” do. So Simanim treats the p-trad structure "
                 "as the norm and the m-trad alternative as the deviation — aware of "
                 "the alternative, but not adopting it.",
@@ -590,11 +585,11 @@ def _p246_transcription() -> object:
 
 def _p246_mapping_table() -> object:
     header = H.table_row_of_headers(
-        ("the note's label", _heb("אנכי"), _heb("עבדים"), "= four-readings row")
+        ("the note's label", "אנכי", "עבדים", "= four-readings row")
     )
     ragil = H.table_row(
         (
-            H.table_header((_heb("בטעם רגיל"), " ", H.small("(ordinary)"))),
+            H.table_header(("בטעם רגיל", " ", H.small("(ordinary)"))),
             H.table_datum(_ROM_TIPEHA),
             H.table_datum(_ROM_SOF_PASUQ),
             H.table_datum(("printed ", _TAHTON, " = m-trad ", _ELYON)),
@@ -602,10 +597,10 @@ def _p246_mapping_table() -> object:
     )
     keter = H.table_row(
         (
-            H.table_header(_heb("כתר אר״ץ")),
+            H.table_header("כתר אר״ץ"),
             H.table_datum(_ROM_PASHTA),
             H.table_datum(_ROM_ETNAHTA),
-            H.table_datum(("m-trad ", _TAHTON, " (MAM ", _heb("א"), ")")),
+            H.table_datum(("m-trad ", _TAHTON, " (MAM ", "א", ")")),
         )
     )
     return H.table((header, ragil, keter), {"class": "printed-decalogue-verdict"})
@@ -619,11 +614,11 @@ def _p246_section() -> tuple[object, ...]:
                 "The mirror note, from the appendix's ",
                 _TAHTON,
                 " Decalogue (which Simanim heads only negatively, ",
-                _heb("בלא טעם עליון"),
+                "בלא טעם עליון",
                 " — lacking the ",
                 _ELYON,
                 "), on the lemma ",
-                _heb("אנכי"),
+                "אנכי",
                 ".",
             )
         ),
@@ -644,9 +639,9 @@ def _p246_section() -> tuple[object, ...]:
                         "source's own emphasis. It reproduces the appendix's own body text, "
                         "asterisk and all, except that the note writes the Tetragrammaton as the "
                         "double-yod ",
-                        _heb("יְיָ"),
+                        hbo("יְיָ"),
                         " where the body has ",
-                        _heb("יהוה"),
+                        "יהוה",
                         ".",
                     )
                 ),
@@ -657,7 +652,7 @@ def _p246_section() -> tuple[object, ...]:
                 H.small(
                     (
                         "It isn't clear whether the mark after ",
-                        _heb("עבדים"),
+                        "עבדים",
                         " in the transcription is a ",
                         _ROM_SOF_PASUQ,
                         " or a colon; we read it as a colon.",
@@ -669,13 +664,13 @@ def _p246_section() -> tuple[object, ...]:
         H.blockquote(
             (
                 "“",
-                _heb("אנכי יי אלהיך"),
+                "אנכי יי אלהיך",
                 " …” — Such is the version in the ordinary cantillation, which opens with ",
                 H.bold(_ROM_TIPEHA_ETNAHTA),
                 " and ends with the verse-final word — at ",
                 _ROM_SOF_PASUQ,
                 " — ",
-                _heb("עבדים"),
+                "עבדים",
                 "; but in the Keter Aram Tsova it opens with ",
                 H.bold(_ROM_PASHTA),
                 " and ends with ",
@@ -692,7 +687,7 @@ def _p246_section() -> tuple[object, ...]:
                 H.small(
                     (
                         "On Simanim's citing the ",
-                        _heb("כתר אר״ץ"),
+                        "כתר אר״ץ",
                         " (Aleppo Codex) here — what that citation can and cannot mean — see ",
                         link("the note below", "#simanim-aleppo-codex"),
                         ".",
@@ -714,11 +709,11 @@ def _p246_section() -> tuple[object, ...]:
                 _TAHTON,
                 " cantillations of the אנכי…עבדים unit: what it prints and calls the "
                 "“ordinary” (",
-                _heb("רגיל"),
+                "רגיל",
                 ") ",
                 _TAHTON,
                 " — ",
-                _heb("עבדים"),
+                "עבדים",
                 " carrying ",
                 _ROM_SILLUQ_SOF_PASUQ,
                 ", ",
@@ -800,13 +795,13 @@ def _source_section(source: dict) -> tuple[object, ...]:
                 _path("in/accgram/printed_decalogue_teamim.json"),
                 rev,
                 " — each Exodus version's first chanted verse, with the accent on ",
-                _heb("אנכי"),
+                "אנכי",
                 " and ",
-                _heb("עבדים"),
+                "עבדים",
                 " derived from its marks. The two Simanim transcriptions are hand-set from the "
                 "committed scans of Simanim's Tiqqun. The four-readings data is credited to "
                 "Hebrew Wikisource (",
-                _heb("עשרת הדברות בסיס/טעמים"),
+                "עשרת הדברות בסיס/טעמים",
                 "); the transcriptions and scans, to Simanim.",
             )
         ),
@@ -821,7 +816,7 @@ def _aleppo_codex_section() -> tuple[object, ...]:
         H.para(
             (
                 "The p. 246 note cites the ",
-                _heb("כתר אר״ץ"),
+                "כתר אר״ץ",
                 " (Keter Aram Tsova, the Aleppo Codex) for the merged ",
                 _ROM_PASHTA_ETNAHTA,
                 " reading. Two things are worth keeping straight about that citation.",
