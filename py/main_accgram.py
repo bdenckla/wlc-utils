@@ -106,6 +106,7 @@ from accgram import prose_run
 from accgram import poetic_run
 from accgram import printed_decalogue
 from accgram import printed_decalogue_page
+from accgram import printed_decalogue_simanim_page
 from accgram import supplied_marks
 from accgram import servi_xcheck
 from accgram import telg_doc_notes
@@ -160,6 +161,7 @@ def _run_generate_html(_args: argparse.Namespace) -> None:
         almost_errors,
         supplied_marks,
         printed_decalogue_page,
+        printed_decalogue_simanim_page,
         dual_under_bars_page,
         telg_doc_notes,
         ps17v14_doc_notes,

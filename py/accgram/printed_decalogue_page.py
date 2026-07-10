@@ -307,6 +307,14 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 "and pisqa markers dropped); the chanted verses are split at sof pasuq.",
             )
         ),
+        H.para(
+            (
+                "See also ",
+                link("Simanim's Tiqqun as an independent witness", "printed-decalogue-simanim.html"),
+                ": two marginal notes from Simanim's Tiqqun that carry the printed elyon in "
+                "the main text and the printed taḥton in the appendix (issue #62).",
+            )
+        ),
     )
 
 
