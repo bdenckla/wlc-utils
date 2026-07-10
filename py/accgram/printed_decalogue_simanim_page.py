@@ -13,14 +13,15 @@ manuscript Decalogue accentuations).  This page ports two research notes -- form
     taḥton: אנכי...עבדים as its own verse, *sof pasuq* at עבדים) with כתר אר״ץ (= manuscript
     taḥton: pashta...etnaḥta, merged).
 
-Together they show Simanim's Exodus Decalogue has the **printed** elyon in its main text and
-the **printed** taḥton in its appendix -- so Simanim follows the printed tradition, not the
-manuscript one (the two diverge only at the opening commandment).  We assume its Deuteronomy
-Decalogue follows suit; only the Exodus notes were examined.
+What actually establishes the answer is not these notes but Simanim's *body text*: its main
+text (p. 83) and appendix Decalogue (p. 246) are compared, by the author, against what Hebrew
+Wikisource records as the printed tradition, and they match.  That body text is asserted here,
+not reproduced.  The two marginal notes are secondary -- kept for the more-for-fun question of
+how aware Simanim is of having made the older, printed-tradition choice.
 
-The two Simanim *transcriptions* are the only hand-set Hebrew (they differ from MAM; they are
-double-checked against the committed scans).  The shared **four-readings** table is sourced
-live from the vendored ``in/accgram/printed_decalogue_teamim.json`` -- each Exodus reading's
+The two Simanim *transcriptions* are the only hand-set Hebrew, double-checked against the
+committed scans.  The shared **four-readings** table is sourced live from the vendored
+``in/accgram/printed_decalogue_teamim.json`` (Hebrew Wikisource data) -- each Exodus reading's
 first chanted verse is read from the data and the accent on אנכי (first word) and עבדים is
 derived from its marks, so the table can never drift from the data.
 
@@ -75,6 +76,17 @@ _AVADIM = "עבדים"
 def _heb(text: str) -> object:
     """Unpointed (consonantal) Hebrew: default font, not the pointed-text font (issue #58)."""
     return H.span(text, {"lang": "he"})
+
+
+def _path(path: str) -> object:
+    """A repo path as plain body text (no monospace <code>, whose optical size clashes with
+    the surrounding font) that may still line-break after each slash (issue #62)."""
+    contents: list[object] = []
+    for i, part in enumerate(path.split("/")):
+        if i:
+            contents += ["/", H.word_break_opportunity()]
+        contents.append(part)
+    return H.span(tuple(contents))
 
 
 # --------------------------------------------------------------------------- #
@@ -188,14 +200,29 @@ def _intro() -> tuple[object, ...]:
                 H.bold("printed"),
                 " tradition. In its ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue, Simanim's main text (p. 83) has the printed ",
+                " (Yitro) Decalogue, Simanim's main text (p. 83) is the printed ",
                 H.bold("elyon"),
-                ", and its appendix (p. 246) has the printed ",
+                " and its appendix (p. 246) is the printed ",
                 H.bold("taḥton"),
                 " — both differing from the Tiberian manuscript only at this first commandment "
                 "(the ",
                 _heb("אנכי…עבדים"),
-                " unit). The two notes mirror each other, and each even points at the other.",
+                " unit). I established this the simple way: I compared Simanim's own Decalogue "
+                "body text against what Hebrew Wikisource records as the printed tradition (the ",
+                H.bold("four readings"),
+                " below), and it matches. I have not reproduced Simanim's body text here — take "
+                "it on my word.",
+            )
+        ),
+        H.para(
+            (
+                "Two of Simanim's marginal notes — one beside each Decalogue — are transcribed "
+                "further down. They are ",
+                H.bold("not"),
+                " what establishes the finding (the body text is); they are worth reading for a "
+                "subtler, more-for-fun question the ",
+                link("conclusion", "#simanim-conclusion"),
+                " returns to: how conscious is Simanim of having made the older choice?",
             )
         ),
     )
@@ -306,9 +333,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                     _heb("עבדים"),
                     ", sof pasuq at ",
                     _heb("פני"),
-                    "). So “read it like the taḥton” can only mean the ",
-                    H.bold("printed"),
-                    " taḥton, not the manuscript one.",
+                    "), a third structure again.",
                 ),
             )
         ),
@@ -334,7 +359,7 @@ def _lines_with_breaks(lines: tuple[str, ...]) -> tuple[object, ...]:
 
 
 # The p. 83 transcription, following the scan's own line breaks (the pointed example verse
-# אנכי…עבדים is MAM-divergent hand-set Hebrew, checked against the committed scan).
+# אנכי…עבדים is hand-set Hebrew, checked against the committed scan).
 _P83_LINES = (
     "[ב] פסוק ראשון נהגו",
     "לקרותו כשמסיים",
@@ -397,9 +422,10 @@ def _p83_section() -> tuple[object, ...]:
                 _heb("בפנים"),
                 "); {but} there are editions that call for it to be chanted as in the ",
                 H.bold("lower"),
-                " (taḥton) accentuation {specifically the ",
-                H.bold("printed"),
-                " taḥton — see the four readings above}, since by the Masorah there must be Ten "
+                " (taḥton) accentuation {i.e. giving ",
+                _heb("אנכי…עבדים"),
+                " its own verse — see the four readings above}, since by the Masorah there must "
+                "be Ten "
                 "Commandments here — thus: {",
                 _heb("אנכי…עבדים"),
                 " as its own verse, shown above, with silluq + sof pasuq at ",
@@ -424,21 +450,18 @@ def _p83_section() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "Simanim's ",
+                "The note is worth reading for what it reveals about Simanim's own stance: its ",
                 H.bold("default"),
                 " (",
                 _heb("בפנים"),
-                ") elyon reading thus ends the first unit on a ",
+                ") elyon reading ends the first unit on a ",
                 H.bold("revia"),
-                " — the merged, nine-verse printed structure — and only “some books” "
-                "restore ",
-                _heb("אנכי…עבדים"),
-                " as its own verse (silluq + sof pasuq at ",
+                " — the merged, nine-verse printed structure — and it files the standalone, "
+                "ten-dibrot reading (silluq + sof pasuq at ",
                 _heb("עבדים"),
-                ") to keep ten dibrot. On its own "
-                "testimony, Simanim follows the ",
-                H.bold("printed"),
-                " tradition for the Decalogue elyon.",
+                ") under what merely “some books” do. So Simanim treats the printed structure "
+                "as the norm and the manuscript-shaped alternative as the deviation — aware of "
+                "the alternative, but not adopting it.",
             )
         ),
     )
@@ -454,10 +477,7 @@ def _p246_transcription() -> object:
     )
     return H.blockquote(
         (
-            H.bold("מענה לשון"),
-            H.line_break(),
-            H.line_break(),
-            H.bold(lemma),
+            H.span_c(lemma, "simanim-lemma"),
             body,
         ),
         {"dir": "rtl", "lang": "hbo"},
@@ -495,10 +515,7 @@ def _p246_section() -> tuple[object, ...]:
                 "The mirror note, from the appendix's taḥton Decalogue (which Simanim heads "
                 "only negatively, ",
                 _heb("בלא טעם עליון"),
-                ", “without the upper accentuation”). It sits under the section "
-                "running-head ",
-                _heb("מענה לשון"),
-                " (maʿaneh lashon, Prov. 16:1 — a generic notes-section title), on the lemma ",
+                ", “without the upper accentuation”), on the lemma ",
                 _heb("אנכי"),
                 ".",
             )
@@ -515,8 +532,11 @@ def _p246_section() -> tuple[object, ...]:
             (
                 H.small(
                     (
-                        "The bold lemma reproduces the appendix's own body text, asterisk and "
-                        "all, except that the note writes the Tetragrammaton as the double-yod ",
+                        "The lemma is shown in blue rather than boldface — bold renders many "
+                        "Hebrew fonts' diacritics hard to read, so we substitute colour for the "
+                        "source's own emphasis. It reproduces the appendix's own body text, "
+                        "asterisk and all, except that the note writes the Tetragrammaton as the "
+                        "double-yod ",
                         _heb("יְיָ"),
                         " where the body has ",
                         _heb("יהוה"),
@@ -525,11 +545,21 @@ def _p246_section() -> tuple[object, ...]:
                 ),
             )
         ),
+        H.para(
+            (
+                H.small(
+                    (
+                        "It isn't clear whether the mark after ",
+                        _heb("עבדים"),
+                        " in the transcription is a sof pasuq or a colon; we read it as a colon.",
+                    )
+                ),
+            )
+        ),
         H.heading_level_3("Translation"),
         H.blockquote(
             (
-                H.bold("Maʿaneh Lashon."),
-                " “",
+                "“",
                 _heb("אנכי יי אלהיך"),
                 " …” — Such is the version in the ordinary accentuation, which opens with ",
                 H.bold("tipeḥa–etnaḥta"),
@@ -545,6 +575,19 @@ def _p246_section() -> tuple[object, ...]:
                 "accentuation within the [main body of the] Ḥumash: …",
             )
         ),
+        H.para(
+            (
+                H.small(
+                    (
+                        "On Simanim's citing the ",
+                        _heb("כתר אר״ץ"),
+                        " (Aleppo Codex) here — what that citation can and cannot mean — see ",
+                        link("the note below", "#simanim-aleppo-codex"),
+                        ".",
+                    )
+                ),
+            )
+        ),
         H.heading_level_3("How it maps onto the four readings"),
         H.para(
             (
@@ -555,48 +598,21 @@ def _p246_section() -> tuple[object, ...]:
         _p246_mapping_table(),
         H.para(
             (
-                "So Simanim's appendix, in its own editorial voice, draws the ",
-                "printed-vs-manuscript taḥton distinction directly: what it prints and calls "
-                "the “ordinary” taḥton is the reading in which ",
+                "So the note has Simanim, in its own editorial voice, distinguishing two "
+                "taḥton accentuations of the first unit: what it prints and calls the "
+                "“ordinary” (",
+                _heb("רגיל"),
+                ") taḥton — ",
                 _heb("עבדים"),
-                " carries silluq + sof pasuq (",
+                " carrying silluq + sof pasuq, ",
                 _heb("אנכי…עבדים"),
-                " as its own verse) — the reading whose marks are the ",
-                H.bold("manuscript's elyon"),
-                ", while the genuine manuscript taḥton — the merged ",
+                " as its own verse, its marks identical to the ",
+                H.bold("manuscript elyon"),
+                " — versus the Keter's merged ",
                 "pashta…etnaḥta",
-                " reading — it sets aside in the note. Independent, printed-tradition "
-                "confirmation that “read it like the taḥton” means the ",
-                H.bold("printed"),
-                " taḥton, since Simanim itself shows it knows the two taḥtons differ.",
-            )
-        ),
-        H.heading_level_3("Two caveats"),
-        H.unordered_list(
-            (
-                (
-                    H.bold("“כתר אר״ץ” here is reconstruction, not autopsy."),
-                    " The reading it reports (",
-                    "pashta…etnaḥta",
-                    ", merged) is the standard manuscript taḥton, so it is substantively right. "
-                    "But the Aleppo Codex's Torah survives only from Deut 28:17 onward, so the "
-                    "physical Keter contains neither Decalogue; any Keter statement about the "
-                    "first commandment rests on reconstruction or pre-1947 testimony.",
-                ),
-                (
-                    H.bold("The colon after "),
-                    _heb("עבדים"),
-                    H.bold(" is an editorial colon, not a sof pasuq."),
-                    " The word is cited bare — vowels only, no silluq, no verse-mark — because "
-                    "the note's topic is precisely how it is pointed: ",
-                    _heb("עבדים"),
-                    " is the shared pivot that takes a sof pasuq under ",
-                    _heb("רגיל"),
-                    " but an etnaḥta under the Keter reading. (",
-                    _heb("בסו״פ"),
-                    " = be-sof-pasuq, verse-finally, in the broad sense bundling silluq + sof "
-                    "pasuq.)",
-                ),
+                ", the genuine manuscript taḥton, which it sets aside. Simanim thus knows the "
+                "two taḥtons differ and knowingly prints the newer one — another glimpse of the "
+                "same self-awareness as the p. 83 note.",
             )
         ),
     )
@@ -604,7 +620,7 @@ def _p246_section() -> tuple[object, ...]:
 
 def _conclusion() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Conclusion"),
+        H.heading_level_2("Conclusion", {"id": "simanim-conclusion"}),
         H.para(
             (
                 "Simanim's Tiqqun follows the ",
@@ -624,18 +640,28 @@ def _conclusion() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "Both notes examined here are of the ",
+                "A closing, more-for-fun observation. I find it somewhat ",
+                H.bold("editorially inconsistent"),
+                " that Simanim — otherwise a modern Tiqqun (from Feldheim) — keeps "
+                "printed-tradition Decalogues, where more recent Bibles have moved toward the "
+                "manuscript elyon and manuscript taḥton. The two marginal notes above suggest "
+                "Simanim was at least half-aware of the tension: each sets its printed reading "
+                "against the standalone-verse / Keter alternative it declines to follow. "
+                "(Straddling old and new is less surprising in a house like Koren, which does it "
+                "more pervasively; Simanim's is a milder case.)",
+            )
+        ),
+        H.para(
+            (
+                "One scope note: I examined only Simanim's ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue; we did not examine Simanim's ",
-                H.bold("Deuteronomy"),
-                " (Vaetḥanan) Decalogue and ",
-                H.bold("assume it follows suit"),
-                ". The opening unit ",
+                " (Yitro) Decalogue. The opening unit ",
                 _heb("אנכי…עבדים"),
-                " is textually identical in the two Decalogues, so the same "
-                "elyon-vs-taḥton choice applies to it — but that Simanim accents its "
-                "Deuteronomy Decalogue the same way is an assumption, not something these "
-                "two Exodus notes attest.",
+                " is textually identical in the ",
+                H.bold("Deuteronomy"),
+                " (Vaetḥanan) Decalogue, so the same elyon-vs-taḥton choice would apply — but "
+                "that Simanim accents its Deuteronomy Decalogue the same way is my assumption, "
+                "not something I checked.",
             )
         ),
     )
@@ -650,16 +676,66 @@ def _source_section(source: dict) -> tuple[object, ...]:
         H.heading_level_2("Source"),
         H.para(
             (
-                "The four readings are read live from the vendored MAM data ",
-                H.code("in/accgram/printed_decalogue_teamim.json"),
+                "The four readings are read live from the vendored Hebrew Wikisource data ",
+                _path("in/accgram/printed_decalogue_teamim.json"),
                 rev,
                 " — each Exodus version's first chanted verse, with the accent on ",
                 _heb("אנכי"),
                 " and ",
                 _heb("עבדים"),
                 " derived from its marks. The two Simanim transcriptions are hand-set from the "
-                "committed scans (they diverge from MAM). All content is credited to MAM and "
-                "the vendored data.",
+                "committed scans of Simanim's Tiqqun. The four-readings data is credited to "
+                "Hebrew Wikisource (",
+                _heb("עשרת הדברות בסיס/טעמים"),
+                "); the transcriptions and scans, to Simanim.",
+            )
+        ),
+    )
+
+
+def _aleppo_codex_section() -> tuple[object, ...]:
+    return (
+        H.heading_level_2(
+            "On Simanim's citation of the Aleppo Codex", {"id": "simanim-aleppo-codex"}
+        ),
+        H.para(
+            (
+                "The p. 246 note cites the ",
+                _heb("כתר אר״ץ"),
+                " (Keter Aram Tsova, the Aleppo Codex) for the merged ",
+                "pashta…etnaḥta",
+                " reading. Two things are worth keeping straight about that citation.",
+            )
+        ),
+        H.unordered_list(
+            (
+                (
+                    H.bold(
+                        "It names one of the Codex's two Decalogue cantillations, not "
+                        "“the” reading."
+                    ),
+                    " The merged ",
+                    "pashta…etnaḥta",
+                    " reading is the manuscript ",
+                    H.bold("taḥton"),
+                    " — one strand. Like the Tiberian manuscripts generally, the Aleppo "
+                    "Codex's Decalogue carries ",
+                    H.bold("both"),
+                    " cantillations; the elyon is the other (",
+                    _heb("אנכי…עבדים"),
+                    " as its own verse, tipeḥa…silluq). Citing the taḥton reading alone does "
+                    "not mean the Codex has only one.",
+                ),
+                (
+                    H.bold("And it is a reconstruction, not an autopsy."),
+                    " The Aleppo Codex's Torah survives only from Deut 28:17 onward, so the "
+                    "physical Codex contains neither Decalogue; any statement about how "
+                    "“the Keter” points ",
+                    _heb("אנכי…עבדים"),
+                    " rests on reconstruction or pre-1947 testimony. Simanim, in a passing "
+                    "reference, has no room to say so — but strictly it should read “one of the "
+                    "two cantillations reconstructed for the Aleppo Codex is …”.",
+                ),
             )
         ),
     )
@@ -673,6 +749,7 @@ def render_body_contents(results: list[pd.VersionResult], source: dict) -> tuple
         *_p83_section(),
         *_p246_section(),
         *_conclusion(),
+        *_aleppo_codex_section(),
         *_source_section(source),
     )
 

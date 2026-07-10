@@ -285,6 +285,11 @@ def line_break2(attr=None):
     return htel_mk_nlb1_nc("br", attr)
 
 
+def word_break_opportunity(attr=None):
+    """Make a <wbr> element (a permitted line-break point, no visible glyph)."""
+    return htel_mk_inline_nc("wbr", attr)
+
+
 @dataclass
 class HelDetails:
     """Details about how to make an HTML element."""

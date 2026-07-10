@@ -233,6 +233,10 @@ table.printed-decalogue-merged td.vc-grad {
 }
 
 .lemma { font-weight: bold; }
+/* Simanim p. 246 lemma (printed-decalogue-simanim.html): coloured instead of bold, since
+   bold renders many Hebrew fonts' points/accents hard to read. light-dark() gives dark blue
+   on a light background, light blue on a dark one. */
+span.simanim-lemma { color: light-dark(#0b57d0, #7bb4ff); }
 p.note-lead { color: light-dark(#555, #aaa); }
 .src { font-size: 0.9em; color: light-dark(#555, #aaa); }
 figure { margin: 1.2em 0; text-align: center; }
