@@ -310,15 +310,14 @@ def _figure(src: str, alt: str, caption: str, *, width: str | None) -> object:
     return H.figure((H.img(img_attr), H.figcaption(caption)))
 
 
-def _transcription(lines: tuple[object, ...]) -> object:
-    """An RTL blockquote transcription. ``lines`` are already-built inline pieces; a line break
-    is inserted between them. Rendered in the pointed-text (hbo) font throughout."""
+def _lines_with_breaks(lines: tuple[str, ...]) -> tuple[object, ...]:
+    """Interleave ``<br>`` between transcription lines (they follow the scan's own breaks)."""
     body: list[object] = []
     for i, line in enumerate(lines):
         if i:
             body.append(H.line_break())
         body.append(line)
-    return H.blockquote(tuple(body), {"dir": "rtl", "lang": "hbo"})
+    return tuple(body)
 
 
 # The p. 83 transcription, following the scan's own line breaks (the pointed example verse
@@ -339,6 +338,31 @@ _P83_LINES = (
 )
 
 
+def _p83_scan_and_transcription() -> object:
+    """Scan and transcription side by side, as in the original issue-#56 comment: a two-column
+    table with the source scan on the left and the RTL transcription (following the scan's own
+    line breaks) on the right."""
+    img = H.img(
+        {
+            "src": _P83_IMG,
+            "alt": "Simanim Tiqqun p. 83: marginal note on the Exodus Decalogue’s first unit",
+            "style": "max-width: 100%; height: auto;",
+            "width": "275",
+        }
+    )
+    header = H.table_row_of_headers(("Source scan", "Transcription"))
+    body = H.table_row(
+        (
+            H.table_datum(img, {"style": "vertical-align: top"}),
+            H.table_datum(
+                _lines_with_breaks(_P83_LINES),
+                {"style": "vertical-align: top", "dir": "rtl", "lang": "hbo"},
+            ),
+        )
+    )
+    return H.table((header, body), {"class": "simanim-scan-transcription"})
+
+
 def _p83_section() -> tuple[object, ...]:
     return (
         H.heading_level_2("Main-text (elyon) note — Simanim p. 83"),
@@ -349,14 +373,7 @@ def _p83_section() -> tuple[object, ...]:
                 ".",
             )
         ),
-        _figure(
-            _P83_IMG,
-            "Simanim Tiqqun p. 83: marginal note on the Exodus Decalogue’s first unit",
-            "Simanim Tiqqun, p. 83 — marginal note on אנכי…עבדים.",
-            width="300",
-        ),
-        H.heading_level_3("Transcription"),
-        _transcription(tuple(_P83_LINES)),
+        _p83_scan_and_transcription(),
         H.heading_level_3("Translation"),
         H.blockquote(
             (
