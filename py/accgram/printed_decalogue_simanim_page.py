@@ -25,7 +25,36 @@ committed scans.  The shared **four-readings** table is sourced live from the ve
 first chanted verse is read from the data and the accent on אנכי (first word) and עבדים is
 derived from its marks, so the table can never drift from the data.
 
-Run via ``main_accgram.py generate-html``.
+Editorial / style conventions for the rendered prose (agreed with Ben; keep them when editing):
+
+* **The two chant-strands are named in Hebrew letters -- תחתון / עליון -- NEVER transliterated
+  and NEVER translated.**  No "taḥton"/"elyon" and no "upper"/"lower" in the output: the
+  upper/lower glosses invite confusion with above-letter vs below-letter accents, which is *not*
+  what the names mean, and for a reader who doesn't know the terms no gloss beats a misleading
+  one.  The full ``טעם תחתון`` / ``טעם עליון`` appears ONLY at first mention (the intro
+  paragraph); everywhere after, drop the טעם -- bare עליון is read as "the [טעם] עליון".  The
+  romanized "taḥton"/"elyon" survive only as *internal keys* (``_READING_SPECS`` names,
+  ``_STRAND_LETTER``, ``_structure_content`` dispatch); render via the ``_TAHTON`` / ``_ELYON``
+  string constants (or ``_render_reading_name()``).  Verbatim quoted source Hebrew (e.g.
+  ``בלא טעם עליון``) keeps
+  whatever it says.  This is a cross-repo rule (cf. MAM-basics
+  ``py/versification_and_cantillation/doc.py``).
+* Prefer "**cantillation**" to "accentuation".
+* **Accent/mark romanizations are single-sourced as ``_ROM_*`` constants** (pashta, tipeḥa,
+  etnaḥta, revia, silluq, sof pasuq, meteg, maqaf, legarmeh, + a few compounds).  They are shared
+  by the ``_ACCENT_NAMES`` derivation table, the ``_READING_SPECS`` expected-accent pins, and the
+  prose -- so a printed name can't drift from the derived one.  Don't retype these spellings
+  inline; ``tests/test_transliterations.py`` guards them tree-wide.  (``_CP_*`` = the codepoint
+  constants, distinct from the ``_ROM_*`` word forms.)
+* Rendered prose uses the **real Unicode em dash** ``—`` (U+2014), not ASCII ``--`` (``--`` is
+  fine in code/comments/docstrings, like this one).
+* **Image ``alt`` text keeps romanized names** ("taḥton") on purpose -- don't mix alphabets in
+  an alt attribute.
+
+Regenerate with ``main_accgram.py generate-html``; test with
+``tests/test_printed_decalogue_simanim.py`` (plus the tree-wide
+``tests/test_transliterations.py``).  A running edit log lives in the gitignored
+``.novc/pending_simanim_page_edits.md``.
 """
 
 from __future__ import annotations
@@ -44,7 +73,7 @@ from py_html import wlc_utils_html as H
 
 import repo_paths
 
-REPORT_TITLE = "Simanim's Tiqqun follows the printed Decalogue tradition"
+REPORT_TITLE = "Simanim's Tiqqun follows the printed tradition for the Decalogues"
 
 _ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
 _ISSUE_56 = "https://github.com/bdenckla/wlc-utils/issues/56"
@@ -52,19 +81,40 @@ _PRINTED_DECALOGUE_PAGE = "printed-decalogue.html"
 _P83_IMG = "img/simanim-decalogue-p83.png"
 _P246_IMG = "img/simanim-decalogue-p246.png"
 
-_SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
-_METEG = "\N{HEBREW POINT METEG}"
+# Codepoints of the two marks we detect by presence (not by the _ACCENT_NAMES table).
+_CP_SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
+_CP_METEG = "\N{HEBREW POINT METEG}"
+
+# Romanized accent/mark names -- the single spelling used everywhere on this page, so a name
+# can neither drift nor be retyped.  Referenced both by _ACCENT_NAMES (the codepoint->name
+# derivation table) and by the rendered prose below; the tree-wide transliteration denylist
+# (tests/test_transliterations.py) still enforces the spelling of the literals here.  The x-form
+# romanizations of the sound ח are written with precomposed h-with-dot-below U+1E25 (ḥ).
+_ROM_PASHTA = "pashta"
+_ROM_TIPEHA = "tipeḥa"
+_ROM_ETNAHTA = "etnaḥta"
+_ROM_REVIA = "revia"
+_ROM_SILLUQ = "silluq"
+_ROM_SOF_PASUQ = "sof pasuq"
+_ROM_METEG = "meteg"
+_ROM_MAQAF = "maqaf"
+_ROM_LEGARMEH = "legarmeh"
+
+# Compound readings that recur verbatim in the prose (U+2026 ellipsis / U+2013 en dash between).
+_ROM_PASHTA_ETNAHTA = f"{_ROM_PASHTA}…{_ROM_ETNAHTA}"  # the merged manuscript תחתון
+_ROM_TIPEHA_ETNAHTA = f"{_ROM_TIPEHA}–{_ROM_ETNAHTA}"  # the ordinary/printed תחתון opening
+_ROM_TIPEHA_SILLUQ = f"{_ROM_TIPEHA}…{_ROM_SILLUQ}"  # the manuscript עליון (standalone verse)
+_ROM_SILLUQ_SOF_PASUQ = f"{_ROM_SILLUQ} + {_ROM_SOF_PASUQ}"  # the standalone-verse close
 
 # The accent codepoints that fall on the two boundary words of the first Decalogue unit,
-# mapped to the romanizations the issue fixes (etnaxta / tipexa / taxton, spelled in the
-# output with the precomposed h-with-dot-below U+1E25).  U+05BD (meteg/silluq) is
-# deliberately absent: it is not a cantillation accent, and is resolved to silluq only in
-# verse-final position (see ``_accent_of`` and CLAUDE.md on meteg-vs-silluq).
+# mapped to the romanizations above.  U+05BD (meteg/silluq) is deliberately absent: it is not a
+# cantillation accent, and is resolved to silluq only in verse-final position (see ``_accent_of``
+# and CLAUDE.md on meteg-vs-silluq).
 _ACCENT_NAMES: dict[str, str] = {
-    "\N{HEBREW ACCENT PASHTA}": "pashta",
-    "\N{HEBREW ACCENT TIPEHA}": "tipeḥa",
-    "\N{HEBREW ACCENT ETNAHTA}": "etnaḥta",
-    "\N{HEBREW ACCENT REVIA}": "revia",
+    "\N{HEBREW ACCENT PASHTA}": _ROM_PASHTA,
+    "\N{HEBREW ACCENT TIPEHA}": _ROM_TIPEHA,
+    "\N{HEBREW ACCENT ETNAHTA}": _ROM_ETNAHTA,
+    "\N{HEBREW ACCENT REVIA}": _ROM_REVIA,
 }
 
 # The base-letter skeleton of the word עבדים -- the closing word of the first Decalogue unit,
@@ -89,6 +139,28 @@ def _path(path: str) -> object:
     return H.span(tuple(contents))
 
 
+# The two chant-strands (טעם) are named in Hebrew letters throughout the rendered prose --
+# תחתון / עליון -- and are NEITHER transliterated NOR translated.  No "upper"/"lower": those
+# English glosses invite confusion with above-letter / below-letter accents, which is not what
+# עליון / תחתון mean; per Ben, an English reader is better off not being handed a misleading
+# meaning at all.  The romanized forms "taḥton"/"elyon" survive only as internal keys
+# (``_READING_SPECS`` names, ``_STRAND_LETTER``, ``_structure_content`` dispatch).  We also
+# prefer "cantillation" to "accentuation".  After a strand is first named as its full טעם (e.g.
+# "the טעם עליון"), later mentions drop the טעם: bare עליון is understood as "the [טעם] עליון".
+# The two strand words are plain Hebrew string constants, substituted directly into the prose
+# (including inside f-strings) rather than wrapped in a lang="he" <span>.
+_TAHTON = "תחתון"
+_ELYON = "עליון"
+_STRAND_HEB: dict[str, str] = {"taḥton": _TAHTON, "elyon": _ELYON}
+
+
+def _render_reading_name(name: str) -> tuple[object, ...]:
+    """A reading name like ``"manuscript taḥton"`` rendered with its strand word in Hebrew
+    letters: ``("manuscript ", "תחתון")``.  The tradition half stays English."""
+    tradition, strand = name.split()
+    return (tradition + " ", _STRAND_HEB[strand])
+
+
 # --------------------------------------------------------------------------- #
 # Deriving the four readings live from the vendored data
 # --------------------------------------------------------------------------- #
@@ -108,8 +180,8 @@ def _accent_of(word: str) -> str:
         name = _ACCENT_NAMES.get(ch)
         if name is not None:
             return name
-    if _SOF_PASUQ in word and _METEG in word:
-        return "silluq"
+    if _CP_SOF_PASUQ in word and _CP_METEG in word:
+        return _ROM_SILLUQ
     raise ValueError(f"no recognized boundary accent on {word!r}")
 
 
@@ -137,10 +209,10 @@ class _Reading:
 # build rather than silently mis-render.  Display extras (MAM strand letter, structure blurb)
 # live in the table renderer, keyed by name.
 _READING_SPECS = (
-    ("manuscript taḥton", "taxton", "manuscript", "pashta", "etnaḥta"),
-    ("manuscript elyon", "elyon", "manuscript", "tipeḥa", "silluq"),
-    ("printed taḥton", "taxton", "printed", "tipeḥa", "silluq"),
-    ("printed elyon", "elyon", "printed", "pashta", "revia"),
+    ("manuscript taḥton", "taxton", "manuscript", _ROM_PASHTA, _ROM_ETNAHTA),
+    ("manuscript elyon", "elyon", "manuscript", _ROM_TIPEHA, _ROM_SILLUQ),
+    ("printed taḥton", "taxton", "printed", _ROM_TIPEHA, _ROM_SILLUQ),
+    ("printed elyon", "elyon", "printed", _ROM_PASHTA, _ROM_REVIA),
 )
 
 
@@ -162,38 +234,45 @@ def _resolve_readings(results: list[pd.VersionResult]) -> list[_Reading]:
 # Rendering
 # --------------------------------------------------------------------------- #
 def _display_accent(name: str) -> str:
-    return "silluq / sof pasuq" if name == "silluq" else name
+    return f"{_ROM_SILLUQ} / {_ROM_SOF_PASUQ}" if name == _ROM_SILLUQ else name
 
 
 def _word_cell(word: str, accent: str) -> object:
     return H.table_datum((hbo(word), H.line_break(), H.small(f"({_display_accent(accent)})")))
 
 
+_PARA_1 = (
+    "Each Decalogue — the one in",
+    *[" ", H.bold("Exodus"), " and the one in ", H.bold("Deuteronomy")],
+    " — has two strands of cantillation, the",
+    *[" ", _heb("טעם תחתון"), " and the ", _heb("טעם עליון"), "."],
+    " Each strand (of the Exodus Decalogue, for example)",
+    " varies not only in where it puts chanted verse boundaries,",
+    " but also in how many such boundaries there are.",
+    " Adding to these complexities, in truth there are",
+    *[" ", H.bold("four"), " cantilations,"],
+    " because at the opening commandment the",
+    *[" ", H.bold("printed tradition")," (p-trad)"],
+    " differs from the",
+    *[" (Tiberian) ", H.bold("manuscript tradition"), " (m-trad),"],
+    f" yielding two different {_ELYON} strands",
+    f" and two different {_TAHTON} strands.",
+    link("The companion page", _PRINTED_DECALOGUE_PAGE),
+    *[" (", link("issue #52", _ISSUE_52), ")"],
+    " grammar-checks all four printed-vs-manuscript readings; this page asks ",
+    *["which of them ", H.bold("Simanim's Tiqqun"), " follows."],
+    " Along the way it transcribes two of Simanim's marginal notes ",
+    *["(formerly two comments on ", link("issue #56", _ISSUE_56), ")"],
+    " — not as the evidence for the answer, but for the light they throw on "
+    "how conscious Simanim is of the choice it makes.",
+)
+
+
+
 def _intro() -> tuple[object, ...]:
     return (
         H.heading_level_1(REPORT_TITLE),
-        H.para(
-            (
-                "The two Decalogues are each chanted two ways -- the ",
-                _heb("טעם תחתון"),
-                " (taḥton, ordinary-length verses) and the ",
-                _heb("טעם עליון"),
-                " (elyon, one verse per commandment) -- and the ",
-                H.bold("printed"),
-                " editions accent the opening commandment differently from the Tiberian ",
-                H.bold("manuscript"),
-                ". ",
-                link("The companion page", _PRINTED_DECALOGUE_PAGE),
-                " (",
-                link("issue #52", _ISSUE_52),
-                ") grammar-checks all four printed-vs-manuscript readings; this page asks a "
-                "simpler question of ",
-                H.bold("Simanim's Tiqqun"),
-                ", from two of its marginal notes (formerly two comments on ",
-                link("issue #56", _ISSUE_56),
-                "): which of the two traditions does it follow?",
-            )
-        ),
+        H.para(_PARA_1),
         H.para(
             (
                 "The answer is the ",
@@ -201,9 +280,9 @@ def _intro() -> tuple[object, ...]:
                 " tradition. In its ",
                 H.bold("Exodus"),
                 " (Yitro) Decalogue, Simanim's main text (p. 83) is the printed ",
-                H.bold("elyon"),
+                _ELYON,
                 " and its appendix (p. 246) is the printed ",
-                H.bold("taḥton"),
+                _TAHTON,
                 " — both differing from the Tiberian manuscript only at this first commandment "
                 "(the ",
                 _heb("אנכי…עבדים"),
@@ -228,8 +307,10 @@ def _intro() -> tuple[object, ...]:
     )
 
 
-# Per-reading display extras (romanized name is English/LTR; the MAM strand letter and the
-# structure blurbs mix English with the odd Hebrew word, wrapped individually).
+# Per-reading display extras.  The reading name's strand word renders in Hebrew letters (see
+# _render_reading_name); the MAM strand letter and the structure blurbs mix English with the
+# odd Hebrew word, wrapped individually.  _STRAND_LETTER's keys are the internal romanized
+# reading names (matched against r.name), not display text.
 _STRAND_LETTER: dict[str, str] = {"manuscript taḥton": "א", "manuscript elyon": "ב"}
 
 
@@ -239,15 +320,16 @@ def _structure_content(name: str) -> tuple[object, ...]:
     if name == "manuscript elyon":
         return (_heb("אנכי…עבדים"), " its own verse → 10 verses")
     if name == "printed taḥton":
-        return (_heb("אנכי…עבדים"), " its own verse (= manuscript elyon)")
+        return (_heb("אנכי…עבדים"), " its own verse (= manuscript ", _ELYON, ")")
     return ("merges commandments I + II → 9 verses",)
 
 
 def _reading_label(r: _Reading) -> tuple[object, ...]:
     letter = _STRAND_LETTER.get(r.name)
+    base = _render_reading_name(r.name)
     if letter:
-        return (r.name, " ", H.small(("MAM ", _heb(letter))))
-    return (r.name,)
+        return (*base, " ", H.small(("MAM ", _heb(letter))))
+    return base
 
 
 def _four_readings_table(readings: list[_Reading]) -> object:
@@ -286,13 +368,13 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                 ". The accent on ",
                 _heb("עבדים"),
                 " is what decides the structure: a ",
-                H.bold("silluq + sof pasuq"),
+                H.bold(_ROM_SILLUQ_SOF_PASUQ),
                 " there ends the verse, so ",
                 _heb("אנכי…עבדים"),
                 " stands as its own verse; an ",
-                H.bold("etnaḥta"),
+                H.bold(_ROM_ETNAHTA),
                 " or ",
-                H.bold("revia"),
+                H.bold(_ROM_REVIA),
                 " there is mid-verse, folding ",
                 _heb("אנכי…עבדים"),
                 " into a longer verse.",
@@ -302,36 +384,56 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
         H.unordered_list(
             (
                 (
-                    H.bold("Printed taḥton = manuscript elyon."),
+                    H.bold(("Printed ", _TAHTON, " = manuscript ", _ELYON, ".")),
                     " Once ",
                     _heb("אנכי…עבדים"),
-                    " is its own verse there is only one grammatical way to accent it "
-                    "-- etnaḥta in the middle, silluq at the end -- so both traditions land on "
-                    "the same marks (consonants, accents, and accent-boundary marks: sof "
-                    "pasuq, maqaf, legarmeh). They differ only by an immaterial meteg.",
+                    " is its own verse there is only one grammatical way to accent it — ",
+                    _ROM_ETNAHTA,
+                    " in the middle, ",
+                    _ROM_SILLUQ,
+                    " at the end — so both traditions land on the same marks (consonants, "
+                    "accents, and accent-boundary marks: ",
+                    _ROM_SOF_PASUQ,
+                    ", ",
+                    _ROM_MAQAF,
+                    ", ",
+                    _ROM_LEGARMEH,
+                    "). They differ only by an immaterial ",
+                    _ROM_METEG,
+                    ".",
                 ),
                 (
-                    H.bold("Printed elyon ≠ manuscript elyon."),
-                    " The printed elyon puts ",
-                    H.bold("revia"),
+                    H.bold(("Printed ", _ELYON, " ≠ manuscript ", _ELYON, ".")),
+                    " The printed ",
+                    _ELYON,
+                    " puts ",
+                    H.bold(_ROM_REVIA),
                     " on ",
                     _heb("עבדים"),
                     " and runs the first two commandments together into one verse (→ ",
                     H.bold("9"),
-                    " total), where the manuscript elyon closes on silluq (→ ",
+                    " total), where the manuscript ",
+                    _ELYON,
+                    " closes on ",
+                    _ROM_SILLUQ,
+                    " (→ ",
                     H.bold("10"),
                     ").",
                 ),
                 (
                     "The manuscript ",
-                    H.bold("taḥton"),
+                    _TAHTON,
                     " does not give ",
                     _heb("אנכי…עבדים"),
-                    " its own verse either -- it runs ",
+                    " its own verse either — it runs ",
                     _heb("אנכי…פני"),
-                    " together (etnaḥta at ",
+                    " together (",
+                    _ROM_ETNAHTA,
+                    " at ",
                     _heb("עבדים"),
-                    ", sof pasuq at ",
+                    ", ",
+                    _ROM_SOF_PASUQ,
+                    " at ",
                     _heb("פני"),
                     "), a third structure again.",
                 ),
@@ -403,7 +505,7 @@ def _p83_scan_and_transcription() -> object:
 
 def _p83_section() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Main-text (elyon) note — Simanim p. 83"),
+        H.heading_level_2("Main-text (עליון) note — Simanim p. 83"),
         H.para(
             (
                 "A note in the margin of the Exodus (Yitro) Decalogue, on ",
@@ -417,21 +519,24 @@ def _p83_section() -> tuple[object, ...]:
             (
                 H.bold("[ב]"),
                 " {Regarding} the first verse — it is the custom of some to chant it as ",
-                H.bold("ending on a revia"),
+                H.bold(("ending on a ", _ROM_REVIA)),
                 ", as given in the main text (",
                 _heb("בפנים"),
                 "); {but} there are editions that call for it to be chanted as in the ",
-                H.bold("lower"),
-                " (taḥton) accentuation {i.e. giving ",
+                _TAHTON,
+                " {i.e. giving ",
                 _heb("אנכי…עבדים"),
                 " its own verse — see the four readings above}, since by the Masorah there must "
                 "be Ten "
                 "Commandments here — thus: {",
                 _heb("אנכי…עבדים"),
-                " as its own verse, shown above, with silluq + sof pasuq at ",
+                " as its own verse, shown above, with ",
+                _ROM_SILLUQ_SOF_PASUQ,
+                " at ",
                 _heb("עבדים"),
-                "}. [The Ten Commandments without the "
-                "upper accentuation appear at the end of the Ḥumash.]",
+                "}. [The Ten Commandments without the ",
+                _ELYON,
+                " appear at the end of the Ḥumash.]",
             )
         ),
         H.para(
@@ -454,10 +559,14 @@ def _p83_section() -> tuple[object, ...]:
                 H.bold("default"),
                 " (",
                 _heb("בפנים"),
-                ") elyon reading ends the first unit on a ",
-                H.bold("revia"),
+                ") ",
+                _ELYON,
+                " reading ends the first unit on a ",
+                H.bold(_ROM_REVIA),
                 " — the merged, nine-verse printed structure — and it files the standalone, "
-                "ten-dibrot reading (silluq + sof pasuq at ",
+                "ten-dibrot reading (",
+                _ROM_SILLUQ_SOF_PASUQ,
+                " at ",
                 _heb("עבדים"),
                 ") under what merely “some books” do. So Simanim treats the printed structure "
                 "as the norm and the manuscript-shaped alternative as the deviation — aware of "
@@ -491,17 +600,17 @@ def _p246_mapping_table() -> object:
     ragil = H.table_row(
         (
             H.table_header((_heb("בטעם רגיל"), " ", H.small("(ordinary)"))),
-            H.table_datum("tipeḥa"),
-            H.table_datum("sof pasuq"),
-            H.table_datum("printed taḥton = manuscript elyon"),
+            H.table_datum(_ROM_TIPEHA),
+            H.table_datum(_ROM_SOF_PASUQ),
+            H.table_datum(("printed ", _TAHTON, " = manuscript ", _ELYON)),
         )
     )
     keter = H.table_row(
         (
             H.table_header(_heb("כתר אר״ץ")),
-            H.table_datum("pashta"),
-            H.table_datum("etnaḥta"),
-            H.table_datum(("manuscript taḥton (MAM ", _heb("א"), ")")),
+            H.table_datum(_ROM_PASHTA),
+            H.table_datum(_ROM_ETNAHTA),
+            H.table_datum(("manuscript ", _TAHTON, " (MAM ", _heb("א"), ")")),
         )
     )
     return H.table((header, ragil, keter), {"class": "printed-decalogue-verdict"})
@@ -509,13 +618,16 @@ def _p246_mapping_table() -> object:
 
 def _p246_section() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Appendix (taḥton) note — Simanim p. 246"),
+        H.heading_level_2("Appendix (תחתון) note — Simanim p. 246"),
         H.para(
             (
-                "The mirror note, from the appendix's taḥton Decalogue (which Simanim heads "
-                "only negatively, ",
+                "The mirror note, from the appendix's ",
+                _TAHTON,
+                " Decalogue (which Simanim heads only negatively, ",
                 _heb("בלא טעם עליון"),
-                ", “without the upper accentuation”), on the lemma ",
+                " — lacking the ",
+                _ELYON,
+                "), on the lemma ",
                 _heb("אנכי"),
                 ".",
             )
@@ -551,7 +663,9 @@ def _p246_section() -> tuple[object, ...]:
                     (
                         "It isn't clear whether the mark after ",
                         _heb("עבדים"),
-                        " in the transcription is a sof pasuq or a colon; we read it as a colon.",
+                        " in the transcription is a ",
+                        _ROM_SOF_PASUQ,
+                        " or a colon; we read it as a colon.",
                     )
                 ),
             )
@@ -561,18 +675,21 @@ def _p246_section() -> tuple[object, ...]:
             (
                 "“",
                 _heb("אנכי יי אלהיך"),
-                " …” — Such is the version in the ordinary accentuation, which opens with ",
-                H.bold("tipeḥa–etnaḥta"),
-                " and ends with the verse-final word — at sof pasuq — ",
+                " …” — Such is the version in the ordinary cantillation, which opens with ",
+                H.bold(_ROM_TIPEHA_ETNAHTA),
+                " and ends with the verse-final word — at ",
+                _ROM_SOF_PASUQ,
+                " — ",
                 _heb("עבדים"),
                 "; but in the Keter Aram Tsova it opens with ",
-                H.bold("pashta"),
+                H.bold(_ROM_PASHTA),
                 " and ends with ",
-                H.bold("etnaḥta"),
+                H.bold(_ROM_ETNAHTA),
                 ", thus: {the merged reading ",
                 _heb("אנכי…עבדים"),
-                " shown above}. And as regards the “Ten Commandments” in the upper "
-                "accentuation within the [main body of the] Ḥumash: …",
+                " shown above}. And as regards the “Ten Commandments” in the ",
+                _ELYON,
+                " within the [main body of the] Ḥumash: …",
             )
         ),
         H.para(
@@ -591,28 +708,34 @@ def _p246_section() -> tuple[object, ...]:
         H.heading_level_3("How it maps onto the four readings"),
         H.para(
             (
-                "The note contrasts two accentuations of the first unit, both already in the "
+                "The note contrasts two cantillations of the first unit, both already in the "
                 "table above:",
             )
         ),
         _p246_mapping_table(),
         H.para(
             (
-                "So the note has Simanim, in its own editorial voice, distinguishing two "
-                "taḥton accentuations of the first unit: what it prints and calls the "
+                "So the note has Simanim, in its own editorial voice, distinguishing two ",
+                _TAHTON,
+                " cantillations of the first unit: what it prints and calls the "
                 "“ordinary” (",
                 _heb("רגיל"),
-                ") taḥton — ",
+                ") ",
+                _TAHTON,
+                " — ",
                 _heb("עבדים"),
-                " carrying silluq + sof pasuq, ",
+                " carrying ",
+                _ROM_SILLUQ_SOF_PASUQ,
+                ", ",
                 _heb("אנכי…עבדים"),
-                " as its own verse, its marks identical to the ",
-                H.bold("manuscript elyon"),
+                " as its own verse, its marks identical to the manuscript ",
+                _ELYON,
                 " — versus the Keter's merged ",
-                "pashta…etnaḥta",
-                ", the genuine manuscript taḥton, which it sets aside. Simanim thus knows the "
-                "two taḥtons differ and knowingly prints the newer one — another glimpse of the "
-                "same self-awareness as the p. 83 note.",
+                _ROM_PASHTA_ETNAHTA,
+                ", the genuine manuscript ",
+                _TAHTON,
+                ", which it sets aside. Simanim thus knows the two differ and knowingly prints "
+                "the newer one — another glimpse of the same self-awareness as the p. 83 note.",
             )
         ),
     )
@@ -625,16 +748,17 @@ def _conclusion() -> tuple[object, ...]:
             (
                 "Simanim's Tiqqun follows the ",
                 H.bold("printed"),
-                " Decalogue tradition, not the Tiberian manuscript one. The two traditions "
+                " tradition for the Decalogues, not the Tiberian manuscript one. The two "
+                "traditions "
                 "diverge only at the opening commandment ",
                 _heb("אנכי…עבדים"),
                 ", and Simanim lands on the printed side of that divergence on both strands: "
                 "the printed ",
-                H.bold("elyon"),
+                _ELYON,
                 " in its ",
                 H.bold("Exodus"),
                 " main text (p. 83), and the printed ",
-                H.bold("taḥton"),
+                _TAHTON,
                 " in its appendix (p. 246).",
             )
         ),
@@ -644,7 +768,11 @@ def _conclusion() -> tuple[object, ...]:
                 H.bold("editorially inconsistent"),
                 " that Simanim — otherwise a modern Tiqqun (from Feldheim) — keeps "
                 "printed-tradition Decalogues, where more recent Bibles have moved toward the "
-                "manuscript elyon and manuscript taḥton. The two marginal notes above suggest "
+                "manuscript ",
+                _ELYON,
+                " and manuscript ",
+                _TAHTON,
+                ". The two marginal notes above suggest "
                 "Simanim was at least half-aware of the tension: each sets its printed reading "
                 "against the standalone-verse / Keter alternative it declines to follow. "
                 "(Straddling old and new is less surprising in a house like Koren, which does it "
@@ -659,7 +787,8 @@ def _conclusion() -> tuple[object, ...]:
                 _heb("אנכי…עבדים"),
                 " is textually identical in the ",
                 H.bold("Deuteronomy"),
-                " (Vaetḥanan) Decalogue, so the same elyon-vs-taḥton choice would apply — but "
+                " (Vaetḥanan) Decalogue, so the same choice between the two cantillations would "
+                "apply — but "
                 "that Simanim accents its Deuteronomy Decalogue the same way is my assumption, "
                 "not something I checked.",
             )
@@ -703,7 +832,7 @@ def _aleppo_codex_section() -> tuple[object, ...]:
                 "The p. 246 note cites the ",
                 _heb("כתר אר״ץ"),
                 " (Keter Aram Tsova, the Aleppo Codex) for the merged ",
-                "pashta…etnaḥta",
+                _ROM_PASHTA_ETNAHTA,
                 " reading. Two things are worth keeping straight about that citation.",
             )
         ),
@@ -715,16 +844,21 @@ def _aleppo_codex_section() -> tuple[object, ...]:
                         "“the” reading."
                     ),
                     " The merged ",
-                    "pashta…etnaḥta",
+                    _ROM_PASHTA_ETNAHTA,
                     " reading is the manuscript ",
-                    H.bold("taḥton"),
+                    _TAHTON,
                     " — one strand. Like the Tiberian manuscripts generally, the Aleppo "
                     "Codex's Decalogue carries ",
                     H.bold("both"),
-                    " cantillations; the elyon is the other (",
+                    " cantillations; the ",
+                    _ELYON,
+                    " is the other (",
                     _heb("אנכי…עבדים"),
-                    " as its own verse, tipeḥa…silluq). Citing the taḥton reading alone does "
-                    "not mean the Codex has only one.",
+                    " as its own verse, ",
+                    _ROM_TIPEHA_SILLUQ,
+                    "). Citing the ",
+                    _TAHTON,
+                    " reading alone does not mean the Codex has only one.",
                 ),
                 (
                     H.bold("And it is a reconstruction, not an autopsy."),

@@ -64,6 +64,15 @@ Subcommands:
                     generated from their committed htel bodies.
 
                 Each report runs with its default paths.
+    generate-html-<name>
+                Generate a single report instead of the whole batch, where <name>
+                is the output file's basename (e.g. generate-html-printed-decalogue-simanim
+                writes gh-pages/accgram/printed-decalogue-simanim.html). Each accepts
+                the same options as its generator (e.g. --html-out). The full set:
+                generate-html-poetic, -goerwitz, -almost-errors, -supplied-marks,
+                -printed-decalogue, -printed-decalogue-simanim,
+                -dual-under-bars-in-leningrad-decalogues, -telg-doc-notes,
+                -ps17v14-mam-doc-notes, -ps17v14-double-tsinnor.
     grammaticality
                 Estimate a PCFG over the committed prose + poetic parse trees
                 (one production per tree node) and score each verse's
@@ -152,24 +161,39 @@ def _run_grammaticality(args: argparse.Namespace) -> None:
     grammaticality.run(args)
 
 
+# HTML report generators, as (name, module) pairs.  Each name is the basename of the file the
+# module generates (gh-pages/accgram/<name>.html), so the derived subcommands are named
+# accordingly: `generate-html` runs the whole list, `generate-html-<name>` runs just one.
+_HTML_GENERATORS = (
+    ("poetic", poetic_oddballs),
+    ("goerwitz", research_tao),
+    ("almost-errors", almost_errors),
+    ("supplied-marks", supplied_marks),
+    ("printed-decalogue", printed_decalogue_page),
+    ("printed-decalogue-simanim", printed_decalogue_simanim_page),
+    ("dual-under-bars-in-leningrad-decalogues", dual_under_bars_page),
+    ("telg-doc-notes", telg_doc_notes),
+    ("ps17v14-mam-doc-notes", ps17v14_doc_notes),
+    ("ps17v14-double-tsinnor", ps17v14_double_tsinnor),
+)
+
+
+def _generate_one_html(module) -> None:
+    """Run a single HTML generator module with its default arguments."""
+    sub = argparse.ArgumentParser()
+    module.add_args(sub, repo_root=_repo_root())
+    module.run(sub.parse_args([]))
+
+
+def _generate_one_html_from_args(module, args: argparse.Namespace) -> None:
+    """Run a single HTML generator module with the args parsed for its subcommand."""
+    module.run(args)
+
+
 def _run_generate_html(_args: argparse.Namespace) -> None:
-    """Run all three HTML generators, each with its own default arguments."""
-    repo_root = _repo_root()
-    for module in (
-        poetic_oddballs,
-        research_tao,
-        almost_errors,
-        supplied_marks,
-        printed_decalogue_page,
-        printed_decalogue_simanim_page,
-        dual_under_bars_page,
-        telg_doc_notes,
-        ps17v14_doc_notes,
-        ps17v14_double_tsinnor,
-    ):
-        sub = argparse.ArgumentParser()
-        module.add_args(sub, repo_root=repo_root)
-        module.run(sub.parse_args([]))
+    """Run every HTML generator, each with its own default arguments."""
+    for _name, module in _HTML_GENERATORS:
+        _generate_one_html(module)
 
 
 def main() -> None:
@@ -284,6 +308,16 @@ def main() -> None:
         ),
     )
     generate_html_parser.set_defaults(func=_run_generate_html)
+
+    # One `generate-html-<name>` subcommand per report, generating that file alone.  Each exposes
+    # its module's own arguments (e.g. --html-out), same as the module's standalone entry point.
+    for name, module in _HTML_GENERATORS:
+        one_parser = subparsers.add_parser(
+            f"generate-html-{name}",
+            help=f"Generate gh-pages/accgram/{name}.html only.",
+        )
+        module.add_args(one_parser, repo_root=_repo_root())
+        one_parser.set_defaults(func=lambda a, m=module: _generate_one_html_from_args(m, a))
 
     args = parser.parse_args()
     args.func(args)
