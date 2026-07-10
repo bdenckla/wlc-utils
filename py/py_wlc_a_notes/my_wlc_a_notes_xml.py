@@ -212,7 +212,7 @@ def _add_analysistags(change_elem, record):
     # So in all cases we just say "aBHL", meaning "UXLC agrees with BHL (body)".
     #
     atags_elem = etan.sub_elem(change_elem, "analysistags")
-    etan.sub_elem(change_elem, "aBHL")
+    etan.sub_elem(atags_elem, "aBHL")
 
 
 def _add_transnotes(change_elem, record):
