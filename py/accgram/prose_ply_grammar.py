@@ -37,7 +37,7 @@ import sys
 from ply import yacc
 
 from accgram.prose_scanner import Token
-from accgram.tree import TN, add_leaves, make_node
+from accgram.tree import add_leaves, make_node
 
 # All 33 grammar tokens (declared even when unused by subsets, to mirror
 # acc2tre.y's %token list and keep the token namespace stable).

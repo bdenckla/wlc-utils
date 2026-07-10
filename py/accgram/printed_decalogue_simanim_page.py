@@ -89,7 +89,7 @@ _CP_METEG = "\N{HEBREW POINT METEG}"
 # can neither drift nor be retyped.  Referenced both by _ACCENT_NAMES (the codepoint->name
 # derivation table) and by the rendered prose below; the tree-wide transliteration denylist
 # (tests/test_transliterations.py) still enforces the spelling of the literals here.  The x-form
-# romanizations of the sound ח are written with precomposed h-with-dot-below U+1E25 (ḥ).
+# romanizations of the sound ח are written with precomposed h-with-dot-below U+1E25.
 _ROM_PASHTA = "pashta"
 _ROM_TIPEHA = "tipeḥa"
 _ROM_ETNAHTA = "etnaḥta"
@@ -138,7 +138,7 @@ def _path(path: str) -> object:
 # תחתון / עליון -- and are NEITHER transliterated NOR translated.  No "upper"/"lower": those
 # English glosses invite confusion with above-letter / below-letter accents, which is not what
 # עליון / תחתון mean; per Ben, an English reader is better off not being handed a misleading
-# meaning at all.  The romanized forms "taḥton"/"elyon" survive only as internal keys
+# meaning at all.  The romanized forms "taxton"/"elyon" survive only as internal keys
 # (``_READING_SPECS`` names, ``_STRAND_LETTER``, ``_structure_content`` dispatch).  We also
 # prefer "cantillation" to "accentuation".  After a strand is first named as its full טעם (e.g.
 # "the טעם עליון"), later mentions drop the טעם: bare עליון is understood as "the [טעם] עליון".

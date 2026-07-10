@@ -29,7 +29,7 @@ def build_intro_contents(
         " by the Python port of the Goerwitz accent checker."
     )
     ungrammatical_text = (
-        f"These verses are considered ungrammatical because they parse into a tree"
+        "These verses are considered ungrammatical because they parse into a tree"
         " containing the string \u201cERROR\u201d; each section below includes one such"
         " tree. Potential causes of \u201cERROR\u201d include"
         " WLC issues,"

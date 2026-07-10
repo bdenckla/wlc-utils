@@ -337,7 +337,7 @@ def render_checker(checker: str, pcfg: Pcfg, scores: list[VerseScore]) -> str:
         pcfg_gap = (c_pcfg_m - o_pcfg_m) / c_pcfg_sd if c_pcfg_sd else float("nan")
         bg_gap = (c_bg_m - o_bg_m) / c_bg_sd if c_bg_sd else float("nan")
         lines.append(
-            f"Ungrammatical vs clean separation (clean-mean minus ungrammatical-mean, in clean sd):"
+            "Ungrammatical vs clean separation (clean-mean minus ungrammatical-mean, in clean sd):"
         )
         lines.append(
             f"  PCFG  per-accent:  clean {c_pcfg_m:6.3f}+-{c_pcfg_sd:.3f}  "

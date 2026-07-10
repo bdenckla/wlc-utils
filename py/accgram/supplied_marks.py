@@ -214,7 +214,7 @@ def _case_extra(s) -> tuple[object, ...]:
         extra.append(
             _comment(
                 (
-                    f"This word is further discussed",
+                    "This word is further discussed",
                     *[" ", link("here", "goerwitz.html#obdt5v8"), ","],
                     " among the ungrammatical verses."
                 )

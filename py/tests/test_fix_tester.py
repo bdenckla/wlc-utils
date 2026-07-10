@@ -50,7 +50,8 @@ def test_merge_next_concatenation_parses_clean():
     # Append nu 26:1: the atnax now bisects a complete verse that ends in
     # silluq + sof-pasuq, and the mid-verse ]1 note / P petuhah are inert.
     guard = fix_tester._ParseGuard()
-    before = fix_tester._evaluate(_NU_2519, "nu", 25, 19, guard)
+    # Evaluate the pre-concatenation verse first (shares the guard); result unused here.
+    fix_tester._evaluate(_NU_2519, "nu", 25, 19, guard)
     after = fix_tester._evaluate(f"{_NU_2519} {_NU_2601}", "nu", 25, 19, guard)
     assert after.status == "CLEAN"
     assert not after.labels
