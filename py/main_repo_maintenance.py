@@ -1,19 +1,22 @@
-"""Repo maintenance: clean .novc/, run the pytest suite, run the routine rebuild.
+"""Repo maintenance: clean .novc/, lint, run the pytest suite, run the routine rebuild.
 
 Run from anywhere (each step resolves paths via ``repo_paths.repo_root()``):
 
     python py/main_repo_maintenance.py
     python py/main_repo_maintenance.py --skip-novc
+    python py/main_repo_maintenance.py --skip-lint
     python py/main_repo_maintenance.py --skip-tests
     python py/main_repo_maintenance.py --skip-rebuild
     python py/main_repo_maintenance.py --continue-on-test-failure
 
-Three independent steps, in order:
+Four independent steps, in order:
 
 1. Wipe the gitignored ``.novc/`` scratch dir. Everything in it is a
    regenerable download cache or tool output, never a durable result.
-2. Run ``pytest py/tests`` (the whole repo's test suite).
-3. Run ``py/main_0_mega.py``, the routine downstream rebuild -- every
+2. Run ``ruff check py`` (the linter, configured by ``ruff.toml``). Lint
+   failures set the overall exit status but do not block the later steps.
+3. Run ``pytest py/tests`` (the whole repo's test suite).
+4. Run ``py/main_0_mega.py``, the routine downstream rebuild -- every
    parameterless, non-download rebuild step (vendored-file sync, WLC
    JSON/Unicode, accgram, the 4.20/4.22 diffs, and the a-notes build).
 
@@ -40,6 +43,9 @@ def _parse_args() -> argparse.Namespace:
         "--skip-novc", action="store_true", help="don't clean .novc/"
     )
     parser.add_argument(
+        "--skip-lint", action="store_true", help="don't run ruff"
+    )
+    parser.add_argument(
         "--skip-tests", action="store_true", help="don't run the test suite"
     )
     parser.add_argument(
@@ -64,6 +70,15 @@ def clean_novc() -> None:
         print(f".novc: removed {len(removed)} entries: {', '.join(removed)}")
     else:
         print(".novc: already empty")
+
+
+def run_lint() -> bool:
+    result = subprocess.run(
+        [sys.executable, "-m", "ruff", "check", "py"], cwd=_REPO
+    )
+    ok = result.returncode == 0
+    print(f"lint: {'OK' if ok else f'FAILED (exit {result.returncode})'}")
+    return ok
 
 
 def run_tests() -> bool:
@@ -97,6 +112,9 @@ def main() -> None:
 
     if not args.skip_novc:
         clean_novc()
+
+    if not args.skip_lint:
+        ok = run_lint() and ok
 
     if not args.skip_tests:
         tests_ok = run_tests()
