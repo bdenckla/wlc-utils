@@ -265,10 +265,9 @@ _PARA_1 = (
     " grammar-checks all p-trad readings; this page serves to document the claim that",
     *[" ", H.bold("Simanim's Tiqqun"), " follows the p-trad."],
     " Along the way, this page transcribes two of Simanim's marginal notes ",
-    " — not as the evidence for the answer, but for the light they throw on "
+    " — not to document the claim, but to document "
     "how conscious Simanim is of the choice it makes.",
 )
-
 
 
 def _intro() -> tuple[object, ...]:
@@ -284,24 +283,18 @@ def _intro() -> tuple[object, ...]:
                 " and its appendix (p. 246) is the p-trad ",
                 _TAHTON,
                 " — both differing from the m-trad only at this first commandment "
-                "(the ",
-                _heb("אנכי…עבדים"),
-                " unit). I established this the simple way: I compared Simanim's own Decalogue "
-                "body text against what Hebrew Wikisource records as the p-trad (the ",
-                H.bold("four readings"),
-                " below), and it matches. I have not reproduced Simanim's body text here — take "
+                "(the אנכי…עבדים unit). Since no digital Simanim exists, I established this by visually spot-checking Simanim "
+                "against Hebrew Wikisource's p-trad. I have not reproduced Simanim's body text here — you'll just have to take "
                 "it on my word.",
             )
         ),
         H.para(
             (
-                "Two of Simanim's marginal notes — one beside each Decalogue — are transcribed "
+                "Two of Simanim's marginal notes are transcribed "
                 "further down. They are ",
                 H.bold("not"),
-                " what establishes the finding (the body text is); they are worth reading for a "
-                "subtler, more-for-fun question the ",
-                link("conclusion", "#simanim-conclusion"),
-                " returns to: how conscious is Simanim of having made the older choice?",
+                " what establishes the finding (the body text is); they are worth reading"
+                " to get a sense of how conscious Simanim is of having made their choice of the p-trad.",
             )
         ),
     )
@@ -318,9 +311,9 @@ def _structure_content(name: str) -> tuple[object, ...]:
     if name == "m-trad taḥton":
         return ("merges ", _heb("אנכי…פני"), " into one verse")
     if name == "m-trad elyon":
-        return (_heb("אנכי…עבדים"), " its own verse → 10 verses")
+        return ("אנכי…עבדים", " its own verse → 10 verses")
     if name == "p-trad taḥton":
-        return (_heb("אנכי…עבדים"), " its own verse (= m-trad ", _ELYON, ")")
+        return ("אנכי…עבדים", " its own verse (= m-trad ", _ELYON, ")")
     return ("merges commandments I + II → 9 verses",)
 
 
@@ -356,7 +349,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
         H.heading_level_2("The four readings of אנכי…עבדים"),
         H.para(
             (
-                "The m-trad and the p-trad accent the Decalogue's first unit ",
+                "The m-trad and the p-trad accent the Decalogue's אנכי…עבדים unit ",
                 "differently, and the two ",
                 _heb("טעמים"),
                 " are effectively reassigned by one notch at the first commandment. Reading "
@@ -370,13 +363,13 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                 " is what decides the structure: a ",
                 H.bold(_ROM_SILLUQ_SOF_PASUQ),
                 " there ends the verse, so ",
-                _heb("אנכי…עבדים"),
+                "אנכי…עבדים",
                 " stands as its own verse; an ",
                 H.bold(_ROM_ETNAHTA),
                 " or ",
                 H.bold(_ROM_REVIA),
                 " there is mid-verse, folding ",
-                _heb("אנכי…עבדים"),
+                "אנכי…עבדים",
                 " into a longer verse.",
             )
         ),
@@ -386,7 +379,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                 (
                     H.bold(("Printed ", _TAHTON, " = m-trad ", _ELYON, ".")),
                     " Once ",
-                    _heb("אנכי…עבדים"),
+                    "אנכי…עבדים",
                     " is its own verse there is only one grammatical way to accent it — ",
                     _ROM_ETNAHTA,
                     " in the middle, ",
@@ -424,7 +417,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                     "The m-trad ",
                     _TAHTON,
                     " does not give ",
-                    _heb("אנכי…עבדים"),
+                    "אנכי…עבדים",
                     " its own verse either — it runs ",
                     _heb("אנכי…פני"),
                     " together (",
@@ -485,7 +478,7 @@ def _p83_scan_and_transcription() -> object:
     img = H.img(
         {
             "src": _P83_IMG,
-            "alt": "Simanim Tiqqun p. 83: marginal note on the Exodus Decalogue’s first unit",
+            "alt": "Simanim Tiqqun p. 83: marginal note on the Exodus Decalogue’s אנכי…עבדים unit",
             "style": "max-width: 100%; height: auto;",
             "width": "275",
         }
@@ -509,7 +502,7 @@ def _p83_section() -> tuple[object, ...]:
         H.para(
             (
                 "A note in the margin of the Exodus (Yitro) Decalogue, on ",
-                _heb("אנכי…עבדים"),
+                "אנכי…עבדים",
                 ".",
             )
         ),
@@ -525,11 +518,11 @@ def _p83_section() -> tuple[object, ...]:
                 "); {but} there are editions that call for it to be chanted as in the ",
                 _TAHTON,
                 " {i.e. giving ",
-                _heb("אנכי…עבדים"),
+                "אנכי…עבדים",
                 " its own verse — see the four readings above}, since by the Masorah there must "
                 "be Ten "
                 "Commandments here — thus: {",
-                _heb("אנכי…עבדים"),
+                "אנכי…עבדים",
                 " as its own verse, shown above, with ",
                 _ROM_SILLUQ_SOF_PASUQ,
                 " at ",
@@ -561,7 +554,7 @@ def _p83_section() -> tuple[object, ...]:
                 _heb("בפנים"),
                 ") ",
                 _ELYON,
-                " reading ends the first unit on a ",
+                " reading ends the אנכי…עבדים unit on a ",
                 H.bold(_ROM_REVIA),
                 " — the merged, nine-verse p-trad structure — and it files the standalone, "
                 "ten-dibrot reading (",
@@ -634,7 +627,7 @@ def _p246_section() -> tuple[object, ...]:
         ),
         _figure(
             _P246_IMG,
-            "Simanim Tiqqun p. 246: appendix note on the taḥton Decalogue’s first unit",
+            "Simanim Tiqqun p. 246: appendix note on the taḥton Decalogue’s אנכי…עבדים unit",
             "Simanim Tiqqun, p. 246 — appendix note contrasting בטעם רגיל and כתר אר״ץ.",
             width=None,
         ),
@@ -686,7 +679,7 @@ def _p246_section() -> tuple[object, ...]:
                 " and ends with ",
                 H.bold(_ROM_ETNAHTA),
                 ", thus: {the merged reading ",
-                _heb("אנכי…עבדים"),
+                "אנכי…עבדים",
                 " shown above}. And as regards the “Ten Commandments” in the ",
                 _ELYON,
                 " within the [main body of the] Ḥumash: …",
@@ -708,7 +701,7 @@ def _p246_section() -> tuple[object, ...]:
         H.heading_level_3("How it maps onto the four readings"),
         H.para(
             (
-                "The note contrasts two cantillations of the first unit, both already in the "
+                "The note contrasts two cantillations of the אנכי…עבדים unit, both already in the "
                 "table above:",
             )
         ),
@@ -717,7 +710,7 @@ def _p246_section() -> tuple[object, ...]:
             (
                 "So the note has Simanim, in its own editorial voice, distinguishing two ",
                 _TAHTON,
-                " cantillations of the first unit: what it prints and calls the "
+                " cantillations of the אנכי…עבדים unit: what it prints and calls the "
                 "“ordinary” (",
                 _heb("רגיל"),
                 ") ",
@@ -727,7 +720,7 @@ def _p246_section() -> tuple[object, ...]:
                 " carrying ",
                 _ROM_SILLUQ_SOF_PASUQ,
                 ", ",
-                _heb("אנכי…עבדים"),
+                "אנכי…עבדים",
                 " as its own verse, its marks identical to the m-trad ",
                 _ELYON,
                 " — versus the Keter's merged ",
@@ -749,7 +742,7 @@ def _conclusion() -> tuple[object, ...]:
                 "Simanim's Tiqqun follows the ",
                 " p-trad for the Decalogues, not the m-trad. The two "
                 "traditions diverge only at the opening commandment ",
-                _heb("אנכי…עבדים"),
+                "אנכי…עבדים",
                 ", and Simanim lands on the p-trad side of that divergence on both strands: "
                 "the p-trad ",
                 _ELYON,
@@ -781,8 +774,7 @@ def _conclusion() -> tuple[object, ...]:
             (
                 "One scope note: I examined only Simanim's ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue. The opening unit ",
-                _heb("אנכי…עבדים"),
+                " (Yitro) Decalogue. The אנכי…עבדים unit ",
                 " is textually identical in the ",
                 H.bold("Deuteronomy"),
                 " (Vaetḥanan) Decalogue, so the same choice between the two cantillations would "
@@ -851,7 +843,7 @@ def _aleppo_codex_section() -> tuple[object, ...]:
                     " cantillations; the ",
                     _ELYON,
                     " is the other (",
-                    _heb("אנכי…עבדים"),
+                    "אנכי…עבדים",
                     " as its own verse, ",
                     _ROM_TIPEHA_SILLUQ,
                     "). Citing the ",
@@ -863,7 +855,7 @@ def _aleppo_codex_section() -> tuple[object, ...]:
                     " The Aleppo Codex's Torah survives only from Deut 28:17 onward, so the "
                     "physical Codex contains neither Decalogue; any statement about how "
                     "“the Keter” points ",
-                    _heb("אנכי…עבדים"),
+                    "אנכי…עבדים",
                     " rests on reconstruction or pre-1947 testimony. Simanim, in a passing "
                     "reference, has no room to say so — but strictly it should read “one of the "
                     "two cantillations reconstructed for the Aleppo Codex is …”.",
