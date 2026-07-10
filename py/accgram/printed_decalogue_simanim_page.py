@@ -65,7 +65,7 @@ from pathlib import Path
 from accgram import printed_decalogue as pd
 from accgram import rtms_report
 from accgram.almost_errors_html_shared import hbo, link
-from accgram.uni_to_marks import is_accent, is_base_letter
+from accgram.uni_to_marks import is_base_letter
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 
@@ -75,8 +75,8 @@ import repo_paths
 
 REPORT_TITLE = "Simanim's Tiqqun follows the printed tradition for the Decalogues"
 
-_ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
-_ISSUE_56 = "https://github.com/bdenckla/wlc-utils/issues/56"
+# _ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
+# _ISSUE_56 = "https://github.com/bdenckla/wlc-utils/issues/56"
 _PRINTED_DECALOGUE_PAGE = "printed-decalogue.html"
 _P83_IMG = "img/simanim-decalogue-p83.png"
 _P246_IMG = "img/simanim-decalogue-p246.png"
@@ -204,15 +204,19 @@ class _Reading:
         self.avadim_accent = _accent_of(self.avadim_word)
 
 
-# (romanized name, ex reading, ex tradition, expected אנכי, expected עבדים) -- the expected
+# (display name, ex reading, ex data-tradition, expected אנכי, expected עבדים) -- the expected
 # accents pin the live derivation so a data change that moved a boundary accent would fail the
 # build rather than silently mis-render.  Display extras (MAM strand letter, structure blurb)
 # live in the table renderer, keyed by name.
+#
+# NB: the third element is the DATA lookup key (matched against vr.tradition in _resolve_readings),
+# which the source emits as "manuscript"/"printed" -- NOT the "m-trad"/"p-trad" display shorthand.
+# Keep it in the source's spelling; only the display name (first element) uses the shorthand.
 _READING_SPECS = (
-    ("manuscript taḥton", "taxton", "manuscript", _ROM_PASHTA, _ROM_ETNAHTA),
-    ("manuscript elyon", "elyon", "manuscript", _ROM_TIPEHA, _ROM_SILLUQ),
-    ("printed taḥton", "taxton", "printed", _ROM_TIPEHA, _ROM_SILLUQ),
-    ("printed elyon", "elyon", "printed", _ROM_PASHTA, _ROM_REVIA),
+    ("m-trad taḥton", "taxton", "manuscript", _ROM_PASHTA, _ROM_ETNAHTA),
+    ("m-trad elyon", "elyon", "manuscript", _ROM_TIPEHA, _ROM_SILLUQ),
+    ("p-trad taḥton", "taxton", "printed", _ROM_TIPEHA, _ROM_SILLUQ),
+    ("p-trad elyon", "elyon", "printed", _ROM_PASHTA, _ROM_REVIA),
 )
 
 
@@ -254,14 +258,13 @@ _PARA_1 = (
     " because at the opening commandment the",
     *[" ", H.bold("printed tradition")," (p-trad)"],
     " differs from the",
-    *[" (Tiberian) ", H.bold("manuscript tradition"), " (m-trad),"],
+    *[" ", H.bold("manuscript tradition"), " (m-trad),"],
     f" yielding two different {_ELYON} strands",
     f" and two different {_TAHTON} strands.",
-    link("The companion page", _PRINTED_DECALOGUE_PAGE),
-    " grammar-checks all four printed-vs-manuscript readings; this page asks ",
-    *["which of them ", H.bold("Simanim's Tiqqun"), " follows."],
-    " Along the way it transcribes two of Simanim's marginal notes ",
-    *["(formerly two comments on ", link("issue #56", _ISSUE_56), ")"],
+    *[" ", link("The companion page", _PRINTED_DECALOGUE_PAGE)],
+    " grammar-checks all p-trad readings; this page serves to document the claim that",
+    *[" ", H.bold("Simanim's Tiqqun"), " follows the p-trad."],
+    " Along the way, this page transcribes two of Simanim's marginal notes ",
     " — not as the evidence for the answer, but for the light they throw on "
     "how conscious Simanim is of the choice it makes.",
 )
@@ -274,19 +277,17 @@ def _intro() -> tuple[object, ...]:
         H.para(_PARA_1),
         H.para(
             (
-                "The answer is the ",
-                H.bold("printed"),
-                " tradition. In its ",
+                "Simanim's Tiqqun follows the p-trad for the Decalogues. In its ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue, Simanim's main text (p. 83) is the printed ",
+                " (Yitro) Decalogue, Simanim's main text (p. 83) is the p-trad ",
                 _ELYON,
-                " and its appendix (p. 246) is the printed ",
+                " and its appendix (p. 246) is the p-trad ",
                 _TAHTON,
-                " — both differing from the Tiberian manuscript only at this first commandment "
+                " — both differing from the m-trad only at this first commandment "
                 "(the ",
                 _heb("אנכי…עבדים"),
                 " unit). I established this the simple way: I compared Simanim's own Decalogue "
-                "body text against what Hebrew Wikisource records as the printed tradition (the ",
+                "body text against what Hebrew Wikisource records as the p-trad (the ",
                 H.bold("four readings"),
                 " below), and it matches. I have not reproduced Simanim's body text here — take "
                 "it on my word.",
@@ -310,16 +311,16 @@ def _intro() -> tuple[object, ...]:
 # _render_reading_name); the MAM strand letter and the structure blurbs mix English with the
 # odd Hebrew word, wrapped individually.  _STRAND_LETTER's keys are the internal romanized
 # reading names (matched against r.name), not display text.
-_STRAND_LETTER: dict[str, str] = {"manuscript taḥton": "א", "manuscript elyon": "ב"}
+_STRAND_LETTER: dict[str, str] = {"m-trad taḥton": "א", "m-trad elyon": "ב"}
 
 
 def _structure_content(name: str) -> tuple[object, ...]:
-    if name == "manuscript taḥton":
+    if name == "m-trad taḥton":
         return ("merges ", _heb("אנכי…פני"), " into one verse")
-    if name == "manuscript elyon":
+    if name == "m-trad elyon":
         return (_heb("אנכי…עבדים"), " its own verse → 10 verses")
-    if name == "printed taḥton":
-        return (_heb("אנכי…עבדים"), " its own verse (= manuscript ", _ELYON, ")")
+    if name == "p-trad taḥton":
+        return (_heb("אנכי…עבדים"), " its own verse (= m-trad ", _ELYON, ")")
     return ("merges commandments I + II → 9 verses",)
 
 
@@ -355,7 +356,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
         H.heading_level_2("The four readings of אנכי…עבדים"),
         H.para(
             (
-                "The manuscript and printed traditions accent the Decalogue's first unit ",
+                "The m-trad and the p-trad accent the Decalogue's first unit ",
                 "differently, and the two ",
                 _heb("טעמים"),
                 " are effectively reassigned by one notch at the first commandment. Reading "
@@ -383,7 +384,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
         H.unordered_list(
             (
                 (
-                    H.bold(("Printed ", _TAHTON, " = manuscript ", _ELYON, ".")),
+                    H.bold(("Printed ", _TAHTON, " = m-trad ", _ELYON, ".")),
                     " Once ",
                     _heb("אנכי…עבדים"),
                     " is its own verse there is only one grammatical way to accent it — ",
@@ -402,8 +403,8 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                     ".",
                 ),
                 (
-                    H.bold(("Printed ", _ELYON, " ≠ manuscript ", _ELYON, ".")),
-                    " The printed ",
+                    H.bold(("Printed ", _ELYON, " ≠ m-trad ", _ELYON, ".")),
+                    " The p-trad ",
                     _ELYON,
                     " puts ",
                     H.bold(_ROM_REVIA),
@@ -411,7 +412,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                     _heb("עבדים"),
                     " and runs the first two commandments together into one verse (→ ",
                     H.bold("9"),
-                    " total), where the manuscript ",
+                    " total), where the m-trad ",
                     _ELYON,
                     " closes on ",
                     _ROM_SILLUQ,
@@ -420,7 +421,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                     ").",
                 ),
                 (
-                    "The manuscript ",
+                    "The m-trad ",
                     _TAHTON,
                     " does not give ",
                     _heb("אנכי…עבדים"),
@@ -562,13 +563,13 @@ def _p83_section() -> tuple[object, ...]:
                 _ELYON,
                 " reading ends the first unit on a ",
                 H.bold(_ROM_REVIA),
-                " — the merged, nine-verse printed structure — and it files the standalone, "
+                " — the merged, nine-verse p-trad structure — and it files the standalone, "
                 "ten-dibrot reading (",
                 _ROM_SILLUQ_SOF_PASUQ,
                 " at ",
                 _heb("עבדים"),
-                ") under what merely “some books” do. So Simanim treats the printed structure "
-                "as the norm and the manuscript-shaped alternative as the deviation — aware of "
+                ") under what merely “some books” do. So Simanim treats the p-trad structure "
+                "as the norm and the m-trad alternative as the deviation — aware of "
                 "the alternative, but not adopting it.",
             )
         ),
@@ -601,7 +602,7 @@ def _p246_mapping_table() -> object:
             H.table_header((_heb("בטעם רגיל"), " ", H.small("(ordinary)"))),
             H.table_datum(_ROM_TIPEHA),
             H.table_datum(_ROM_SOF_PASUQ),
-            H.table_datum(("printed ", _TAHTON, " = manuscript ", _ELYON)),
+            H.table_datum(("printed ", _TAHTON, " = m-trad ", _ELYON)),
         )
     )
     keter = H.table_row(
@@ -609,7 +610,7 @@ def _p246_mapping_table() -> object:
             H.table_header(_heb("כתר אר״ץ")),
             H.table_datum(_ROM_PASHTA),
             H.table_datum(_ROM_ETNAHTA),
-            H.table_datum(("manuscript ", _TAHTON, " (MAM ", _heb("א"), ")")),
+            H.table_datum(("m-trad ", _TAHTON, " (MAM ", _heb("א"), ")")),
         )
     )
     return H.table((header, ragil, keter), {"class": "printed-decalogue-verdict"})
@@ -727,11 +728,11 @@ def _p246_section() -> tuple[object, ...]:
                 _ROM_SILLUQ_SOF_PASUQ,
                 ", ",
                 _heb("אנכי…עבדים"),
-                " as its own verse, its marks identical to the manuscript ",
+                " as its own verse, its marks identical to the m-trad ",
                 _ELYON,
                 " — versus the Keter's merged ",
                 _ROM_PASHTA_ETNAHTA,
-                ", the genuine manuscript ",
+                ", the genuine m-trad ",
                 _TAHTON,
                 ", which it sets aside. Simanim thus knows the two differ and knowingly prints "
                 "the newer one — another glimpse of the same self-awareness as the p. 83 note.",
@@ -746,17 +747,15 @@ def _conclusion() -> tuple[object, ...]:
         H.para(
             (
                 "Simanim's Tiqqun follows the ",
-                H.bold("printed"),
-                " tradition for the Decalogues, not the Tiberian manuscript one. The two "
-                "traditions "
-                "diverge only at the opening commandment ",
+                " p-trad for the Decalogues, not the m-trad. The two "
+                "traditions diverge only at the opening commandment ",
                 _heb("אנכי…עבדים"),
-                ", and Simanim lands on the printed side of that divergence on both strands: "
-                "the printed ",
+                ", and Simanim lands on the p-trad side of that divergence on both strands: "
+                "the p-trad ",
                 _ELYON,
                 " in its ",
                 H.bold("Exodus"),
-                " main text (p. 83), and the printed ",
+                " main text (p. 83), and the p-trad ",
                 _TAHTON,
                 " in its appendix (p. 246).",
             )
@@ -766,13 +765,13 @@ def _conclusion() -> tuple[object, ...]:
                 "A closing, more-for-fun observation. I find it somewhat ",
                 H.bold("editorially inconsistent"),
                 " that Simanim — otherwise a modern Tiqqun (from Feldheim) — keeps "
-                "printed-tradition Decalogues, where more recent Bibles have moved toward the "
-                "manuscript ",
+                "p-trad Decalogues, where more recent Bibles have moved toward the "
+                "m-trad ",
                 _ELYON,
-                " and manuscript ",
+                " and m-trad ",
                 _TAHTON,
                 ". The two marginal notes above suggest "
-                "Simanim was at least half-aware of the tension: each sets its printed reading "
+                "Simanim was at least half-aware of the tension: each sets its p-trad reading "
                 "against the standalone-verse / Keter alternative it declines to follow. "
                 "(Straddling old and new is less surprising in a house like Koren, which does it "
                 "more pervasively; Simanim's is a milder case.)",
@@ -844,7 +843,7 @@ def _aleppo_codex_section() -> tuple[object, ...]:
                     ),
                     " The merged ",
                     _ROM_PASHTA_ETNAHTA,
-                    " reading is the manuscript ",
+                    " reading is the m-trad ",
                     _TAHTON,
                     " — one strand. Like the Tiberian manuscripts generally, the Aleppo "
                     "Codex's Decalogue carries ",

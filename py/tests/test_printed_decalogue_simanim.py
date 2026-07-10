@@ -37,17 +37,17 @@ def test_four_readings_derive_expected_accents() -> None:
     readings = sim._resolve_readings(_results_or_skip())
     got = {r.name: (r.anokhi_accent, r.avadim_accent) for r in readings}
     assert got == {
-        "manuscript taḥton": ("pashta", "etnaḥta"),
-        "manuscript elyon": ("tipeḥa", "silluq"),
-        "printed taḥton": ("tipeḥa", "silluq"),
-        "printed elyon": ("pashta", "revia"),
+        "m-trad taḥton": ("pashta", "etnaḥta"),
+        "m-trad elyon": ("tipeḥa", "silluq"),
+        "p-trad taḥton": ("tipeḥa", "silluq"),
+        "p-trad elyon": ("pashta", "revia"),
     }
 
 
 def test_printed_taxton_equals_manuscript_elyon() -> None:
-    """The page's headline identity: printed taḥton = manuscript elyon on both boundary words."""
+    """The page's headline identity: p-trad taḥton = m-trad elyon on both boundary words."""
     readings = {r.name: r for r in sim._resolve_readings(_results_or_skip())}
-    pt, me = readings["printed taḥton"], readings["manuscript elyon"]
+    pt, me = readings["p-trad taḥton"], readings["m-trad elyon"]
     assert (pt.anokhi_accent, pt.avadim_accent) == (me.anokhi_accent, me.avadim_accent)
 
 
