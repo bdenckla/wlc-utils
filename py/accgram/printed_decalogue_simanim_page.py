@@ -7,11 +7,11 @@ manuscript Decalogue accentuations).  This page ports two research notes -- form
 
   * **p. 83** (main-text, *elyon*): Simanim's marginal note on the Exodus (Yitro) Decalogue
     first unit אנכי...עבדים.  Its default (בפנים) elyon reading ends that unit on a *revia*
-    (the merged, 9-verse printed structure); "some books" instead give the standalone
-    *sof-pasuq* verse to keep ten dibrot.
+    (the merged, 9-verse printed structure); "some books" instead give אנכי...עבדים its own
+    verse (silluq + *sof pasuq* at עבדים) to keep ten dibrot.
   * **p. 246** (appendix, *taḥton*): the mirror note, contrasting בטעם רגיל (= printed
-    taḥton: standalone, *sof pasuq* at עבדים) with כתר אר״ץ (= manuscript taḥton:
-    pashta...etnaḥta, merged).
+    taḥton: אנכי...עבדים as its own verse, *sof pasuq* at עבדים) with כתר אר״ץ (= manuscript
+    taḥton: pashta...etnaḥta, merged).
 
 Together they show Simanim carries the **printed** elyon in its main text and the **printed**
 taḥton in its appendix, so the Simanim scans are independent printed-tradition witnesses.
@@ -66,7 +66,7 @@ _ACCENT_NAMES: dict[str, str] = {
 
 # The base-letter skeleton of the word עבדים -- the closing word of the first Decalogue unit,
 # located within each reading's first chanted verse by matching its consonants (it sits
-# mid-verse in the merged readings, verse-finally in the standalone ones).
+# mid-verse in the merged readings, verse-finally where אנכי…עבדים is its own verse).
 _AVADIM = "עבדים"
 
 
@@ -190,9 +190,12 @@ def _intro() -> tuple[object, ...]:
                 H.bold("printed elyon"),
                 " as its default; the ",
                 H.bold("appendix"),
-                " note (p. 246) sits beside the taḥton Decalogue and prints the standalone ",
+                " note (p. 246) sits beside the taḥton Decalogue and prints the ",
                 H.bold("printed taḥton"),
-                ". Each even points at the other. Taken together they show Simanim carrying "
+                " (in which ",
+                _heb("אנכי…עבדים"),
+                " is its own verse). Each even points at the other. Taken together they show "
+                "Simanim carrying "
                 "the printed tradition on both strands -- so the Simanim scans are independent "
                 "printed-tradition witnesses, not merely an echo of MAM's own note.",
             )
@@ -209,9 +212,9 @@ def _structure_content(name: str) -> tuple[object, ...]:
     if name == "manuscript taḥton":
         return ("merges ", _heb("אנכי…פני"), " into one verse")
     if name == "manuscript elyon":
-        return (_heb("אנכי…עבדים"), " standalone → 10 verses")
+        return (_heb("אנכי…עבדים"), " its own verse → 10 verses")
     if name == "printed taḥton":
-        return ("standalone (= manuscript elyon)",)
+        return (_heb("אנכי…עבדים"), " its own verse (= manuscript elyon)")
     return ("merges commandments I + II → 9 verses",)
 
 
@@ -255,7 +258,19 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                 _heb("אנכי"),
                 ") and on ",
                 _heb("עבדים"),
-                ":",
+                ". The accent on ",
+                _heb("עבדים"),
+                " is what decides the structure: a ",
+                H.bold("silluq + sof pasuq"),
+                " there ends the verse, so ",
+                _heb("אנכי…עבדים"),
+                " stands as its own verse; an ",
+                H.bold("etnaḥta"),
+                " or ",
+                H.bold("revia"),
+                " there is mid-verse, folding ",
+                _heb("אנכי…עבדים"),
+                " into a longer verse.",
             )
         ),
         _four_readings_table(readings),
@@ -265,7 +280,7 @@ def _four_readings_section(readings: list[_Reading]) -> tuple[object, ...]:
                     H.bold("Printed taḥton = manuscript elyon."),
                     " Once ",
                     _heb("אנכי…עבדים"),
-                    " is a standalone verse there is only one grammatical way to accent it "
+                    " is its own verse there is only one grammatical way to accent it "
                     "-- etnaḥta in the middle, silluq at the end -- so both traditions land on "
                     "the same marks (consonants, accents, and accent-boundary marks: sof "
                     "pasuq, maqaf, legarmeh). They differ only by an immaterial meteg.",
@@ -387,9 +402,11 @@ def _p83_section() -> tuple[object, ...]:
                 " (taḥton) accentuation {specifically the ",
                 H.bold("printed"),
                 " taḥton — see the four readings above}, since by the Masorah there must be Ten "
-                "Commandments here — thus: {the standalone verse ",
+                "Commandments here — thus: {",
                 _heb("אנכי…עבדים"),
-                " shown above, ending on silluq / sof pasuq}. [The Ten Commandments without the "
+                " as its own verse, shown above, with silluq + sof pasuq at ",
+                _heb("עבדים"),
+                "}. [The Ten Commandments without the "
                 "upper accentuation appear at the end of the Ḥumash.]",
             )
         ),
@@ -416,7 +433,11 @@ def _p83_section() -> tuple[object, ...]:
                 ") elyon reading thus ends the first unit on a ",
                 H.bold("revia"),
                 " — the merged, nine-verse printed structure — and only “some books” "
-                "restore the standalone sof-pasuq verse to keep ten dibrot. On its own "
+                "restore ",
+                _heb("אנכי…עבדים"),
+                " as its own verse (silluq + sof pasuq at ",
+                _heb("עבדים"),
+                ") to keep ten dibrot. On its own "
                 "testimony, Simanim follows the ",
                 H.bold("printed"),
                 " tradition for the Decalogue elyon.",
@@ -538,7 +559,11 @@ def _p246_section() -> tuple[object, ...]:
             (
                 "So Simanim's appendix, in its own editorial voice, draws the ",
                 "printed-vs-manuscript taḥton distinction directly: what it prints and calls "
-                "the “ordinary” taḥton is the standalone reading whose marks are the ",
+                "the “ordinary” taḥton is the reading in which ",
+                _heb("עבדים"),
+                " carries silluq + sof pasuq (",
+                _heb("אנכי…עבדים"),
+                " as its own verse) — the reading whose marks are the ",
                 H.bold("manuscript's elyon"),
                 ", while the genuine manuscript taḥton — the merged ",
                 "pashta…etnaḥta",
@@ -589,7 +614,11 @@ def _conclusion() -> tuple[object, ...]:
                 " in the main text of its Decalogues and the ",
                 H.bold("printed taḥton"),
                 " in its appendix. Both marginal notes are independent printed-tradition "
-                "witnesses to the standalone silluq reading that the printed tradition itself "
+                "witnesses to the reading in which ",
+                _heb("עבדים"),
+                " carries silluq + sof pasuq (",
+                _heb("אנכי…עבדים"),
+                " as its own verse) — the reading the printed tradition itself "
                 "labels “taḥton,” which is what lets the ",
                 link("issue #52 finding", _PRINTED_DECALOGUE_PAGE),
                 " rest on more than MAM's own note alone.",
