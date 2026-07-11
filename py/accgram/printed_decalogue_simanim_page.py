@@ -74,8 +74,8 @@ _PRINTED_DECALOGUE_PAGE = "printed-decalogue.html"
 # The four-strands table now lives on the companion page (issue #52); all cross-references land
 # on its heading anchor there rather than on a local table.
 _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
-_P83_IMG = "img/simanim-decalogue-p83.png"
-_P246_IMG = "img/simanim-decalogue-p246.png"
+_P83_IMG = "img/simanim-decalogue-p-083-sidenote.png"
+_P246_IMG = "img/simanim-decalogue-p-246-footnote.png"
 # Body-text scans (issue #62): the actual Simanim Decalogues whose cantillation establishes the
 # p-trad finding -- distinct from the two note scans above.  p. 83 is the main Decalogue in the
 # elyon; p. 246 is the appendix Decalogue in the taxton.

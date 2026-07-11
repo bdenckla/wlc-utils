@@ -75,5 +75,5 @@ def test_scan_images_committed() -> None:
     """Both Simanim scans are committed locally (the page references them by relative path,
     not the issue CDN)."""
     img_dir = repo_paths.gh_pages_dir() / "accgram" / "img"
-    for name in ("simanim-decalogue-p83.png", "simanim-decalogue-p246.png"):
+    for name in ("simanim-decalogue-p-083-sidenote.png", "simanim-decalogue-p-246-footnote.png"):
         assert (img_dir / name).is_file(), f"missing committed scan {name}"
