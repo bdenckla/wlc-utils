@@ -45,20 +45,13 @@ _ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
 _SOURCE_URL = "https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים"
 
 
-def _heb(text: str) -> object:
-    """Unpointed Hebrew: rendered in the default font, *not* the Taamey pointed-text font.
-
-    Only genuinely pointed Hebrew is wrapped in ``hbo()`` (lang="hbo", which the stylesheet
-    styles with the pointed-text font); bare consonantal terms such as the reading names or
-    section references get this plain-``lang="he"`` span instead (issue #58)."""
-    return H.span(text, {"lang": "he"})
-
-
-def _reading_name(name: str) -> tuple[object, ...]:
-    """Render a reading name (e.g. ``"m-trad taḥton"``) with its bare-Hebrew strand word in a
-    plain ``lang="he"`` span, per the strand-name convention: ``("m-trad ", <span>תחתון</span>)``."""
-    tradition, strand = pds.render_reading_name(name)
-    return (tradition, _heb(strand))
+# Strand names are single-sourced in printed_decalogue_strands (see its module docstring). These
+# thin local aliases let the Hebrew strand words drop straight into the prose -- bare in a string
+# or as {_TAHTON} / {_ELYON} inside an f-string -- rather than through a lang="he" <span> (issue
+# #58), matching the Simanim companion page. Genuinely *pointed* Hebrew still goes through hbo()
+# (lang="hbo" -> the Taamey pointed-text font); only bare consonantal terms are inlined this way.
+_TAHTON = pds.TAHTON
+_ELYON = pds.ELYON
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -83,40 +76,20 @@ def _intro() -> tuple[object, ...]:
         H.heading_level_2("The question"),
         H.para(
             (
-                "The two Decalogues (Exodus 20 and Deuteronomy 5) are each chanted two ways: "
-                "the ",
-                _heb("טעם תחתון"),
-                " division into ordinary-length verses, and the ",
-                _heb("טעם עליון"),
-                " division by commandment, which makes the short "
-                "prohibitions (",
-                _heb("לא תרצח"),
-                ", ",
-                _heb("לא תנאף"),
-                ", ",
-                _heb("לא תגנב"),
-                ") their own tiny verses and folds long "
-                "passages into single long ones. ",
+                "The two Decalogues are each chanted two ways: "
+                "the טעם תחתון division into ordinary-length verses, and the טעם עליון division "
+                "by commandment, which makes the short prohibitions (לא תרצח, לא תנאף, לא תגנב) "
+                "their own tiny verses and folds long passages into single long ones. ",
                 link("Issue #36", _ISSUE_36),
                 " grammar-checked the ",
                 H.bold("Tiberian-manuscript"),
-                " (WLC / MAM) ",
-                _heb(pds.TAHTON),
-                " and ",
-                _heb(pds.ELYON),
-                " threads by detangling WLC’s dual "
+                f" (WLC / MAM) {_TAHTON} and {_ELYON} threads by detangling WLC’s dual "
                 "cantillation. This page (",
                 link("issue #52", _ISSUE_52),
                 ") asks the companion question for the ",
                 H.bold("printed editions"),
-                " (",
-                _heb("דפוסים"),
-                ", also Koren and Simanim): fed through the very same prose grammar checker, "
-                "are their ",
-                _heb(pds.TAHTON),
-                " and ",
-                _heb(pds.ELYON),
-                " accentuations grammatical too?",
+                " (דפוסים, also Koren and Simanim): fed through the very same prose grammar "
+                f"checker, are their {_TAHTON} and {_ELYON} accentuations grammatical too?",
             )
         ),
         H.para(
@@ -169,33 +142,25 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
         _verdict_table(by_key),
         H.para(
             (
-                H.bold(_heb(pds.TAHTON)),
-                " is grammatical everywhere — both books, both traditions. The printed ",
-                _heb(pds.TAHTON),
-                " differs from the manuscript only in details that do not touch the "
-                "accent grammar (vocalization such as ",
+                H.bold(_TAHTON),
+                f" is grammatical everywhere — both books, both traditions. The printed {_TAHTON}"
+                " differs from the manuscript only in details that do not touch the accent "
+                "grammar (vocalization such as ",
                 hbo("תִּרְצַח"),
                 " vs ",
                 hbo("תִּרְצָח"),
-                " at ",
-                _heb("לא תרצח"),
-                ", and where a maqaf or ga‘ya falls), and "
-                "in one verse boundary: the printed ",
-                _heb(pds.TAHTON),
-                " ends its first verse at ",
-                _heb("מבית עבדים"),
-                " (so it has one more verse than the manuscript, which runs the first two "
-                "commandments together). Both parse clean.",
+                " at לא תרצח, and where a maqaf or ga‘ya falls), and in one verse boundary: the "
+                f"printed {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse "
+                "than the manuscript, which runs the first two commandments together). Both "
+                "parse clean.",
             )
         ),
         H.para(
             (
-                H.bold(_heb(pds.ELYON)),
+                H.bold(_ELYON),
                 " is grammatical in the manuscript but ",
                 H.bold("not"),
-                " in the printed editions: the printed ",
-                _heb(pds.ELYON),
-                " of ",
+                f" in the printed editions: the printed {_ELYON} of ",
                 H.bold("each"),
                 " Decalogue has exactly one ungrammatical chanted verse — its opening one.",
             )
@@ -315,7 +280,7 @@ def _verse_counts_table(readings: list[pds.Reading]) -> object:
         rows.append(
             H.table_row(
                 (
-                    H.table_header(_reading_name(r.name)),
+                    H.table_header(pds.render_reading_name(r.name)),
                     H.table_datum(str(r.n_verses)),
                 )
             )
@@ -350,7 +315,7 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
         H.unordered_list(
             (
                 (
-                    H.bold(("Printed ", _heb(pds.TAHTON), " = manuscript ", _heb(pds.ELYON), ".")),
+                    H.bold(f"Printed {_TAHTON} = manuscript {_ELYON}."),
                     " Once אנכי…עבדים is its own verse there is only one grammatical way to"
                     " accent it — ",
                     pds.ROM_ETNAHTA,
@@ -369,38 +334,31 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                     " rowspan).",
                 ),
                 (
-                    H.bold(("Printed ", _heb(pds.ELYON), " ≠ manuscript ", _heb(pds.ELYON), ".")),
-                    " The printed ",
-                    _heb(pds.ELYON),
-                    " puts ",
+                    H.bold(f"Printed {_ELYON} ≠ manuscript {_ELYON}."),
+                    f" The printed {_ELYON} puts ",
                     H.bold(pds.ROM_REVIA),
                     " on עבדים and runs the first two commandments together into one verse (→ ",
                     H.bold("9"),
-                    " total), where the manuscript ",
-                    _heb(pds.ELYON),
-                    " closes on ",
+                    f" total), where the manuscript {_ELYON} closes on ",
                     pds.ROM_SILLUQ,
                     " (→ ",
                     H.bold("10"),
                     ").",
                 ),
                 (
-                    "The manuscript ",
-                    _heb(pds.TAHTON),
-                    " does not give אנכי…עבדים its own verse either — it runs אנכי…פני together (",
+                    f"The manuscript {_TAHTON} does not give אנכי…עבדים its own verse either — it"
+                    " runs אנכי…פני together (",
                     pds.ROM_ETNAHTA,
                     " at עבדים, ",
                     pds.ROM_SOF_PASUQ,
-                    " at פני",
-                    "), a third structure again.",
+                    " at פני), a third structure again.",
                 ),
             )
         ),
         H.para(
             (
-                "Only one of these four strands is ungrammatical — the printed ",
-                _heb(pds.ELYON),
-                ", whose merged opening verse the ",
+                f"Only one of these four strands is ungrammatical — the printed {_ELYON}, whose "
+                "merged opening verse the ",
                 link("section below", "#why-the-printed-elyon-fails"),
                 " dissects.",
             )
@@ -464,29 +422,22 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
     ms_cmd1, ms_cmd2 = ex_ms.chanted_verses[0], ex_ms.chanted_verses[1]
     return (
         H.heading_level_2(
-            ("Why the printed ", _heb(pds.ELYON), " fails: the merged first verse"),
+            f"Why the printed {_ELYON} fails: the merged first verse",
             {"id": "why-the-printed-elyon-fails"},
         ),
         H.para(
             (
-                "In the manuscript ",
-                _heb(pds.ELYON),
-                ", the first commandment ",
+                f"In the manuscript {_ELYON}, the first commandment ",
                 hbo("אָנֹכִי … עֲבָדִים"),
-                " is its own chanted verse, and ",
-                _heb("לא יהיה לך אלהים אחרים"),
-                " begins the next — two separate verses, ",
+                " is its own chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
+                "separate verses, ",
                 H.bold("both of which parse clean"),
                 ". The printed editions instead merge the first two commandments into a single "
                 "verse (nine chanted verses in all, against the manuscript’s ten). That one "
                 "merged verse is what the grammar rejects. Shown stripped to consonants and "
-                "accents (MAM-simple style) and divided at the printed ",
-                _heb(pds.TAHTON),
-                "’s verse boundaries — one ",
-                _heb(pds.ELYON),
-                " verse (E) spanning the five ordinary ",
-                _heb(pds.TAHTON),
-                " verses (T) it merges:",
+                f"accents (MAM-simple style) and divided at the printed {_TAHTON}’s verse "
+                f"boundaries — one {_ELYON} verse (E) spanning the five ordinary {_TAHTON} "
+                "verses (T) it merges:",
             )
         ),
         _merged_verse_table(by_key),
@@ -510,11 +461,9 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
             (
                 "The cause is the merged ",
                 H.bold("structure"),
-                ", not sheer length: Deuteronomy’s printed ",
-                _heb(pds.ELYON),
-                " Sabbath verse runs 55 words "
-                "and parses clean, while this merged verse (51 words) does not. Keeping the two "
-                "commandments as the manuscript’s two separate verses (",
+                f", not sheer length: Deuteronomy’s printed {_ELYON} Sabbath verse runs 55 "
+                "words and parses clean, while this merged verse (51 words) does not. Keeping "
+                "the two commandments as the manuscript’s two separate verses (",
                 f"{len(ms_cmd1.words)} and {len(ms_cmd2.words)} words) ",
                 "is exactly what lets them parse.",
             )
@@ -543,11 +492,9 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
             (
                 "See also ",
                 link("Simanim's Tiqqun as an independent witness", "printed-decalogue-simanim.html"),
-                ": two notes from Simanim's Tiqqun — its main text uses the printed ",
-                _heb(pds.ELYON),
-                " and its appendix the printed ",
-                _heb(pds.TAHTON),
-                " (issue #62). That page now leans on this page's ",
+                f": two notes from Simanim's Tiqqun — its main text uses the printed {_ELYON} "
+                f"and its appendix the printed {_TAHTON} (issue #62). That page now leans on "
+                "this page's ",
                 link("four-strands table", "#four-strands"),
                 " rather than repeating it.",
             )
