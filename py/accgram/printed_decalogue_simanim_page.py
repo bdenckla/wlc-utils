@@ -323,12 +323,11 @@ def _intro(source: dict) -> tuple[object, ...]:
                 _ELYON,
                 " and its appendix Decalogue (p. 246) is the p-trad ",
                 _TAHTON,
-                " — both differing from the m-trad only at this first commandment (the"
-                " אנכי…עבדים unit). Since no digital Simanim exists, I established this by"
+                ". Since no digital Simanim exists, I established this by"
                 " visually spot-checking Simanim against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
-                ". I have not reproduced Simanim's body text here — you'll just have to take it"
-                " on my word.",
+                ". I have not reproduced Simanim's body text here — you'll just have to take"
+                " my word for it.",
             )
         ),
         H.para(
