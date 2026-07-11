@@ -70,43 +70,46 @@ def _by_key(results: list[pd.VersionResult]) -> dict[tuple[str, str, str], pd.Ve
 
 
 def _intro() -> tuple[object, ...]:
+    # The opening span -- from "Roughly speaking" through "two different תחתון strands" -- is
+    # duplicated verbatim in printed_decalogue_simanim_page._PARA_1 (the no-HTML shared module pds
+    # can't hold rendered prose). If you edit this wording, edit it there too (and vice versa).
     return (
         H.heading_level_1(REPORT_TITLE),
         H.heading_level_2("The question"),
         H.para(
             (
-                "Each Decalogue — the one in ",
+                "Roughly speaking, each Decalogue — the one in ",
                 H.bold("Exodus"),
                 " and the one in ",
                 H.bold("Deuteronomy"),
-                " — has two strands of cantillation, the טעם תחתון and the טעם עליון; in truth"
+                " — has two strands of cantillation, the טעם תחתון and the טעם עליון."
+                " Why is this only roughly true? Because in truth"
                 " there are ",
                 H.bold("four"),
-                ", because at the opening commandment the ",
+                " strands: at the opening commandment the ",
                 H.bold("printed tradition"),
                 " (p-trad) differs from the ",
                 H.bold("manuscript tradition"),
                 f" (m-trad), yielding two different {_ELYON} strands and two different"
-                f" {_TAHTON} strands. Richard Goerwitz's ",
+                f" {_TAHTON} strands. We have run Richard Goerwitz's ",
                 link("accent grammar checker", _GOERWITZ_URL),
-                " vets the manuscript tradition's cantillation as grammatical prose; this page"
-                " asks the companion question for the ",
-                H.bold("printed tradition"),
-                " (still visible in more traditional editions like Koren and Simanim): fed"
-                f" through the same grammar checker, are its {_TAHTON} and {_ELYON}"
-                " accentuations grammatical too?",
+                " against the m-trad cantillations (as represented by WLC); this page"
+                " asks the companion question for the p-trad",
+                " (a tradition still visible in editions like Koren and Simanim): fed"
+                f" through the same grammar checker, are the p-trad's {_TAHTON} and {_ELYON}"
+                " grammatical too?",
             )
         ),
         H.para(
             (
-                "There is no dual cantillation to detangle here. Where the Tiberian manuscript"
-                " packs both of its strands into one text, the Wikisource base page ",
+                "There is no dual cantillation to detangle here. Whereas the Tiberian manuscripts (and WLC)"
+                " pack both of their strands onto one set of letters, the Wikisource page ",
                 link("עשרת הדברות בסיס/טעמים", _SOURCE_URL),
-                " spells out all the strands — printed and manuscript alike — separately and"
-                " word-for-word, each as plain single cantillation. Every chanted verse"
+                " spells out all the strands separately — p-trad and m-trad alike —"
+                " each as single cantillation. Every chanted verse"
                 " (delimited by its own sof pasuq) is grammar-checked on its own. The"
-                " manuscript tradition is the baseline — MAM's own authoritative text, expected"
-                " to parse clean throughout — and the printed tradition is the object of study.",
+                " m-trad is the baseline — MAM's own authoritative text, expected"
+                " to parse clean throughout — and the p-trad is the object of study.",
             )
         ),
     )
@@ -148,24 +151,24 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
         H.para(
             (
                 H.bold(_TAHTON),
-                f" is grammatical everywhere — both books, both traditions. The printed {_TAHTON}"
-                " differs from the manuscript only in details that do not touch the accent "
+                f" is grammatical everywhere — both books, both traditions. The p-trad {_TAHTON}"
+                " differs from the m-trad in details that do not touch the accent "
                 "grammar (vocalization such as ",
                 hbo("תִּרְצַח"),
                 " vs ",
                 hbo("תִּרְצָח"),
                 " at לא תרצח, and where a maqaf or ga‘ya falls), and in one verse boundary: the "
-                f"printed {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse "
-                "than the manuscript, which runs the first two commandments together). Both "
+                f"p-trad {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse "
+                "than the m-trad, which runs the first two commandments together). Both "
                 "parse clean.",
             )
         ),
         H.para(
             (
                 H.bold(_ELYON),
-                " is grammatical in the manuscript but ",
+                " is grammatical in the m-trad but ",
                 H.bold("not"),
-                f" in the printed tradition: the printed {_ELYON} of ",
+                f" in the p-trad: the p-trad {_ELYON} of ",
                 H.bold("each"),
                 " Decalogue has exactly one ungrammatical chanted verse — its opening one.",
             )
@@ -208,14 +211,14 @@ def _range_cell(words: tuple[str, ...], *, attr=None) -> object:
 # --------------------------------------------------------------------------- #
 # Two-char row-header abbreviations for the four strands, coherent with the merged table's
 # single E/T letters below; the dotted-underline title spells each out (romanized taḥton/elyon is
-# fine in an attribute). m/p = manuscript/printed tradition, T/E = taxton/elyon strand. The titles
+# fine in an attribute). m/p = m-trad/p-trad, T/E = taxton/elyon strand. The titles
 # say NO "upper"/"lower" -- that gloss invites confusion with above-letter vs below-letter accents
 # (see printed_decalogue_strands module docstring; same rule on both printed-Decalogue pages).
 _STRAND_ABBRS: dict[str, tuple[str, str]] = {
-    "m-trad taḥton": ("mT", "manuscript-tradition taḥton (cantillation strand)"),
-    "m-trad elyon": ("mE", "manuscript-tradition elyon (cantillation strand)"),
-    "p-trad taḥton": ("pT", "printed-tradition taḥton (cantillation strand)"),
-    "p-trad elyon": ("pE", "printed-tradition elyon (cantillation strand)"),
+    "m-trad taḥton": ("mT", "manuscript-tradition taḥton"),
+    "m-trad elyon": ("mE", "manuscript-tradition elyon"),
+    "p-trad taḥton": ("pT", "printed-tradition taḥton"),
+    "p-trad elyon": ("pE", "printed-tradition elyon"),
 }
 
 # m-trad elyon and p-trad taxton accent אנכי…עבדים identically (tipexa on אנכי, silluq on עבדים)
@@ -328,8 +331,8 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
         H.heading_level_2("The four strands of אנכי…עבדים", {"id": "four-strands"}),
         H.para(
             (
-                "The manuscript and printed traditions accent the Decalogue's אנכי…עבדים unit "
-                "differently. The accent on עבדים is what decides the structure: a ",
+                "The m-trad and p-trad accent the Decalogue's אנכי…עבדים unit differently."
+                " The accent on עבדים is what decides the structure: a ",
                 H.bold(pds.ROM_SILLUQ_SOF_PASUQ),
                 " there ends the verse, so אנכי…עבדים stands as its own verse; an ",
                 H.bold(pds.ROM_ETNAHTA),
@@ -354,7 +357,7 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
         H.unordered_list(
             (
                 (
-                    H.bold(f"Printed {_TAHTON} = manuscript {_ELYON}."),
+                    H.bold(f"P-trad {_TAHTON} = m-trad {_ELYON}."),
                     " Once אנכי…עבדים is its own verse there is only one grammatical way to"
                     " accent it — ",
                     pds.ROM_ETNAHTA,
@@ -373,19 +376,19 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                     " shared row, labelled mE/pT.",
                 ),
                 (
-                    H.bold(f"Printed {_ELYON} ≠ manuscript {_ELYON}."),
-                    f" The printed {_ELYON} puts ",
+                    H.bold(f"P-trad {_ELYON} ≠ m-trad {_ELYON}."),
+                    f" The p-trad {_ELYON} puts ",
                     H.bold(pds.ROM_REVIA),
                     " on עבדים and runs the first two commandments together into one verse (→ ",
                     H.bold("9"),
-                    f" total), where the manuscript {_ELYON} closes on ",
+                    f" total), where the m-trad {_ELYON} closes on ",
                     pds.ROM_SILLUQ,
                     " (→ ",
                     H.bold("10"),
                     ").",
                 ),
                 (
-                    f"The manuscript {_TAHTON} does not give אנכי…עבדים its own verse either — it"
+                    f"The m-trad {_TAHTON} does not give אנכי…עבדים its own verse either — it"
                     " runs אנכי…פני together (",
                     pds.ROM_ETNAHTA,
                     " at עבדים, ",
@@ -396,7 +399,7 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                f"Only one of these four strands is ungrammatical — the printed {_ELYON}, whose "
+                f"Only one of these four strands is ungrammatical — the p-trad {_ELYON}, whose "
                 "merged opening verse the ",
                 link("section below", "#why-the-printed-elyon-fails"),
                 " dissects.",
@@ -461,20 +464,20 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
     ms_cmd1, ms_cmd2 = ex_ms.chanted_verses[0], ex_ms.chanted_verses[1]
     return (
         H.heading_level_2(
-            f"Why the printed {_ELYON} fails: the merged first verse",
+            f"Why the p-trad {_ELYON} fails: the merged first verse",
             {"id": "why-the-printed-elyon-fails"},
         ),
         H.para(
             (
-                f"In the manuscript {_ELYON}, the first commandment ",
+                f"In the m-trad {_ELYON}, the first commandment ",
                 hbo("אָנֹכִי … עֲבָדִים"),
                 " is its own chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
                 "separate verses, ",
                 H.bold("both of which parse clean"),
-                ". The printed tradition instead merges the first two commandments into a single "
-                "verse (nine chanted verses in all, against the manuscript’s ten). That one "
+                ". The p-trad instead merges the first two commandments into a single "
+                "verse (nine chanted verses in all, against the m-trad’s ten). That one "
                 "merged verse is what the grammar rejects. Shown stripped to consonants and "
-                f"accents (MAM-simple style) and divided at the printed {_TAHTON}’s verse "
+                f"accents (MAM-simple style) and divided at the p-trad {_TAHTON}’s verse "
                 f"boundaries — one {_ELYON} verse (E) spanning the five ordinary {_TAHTON} "
                 "verses (T) it merges:",
             )
@@ -500,9 +503,9 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
             (
                 "The cause is the merged ",
                 H.bold("structure"),
-                f", not sheer length: Deuteronomy’s printed {_ELYON} Sabbath verse runs 55 "
+                f", not sheer length: Deuteronomy’s p-trad {_ELYON} Sabbath verse runs 55 "
                 "words and parses clean, while this merged verse (51 words) does not. Keeping "
-                "the two commandments as the manuscript’s two separate verses (",
+                "the two commandments as the m-trad’s two separate verses (",
                 f"{len(ms_cmd1.words)} and {len(ms_cmd2.words)} words) ",
                 "is exactly what lets them parse.",
             )
@@ -518,10 +521,10 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
         H.heading_level_2("Source"),
         H.para(
             (
-                "All eight readings (two books × taḥton/elyon × manuscript/printed) are "
+                "All eight readings (two books × taḥton/elyon × m-trad/p-trad) are "
                 "taken from the Wikisource base page ",
                 link("עשרת הדברות בסיס/טעמים", _SOURCE_URL),
-                f" (revision {oldid}, {ts[:10]}), which every printed-vs-manuscript comparison "
+                f" (revision {oldid}, {ts[:10]}), which every p-trad-vs-m-trad comparison "
                 "table there transcludes. A handful of wiki templates are resolved to plain "
                 "pointed text (legarmeh/paseq to a paseq mark, qere for ketiv-qere, paragraph "
                 "and pisqa markers dropped); the chanted verses are split at sof pasuq.",
@@ -531,8 +534,8 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
             (
                 "See also ",
                 link("Simanim's Tiqqun as an independent witness", "printed-decalogue-simanim.html"),
-                f": two notes from Simanim's Tiqqun — its main text uses the printed {_ELYON} "
-                f"and its appendix the printed {_TAHTON} (issue #62). That page now leans on "
+                f": two notes from Simanim's Tiqqun — its main text uses the p-trad {_ELYON} "
+                f"and its appendix the p-trad {_TAHTON} (issue #62). That page now leans on "
                 "this page's ",
                 link("four-strands table", "#four-strands"),
                 " rather than repeating it.",
