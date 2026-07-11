@@ -259,6 +259,12 @@ def big(contents, attr=None):
     return htel_mk_inline("big", attr, contents)
 
 
+def bdi(contents, attr=None):
+    """Make a <bdi> element (bidirectional isolate: keeps a run of opposite-direction text,
+    e.g. Hebrew embedded in an English sentence, from disturbing the surrounding order)."""
+    return htel_mk_inline("bdi", attr, contents)
+
+
 def sup(contents, attr=None):
     """Make a <sup> (superscript) element."""
     return htel_mk_inline("sup", attr, contents)
