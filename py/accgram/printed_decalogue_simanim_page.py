@@ -125,14 +125,17 @@ def _path(path: str) -> object:
 # --------------------------------------------------------------------------- #
 # Rendering
 # --------------------------------------------------------------------------- #
+# The opening span -- from "Roughly speaking" through "two different תחתון strands" -- is
+# duplicated verbatim in printed_decalogue_page._intro() (its no-HTML shared module pds can't
+# hold rendered prose). If you edit this wording, edit it there too (and vice versa).
 _PARA_1 = (
-    "Each Decalogue — the one in",
+    "Roughly speaking, each Decalogue — the one in",
     *[" ", H.bold("Exodus"), " and the one in ", H.bold("Deuteronomy")],
     " — has two strands of cantillation, the",
-    *[" ", "טעם תחתון", " and the ", "טעם עליון", ";"],
-    " in truth there are",
-    *[" ", H.bold("four"), ","],
-    " because at the opening commandment the",
+    *[" ", "טעם תחתון", " and the ", "טעם עליון", "."],
+    " Why is this only roughly true? Because in truth there are",
+    *[" ", H.bold("four"), " strands:"],
+    " at the opening commandment the",
     *[" ", H.bold("printed tradition"), " (p-trad)"],
     " differs from the",
     *[" ", H.bold("manuscript tradition"), " (m-trad),"],
