@@ -12,7 +12,7 @@ In the printed tradition, are the accents of the Decalogue grammatical?</title>
 In the printed tradition, are the accents of the Decalogue grammatical?</h1>
 <h2>
 The question</h2>
-<p>The two Decalogues (Exodus 20 and Deuteronomy 5) are each chanted two ways: the <span lang="he">טעם תחתון</span> (taḥton, “lower”) division into ordinary-length verses, and the <span lang="he">טעם עליון</span> (elyon, “upper”) division by commandment, which makes the short prohibitions (<span lang="he">לא תרצח</span>, <span lang="he">לא תנאף</span>, <span lang="he">לא תגנב</span>) their own tiny verses and folds long passages into single long ones. <a href="https://github.com/bdenckla/wlc-utils/issues/36">Issue #36</a> grammar-checked the <b>Tiberian-manuscript</b> (WLC / MAM) taḥton and elyon threads by detangling WLC’s dual cantillation. This page (<a href="https://github.com/bdenckla/wlc-utils/issues/52">issue #52</a>) asks the companion question for the <b>printed editions</b> (<span lang="he">דפוסים</span>, also Koren and Simanim): fed through the very same prose grammar checker, are their taḥton and elyon accentuations grammatical too?</p>
+<p>The two Decalogues (Exodus 20 and Deuteronomy 5) are each chanted two ways: the <span lang="he">טעם תחתון</span> division into ordinary-length verses, and the <span lang="he">טעם עליון</span> division by commandment, which makes the short prohibitions (<span lang="he">לא תרצח</span>, <span lang="he">לא תנאף</span>, <span lang="he">לא תגנב</span>) their own tiny verses and folds long passages into single long ones. <a href="https://github.com/bdenckla/wlc-utils/issues/36">Issue #36</a> grammar-checked the <b>Tiberian-manuscript</b> (WLC / MAM) <span lang="he">תחתון</span> and <span lang="he">עליון</span> threads by detangling WLC’s dual cantillation. This page (<a href="https://github.com/bdenckla/wlc-utils/issues/52">issue #52</a>) asks the companion question for the <b>printed editions</b> (<span lang="he">דפוסים</span>, also Koren and Simanim): fed through the very same prose grammar checker, are their <span lang="he">תחתון</span> and <span lang="he">עליון</span> accentuations grammatical too?</p>
 <p>Unlike the manuscript thread, the printed and manuscript readings are already single cantillation, spelled out word-for-word on the Wikisource base page <a href="https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים">עשרת הדברות בסיס/טעמים</a>. Each chanted verse (delimited by its own sof pasuq) is fed through the shared pipeline — a leading verse-start token, the prose scanner, then the prose PLY grammar — exactly as issue #36 does. The manuscript versions are the baseline (MAM’s own authoritative text, expected all clean); the printed versions are the object of study.</p>
 <h2>
 The verdict</h2>
@@ -23,22 +23,48 @@ The verdict</h2>
 <tr><th>Deuteronomy 5 — taḥton (lower)</th><td class="clean">✓ all 12 clean</td><td class="clean">✓ all 13 clean</td></tr>
 <tr><th>Deuteronomy 5 — elyon (upper)</th><td class="clean">✓ all 10 clean</td><td class="ungrammatical">✗ 1 of 9 ungrammatical (verse 1)</td></tr>
 </table>
-<p><b>taḥton</b> is grammatical everywhere — both books, both traditions. The printed taḥton differs from the manuscript only in details that do not touch the accent grammar (vocalization such as <span lang="hbo">תִּרְצַח</span> vs <span lang="hbo">תִּרְצָח</span> at <span lang="he">לא תרצח</span>, and where a maqaf or ga‘ya falls), and in one verse boundary: the printed taḥton ends its first verse at <span lang="he">מבית עבדים</span> (so it has one more verse than the manuscript, which runs the first two commandments together). Both parse clean.</p>
-<p><b>elyon</b> is grammatical in the manuscript but <b>not</b> in the printed editions: the printed elyon of <b>each</b> Decalogue has exactly one ungrammatical chanted verse — its opening one.</p>
-<h2>
-Why the printed elyon fails: the merged first verse</h2>
-<p>In the manuscript elyon, the first commandment <span lang="hbo">אָנֹכִי … עֲבָדִים</span> is its own chanted verse, and <span lang="he">לא יהיה לך אלהים אחרים</span> begins the next — two separate verses, <b>both of which parse clean</b>. The printed editions instead merge the first two commandments into a single verse (nine chanted verses in all, against the manuscript’s ten). That one merged verse is what the grammar rejects. Shown accent-stripped and divided at the printed taḥton’s verse boundaries — one elyon verse (E) spanning the five ordinary taḥton verses (T) it merges:</p>
-<table class="printed-decalogue-merged" dir="rtl">
-<tr><th><abbr title="elyon (upper cantillation strand)">E</abbr></th><td colspan="5"><span class="vc-start">אָֽנֹכִי</span>…<span class="vc-stop">מִצְוֺתָֽי׃</span></td></tr>
-<tr><th><abbr title="taḥton (lower cantillation strand)">T</abbr></th><td><span class="vc-start">אָֽנֹכִי</span>…<span class="vc-stop">עֲבָדִֽים׃</span></td><td><span class="vc-start">לֹֽא־יִהְיֶה</span>…<span class="vc-stop">עַל־פָּנָֽי׃</span></td><td><span class="vc-start">לֹֽא־תַעֲשֶׂה</span>…<span class="vc-stop">לָאָֽרֶץ׃</span></td><td><span class="vc-start">לֹֽא־תִשְׁתַּחֲוֶה</span>…<span class="vc-stop">לְשֹׂנְאָֽי׃</span></td><td><span class="vc-start">וְעֹשֶׂה</span>…<span class="vc-stop">מִצְוֺתָֽי׃</span></td></tr>
+<p><b><span lang="he">תחתון</span></b> is grammatical everywhere — both books, both traditions. The printed <span lang="he">תחתון</span> differs from the manuscript only in details that do not touch the accent grammar (vocalization such as <span lang="hbo">תִּרְצַח</span> vs <span lang="hbo">תִּרְצָח</span> at <span lang="he">לא תרצח</span>, and where a maqaf or ga‘ya falls), and in one verse boundary: the printed <span lang="he">תחתון</span> ends its first verse at <span lang="he">מבית עבדים</span> (so it has one more verse than the manuscript, which runs the first two commandments together). Both parse clean.</p>
+<p><b><span lang="he">עליון</span></b> is grammatical in the manuscript but <b>not</b> in the printed editions: the printed <span lang="he">עליון</span> of <b>each</b> Decalogue has exactly one ungrammatical chanted verse — its opening one.</p>
+<h2 id="four-strands">
+The four strands of אנכי…עבדים</h2>
+<p>The manuscript and printed traditions accent the Decalogue's אנכי…עבדים unit differently. The accent on עבדים is what decides the structure: a <b>silluq + sof pasuq</b> there ends the verse, so אנכי…עבדים stands as its own verse; an <b>etnaḥta</b> or <b>revia</b> there is mid-verse, folding אנכי…עבדים into a longer verse. In the two folding strands the range below shows עבדים in the middle, so its structure-deciding accent is on view:</p>
+<table class="strand-table" dir="rtl">
+<tr><th><abbr title="manuscript-tradition taḥton (lower cantillation strand)">mT</abbr></th><td lang="hbo"><span class="vc-start">אנכי֙</span>…<span class="vc-mid">עבד֑ים</span>…<span class="vc-stop">על־פנֽי׃</span></td></tr>
+<tr><th><abbr title="manuscript-tradition elyon (upper cantillation strand)">mE</abbr></th><td lang="hbo" rowspan="2"><span class="vc-start">אנכ֖י</span>…<span class="vc-stop">עבדֽים׃</span></td></tr>
+<tr><th><abbr title="printed-tradition taḥton (lower cantillation strand)">pT</abbr></th></tr>
+<tr><th><abbr title="printed-tradition elyon (upper cantillation strand)">pE</abbr></th><td lang="hbo"><span class="vc-start">אנכי֙</span>…<span class="vc-mid">עבד֗ים</span>…<span class="vc-stop">מצותֽי׃</span></td></tr>
+</table>
+<p>How many chanted verses each strand divides the Exodus Decalogue into:</p>
+<table>
+<tr><th>strand</th><th>chanted verses (Exodus)</th></tr>
+<tr><th>m-trad <span lang="he">תחתון</span></th><td>12</td></tr>
+<tr><th>m-trad <span lang="he">עליון</span></th><td>10</td></tr>
+<tr><th>p-trad <span lang="he">תחתון</span></th><td>13</td></tr>
+<tr><th>p-trad <span lang="he">עליון</span></th><td>9</td></tr>
+</table>
+<ul>
+<li>
+<b>Printed <span lang="he">תחתון</span> = manuscript <span lang="he">עליון</span>.</b> Once אנכי…עבדים is its own verse there is only one grammatical way to accent it — etnaḥta in the middle, silluq at the end — so both traditions land on the same marks (consonants, accents, and accent-boundary marks: sof pasuq, maqaf, legarmeh). They differ only by an immaterial meteg (which the stripped range cells above drop, so their shared cell is one rowspan).</li>
+<li>
+<b>Printed <span lang="he">עליון</span> ≠ manuscript <span lang="he">עליון</span>.</b> The printed <span lang="he">עליון</span> puts <b>revia</b> on עבדים and runs the first two commandments together into one verse (→ <b>9</b> total), where the manuscript <span lang="he">עליון</span> closes on silluq (→ <b>10</b>).</li>
+<li>
+The manuscript <span lang="he">תחתון</span> does not give אנכי…עבדים its own verse either — it runs אנכי…פני together (etnaḥta at עבדים, sof pasuq at פני), a third structure again.</li>
+</ul>
+<p>Only one of these four strands is ungrammatical — the printed <span lang="he">עליון</span>, whose merged opening verse the <a href="#why-the-printed-elyon-fails">section below</a> dissects.</p>
+<h2 id="why-the-printed-elyon-fails">
+Why the printed <span lang="he">עליון</span> fails: the merged first verse</h2>
+<p>In the manuscript <span lang="he">עליון</span>, the first commandment <span lang="hbo">אָנֹכִי … עֲבָדִים</span> is its own chanted verse, and <span lang="he">לא יהיה לך אלהים אחרים</span> begins the next — two separate verses, <b>both of which parse clean</b>. The printed editions instead merge the first two commandments into a single verse (nine chanted verses in all, against the manuscript’s ten). That one merged verse is what the grammar rejects. Shown stripped to consonants and accents (MAM-simple style) and divided at the printed <span lang="he">תחתון</span>’s verse boundaries — one <span lang="he">עליון</span> verse (E) spanning the five ordinary <span lang="he">תחתון</span> verses (T) it merges:</p>
+<table class="strand-table" dir="rtl">
+<tr><th><abbr title="elyon (upper cantillation strand)">E</abbr></th><td lang="hbo" colspan="5"><span class="vc-start">אנכי֙</span>…<span class="vc-stop">מצותֽי׃</span></td></tr>
+<tr><th><abbr title="taḥton (lower cantillation strand)">T</abbr></th><td lang="hbo"><span class="vc-start">אנכ֖י</span>…<span class="vc-stop">עבדֽים׃</span></td><td lang="hbo"><span class="vc-start">לא־יהי֥ה</span>…<span class="vc-stop">על־פנֽי׃</span></td><td lang="hbo"><span class="vc-start">לא־תעש֨ה</span>…<span class="vc-stop">לאֽרץ׃</span></td><td lang="hbo"><span class="vc-start">לא־תשתחו֥ה</span>…<span class="vc-stop">לשנאֽי׃</span></td><td lang="hbo"><span class="vc-start">וע֥שה</span>…<span class="vc-stop">מצותֽי׃</span></td></tr>
 <tr><th><abbr title="schematic color gradient for the elyon verse">e</abbr></th><td class="vc-grad" colspan="5"></td></tr>
 <tr><th><abbr title="schematic color gradient for the taḥton verse(s)">t</abbr></th><td class="vc-grad"></td><td class="vc-grad"></td><td class="vc-grad"></td><td class="vc-grad"></td><td class="vc-grad"></td></tr>
 </table>
 <p>The single etnaḥta falls at <span lang="hbo">לְשֹׂנְאָי</span>, leaving an over-long first half that carries a segolta plus three separate revia domains (at <span lang="hbo">עֲבָדִים</span>, <span lang="hbo">עַל־פָּנַי</span>, and <span lang="hbo">לָאָרֶץ</span>); the prose grammar cannot build it and returns a <code>pashta_phrase</code> error — the same failure, at the same structural point, in both Decalogues.</p>
-<p>The cause is the merged <b>structure</b>, not sheer length: Deuteronomy’s printed elyon Sabbath verse runs 55 words and parses clean, while this merged verse (51 words) does not. Keeping the two commandments as the manuscript’s two separate verses (9 and 42 words) is exactly what lets them parse.</p>
+<p>The cause is the merged <b>structure</b>, not sheer length: Deuteronomy’s printed <span lang="he">עליון</span> Sabbath verse runs 55 words and parses clean, while this merged verse (51 words) does not. Keeping the two commandments as the manuscript’s two separate verses (9 and 42 words) is exactly what lets them parse.</p>
 <h2>
 Source</h2>
 <p>All eight readings (two books × taḥton/elyon × manuscript/printed) are taken from the Wikisource base page <a href="https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים">עשרת הדברות בסיס/טעמים</a> (revision 2810844, 2023-10-22), which every printed-vs-manuscript comparison table there transcludes. A handful of wiki templates are resolved to plain pointed text (legarmeh/paseq to a paseq mark, qere for ketiv-qere, paragraph and pisqa markers dropped); the chanted verses are split at sof pasuq.</p>
-<p>See also <a href="printed-decalogue-simanim.html">Simanim's Tiqqun as an independent witness</a>: two marginal notes from Simanim's Tiqqun that carry the printed elyon in the main text and the printed taḥton in the appendix (issue #62).</p>
+<p>See also <a href="printed-decalogue-simanim.html">Simanim's Tiqqun as an independent witness</a>: two notes from Simanim's Tiqqun — its main text uses the printed <span lang="he">עליון</span> and its appendix the printed <span lang="he">תחתון</span> (issue #62). That page now leans on this page's <a href="#four-strands">four-strands table</a> rather than repeating it.</p>
 </body>
 </html>

@@ -7,6 +7,16 @@ taxton/elyon threads by detangling WLC): this page reports whether the *printed*
 grammar checker.  It renders live from ``printed_decalogue.check_all`` over the vendored
 readings, so it can never drift from the checker's real behaviour.
 
+It also lays out the four cantillation strands of the opening אנכי...עבדים unit (manuscript /
+printed x taḥton / elyon) as a MAM-simple-style range table, resolved by the shared
+``printed_decalogue_strands`` module.  The Simanim-witness companion page
+(``printed_decalogue_simanim_page``) links back to that table rather than duplicating it.
+
+Editorial / style conventions for the rendered prose are single-sourced in
+``printed_decalogue_strands`` (bare-Hebrew strand names תחתון / עליון in output, romanized only
+in ``title`` / ``alt`` attributes and internal keys; ``ROM_*`` accent names never retyped; real
+em dashes).
+
 Run via ``main_accgram.py generate-html``.
 """
 
@@ -16,10 +26,12 @@ import argparse
 from pathlib import Path
 
 from accgram import printed_decalogue as pd
+from accgram import printed_decalogue_strands as pds
 from accgram import rtms_report
 from accgram.almost_errors_html_shared import hbo, link
-from accgram.uni_to_marks import is_accent
 from cmn.utf8_io import force_utf8_io
+from mb_cmn import hebrew_accent_strip as has
+from mb_cmn import hebrew_punctuation as hpunc
 import wlc_provenance as provenance
 
 from py_html import wlc_utils_html as H
@@ -40,6 +52,13 @@ def _heb(text: str) -> object:
     styles with the pointed-text font); bare consonantal terms such as the reading names or
     section references get this plain-``lang="he"`` span instead (issue #58)."""
     return H.span(text, {"lang": "he"})
+
+
+def _reading_name(name: str) -> tuple[object, ...]:
+    """Render a reading name (e.g. ``"m-trad taḥton"``) with its bare-Hebrew strand word in a
+    plain ``lang="he"`` span, per the strand-name convention: ``("m-trad ", <span>תחתון</span>)``."""
+    tradition, strand = pds.render_reading_name(name)
+    return (tradition, _heb(strand))
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -67,9 +86,9 @@ def _intro() -> tuple[object, ...]:
                 "The two Decalogues (Exodus 20 and Deuteronomy 5) are each chanted two ways: "
                 "the ",
                 _heb("טעם תחתון"),
-                " (taḥton, “lower”) division into ordinary-length verses, and the ",
+                " division into ordinary-length verses, and the ",
                 _heb("טעם עליון"),
-                " (elyon, “upper”) division by commandment, which makes the short "
+                " division by commandment, which makes the short "
                 "prohibitions (",
                 _heb("לא תרצח"),
                 ", ",
@@ -81,7 +100,11 @@ def _intro() -> tuple[object, ...]:
                 link("Issue #36", _ISSUE_36),
                 " grammar-checked the ",
                 H.bold("Tiberian-manuscript"),
-                " (WLC / MAM) taḥton and elyon threads by detangling WLC’s dual "
+                " (WLC / MAM) ",
+                _heb(pds.TAHTON),
+                " and ",
+                _heb(pds.ELYON),
+                " threads by detangling WLC’s dual "
                 "cantillation. This page (",
                 link("issue #52", _ISSUE_52),
                 ") asks the companion question for the ",
@@ -89,7 +112,11 @@ def _intro() -> tuple[object, ...]:
                 " (",
                 _heb("דפוסים"),
                 ", also Koren and Simanim): fed through the very same prose grammar checker, "
-                "are their taḥton and elyon accentuations grammatical too?",
+                "are their ",
+                _heb(pds.TAHTON),
+                " and ",
+                _heb(pds.ELYON),
+                " accentuations grammatical too?",
             )
         ),
         H.para(
@@ -142,9 +169,10 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
         _verdict_table(by_key),
         H.para(
             (
-                H.bold("taḥton"),
-                " is grammatical everywhere — both books, both traditions. The printed "
-                "taḥton differs from the manuscript only in details that do not touch the "
+                H.bold(_heb(pds.TAHTON)),
+                " is grammatical everywhere — both books, both traditions. The printed ",
+                _heb(pds.TAHTON),
+                " differs from the manuscript only in details that do not touch the "
                 "accent grammar (vocalization such as ",
                 hbo("תִּרְצַח"),
                 " vs ",
@@ -152,7 +180,9 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
                 " at ",
                 _heb("לא תרצח"),
                 ", and where a maqaf or ga‘ya falls), and "
-                "in one verse boundary: the printed taḥton ends its first verse at ",
+                "in one verse boundary: the printed ",
+                _heb(pds.TAHTON),
+                " ends its first verse at ",
                 _heb("מבית עבדים"),
                 " (so it has one more verse than the manuscript, which runs the first two "
                 "commandments together). Both parse clean.",
@@ -160,10 +190,12 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
         ),
         H.para(
             (
-                H.bold("elyon"),
+                H.bold(_heb(pds.ELYON)),
                 " is grammatical in the manuscript but ",
                 H.bold("not"),
-                " in the printed editions: the printed elyon of ",
+                " in the printed editions: the printed ",
+                _heb(pds.ELYON),
+                " of ",
                 H.bold("each"),
                 " Decalogue has exactly one ungrammatical chanted verse — its opening one.",
             )
@@ -172,39 +204,227 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
 
 
 # --------------------------------------------------------------------------- #
-# The merged-verse table (issue #59)
+# Word stripping and the shared range cell
 # --------------------------------------------------------------------------- #
-# A range-divided, accent-stripped view of the one ungrammatical printed-elyon verse. The
-# printed tradition merges the first two commandments into a single chanted verse, which the
-# printed taxton instead keeps as five ordinary verses. Modeled on MAM-simple's
-# versification-and-cantillation "TEMBte" tables, but: no M/B verse-number rows, the *printed*
-# strands rather than the manuscript ones, and the cantillation accents stripped — this table
-# is about the range division, not the accents. (The M/B numbering is dropped because the
-# printed taxton splits the first commandment from the second where the MAM taxton merges them
-# into one chanted verse, so a single "MAM verse number" row cannot align 1:1 with the printed
-# columns; issue #59.)
-_ELYON_TITLE = "elyon (upper cantillation strand)"
-_TAXTON_TITLE = "taḥton (lower cantillation strand)"
-_ELYON_GRAD_TITLE = "schematic color gradient for the elyon verse"
-_TAXTON_GRAD_TITLE = "schematic color gradient for the taḥton verse(s)"
-
-
-def _strip_teamim(word: str) -> str:
-    """Pointed text (consonants + vowels) with the cantillation accents removed. Meteg, maqaf,
-    paseq and sof pasuq are not cantillation accents (``uni_to_marks.is_accent``) and stay."""
-    return "".join(ch for ch in word if not is_accent(ch))
+def _strip_pointing(word: str) -> str:
+    """Reduce a pointed Hebrew word to consonants + cantillation accents + accent-coupled
+    punctuation (maqaf, sof pasuq, legarmeh), dropping vowels, dagesh, shin/sin dots, rafe,
+    and ordinary meteg. A word's U+05BD is *silluq* (an accent, kept) exactly when the word is
+    verse-final, i.e. carries sof pasuq; otherwise every U+05BD is an ordinary meteg (a ga'ya)
+    and is dropped. MAM-simple style, via the shared mb_cmn.hebrew_accent_strip kernel (cf.
+    MAM-basics ``versification_and_cantillation/strands.py::_strip_pointing``)."""
+    keep_meteg = has.METEG_SILLUQ if hpunc.SOPA in word else has.METEG_DROP
+    return has.strip_to_accents(word, keep_meteg=keep_meteg)
 
 
 def _abbr(letter: str, title: str) -> object:
     return H.htel_mk_inline("abbr", {"title": title}, letter)
 
 
-def _range_cell(words: tuple[str, ...], *, attr=None) -> object:
-    """A ``first … last`` range label (accent-stripped): each range is a complete verse, so its
-    first word is tinted green (start) and its last word red (stop), as the TEMBte tables do."""
-    first = H.span_c(_strip_teamim(words[0]), "vc-start")
-    last = H.span_c(_strip_teamim(words[-1]), "vc-stop")
-    return H.table_datum((first, "…", last), attr)
+def _range_cell(words: tuple[str, ...], *, mid: str | None = None, attr=None) -> object:
+    """A ``first … last`` range label (stripped to consonants + accents), each range a complete
+    verse: its first word is tinted green (start) and its last word red (stop), as the TEMBte
+    tables do. An optional ``mid`` word (one of ``words``, e.g. עבדים) is shown in the middle as
+    a neutral vc-mid word — ``first…mid…last`` — so a folding strand's structure-deciding accent
+    is visible. ``lang="hbo"`` goes on the ``<td>`` (not the spans): the cells now carry accents,
+    and this page's convention (issue #58) gives accent-bearing Hebrew ``lang="hbo"`` → the
+    Taamey font; one attr on the td keeps the ``…`` and words at a single size."""
+    td_attr = {"lang": "hbo", **(attr or {})}
+    first = H.span_c(_strip_pointing(words[0]), "vc-start")
+    last = H.span_c(_strip_pointing(words[-1]), "vc-stop")
+    if mid is None:
+        return H.table_datum((first, "…", last), td_attr)
+    mid_span = H.span_c(_strip_pointing(mid), "vc-mid")
+    return H.table_datum((first, "…", mid_span, "…", last), td_attr)
+
+
+# --------------------------------------------------------------------------- #
+# The four-strands table (issue #52)
+# --------------------------------------------------------------------------- #
+# Two-char row-header abbreviations for the four strands, coherent with the merged table's
+# single E/T letters below; the dotted-underline title spells each out (romanized is fine in an
+# attribute). m/p = manuscript/printed tradition, T/E = taxton/elyon strand.
+_STRAND_ABBRS: dict[str, tuple[str, str]] = {
+    "m-trad taḥton": ("mT", "manuscript-tradition taḥton (lower cantillation strand)"),
+    "m-trad elyon": ("mE", "manuscript-tradition elyon (upper cantillation strand)"),
+    "p-trad taḥton": ("pT", "printed-tradition taḥton (lower cantillation strand)"),
+    "p-trad elyon": ("pE", "printed-tradition elyon (upper cantillation strand)"),
+}
+
+# The two folding strands do NOT give אנכי…עבדים its own verse: עבדים sits mid-verse (etnaxta for
+# m-trad taxton, revia for p-trad elyon), so their range cells show it as a neutral vc-mid word
+# in a three-part אנכי…עבדים…end range, making the structure-deciding accent visible. The other
+# two make אנכי…עבדים its own verse (עבדים is the verse-final, silluq-bearing last word), so a
+# plain two-part range suffices.
+_FOLDING_STRANDS = ("m-trad taḥton", "p-trad elyon")
+
+# m-trad elyon and p-trad taxton accent אנכי…עבדים identically (tipexa on אנכי, silluq on עבדים)
+# and give it the same first chanted verse; being adjacent rows, their shared range cell is a
+# single rowspan="2" that states the identity visually.
+_MERGED_STRANDS = ("m-trad elyon", "p-trad taḥton")
+
+
+def _strand_range_cell(r: pds.Reading, *, attr=None) -> object:
+    mid = r.avadim_word if r.name in _FOLDING_STRANDS else None
+    return _range_cell(r.first_verse_words, mid=mid, attr=attr)
+
+
+def _four_strands_table(readings: list[pds.Reading]) -> object:
+    by_name = {r.name: r for r in readings}
+    names = [r.name for r in readings]
+    rows: list[object] = []
+    for i, r in enumerate(readings):
+        prev_name = names[i - 1] if i else None
+        next_name = names[i + 1] if i + 1 < len(names) else None
+        merged_below = r.name == _MERGED_STRANDS[0] and next_name == _MERGED_STRANDS[1]
+        merged_above = r.name == _MERGED_STRANDS[1] and prev_name == _MERGED_STRANDS[0]
+        letter, title = _STRAND_ABBRS[r.name]
+        cells: list[object] = [H.table_header(_abbr(letter, title))]
+        if merged_above:
+            pass  # the range cell spans down from the row above (rowspan="2")
+        else:
+            if merged_below:
+                other = by_name[_MERGED_STRANDS[1]]
+                # Compare the STRIPPED endpoint forms, not the full words: the two strands' full
+                # אנכי / עבדים differ only by an immaterial meteg, which _strip_pointing correctly
+                # drops, so the shared-cell claim must be asserted on the stripped forms. Do NOT
+                # "fix" this to full-word equality — it would fire on that immaterial meteg. Same
+                # fail-the-build-on-data-drift style as resolve_readings.
+                mine = (_strip_pointing(r.first_verse_words[0]),
+                        _strip_pointing(r.first_verse_words[-1]))
+                theirs = (_strip_pointing(other.first_verse_words[0]),
+                          _strip_pointing(other.first_verse_words[-1]))
+                if mine != theirs:
+                    raise AssertionError(
+                        f"{r.name} and {other.name} share one rowspan range cell, but their "
+                        "stripped אנכי / עבדים endpoints differ -- the vendored readings drifted"
+                    )
+            span = {"rowspan": "2"} if merged_below else None
+            cells.append(_strand_range_cell(r, attr=span))
+        rows.append(H.table_row(tuple(cells)))
+    return H.table(tuple(rows), {"class": "strand-table", "dir": "rtl"})
+
+
+def _verse_counts_table(readings: list[pds.Reading]) -> object:
+    """A small plain table of how many chanted verses each strand divides the Exodus Decalogue
+    into (12 / 10 / 13 / 9). No class: it takes the global zebra styling, like the verdict
+    table -- the verse count would not fit the strand table's range cells."""
+    header = H.table_row_of_headers(("strand", "chanted verses (Exodus)"))
+    rows = [header]
+    for r in readings:
+        rows.append(
+            H.table_row(
+                (
+                    H.table_header(_reading_name(r.name)),
+                    H.table_datum(str(r.n_verses)),
+                )
+            )
+        )
+    return H.table(tuple(rows))
+
+
+def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
+    return (
+        H.heading_level_2("The four strands of אנכי…עבדים", {"id": "four-strands"}),
+        H.para(
+            (
+                "The manuscript and printed traditions accent the Decalogue's אנכי…עבדים unit "
+                "differently. The accent on עבדים is what decides the structure: a ",
+                H.bold(pds.ROM_SILLUQ_SOF_PASUQ),
+                " there ends the verse, so אנכי…עבדים stands as its own verse; an ",
+                H.bold(pds.ROM_ETNAHTA),
+                " or ",
+                H.bold(pds.ROM_REVIA),
+                " there is mid-verse, folding אנכי…עבדים into a longer verse. In the two folding "
+                "strands the range below shows עבדים in the middle, so its structure-deciding "
+                "accent is on view:",
+            )
+        ),
+        _four_strands_table(readings),
+        H.para(
+            (
+                "How many chanted verses each strand divides the Exodus Decalogue into:",
+            )
+        ),
+        _verse_counts_table(readings),
+        H.unordered_list(
+            (
+                (
+                    H.bold(("Printed ", _heb(pds.TAHTON), " = manuscript ", _heb(pds.ELYON), ".")),
+                    " Once אנכי…עבדים is its own verse there is only one grammatical way to"
+                    " accent it — ",
+                    pds.ROM_ETNAHTA,
+                    " in the middle, ",
+                    pds.ROM_SILLUQ,
+                    " at the end — so both traditions land on the same marks (consonants,"
+                    " accents, and accent-boundary marks: ",
+                    pds.ROM_SOF_PASUQ,
+                    ", ",
+                    pds.ROM_MAQAF,
+                    ", ",
+                    pds.ROM_LEGARMEH,
+                    "). They differ only by an immaterial ",
+                    pds.ROM_METEG,
+                    " (which the stripped range cells above drop, so their shared cell is one"
+                    " rowspan).",
+                ),
+                (
+                    H.bold(("Printed ", _heb(pds.ELYON), " ≠ manuscript ", _heb(pds.ELYON), ".")),
+                    " The printed ",
+                    _heb(pds.ELYON),
+                    " puts ",
+                    H.bold(pds.ROM_REVIA),
+                    " on עבדים and runs the first two commandments together into one verse (→ ",
+                    H.bold("9"),
+                    " total), where the manuscript ",
+                    _heb(pds.ELYON),
+                    " closes on ",
+                    pds.ROM_SILLUQ,
+                    " (→ ",
+                    H.bold("10"),
+                    ").",
+                ),
+                (
+                    "The manuscript ",
+                    _heb(pds.TAHTON),
+                    " does not give אנכי…עבדים its own verse either — it runs אנכי…פני together (",
+                    pds.ROM_ETNAHTA,
+                    " at עבדים, ",
+                    pds.ROM_SOF_PASUQ,
+                    " at פני",
+                    "), a third structure again.",
+                ),
+            )
+        ),
+        H.para(
+            (
+                "Only one of these four strands is ungrammatical — the printed ",
+                _heb(pds.ELYON),
+                ", whose merged opening verse the ",
+                link("section below", "#why-the-printed-elyon-fails"),
+                " dissects.",
+            )
+        ),
+    )
+
+
+# --------------------------------------------------------------------------- #
+# The merged-verse table (issue #59)
+# --------------------------------------------------------------------------- #
+# A range-divided view of the one ungrammatical printed-elyon verse, stripped to consonants +
+# accents (MAM-simple style). The printed tradition merges the first two commandments into a
+# single chanted verse, which the printed taxton instead keeps as five ordinary verses. Modeled
+# on MAM-simple's versification-and-cantillation "TEMBte" tables, but: no M/B verse-number rows
+# and the *printed* strands rather than the manuscript ones. The words keep their cantillation
+# accents (only the vowels/dagesh/ordinary-meteg are stripped) because the divergence this table
+# shows lives in the accents; the range division is what the green/red endpoints mark. (The M/B
+# numbering is dropped because the printed taxton splits the first commandment from the second
+# where the MAM taxton merges them into one chanted verse, so a single "MAM verse number" row
+# cannot align 1:1 with the printed columns; issue #59.)
+_ELYON_TITLE = "elyon (upper cantillation strand)"
+_TAXTON_TITLE = "taḥton (lower cantillation strand)"
+_ELYON_GRAD_TITLE = "schematic color gradient for the elyon verse"
+_TAXTON_GRAD_TITLE = "schematic color gradient for the taḥton verse(s)"
 
 
 def _taxton_columns(tax: pd.VersionResult, n_words: int) -> list[pd.ChantedVerseResult]:
@@ -236,17 +456,22 @@ def _merged_verse_table(by_key: dict) -> object:
     # e / t: the schematic gradient bars — one span for the merged elyon verse, one per taxton.
     e_grad = row("e", _ELYON_GRAD_TITLE, (H.table_datum("", {"class": "vc-grad", "colspan": str(n)}),))
     t_grad = row("t", _TAXTON_GRAD_TITLE, tuple(H.table_datum("", {"class": "vc-grad"}) for _ in cols))
-    return H.table((e_row, t_row, e_grad, t_grad), {"class": "printed-decalogue-merged", "dir": "rtl"})
+    return H.table((e_row, t_row, e_grad, t_grad), {"class": "strand-table", "dir": "rtl"})
 
 
 def _finding_section(by_key: dict) -> tuple[object, ...]:
     ex_ms = by_key[("ex", "elyon", "manuscript")]
     ms_cmd1, ms_cmd2 = ex_ms.chanted_verses[0], ex_ms.chanted_verses[1]
     return (
-        H.heading_level_2("Why the printed elyon fails: the merged first verse"),
+        H.heading_level_2(
+            ("Why the printed ", _heb(pds.ELYON), " fails: the merged first verse"),
+            {"id": "why-the-printed-elyon-fails"},
+        ),
         H.para(
             (
-                "In the manuscript elyon, the first commandment ",
+                "In the manuscript ",
+                _heb(pds.ELYON),
+                ", the first commandment ",
                 hbo("אָנֹכִי … עֲבָדִים"),
                 " is its own chanted verse, and ",
                 _heb("לא יהיה לך אלהים אחרים"),
@@ -254,9 +479,14 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
                 H.bold("both of which parse clean"),
                 ". The printed editions instead merge the first two commandments into a single "
                 "verse (nine chanted verses in all, against the manuscript’s ten). That one "
-                "merged verse is what the grammar rejects. Shown accent-stripped and divided at "
-                "the printed taḥton’s verse boundaries — one elyon verse (E) spanning the five "
-                "ordinary taḥton verses (T) it merges:",
+                "merged verse is what the grammar rejects. Shown stripped to consonants and "
+                "accents (MAM-simple style) and divided at the printed ",
+                _heb(pds.TAHTON),
+                "’s verse boundaries — one ",
+                _heb(pds.ELYON),
+                " verse (E) spanning the five ordinary ",
+                _heb(pds.TAHTON),
+                " verses (T) it merges:",
             )
         ),
         _merged_verse_table(by_key),
@@ -280,7 +510,9 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
             (
                 "The cause is the merged ",
                 H.bold("structure"),
-                ", not sheer length: Deuteronomy’s printed elyon Sabbath verse runs 55 words "
+                ", not sheer length: Deuteronomy’s printed ",
+                _heb(pds.ELYON),
+                " Sabbath verse runs 55 words "
                 "and parses clean, while this merged verse (51 words) does not. Keeping the two "
                 "commandments as the manuscript’s two separate verses (",
                 f"{len(ms_cmd1.words)} and {len(ms_cmd2.words)} words) ",
@@ -311,8 +543,13 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
             (
                 "See also ",
                 link("Simanim's Tiqqun as an independent witness", "printed-decalogue-simanim.html"),
-                ": two marginal notes from Simanim's Tiqqun that carry the printed elyon in "
-                "the main text and the printed taḥton in the appendix (issue #62).",
+                ": two notes from Simanim's Tiqqun — its main text uses the printed ",
+                _heb(pds.ELYON),
+                " and its appendix the printed ",
+                _heb(pds.TAHTON),
+                " (issue #62). That page now leans on this page's ",
+                link("four-strands table", "#four-strands"),
+                " rather than repeating it.",
             )
         ),
     )
@@ -320,9 +557,11 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
 
 def render_body_contents(results: list[pd.VersionResult], source: dict) -> tuple[object, ...]:
     by_key = _by_key(results)
+    readings = pds.resolve_readings(results)
     return (
         *_intro(),
         *_verdict_section(by_key),
+        *_four_strands_section(readings),
         *_finding_section(by_key),
         *_provenance_section(source),
     )

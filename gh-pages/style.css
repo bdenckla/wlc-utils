@@ -199,38 +199,47 @@ img {
 table.printed-decalogue-verdict td.clean { color: light-dark(#1a7f37, #4ac26b); }
 table.printed-decalogue-verdict td.ungrammatical { color: light-dark(#b3261e, #ff7b72); font-weight: bold; }
 
-/* The merged-verse table (printed-decalogue.html, issue #59): a range-divided, accent-stripped
-   view of the ungrammatical merged first verse, ported from MAM-simple's TEMBte tables. It is
-   transposed (rows = strands + verse numbers; columns = the taḥton verse ranges) and grows as
-   wide as its cells want, re-centered on the page: margin-left:50% + translateX(-50%). */
-table.printed-decalogue-merged {
+/* The strand tables (printed-decalogue.html, issues #59 / #52): range-divided views of a
+   cantillation strand, ported from MAM-simple's TEMBte tables. Two of them share this style:
+   the four-strands table (one row per strand, first…last range cells) and the merged-verse
+   table (transposed: rows = strands + gradient bars; columns = the taḥton verse ranges). Each
+   grows as wide as its cells want, re-centered on the page: margin-left:50% + translateX(-50%).
+   Colors/gradient/abbr match MAM-simple byte-for-byte; the zebra-neutralization is a wlc-utils
+   extra (MAM-simple's page has no global odd-row striping to undo). */
+table.strand-table {
     border-collapse: collapse;
     width: max-content;
     max-width: none;
     margin-left: 50%;
     transform: translateX(-50%);
 }
-table.printed-decalogue-merged th,
-table.printed-decalogue-merged td {
+table.strand-table th,
+table.strand-table td {
     border: 1px solid light-dark(#ccc, #444);
     padding: 0.3rem 0.6rem;
     text-align: start;
 }
-table.printed-decalogue-merged th {
+table.strand-table th {
     text-align: center;
     background-color: light-dark(#f5f5f5, #242424);
 }
-table.printed-decalogue-merged th abbr[title] { text-decoration: underline dotted; cursor: help; }
+table.strand-table th abbr[title] { text-decoration: underline dotted; cursor: help; }
 /* Neutralize the shared odd-row zebra-striping (see tr:nth-of-type(odd) td above) so it does
    not tint the range-label cells; the gradient cells re-assert their own fill below. */
-table.printed-decalogue-merged tr td { background-color: transparent; }
-table.printed-decalogue-merged .vc-start { color: light-dark(#0a7a0a, #57c957); }
-table.printed-decalogue-merged .vc-stop  { color: light-dark(#c11414, #ff7a7a); }
+table.strand-table tr td { background-color: transparent; }
+table.strand-table .vc-start { color: light-dark(#0a7a0a, #57c957); }
+table.strand-table .vc-stop  { color: light-dark(#c11414, #ff7a7a); }
+/* Neutral interior word of a three-part first…mid…last range (MAM-simple's vc-mid): no hue,
+   just the body text color, so the eye reads the structure-deciding mid word plainly. */
+table.strand-table .vc-mid   { color: inherit; }
 /* Schematic gradient bars (rtl: green start at right → red stop at left). */
-table.printed-decalogue-merged td.vc-grad {
+table.strand-table td.vc-grad {
     height: 1.2rem;
     background: linear-gradient(to left, light-dark(#0a7a0a, #1f6b1f), light-dark(#c11414, #8a2020));
 }
+/* The range cells now carry cantillation accents (lang="hbo" → Taamey D). The global
+   lang="hbo" rule is 140%, too tall inside these bordered range cells; tune down here. */
+table.strand-table td[lang="hbo"] { font-size: 120%; }
 
 .lemma { font-weight: bold; }
 /* Simanim p. 246 lemma (printed-decalogue-simanim.html): coloured instead of bold, since
