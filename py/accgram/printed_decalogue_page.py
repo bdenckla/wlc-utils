@@ -65,8 +65,16 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 # --------------------------------------------------------------------------- #
 # Rendering
 # --------------------------------------------------------------------------- #
+# Keys into the by-key dict are prefixed (bk-/sk-/tk-) to mark them, at a glance, as internal
+# lookup tokens rather than user-visible strings. The raw VersionResult fields are bare
+# ("ex", "taxton", "manuscript"); this is the one place they get promoted to prefixed keys, so
+# every lookup below must use the prefixed form.
+def _bk(vr: pd.VersionResult) -> tuple[str, str, str]:
+    return (f"bk-{vr.book}", f"sk-{vr.reading}", f"tk-{vr.tradition}")
+
+
 def _by_key(results: list[pd.VersionResult]) -> dict[tuple[str, str, str], pd.VersionResult]:
-    return {(vr.book, vr.reading, vr.tradition): vr for vr in results}
+    return {_bk(vr): vr for vr in results}
 
 
 def _intro() -> tuple[object, ...]:
@@ -125,19 +133,25 @@ def _cell(vr: pd.VersionResult) -> object:
         f"✗ {len(bad)} of {n} ungrammatical ({which})", {"class": "ungrammatical"}
     )
 
+# The traditional strand name for each reading (report labels only). No "upper"/"lower" gloss:
+# it invites confusion with above-letter vs below-letter accents (see printed_decalogue_strands
+# module docstring for the cross-page rule).
+_STRAND_LABELS: dict[str, str] = {"sk-taxton": "תחתון", "sk-elyon": "עליון"}  # sk: strand key
+_BOOK_LABELS: dict[str, str] = {"bk-ex": "Ex.", "bk-dt": "Deut."}  # bk: book key
+
 
 def _verdict_table(by_key: dict) -> object:
     header = H.table_row_of_headers(("", "Manuscript tradition", "Printed tradition"))
     rows = [header]
-    for book in ("ex", "dt"):
-        for reading in ("taxton", "elyon"):
-            label = f"{pd.BOOK_LABELS[book]} — {pd.READING_LABELS[reading]}"
+    for book in ("bk-ex", "bk-dt"):
+        for strand in ("sk-taxton", "sk-elyon"):
+            label = f"{_BOOK_LABELS[book]} {_STRAND_LABELS[strand]}"
             rows.append(
                 H.table_row(
                     (
                         H.table_header(label),
-                        _cell(by_key[(book, reading, "manuscript")]),
-                        _cell(by_key[(book, reading, "printed")]),
+                        _cell(by_key[(book, strand, "tk-manuscript")]),
+                        _cell(by_key[(book, strand, "tk-printed")]),
                     )
                 )
             )
@@ -150,7 +164,7 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
         _verdict_table(by_key),
         H.para(
             (
-                H.bold(_TAHTON),
+                f"The {_TAHTON}"
                 f" is grammatical everywhere — both books, both traditions. The p-trad {_TAHTON}"
                 " differs from the m-trad in details that do not touch the accent "
                 "grammar (vocalization such as ",
@@ -165,7 +179,7 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
         ),
         H.para(
             (
-                H.bold(_ELYON),
+                f"The {_ELYON}"
                 " is grammatical in the m-trad but ",
                 H.bold("not"),
                 f" in the p-trad: the p-trad {_ELYON} of ",
@@ -288,7 +302,7 @@ def _merged_header() -> object:
     suffix = " (cantillation strand)"
     la, ta = _STRAND_ABBRS[_MERGED_STRANDS[0]]
     lb, tb = _STRAND_ABBRS[_MERGED_STRANDS[1]]
-    title = f"{ta.removesuffix(suffix)} = {tb.removesuffix(suffix)} (cantillation strands, identical opening)"
+    title = f"{ta.removesuffix(suffix)} = {tb.removesuffix(suffix)} (cantillation strands, identical in the first chanted verse only)"
     return H.table_header(_abbr(f"{la}/{lb}", title))
 
 
@@ -312,7 +326,7 @@ def _verse_counts_table(readings: list[pds.Reading]) -> object:
     """A small plain table of how many chanted verses each strand divides the Exodus Decalogue
     into (12 / 10 / 13 / 9). No class: it takes the global zebra styling, like the verdict
     table -- the verse count would not fit the strand table's range cells."""
-    header = H.table_row_of_headers(("strand", "chanted verses (Exodus)"))
+    header = H.table_row_of_headers(("strand", "verse count"))
     rows = [header]
     for r in readings:
         rows.append(
@@ -339,12 +353,21 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                 " or ",
                 H.bold(pds.ROM_REVIA),
                 " there is mid-verse, folding אנכי…עבדים into a longer verse. The table below "
-                "lays all four strands over the same milestone columns — אנכי (their common "
-                "start), then עבדים, על־פני, and מצותי — so their subset relation is plain: every "
+                "lays all four strands over the same milestone words — ",
+                # The milestone list is LTR (first → last), but each word is RTL; without <bdi>
+                # the adjacent עבדים / על־פני runs merge across their comma and render reversed.
+                # Isolating each element keeps the list order left-to-right.
+                H.bdi("אנכי"),
+                " (their common start), then ",
+                H.bdi("עבדים"),
+                ", ",
+                H.bdi("על־פני"),
+                ", and ",
+                H.bdi("מצותי"),
+                " — so their subset relation is plain: every "
                 "verse starts green at אנכי and ends red at its own last word, the shorter ones "
                 "stopping where the longer ones keep going. Each strand keeps its own accent on "
-                "עבדים, the structure-deciding mark (the column ordering is schematic — it shows "
-                "only which endpoint comes before which, not the real distances between them):",
+                "עבדים, the structure-deciding mark:",
             )
         ),
         _four_strands_table(readings),
@@ -357,14 +380,15 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
         H.unordered_list(
             (
                 (
-                    H.bold(f"P-trad {_TAHTON} = m-trad {_ELYON}."),
+                    H.bold(f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first"
+                           " chanted verse."),
                     " Once אנכי…עבדים is its own verse there is only one grammatical way to"
                     " accent it — ",
                     pds.ROM_ETNAHTA,
                     " in the middle, ",
                     pds.ROM_SILLUQ,
-                    " at the end — so both traditions land on the same marks (consonants,"
-                    " accents, and accent-boundary marks: ",
+                    " at the end — so in that verse both traditions land on the same marks"
+                    " (consonants, accents, and accent-boundary marks: ",
                     pds.ROM_SOF_PASUQ,
                     ", ",
                     pds.ROM_MAQAF,
@@ -373,7 +397,16 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                     "). They differ only by an immaterial ",
                     pds.ROM_METEG,
                     " (which the stripped cells above drop), so the table gives them a single"
-                    " shared row, labelled mE/pT.",
+                    " shared row, labelled mE/pT. The equality stops there: past this first"
+                    " verse the two strands diverge completely — the p-trad ",
+                    _TAHTON,
+                    " runs the Exodus Decalogue on for ",
+                    H.bold("13"),
+                    " chanted verses, the m-trad ",
+                    _ELYON,
+                    " for only ",
+                    H.bold("10"),
+                    ".",
                 ),
                 (
                     H.bold(f"P-trad {_ELYON} ≠ m-trad {_ELYON}."),
@@ -442,8 +475,8 @@ def _taxton_columns(tax: pd.VersionResult, n_words: int) -> list[pd.ChantedVerse
 
 
 def _merged_verse_table(by_key: dict) -> object:
-    merged = by_key[("ex", "elyon", "printed")].ungrammatical[0]
-    cols = _taxton_columns(by_key[("ex", "taxton", "printed")], len(merged.words))
+    merged = by_key[("bk-ex", "sk-elyon", "tk-printed")].ungrammatical[0]
+    cols = _taxton_columns(by_key[("bk-ex", "sk-taxton", "tk-printed")], len(merged.words))
     n = len(cols)
 
     def row(letter: str, title: str, cells: tuple[object, ...]) -> object:
@@ -460,7 +493,7 @@ def _merged_verse_table(by_key: dict) -> object:
 
 
 def _finding_section(by_key: dict) -> tuple[object, ...]:
-    ex_ms = by_key[("ex", "elyon", "manuscript")]
+    ex_ms = by_key[("bk-ex", "sk-elyon", "tk-manuscript")]
     ms_cmd1, ms_cmd2 = ex_ms.chanted_verses[0], ex_ms.chanted_verses[1]
     return (
         H.heading_level_2(
