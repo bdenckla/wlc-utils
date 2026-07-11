@@ -5,18 +5,18 @@ Companion to ``printed_decalogue_page`` (issue #52, which grammar-checks the pri
 manuscript Decalogue accentuations).  This page ports two research notes -- formerly issue
 #56 comments -- into a versioned, reviewable document:
 
-  * **p. 83** (main-text, *elyon*): Simanim's marginal note on the Exodus (Yitro) Decalogue
-    first unit אנכי...עבדים.  Its default (בפנים) elyon reading ends that unit on a *revia*
-    (the merged, 9-verse printed structure); "some books" instead give אנכי...עבדים its own
-    verse (silluq + *sof pasuq* at עבדים) to keep ten dibrot.
-  * **p. 246** (appendix, *taḥton*): the mirror note, contrasting בטעם רגיל (= printed
+  * **p. 83** (main Decalogue, *elyon*): Simanim's side-margin note on the Exodus (Yitro)
+    Decalogue first unit אנכי...עבדים.  Its default (בפנים) elyon reading ends that unit on a
+    *revia* (the merged, 9-verse printed structure); "some books" instead give אנכי...עבדים its
+    own verse (silluq + *sof pasuq* at עבדים) to keep ten dibrot.
+  * **p. 246** (appendix, *taḥton*): the mirror footnote, contrasting בטעם רגיל (= printed
     taḥton: אנכי...עבדים as its own verse, *sof pasuq* at עבדים) with כתר אר״ץ (= manuscript
     taḥton: pashta...etnaḥta, merged).
 
 What actually establishes the answer is not these notes but Simanim's *body text*: its main
-text (p. 83) and appendix Decalogue (p. 246) are compared, by the author, against what Hebrew
+Decalogue (p. 83) and appendix Decalogue (p. 246) are compared, by the author, against what Hebrew
 Wikisource records as the printed tradition, and they match.  That body text is asserted here,
-not reproduced.  The two marginal notes are secondary -- kept for the more-for-fun question of
+not reproduced.  The two notes are secondary -- kept for the more-for-fun question of
 how aware Simanim is of having made the older, printed-tradition choice.
 
 The two Simanim *transcriptions* are the only hand-set Hebrew, double-checked against the
@@ -40,6 +40,15 @@ Editorial / style conventions for the rendered prose (agreed with Ben; keep them
   whatever it says.  This is a cross-repo rule (cf. MAM-basics
   ``py/versification_and_cantillation/doc.py``).
 * Prefer "**cantillation**" to "accentuation".
+* **Three term pairs, kept strictly apart** (a recurring inconsistency -- don't regress):
+  *main* vs *appendix* = the book's two parts (the running Ḥumash vs the Decalogue reprinted at
+  the back); *body* vs *note* = running text vs annotation; and the two notes differ by
+  placement.  Use "main" ONLY for main-vs-appendix -- pair it as "main Decalogue" /
+  "appendix Decalogue", never "main text" -- and "body" ONLY for body-vs-note (so the p. 83
+  note's ``בפנים`` renders as "the body", NOT "the main text").  The **p. 83** note sits in the
+  **side margin** ("side-margin note"); the **p. 246** note sits in the **bottom margin**, keyed
+  by an asterisk -- it is a **footnote**, so never call it a "marginal note".  For the pair, say
+  "notes" (never "marginal notes").
 * **Accent/mark romanizations are single-sourced as ``_ROM_*`` constants** (pashta, tipeḥa,
   etnaḥta, revia, silluq, sof pasuq, meteg, maqaf, legarmeh, + a few compounds).  They are shared
   by the ``_ACCENT_NAMES`` derivation table, the ``_READING_SPECS`` expected-accent pins, and the
@@ -80,6 +89,21 @@ REPORT_TITLE = "Simanim's Tiqqun follows the printed tradition for the Decalogue
 _PRINTED_DECALOGUE_PAGE = "printed-decalogue.html"
 _P83_IMG = "img/simanim-decalogue-p83.png"
 _P246_IMG = "img/simanim-decalogue-p246.png"
+
+# The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section
+# of the very page these four strands are vendored from -- so its base URL is single-sourced from
+# the data's own provenance (see _source_section), and we append only the section anchor here.
+# That Exodus section holds BOTH p-trad strands (תחתון and עליון), which is exactly what the
+# spot-check compares against.  Wikisource forms a heading's anchor id by replacing spaces with
+# underscores (parentheses kept literally); the Deuteronomy copy of this heading gets a "_2"
+# suffix, so the bare (suffix-less) id is the Exodus one we want.
+_WIKISOURCE_PTRAD_SECTION = "הטעם התחתון מול הטעם העליון (לפי נוסח הדפוסים)"
+
+
+def _wikisource_ptrad_href(source: dict) -> str:
+    base = source["provenance"]["url"]
+    return f"{base}#{_WIKISOURCE_PTRAD_SECTION.replace(' ', '_')}"
+
 
 # Codepoints of the two marks we detect by presence (not by the _ACCENT_NAMES table).
 _CP_SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
@@ -279,15 +303,15 @@ _PARA_1 = (
     *[" ", H.bold("manuscript tradition"), " (m-trad),"],
     f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
     *[" ", link("The companion page", _PRINTED_DECALOGUE_PAGE)],
-    " grammar-checks all p-trad readings; this page serves to document the claim that",
+    " grammar-checks all p-trad passages; this page serves to document the claim that",
     *[" ", H.bold("Simanim's Tiqqun"), " follows the p-trad."],
-    " Along the way, this page transcribes two of Simanim's marginal notes"
+    " Along the way, this page transcribes two of Simanim's notes"
     " — not to document the claim, but to document"
     " how conscious Simanim is of the choice it makes.",
 )
 
 
-def _intro() -> tuple[object, ...]:
+def _intro(source: dict) -> tuple[object, ...]:
     return (
         H.heading_level_1(REPORT_TITLE),
         H.para(_PARA_1),
@@ -295,21 +319,22 @@ def _intro() -> tuple[object, ...]:
             (
                 "Simanim's Tiqqun follows the p-trad for the Decalogues. In its ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue, Simanim's main text (p. 83) is the p-trad ",
+                " (Yitro) Decalogue, Simanim's main Decalogue (p. 83) is the p-trad ",
                 _ELYON,
-                " and its appendix (p. 246) is the p-trad ",
+                " and its appendix Decalogue (p. 246) is the p-trad ",
                 _TAHTON,
                 " — both differing from the m-trad only at this first commandment (the"
                 " אנכי…עבדים unit). Since no digital Simanim exists, I established this by"
-                " visually spot-checking Simanim against XXX Hebrew Wikisource's p-trad YYY. I have not"
-                " reproduced Simanim's body text here — you'll just have to take it on my word.",
-                # XXX ... YYY Make this into an appropriate link to the Hebrew Wikisource p-trad,
-                # including an anchor (bar in foo#bar) to jump to the most relevant place.
+                " visually spot-checking Simanim against ",
+                link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
+                ". I have not reproduced Simanim's body text here — you'll just have to take it"
+                " on my word.",
             )
         ),
         H.para(
             (
-                "Two of Simanim's marginal notes are transcribed further down. They are ",
+                "Two of Simanim's notes — a side-margin note (p. 83) and a footnote (p. 246) —"
+                " are transcribed further down. They are ",
                 H.bold("not"),
                 " what establishes the finding (the body text is); they are worth reading to get"
                 " a sense of how conscious Simanim is of having chosen the p-trad.",
@@ -322,7 +347,7 @@ def _reading_label(r: _Reading) -> tuple[object, ...]:
     return _render_reading_name(r.name)
 
 
-# m-trad עליון and p-trad תחתון accent אנכי…עבדים identically (tipeḥa on אנכי, silluq on עבדים)
+# m-trad עליון and p-trad תחתון accent אנכי…עבדים identically (tipexa on אנכי, silluq on עבדים)
 # and give it the same first chanted verse; where these two adjacent strands share those cells
 # (everything but the total verse count) we span them with a single rowspan.
 _MERGED_WORD_STRANDS = ("m-trad elyon", "p-trad taḥton")
@@ -456,7 +481,7 @@ def _p83_scan_and_transcription() -> object:
     img = H.img(
         {
             "src": _P83_IMG,
-            "alt": "Simanim Tiqqun p. 83: marginal note on the Exodus Decalogue’s אנכי…עבדים unit",
+            "alt": "Simanim Tiqqun p. 83: side-margin note on the Exodus Decalogue’s אנכי…עבדים unit",
             "style": "max-width: 100%; height: auto;",
             "width": "275",
         }
@@ -476,8 +501,8 @@ def _p83_scan_and_transcription() -> object:
 
 def _p83_section() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Main-text (עליון) note — Simanim p. 83"),
-        H.para(("A note in the margin of the Exodus (Yitro) Decalogue, on אנכי…עבדים.",)),
+        H.heading_level_2("Margin note on the main (עליון) Decalogue — Simanim p. 83"),
+        H.para(("A note in the side margin of the Exodus (Yitro) Decalogue, on אנכי…עבדים.",)),
         _p83_scan_and_transcription(),
         H.heading_level_3("Translation"),
         H.blockquote(
@@ -485,7 +510,7 @@ def _p83_section() -> tuple[object, ...]:
                 H.bold("[ב]"),
                 " {Regarding} the first verse — it is the custom of some to chant it as ",
                 H.bold(("ending on a ", _ROM_REVIA)),
-                ", as given in the main text (בפנים); {but} there are editions that call for it"
+                ", as given in the body (בפנים); {but} there are editions that call for it"
                 " to be chanted as in the ",
                 _TAHTON,
                 " {i.e. giving אנכי…עבדים its own verse — see the four strands above}, since by"
@@ -567,10 +592,10 @@ def _p246_mapping_table() -> object:
 
 def _p246_section() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Appendix (תחתון) note — Simanim p. 246"),
+        H.heading_level_2("Footnote on the appendix (תחתון) Decalogue — Simanim p. 246"),
         H.para(
             (
-                "The mirror note, from the appendix's ",
+                "The mirror footnote, from the appendix's ",
                 _TAHTON,
                 " Decalogue (which Simanim heads only negatively, בלא טעם עליון — lacking the ",
                 _ELYON,
@@ -579,8 +604,8 @@ def _p246_section() -> tuple[object, ...]:
         ),
         _figure(
             _P246_IMG,
-            "Simanim Tiqqun p. 246: appendix note on the taḥton Decalogue’s אנכי…עבדים unit",
-            "Simanim Tiqqun, p. 246 — appendix note contrasting בטעם רגיל and כתר אר״ץ.",
+            "Simanim Tiqqun p. 246: appendix footnote on the taḥton Decalogue’s אנכי…עבדים unit",
+            "Simanim Tiqqun, p. 246 — appendix footnote contrasting בטעם רגיל and כתר אר״ץ.",
             width=None,
         ),
         H.heading_level_3("Transcription"),
@@ -626,7 +651,7 @@ def _p246_section() -> tuple[object, ...]:
                 ", thus: {the merged cantillation of אנכי…עבדים shown above}. And as regards the “Ten"
                 " Commandments” in the ",
                 _ELYON,
-                " within the [main body of the] Ḥumash: …",
+                " within the [main part of the] Ḥumash: …",
             )
         ),
         H.para(
@@ -665,7 +690,7 @@ def _p246_section() -> tuple[object, ...]:
                 ", the genuine m-trad ",
                 _TAHTON,
                 ", which it sets aside. Simanim thus knows the two differ and knowingly prints the"
-                " newer one — another glimpse of the same self-awareness as the p. 83 note.",
+                " newer one — another glimpse of the same self-awareness as the p. 83 margin note.",
             )
         ),
     )
@@ -679,9 +704,9 @@ def _conclusion() -> tuple[object, ...]:
                 "Simanim's Tiqqun follows the p-trad for the Decalogues, not the m-trad. The two"
                 " traditions diverge only at the opening commandment אנכי…עבדים, and Simanim lands"
                 " on the p-trad side of that divergence on both strands: the p-trad ",
-                *[_ELYON, " in its ", H.bold("Exodus"), " main text (p. 83), and the p-trad "],
+                *[_ELYON, " in its ", H.bold("Exodus"), " main Decalogue (p. 83), and the p-trad "],
                 _TAHTON,
-                " in its appendix (p. 246).",
+                " in its appendix Decalogue (p. 246).",
             )
         ),
         H.para(
@@ -693,7 +718,7 @@ def _conclusion() -> tuple[object, ...]:
                 _ELYON,
                 " and m-trad ",
                 _TAHTON,
-                ". The two marginal notes above suggest Simanim was at least half-aware of the"
+                ". The two notes above suggest Simanim was at least half-aware of the"
                 " tension: each sets its p-trad cantillation against the standalone-verse / Keter"
                 " alternative it declines to follow. (Straddling old and new is less surprising in"
                 " a house like Koren, which does it more pervasively; Simanim's is a milder case.)",
@@ -786,7 +811,7 @@ def _aleppo_codex_section() -> tuple[object, ...]:
 def render_body_contents(results: list[pd.VersionResult], source: dict) -> tuple[object, ...]:
     readings = _resolve_readings(results)
     return (
-        *_intro(),
+        *_intro(source),
         *_four_readings_section(readings),
         *_p83_section(),
         *_p246_section(),
