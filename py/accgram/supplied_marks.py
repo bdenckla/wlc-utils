@@ -189,7 +189,7 @@ def _image_block(img_file: str, kind: str) -> object:
         return figures[0]
     # The UXLC-note crop: credit the note (an LC image, served via Sefaria).
     para = my_html_for_img.html_for_single_img(
-        img_file, img_para_attr={"class": "goerwitz-tms-image"}
+        img_file, img_para_attr={"class": "goerwitz-tms-image"}, img_base="img/"
     )
     caption = H.figcaption(
         (

@@ -101,7 +101,7 @@ def _intro() -> tuple[object, ...]:
 
 def _image_block(img_file: str, ref_label: str, caption_text: str) -> object:
     para = my_html_for_img.html_for_single_img(
-        img_file, img_para_attr={"class": "goerwitz-tms-image"}
+        img_file, img_para_attr={"class": "goerwitz-tms-image"}, img_base="img/"
     )
     caption = H.figcaption(
         (H.bold(ref_label), ": ", caption_text),

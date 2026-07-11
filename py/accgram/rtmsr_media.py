@@ -10,6 +10,10 @@ _GOERWITZ_TMS_IMAGE_CLASS = "goerwitz-tms-image"
 _GOERWITZ_TMS_FIGURE_CLASS = "goerwitz-tms-figure"
 _GOERWITZ_TMS_IMAGE_CAPTION_CLASS = "goerwitz-tms-image-caption"
 
+# accgram pages sit directly in gh-pages/accgram/, so images resolve to that folder's
+# own img/ dir rather than the top-level gh-pages/img/ (see my_html_for_img).
+_IMG_BASE = "img/"
+
 _POINTED_HEBREW_SEGMENT_RE = re.compile(r"[\u0590-\u05FF]+")
 _HEBREW_POINTING_MARK_RE = re.compile(r"[\u0591-\u05C7]")
 _HEBREW_LETTER_RE = re.compile(r"[\u05D0-\u05EA]")
@@ -47,6 +51,7 @@ def render_image_paragraphs(
         my_html_for_img.html_for_imgs(
             structured_text,
             img_para_attr={"class": _GOERWITZ_TMS_IMAGE_CLASS},
+            img_base=_IMG_BASE,
         )
     )
     if not image_paragraphs:
@@ -71,6 +76,7 @@ def render_image_paragraphs(
             para = my_html_for_img.html_for_single_img(
                 extra_img,
                 img_para_attr={"class": _GOERWITZ_TMS_IMAGE_CLASS},
+                img_base=_IMG_BASE,
             )
             image_paragraphs.append(
                 _wrap_with_plain_source_caption(para, extra_source_label)
