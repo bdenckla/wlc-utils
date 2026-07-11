@@ -160,6 +160,13 @@ def _body_scans() -> tuple[object, ...]:
                 *[" ", H.bdi(' "עשרת הדברות" בטעם עליון'), "."],
                 " The אנכי…עבדים unit ends on a",
                 *[" ", _ROM_REVIA, "."],
+                H.line_break(),
+                H.small(
+                    (
+                        "The horizontal brown bar marks a removed page break — two page-scans"
+                        " joined into a single column.",
+                    )
+                ),
             ),
             width=None,
         ),
@@ -396,7 +403,22 @@ def _p246_section() -> tuple[object, ...]:
         _figure(
             _P246_IMG,
             "Simanim Tiqqun p. 246: appendix footnote on the taḥton Decalogue’s אנכי…עבדים unit",
-            "Simanim Tiqqun, p. 246 — appendix footnote contrasting בטעם רגיל and כתר אר״ץ.",
+            # The blue vertical bars are deliberately a different colour AND orientation from
+            # the brown horizontal page-break bar (see the p. 83 elyon figure above): the two
+            # mark opposite operations — a horizontal brown bar marks a page break we *removed*
+            # (two scans joined), whereas these mark line breaks we *added* to a single wide
+            # line. That contrast is the reason for the distinct styling, but it's mechanical
+            # detail; the caption states only what each bar means, not why they look different.
+            (
+                "Simanim Tiqqun, p. 246 — appendix footnote contrasting בטעם רגיל and כתר אר״ץ.",
+                H.line_break(),
+                H.small(
+                    (
+                        "The vertical blue bars mark line breaks we added — after אתנחתא and after"
+                        " עבדים — to narrow the inconveniently wide original.",
+                    )
+                ),
+            ),
             width=None,
         ),
         H.heading_level_3("Transcription"),
