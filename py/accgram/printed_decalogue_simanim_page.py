@@ -156,7 +156,7 @@ def _body_scans() -> tuple[object, ...]:
             _P83_BODY_IMG,
             "Simanim Tiqqun p. 83: the Exodus main Decalogue in the elyon",
             (
-                "Simanim's main Decalogue (p. 83), headed",
+                "The (massive) verse that starts Simanim's main Decalogue (p. 83), headed",
                 *[" ", H.bdi(' "עשרת הדברות" בטעם עליון'), "."],
                 " The אנכי…עבדים unit ends on a",
                 *[" ", _ROM_REVIA, "."],
@@ -174,7 +174,7 @@ def _body_scans() -> tuple[object, ...]:
             _P246_BODY_IMG,
             "Simanim Tiqqun p. 246: the Exodus appendix Decalogue in the taḥton",
             (
-                f"Simanim's appendix Decalogue (p. 246), headed עשרת הדברות דיתרו בלא טעם עליון."
+                f"The (short) two verses that start Simanim's appendix Decalogue (p. 246), headed עשרת הדברות דיתרו בלא טעם עליון."
                 " (Heading not shown in this image though.)"
                 " The אנכי…עבדים unit ends on a",
                 *[" ", _ROM_SILLUQ_SOF_PASUQ, "."],
