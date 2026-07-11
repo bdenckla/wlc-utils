@@ -71,6 +71,15 @@ def build_intro_contents(
         wlc_utils_html.anchor("Almost errors", {"href": "almost-errors.html"}),
         " page.",
     )
+    printed_decalogue_text = (
+        "Aside: this page runs the checker on WLC; whether the accents in the"
+        " Decalogues of the printed tradition are grammatical is examined in ",
+        wlc_utils_html.anchor(
+            "In the printed tradition, are the accents of the Decalogue grammatical?",
+            {"href": "printed-decalogue.html"},
+        ),
+        ".",
+    )
 
     return (
         wlc_utils_html.heading_level_2("Introduction"),
@@ -82,6 +91,7 @@ def build_intro_contents(
         wlc_utils_html.para(and_text),
         wlc_utils_html.para(bracket_notes_text),
         wlc_utils_html.para(almost_errors_text),
+        wlc_utils_html.para(printed_decalogue_text),
     )
 
 
