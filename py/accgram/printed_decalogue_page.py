@@ -186,87 +186,117 @@ def _abbr(letter: str, title: str) -> object:
     return H.htel_mk_inline("abbr", {"title": title}, letter)
 
 
-def _range_cell(words: tuple[str, ...], *, mid: str | None = None, attr=None) -> object:
-    """A ``first … last`` range label (stripped to consonants + accents), each range a complete
+def _range_cell(words: tuple[str, ...], *, attr=None) -> object:
+    """A ``first … last`` range label (stripped to consonants + accents), the range a complete
     verse: its first word is tinted green (start) and its last word red (stop), as the TEMBte
-    tables do. An optional ``mid`` word (one of ``words``, e.g. עבדים) is shown in the middle as
-    a neutral vc-mid word — ``first…mid…last`` — so a folding strand's structure-deciding accent
-    is visible. ``lang="hbo"`` goes on the ``<td>`` (not the spans): the cells now carry accents,
-    and this page's convention (issue #58) gives accent-bearing Hebrew ``lang="hbo"`` → the
-    Taamey font; one attr on the td keeps the ``…`` and words at a single size."""
+    tables do. ``lang="hbo"`` goes on the ``<td>`` (not the spans): the cells carry accents, and
+    this page's convention (issue #58) gives accent-bearing Hebrew ``lang="hbo"`` → the Taamey
+    font; one attr on the td keeps the ``…`` and words at a single size."""
     td_attr = {"lang": "hbo", **(attr or {})}
     first = H.span_c(_strip_pointing(words[0]), "vc-start")
     last = H.span_c(_strip_pointing(words[-1]), "vc-stop")
-    if mid is None:
-        return H.table_datum((first, "…", last), td_attr)
-    mid_span = H.span_c(_strip_pointing(mid), "vc-mid")
-    return H.table_datum((first, "…", mid_span, "…", last), td_attr)
+    return H.table_datum((first, "…", last), td_attr)
 
 
 # --------------------------------------------------------------------------- #
 # The four-strands table (issue #52)
 # --------------------------------------------------------------------------- #
 # Two-char row-header abbreviations for the four strands, coherent with the merged table's
-# single E/T letters below; the dotted-underline title spells each out (romanized is fine in an
-# attribute). m/p = manuscript/printed tradition, T/E = taxton/elyon strand.
+# single E/T letters below; the dotted-underline title spells each out (romanized taḥton/elyon is
+# fine in an attribute). m/p = manuscript/printed tradition, T/E = taxton/elyon strand. The titles
+# say NO "upper"/"lower" -- that gloss invites confusion with above-letter vs below-letter accents
+# (see printed_decalogue_strands module docstring; same rule on both printed-Decalogue pages).
 _STRAND_ABBRS: dict[str, tuple[str, str]] = {
-    "m-trad taḥton": ("mT", "manuscript-tradition taḥton (lower cantillation strand)"),
-    "m-trad elyon": ("mE", "manuscript-tradition elyon (upper cantillation strand)"),
-    "p-trad taḥton": ("pT", "printed-tradition taḥton (lower cantillation strand)"),
-    "p-trad elyon": ("pE", "printed-tradition elyon (upper cantillation strand)"),
+    "m-trad taḥton": ("mT", "manuscript-tradition taḥton (cantillation strand)"),
+    "m-trad elyon": ("mE", "manuscript-tradition elyon (cantillation strand)"),
+    "p-trad taḥton": ("pT", "printed-tradition taḥton (cantillation strand)"),
+    "p-trad elyon": ("pE", "printed-tradition elyon (cantillation strand)"),
 }
 
-# The two folding strands do NOT give אנכי…עבדים its own verse: עבדים sits mid-verse (etnaxta for
-# m-trad taxton, revia for p-trad elyon), so their range cells show it as a neutral vc-mid word
-# in a three-part אנכי…עבדים…end range, making the structure-deciding accent visible. The other
-# two make אנכי…עבדים its own verse (עבדים is the verse-final, silluq-bearing last word), so a
-# plain two-part range suffices.
-_FOLDING_STRANDS = ("m-trad taḥton", "p-trad elyon")
-
 # m-trad elyon and p-trad taxton accent אנכי…עבדים identically (tipexa on אנכי, silluq on עבדים)
-# and give it the same first chanted verse; being adjacent rows, their shared range cell is a
-# single rowspan="2" that states the identity visually.
+# and give it the same first chanted verse, so the two collapse into a single "mE/pT" row rather
+# than two rows sharing a rowspan.
 _MERGED_STRANDS = ("m-trad elyon", "p-trad taḥton")
 
+# The opening unit's four positional milestones, in verse order (rtl: אנכי rightmost →
+# מצותי leftmost). Every strand starts at אנכי (their common point) and ends at one of the later
+# three; the strands nest — m-trad elyon / p-trad taxton stop at עבדים, m-trad taxton at על־פני,
+# p-trad elyon at מצותי — so laying them over these shared columns shows that subset relation and
+# their common start at a glance (schematic: only the ORDER of the endpoints is shown, not the
+# real word-distances between them). Skeletons are consonants-only (base_skeleton form), matching
+# each reading's pds.STRUCTURE end_skel so an endpoint's column is derived, never hard-assigned.
+_MILESTONES: tuple[str, ...] = ("אנכי", "עבדים", "עלפני", "מצותי")
 
-def _strand_range_cell(r: pds.Reading, *, attr=None) -> object:
-    mid = r.avadim_word if r.name in _FOLDING_STRANDS else None
-    return _range_cell(r.first_verse_words, mid=mid, attr=attr)
+
+def _word_at(r: pds.Reading, skeleton: str) -> str:
+    """The strand's own pointed word at a milestone, matched by consonantal skeleton within its
+    first chanted verse. Each strand keeps ITS OWN accent on a shared milestone (e.g. עבדים is
+    etnaḥta / silluq / revia across strands), which is the structure-deciding signal, so the cell
+    must show the per-strand form rather than one canonical word per column."""
+    for word in r.first_verse_words:
+        if pds.base_skeleton(word) == skeleton:
+            return word
+    raise AssertionError(
+        f"{r.name}: no word with skeleton {skeleton!r} in its first chanted verse "
+        "-- the vendored readings drifted"
+    )
+
+
+def _milestone_cells(r: pds.Reading) -> list[object]:
+    """One strand's row of milestone cells over the shared _MILESTONES columns: its start word
+    (אנכי) green, its endpoint word red, any interior milestones neutral, and every milestone
+    LATER than its endpoint an empty cell — so a shorter verse visibly stops where the longer
+    ones keep going, making the subset relation and common start legible down the columns."""
+    end = _MILESTONES.index(r.first_verse_end)
+    cells: list[object] = []
+    for i, skel in enumerate(_MILESTONES):
+        if i > end:
+            cells.append(H.table_datum("", {"lang": "hbo"}))  # verse ends before this milestone
+            continue
+        cls = "vc-start" if i == 0 else "vc-stop" if i == end else "vc-mid"
+        span = H.span_c(_strip_pointing(_word_at(r, skel)), cls)
+        cells.append(H.table_datum((span,), {"lang": "hbo"}))
+    return cells
+
+
+def _assert_merged_identical(r: pds.Reading, other: pds.Reading) -> None:
+    """The two merged strands share ONE row (label "mE/pT"), so they must read identically.
+    Compare the STRIPPED forms at each shared milestone, not the full words: their full אנכי /
+    עבדים differ only by an immaterial meteg, which _strip_pointing correctly drops. Do NOT "fix"
+    this to full-word equality — it would fire on that immaterial meteg. Same
+    fail-the-build-on-data-drift style as resolve_readings."""
+    for skel in _MILESTONES[: _MILESTONES.index(r.first_verse_end) + 1]:
+        if _strip_pointing(_word_at(r, skel)) != _strip_pointing(_word_at(other, skel)):
+            raise AssertionError(
+                f"{r.name} and {other.name} share one row, but their stripped "
+                f"{skel} forms differ -- the vendored readings drifted"
+            )
+
+
+def _merged_header() -> object:
+    """The single row header for the two identically-opening strands: visible "mE/pT", its title
+    stating the identity (both halves already free of any upper/lower gloss). The shared
+    "(cantillation strand)" parenthetical is factored out to the end rather than repeated."""
+    suffix = " (cantillation strand)"
+    la, ta = _STRAND_ABBRS[_MERGED_STRANDS[0]]
+    lb, tb = _STRAND_ABBRS[_MERGED_STRANDS[1]]
+    title = f"{ta.removesuffix(suffix)} = {tb.removesuffix(suffix)} (cantillation strands, identical opening)"
+    return H.table_header(_abbr(f"{la}/{lb}", title))
 
 
 def _four_strands_table(readings: list[pds.Reading]) -> object:
     by_name = {r.name: r for r in readings}
-    names = [r.name for r in readings]
     rows: list[object] = []
-    for i, r in enumerate(readings):
-        prev_name = names[i - 1] if i else None
-        next_name = names[i + 1] if i + 1 < len(names) else None
-        merged_below = r.name == _MERGED_STRANDS[0] and next_name == _MERGED_STRANDS[1]
-        merged_above = r.name == _MERGED_STRANDS[1] and prev_name == _MERGED_STRANDS[0]
-        letter, title = _STRAND_ABBRS[r.name]
-        cells: list[object] = [H.table_header(_abbr(letter, title))]
-        if merged_above:
-            pass  # the range cell spans down from the row above (rowspan="2")
+    for r in readings:
+        if r.name == _MERGED_STRANDS[1]:
+            continue  # folded into the single mE/pT row emitted at _MERGED_STRANDS[0]
+        if r.name == _MERGED_STRANDS[0]:
+            _assert_merged_identical(r, by_name[_MERGED_STRANDS[1]])
+            header = _merged_header()
         else:
-            if merged_below:
-                other = by_name[_MERGED_STRANDS[1]]
-                # Compare the STRIPPED endpoint forms, not the full words: the two strands' full
-                # אנכי / עבדים differ only by an immaterial meteg, which _strip_pointing correctly
-                # drops, so the shared-cell claim must be asserted on the stripped forms. Do NOT
-                # "fix" this to full-word equality — it would fire on that immaterial meteg. Same
-                # fail-the-build-on-data-drift style as resolve_readings.
-                mine = (_strip_pointing(r.first_verse_words[0]),
-                        _strip_pointing(r.first_verse_words[-1]))
-                theirs = (_strip_pointing(other.first_verse_words[0]),
-                          _strip_pointing(other.first_verse_words[-1]))
-                if mine != theirs:
-                    raise AssertionError(
-                        f"{r.name} and {other.name} share one rowspan range cell, but their "
-                        "stripped אנכי / עבדים endpoints differ -- the vendored readings drifted"
-                    )
-            span = {"rowspan": "2"} if merged_below else None
-            cells.append(_strand_range_cell(r, attr=span))
-        rows.append(H.table_row(tuple(cells)))
+            letter, title = _STRAND_ABBRS[r.name]
+            header = H.table_header(_abbr(letter, title))
+        rows.append(H.table_row((header, *_milestone_cells(r))))
     return H.table(tuple(rows), {"class": "strand-table", "dir": "rtl"})
 
 
@@ -300,9 +330,13 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                 H.bold(pds.ROM_ETNAHTA),
                 " or ",
                 H.bold(pds.ROM_REVIA),
-                " there is mid-verse, folding אנכי…עבדים into a longer verse. In the two folding "
-                "strands the range below shows עבדים in the middle, so its structure-deciding "
-                "accent is on view:",
+                " there is mid-verse, folding אנכי…עבדים into a longer verse. The table below "
+                "lays all four strands over the same milestone columns — אנכי (their common "
+                "start), then עבדים, על־פני, and מצותי — so their subset relation is plain: every "
+                "verse starts green at אנכי and ends red at its own last word, the shorter ones "
+                "stopping where the longer ones keep going. Each strand keeps its own accent on "
+                "עבדים, the structure-deciding mark (the column ordering is schematic — it shows "
+                "only which endpoint comes before which, not the real distances between them):",
             )
         ),
         _four_strands_table(readings),
@@ -330,8 +364,8 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                     pds.ROM_LEGARMEH,
                     "). They differ only by an immaterial ",
                     pds.ROM_METEG,
-                    " (which the stripped range cells above drop, so their shared cell is one"
-                    " rowspan).",
+                    " (which the stripped cells above drop), so the table gives them a single"
+                    " shared row, labelled mE/pT.",
                 ),
                 (
                     H.bold(f"Printed {_ELYON} ≠ manuscript {_ELYON}."),
@@ -379,8 +413,8 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
 # numbering is dropped because the printed taxton splits the first commandment from the second
 # where the MAM taxton merges them into one chanted verse, so a single "MAM verse number" row
 # cannot align 1:1 with the printed columns; issue #59.)
-_ELYON_TITLE = "elyon (upper cantillation strand)"
-_TAXTON_TITLE = "taḥton (lower cantillation strand)"
+_ELYON_TITLE = "elyon (cantillation strand)"
+_TAXTON_TITLE = "taḥton (cantillation strand)"
 _ELYON_GRAD_TITLE = "schematic color gradient for the elyon verse"
 _TAXTON_GRAD_TITLE = "schematic color gradient for the taḥton verse(s)"
 

@@ -48,8 +48,10 @@ import repo_paths
 _PASEQ = "\N{HEBREW PUNCTUATION PASEQ}"
 _SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
 
-# The traditional-name and English gloss for each strand (report labels only).
-READING_LABELS: dict[str, str] = {"taxton": "taḥton (lower)", "elyon": "elyon (upper)"}
+# The traditional strand name for each reading (report labels only). No "upper"/"lower" gloss:
+# it invites confusion with above-letter vs below-letter accents (see printed_decalogue_strands
+# module docstring for the cross-page rule).
+READING_LABELS: dict[str, str] = {"taxton": "taḥton", "elyon": "elyon"}
 TRADITION_LABELS: dict[str, str] = {"manuscript": "Tiberian manuscript", "printed": "printed editions"}
 BOOK_LABELS: dict[str, str] = {"ex": "Exodus 20", "dt": "Deuteronomy 5"}
 
