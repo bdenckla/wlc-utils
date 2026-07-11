@@ -2,7 +2,7 @@ r"""Generate gh-pages/accgram/printed-decalogue.html -- the printed-tradition De
 grammaticality report (issue #52).
 
 Companion to the dual-cantillation work of issue #36 (which grammar-checks the *manuscript*
-taxton/elyon threads by detangling WLC): this page reports whether the *printed* editions'
+taxton/elyon strands by detangling WLC): this page reports whether the *printed tradition*'s
 (דפוסים) taxton and elyon accentuations of the two Decalogues parse under the same prose
 grammar checker.  It renders live from ``printed_decalogue.check_all`` over the vendored
 readings, so it can never drift from the checker's real behaviour.
@@ -40,8 +40,7 @@ import repo_paths
 
 REPORT_TITLE = "In the printed tradition, are the accents of the Decalogue grammatical?"
 
-_ISSUE_36 = "https://github.com/bdenckla/wlc-utils/issues/36"
-_ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
+_GOERWITZ_URL = "goerwitz.html"
 _SOURCE_URL = "https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים"
 
 
@@ -76,32 +75,38 @@ def _intro() -> tuple[object, ...]:
         H.heading_level_2("The question"),
         H.para(
             (
-                "The two Decalogues are each chanted two ways: "
-                "the טעם תחתון division into ordinary-length verses, and the טעם עליון division "
-                "by commandment, which makes the short prohibitions (לא תרצח, לא תנאף, לא תגנב) "
-                "their own tiny verses and folds long passages into single long ones. ",
-                link("Issue #36", _ISSUE_36),
-                " grammar-checked the ",
-                H.bold("Tiberian-manuscript"),
-                f" (WLC / MAM) {_TAHTON} and {_ELYON} threads by detangling WLC’s dual "
-                "cantillation. This page (",
-                link("issue #52", _ISSUE_52),
-                ") asks the companion question for the ",
-                H.bold("printed editions"),
-                " (דפוסים, also Koren and Simanim): fed through the very same prose grammar "
-                f"checker, are their {_TAHTON} and {_ELYON} accentuations grammatical too?",
+                "Each Decalogue — the one in ",
+                H.bold("Exodus"),
+                " and the one in ",
+                H.bold("Deuteronomy"),
+                " — has two strands of cantillation, the טעם תחתון and the טעם עליון; in truth"
+                " there are ",
+                H.bold("four"),
+                ", because at the opening commandment the ",
+                H.bold("printed tradition"),
+                " (p-trad) differs from the ",
+                H.bold("manuscript tradition"),
+                f" (m-trad), yielding two different {_ELYON} strands and two different"
+                f" {_TAHTON} strands. Richard Goerwitz's ",
+                link("accent grammar checker", _GOERWITZ_URL),
+                " vets the manuscript tradition's cantillation as grammatical prose; this page"
+                " asks the companion question for the ",
+                H.bold("printed tradition"),
+                " (still visible in more traditional editions like Koren and Simanim): fed"
+                f" through the same grammar checker, are its {_TAHTON} and {_ELYON}"
+                " accentuations grammatical too?",
             )
         ),
         H.para(
             (
-                "Unlike the manuscript thread, the printed and manuscript readings are already "
-                "single cantillation, spelled out word-for-word on the Wikisource base page ",
+                "There is no dual cantillation to detangle here. Where the Tiberian manuscript"
+                " packs both of its strands into one text, the Wikisource base page ",
                 link("עשרת הדברות בסיס/טעמים", _SOURCE_URL),
-                ". Each chanted verse (delimited by its own sof pasuq) is fed through the "
-                "shared pipeline — a leading verse-start token, the prose scanner, then the "
-                "prose PLY grammar — exactly as issue #36 does. The manuscript versions are "
-                "the baseline (MAM’s own authoritative text, expected all clean); the printed "
-                "versions are the object of study.",
+                " spells out all the strands — printed and manuscript alike — separately and"
+                " word-for-word, each as plain single cantillation. Every chanted verse"
+                " (delimited by its own sof pasuq) is grammar-checked on its own. The"
+                " manuscript tradition is the baseline — MAM's own authoritative text, expected"
+                " to parse clean throughout — and the printed tradition is the object of study.",
             )
         ),
     )
@@ -119,7 +124,7 @@ def _cell(vr: pd.VersionResult) -> object:
 
 
 def _verdict_table(by_key: dict) -> object:
-    header = H.table_row_of_headers(("", "Tiberian manuscript", "Printed editions"))
+    header = H.table_row_of_headers(("", "Manuscript tradition", "Printed tradition"))
     rows = [header]
     for book in ("ex", "dt"):
         for reading in ("taxton", "elyon"):
@@ -160,7 +165,7 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
                 H.bold(_ELYON),
                 " is grammatical in the manuscript but ",
                 H.bold("not"),
-                f" in the printed editions: the printed {_ELYON} of ",
+                f" in the printed tradition: the printed {_ELYON} of ",
                 H.bold("each"),
                 " Decalogue has exactly one ungrammatical chanted verse — its opening one.",
             )
@@ -466,7 +471,7 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
                 " is its own chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
                 "separate verses, ",
                 H.bold("both of which parse clean"),
-                ". The printed editions instead merge the first two commandments into a single "
+                ". The printed tradition instead merges the first two commandments into a single "
                 "verse (nine chanted verses in all, against the manuscript’s ten). That one "
                 "merged verse is what the grammar rejects. Shown stripped to consonants and "
                 f"accents (MAM-simple style) and divided at the printed {_TAHTON}’s verse "
@@ -479,7 +484,7 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
             (
                 "The single etnaḥta falls at ",
                 hbo("לְשֹׂנְאָי"),
-                ", leaving an over-long first half that carries a segolta plus three separate "
+                ", leaving an over-long first half that has a segolta plus three separate "
                 "revia domains (at ",
                 hbo("עֲבָדִים"),
                 ", ",
