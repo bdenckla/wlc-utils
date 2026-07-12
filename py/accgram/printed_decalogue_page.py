@@ -448,23 +448,9 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
             (
                 (
                     H.bold(f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first"
-                           " chanted verse."),
-                    " Once אנכי…עבדים is its own verse there is only one grammatical way to"
-                    " accent it — ",
-                    pds.ROM_ETNAHTA,
-                    " in the middle, ",
-                    pds.ROM_SILLUQ,
-                    " at the end — so in that verse both traditions land on the same marks"
-                    " (consonants, accents, and accent-boundary marks: ",
-                    pds.ROM_SOF_PASUQ,
-                    ", ",
-                    pds.ROM_MAQAF,
-                    ", ",
-                    pds.ROM_LEGARMEH,
-                    "). They differ only by an immaterial ",
-                    pds.ROM_METEG,
-                    " (which the stripped cells above drop), so the table gives them a single"
-                    " shared row, labelled mE/pT. The equality stops there: past this first"
+                           " chanted verse"),
+                    ", where the table gives them a single shared row, labelled mE/pT."
+                    " The equality stops there: past this first"
                     " verse the two strands diverge completely — the p-trad ",
                     _TAHTON,
                     " runs the Exodus Decalogue on for ",
