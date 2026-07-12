@@ -69,14 +69,18 @@ def hbo(text: str) -> object:
 # A run of Hebrew-block characters -- letters, points, accents, and the maqaf / sof pasuq
 # that join or end an accent-word.  Covers both bare consonantal skeletons and fully-pointed
 # words, so the whole word stays in one hbo span rather than being split at its marks.
-_HEBREW_RUN_RE = re.compile(r"[֐-׿]+")
+# Inter-word spaces are kept inside the run so a whole Hebrew phrase (multiple space-separated
+# words) stays in one hbo span; leading/trailing spaces bordering non-Hebrew text stay out.
+_HEBREW_RUN_RE = re.compile(r"[֐-׿]+(?: +[֐-׿]+)*")
 
 
 def wrap_hebrew_runs(text: str) -> tuple[object, ...]:
     """Split ``text`` into a flat (string | hbo-span) sequence, wrapping each Hebrew run.
 
-    Wrapping the Hebrew words in ``lang="hbo"`` spans gives them the Hebrew font and
-    (via the stylesheet) keeps them upright -- Hebrew is never italicized."""
+    Each maximal Hebrew phrase -- consecutive Hebrew words and the spaces between them --
+    is kept in a single hbo span rather than one span per word.  Wrapping the Hebrew in
+    ``lang="hbo"`` spans gives it the Hebrew font and (via the stylesheet) keeps it upright
+    -- Hebrew is never italicized."""
     pieces: list[object] = []
     cursor = 0
     for match in _HEBREW_RUN_RE.finditer(text):
