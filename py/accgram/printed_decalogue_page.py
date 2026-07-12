@@ -8,7 +8,7 @@ grammar checker.  It renders live from ``printed_decalogue.check_all`` over the 
 readings, so it can never drift from the checker's real behaviour.
 
 It also lays out the four cantillation strands of the opening אנכי...עבדים unit (manuscript /
-printed x taḥton / elyon) as a MAM-simple-style range table, resolved by the shared
+printed x taḥton / elyon) over shared milestone words, resolved by the shared
 ``printed_decalogue_strands`` module.  The Simanim-witness companion page
 (``printed_decalogue_simanim_page``) links back to that table rather than duplicating it.
 
@@ -198,8 +198,8 @@ def _strip_pointing(word: str) -> str:
     punctuation (maqaf, sof pasuq, legarmeh), dropping vowels, dagesh, shin/sin dots, rafe,
     and ordinary meteg. A word's U+05BD is *silluq* (an accent, kept) exactly when the word is
     verse-final, i.e. carries sof pasuq; otherwise every U+05BD is an ordinary meteg (a ga'ya)
-    and is dropped. MAM-simple style, via the shared mb_cmn.hebrew_accent_strip kernel (cf.
-    MAM-basics ``versification_and_cantillation/strands.py::_strip_pointing``)."""
+    and is dropped. Done with the shared mb_cmn.hebrew_accent_strip kernel (cf. MAM-basics
+    ``versification_and_cantillation/strands.py::_strip_pointing``)."""
     keep_meteg = has.METEG_SILLUQ if hpunc.SOPA in word else has.METEG_DROP
     return has.strip_to_accents(word, keep_meteg=keep_meteg)
 
@@ -208,16 +208,83 @@ def _abbr(letter: str, title: str) -> object:
     return H.htel_mk_inline("abbr", {"title": title}, letter)
 
 
-def _range_cell(words: tuple[str, ...], *, attr=None) -> object:
-    """A ``first … last`` range label (stripped to consonants + accents), the range a complete
-    verse: its first word is tinted green (start) and its last word red (stop), as the TEMBte
-    tables do. ``lang="hbo"`` goes on the ``<td>`` (not the spans): the cells carry accents, and
-    this page's convention (issue #58) gives accent-bearing Hebrew ``lang="hbo"`` → the Taamey
-    font; one attr on the td keeps the ``…`` and words at a single size."""
-    td_attr = {"lang": "hbo", **(attr or {})}
-    first = H.span_c(_strip_pointing(words[0]), "vc-start")
-    last = H.span_c(_strip_pointing(words[-1]), "vc-stop")
-    return H.table_datum((first, "…", last), td_attr)
+# ── Letter-equalizing the paired taxton/elyon boundary cells (ported from MAM-basics #201) ──
+# Each column shows one underlying text span read by both strands, so the two cells should share
+# a consonant skeleton at each boundary. They can still tokenize a boundary word differently —
+# most visibly the leading לא of a negative commandment, which the taxton maqaf-joins to the next
+# word (one token לא־תעשה) while the elyon leaves it free (לא as its own word). _balanced_sides
+# pulls extra boundary words inward, word by word, until the two sides' skeletons match, so the
+# sibling cells align (e.g. taxton לא־תעשה לך … / elyon לא תעשה־לך …) instead of a bare לא sitting
+# under a fuller taxton cell. It asserts equality — a guard that fires loudly on any column it
+# cannot reconcile.
+def _skel(word: str) -> str:
+    """A word's consonant skeleton: only the Hebrew letters (alef…tav), dropping points, accents,
+    maqaf, sof pasuq and legarmeh — so a maqaf-joined לא־תעשה and a space-separated לא תעשה compare
+    equal. Uses the same letter bounds as the strip kernel (private today; cf. MAM-basics #198)."""
+    return "".join(ch for ch in word if has._LETTER_LO <= ord(ch) <= has._LETTER_HI)
+
+
+def _balance_boundary(t_words, e_words, *, grow_backward: bool, label: str) -> tuple[int, int]:
+    """How many boundary words each strand must show for their skeletons to match at one end of a
+    column. Compares the taxton's and elyon's leading (or, with ``grow_backward``, trailing) run
+    of words, growing the shorter-skeleton side inward one word at a time while it stays a prefix/
+    suffix of the longer. Raises with the column ``label`` if the skeletons diverge or a side runs
+    out of words."""
+
+    def seg(words, take):
+        chosen = words[-take:] if grow_backward else words[:take]
+        return "".join(_skel(w) for w in chosen)
+
+    t_take = e_take = 1
+    while True:
+        ts, es = seg(t_words, t_take), seg(e_words, e_take)
+        if ts == es:
+            return t_take, e_take
+        short, long_ = (ts, es) if len(ts) < len(es) else (es, ts)
+        aligned = long_.endswith(short) if grow_backward else long_.startswith(short)
+        grow_t = len(ts) < len(es)
+        room = (t_take < len(t_words)) if grow_t else (e_take < len(e_words))
+        if not aligned or not room:
+            raise AssertionError(
+                f"cannot letter-equalize the {label} boundary — taxton skeleton {ts!r} vs "
+                f"elyon skeleton {es!r}; taxton words={t_words!r}, elyon words={e_words!r}"
+            )
+        if grow_t:
+            t_take += 1
+        else:
+            e_take += 1
+
+
+def _balanced_sides(t_words, e_words, *, label: str):
+    """Letter-balance both ends of a column, returning the displayed boundary word lists
+    ``(t_first, t_last, e_first, e_last)`` — each the word(s) whose skeletons the two strands
+    share after any pulling."""
+    tf, ef = _balance_boundary(t_words, e_words, grow_backward=False, label=f"{label} first")
+    tl, el = _balance_boundary(t_words, e_words, grow_backward=True, label=f"{label} last")
+    return t_words[:tf], t_words[-tl:], e_words[:ef], e_words[-el:]
+
+
+def _range_cell(first_words, last_words, *, start: bool, stop: bool) -> object:
+    """A ``first … last`` range cell: the (already letter-balanced) boundary word(s) at each end,
+    stripped to consonants + accents and joined by an ellipsis. The verse-initial word is green
+    when ``start`` and the verse-final word red when ``stop``; any word pulled in only for
+    letter-alignment renders plain. ``lang="hbo"`` → Taamey font (issue #58)."""
+    fw = [_strip_pointing(w) for w in first_words]
+    lw = [_strip_pointing(w) for w in last_words]
+    fw[0] = H.span_c(fw[0], "vc-start") if start else fw[0]
+    lw[-1] = H.span_c(lw[-1], "vc-stop") if stop else lw[-1]
+    # fw words (space-separated), then the ellipsis, then lw words (space-separated).
+    nodes: list[object] = []
+    for i, node in enumerate(fw):
+        if i:
+            nodes.append(" ")
+        nodes.append(node)
+    nodes.append("…")
+    for i, node in enumerate(lw):
+        if i:
+            nodes.append(" ")
+        nodes.append(node)
+    return H.table_datum(tuple(nodes), {"lang": "hbo"})
 
 
 # --------------------------------------------------------------------------- #
@@ -442,59 +509,127 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
 
 
 # --------------------------------------------------------------------------- #
-# The merged-verse table (issue #59)
+# The nesting tables (issues #59, #62)
 # --------------------------------------------------------------------------- #
-# A range-divided view of the one ungrammatical printed-elyon verse, stripped to consonants +
-# accents (MAM-simple style). The printed tradition merges the first two commandments into a
-# single chanted verse, which the printed taxton instead keeps as five ordinary verses. Modeled
-# on MAM-simple's versification-and-cantillation "TEMBte" tables, but: no M/B verse-number rows
-# and the *printed* strands rather than the manuscript ones. The words keep their cantillation
-# accents (only the vowels/dagesh/ordinary-meteg are stripped) because the divergence this table
-# shows lives in the accents; the range division is what the green/red endpoints mark. (The M/B
-# numbering is dropped because the printed taxton splits the first commandment from the second
-# where the MAM taxton merges them into one chanted verse, so a single "MAM verse number" row
-# cannot align 1:1 with the printed columns; issue #59.)
-_ELYON_TITLE = "elyon (cantillation strand)"
-_TAXTON_TITLE = "taḥton (cantillation strand)"
-_ELYON_GRAD_TITLE = "schematic color gradient for the elyon verse"
-_TAXTON_GRAD_TITLE = "schematic color gradient for the taḥton verse(s)"
+# Two transposed strand tables over the SAME opening region (commandments 1-2, the 51 words
+# אנכי...מצותי): one for the printed tradition (pE/pT), one for the manuscript tradition (mE/mT),
+# so the reader can compare how each tradition's elyon and taxton verses nest. The layout echoes
+# the table in MAM-simple/gh-pages/versification-and-cantillation.html (the source of the analogy,
+# not of the text), but with no M/B verse-number rows. Each cell is a first…last range (consonants
+# + accents; vowels/dagesh/ordinary-meteg stripped), green where a column begins one of the
+# strand's verses and red where it ends one. The columns are the finest common subdivision: the
+# union of both strands' verse boundaries. Because the p-trad taxton breaks at every boundary
+# either m-trad strand uses, BOTH tables end up with the same five columns (widths 9,5,14,17,6);
+# what differs is which column edges are true verse starts/stops. Where a verse straddles a column
+# edge of the other strand (the m-trad taxton's אנכי...על־פני crossing the elyon's break after
+# עבדים) the cell shows a start with no matching stop, or vice versa — the "straddling" that makes
+# the m-trad nesting less tidy than the p-trad's clean five-in-one. (M/B numbering is dropped because the two traditions
+# split this region differently, so no single verse-number row aligns with the columns; issue #59.)
 
 
-def _taxton_columns(tax: pd.VersionResult, n_words: int) -> list[pd.ChantedVerseResult]:
-    """The leading printed-taḥton chanted verses whose words together make up the merged
-    printed-elyon verse. Aligned by word count: the two strands are the same word sequence,
-    differing only in vocalization/accents."""
-    cols: list[pd.ChantedVerseResult] = []
+def _leading_verses(version: pd.VersionResult, n_words: int) -> list[pd.ChantedVerseResult]:
+    """The leading chanted verses of ``version`` whose words together cover the first ``n_words``
+    (the opening region). The strands are the same word sequence, differing only in vocalization/
+    accents, so this splits the shared region consistently for each strand."""
+    out: list[pd.ChantedVerseResult] = []
     total = 0
-    for cv in tax.chanted_verses:
-        cols.append(cv)
+    for cv in version.chanted_verses:
+        out.append(cv)
         total += len(cv.words)
         if total >= n_words:
             break
-    return cols
+    return out
 
 
-def _merged_verse_table(by_key: dict) -> object:
-    merged = by_key[("bk-ex", "sk-elyon", "tk-printed")].ungrammatical[0]
-    cols = _taxton_columns(by_key[("bk-ex", "sk-taxton", "tk-printed")], len(merged.words))
-    n = len(cols)
+def _verse_ends(verses: list[pd.ChantedVerseResult]) -> list[int]:
+    """The cumulative word-offset at which each verse ends, e.g. ``[9, 51]`` for a 9- then
+    42-word pair."""
+    ends: list[int] = []
+    total = 0
+    for v in verses:
+        total += len(v.words)
+        ends.append(total)
+    return ends
 
-    def row(letter: str, title: str, cells: tuple[object, ...]) -> object:
-        return H.table_row((H.table_header(_abbr(letter, title)), *cells))
 
-    # E: the printed elyon — one verse spanning all the taxton columns.
-    e_row = row("E", _ELYON_TITLE, (_range_cell(merged.words, attr={"colspan": str(n)}),))
-    # T: the printed taxton — each column a complete ordinary verse.
-    t_row = row("T", _TAXTON_TITLE, tuple(_range_cell(cv.words) for cv in cols))
-    # e / t: the schematic gradient bars — one span for the merged elyon verse, one per taxton.
-    e_grad = row("e", _ELYON_GRAD_TITLE, (H.table_datum("", {"class": "vc-grad", "colspan": str(n)}),))
-    t_grad = row("t", _TAXTON_GRAD_TITLE, tuple(H.table_datum("", {"class": "vc-grad"}) for _ in cols))
-    return H.table((e_row, t_row, e_grad, t_grad), {"class": "strand-table", "dir": "rtl"})
+def _columns(*verse_lists: list[pd.ChantedVerseResult]) -> list[tuple[int, int]]:
+    """Column ``(start, end)`` word-offsets = the segments delimited by the union of every
+    strand's verse boundaries, so within a column no strand breaks."""
+    cuts = sorted({0, *(e for verses in verse_lists for e in _verse_ends(verses))})
+    return list(zip(cuts, cuts[1:]))
+
+
+def _labeled_row(letter: str, title: str, cells: list[object]) -> object:
+    return H.table_row((H.table_header(_abbr(letter, title)), *cells))
+
+
+def _grad_row(
+    letter: str,
+    title: str,
+    verses: list[pd.ChantedVerseResult],
+    columns: list[tuple[int, int]],
+) -> object:
+    """A strand's schematic gradient bar: one cell per verse, colspanned across the columns that
+    verse covers (a verse spanning k columns is one k-wide green→red bar)."""
+    ends = _verse_ends(verses)
+    spans = list(zip([0, *ends[:-1]], ends))
+    cells = []
+    for vs, ve in spans:
+        k = sum(1 for a, b in columns if vs <= a and b <= ve)
+        attr = {"class": "vc-grad", **({"colspan": str(k)} if k > 1 else {})}
+        cells.append(H.table_datum("", attr))
+    return H.table_row((H.table_header(_abbr(letter, title)), *cells))
+
+
+def _nesting_table(elyon: pd.VersionResult, taxton: pd.VersionResult, n_words: int, *, pfx: str) -> object:
+    """The transposed strand table for one tradition over the opening ``n_words``-word region.
+    ``pfx`` ("p" / "m") prefixes the row labels — pE/pT and the gradient rows pe/pt (mE/mT, me/mt) —
+    matching the four-strands table's mT/pE convention. Both traditions land on the same columns."""
+    trad = {"p": "printed", "m": "manuscript"}[pfx]
+    e_verses = _leading_verses(elyon, n_words)
+    t_verses = _leading_verses(taxton, n_words)
+    e_words = tuple(w for cv in e_verses for w in cv.words)
+    t_words = tuple(w for cv in t_verses for w in cv.words)
+    columns = _columns(e_verses, t_verses)
+    e_ends, t_ends = _verse_ends(e_verses), _verse_ends(t_verses)
+    e_starts, e_stops = {0, *e_ends[:-1]}, set(e_ends)
+    t_starts, t_stops = {0, *t_ends[:-1]}, set(t_ends)
+    # Build the two text rows together, column by column: each column's elyon and taxton slices
+    # are letter-balanced against each other (issue #201) before rendering, so sibling cells align.
+    e_cells: list[object] = []
+    t_cells: list[object] = []
+    for a, b in columns:
+        t_first, t_last, e_first, e_last = _balanced_sides(
+            t_words[a:b], e_words[a:b], label=f"{pfx} {a}:{b}"
+        )
+        e_cells.append(_range_cell(e_first, e_last, start=a in e_starts, stop=b in e_stops))
+        t_cells.append(_range_cell(t_first, t_last, start=a in t_starts, stop=b in t_stops))
+    rows = (
+        _labeled_row(pfx + "E", f"{trad}-tradition elyon", e_cells),
+        _labeled_row(pfx + "T", f"{trad}-tradition taḥton", t_cells),
+        _grad_row(pfx + "e", f"schematic color gradient for the {trad} elyon verse(s)", e_verses, columns),
+        _grad_row(pfx + "t", f"schematic color gradient for the {trad} taḥton verse(s)", t_verses, columns),
+    )
+    return H.table(rows, {"class": "strand-table", "dir": "rtl"})
 
 
 def _finding_section(by_key: dict) -> tuple[object, ...]:
     ex_ms = by_key[("bk-ex", "sk-elyon", "tk-manuscript")]
     ms_cmd1, ms_cmd2 = ex_ms.chanted_verses[0], ex_ms.chanted_verses[1]
+    merged = by_key[("bk-ex", "sk-elyon", "tk-printed")].ungrammatical[0]
+    n_words = len(merged.words)
+    p_table = _nesting_table(
+        by_key[("bk-ex", "sk-elyon", "tk-printed")],
+        by_key[("bk-ex", "sk-taxton", "tk-printed")],
+        n_words,
+        pfx="p",
+    )
+    m_table = _nesting_table(
+        ex_ms,
+        by_key[("bk-ex", "sk-taxton", "tk-manuscript")],
+        n_words,
+        pfx="m",
+    )
     return (
         H.heading_level_2(
             f"Why the p-trad {_ELYON} fails: the merged first verse",
@@ -510,17 +645,17 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
                 ". The p-trad instead merges the first two commandments into a single "
                 "verse (nine chanted verses in all, against the m-trad’s ten). That one "
                 "merged verse is what the grammar rejects. Shown stripped to consonants and "
-                f"accents (MAM-simple style) and divided at the p-trad {_TAHTON}’s verse "
-                f"boundaries — one {_ELYON} verse (E) spanning the five ordinary {_TAHTON} "
-                "verses (T) it merges:",
+                f"accents and divided at the p-trad {_TAHTON}’s verse boundaries — one p-trad "
+                f"{_ELYON} verse (pE) spanning the five ordinary p-trad {_TAHTON} verses (pT) "
+                "it merges:",
             )
         ),
-        _merged_verse_table(by_key),
+        p_table,
         H.para(
             (
                 "The single etnaḥta falls at ",
                 hbo("לְשֹׂנְאָי"),
-                ", leaving an over-long first half that has a segolta plus three separate "
+                ", leaving a first half crowded with a segolta plus three separate "
                 "revia domains (at ",
                 hbo("עֲבָדִים"),
                 ", ",
@@ -541,6 +676,37 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
                 "the two commandments as the m-trad’s two separate verses (",
                 f"{len(ms_cmd1.words)} and {len(ms_cmd2.words)} words) ",
                 "is exactly what lets them parse.",
+            )
+        ),
+        H.heading_level_3("A tidier nesting — until you scrutinize it"),
+        H.para(
+            (
+                f"It is tempting to call the p-trad’s arrangement the neater one. Its five "
+                f"{_TAHTON} verses nest perfectly inside a single {_ELYON} verse — a clean "
+                "five-in-one — whereas the m-trad divides the very same words into ",
+                H.bold("two"),
+                f" {_ELYON} verses and ",
+                H.bold("four"),
+                f" {_TAHTON} verses that do not nest cleanly at all: the m-trad ",
+                f"{_TAHTON}’s opening verse ",
+                hbo("אנכי … על־פני"),
+                f" straddles the {_ELYON}’s break after ",
+                hbo("עבדים"),
+                ", so neither strand’s verses sit wholly inside the other’s. In the gradient "
+                "bars below, mE’s first break lands inside mT’s first verse, which runs on to "
+                "על־פני — that is the straddle:",
+            )
+        ),
+        m_table,
+        H.para(
+            (
+                "But the p-trad’s tidiness is bought with an ungrammatical cantillation — the "
+                "very one dissected above. Once you see the accents that buy the five-in-one, "
+                "its neatness evaporates. This is ",
+                H.bold("not"),
+                " to say the tidier nesting could not have been cantillated grammatically; "
+                "perhaps some other accentuation would have carried it off. That is a "
+                "theoretical question we are not prepared to settle here.",
             )
         ),
     )
