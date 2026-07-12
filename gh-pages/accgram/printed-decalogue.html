@@ -23,7 +23,7 @@ The verdict</h2>
 <tr><th>Deut. תחתון</th><td class="clean">✓ all 12 clean</td><td class="clean">✓ all 13 clean</td></tr>
 <tr><th>Deut. עליון</th><td class="clean">✓ all 10 clean</td><td class="ungrammatical">✗ 1 of 9 ungrammatical (verse 1)</td></tr>
 </table>
-<p>The תחתון is grammatical everywhere — both books, both traditions. The p-trad תחתון differs from the m-trad in details that do not touch the accent grammar (vocalization such as <span lang="hbo">תִּרְצַח</span> vs <span lang="hbo">תִּרְצָח</span> at לא תרצח, and where a maqaf or ga‘ya falls), and in one verse boundary: the p-trad תחתון ends its first verse at מבית עבדים (so it has one more verse than the m-trad, which runs the first two commandments together). Both parse clean.</p>
+<p>The תחתון is grammatical everywhere — both books, both traditions. The p-trad תחתון differs from the m-trad in one verse boundary: the p-trad תחתון ends its first verse at מבית עבדים (so it has one more verse than the m-trad, which runs the first two commandments together). Both parse clean. It also differs in some details that do not touch the accent grammar (<a href="#tahton-details">catalogued in an appendix below</a>).</p>
 <p>The עליון is grammatical in the m-trad but <b>not</b> in the p-trad: the p-trad עליון of <b>each</b> Decalogue has exactly one ungrammatical chanted verse — its opening one.</p>
 <h2 id="four-strands">
 The four strands of אנכי…עבדים</h2>
@@ -59,7 +59,7 @@ Why the p-trad עליון fails: the merged first verse</h2>
 <tr><th><abbr title="schematic color gradient for the printed elyon verse(s)">pe</abbr></th><td class="vc-grad" colspan="5"></td></tr>
 <tr><th><abbr title="schematic color gradient for the printed taḥton verse(s)">pt</abbr></th><td class="vc-grad"></td><td class="vc-grad"></td><td class="vc-grad"></td><td class="vc-grad"></td><td class="vc-grad"></td></tr>
 </table>
-<p>The single etnaḥta falls at <span lang="hbo">לְשֹׂנְאָי</span>, leaving a first half crowded with a segolta plus three separate revia domains (at <span lang="hbo">עֲבָדִים</span>, <span lang="hbo">עַל־פָּנַי</span>, and <span lang="hbo">לָאָרֶץ</span>); the prose grammar cannot build it and returns a <code>pashta_phrase</code> error — the same failure, at the same structural point, in both Decalogues.</p>
+<p>The single etnaḥta falls at <span lang="hbo">לְשֹׂנְאָי</span>, leaving a first half crowded with a segolta plus three separate revia domains (at <bdi><span lang="hbo">עֲבָדִים</span></bdi>, <bdi><span lang="hbo">עַל־פָּנַי</span></bdi>, and <bdi><span lang="hbo">לָאָרֶץ</span></bdi>); the prose grammar cannot build it and returns a <code>pashta_phrase</code> error — the same failure, at the same structural point, in both Decalogues.</p>
 <p>The cause is the merged <b>structure</b>, not sheer length: Deuteronomy’s p-trad עליון Sabbath verse runs 55 words and parses clean, while this merged verse (51 words) does not. Keeping the two commandments as the m-trad’s two separate verses (9 and 42 words) is exactly what lets them parse.</p>
 <h3>
 A tidier nesting — until you scrutinize it</h3>
@@ -75,5 +75,21 @@ A tidier nesting — until you scrutinize it</h3>
 Source</h2>
 <p>All eight readings (two books × taḥton/elyon × m-trad/p-trad) are taken from the Wikisource base page <a href="https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים">עשרת הדברות בסיס/טעמים</a> (revision 2810844, 2023-10-22), which every p-trad-vs-m-trad comparison table there transcludes. A handful of wiki templates are resolved to plain pointed text (legarmeh/paseq to a paseq mark, qere for ketiv-qere, paragraph and pisqa markers dropped); the chanted verses are split at sof pasuq.</p>
 <p>See also <a href="printed-decalogue-simanim.html">Simanim's Tiqqun as an independent witness</a>: two notes from Simanim's Tiqqun — its main text uses the p-trad עליון and its appendix the p-trad תחתון (issue #62). That page now leans on this page's <a href="#four-strands">four-strands table</a> rather than repeating it.</p>
+<h2 id="tahton-details">
+Appendix: how the two תחתון strands differ</h2>
+<p>Both תחתון strands parse clean everywhere, so none of the differences below bears on the grammaticality question this page asks — they are gathered here only to make the verdict's “details that do not touch the accent grammar” concrete. The one structural difference — the p-trad ending its first verse at מבית עבדים, and the boundary accents on <bdi>אנכי</bdi>, <bdi>אלהיך</bdi>, <bdi>מבית</bdi>, and <bdi>עבדים</bdi> that follow from it — is the verdict's own point and is not repeated here.</p>
+<p>In Exodus the two strands differ in essentially one grammar-irrelevant respect: the vocalization of לא תרצח — <span lang="hbo">תִּרְצָ֖ח</span> (m-trad, qamats) against <span lang="hbo">תִּרְצַ֖ח</span> (p-trad, patax). Both carry the same tipeḥa; only the vowel differs.</p>
+<p>Deuteronomy differs in more ways, none of them grammatical:</p>
+<ul>
+<li>
+<b>Vocalization.</b> The same <bdi><span lang="hbo">תִּרְצָ֖ח</span></bdi> / <bdi><span lang="hbo">תִּרְצַ֖ח</span></bdi> split at לא תרצח; and two words the m-trad points with qamats qatan but the p-trad with plain qamats — <bdi><span lang="hbo">כׇל</span></bdi> / <bdi><span lang="hbo">וְכׇל</span></bdi> against <bdi><span lang="hbo">כָל</span></bdi> / <bdi><span lang="hbo">וְכָל</span></bdi> — the same sound (kol), an orthographic choice only.</li>
+<li>
+<b>Maqaf and ga‘ya.</b> At “you shall not do any work” the m-trad keeps <span lang="hbo">לֹ֣א תַעֲשֶׂ֣ה</span> as two separately-accented words, while the p-trad joins them with a maqaf and reduces the first to a proclitic bearing a ga‘ya: <span lang="hbo">לֹֽא־תַעֲשֶׂ֨ה</span>.</li>
+<li>
+<b>Paseq.</b> The p-trad adds a paseq after <span lang="hbo">אַתָּה׀</span> where the m-trad has none.</li>
+<li>
+<b>Internal cantillation accents.</b> Within the Sabbath commandment the two strands choose different (individually grammatical) accents on several words — e.g. m-trad <span lang="hbo">וַ֠אֲמָתֶ֠ךָ</span> against p-trad <span lang="hbo">וַאֲמָתֶ֗ךָ</span> (revia), with similar swaps on <bdi>תעשה</bdi>, <bdi>מלאכה</bdi>, <bdi>ושורך</bdi>, <bdi>וחמרך</bdi>, and <bdi>ובהמתך</bdi>.</li>
+</ul>
+<p>None of these changes the parse: fed through the grammar checker, both תחתון strands come back clean in both books.</p>
 </body>
 </html>

@@ -265,6 +265,28 @@ def bdi(contents, attr=None):
     return htel_mk_inline("bdi", attr, contents)
 
 
+def bdi_multi(*items, conj="and"):
+    """Inline nodes for a comma-separated list of opposite-direction items (e.g. Hebrew words in
+    English prose), each wrapped in <bdi> so the list keeps its written order however a viewer
+    resolves the surrounding bidirectional text -- without this, adjacent RTL items merge across
+    their neutral commas and render reversed. Joined by ", " with a serial ", <conj> " before the
+    last item (or " <conj> " when there are only two). Each item may be a bare string or a
+    prebuilt htel such as an hbo(...) span. Returns a TUPLE of inline nodes -- splice it into a
+    contents tuple with ``*``: ``(..., *bdi_multi("א", "ב", "ג"), ...)``. Call it with one item
+    per line so the source order is unambiguous however the editor renders the RTL literals."""
+    assert items, "bdi_multi needs at least one item"
+    wrapped = [bdi(item) for item in items]
+    last = len(wrapped) - 1
+    parts = []
+    for i, node in enumerate(wrapped):
+        if i == last and i:
+            parts.append(f", {conj} " if last >= 2 else f" {conj} ")
+        elif i:
+            parts.append(", ")
+        parts.append(node)
+    return tuple(parts)
+
+
 def sup(contents, attr=None):
     """Make a <sup> (superscript) element."""
     return htel_mk_inline("sup", attr, contents)
