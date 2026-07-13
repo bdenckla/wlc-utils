@@ -64,7 +64,9 @@ def default_html_out_path(repo_root: Path) -> Path:
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
     parser.add_argument("--source", type=Path, default=pd.default_source_path())
-    parser.add_argument("--html-out", type=Path, default=default_html_out_path(repo_root))
+    parser.add_argument(
+        "--html-out", type=Path, default=default_html_out_path(repo_root)
+    )
 
 
 # --------------------------------------------------------------------------- #
@@ -78,7 +80,9 @@ def _bk(vr: pd.VersionResult) -> tuple[str, str, str]:
     return (f"bk-{vr.book}", f"sk-{vr.reading}", f"tk-{vr.tradition}")
 
 
-def _by_key(results: list[pd.VersionResult]) -> dict[tuple[str, str, str], pd.VersionResult]:
+def _by_key(
+    results: list[pd.VersionResult],
+) -> dict[tuple[str, str, str], pd.VersionResult]:
     return {_bk(vr): vr for vr in results}
 
 
@@ -100,13 +104,13 @@ def _intro() -> tuple[object, ...]:
                 " differs from the",
                 *[" ", H.bold("manuscript tradition"), " (m-trad),"],
                 f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
+                #
+                " (The printed tradition is fading, but still visible in editions like Koren and Simanim.)"
+                #
                 " We have run Richard Goerwitz's ",
                 link("accent grammar checker", _GOERWITZ_URL),
-                " against the m-trad cantillations (as represented by WLC); this page"
-                " asks the companion question for the p-trad",
-                " (a tradition still visible in editions like Koren and Simanim): fed"
-                f" through the same grammar checker, are the p-trad's {_TAHTON} and {_ELYON}"
-                " grammatical too?",
+                " against the m-trad strands (as represented by WLC); this page"
+                " shows what happens when the checker is run against the p-trad strands.",
             )
         ),
         H.para(
@@ -134,10 +138,14 @@ def _cell(vr: pd.VersionResult) -> object:
         f"✗ {len(bad)} of {n} ungrammatical ({which})", {"class": "ungrammatical"}
     )
 
+
 # The traditional strand name for each reading (report labels only). No "upper"/"lower" gloss:
 # it invites confusion with above-letter vs below-letter accents (see printed_decalogue_strands
 # module docstring for the cross-page rule).
-_STRAND_LABELS: dict[str, str] = {"sk-taxton": "תחתון", "sk-elyon": "עליון"}  # sk: strand key
+_STRAND_LABELS: dict[str, str] = {
+    "sk-taxton": "תחתון",
+    "sk-elyon": "עליון",
+}  # sk: strand key
 _BOOK_LABELS: dict[str, str] = {"bk-ex": "Ex.", "bk-dt": "Deut."}  # bk: book key
 
 
@@ -178,8 +186,7 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
         ),
         H.para(
             (
-                f"The {_ELYON}"
-                " is grammatical in the m-trad but ",
+                f"The {_ELYON}" " is grammatical in the m-trad but ",
                 H.bold("not"),
                 f" in the p-trad: the p-trad {_ELYON} of ",
                 H.bold("each"),
@@ -219,11 +226,14 @@ def _abbr(letter: str, title: str) -> object:
 def _skel(word: str) -> str:
     """A word's consonant skeleton: only the Hebrew letters (alef…tav), dropping points, accents,
     maqaf, sof pasuq and legarmeh — so a maqaf-joined לא־תעשה and a space-separated לא תעשה compare
-    equal. Uses the same letter bounds as the strip kernel (private today; cf. MAM-basics #198)."""
+    equal. Uses the same letter bounds as the strip kernel (private today; cf. MAM-basics #198).
+    """
     return "".join(ch for ch in word if has._LETTER_LO <= ord(ch) <= has._LETTER_HI)
 
 
-def _balance_boundary(t_words, e_words, *, grow_backward: bool, label: str) -> tuple[int, int]:
+def _balance_boundary(
+    t_words, e_words, *, grow_backward: bool, label: str
+) -> tuple[int, int]:
     """How many boundary words each strand must show for their skeletons to match at one end of a
     column. Compares the taxton's and elyon's leading (or, with ``grow_backward``, trailing) run
     of words, growing the shorter-skeleton side inward one word at a time while it stays a prefix/
@@ -258,8 +268,12 @@ def _balanced_sides(t_words, e_words, *, label: str):
     """Letter-balance both ends of a column, returning the displayed boundary word lists
     ``(t_first, t_last, e_first, e_last)`` — each the word(s) whose skeletons the two strands
     share after any pulling."""
-    tf, ef = _balance_boundary(t_words, e_words, grow_backward=False, label=f"{label} first")
-    tl, el = _balance_boundary(t_words, e_words, grow_backward=True, label=f"{label} last")
+    tf, ef = _balance_boundary(
+        t_words, e_words, grow_backward=False, label=f"{label} first"
+    )
+    tl, el = _balance_boundary(
+        t_words, e_words, grow_backward=True, label=f"{label} last"
+    )
     return t_words[:tf], t_words[-tl:], e_words[:ef], e_words[-el:]
 
 
@@ -334,12 +348,15 @@ def _milestone_cells(r: pds.Reading) -> list[object]:
     """One strand's row of milestone cells over the shared _MILESTONES columns: its start word
     (אנכי) green, its endpoint word red, any interior milestones neutral, and every milestone
     LATER than its endpoint an empty cell — so a shorter verse visibly stops where the longer
-    ones keep going, making the subset relation and common start legible down the columns."""
+    ones keep going, making the subset relation and common start legible down the columns.
+    """
     end = _MILESTONES.index(r.first_verse_end)
     cells: list[object] = []
     for i, skel in enumerate(_MILESTONES):
         if i > end:
-            cells.append(H.table_datum("", {"lang": "hbo"}))  # verse ends before this milestone
+            cells.append(
+                H.table_datum("", {"lang": "hbo"})
+            )  # verse ends before this milestone
             continue
         cls = "vc-start" if i == 0 else "vc-stop" if i == end else "vc-mid"
         span = H.span_c(_strip_pointing(_word_at(r, skel)), cls)
@@ -364,11 +381,11 @@ def _assert_merged_identical(r: pds.Reading, other: pds.Reading) -> None:
 def _merged_header() -> object:
     """The single row header for the two identically-opening strands: visible "mE/pT", its title
     stating the identity (both halves already free of any upper/lower gloss). The shared
-    "(cantillation strand)" parenthetical is factored out to the end rather than repeated."""
-    suffix = " (cantillation strand)"
+    "(cantillation strand)" parenthetical is factored out to the end rather than repeated.
+    """
     la, ta = _STRAND_ABBRS[_MERGED_STRANDS[0]]
     lb, tb = _STRAND_ABBRS[_MERGED_STRANDS[1]]
-    title = f"{ta.removesuffix(suffix)} = {tb.removesuffix(suffix)} (cantillation strands, identical in the first chanted verse only)"
+    title = f"{ta} = {tb} (same in the first chanted verse only)"
     return H.table_header(_abbr(f"{la}/{lb}", title))
 
 
@@ -389,9 +406,11 @@ def _four_strands_table(readings: list[pds.Reading]) -> object:
 
 
 def _verse_counts_table(readings: list[pds.Reading]) -> object:
-    """A small plain table of how many chanted verses each strand divides the Exodus Decalogue
-    into (12 / 10 / 13 / 9). No class: it takes the global zebra styling, like the verdict
-    table -- the verse count would not fit the strand table's range cells."""
+    """A small plain table of how many chanted verses each strand divides the Decalogue into
+    (12 / 10 / 13 / 9). Rendered from the Exodus readings, but the counts are identical in
+    Deuteronomy, so the table stands for both books. No class: it takes the global zebra styling,
+    like the verdict table -- the verse count would not fit the strand table's range cells.
+    """
     header = H.table_row_of_headers(("strand", "verse count"))
     rows = [header]
     for r in readings:
@@ -404,6 +423,39 @@ def _verse_counts_table(readings: list[pds.Reading]) -> object:
             )
         )
     return H.table(tuple(rows))
+
+    _UL_ITEM_1 = (
+        H.bold(
+            f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first chanted verse"
+        ),
+        ", where the table gives them a single shared row, labelled mE/pT."
+        " The equality stops there: past this first"
+        " verse the two strands diverge — the p-trad ",
+        *[f" {_TAHTON} divides each Decalogue into ", H.bold("13")],
+        *[f" chanted verses, the m-trad {_ELYON} into only ", H.bold("10"), "."],
+    )
+
+    _UL_ITEM_2 = (
+        H.bold(f"P-trad {_ELYON} ≠ m-trad {_ELYON}."),
+        f" The p-trad {_ELYON} puts ",
+        H.bold(pds.ROM_REVIA),
+        " on עבדים and runs the first two commandments together into one verse (→ ",
+        H.bold("9"),
+        f" total), where the m-trad {_ELYON} closes on ",
+        pds.ROM_SILLUQ,
+        " (→ ",
+        H.bold("10"),
+        ").",
+    )
+
+    _UL_ITEM_3 = (
+        f"The m-trad {_TAHTON} does not give אנכי…עבדים its own verse either — it"
+        " runs אנכי…פני together (",
+        pds.ROM_ETNAHTA,
+        " at עבדים, ",
+        pds.ROM_SOF_PASUQ,
+        " at פני), a third structure again.",
+    )
 
 
 def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
@@ -438,47 +490,16 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
         _four_strands_table(readings),
         H.para(
             (
-                "How many chanted verses each strand divides the Exodus Decalogue into:",
+                "How many chanted verses each strand divides the Decalogue into — the same"
+                " counts in both books, Exodus and Deuteronomy:",
             )
         ),
         _verse_counts_table(readings),
         H.unordered_list(
             (
-                (
-                    H.bold(f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first"
-                           " chanted verse"),
-                    ", where the table gives them a single shared row, labelled mE/pT."
-                    " The equality stops there: past this first"
-                    " verse the two strands diverge completely — the p-trad ",
-                    _TAHTON,
-                    " runs the Exodus Decalogue on for ",
-                    H.bold("13"),
-                    " chanted verses, the m-trad ",
-                    _ELYON,
-                    " for only ",
-                    H.bold("10"),
-                    ".",
-                ),
-                (
-                    H.bold(f"P-trad {_ELYON} ≠ m-trad {_ELYON}."),
-                    f" The p-trad {_ELYON} puts ",
-                    H.bold(pds.ROM_REVIA),
-                    " on עבדים and runs the first two commandments together into one verse (→ ",
-                    H.bold("9"),
-                    f" total), where the m-trad {_ELYON} closes on ",
-                    pds.ROM_SILLUQ,
-                    " (→ ",
-                    H.bold("10"),
-                    ").",
-                ),
-                (
-                    f"The m-trad {_TAHTON} does not give אנכי…עבדים its own verse either — it"
-                    " runs אנכי…פני together (",
-                    pds.ROM_ETNAHTA,
-                    " at עבדים, ",
-                    pds.ROM_SOF_PASUQ,
-                    " at פני), a third structure again.",
-                ),
+                _UL_ITEM_1,
+                _UL_ITEM_2,
+                _UL_ITEM_3,
             )
         ),
         H.para(
@@ -511,7 +532,9 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
 # split this region differently, so no single verse-number row aligns with the columns; issue #59.)
 
 
-def _leading_verses(version: pd.VersionResult, n_words: int) -> list[pd.ChantedVerseResult]:
+def _leading_verses(
+    version: pd.VersionResult, n_words: int
+) -> list[pd.ChantedVerseResult]:
     """The leading chanted verses of ``version`` whose words together cover the first ``n_words``
     (the opening region). The strands are the same word sequence, differing only in vocalization/
     accents, so this splits the shared region consistently for each strand."""
@@ -565,10 +588,13 @@ def _grad_row(
     return H.table_row((H.table_header(_abbr(letter, title)), *cells))
 
 
-def _nesting_table(elyon: pd.VersionResult, taxton: pd.VersionResult, n_words: int, *, pfx: str) -> object:
+def _nesting_table(
+    elyon: pd.VersionResult, taxton: pd.VersionResult, n_words: int, *, pfx: str
+) -> object:
     """The transposed strand table for one tradition over the opening ``n_words``-word region.
     ``pfx`` ("p" / "m") prefixes the row labels — pE/pT and the gradient rows pe/pt (mE/mT, me/mt) —
-    matching the four-strands table's mT/pE convention. Both traditions land on the same columns."""
+    matching the four-strands table's mT/pE convention. Both traditions land on the same columns.
+    """
     trad = {"p": "printed", "m": "manuscript"}[pfx]
     e_verses = _leading_verses(elyon, n_words)
     t_verses = _leading_verses(taxton, n_words)
@@ -586,13 +612,27 @@ def _nesting_table(elyon: pd.VersionResult, taxton: pd.VersionResult, n_words: i
         t_first, t_last, e_first, e_last = _balanced_sides(
             t_words[a:b], e_words[a:b], label=f"{pfx} {a}:{b}"
         )
-        e_cells.append(_range_cell(e_first, e_last, start=a in e_starts, stop=b in e_stops))
-        t_cells.append(_range_cell(t_first, t_last, start=a in t_starts, stop=b in t_stops))
+        e_cells.append(
+            _range_cell(e_first, e_last, start=a in e_starts, stop=b in e_stops)
+        )
+        t_cells.append(
+            _range_cell(t_first, t_last, start=a in t_starts, stop=b in t_stops)
+        )
     rows = (
         _labeled_row(pfx + "E", f"{trad}-tradition elyon", e_cells),
         _labeled_row(pfx + "T", f"{trad}-tradition taḥton", t_cells),
-        _grad_row(pfx + "e", f"schematic color gradient for the {trad} elyon verse(s)", e_verses, columns),
-        _grad_row(pfx + "t", f"schematic color gradient for the {trad} taḥton verse(s)", t_verses, columns),
+        _grad_row(
+            pfx + "e",
+            f"schematic color gradient for the {trad} elyon verse(s)",
+            e_verses,
+            columns,
+        ),
+        _grad_row(
+            pfx + "t",
+            f"schematic color gradient for the {trad} taḥton verse(s)",
+            t_verses,
+            columns,
+        ),
     )
     return H.table(rows, {"class": "strand-table", "dir": "rtl"})
 
@@ -718,7 +758,10 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
         H.para(
             (
                 "See also ",
-                link("Simanim's Tiqqun as an independent witness", "printed-decalogue-simanim.html"),
+                link(
+                    "Simanim's Tiqqun as an independent witness",
+                    "printed-decalogue-simanim.html",
+                ),
                 f": two notes from Simanim's Tiqqun — its main text uses the p-trad {_ELYON} "
                 f"and its appendix the p-trad {_TAHTON} (issue #62). That page now leans on "
                 "this page's ",
@@ -742,7 +785,8 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
 def _appendix_section() -> tuple[object, ...]:
     return (
         H.heading_level_2(
-            f"Appendix: how the two {_TAHTON} strands differ", {"id": _TAHTON_DETAILS_ID}
+            f"Appendix: how the two {_TAHTON} strands differ",
+            {"id": _TAHTON_DETAILS_ID},
         ),
         H.para(
             (
@@ -770,9 +814,7 @@ def _appendix_section() -> tuple[object, ...]:
                 f" (p-trad, patax). Both carry the same {pds.ROM_TIPEHA}; only the vowel differs.",
             )
         ),
-        H.para(
-            ("Deuteronomy differs in more ways, none of them grammatical:",)
-        ),
+        H.para(("Deuteronomy differs in more ways, none of them grammatical:",)),
         H.unordered_list(
             (
                 (
@@ -840,7 +882,9 @@ def _appendix_section() -> tuple[object, ...]:
     )
 
 
-def render_body_contents(results: list[pd.VersionResult], source: dict) -> tuple[object, ...]:
+def render_body_contents(
+    results: list[pd.VersionResult], source: dict
+) -> tuple[object, ...]:
     by_key = _by_key(results)
     readings = pds.resolve_readings(results)
     return (
