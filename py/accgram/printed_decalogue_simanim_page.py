@@ -129,11 +129,9 @@ def _path(path: str) -> object:
 # duplicated verbatim in printed_decalogue_page._intro() (its no-HTML shared module pds can't
 # hold rendered prose). If you edit this wording, edit it there too (and vice versa).
 _PARA_1 = (
-    "Roughly speaking, each Decalogue — the one in",
-    *[" ", H.bold("Exodus"), " and the one in ", H.bold("Deuteronomy")],
-    " — has two strands of cantillation, the",
-    *[" ", "טעם תחתון", " and the ", "טעם עליון", "."],
-    " Why is this only roughly true? Because in truth there are",
+    "Roughly speaking, each Decalogue",
+    " has two strands of cantillation, the טעם תחתון and the טעם עליון.",
+    " Why is this only roughly true? Because in detail there are",
     *[" ", H.bold("four"), " strands:"],
     " at the opening commandment the",
     *[" ", H.bold("printed tradition"), " (p-trad)"],

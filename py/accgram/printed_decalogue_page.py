@@ -91,20 +91,16 @@ def _intro() -> tuple[object, ...]:
         H.heading_level_2("The question"),
         H.para(
             (
-                "Roughly speaking, each Decalogue — the one in ",
-                H.bold("Exodus"),
-                " and the one in ",
-                H.bold("Deuteronomy"),
-                " — has two strands of cantillation, the טעם תחתון and the טעם עליון."
-                " Why is this only roughly true? Because in truth"
-                " there are ",
-                H.bold("four"),
-                " strands: at the opening commandment the ",
-                H.bold("printed tradition"),
-                " (p-trad) differs from the ",
-                H.bold("manuscript tradition"),
-                f" (m-trad), yielding two different {_ELYON} strands and two different"
-                f" {_TAHTON} strands. We have run Richard Goerwitz's ",
+                "Roughly speaking, each Decalogue",
+                " has two strands of cantillation, the טעם תחתון and the טעם עליון.",
+                " Why is this only roughly true? Because in detail there are",
+                *[" ", H.bold("four"), " strands:"],
+                " at the opening commandment the",
+                *[" ", H.bold("printed tradition"), " (p-trad)"],
+                " differs from the",
+                *[" ", H.bold("manuscript tradition"), " (m-trad),"],
+                f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
+                " We have run Richard Goerwitz's ",
                 link("accent grammar checker", _GOERWITZ_URL),
                 " against the m-trad cantillations (as represented by WLC); this page"
                 " asks the companion question for the p-trad",
