@@ -661,9 +661,8 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
         ),
         H.para(
             (
-                f"In the m-trad {_ELYON}, the first commandment ",
-                hbo("אָנֹכִי … עֲבָדִים"),
-                " is its own chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
+                f"In the m-trad {_ELYON}, the first commandment אנכי … עבדים is its own "
+                "chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
                 "separate verses, ",
                 H.bold("both of which parse clean"),
                 ". The p-trad instead merges the first two commandments into a single "
@@ -677,18 +676,9 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
         p_table,
         H.para(
             (
-                "The single etnaḥta falls at ",
-                hbo("לְשֹׂנְאָי"),
-                ", leaving a first half crowded with a segolta plus three separate "
-                "revia domains (at ",
-                # Each item is a pointed hbo() span; bdi_multi wraps each in <bdi> so the list
-                # keeps its order (the isolate sits outside the lang="hbo" font span).
-                *H.bdi_multi(
-                    hbo("עֲבָדִים"),
-                    hbo("עַל־פָּנַי"),
-                    hbo("לָאָרֶץ"),
-                ),
-                "); the prose grammar cannot build it and returns a ",
+                "The single etnaḥta falls at לשנאי, leaving a first half crowded with a "
+                "segolta plus three separate revia domains (at עבדים, על־פני, לארץ); the "
+                "prose grammar cannot build it and returns a ",
                 H.code("pashta_phrase"),
                 " error — the same failure, at the same structural point, in both Decalogues.",
             )
@@ -714,11 +704,9 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
                 f" {_ELYON} verses and ",
                 H.bold("four"),
                 f" {_TAHTON} verses that do not nest cleanly at all: the m-trad ",
-                f"{_TAHTON}’s opening verse ",
-                hbo("אנכי … על־פני"),
-                f" straddles the {_ELYON}’s break after ",
-                hbo("עבדים"),
-                ", so neither strand’s verses sit wholly inside the other’s. In the gradient "
+                f"{_TAHTON}’s opening verse אנכי … על־פני straddles the {_ELYON}’s break "
+                f"after עבדים, so neither strand’s verses sit wholly inside the other’s. In "
+                "the gradient "
                 "bars below, mE’s first break lands inside mT’s first verse, which runs on to "
                 "על־פני — that is the straddle:",
             )
