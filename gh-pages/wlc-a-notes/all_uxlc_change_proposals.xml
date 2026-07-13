@@ -29,8 +29,9 @@
       <note>The qubuts in the MPK becomes a shuruq dot in the qere.</note>
       <note>Although Dotan does not note this word, he notes a later version of this word in this verse, וְיִשְׁתַּחֲוּ֥וּ. Presumably he notes this later word for the unexpected dagesh in its next-to-last vav. This later word is a normal (non-qere) word.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -75,8 +76,9 @@
       <note>I do not think Dotan finds the qubuts-to-shuruq issue notable because he does not note the similar ketiv/qere in gn27:29 words 3 and 4, וישתחו/וְיִֽשְׁתַּחֲו֤וּ. That gn27:29 ketiv/qere has the same qubuts-to-shuruq pattern as this one except the next-to-last vav of its qere is free of a dagesh, as expected, and therefore Dotan finds nothing notable about it.</note>
       <note>We know that Dotan finds the dagesh notable because he notes gn27:29 word 10, וְיִשְׁתַּחֲוּ֥וּ, a normal (non-qere) word that is analogous to this qere, including having an unexpected dagesh in its next-to-last vav.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -115,8 +117,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is וַיְצַוֻּ֕.</note>
       <note>The qubuts in the MPK becomes a shuruq dot in the qere.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -155,8 +158,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is וַיֹּאמְרֻ֣.</note>
       <note>The qubuts in the MPK becomes a shuruq dot in the qere.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -196,8 +200,9 @@
       <note>The qubuts in the MPK becomes a shuruq dot in the qere.</note>
       <note>There’s a large, clear dot above the ר; I don’t know what it is supposed to mean, if anything. Surely not a revia!</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -239,8 +244,9 @@
       <note>As a reminder, a WLC c-note (bracket-c note) is defined as follows:</note>
       <note>«We read an accent in ל differently from BHS. (This is similar to the note “]C”, but the latter refers to accent differences against BHQ.)»</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -280,8 +286,9 @@
       <note>The qubuts in the MPK becomes a shuruq dot in the qere.</note>
       <note>The dagesh in the qof is way off center, but still legit IMO.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -320,8 +327,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is וְקִבְּלֻ֣.</note>
       <note>The qubuts in the MPK becomes a shuruq dot in the qere.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -360,8 +368,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is וַיַּעֲלֻ֨.</note>
       <note>The qubuts in the MPK becomes a shuruq dot in the qere.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -400,8 +409,9 @@
       <note>The qere atom at issue is part of the qere compound מַה־זֶּ֣ה.</note>
       <note>The manuscript’s pointed ketiv (MPK) is מַזֶּ֣ה.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -440,8 +450,9 @@
       <note>The qere atom at issue is part of the qere compound מַה־לָּכֶם֙.</note>
       <note>The manuscript’s pointed ketiv (MPK) is מַלָּכֶם֙.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -480,8 +491,9 @@
       <note>The qere atom at issue is part of the qere compound וְהִנֵּה־ה֛וּא.</note>
       <note>The manuscript’s pointed ketiv (MPK) is וְהִנֵּה֛וּ.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -522,8 +534,9 @@
       <note>This is the dual of js24:15.</note>
       <note>Dotan notes that strictly speaking, the implied qere is בְעֵ֥בֶר, which leaves the ב unexpectedly free of a dagesh.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -564,8 +577,9 @@
       <note>This is the dual of js22:7.</note>
       <note>Dotan notes that strictly speaking, the implied qere is מֵּעֵ֣בֶר, which gives the מ an unexpected dagesh.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -606,8 +620,9 @@
       <note>See js24:15, which is similar.</note>
       <note>Dotan does not note this case, though he does note js24:15.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -648,8 +663,9 @@
       <note>Why in the margin does it say not only «בני קר ולא כת» but also «בני ק»?</note>
       <note>Although Dotan does not note this word, he notes that the next word has an unexpected dagesh in its ב. I.e., it unexpectedly starts with בּ not ב. i.e. בִנְיָמִ֔ן (Vinyamin) would be expected.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -688,8 +704,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is אְׄאָֽׄאׄ׃. (We use אׄ (א with an extraordinary upper dot) to hold marks not associated with a parent letter.)</note>
       <note>The MPK has no letter to carry a dagesh for the qere’s פ. The MPK (points on no letters) is sheva, qamats, and siluq.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -729,8 +746,9 @@
       <note>The MPK has no letter to carry a dagesh for the qere’s ב. The MPK (points on no letters) is two qamats marks and pashta.</note>
       <note>There is also a dot near the pashta, which we ignore. I.e. we assume it is not ink, or in any case not intentional.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -769,8 +787,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is אָׄאִ֖ׄאׄאׄ. (We use אׄ (א with an extraordinary upper dot) to hold marks not associated with a parent letter.)</note>
       <note>The MPK has no letter to carry a dagesh for the qere’s ב. The MPK (points on no letters) is qamats, ḥiriq, and tipeḥa.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -813,8 +832,9 @@
       <note>Note that, contrary to UXLC, עַל is a normal atom, i.e. it is not part of a ketiv/qere. It is abnormal only in that it precedes a qere velo ketiv. I.e. UXLC has &lt;k&gt;על&lt;/k&gt;&lt;q&gt;עַל־&lt;/q&gt; where I think it should merely have &lt;w&gt;עַל־&lt;/w&gt;.</note>
       <note>The manuscript’s lack of a trailing maqaf on עַל is the subject of a currently-pending change proposal, 2024.04.01/2024.01.18-2.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -853,8 +873,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is אְׄאָׄא֖ׄאׄאׄ. (We use אׄ (א with an extraordinary upper dot) to hold marks not associated with a parent letter.)</note>
       <note>The MPK has no letter to carry a ḥolam dot for the qere’s vav. The MPK (points on no letters) is sheva, qamats, and tipeḥa.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -894,8 +915,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is אָׄאׄ֙. (We use אׄ (א with an extraordinary upper dot) to hold marks not associated with a parent letter.)</note>
       <note>The MPK has no letter to carry a mapiq for the qere’s ה. The MPK (points on no letters) is qamats and pashta.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -935,8 +957,9 @@
       <note>The MPK has no letter to carry a dagesh for the qere’s וָּ.</note>
       <note>Unlike the dagesh, the qamats does not need a letter to carry it; it is allowed to be an orphan. It appears between the ḥiriq and the sheva (of the yod and ל respectively). Unlike the manuscript, our MPK shows that orphan qamats on a אׄ (א with an extraordinary upper dot).</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -976,8 +999,9 @@
       <note>The MPK has no letter to carry a dagesh for the qere’s ב.</note>
       <note>Unlike the dagesh, the ḥiriq does not need a letter to carry it; it is allowed to be an orphan. It appears before the sheva of the initial ת. Unlike the manuscript, our MPK shows that orphan ḥiriq on a אׄ (א with an extraordinary upper dot).</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1017,8 +1041,9 @@
       <note>The MPK has no letter to carry a dagesh for the qere’s yod.</note>
       <note>Unlike the dagesh, the ḥiriq does not need a letter to carry it; it is allowed to be an orphan. It appears between the pataḥ and the sheva (of the vav and ת respectively). Unlike the manuscript, our MPK shows that orphan ḥiriq on a אׄ (א with an extraordinary upper dot).</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1057,8 +1082,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is דָּנִאֵ֣ׄאל. (We use אׄ (א with an extraordinary upper dot) to hold marks not associated with a parent letter.)</note>
       <note>The MPK has no letter to carry a dagesh for the qere’s yod.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1097,8 +1123,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is דָּנִאֵ֣ׄאל. (We use אׄ (א with an extraordinary upper dot) to hold marks not associated with a parent letter.)</note>
       <note>The MPK has no letter to carry a dagesh for the qere’s yod.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1138,8 +1165,9 @@
       <note>The MPK has no letter to carry a dagesh for the qere’s yod.</note>
       <note>The rafeh on the א makes it clear that the qere’s yod functions as a consonant not a vowel, i.e. the qere’s syllables are מִ דָּֽ נִ יֵּ֑אל.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1178,8 +1206,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is זְקֵנִ֖ים.</note>
       <note>The MPK has no letter to carry a shuruq dot for the qere’s vav.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1219,8 +1248,9 @@
       <note>The MPK has no letter to carry a dagesh for the qere’s ד.</note>
       <note>Unlike the dagesh, the sheva does not need a letter to carry it; it is allowed to be an orphan. It appears between the sheva and the ḥiriq (of the ז and מ respectively). Unlike the manuscript, our MPK shows that orphan sheva on a אׄ (א with an extraordinary upper dot).</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1265,8 +1295,9 @@
       <note>Dotan’s example from dt28:27 is not a-noted in WLC, which has merely the following:</note>
       <note>«*W/B/(PLYM **W./BA/+.:XORI80YM»</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1311,8 +1342,9 @@
       <note>Dotan’s example from dt28:27 is not a-noted in WLC, which has merely the following:</note>
       <note>«*W/B/(PLYM **W./BA/+.:XORI80YM»</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1351,8 +1383,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is הָאֵ֔הֶה.</note>
       <note>The MPK’s ה does not carry a dagesh for the qere’s ל, perhaps because that would be illegal.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1392,8 +1425,9 @@
       <note>The manuscript’s pointed ketiv (MPK) is שְׁכֵנָ֑כִי.</note>
       <note>The MPK’s yod does not carry a sheva for the qere’s ך, perhaps because that would be illegal.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1437,8 +1471,9 @@
       <note>More regarding the odd placement of this dot: the last five letters of ketiv and qere, יונים, are in common between ketiv and qere. So why not point them in the MPK as they are in the (implied) qere?</note>
       <note>Yet another way of stating this question: I see the ketiv/qere variation in this word as restricted to the prefixes חרי and דב respectively. So in the common suffix יונים, i.e. after that variation, why should the MPK be any different than the (implied) qere?</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1484,8 +1519,9 @@
       <note>Dotan’s Appendix A notes, as I have noted above, that the ḥolam ḥaser dot would be expected on (the left side of) the ר of the MPK, whereas it is on (the left side of) the צ. Dotan does not note anything about the creation ex nihilo of the dagesh on the qere’s צ.</note>
       <note>A final, unimportant remark is that I’ve put a rafeh above the ה of the MPK but I’m not sure about this; it might belong above the נ.</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
@@ -1527,8 +1563,9 @@
       <note>Breuer notes that א and ק have the expected pataḥ under ע. (א is the Aleppo Codex and ק is the Cairo Codex of The Prophets.)</note>
       <note>Dotan notes that strictly speaking, the implied qere is מִמַּעֲרְכ֣וֹת (ḥataf pataḥ under ע).</note>
     </notes>
-    <analysistags />
-    <aBHL />
+    <analysistags>
+      <aBHL />
+    </analysistags>
     <transnotes>
       <transnote>
         <action>Add</action>
