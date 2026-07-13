@@ -37,7 +37,7 @@ def test_ps_1_1_revia_mugrash_geresh_muqdam():
     # ... 11L"CI81YM = geresh muqdam (11) + revia (81) -> one revia mugrash.
     body = (
         r')A71$:75R"Y-HF/)I81Y$]c ):A$E70R05 LO71) HFLAK:02 B.A/(:ACA93T '
-        r'R:$F60(I71YM W./B:/DE74REK: 13XA+.F)IYM LO71) (FMF92D '
+        r"R:$F60(I71YM W./B:/DE74REK: 13XA+.F)IYM LO71) (FMF92D "
         r'W./B:/MOW$A71B 11L"CI81YM LO74) YF$F75B00'
     )
     types = _types(body)
@@ -159,7 +159,9 @@ def test_revia_then_geresh_only_fuses_same_letter():
     same = _types_marks("X" + am.REVIA + am.GERESH + tail)
     cross = _types_marks("X" + am.REVIA + "X" + am.GERESH + tail)
     assert same.count(pan.REVIA_MUGRASH) == 1  # fused, regardless of what follows
-    assert pan.REVIA_GADOL in cross and pan.REVIA_MUGRASH not in cross  # geresh swallowed
+    assert (
+        pan.REVIA_GADOL in cross and pan.REVIA_MUGRASH not in cross
+    )  # geresh swallowed
 
 
 def test_intra_atom_tsinnorit_fuses_to_metsunnar():
@@ -246,7 +248,12 @@ def test_non_whitelisted_pair_fuses_to_bang():
     assert pan.MUNAX not in types and pan.MERKHA not in types
     # and it is unparseable (no grammar terminal for the dynamic bang type)
     parser = build_parser()
-    assert parse_tokens(parser, scan_verse("t 1:1", "X" + am.MUNAX + am.MERKHA + "X" + tail).tokens) is None
+    assert (
+        parse_tokens(
+            parser, scan_verse("t 1:1", "X" + am.MUNAX + am.MERKHA + "X" + tail).tokens
+        )
+        is None
+    )
 
 
 def test_whitelisted_pairs_not_flagged():
@@ -257,7 +264,9 @@ def test_whitelisted_pairs_not_flagged():
     tail = "X XX" + am.ATNAX + "X XX" + am.METEG + am.SOF_PASUQ
     dexi = _types_marks("X" + am.DEXI + am.MUNAX + "X" + tail)
     assert pan.DEXI in dexi and pan.MUNAX in dexi
-    assert not any("!" in leaf for _t, leaf in scan_accents("X" + am.DEXI + am.MUNAX + "X" + tail))
+    assert not any(
+        "!" in leaf for _t, leaf in scan_accents("X" + am.DEXI + am.MUNAX + "X" + tail)
+    )
     metsun = _types_marks("X" + am.TSINNORIT + "X" + am.MAHAPAKH + "X" + tail)
     assert pan.MAHAPAKH_METSUNNAR in metsun
 
@@ -273,7 +282,9 @@ def test_same_letter_oleh_weyored_fuses_not_banged():
     assert pan.OLEH_WEYORED in same
     assert pan.MERKHA not in same  # the yored merkha is consumed, not a servus
     assert "MERKHA_OLE" not in same  # not banged
-    assert not any("!" in leaf for _t, leaf in scan_accents("X" + am.MERKHA + am.OLE + "X " + tail))
+    assert not any(
+        "!" in leaf for _t, leaf in scan_accents("X" + am.MERKHA + am.OLE + "X " + tail)
+    )
     # and the verse parses cleanly
     parser = build_parser()
     toks = scan_verse("test 1:1", "X" + am.MERKHA + am.OLE + "X " + tail).tokens
@@ -308,7 +319,7 @@ def test_these_verses_parse():
     parser = build_parser()
     for body in (
         r')A71$:75R"Y-HF/)I81Y$]c ):A$E70R05 LO71) HFLAK:02 B.A/(:ACA93T '
-        r'R:$F60(I71YM W./B:/DE74REK: 13XA+.F)IYM LO71) (FMF92D '
+        r"R:$F60(I71YM W./B:/DE74REK: 13XA+.F)IYM LO71) (FMF92D "
         r'W./B:/MOW$A71B 11L"CI81YM LO74) YF$F75B00',
     ):
         v = scan_verse("test 1:1", mc_to_marks(body))

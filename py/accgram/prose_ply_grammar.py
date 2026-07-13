@@ -112,10 +112,10 @@ def p_silluq_phrase_merkha(p):
 
 def p_silluq_clause(p):
     """silluq_clause : silluq_phrase
-                     | tipexa_silluq_clause
-                     | zaqef_silluq_clause
-                     | segolta_silluq_clause
-                     | atnax_silluq_clause"""
+    | tipexa_silluq_clause
+    | zaqef_silluq_clause
+    | segolta_silluq_clause
+    | atnax_silluq_clause"""
     p[0] = p[1]
 
 
@@ -126,8 +126,8 @@ def p_tipexa_silluq_clause(p):
 
 def p_zaqef_silluq_clause(p):
     """zaqef_silluq_clause : zaqef_clause silluq_phrase
-                           | zaqef_clause tipexa_silluq_clause
-                           | zaqef_clause zaqef_silluq_clause"""
+    | zaqef_clause tipexa_silluq_clause
+    | zaqef_clause zaqef_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
@@ -136,14 +136,14 @@ def p_zaqef_silluq_clause(p):
 # zaqef either, oddly enough.
 def p_segolta_silluq_clause(p):
     """segolta_silluq_clause : segolta_clause silluq_phrase
-                             | segolta_clause tipexa_silluq_clause"""
+    | segolta_clause tipexa_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
 def p_atnax_silluq_clause(p):
     """atnax_silluq_clause : atnax_clause silluq_phrase
-                            | atnax_clause tipexa_silluq_clause
-                            | atnax_clause zaqef_silluq_clause"""
+    | atnax_clause tipexa_silluq_clause
+    | atnax_clause zaqef_silluq_clause"""
     p[0] = make_node("silluq_clause", p[1], p[2])
 
 
@@ -165,9 +165,9 @@ def p_atnax_phrase_munax2(p):
 
 def p_atnax_clause(p):
     """atnax_clause : atnax_phrase
-                     | tipexa_atnax_clause
-                     | zaqef_atnax_clause
-                     | segolta_atnax_clause"""
+    | tipexa_atnax_clause
+    | zaqef_atnax_clause
+    | segolta_atnax_clause"""
     p[0] = p[1]
 
 
@@ -178,15 +178,15 @@ def p_tipexa_atnax_clause(p):
 
 def p_zaqef_atnax_clause(p):
     """zaqef_atnax_clause : zaqef_clause atnax_phrase
-                           | zaqef_clause tipexa_atnax_clause
-                           | zaqef_clause zaqef_atnax_clause"""
+    | zaqef_clause tipexa_atnax_clause
+    | zaqef_clause zaqef_atnax_clause"""
     p[0] = make_node("atnax_clause", p[1], p[2])
 
 
 def p_segolta_atnax_clause(p):
     """segolta_atnax_clause : segolta_clause atnax_phrase
-                             | segolta_clause tipexa_atnax_clause
-                             | segolta_clause zaqef_atnax_clause"""
+    | segolta_clause tipexa_atnax_clause
+    | segolta_clause zaqef_atnax_clause"""
     p[0] = make_node("atnax_clause", p[1], p[2])
 
 
@@ -225,22 +225,22 @@ def p_zaqef_phrase_munax2(p):
 
 def p_zaqef_clause(p):
     """zaqef_clause : zaqef_phrase
-                    | pashta_zaqef_clause
-                    | revia_zaqef_clause"""
+    | pashta_zaqef_clause
+    | revia_zaqef_clause"""
     p[0] = p[1]
 
 
 def p_pashta_zaqef_clause(p):
     """pashta_zaqef_clause : pashta_clause zaqef_phrase
-                           | pashta_clause pashta_zaqef_clause
-                           | pashta_clause revia_zaqef_clause"""
+    | pashta_clause pashta_zaqef_clause
+    | pashta_clause revia_zaqef_clause"""
     p[0] = make_node("zaqef_clause", p[1], p[2])
 
 
 def p_revia_zaqef_clause(p):
     """revia_zaqef_clause : revia_clause zaqef_phrase
-                          | revia_clause pashta_zaqef_clause
-                          | revia_clause revia_zaqef_clause"""
+    | revia_clause pashta_zaqef_clause
+    | revia_clause revia_zaqef_clause"""
     p[0] = make_node("zaqef_clause", p[1], p[2])
 
 
@@ -269,31 +269,31 @@ def p_segolta_phrase_munax2(p):
 
 def p_segolta_clause(p):
     """segolta_clause : segolta_phrase
-                      | zarqa_segolta_clause
-                      | pashta_segolta_clause
-                      | revia_segolta_clause"""
+    | zarqa_segolta_clause
+    | pashta_segolta_clause
+    | revia_segolta_clause"""
     p[0] = p[1]
 
 
 def p_zarqa_segolta_clause(p):
     """zarqa_segolta_clause : zarqa_clause segolta_phrase
-                            | zarqa_clause zarqa_segolta_clause"""
+    | zarqa_clause zarqa_segolta_clause"""
     p[0] = make_node("segolta_clause", p[1], p[2])
 
 
 def p_pashta_segolta_clause(p):
     """pashta_segolta_clause : pashta_clause segolta_phrase
-                             | pashta_clause zarqa_segolta_clause
-                             | pashta_clause pashta_segolta_clause
-                             | pashta_clause revia_segolta_clause"""
+    | pashta_clause zarqa_segolta_clause
+    | pashta_clause pashta_segolta_clause
+    | pashta_clause revia_segolta_clause"""
     p[0] = make_node("segolta_clause", p[1], p[2])
 
 
 def p_revia_segolta_clause(p):
     """revia_segolta_clause : revia_clause segolta_phrase
-                            | revia_clause zarqa_segolta_clause
-                            | revia_clause pashta_segolta_clause
-                            | revia_clause revia_segolta_clause"""
+    | revia_clause zarqa_segolta_clause
+    | revia_clause pashta_segolta_clause
+    | revia_clause revia_segolta_clause"""
     p[0] = make_node("segolta_clause", p[1], p[2])
 
 
@@ -332,31 +332,31 @@ def p_tipexa_phrase_qadma_mayela(p):
 
 def p_tipexa_clause(p):
     """tipexa_clause : tipexa_phrase
-                     | tevir_tipexa_clause
-                     | pashta_tipexa_clause
-                     | revia_tipexa_clause"""
+    | tevir_tipexa_clause
+    | pashta_tipexa_clause
+    | revia_tipexa_clause"""
     p[0] = p[1]
 
 
 def p_tevir_tipexa_clause(p):
     """tevir_tipexa_clause : tevir_clause tipexa_phrase
-                           | tevir_clause tevir_tipexa_clause"""
+    | tevir_clause tevir_tipexa_clause"""
     p[0] = make_node("tipexa_clause", p[1], p[2])
 
 
 def p_pashta_tipexa_clause(p):
     """pashta_tipexa_clause : pashta_clause tipexa_phrase
-                            | pashta_clause tevir_tipexa_clause
-                            | pashta_clause pashta_tipexa_clause
-                            | pashta_clause revia_tipexa_clause"""
+    | pashta_clause tevir_tipexa_clause
+    | pashta_clause pashta_tipexa_clause
+    | pashta_clause revia_tipexa_clause"""
     p[0] = make_node("tipexa_clause", p[1], p[2])
 
 
 def p_revia_tipexa_clause(p):
     """revia_tipexa_clause : revia_clause tipexa_phrase
-                           | revia_clause tevir_tipexa_clause
-                           | revia_clause pashta_tipexa_clause
-                           | revia_clause revia_tipexa_clause"""
+    | revia_clause tevir_tipexa_clause
+    | revia_clause pashta_tipexa_clause
+    | revia_clause revia_tipexa_clause"""
     p[0] = make_node("tipexa_clause", p[1], p[2])
 
 
@@ -418,16 +418,16 @@ def p_tevir_phrase_munax_telq_qadma_merkha(p):
 
 def p_tevir_clause(p):
     """tevir_clause : tevir_phrase
-                    | legarmeh_tevir_clause
-                    | geresh_tevir_clause
-                    | big_telisha_tevir_clause
-                    | pazer_tevir_clause"""
+    | legarmeh_tevir_clause
+    | geresh_tevir_clause
+    | big_telisha_tevir_clause
+    | pazer_tevir_clause"""
     p[0] = p[1]
 
 
 def p_legarmeh_tevir_clause(p):
     """legarmeh_tevir_clause : legarmeh_phrase tevir_phrase
-                             | legarmeh_phrase legarmeh_tevir_clause"""
+    | legarmeh_phrase legarmeh_tevir_clause"""
     p[0] = make_node("tevir_clause", p[1], p[2])
 
 
@@ -436,26 +436,26 @@ def p_legarmeh_tevir_clause(p):
 # one servus (Gen 13:1).  See also geresh_pashta_clause above.
 def p_geresh_tevir_clause(p):
     """geresh_tevir_clause : geresh_clause tevir_phrase
-                           | geresh_clause legarmeh_tevir_clause
-                           | geresh_clause geresh_tevir_clause
-                           | geresh_clause big_telisha_tevir_clause"""
+    | geresh_clause legarmeh_tevir_clause
+    | geresh_clause geresh_tevir_clause
+    | geresh_clause big_telisha_tevir_clause"""
     p[0] = make_node("tevir_clause", p[1], p[2])
 
 
 def p_big_telisha_tevir_clause(p):
     """big_telisha_tevir_clause : big_telisha_clause tevir_phrase
-                                | big_telisha_clause legarmeh_tevir_clause
-                                | big_telisha_clause geresh_tevir_clause
-                                | big_telisha_clause big_telisha_tevir_clause"""
+    | big_telisha_clause legarmeh_tevir_clause
+    | big_telisha_clause geresh_tevir_clause
+    | big_telisha_clause big_telisha_tevir_clause"""
     p[0] = make_node("tevir_clause", p[1], p[2])
 
 
 def p_pazer_tevir_clause(p):
     """pazer_tevir_clause : pazer_clause tevir_phrase
-                          | pazer_clause legarmeh_tevir_clause
-                          | pazer_clause geresh_tevir_clause
-                          | pazer_clause big_telisha_tevir_clause
-                          | pazer_clause pazer_tevir_clause"""
+    | pazer_clause legarmeh_tevir_clause
+    | pazer_clause geresh_tevir_clause
+    | pazer_clause big_telisha_tevir_clause
+    | pazer_clause pazer_tevir_clause"""
     p[0] = make_node("tevir_clause", p[1], p[2])
 
 
@@ -530,17 +530,17 @@ def p_zarqa_phrase_munax_telq_qadma_merkha(p):
 
 def p_zarqa_clause(p):
     """zarqa_clause : zarqa_phrase
-                    | legarmeh_zarqa_clause
-                    | geresh_zarqa_clause
-                    | big_telisha_zarqa_clause
-                    | pazer_zarqa_clause"""
+    | legarmeh_zarqa_clause
+    | geresh_zarqa_clause
+    | big_telisha_zarqa_clause
+    | pazer_zarqa_clause"""
     p[0] = p[1]
 
 
 # Not actually attested, but theoretically possible.
 def p_legarmeh_zarqa_clause(p):
     """legarmeh_zarqa_clause : legarmeh_phrase zarqa_phrase
-                             | legarmeh_phrase legarmeh_zarqa_clause"""
+    | legarmeh_phrase legarmeh_zarqa_clause"""
     p[0] = make_node("zarqa_clause", p[1], p[2])
 
 
@@ -549,26 +549,26 @@ def p_legarmeh_zarqa_clause(p):
 # basically like geresh_pashta_clause (on which, see above).
 def p_geresh_zarqa_clause(p):
     """geresh_zarqa_clause : geresh_clause zarqa_phrase
-                           | geresh_clause legarmeh_zarqa_clause
-                           | geresh_clause big_telisha_zarqa_clause
-                           | geresh_clause geresh_zarqa_clause"""
+    | geresh_clause legarmeh_zarqa_clause
+    | geresh_clause big_telisha_zarqa_clause
+    | geresh_clause geresh_zarqa_clause"""
     p[0] = make_node("zarqa_clause", p[1], p[2])
 
 
 def p_big_telisha_zarqa_clause(p):
     """big_telisha_zarqa_clause : big_telisha_clause zarqa_phrase
-                                | big_telisha_clause legarmeh_zarqa_clause
-                                | big_telisha_clause geresh_zarqa_clause
-                                | big_telisha_clause big_telisha_zarqa_clause"""
+    | big_telisha_clause legarmeh_zarqa_clause
+    | big_telisha_clause geresh_zarqa_clause
+    | big_telisha_clause big_telisha_zarqa_clause"""
     p[0] = make_node("zarqa_clause", p[1], p[2])
 
 
 def p_pazer_zarqa_clause(p):
     """pazer_zarqa_clause : pazer_clause zarqa_phrase
-                          | pazer_clause legarmeh_zarqa_clause
-                          | pazer_clause geresh_zarqa_clause
-                          | pazer_clause big_telisha_zarqa_clause
-                          | pazer_clause pazer_zarqa_clause"""
+    | pazer_clause legarmeh_zarqa_clause
+    | pazer_clause geresh_zarqa_clause
+    | pazer_clause big_telisha_zarqa_clause
+    | pazer_clause pazer_zarqa_clause"""
     p[0] = make_node("zarqa_clause", p[1], p[2])
 
 
@@ -700,16 +700,16 @@ def p_pashta_phrase_munax_telq(p):
 # parses the qadma as a well-formed pashta clause/phrase.  See, e.g., Ezek 38:4.
 def p_pashta_clause(p):
     """pashta_clause : pashta_phrase
-                     | legarmeh_pashta_clause
-                     | geresh_pashta_clause
-                     | big_telisha_pashta_clause
-                     | pazer_pashta_clause"""
+    | legarmeh_pashta_clause
+    | geresh_pashta_clause
+    | big_telisha_pashta_clause
+    | pazer_pashta_clause"""
     p[0] = p[1]
 
 
 def p_legarmeh_pashta_clause(p):
     """legarmeh_pashta_clause : legarmeh_phrase pashta_phrase
-                              | legarmeh_phrase legarmeh_pashta_clause"""
+    | legarmeh_phrase legarmeh_pashta_clause"""
     p[0] = make_node("pashta_clause", p[1], p[2])
 
 
@@ -718,26 +718,26 @@ def p_legarmeh_pashta_clause(p):
 # one servus.
 def p_geresh_pashta_clause(p):
     """geresh_pashta_clause : geresh_clause pashta_phrase
-                            | geresh_clause legarmeh_pashta_clause
-                            | geresh_clause big_telisha_pashta_clause
-                            | geresh_clause geresh_pashta_clause"""
+    | geresh_clause legarmeh_pashta_clause
+    | geresh_clause big_telisha_pashta_clause
+    | geresh_clause geresh_pashta_clause"""
     p[0] = make_node("pashta_clause", p[1], p[2])
 
 
 def p_big_telisha_pashta_clause(p):
     """big_telisha_pashta_clause : big_telisha_clause pashta_phrase
-                                 | big_telisha_clause legarmeh_pashta_clause
-                                 | big_telisha_clause geresh_pashta_clause
-                                 | big_telisha_clause big_telisha_pashta_clause"""
+    | big_telisha_clause legarmeh_pashta_clause
+    | big_telisha_clause geresh_pashta_clause
+    | big_telisha_clause big_telisha_pashta_clause"""
     p[0] = make_node("pashta_clause", p[1], p[2])
 
 
 def p_pazer_pashta_clause(p):
     """pazer_pashta_clause : pazer_clause pashta_phrase
-                           | pazer_clause legarmeh_pashta_clause
-                           | pazer_clause geresh_pashta_clause
-                           | pazer_clause big_telisha_pashta_clause
-                           | pazer_clause pazer_pashta_clause"""
+    | pazer_clause legarmeh_pashta_clause
+    | pazer_clause geresh_pashta_clause
+    | pazer_clause big_telisha_pashta_clause
+    | pazer_clause pazer_pashta_clause"""
     p[0] = make_node("pashta_clause", p[1], p[2])
 
 
@@ -771,40 +771,40 @@ def p_revia_phrase_munax_darga_munax(p):
 
 def p_revia_clause(p):
     """revia_clause : revia_phrase
-                    | legarmeh_revia_clause
-                    | geresh_revia_clause
-                    | big_telisha_revia_clause
-                    | pazer_revia_clause"""
+    | legarmeh_revia_clause
+    | geresh_revia_clause
+    | big_telisha_revia_clause
+    | pazer_revia_clause"""
     p[0] = p[1]
 
 
 def p_legarmeh_revia_clause(p):
     """legarmeh_revia_clause : legarmeh_phrase revia_phrase
-                             | legarmeh_phrase legarmeh_revia_clause"""
+    | legarmeh_phrase legarmeh_revia_clause"""
     p[0] = make_node("revia_clause", p[1], p[2])
 
 
 def p_geresh_revia_clause(p):
     """geresh_revia_clause : geresh_clause revia_phrase
-                           | geresh_clause legarmeh_revia_clause
-                           | geresh_clause geresh_revia_clause"""
+    | geresh_clause legarmeh_revia_clause
+    | geresh_clause geresh_revia_clause"""
     p[0] = make_node("revia_clause", p[1], p[2])
 
 
 def p_big_telisha_revia_clause(p):
     """big_telisha_revia_clause : big_telisha_clause revia_phrase
-                                | big_telisha_clause legarmeh_revia_clause
-                                | big_telisha_clause geresh_revia_clause
-                                | big_telisha_clause big_telisha_revia_clause"""
+    | big_telisha_clause legarmeh_revia_clause
+    | big_telisha_clause geresh_revia_clause
+    | big_telisha_clause big_telisha_revia_clause"""
     p[0] = make_node("revia_clause", p[1], p[2])
 
 
 def p_pazer_revia_clause(p):
     """pazer_revia_clause : pazer_clause revia_phrase
-                          | pazer_clause legarmeh_revia_clause
-                          | pazer_clause geresh_revia_clause
-                          | pazer_clause big_telisha_revia_clause
-                          | pazer_clause pazer_revia_clause"""
+    | pazer_clause legarmeh_revia_clause
+    | pazer_clause geresh_revia_clause
+    | pazer_clause big_telisha_revia_clause
+    | pazer_clause pazer_revia_clause"""
     p[0] = make_node("revia_clause", p[1], p[2])
 
 
@@ -859,13 +859,13 @@ def p_geresh_phrase_munax3_telq_azla(p):
 
 def p_geresh_clause(p):
     """geresh_clause : geresh_phrase
-                     | legarmeh_geresh_clause"""
+    | legarmeh_geresh_clause"""
     p[0] = p[1]
 
 
 def p_legarmeh_geresh_clause(p):
     """legarmeh_geresh_clause : legarmeh_phrase geresh_phrase
-                              | legarmeh_phrase legarmeh_geresh_clause"""
+    | legarmeh_phrase legarmeh_geresh_clause"""
     p[0] = make_node("geresh_clause", p[1], p[2])
 
 
@@ -902,14 +902,14 @@ def p_big_telisha_phrase_munax5(p):
 
 def p_big_telisha_clause(p):
     """big_telisha_clause : big_telisha_phrase
-                          | legarmeh_big_telisha_clause"""
+    | legarmeh_big_telisha_clause"""
     p[0] = p[1]
 
 
 # Not attested, but theoretically possible.
 def p_legarmeh_big_telisha_clause(p):
     """legarmeh_big_telisha_clause : legarmeh_phrase big_telisha_phrase
-                                   | legarmeh_phrase legarmeh_big_telisha_clause"""
+    | legarmeh_phrase legarmeh_big_telisha_clause"""
     p[0] = make_node("big_telisha_clause", p[1], p[2])
 
 
@@ -977,13 +977,13 @@ def p_pazer_phrase_munax5_galgal(p):
 
 def p_pazer_clause(p):
     """pazer_clause : pazer_phrase
-                    | legarmeh_pazer_clause"""
+    | legarmeh_pazer_clause"""
     p[0] = p[1]
 
 
 def p_legarmeh_pazer_clause(p):
     """legarmeh_pazer_clause : legarmeh_phrase pazer_phrase
-                             | legarmeh_phrase legarmeh_pazer_clause"""
+    | legarmeh_phrase legarmeh_pazer_clause"""
     p[0] = make_node("pazer_clause", p[1], p[2])
 
 
@@ -1032,15 +1032,15 @@ LOCATION_ONLY = object()
 
 def p_pasuq_error(p):
     """pasuq : error
-             | TILDE error UNKNOWN_ACCENT SOFPASUQ
-             | TILDE silluq_clause error"""
+    | TILDE error UNKNOWN_ACCENT SOFPASUQ
+    | TILDE silluq_clause error"""
     p[0] = LOCATION_ONLY
 
 
 def p_silluq_phrase_error(p):
     # e.g. Gen 32:24, missing silluq.
     """silluq_phrase : error
-                     | error SILLUQ"""
+    | error SILLUQ"""
     p.parser.errok()
     p[0] = add_leaves("silluq_phrase", "ERROR")
 
@@ -1073,14 +1073,14 @@ def p_segolta_phrase_error(p):
 def p_zarqa_segolta_clause_error(p):
     # Isa 45:1 (MUNAX MUNAX error); a BHS error at 2Chr 7:5 (MUNAX error REVIA).
     """zarqa_segolta_clause : zarqa_clause MUNAX MUNAX error
-                            | zarqa_clause MUNAX error REVIA"""
+    | zarqa_clause MUNAX error REVIA"""
     p.parser.errok()
     p[0] = make_node("segolta_clause", p[1], add_leaves("segolta_phrase", "ERROR"))
 
 
 def p_tipexa_phrase_error(p):
     """tipexa_phrase : error TIPEXA
-                     | geresh_clause error TIPEXA"""
+    | geresh_clause error TIPEXA"""
     p.parser.errok()
     p[0] = add_leaves("tipexa_phrase", "ERROR")
 
@@ -1121,7 +1121,7 @@ def p_revia_phrase_error(p):
 
 def p_pashta_phrase_error(p):
     """pashta_phrase : error PASHTA
-                     | error YETIV"""
+    | error YETIV"""
     p.parser.errok()
     p[0] = add_leaves("pashta_phrase", "ERROR")
 

@@ -32,7 +32,9 @@ def _results_or_skip() -> list[pd.VersionResult]:
     return pd.check_all(pd.load_source(src))
 
 
-def _by_key(results: list[pd.VersionResult]) -> dict[tuple[str, str, str], pd.VersionResult]:
+def _by_key(
+    results: list[pd.VersionResult],
+) -> dict[tuple[str, str, str], pd.VersionResult]:
     return {(vr.book, vr.reading, vr.tradition): vr for vr in results}
 
 
@@ -53,7 +55,9 @@ def test_taxton_all_clean() -> None:
     results = _results_or_skip()
     for vr in results:
         if vr.reading == "taxton":
-            assert vr.ungrammatical == (), f"{vr.book} taxton {vr.tradition} unexpectedly bad"
+            assert (
+                vr.ungrammatical == ()
+            ), f"{vr.book} taxton {vr.tradition} unexpectedly bad"
 
 
 def test_manuscript_elyon_all_clean() -> None:
@@ -77,9 +81,13 @@ def test_printed_elyon_one_ungrammatical_merged_first_verse() -> None:
     for book in ("ex", "dt"):
         vr = by_key[(book, "elyon", "printed")]
         bad = vr.ungrammatical
-        assert len(bad) == 1, f"{book} printed elyon: expected 1 ungrammatical, got {len(bad)}"
+        assert (
+            len(bad) == 1
+        ), f"{book} printed elyon: expected 1 ungrammatical, got {len(bad)}"
         offender = bad[0]
-        assert offender.index == 1, f"{book} printed elyon: offender is not the first verse"
+        assert (
+            offender.index == 1
+        ), f"{book} printed elyon: offender is not the first verse"
         # The merged verse runs from אנכי (commandment 1) through the end of commandment 2.
         assert offender.words[0].startswith("אָֽנֹכִי")
         assert offender.words[-1].endswith(_SOF_PASUQ)

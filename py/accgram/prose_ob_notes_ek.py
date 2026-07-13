@@ -9,7 +9,6 @@ from accgram.prose_ob_notes_shared import (
     ambiguous_mark_context_comment,
 )
 
-
 BY_REF: dict[str, dict[str, object]] = {
     "ek 11:1": {
         "st-source": "bhs",

@@ -40,11 +40,15 @@ def _detangle_or_skip() -> list[dcd.PassageResult]:
     if not mam_dir.is_dir():
         pytest.skip(f"MAM-simple not present at {mam_dir}")
     wlc_index = rtms_data.load_wlc422_index(kq_u_dir)
-    mam = load_mam_simple_for_refs(mam_dir, dcd.all_refs_by_book(), include_strands=True)
+    mam = load_mam_simple_for_refs(
+        mam_dir, dcd.all_refs_by_book(), include_strands=True
+    )
     return dcd.detangle_all(wlc_index, mam, build_parser())
 
 
-def _all_chanted_verses(results: list[dcd.PassageResult]) -> list[dcd.ChantedVerseResult]:
+def _all_chanted_verses(
+    results: list[dcd.PassageResult],
+) -> list[dcd.ChantedVerseResult]:
     return [cv for pr in results for tr in pr.strands for cv in tr.chanted_verses]
 
 
@@ -65,7 +69,11 @@ def test_supplied_marks_are_exactly_the_five_clean_supplies() -> None:
     assert len(supplies) == 5
     assert keyed == {
         ("ex20:3", "alef", am.MERKHA),
-        ("dt5:8", "alef", am.QADMA),  # the taxton's omitted qadma, supplied (LC-supported)
+        (
+            "dt5:8",
+            "alef",
+            am.QADMA,
+        ),  # the taxton's omitted qadma, supplied (LC-supported)
         ("dt5:17", "alef", am.TIPEXA),
         ("dt5:6", "bet", am.TIPEXA),
         ("dt5:6", "bet", am.ATNAX),
@@ -106,7 +114,9 @@ def test_supplied_mark_words_parse_clean() -> None:
 def test_dt58_anomaly_surfaces_as_attributed_error_not_crash() -> None:
     results = _detangle_or_skip()
     dt = next(pr for pr in results if pr.passage.bb == "dt")
-    elyon = next(tr for tr in dt.strands if tr.strand == "bet")  # the merkha breaks the elyon
+    elyon = next(
+        tr for tr in dt.strands if tr.strand == "bet"
+    )  # the merkha breaks the elyon
     dt58 = [cv for cv in elyon.chanted_verses if "dt5:8" in cv.word_bcvs]
     assert dt58 and dt58[0].status == "error"
     assert dt58[0].tree is not None  # a real (ERROR-bearing) tree, not a None crash
@@ -123,7 +133,9 @@ def test_every_chanted_verse_parses_or_is_attributed_only_dt58_is_an_oddity() ->
     cvs = _all_chanted_verses(results)
     bad = [cv.ref for cv in cvs if cv.status not in ("clean", "error")]
     assert not bad, f"unexpected no_parse/location_only: {bad}"
-    ungrammatical_spans = {(cv.strand, cv.bcv_span) for cv in cvs if cv.status == "error"}
+    ungrammatical_spans = {
+        (cv.strand, cv.bcv_span) for cv in cvs if cv.status == "error"
+    }
     assert ungrammatical_spans == {("bet", ("dt5:7", "dt5:10"))}
 
 
@@ -183,7 +195,9 @@ def test_fold_in_yields_one_dt58_ungrammatical_record() -> None:
     dt = dcd.folded_ungrammatical_records("dt", wlc_index, mam, parser)
     assert len(dt) == 1
     assert dt[0]["bcv"] == "dt5:8"
-    assert dt[0]["dual_cant_strand"] == "bet"  # the elyon is the ungrammatical reading now
+    assert (
+        dt[0]["dual_cant_strand"] == "bet"
+    )  # the elyon is the ungrammatical reading now
     assert dt[0]["status"] == "error"
     assert dt[0]["dual_cant"] is True
     assert dt[0]["ref"].endswith("5:8")  # so the ungrammatical collector reads (5, 8)

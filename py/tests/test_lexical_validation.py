@@ -21,16 +21,16 @@ from accgram.lexical_validation import (
 )
 
 _TS = am.TSINNORIT  # M-C 82 (zarqa stress-helper)
-_ZI = am.TSINNOR    # M-C 02 (tsinnor / zarqa main)
-_MA = am.MAHAPAKH   # U+05A4 (below)
-_TI = am.TIPEXA     # U+0596 (below)
-_QA = am.QADMA      # U+05A8 (above; "azla")
+_ZI = am.TSINNOR  # M-C 02 (tsinnor / zarqa main)
+_MA = am.MAHAPAKH  # U+05A4 (below)
+_TI = am.TIPEXA  # U+0596 (below)
+_QA = am.QADMA  # U+05A8 (above; "azla")
 _TG = am.TELISHA_GEDOLA  # U+05A0 (prepositive disjunctive)
-_G2 = am.GERSHAYIM       # U+059E (gn5:29, zp2:15 companion)
-_GE = am.GERESH          # U+059C
-_GM = am.GERESH_MUQDAM   # U+059D (2k17:13 companion, pre-scanner-normalization)
+_G2 = am.GERSHAYIM  # U+059E (gn5:29, zp2:15 companion)
+_GE = am.GERESH  # U+059C
+_GM = am.GERESH_MUQDAM  # U+059D (2k17:13 companion, pre-scanner-normalization)
 _TQ = am.TELISHA_QETANA  # U+05A9 (M-C 04 main / 24 medial helper)
-_LT = am.LETTER          # "X" consonant filler
+_LT = am.LETTER  # "X" consonant filler
 
 
 def _codes(body: str) -> list[str]:
@@ -72,7 +72,19 @@ def test_02_before_82_does_not_fuse():
 
 
 def test_no_82_anywhere_is_clean():
-    assert _codes("WAYO" + am.MERKHA + "MER" + am.PASHTA + " )ELOHI" + am.ATNAX + "YM" + am.SOF_PASUQ) == []
+    assert (
+        _codes(
+            "WAYO"
+            + am.MERKHA
+            + "MER"
+            + am.PASHTA
+            + " )ELOHI"
+            + am.ATNAX
+            + "YM"
+            + am.SOF_PASUQ
+        )
+        == []
+    )
 
 
 def test_atom_with_both_returns_the_atom_text():
@@ -148,7 +160,9 @@ def test_non_accent_between_marks_does_not_pair():
 
 def test_no_pair_is_clean():
     assert _pairs("XX" + _MA + "X XXX" + _TI + "X" + am.SOF_PASUQ) == []
-    assert _pairs("YISRA" + _TS + "L]s") == []  # an unpaired 82 is not a same-letter pair
+    assert (
+        _pairs("YISRA" + _TS + "L]s") == []
+    )  # an unpaired 82 is not a same-letter pair
 
 
 # --- misplaced (non-final) telisha qetanna, M-C lone 24 (je 44:17) -------------

@@ -51,7 +51,6 @@ from __future__ import annotations
 from accgram import printed_decalogue as pd
 from accgram.uni_to_marks import is_base_letter
 
-
 # Codepoints of the two marks we detect by presence (not by the _ACCENT_NAMES table).
 _CP_SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
 _CP_METEG = "\N{HEBREW POINT METEG}"
@@ -74,7 +73,9 @@ ROM_LEGARMEH = "legarmeh"
 # Compound readings that recur verbatim in the prose (U+2026 ellipsis / U+2013 en dash between).
 ROM_PASHTA_ETNAHTA = f"{ROM_PASHTA}…{ROM_ETNAHTA}"  # the merged manuscript תחתון
 ROM_TIPEHA_ETNAHTA = f"{ROM_TIPEHA}–{ROM_ETNAHTA}"  # the ordinary/printed תחתון opening
-ROM_TIPEHA_SILLUQ = f"{ROM_TIPEHA}…{ROM_SILLUQ}"  # the manuscript עליון (standalone verse)
+ROM_TIPEHA_SILLUQ = (
+    f"{ROM_TIPEHA}…{ROM_SILLUQ}"  # the manuscript עליון (standalone verse)
+)
 ROM_SILLUQ_SOF_PASUQ = f"{ROM_SILLUQ} + {ROM_SOF_PASUQ}"  # the standalone-verse close
 
 # The accent codepoints that fall on the two boundary words of the first Decalogue unit,

@@ -63,9 +63,7 @@ KEPT_NON_ACCENT = frozenset(
 # needs front-loading here (in the telg + gershayim words it partners the telisha gedola,
 # and the same-letter pair is handled by the telg!gerstar exception below).  (The secondary
 # telisha gedola 44 is prepositive too but is the dropped non-first of a repeat below.)
-PREPOSITIVE_MARKS = frozenset(
-    (am.YETIV, am.GERESH_MUQDAM, am.DEXI, am.TELISHA_GEDOLA)
-)
+PREPOSITIVE_MARKS = frozenset((am.YETIV, am.GERESH_MUQDAM, am.DEXI, am.TELISHA_GEDOLA))
 
 # The geresh family (plain geresh, gershayim, and the prose geresh muqdam, which the
 # scanner normalizes to a plain geresh).  Used to detect a telg + gerstar word, where the

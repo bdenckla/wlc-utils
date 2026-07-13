@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from py_html import wlc_utils_html
 
-
 # Transliteration term constants.  Several accent/term names contain het, which
 # the repo writes precomposed (U+1E25).  Defining each term once here lets
 # the ob_notes_* modules interpolate the glyph (e.g. f"...{TIPEXA}...") instead

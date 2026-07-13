@@ -120,7 +120,9 @@ def run(args: argparse.Namespace) -> None:
     )
 
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
-    parsed_ungrammatical_rows = rtms_rows.parse_ungrammatical_rows(ungrammatical_in_path, refs_by_book)
+    parsed_ungrammatical_rows = rtms_rows.parse_ungrammatical_rows(
+        ungrammatical_in_path, refs_by_book
+    )
 
     # Annotated ungrammatical (those carrying hand-authored prose_ob_notes structured text) get the
     # UXLC/changetext validation the old troublemaker rows used to get; each validation
@@ -128,7 +130,9 @@ def run(args: argparse.Namespace) -> None:
     # ungrammatical get plain enrichment.
     structured_text_by_ref = get_structured_text()
     rich_refs = [
-        ref for _row, _bcv, ref in parsed_ungrammatical_rows if ref in structured_text_by_ref
+        ref
+        for _row, _bcv, ref in parsed_ungrammatical_rows
+        if ref in structured_text_by_ref
     ]
     sanity_check_structured_text(
         refs=rich_refs,

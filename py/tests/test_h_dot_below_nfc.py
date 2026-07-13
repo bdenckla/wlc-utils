@@ -31,6 +31,7 @@ Scope excludes:
     release notes and manuals), left as-is for fidelity to source
   - binary files (by extension)
 """
+
 import io
 import tokenize
 import unicodedata
@@ -117,11 +118,7 @@ def _string_has_h_dot_below(s: str) -> bool:
     if _H_WITH_DOT_BELOW in s or _H_CAP_WITH_DOT_BELOW in s:
         return True
     for i, ch in enumerate(s):
-        if (
-            ch in ("h", "H")
-            and i + 1 < len(s)
-            and s[i + 1] == _COMBINING_DOT_BELOW
-        ):
+        if ch in ("h", "H") and i + 1 < len(s) and s[i + 1] == _COMBINING_DOT_BELOW:
             return True
     return False
 
@@ -157,11 +154,7 @@ def _find_decomposed_latin_clusters(text):
     n = len(text)
     while i < n:
         ch = text[i]
-        if (
-            _is_latin_base(ch)
-            and i + 1 < n
-            and unicodedata.combining(text[i + 1]) != 0
-        ):
+        if _is_latin_base(ch) and i + 1 < n and unicodedata.combining(text[i + 1]) != 0:
             j = i + 1
             while (
                 j < n

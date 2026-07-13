@@ -128,7 +128,9 @@ def _segment_chanted_verses(section: str) -> list[str]:
 def build_payload(wikitext: str, provenance: dict[str, object]) -> dict[str, object]:
     versions: list[dict[str, object]] = []
     for book, reading, tradition, name in _SECTIONS:
-        chanted_verses = _segment_chanted_verses(_resolve_templates(_extract_section(wikitext, name)))
+        chanted_verses = _segment_chanted_verses(
+            _resolve_templates(_extract_section(wikitext, name))
+        )
         versions.append(
             {
                 "book": book,
@@ -141,7 +143,7 @@ def build_payload(wikitext: str, provenance: dict[str, object]) -> dict[str, obj
     provenance = dict(provenance)
     provenance["resolution_notes"] = (
         "Wiki templates resolved: {{מ:לגרמיה}}/{{מ:פסק}} -> U+05C0 paseq folded onto the "
-        "preceding word; {{מ:קמץ|ד=X|ס=Y}} -> X; {{כו\"ק|ketiv|qere}} -> qere; paragraph/"
+        'preceding word; {{מ:קמץ|ד=X|ס=Y}} -> X; {{כו"ק|ketiv|qere}} -> qere; paragraph/'
         "pisqa markers dropped; inner <קטע> tags stripped. Chanted verses split at sof pasuq."
     )
     return {"provenance": provenance, "versions": versions}
@@ -160,8 +162,10 @@ def run(args: argparse.Namespace) -> None:
         json.dump(payload, f_out, ensure_ascii=False, indent=2)
         f_out.write("\n")
     n_cv = sum(len(v["chanted_verses"]) for v in payload["versions"])
-    print(f"printed-decalogue: {len(payload['versions'])} versions, {n_cv} chanted verses "
-          f"(oldid {provenance['oldid']}) -> {out_path}")
+    print(
+        f"printed-decalogue: {len(payload['versions'])} versions, {n_cv} chanted verses "
+        f"(oldid {provenance['oldid']}) -> {out_path}"
+    )
 
 
 def main() -> None:

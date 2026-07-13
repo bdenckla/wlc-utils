@@ -36,7 +36,8 @@ def _types(tokens):
 def test_underlying_servi_reads_the_conjunctive_under_each_legarmeh():
     # azla(63)+paseq(05), then mahapakh(70)+paseq(05): azla then mahapakh servus.
     assert pr._legarmeh_underlying_servi(mc_to_marks("QF63H05 HA70B05")) == [
-        pan.AZLA, pan.MAHAPAKH,
+        pan.AZLA,
+        pan.MAHAPAKH,
     ]
 
 
@@ -71,7 +72,13 @@ def test_demotion_keeps_the_legarmeh_mam_confirms_and_drops_the_one_it_does_not(
         tokens,
         mam_disjunctives=[pan.LEGARMEH, pan.TSINNOR, pan.OLEH_WEYORED],
     )
-    assert _types(out) == [pan.TILDE, pan.LEGARMEH, pan.TSINNOR, pan.MAHAPAKH, pan.SOFPASUQ]
+    assert _types(out) == [
+        pan.TILDE,
+        pan.LEGARMEH,
+        pan.TSINNOR,
+        pan.MAHAPAKH,
+        pan.SOFPASUQ,
+    ]
 
 
 def test_demote_is_a_noop_when_verse_is_absent_from_mam():
@@ -110,7 +117,12 @@ def test_charitable_oleh_uniquely_recovers_an_unmarked_yored():
 def test_charitable_oleh_is_none_when_no_promotion_parses():
     parser = build_parser()
     # A verse with no merkha cannot be repaired by promoting a merkha.
-    tokens = [(pan.TILDE, ""), (pan.ATNAX, "atnax"), (pan.SILLUQ, "silluq"), (pan.SOFPASUQ, "")]
+    tokens = [
+        (pan.TILDE, ""),
+        (pan.ATNAX, "atnax"),
+        (pan.SILLUQ, "silluq"),
+        (pan.SOFPASUQ, ""),
+    ]
     assert pr._charitable_oleh(tokens, parser) is None
 
 
@@ -120,16 +132,21 @@ def test_charitable_oleh_is_none_when_no_promotion_parses():
 # disjunctive skeletons.
 _PS_68_20 = mc_to_marks(
     "B.F70R74W.K: ):ADON/FY02 YO70WM05 YO71WM YA75(:AMFS-L/F81NW. "
-    "HF82/)\"70L Y:75$W.(FT/\"64NW. SE75LFH00"
+    'HF82/)"70L Y:75$W.(FT/"64NW. SE75LFH00'
 )
 _PS_68_20_MAM = [pan.TSINNOR, pan.OLEH_WEYORED, pan.REVIA_MUGRASH, pan.SILLUQ]
 _PR_30_15 = mc_to_marks(
-    "LA95/(:ALW.QF63H05 $:T.\"71Y BFNOWT02 HA70B05 HA71B $FLO74W$ 13H\"N.FH "
+    'LA95/(:ALW.QF63H05 $:T."71Y BFNOWT02 HA70B05 HA71B $FLO74W$ 13H"N.FH '
     "LO74) TI&:B.A92(:NFH 11)AR:B.A81( LO)-)F71M:RW. HO75WN00"
 )
 _PR_30_15_MAM = [
-    pan.LEGARMEH, pan.TSINNOR, pan.OLEH_WEYORED, pan.DEXI,
-    pan.ATNAX, pan.REVIA_MUGRASH, pan.SILLUQ,
+    pan.LEGARMEH,
+    pan.TSINNOR,
+    pan.OLEH_WEYORED,
+    pan.DEXI,
+    pan.ATNAX,
+    pan.REVIA_MUGRASH,
+    pan.SILLUQ,
 ]
 
 

@@ -90,7 +90,9 @@ class Passage:
 
 PASSAGES: tuple[Passage, ...] = (
     Passage("gn 35:22", "gn", ((35, 22),), "pashut", "midrashit"),
-    Passage("ex 20:2-17", "ex", tuple((20, v) for v in range(2, 18)), "taxton", "elyon"),
+    Passage(
+        "ex 20:2-17", "ex", tuple((20, v) for v in range(2, 18)), "taxton", "elyon"
+    ),
     Passage("dt 5:6-21", "dt", tuple((5, v) for v in range(6, 22)), "taxton", "elyon"),
 )
 
@@ -118,7 +120,9 @@ class SuppliedMark:
     accent: str  # supplied accent codepoint
     accent_name: str
     reason: str
-    source: str = "mam"  # "mam" (MAM only) or "lc" (the LC gives non-definitive support)
+    source: str = (
+        "mam"  # "mam" (MAM only) or "lc" (the LC gives non-definitive support)
+    )
     aside: str = ""  # optional follow-on paragraph, e.g. an under-bar dual-purpose note
 
 
@@ -149,13 +153,16 @@ class PunctuationChange:
     carries it for the other reading).  WLC's tangle is neither maqaf- nor sof-pasuq-maximalist
     (a mix of both, so those are supplied and suppressed), but it *is* legarmeh-maximalist -- a
     legarmeh's broad-sense paseq is always WLC's own, never supplied from MAM -- so legarmeh is
-    only ever suppressed.  A narrow-sense paseq is not part of the accent grammar, not tracked."""
+    only ever suppressed.  A narrow-sense paseq is not part of the accent grammar, not tracked.
+    """
 
     bcv: str
     strand: str  # "alef" / "bet"
     strand_label: str  # pashut / taxton / ...
     mark: str  # "maqaf" / "sof pasuq" / "legarmeh"
-    delta: str  # "supplied" (strand has, WLC lacks) / "suppressed" (WLC has, strand lacks)
+    delta: (
+        str  # "supplied" (strand has, WLC lacks) / "suppressed" (WLC has, strand lacks)
+    )
     wlc_word: str  # the aligned WLC word
     mam_word: str  # the aligned MAM strand word
 
@@ -169,12 +176,16 @@ class ChantedVerseResult:
     strand_label: str
     bcv_span: tuple[str, str]  # the BHS numbered verse(s) this chanted verse touches
     words: tuple[str, ...]  # emitted (pointed-Hebrew) stream words
-    word_bcvs: tuple[str, ...]  # the numbered verse each word falls in (parallel to words)
+    word_bcvs: tuple[
+        str, ...
+    ]  # the numbered verse each word falls in (parallel to words)
     body: str  # scanner mark body
     tokens: tuple[str, ...]  # token type stream
     status: str  # clean / ungrammatical / location_only / no_parse
     tree: dict | None
-    word_leaf_counts: tuple[int, ...]  # parse-tree leaves each word contributes (parallel
+    word_leaf_counts: tuple[
+        int, ...
+    ]  # parse-tree leaves each word contributes (parallel
     # to words); lets the renderer gray a chanted verse's out-of-focus numbered verses by
     # column.  Exact in error-free spans; an ERROR may absorb tokens, but only within the
     # focus verse, so the leading/trailing flanks the renderer grays stay exact.
@@ -224,7 +235,12 @@ def _real_accents_ordered(word: str) -> list[str]:
 # of truth); first constant wins for an aliased codepoint.
 _ACCENT_SPELLING: dict[str, str] = {}
 for _name, _val in vars(am).items():
-    if _name.isupper() and isinstance(_val, str) and len(_val) == 1 and uni_to_marks.is_accent(_val):
+    if (
+        _name.isupper()
+        and isinstance(_val, str)
+        and len(_val) == 1
+        and uni_to_marks.is_accent(_val)
+    ):
         _ACCENT_SPELLING.setdefault(_val, _name.lower().replace("_", " "))
 
 
@@ -341,7 +357,9 @@ def _blocks(wlc: list[_Tok], strand: list[_Tok]) -> list[_Block]:
     out: list[_Block] = []
     for tag, i1, i2, j1, j2 in sm.get_opcodes():
         out.append(
-            _Block(tag, tuple(range(i1, i2)), tuple(word_idxs[j] for j in range(j1, j2)))
+            _Block(
+                tag, tuple(range(i1, i2)), tuple(word_idxs[j] for j in range(j1, j2))
+            )
         )
     return out
 
@@ -434,7 +452,10 @@ def _punctuation_changes(
             if (
                 _MUNAX in wlc[wi].text  # WLC's tangle carries a munax …
                 and _PASEQ in wlc[wi].text  # … + a broad-sense paseq (a legarmeh) …
-                and _MUNAX not in _real_accents_ordered(strand_toks[ti].text)  # this strand reads the other accent
+                and _MUNAX
+                not in _real_accents_ordered(
+                    strand_toks[ti].text
+                )  # this strand reads the other accent
             ):
                 changes.append(
                     PunctuationChange(
@@ -459,7 +480,8 @@ def _equal_meteg_by_wlc(
     A medial meteg is a transcription-ambiguous mark -- it ``half-includes`` as an accent,
     and WLC may have written a real accent (merkha/tipexa) where it is due, or vice versa.
     So the strand whose mark here is a sole meteg is the ambiguous slot that absorbs WLC's
-    actual mark; the other strand's distinct accent is the omitted one, supplied from MAM."""
+    actual mark; the other strand's distinct accent is the omitted one, supplied from MAM.
+    """
     out: dict[int, bool] = {}
     for block in blocks:
         if block.tag == "equal":
@@ -474,7 +496,9 @@ class _Assign:
     substitutions: dict[str, str]  # mam accent -> wlc accent (anomaly only)
     supplies: tuple[SuppliedMark, ...]
     anomalies: tuple[Anomaly, ...]
-    strays: tuple[str, ...] = ()  # WLC accents this strand has no slot for, emitted anyway
+    strays: tuple[
+        str, ...
+    ] = ()  # WLC accents this strand has no slot for, emitted anyway
 
 
 _NO_ASSIGN = _Assign({}, (), ())
@@ -613,7 +637,8 @@ def display_form(word: str) -> str:
     """A word reduced to its base letters, accents, and the meteg / maqaf / sof pasuq the
     supply note describes -- vowels and dagesh dropped (the note illustrates accent and
     punctuation placement, not vocalization).  Inlined into the reason so the marks named
-    in prose are actually shown; also used by the supplied-marks page's punctuation table."""
+    in prose are actually shown; also used by the supplied-marks page's punctuation table.
+    """
     keep = _display_keep(word)
     return "".join(
         ch
@@ -633,7 +658,9 @@ def display_real_marks(strand_word: str, wlc_word: str) -> str:
     WLC *itself* carries (then doubled in ``wlc_word`` too, most often a pashta) is genuine and is
     left intact.  The kept-character set matches ``display_form``."""
     drop_idx: set[int] = set()
-    accents = {ch for ch in strand_word if uni_to_marks.is_accent(ch) and ch != _TSINNORIT}
+    accents = {
+        ch for ch in strand_word if uni_to_marks.is_accent(ch) and ch != _TSINNORIT
+    }
     for accent in accents:
         occ = [j for j, ch in enumerate(strand_word) if ch == accent]
         if len(occ) < 2 or wlc_word.count(accent) >= 2:
@@ -646,7 +673,9 @@ def display_real_marks(strand_word: str, wlc_word: str) -> str:
         for i, ch in enumerate(strand_word)
         if i not in drop_idx
         and ch != _TSINNORIT
-        and (uni_to_marks.is_base_letter(ch) or uni_to_marks.is_accent(ch) or ch in keep)
+        and (
+            uni_to_marks.is_base_letter(ch) or uni_to_marks.is_accent(ch) or ch in keep
+        )
     )
 
 
@@ -703,7 +732,9 @@ def _supply_reason(
             f" {other_label} strand: {wlc} (silluq + sof pasuq), so the"
             f" detangler supplies the {this_label}’s {accent_spelling} from MAM: {mam}."
         )
-        return reason, _under_bar_note("silluq", accent_spelling, other_label, this_label)
+        return reason, _under_bar_note(
+            "silluq", accent_spelling, other_label, this_label
+        )
     if not wlc_have:
         form = "meteg + maqaf" if _METEG in wlc_word else "maqaf"
         reason = (
@@ -714,7 +745,8 @@ def _supply_reason(
         )
         aside = (
             _under_bar_note("meteg", accent_spelling, other_label, this_label)
-            if _METEG in wlc_word else ""
+            if _METEG in wlc_word
+            else ""
         )
         return reason, aside
     others = ", ".join(_accent_spelling(a) for a in sorted(wlc_have, key=ord))
@@ -760,7 +792,9 @@ def _assign_pooled(
 # --------------------------------------------------------------------------- #
 # Emission + segmentation + parsing
 # --------------------------------------------------------------------------- #
-def _emit_word(text: str, substitutions: dict[str, str], strays: tuple[str, ...] = ()) -> str:
+def _emit_word(
+    text: str, substitutions: dict[str, str], strays: tuple[str, ...] = ()
+) -> str:
     """Build one WLC-stream word on the MAM strand word's spine.
 
     Keep base letters and the spine marks (maqaf / paseq / sof pasuq / meteg); drop the
@@ -796,7 +830,8 @@ def _emit_word(text: str, substitutions: dict[str, str], strays: tuple[str, ...]
 
 def _emit_stream(strand: list[_Tok], assigns: dict[int, _Assign]) -> list[_Tok]:
     """Emit the strand's stream as pointed-Hebrew vels, folding each non-word token
-    (paseq / standalone sof pasuq) onto the previous word (WLC's attached convention)."""
+    (paseq / standalone sof pasuq) onto the previous word (WLC's attached convention).
+    """
     vels: list[_Tok] = []
     for i, tok in enumerate(strand):
         if tok.skel:
@@ -839,7 +874,11 @@ def _strip_nonfinal_meteg(chanted_verse: list[_Tok]) -> list[_Tok]:
     if len(chanted_verse) <= 1:
         return chanted_verse
     return [
-        vel if i == len(chanted_verse) - 1 else _Tok(vel.bcv, vel.text.replace(_METEG, ""))
+        (
+            vel
+            if i == len(chanted_verse) - 1
+            else _Tok(vel.bcv, vel.text.replace(_METEG, ""))
+        )
         for i, vel in enumerate(chanted_verse)
     ]
 
@@ -893,7 +932,7 @@ def _parse_chanted_verse(
     # None of the three loci is a HasLegarmeh passage, so a fresh per-verse instance is
     # immaterial; pass the strand's first numbered verse for the (unused-here) ref.
     first_bcv = cv[0].bcv
-    chv = first_bcv[len(passage.bb):]
+    chv = first_bcv[len(passage.bb) :]
     chnu = int(chv.split(":")[0])
     vrnu = int(chv.split(":")[1])
     tokens = [Token("TILDE", "")] + scan_accents(
@@ -975,7 +1014,9 @@ def _process_strand(
     results: list[ChantedVerseResult] = []
     for idx, cv in enumerate(chanted_verses, start=1):
         ordinal = f" (chanted verse {idx}/{n})" if n > 1 else ""
-        results.append(_parse_chanted_verse(passage, cv, strand, label, ordinal, parser))
+        results.append(
+            _parse_chanted_verse(passage, cv, strand, label, ordinal, parser)
+        )
     return (
         StrandResult(strand=strand, strand_label=label, chanted_verses=tuple(results)),
         supplies,
@@ -1001,12 +1042,28 @@ def detangle_passage(
     bet_meteg = _equal_meteg_by_wlc(wlc, bet, bet_blocks)
 
     alef_result, alef_sup, alef_anom = _process_strand(
-        passage, "alef", passage.alef_label, passage.bet_label,
-        wlc, alef, alef_blocks, bet_acc, bet_meteg, parser,
+        passage,
+        "alef",
+        passage.alef_label,
+        passage.bet_label,
+        wlc,
+        alef,
+        alef_blocks,
+        bet_acc,
+        bet_meteg,
+        parser,
     )
     bet_result, bet_sup, bet_anom = _process_strand(
-        passage, "bet", passage.bet_label, passage.alef_label,
-        wlc, bet, bet_blocks, alef_acc, alef_meteg, parser,
+        passage,
+        "bet",
+        passage.bet_label,
+        passage.alef_label,
+        wlc,
+        bet,
+        bet_blocks,
+        alef_acc,
+        alef_meteg,
+        parser,
     )
     punctuation_changes = tuple(
         _punctuation_changes(wlc, alef, alef_blocks, "alef", passage.alef_label)
@@ -1059,9 +1116,10 @@ def chanted_verse_to_prose_record(
     mark lives (e.g. the elyon dt 5:7-10 ungrammatical is keyed dt 5:8, where WLC's stray sits), so
     the note and goerwitz row land on that verse.  The strand and the full chanted-verse span
     are kept in ``dual_cant_*`` fields for provenance (the goerwitz row re-derives its visible
-    ref from the bcv); the ``dual_cant`` flag marks the record so a re-run replaces it."""
+    ref from the bcv); the ``dual_cant`` flag marks the record so a re-run replaces it.
+    """
     bcv = key_bcv or cv.bcv_span[0]
-    chnu, vrnu = bcv[len(bb):].split(":")
+    chnu, vrnu = bcv[len(bb) :].split(":")
     return {
         "ref": f"{wlc_bb_to_bk39id(bb)} {chnu}:{vrnu}",
         "bcv": bcv,

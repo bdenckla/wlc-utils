@@ -250,12 +250,7 @@ def _accent_name_diff(wlc_word: str, mam_word: str) -> tuple[list[str], list[str
     mam_mos = mam_accs.pop(_MOS_ABBREV, 0)
     removed = list((wlc_accs - mam_accs).elements())
     added = list((mam_accs - wlc_accs).elements())
-    if (
-        mam_mos
-        and not added
-        and _SOF_PASUQ in mam_word
-        and (removed or wlc_mos == 0)
-    ):
+    if mam_mos and not added and _SOF_PASUQ in mam_word and (removed or wlc_mos == 0):
         added.append(_SILLUQ_ABBREV)
     return removed, added
 
@@ -297,9 +292,7 @@ def _accent_moves(wlc_word: str, mam_word: str) -> list[str]:
     added = list((mam_assoc - wlc_assoc).elements())
     moves: list[str] = []
     for accent, from_letter in removed:
-        match = next(
-            (i for i, (acc, _) in enumerate(added) if acc == accent), None
-        )
+        match = next((i for i, (acc, _) in enumerate(added) if acc == accent), None)
         if match is None:
             continue
         _, to_letter = added.pop(match)
@@ -336,12 +329,8 @@ def _no_accent_change_reason(wlc_tokens: list[str], mam_tokens: list[str]) -> st
     substitution path before we get here).  What remains is a niqqud-only edit or a
     *medial* meteg-only edit, both invisible to the grammar; we label which.
     """
-    wlc_mos = sum(
-        Counter(uni_heb.accent_names(w))[_MOS_ABBREV] for w in wlc_tokens
-    )
-    mam_mos = sum(
-        Counter(uni_heb.accent_names(w))[_MOS_ABBREV] for w in mam_tokens
-    )
+    wlc_mos = sum(Counter(uni_heb.accent_names(w))[_MOS_ABBREV] for w in wlc_tokens)
+    mam_mos = sum(Counter(uni_heb.accent_names(w))[_MOS_ABBREV] for w in mam_tokens)
     return "meteg_only" if wlc_mos != mam_mos else "vowel_only"
 
 
@@ -379,6 +368,4 @@ def _collect_unit_setters(container: list, setters: list) -> None:
             continue
         word = vel.get("word")
         if isinstance(word, str) and _HEB_LETTER_RE.search(word):
-            setters.append(
-                lambda new_word, d=vel: d.__setitem__("word", new_word)
-            )
+            setters.append(lambda new_word, d=vel: d.__setitem__("word", new_word))

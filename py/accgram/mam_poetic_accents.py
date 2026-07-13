@@ -116,11 +116,14 @@ _SERVUS_SIGNS: list[tuple[str, str]] = [
     (ha.MUN, pan.MUNAX),
     (ha.MER, pan.MERKHA),
     (ha.MAH, pan.MAHAPAKH),
-    (ha.QOM, pan.AZLA),      # qadma = azla (the conjunctive)
-    (ha.YBY, pan.GALGAL),    # yerax-ben-yomo = galgal
-    (ha.ATN_H, pan.GALGAL),  # atnax-hafukh: MAM's oleh-weyored servus (the LC has galgal)
+    (ha.QOM, pan.AZLA),  # qadma = azla (the conjunctive)
+    (ha.YBY, pan.GALGAL),  # yerax-ben-yomo = galgal
+    (
+        ha.ATN_H,
+        pan.GALGAL,
+    ),  # atnax-hafukh: MAM's oleh-weyored servus (the LC has galgal)
     (ha.ILU, pan.ILLUY),
-    (ha.TIP, pan.TARXA),     # U+0596 (tipexa in prose) is the poetic tarxa servant
+    (ha.TIP, pan.TARXA),  # U+0596 (tipexa in prose) is the poetic tarxa servant
 ]
 
 # Node types whose subtree carries no cantillated text for our purposes.
@@ -173,7 +176,9 @@ def _word_self_servus(accents: str, marker_char: str) -> str | None:
     best_idx = -1
     best_name: str | None = None
     for sign, name in _SERVUS_SIGNS:
-        idx = accents.rfind(sign, 0, disj_idx)  # closest occurrence before the disjunctive
+        idx = accents.rfind(
+            sign, 0, disj_idx
+        )  # closest occurrence before the disjunctive
         if idx > best_idx:
             best_idx = idx
             best_name = name
@@ -215,7 +220,9 @@ def _emit_word_events(text: str, events: list[_Event]) -> None:
             # same-word servant.  It is part of the divider, and oleh-weyored's true
             # servant always sits on the preceding word, so it has no self_servus.
             self_servus = (
-                None if marker == pan.OLEH_WEYORED else _word_self_servus(word, marker_char)
+                None
+                if marker == pan.OLEH_WEYORED
+                else _word_self_servus(word, marker_char)
             )
             events.append(("WORD", marker, None, self_servus, cons))
 
@@ -270,11 +277,15 @@ def _walk_kq(node: dict, events: list[_Event]) -> None:
         for child in contents
         if isinstance(child, dict) and child.get("type") in _QERE_TYPES
     ]
-    chosen = qere_children if qere_children else [
-        child
-        for child in contents
-        if not (isinstance(child, dict) and child.get("type") in _KETIV_TYPES)
-    ]
+    chosen = (
+        qere_children
+        if qere_children
+        else [
+            child
+            for child in contents
+            if not (isinstance(child, dict) and child.get("type") in _KETIV_TYPES)
+        ]
+    )
     for child in chosen:
         _walk(child, events)
 
@@ -313,7 +324,10 @@ def _build_word_accents(events: list[_Event]) -> list[list[str | None]]:
         elif kind == "LP_PASEQ":
             # A narrow-sense paseq promotes a preceding shalshelet to gedolah, but does not
             # by itself create a legarmeh.
-            if last_word_index is not None and words[last_word_index][0] == pan.SHALSHELET:
+            if (
+                last_word_index is not None
+                and words[last_word_index][0] == pan.SHALSHELET
+            ):
                 words[last_word_index][0] = pan.SHALSHELET_GEDOLAH
 
     # Bare shalshelet (no paseq) is the conjunctive qetannah -> swallow its disjunctive.
@@ -354,7 +368,9 @@ def word_accents_from_verse_node(
 def disjunctives_from_verse_node(verse_node: dict) -> list[str]:
     """Return the ordered poetic disjunctive sequence for one MAM-simple verse."""
     return [
-        d for d, _servus, _self in word_accents_from_verse_node(verse_node) if d is not None
+        d
+        for d, _servus, _self in word_accents_from_verse_node(verse_node)
+        if d is not None
     ]
 
 

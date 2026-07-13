@@ -7,7 +7,6 @@ from accgram.prose_ob_notes_shared import (
     MISSING_SOF_PASUQ_SUMMARY,
 )
 
-
 BY_REF: dict[str, dict[str, object]] = {
     "am 1:14": {
         "st-source": "tbd",

@@ -115,5 +115,7 @@ def _row_ref(row: dict[str, object]) -> str:
 def _row_output_file(row: dict[str, object]) -> str:
     output_file = row.get("output_file")
     if not isinstance(output_file, str) or not output_file.strip():
-        raise ValueError("Ungrammatical row is missing non-empty string field 'output_file'")
+        raise ValueError(
+            "Ungrammatical row is missing non-empty string field 'output_file'"
+        )
     return output_file.strip()

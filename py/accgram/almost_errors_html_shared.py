@@ -44,7 +44,9 @@ def verse_links(bcv: str) -> object:
     links = (
         H.anchor("UXLC", {"href": my_wlc_bcv_str.get_tanach_dot_us_url(bcv)}),
         " | ",
-        H.anchor("MAM", {"href": rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)}),
+        H.anchor(
+            "MAM", {"href": rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)}
+        ),
     )
     return H.para(links)
 

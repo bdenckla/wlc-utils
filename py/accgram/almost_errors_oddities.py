@@ -115,7 +115,9 @@ def _qadma_gaya_links(*, supplied: bool) -> tuple[object, ...]:
             continue
         if nodes:
             nodes.append("; ")
-        nodes.append(link(display, rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)))
+        nodes.append(
+            link(display, rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu))
+        )
     return tuple(nodes)
 
 
@@ -135,9 +137,9 @@ def oddities_intro() -> tuple[object, ...]:
         ),
     )
 
+
 _SEE = (
-    "(See UXLC notes"
-    " ",
+    "(See UXLC notes" " ",
     link(
         "G5:29",
         "https://tanach.us/Notes/Genesis/Genesis.5.29.6-c.html",
@@ -149,7 +151,7 @@ _SEE = (
     ),
     ", and the UXLC change record for 2K17:13, ",
     uxlc_change_link("2020.10.19/2020.09.22-2"),
-    ".)"
+    ".)",
 )
 _TELG_PARA_1_CONTENTS = (
     "Five WLC words carry both a “telg” (telisha gedola) and a “gerstar” (a geresh or gershayim)."
@@ -168,15 +170,15 @@ _TELG_PARA_1_CONTENTS = (
     " Presumably this is because the stress is not initial in those two words,"
     " and the naqdan (the pointing-scribe) wanted to preserve"
     " the prepositive and impositive placement of telg and gerstar respectively."
-    )
+)
 _TELG_PARA_2_CONTENTS = (
     #
     " In the three same-letter words, the LC has the gerstar first and the telg second.",
     #
     *(" ", *_SEE),
     #
-    " So, the same-letter words have their accent swapped compared to the order in the cross-letter words."
-    )
+    " So, the same-letter words have their accent swapped compared to the order in the cross-letter words.",
+)
 _TELG_PARA_3_CONTENTS = (
     #
     " The checker reads a telg and a gerstar on a single letter in the order they are written in the manuscript —"
@@ -243,7 +245,11 @@ def telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]
     for bcv in _TELG_TREE_REFS:
         items.append(H.htel_mk("h4", None, ref_display(bcv)))
         items.append(verse_links(bcv))
-        items.append(render_tree(aet._telg_tree_text(bcv, "keep_both", index, parser, has_legarmeh)))
+        items.append(
+            render_tree(
+                aet._telg_tree_text(bcv, "keep_both", index, parser, has_legarmeh)
+            )
+        )
     items.append(
         H.para(
             (
@@ -341,7 +347,7 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
             (
                 "That this double accent is intentional in the LC is"
                 " supported by the word’s masorah qetannah note,"
-                " ל̇ בטע̇" # we purposely don't format this as hbo because Taamey D doesn't support "combining dot above" well
+                " ל̇ בטע̇"  # we purposely don't format this as hbo because Taamey D doesn't support "combining dot above" well
                 " (“[this is the] one [word in all Tanakh that appears] with [these]"
                 " accents [arranged like this]”):",
             )

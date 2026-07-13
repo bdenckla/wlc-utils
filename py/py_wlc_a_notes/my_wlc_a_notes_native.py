@@ -16,7 +16,9 @@ def write_to_html(native, record):
     ucp_n_str_02 = f"{ucp_n:02d}"
     title = f"UXLC change proposal {ucp_n}"
     path = f"ucp/uxlc_change_proposal_{ucp_n_str_02}.html"
-    write_ctx = wlc_utils_html.WriteCtx(title, f"gh-pages/wlc-a-notes/{path}", centered=True)
+    write_ctx = wlc_utils_html.WriteCtx(
+        title, f"gh-pages/wlc-a-notes/{path}", centered=True
+    )
     wlc_utils_html.write_html_to_file(body_contents, write_ctx, "../../")
     return path
 

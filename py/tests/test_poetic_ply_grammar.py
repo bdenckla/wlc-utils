@@ -72,8 +72,13 @@ def test_revia_mugrash_before_silluq():
     tree = parse_tokens(
         parser,
         _verse(
-            pan.MUNAX, pan.ATNAX, pan.MERKHA, pan.REVIA_MUGRASH,
-            pan.TARXA, pan.MUNAX, pan.SILLUQ,
+            pan.MUNAX,
+            pan.ATNAX,
+            pan.MERKHA,
+            pan.REVIA_MUGRASH,
+            pan.TARXA,
+            pan.MUNAX,
+            pan.SILLUQ,
         ),
     )
     assert tree is not None
@@ -89,8 +94,16 @@ def test_oleh_weyored_is_topmost_divider():
     tree = parse_tokens(
         parser,
         _verse(
-            pan.REVIA_GADOL, pan.MERKHA, pan.REVIA_QATAN, pan.GALGAL, pan.OLEH_WEYORED,
-            pan.MUNAX, pan.ATNAX, pan.MERKHA, pan.REVIA_MUGRASH, pan.SILLUQ,
+            pan.REVIA_GADOL,
+            pan.MERKHA,
+            pan.REVIA_QATAN,
+            pan.GALGAL,
+            pan.OLEH_WEYORED,
+            pan.MUNAX,
+            pan.ATNAX,
+            pan.MERKHA,
+            pan.REVIA_MUGRASH,
+            pan.SILLUQ,
         ),
     )
     assert tree is not None
@@ -110,18 +123,34 @@ def test_full_hierarchy_pazer_legarmeh_dexi_tsinnor():
     tree = parse_tokens(
         parser,
         _verse(
-            pan.PAZER, pan.LEGARMEH, pan.REVIA_GADOL, pan.MERKHA, pan.TSINNOR,
-            pan.GALGAL, pan.OLEH_WEYORED,
-            pan.MUNAX, pan.DEXI, pan.MERKHA, pan.ATNAX,
-            pan.MERKHA, pan.REVIA_MUGRASH, pan.SILLUQ,
+            pan.PAZER,
+            pan.LEGARMEH,
+            pan.REVIA_GADOL,
+            pan.MERKHA,
+            pan.TSINNOR,
+            pan.GALGAL,
+            pan.OLEH_WEYORED,
+            pan.MUNAX,
+            pan.DEXI,
+            pan.MERKHA,
+            pan.ATNAX,
+            pan.MERKHA,
+            pan.REVIA_MUGRASH,
+            pan.SILLUQ,
         ),
     )
     assert tree is not None
     out = print_tree(tree, 0)
     for label in (
-        "pazer_phrase", "legarmeh_phrase", "revia_gadol_clause",
-        "tsinnor_phrase", "oleh_weyored_phrase", "dexi_phrase",
-        "atnax_phrase", "revia_mugrash_phrase", "silluq_phrase",
+        "pazer_phrase",
+        "legarmeh_phrase",
+        "revia_gadol_clause",
+        "tsinnor_phrase",
+        "oleh_weyored_phrase",
+        "dexi_phrase",
+        "atnax_phrase",
+        "revia_mugrash_phrase",
+        "silluq_phrase",
     ):
         assert label in out, label
 
@@ -134,8 +163,12 @@ def test_conj_absorbs_metsunnar_and_shalshelet_qetannah():
     tree = parse_tokens(
         parser,
         _verse(
-            pan.MAHAPAKH_METSUNNAR, pan.MERKHA_METSUNNAR, pan.SHALSHELET_QETANNAH,
-            pan.ATNAX, pan.MERKHA, pan.SILLUQ,
+            pan.MAHAPAKH_METSUNNAR,
+            pan.MERKHA_METSUNNAR,
+            pan.SHALSHELET_QETANNAH,
+            pan.ATNAX,
+            pan.MERKHA,
+            pan.SILLUQ,
         ),
     )
     assert tree is not None
@@ -145,7 +178,10 @@ def test_conj_absorbs_metsunnar_and_shalshelet_qetannah():
     assert tree.label == "silluq_clause"
     # dropping the three servi leaves the same disjunctive skeleton (servus-neutral)
     bare = parse_tokens(parser, _verse(pan.ATNAX, pan.MERKHA, pan.SILLUQ))
-    assert [n.label for n in (tree.left, tree.right)] == [bare.left.label, bare.right.label]
+    assert [n.label for n in (tree.left, tree.right)] == [
+        bare.left.label,
+        bare.right.label,
+    ]
 
 
 def test_merkha_azla_bang_is_unparseable():
@@ -165,9 +201,7 @@ def test_stray_accent_is_unparseable():
     """Plan C fail-fast: STRAY_ACCENT has no grammar terminal, so any verse carrying
     one is a NO_PARSE (the poetic-native error surface)."""
     parser = build_parser()
-    tree, error = parse_tokens_diagnostic(
-        parser, _verse(pan.STRAY_ACCENT, pan.SILLUQ)
-    )
+    tree, error = parse_tokens_diagnostic(parser, _verse(pan.STRAY_ACCENT, pan.SILLUQ))
     assert tree is None
     assert error is not None and error.token_type == pan.STRAY_ACCENT
 
@@ -193,8 +227,13 @@ def test_legarmeh_directly_under_atnax():
     tree = parse_tokens(
         parser,
         _verse(
-            pan.LEGARMEH, pan.MUNAX, pan.MUNAX, pan.ATNAX,
-            pan.REVIA_MUGRASH, pan.MERKHA, pan.SILLUQ,
+            pan.LEGARMEH,
+            pan.MUNAX,
+            pan.MUNAX,
+            pan.ATNAX,
+            pan.REVIA_MUGRASH,
+            pan.MERKHA,
+            pan.SILLUQ,
         ),
     )
     assert tree is not None
@@ -211,8 +250,12 @@ def test_legarmeh_directly_before_silluq_under_revia_mugrash():
     tree = parse_tokens(
         parser,
         _verse(
-            pan.MERKHA, pan.ATNAX, pan.REVIA_MUGRASH,
-            pan.LEGARMEH, pan.ILLUY, pan.SILLUQ,
+            pan.MERKHA,
+            pan.ATNAX,
+            pan.REVIA_MUGRASH,
+            pan.LEGARMEH,
+            pan.ILLUY,
+            pan.SILLUQ,
         ),
     )
     assert tree is not None
@@ -253,8 +296,14 @@ def test_tsinnor_subdivides_revia_qatan_before_oleh():
     tree = parse_tokens(
         parser,
         _verse(
-            pan.LEGARMEH, pan.TSINNOR, pan.REVIA_QATAN, pan.OLEH_WEYORED,
-            pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.SILLUQ,
+            pan.LEGARMEH,
+            pan.TSINNOR,
+            pan.REVIA_QATAN,
+            pan.OLEH_WEYORED,
+            pan.MERKHA,
+            pan.ATNAX,
+            pan.MERKHA,
+            pan.SILLUQ,
         ),
     )
     assert tree is not None
@@ -309,17 +358,36 @@ def test_misplaced_disjunctive_stays_no_parse():
     tree = parse_tokens(
         parser,
         _verse(
-            pan.MAHAPAKH, pan.MUNAX, pan.TSINNOR, pan.LEGARMEH, pan.MERKHA,
-            pan.REVIA_MUGRASH, pan.MAHAPAKH, pan.ILLUY, pan.SILLUQ,
+            pan.MAHAPAKH,
+            pan.MUNAX,
+            pan.TSINNOR,
+            pan.LEGARMEH,
+            pan.MERKHA,
+            pan.REVIA_MUGRASH,
+            pan.MAHAPAKH,
+            pan.ILLUY,
+            pan.SILLUQ,
         ),
     )
     assert tree is None
 
 
 _PS_17_14_ACCENTS = [
-    pan.MERKHA, pan.LEGARMEH, pan.PAZER, pan.ILLUY, pan.REVIA_GADOL,
-    pan.MERKHA, pan.TSINNOR, pan.TSINNOR, pan.GALGAL, pan.OLEH_WEYORED,
-    pan.MERKHA, pan.ATNAX, pan.MERKHA, pan.REVIA_MUGRASH, pan.SILLUQ,
+    pan.MERKHA,
+    pan.LEGARMEH,
+    pan.PAZER,
+    pan.ILLUY,
+    pan.REVIA_GADOL,
+    pan.MERKHA,
+    pan.TSINNOR,
+    pan.TSINNOR,
+    pan.GALGAL,
+    pan.OLEH_WEYORED,
+    pan.MERKHA,
+    pan.ATNAX,
+    pan.MERKHA,
+    pan.REVIA_MUGRASH,
+    pan.SILLUQ,
 ]
 
 
@@ -368,8 +436,15 @@ def test_accepting_repeats_leaves_other_no_parse_untouched():
     violation that must stay NO_PARSE."""
     parser = build_parser()
     toks = _verse(
-        pan.MAHAPAKH, pan.MUNAX, pan.TSINNOR, pan.LEGARMEH, pan.MERKHA,
-        pan.REVIA_MUGRASH, pan.MAHAPAKH, pan.ILLUY, pan.SILLUQ,
+        pan.MAHAPAKH,
+        pan.MUNAX,
+        pan.TSINNOR,
+        pan.LEGARMEH,
+        pan.MERKHA,
+        pan.REVIA_MUGRASH,
+        pan.MAHAPAKH,
+        pan.ILLUY,
+        pan.SILLUQ,
     )
     assert parse_tokens_diagnostic(parser, toks)[0] is None
     assert parse_tokens_accepting_repeats(parser, toks)[0] is None
@@ -389,8 +464,11 @@ def test_pazer_directly_under_atnax():
     tree = parse_tokens(
         parser,
         _verse(
-            pan.LEGARMEH, pan.PAZER, pan.ATNAX,
-            pan.REVIA_MUGRASH, pan.SILLUQ,
+            pan.LEGARMEH,
+            pan.PAZER,
+            pan.ATNAX,
+            pan.REVIA_MUGRASH,
+            pan.SILLUQ,
         ),
     )
     assert tree is not None

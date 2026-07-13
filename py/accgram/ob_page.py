@@ -43,7 +43,8 @@ class TristateFacet:
     """A has / doesn't-have / don't-care radio group, ANDed with the other facets.
 
     Defaults to "don't care" so the page opens unfiltered on this axis. The has /
-    doesn't-have counts are the no-JS fallback; the filter script recomputes them live."""
+    doesn't-have counts are the no-JS fallback; the filter script recomputes them live.
+    """
 
     legend: str
     group_name: str  # the radio group's shared name/class, e.g. "gf-uchange"
@@ -64,7 +65,9 @@ class CorpusDescriptor:
 
     heading_blocks: tuple[object, ...]  # h1 + intro (+ citation), already built
     facets: tuple[Facet, ...]
-    count_para_class: str  # the filter's running-total para class ("gf-count"/"pf-count")
+    count_para_class: (
+        str  # the filter's running-total para class ("gf-count"/"pf-count")
+    )
     verse_sections: tuple[object, ...]  # already built via render_verse_section
     tail_blocks: tuple[object, ...]  # prose bracket-notes glossary; () for poetic
     filter_script_name: str  # "goerwitz-filter.js" | "poetic-filter.js"
@@ -118,7 +121,9 @@ def build_filter_controls(facets: Sequence[Facet], count_para_class: str) -> obj
                 )
             )
     count_para = wlc_utils_html.para("", {"class": count_para_class})
-    return wlc_utils_html.div((*fieldsets, count_para), {"class": _FILTER_WRAPPER_CLASS})
+    return wlc_utils_html.div(
+        (*fieldsets, count_para), {"class": _FILTER_WRAPPER_CLASS}
+    )
 
 
 def _fieldset(legend_text: str, labels: tuple[object, ...]) -> object:

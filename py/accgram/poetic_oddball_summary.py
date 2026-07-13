@@ -98,9 +98,7 @@ def _word_aligned_clauses(row: dict[str, object]) -> list[str] | None:
                 if wlc_disj != mam_disj:
                     clauses.append(_phrase_word_diff(cons, wlc_disj, mam_disj))
         else:
-            clauses.append(
-                _phrase_segment_diff(wlc_words[i1:i2], mam_words[j1:j2])
-            )
+            clauses.append(_phrase_segment_diff(wlc_words[i1:i2], mam_words[j1:j2]))
     return clauses
 
 
@@ -208,9 +206,7 @@ def _disj_phrase(disj: tuple[str, ...]) -> str:
     return _humanize_disjunctives(disj) if disj else "no divider (a conjunctive)"
 
 
-def _describe_disjunctive_diff(
-    wlc: tuple[str, ...], mam: tuple[str, ...]
-) -> list[str]:
+def _describe_disjunctive_diff(wlc: tuple[str, ...], mam: tuple[str, ...]) -> list[str]:
     """Phrase each edit between the WLC and MAM disjunctive skeletons from WLC's
     side (MAM is the oracle), e.g. "WLC omits silluq that MAM reads".  Fallback only
     (see _word_aligned_clauses); the disjunctive-only skeleton drops conjunctives and

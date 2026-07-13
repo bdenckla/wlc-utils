@@ -223,7 +223,9 @@ _OACCENTS_PATT = _paren("|".join(_OVER_ACCENTS))
 # there preserves the source order of two over-accents sharing one letter, so the
 # three same-letter telg!gerstar words (gn5:29, zp2:15, 2k17:13) stay
 # gerstar-then-telg (manuscript order) instead of being permuted to telg-first.
-_PREPOS_FLOAT = "(?:" + _NON_LETT_NO_DIGIT + r"|(?!" + "|".join(_OVER_ACCENTS) + r")\d\d)*"
+_PREPOS_FLOAT = (
+    "(?:" + _NON_LETT_NO_DIGIT + r"|(?!" + "|".join(_OVER_ACCENTS) + r")\d\d)*"
+)
 _PREPOS_PATT = r"^(\*\*|)(10|11|12|13|14)" + _paren(_LETT + _PREPOS_FLOAT)
 _PREPOS_REPL = r"\1\3\2"
 _UACCENTS_PATT = _paren("|".join(_UNDER_ACCENTS))

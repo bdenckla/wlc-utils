@@ -151,7 +151,8 @@ _PARA_1 = (
 def _body_scans() -> tuple[object, ...]:
     """The two body-text scans that establish the finding (issue #62): Simanim's main Decalogue in
     the p-trad עליון (p. 83) and its appendix Decalogue in the p-trad תחתון (p. 246). These are the
-    body text the page used to only assert; showing them is what replaces the old apology."""
+    body text the page used to only assert; showing them is what replaces the old apology.
+    """
     return (
         _figure(
             _P83_BODY_IMG,
@@ -280,7 +281,11 @@ def _p83_scan_and_transcription() -> object:
 def _p83_section() -> tuple[object, ...]:
     return (
         H.heading_level_2("Margin note on the main (עליון) Decalogue — Simanim p. 83"),
-        H.para(("A note in the side margin of the Exodus (Yitro) Decalogue, on אנכי…עבדים.",)),
+        H.para(
+            (
+                "A note in the side margin of the Exodus (Yitro) Decalogue, on אנכי…עבדים.",
+            )
+        ),
         _p83_scan_and_transcription(),
         H.heading_level_3("Translation"),
         H.blockquote(
@@ -296,7 +301,9 @@ def _p83_section() -> tuple[object, ...]:
                 hbo(_P83_STANDALONE_VERSE),
                 H.line_break(),
                 "[The Ten Commandments without the ",
-                f"{_ELYON} cantillation ""{can be found}"" at the end of the ḥumash.]",
+                f"{_ELYON} cantillation "
+                "{can be found}"
+                " at the end of the ḥumash.]",
             )
         ),
         H.para(
@@ -304,7 +311,11 @@ def _p83_section() -> tuple[object, ...]:
                 H.small(
                     (
                         H.bold("Notation:"),
-                        *[" text in ", H.bold("{curly braces}"), " is our editorial addition; "],
+                        *[
+                            " text in ",
+                            H.bold("{curly braces}"),
+                            " is our editorial addition; ",
+                        ],
                         H.bold("[square brackets]"),
                         " reproduce brackets present in the source itself.",
                     )
@@ -393,7 +404,9 @@ def _p246_mapping_table() -> object:
 
 def _p246_section() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Footnote on the appendix (תחתון) Decalogue — Simanim p. 246"),
+        H.heading_level_2(
+            "Footnote on the appendix (תחתון) Decalogue — Simanim p. 246"
+        ),
         H.para(
             (
                 f"The mirror footnote, from the appendix's {_TAHTON} Decalogue (which Simanim"
@@ -465,9 +478,8 @@ def _p246_section() -> tuple[object, ...]:
                 H.bold(_ROM_ETNAHTA),
                 ", thus: ",
                 hbo(_P246_MERGED_VERSE),
-                ". And as regards the “Ten"
-                " Commandments” in the ",
-                f"{_ELYON} within the ḥumash: ""{see the main part of the ḥumash?}",
+                ". And as regards the “Ten" " Commandments” in the ",
+                f"{_ELYON} within the ḥumash: " "{see the main part of the ḥumash?}",
             )
         ),
         H.para(
@@ -642,7 +654,9 @@ def default_html_out_path(repo_root: Path) -> Path:
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
     parser.add_argument("--source", type=Path, default=pd.default_source_path())
-    parser.add_argument("--html-out", type=Path, default=default_html_out_path(repo_root))
+    parser.add_argument(
+        "--html-out", type=Path, default=default_html_out_path(repo_root)
+    )
 
 
 def run(args: argparse.Namespace) -> None:

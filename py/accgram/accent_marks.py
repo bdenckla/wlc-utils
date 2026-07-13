@@ -47,45 +47,47 @@ from mb_cmn import hebrew_punctuation as hpu
 # the single source of truth).  Here we only alias them to the descriptive
 # spellings the scanners use; the trailing comment is the legacy M-C 2-digit code.
 
-ATNAX = ha.ATN              # etnaxta             (M-C 92)
-SEGOLTA = ha.SEG_A          # segol (accent)      (01)
-SHALSHELET = ha.SHA         # shalshelet          (65)
-ZAQEF_QATAN = ha.ZAQ_Q      # zaqef qatan         (80)
-ZAQEF_GADOL = ha.ZAQ_G      # zaqef gadol         (85)
-TIPEXA = ha.TIP             # tipexa              (73)
-REVIA = ha.REV              # revia               (81)
+ATNAX = ha.ATN  # etnaxta             (M-C 92)
+SEGOLTA = ha.SEG_A  # segol (accent)      (01)
+SHALSHELET = ha.SHA  # shalshelet          (65)
+ZAQEF_QATAN = ha.ZAQ_Q  # zaqef qatan         (80)
+ZAQEF_GADOL = ha.ZAQ_G  # zaqef gadol         (85)
+TIPEXA = ha.TIP  # tipexa              (73)
+REVIA = ha.REV  # revia               (81)
 TSINNORIT = ha.ZSH_OR_TSIT  # zarqa stress-helper / tsinnorit (82)
-PASHTA = ha.PASH            # pashta              (03 main / 33 helper)
-YETIV = ha.YET              # yetiv               (10)
-TEVIR = ha.TEV              # tevir               (91)
-GERESH = ha.GER             # geresh              (61)
-GERESH_MUQDAM = ha.GER_M    # geresh muqdam       (11)
-GERSHAYIM = ha.GER_2        # gershayim           (62 main / 12 secondary)
-QARNEY_PARA = ha.QAR        # qarney para (pazer gadol) (84)
-TELISHA_GEDOLA = ha.TEL_G   # telisha gedola      (14 main / 44 secondary)
-PAZER = ha.PAZ              # pazer               (83)
-MUNAX = ha.MUN              # munax               (74)
-MAHAPAKH = ha.MAH           # mahapakh            (70)
-MERKHA = ha.MER             # merkha              (71)
-MERKHA_KEFULA = ha.MER_2    # merkha kefula       (72)
-DARGA = ha.DAR              # darga               (94)
-QADMA = ha.QOM              # qadma / azla        (63)  prose=qadma, poetic=azla (prose azla only before geresh)
-TELISHA_QETANA = ha.TEL_Q   # telisha qetana      (04 main / 24 helper)
-YERAX = ha.YBY              # yerax ben yomo / galgal (93)
-OLE = ha.OLE                # ole                 (60)
-ILUY = ha.ILU               # iluy                (64)
-DEXI = ha.DEX               # dexi                (13)
-TSINNOR = ha.Z_OR_TSOR      # tsinnor (zarqa/tsinnor main) (02)
+PASHTA = ha.PASH  # pashta              (03 main / 33 helper)
+YETIV = ha.YET  # yetiv               (10)
+TEVIR = ha.TEV  # tevir               (91)
+GERESH = ha.GER  # geresh              (61)
+GERESH_MUQDAM = ha.GER_M  # geresh muqdam       (11)
+GERSHAYIM = ha.GER_2  # gershayim           (62 main / 12 secondary)
+QARNEY_PARA = ha.QAR  # qarney para (pazer gadol) (84)
+TELISHA_GEDOLA = ha.TEL_G  # telisha gedola      (14 main / 44 secondary)
+PAZER = ha.PAZ  # pazer               (83)
+MUNAX = ha.MUN  # munax               (74)
+MAHAPAKH = ha.MAH  # mahapakh            (70)
+MERKHA = ha.MER  # merkha              (71)
+MERKHA_KEFULA = ha.MER_2  # merkha kefula       (72)
+DARGA = ha.DAR  # darga               (94)
+QADMA = (
+    ha.QOM
+)  # qadma / azla        (63)  prose=qadma, poetic=azla (prose azla only before geresh)
+TELISHA_QETANA = ha.TEL_Q  # telisha qetana      (04 main / 24 helper)
+YERAX = ha.YBY  # yerax ben yomo / galgal (93)
+OLE = ha.OLE  # ole                 (60)
+ILUY = ha.ILU  # iluy                (64)
+DEXI = ha.DEX  # dexi                (13)
+TSINNOR = ha.Z_OR_TSOR  # tsinnor (zarqa/tsinnor main) (02)
 
 # --- non-accent marks ---------------------------------------------------------
 
-METEG = hp.MTGOSLQ          # meteg / silluq      (35 / 75 / 95)
-PASEQ = hpu.PASOLEG         # paseq               (05)
-SOF_PASUQ = hpu.SOPA        # sof pasuq           (00)
-UPPER_DOT = hpu.UPDOT       # upper punctum       (52)
-LOWER_DOT = hpu.LODOT       # lower punctum       (53)
+METEG = hp.MTGOSLQ  # meteg / silluq      (35 / 75 / 95)
+PASEQ = hpu.PASOLEG  # paseq               (05)
+SOF_PASUQ = hpu.SOPA  # sof pasuq           (00)
+UPPER_DOT = hpu.UPDOT  # upper punctum       (52)
+LOWER_DOT = hpu.LODOT  # lower punctum       (53)
 
-MAQAF = "-"               # word-internal boundary (joins one accent word)
+MAQAF = "-"  # word-internal boundary (joins one accent word)
 # Placeholder base consonant (opaque scanner filler).  Alef -- a real Hebrew base, so a
 # combining accent sits on it legibly and the scan body needs no re-basing for display.
 # (It was a Latin "X" through issue #9; nothing keys on its identity -- every rule treats
@@ -110,7 +112,7 @@ _MARK_DIGITS: dict[str, str] = {
     TIPEXA: "73",
     REVIA: "81",
     TSINNORIT: "82",
-    PASHTA: "03",          # helper 33 shares digit 3 -> same blocking set
+    PASHTA: "03",  # helper 33 shares digit 3 -> same blocking set
     YETIV: "10",
     TEVIR: "91",
     GERESH: "61",

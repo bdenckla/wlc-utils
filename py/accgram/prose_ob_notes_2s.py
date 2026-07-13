@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-
 BY_REF: dict[str, dict[str, object]] = {
     "2s 6:20": {
         "st-source": "bhs",

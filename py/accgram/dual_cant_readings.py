@@ -46,7 +46,8 @@ def without_heavy_reading_fields(
     rows: list[dict[str, object]],
 ) -> list[dict[str, object]]:
     """Return copies of ``rows`` with each ``dual_cant_readings`` entry's heavy fields
-    (``tree``, ``word_leaf_counts``) dropped. Non-mutating: callers' rows keep their trees."""
+    (``tree``, ``word_leaf_counts``) dropped. Non-mutating: callers' rows keep their trees.
+    """
     out: list[dict[str, object]] = []
     for row in rows:
         readings = row.get("dual_cant_readings")
@@ -55,9 +56,11 @@ def without_heavy_reading_fields(
             continue
         new_row = dict(row)
         new_row["dual_cant_readings"] = [
-            {k: v for k, v in reading.items() if k not in _HEAVY_READING_FIELDS}
-            if isinstance(reading, dict)
-            else reading
+            (
+                {k: v for k, v in reading.items() if k not in _HEAVY_READING_FIELDS}
+                if isinstance(reading, dict)
+                else reading
+            )
             for reading in readings
         ]
         out.append(new_row)
@@ -83,7 +86,9 @@ def load_readings_by_bcv(
                     "word_bcvs": list(cv.word_bcvs),
                     "status": cv.status,  # clean / ungrammatical -> whether to show a parse tree
                     "tree": cv.tree,  # the parse-tree image (None when location-only)
-                    "word_leaf_counts": list(cv.word_leaf_counts),  # per-word leaf count, for graying
+                    "word_leaf_counts": list(
+                        cv.word_leaf_counts
+                    ),  # per-word leaf count, for graying
                 }
                 for bcv in _bcvs_in_span(span):
                     by_bcv.setdefault(bcv, []).append(reading)

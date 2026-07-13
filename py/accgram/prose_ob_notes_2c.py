@@ -9,7 +9,6 @@ from accgram.prose_ob_notes_shared import (
     TIPEXA,
 )
 
-
 BY_REF: dict[str, dict[str, object]] = {
     "2c 22:12": {
         "st-source": "bhs",
@@ -23,9 +22,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "wlc_focus": "ז֣בח הבק֗ר",
         "st-summary": f"BHS accents a word with {MUNAX} rather than segol.",
         "uxlc_change": "2024.04.01/2023.09.16-3",
-        "comment": (
-            f"MAM has {MUNAX} segol whereas the LC has segol revia."
-        )
+        "comment": (f"MAM has {MUNAX} segol whereas the LC has segol revia."),
     },
     "2c 8:10": {
         "st-source": "bhs",

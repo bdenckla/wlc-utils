@@ -119,7 +119,9 @@ _POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
 # earlier "two impositive accents" blacklist, which leaned on contested positional
 # classifications of marks -- tsinnorit, ole -- that, per the corpus, never share a letter
 # anyway; the whitelist is the honest rule and is also stricter.)
-_ANY_ACCENT = "[֑-֮]"  # U+0591..U+05AE (as the stray-accent class; meteg U+05BD excluded)
+_ANY_ACCENT = (
+    "[֑-֮]"  # U+0591..U+05AE (as the stray-accent class; meteg U+05BD excluded)
+)
 
 # Legit same-letter pairs that survive to the guard as two adjacent marks (i.e. are NOT
 # fused by an earlier rule), spared from the bang via negative lookahead.  Order is the
@@ -129,10 +131,21 @@ _WHITELISTED_ADJACENT_PAIRS = (am.DEXI + am.MUNAX,)
 # Display names for building a bang's per-pair (type, leaf); covers the poetic accents,
 # with a codepoint fallback for anything unforeseen.
 _ACCENT_LEAF_NAME: dict[str, str] = {
-    am.ATNAX: "atnax", am.SHALSHELET: "shalshelet", am.TIPEXA: "tarxa",
-    am.REVIA: "revia", am.PAZER: "pazer", am.MUNAX: "munax", am.MAHAPAKH: "mahapakh",
-    am.MERKHA: "merkha", am.QADMA: "azla", am.YERAX: "galgal", am.ILUY: "illuy",
-    am.OLE: "ole", am.DEXI: "dexi", am.TSINNOR: "tsinnor", am.GERESH: "geresh",
+    am.ATNAX: "atnax",
+    am.SHALSHELET: "shalshelet",
+    am.TIPEXA: "tarxa",
+    am.REVIA: "revia",
+    am.PAZER: "pazer",
+    am.MUNAX: "munax",
+    am.MAHAPAKH: "mahapakh",
+    am.MERKHA: "merkha",
+    am.QADMA: "azla",
+    am.YERAX: "galgal",
+    am.ILUY: "illuy",
+    am.OLE: "ole",
+    am.DEXI: "dexi",
+    am.TSINNOR: "tsinnor",
+    am.GERESH: "geresh",
     am.GERESH_MUQDAM: "geresh muqdam",
 }
 
@@ -151,7 +164,9 @@ def _bang_pair_token(marks: str) -> tuple[str, str]:
 
 
 # The guard regex: any two adjacent accents EXCEPT a whitelisted sequence pair.
-_BANG_GUARD = "(?!" + "|".join(_WHITELISTED_ADJACENT_PAIRS) + ")" + _ANY_ACCENT + _ANY_ACCENT
+_BANG_GUARD = (
+    "(?!" + "|".join(_WHITELISTED_ADJACENT_PAIRS) + ")" + _ANY_ACCENT + _ANY_ACCENT
+)
 
 # Rule table: (regex anchored at scan position, token type or None to swallow).
 # Longest match wins; ties broken by order (mirrors flex / the prose scanner).
@@ -210,7 +225,10 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.SHALSHELET), pan.SHALSHELET_QETANNAH),
     # legarmeh = azla (qadma) or mahapakh followed by paseq.  Must precede
     # the bare AZLA / MAHAPAKH rules so the longer paseq-terminated match wins.
-    (re.compile(r"(?:" + am.QADMA + r"|" + am.MAHAPAKH + r")" + _TEXT + am.PASEQ), pan.LEGARMEH),
+    (
+        re.compile(r"(?:" + am.QADMA + r"|" + am.MAHAPAKH + r")" + _TEXT + am.PASEQ),
+        pan.LEGARMEH,
+    ),
     # mahapakh / merkha metsunnar = a tsinnorit (U+0598) fused onto its mahapakh /
     # merkha partner in the same chanted word, the secondary tsinnorit consumed into
     # one conjunctive token instead of swallowed (Plan C).  Two graphical shapes:
@@ -223,10 +241,19 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     #     the tsinnorit (Yeivin §372 "immediately before the stress"; corpus-confirmed
     #     for all 198), so the rule cannot reach across an intervening divider (an ole,
     #     a mahapakh-legarmeh) to steal it, and the two shapes stay disjoint.
-    (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + am.MAHAPAKH), pan.MAHAPAKH_METSUNNAR),
+    (
+        re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + am.MAHAPAKH),
+        pan.MAHAPAKH_METSUNNAR,
+    ),
     (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + am.MERKHA), pan.MERKHA_METSUNNAR),
-    (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + " " + _TEXT + am.MAHAPAKH), pan.MAHAPAKH_METSUNNAR),
-    (re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + " " + _TEXT + am.MERKHA), pan.MERKHA_METSUNNAR),
+    (
+        re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + " " + _TEXT + am.MAHAPAKH),
+        pan.MAHAPAKH_METSUNNAR,
+    ),
+    (
+        re.compile(am.TSINNORIT + _TSINNORIT_ATOM_TAIL + " " + _TEXT + am.MERKHA),
+        pan.MERKHA_METSUNNAR,
+    ),
     # revia (gadol/qatan) -- reclassified in the second pass.
     (re.compile(am.REVIA), pan.REVIA),
     # bang guard = any two adjacent accents on one base letter (no X between -> same
@@ -399,7 +426,10 @@ def scan_accents(body: str) -> list[tuple[str, str]]:
         pos += max(best_len, 1)
 
     resolved = _reclassify_revia(_recover_unmarked_oleh(raw_types))
-    return [(t, dyn_leaves[i] if i in dyn_leaves else _LEAF[t]) for i, t in enumerate(resolved)]
+    return [
+        (t, dyn_leaves[i] if i in dyn_leaves else _LEAF[t])
+        for i, t in enumerate(resolved)
+    ]
 
 
 @dataclass(frozen=True)

@@ -121,11 +121,13 @@ def _verse_record(
         "ref": verse.reference,
         "bcv": bcv,
         "input": {
-            "unicode": rtms_data.verse_unicode_text(
-                wlc_index, bb, int(chnu_str), int(vrnu_str)
-            )
-            if wlc_index
-            else "",
+            "unicode": (
+                rtms_data.verse_unicode_text(
+                    wlc_index, bb, int(chnu_str), int(vrnu_str)
+                )
+                if wlc_index
+                else ""
+            ),
             "marks": verse.body,
             "tokens": [token_type for token_type, _ in tokens],
         },
@@ -179,8 +181,7 @@ def render_book(
     """
     verses = scan_book(text, bb)
     records = [
-        _verse_record(verse, bb, parser, mam_disj_by_ref, wlc_index)
-        for verse in verses
+        _verse_record(verse, bb, parser, mam_disj_by_ref, wlc_index) for verse in verses
     ]
     counts = _status_counts(records)
     stats = BookRun(
@@ -282,7 +283,9 @@ def run(args: argparse.Namespace) -> None:
         total_ungrammatical += stats.error_count
         total_no_parse += stats.no_parse_count
         total_verses += stats.verse_count
-        rate = 100.0 * stats.parsed_count / stats.verse_count if stats.verse_count else 0.0
+        rate = (
+            100.0 * stats.parsed_count / stats.verse_count if stats.verse_count else 0.0
+        )
         print(
             f"{bb}: parsed {stats.parsed_count}/{stats.verse_count} ({rate:.1f}%) clean"
             f"; {stats.error_count} missing-silluq ungrammatical verse(s), "

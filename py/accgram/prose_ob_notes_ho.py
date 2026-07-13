@@ -8,7 +8,6 @@ from accgram.prose_ob_notes_shared import (
     SOMEWHERE,
 )
 
-
 BY_REF: dict[str, dict[str, object]] = {
     "ho 4:19": {
         "st-source": "tbd",

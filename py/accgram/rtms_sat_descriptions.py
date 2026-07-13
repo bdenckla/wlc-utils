@@ -5,8 +5,7 @@ from accgram import rtms_meteg_witness
 from accgram import rtmsr_diff_format
 from accgram.rtms_sat_source_rows import SatSourceRow
 
-_NON_STRING_ORIGIN_ALLOWLIST: dict[tuple[str, str], str] = {
-}
+_NON_STRING_ORIGIN_ALLOWLIST: dict[tuple[str, str], str] = {}
 
 
 def build_sat_value_and_description(

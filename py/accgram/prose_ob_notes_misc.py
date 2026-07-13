@@ -13,7 +13,6 @@ from accgram.prose_ob_notes_shared import (
     TIP_LIKE_INCL,
 )
 
-
 _LM_0505_01 = (
     "The consensus pointing of the last two atoms in this verse is הֽוּנַֽח־לָֽנוּ׃."
     " I.e. ignoring vowel marks, the consensus for the atom in question is הֽונֽח־, i.e. two meteg marks and a maqaf."

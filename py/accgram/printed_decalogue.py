@@ -53,7 +53,12 @@ def default_source_path() -> Path:
 
 
 def default_out_path() -> Path:
-    return repo_paths.out_dir() / "accgram" / "printed-decalogue" / "_printed_decalogue.json"
+    return (
+        repo_paths.out_dir()
+        / "accgram"
+        / "printed-decalogue"
+        / "_printed_decalogue.json"
+    )
 
 
 # --------------------------------------------------------------------------- #
@@ -96,7 +101,7 @@ def _to_vels(chanted_verse: str) -> list[str]:
             vels[-1] = vels[-1] + _PASEQ
         elif tok.startswith(_PASEQ) and vels:
             vels[-1] = vels[-1] + _PASEQ
-            rest = tok[len(_PASEQ):]
+            rest = tok[len(_PASEQ) :]
             if rest:
                 vels.append(rest)
         else:
@@ -104,7 +109,9 @@ def _to_vels(chanted_verse: str) -> list[str]:
     return vels
 
 
-def _parse_chanted_verse(text: str, book: str, index: int, parser) -> ChantedVerseResult:
+def _parse_chanted_verse(
+    text: str, book: str, index: int, parser
+) -> ChantedVerseResult:
     vels = _to_vels(text)
     body = uni_to_marks.verse_to_marks({"vels": vels})
     # None of the Decalogue readings is a HasLegarmeh corpus; a fresh per-verse instance is

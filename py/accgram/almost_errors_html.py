@@ -91,7 +91,9 @@ def _intro() -> tuple[object, ...]:
     )
 
 
-def render_body_contents(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]:
+def render_body_contents(
+    index, parser, has_legarmeh: HasLegarmeh
+) -> tuple[object, ...]:
     sections: list[object] = [
         *_intro(),
         # Charities: forgive a genuine LC/BHS/WLC quirk or anomaly.

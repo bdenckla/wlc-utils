@@ -120,15 +120,32 @@ _WHITELISTED_SAME_LETTER: frozenset[frozenset[str]] = frozenset(
 # scanner's spellings (prose_scanner._LEAF -- qadma's standalone prose leaf is "qadma").  A codepoint
 # fallback (``U+XXXX``) covers any unforeseen mark so the label is always populated.
 _ACCENT_LEAF_NAME: dict[str, str] = {
-    am.ATNAX: "atnax", am.SEGOLTA: "segolta", am.SHALSHELET: "shalshelet",
-    am.ZAQEF_QATAN: "zaqef", am.ZAQEF_GADOL: "zaqefgadol", am.TIPEXA: "tipexa",
-    am.REVIA: "revia", am.PASHTA: "pashta", am.YETIV: "yetiv", am.TEVIR: "tevir",
-    am.GERESH: "geresh", am.GERESH_MUQDAM: "geresh", am.GERSHAYIM: "gershayim",
-    am.QARNEY_PARA: "pazergadol", am.TELISHA_GEDOLA: "telishagedola",
-    am.PAZER: "pazer", am.MUNAX: "munax", am.MAHAPAKH: "mahapakh",
-    am.MERKHA: "merkha", am.MERKHA_KEFULA: "merkhakefula", am.DARGA: "darga",
-    am.QADMA: "qadma", am.TELISHA_QETANA: "telishaqetanna", am.YERAX: "galgal",
-    am.TSINNORIT: "tsinnorit", am.TSINNOR: "zarqa",
+    am.ATNAX: "atnax",
+    am.SEGOLTA: "segolta",
+    am.SHALSHELET: "shalshelet",
+    am.ZAQEF_QATAN: "zaqef",
+    am.ZAQEF_GADOL: "zaqefgadol",
+    am.TIPEXA: "tipexa",
+    am.REVIA: "revia",
+    am.PASHTA: "pashta",
+    am.YETIV: "yetiv",
+    am.TEVIR: "tevir",
+    am.GERESH: "geresh",
+    am.GERESH_MUQDAM: "geresh",
+    am.GERSHAYIM: "gershayim",
+    am.QARNEY_PARA: "pazergadol",
+    am.TELISHA_GEDOLA: "telishagedola",
+    am.PAZER: "pazer",
+    am.MUNAX: "munax",
+    am.MAHAPAKH: "mahapakh",
+    am.MERKHA: "merkha",
+    am.MERKHA_KEFULA: "merkhakefula",
+    am.DARGA: "darga",
+    am.QADMA: "qadma",
+    am.TELISHA_QETANA: "telishaqetanna",
+    am.YERAX: "galgal",
+    am.TSINNORIT: "tsinnorit",
+    am.TSINNOR: "zarqa",
 }
 
 
@@ -171,7 +188,9 @@ def unpaired_stress_helpers(body: str) -> list[LexicalUngrammaticalMark]:
             partner, code = entry
             if partner not in atom[i + 1 :]:
                 # The unpaired helper itself locates the offending word (U+0598).
-                unpaired.append(LexicalUngrammaticalMark(code=code, atom=atom, rep_char=ch))
+                unpaired.append(
+                    LexicalUngrammaticalMark(code=code, atom=atom, rep_char=ch)
+                )
     return unpaired
 
 
@@ -237,7 +256,9 @@ def nonfinal_telisha_qetannas(body: str) -> list[LexicalUngrammaticalMark]:
                 continue  # the medial helper of a well-formed 24...04 pair (fused)
             # The telisha qetanna itself (U+05A9) locates the offending word.
             unpaired.append(
-                LexicalUngrammaticalMark(code="medial telisha qetanna", atom=atom, rep_char=ch)
+                LexicalUngrammaticalMark(
+                    code="medial telisha qetanna", atom=atom, rep_char=ch
+                )
             )
     return unpaired
 

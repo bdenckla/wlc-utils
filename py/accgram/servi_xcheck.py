@@ -90,12 +90,20 @@ _MAX_LISTED = 60
 class TargetReport:
     target: str
     l_dist: Counter  # L adjacent servant (non-None) -> count
-    both: int = 0  # occurrences with a servant in BOTH witnesses (length-matched verses)
+    both: int = (
+        0  # occurrences with a servant in BOTH witnesses (length-matched verses)
+    )
     agree: int = 0  # ... and the servant type matches
     disagree: int = 0  # ... and it differs (a real servant-type conflict)
-    one_sided: int = 0  # only one witness has a servant there (other reads bare/divider)
-    len_mismatch: int = 0  # verses where L and MAM disagree on the target's occurrence count
-    disagreements: list[tuple[str, str | None, str | None]] = field(default_factory=list)
+    one_sided: int = (
+        0  # only one witness has a servant there (other reads bare/divider)
+    )
+    len_mismatch: int = (
+        0  # verses where L and MAM disagree on the target's occurrence count
+    )
+    disagreements: list[tuple[str, str | None, str | None]] = field(
+        default_factory=list
+    )
 
 
 def _scan_l(input_path: Path) -> dict[str, list[str]]:
@@ -174,7 +182,10 @@ def _verdict(rep: TargetReport) -> str:
 
 
 def render_report(reports: list[TargetReport]) -> str:
-    lines: list[str] = ["# Poetic servant-adjacency cross-check: WLC scanner vs MAM-simple", ""]
+    lines: list[str] = [
+        "# Poetic servant-adjacency cross-check: WLC scanner vs MAM-simple",
+        "",
+    ]
     for rep in reports:
         dist = ", ".join(f"{k}:{v}" for k, v in rep.l_dist.most_common()) or "(none)"
         lines.append(f"## {rep.target}")

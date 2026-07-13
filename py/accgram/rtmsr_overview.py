@@ -129,7 +129,9 @@ def _source(structured_text: object, ref: str) -> str:
     never silently changes a verse's source. Every ungrammatical must carry a valid
     st-source; a missing or unknown value is a hard error.
     """
-    source = structured_text.get("st-source") if isinstance(structured_text, dict) else None
+    source = (
+        structured_text.get("st-source") if isinstance(structured_text, dict) else None
+    )
     if source not in _SOURCE_LABELS:
         raise ValueError(
             f"Ungrammatical {ref!r} has a missing or invalid 'st-source' (got "
@@ -214,9 +216,7 @@ def _render_verse_section(entry: _Entry, *, is_first: bool) -> object:
         )
     )
     items.extend(
-        ob_report.render_error_context_section(
-            entry.row, error_tree=entry.error_tree
-        )
+        ob_report.render_error_context_section(entry.row, error_tree=entry.error_tree)
     )
     return ob_page.render_verse_section(
         items,

@@ -22,7 +22,9 @@ from accgram import printed_decalogue_strands as pds
 # Marks referenced below, spelled with \N{} escapes rather than bare (orphan) combining marks
 # in a literal (CLAUDE.md). U+05BD is the meteg/silluq glyph -- kept by _strip_pointing only
 # when the word is verse-final (there it is silluq, an accent); U+05C3 is sof pasuq.
-_SILLUQ = "\N{HEBREW POINT METEG}"  # U+05BD, functioning as silluq on the verse-final word
+_SILLUQ = (
+    "\N{HEBREW POINT METEG}"  # U+05BD, functioning as silluq on the verse-final word
+)
 _SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"  # U+05C3
 _QAMATS = "\N{HEBREW POINT QAMATS}"  # U+05B8, a vowel -- must be dropped
 _HATAF_PATAH = "\N{HEBREW POINT HATAF PATAH}"  # U+05B2, a vowel -- must be dropped
@@ -38,7 +40,8 @@ def _source_or_skip() -> dict:
 def test_body_renders() -> None:
     """The full page body builds and is non-empty. Building it runs pds.resolve_readings (whose
     per-strand drift assertions fire here) and _four_strands_table (whose rowspan asserts the two
-    merged strands' STRIPPED endpoints are equal), so a data drift fails this test loudly."""
+    merged strands' STRIPPED endpoints are equal), so a data drift fails this test loudly.
+    """
     source = _source_or_skip()
     results = pd.check_all(source)
     body = page.render_body_contents(results, source)
@@ -61,9 +64,14 @@ def test_strip_pointing_keeps_accent_and_sof_pasuq_drops_vowels() -> None:
 
 def test_merged_strands_have_identical_stripped_endpoints() -> None:
     """m-trad elyon and p-trad taḥton read אנכי…עבדים identically once stripped (their full forms
-    differ only by an immaterial meteg) -- the equality the four-strands table's rowspan asserts."""
+    differ only by an immaterial meteg) -- the equality the four-strands table's rowspan asserts.
+    """
     results = pd.check_all(_source_or_skip())
     readings = {r.name: r for r in pds.resolve_readings(results)}
     me, pt = readings["m-trad elyon"], readings["p-trad taḥton"]
-    assert page._strip_pointing(me.first_verse_words[0]) == page._strip_pointing(pt.first_verse_words[0])
-    assert page._strip_pointing(me.first_verse_words[-1]) == page._strip_pointing(pt.first_verse_words[-1])
+    assert page._strip_pointing(me.first_verse_words[0]) == page._strip_pointing(
+        pt.first_verse_words[0]
+    )
+    assert page._strip_pointing(me.first_verse_words[-1]) == page._strip_pointing(
+        pt.first_verse_words[-1]
+    )

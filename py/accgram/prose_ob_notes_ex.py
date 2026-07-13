@@ -10,7 +10,6 @@ from accgram.prose_ob_notes_shared import (
     ZARQA_WHIM,
 )
 
-
 _BAR_INSTEAD_OF_SOF_PASUQ_SUMMARY = "In the place where one would expect a sof pasuq, the LC has a vertical bar somewhat like a paseq or legarmeh."
 
 

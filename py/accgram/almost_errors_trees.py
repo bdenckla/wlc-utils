@@ -130,14 +130,18 @@ def _telg_verdict(tree) -> str:
     return "ERROR" if "ERROR" in print_tree(tree) else "clean"
 
 
-def _telg_tree_text(bcv: str, mode: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
+def _telg_tree_text(
+    bcv: str, mode: str, index, parser, has_legarmeh: HasLegarmeh
+) -> str:
     """Tree text for one telg-exhibit verse under one alternate reading ``mode``."""
     with _word_to_marks_mode(mode):
         body = uni_to_marks.verse_to_marks(index[bcv])
     return _tree_text(_scan_and_parse(bcv, body, parser, has_legarmeh))
 
 
-def _telg_verdict_for(bcv: str, mode: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
+def _telg_verdict_for(
+    bcv: str, mode: str, index, parser, has_legarmeh: HasLegarmeh
+) -> str:
     with _word_to_marks_mode(mode):
         body = uni_to_marks.verse_to_marks(index[bcv])
     return _telg_verdict(_scan_and_parse(bcv, body, parser, has_legarmeh))
@@ -154,7 +158,9 @@ def _prose_verse_tree_text(bcv: str, index, parser, has_legarmeh: HasLegarmeh) -
     ungrammatical = lexical_validation.lexical_ungrammatical(body)
     if ungrammatical:
         words = prose_run._ungrammatical_unicode_words(ungrammatical, verse)
-        return print_tree(prose_run._illegal_mark_tree(ungrammatical, words), 0).rstrip("\n")
+        return print_tree(prose_run._illegal_mark_tree(ungrammatical, words), 0).rstrip(
+            "\n"
+        )
     return _tree_text(_scan_and_parse(bcv, body, parser, has_legarmeh))
 
 
@@ -224,7 +230,8 @@ def _ek_word_to_marks_mode(mode: str):
 def _no_mahapakh_qadma_fuse():
     """Temporarily drop the scanner's ``MAHAPAKHQADMA`` fuse rule so a mahapakh-then-qadma
     adjacency scans as two tokens (``MAHAPAKH QADMA``) instead of re-fusing -- the only way
-    to observe the ``seq_mah_qadma`` reading as a genuine sequence.  Restored on exit."""
+    to observe the ``seq_mah_qadma`` reading as a genuine sequence.  Restored on exit.
+    """
     original = prose_scanner._GG_RULES
     prose_scanner._GG_RULES = [r for r in original if r[1] != "MAHAPAKHQADMA"]
     try:
@@ -246,7 +253,9 @@ def _ek_verdict_for(mode: str, index, parser, has_legarmeh: HasLegarmeh) -> str:
 def _telg_gerstar_word(verse: object) -> str | None:
     for word in prose_run._verse_display_words(verse):
         has_telg = am.TELISHA_GEDOLA in word
-        has_gerstar = any((am.GERESH if c == am.GERESH_MUQDAM else c) in _GG for c in word)
+        has_gerstar = any(
+            (am.GERESH if c == am.GERESH_MUQDAM else c) in _GG for c in word
+        )
         if has_telg and has_gerstar:
             return word
     return None
@@ -257,7 +266,9 @@ class TelgForms(NamedTuple):
 
     word: str  # the real WLC word, both marks, shown post-charity (geresh muqdam -> geresh)
     keep_telg: str  # the telisha gedola alone (geresh-family companion dropped)
-    keep_gerstar: str  # the geresh-family mark alone (telisha gedola dropped), post-charity
+    keep_gerstar: (
+        str  # the geresh-family mark alone (telisha gedola dropped), post-charity
+    )
     same_letter: bool  # both marks sit on one base letter, so the repeated-word seq is non-trivial
 
 

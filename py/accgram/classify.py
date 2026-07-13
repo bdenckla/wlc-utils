@@ -46,7 +46,9 @@ def write_ungrammatical(
         if match is None:
             continue
         bb = match.group(1).lower()
-        for chnu, vrnu in sorted(prose_oddballs._collect_ungrammatical_refs(output_path)):
+        for chnu, vrnu in sorted(
+            prose_oddballs._collect_ungrammatical_refs(output_path)
+        ):
             refs_with_files.append((bb, chnu, vrnu, output_path.name))
 
     wlc_index = rtms_data.load_wlc422_index(wlc422_kq_u_dir)
@@ -61,7 +63,9 @@ def write_ungrammatical(
     ]
     ungrammatical_rows.sort(key=lambda row: _ref_to_tuple(str(row["ref"])))
 
-    books_with_ungrammatical = {_ref_to_tuple(str(row["ref"]))[0] for row in ungrammatical_rows}
+    books_with_ungrammatical = {
+        _ref_to_tuple(str(row["ref"]))[0] for row in ungrammatical_rows
+    }
     ungrammatical_payload: dict[str, object] = {
         "artifacts_description": "ungrammatical verses with ERROR leaves in *_ag.json outputs",
         "payload_provenance_note": (
@@ -76,7 +80,9 @@ def write_ungrammatical(
         },
         "oddballs": ungrammatical_rows,
     }
-    ungrammatical_payload = provenance.with_json_provenance(ungrammatical_payload, __file__)
+    ungrammatical_payload = provenance.with_json_provenance(
+        ungrammatical_payload, __file__
+    )
 
     _write_json(ungrammatical_out, ungrammatical_payload)
 

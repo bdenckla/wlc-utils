@@ -13,7 +13,6 @@ from accgram.prose_ob_notes_shared import (
     ZARQA_WHIM,
 )
 
-
 BY_REF: dict[str, dict[str, object]] = {
     "dt 5:8": {
         # Dual-cantillation detangling (issue #36). dt 5:8 is one of the two-reading
@@ -65,7 +64,9 @@ BY_REF: dict[str, dict[str, object]] = {
                 " lacks its due qadma, and the elyon carries a merkha where only a meteg"
                 f" belongs. The detangler supplies the qadma for the {TAXTON}, making that"
                 " strand grammatical (see the ",
-                wlc_utils_html.anchor("supplied-marks page", {"href": "supplied-marks.html"}),
+                wlc_utils_html.anchor(
+                    "supplied-marks page", {"href": "supplied-marks.html"}
+                ),
                 ") — but leaves WLC’s merkha in the elyon, so the elyon is listed here"
                 " among other verses deemed ungrammatical.",
             ],
@@ -166,7 +167,7 @@ BY_REF: dict[str, dict[str, object]] = {
             ],
             [
                 f"The most likely explanation is that the LC simply does not have the expected {TIPEXA} anywhere in the word."
-            ]
+            ],
         ),
     },
     "dt 14:24": {

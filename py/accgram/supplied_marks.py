@@ -216,7 +216,7 @@ def _case_extra(s) -> tuple[object, ...]:
                 (
                     "This word is further discussed",
                     *[" ", link("here", "goerwitz.html#obdt5v8"), ","],
-                    " among the ungrammatical verses."
+                    " among the ungrammatical verses.",
                 )
             )
         )
@@ -308,7 +308,14 @@ def _punct_intro() -> tuple[object, ...]:
 
 def _punct_sort_key(d) -> tuple:
     chnu, vrnu = (int(p) for p in d.bcv[2:].split(":"))
-    return (_PASSAGE_RANK.get(d.bcv[:2], 9), 0 if d.strand == "alef" else 1, chnu, vrnu, d.mark, d.delta)
+    return (
+        _PASSAGE_RANK.get(d.bcv[:2], 9),
+        0 if d.strand == "alef" else 1,
+        chnu,
+        vrnu,
+        d.mark,
+        d.delta,
+    )
 
 
 def _delta_class(delta: str) -> str:
@@ -371,14 +378,25 @@ def _punct_table(changes: list) -> object:
 def _punct_observation(changes: list) -> object:
     """An observation drawn from the table: WLC's Decalogue punctuation sits far closer to
     the elyon (only suppressions needed) than to the taxton (supplies plus suppressions).  The
-    counts are tallied live from the changes so they track the checker, not a hard-coded number."""
-    elyon_supplied = sum(1 for d in changes if d.strand_label == "elyon" and d.delta == "supplied")
-    elyon_suppressed = sum(1 for d in changes if d.strand_label == "elyon" and d.delta == "suppressed")
-    taxton_supplied = sum(1 for d in changes if d.strand_label == "taxton" and d.delta == "supplied")
-    taxton_suppressed = sum(1 for d in changes if d.strand_label == "taxton" and d.delta == "suppressed")
+    counts are tallied live from the changes so they track the checker, not a hard-coded number.
+    """
+    elyon_supplied = sum(
+        1 for d in changes if d.strand_label == "elyon" and d.delta == "supplied"
+    )
+    elyon_suppressed = sum(
+        1 for d in changes if d.strand_label == "elyon" and d.delta == "suppressed"
+    )
+    taxton_supplied = sum(
+        1 for d in changes if d.strand_label == "taxton" and d.delta == "supplied"
+    )
+    taxton_suppressed = sum(
+        1 for d in changes if d.strand_label == "taxton" and d.delta == "suppressed"
+    )
     # The prose claims the elyon needs only suppressions ("all that is needed is to suppress");
     # check that against the live counts so the text can't drift from the checker.
-    assert elyon_supplied == 0, f"prose says no elyon marks are supplied, but {elyon_supplied} are"
+    assert (
+        elyon_supplied == 0
+    ), f"prose says no elyon marks are supplied, but {elyon_supplied} are"
     return H.para(
         "Sorting by “Strand” reveals that the Decalogues are largely punctuated according to the"
         f" {_ELYON}: to correctly punctuate the {_ELYON} all that is needed is to suppress"
@@ -400,7 +418,9 @@ def _punct_section(changes: list) -> tuple[object, ...]:
     )
 
 
-def render_body_contents(supplies: list, punctuation_changes: list) -> tuple[object, ...]:
+def render_body_contents(
+    supplies: list, punctuation_changes: list
+) -> tuple[object, ...]:
     sections: list[object] = [
         *_intro(),
         *_supplied_section(supplies),

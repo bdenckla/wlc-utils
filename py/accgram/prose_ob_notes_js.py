@@ -6,7 +6,6 @@ from accgram.prose_ob_notes_shared import (
     ZARQA_WHIM,
 )
 
-
 BY_REF: dict[str, dict[str, object]] = {
     "js 4:8": {
         "st-source": "wlc",

@@ -11,7 +11,6 @@ from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 import repo_paths
 
-
 # The three single-cantillation projections of a dually-cantillated span (issue #36).
 # A ``cant-all-three`` node carries one child of each type: ``cant-combined`` (the
 # dual/merged form, analogous to what WLC stores) and the two detangled strands

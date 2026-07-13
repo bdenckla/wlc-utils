@@ -3,7 +3,6 @@
 import py_html.wlc_utils_html as wlc_utils_html
 import mb_cmn.my_utils as my_utils
 
-
 # Default location of images relative to the page being generated.  Pages that sit
 # one level below their sub-folder root (e.g. gh-pages/420422/full-record/*, the
 # wlc-a-notes pages) resolve this to their own sub-folder's img/ dir and so keep the
@@ -24,7 +23,9 @@ def html_for_imgs(record, *, img_para_attr=None, img_base=_DEFAULT_IMG_BASE):
     if "imgs" in record:
         imgs_items = record["imgs"].items()
         list_of_lists = [
-            _html_for_imgs_item(imgs_item, img_para_attr=img_para_attr, img_base=img_base)
+            _html_for_imgs_item(
+                imgs_item, img_para_attr=img_para_attr, img_base=img_base
+            )
             for imgs_item in imgs_items
         ]
         return my_utils.sum_of_seqs(list_of_lists)

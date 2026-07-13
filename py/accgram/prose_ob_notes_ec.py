@@ -6,7 +6,6 @@ from accgram.prose_ob_notes_shared import (
     TIPEXA,
 )
 
-
 BY_REF: dict[str, dict[str, object]] = {
     "ec 7:21": {
         "st-source": "bhs",

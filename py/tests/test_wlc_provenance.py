@@ -15,9 +15,8 @@ import wlc_provenance
 def test_wrapper_supplies_repo_name() -> None:
     assert repo_paths.REPO_NAME == "wlc-utils"
     generator = repo_paths.repo_root() / "py" / "main_accgram.py"
-    assert (
-        "wlc-utils/py/main_accgram.py"
-        in wlc_provenance.generated_by_text(str(generator))
+    assert "wlc-utils/py/main_accgram.py" in wlc_provenance.generated_by_text(
+        str(generator)
     )
 
 

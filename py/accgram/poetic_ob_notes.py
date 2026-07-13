@@ -87,7 +87,9 @@ BY_REF: dict[str, dict[str, object]] = {
         "comment": (
             [
                 "The UXLC ",
-                wlc_utils_html.anchor("note for this verse", {"href": _JOB_31_15_NOTE_URL}),
+                wlc_utils_html.anchor(
+                    "note for this verse", {"href": _JOB_31_15_NOTE_URL}
+                ),
                 " describes the mark WLC transcribes here as a geresh muqdam of “a "
                 "very odd shape,” a vertical straight line arising from the top front "
                 "of the he, and flags it with a transcription-uncertainty “t” marker; "

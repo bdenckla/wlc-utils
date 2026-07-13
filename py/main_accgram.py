@@ -317,7 +317,9 @@ def main() -> None:
             help=f"Generate gh-pages/accgram/{name}.html only.",
         )
         module.add_args(one_parser, repo_root=_repo_root())
-        one_parser.set_defaults(func=lambda a, m=module: _generate_one_html_from_args(m, a))
+        one_parser.set_defaults(
+            func=lambda a, m=module: _generate_one_html_from_args(m, a)
+        )
 
     args = parser.parse_args()
     args.func(args)

@@ -22,7 +22,9 @@ def write_ungrammatical_payload(
     serializable_rows = rtms_meteg_witness.strip_internal_witness_fields_from_rows(
         enriched_ungrammatical_rows
     )
-    serializable_rows = dual_cant_readings.without_heavy_reading_fields(serializable_rows)
+    serializable_rows = dual_cant_readings.without_heavy_reading_fields(
+        serializable_rows
+    )
     ungrammatical_payload: dict[str, object] = {
         "artifacts_description": "enriched ungrammatical verse research records",
         "payload_provenance_note": (
@@ -38,7 +40,9 @@ def write_ungrammatical_payload(
         },
         "oddballs": serializable_rows,
     }
-    ungrammatical_payload = provenance.with_json_provenance(ungrammatical_payload, source_file)
+    ungrammatical_payload = provenance.with_json_provenance(
+        ungrammatical_payload, source_file
+    )
     _write_json(ungrammatical_out_path, ungrammatical_payload)
 
 

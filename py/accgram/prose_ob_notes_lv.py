@@ -10,7 +10,6 @@ from accgram.prose_ob_notes_shared import (
     ZARQA_WHIM,
 )
 
-
 BY_REF: dict[str, dict[str, object]] = {
     "lv 18:17": {
         "st-source": "tbd",

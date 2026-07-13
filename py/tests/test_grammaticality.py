@@ -61,7 +61,9 @@ def test_logprob_unseen_rhs_is_finite_and_smaller():
 
 def test_logprob_unknown_lhs_floors():
     pcfg = g.estimate_pcfg([_two_leaf_obj()])
-    assert pcfg.logprob("no_such_clause", ("BIN", "a", "b")) == pytest.approx(math.log(0.5))
+    assert pcfg.logprob("no_such_clause", ("BIN", "a", "b")) == pytest.approx(
+        math.log(0.5)
+    )
 
 
 def test_rarer_production_scores_lower():

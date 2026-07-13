@@ -11,7 +11,6 @@ from accgram.prose_ob_notes_shared import (
     ZARQA_WHIM_SUMMARY,
 )
 
-
 _NU_2509_01 = (
     "Compared to MAM, BHS starts chapter 26 “late”."
     f" It only starts chapter 26 after the {ETNAXTA} of what MAM calls 26:1."

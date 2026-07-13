@@ -19,7 +19,9 @@ def test_repo_root_is_module_anchored() -> None:
 def test_default_sibling_is_repo_parent(monkeypatch) -> None:
     monkeypatch.delenv("WLC_SIBLINGS_ROOT", raising=False)
     monkeypatch.delenv("WLC_MAM_SIMPLE_DIR", raising=False)
-    assert repo_paths.sibling("MAM-simple") == repo_paths.repo_root().parent / "MAM-simple"
+    assert (
+        repo_paths.sibling("MAM-simple") == repo_paths.repo_root().parent / "MAM-simple"
+    )
 
 
 def test_default_siblings_root_is_repo_parent(monkeypatch) -> None:

@@ -75,7 +75,11 @@ _DENYLIST: list[tuple[re.Pattern[str], str, str]] = [
     (re.compile(r"\bmahpakh?\b"), "mahapakh", "mahpak(h)"),
     (re.compile(r"\bmereka\b"), "merkha", "mereka"),
     (re.compile(r"\bmerka\b"), "merkha", "merka"),
-    (re.compile(r"\b(?:MUNACH|MEREKA|MAHPAK|ATNACH|TIFCHA)\b"), "adopted caps", "legacy CAPS"),
+    (
+        re.compile(r"\b(?:MUNACH|MEREKA|MAHPAK|ATNACH|TIFCHA)\b"),
+        "adopted caps",
+        "legacy CAPS",
+    ),
     (re.compile(r"\b(?:ethnakhta|etnahta|etnachta)\b"), "atnaḥ / ATNAX", "etna*ta"),
     (re.compile(r"\batnach\b"), "atnaḥ (U+1E25)", "atnach"),
 ]

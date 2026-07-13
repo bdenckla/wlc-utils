@@ -481,7 +481,11 @@ def _render_ungrammatical_section(row: dict[str, object], *, is_first: bool) -> 
     items: list[object] = [
         wlc_utils_html.heading_level_2(str(row["ref"]), {"id": anchor_id})
     ]
-    items.extend(_render_ref_links(row, bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, anchor_id=anchor_id))
+    items.extend(
+        _render_ref_links(
+            row, bb=bb, chnu=chnu, vrnu=vrnu, bcv=bcv, anchor_id=anchor_id
+        )
+    )
     items.append(_render_summary(row))
     hebrew_verse = _render_hebrew_verse(row)
     if hebrew_verse is not None:
@@ -550,9 +554,14 @@ def _render_ref_links(
             "Mwd", {"href": rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu)}
         ),
         " | ",
-        wlc_utils_html.anchor("UXLC", {"href": my_wlc_bcv_str.get_tanach_dot_us_url(bcv)}),
+        wlc_utils_html.anchor(
+            "UXLC", {"href": my_wlc_bcv_str.get_tanach_dot_us_url(bcv)}
+        ),
     ]
-    for label, key in (("UXLC note page", "uxlc_note_page"), ("GitHub issue", "github-issue")):
+    for label, key in (
+        ("UXLC note page", "uxlc_note_page"),
+        ("GitHub issue", "github-issue"),
+    ):
         url = lookup({}, key)
         if isinstance(url, str) and url.strip():
             links.extend((" | ", wlc_utils_html.anchor(label, {"href": url.strip()})))
@@ -631,9 +640,7 @@ def _render_meta(row: dict[str, object]) -> object:
     error = row["error"]
     contents: list[object] = [f"tokens: {' '.join(token_types)} · "]
     if error is not None:
-        n_accents = sum(
-            1 for t in token_types if t not in ("TILDE", "SOFPASUQ")
-        )
+        n_accents = sum(1 for t in token_types if t not in ("TILDE", "SOFPASUQ"))
         contents.append(
             f"parser stalled at accent {error.accent_index}/{n_accents} "
             f"({error.token_type}) · "

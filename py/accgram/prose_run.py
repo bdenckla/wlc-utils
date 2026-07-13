@@ -51,9 +51,7 @@ def _illegal_mark_tree(
     error is attributed to the ungrammatical mark itself rather than to whatever the rest of
     the accent sequence would have parsed into.
     """
-    detail = "; ".join(
-        f"{mark.code} in {word}" for mark, word in zip(marks, words)
-    )
+    detail = "; ".join(f"{mark.code} in {word}" for mark, word in zip(marks, words))
     return add_leaves(f"illegal_mark {detail}", "ERROR")
 
 
@@ -145,11 +143,13 @@ def _verse_record(
         "ref": verse.reference,
         "bcv": bcv,
         "input": {
-            "unicode": rtms_data.verse_unicode_text(
-                wlc_index, bb, int(chnu_str), int(vrnu_str)
-            )
-            if wlc_index
-            else "",
+            "unicode": (
+                rtms_data.verse_unicode_text(
+                    wlc_index, bb, int(chnu_str), int(vrnu_str)
+                )
+                if wlc_index
+                else ""
+            ),
             "marks": verse.body,
             "tokens": [token.type for token in verse.tokens],
         },
@@ -264,7 +264,9 @@ def run(args: argparse.Namespace) -> None:
             f"{folded_note} -> {out_path}"
         )
 
-    print(f"\nTotal: parsed {total_parsed}/{total_verses} verses across selected books.")
+    print(
+        f"\nTotal: parsed {total_parsed}/{total_verses} verses across selected books."
+    )
 
 
 def _load_dual_cant_mam() -> dict[str, dict] | None:
@@ -287,14 +289,22 @@ def _fold_dual_cant_oddities(
     A dual-cant book's WLC dual verses are excluded from the normal scan; the detangler
     parses each strand's chanted verses and a genuine WLC dual-cant bug surfaces as an
     ungrammatical verse.  Those ungrammatical chanted verses are folded in here so they appear in the
-    existing prose ungrammatical-verse report (goerwitz.html), keyed by their numbered verse."""
+    existing prose ungrammatical-verse report (goerwitz.html), keyed by their numbered verse.
+    """
     if mam_by_bcv is None or dual_cant_detangle.passage_for_book(bb) is None:
         return []
-    return dual_cant_detangle.folded_ungrammatical_records(bb, wlc_index, mam_by_bcv, parser)
+    return dual_cant_detangle.folded_ungrammatical_records(
+        bb, wlc_index, mam_by_bcv, parser
+    )
 
 
 def _book_summary(records: list[dict[str, object]]) -> dict[str, int]:
-    counts = {"verses": len(records), "oddballs": 0, "illegal_marks": 0, "location_only": 0}
+    counts = {
+        "verses": len(records),
+        "oddballs": 0,
+        "illegal_marks": 0,
+        "location_only": 0,
+    }
     for record in records:
         if record["status"] == "error":
             counts["oddballs"] += 1

@@ -140,10 +140,16 @@ def render_dual_cant_section(
         for reading in readings:
             if isinstance(reading, dict):
                 items.extend(
-                    _render_dual_cant_strand_block(reading, tables=tables, focus_bcv=bcv)
+                    _render_dual_cant_strand_block(
+                        reading, tables=tables, focus_bcv=bcv
+                    )
                 )
-    items.extend(_render_image_paragraphs(row, structured_text_lookup=structured_text_lookup))
-    items.extend(_render_comment_paragraphs(row, structured_text_lookup=structured_text_lookup))
+    items.extend(
+        _render_image_paragraphs(row, structured_text_lookup=structured_text_lookup)
+    )
+    items.extend(
+        _render_comment_paragraphs(row, structured_text_lookup=structured_text_lookup)
+    )
     return tuple(items)
 
 
@@ -373,7 +379,9 @@ def _render_verse_paragraphs(
         return rtmsr_verse.render_dual_cant_reading_paragraphs(
             readings, focus_bcv=focus_bcv
         )
-    return (_render_wlc_verse_paragraph(row, structured_text_lookup=structured_text_lookup),)
+    return (
+        _render_wlc_verse_paragraph(row, structured_text_lookup=structured_text_lookup),
+    )
 
 
 def _render_wlc_verse_paragraph(

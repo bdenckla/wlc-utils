@@ -106,7 +106,9 @@ class _ParseGuard:
         def work() -> None:
             try:
                 box["tree"] = parse_tokens(self.parser, tokens)
-            except BaseException as exc:  # noqa: BLE001 - re-raised on the caller thread
+            except (
+                BaseException
+            ) as exc:  # noqa: BLE001 - re-raised on the caller thread
                 box["exc"] = exc
 
         thread = threading.Thread(target=work, daemon=True)
@@ -299,11 +301,7 @@ def _test_one(
     # The scanned body is transcoded from the canonical -kq-u verse (issue #9: M-C
     # dropped as an input), not read from the ungrammatical row's stored content.
     raw_verse = wlc422_by_bcv.get(bcv)
-    body = (
-        uni_to_marks.verse_to_marks(raw_verse)
-        if isinstance(raw_verse, dict)
-        else ""
-    )
+    body = uni_to_marks.verse_to_marks(raw_verse) if isinstance(raw_verse, dict) else ""
     if not body:
         return result("UNTESTABLE", reason="no_body")
 
@@ -346,7 +344,9 @@ def _test_one(
             )
         if synth_fix is None or not wlc_focus:
             return result(
-                "UNTESTABLE", reason="no_mam_diff", before=before,
+                "UNTESTABLE",
+                reason="no_mam_diff",
+                before=before,
                 fix_description="(MAM equals WLC; nothing to adopt)",
             )
         # MAM offers nothing to adopt; test the note's hand-authored speculation.
@@ -354,7 +354,9 @@ def _test_one(
         synthesized = True
     elif diff_entry is _MULTI_DIFF:
         return result(
-            "UNTESTABLE", reason="multi_diff", before=before,
+            "UNTESTABLE",
+            reason="multi_diff",
+            before=before,
             fix_description=_describe_diff_list(diff),
         )
 
@@ -496,13 +498,16 @@ def run_tests(args: argparse.Namespace) -> list[FixTestResult]:
     repo_root = _repo_root()
 
     classify.write_ungrammatical(
-        prose_dir=getattr(args, "prose_dir", None) or research_tao.default_prose_dir(repo_root),
+        prose_dir=getattr(args, "prose_dir", None)
+        or research_tao.default_prose_dir(repo_root),
         wlc422_kq_u_dir=args.wlc422_kq_u_dir,
         ungrammatical_out=args.ungrammatical_in,
     )
 
     refs_by_book: dict[str, set[tuple[int, int]]] = {}
-    parsed_rows = rtms_rows.parse_ungrammatical_rows(args.ungrammatical_in, refs_by_book)
+    parsed_rows = rtms_rows.parse_ungrammatical_rows(
+        args.ungrammatical_in, refs_by_book
+    )
     structured_text_by_ref = get_structured_text()
 
     source_indexes = rtms_data.load_source_indexes(
@@ -568,7 +573,9 @@ def render_text_report(results: list[FixTestResult]) -> str:
     synth = sum(1 for r in results if r.synthesized)
 
     lines: list[str] = []
-    lines.append("# Fix-tester: do MAM-simple values resolve annotated prose ungrammatical?")
+    lines.append(
+        "# Fix-tester: do MAM-simple values resolve annotated prose ungrammatical?"
+    )
     lines.append("")
     lines.append(
         f"confirmed: {counts['CONFIRMED']}  denied: {counts['DENIED']}  "
@@ -633,9 +640,13 @@ def _render_entry(r: FixTestResult) -> list[str]:
         return out
     if r.transformation:
         out.append(f"    transform: {r.transformation}")
-    out.append(f"    before: {' '.join(r.before_tokens)}  [{_status_label(r.before_status, r.before_labels)}]")
+    out.append(
+        f"    before: {' '.join(r.before_tokens)}  [{_status_label(r.before_status, r.before_labels)}]"
+    )
     after_tokens = " ".join(r.after_tokens) if r.after_tokens else ""
-    out.append(f"    after:  {after_tokens}  [{_status_label(r.after_status, r.after_labels)}]")
+    out.append(
+        f"    after:  {after_tokens}  [{_status_label(r.after_status, r.after_labels)}]"
+    )
     return out
 
 

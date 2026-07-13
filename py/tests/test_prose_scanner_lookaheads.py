@@ -44,21 +44,27 @@ def test_mayela_when_73_reaches_sof_pasuq_or_atnax():
     # tipexa followed (within the word) only by allowed chars up to sof-pasuq/atnax.
     assert _types(am.TIPEXA + "NA" + am.SOF_PASUQ) == ["MAYELA", "SOFPASUQ"]
     assert _types(am.TIPEXA + "NA" + am.ATNAX + "Z" + am.SOF_PASUQ) == [
-        "MAYELA", "ATNAX", "SOFPASUQ",
+        "MAYELA",
+        "ATNAX",
+        "SOFPASUQ",
     ]
 
 
 def test_tipexa_when_a_blocking_accent_intervenes():
     # revia is a blocking mark (M-C 81 carries an '8'), so tipexa stays plain.
     assert _types(am.TIPEXA + "NA" + am.REVIA + "C" + am.SOF_PASUQ) == [
-        "TIPEXA", "REVIA", "SOFPASUQ",
+        "TIPEXA",
+        "REVIA",
+        "SOFPASUQ",
     ]
 
 
 # --- legarmeh (munax{TEXT}paseq / [^12368]*...revia) ---------------------------
 def test_legarmeh_when_munax_paseq_precedes_revia():
     assert _types(am.MUNAX + "A" + am.PASEQ + "B" + am.REVIA + "C" + am.SOF_PASUQ) == [
-        "LEGARMEH", "REVIA", "SOFPASUQ",
+        "LEGARMEH",
+        "REVIA",
+        "SOFPASUQ",
     ]
 
 
@@ -106,8 +112,8 @@ def test_has_legarmeh_old_i_is_monotonic():
     # old_i advances to the matched index, so an earlier passage no longer
     # matches afterwards ("assumes the books are in Jewish order").
     h = HasLegarmeh()
-    assert h("ru", 1, 2) is True        # index 13
-    assert h("gn", 28, 9) is False      # index 0 < old_i -> never revisited
+    assert h("ru", 1, 2) is True  # index 13
+    assert h("gn", 28, 9) is False  # index 0 < old_i -> never revisited
 
 
 # --- new-format chapter/verse lookahead (via scan_book) ------------------------

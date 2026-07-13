@@ -8,7 +8,6 @@ from accgram.prose_ob_notes_shared import (
 )
 from py_html import wlc_utils_html
 
-
 _FOI_CATEGORY_NAME = "⅃-leg...non-revia ((tev)) with 2 (qa,da) intervening"
 
 _FOI_CATEGORY_URL = (
@@ -26,9 +25,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "comment": [
             (
                 "This verse is the sole member of the FOI category “",
-                wlc_utils_html.anchor(
-                    _FOI_CATEGORY_NAME, {"href": _FOI_CATEGORY_URL}
-                ),
+                wlc_utils_html.anchor(_FOI_CATEGORY_NAME, {"href": _FOI_CATEGORY_URL}),
                 "”.",
             ),
             "Verified by re-running the checker on a fixed verse: substituting"
@@ -49,9 +46,7 @@ BY_REF: dict[str, dict[str, object]] = {
         # MAM equals WLC, so the fix-tester exercises this synth_fix: replace the
         # munax (U+05A3) with a segolta (U+0592).
         "synth_fix": "לכ֒ורש",
-        "st-summary": (
-            f"The checker requires a segol accent rather than a {MUNAX}."
-        ),
+        "st-summary": (f"The checker requires a segol accent rather than a {MUNAX}."),
         "comment": [
             "Verified by re-running the checker on a fixed verse: replacing the"
             f" {MUNAX} with a segol accent clears the segolta_phrase error. Note that"

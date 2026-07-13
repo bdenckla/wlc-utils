@@ -34,7 +34,10 @@ def write_html_to_file(body_contents, write_ctx: WriteCtx, path_to_style):
             * an output path
     """
     html_el = html_el2(
-        write_ctx.title, body_contents, f"{path_to_style}style.css", centered=write_ctx.centered
+        write_ctx.title,
+        body_contents,
+        f"{path_to_style}style.css",
+        centered=write_ctx.centered,
     )
     file_io.with_tmp_openw(
         write_ctx.path,
@@ -261,7 +264,8 @@ def big(contents, attr=None):
 
 def bdi(contents, attr=None):
     """Make a <bdi> element (bidirectional isolate: keeps a run of opposite-direction text,
-    e.g. Hebrew embedded in an English sentence, from disturbing the surrounding order)."""
+    e.g. Hebrew embedded in an English sentence, from disturbing the surrounding order).
+    """
     return htel_mk_inline("bdi", attr, contents)
 
 
@@ -273,7 +277,8 @@ def bdi_multi(*items, conj="and"):
     last item (or " <conj> " when there are only two). Each item may be a bare string or a
     prebuilt htel such as an hbo(...) span. Returns a TUPLE of inline nodes -- splice it into a
     contents tuple with ``*``: ``(..., *bdi_multi("א", "ב", "ג"), ...)``. Call it with one item
-    per line so the source order is unambiguous however the editor renders the RTL literals."""
+    per line so the source order is unambiguous however the editor renders the RTL literals.
+    """
     assert items, "bdi_multi needs at least one item"
     wrapped = [bdi(item) for item in items]
     last = len(wrapped) - 1

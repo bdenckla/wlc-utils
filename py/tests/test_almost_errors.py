@@ -62,7 +62,9 @@ def test_telg_word_forms_same_letter_splits_marks() -> None:
     forms = aet._telg_word_forms(_SAME_LETTER_BOTH)
     assert forms.word == _SAME_LETTER_BOTH  # no geresh muqdam to charitably rewrite
     assert am.TELISHA_GEDOLA in forms.keep_telg and am.GERESH not in forms.keep_telg
-    assert am.GERESH in forms.keep_gerstar and am.TELISHA_GEDOLA not in forms.keep_gerstar
+    assert (
+        am.GERESH in forms.keep_gerstar and am.TELISHA_GEDOLA not in forms.keep_gerstar
+    )
     assert forms.same_letter is True
 
 

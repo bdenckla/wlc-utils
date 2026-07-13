@@ -39,12 +39,8 @@ _NOVC = _REPO / ".novc"
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--skip-novc", action="store_true", help="don't clean .novc/"
-    )
-    parser.add_argument(
-        "--skip-lint", action="store_true", help="don't run ruff"
-    )
+    parser.add_argument("--skip-novc", action="store_true", help="don't clean .novc/")
+    parser.add_argument("--skip-lint", action="store_true", help="don't run ruff")
     parser.add_argument(
         "--skip-tests", action="store_true", help="don't run the test suite"
     )
@@ -73,18 +69,14 @@ def clean_novc() -> None:
 
 
 def run_lint() -> bool:
-    result = subprocess.run(
-        [sys.executable, "-m", "ruff", "check", "py"], cwd=_REPO
-    )
+    result = subprocess.run([sys.executable, "-m", "ruff", "check", "py"], cwd=_REPO)
     ok = result.returncode == 0
     print(f"lint: {'OK' if ok else f'FAILED (exit {result.returncode})'}")
     return ok
 
 
 def run_tests() -> bool:
-    result = subprocess.run(
-        [sys.executable, "-m", "pytest", "py/tests"], cwd=_REPO
-    )
+    result = subprocess.run([sys.executable, "-m", "pytest", "py/tests"], cwd=_REPO)
     ok = result.returncode == 0
     print(f"tests: {'OK' if ok else f'FAILED (exit {result.returncode})'}")
     return ok

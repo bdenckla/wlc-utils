@@ -122,11 +122,15 @@ _SWALLOWED_MARKS = am.METEG + am.PASEQ + am.TSINNORIT + am.UPPER_DOT + am.LOWER_
 # Built as the negation of the accent codepoints (every _MARK_DIGITS key that is not a
 # swallowed mark -- this still blocks at sof pasuq and at any other accent), so the run
 # halts at the geresh (or any accent) ahead.
-_GERESH_MID = "[^" + "".join(
-    am._escape_in_class(mark)
-    for mark in am._MARK_DIGITS
-    if mark not in _SWALLOWED_MARKS
-) + "]"
+_GERESH_MID = (
+    "[^"
+    + "".join(
+        am._escape_in_class(mark)
+        for mark in am._MARK_DIGITS
+        if mark not in _SWALLOWED_MARKS
+    )
+    + "]"
+)
 _GERESH_LA = r"(?=" + _GERESH_MID + r"*" + am.GERESH + r")"
 
 _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
@@ -268,12 +272,23 @@ class HasLegarmeh:
     """
 
     _PASSAGES = (
-        ("gn", 28, 9), ("lv", 10, 6), ("lv", 21, 10),
-        ("1s", 14, 3), ("1s", 14, 47), ("2s", 13, 32),
-        ("2k", 18, 17), ("is", 36, 2), ("je", 4, 19),
-        ("je", 38, 11), ("je", 40, 11), ("ek", 9, 2),
-        ("hg", 2, 12), ("ru", 1, 2), ("da", 3, 2),
-        ("ne", 8, 7), ("2c", 26, 15),
+        ("gn", 28, 9),
+        ("lv", 10, 6),
+        ("lv", 21, 10),
+        ("1s", 14, 3),
+        ("1s", 14, 47),
+        ("2s", 13, 32),
+        ("2k", 18, 17),
+        ("is", 36, 2),
+        ("je", 4, 19),
+        ("je", 38, 11),
+        ("je", 40, 11),
+        ("ek", 9, 2),
+        ("hg", 2, 12),
+        ("ru", 1, 2),
+        ("da", 3, 2),
+        ("ne", 8, 7),
+        ("2c", 26, 15),
     )
 
     def __init__(self) -> None:

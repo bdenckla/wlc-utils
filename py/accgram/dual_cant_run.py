@@ -88,7 +88,9 @@ def run(args: argparse.Namespace) -> None:
 
 
 def _payload(results: list[dcd.PassageResult]) -> dict[str, object]:
-    chanted_verses = [cv for pr in results for tr in pr.strands for cv in tr.chanted_verses]
+    chanted_verses = [
+        cv for pr in results for tr in pr.strands for cv in tr.chanted_verses
+    ]
     return {
         "summary": {
             "passages": len(results),
@@ -112,7 +114,9 @@ def _passage_obj(pr: dcd.PassageResult) -> dict[str, object]:
         "strands": [_strand_obj(tr) for tr in pr.strands],
         "supplied_marks": [_supply_obj(s) for s in pr.supplied_marks],
         "anomalies": [_anomaly_obj(a) for a in pr.anomalies],
-        "punctuation_changes": [_punctuation_change_obj(d) for d in pr.punctuation_changes],
+        "punctuation_changes": [
+            _punctuation_change_obj(d) for d in pr.punctuation_changes
+        ],
     }
 
 

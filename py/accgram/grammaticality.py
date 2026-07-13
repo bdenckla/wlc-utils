@@ -127,7 +127,9 @@ def estimate_pcfg(trees: list[dict]) -> Pcfg:
 
 def score_obj(pcfg: Pcfg, tree_obj: dict) -> tuple[float, list[tuple[str, Rhs, float]]]:
     """Total log-likelihood of a tree and its per-node ``(lhs, rhs, logp)`` breakdown."""
-    per_node = [(lhs, rhs, pcfg.logprob(lhs, rhs)) for lhs, rhs in iter_productions(tree_obj)]
+    per_node = [
+        (lhs, rhs, pcfg.logprob(lhs, rhs)) for lhs, rhs in iter_productions(tree_obj)
+    ]
     return math.fsum(lp for _, _, lp in per_node), per_node
 
 
@@ -207,7 +209,9 @@ def score_checker(checker: str) -> tuple[Pcfg, Bigram, list[VerseScore]]:
     treed = [v for v in verses if v.get("tree") is not None]
     clean_trees = [v["tree"] for v in treed if v["status"] == "clean"]
     pcfg = estimate_pcfg(clean_trees)
-    bigram = estimate_bigram([v["input"]["tokens"] for v in treed if v["status"] == "clean"])
+    bigram = estimate_bigram(
+        [v["input"]["tokens"] for v in treed if v["status"] == "clean"]
+    )
 
     scores: list[VerseScore] = []
     for v in treed:
@@ -351,8 +355,12 @@ def render_checker(checker: str, pcfg: Pcfg, scores: list[VerseScore]) -> str:
             "Structure (PCFG) separates anomalies far more sharply than sequence "
             "(bigram), confirming the PCFG as the primary measure."
         )
-    by_pcfg = {s.ref for s in sorted(clean, key=lambda s: s.per_accent)[:_LEADERBOARD_N]}
-    by_bg = {s.ref for s in sorted(clean, key=lambda s: s.bigram_per_tok)[:_LEADERBOARD_N]}
+    by_pcfg = {
+        s.ref for s in sorted(clean, key=lambda s: s.per_accent)[:_LEADERBOARD_N]
+    }
+    by_bg = {
+        s.ref for s in sorted(clean, key=lambda s: s.bigram_per_tok)[:_LEADERBOARD_N]
+    }
     lines.append(
         f"Among CLEAN verses the two rankings are largely orthogonal: only "
         f"{len(by_pcfg & by_bg)}/{_LEADERBOARD_N} of the rarest-by-PCFG verses are also "
@@ -363,7 +371,9 @@ def render_checker(checker: str, pcfg: Pcfg, scores: list[VerseScore]) -> str:
 
 
 def render_report(per_checker: list[tuple[str, Pcfg, list[VerseScore]]]) -> str:
-    blocks = [render_checker(checker, pcfg, scores) for checker, pcfg, scores in per_checker]
+    blocks = [
+        render_checker(checker, pcfg, scores) for checker, pcfg, scores in per_checker
+    ]
     return ("\n" + "=" * 80 + "\n\n").join(blocks).rstrip() + "\n"
 
 

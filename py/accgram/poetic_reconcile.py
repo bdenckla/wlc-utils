@@ -110,9 +110,7 @@ def _demote_mam_paseq(
     return out
 
 
-def _legarmeh_positions_to_demote(
-    wlc_disj: list[str], mam_disj: list[str]
-) -> set[int]:
+def _legarmeh_positions_to_demote(wlc_disj: list[str], mam_disj: list[str]) -> set[int]:
     """Indices (into ``wlc_disj``) of WLC legarmehs not matched to a MAM legarmeh."""
     matcher = difflib.SequenceMatcher(a=wlc_disj, b=mam_disj, autojunk=False)
     demote: set[int] = set()

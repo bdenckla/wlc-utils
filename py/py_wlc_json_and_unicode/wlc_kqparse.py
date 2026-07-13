@@ -1,5 +1,3 @@
-
-
 def kqparse(parsed):
     kqparsed = {"header": parsed["header"], "verses": []}
     stacks = _STACKS_INIT

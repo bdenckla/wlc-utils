@@ -40,7 +40,9 @@ def _parse_one(bb: str, verse_line: str) -> tuple[list[str], str]:
 
 def test_no_sof_pasuq_recovers_silluq_and_flags_sof_pasuq():
     # lv 19:1: ends in a silluq (75) with no sof pasuq (no 00).
-    types, tree = _parse_one("lv", r'19:1 WA/Y:DAB."71R Y:HWF73H )EL-MO$E71H L."/)MO75R]1')
+    types, tree = _parse_one(
+        "lv", r'19:1 WA/Y:DAB."71R Y:HWF73H )EL-MO$E71H L."/)MO75R]1'
+    )
     # The trailing silluq is recovered, then a synthetic terminator is appended.
     assert types[-2:] == ["SILLUQ", "MISSING_SOFPASUQ"]
     # The sof pasuq is flagged distinctly...

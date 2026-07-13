@@ -56,7 +56,11 @@ _IMAGES: tuple[tuple[str, str, str], ...] = (
 
 
 def default_html_out_path(repo_root: Path) -> Path:
-    return repo_paths.gh_pages_dir() / "accgram" / "dual-under-bars-in-leningrad-decalogues.html"
+    return (
+        repo_paths.gh_pages_dir()
+        / "accgram"
+        / "dual-under-bars-in-leningrad-decalogues.html"
+    )
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:

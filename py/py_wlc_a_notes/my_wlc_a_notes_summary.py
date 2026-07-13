@@ -75,7 +75,9 @@ def _write2(records, intro, title, path, no_ucp=False):
     rows = [_row_for_header(), *rows_for_data]
     table = wlc_utils_html.table(rows)
     body_contents = [*intro, table]
-    write_ctx = wlc_utils_html.WriteCtx(title, f"gh-pages/wlc-a-notes/{path}", centered=True)
+    write_ctx = wlc_utils_html.WriteCtx(
+        title, f"gh-pages/wlc-a-notes/{path}", centered=True
+    )
     wlc_utils_html.write_html_to_file(body_contents, write_ctx, "../")
 
 

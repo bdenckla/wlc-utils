@@ -157,6 +157,7 @@ def test_word_disj_and_text_pairs_consonants_with_resolved_divider():
 
 # --- servant (conjunctive) extraction: servi_before / word_accents ---------------
 
+
 def _silluq_word() -> dict:
     return {"type": "text", "text": B + ha.MER + SOF}
 
@@ -176,7 +177,9 @@ def test_word_accents_captures_same_word_galgal_before_pazer():
     # A long word can host its own servant: galgal (yerax-ben-yomo) then pazer on one
     # word (e.g. Ps 32:5 אוֹדִ֪יעֲךָ֡).  The galgal is recorded as the pazer word's
     # self_servus, not lost -- and it is what stands adjacent to the pazer.
-    node = _verse(_text(ha.MUN), {"type": "text", "text": B + ha.YBY + B + ha.PAZ}, _silluq_word())
+    node = _verse(
+        _text(ha.MUN), {"type": "text", "text": B + ha.YBY + B + ha.PAZ}, _silluq_word()
+    )
     assert word_accents_from_verse_node(node) == [
         (None, pan.MUNAX, None),
         (pan.PAZER, None, pan.GALGAL),
@@ -209,17 +212,19 @@ def test_servi_before_in_words_operates_on_a_word_list():
     # The factored helper (used by servi-xcheck over load_word_accents) reads a
     # prebuilt (disjunctive, servus) list without re-walking a node.
     words = [
-        (None, pan.MAHAPAKH, None),   # distant servant
-        (None, pan.MERKHA, None),     # adjacent servant
+        (None, pan.MAHAPAKH, None),  # distant servant
+        (None, pan.MERKHA, None),  # adjacent servant
         (pan.REVIA_QATAN, None, None),
         (pan.OLEH_WEYORED, None, None),  # a divider: the dexi-less target is bare here
         (None, pan.MUNAX, None),
-        (pan.DEXI, None, None),       # munax-served dexi
+        (pan.DEXI, None, None),  # munax-served dexi
         (pan.SILLUQ, None, None),
     ]
     assert servi_before_in_words(words, pan.REVIA_QATAN) == [pan.MERKHA]
     assert servi_before_in_words(words, pan.DEXI) == [pan.MUNAX]
-    assert servi_before_in_words(words, pan.OLEH_WEYORED) == [None]  # preceded by a divider
+    assert servi_before_in_words(words, pan.OLEH_WEYORED) == [
+        None
+    ]  # preceded by a divider
 
 
 def test_servi_before_in_words_prefers_same_word_self_servus():

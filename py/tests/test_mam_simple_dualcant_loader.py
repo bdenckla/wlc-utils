@@ -36,7 +36,11 @@ def _verse(bb: str, chnu: int, vrnu: int) -> dict[str, object]:
 
 
 def _skels(vels: list[object]) -> list[str]:
-    return ["".join(c for c in tok if "א" <= c <= "ת") for tok in vels if isinstance(tok, str)]
+    return [
+        "".join(c for c in tok if "א" <= c <= "ת")
+        for tok in vels
+        if isinstance(tok, str)
+    ]
 
 
 def test_strands_exposed_separately_and_differ_on_dual_word():
@@ -55,8 +59,12 @@ def test_strands_exposed_separately_and_differ_on_dual_word():
 
     # The strands disagree on the dual span: ראובן carries zaqef qatan (U+0594) in the
     # alef/pashut strand but revia (U+0597) in the bet/midrashit strand.
-    alef_reuven = next(tok for tok in alef if "ראוב" in "".join(c for c in tok if "א" <= c <= "ת"))
-    bet_reuven = next(tok for tok in bet if "ראוב" in "".join(c for c in tok if "א" <= c <= "ת"))
+    alef_reuven = next(
+        tok for tok in alef if "ראוב" in "".join(c for c in tok if "א" <= c <= "ת")
+    )
+    bet_reuven = next(
+        tok for tok in bet if "ראוב" in "".join(c for c in tok if "א" <= c <= "ת")
+    )
     assert am.ZAQEF_QATAN in alef_reuven and am.REVIA not in alef_reuven
     assert am.REVIA in bet_reuven and am.ZAQEF_QATAN not in bet_reuven
 

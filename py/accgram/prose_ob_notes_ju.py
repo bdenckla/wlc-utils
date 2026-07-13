@@ -6,7 +6,6 @@ from accgram.prose_ob_notes_shared import (
     MUNAX,
 )
 
-
 _JU_1318_01 = (
     "Color images make it clearer that the mark in question is a speck on the LC vellum rather than a tevir dot made of ink."
     " See the image in the UXLC note to which we link above."
@@ -82,8 +81,8 @@ BY_REF: dict[str, dict[str, object]] = {
                 "To transcribe this word as (illegally) accented with merkha"
                 " without any acknowledgment of either illegality or uncertainty is,"
                 " to me, bordering on irresponsible."
-            ]
-        )
+            ],
+        ),
     },
     "ju 21:16": {
         "st-source": "bhs",

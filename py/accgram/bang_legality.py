@@ -54,7 +54,11 @@ import repo_paths
 # (token, leaf) pair for x and for y, plus the (mark_x, mark_y) codepoints used to
 # locate the bearing word in the raw -kq-u text.  Poetic-first: only merkha!azla.
 BANG_DECOMP: dict[str, tuple[tuple[str, str], tuple[str, str], tuple[str, str]]] = {
-    pan.MERKHA_AZLA: ((pan.MERKHA, "merkha"), (pan.AZLA, "azla"), (am.MERKHA, am.QADMA)),
+    pan.MERKHA_AZLA: (
+        (pan.MERKHA, "merkha"),
+        (pan.AZLA, "azla"),
+        (am.MERKHA, am.QADMA),
+    ),
 }
 
 

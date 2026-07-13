@@ -13,7 +13,6 @@ from __future__ import annotations
 from mb_cmn import bib_locales as tbn
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
-
 _BHS_SINGLE_VERSE_EXCLUSIONS: frozenset[tuple[str, int, int]] = frozenset(
     {
         ("gn", 35, 22),
