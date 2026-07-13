@@ -424,38 +424,38 @@ def _verse_counts_table(readings: list[pds.Reading]) -> object:
         )
     return H.table(tuple(rows))
 
-    _UL_ITEM_1 = (
-        H.bold(
-            f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first chanted verse"
-        ),
-        ", where the table gives them a single shared row, labelled mE/pT."
-        " The equality stops there: past this first"
-        " verse the two strands diverge — the p-trad ",
-        *[f" {_TAHTON} divides each Decalogue into ", H.bold("13")],
-        *[f" chanted verses, the m-trad {_ELYON} into only ", H.bold("10"), "."],
-    )
+_UL_ITEM_1 = (
+    H.bold(
+        f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first chanted verse"
+    ),
+    ", where the table gives them a single shared row, labelled mE/pT."
+    " The equality stops there: past this first"
+    " verse the two strands diverge — the p-trad ",
+    *[f" {_TAHTON} divides each Decalogue into ", H.bold("13")],
+    *[f" chanted verses, the m-trad {_ELYON} into only ", H.bold("10"), "."],
+)
 
-    _UL_ITEM_2 = (
-        H.bold(f"P-trad {_ELYON} ≠ m-trad {_ELYON}."),
-        f" The p-trad {_ELYON} puts ",
-        H.bold(pds.ROM_REVIA),
-        " on עבדים and runs the first two commandments together into one verse (→ ",
-        H.bold("9"),
-        f" total), where the m-trad {_ELYON} closes on ",
-        pds.ROM_SILLUQ,
-        " (→ ",
-        H.bold("10"),
-        ").",
-    )
+_UL_ITEM_2 = (
+    H.bold(f"P-trad {_ELYON} ≠ m-trad {_ELYON}."),
+    f" The p-trad {_ELYON} puts ",
+    H.bold(pds.ROM_REVIA),
+    " on עבדים and runs the first two commandments together into one verse (→ ",
+    H.bold("9"),
+    f" total), where the m-trad {_ELYON} closes on ",
+    pds.ROM_SILLUQ,
+    " (→ ",
+    H.bold("10"),
+    ").",
+)
 
-    _UL_ITEM_3 = (
-        f"The m-trad {_TAHTON} does not give אנכי…עבדים its own verse either — it"
-        " runs אנכי…פני together (",
-        pds.ROM_ETNAHTA,
-        " at עבדים, ",
-        pds.ROM_SOF_PASUQ,
-        " at פני), a third structure again.",
-    )
+_UL_ITEM_3 = (
+    f"The m-trad {_TAHTON} does not give אנכי…עבדים its own verse either — it"
+    " runs אנכי…פני together (",
+    pds.ROM_ETNAHTA,
+    " at עבדים, ",
+    pds.ROM_SOF_PASUQ,
+    " at פני), a third structure again.",
+)
 
 
 def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
