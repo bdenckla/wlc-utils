@@ -430,13 +430,13 @@ _UL_ITEM_2 = (
     H.bold(f"P-trad {_ELYON} ≠ m-trad {_ELYON}."),
     f" The p-trad {_ELYON} puts ",
     H.bold(pds.ROM_REVIA),
-    " on עבדים and runs the first two commandments together into one verse (→ ",
+    " on עבדים and runs the first two commandments together into one verse,"
+    " leading to only ",
     H.bold("9"),
-    f" total), where the m-trad {_ELYON} closes on ",
-    pds.ROM_SILLUQ,
-    " (→ ",
+    " chanted verses total. In contrast, the first chanted verse of the m-trad's"
+    f" {_ELYON} ends on עבדים, leading to ",
     H.bold("10"),
-    ").",
+    " chanted verses total.",
 )
 
 _UL_ITEM_3 = (
@@ -661,8 +661,9 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
         H.para(
             (
                 "The single etnaḥta falls at לשנאי, leaving a first half crowded with a "
-                "segolta plus three separate revia domains (at עבדים, על־פני, לארץ); the "
-                "prose grammar cannot build it and returns a ",
+                "segolta plus three separate revia domains (at ",
+                *H.bdi_multi("עבדים", "על־פני", "לארץ"),
+                "); the prose grammar cannot build it and returns a ",
                 H.code("pashta_phrase"),
                 " error — the same failure, at the same structural point, in both Decalogues.",
             )
