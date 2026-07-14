@@ -178,8 +178,9 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
                 " differs from the m-trad in one verse boundary: the "
                 f"p-trad {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse "
                 "than the m-trad, which runs the first two commandments together). Both "
-                "parse clean. It also differs in some details that do not touch the accent "
-                "grammar (",
+                "parse clean. It also differs in some further details — several of them "
+                "changes of cantillation that give the two strands genuinely different parses, "
+                "but none that costs either its grammaticality (",
                 link("catalogued in an appendix below", f"#{_TAHTON_DETAILS_ID}"),
                 ").",
             )
@@ -761,16 +762,44 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
 
 
 # --------------------------------------------------------------------------- #
-# Appendix: the grammar-irrelevant תחתון differences
+# Appendix: the grammaticality-irrelevant תחתון differences
 # --------------------------------------------------------------------------- #
 # Spun out of the verdict paragraph's parenthetical (which now just links here): a plain-prose
-# catalogue of how the p-trad and m-trad תחתון differ WITHOUT touching grammaticality. Both
-# strands parse clean everywhere, so none of this bears on the page's question; it is here only
-# to substantiate the verdict's "details that do not touch the accent grammar" claim. Hand-written
-# (not derived) on purpose: it is documentary colour, not part of the live grammaticality result.
-# The verse-boundary difference (p-trad first verse ending at מבית עבדים) and the boundary accents
-# it drags along are the verdict's own point and are deliberately NOT repeated here.
-def _appendix_section() -> tuple[object, ...]:
+# catalogue of how the p-trad and m-trad תחתון differ WITHOUT touching grammaticality (several DO
+# change the parse tree — e.g. a disjunctive-rank accent swap — but leave both strands well-formed).
+# Both strands parse clean everywhere, so none of this bears on the page's question; it is here only
+# to substantiate the verdict's point that these differences never cost either strand its
+# grammaticality. The prose
+# is hand-written documentary colour, not part of the live grammaticality result; the one Hebrew
+# passage it displays (the Deuteronomy Sabbath verse, where the תחתון cantillation differences
+# cluster) is pulled live from the data via _dt_taxton_sabbath so it can't drift from the text the
+# page grammar-checks. The verse-boundary difference (p-trad first verse ending at מבית עבדים) and
+# the boundary accents it drags along are the verdict's own point and are deliberately NOT repeated
+# here.
+def _dt_taxton_sabbath(results: list[pd.VersionResult], tradition: str) -> object:
+    """The Sabbath-commandment chanted verse of the Deuteronomy תחתון (``tradition`` =
+    "manuscript" / "printed"), as an hbo span, pulled live from the vendored data — the
+    one chanted verse whose words include the skeleton בהמתך. All three cantillation
+    differences between the two תחתון strands (maqaf/ga‘ya, paseq, the internal accent
+    swaps) fall within this one verse, so the strands are shown by displaying it in each.
+    Asserts exactly one match so a data change that moved or renumbered the verse fails the
+    build rather than silently mis-rendering."""
+    by_key = {(vr.book, vr.reading, vr.tradition): vr for vr in results}
+    vr = by_key[("dt", "taxton", tradition)]
+    sabbath = [
+        cv
+        for cv in vr.chanted_verses
+        if any("בהמתך" in pds.base_skeleton(w) for w in cv.words)
+    ]
+    if len(sabbath) != 1:
+        raise AssertionError(
+            f"dt taxton {tradition}: expected exactly 1 Sabbath verse (skeleton בהמתך), "
+            f"found {len(sabbath)} -- the vendored readings drifted"
+        )
+    return hbo(" ".join(sabbath[0].words))
+
+
+def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
     return (
         H.heading_level_2(
             f"Appendix: how the two {_TAHTON} strands differ",
@@ -779,8 +808,9 @@ def _appendix_section() -> tuple[object, ...]:
         H.para(
             (
                 f"Both {_TAHTON} strands parse clean everywhere, so none of the differences below "
-                "bears on the grammaticality question this page asks — they are gathered here only "
-                "to make the verdict's “details that do not touch the accent grammar” concrete. "
+                "bears on the grammaticality question this page asks — not even the several that "
+                "do change the parse. They are gathered here only to make concrete the verdict's "
+                "point that the strands differ in ways that never cost either its grammaticality. "
                 "The one structural difference — the p-trad ending its first verse at מבית עבדים, "
                 "and the boundary accents on ",
                 *H.bdi_multi(
@@ -802,11 +832,53 @@ def _appendix_section() -> tuple[object, ...]:
                 f" (p-trad, patax). Both carry the same {pds.ROM_TIPEHA}; only the vowel differs.",
             )
         ),
-        H.para(("Deuteronomy differs in more ways, none of them grammatical:",)),
+        H.para(
+            (
+                "Deuteronomy differs in more ways. Three are differences of cantillation — so, "
+                "unlike the Exodus vowel-swap, they do change the parse, though they leave both "
+                "strands equally grammatical — and all three fall within a single stretch "
+                "of the Sabbath commandment: the m-trad keeps ",
+                hbo("לֹ֣א תַעֲשֶׂ֣ה"),
+                " as two separately-accented words where the p-trad joins them with a ",
+                pds.ROM_MAQAF,
+                " and reduces the first to a proclitic bearing a ga‘ya (",
+                hbo("לֹֽא־תַעֲשֶׂ֨ה"),
+                "); the p-trad adds a paseq after ",
+                hbo("אַתָּה׀"),
+                " where the m-trad has none; and the two strands choose different "
+                "(individually grammatical) accents on several words within the commandment "
+                "— e.g. m-trad ",
+                hbo("וַ֠אֲמָתֶ֠ךָ"),
+                " against p-trad ",
+                hbo("וַאֲמָתֶ֗ךָ"),
+                f" ({pds.ROM_REVIA}), with similar swaps on ",
+                *H.bdi_multi(
+                    "תעשה",
+                    "מלאכה",
+                    "ושורך",
+                    "וחמרך",
+                    "ובהמתך",
+                ),
+                ". They are easiest to see by reading the verse in each strand, the m-trad "
+                "above the p-trad:",
+            )
+        ),
+        # The whole Sabbath verse pulled live from the data (so it can never drift from the
+        # accentuation the rest of the page grammar-checks), m-trad above p-trad.
+        H.para((H.bold(f"m-trad {_TAHTON}:"), " ", _dt_taxton_sabbath(results, "manuscript"))),
+        H.para((H.bold(f"p-trad {_TAHTON}:"), " ", _dt_taxton_sabbath(results, "printed"))),
+        H.para(
+            (
+                "Two further differences are purely vocalization — vowel-pointing, not "
+                "cantillation:",
+            )
+        ),
         H.unordered_list(
             (
                 (
-                    H.bold("Vocalization."),
+                    # The verse is named in Hebrew (unpointed), not by an English gloss; bdi-wrap
+                    # it so the bold RTL label sits cleanly at the head of the LTR list item.
+                    H.bold((H.bdi(hbo("לא תרצח")), ".")),
                     # Each "X / Y" is two adjacent RTL words separated only by a neutral slash, so
                     # both are <bdi>-isolated (around the lang="hbo" span) to keep the pair from
                     # rendering reversed. Lone hbo forms elsewhere, bounded by English, need no bdi.
@@ -814,8 +886,12 @@ def _appendix_section() -> tuple[object, ...]:
                     H.bdi(hbo("תִּרְצָ֖ח")),
                     " / ",
                     H.bdi(hbo("תִּרְצַ֖ח")),
-                    " split at לא תרצח; and two words the m-trad points with qamats qatan but the "
-                    "p-trad with plain qamats — ",
+                    " split as in Exodus.",
+                ),
+                (
+                    H.bold("Qamats qatan vs. plain qamats."),
+                    " Two words the m-trad points with qamats qatan but the p-trad with plain "
+                    "qamats — ",
                     H.bdi(hbo("כׇל")),
                     " / ",
                     H.bdi(hbo("וְכׇל")),
@@ -823,48 +899,23 @@ def _appendix_section() -> tuple[object, ...]:
                     H.bdi(hbo("כָל")),
                     " / ",
                     H.bdi(hbo("וְכָל")),
-                    " — the same sound (kol), an orthographic choice only.",
-                ),
-                (
-                    H.bold("Maqaf and ga‘ya."),
-                    " At “you shall not do any work” the m-trad keeps ",
-                    hbo("לֹ֣א תַעֲשֶׂ֣ה"),
-                    " as two separately-accented words, while the p-trad joins them with a ",
-                    pds.ROM_MAQAF,
-                    " and reduces the first to a proclitic bearing a ga‘ya: ",
-                    hbo("לֹֽא־תַעֲשֶׂ֨ה"),
-                    ".",
-                ),
-                (
-                    H.bold("Paseq."),
-                    " The p-trad adds a paseq after ",
-                    hbo("אַתָּה׀"),
-                    " where the m-trad has none.",
-                ),
-                (
-                    H.bold("Internal cantillation accents."),
-                    " Within the Sabbath commandment the two strands choose different "
-                    "(individually grammatical) accents on several words — e.g. m-trad ",
-                    hbo("וַ֠אֲמָתֶ֠ךָ"),
-                    " against p-trad ",
-                    hbo("וַאֲמָתֶ֗ךָ"),
-                    f" ({pds.ROM_REVIA}), with similar swaps on ",
-                    *H.bdi_multi(
-                        "תעשה",
-                        "מלאכה",
-                        "ושורך",
-                        "וחמרך",
-                        "ובהמתך",
+                    ". This is actually a bug that will soon be fixed; the interested reader "
+                    "should consult ",
+                    link(
+                        "MAM-basics issue #202",
+                        "https://github.com/bdenckla/MAM-basics/issues/202",
                     ),
-                    ".",
+                    " for the details.",
                 ),
             )
         ),
         H.para(
             (
-                "None of these changes the parse: fed through the grammar checker, both ",
+                "None of these costs either strand its grammaticality: fed through the grammar "
+                "checker, both ",
                 _TAHTON,
-                " strands come back clean in both books.",
+                " strands come back clean in both books — even where the accents they choose "
+                "parse the verse differently.",
             )
         ),
     )
@@ -881,7 +932,7 @@ def render_body_contents(
         *_four_strands_section(readings),
         *_finding_section(by_key),
         *_provenance_section(source),
-        *_appendix_section(),
+        *_appendix_section(results),
     )
 
 
