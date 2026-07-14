@@ -9,8 +9,9 @@ readings, so it can never drift from the checker's real behaviour.
 
 It also lays out the four cantillation strands of the opening אנכי...עבדים unit (manuscript /
 printed x taḥton / elyon) over shared milestone words, resolved by the shared
-``printed_decalogue_strands`` module.  The Simanim-witness companion page
-(``printed_decalogue_simanim_page``) links back to that table rather than duplicating it.
+``printed_decalogue_strands`` module.  The Simanim- and Koren-witness companion pages
+(``printed_decalogue_simanim_page``, ``printed_decalogue_koren_page``) link back to that table
+rather than duplicating it.
 
 Editorial / style conventions for the rendered prose are single-sourced in
 ``printed_decalogue_strands`` (bare-Hebrew strand names תחתון / עליון in output, romanized only
@@ -748,6 +749,18 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 f": two notes from Simanim's Tiqqun — its main text uses the p-trad {_ELYON} "
                 f"and its appendix the p-trad {_TAHTON} (issue #62). That page now leans on "
                 "this page's ",
+                link("four-strands table", "#four-strands"),
+                " rather than repeating it.",
+            )
+        ),
+        H.para(
+            (
+                "See also the ",
+                link("Koren Tanakh", "printed-decalogue-koren.html"),
+                f" as a second independent witness: it prints the p-trad {_TAHTON} in its "
+                f"Exodus running text and the p-trad {_ELYON} in an appendix, with a note "
+                "(citing רוו״ה) flagging the standalone-verse alternative it declines to "
+                "print. That page, too, leans on this page's ",
                 link("four-strands table", "#four-strands"),
                 " rather than repeating it.",
             )
