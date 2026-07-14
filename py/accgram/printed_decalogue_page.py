@@ -31,6 +31,7 @@ from accgram import rtms_report
 from accgram.almost_errors_html_shared import hbo, link
 from cmn.utf8_io import force_utf8_io
 from mb_cmn import hebrew_accent_strip as has
+from mb_cmn import hebrew_accents as ha
 from mb_cmn import hebrew_punctuation as hpunc
 import wlc_provenance as provenance
 
@@ -769,21 +770,46 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
 # change the parse tree — e.g. a disjunctive-rank accent swap — but leave both strands well-formed).
 # Both strands parse clean everywhere, so none of this bears on the page's question; it is here only
 # to substantiate the verdict's point that these differences never cost either strand its
-# grammaticality. The prose
-# is hand-written documentary colour, not part of the live grammaticality result; the one Hebrew
-# passage it displays (the Deuteronomy Sabbath verse, where the תחתון cantillation differences
-# cluster) is pulled live from the data via _dt_taxton_sabbath so it can't drift from the text the
-# page grammar-checks. The verse-boundary difference (p-trad first verse ending at מבית עבדים) and
-# the boundary accents it drags along are the verdict's own point and are deliberately NOT repeated
-# here.
-def _dt_taxton_sabbath(results: list[pd.VersionResult], tradition: str) -> object:
-    """The Sabbath-commandment chanted verse of the Deuteronomy תחתון (``tradition`` =
-    "manuscript" / "printed"), as an hbo span, pulled live from the vendored data — the
-    one chanted verse whose words include the skeleton בהמתך. All three cantillation
-    differences between the two תחתון strands (maqaf/ga‘ya, paseq, the internal accent
-    swaps) fall within this one verse, so the strands are shown by displaying it in each.
-    Asserts exactly one match so a data change that moved or renumbered the verse fails the
-    build rather than silently mis-rendering."""
+# grammaticality. The prose is hand-written documentary colour, not part of the live grammaticality
+# result; but the Hebrew it displays for the Deuteronomy differences — where the תחתון cantillation
+# differences cluster, in the Sabbath commandment — is pulled live from the data and reduced, again
+# live, to just the stretch the two strands accent differently (_sabbath_diff_table), so it can't
+# drift from the text the page grammar-checks. The verse-boundary difference (p-trad first verse
+# ending at מבית עבדים) and the boundary accents it drags along are the verdict's own point and are
+# deliberately NOT repeated here.
+
+# The prose books' conjunctive accents (Yeivin ITM §194, encoded once in mb_cmn.hebrew_accents);
+# every other cantillation accent is disjunctive. Used only to verify, live, that each displayed
+# line really does end on a disjunctive.
+_PROSE_CONJUNCTIVES = set(ha.CONJUNCTIVES_BCC["cant-sys-prose"])
+_ACCENT_LO = ord("\N{HEBREW ACCENT ETNAHTA}")  # U+0591, first cantillation accent
+_ACCENT_HI = ord("\N{HEBREW ACCENT ZINOR}")  # U+05AE, last (meteg U+05BD is excluded)
+
+# The three shared boundaries at which the differing stretch is broken into aligned line-pairs.
+# Each is a consonantal skeleton (cf. _MILESTONES) that ends a line in BOTH strands and carries a
+# disjunctive accent in both — the only kind of point where a break keeps the m-trad and p-trad
+# lines aligned. These three (of the stretch's shared disjunctive boundaries) give three ~even
+# pairs. _split_into_lines asserts each lands, in order, and is genuinely disjunctive, so any drift
+# in the vendored accents fails the build instead of silently mis-breaking.
+_SABBATH_LINE_ENDS: tuple[str, ...] = ("כלמלאכה", "ועבדךואמתך", "וכלבהמתך")
+
+
+def _ends_on_disjunctive(word: str) -> bool:
+    """True if a pointed prose word's cantillation accent is disjunctive: it bears an accent in the
+    U+0591..U+05AE block that is not one of the prose conjunctives (Yeivin ITM §194)."""
+    return any(
+        _ACCENT_LO <= ord(ch) <= _ACCENT_HI and ch not in _PROSE_CONJUNCTIVES
+        for ch in word
+    )
+
+
+def _dt_taxton_sabbath_words(
+    results: list[pd.VersionResult], tradition: str
+) -> list[str]:
+    """The words of the Deuteronomy תחתון Sabbath chanted verse (``tradition`` = "manuscript" /
+    "printed"), pulled live from the vendored data — the one chanted verse whose words include the
+    skeleton בהמתך. Asserts exactly one match so a data change that moved or renumbered the verse
+    fails the build rather than silently mis-rendering."""
     by_key = {(vr.book, vr.reading, vr.tradition): vr for vr in results}
     vr = by_key[("dt", "taxton", tradition)]
     sabbath = [
@@ -796,7 +822,85 @@ def _dt_taxton_sabbath(results: list[pd.VersionResult], tradition: str) -> objec
             f"dt taxton {tradition}: expected exactly 1 Sabbath verse (skeleton בהמתך), "
             f"found {len(sabbath)} -- the vendored readings drifted"
         )
-    return hbo(" ".join(sabbath[0].words))
+    return sabbath[0].words
+
+
+def _differing_span(
+    m_words: list[str], p_words: list[str]
+) -> tuple[list[str], list[str]]:
+    """The (m, p) sub-lists bracketing every difference between the two strands: the shared,
+    byte-identical prefix and suffix are stripped, leaving the contiguous stretch where the strands
+    differ. (They share a consonantal text, so any difference is an accent or a maqaf/paseq mark;
+    the identical head and tail are common context we omit.)"""
+    head = 0
+    while head < min(len(m_words), len(p_words)) and m_words[head] == p_words[head]:
+        head += 1
+    tail = 0
+    while (
+        tail < min(len(m_words), len(p_words)) - head
+        and m_words[-1 - tail] == p_words[-1 - tail]
+    ):
+        tail += 1
+    return m_words[head : len(m_words) - tail], p_words[head : len(p_words) - tail]
+
+
+def _split_into_lines(words: list[str], line_ends: tuple[str, ...]) -> list[list[str]]:
+    """Split ``words`` into the successive line groups ending at each skeleton in ``line_ends``.
+    Asserts every break lands, in order, consumes the whole stretch, and ends on a word that really
+    carries a disjunctive accent — so any drift in the vendored words/accents fails the build."""
+    lines: list[list[str]] = []
+    cur: list[str] = []
+    pending = list(line_ends)
+    for w in words:
+        cur.append(w)
+        if pending and pds.base_skeleton(w) == pending[0]:
+            if not _ends_on_disjunctive(w):
+                raise AssertionError(
+                    f"line-end {w!r} no longer carries a disjunctive accent -- readings drifted"
+                )
+            lines.append(cur)
+            cur, pending = [], pending[1:]
+    if cur or pending:
+        raise AssertionError(
+            f"sabbath line split: leftover words {cur!r} / unconsumed line-ends {pending!r} "
+            "-- the vendored readings drifted"
+        )
+    return lines
+
+
+def _diff_row(label: str, words: list[str]) -> object:
+    """One table row: a bold m-trad/p-trad label cell, then the strand's line of words as a
+    right-aligned (dir=rtl) hbo cell so the three pairs' Hebrew all line up flush-right. Each word
+    is shown in the classic consonants-plus-accents form (_strip_pointing: vowels, dagesh, and
+    mid-verse meteg dropped), so only the cantillation differences remain -- the vowel-pointing
+    differences are catalogued separately in the bullets below."""
+    line = " ".join(_strip_pointing(w) for w in words)
+    return H.table_row(
+        (
+            H.table_datum(H.bold(label)),
+            H.table_datum(hbo(line), {"dir": "rtl"}),
+        )
+    )
+
+
+def _sabbath_diff_table(results: list[pd.VersionResult]) -> object:
+    """The differing stretch of the two Deuteronomy תחתון Sabbath strands, as a table of three
+    line-pairs (an m-trad row directly above its p-trad row), each line a short run of words ending
+    on a shared disjunctive; the head and tail the two strands share verbatim are omitted. The plain
+    (classless) table picks up the shared centered layout, the odd-row zebra (tinting the m-trad
+    rows), and the lang="hbo" font. Span, breaks, and the disjunctive check are all derived live
+    from the data, so nothing here can drift from the grammar-checked text."""
+    m_span, p_span = _differing_span(
+        _dt_taxton_sabbath_words(results, "manuscript"),
+        _dt_taxton_sabbath_words(results, "printed"),
+    )
+    m_lines = _split_into_lines(m_span, _SABBATH_LINE_ENDS)
+    p_lines = _split_into_lines(p_span, _SABBATH_LINE_ENDS)
+    rows: list[object] = []
+    for m_line, p_line in zip(m_lines, p_lines):
+        rows.append(_diff_row("m-trad", m_line))
+        rows.append(_diff_row("p-trad", p_line))
+    return H.table(tuple(rows))
 
 
 def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
@@ -837,36 +941,17 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 "Deuteronomy differs in more ways. Three are differences of cantillation — so, "
                 "unlike the Exodus vowel-swap, they do change the parse, though they leave both "
                 "strands equally grammatical — and all three fall within a single stretch "
-                "of the Sabbath commandment: the m-trad keeps ",
-                hbo("לֹ֣א תַעֲשֶׂ֣ה"),
-                " as two separately-accented words where the p-trad joins them with a ",
-                pds.ROM_MAQAF,
-                " and reduces the first to a proclitic bearing a ga‘ya (",
-                hbo("לֹֽא־תַעֲשֶׂ֨ה"),
-                "); the p-trad adds a paseq after ",
-                hbo("אַתָּה׀"),
-                " where the m-trad has none; and the two strands choose different "
-                "(individually grammatical) accents on several words within the commandment "
-                "— e.g. m-trad ",
-                hbo("וַ֠אֲמָתֶ֠ךָ"),
-                " against p-trad ",
-                hbo("וַאֲמָתֶ֗ךָ"),
-                f" ({pds.ROM_REVIA}), with similar swaps on ",
-                *H.bdi_multi(
-                    "תעשה",
-                    "מלאכה",
-                    "ושורך",
-                    "וחמרך",
-                    "ובהמתך",
-                ),
-                ". They are easiest to see by reading the verse in each strand, the m-trad "
-                "above the p-trad:",
+                "of the Sabbath commandment. Below is just that stretch — the run of words the two "
+                "strands accent differently, everything before and after it being identical — shown "
+                "in each strand, m-trad above p-trad, stripped to consonants and accents (so the "
+                "vowel-pointing differences noted below drop out and only the cantillation shows), "
+                "each line ending on a disjunctive accent:",
             )
         ),
-        # The whole Sabbath verse pulled live from the data (so it can never drift from the
-        # accentuation the rest of the page grammar-checks), m-trad above p-trad.
-        H.para((H.bold(f"m-trad {_TAHTON}:"), " ", _dt_taxton_sabbath(results, "manuscript"))),
-        H.para((H.bold(f"p-trad {_TAHTON}:"), " ", _dt_taxton_sabbath(results, "printed"))),
+        # Just the differing stretch of the Sabbath verse, pulled and reduced live from the data (so
+        # it can never drift from the accentuation the rest of the page grammar-checks), as a table
+        # of three line-pairs, m-trad above p-trad, each line ending on a shared disjunctive.
+        _sabbath_diff_table(results),
         H.para(
             (
                 "Two further differences are purely vocalization — vowel-pointing, not "
