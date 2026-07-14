@@ -44,6 +44,16 @@ REPORT_TITLE = "In the printed tradition, are the accents of the Decalogue gramm
 _GOERWITZ_URL = "goerwitz.html"
 _SOURCE_URL = "https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים"
 
+# An online Bible that happens to preserve the p-trad תחתון cantillation of the Deuteronomy
+# Sabbath commandment -- the reading catalogued in the appendix below, which the print editions
+# Koren and Simanim do NOT show. Chabad's Deut. 5 gives exactly that reading (Chabad's own
+# Hebrew Bible being the subject of the CTR review linked beside it).
+_CHABAD_DT5_URL = (
+    "https://www.chabad.org/torah-texts/9969/Tanakh-The-Hebrew-Bible/"
+    "Torah-The-Pentateuch/Devarim-Deuteronomy/Chapter-5"
+)
+_CTR_REVIEW_URL = "https://bdenckla.github.io/MAM-with-doc/misc/rocc_0_review_of_ctr.html"
+
 # In-page anchor for the appendix cataloguing the grammar-irrelevant p-trad-vs-m-trad תחתון
 # differences (single-sourced: used as both the verdict-paragraph link's href fragment and the
 # appendix heading's id, matching the #four-strands / #why-the-printed-elyon-fails style).
@@ -90,8 +100,8 @@ def _by_key(
 def _intro() -> tuple[object, ...]:
     # The opening span -- from "Roughly speaking" through "only the start of one." (including the
     # "(The printed tradition is fading...)" aside) -- is duplicated verbatim in
-    # printed_decalogue_simanim_page._PARA_1 (the no-HTML shared module pds can't hold rendered
-    # prose). If you edit this wording, edit it there too (and vice versa).
+    # printed_decalogue_simanim_page._PARA_1 and printed_decalogue_koren_page._PARA_1 (the no-HTML
+    # shared module pds can't hold rendered prose). If you edit this wording, edit it in all three.
     return (
         H.heading_level_1(REPORT_TITLE),
         H.heading_level_2("The question"),
@@ -984,6 +994,46 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 _TAHTON,
                 " strands come back clean in both books — even where the accents they choose "
                 "parse the verse differently.",
+            )
+        ),
+        # The user-supplied datum (issue #52 follow-up): the p-trad תחתון Sabbath cantillation
+        # dissected just above is missing from the two print editions this page cites as still
+        # carrying the p-trad, but survives online at Chabad -- whose own edition our CTR review
+        # judges the weirdest, and possibly worst, on the web.
+        *_chabad_witness(),
+    )
+
+
+# --------------------------------------------------------------------------- #
+# The online-witness note: Chabad preserves the p-trad תחתון Sabbath cantillation
+# --------------------------------------------------------------------------- #
+def _chabad_witness() -> tuple[object, ...]:
+    """A short note that the p-trad תחתון Sabbath reading catalogued above is absent from Koren and
+    Simanim yet present in Chabad's online Bible, with a nod to our CTR review of that eccentric
+    edition."""
+    return (
+        H.heading_level_3("A gap in Koren and Simanim — and where the reading survives online"),
+        H.para(
+            (
+                f"One curiosity of this p-trad {_TAHTON} Sabbath cantillation is that the two print "
+                "editions cited at the top of this page as still showing the p-trad — Koren and "
+                "Simanim — do ",
+                H.bold("not"),
+                " print it here; for the Deuteronomy Sabbath commandment neither carries the "
+                f"p-trad {_TAHTON} shown above. Among online Bibles it does survive, in a "
+                "conspicuously eccentric one: Chabad's ",
+                link("Deuteronomy 5", _CHABAD_DT5_URL),
+                f" gives exactly this p-trad {_TAHTON} reading of the words ",
+                "לא תעשה כל מלאכה",
+                " onward.",
+            )
+        ),
+        H.para(
+            (
+                "That eccentricity is not confined to the accents here: our ",
+                link("review of Chabad's online Hebrew Bible", _CTR_REVIEW_URL),
+                " calls it “certainly the weirdest Hebrew Bible on the web, and possibly the "
+                "worst”.",
             )
         ),
     )

@@ -1,0 +1,41 @@
+"""The Koren-Decalogue page (printed-decalogue-koren.html).
+
+Companion to ``test_printed_decalogue_simanim``. The four-strands derivation itself is pinned by
+that test and by ``printed_decalogue_strands``; here we only confirm the Koren page body renders
+and that its scans are committed.
+
+Skips if the vendored source JSON is absent (regenerate via printed_decalogue_fetch.py).
+
+Run:
+    .venv/Scripts/python.exe -m pytest py/tests/test_printed_decalogue_koren.py -v
+"""
+
+from __future__ import annotations
+
+from accgram import printed_decalogue as pd
+from accgram import printed_decalogue_koren_page as kor
+
+import pytest
+
+import repo_paths
+
+
+def test_body_renders() -> None:
+    """The full Koren page body builds without error and is non-empty. Like the Simanim page it
+    needs only the source's provenance, not the grammar-check results."""
+    src = pd.default_source_path()
+    if not src.is_file():
+        pytest.skip(f"vendored printed-Decalogue source not present at {src}")
+    body = kor.render_body_contents(pd.load_source(src))
+    assert isinstance(body, tuple) and len(body) > 0
+
+
+def test_scan_images_committed() -> None:
+    """The three Koren scans are committed locally (the page references them by relative path)."""
+    img_dir = repo_paths.gh_pages_dir() / "accgram" / "img"
+    for name in (
+        "Koren-p-113-Ex-Dec-p-trad-taxton.png",
+        "Koren-appendix-p-38-Ex-Dec-p-trad-elyon.png",
+        "Koren-appendix-p-38-Ex-Dec-p-trad-elyon-note.png",
+    ):
+        assert (img_dir / name).is_file(), f"missing committed scan {name}"

@@ -70,7 +70,7 @@ Subcommands:
                 writes gh-pages/accgram/printed-decalogue-simanim.html). Each accepts
                 the same options as its generator (e.g. --html-out). The full set:
                 generate-html-poetic, -goerwitz, -almost-errors, -supplied-marks,
-                -printed-decalogue, -printed-decalogue-simanim,
+                -printed-decalogue, -printed-decalogue-simanim, -printed-decalogue-koren,
                 -dual-under-bars-in-leningrad-decalogues, -telg-doc-notes,
                 -ps17v14-mam-doc-notes, -ps17v14-double-tsinnor.
     grammaticality
@@ -114,6 +114,7 @@ from accgram import research_tao
 from accgram import prose_run
 from accgram import poetic_run
 from accgram import printed_decalogue
+from accgram import printed_decalogue_koren_page
 from accgram import printed_decalogue_page
 from accgram import printed_decalogue_simanim_page
 from accgram import supplied_marks
@@ -171,6 +172,7 @@ _HTML_GENERATORS = (
     ("supplied-marks", supplied_marks),
     ("printed-decalogue", printed_decalogue_page),
     ("printed-decalogue-simanim", printed_decalogue_simanim_page),
+    ("printed-decalogue-koren", printed_decalogue_koren_page),
     ("dual-under-bars-in-leningrad-decalogues", dual_under_bars_page),
     ("telg-doc-notes", telg_doc_notes),
     ("ps17v14-mam-doc-notes", ps17v14_doc_notes),
