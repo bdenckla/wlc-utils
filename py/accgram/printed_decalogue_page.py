@@ -159,7 +159,7 @@ _BOOK_LABELS: dict[str, str] = {"bk-ex": "Ex.", "bk-dt": "Deut."}  # bk: book ke
 
 
 def _verdict_table(by_key: dict) -> object:
-    header = H.table_row_of_headers(("", "Manuscript tradition", "Printed tradition"))
+    header = H.table_row_of_headers(("", "m-trad verses", "p-trad verses"))
     rows = [header]
     for book in ("bk-ex", "bk-dt"):
         for strand in ("sk-taxton", "sk-elyon"):
@@ -186,7 +186,7 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
                 f" is grammatical everywhere — both books, both traditions. In terms of verse"
                 f" boundaries, the p-trad {_TAHTON} differs from the m-trad in only one place: the "
                 f"p-trad {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse "
-                "than the m-trad, which runs the first two commandments together). Both "
+                "than the m-trad, whose first verse runs on to על־פני instead). Both "
                 "parse clean. It also differs in some further details — several of them "
                 "changes of cantillation that give the two strands genuinely different parses, "
                 "but none that costs either its grammaticality (",
@@ -415,25 +415,6 @@ def _four_strands_table(readings: list[pds.Reading]) -> object:
     return H.table(tuple(rows), {"class": "strand-table", "dir": "rtl"})
 
 
-def _verse_counts_table(readings: list[pds.Reading]) -> object:
-    """A small plain table of how many chanted verses each strand divides the Decalogue into
-    (12 / 10 / 13 / 9). Rendered from the Exodus readings, but the counts are identical in
-    Deuteronomy, so the table stands for both books. No class: it takes the global zebra styling,
-    like the verdict table -- the verse count would not fit the strand table's range cells.
-    """
-    header = H.table_row_of_headers(("strand", "verse count"))
-    rows = [header]
-    for r in readings:
-        rows.append(
-            H.table_row(
-                (
-                    H.table_header(pds.render_reading_name(r.name)),
-                    H.table_datum(str(r.n_verses)),
-                )
-            )
-        )
-    return H.table(tuple(rows))
-
 _UL_ITEM_1 = (
     H.bold(
         f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first chanted verse"
@@ -498,13 +479,6 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
             )
         ),
         _four_strands_table(readings),
-        H.para(
-            (
-                "How many chanted verses each strand divides the Decalogue into — the same"
-                " counts in both books, Exodus and Deuteronomy:",
-            )
-        ),
-        _verse_counts_table(readings),
         H.unordered_list(
             (
                 _UL_ITEM_1,
