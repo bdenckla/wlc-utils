@@ -125,20 +125,29 @@ def _path(path: str) -> object:
 # --------------------------------------------------------------------------- #
 # Rendering
 # --------------------------------------------------------------------------- #
-# The opening span -- from "Roughly speaking" through "two different תחתון strands" -- is
-# duplicated verbatim in printed_decalogue_page._intro() (its no-HTML shared module pds can't
-# hold rendered prose). If you edit this wording, edit it there too (and vice versa).
+# The opening span -- from "Roughly speaking" through "only the start of one." (including the
+# "(The printed tradition is fading...)" aside) -- is duplicated verbatim in
+# printed_decalogue_page._intro() (its no-HTML shared module pds can't hold rendered prose). If you
+# edit this wording, edit it there too (and vice versa).
 _PARA_1 = (
     "Roughly speaking, each Decalogue",
     " has two strands of cantillation, the טעם תחתון and the טעם עליון.",
     " Why is this only roughly true? Because in detail there are",
-    *[" ", H.bold("four"), " strands:"],
-    " at the opening commandment the",
+    *[" ", H.bold("four"), " strands: the"],
     *[" ", H.bold("printed tradition"), " (p-trad)"],
-    " differs from the",
-    *[" ", H.bold("manuscript tradition"), " (m-trad),"],
+    " and the",
+    *[" ", H.bold("manuscript tradition"), " (m-trad)"],
+    " differ in cantillation,",
     f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
-    *[" ", link("The companion page", _FOUR_STRANDS_HREF)],
+    " (The printed tradition is fading, but still visible in editions like Koren and Simanim.)",
+    " The most striking such difference has to do with whether אנכי…עבדים,",
+    " typically identified as the first commandment, is an entire chanted verse or",
+    " only the start of one.",
+)
+
+# The continuation is this page's own second paragraph (the companion page's differs).
+_PARA_2 = (
+    link("The companion page", _FOUR_STRANDS_HREF),
     " lays out those four strands and grammar-checks the p-trad; this page serves only to"
     " document the claim that",
     *[" ", H.bold("Simanim's Tiqqun"), " follows the p-trad."],
@@ -191,6 +200,7 @@ def _intro(source: dict) -> tuple[object, ...]:
     return (
         H.heading_level_1(REPORT_TITLE),
         H.para(_PARA_1),
+        H.para(_PARA_2),
         H.para(
             (
                 "Simanim's Tiqqun follows the p-trad for the Decalogues. In its ",
@@ -526,7 +536,8 @@ def _conclusion() -> tuple[object, ...]:
         H.para(
             (
                 "Simanim's Tiqqun follows the p-trad for the Decalogues, not the m-trad. The two"
-                " traditions diverge only at the opening commandment אנכי…עבדים, and Simanim lands"
+                " traditions' most consequential divergence is at the opening commandment"
+                " אנכי…עבדים, and Simanim lands"
                 f" on the p-trad side of that divergence on both strands: the p-trad {_ELYON} in"
                 " its ",
                 H.bold("Exodus"),

@@ -88,9 +88,10 @@ def _by_key(
 
 
 def _intro() -> tuple[object, ...]:
-    # The opening span -- from "Roughly speaking" through "two different תחתון strands" -- is
-    # duplicated verbatim in printed_decalogue_simanim_page._PARA_1 (the no-HTML shared module pds
-    # can't hold rendered prose). If you edit this wording, edit it there too (and vice versa).
+    # The opening span -- from "Roughly speaking" through "only the start of one." (including the
+    # "(The printed tradition is fading...)" aside) -- is duplicated verbatim in
+    # printed_decalogue_simanim_page._PARA_1 (the no-HTML shared module pds can't hold rendered
+    # prose). If you edit this wording, edit it there too (and vice versa).
     return (
         H.heading_level_1(REPORT_TITLE),
         H.heading_level_2("The question"),
@@ -99,16 +100,23 @@ def _intro() -> tuple[object, ...]:
                 "Roughly speaking, each Decalogue",
                 " has two strands of cantillation, the טעם תחתון and the טעם עליון.",
                 " Why is this only roughly true? Because in detail there are",
-                *[" ", H.bold("four"), " strands:"],
-                " at the opening commandment the",
+                *[" ", H.bold("four"), " strands: the"],
                 *[" ", H.bold("printed tradition"), " (p-trad)"],
-                " differs from the",
-                *[" ", H.bold("manuscript tradition"), " (m-trad),"],
+                " and the",
+                *[" ", H.bold("manuscript tradition"), " (m-trad)"],
+                " differ in cantillation,",
                 f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
                 #
-                " (The printed tradition is fading, but still visible in editions like Koren and Simanim.)"
+                " (The printed tradition is fading, but still visible in editions like Koren and Simanim.)",
                 #
-                " We have run Richard Goerwitz's ",
+                " The most striking such difference has to do with whether אנכי…עבדים,",
+                " typically identified as the first commandment, is an entire chanted verse or",
+                " only the start of one.",
+            )
+        ),
+        H.para(
+            (
+                "We have run Richard Goerwitz's ",
                 link("accent grammar checker", _GOERWITZ_URL),
                 " against the m-trad strands (as represented by WLC); this page"
                 " shows what happens when the checker is run against the p-trad strands.",
