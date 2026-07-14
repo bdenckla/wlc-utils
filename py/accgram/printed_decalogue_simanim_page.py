@@ -559,15 +559,24 @@ def _conclusion() -> tuple[object, ...]:
                 " a milder case.)",
             )
         ),
+        # Ben provides an image of Simanim's Deuteronomy appendix taxton Decalogue (p. 247),
+        # img/Simanim-Tiqqun-p247-Deut-Dec-m-trad-taxton-Shabbat.png, showing that its Shabbat
+        # commandment follows the m-trad rather than the p-trad cantillation. That image is
+        # deliberately NOT linked from this HTML (the Deuteronomy text is not reproduced here);
+        # it is committed only as the private evidence behind this scope note's Shabbat caveat.
         H.para(
             (
-                "One scope note: I examined only Simanim's ",
+                "One scope note: the finding above rests on the אנכי…עבדים unit — the most striking"
+                " p-trad/m-trad divergence — in Simanim's ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue. The אנכי…עבדים unit is textually identical in the ",
+                " (Yitro) Decalogue. I have since verified the same p-trad choice in Simanim's ",
                 H.bold("Deuteronomy"),
-                " (Vaetḥanan) Decalogue, so the same choice between the two cantillations would"
-                " apply — but that Simanim accents its Deuteronomy Decalogue the same way is my"
-                " assumption, not something I checked.",
+                f" (Vaetḥanan) Decalogue, whose {_ELYON} main Decalogue starts on p. 208, so the"
+                " claim holds for both Decalogues rather than Exodus alone. One caveat: in the"
+                f" Deuteronomy {_TAHTON} (appendix, p. 247), the p-trad and m-trad also diverge at"
+                " the Shabbat commandment, but there Simanim follows the m-trad, not the p-trad —"
+                " so its p-trad allegiance, firm at אנכי…עבדים across both Decalogues, is not"
+                " absolute.",
             )
         ),
         H.para(
