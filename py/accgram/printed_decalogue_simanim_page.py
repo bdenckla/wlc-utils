@@ -139,8 +139,9 @@ _PARA_1 = (
     *[" ", H.bold("manuscript tradition"), " (m-trad)"],
     " differ in cantillation,",
     f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
-    " (The printed tradition is fading, but still visible in editions like Koren and Simanim.)",
-    " The most striking such difference has to do with whether אנכי…עבדים,",
+    " (The p-trad is fading, but still visible in editions like Koren and Simanim.)",
+    #
+    " The most striking difference between the p-trad and m-trad has to do with whether אנכי…עבדים,",
     " typically identified as the first commandment, is an entire chanted verse or",
     " only the start of one.",
 )

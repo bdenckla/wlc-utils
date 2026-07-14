@@ -107,9 +107,9 @@ def _intro() -> tuple[object, ...]:
                 " differ in cantillation,",
                 f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
                 #
-                " (The printed tradition is fading, but still visible in editions like Koren and Simanim.)",
+                " (The p-trad is fading, but still visible in editions like Koren and Simanim.)",
                 #
-                " The most striking such difference has to do with whether אנכי…עבדים,",
+                " The most striking difference between the p-trad and m-trad has to do with whether אנכי…עבדים,",
                 " typically identified as the first commandment, is an entire chanted verse or",
                 " only the start of one.",
             )
@@ -183,8 +183,8 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
         H.para(
             (
                 f"The {_TAHTON}"
-                f" is grammatical everywhere — both books, both traditions. The p-trad {_TAHTON}"
-                " differs from the m-trad in one verse boundary: the "
+                f" is grammatical everywhere — both books, both traditions. In terms of verse"
+                f" boundaries, the p-trad {_TAHTON} differs from the m-trad in only one place: the "
                 f"p-trad {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse "
                 "than the m-trad, which runs the first two commandments together). Both "
                 "parse clean. It also differs in some further details — several of them "
