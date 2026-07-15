@@ -113,7 +113,7 @@ def add_htel_to_etxml(etxml_parent, htel):
 def html_el2(title_text, body_contents, flex_css_hrefs, centered=False):
     """Make an <html> element."""
     meta = htel_mk_nlb2_nc("meta", attr={"charset": "utf-8"})
-    title = htel_mk("title", flex_contents=(title_text,))
+    title = htel_mk_nlb1("title", contents=(title_text,))
     strict_css_hrefs = _strictify(flex_css_hrefs)
     links_to_css = tuple(map(_link_to_css, strict_css_hrefs))
     head_cont = meta, title, *links_to_css
@@ -204,7 +204,7 @@ def unordered_list(liconts, attr=None):
 
 def heading_level_1(contents, attr=None):
     """Make an <h1> element."""
-    return htel_mk("h1", attr, contents)
+    return htel_mk_nlb1("h1", attr, contents)
 
 
 def heading_level_2(contents, attr=None):
