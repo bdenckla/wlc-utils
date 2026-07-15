@@ -152,7 +152,7 @@ def figcaption(contents, attr=None):
 
 def img(attr=None):
     """Make an <img> element."""
-    return htel_mk_nlb1("img", attr)
+    return htel_mk_nlb1_nc("img", attr)
 
 
 def caption(contents):
