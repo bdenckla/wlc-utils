@@ -195,9 +195,32 @@ img {
    ps17v14-double-tsinnor.html), generated from their former hand-authored
    bodies.  These reuse the shared shell above; the few classes below preserve
    the lead/lemma/source styling those pages carried inline. */
+/* The three printed-Decalogue tables below each neutralize the shared odd-row zebra
+   (tr:nth-of-type(odd) td above), the same way table.strand-table does (issue #65, finding C3).
+   The tint is a row-tracking aid for long tables, but each of these is short AND has rows that
+   alternate by category, so the stripe lands on every other category row and reads as if it
+   ENCODED that category rather than merely counting rows:
+     - the verdict matrix: odd rows are its two עליון rows (rows 3 and 5), so the tint looks like
+       it marks the עליון strand;
+     - the Simanim strand-mapping table: its one tinted row (row 3) is the m-trad row;
+     - the Sabbath m/p-diff table: odd rows are exactly its three m-trad rows.
+   (The Simanim scan/transcription table needs no opt-out: its only odd row is the all-<th> header,
+   and the zebra rule targets td, so nothing there is tinted.) */
+
 /* Printed-Decalogue grammaticality report (printed-decalogue.html): the verdict matrix. */
 table.printed-decalogue-verdict td.clean { color: light-dark(#1a7f37, #4ac26b); }
 table.printed-decalogue-verdict td.ungrammatical { color: light-dark(#b3261e, #ff7b72); font-weight: bold; }
+table.printed-decalogue-verdict tr td { background-color: transparent; }
+
+/* printed-decalogue-simanim.html: the table mapping the p. 246 note's own labels (בטעם רגיל /
+   כתר אר״ץ) onto two of the companion page's four strands. It long reused the verdict matrix's
+   class, which styles a grammaticality verdict it never renders -- a misnomer that bought it
+   nothing (issue #65, finding C4d). */
+table.printed-decalogue-strand-mapping tr td { background-color: transparent; }
+
+/* printed-decalogue.html appendix: the three m-trad/p-trad line-pairs of the Deuteronomy תחתון
+   Sabbath verse. Otherwise unstyled -- it takes the shared centered layout and lang="hbo" font. */
+table.printed-decalogue-sabbath-diff tr td { background-color: transparent; }
 
 /* The strand tables (printed-decalogue.html, issues #59 / #52): range-divided views of a
    cantillation strand, ported from MAM-simple's TEMBte tables. Two of them share this style:

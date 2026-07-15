@@ -32,15 +32,38 @@ when editing either page):
   cross-repo rule (cf. MAM-basics ``py/versification_and_cantillation/doc.py``).
 * Prefer "**cantillation**" to "accentuation".
 * **Accent/mark romanizations are single-sourced as ``ROM_*`` constants** (pashta, tipeḥa,
-  etnaḥta, revia, silluq, sof pasuq, meteg, maqaf, legarmeh, + a few compounds).  They are shared
-  by the ``_ACCENT_NAMES`` derivation table, the ``READING_SPECS`` expected-accent pins, and the
-  prose of both pages -- so a printed name can't drift from the derived one.  Don't retype these
-  spellings inline; ``tests/test_transliterations.py`` guards them tree-wide.  (``_CP_*`` = the
-  codepoint constants, distinct from the ``ROM_*`` word forms.)
+  etnaḥta, revia, segolta, silluq, sof pasuq, meteg, maqaf, legarmeh, paseq, + a few compounds).
+  They are shared by the ``_ACCENT_NAMES`` derivation table, the ``READING_SPECS``
+  expected-accent pins, and the prose of all three pages -- so a printed name can't drift from
+  the derived one.  Don't retype these spellings inline; ``tests/test_transliterations.py``
+  guards them tree-wide.  (``_CP_*`` = the codepoint constants, distinct from the ``ROM_*`` word
+  forms.)  They stay PLAIN ``str`` here on purpose: ``_accent_of`` returns them and
+  ``READING_SPECS`` compares them, so they must never become HTML.
+* **Every romanized accent/mark name renders italic, inside ``<span class="romanized">``**
+  (``gh-pages/style.css``; matching the MAM-simple island, which italicizes every such term).
+  The pages do the wrapping, not this module -- each aliases the ``ROM_*`` strings through
+  ``py_html.my_html_span_romanized.rmn`` ONCE at module level, so every prose site is styled
+  without a per-site call (settled as issue #65, finding C2).  This is why the wrapped aliases
+  are HTML nodes, not strings, and so cannot be interpolated into an f-string -- splice them
+  into a contents tuple instead.  Book/apparatus terms (Tiqqun, ḥumash, Keter, qere/ketiv,
+  pisqa) are NOT accent names and stay unwrapped; so does the ``pashta_phrase`` code identifier,
+  which is a checker error name rather than a transliteration.
 * Rendered prose uses the **real Unicode em dash** ``—`` (U+2014), not ASCII ``--`` (``--`` is
   fine in code/comments/docstrings, like this one).
-* **Image ``alt`` text keeps romanized names** ("taḥton") on purpose -- don't mix alphabets in
-  an alt attribute.
+* **Attribute contexts are EXEMPT from the Hebrew-letter rule, by design -- do not "fix" them.**
+  Romanized "taḥton"/"elyon" is correct, and stays, inside ``img alt`` text and ``abbr title``
+  text (and any similar attribute); only *visible prose* takes the Hebrew letters of bullet 1.
+  Reasons: an alt/title string is announced by screen readers and copied into plain-text
+  contexts, where ASCII romanization survives and a bidirectional Hebrew run does not; and an
+  attribute is no place to mix alphabets.  So the trio's hover/screen-reader text being romanized
+  while its prose is Hebrew-lettered is a deliberate asymmetry, NOT an inconsistency to clean up
+  (settled as issue #65, finding T1).  Recorded here because it keeps getting re-litigated.
+
+  **There are exactly TWO exempt registers: attributes and internal keys.**  Compact *notation*
+  in visible prose is NOT a third one -- an axis gloss like ``(two books x TAHTON/ELYON x
+  m-trad/p-trad)`` is visible prose and takes the Hebrew letters via the constants, however
+  terse or schematic it looks.  (Only the strand words are governed; ``m-trad``/``p-trad`` are
+  tradition abbreviations, not strand names, and stay as they are.)
 
 Tested by ``tests/test_printed_decalogue_simanim.py`` and ``tests/test_printed_decalogue_page.py``
 (plus the tree-wide ``tests/test_transliterations.py``).
@@ -64,11 +87,13 @@ ROM_PASHTA = "pashta"
 ROM_TIPEHA = "tipeḥa"
 ROM_ETNAHTA = "etnaḥta"
 ROM_REVIA = "revia"
+ROM_SEGOLTA = "segolta"
 ROM_SILLUQ = "silluq"
 ROM_SOF_PASUQ = "sof pasuq"
 ROM_METEG = "meteg"
 ROM_MAQAF = "maqaf"
 ROM_LEGARMEH = "legarmeh"
+ROM_PASEQ = "paseq"
 
 # Compound readings that recur verbatim in the prose (U+2026 ellipsis / U+2013 en dash between).
 ROM_PASHTA_ETNAHTA = f"{ROM_PASHTA}…{ROM_ETNAHTA}"  # the merged manuscript תחתון

@@ -28,8 +28,10 @@ committed scans.
 Editorial / style conventions shared with the companion page -- bare-Hebrew strand names
 תחתון / עליון (never transliterated or translated), the single-sourced ``ROM_*`` accent
 romanizations, and the real-em-dash rule -- are documented on ``printed_decalogue_strands`` and
-imported from it (the thin ``_TAHTON`` / ``_ELYON`` / ``_ROM_*`` aliases below just limit prose
-churn).  The conventions specific to THIS page (keep them when editing):
+imported from it (the thin ``_TAHTON`` / ``_ELYON`` aliases below just limit prose churn; the
+``_ROM_*`` ones additionally wrap each name in the italic ``span.romanized``, so they are HTML
+nodes rather than strings -- see the comment at that alias block).  The conventions specific to
+THIS page (keep them when editing):
 
 * Prefer "**cantillation**" to "accentuation".
 * **Three term pairs, kept strictly apart** (a recurring inconsistency -- don't regress):
@@ -41,8 +43,9 @@ churn).  The conventions specific to THIS page (keep them when editing):
   **side margin** ("side-margin note"); the **p. 246** note sits in the **bottom margin**, keyed
   by an asterisk -- it is a **footnote**, so never call it a "marginal note".  For the pair, say
   "notes" (never "marginal notes").
-* **Image ``alt`` text keeps romanized names** ("taḥton") on purpose -- don't mix alphabets in
-  an alt attribute.
+* **Image ``alt`` text keeps romanized names** ("taḥton") on purpose -- attribute contexts are
+  exempt from the Hebrew-letter rule by design; see the "Attribute contexts are EXEMPT" bullet in
+  ``printed_decalogue_strands``' module docstring for the full rule and why.
 
 Regenerate with ``main_accgram.py generate-html``; test with
 ``tests/test_printed_decalogue_simanim.py`` (plus the tree-wide
@@ -63,6 +66,7 @@ from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 
 from py_html import wlc_utils_html as H
+from py_html.my_html_span_romanized import rmn
 
 import repo_paths
 
@@ -91,15 +95,19 @@ _TANAKH_EX_ELYON_IMG = "img/Simanim-Tanakh-p-350-Ex-Dec-elyon-m-trad.png"
 # module docstring). These thin local aliases keep the prose below unchanged after the move.
 _TAHTON = pds.TAHTON
 _ELYON = pds.ELYON
-_ROM_PASHTA = pds.ROM_PASHTA
-_ROM_TIPEHA = pds.ROM_TIPEHA
-_ROM_ETNAHTA = pds.ROM_ETNAHTA
-_ROM_REVIA = pds.ROM_REVIA
-_ROM_SOF_PASUQ = pds.ROM_SOF_PASUQ
-_ROM_PASHTA_ETNAHTA = pds.ROM_PASHTA_ETNAHTA
-_ROM_TIPEHA_ETNAHTA = pds.ROM_TIPEHA_ETNAHTA
-_ROM_TIPEHA_SILLUQ = pds.ROM_TIPEHA_SILLUQ
-_ROM_SILLUQ_SOF_PASUQ = pds.ROM_SILLUQ_SOF_PASUQ
+# Each _ROM_* accent name is pre-wrapped ONCE in <span class="romanized"> (italic), so every prose
+# site below is styled without a per-site rmn() call -- issue #65, finding C2; the rule and its
+# exclusions are documented in printed_decalogue_strands' module docstring. These are HTML nodes,
+# not strings: splice them into a contents tuple, never into an f-string.
+_ROM_PASHTA = rmn(pds.ROM_PASHTA)
+_ROM_TIPEHA = rmn(pds.ROM_TIPEHA)
+_ROM_ETNAHTA = rmn(pds.ROM_ETNAHTA)
+_ROM_REVIA = rmn(pds.ROM_REVIA)
+_ROM_SOF_PASUQ = rmn(pds.ROM_SOF_PASUQ)
+_ROM_PASHTA_ETNAHTA = rmn(pds.ROM_PASHTA_ETNAHTA)
+_ROM_TIPEHA_ETNAHTA = rmn(pds.ROM_TIPEHA_ETNAHTA)
+_ROM_TIPEHA_SILLUQ = rmn(pds.ROM_TIPEHA_SILLUQ)
+_ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section
 # of the very page these four strands are vendored from -- so its base URL is single-sourced from
@@ -130,31 +138,27 @@ def _path(path: str) -> object:
 # --------------------------------------------------------------------------- #
 # Rendering
 # --------------------------------------------------------------------------- #
-# The opening span -- from "Roughly speaking" through "only the start of one." (including the
-# "(The printed tradition is fading...)" aside) -- is duplicated verbatim in
-# printed_decalogue_page._intro() and printed_decalogue_koren_page._PARA_1 (the no-HTML shared
-# module pds can't hold rendered prose). If you edit this wording, edit it in all three places.
+# This page used to open with the companion page's whole four-strands intro paragraph, duplicated
+# verbatim (issue #65, finding V5). It now opens with ONE sentence that cues the reiteration and
+# links to the companion, which alone states the four strands in full. Keep it to one sentence: a
+# reader arriving here from the companion should be able to see at a glance that nothing new is
+# being said yet.
 _PARA_1 = (
-    "Roughly speaking, each Decalogue",
-    " has two strands of cantillation, the טעם תחתון and the טעם עליון.",
-    " Why is this only roughly true? Because in detail there are",
-    *[" ", H.bold("four"), " strands: the"],
+    "As ",
+    link("the companion page", _FOUR_STRANDS_HREF),
+    " explains, each Decalogue has not two strands of cantillation but",
+    *[" ", H.bold("four"), ": the"],
     *[" ", H.bold("printed tradition"), " (p-trad)"],
     " and the",
     *[" ", H.bold("manuscript tradition"), " (m-trad)"],
-    " differ in cantillation,",
-    f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
-    " (The p-trad is fading, but still visible in editions like Koren and Simanim.)",
-    #
-    " The most striking difference between the p-trad and m-trad has to do with whether אנכי…עבדים,",
-    " typically identified as the first commandment, is an entire chanted verse or",
-    " only the start of one.",
+    f" each have their own טעם {_TAHTON} and their own טעם {_ELYON}, differing most strikingly over"
+    " whether אנכי…עבדים, typically identified as the first commandment, is an entire chanted"
+    " verse or only the start of one.",
 )
 
 # The continuation is this page's own second paragraph (the companion page's differs).
 _PARA_2 = (
-    link("The companion page", _FOUR_STRANDS_HREF),
-    " lays out those four strands and grammar-checks the p-trad; this page serves only to"
+    "That page lays out those four strands and grammar-checks the p-trad; this page serves only to"
     " document the claim that",
     *[" ", H.bold("Simanim's Tiqqun"), " follows the p-trad."],
     " Along the way it transcribes two of Simanim's notes"
@@ -224,9 +228,14 @@ def _intro(source: dict) -> tuple[object, ...]:
     )
 
 
+# Every ``alt`` passed here names the strands in ROMANIZED form ("taxton"/"elyon") while the
+# figcaption beside it uses Hebrew letters. That is deliberate, not drift: attribute contexts are
+# exempt by design (issue #65, finding T1) -- see printed_decalogue_strands' module docstring.
 def _figure(src: str, alt: str, caption: object, *, width: str | None) -> object:
+    # No inline style here: gh-pages/style.css already declares `img { max-width: 100% }` and
+    # `figure img { height: auto }`, so an inline copy only duplicated the stylesheet and
+    # outranked it (issue #65, finding C4b). Don't reintroduce it.
     img_attr = {"src": src, "alt": alt}
-    img_attr["style"] = "max-width: 100%; height: auto;"
     if width:
         img_attr["width"] = width
     return H.figure((H.img(img_attr), H.figcaption(caption)))
@@ -273,11 +282,14 @@ def _p83_scan_and_transcription() -> object:
     """Scan and transcription side by side, as in the original issue-#56 comment: a two-column
     table with the source scan on the left and the RTL transcription (following the scan's own
     line breaks) on the right."""
+    # As in _figure: no inline style, since gh-pages/style.css's `img { max-width: 100% }` already
+    # covers it (issue #65, finding C4b). This img sits in a table cell rather than a <figure>, so
+    # it never picked up `figure img { height: auto }` -- but height:auto is the CSS initial value
+    # for a replaced element anyway, so the inline copy bought nothing here either.
     img = H.img(
         {
             "src": _P83_IMG,
-            "alt": "Simanim Tiqqun p. 83: side-margin note on the Exodus Decalogue’s אנכי…עבדים unit",
-            "style": "max-width: 100%; height: auto;",
+            "alt": "Simanim Tiqqun p. 83: side-margin note on the Exodus Decalogue's אנכי…עבדים unit",
             "width": "275",
         }
     )
@@ -330,7 +342,7 @@ def _p83_section() -> tuple[object, ...]:
                         *[
                             " text in ",
                             H.bold("{curly braces}"),
-                            " is our editorial addition; ",
+                            " is my editorial addition; ",
                         ],
                         H.bold("[square brackets]"),
                         " reproduce brackets present in the source itself.",
@@ -400,10 +412,14 @@ def _p246_mapping_table() -> object:
     ragil = H.table_row(
         (
             H.table_header(("בטעם רגיל", " ", H.small("(ordinary)"))),
-            H.table_datum(_ROM_SOF_PASUQ),
+            # This strand gives אנכי…עבדים its own chanted verse (pds.STRUCTURE pins that
+            # verse's end at עבדים), so עבדים IS verse-final here and its U+05BD really is
+            # silluq, not a meteg. Name the accent and the punctuation both, as the rest of
+            # the page-set does -- "sof pasuq" alone named neither the accent nor the strand.
+            H.table_datum(_ROM_SILLUQ_SOF_PASUQ),
             H.table_datum(_ROM_TIPEHA),
             H.table_datum(
-                link(("printed ", _TAHTON, " = m-trad ", _ELYON), _FOUR_STRANDS_HREF)
+                link(("p-trad ", _TAHTON, " = m-trad ", _ELYON), _FOUR_STRANDS_HREF)
             ),
         )
     )
@@ -415,7 +431,12 @@ def _p246_mapping_table() -> object:
             H.table_datum(link(("m-trad ", _TAHTON), _FOUR_STRANDS_HREF)),
         )
     )
-    return H.table((header, ragil, keter), {"class": "printed-decalogue-verdict"})
+    # Its own class, not the companion page's "printed-decalogue-verdict": this table maps the
+    # note's labels onto strands, it renders no grammaticality verdict, and it never used that
+    # class's td.clean / td.ungrammatical rules (issue #65, finding C4d).
+    return H.table(
+        (header, ragil, keter), {"class": "printed-decalogue-strand-mapping"}
+    )
 
 
 def _p246_section() -> tuple[object, ...]:
@@ -432,7 +453,7 @@ def _p246_section() -> tuple[object, ...]:
         ),
         _figure(
             _P246_IMG,
-            "Simanim Tiqqun p. 246: appendix footnote on the taḥton Decalogue’s אנכי…עבדים unit",
+            "Simanim Tiqqun p. 246: appendix footnote on the taḥton Decalogue's אנכי…עבדים unit",
             # The blue vertical bars are deliberately a different colour AND orientation from
             # the brown horizontal page-break bar (see the p. 83 elyon figure above): the two
             # mark opposite operations — a horizontal brown bar marks a page break we *removed*
@@ -444,7 +465,7 @@ def _p246_section() -> tuple[object, ...]:
                 H.line_break(),
                 H.small(
                     (
-                        "The vertical blue bars mark line breaks we added — after אתנחתא and after"
+                        "The vertical blue bars mark line breaks I added — after אתנחתא and after"
                         " עבדים — to narrow the inconveniently wide original.",
                     )
                 ),
@@ -458,7 +479,7 @@ def _p246_section() -> tuple[object, ...]:
                 H.small(
                     (
                         "The lemma is shown in blue rather than boldface — bold renders many"
-                        " Hebrew fonts' diacritics hard to read, so we substitute colour for the"
+                        " Hebrew fonts' diacritics hard to read, so I substitute colour for the"
                         " source's own emphasis. It reproduces the appendix's own body text,"
                         " asterisk and all, except that the note writes the Tetragrammaton as the"
                         " double-yod (יי) abbreviation where the body has the full יהוה.",
@@ -472,7 +493,7 @@ def _p246_section() -> tuple[object, ...]:
                     (
                         "It isn't clear whether the mark after עבדים in the transcription is a ",
                         _ROM_SOF_PASUQ,
-                        " or a colon; we read it as a colon.",
+                        " or a colon; I read it as a colon.",
                     )
                 ),
             )
@@ -572,12 +593,13 @@ def _conclusion() -> tuple[object, ...]:
         H.para(
             (
                 "One scope note: the finding above rests on the אנכי…עבדים unit — the most striking"
-                " p-trad/m-trad divergence — in Simanim's ",
+                " p-trad/m-trad divergence. Simanim makes the same p-trad choice at that unit in"
+                " both of its Decalogues: the ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue. I have since verified the same p-trad choice in Simanim's ",
+                " (Yitro) one and the ",
                 H.bold("Deuteronomy"),
-                f" (Vaetḥanan) Decalogue, whose {_ELYON} main Decalogue starts on p. 208, so the"
-                " claim holds for both Decalogues rather than Exodus alone. One caveat: in the"
+                f" (Vaetḥanan) one, whose {_ELYON} main Decalogue starts on p. 208. One caveat:"
+                " in the"
                 f" Deuteronomy {_TAHTON} (appendix, p. 247), the p-trad and m-trad also diverge at"
                 " the Shabbat commandment, but there Simanim follows the m-trad, not the p-trad —"
                 " so its p-trad allegiance, firm at אנכי…עבדים across both Decalogues, is not"
@@ -588,9 +610,9 @@ def _conclusion() -> tuple[object, ...]:
             (
                 "Another scope note: everything above concerns Simanim's ",
                 H.bold("Tiqqun"),
-                ". I have since also checked the separately published Simanim ",
+                ". The separately published Simanim ",
                 H.bold("Tanakh"),
-                " (Feldheim), and it does not agree with the Tiqqun: it follows the ",
+                " (Feldheim) does not agree with it: the Tanakh follows the ",
                 H.bold("m-trad"),
                 f", not the p-trad, on both strands. Where the Tiqqun is p-trad, the Tanakh's"
                 f" Exodus Decalogue is the m-trad {_TAHTON} in its running text (p. 119) and the"

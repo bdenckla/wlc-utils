@@ -26,9 +26,12 @@ printed-tradition choice it makes:
 Editorial / style conventions are shared with the two companion pages and documented on
 ``printed_decalogue_strands`` (bare-Hebrew strand names תחתון / עליון -- never transliterated or
 translated; the single-sourced ``ROM_*`` accent romanizations; the real-em-dash rule).  The thin
-``_TAHTON`` / ``_ELYON`` / ``_ROM_*`` aliases below just limit prose churn.  As on the Simanim
+``_TAHTON`` / ``_ELYON`` aliases below just limit prose churn; the ``_ROM_*`` ones additionally
+wrap each name in the italic ``span.romanized``, so they are HTML nodes rather than strings (see
+the comment at that alias block).  As on the Simanim
 page: prefer "cantillation" to "accentuation"; keep romanized names ("taḥton") in image ``alt``
-text on purpose (don't mix alphabets in an alt attribute); and keep *running text* (the everyday
+text on purpose (attribute contexts are exempt from the Hebrew-letter rule by design -- see the
+"Attribute contexts are EXEMPT" bullet in ``printed_decalogue_strands``); and keep *running text* (the everyday
 Torah text) distinct from *appendix* (the strand reprinted separately), and *body* (printed text)
 distinct from *note* (annotation).
 
@@ -55,6 +58,7 @@ from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 
 from py_html import wlc_utils_html as H
+from py_html.my_html_span_romanized import rmn
 
 import repo_paths
 
@@ -79,8 +83,12 @@ _P38_NOTE_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon-note.png"
 # module docstring). These thin local aliases keep the prose below unchanged.
 _TAHTON = pds.TAHTON
 _ELYON = pds.ELYON
-_ROM_REVIA = pds.ROM_REVIA
-_ROM_SILLUQ_SOF_PASUQ = pds.ROM_SILLUQ_SOF_PASUQ
+# Each _ROM_* accent name is pre-wrapped ONCE in <span class="romanized"> (italic), so every prose
+# site below is styled without a per-site rmn() call -- issue #65, finding C2; the rule and its
+# exclusions are documented in printed_decalogue_strands' module docstring. These are HTML nodes,
+# not strings: splice them into a contents tuple, never into an f-string.
+_ROM_REVIA = rmn(pds.ROM_REVIA)
+_ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section of
 # the very page these four strands are vendored from -- so its base URL is single-sourced from the
@@ -107,30 +115,26 @@ def _path(path: str) -> object:
 # --------------------------------------------------------------------------- #
 # Rendering
 # --------------------------------------------------------------------------- #
-# The opening span -- from "Roughly speaking" through "only the start of one." -- is duplicated
-# verbatim in printed_decalogue_page._intro() and printed_decalogue_simanim_page._PARA_1 (the
-# no-HTML shared module pds can't hold rendered prose). If you edit this wording, edit it in all
-# three places.
+# This page used to open with the companion page's whole four-strands intro paragraph, duplicated
+# verbatim (issue #65, finding V5). It now opens with ONE sentence that cues the reiteration and
+# links to the companion, which alone states the four strands in full. Keep it to one sentence: a
+# reader arriving here from the companion should be able to see at a glance that nothing new is
+# being said yet.
 _PARA_1 = (
-    "Roughly speaking, each Decalogue",
-    " has two strands of cantillation, the טעם תחתון and the טעם עליון.",
-    " Why is this only roughly true? Because in detail there are",
-    *[" ", H.bold("four"), " strands: the"],
+    "As ",
+    link("the companion page", _FOUR_STRANDS_HREF),
+    " explains, each Decalogue has not two strands of cantillation but",
+    *[" ", H.bold("four"), ": the"],
     *[" ", H.bold("printed tradition"), " (p-trad)"],
     " and the",
     *[" ", H.bold("manuscript tradition"), " (m-trad)"],
-    " differ in cantillation,",
-    f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
-    " (The p-trad is fading, but still visible in editions like Koren and Simanim.)",
-    #
-    " The most striking difference between the p-trad and m-trad has to do with whether אנכי…עבדים,",
-    " typically identified as the first commandment, is an entire chanted verse or",
-    " only the start of one.",
+    f" each have their own טעם {_TAHTON} and their own טעם {_ELYON}, differing most strikingly over"
+    " whether אנכי…עבדים, typically identified as the first commandment, is an entire chanted"
+    " verse or only the start of one.",
 )
 
 _PARA_2 = (
-    link("The companion page", _FOUR_STRANDS_HREF),
-    " lays out those four strands and grammar-checks the p-trad; this page serves only to"
+    "That page lays out those four strands and grammar-checks the p-trad; this page serves only to"
     " document the claim that",
     *[" ", H.bold("Koren"), " follows the p-trad."],
     " Along the way it transcribes one of Koren's own notes"
@@ -139,9 +143,14 @@ _PARA_2 = (
 )
 
 
+# Every ``alt`` passed here names the strands in ROMANIZED form ("taxton"/"elyon") while the
+# figcaption beside it uses Hebrew letters. That is deliberate, not drift: attribute contexts are
+# exempt by design (issue #65, finding T1) -- see printed_decalogue_strands' module docstring.
 def _figure(src: str, alt: str, caption: object, *, width: str | None) -> object:
+    # No inline style here: gh-pages/style.css already declares `img { max-width: 100% }` and
+    # `figure img { height: auto }`, so an inline copy only duplicated the stylesheet and
+    # outranked it (issue #65, finding C4b). Don't reintroduce it.
     img_attr = {"src": src, "alt": alt}
-    img_attr["style"] = "max-width: 100%; height: auto;"
     if width:
         img_attr["width"] = width
     return H.figure((H.img(img_attr), H.figcaption(caption)))
@@ -183,7 +192,7 @@ def _body_scans() -> tuple[object, ...]:
                 f" {_ELYON}. Here אנכי…עבדים is merged into the long opening verse — it ends on a",
                 *[" ", _ROM_REVIA, ","],
                 " not on its own verse. A note on this page, citing רוו״ה, points to the",
-                f" {_TAHTON} reading of the First Commandment; it is transcribed below.",
+                f" {_TAHTON} cantillation of the First Commandment; it is transcribed below.",
             ),
             width=None,
         ),
@@ -232,7 +241,7 @@ def _p38_note_section() -> tuple[object, ...]:
         ),
         _figure(
             _P38_NOTE_IMG,
-            "Koren appendix p. 38: note on the elyon Decalogue’s אנכי…עבדים unit",
+            "Koren appendix p. 38: note on the elyon Decalogue's אנכי…עבדים unit",
             (
                 "Koren, appendix p. 38 — the note on the",
                 f" {_ELYON} Decalogue, citing רוו״ה.",
@@ -260,12 +269,12 @@ def _p38_note_section() -> tuple[object, ...]:
                         H.bold("Notation:"),
                         " text in ",
                         H.bold("{curly braces}"),
-                        " is our editorial addition. That includes the expansion of the siglum"
-                        " רוו״ה, which we ",
+                        " is my editorial addition. That includes the expansion of the siglum"
+                        " רוו״ה, which I ",
                         H.bold("tentatively"),
                         " read as ר' וולף היידנהיים (R. Wolf Heidenheim) — the grammarian whose"
                         " editions fixed much of the printed dual-cantillation norm, so the"
-                        " likeliest referent here, though we have not confirmed the expansion."
+                        " likeliest referent here, though I have not confirmed the expansion."
                         " The parentheses are likewise an editorial addition; the note itself has"
                         " none.",
                     )
@@ -288,7 +297,7 @@ def _p38_note_section() -> tuple[object, ...]:
                 _ROM_SILLUQ_SOF_PASUQ,
                 " at עבדים), which keeps ten distinct commandments. That ",
                 _TAHTON,
-                " reading is one of the ",
+                " cantillation is one of the ",
                 link("four strands on the companion page", _FOUR_STRANDS_HREF),
                 " (the p-trad ",
                 _TAHTON,
@@ -318,9 +327,9 @@ def _conclusion() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "A closing, more-for-fun observation — the same one the ",
+                "A closing, more-for-fun observation — parallel to the one the ",
                 link("Simanim page", _SIMANIM_PAGE),
-                " makes. It is somewhat ",
+                " makes, though it lands on a gentler verdict. It is somewhat ",
                 H.bold("editorially conservative"),
                 " to keep p-trad Decalogues at all, where more recent Bibles have moved toward the"
                 f" m-trad {_ELYON} and m-trad {_TAHTON}. Koren straddles old and new rather"

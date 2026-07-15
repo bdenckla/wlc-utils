@@ -37,6 +37,7 @@ from mb_cmn import hebrew_punctuation as hpunc
 import wlc_provenance as provenance
 
 from py_html import wlc_utils_html as H
+from py_html.my_html_span_romanized import rmn
 
 import repo_paths
 
@@ -46,14 +47,16 @@ _GOERWITZ_URL = "goerwitz.html"
 _SOURCE_URL = "https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים"
 
 # An online Bible that happens to preserve the p-trad תחתון cantillation of the Deuteronomy
-# Sabbath commandment -- the reading catalogued in the appendix below, which the print editions
-# Koren and Simanim do NOT show. Chabad's Deut. 5 gives exactly that reading (Chabad's own
-# Hebrew Bible being the subject of the CTR review linked beside it).
+# Sabbath commandment -- the cantillation catalogued in the appendix below, which the print
+# editions Koren and Simanim do NOT show. Chabad's Deut. 5 gives exactly that cantillation
+# (Chabad's own Hebrew Bible being the subject of the CTR review linked beside it).
 _CHABAD_DT5_URL = (
     "https://www.chabad.org/torah-texts/9969/Tanakh-The-Hebrew-Bible/"
     "Torah-The-Pentateuch/Devarim-Deuteronomy/Chapter-5"
 )
-_CTR_REVIEW_URL = "https://bdenckla.github.io/MAM-with-doc/misc/rocc_0_review_of_ctr.html"
+_CTR_REVIEW_URL = (
+    "https://bdenckla.github.io/MAM-with-doc/misc/rocc_0_review_of_ctr.html"
+)
 
 # In-page anchor for the appendix cataloguing the grammar-irrelevant p-trad-vs-m-trad תחתון
 # differences (single-sourced: used as both the verdict-paragraph link's href fragment and the
@@ -68,6 +71,21 @@ _TAHTON_DETAILS_ID = "tahton-details"
 # (lang="hbo" -> the Taamey pointed-text font); only bare consonantal terms are inlined this way.
 _TAHTON = pds.TAHTON
 _ELYON = pds.ELYON
+
+
+# Romanized accent/mark names, each pre-wrapped ONCE in <span class="romanized"> (italic) so every
+# prose site below is styled without a per-site rmn() call -- issue #65, finding C2; the rule and
+# its exclusions are documented in printed_decalogue_strands' module docstring. These are HTML
+# nodes, not strings: splice them into a contents tuple, never into an f-string. The underlying
+# spellings stay single-sourced in pds -- don't retype them inline.
+_ROM_ETNAHTA = rmn(pds.ROM_ETNAHTA)
+_ROM_LEGARMEH = rmn(pds.ROM_LEGARMEH)
+_ROM_PASEQ = rmn(pds.ROM_PASEQ)
+_ROM_REVIA = rmn(pds.ROM_REVIA)
+_ROM_SEGOLTA = rmn(pds.ROM_SEGOLTA)
+_ROM_SOF_PASUQ = rmn(pds.ROM_SOF_PASUQ)
+_ROM_TIPEHA = rmn(pds.ROM_TIPEHA)
+_ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -99,10 +117,12 @@ def _by_key(
 
 
 def _intro() -> tuple[object, ...]:
-    # The opening span -- from "Roughly speaking" through "only the start of one." (including the
-    # "(The printed tradition is fading...)" aside) -- is duplicated verbatim in
-    # printed_decalogue_simanim_page._PARA_1 and printed_decalogue_koren_page._PARA_1 (the no-HTML
-    # shared module pds can't hold rendered prose). If you edit this wording, edit it in all three.
+    # This is the ONE full statement of the four strands in the page trio (issue #65, finding V5).
+    # The two satellite pages (printed_decalogue_simanim_page, printed_decalogue_koren_page) used to
+    # duplicate this paragraph verbatim; each now opens with a single "As the companion page
+    # explains..." sentence linking here instead, so a reader arriving from a satellite can tell
+    # reiteration from new material. Keep it that way: don't re-expand the satellites, and expect
+    # any edit here to be the only edit needed.
     return (
         H.heading_level_1(REPORT_TITLE),
         H.heading_level_2("The question"),
@@ -118,7 +138,8 @@ def _intro() -> tuple[object, ...]:
                 " differ in cantillation,",
                 f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
                 #
-                " (The p-trad is fading, but still visible in editions like Koren and Simanim.)",
+                " (The p-trad is fading, but still visible in editions like Koren and Simanim's"
+                " Tiqqun.)",
                 #
                 " The most striking difference between the p-trad and m-trad has to do with whether אנכי…עבדים,",
                 " typically identified as the first commandment, is an entire chanted verse or",
@@ -127,7 +148,7 @@ def _intro() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "We have run Richard Goerwitz's ",
+                "I have run Richard Goerwitz's ",
                 link("accent grammar checker", _GOERWITZ_URL),
                 " against the m-trad strands (as represented by WLC); this page"
                 " shows what happens when the checker is run against the p-trad strands.",
@@ -140,7 +161,9 @@ def _intro() -> tuple[object, ...]:
                 link("עשרת הדברות בסיס/טעמים", _SOURCE_URL),
                 " spells out all the strands separately — p-trad and m-trad alike —"
                 " each as single cantillation. Every chanted verse"
-                " (delimited by its own sof pasuq) is grammar-checked on its own. The"
+                " (delimited by its own ",
+                _ROM_SOF_PASUQ,
+                ") is grammar-checked on its own. The"
                 " m-trad is the baseline — MAM's own authoritative text, expected"
                 " to parse clean throughout — and the p-trad is the object of study.",
             )
@@ -231,6 +254,10 @@ def _strip_pointing(word: str) -> str:
     return has.strip_to_accents(word, keep_meteg=keep_meteg)
 
 
+# The `title` text here is an ATTRIBUTE context, so it keeps the romanized "taxton"/"elyon" even
+# though the visible prose names the strands in Hebrew letters. That asymmetry is deliberate and
+# settled -- see the "Attribute contexts are EXEMPT" bullet in printed_decalogue_strands' module
+# docstring before "correcting" any title/alt string on this page or its two satellites.
 def _abbr(letter: str, title: str) -> object:
     return H.htel_mk_inline("abbr", {"title": title}, letter)
 
@@ -427,9 +454,7 @@ def _four_strands_table(readings: list[pds.Reading]) -> object:
 
 
 _UL_ITEM_1 = (
-    H.bold(
-        f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first chanted verse"
-    ),
+    H.bold(f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first chanted verse"),
     ", where the table gives them a single shared row, labelled mE/pT."
     " The equality stops there: past this first"
     " verse the two strands diverge — the p-trad ",
@@ -440,7 +465,7 @@ _UL_ITEM_1 = (
 _UL_ITEM_2 = (
     H.bold(f"P-trad {_ELYON} ≠ m-trad {_ELYON}."),
     f" The p-trad {_ELYON} puts ",
-    H.bold(pds.ROM_REVIA),
+    H.bold(_ROM_REVIA),
     " on עבדים and runs the first two commandments together into one verse,"
     " leading to only ",
     H.bold("9"),
@@ -453,9 +478,9 @@ _UL_ITEM_2 = (
 _UL_ITEM_3 = (
     f"The m-trad {_TAHTON} does not give אנכי…עבדים its own verse either — it"
     " runs אנכי…פני together (",
-    pds.ROM_ETNAHTA,
+    _ROM_ETNAHTA,
     " at עבדים, ",
-    pds.ROM_SOF_PASUQ,
+    _ROM_SOF_PASUQ,
     " at פני), a third structure again.",
 )
 
@@ -467,11 +492,11 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
             (
                 "The m-trad and p-trad accent the Decalogue's אנכי…עבדים unit differently."
                 " The accent on עבדים is what decides the structure: a ",
-                H.bold(pds.ROM_SILLUQ_SOF_PASUQ),
+                H.bold(_ROM_SILLUQ_SOF_PASUQ),
                 " there ends the verse, so אנכי…עבדים stands as its own verse; an ",
-                H.bold(pds.ROM_ETNAHTA),
+                H.bold(_ROM_ETNAHTA),
                 " or ",
-                H.bold(pds.ROM_REVIA),
+                H.bold(_ROM_REVIA),
                 " there is mid-verse, folding אנכי…עבדים into a longer verse. The table below "
                 "lays all four strands over the same milestone words — ",
                 H.bdi("אנכי"),
@@ -656,14 +681,14 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
         ),
         H.para(
             (
-                f"In the m-trad {_ELYON}, the first commandment אנכי … עבדים is its own "
+                f"In the m-trad {_ELYON}, the first commandment אנכי…עבדים is its own "
                 "chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
                 "separate verses, ",
                 H.bold("both of which parse clean"),
                 ". The p-trad instead merges the first two commandments into a single "
-                "verse (nine chanted verses in all, against the m-trad’s ten). That one "
+                "verse (nine chanted verses in all, against the m-trad's ten). That one "
                 "merged verse is what the grammar rejects. Shown stripped to consonants and "
-                f"accents and divided at the p-trad {_TAHTON}’s verse boundaries — one p-trad "
+                f"accents and divided at the p-trad {_TAHTON}'s verse boundaries — one p-trad "
                 f"{_ELYON} verse (pE) spanning the five ordinary p-trad {_TAHTON} verses (pT) "
                 "it merges:",
             )
@@ -671,8 +696,13 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
         p_table,
         H.para(
             (
-                "The single etnaḥta falls at לשנאי, leaving a first half crowded with a "
-                "segolta plus three separate revia domains (at ",
+                "The single ",
+                _ROM_ETNAHTA,
+                " falls at לשנאי, leaving a first half crowded with a ",
+                _ROM_SEGOLTA,
+                " plus three separate ",
+                _ROM_REVIA,
+                " domains (at ",
                 *H.bdi_multi("עבדים", "על־פני", "לארץ"),
                 "); the prose grammar cannot build it and returns a ",
                 H.code("pashta_phrase"),
@@ -683,9 +713,9 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
             (
                 "The cause is the merged ",
                 H.bold("structure"),
-                f", not sheer length: Deuteronomy’s p-trad {_ELYON} Sabbath verse runs 55 "
+                f", not sheer length: Deuteronomy's p-trad {_ELYON} Sabbath verse runs 55 "
                 "words and parses clean, while this merged verse (51 words) does not. Keeping "
-                "the two commandments as the m-trad’s two separate verses (",
+                "the two commandments as the m-trad's two separate verses (",
                 f"{len(ms_cmd1.words)} and {len(ms_cmd2.words)} words) ",
                 "is exactly what lets them parse.",
             )
@@ -693,30 +723,30 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
         H.heading_level_3("A tidier nesting — until you scrutinize it"),
         H.para(
             (
-                f"It is tempting to call the p-trad’s arrangement the neater one. Its five "
+                f"It is tempting to call the p-trad's arrangement the neater one. Its five "
                 f"{_TAHTON} verses nest perfectly inside a single {_ELYON} verse — a clean "
                 "five-in-one — whereas the m-trad divides the very same words into ",
                 H.bold("two"),
                 f" {_ELYON} verses and ",
                 H.bold("four"),
                 f" {_TAHTON} verses that do not nest cleanly at all: the m-trad ",
-                f"{_TAHTON}’s opening verse אנכי … על־פני straddles the {_ELYON}’s break "
-                f"after עבדים, so neither strand’s verses sit wholly inside the other’s. In "
+                f"{_TAHTON}'s opening verse אנכי…על־פני straddles the {_ELYON}'s break "
+                f"after עבדים, so neither strand's verses sit wholly inside the other's. In "
                 "the gradient "
-                "bars below, mE’s first break lands inside mT’s first verse, which runs on to "
+                "bars below, mE's first break lands inside mT's first verse, which runs on to "
                 "על־פני — that is the straddle:",
             )
         ),
         m_table,
         H.para(
             (
-                "But the p-trad’s tidiness is bought with an ungrammatical cantillation — the "
+                "But the p-trad's tidiness is bought with an ungrammatical cantillation — the "
                 "very one dissected above. Once you see the accents that buy the five-in-one, "
                 "its neatness evaporates. This is ",
                 H.bold("not"),
                 " to say the tidier nesting could not have been cantillated grammatically; "
                 "perhaps some other accentuation would have carried it off. That is a "
-                "theoretical question we are not prepared to settle here.",
+                "theoretical question I am not prepared to settle here.",
             )
         ),
     )
@@ -730,13 +760,21 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
         H.heading_level_2("Source"),
         H.para(
             (
-                "All eight readings (two books × taḥton/elyon × m-trad/p-trad) are "
+                f"All eight strands (two books × {_TAHTON}/{_ELYON} × m-trad/p-trad) are "
                 "taken from the Wikisource base page ",
                 link("עשרת הדברות בסיס/טעמים", _SOURCE_URL),
                 f" (revision {oldid}, {ts[:10]}), which every p-trad-vs-m-trad comparison "
                 "table there transcludes. A handful of wiki templates are resolved to plain "
-                "pointed text (legarmeh/paseq to a paseq mark, qere for ketiv-qere, paragraph "
-                "and pisqa markers dropped); the chanted verses are split at sof pasuq.",
+                "pointed text (",
+                _ROM_LEGARMEH,
+                "/",
+                _ROM_PASEQ,
+                " to a ",
+                _ROM_PASEQ,
+                " mark, qere for ketiv-qere, paragraph and pisqa markers dropped); the chanted "
+                "verses are split at ",
+                _ROM_SOF_PASUQ,
+                ".",
             )
         ),
         H.para(
@@ -747,8 +785,8 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                     "printed-decalogue-simanim.html",
                 ),
                 f": two notes from Simanim's Tiqqun — its main text uses the p-trad {_ELYON} "
-                f"and its appendix the p-trad {_TAHTON} (issue #62). That page now leans on "
-                "this page's ",
+                "and its appendix the p-trad "
+                f"{_TAHTON}. That page links to this page's ",
                 link("four-strands table", "#four-strands"),
                 " rather than repeating it.",
             )
@@ -760,7 +798,7 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 f" as a second independent witness: it prints the p-trad {_TAHTON} in its "
                 f"Exodus running text and the p-trad {_ELYON} in an appendix, with a note "
                 "(citing רוו״ה) flagging the standalone-verse alternative it declines to "
-                "print. That page, too, leans on this page's ",
+                "print. That page, too, links to this page's ",
                 link("four-strands table", "#four-strands"),
                 " rather than repeating it.",
             )
@@ -853,7 +891,8 @@ def _differing_span(
 def _split_into_lines(words: list[str], line_ends: tuple[str, ...]) -> list[list[str]]:
     """Split ``words`` into the successive line groups ending at each skeleton in ``line_ends``.
     Asserts every break lands, in order, consumes the whole stretch, and ends on a word that really
-    carries a disjunctive accent — so any drift in the vendored words/accents fails the build."""
+    carries a disjunctive accent — so any drift in the vendored words/accents fails the build.
+    """
     lines: list[list[str]] = []
     cur: list[str] = []
     pending = list(line_ends)
@@ -892,10 +931,12 @@ def _diff_row(label: str, words: list[str]) -> object:
 def _sabbath_diff_table(results: list[pd.VersionResult]) -> object:
     """The differing stretch of the two Deuteronomy תחתון Sabbath strands, as a table of three
     line-pairs (an m-trad row directly above its p-trad row), each line a short run of words ending
-    on a shared disjunctive; the head and tail the two strands share verbatim are omitted. The plain
-    (classless) table picks up the shared centered layout, the odd-row zebra (tinting the m-trad
-    rows), and the lang="hbo" font. Span, breaks, and the disjunctive check are all derived live
-    from the data, so nothing here can drift from the grammar-checked text."""
+    on a shared disjunctive; the head and tail the two strands share verbatim are omitted. The table
+    picks up the shared centered layout and the lang="hbo" font; its lone class turns OFF the shared
+    odd-row zebra, which -- the rows alternating m-trad/p-trad -- tinted exactly the three m-trad
+    rows and so read as if the stripe meant "m-trad" (issue #65, finding C3). Span, breaks, and the
+    disjunctive check are all derived live from the data, so nothing here can drift from the
+    grammar-checked text."""
     m_span, p_span = _differing_span(
         _dt_taxton_sabbath_words(results, "manuscript"),
         _dt_taxton_sabbath_words(results, "printed"),
@@ -906,7 +947,7 @@ def _sabbath_diff_table(results: list[pd.VersionResult]) -> object:
     for m_line, p_line in zip(m_lines, p_lines):
         rows.append(_diff_row("m-trad", m_line))
         rows.append(_diff_row("p-trad", p_line))
-    return H.table(tuple(rows))
+    return H.table(tuple(rows), {"class": "printed-decalogue-sabbath-diff"})
 
 
 def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
@@ -939,7 +980,9 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 hbo("תִּרְצָ֖ח"),
                 " (m-trad, qamats) against ",
                 hbo("תִּרְצַ֖ח"),
-                f" (p-trad, patax). Both carry the same {pds.ROM_TIPEHA}; only the vowel differs.",
+                " (p-trad, patax). Both have the same ",
+                _ROM_TIPEHA,
+                "; only the vowel differs.",
             )
         ),
         H.para(
@@ -990,13 +1033,16 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                     H.bdi(hbo("כָל")),
                     " / ",
                     H.bdi(hbo("וְכָל")),
-                    ". This is actually a bug that will soon be fixed; the interested reader "
-                    "should consult ",
+                    ". This one is not a real m-trad/p-trad difference at all, but a defect "
+                    "in the source: the p-trad supplies only the cantillation, and the "
+                    f"vowel-pointing under it is Wikisource's own, so the p-trad {_TAHTON} "
+                    "vendored here is simply mispointed in Deuteronomy — its own Exodus "
+                    f"{_TAHTON} points the same words with qamats qatan. Reported as ",
                     link(
                         "MAM-basics issue #202",
                         "https://github.com/bdenckla/MAM-basics/issues/202",
                     ),
-                    " for the details.",
+                    ".",
                 ),
             )
         ),
@@ -1011,7 +1057,7 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         ),
         # The user-supplied datum (issue #52 follow-up): the p-trad תחתון Sabbath cantillation
         # dissected just above is missing from the two print editions this page cites as still
-        # carrying the p-trad, but survives online at Chabad -- whose own edition our CTR review
+        # carrying the p-trad, but survives online at Chabad -- whose own edition my CTR review
         # judges the weirdest, and possibly worst, on the web.
         *_chabad_witness(),
     )
@@ -1021,29 +1067,31 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
 # The online-witness note: Chabad preserves the p-trad תחתון Sabbath cantillation
 # --------------------------------------------------------------------------- #
 def _chabad_witness() -> tuple[object, ...]:
-    """A short note that the p-trad תחתון Sabbath reading catalogued above is absent from Koren and
-    Simanim yet present in Chabad's online Bible, with a nod to our CTR review of that eccentric
-    edition."""
+    """A short note that the p-trad תחתון Sabbath cantillation catalogued above is absent from
+    Koren and Simanim yet present in Chabad's online Bible, with a nod to my CTR review of that
+    eccentric edition."""
     return (
-        H.heading_level_3("A gap in Koren and Simanim — and where the reading survives online"),
+        H.heading_level_3(
+            "A gap in Koren and Simanim — and where the cantillation survives online"
+        ),
         H.para(
             (
                 f"One curiosity of this p-trad {_TAHTON} Sabbath cantillation is that the two print "
                 "editions cited at the top of this page as still showing the p-trad — Koren and "
                 "Simanim — do ",
                 H.bold("not"),
-                " print it here; for the Deuteronomy Sabbath commandment neither carries the "
+                " print it here; for the Deuteronomy Sabbath commandment neither has the "
                 f"p-trad {_TAHTON} shown above. Among online Bibles it does survive, in a "
                 "conspicuously eccentric one: Chabad's ",
                 link("Deuteronomy 5", _CHABAD_DT5_URL),
-                f" gives exactly this p-trad {_TAHTON} reading of the words ",
+                f" gives exactly this p-trad {_TAHTON} cantillation of the words ",
                 "לא תעשה כל מלאכה",
                 " onward.",
             )
         ),
         H.para(
             (
-                "That eccentricity is not confined to the accents here: our ",
+                "That eccentricity is not confined to the accents here: my ",
                 link("review of Chabad's online Hebrew Bible", _CTR_REVIEW_URL),
                 " calls it “certainly the weirdest Hebrew Bible on the web, and possibly the "
                 "worst”.",
