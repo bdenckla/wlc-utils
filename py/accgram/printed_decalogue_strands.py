@@ -94,6 +94,12 @@ ROM_METEG = "meteg"
 ROM_MAQAF = "maqaf"
 ROM_LEGARMEH = "legarmeh"
 ROM_PASEQ = "paseq"
+# The Shabbat-commandment accents: these fall outside the אנכי…עבדים unit _ACCENT_NAMES derives,
+# and are named only in the Koren page's Deuteronomy prose (issue #66), where the p-trad/m-trad
+# also diverge -- p-trad geresh/zaqef qatan against m-trad pazer/revia.
+ROM_GERESH = "geresh"
+ROM_ZAQEF_QATAN = "zaqef qatan"
+ROM_PAZER = "pazer"
 
 # Compound readings that recur verbatim in the prose (U+2026 ellipsis / U+2013 en dash between).
 ROM_PASHTA_ETNAHTA = f"{ROM_PASHTA}…{ROM_ETNAHTA}"  # the merged manuscript תחתון

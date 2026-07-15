@@ -31,11 +31,13 @@ def test_body_renders() -> None:
 
 
 def test_scan_images_committed() -> None:
-    """The three Koren scans are committed locally (the page references them by relative path)."""
+    """The four Koren scans are committed locally (the page references them by relative path)."""
     img_dir = repo_paths.gh_pages_dir() / "accgram" / "img"
     for name in (
         "Koren-p-113-Ex-Dec-p-trad-taxton.png",
         "Koren-appendix-p-38-Ex-Dec-p-trad-elyon.png",
         "Koren-appendix-p-38-Ex-Dec-p-trad-elyon-note.png",
+        # The Deuteronomy Shabbat commandment (issue #66), backing the conclusion's scope note.
+        "Koren-p-281-Dt-Dec-Shabbat-p-trad-taxton.png",
     ):
         assert (img_dir / name).is_file(), f"missing committed scan {name}"

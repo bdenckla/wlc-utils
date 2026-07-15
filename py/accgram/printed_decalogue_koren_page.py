@@ -37,9 +37,13 @@ distinct from *note* (annotation).
 
 DRAFT-STAGE FACTS TO VERIFY (see .novc/pending_koren_page_edits.md): the page numbers (113 / 38)
 come from the committed scan filenames; the appendix's separate low pagination is described but not
-confirmed; the finding rests on the Exodus Decalogue only (Deuteronomy not checked yet); and
-רוו״ה is *tentatively* expanded to Wolf Heidenheim (likely but unconfirmed, flagged as such in the
-rendered notation line).
+confirmed; and רוו״ה is *tentatively* expanded to Wolf Heidenheim (likely but unconfirmed, flagged
+as such in the rendered notation line).
+
+Koren's Deuteronomy (Vaetxanan) Decalogue *has* now been spot-checked (issue #66), so the claim is
+no longer Exodus-scoped: Koren shows the p-trad in both books.  The Deuteronomy check also reaches
+a second divergence point the Exodus scans cannot -- the Shabbat commandment -- where Koren again
+shows the p-trad, and where Simanim's Tiqqun does not.  See the conclusion's scope note.
 
 Regenerate with ``main_accgram.py generate-html``; test with
 ``tests/test_printed_decalogue_koren.py`` (plus the tree-wide ``tests/test_transliterations.py``).
@@ -62,7 +66,10 @@ from py_html.my_html_span_romanized import rmn
 
 import repo_paths
 
-REPORT_TITLE = "Koren follows the printed tradition for the Decalogue"
+# Plural "Decalogues" since issue #66: the claim now genuinely covers Exodus and Deuteronomy both,
+# so the Simanim page's plural policy (claims about both Decalogues take the plural) applies here
+# too. It was singular only while the page was Exodus-scoped.
+REPORT_TITLE = "Koren follows the printed tradition for the Decalogues"
 
 _PRINTED_DECALOGUE_PAGE = "printed-decalogue.html"
 _SIMANIM_PAGE = "printed-decalogue-simanim.html"
@@ -75,6 +82,10 @@ _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
 # in the appendix (עליון).
 _P113_BODY_IMG = "img/Koren-p-113-Ex-Dec-p-trad-taxton.png"
 _P38_BODY_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon.png"
+# The Deuteronomy (Vaetxanan) תחתון Decalogue starts on p. 280 and runs onto p. 281; this crop is
+# its Shabbat commandment, on p. 281. It backs the conclusion's scope note (issue #66): unlike
+# Simanim's Tiqqun, Koren shows the p-trad here too.
+_P281_DT_BODY_IMG = "img/Koren-p-281-Dt-Dec-Shabbat-p-trad-taxton.png"
 # The Koren note (a crop of the appendix p. 38 עליון Decalogue): the רוו״ה footnote transcribed and
 # translated below.
 _P38_NOTE_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon-note.png"
@@ -89,6 +100,11 @@ _ELYON = pds.ELYON
 # not strings: splice them into a contents tuple, never into an f-string.
 _ROM_REVIA = rmn(pds.ROM_REVIA)
 _ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
+# The Deuteronomy Shabbat-commandment accents (issue #66), named only in the conclusion's scope
+# note and the p. 281 figure caption.
+_ROM_GERESH = rmn(pds.ROM_GERESH)
+_ROM_ZAQEF_QATAN = rmn(pds.ROM_ZAQEF_QATAN)
+_ROM_PAZER = rmn(pds.ROM_PAZER)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section of
 # the very page these four strands are vendored from -- so its base URL is single-sourced from the
@@ -206,7 +222,7 @@ def _intro(source: dict) -> tuple[object, ...]:
         H.para(_PARA_2),
         H.para(
             (
-                "Koren follows the p-trad for the Decalogue. In its ",
+                "Koren follows the p-trad for the Decalogues. In its ",
                 H.bold("Exodus"),
                 " (Yitro) Decalogue, Koren runs the p-trad",
                 f" {_TAHTON} in the running text (p. 113) and gives the p-trad {_ELYON} in an"
@@ -316,7 +332,7 @@ def _conclusion() -> tuple[object, ...]:
         H.heading_level_2("Conclusion", {"id": "koren-conclusion"}),
         H.para(
             (
-                "Koren follows the p-trad for the Decalogue, not the m-trad. The two traditions'"
+                "Koren follows the p-trad for the Decalogues, not the m-trad. The two traditions'"
                 " most consequential divergence is at the opening commandment אנכי…עבדים, and"
                 " Koren lands on the p-trad side of that divergence on both strands: the p-trad ",
                 _TAHTON,
@@ -331,8 +347,9 @@ def _conclusion() -> tuple[object, ...]:
                 link("Simanim page", _SIMANIM_PAGE),
                 " makes, though it lands on a gentler verdict. It is somewhat ",
                 H.bold("editorially conservative"),
-                " to keep p-trad Decalogues at all, where more recent Bibles have moved toward the"
-                f" m-trad {_ELYON} and m-trad {_TAHTON}. Koren straddles old and new rather"
+                " to keep p-trad Decalogues at all — let alone to keep them in both books, as the"
+                " scope note below shows Koren does — where more recent Bibles have moved toward"
+                f" the m-trad {_ELYON} and m-trad {_TAHTON}. Koren straddles old and new rather"
                 " pervasively; the רוו״ה note above is one glimpse of that — it sets Koren's"
                 " printed ",
                 _ELYON,
@@ -342,13 +359,49 @@ def _conclusion() -> tuple[object, ...]:
         H.para(
             (
                 "One scope note: the finding above rests on the אנכי…עבדים unit — the most striking"
-                " p-trad/m-trad divergence — in Koren's ",
+                " p-trad/m-trad divergence. Koren makes the same p-trad choice at that unit in both"
+                " of its Decalogues: the ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue. I have not here checked Koren's ",
+                " (Yitro) one and the ",
                 H.bold("Deuteronomy"),
-                " (Vaetḥanan) Decalogue, so the claim is made for the Exodus Decalogue"
-                " specifically, not asserted for both.",
+                f" (Vaetḥanan) one, whose {_TAHTON} running text starts on p. 280 and runs onto"
+                " p. 281. There too אנכי…עבדים is its own chanted verse, closing on עבדים with a",
+                *[" ", _ROM_SILLUQ_SOF_PASUQ, "."],
             )
+        ),
+        H.para(
+            (
+                "Koren's Deuteronomy also reaches a divergence its Exodus Decalogue cannot: the"
+                " Shabbat commandment, where the p-trad and m-trad part again. There too Koren"
+                " shows the p-trad — so its p-trad allegiance is unqualified, where the ",
+                link("Simanim page", _SIMANIM_PAGE),
+                " finds Simanim's Tiqqun following the m-trad at that very commandment. The scan"
+                " below is that commandment. One boundary on all this: what I have checked in"
+                " Deuteronomy is the ",
+                _TAHTON,
+                "; I have not chased Koren's Deuteronomy ",
+                _ELYON,
+                " through its appendix, so the Deuteronomy half of the claim rests on the ",
+                _TAHTON,
+                " alone.",
+            )
+        ),
+        _figure(
+            _P281_DT_BODY_IMG,
+            "Koren p. 281: the Shabbat commandment of the Deuteronomy Decalogue, in the p-trad"
+            " taḥton",
+            (
+                "The Shabbat commandment of Koren's Deuteronomy (Vaetḥanan) Decalogue in the"
+                f" running text (p. 281), in the p-trad {_TAHTON}. Two of the p-trad's"
+                " characteristic choices here: כָל־מְלָאכָ֜ה has a",
+                *[" ", _ROM_GERESH, " where the m-trad has a "],
+                _ROM_PAZER,
+                ", and וְכָל־בְּהֶמְתֶּ֔ךָ has a",
+                *[" ", _ROM_ZAQEF_QATAN, " where the m-trad has a "],
+                _ROM_REVIA,
+                ".",
+            ),
+            width=None,
         ),
     )
 
