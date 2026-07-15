@@ -8,7 +8,7 @@ two research notes -- formerly issue #56 comments -- into a versioned, reviewabl
   * **p. 83** (main Decalogue, *elyon*): Simanim's side-margin note on the Exodus (Yitro)
     Decalogue first unit אנכי...עבדים.  Its default (בפנים) elyon reading ends that unit on a
     *revia* (the merged, 9-verse printed structure); "some books" instead give אנכי...עבדים its
-    own verse (silluq + *sof pasuq* at עבדים) to keep ten dibrot.
+    own verse (silluq + *sof pasuq* at עבדים) to keep ten distinct commandments.
   * **p. 246** (appendix, *taḥton*): the mirror footnote, contrasting בטעם רגיל (= printed
     taḥton: אנכי...עבדים as its own verse, *sof pasuq* at עבדים) with כתר אר״ץ (= manuscript
     taḥton: pashta...etnaḥta, merged).
@@ -260,7 +260,7 @@ _P83_LINES = (
 )
 
 
-# The standalone-verse (ten-dibrot) cantillation the p. 83 note gives after "כך:" -- the same
+# The standalone-verse (ten-commandment) cantillation the p. 83 note gives after "כך:" -- the same
 # pointed אנכי…עבדים of _P83_LINES above, run together as one verse (silluq + sof pasuq at עבדים),
 # quoted in the translation below so it shows the real text rather than describing it.
 _P83_STANDALONE_VERSE = (

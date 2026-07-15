@@ -17,11 +17,11 @@ The one *note* is the secondary, more-for-fun material -- kept for how aware Kor
 printed-tradition choice it makes:
 
   * **appendix p. 38** (עליון): a note on the merged עליון Decalogue, citing רוו״ה
-    (= ר' וולף היידנהיים, R. Wolf Heidenheim), directing that the first dibber -- through
+    (= ר' וולף היידנהיים, R. Wolf Heidenheim), directing that the First Commandment -- through
     מבית עבדים -- be read בטעם התחתון, i.e. as its own chanted verse rather than merged into the
     long opening verse the עליון body prints.  This is the exact mirror of Simanim's p. 83
     side-margin note: the עליון body ends אנכי…עבדים on a revia, and the note flags the
-    standalone-verse (ten-dibrot) alternative it declines to print.
+    standalone-verse (ten-commandment) alternative it declines to print.
 
 Editorial / style conventions are shared with the two companion pages and documented on
 ``printed_decalogue_strands`` (bare-Hebrew strand names תחתון / עליון -- never transliterated or
@@ -183,7 +183,7 @@ def _body_scans() -> tuple[object, ...]:
                 f" {_ELYON}. Here אנכי…עבדים is merged into the long opening verse — it ends on a",
                 *[" ", _ROM_REVIA, ","],
                 " not on its own verse. A note on this page, citing רוו״ה, points to the",
-                f" {_TAHTON} reading of the first dibber; it is transcribed below.",
+                f" {_TAHTON} reading of the First Commandment; it is transcribed below.",
             ),
             width=None,
         ),
@@ -247,8 +247,8 @@ def _p38_note_section() -> tuple[object, ...]:
         H.heading_level_3("Translation"),
         H.blockquote(
             (
-                "In the opinion of רוו״ה {R. Wolf Heidenheim}, one should read the first dibber up"
-                " to “מבית עבדים” in the ",
+                "In the opinion of רוו״ה {R. Wolf Heidenheim}, one should read the First"
+                " Commandment (up to “מבית עבדים”) in the ",
                 _TAHTON,
                 ".",
             )
@@ -265,7 +265,9 @@ def _p38_note_section() -> tuple[object, ...]:
                         H.bold("tentatively"),
                         " read as ר' וולף היידנהיים (R. Wolf Heidenheim) — the grammarian whose"
                         " editions fixed much of the printed dual-cantillation norm, so the"
-                        " likeliest referent here, though we have not confirmed the expansion.",
+                        " likeliest referent here, though we have not confirmed the expansion."
+                        " The parentheses are likewise an editorial addition; the note itself has"
+                        " none.",
                     )
                 ),
             )
@@ -280,11 +282,11 @@ def _p38_note_section() -> tuple[object, ...]:
                 " on a ",
                 H.bold(_ROM_REVIA),
                 " rather than closing its own verse. The note flags the alternative, on רוו״ה's"
-                " authority: read the first dibber (through מבית עבדים) in the ",
+                " authority: read the First Commandment (through מבית עבדים) in the ",
                 _TAHTON,
                 " — i.e. as its own chanted verse (",
                 _ROM_SILLUQ_SOF_PASUQ,
-                " at עבדים), which keeps ten distinct dibrot. That ",
+                " at עבדים), which keeps ten distinct commandments. That ",
                 _TAHTON,
                 " reading is one of the ",
                 link("four strands on the companion page", _FOUR_STRANDS_HREF),
