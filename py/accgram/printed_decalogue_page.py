@@ -450,7 +450,7 @@ _UL_ITEM_1 = (
     ", where the table gives them a single shared row, labelled mE/pT."
     " The equality stops there: past this first"
     " verse the two strands diverge — the p-trad ",
-    *[f" {_TAHTON} divides each Decalogue into ", H.bold("13")],
+    *[f"{_TAHTON} divides each Decalogue into ", H.bold("13")],
     *[f" chanted verses, the m-trad {_ELYON} into only ", H.bold("10"), "."],
 )
 
@@ -516,10 +516,10 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                f"Only one of these four strands is ungrammatical — the p-trad {_ELYON}, whose "
-                "merged opening verse the ",
+                f"Of these four strands, only the p-trad {_ELYON} is ungrammatical — the "
+                "verdict above already said so — and the ",
                 link("section below", "#why-the-printed-elyon-fails"),
-                " dissects.",
+                " dissects its merged opening verse.",
             )
         ),
     )
@@ -673,12 +673,14 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
         ),
         H.para(
             (
-                f"In the m-trad {_ELYON}, the first commandment אנכי…עבדים is its own "
-                "chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
+                "As the ",
+                link("four-strands table above", "#four-strands"),
+                f" laid out, in the m-trad {_ELYON} the first commandment אנכי…עבדים is its "
+                "own chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
                 "separate verses, ",
                 H.bold("both of which parse clean"),
                 ". The p-trad instead merges the first two commandments into a single "
-                "verse (nine chanted verses in all, against the m-trad's ten). That one "
+                "verse. That one "
                 "merged verse is what the grammar rejects. Shown stripped to consonants and "
                 f"accents and divided at the p-trad {_TAHTON}'s verse boundaries — one p-trad "
                 f"{_ELYON} verse (pE) spanning the five ordinary p-trad {_TAHTON} verses (pT) "
@@ -979,9 +981,9 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                "Deuteronomy differs in more ways. Three are differences of cantillation — so, "
-                "unlike the Exodus vowel-swap, they do change the parse, though they leave both "
-                "strands equally grammatical — and all three fall within a single stretch "
+                "Deuteronomy differs in more ways. Three are differences of cantillation — "
+                "which, unlike the Exodus vowel-swap, do change the parse — and all three fall "
+                "within a single stretch "
                 "of the Sabbath commandment. Below is just that stretch — the run of words the two "
                 "strands accent differently, everything before and after it being identical — shown "
                 "in each strand, m-trad above p-trad, stripped to consonants and accents (so the "
@@ -1036,15 +1038,6 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                     ),
                     ".",
                 ),
-            )
-        ),
-        H.para(
-            (
-                "None of these costs either strand its grammaticality: fed through the grammar "
-                "checker, both ",
-                _TAHTON,
-                " strands come back clean in both books — even where the accents they choose "
-                "parse the verse differently.",
             )
         ),
         # An aside (issue #52 follow-up, corrected by issue #66): the p-trad תחתון Sabbath
