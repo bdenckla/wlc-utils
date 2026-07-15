@@ -46,16 +46,6 @@ REPORT_TITLE = "In the printed tradition, are the accents of the Decalogue gramm
 _GOERWITZ_URL = "goerwitz.html"
 _SOURCE_URL = "https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים"
 
-# An online Bible that happens to show the p-trad תחתון cantillation of the Deuteronomy Sabbath
-# commandment -- the cantillation catalogued in the appendix below. Chabad's Deut. 5 gives exactly
-# that cantillation (Chabad's own Hebrew Bible being the subject of the CTR review linked beside
-# it). NB: this note makes no claim that Chabad is the ONLY place the cantillation survives -- it
-# is not. Koren prints it too, in its own Deuteronomy (issue #66); an earlier draft of the appendix
-# below asserted a "gap in Koren and Simanim" that was simply false for Koren.
-_CHABAD_DT5_URL = (
-    "https://www.chabad.org/torah-texts/9969/Tanakh-The-Hebrew-Bible/"
-    "Torah-The-Pentateuch/Devarim-Deuteronomy/Chapter-5"
-)
 _CTR_REVIEW_URL = (
     "https://bdenckla.github.io/MAM-with-doc/misc/rocc_0_review_of_ctr.html"
 )
@@ -1058,40 +1048,36 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
             )
         ),
         # An aside (issue #52 follow-up, corrected by issue #66): the p-trad תחתון Sabbath
-        # cantillation dissected just above also turns up online at Chabad -- whose own edition my
-        # CTR review judges the weirdest, and possibly worst, on the web. The aside exists for that
-        # quip; it deliberately makes no claim about which print editions do or do not show the
-        # cantillation.
+        # cantillation dissected just above also turns up in CTR, the web edition my CTR review
+        # judges the weirdest, and possibly worst, on the web. The aside exists for that quip.
+        # Its "on the web" scoping is load-bearing, not incidental: it deliberately makes no claim
+        # about which PRINT editions show the cantillation. Koren prints it too, in its own
+        # Deuteronomy (issue #66); an earlier draft asserted a "gap in Koren and Simanim" that was
+        # simply false for Koren. Keep any rewrite of the aside scoped to the web.
         *_chabad_witness(),
     )
 
 
 # --------------------------------------------------------------------------- #
-# The online-witness aside: Chabad shows the p-trad תחתון Sabbath cantillation
+# The CTR aside: a p-trad Bible on the web (see the guardrail comment at the call site above)
 # --------------------------------------------------------------------------- #
 def _chabad_witness() -> tuple[object, ...]:
-    """A short aside that the p-trad תחתון Sabbath cantillation catalogued above turns up in
-    Chabad's online Bible, with a nod to my CTR review of that eccentric edition.  Makes no claim
-    about which print editions show the cantillation -- see the comment at ``_CHABAD_DT5_URL``.
-    """
     return (
-        H.heading_level_3("An online witness: Chabad's Deuteronomy 5"),
+        H.heading_level_3("A p-trad Bible on the web: CTR"),
         H.para(
             (
-                f"An aside on where else this p-trad {_TAHTON} Sabbath cantillation turns up. One "
-                "online Bible that shows it is a conspicuously eccentric one: Chabad's ",
-                link("Deuteronomy 5", _CHABAD_DT5_URL),
-                f" gives exactly this p-trad {_TAHTON} cantillation of the words ",
-                "לא תעשה כל מלאכה",
-                " onward.",
+                "Possibly the only p-trad Bible on the web is CTR:"
+                " a web version of The Complete Tanach with Rashi."
+                " (CTR is served from Chabad.org.)"
+                f" CTR has not only the characteristic opening verse of the p-trad {_TAHTON}"
+                f" but also the p-trad {_TAHTON} accents in the Sabbath commandment."
             )
         ),
         H.para(
             (
-                "That eccentricity is not confined to the accents here: my ",
-                link("review of Chabad's online Hebrew Bible", _CTR_REVIEW_URL),
-                " calls it “certainly the weirdest Hebrew Bible on the web, and possibly the "
-                "worst”.",
+                *["For more on CTR: see my ", link("review", _CTR_REVIEW_URL), ","],
+                " which calls it"
+                " “certainly the weirdest Hebrew Bible on the web, and possibly the worst.”",
             )
         ),
     )
