@@ -344,7 +344,7 @@ def _range_cell(first_words, last_words, *, start: bool, stop: bool) -> object:
 # The four-strands table (issue #52)
 # --------------------------------------------------------------------------- #
 # Two-char row-header abbreviations for the four strands, coherent with the merged table's
-# single E/T letters below; the dotted-underline title spells each out (romanized taḥton/elyon is
+# single E/T letters below; the dotted-underline title spells each out (the romanized form is
 # fine in an attribute). m/p = m-trad/p-trad, T/E = taxton/elyon strand. The titles
 # say NO "upper"/"lower" -- that gloss invites confusion with above-letter vs below-letter accents
 # (see printed_decalogue_strands module docstring; same rule on both printed-Decalogue pages).

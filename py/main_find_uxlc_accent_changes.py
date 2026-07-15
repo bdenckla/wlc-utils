@@ -41,11 +41,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from accgram import prose_ob_notes  # noqa: E402
 
 ACC = {
-    "etnachta",
-    "etnahta",
-    "atnah-hafukh",
+    "etnachta",  # translit-ok: UXLC accent names
+    "etnahta",  # translit-ok: UXLC accent names
+    "atnah-hafukh",  # translit-ok: UXLC accent names
     "zarqa",
-    "zinor",
+    "zinor",  # translit-ok: UXLC accent names
     "pashta",
     "yetiv",  # translit-ok: UXLC accent names
     "tevir",
@@ -56,20 +56,20 @@ ACC = {
     "telisha-gedola",
     "telisha-qetana",
     "pazer",
-    "munah",
+    "munah",  # translit-ok: UXLC accent names
     "mahapakh",  # translit-ok: UXLC accent names
     "makhapakh",
     "merkha",
     "darga",
     "qadma",
-    "yerah-ben-yomo",
+    "yerah-ben-yomo",  # translit-ok: UXLC accent names
     "ole",
     "iluy",  # translit-ok: UXLC accent names
-    "dehi",
+    "dehi",  # translit-ok: UXLC accent names
     "revia",
     "zaqef-qatan",
     "zaqef-gadol",
-    "tipeha",
+    "tipeha",  # translit-ok: UXLC accent names
     "shalshelet",  # translit-ok: UXLC accent names
 }
 CONS = {

@@ -80,7 +80,7 @@ PASEQ_CP = "׀"  # HEBREW PUNCTUATION PASEQ
 # These are the prose te'amim; poetic-only accents (atnax-hafukh, etc.) have no prose
 # mark and simply will not validate if they appear.
 NAME2MARK = {
-    "etnachta": am.ATNAX,
+    "etnachta": am.ATNAX,  # translit-ok: UXLC name
     "etnahta": am.ATNAX,  # translit-ok: UXLC name
     "zarqa": am.TSINNOR,
     "zinor": am.TSINNOR,  # translit-ok: UXLC name
