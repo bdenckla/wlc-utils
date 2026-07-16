@@ -75,9 +75,12 @@ REPORT_TITLE = "Simanim's Tiqqun follows the printed tradition for the Decalogue
 # _ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
 # _ISSUE_56 = "https://github.com/bdenckla/wlc-utils/issues/56"
 _PRINTED_DECALOGUE_PAGE = "printed-decalogue.html"
-# The four-strands table now lives on the companion page (issue #52); all cross-references land
-# on its heading anchor there rather than on a local table.
+# The four-strands table now lives on the companion page (issue #52); cross-references whose link
+# text names the table land on its heading anchor there rather than on a local table.
 _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
+# Link text that names the page, not the table, gets the page itself: an anchor would drop the
+# reader past the companion's own intro, mid-page, which is not what "the companion page" promises.
+_COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
 _P83_IMG = "img/simanim-decalogue-p-083-sidenote.png"
 _P246_IMG = "img/simanim-decalogue-p-246-footnote.png"
 # Body-text scans (issue #62): the actual Simanim Decalogues whose cantillation establishes the
@@ -145,7 +148,7 @@ def _path(path: str) -> object:
 # being said yet.
 _PARA_1 = (
     "As ",
-    link("the companion page", _FOUR_STRANDS_HREF),
+    link("the companion page", _COMPANION_PAGE_HREF),
     " explains, each Decalogue has not two strands of cantillation but",
     *[" ", H.bold("four"), ": the"],
     *[" ", H.bold("printed tradition"), " (p-trad)"],

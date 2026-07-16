@@ -73,9 +73,12 @@ REPORT_TITLE = "Koren follows the printed tradition for the Decalogues"
 
 _PRINTED_DECALOGUE_PAGE = "printed-decalogue.html"
 _SIMANIM_PAGE = "printed-decalogue-simanim.html"
-# The four-strands table lives on the companion page (issue #52); all cross-references land on its
-# heading anchor there rather than on a local table.
+# The four-strands table lives on the companion page (issue #52); cross-references whose link text
+# names the table land on its heading anchor there rather than on a local table.
 _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
+# Link text that names the page, not the table, gets the page itself: an anchor would drop the
+# reader past the companion's own intro, mid-page, which is not what "the companion page" promises.
+_COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
 
 # Body-text scans: the two Koren Decalogues whose cantillation establishes the p-trad finding.
 # p. 113 is the Exodus Decalogue in the running text (תחתון); p. 38 is the same Decalogue reprinted
@@ -138,7 +141,7 @@ def _path(path: str) -> object:
 # being said yet.
 _PARA_1 = (
     "As ",
-    link("the companion page", _FOUR_STRANDS_HREF),
+    link("the companion page", _COMPANION_PAGE_HREF),
     " explains, each Decalogue has not two strands of cantillation but",
     *[" ", H.bold("four"), ": the"],
     *[" ", H.bold("printed tradition"), " (p-trad)"],
