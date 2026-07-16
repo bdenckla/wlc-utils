@@ -136,6 +136,26 @@ ELYON = "עליון"
 _STRAND_HEB: dict[str, str] = {"taḥton": TAHTON, "elyon": ELYON}
 
 
+# The one-sentence statement of what the four strands most strikingly disagree about, shared
+# VERBATIM by all three pages of the trio (main + the Simanim and Koren witnesses) so it cannot
+# drift between them.  Plain ``str``, not HTML: splice it into a contents tuple.
+#
+# Why this span and not the older "is אנכי…עבדים an entire chanted verse or only the start of
+# one?": that framing asked a yes/no question and pinned it on the p-trad/m-trad axis, but the
+# answer doesn't split on that axis at all -- each tradition says yes with one strand and no with
+# the other (m-trad עליון and p-trad תחתון make it its own verse; m-trad תחתון and p-trad עליון
+# run it on).  Widening to אנכי…מצותי states the real, four-way difference: over this span the
+# strands divide into 5 (p-trad תחתון), 4 (m-trad תחתון), 2 (m-trad עליון) and 1 (p-trad עליון)
+# chanted verses -- no two alike.  The span is principled, not chosen to taste: every strand has a
+# verse boundary at מצותי, and it is exactly the p-trad עליון's entire first verse (see
+# ``STRUCTURE``), i.e. the smallest span that contains all four strands' disagreement.
+MOST_STRIKING = (
+    "The most striking difference between the four strands is how they divide up the span"
+    " אנכי…מצותי into chanted verses. (This span is typically identified as comprising the"
+    " first two Commandments.)"
+)
+
+
 def render_reading_name(name: str) -> tuple[object, ...]:
     """A reading name like ``"m-trad taḥton"`` rendered with its strand word in Hebrew
     letters: ``("m-trad ", "תחתון")``.  The tradition half stays English."""

@@ -143,20 +143,20 @@ def _path(path: str) -> object:
 # --------------------------------------------------------------------------- #
 # This page used to open with the companion page's whole four-strands intro paragraph, duplicated
 # verbatim (issue #65, finding V5). It now opens with ONE sentence that cues the reiteration and
-# links to the companion, which alone states the four strands in full. Keep it to one sentence: a
-# reader arriving here from the companion should be able to see at a glance that nothing new is
-# being said yet.
+# links to the companion, which alone states the four strands in full, plus the shared
+# pds.MOST_STRIKING sentence (single-sourced there, verbatim on all three pages of the trio).
+# Keep it that way: a reader arriving here from the companion should be able to see at a glance
+# that nothing new is being said yet.
 _PARA_1 = (
     "As ",
     link("the companion page", _COMPANION_PAGE_HREF),
-    " explains, each Decalogue has not two strands of cantillation but",
-    *[" ", H.bold("four"), ": the"],
+    " explains, each Decalogue has",
+    *[" ", H.bold("four"), " strands of cantillation: the"],
     *[" ", H.bold("printed tradition"), " (p-trad)"],
     " and the",
     *[" ", H.bold("manuscript tradition"), " (m-trad)"],
-    f" each have their own טעם {_TAHTON} and their own טעם {_ELYON}, differing most strikingly over"
-    " whether אנכי…עבדים, typically identified as the first commandment, is an entire chanted"
-    " verse or only the start of one.",
+    f" each have their own טעם {_TAHTON} and their own טעם {_ELYON}.",
+    " " + pds.MOST_STRIKING,
 )
 
 # The continuation is this page's own second paragraph (the companion page's differs).

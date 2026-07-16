@@ -113,8 +113,10 @@ def _intro() -> tuple[object, ...]:
     # The two satellite pages (printed_decalogue_simanim_page, printed_decalogue_koren_page) used to
     # duplicate this paragraph verbatim; each now opens with a single "As the companion page
     # explains..." sentence linking here instead, so a reader arriving from a satellite can tell
-    # reiteration from new material. Keep it that way: don't re-expand the satellites, and expect
-    # any edit here to be the only edit needed.
+    # reiteration from new material. Keep it that way: don't re-expand the satellites. The one
+    # thing all three pages DO say verbatim is the closing pds.MOST_STRIKING sentence, single-
+    # sourced there rather than retyped here -- so edit that constant, not this paragraph, to
+    # restate the difference; everything else in this paragraph is the main page's alone.
     return (
         H.heading_level_1(REPORT_TITLE),
         H.heading_level_2("The question"),
@@ -133,9 +135,10 @@ def _intro() -> tuple[object, ...]:
                 " (The p-trad is fading, but still visible in editions like Koren and Simanim's"
                 " Tiqqun.)",
                 #
-                " The most striking difference between the p-trad and m-trad has to do with whether אנכי…עבדים,",
-                " typically identified as the first commandment, is an entire chanted verse or",
-                " only the start of one.",
+                # Single-sourced in pds and shared verbatim with the two satellite pages; see
+                # pds.MOST_STRIKING for why the difference is stated over this span rather than
+                # as the older yes/no question about אנכי…עבדים.
+                " " + pds.MOST_STRIKING,
             )
         ),
         H.para(
