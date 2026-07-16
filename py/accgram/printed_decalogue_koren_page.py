@@ -166,7 +166,11 @@ def _figure(src: str, alt: str, caption: object, *, width: str | None) -> object
     # No inline style here: gh-pages/style.css already declares `img { max-width: 100% }` and
     # `figure img { height: auto }`, so an inline copy only duplicated the stylesheet and
     # outranked it (issue #65, finding C4b). Don't reintroduce it.
-    img_attr = {"src": src, "alt": alt}
+    # class="ink-on-white" opts the scan into the stylesheet's dark-mode CSS inversion. It is
+    # unconditional here because every image on this page is a Koren scan -- black ink, white
+    # paper. Don't hoist it into a shared img helper: the manuscript photos elsewhere in the
+    # tree are ink on parchment and must NOT invert (see the rule's comment in style.css).
+    img_attr = {"src": src, "alt": alt, "class": "ink-on-white"}
     if width:
         img_attr["width"] = width
     return H.figure((H.img(img_attr), H.figcaption(caption)))

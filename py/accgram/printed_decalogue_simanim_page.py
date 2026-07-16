@@ -235,7 +235,12 @@ def _figure(src: str, alt: str, caption: object, *, width: str | None) -> object
     # No inline style here: gh-pages/style.css already declares `img { max-width: 100% }` and
     # `figure img { height: auto }`, so an inline copy only duplicated the stylesheet and
     # outranked it (issue #65, finding C4b). Don't reintroduce it.
-    img_attr = {"src": src, "alt": alt}
+    # class="ink-on-white" opts the scan into the stylesheet's dark-mode CSS inversion. It is
+    # unconditional here because every image on this page is a printed-book scan (Simanim's
+    # Tiqqun, Simanim's Tanakh, Feldheim) -- black ink, white paper. Don't hoist it into a
+    # shared img helper: the manuscript photos elsewhere in the tree are ink on parchment and
+    # must NOT invert (see the rule's comment in style.css).
+    img_attr = {"src": src, "alt": alt, "class": "ink-on-white"}
     if width:
         img_attr["width"] = width
     return H.figure((H.img(img_attr), H.figcaption(caption)))
@@ -286,11 +291,14 @@ def _p83_scan_and_transcription() -> object:
     # covers it (issue #65, finding C4b). This img sits in a table cell rather than a <figure>, so
     # it never picked up `figure img { height: auto }` -- but height:auto is the CSS initial value
     # for a replaced element anyway, so the inline copy bought nothing here either.
+    # class="ink-on-white" as in _figure -- this scan is outside a <figure>, so it takes the
+    # dark-mode inversion but not the `figure img` border the rule pre-inverts alongside it.
     img = H.img(
         {
             "src": _P83_IMG,
             "alt": "Simanim Tiqqun p. 83: side-margin note on the Exodus Decalogue's אנכי…עבדים unit",
             "width": "275",
+            "class": "ink-on-white",
         }
     )
     header = H.table_row_of_headers(("Source scan", "Transcription"))

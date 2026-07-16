@@ -274,3 +274,23 @@ p.note-lead { color: light-dark(#555, #aaa); }
 figure { margin: 1.2em 0; text-align: center; }
 figure img { height: auto; border: 1px solid light-dark(#ccc, #555); }
 figcaption { font-size: 0.9em; color: light-dark(#555, #aaa); margin-top: 0.4em; }
+
+/* Scans of black ink on white paper (the printed-Tanakh pages: Koren, Simanim, Feldheim),
+   which otherwise sit on a dark page as a glaring white slab. Inverting in CSS keeps ONE
+   committed scan per figure -- no hand-inverted twin to keep in sync, and the light-mode
+   page still serves the file as scanned.
+   Opt-in per image, deliberately NOT a blanket `img` rule: the manuscript photos
+   (Leningrad, Aleppo) are brown ink on cream parchment, and inverting a photograph of
+   vellum yields a blue-black page that misrepresents the source rather than adapting it.
+   Apply only where the paper really is white and the ink really is black -- in these both
+   are neutral (paper #fff, ink ~#000), so a plain invert() stays neutral and needs no
+   hue-rotate() to undo a color cast.
+   filter applies to the element's border too, hence the pre-inverted border color: #aaa
+   inverts back to the #555 that `figure img` above asks for in dark mode. That border is
+   load-bearing here -- an inverted scan's background is black, same as the page's. */
+@media (prefers-color-scheme: dark) {
+    img.ink-on-white {
+        filter: invert(1);
+        border-color: #aaa;
+    }
+}
