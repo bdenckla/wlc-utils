@@ -10,13 +10,13 @@ place in the p-trad camp -- plus one Koren note that shows the same editorial se
 Simanim page found in Simanim.
 
 What establishes the answer is Koren's *body text*: its Exodus (Yitro) Decalogue is printed twice,
-the p-trad תחתון in the running text (p. 113) and the p-trad עליון in an appendix (p. 38), and both
+the p-trad תחתון in the running text (p. 113) and the p-trad עליון in an appendix (p. A38), and both
 are compared, by the author, against what Hebrew Wikisource records as the printed tradition, and
 they match.  That body text is asserted here, not transcribed word-for-word (only shown as scans).
 The one *note* is the secondary, more-for-fun material -- kept for how aware Koren is of the older,
 printed-tradition choice it makes:
 
-  * **appendix p. 38** (עליון): a note on the merged עליון Decalogue, citing רוו״ה
+  * **appendix p. A38** (עליון): a note on the merged עליון Decalogue, citing רוו״ה
     (= ר' וולף היידנהיים, R. Wolf Heidenheim), directing that the First Commandment -- through
     מבית עבדים -- be read בטעם התחתון, i.e. as its own chanted verse rather than merged into the
     long opening verse the עליון body prints.  This is the exact mirror of Simanim's p. 83
@@ -35,10 +35,17 @@ text on purpose (attribute contexts are exempt from the Hebrew-letter rule by de
 Torah text) distinct from *appendix* (the strand reprinted separately), and *body* (printed text)
 distinct from *note* (annotation).
 
-DRAFT-STAGE FACTS TO VERIFY (see .novc/pending_koren_page_edits.md): the page numbers (113 / 38)
-come from the committed scan filenames; the appendix's separate low pagination is described but not
-confirmed; and רוו״ה is *tentatively* expanded to Wolf Heidenheim (likely but unconfirmed, flagged
-as such in the rendered notation line).
+DRAFT-STAGE FACTS TO VERIFY (see .novc/pending_koren_page_edits.md): the page numbers (113 / A38)
+come from the committed scan filenames; and רוו״ה is *tentatively* expanded to Wolf Heidenheim
+(likely but unconfirmed, flagged as such in the rendered notation line).
+
+The appendix's separate pagination IS now confirmed (Ben, 2026-07-15), which is why every citation
+of it reads "p. A38", never a bare "p. 38": the appendix restarts its own page numbering at 1, so
+an unprefixed 38 would read as page 38 of the running text and, being lower than the running-text
+Decalogue's own p. 113, would wrongly suggest the appendix sits *before* it.  Keep the A prefix on
+appendix citations, and don't "normalize" it away.  (The scan *filenames* keep their original
+``Koren-appendix-p-38-...`` spelling -- they are committed assets, and "appendix" already
+disambiguates them.)
 
 Koren's Deuteronomy (Vaetxanan) Decalogue *has* now been spot-checked (issue #66), so the claim is
 no longer Exodus-scoped: Koren shows the p-trad in both books.  The Deuteronomy check also reaches
@@ -81,17 +88,17 @@ _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
 _COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
 
 # Body-text scans: the two Koren Decalogues whose cantillation establishes the p-trad finding.
-# p. 113 is the Exodus Decalogue in the running text (תחתון); p. 38 is the same Decalogue reprinted
+# p. 113 is the Exodus Decalogue in the running text (תחתון); p. A38 is the same Decalogue reprinted
 # in the appendix (עליון).
 _P113_BODY_IMG = "img/Koren-p-113-Ex-Dec-p-trad-taxton.png"
-_P38_BODY_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon.png"
+_PA38_BODY_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon.png"
 # The Deuteronomy (Vaetxanan) תחתון Decalogue starts on p. 280 and runs onto p. 281; this crop is
 # its Shabbat commandment, on p. 281. It backs the conclusion's scope note (issue #66): unlike
 # Simanim's Tiqqun, Koren shows the p-trad here too.
 _P281_DT_BODY_IMG = "img/Koren-p-281-Dt-Dec-Shabbat-p-trad-taxton.png"
-# The Koren note (a crop of the appendix p. 38 עליון Decalogue): the רוו״ה footnote transcribed and
+# The Koren note (a crop of the appendix p. A38 עליון Decalogue): the רוו״ה footnote transcribed and
 # translated below.
-_P38_NOTE_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon-note.png"
+_PA38_NOTE_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon-note.png"
 
 # Strand names and accent romanizations are single-sourced in printed_decalogue_strands (see its
 # module docstring). These thin local aliases keep the prose below unchanged.
@@ -192,7 +199,7 @@ def _lines_with_breaks(lines: tuple[str, ...]) -> tuple[object, ...]:
 def _body_scans() -> tuple[object, ...]:
     """The two body-text scans that establish the finding: Koren's Exodus Decalogue in the running
     text (p-trad תחתון, p. 113) and the same Decalogue reprinted in the appendix (p-trad עליון,
-    p. 38).  These are the body text the page otherwise only asserts."""
+    p. A38).  These are the body text the page otherwise only asserts."""
     return (
         _figure(
             _P113_BODY_IMG,
@@ -208,10 +215,10 @@ def _body_scans() -> tuple[object, ...]:
             width=None,
         ),
         _figure(
-            _P38_BODY_IMG,
-            "Koren appendix p. 38: the Exodus Decalogue in the elyon",
+            _PA38_BODY_IMG,
+            "Koren appendix p. A38: the Exodus Decalogue in the elyon",
             (
-                "The same Decalogue reprinted in Koren's appendix (p. 38), in the p-trad"
+                "The same Decalogue reprinted in Koren's appendix (p. A38), in the p-trad"
                 f" {_ELYON}. Here אנכי…עבדים is merged into the long opening verse — it ends on a",
                 *[" ", _ROM_REVIA, ","],
                 " not on its own verse. A note on this page, citing רוו״ה, points to the",
@@ -231,9 +238,9 @@ def _intro(source: dict) -> tuple[object, ...]:
             (
                 "Koren follows the p-trad for the Decalogues. In its ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue, Koren runs the p-trad",
+                " (Yitro) Decalogue, Koren has the p-trad",
                 f" {_TAHTON} in the running text (p. 113) and gives the p-trad {_ELYON} in an"
-                " appendix (p. 38). Since no digital Koren exists, I established this by"
+                " appendix (p. A38). Since no digital Koren exists, I established this by"
                 " visually spot-checking Koren against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
                 ". The two scans below reproduce that body text — Koren's own running-text and"
@@ -247,15 +254,15 @@ def _intro(source: dict) -> tuple[object, ...]:
 # The Koren note, following the scan's own two line breaks. It is unpointed prose (no cantillation),
 # so unlike the Simanim transcriptions there is no hand-set pointed verse to check. רוו״ה carries a
 # gershayim (U+05F4); the quoted lemma "מבית עבדים" reproduces the note's own straight quotes.
-_P38_NOTE_LINES = (
+_PA38_NOTE_LINES = (
     'לדעת רוו״ה, יש לקרוא את הדיבר הראשון עד "מבית עבדים"',
     "בטעם התחתון.",
 )
 
 
-def _p38_note_section() -> tuple[object, ...]:
+def _pa38_note_section() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Note on the appendix (עליון) Decalogue — Koren p. 38"),
+        H.heading_level_2("Note on the appendix (עליון) Decalogue — Koren p. A38"),
         H.para(
             (
                 "A note on the appendix Decalogue, keyed to the opening commandment אנכי…עבדים and"
@@ -263,17 +270,17 @@ def _p38_note_section() -> tuple[object, ...]:
             )
         ),
         _figure(
-            _P38_NOTE_IMG,
-            "Koren appendix p. 38: note on the elyon Decalogue's אנכי…עבדים unit",
+            _PA38_NOTE_IMG,
+            "Koren appendix p. A38: note on the elyon Decalogue's אנכי…עבדים unit",
             (
-                "Koren, appendix p. 38 — the note on the",
+                "Koren, appendix p. A38 — the note on the",
                 f" {_ELYON} Decalogue, citing רוו״ה.",
             ),
             width=None,
         ),
         H.heading_level_3("Transcription"),
         H.blockquote(
-            _lines_with_breaks(_P38_NOTE_LINES),
+            _lines_with_breaks(_PA38_NOTE_LINES),
             {"dir": "rtl", "lang": "hbo"},
         ),
         H.heading_level_3("Translation"),
@@ -345,7 +352,7 @@ def _conclusion() -> tuple[object, ...]:
                 _TAHTON,
                 " in its ",
                 H.bold("Exodus"),
-                f" running text (p. 113), and the p-trad {_ELYON} in its appendix (p. 38).",
+                f" running text (p. 113), and the p-trad {_ELYON} in its appendix (p. A38).",
             )
         ),
         H.para(
@@ -438,7 +445,7 @@ def _source_section(source: dict) -> tuple[object, ...]:
 def render_body_contents(source: dict) -> tuple[object, ...]:
     return (
         *_intro(source),
-        *_p38_note_section(),
+        *_pa38_note_section(),
         *_conclusion(),
         *_source_section(source),
     )
