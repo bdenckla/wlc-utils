@@ -1,5 +1,5 @@
 r"""Shared computation for the two printed-Decalogue pages: the four cantillation strands
-of the Exodus Decalogue's opening אנכי...עבדים unit, resolved live from the vendored data.
+of the Exodus Decalogue's opening אנכי...עבדים span, resolved live from the vendored data.
 
 This module is pure computation -- no HTML, no display/editorial vocabulary in its *return
 values* -- so both companion pages can depend on it without either depending on the other:
@@ -94,7 +94,7 @@ ROM_METEG = "meteg"
 ROM_MAQAF = "maqaf"
 ROM_LEGARMEH = "legarmeh"
 ROM_PASEQ = "paseq"
-# The Shabbat-commandment accents: these fall outside the אנכי…עבדים unit _ACCENT_NAMES derives,
+# The Shabbat-commandment accents: these fall outside the אנכי…עבדים span _ACCENT_NAMES derives,
 # and are named only in the Koren page's Deuteronomy prose (issue #66), where the p-trad/m-trad
 # also diverge -- p-trad geresh/zaqef qatan against m-trad pazer/revia.
 ROM_GERESH = "geresh"
@@ -109,7 +109,7 @@ ROM_TIPEHA_SILLUQ = (
 )
 ROM_SILLUQ_SOF_PASUQ = f"{ROM_SILLUQ} + {ROM_SOF_PASUQ}"  # the standalone-verse close
 
-# The accent codepoints that fall on the two boundary words of the first Decalogue unit,
+# The accent codepoints that fall on the two boundary words of the first Decalogue span,
 # mapped to the romanizations above.  U+05BD (meteg/silluq) is deliberately absent: it is not a
 # cantillation accent, and is resolved to silluq only in verse-final position (see ``_accent_of``
 # and CLAUDE.md on meteg-vs-silluq).
@@ -120,7 +120,7 @@ _ACCENT_NAMES: dict[str, str] = {
     "\N{HEBREW ACCENT REVIA}": ROM_REVIA,
 }
 
-# The base-letter skeleton of the word עבדים -- the closing word of the first Decalogue unit,
+# The base-letter skeleton of the word עבדים -- the closing word of the first Decalogue span,
 # located within each reading's first chanted verse by matching its consonants (it sits
 # mid-verse in the merged readings, verse-finally where אנכי…עבדים is its own verse).
 AVADIM = "עבדים"
@@ -195,7 +195,7 @@ def _find_word(words: tuple[str, ...], skeleton: str) -> str:
 
 
 class Reading:
-    """One of the four ways the opening Decalogue unit is accented, resolved from the data."""
+    """One of the four ways the opening Decalogue span is accented, resolved from the data."""
 
     def __init__(self, name: str, vr: pd.VersionResult):
         first = vr.chanted_verses[0]

@@ -6,7 +6,7 @@ manuscript Decalogue accentuations and lays out the four cantillation strands). 
 two research notes -- formerly issue #56 comments -- into a versioned, reviewable document:
 
   * **p. 83** (main Decalogue, *elyon*): Simanim's side-margin note on the Exodus (Yitro)
-    Decalogue first unit אנכי...עבדים.  Its default (בפנים) elyon reading ends that unit on a
+    Decalogue first span אנכי...עבדים.  Its default (בפנים) elyon reading ends that span on a
     *revia* (the merged, 9-verse printed structure); "some books" instead give אנכי...עבדים its
     own verse (silluq + *sof pasuq* at עבדים) to keep ten distinct commandments.
   * **p. 246** (appendix, *taḥton*): the mirror footnote, contrasting בטעם רגיל (= printed
@@ -19,7 +19,7 @@ Wikisource records as the printed tradition, and they match.  That body text is 
 not reproduced.  The two notes are secondary -- kept for the more-for-fun question of
 how aware Simanim is of having made the older, printed-tradition choice.
 
-The four cantillation strands of the opening אנכי...עבדים unit are derived live from the vendored
+The four cantillation strands of the opening אנכי...עבדים span are derived live from the vendored
 ``in/accgram/printed_decalogue_teamim.json`` by the shared ``printed_decalogue_strands`` module
 and tabulated on the companion page; this page links to that table rather than duplicating it.
 The two Simanim *transcriptions* are the only hand-set Hebrew, double-checked against the
@@ -182,7 +182,7 @@ def _body_scans() -> tuple[object, ...]:
             (
                 "The (massive) verse that starts Simanim's main Decalogue (p. 83), headed",
                 *[" ", H.bdi(' "עשרת הדברות" בטעם עליון'), "."],
-                " The אנכי…עבדים unit ends on a",
+                " The אנכי…עבדים span ends on a",
                 *[" ", _ROM_REVIA, "."],
                 H.line_break(),
                 H.small(
@@ -200,7 +200,7 @@ def _body_scans() -> tuple[object, ...]:
             (
                 f"The (short) two verses that start Simanim's appendix Decalogue (p. 246), headed עשרת הדברות דיתרו בלא טעם עליון."
                 " (Heading not shown in this image though.)"
-                " The אנכי…עבדים unit ends on a",
+                " The אנכי…עבדים span ends on a",
                 *[" ", _ROM_SILLUQ_SOF_PASUQ, "."],
                 " The asterisk is a callout to the footnote transcribed below.",
             ),
@@ -299,7 +299,7 @@ def _p83_scan_and_transcription() -> object:
     img = H.img(
         {
             "src": _P83_IMG,
-            "alt": "Simanim Tiqqun p. 83: side-margin note on the Exodus Decalogue's אנכי…עבדים unit",
+            "alt": "Simanim Tiqqun p. 83: side-margin note on the Exodus Decalogue's אנכי…עבדים span",
             "width": "275",
             "class": "ink-on-white",
         }
@@ -365,7 +365,7 @@ def _p83_section() -> tuple[object, ...]:
             (
                 "The note is worth reading for what it reveals about Simanim's own stance: its ",
                 H.bold("default"),
-                f" {_ELYON} ends the אנכי…עבדים unit on a ",
+                f" {_ELYON} ends the אנכי…עבדים span on a ",
                 H.bold(_ROM_REVIA),
                 " — the nine-verse p-trad structure — and it files the standalone,"
                 " ten-verse cantillation (",
@@ -464,7 +464,7 @@ def _p246_section() -> tuple[object, ...]:
         ),
         _figure(
             _P246_IMG,
-            "Simanim Tiqqun p. 246: appendix footnote on the taḥton Decalogue's אנכי…עבדים unit",
+            "Simanim Tiqqun p. 246: appendix footnote on the taḥton Decalogue's אנכי…עבדים span",
             # The blue vertical bars are deliberately a different colour AND orientation from
             # the brown horizontal page-break bar (see the p. 83 elyon figure above): the two
             # mark opposite operations — a horizontal brown bar marks a page break we *removed*
@@ -545,7 +545,7 @@ def _p246_section() -> tuple[object, ...]:
         H.heading_level_3("How it maps onto the four strands"),
         H.para(
             (
-                "The note contrasts two cantillations of the אנכי…עבדים unit, both in the ",
+                "The note contrasts two cantillations of the אנכי…עבדים span, both in the ",
                 link("four-strands table on the companion page", _FOUR_STRANDS_HREF),
                 ":",
             )
@@ -554,7 +554,7 @@ def _p246_section() -> tuple[object, ...]:
         H.para(
             (
                 f"So the note has Simanim, in its own editorial voice, distinguishing two"
-                f" {_TAHTON} cantillations of the אנכי…עבדים unit: what it prints and calls the"
+                f" {_TAHTON} cantillations of the אנכי…עבדים span: what it prints and calls the"
                 f" “ordinary” (רגיל) {_TAHTON} — עבדים with ",
                 _ROM_SILLUQ_SOF_PASUQ,
                 f", אנכי…עבדים as its own verse, its marks identical to the m-trad {_ELYON} —"
@@ -603,8 +603,8 @@ def _conclusion() -> tuple[object, ...]:
         # it is committed only as the private evidence behind this scope note's Shabbat caveat.
         H.para(
             (
-                "One scope note: the finding above rests on the אנכי…עבדים unit — the most striking"
-                " p-trad/m-trad divergence. Simanim makes the same p-trad choice at that unit in"
+                "One scope note: the finding above rests on the אנכי…עבדים span — the most striking"
+                " p-trad/m-trad divergence. Simanim makes the same p-trad choice at that span in"
                 " both of its Decalogues: the ",
                 H.bold("Exodus"),
                 " (Yitro) one and the ",

@@ -1,6 +1,6 @@
 """Issue #62: the Simanim-Decalogue page (printed-decalogue-simanim.html).
 
-The four cantillation strands of the opening אנכי…עבדים unit are derived live from the vendored
+The four cantillation strands of the opening אנכי…עבדים span are derived live from the vendored
 ``in/accgram/printed_decalogue_teamim.json`` by the shared ``printed_decalogue_strands`` module:
 for each Exodus reading it reads the first chanted verse and derives the accent on אנכי (first
 word) and עבדים.  These tests pin that derivation (which now lives on the strands module, not on

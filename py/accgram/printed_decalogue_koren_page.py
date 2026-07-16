@@ -2,7 +2,7 @@ r"""Generate gh-pages/accgram/printed-decalogue-koren.html -- does the Koren Tan
 printed or the manuscript Decalogue tradition?  Answer: the printed tradition.
 
 Companion to ``printed_decalogue_simanim_page``: the same question, asked of Koren instead of
-Simanim's Tiqqun.  The four cantillation strands of the opening אנכי…עבדים unit are derived live
+Simanim's Tiqqun.  The four cantillation strands of the opening אנכי…עבדים span are derived live
 from the vendored ``in/accgram/printed_decalogue_teamim.json`` by the shared
 ``printed_decalogue_strands`` module and tabulated on the ``printed-decalogue`` companion page;
 this page links to that table rather than duplicating it, and serves only to document Koren's
@@ -205,12 +205,9 @@ def _body_scans() -> tuple[object, ...]:
             _P113_BODY_IMG,
             "Koren p. 113: the Exodus Decalogue in the running text, in the p-trad taḥton",
             (
-                "The start of Koren's Exodus (Yitro) Decalogue in the running text (p. 113), in"
-                f" the p-trad {_TAHTON}. The אנכי…עבדים unit is its own chanted verse, closing on"
-                " עבדים with a",
-                *[" ", _ROM_SILLUQ_SOF_PASUQ, " ("],
-                "עֲבָדִֽים׃",
-                ").",
+                "The start of Koren's Exodus Decalogue in the running text (p. 113), in"
+                f" the p-trad {_TAHTON}. The אנכי…עבדים span is its own chanted verse, closing",
+                *[" with a ", _ROM_SILLUQ_SOF_PASUQ, "."],
             ),
             width=None,
         ),
@@ -218,11 +215,10 @@ def _body_scans() -> tuple[object, ...]:
             _PA38_BODY_IMG,
             "Koren appendix p. A38: the Exodus Decalogue in the elyon",
             (
-                "The same Decalogue reprinted in Koren's appendix (p. A38), in the p-trad"
-                f" {_ELYON}. Here אנכי…עבדים is merged into the long opening verse — it ends on a",
-                *[" ", _ROM_REVIA, ","],
-                " not on its own verse. A note on this page, citing רוו״ה, points to the",
-                f" {_TAHTON} cantillation of the First Commandment; it is transcribed below.",
+                "The start of Koren's Exodus Decalogue in the appendix (p. A38), in the p-trad"
+                f" {_ELYON}. The אנכי…עבדים span is only the first phrase of a long"
+                " verse — עבדים has only a",
+                *[" ", _ROM_REVIA, "."],
             ),
             width=None,
         ),
@@ -238,7 +234,7 @@ def _intro(source: dict) -> tuple[object, ...]:
             (
                 "Koren follows the p-trad for the Decalogues. In its ",
                 H.bold("Exodus"),
-                " (Yitro) Decalogue, Koren has the p-trad",
+                " Decalogue, Koren has the p-trad",
                 f" {_TAHTON} in the running text (p. 113) and gives the p-trad {_ELYON} in an"
                 " appendix (p. A38). Since no digital Koren exists, I established this by"
                 " visually spot-checking Koren against ",
@@ -271,7 +267,7 @@ def _pa38_note_section() -> tuple[object, ...]:
         ),
         _figure(
             _PA38_NOTE_IMG,
-            "Koren appendix p. A38: note on the elyon Decalogue's אנכי…עבדים unit",
+            "Koren appendix p. A38: note on the elyon Decalogue's אנכי…עבדים span",
             (
                 "Koren, appendix p. A38 — the note on the",
                 f" {_ELYON} Decalogue, citing רוו״ה.",
@@ -372,11 +368,11 @@ def _conclusion() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "One scope note: the finding above rests on the אנכי…עבדים unit — the most striking"
-                " p-trad/m-trad divergence. Koren makes the same p-trad choice at that unit in both"
+                "One scope note: the finding above rests on the אנכי…עבדים span — the most striking"
+                " p-trad/m-trad divergence. Koren makes the same p-trad choice at that span in both"
                 " of its Decalogues: the ",
                 H.bold("Exodus"),
-                " (Yitro) one and the ",
+                " one and the ",
                 H.bold("Deuteronomy"),
                 f" (Vaetḥanan) one, whose {_TAHTON} running text starts on p. 280 and runs onto"
                 " p. 281. There too אנכי…עבדים is its own chanted verse, closing on עבדים with a",

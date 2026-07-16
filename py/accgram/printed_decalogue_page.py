@@ -7,7 +7,7 @@ taxton/elyon strands by detangling WLC): this page reports whether the *printed 
 grammar checker.  It renders live from ``printed_decalogue.check_all`` over the vendored
 readings, so it can never drift from the checker's real behaviour.
 
-It also lays out the four cantillation strands of the opening אנכי...עבדים unit (manuscript /
+It also lays out the four cantillation strands of the opening אנכי...עבדים span (manuscript /
 printed x taḥton / elyon) over shared milestone words, resolved by the shared
 ``printed_decalogue_strands`` module.  The Simanim- and Koren-witness companion pages
 (``printed_decalogue_simanim_page``, ``printed_decalogue_koren_page``) link back to that table
@@ -363,7 +363,7 @@ _STRAND_ABBRS: dict[str, tuple[str, str]] = {
 # than two rows sharing a rowspan.
 _MERGED_STRANDS = ("m-trad elyon", "p-trad taḥton")
 
-# The opening unit's four positional milestones, in verse order (rtl: אנכי rightmost →
+# The opening span's four positional milestones, in verse order (rtl: אנכי rightmost →
 # מצותי leftmost). Every strand starts at אנכי (their common point) and ends at one of the later
 # three; the strands nest — m-trad elyon / p-trad taxton stop at עבדים, m-trad taxton at על־פני,
 # p-trad elyon at מצותי — so laying them over these shared columns shows that subset relation and
@@ -485,7 +485,7 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
         H.heading_level_2("The four strands of אנכי…עבדים", {"id": "four-strands"}),
         H.para(
             (
-                "The m-trad and p-trad accent the Decalogue's אנכי…עבדים unit differently."
+                "The m-trad and p-trad accent the Decalogue's אנכי…עבדים span differently."
                 " The accent on עבדים is what decides the structure: a ",
                 H.bold(_ROM_SILLUQ_SOF_PASUQ),
                 " there ends the verse, so אנכי…עבדים stands as its own verse; an ",
