@@ -1,22 +1,28 @@
-"""Repo maintenance: clean .novc/, lint, run the pytest suite, run the routine rebuild.
+"""Repo maintenance: clean .novc/, check formatting, lint, run the pytest
+suite, run the routine rebuild.
 
 Run from anywhere (each step resolves paths via ``repo_paths.repo_root()``):
 
     python py/main_repo_maintenance.py
     python py/main_repo_maintenance.py --skip-novc
+    python py/main_repo_maintenance.py --skip-black
     python py/main_repo_maintenance.py --skip-lint
     python py/main_repo_maintenance.py --skip-tests
     python py/main_repo_maintenance.py --skip-rebuild
     python py/main_repo_maintenance.py --continue-on-test-failure
 
-Four independent steps, in order:
+Five independent steps, in order:
 
 1. Wipe the gitignored ``.novc/`` scratch dir. Everything in it is a
    regenerable download cache or tool output, never a durable result.
-2. Run ``ruff check py`` (the linter, configured by ``ruff.toml``). Lint
+2. Run ``black --check py``. Check-only: drift is reported, never
+   auto-reformatted -- repo-wide reformatting is its own deliberate commit.
+   Like lint, failures set the overall exit status but do not block the
+   later steps.
+3. Run ``ruff check py`` (the linter, configured by ``ruff.toml``). Lint
    failures set the overall exit status but do not block the later steps.
-3. Run ``pytest py/tests`` (the whole repo's test suite).
-4. Run ``py/main_0_mega.py``, the routine downstream rebuild -- every
+4. Run ``pytest py/tests`` (the whole repo's test suite).
+5. Run ``py/main_0_mega.py``, the routine downstream rebuild -- every
    parameterless, non-download rebuild step (vendored-file sync, WLC
    JSON/Unicode, accgram, the 4.20/4.22 diffs, and the a-notes build).
 
@@ -40,6 +46,9 @@ _NOVC = _REPO / ".novc"
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--skip-novc", action="store_true", help="don't clean .novc/")
+    parser.add_argument(
+        "--skip-black", action="store_true", help="don't run black --check"
+    )
     parser.add_argument("--skip-lint", action="store_true", help="don't run ruff")
     parser.add_argument(
         "--skip-tests", action="store_true", help="don't run the test suite"
@@ -66,6 +75,13 @@ def clean_novc() -> None:
         print(f".novc: removed {len(removed)} entries: {', '.join(removed)}")
     else:
         print(".novc: already empty")
+
+
+def run_black() -> bool:
+    result = subprocess.run([sys.executable, "-m", "black", "--check", "py"], cwd=_REPO)
+    ok = result.returncode == 0
+    print(f"black: {'OK' if ok else f'FAILED (exit {result.returncode})'}")
+    return ok
 
 
 def run_lint() -> bool:
@@ -104,6 +120,9 @@ def main() -> None:
 
     if not args.skip_novc:
         clean_novc()
+
+    if not args.skip_black:
+        ok = run_black() and ok
 
     if not args.skip_lint:
         ok = run_lint() and ok
