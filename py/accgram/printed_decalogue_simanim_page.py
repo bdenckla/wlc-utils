@@ -36,7 +36,7 @@ THIS page (keep them when editing):
 * Prefer "**cantillation**" to "accentuation".
 * **Three term pairs, kept strictly apart** (a recurring inconsistency -- don't regress):
   *main* vs *appendix* = the book's two parts (the running ḥumash vs the Decalogue reprinted at
-  the back); *body* vs *note* = running text vs annotation; and the two notes differ by
+  the back); *body* vs *note* = printed text vs annotation; and the two notes differ by
   placement.  Use "main" ONLY for main-vs-appendix -- pair it as "main Decalogue" /
   "appendix Decalogue", never "main text" -- and "body" ONLY for body-vs-note (so the p. 83
   note's ``בפנים`` renders as "the body", NOT "the main text").  The **p. 83** note sits in the
@@ -88,7 +88,7 @@ _P246_IMG = "img/simanim-decalogue-p-246-footnote.png"
 _P83_BODY_IMG = "img/Simanim-Tiqqun-p-083-Ex-Dec-elyon.png"
 _P246_BODY_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton.png"
 # Simanim *Tanakh* (Feldheim), a different edition from the Tiqqun (issue #62 scope note): both
-# its Exodus Decalogue strands are m-trad, unlike the Tiqqun's p-trad -- the running-text taxton
+# its Exodus Decalogue strands are m-trad, unlike the Tiqqun's p-trad -- the main-Decalogue taxton
 # (p. 119) and the elyon in the Torah section's appendix (p. 350).
 _TANAKH_EX_TAHTON_IMG = "img/Feldheim-Tanakh-p-0119-Ex-Dec-start-m-trad-taxton.png"
 _TANAKH_EX_ELYON_IMG = "img/Simanim-Tanakh-p-350-Ex-Dec-elyon-m-trad.png"
@@ -163,9 +163,7 @@ _PARA_2 = (
     "That page lays out those four strands and grammar-checks the p-trad; this page serves only to"
     " document the claim that",
     *[" ", H.bold("Simanim's Tiqqun"), " follows the p-trad."],
-    " Along the way it transcribes two of Simanim's notes"
-    " — not to establish the claim, but to show"
-    " how conscious Simanim is of the choice it makes.",
+    " Along the way it transcribes two of Simanim's notes.",
 )
 
 
@@ -624,10 +622,10 @@ def _conclusion() -> tuple[object, ...]:
                 " (Feldheim) does not agree with it: the Tanakh follows the ",
                 H.bold("m-trad"),
                 f", not the p-trad, on both strands. Where the Tiqqun is p-trad, the Tanakh's"
-                f" Exodus Decalogue is the m-trad {_TAHTON} in its running text (p. 119) and the"
-                f" m-trad {_ELYON} in the appendix to the Torah section (p. 350) — both shown"
+                f" Exodus main Decalogue (p. 119) is the m-trad {_TAHTON} and the"
+                f" m-trad {_ELYON} is in the appendix to the Torah section (p. 350) — both shown"
                 f" below. Its Deuteronomy Decalogue is likewise m-trad on both strands — the"
-                f" {_TAHTON} in the running text (starting p. 297) and the {_ELYON} in that same"
+                f" {_TAHTON} in the main Decalogue (starting p. 297) and the {_ELYON} in that same"
                 f" appendix, where Deuteronomy agrees with Exodus, as one would expect (neither"
                 " Deuteronomy image shown). So the two Simanim editions genuinely diverge — one"
                 " should not assume they agree.",
@@ -635,9 +633,9 @@ def _conclusion() -> tuple[object, ...]:
         ),
         _figure(
             _TANAKH_EX_TAHTON_IMG,
-            "Simanim Tanakh p. 119: the Exodus Decalogue in running text, in the m-trad taḥton",
+            "Simanim Tanakh p. 119: the Exodus main Decalogue, in the m-trad taḥton",
             (
-                "Simanim Tanakh, p. 119 — the start of the Exodus Decalogue in running text, in"
+                "Simanim Tanakh, p. 119 — the start of the Exodus main Decalogue, in"
                 f" the m-trad {_TAHTON} cantillation.",
             ),
             width=None,
@@ -653,10 +651,10 @@ def _conclusion() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "The two editions also swap which strand goes in the running text and which in an"
+                "The two editions also swap which strand goes in the main Decalogue and which in an"
                 " appendix, as one would expect from their different purposes: the Tiqqun runs the"
-                f" {_ELYON} in its main text and appends the {_TAHTON}, whereas the Tanakh does the"
-                f" reverse — the everyday {_TAHTON} in the running text and the {_ELYON} in an"
+                f" {_ELYON} in its main Decalogue and appends the {_TAHTON}, whereas the Tanakh does"
+                f" the reverse — the everyday {_TAHTON} in the main Decalogue and the {_ELYON} in an"
                 " appendix. And because this is a Tanakh, not a Torah-only Tiqqun, that appendix"
                 " sits at the end of the Torah section — mid-volume, before the Prophets — not at"
                 " the back of the book.",

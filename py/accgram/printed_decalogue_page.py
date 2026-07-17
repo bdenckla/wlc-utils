@@ -787,8 +787,8 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                     "this document on the Decalogues in the Simanim Tiqqun",
                     "printed-decalogue-simanim.html",
                 ),
-                f" — its main text uses the p-trad {_ELYON} "
-                "and its appendix the p-trad "
+                f" — its main Decalogue uses the p-trad {_ELYON} "
+                "and its appendix Decalogue the p-trad "
                 f"{_TAHTON}.",
             )
         ),
@@ -800,7 +800,7 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                     "printed-decalogue-koren.html",
                 ),
                 f" — it has the p-trad {_TAHTON} in its "
-                f"Exodus running text and the p-trad {_ELYON} in an appendix.",
+                f"Exodus main Decalogue and the p-trad {_ELYON} in its appendix Decalogue.",
             )
         ),
     )

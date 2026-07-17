@@ -9,8 +9,8 @@ this page links to that table rather than duplicating it, and serves only to doc
 place in the p-trad camp -- plus one Koren note that shows the same editorial self-awareness the
 Simanim page found in Simanim.
 
-What establishes the answer is Koren's *body text*: its Exodus Decalogue has the p-trad תחתון in
-the running text (p. 113) and the p-trad עליון in an appendix (p. A38), and both are compared, by
+What establishes the answer is Koren's *body text*: its Exodus main Decalogue (p. 113) is the
+p-trad תחתון and its appendix Decalogue (p. A38) the p-trad עליון, and both are compared, by
 the author, against what Hebrew Wikisource records as the printed tradition, and they match.  That
 body text is asserted here, not transcribed word-for-word (only shown as scans).
 The one *note* is the secondary, more-for-fun material -- kept for how aware Koren is of the older,
@@ -31,9 +31,13 @@ wrap each name in the italic ``span.romanized``, so they are HTML nodes rather t
 the comment at that alias block).  As on the Simanim
 page: prefer "cantillation" to "accentuation"; keep romanized names ("taḥton") in image ``alt``
 text on purpose (attribute contexts are exempt from the Hebrew-letter rule by design -- see the
-"Attribute contexts are EXEMPT" bullet in ``printed_decalogue_strands``); and keep *running text* (the everyday
-Torah text) distinct from *appendix* (the strand printed separately), and *body* (printed text)
-distinct from *note* (annotation).
+"Attribute contexts are EXEMPT" bullet in ``printed_decalogue_strands``); and keep the two term
+pairs strictly apart.  *main* vs *appendix* = the book's two parts (the running Torah text vs the
+Decalogue reprinted in the appendix) -- use "main" ONLY for that pair, worded as "main Decalogue" /
+"appendix Decalogue", never "main text"; and *body* (printed text) vs *note* (annotation).  Do not
+regress "main" to "running text" here: the Simanim page's docstring is the fuller statement of this
+rule.  (Note Koren is a **Tanakh**, not a ḥumash -- the Simanim page glosses this same pair as "the
+running ḥumash", which is right for its Torah-only Tiqqun but would be wrong here.)
 
 DRAFT-STAGE FACTS TO VERIFY (see .novc/pending_koren_page_edits.md): the page numbers (113 / A38)
 come from the committed scan filenames; and רוו״ה is *tentatively* expanded to Wolf Heidenheim
@@ -41,7 +45,7 @@ come from the committed scan filenames; and רוו״ה is *tentatively* expanded
 
 The appendix's separate pagination IS now confirmed (Ben, 2026-07-15), which is why every citation
 of it reads "p. A38", never a bare "p. 38": the appendix restarts its own page numbering at 1, so
-an unprefixed 38 would read as page 38 of the running text and, being lower than the running-text
+an unprefixed 38 would read as page 38 of the book's main part and, being lower than the main
 Decalogue's own p. 113, would wrongly suggest the appendix sits *before* it.  Keep the A prefix on
 appendix citations, and don't "normalize" it away.  (The scan *filenames* keep their original
 ``Koren-appendix-p-38-...`` spelling -- they are committed assets, and "appendix" already
@@ -88,7 +92,7 @@ _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
 _COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
 
 # Body-text scans: the two Koren Exodus Decalogues whose cantillation establishes the p-trad
-# finding -- the תחתון in the running text (p. 113) and the עליון in the appendix (p. A38).
+# finding -- the תחתון in the main Decalogue (p. 113) and the עליון in the appendix (p. A38).
 _P113_BODY_IMG = "img/Koren-p-113-Ex-Dec-p-trad-taxton.png"
 _PA38_BODY_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon.png"
 # The Deuteronomy (Vaetxanan) תחתון Decalogue starts on p. 280 and runs onto p. 281; this crop is
@@ -162,9 +166,7 @@ _PARA_2 = (
     "That page lays out those four strands and grammar-checks the p-trad; this page serves only to"
     " document the claim that",
     *[" ", H.bold("Koren"), " follows the p-trad."],
-    " Along the way it transcribes one of Koren's own notes"
-    " — not to establish the claim, but to show"
-    " how conscious Koren is of the choice it makes.",
+    " Along the way it transcribes one of Koren's own notes.",
 )
 
 
@@ -202,9 +204,9 @@ def _body_scans() -> tuple[object, ...]:
     return (
         _figure(
             _P113_BODY_IMG,
-            "Koren p. 113: the Exodus Decalogue in the running text, in the p-trad taḥton",
+            "Koren p. 113: the Exodus main Decalogue in the p-trad taḥton",
             (
-                "The start of Koren's Exodus Decalogue in the running text (p. 113), in"
+                "The start of Koren's Exodus main Decalogue (p. 113), in"
                 f" the p-trad {_TAHTON}. The אנכי…עבדים span is its own chanted verse, closing",
                 *[" with a ", _ROM_SILLUQ_SOF_PASUQ, "."],
             ),
@@ -212,9 +214,9 @@ def _body_scans() -> tuple[object, ...]:
         ),
         _figure(
             _PA38_BODY_IMG,
-            "Koren appendix p. A38: the Exodus Decalogue in the elyon",
+            "Koren appendix p. A38: the Exodus appendix Decalogue in the elyon",
             (
-                "The start of Koren's Exodus Decalogue in the appendix (p. A38), in the p-trad"
+                "The start of Koren's Exodus appendix Decalogue (p. A38), in the p-trad"
                 f" {_ELYON}. The אנכי…עבדים span is only the first phrase of a long"
                 " verse — עבדים has only a",
                 *[" ", _ROM_REVIA, "."],
@@ -233,12 +235,12 @@ def _intro(source: dict) -> tuple[object, ...]:
             (
                 "Koren follows the p-trad for the Decalogues. In its ",
                 H.bold("Exodus"),
-                " Decalogue, Koren has the p-trad",
-                f" {_TAHTON} in the running text (p. 113) and gives the p-trad {_ELYON} in an"
-                " appendix (p. A38). Since no digital Koren exists, I established this by"
+                " Decalogue, Koren's main Decalogue (p. 113) is the p-trad"
+                f" {_TAHTON} and its appendix Decalogue (p. A38) is the p-trad {_ELYON}"
+                ". Since no digital Koren exists, I established this by"
                 " visually spot-checking Koren against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
-                ". The two scans below reproduce that body text — Koren's own running-text and"
+                ". The two scans below reproduce that body text — Koren's own main and"
                 " appendix Decalogues.",
             )
         ),
@@ -347,7 +349,8 @@ def _conclusion() -> tuple[object, ...]:
                 _TAHTON,
                 " in its ",
                 H.bold("Exodus"),
-                f" running text (p. 113), and the p-trad {_ELYON} in its appendix (p. A38).",
+                f" main Decalogue (p. 113), and the p-trad {_ELYON} in its appendix Decalogue"
+                " (p. A38).",
             )
         ),
         H.para(
@@ -373,7 +376,7 @@ def _conclusion() -> tuple[object, ...]:
                 H.bold("Exodus"),
                 " one and the ",
                 H.bold("Deuteronomy"),
-                f" (Vaetḥanan) one, whose {_TAHTON} running text starts on p. 280 and runs onto"
+                f" (Vaetḥanan) one, whose {_TAHTON} main Decalogue starts on p. 280 and runs onto"
                 " p. 281. There too אנכי…עבדים is its own chanted verse, closing on עבדים with a",
                 *[" ", _ROM_SILLUQ_SOF_PASUQ, "."],
             )
@@ -400,8 +403,8 @@ def _conclusion() -> tuple[object, ...]:
             "Koren p. 281: the Shabbat commandment of the Deuteronomy Decalogue, in the p-trad"
             " taḥton",
             (
-                "The Shabbat commandment of Koren's Deuteronomy (Vaetḥanan) Decalogue in the"
-                f" running text (p. 281), in the p-trad {_TAHTON}. Two of the p-trad's"
+                "The Shabbat commandment of Koren's Deuteronomy (Vaetḥanan) main Decalogue"
+                f" (p. 281), in the p-trad {_TAHTON}. Two of the p-trad's"
                 " characteristic choices here: כָל־מְלָאכָ֜ה has a",
                 *[" ", _ROM_GERESH, " where the m-trad has a "],
                 _ROM_PAZER,
