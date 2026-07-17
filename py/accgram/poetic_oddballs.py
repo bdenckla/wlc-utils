@@ -3,13 +3,13 @@
 The poetic corpus run (``run-poetic``) parses 99.69% of the Three Books
 cleanly; the residual splits into two documented ungrammatical kinds:
 
-  * ``missing_silluq`` -- the 13 verses whose sof pasuq arrives with no silluq
+  * ``missing_silluq`` -- verses whose sof pasuq arrives with no silluq
     code, recovered by the grammar into an ERROR-leaf tree (structure preserved,
     the silluq_phrase mark is ``ERROR``).
-  * ``no_parse`` -- the 1 NO_PARSE L anomaly (Job 31:15) for which no valid tree
-    exists (the disjunctive hierarchy is violated or a token is lexically
-    illicit); emitted as a ``NO_PARSE`` token line by the driver.  (Ps
-    17:14's double tsinnor was a second such case until the parser began accepting
+  * ``no_parse`` -- an L anomaly for which no valid tree exists (the disjunctive
+    hierarchy is violated or a token is lexically illicit), e.g. Job 31:15 and
+    Psalms 56:10; emitted as a ``NO_PARSE`` token line by the driver.  (Ps
+    17:14's double tsinnor was another such case until the parser began accepting
     a repeated divider as one; see poetic_ply_grammar.parse_tokens_accepting_repeats
     and gh-pages/accgram/ps17v14-double-tsinnor.html.)
 

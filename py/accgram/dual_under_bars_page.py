@@ -1,16 +1,11 @@
 r"""Generate gh-pages/accgram/dual-under-bars-in-leningrad-decalogues.html (issue #53).
 
-Two of the "Supplied accents" Asides on supplied-marks.html (Exodus 20:3, Deuteronomy
-5:17) speculate that the Leningrad Codex's naqdan may have intended a single vertical
-under-bar stroke (design doc §2, UXLC-utils repo) to serve both the taxton and elyon
-strands' readings at once, rather than the mark being genuinely absent for one strand.
-
-This page shows three manuscript-photo crops from elsewhere in the very same two
-Decalogue passages where the naqdan certainly did write two separate under-bar marks
-on one letter: Exodus 20:13's own לא and תרצח (the direct twin of Deuteronomy 5:17's
-own תרצח), and Deuteronomy 5:17's own לא. It states the evidence plainly and lets the
-reader weigh it against the Asides' speculation -- it does not conclude which reading
-(one stroke vs. two) is correct.
+An evidence page backing the "Supplied accents" Asides on supplied-marks.html (Exodus 20:3,
+Deuteronomy 5:17), which speculate that the Leningrad naqdan may have meant one vertical
+under-bar stroke (design doc §2, UXLC-utils repo) to serve both the taxton and elyon strands
+at once. It shows three manuscript crops where the naqdan clearly did write two separate
+under-bars on one letter, and deliberately draws no conclusion. The intro paragraph carries
+that argument in full; the crops and captions live in ``_IMAGES``.
 
 Run via ``main_accgram.py generate-html``.
 """

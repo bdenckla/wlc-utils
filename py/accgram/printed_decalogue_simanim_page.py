@@ -83,9 +83,8 @@ _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
 _COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
 _P83_IMG = "img/simanim-decalogue-p-083-sidenote.png"
 _P246_IMG = "img/simanim-decalogue-p-246-footnote.png"
-# Body-text scans (issue #62): the actual Simanim Decalogues whose cantillation establishes the
-# p-trad finding -- distinct from the two note scans above.  p. 83 is the main Decalogue in the
-# elyon; p. 246 is the appendix Decalogue in the taxton.
+# Body-text scans (issue #62): the Simanim Decalogues whose cantillation establishes the p-trad
+# finding -- distinct from the two note scans above (the constant names encode strand + page).
 _P83_BODY_IMG = "img/Simanim-Tiqqun-p-083-Ex-Dec-elyon.png"
 _P246_BODY_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton.png"
 # Simanim *Tanakh* (Feldheim), a different edition from the Tiqqun (issue #62 scope note): both
@@ -171,9 +170,8 @@ _PARA_2 = (
 
 
 def _body_scans() -> tuple[object, ...]:
-    """The two body-text scans that establish the finding (issue #62): Simanim's main Decalogue in
-    the p-trad עליון (p. 83) and its appendix Decalogue in the p-trad תחתון (p. 246). These are the
-    body text the page used to only assert; showing them is what replaces the old apology.
+    """The two body-text scans that are the finding's actual evidence (issue #62): the body text
+    the page used to only assert -- showing them is what replaced the old apology.
     """
     return (
         _figure(

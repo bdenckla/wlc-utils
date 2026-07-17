@@ -9,10 +9,10 @@ this page links to that table rather than duplicating it, and serves only to doc
 place in the p-trad camp -- plus one Koren note that shows the same editorial self-awareness the
 Simanim page found in Simanim.
 
-What establishes the answer is Koren's *body text*: its Exodus (Yitro) Decalogue is printed twice,
-the p-trad תחתון in the running text (p. 113) and the p-trad עליון in an appendix (p. A38), and both
-are compared, by the author, against what Hebrew Wikisource records as the printed tradition, and
-they match.  That body text is asserted here, not transcribed word-for-word (only shown as scans).
+What establishes the answer is Koren's *body text*: its Exodus Decalogue has the p-trad תחתון in
+the running text (p. 113) and the p-trad עליון in an appendix (p. A38), and both are compared, by
+the author, against what Hebrew Wikisource records as the printed tradition, and they match.  That
+body text is asserted here, not transcribed word-for-word (only shown as scans).
 The one *note* is the secondary, more-for-fun material -- kept for how aware Koren is of the older,
 printed-tradition choice it makes:
 
@@ -32,7 +32,7 @@ the comment at that alias block).  As on the Simanim
 page: prefer "cantillation" to "accentuation"; keep romanized names ("taḥton") in image ``alt``
 text on purpose (attribute contexts are exempt from the Hebrew-letter rule by design -- see the
 "Attribute contexts are EXEMPT" bullet in ``printed_decalogue_strands``); and keep *running text* (the everyday
-Torah text) distinct from *appendix* (the strand reprinted separately), and *body* (printed text)
+Torah text) distinct from *appendix* (the strand printed separately), and *body* (printed text)
 distinct from *note* (annotation).
 
 DRAFT-STAGE FACTS TO VERIFY (see .novc/pending_koren_page_edits.md): the page numbers (113 / A38)
@@ -87,9 +87,8 @@ _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
 # reader past the companion's own intro, mid-page, which is not what "the companion page" promises.
 _COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
 
-# Body-text scans: the two Koren Decalogues whose cantillation establishes the p-trad finding.
-# p. 113 is the Exodus Decalogue in the running text (תחתון); p. A38 is the same Decalogue reprinted
-# in the appendix (עליון).
+# Body-text scans: the two Koren Exodus Decalogues whose cantillation establishes the p-trad
+# finding -- the תחתון in the running text (p. 113) and the עליון in the appendix (p. A38).
 _P113_BODY_IMG = "img/Koren-p-113-Ex-Dec-p-trad-taxton.png"
 _PA38_BODY_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon.png"
 # The Deuteronomy (Vaetxanan) תחתון Decalogue starts on p. 280 and runs onto p. 281; this crop is
@@ -197,9 +196,9 @@ def _lines_with_breaks(lines: tuple[str, ...]) -> tuple[object, ...]:
 
 
 def _body_scans() -> tuple[object, ...]:
-    """The two body-text scans that establish the finding: Koren's Exodus Decalogue in the running
-    text (p-trad תחתון, p. 113) and the same Decalogue reprinted in the appendix (p-trad עליון,
-    p. A38).  These are the body text the page otherwise only asserts."""
+    """The two body-text scans that are the finding's actual evidence -- elsewhere the page only
+    asserts Koren's body text, here it is shown.  (The captions below name the strands and pages.)
+    """
     return (
         _figure(
             _P113_BODY_IMG,
