@@ -275,7 +275,7 @@ figure { margin: 1.2em 0; text-align: center; }
 figure img { height: auto; border: 1px solid light-dark(#ccc, #555); }
 figcaption { font-size: 0.9em; color: light-dark(#555, #aaa); margin-top: 0.4em; }
 
-/* Scans of black ink on white paper (the printed-Tanakh pages: Koren, Simanim, Feldheim),
+/* Scans of black ink on white paper (the printed-Tanakh pages: Koren, Simanim),
    which otherwise sit on a dark page as a glaring white slab. Inverting in CSS keeps ONE
    committed scan per figure -- no hand-inverted twin to keep in sync, and the light-mode
    page still serves the file as scanned.

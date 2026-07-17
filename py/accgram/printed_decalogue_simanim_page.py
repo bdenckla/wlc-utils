@@ -81,16 +81,16 @@ _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
 # Link text that names the page, not the table, gets the page itself: an anchor would drop the
 # reader past the companion's own intro, mid-page, which is not what "the companion page" promises.
 _COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
-_P83_IMG = "img/simanim-decalogue-p-083-sidenote.png"
-_P246_IMG = "img/simanim-decalogue-p-246-footnote.png"
+_P83_IMG = "img/Simanim-Tiqqun-p-083-Ex-Dec-elyon-sidenote.png"
+_P246_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton-footnote.png"
 # Body-text scans (issue #62): the Simanim Decalogues whose cantillation establishes the p-trad
 # finding -- distinct from the two note scans above (the constant names encode strand + page).
 _P83_BODY_IMG = "img/Simanim-Tiqqun-p-083-Ex-Dec-elyon.png"
 _P246_BODY_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton.png"
-# Simanim *Tanakh* (Feldheim), a different edition from the Tiqqun (issue #62 scope note): both
-# its Exodus Decalogue strands are m-trad, unlike the Tiqqun's p-trad -- the main-Decalogue taxton
-# (p. 119) and the elyon in the Torah section's appendix (p. 350).
-_TANAKH_EX_TAHTON_IMG = "img/Feldheim-Tanakh-p-0119-Ex-Dec-start-m-trad-taxton.png"
+# Simanim *Tanakh*, a different edition from the Tiqqun though Feldheim publishes both (issue #62
+# scope note): both its Exodus Decalogue strands are m-trad, unlike the Tiqqun's p-trad -- the
+# main-Decalogue taxton (p. 119) and the elyon in the Torah section's appendix (p. 350).
+_TANAKH_EX_TAHTON_IMG = "img/Simanim-Tanakh-p-119-Ex-Dec-start-m-trad-taxton.png"
 _TANAKH_EX_ELYON_IMG = "img/Simanim-Tanakh-p-350-Ex-Dec-elyon-m-trad.png"
 
 # Strand names and accent romanizations are single-sourced in printed_decalogue_strands (see its
@@ -161,8 +161,7 @@ _PARA_1 = (
 # The continuation is this page's own second paragraph (the companion page's differs).
 _PARA_2 = (
     "That page lays out those four strands and grammar-checks the p-trad; this page serves only to"
-    " document the claim that",
-    *[" ", H.bold("Simanim's Tiqqun"), " follows the p-trad."],
+    " document the claim that Simanim's Tiqqun follows the p-trad."
     " Along the way it transcribes two of Simanim's notes.",
 )
 
@@ -183,7 +182,7 @@ def _body_scans() -> tuple[object, ...]:
                 H.line_break(),
                 H.small(
                     (
-                        "The horizontal brown bar marks a removed page break — two page-scans"
+                        "The horizontal bar marks a removed page break — two page-scans"
                         " joined into a single column.",
                     )
                 ),
@@ -212,15 +211,14 @@ def _intro(source: dict) -> tuple[object, ...]:
         H.para(_PARA_2),
         H.para(
             (
-                "Simanim's Tiqqun follows the p-trad for the Decalogues. In its ",
-                H.bold("Exodus"),
+                "Simanim's Tiqqun follows the p-trad for the Decalogues. In its Exodus"
                 " (Yitro) Decalogue, Simanim's main Decalogue (p. 83) is the p-trad"
                 f" {_ELYON} and its appendix Decalogue (p. 246) is the p-trad {_TAHTON}"
                 ". Since no digital Simanim exists, I established this by"
                 " visually spot-checking Simanim against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
-                ". The two scans below reproduce that body text — Simanim's own main and"
-                " appendix Decalogues.",
+                ". The two scans below show enough of Simanim's Exodus Decalogues to"
+                ' "diagnose" them both as p-trad.',
             )
         ),
         *_body_scans(),
@@ -236,7 +234,7 @@ def _figure(src: str, alt: str, caption: object, *, width: str | None) -> object
     # outranked it (issue #65, finding C4b). Don't reintroduce it.
     # class="ink-on-white" opts the scan into the stylesheet's dark-mode CSS inversion. It is
     # unconditional here because every image on this page is a printed-book scan (Simanim's
-    # Tiqqun, Simanim's Tanakh, Feldheim) -- black ink, white paper. Don't hoist it into a
+    # Tiqqun, Simanim's Tanakh) -- black ink, white paper. Don't hoist it into a
     # shared img helper: the manuscript photos elsewhere in the tree are ink on parchment and
     # must NOT invert (see the rule's comment in style.css).
     img_attr = {"src": src, "alt": alt, "class": "ink-on-white"}
@@ -326,8 +324,9 @@ def _p83_section() -> tuple[object, ...]:
         H.blockquote(
             (
                 H.bold("[{Verse 20:}2]"),
-                " {Regarding} the first {pseudo-?} verse — it is the custom of some to chant it as ",
-                H.bold(("ending on a ", _ROM_REVIA)),
+                " {Regarding} the first {pseudo-?} verse — it is the custom of some to chant it as "
+                "ending on a ",
+                _ROM_REVIA,
                 ", as given in the body; {but} there are editions that call for it"
                 " to be chanted as in the ",
                 _TAHTON,
@@ -346,23 +345,18 @@ def _p83_section() -> tuple[object, ...]:
                 H.small(
                     (
                         H.bold("Notation:"),
-                        *[
-                            " text in ",
-                            H.bold("{curly braces}"),
-                            " is my editorial addition; ",
-                        ],
-                        H.bold("[square brackets]"),
-                        " reproduce brackets present in the source itself.",
+                        " text in {curly braces} is my editorial addition; ",
+                        "[square brackets] reproduce square brackets present in the source itself.",
                     )
                 ),
             )
         ),
         H.para(
             (
-                "The note is worth reading for what it reveals about Simanim's own stance: its ",
-                H.bold("default"),
+                "The note is worth reading for what it reveals about Simanim's own stance:"
+                " its default"
                 f" {_ELYON} ends the אנכי…עבדים span on a ",
-                H.bold(_ROM_REVIA),
+                _ROM_REVIA,
                 " — the nine-verse p-trad structure — and it files the standalone,"
                 " ten-verse cantillation (",
                 _ROM_SILLUQ_SOF_PASUQ,
@@ -472,7 +466,7 @@ def _p246_section() -> tuple[object, ...]:
                 H.line_break(),
                 H.small(
                     (
-                        "The vertical blue bars mark line breaks I added — after אתנחתא and after"
+                        "The vertical bars mark line breaks I added — after אתנחתא and after"
                         " עבדים — to narrow the inconveniently wide original.",
                     )
                 ),
@@ -485,11 +479,8 @@ def _p246_section() -> tuple[object, ...]:
             (
                 H.small(
                     (
-                        "The lemma is shown in blue rather than boldface — bold renders many"
-                        " Hebrew fonts' diacritics hard to read, so I substitute colour for the"
-                        " source's own emphasis. It reproduces the appendix's own body text,"
-                        " asterisk and all, except that the note writes the Tetragrammaton as the"
-                        " double-yod (יי) abbreviation where the body has the full יהוה.",
+                        "The lemma is shown in blue in our transcription rather than boldface as"
+                        " in the original.",
                     )
                 ),
             )
@@ -511,15 +502,15 @@ def _p246_section() -> tuple[object, ...]:
                 H.span_c(hbo(_P246_LEMMA), "simanim-lemma"),
                 " Such is the version in the ordinary cantillation, which"
                 " opens with ",
-                H.bold(_ROM_TIPEHA_ETNAHTA),
+                _ROM_TIPEHA_ETNAHTA,
                 " and ends with the ",
                 _ROM_SOF_PASUQ,
                 " word ",
                 hbo(_P246_AVADIM_RAGIL),
                 "; but in the Keter Aram Tsova it opens with ",
-                H.bold(_ROM_PASHTA),
+                _ROM_PASHTA,
                 " and ends with ",
-                H.bold(_ROM_ETNAHTA),
+                _ROM_ETNAHTA,
                 ", thus: ",
                 hbo(_P246_MERGED_VERSE),
                 ". And as regards the “Ten" " Commandments” in the ",
@@ -573,23 +564,9 @@ def _conclusion() -> tuple[object, ...]:
                 " traditions' most consequential divergence is at the opening commandment"
                 " אנכי…עבדים, and Simanim lands"
                 f" on the p-trad side of that divergence on both strands: the p-trad {_ELYON} in"
-                " its ",
-                H.bold("Exodus"),
+                " its Exodus",
                 f" main Decalogue (p. 83), and the p-trad {_TAHTON} in its appendix Decalogue"
                 " (p. 246).",
-            )
-        ),
-        H.para(
-            (
-                "A closing, more-for-fun observation. I find it somewhat ",
-                H.bold("editorially inconsistent"),
-                " that Simanim — otherwise a modern Tiqqun (from Feldheim) — keeps p-trad"
-                f" Decalogues, where more recent Bibles have moved toward the m-trad {_ELYON} and"
-                f" m-trad {_TAHTON}. The two notes above suggest Simanim was at least half-aware"
-                " of the tension: each sets its p-trad cantillation against the standalone-verse"
-                " / Keter alternative it declines to follow. (Straddling old and new is less"
-                " surprising in a house like Koren, which does it more pervasively; Simanim's is"
-                " a milder case.)",
             )
         ),
         # Ben provides an image of Simanim's Deuteronomy appendix taxton Decalogue (p. 247),
@@ -601,12 +578,9 @@ def _conclusion() -> tuple[object, ...]:
             (
                 "One scope note: the finding above rests on the אנכי…עבדים span — the most striking"
                 " p-trad/m-trad divergence. Simanim makes the same p-trad choice at that span in"
-                " both of its Decalogues: the ",
-                H.bold("Exodus"),
-                " (Yitro) one and the ",
-                H.bold("Deuteronomy"),
-                f" (Vaetḥanan) one, whose {_ELYON} main Decalogue starts on p. 208. One caveat:"
-                " in the"
+                " both of its Decalogues: the Exodus (Yitro) one and the",
+                f" Deuteronomy (Vaetḥanan) one, whose {_ELYON} main Decalogue starts on p. 208."
+                " One caveat: in the"
                 f" Deuteronomy {_TAHTON} (appendix, p. 247), the p-trad and m-trad also diverge at"
                 " the Shabbat commandment, but there Simanim follows the m-trad, not the p-trad —"
                 " so its p-trad allegiance, firm at אנכי…עבדים across both Decalogues, is not"
@@ -619,8 +593,7 @@ def _conclusion() -> tuple[object, ...]:
                 H.bold("Tiqqun"),
                 ". The separately published Simanim ",
                 H.bold("Tanakh"),
-                " (Feldheim) does not agree with it: the Tanakh follows the ",
-                H.bold("m-trad"),
+                " does not agree with it: the Tanakh follows the m-trad"
                 f", not the p-trad, on both strands. Where the Tiqqun is p-trad, the Tanakh's"
                 f" Exodus main Decalogue (p. 119) is the m-trad {_TAHTON} and the"
                 f" m-trad {_ELYON} is in the appendix to the Torah section (p. 350) — both shown"
@@ -708,8 +681,7 @@ def _aleppo_codex_section() -> tuple[object, ...]:
                     " The ",
                     _ROM_PASHTA_ETNAHTA,
                     f" cantillation is the m-trad {_TAHTON} — one strand. Like the Tiberian"
-                    " manuscripts generally, the Aleppo Codex's Decalogue has ",
-                    H.bold("both"),
+                    " manuscripts generally, the Aleppo Codex's Decalogue has both"
                     f" cantillations; the {_ELYON} is the other (אנכי…עבדים as its own verse, ",
                     _ROM_TIPEHA_SILLUQ,
                     f"). Citing the {_TAHTON} strand alone does not mean the Codex has only one.",

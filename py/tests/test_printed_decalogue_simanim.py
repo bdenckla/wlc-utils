@@ -76,7 +76,7 @@ def test_scan_images_committed() -> None:
     not the issue CDN)."""
     img_dir = repo_paths.gh_pages_dir() / "accgram" / "img"
     for name in (
-        "simanim-decalogue-p-083-sidenote.png",
-        "simanim-decalogue-p-246-footnote.png",
+        "Simanim-Tiqqun-p-083-Ex-Dec-elyon-sidenote.png",
+        "Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton-footnote.png",
     ):
         assert (img_dir / name).is_file(), f"missing committed scan {name}"

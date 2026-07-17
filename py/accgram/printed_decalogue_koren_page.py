@@ -164,8 +164,7 @@ _PARA_1 = (
 
 _PARA_2 = (
     "That page lays out those four strands and grammar-checks the p-trad; this page serves only to"
-    " document the claim that",
-    *[" ", H.bold("Koren"), " follows the p-trad."],
+    " document the claim that Koren follows the p-trad."
     " Along the way it transcribes one of Koren's own notes.",
 )
 
@@ -233,15 +232,14 @@ def _intro(source: dict) -> tuple[object, ...]:
         H.para(_PARA_2),
         H.para(
             (
-                "Koren follows the p-trad for the Decalogues. In its ",
-                H.bold("Exodus"),
+                "Koren follows the p-trad for the Decalogues. In its Exodus"
                 " Decalogue, Koren's main Decalogue (p. 113) is the p-trad"
                 f" {_TAHTON} and its appendix Decalogue (p. A38) is the p-trad {_ELYON}"
                 ". Since no digital Koren exists, I established this by"
                 " visually spot-checking Koren against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
-                ". The two scans below reproduce that body text — Koren's own main and"
-                " appendix Decalogues.",
+                ". The two scans below show enough of Koren's Exodus Decalogues to"
+                ' "diagnose" them both as p-trad.',
             )
         ),
         *_body_scans(),
@@ -294,11 +292,8 @@ def _pa38_note_section() -> tuple[object, ...]:
                 H.small(
                     (
                         H.bold("Notation:"),
-                        " text in ",
-                        H.bold("{curly braces}"),
-                        " is my editorial addition. That includes the expansion of the siglum"
-                        " רוו״ה, which I ",
-                        H.bold("tentatively"),
+                        " text in {curly braces} is my editorial addition. That includes the"
+                        " expansion of the abbreviation רוו״ה, which I tentatively"
                         " read as ר' וולף היידנהיים (R. Wolf Heidenheim) — the grammarian whose"
                         " editions fixed much of the printed dual-cantillation norm, so the"
                         " likeliest referent here, though I have not confirmed the expansion."
@@ -313,10 +308,10 @@ def _pa38_note_section() -> tuple[object, ...]:
                 "The note is the mirror of ",
                 link("Simanim's p. 83 side-margin note", _SIMANIM_PAGE),
                 ". Koren's appendix prints the ",
-                H.bold(_ELYON),
+                _ELYON,
                 " by default — the merged, nine-verse p-trad structure, in which אנכי…עבדים ends"
                 " on a ",
-                H.bold(_ROM_REVIA),
+                _ROM_REVIA,
                 " rather than closing its own verse. The note flags the alternative, on רוו״ה's"
                 " authority: read the First Commandment (through מבית עבדים) in the ",
                 _TAHTON,
@@ -347,36 +342,18 @@ def _conclusion() -> tuple[object, ...]:
                 " most consequential divergence is at the opening commandment אנכי…עבדים, and"
                 " Koren lands on the p-trad side of that divergence on both strands: the p-trad ",
                 _TAHTON,
-                " in its ",
-                H.bold("Exodus"),
+                " in its Exodus",
                 f" main Decalogue (p. 113), and the p-trad {_ELYON} in its appendix Decalogue"
                 " (p. A38).",
             )
         ),
         H.para(
             (
-                "A closing, more-for-fun observation — parallel to the one the ",
-                link("Simanim page", _SIMANIM_PAGE),
-                " makes, though it lands on a gentler verdict. It is somewhat ",
-                H.bold("editorially conservative"),
-                " to keep p-trad Decalogues at all — let alone to keep them in both books, as the"
-                " scope note below shows Koren does — where more recent Bibles have moved toward"
-                f" the m-trad {_ELYON} and m-trad {_TAHTON}. Koren straddles old and new rather"
-                " pervasively; the רוו״ה note above is one glimpse of that — it sets Koren's"
-                " printed ",
-                _ELYON,
-                " against the standalone-verse alternative it declines to print.",
-            )
-        ),
-        H.para(
-            (
                 "One scope note: the finding above rests on the אנכי…עבדים span — the most striking"
                 " p-trad/m-trad divergence. Koren makes the same p-trad choice at that span in both"
-                " of its Decalogues: the ",
-                H.bold("Exodus"),
-                " one and the ",
-                H.bold("Deuteronomy"),
-                f" (Vaetḥanan) one, whose {_TAHTON} main Decalogue starts on p. 280 and runs onto"
+                " of its Decalogues: the Exodus one and the",
+                f" Deuteronomy (Vaetḥanan) one, whose {_TAHTON} main Decalogue starts on p. 280"
+                " and runs onto"
                 " p. 281. There too אנכי…עבדים is its own chanted verse, closing on עבדים with a",
                 *[" ", _ROM_SILLUQ_SOF_PASUQ, "."],
             )
