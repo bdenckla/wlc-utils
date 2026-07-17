@@ -155,6 +155,20 @@ def img(attr=None):
     return htel_mk_nlb1_nc("img", attr)
 
 
+def svg(contents, attr=None):
+    """Make an <svg> element."""
+    return htel_mk("svg", attr, contents)
+
+
+def rect(attr=None):
+    """Make an <svg> <rect> element.
+
+    Emitted CLOSED (``<rect ...></rect>``), not as a void tag: in HTML5 foreign
+    content an unclosed <rect> would swallow the following siblings.
+    """
+    return htel_mk("rect", attr, ())
+
+
 def caption(contents):
     """Make a <caption> element."""
     return htel_mk_nlb1("caption", contents=contents)

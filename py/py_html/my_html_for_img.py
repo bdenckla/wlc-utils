@@ -1,7 +1,13 @@
 """Exports img_html."""
 
+from collections import namedtuple
+
 import py_html.wlc_utils_html as wlc_utils_html
 import mb_cmn.my_utils as my_utils
+
+# A highlight box in the scan's own pixel coordinates (= the SVG viewBox units).
+# rx is the rectangle's corner radius (also in pixel space).
+Box = namedtuple("Box", ["x", "y", "w", "h", "rx"], defaults=[6])
 
 # Default location of images relative to the page being generated.  Pages that sit
 # one level below their sub-folder root (e.g. gh-pages/420422/full-record/*, the
@@ -43,3 +49,41 @@ def _html_for_imgs_item(imgs_item, *, img_para_attr=None, img_base=_DEFAULT_IMG_
         wlc_utils_html.para(img_label),
         html_for_single_img(img_path, img_para_attr=img_para_attr, img_base=img_base),
     ]
+
+
+def annotated_img(img_attr, boxes, *, viewbox_w, viewbox_h):
+    """<img> with a filled-highlight SVG overlaid, in a positioned wrapper.
+
+    ``boxes`` are Box instances in the scan's own pixel space, which is also the
+    SVG viewBox space -- so the highlights scale with the responsively-sized img.
+    The overlay is a SIBLING of the <img> (not a child): the img's dark-mode
+    ``filter: invert(1)`` (class="ink-on-white") therefore never touches the
+    overlay, whose fill is instead chosen per-mode via ``light-dark()`` in CSS.
+    ``aria-hidden`` because the highlighted word is already named in the
+    figcaption prose -- the overlay is decorative reinforcement, not the sole
+    carrier of meaning.
+    """
+    rects = tuple(
+        wlc_utils_html.rect(
+            {
+                "x": str(box.x),
+                "y": str(box.y),
+                "width": str(box.w),
+                "height": str(box.h),
+                "rx": str(box.rx),
+            }
+        )
+        for box in boxes
+    )
+    overlay = wlc_utils_html.svg(
+        rects,
+        {
+            "class": "scan-annot-overlay",
+            "viewBox": f"0 0 {viewbox_w} {viewbox_h}",
+            "preserveAspectRatio": "none",
+            "aria-hidden": "true",
+        },
+    )
+    return wlc_utils_html.div(
+        (wlc_utils_html.img(img_attr), overlay), {"class": "scan-annot"}
+    )

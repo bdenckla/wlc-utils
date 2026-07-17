@@ -66,6 +66,7 @@ from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 
 from py_html import wlc_utils_html as H
+from py_html import my_html_for_img as mhi
 from py_html.my_html_span_romanized import rmn
 
 import repo_paths
@@ -87,6 +88,15 @@ _P246_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton-footnote.png"
 # finding -- distinct from the two note scans above (the constant names encode strand + page).
 _P83_BODY_IMG = "img/Simanim-Tiqqun-p-083-Ex-Dec-elyon.png"
 _P246_BODY_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton.png"
+# Highlight rectangles in Simanim-Tiqqun-p-083 pixel space (961x664, the scan's own
+# resolution = the overlay viewBox). Each Box marks a word named in the figcaption; the
+# coordinates come from py/accgram/gen_highlight_picker.py (drag boxes over the words, then
+# paste the exported `px` boxes here). These three mark עבדים, אל־פני, and מצותי.
+_P83_BOXES: tuple[mhi.Box, ...] = (
+    mhi.Box(x=800, y=145, w=161, h=71),
+    mhi.Box(x=84, y=141, w=160, h=73),
+    mhi.Box(x=639, y=572, w=155, h=66),
+)
 # Simanim *Tanakh*, a different edition from the Tiqqun though Feldheim publishes both (issue #62
 # scope note): both its Exodus Decalogue strands are m-trad, unlike the Tiqqun's p-trad -- the
 # main-Decalogue taxton (p. 119) and the elyon in the Torah section's appendix (p. 350).
@@ -188,6 +198,8 @@ def _body_scans() -> tuple[object, ...]:
                 ),
             ),
             width=None,
+            boxes=_P83_BOXES,
+            viewbox=(961, 664),
         ),
         _figure(
             _P246_BODY_IMG,
@@ -228,7 +240,15 @@ def _intro(source: dict) -> tuple[object, ...]:
 # Every ``alt`` passed here names the strands in ROMANIZED form ("taxton"/"elyon") while the
 # figcaption beside it uses Hebrew letters. That is deliberate, not drift: attribute contexts are
 # exempt by design (issue #65, finding T1) -- see printed_decalogue_strands' module docstring.
-def _figure(src: str, alt: str, caption: object, *, width: str | None) -> object:
+def _figure(
+    src: str,
+    alt: str,
+    caption: object,
+    *,
+    width: str | None,
+    boxes: tuple[mhi.Box, ...] | None = None,
+    viewbox: tuple[int, int] | None = None,
+) -> object:
     # No inline style here: gh-pages/style.css already declares `img { max-width: 100% }` and
     # `figure img { height: auto }`, so an inline copy only duplicated the stylesheet and
     # outranked it (issue #65, finding C4b). Don't reintroduce it.
@@ -240,7 +260,18 @@ def _figure(src: str, alt: str, caption: object, *, width: str | None) -> object
     img_attr = {"src": src, "alt": alt, "class": "ink-on-white"}
     if width:
         img_attr["width"] = width
-    return H.figure((H.img(img_attr), H.figcaption(caption)))
+    # When boxes are given, the <img> is wrapped in a positioned <div> alongside an inline-SVG
+    # word-highlight overlay (my_html_for_img.annotated_img). The overlay is a sibling of the
+    # img, so the img's dark-mode invert never touches it -- see the .scan-annot rules and the
+    # ink-on-white comment in style.css. class="ink-on-white" stays on the img either way.
+    if boxes:
+        assert viewbox is not None, "boxes require a viewbox=(w, h)"
+        img_node = mhi.annotated_img(
+            img_attr, boxes, viewbox_w=viewbox[0], viewbox_h=viewbox[1]
+        )
+    else:
+        img_node = H.img(img_attr)
+    return H.figure((img_node, H.figcaption(caption)))
 
 
 def _lines_with_breaks(lines: tuple[str, ...]) -> tuple[object, ...]:
