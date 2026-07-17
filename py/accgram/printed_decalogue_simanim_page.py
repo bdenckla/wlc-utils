@@ -196,7 +196,7 @@ def _body_scans() -> tuple[object, ...]:
             _P246_BODY_IMG,
             "Simanim Tiqqun p. 246: the Exodus appendix Decalogue in the taḥton",
             (
-                f"The (short) two verses that start Simanim's appendix Decalogue (p. 246), headed עשרת הדברות דיתרו בלא טעם עליון."
+                "The (short) two verses that start Simanim's appendix Decalogue (p. 246), headed עשרת הדברות דיתרו בלא טעם עליון."
                 " (Heading not shown in this image though.)"
                 " The אנכי…עבדים span ends on a",
                 *[" ", _ROM_SILLUQ_SOF_PASUQ, "."],

@@ -64,7 +64,7 @@ from pathlib import Path
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
 from accgram import rtms_report
-from accgram.almost_errors_html_shared import hbo, link
+from accgram.almost_errors_html_shared import link
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 
