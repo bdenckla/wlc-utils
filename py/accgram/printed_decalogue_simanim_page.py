@@ -97,6 +97,15 @@ _P83_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=84, y=141, w=160, h=73),
     mhi.Box(x=639, y=572, w=155, h=66),
 )
+# Highlight rectangles in Simanim-Tiqqun-p-246 pixel space (1149x327, the scan's own
+# resolution = the overlay viewBox). Mirroring the p. 83 highlights above, these two mark
+# words named in the figcaption -- עבדים (end of the אנכי…עבדים span) and על־פני. Coordinates
+# come from py/accgram/gen_highlight_picker.py (drag boxes over the words, export the `px`
+# boxes). Note the p. 246 scan is a different size than the p. 83 one (1149x327 vs 961x664).
+_P246_BOXES: tuple[mhi.Box, ...] = (
+    mhi.Box(x=942, y=218, w=192, h=77),
+    mhi.Box(x=114, y=201, w=183, h=87),
+)
 # Simanim *Tanakh*, a different edition from the Tiqqun though Feldheim publishes both (issue #62
 # scope note): both its Exodus Decalogue strands are m-trad, unlike the Tiqqun's p-trad -- the
 # main-Decalogue taxton (p. 119) and the elyon in the Torah section's appendix (p. 350).
@@ -212,6 +221,8 @@ def _body_scans() -> tuple[object, ...]:
                 " The asterisk is a callout to the footnote transcribed below.",
             ),
             width=None,
+            boxes=_P246_BOXES,
+            viewbox=(1149, 327),
         ),
     )
 
