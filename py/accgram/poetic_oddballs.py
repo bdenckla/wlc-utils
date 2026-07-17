@@ -113,7 +113,7 @@ StructuredTextLookup = Callable[[dict[str, object], str], object]
 #   token_types       full scanned token-type sequence (tuple[str, ...])
 #   wlc_disjunctives  WLC disjunctive skeleton, scanner (tuple[str, ...])
 #   mam_disjunctives  MAM oracle skeleton (tuple[str, ...] | None if absent)
-#   mam_words         MAM per-word (base_consonants, disjunctive_or_None), the
+#   mam_words         MAM per-word (base_letters, disjunctive_or_None), the
 #                     word-aligned counterpart of mam_disjunctives used to derive
 #                     the summary; None if the verse is absent from MAM-simple.
 #                     Not written to _oddballs.json (the skeletons are the datum).
@@ -573,7 +573,7 @@ def _render_summary(row: dict[str, object]) -> object:
     """A tentative, mechanically auto-derived summary (NOT hand-authored).
 
     It is computed by aligning the WLC and MAM-simple verses word-for-word (the
-    consonantal skeleton as the key) and reporting each word whose divider differs;
+    letter skeleton as the key) and reporting each word whose divider differs;
     it is labelled tentative/auto-derived so a reader knows not to treat it as a
     vetted attribution. Earlier this diffed the conjunctive-stripped disjunctive
     skeletons, which conflated a divider that shifted to the neighbouring word into a

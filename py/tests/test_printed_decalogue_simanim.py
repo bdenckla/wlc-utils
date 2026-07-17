@@ -54,7 +54,7 @@ def test_printed_taxton_equals_manuscript_elyon() -> None:
 
 
 def test_avadim_located_within_each_first_verse() -> None:
-    """עבדים is found (by consonantal skeleton) in every reading's first chanted verse --
+    """עבדים is found (by letter skeleton) in every reading's first chanted verse --
     verse-finally in the standalone readings, mid-verse in the merged ones."""
     readings = pds.resolve_readings(_results_or_skip())
     for r in readings:

@@ -13,11 +13,11 @@ i.e. the last `meteg` token in the space-delimited segment that contains
 `sof-pasuq`. That one token is relabelled `silluq` and treated as a te'am; every
 other `meteg` is narrow meteg and ignored entirely.
 
-Marks in the refuni/changeuni token fields attach to their preceding consonant.
-We therefore anchor each accent to its base consonant, align the two consonant
-sequences, and compare the accent marks per consonant. This is robust to
+Marks in the refuni/changeuni token fields attach to their preceding letter.
+We therefore anchor each accent to its base letter, align the two letter
+sequences, and compare the accent marks per letter. This is robust to
 difflib's arbitrary choice of which token "moved" in a pure reorder, and to
-consonant insertions/deletions shifting positions.
+letter insertions/deletions shifting positions.
 
 Notes / deliberate scope decisions:
   - `segol` is treated as the VOWEL, not the accent segolta: in this corpus the
@@ -129,10 +129,10 @@ ACC_S = ACC | {"silluq"}
 
 
 def units(tokens):
-    """Split into consonant-units: [consonant, [te'am marks in order]].
+    """Split into letter-units: [letter, [te'am marks in order]].
 
     Te'am = ACC_S (accents + silluq); narrow meteg is ignored. A leading '^'
-    sentinel holds any marks before the first consonant."""
+    sentinel holds any marks before the first letter."""
     us = [["^", []]]
     for t in tokens:
         if t in CONS:
@@ -153,7 +153,7 @@ def classify(d):
     reasons = set()
     if maqaf_count(a) != maqaf_count(b):
         reasons.add("maqaf")
-    # A change to the consonant skeleton (qere/ketiv orthography) where an accent
+    # A change to the letter skeleton (qere/ketiv orthography) where an accent
     # merely re-anchors to a neighbouring letter is not an accent-layer change.
     if [t for t in a if t in CONS] == [t for t in b if t in CONS]:
         ua, ub = units(a), units(b)

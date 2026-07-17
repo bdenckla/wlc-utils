@@ -60,7 +60,7 @@ _TAHTON_DETAILS_ID = "tahton-details"
 # thin local aliases let the Hebrew strand words drop straight into the prose -- bare in a string
 # or as {_TAHTON} / {_ELYON} inside an f-string -- rather than through a lang="he" <span> (issue
 # #58), matching the Simanim companion page. Genuinely *pointed* Hebrew still goes through hbo()
-# (lang="hbo" -> the Taamey pointed-text font); only bare consonantal terms are inlined this way.
+# (lang="hbo" -> the Taamey pointed-text font); only bare unpointed terms are inlined this way.
 _TAHTON = pds.TAHTON
 _ELYON = pds.ELYON
 
@@ -239,7 +239,7 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
 # Word stripping and the shared range cell
 # --------------------------------------------------------------------------- #
 def _strip_pointing(word: str) -> str:
-    """Reduce a pointed Hebrew word to consonants + cantillation accents + accent-coupled
+    """Reduce a pointed Hebrew word to letters + cantillation accents + accent-coupled
     punctuation (maqaf, sof pasuq, legarmeh), dropping vowels, dagesh, shin/sin dots, rafe,
     and ordinary meteg. A word's U+05BD is *silluq* (an accent, kept) exactly when the word is
     verse-final, i.e. carries sof pasuq; otherwise every U+05BD is an ordinary meteg (a ga'ya)
@@ -259,7 +259,7 @@ def _abbr(letter: str, title: str) -> object:
 
 # ── Letter-equalizing the paired taxton/elyon boundary cells (ported from MAM-basics #201) ──
 # Each column shows one underlying text span read by both strands, so the two cells should share
-# a consonant skeleton at each boundary. They can still tokenize a boundary word differently —
+# a letter skeleton at each boundary. They can still tokenize a boundary word differently —
 # most visibly the leading לא of a negative commandment, which the taxton maqaf-joins to the next
 # word (one token לא־תעשה) while the elyon leaves it free (לא as its own word). _balanced_sides
 # pulls extra boundary words inward, word by word, until the two sides' skeletons match, so the
@@ -267,7 +267,7 @@ def _abbr(letter: str, title: str) -> object:
 # under a fuller taxton cell. It asserts equality — a guard that fires loudly on any column it
 # cannot reconcile.
 def _skel(word: str) -> str:
-    """A word's consonant skeleton: only the Hebrew letters (alef…tav), dropping points, accents,
+    """A word's letter skeleton: only the Hebrew letters (alef…tav), dropping points, accents,
     maqaf, sof pasuq and legarmeh — so a maqaf-joined לא־תעשה and a space-separated לא תעשה compare
     equal. Uses the same letter bounds as the strip kernel (private today; cf. MAM-basics #198).
     """
@@ -322,7 +322,7 @@ def _balanced_sides(t_words, e_words, *, label: str):
 
 def _range_cell(first_words, last_words, *, start: bool, stop: bool) -> object:
     """A ``first … last`` range cell: the (already letter-balanced) boundary word(s) at each end,
-    stripped to consonants + accents and joined by an ellipsis. The verse-initial word is green
+    stripped to letters + accents and joined by an ellipsis. The verse-initial word is green
     when ``start`` and the verse-final word red when ``stop``; any word pulled in only for
     letter-alignment renders plain. ``lang="hbo"`` → Taamey font (issue #58)."""
     fw = [_strip_pointing(w) for w in first_words]
@@ -368,13 +368,13 @@ _MERGED_STRANDS = ("m-trad elyon", "p-trad taḥton")
 # three; the strands nest — m-trad elyon / p-trad taxton stop at עבדים, m-trad taxton at על־פני,
 # p-trad elyon at מצותי — so laying them over these shared columns shows that subset relation and
 # their common start at a glance (schematic: only the ORDER of the endpoints is shown, not the
-# real word-distances between them). Skeletons are consonants-only (base_skeleton form), matching
+# real word-distances between them). Skeletons are letters-only (base_skeleton form), matching
 # each reading's pds.STRUCTURE end_skel so an endpoint's column is derived, never hard-assigned.
 _MILESTONES: tuple[str, ...] = ("אנכי", "עבדים", "עלפני", "מצותי")
 
 
 def _word_at(r: pds.Reading, skeleton: str) -> str:
-    """The strand's own pointed word at a milestone, matched by consonantal skeleton within its
+    """The strand's own pointed word at a milestone, matched by letter skeleton within its
     first chanted verse. Each strand keeps ITS OWN accent on a shared milestone (e.g. עבדים is
     etnaḥta / silluq / revia across strands), which is the structure-deciding signal, so the cell
     must show the per-strand form rather than one canonical word per column."""
@@ -535,7 +535,7 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
 # אנכי...מצותי): one for the printed tradition (pE/pT), one for the manuscript tradition (mE/mT),
 # so the reader can compare how each tradition's elyon and taxton verses nest. The layout echoes
 # the table in MAM-simple/gh-pages/versification-and-cantillation.html (the source of the analogy,
-# not of the text), but with no M/B verse-number rows. Each cell is a first…last range (consonants
+# not of the text), but with no M/B verse-number rows. Each cell is a first…last range (letters
 # + accents; vowels/dagesh/ordinary-meteg stripped), green where a column begins one of the
 # strand's verses and red where it ends one. The columns are the finest common subdivision: the
 # union of both strands' verse boundaries. Because the p-trad taxton breaks at every boundary
@@ -684,7 +684,7 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
                 H.bold("both of which parse clean"),
                 ". The p-trad instead merges the first two commandments into a single "
                 "verse. That one "
-                "merged verse is what the grammar rejects. Shown stripped to consonants and "
+                "merged verse is what the grammar rejects. Shown stripped to letters and "
                 f"accents and divided at the p-trad {_TAHTON}'s verse boundaries — one p-trad "
                 f"{_ELYON} verse (pE) spanning the five ordinary p-trad {_TAHTON} verses (pT) "
                 "it merges:",
@@ -827,7 +827,7 @@ _ACCENT_LO = ord("\N{HEBREW ACCENT ETNAHTA}")  # U+0591, first cantillation acce
 _ACCENT_HI = ord("\N{HEBREW ACCENT ZINOR}")  # U+05AE, last (meteg U+05BD is excluded)
 
 # The three shared boundaries at which the differing stretch is broken into aligned line-pairs.
-# Each is a consonantal skeleton (cf. _MILESTONES) that ends a line in BOTH strands and carries a
+# Each is a letter skeleton (cf. _MILESTONES) that ends a line in BOTH strands and carries a
 # disjunctive accent in both — the only kind of point where a break keeps the m-trad and p-trad
 # lines aligned. These three (of the stretch's shared disjunctive boundaries) give three ~even
 # pairs. _split_into_lines asserts each lands, in order, and is genuinely disjunctive, so any drift
@@ -871,7 +871,7 @@ def _differing_span(
 ) -> tuple[list[str], list[str]]:
     """The (m, p) sub-lists bracketing every difference between the two strands: the shared,
     byte-identical prefix and suffix are stripped, leaving the contiguous stretch where the strands
-    differ. (They share a consonantal text, so any difference is an accent or a maqaf/paseq mark;
+    differ. (They share the same letters, so any difference is an accent or a maqaf/paseq mark;
     the identical head and tail are common context we omit.)"""
     head = 0
     while head < min(len(m_words), len(p_words)) and m_words[head] == p_words[head]:
@@ -913,7 +913,7 @@ def _split_into_lines(words: list[str], line_ends: tuple[str, ...]) -> list[list
 def _diff_row(label: str, words: list[str]) -> object:
     """One table row: a bold m-trad/p-trad label cell, then the strand's line of words as a
     right-aligned (dir=rtl) hbo cell so the three pairs' Hebrew all line up flush-right. Each word
-    is shown in the classic consonants-plus-accents form (_strip_pointing: vowels, dagesh, and
+    is shown in the classic letters-plus-accents form (_strip_pointing: vowels, dagesh, and
     mid-verse meteg dropped), so only the cantillation differences remain -- the vowel-pointing
     differences are catalogued separately in the bullets below."""
     line = " ".join(_strip_pointing(w) for w in words)
@@ -989,7 +989,7 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 "within a single stretch "
                 "of the Sabbath commandment. Below is just that stretch — the run of words the two "
                 "strands accent differently, everything before and after it being identical — shown "
-                "in each strand, m-trad above p-trad, stripped to consonants and accents (so the "
+                "in each strand, m-trad above p-trad, stripped to letters and accents (so the "
                 "vowel-pointing differences noted below drop out and only the cantillation shows), "
                 "each line ending on a disjunctive accent:",
             )

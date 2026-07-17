@@ -121,7 +121,7 @@ _ACCENT_NAMES: dict[str, str] = {
 }
 
 # The base-letter skeleton of the word עבדים -- the closing word of the first Decalogue span,
-# located within each reading's first chanted verse by matching its consonants (it sits
+# located within each reading's first chanted verse by matching its letters (it sits
 # mid-verse in the merged readings, verse-finally where אנכי…עבדים is its own verse).
 AVADIM = "עבדים"
 
@@ -208,7 +208,7 @@ class Reading:
         self.anokhi_accent = _accent_of(self.anokhi_word)
         self.avadim_accent = _accent_of(self.avadim_word)
         # How many chanted verses this strand splits the Exodus Decalogue into, and the
-        # consonantal skeleton of its first chanted verse's last word (its span endpoint).
+        # letter skeleton of its first chanted verse's last word (its span endpoint).
         self.n_verses = len(vr.chanted_verses)
         self.first_verse_end = base_skeleton(first.words[-1])
 
@@ -229,7 +229,7 @@ READING_SPECS = (
 )
 
 # Per-strand opening structure: (first-verse span as short right-to-left notation, the
-# consonantal skeleton of that first verse's last word, the number of chanted verses the
+# letter skeleton of that first verse's last word, the number of chanted verses the
 # strand divides the Exodus Decalogue into).  ``end_skel`` and ``n_verses`` are pinned
 # against the vendored data in resolve_readings so a moved boundary fails the build rather
 # than silently mislabelling.  (span endpoints from the data: אנכי…על־פני / …עבדים / …מצותי.)

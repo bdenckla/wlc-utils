@@ -54,7 +54,7 @@ def test_strands_exposed_separately_and_differ_on_dual_word():
     # (single-cant prefix + its span words + single-cant suffix), 19 tokens for Gen 35:22.
     assert all(isinstance(tok, str) for tok in alef)
     assert all(isinstance(tok, str) for tok in bet)
-    assert _skels(alef) == _skels(bet)  # same consonantal text
+    assert _skels(alef) == _skels(bet)  # same letters
     assert len(alef) == 19
 
     # The strands disagree on the dual span: ראובן carries zaqef qatan (U+0594) in the

@@ -4,7 +4,7 @@ Split out of ``poetic_oddballs`` (which owns the ungrammatical collection + HTML
 this module is just the per-verse summary line shown under each ungrammatical verse.
 
 The summary is computed by aligning the two verses *word-for-word* -- the
-consonantal skeleton as the key, via the same ``difflib`` engine ``mb_cmn.my_diffs``
+letter skeleton as the key, via the same ``difflib`` engine ``mb_cmn.my_diffs``
 wraps for the prose page -- and reporting each word whose divider differs.  This
 replaced an earlier diff of the conjunctive-stripped *disjunctive skeletons*, which
 dropped every conjunctive and so conflated a divider that merely shifted to the
@@ -13,7 +13,7 @@ WLC's legarmeh and MAM's oleh-we-yored sit on different words).  The disjunctive
 skeleton remains the persisted datum and the table on the page; only the human-
 readable summary uses the word alignment.
 
-The WLC side pairs the wlc422 Unicode consonants (the shared alignment key, grouped
+The WLC side pairs the wlc422 Unicode letters (the shared alignment key, grouped
 into accent-words) with the M-C scanner's resolved disjunctives; the MAM side comes
 from ``mam_poetic_accents.load_poetic_word_disj``.  When the two WLC views cannot be
 reconciled 1:1 the summary falls back to the disjunctive-skeleton diff, flagged as
@@ -24,7 +24,7 @@ from __future__ import annotations
 
 import difflib
 
-from accgram.mam_poetic_accents import base_consonants
+from accgram.mam_poetic_accents import base_letters
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 from accgram.poetic_scanner import scan_accents
 from mb_cmn import hebrew_punctuation as hpunc
@@ -47,7 +47,7 @@ def derive_tentative_summary(row: dict[str, object]) -> str:
     clauses = _word_aligned_clauses(row)
     if clauses is None:
         # Word-level alignment could not be reconciled (e.g. the WLC accent-word and
-        # wlc422 consonant-word counts disagree); fall back to the conjunctive-stripped
+        # wlc422 letter-word counts disagree); fall back to the conjunctive-stripped
         # skeleton diff, flagged so the reader knows it is the weaker comparison.
         skeleton = _describe_disjunctive_diff(
             row["wlc_disjunctives"], row["mam_disjunctives"]
@@ -68,7 +68,7 @@ def derive_tentative_summary(row: dict[str, object]) -> str:
 def _word_aligned_clauses(row: dict[str, object]) -> list[str] | None:
     """Per-word divider differences between WLC and MAM, or None if unalignable.
 
-    Aligns the two verses *by word* (consonantal skeleton as the key, the same
+    Aligns the two verses *by word* (letter skeleton as the key, the same
     ``difflib`` engine ``mb_cmn.my_diffs`` wraps for the prose page) and reports each
     word whose divider differs.  This replaces the old disjunctive-skeleton diff, which
     dropped every conjunctive and so conflated a divider that merely *shifted to the
@@ -79,24 +79,24 @@ def _word_aligned_clauses(row: dict[str, object]) -> list[str] | None:
     wlc_words = _wlc_accent_words(row)
     if wlc_words is None:
         return None
-    mam_words = [(cons, (d,) if d else ()) for cons, d in row["mam_words"]]
+    mam_words = [(letters, (d,) if d else ()) for letters, d in row["mam_words"]]
 
     # The WLC word strings keep their maqaf for display ("הלא־בבטן"); the MAM side's
-    # base_consonants drops it, so strip it back out for the alignment key only -- the
+    # base_letters drops it, so strip it back out for the alignment key only -- the
     # opcode indices below still address the maqaf-bearing wlc_words for phrasing.
     matcher = difflib.SequenceMatcher(
-        a=[cons.replace(hpunc.MAQ, "") for cons, _ in wlc_words],
-        b=[cons for cons, _ in mam_words],
+        a=[letters.replace(hpunc.MAQ, "") for letters, _ in wlc_words],
+        b=[letters for letters, _ in mam_words],
         autojunk=False,
     )
     clauses: list[str] = []
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
         if tag == "equal":
             for k in range(i2 - i1):
-                cons, wlc_disj = wlc_words[i1 + k]
-                _mam_cons, mam_disj = mam_words[j1 + k]
+                letters, wlc_disj = wlc_words[i1 + k]
+                _mam_letters, mam_disj = mam_words[j1 + k]
                 if wlc_disj != mam_disj:
-                    clauses.append(_phrase_word_diff(cons, wlc_disj, mam_disj))
+                    clauses.append(_phrase_word_diff(letters, wlc_disj, mam_disj))
         else:
             clauses.append(_phrase_segment_diff(wlc_words[i1:i2], mam_words[j1:j2]))
     return clauses
@@ -105,27 +105,27 @@ def _word_aligned_clauses(row: dict[str, object]) -> list[str] | None:
 def _wlc_accent_words(
     row: dict[str, object],
 ) -> list[tuple[str, tuple[str, ...]]] | None:
-    """Per-word ``(base_consonants, disjunctives)`` for the WLC verse, accent-word by
-    accent-word: the wlc422 Unicode consonants (the shared alignment key) zipped with
+    """Per-word ``(base_letters, disjunctives)`` for the WLC verse, accent-word by
+    accent-word: the wlc422 Unicode letters (the shared alignment key) zipped with
     the M-C scanner's resolved disjunctives.  None if the two cannot be reconciled
     1:1 (different accent-word counts)."""
-    cons_words = _wlc_consonant_words(row["wlc422_kq_u_verse"])
-    if cons_words is None:
+    letter_words = _wlc_letter_words(row["wlc422_kq_u_verse"])
+    if letter_words is None:
         return None
     disj_words = _wlc_disjunctives_per_word(row["body"])
-    if len(cons_words) != len(disj_words):
+    if len(letter_words) != len(disj_words):
         return None
-    return list(zip(cons_words, disj_words))
+    return list(zip(letter_words, disj_words))
 
 
-def _wlc_consonant_words(wlc_verse: object) -> list[str] | None:
-    """Group the wlc422 ``vels`` into accent-words and return each one's consonants.
+def _wlc_letter_words(wlc_verse: object) -> list[str] | None:
+    """Group the wlc422 ``vels`` into accent-words and return each one's letters.
 
     A maqaf-terminated token joins the next sub-word into one accent-word (matching the
     M-C scanner's whitespace-delimited words); the maqaf itself is kept in the returned
     string so a joined word displays as "הלא־בבטן" rather than the run-together
     "הלאבבטן" (the alignment key strips it back out -- see _word_aligned_clauses --
-    since the MAM side's base_consonants drops the maqaf).  Punctuation-only tokens
+    since the MAM side's base_letters drops the maqaf).  Punctuation-only tokens
     (paseq) drop out.  None if the verse carries no ``vels``."""
     if not isinstance(wlc_verse, dict):
         return None
@@ -138,10 +138,10 @@ def _wlc_consonant_words(wlc_verse: object) -> list[str] | None:
         text = _token_text(token)  # a vel may be a {"word", "notes"} dict, not a str
         if not text:
             continue
-        cons = base_consonants(text)
-        if not cons:  # punctuation-only token (paseq, etc.)
+        letters = base_letters(text)
+        if not letters:  # punctuation-only token (paseq, etc.)
             continue
-        current += cons
+        current += letters
         if hpunc.MAQ in text:  # maqaf joins this to the next sub-word
             current += hpunc.MAQ
             continue
@@ -171,10 +171,10 @@ def _wlc_disjunctives_per_word(body: str) -> list[tuple[str, ...]]:
 
 
 def _phrase_word_diff(
-    cons: str, wlc_disj: tuple[str, ...], mam_disj: tuple[str, ...]
+    letters: str, wlc_disj: tuple[str, ...], mam_disj: tuple[str, ...]
 ) -> str:
     return (
-        f"on {cons}, WLC reads {_disj_phrase(wlc_disj)} "
+        f"on {letters}, WLC reads {_disj_phrase(wlc_disj)} "
         f"where MAM reads {_disj_phrase(mam_disj)}"
     )
 
@@ -197,8 +197,8 @@ def _phrase_segment_diff(
 
 def _phrase_word_list(seg: list[tuple[str, tuple[str, ...]]]) -> str:
     return ", ".join(
-        cons + (f" [{_humanize_disjunctives(disj)}]" if disj else "")
-        for cons, disj in seg
+        letters + (f" [{_humanize_disjunctives(disj)}]" if disj else "")
+        for letters, disj in seg
     )
 
 

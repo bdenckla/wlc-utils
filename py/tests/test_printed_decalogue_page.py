@@ -49,14 +49,14 @@ def test_body_renders() -> None:
 
 
 def test_strip_pointing_keeps_accent_and_sof_pasuq_drops_vowels() -> None:
-    """On a verse-final עבדים (silluq + sof pasuq): consonants and the two signal marks survive,
+    """On a verse-final עבדים (silluq + sof pasuq): letters and the two signal marks survive,
     the vowels do not."""
     results = pd.check_all(_source_or_skip())
     readings = {r.name: r for r in pds.resolve_readings(results)}
     # m-trad elyon gives אנכי…עבדים its own verse, so its עבדים is verse-final (silluq + sof pasuq).
     avadim = readings["m-trad elyon"].avadim_word
     stripped = page._strip_pointing(avadim)
-    assert pds.base_skeleton(stripped) == pds.AVADIM  # all consonants kept
+    assert pds.base_skeleton(stripped) == pds.AVADIM  # all letters kept
     assert _SOF_PASUQ in stripped  # accent-coupled punctuation kept
     assert _SILLUQ in stripped  # the verse-final U+05BD is silluq (an accent), kept
     assert _QAMATS not in stripped and _HATAF_PATAH not in stripped  # vowels dropped

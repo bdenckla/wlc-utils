@@ -117,7 +117,7 @@ _METEGISH = {"meteg", "silluq"}
 def synth_word(uni_tokens: list[str]) -> str | None:
     """Synthesize a scanner-readable mark word from refuni/changeuni token names.
 
-    Consonants -> a filler placeholder (the scanner swallows letters; they only serve
+    Letters -> a filler placeholder (the scanner swallows letters; they only serve
     as non-terminator TEXT).  Vowels/points are dropped.  Accents/meteg/sof-pasuq/
     paseq/maqaf become their marks/delimiters, in order.  Returns None if a token has
     no known prose mark (e.g. a poetic accent) -> case is unsupported.

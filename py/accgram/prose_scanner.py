@@ -178,7 +178,7 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     (re.compile(am.MUNAX), "MUNAX"),
     # mahapakh + qadma on one base letter (adjacent in the mark string, no X
     # between -> same letter): an impositive above-accent and below-accent share a
-    # consonant, so the pair has no right-to-left (graphical) order -- one sits above the
+    # letter, so the pair has no right-to-left (graphical) order -- one sits above the
     # letter and one below -- even though it has a chanting order (qadma before mahapakh;
     # cf. the ek20:31 MAM note).  Fused into one unitary token rather than judged as a
     # servus *sequence*; the genuine cross-letter `qadma...mahapakhh` chain still tokenizes

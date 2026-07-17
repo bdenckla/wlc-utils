@@ -69,7 +69,7 @@ def hbo(text: str) -> object:
 
 
 # A run of Hebrew-block characters -- letters, points, accents, and the maqaf / sof pasuq
-# that join or end an accent-word.  Covers both bare consonantal skeletons and fully-pointed
+# that join or end an accent-word.  Covers both bare letter skeletons and fully-pointed
 # words, so the whole word stays in one hbo span rather than being split at its marks.
 # Inter-word spaces are kept inside the run so a whole Hebrew phrase (multiple space-separated
 # words) stays in one hbo span; leading/trailing spaces bordering non-Hebrew text stay out.

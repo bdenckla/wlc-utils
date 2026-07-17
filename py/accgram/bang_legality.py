@@ -110,7 +110,7 @@ def _raw_words(vel) -> list[str]:
 
 def _words_with_pair(verse: dict, mark_x: str, mark_y: str) -> list[str]:
     """Pointed words whose text carries ``mark_x`` immediately followed by ``mark_y``
-    (same letter -- two adjacent marks, no base consonant between)."""
+    (same letter -- two adjacent marks, no base letter between)."""
     pair = mark_x + mark_y
     vels = verse.get("vels")
     hits: list[str] = []

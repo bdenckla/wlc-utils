@@ -14,7 +14,7 @@ from mb_cmn import hebrew_accents as ha
 
 from accgram import poetic_accent_names as pan
 from accgram.mam_poetic_accents import (
-    base_consonants,
+    base_letters,
     disjunctives_from_verse_node,
     servi_before_from_verse_node,
     servi_before_in_words,
@@ -22,7 +22,7 @@ from accgram.mam_poetic_accents import (
     word_disj_and_text_from_verse_node,
 )
 
-# Combining-accent helpers; the consonant carrier is irrelevant to extraction.
+# Combining-accent helpers; the letter carrier is irrelevant to extraction.
 B = "ב"  # an arbitrary base letter (bet)
 SOF = "׃"
 
@@ -126,19 +126,19 @@ def test_ketiv_skipped_qere_read():
     assert disjunctives_from_verse_node(node) == [pan.ATNAX, pan.SILLUQ]
 
 
-# --- word-aligned per-word datum: base_consonants / word_disj_and_text -----------
+# --- word-aligned per-word datum: base_letters / word_disj_and_text -----------
 
 
-def test_base_consonants_strips_points_accents_and_punctuation():
+def test_base_letters_strips_points_accents_and_punctuation():
     # Only the Hebrew letters survive -- the alignment key the ungrammatical-verse report uses to
     # pair a MAM word with its WLC counterpart despite differing points/accents.
-    assert base_consonants(B + ha.OLE + B + ha.MER) == "בב"
-    assert base_consonants(B + ha.ATN + SOF) == "ב"
+    assert base_letters(B + ha.OLE + B + ha.MER) == "בב"
+    assert base_letters(B + ha.ATN + SOF) == "ב"
 
 
-def test_word_disj_and_text_pairs_consonants_with_resolved_divider():
+def test_word_disj_and_text_pairs_letters_with_resolved_divider():
     # mahapakh word + lp-legarmeih -> legarmeh on that word; atnax; silluq.  Every word is
-    # kept (not just divider-bearing ones), its base consonants paired with its fully
+    # kept (not just divider-bearing ones), its base letters paired with its fully
     # resolved disjunctive (None for a conjunctive) -- the datum word-aligned vs WLC.
     node = _verse(
         _text(ha.MER),  # a bare conjunctive word: kept, with disj None

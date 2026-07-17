@@ -34,7 +34,7 @@ from dataclasses import dataclass
 from accgram import uni_to_marks
 from mb_cmn import uni_heb
 
-# A Hebrew consonant (used to tell a real word token from punctuation/markers).
+# A Hebrew letter (used to tell a real word token from punctuation/markers).
 _HEB_LETTER_RE = re.compile(r"[א-ת]")
 # Sof pasuq punctuation (U+05C3).  A MAM value that merely adds it is the "missing
 # sof pasuq" fix -- grammar-visible (the transcoder emits 00, the scanner terminates).
@@ -193,7 +193,7 @@ def apply_mam_fix(
 
 
 def verse_words(wlc_verse: object) -> list[str]:
-    """Return the WLC verse's word tokens (those carrying a Hebrew consonant)."""
+    """Return the WLC verse's word tokens (those carrying a Hebrew letter)."""
     if not isinstance(wlc_verse, dict):
         return []
     vels = wlc_verse.get("vels")

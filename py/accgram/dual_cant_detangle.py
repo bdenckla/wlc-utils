@@ -23,7 +23,7 @@ Design (all four points verified against the data, see issue #36):
 * **Punctuation (maqaf, paseq, sof pasuq) comes from each MAM strand**, which is why
   the loader (``mam_simple_verse``) exposes the strands as their own token streams.  WLC's
   one compromise maqaf pattern fits neither strand; the grammar is boundary-sensitive.
-* **Alignment is pairwise** (WLC↔alef and WLC↔bet) on the consonant skeleton, so spelling
+* **Alignment is pairwise** (WLC↔alef and WLC↔bet) on the letter skeleton, so spelling
   / mater / ketiv-qere differences don't derail it.  Because the loader tokenizes paseq
   and ketiv-qere correctly, the would-be maqaf-join divergences (Exod 20:4 / Deut 5:8)
   collapse to clean 1:1 alignment.
@@ -70,7 +70,7 @@ _MUNAX = am.MUNAX
 _SRC_MAQAF = uni_to_marks.MAQAF  # the Unicode maqaf U+05BE in the source words
 
 # Characters of a strand word that survive into the emitted WLC-stream word: base
-# consonants and the punctuation / final marks (the spine), plus meteg (kept here so the
+# letters and the punctuation / final marks (the spine), plus meteg (kept here so the
 # scanner can recover a verse-final silluq from it; the non-final metegs are stripped
 # afterwards by ``_strip_nonfinal_meteg``).  Accents are handled separately
 # (matched/substituted/supplied); points/dagesh/CGJ are dropped.

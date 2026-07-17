@@ -2,7 +2,7 @@ r"""Extract the Unicode **mark sequence** the scanners consume (issue #9, Phase 
 
 The prose/poetic scanners (`prose_scanner` / `poetic_scanner`) read each verse
 as a stream of single-character *marks* -- one Unicode codepoint per cantillation
-accent (plus meteg/paseq/sof-pasuq/puncta), placeholder ``X`` per base consonant, and
+accent (plus meteg/paseq/sof-pasuq/puncta), placeholder ``X`` per base letter, and
 maqaf (``-``) / space word boundaries -- as defined in `accent_marks`.  This module
 produces that mark body straight from the canonical ``-kq-u`` Unicode verses.
 
@@ -10,7 +10,7 @@ It is the partial inverse of `wlc_uword.uword`, but only faithful to what the sc
 and `lexical_validation` actually read:
 
 * **Letters** are opaque filler (the rules key on the marks and the word boundaries),
-  so each base consonant becomes a single ``LETTER`` placeholder and vowels/points are
+  so each base letter becomes a single ``LETTER`` placeholder and vowels/points are
   dropped -- real reverse-transliteration is unnecessary.
 * **Accents** pass through as their own codepoint.  The five M-C codepoint conflations
   no longer need distinct codes: pashta and telisha qetana keep both their stress-helper
@@ -22,13 +22,13 @@ and `lexical_validation` actually read:
   letter, `lexical_validation` whitelists the same-letter pair (`word_to_marks`).
 * **Prepositive accents** (yetiv, geresh muqdam, dexi, telisha gedola) are relocated to
   the front of the word's mark sequence, undoing `wlc_uword._PREPOS_PATT`'s move past an
-  accent on the first consonant, so the scanner reads the accents in M-C order.  The one
+  accent on the first letter, so the scanner reads the accents in M-C order.  The one
   exception is a telg + gerstar word, where the telg stays in document order so the pair
   keeps its Unicode (manuscript) order (`word_to_marks`).
 * **Boundaries / punctuation** are reproduced exactly: maqaf -> ``-``, inter-word gaps
   -> space, paseq / sof pasuq / puncta as their own codepoints.
 * **Ketiv-qere & notes** reproduce the token stream the M-C source presented: the ketiv
-  is a swallowed ``*<consonants>`` atom, the qere ``**`` + its pointed body, and
+  is a swallowed ``*<letters>`` atom, the qere ``**`` + its pointed body, and
   ``notes`` are appended verbatim (the ``]N`` markers the legarmeh/mayela lookaheads
   key on).
 
@@ -56,8 +56,8 @@ KEPT_NON_ACCENT = frozenset(
 )
 
 # Prepositive accents: written at the word's start but relocated by
-# `wlc_uword._PREPOS_PATT` to just after the first consonant -- a move that can carry
-# them past an accent on that first consonant, inverting the accent order the scanner
+# `wlc_uword._PREPOS_PATT` to just after the first letter -- a move that can carry
+# them past an accent on that first letter, inverting the accent order the scanner
 # reads.  We restore M-C order by emitting them at the front of the word's marks.
 # Gershayim (M-C 12) is *also* prepositive in M-C, but is deliberately left out: it never
 # needs front-loading here (in the telg + gershayim words it partners the telisha gedola,

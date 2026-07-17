@@ -125,7 +125,7 @@ def test_ketiv_qere_substitutes_the_qere_side():
 
 def test_section_marker_excluded_from_alignment():
     # A lone setumah/petuhah/nun-inversum stands as its own vel but is not a word
-    # (no Hebrew consonant via _token_text), so it must not count during alignment:
+    # (no Hebrew letter via _token_text), so it must not count during alignment:
     # 1 real word-unit aligns to 1 WLC word despite the trailing section marker.
     result = apply_mam_fix(
         {"vels": ["פל֛אי׃", {"sam_pe_inun": "S"}]},

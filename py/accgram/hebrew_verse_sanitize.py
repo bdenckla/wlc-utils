@@ -100,7 +100,7 @@ def _sanitize_hebrew_token(
     keep_all_meteg: bool,
     remove_mam_stress_helper_duplicates: bool,
 ) -> str:
-    # Delegate the generic "strip to consonants + accents + accent-coupled
+    # Delegate the generic "strip to letters + accents + accent-coupled
     # punctuation" kernel to the vendored mb_cmn.hebrew_accent_strip; our two
     # booleans map onto its three-valued meteg policy.  The MAM stress-helper
     # dedup below is WLC-specific and stays local.
