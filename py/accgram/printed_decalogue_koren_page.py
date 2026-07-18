@@ -72,6 +72,7 @@ from accgram.almost_errors_html_shared import link
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 
+from py_html import my_html_for_img as mhi
 from py_html import wlc_utils_html as H
 from py_html.my_html_span_romanized import rmn
 
@@ -102,6 +103,14 @@ _P281_DT_BODY_IMG = "img/Koren-p-281-Dt-Dec-Shabbat-p-trad-taxton.png"
 # The Koren note (a crop of the appendix p. A38 עליון Decalogue): the רוו״ה footnote transcribed and
 # translated below.
 _PA38_NOTE_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon-note.png"
+
+# Word-highlight boxes on the p. 113 taḥton scan, in the scan's own pixel space (viewbox 936x262,
+# the rectified grayscale image's natural size). Picked with gen_highlight_picker.py; they mark the
+# boundary words of the אנכי…עבדים span the caption discusses.
+_P113_BOXES: tuple[mhi.Box, ...] = (
+    mhi.Box(x=466, y=112, w=138, h=59),
+    mhi.Box(x=796, y=162, w=131, h=69),
+)
 
 # Strand names and accent romanizations are single-sourced in printed_decalogue_strands (see its
 # module docstring). These thin local aliases keep the prose below unchanged.
@@ -172,7 +181,15 @@ _PARA_2 = (
 # Every ``alt`` passed here names the strands in ROMANIZED form ("taxton"/"elyon") while the
 # figcaption beside it uses Hebrew letters. That is deliberate, not drift: attribute contexts are
 # exempt by design (issue #65, finding T1) -- see printed_decalogue_strands' module docstring.
-def _figure(src: str, alt: str, caption: object, *, width: str | None) -> object:
+def _figure(
+    src: str,
+    alt: str,
+    caption: object,
+    *,
+    width: str | None,
+    boxes: tuple[mhi.Box, ...] | None = None,
+    viewbox: tuple[int, int] | None = None,
+) -> object:
     # No inline style here: gh-pages/style.css already declares `img { max-width: 100% }` and
     # `figure img { height: auto }`, so an inline copy only duplicated the stylesheet and
     # outranked it (issue #65, finding C4b). Don't reintroduce it.
@@ -183,7 +200,18 @@ def _figure(src: str, alt: str, caption: object, *, width: str | None) -> object
     img_attr = {"src": src, "alt": alt, "class": "ink-on-white"}
     if width:
         img_attr["width"] = width
-    return H.figure((H.img(img_attr), H.figcaption(caption)))
+    # When boxes are given, the <img> is wrapped in a positioned <div> alongside an inline-SVG
+    # word-highlight overlay (my_html_for_img.annotated_img). The overlay is a sibling of the
+    # img, so the img's dark-mode invert never touches it -- see the .scan-annot rules and the
+    # ink-on-white comment in style.css. class="ink-on-white" stays on the img either way.
+    if boxes:
+        assert viewbox is not None, "boxes require a viewbox=(w, h)"
+        img_node = mhi.annotated_img(
+            img_attr, boxes, viewbox_w=viewbox[0], viewbox_h=viewbox[1]
+        )
+    else:
+        img_node = H.img(img_attr)
+    return H.figure((img_node, H.figcaption(caption)))
 
 
 def _lines_with_breaks(lines: tuple[str, ...]) -> tuple[object, ...]:
@@ -210,6 +238,8 @@ def _body_scans() -> tuple[object, ...]:
                 *[" with a ", _ROM_SILLUQ_SOF_PASUQ, "."],
             ),
             width=None,
+            boxes=_P113_BOXES,
+            viewbox=(936, 262),
         ),
         _figure(
             _PA38_BODY_IMG,
