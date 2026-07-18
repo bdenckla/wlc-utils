@@ -1,5 +1,8 @@
 r"""Generate gh-pages/accgram/printed-decalogue-simanim.html -- does Simanim's Tiqqun follow
-the printed or the manuscript Decalogue tradition?  Answer: the printed tradition (issue #62).
+the printed or the manuscript Decalogue tradition?  Answer: the printed tradition (issue #62) --
+precisely, it follows the p-trad's chanted verse boundaries, but not its every cantillation
+detail: the Shabbat commandment of its Deuteronomy taḥton (appendix) Decalogue has the m-trad
+accents, an accents-only divergence that moves no chanted verse boundary (see ``_conclusion``).
 
 Companion to ``printed_decalogue_page`` (issue #52, which grammar-checks the printed vs
 manuscript Decalogue accentuations and lays out the four cantillation strands).  This page ports
@@ -71,7 +74,14 @@ from py_html.my_html_span_romanized import rmn
 
 import repo_paths
 
-REPORT_TITLE = "Simanim's Tiqqun follows the printed tradition for the Decalogues"
+# "chanted verse boundaries", not a bare "the printed tradition": the Tiqqun's p-trad allegiance
+# is exceptionless for chanted verse boundaries but not for every cantillation detail -- its
+# Deuteronomy taḥton Shabbat commandment has the m-trad accents (the first scope note in
+# _conclusion). The title claims only the exceptionless part.
+REPORT_TITLE = (
+    "Simanim's Tiqqun follows the printed tradition's chanted verse boundaries"
+    " for the Decalogues"
+)
 
 # _ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
 # _ISSUE_56 = "https://github.com/bdenckla/wlc-utils/issues/56"
@@ -137,7 +147,7 @@ _TANAKH_EX_ELYON_IMG = "img/Simanim-Tanakh-p-350-Ex-Dec-elyon-m-trad.png"
 # grayscale, reduced-resolution crop of the pointed (taxton) column, cropped to just the stretch
 # the two traditions accent differently.
 _P247_DT_IMG = "img/Simanim-Tiqqun-p-247-Deut-Dec-m-trad-taxton-Shabbat.png"
-# Highlight rectangles in the p. 247 crop's pixel space (1600x383, the crop's own resolution = the
+# Highlight rectangles in the p. 247 crop's pixel space (1474x383, the crop's own resolution = the
 # overlay viewBox). Each Box marks one of the three maqaf-joined words the two traditions accent
 # differently -- the disjunctive word ending each row of the companion page's Sabbath-diff table:
 # kol-melakha (m-trad pazer, not the p-trad geresh), ve'avdekha-va'amatekha, and vekhol-behemtekha
@@ -145,7 +155,7 @@ _P247_DT_IMG = "img/Simanim-Tiqqun-p-247-Deut-Dec-m-trad-taxton-Shabbat.png"
 # py/accgram/gen_highlight_picker.py (drag boxes over the words, export the `px` boxes).
 _P247_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=12, y=13, w=400, h=122),
-    mhi.Box(x=453, y=111, w=457, h=128),
+    mhi.Box(x=465, y=111, w=457, h=128),
     mhi.Box(x=1052, y=218, w=407, h=121),
 )
 
@@ -223,7 +233,7 @@ _PARA_1 = (
 # The continuation is this page's own second paragraph (the companion page's differs).
 _PARA_2 = (
     "That page lays out those four strands and grammar-checks the p-trad; this page serves only to"
-    " document the claim that Simanim's Tiqqun follows the p-trad."
+    " document to what extent Simanim's Tiqqun follows the p-trad."
     " Along the way it transcribes two of Simanim's notes.",
 )
 
@@ -277,7 +287,11 @@ def _intro(source: dict) -> tuple[object, ...]:
         H.para(_PARA_2),
         H.para(
             (
-                "Simanim's Tiqqun follows the p-trad for the Decalogues. In its Exodus"
+                "Simanim's Tiqqun follows the p-trad's chanted verse boundaries for the"
+                " Decalogues, though not every detail of its cantillation — the one departure,"
+                " at a single commandment of its Deuteronomy appendix Decalogue, is covered in ",
+                link("the conclusion", "#simanim-conclusion"),
+                ". In its Exodus"
                 " (Yitro) Decalogue, Simanim's main Decalogue (p. 83) is the p-trad"
                 f" {_ELYON} and its appendix Decalogue (p. 246) is the p-trad {_TAHTON}"
                 ". Since no digital Simanim exists, I established this by"
@@ -645,9 +659,13 @@ def _conclusion() -> tuple[object, ...]:
         H.heading_level_2("Conclusion", {"id": "simanim-conclusion"}),
         H.para(
             (
-                "Simanim's Tiqqun follows the p-trad for the Decalogues, not the m-trad. The two"
+                "Simanim's Tiqqun follows the p-trad for the Decalogues, not the m-trad — fully"
+                " as to chanted verse boundaries, though (per the first scope note below) not in"
+                " every cantillation detail. The two"
                 " traditions' most consequential divergence is at the opening commandment"
-                " אנכי…עבדים, and Simanim lands"
+                " אנכי…עבדים — within each strand, a divergence of chanted verse boundaries: one"
+                " tradition gives that span its own chanted verse where the other runs it on."
+                " Simanim lands"
                 f" on the p-trad side of that divergence on both strands: the p-trad {_ELYON} in"
                 " its Exodus",
                 f" main Decalogue (p. 83), and the p-trad {_TAHTON} in its appendix Decalogue"
@@ -667,10 +685,14 @@ def _conclusion() -> tuple[object, ...]:
                 f" Deuteronomy (Vaetḥanan) one, whose {_ELYON} main Decalogue starts on p. 208."
                 " One caveat: in the"
                 f" Deuteronomy {_TAHTON} (appendix, p. 247), the p-trad and m-trad also diverge at"
-                " the Shabbat commandment, but there Simanim follows the m-trad, not the p-trad —"
-                " so its p-trad allegiance, firm at אנכי…עבדים across both Decalogues, is not"
-                " absolute. The scan below is that commandment, with the three words the two"
-                " traditions accent differently highlighted.",
+                " the Shabbat commandment, but there Simanim follows the m-trad, not the p-trad."
+                " That divergence, though, is one of accents alone: the two traditions divide the"
+                " Shabbat commandment into chanted verses identically, differing only on some"
+                " mid-verse accents. So the precise extent of Simanim's p-trad allegiance is as"
+                " the title states it: Simanim follows the p-trad's chanted verse boundaries"
+                " without exception, but not its every cantillation detail. The scan below is"
+                " that commandment, with the three words the two traditions accent differently"
+                " highlighted.",
             )
         ),
         _figure(
@@ -691,7 +713,7 @@ def _conclusion() -> tuple[object, ...]:
             ),
             width=None,
             boxes=_P247_BOXES,
-            viewbox=(1600, 383),
+            viewbox=(1474, 383),
         ),
         H.para(
             (

@@ -789,7 +789,9 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 ),
                 f" — its main Decalogue uses the p-trad {_ELYON} "
                 "and its appendix Decalogue the p-trad "
-                f"{_TAHTON}.",
+                f"{_TAHTON}. More precisely, it follows the p-trad's chanted verse boundaries but"
+                " not its every cantillation detail: at the Shabbat commandment, its Deuteronomy"
+                " appendix Decalogue has the m-trad accents.",
             )
         ),
         H.para(

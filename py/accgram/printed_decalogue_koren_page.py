@@ -54,7 +54,8 @@ disambiguates them.)
 Koren's Deuteronomy (Vaetxanan) Decalogue *has* now been spot-checked (issue #66), so the claim is
 no longer Exodus-scoped: Koren shows the p-trad in both books.  The Deuteronomy check also reaches
 a second divergence point the Exodus scans cannot -- the Shabbat commandment -- where Koren again
-shows the p-trad, and where Simanim's Tiqqun does not.  See the conclusion's scope note.
+shows the p-trad, and where Simanim's Tiqqun does not (an accents-only departure: Simanim's Tiqqun
+still follows the p-trad's chanted verse boundaries).  See the conclusion's scope note.
 
 Regenerate with ``main_accgram.py generate-html``; test with
 ``tests/test_printed_decalogue_koren.py`` (plus the tree-wide ``tests/test_transliterations.py``).
@@ -394,7 +395,9 @@ def _conclusion() -> tuple[object, ...]:
                 " Shabbat commandment, where the p-trad and m-trad part again. There too Koren"
                 " shows the p-trad — so its p-trad allegiance is unqualified, where the ",
                 link("Simanim page", _SIMANIM_PAGE),
-                " finds Simanim's Tiqqun following the m-trad at that very commandment. The scan"
+                " finds Simanim's Tiqqun following the m-trad accents at that very commandment"
+                " (an accents-only departure — Simanim's Tiqqun still follows the p-trad's"
+                " chanted verse boundaries). The scan"
                 " below is that commandment. One boundary on all this: what I have checked in"
                 " Deuteronomy is the ",
                 _TAHTON,
