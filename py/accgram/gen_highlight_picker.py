@@ -23,12 +23,19 @@ Usage (from the repo root; PowerShell):
 The .png suffix is optional. The image is resolved under gh-pages/accgram/img/.
 Add --serve to run a local http server (then Ctrl+C to stop it) instead of the
 default file:// open.
+
+Priming (start from existing boxes instead of blank): pass ``--boxes-file <path>``,
+a JSON file holding either a bare list of px boxes ``[{"x":..,"y":..,"w":..,"h":..}]``
+(the same px form stored as ``mhi.Box`` in the page generators) or a whole prior
+``highlight-boxes-*.json`` export from this tool. The seed boxes appear on load, ready
+to nudge; export as usual when done. Without it, the editor opens blank as before.
 """
 
 from __future__ import annotations
 
 import functools
 import http.server
+import json
 import socket
 import sys
 import threading
@@ -78,22 +85,46 @@ def _resolve_img(arg: str) -> str:
     return name
 
 
-def _build_html(img_name: str) -> str:
+def _px_boxes_from_arg(data: object) -> list[dict]:
+    """Normalize a --boxes-file payload to a list of ``{x, y, w, h}`` px dicts.
+
+    Accepts either a bare list of px boxes (``[{"x":..,"y":..,"w":..,"h":..}, ...]``)
+    or a whole prior export from this tool (``{"boxes": [{"px": {...}, "rel": {...}}]}``),
+    so a saved ``highlight-boxes-*.json`` can be re-opened and tweaked rather than
+    re-dragged. Missing/extra keys are the caller's problem; we only pluck ``px``.
+    """
+    if isinstance(data, dict) and "boxes" in data:
+        return [b["px"] for b in data["boxes"]]
+    assert isinstance(data, list), "boxes payload must be a list or an export dict"
+    return data
+
+
+def _build_html(img_name: str, init_boxes_px: list[dict] | None = None) -> str:
     """Return the self-contained picker HTML for the given scan.
 
     The <img> uses a RELATIVE path (../gh-pages/accgram/img/<name>) from the
     picker's own .novc/ location, so it resolves identically whether the page is
     opened as a file:// URL (no server) or served over http://.
+
+    ``init_boxes_px`` (px ``{x, y, w, h}`` dicts in the scan's own pixel space) seeds
+    the editor so it opens with boxes to tweak rather than blank. They are injected as
+    px and converted to the editor's normalized 0-1 form in-browser on image load
+    (using naturalWidth/Height), so this stays Pillow-free like the rest of the tool.
     """
     img_url = f"../gh-pages/accgram/img/{img_name}"
-    return _HTML_TEMPLATE.replace("__IMG_NAME__", img_name).replace(
-        "__IMG_URL__", img_url
+    init_json = json.dumps(init_boxes_px or [])
+    return (
+        _HTML_TEMPLATE.replace("__IMG_NAME__", img_name)
+        .replace("__IMG_URL__", img_url)
+        .replace("__INIT_BOXES_PX__", init_json)
     )
 
 
-def generate(arg: str, *, serve: bool = False) -> None:
+def generate(
+    arg: str, *, serve: bool = False, init_boxes_px: list[dict] | None = None
+) -> None:
     img_name = _resolve_img(arg)
-    html = _build_html(img_name)
+    html = _build_html(img_name, init_boxes_px)
     _OUT_DIR.mkdir(exist_ok=True)
     out_path = _OUT_DIR / f"highlight-picker-{img_name}.html"
     out_path.write_text(html, encoding="utf-8", newline="")
@@ -179,6 +210,9 @@ _HTML_TEMPLATE = """\
 
 const SVGNS = "http://www.w3.org/2000/svg";
 const IMG_NAME = "__IMG_NAME__";
+// Optional seed boxes in scan-pixel space ([{x,y,w,h}, ...] or []), injected by
+// _build_html. Converted to normalized 0-1 boxes once the image is measured (seedFromInit).
+const INIT_BOXES_PX = __INIT_BOXES_PX__;
 const FINE_SCALE = 0.2;
 const MIN = 0.01;
 
@@ -489,7 +523,28 @@ async function copyPython() {
 
 // --- Init ------------------------------------------------------------------
 
-img.addEventListener("load", updateStatus);
+// Seed the editor from INIT_BOXES_PX exactly once, once the image has a measured
+// natural size (needed to normalize px -> 0-1). Runs on load, and immediately if the
+// image is already complete (cached), where the load event may have fired earlier.
+let seeded = false;
+function seedFromInit() {
+  if (seeded) return;
+  const [w, h] = naturalSize();
+  if (!w || !h) return;
+  seeded = true;
+  if (!INIT_BOXES_PX.length) return;
+  boxes = INIT_BOXES_PX.map((b) => ({
+    left: b.x / w, top: b.y / h,
+    right: (b.x + b.w) / w, bottom: (b.y + b.h) / h,
+  }));
+  active = 0;
+  lastSide = "move";
+  draw();
+  updateStatus();
+}
+
+img.addEventListener("load", () => { seedFromInit(); updateStatus(); });
+if (img.complete && img.naturalWidth) seedFromInit();
 draw();
 updateStatus();
 </script>
@@ -506,15 +561,33 @@ def main() -> None:
     args = sys.argv[1:]
     serve = "--serve" in args
     args = [a for a in args if a != "--serve"]
+    init_boxes_px = None
+    if "--boxes-file" in args:
+        i = args.index("--boxes-file")
+        if i + 1 >= len(args):
+            print("Error: --boxes-file needs a path argument")
+            sys.exit(1)
+        boxes_path = Path(args[i + 1])
+        init_boxes_px = _px_boxes_from_arg(
+            json.loads(boxes_path.read_text(encoding="utf-8"))
+        )
+        args = args[:i] + args[i + 2 :]
     if len(args) != 1:
-        print("Usage: python py/accgram/gen_highlight_picker.py [--serve] <image-name>")
+        print(
+            "Usage: python py/accgram/gen_highlight_picker.py [--serve]"
+            " [--boxes-file <path>] <image-name>"
+        )
         print(
             "  e.g.: python py/accgram/gen_highlight_picker.py "
             "Simanim-Tiqqun-p-083-Ex-Dec-elyon.png"
         )
-        print("  --serve  run a local http server instead of opening a file:// URL")
+        print("  --serve            run a local http server instead of a file:// URL")
+        print(
+            "  --boxes-file PATH   seed the editor with boxes to tweak (JSON: a list of"
+            " {x,y,w,h} px boxes, or a prior highlight-boxes-*.json export)"
+        )
         sys.exit(1)
-    generate(args[0], serve=serve)
+    generate(args[0], serve=serve, init_boxes_px=init_boxes_px)
 
 
 if __name__ == "__main__":
