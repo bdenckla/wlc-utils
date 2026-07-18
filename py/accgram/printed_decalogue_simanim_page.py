@@ -116,6 +116,16 @@ _P119_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=354, y=107, w=131, h=61),
     mhi.Box(x=718, y=163, w=134, h=68),
 )
+# Highlight rectangles in Simanim-Tanakh-p-350 pixel space (970x138, the scan's own
+# resolution = the overlay viewBox). Mirroring the p. 83 / p. 246 / p. 119 highlights above,
+# these two mark עבדים and על־פני -- the same two words, present here in the m-trad elyon of
+# the Torah-section appendix regardless of strand. Coordinates come from
+# py/accgram/gen_highlight_picker.py (drag boxes over the words, export the `px` boxes). Note
+# this scan is a different size again (970x138 vs 961x664, 1149x327, and 972x259).
+_P350_BOXES: tuple[mhi.Box, ...] = (
+    mhi.Box(x=5, y=6, w=132, h=60),
+    mhi.Box(x=348, y=64, w=128, h=66),
+)
 # Simanim *Tanakh*, a different edition from the Tiqqun though Feldheim publishes both (issue #62
 # scope note): both its Exodus Decalogue strands are m-trad, unlike the Tiqqun's p-trad -- the
 # main-Decalogue taxton (p. 119) and the elyon in the Torah section's appendix (p. 350).
@@ -675,6 +685,8 @@ def _conclusion() -> tuple[object, ...]:
                 f" section, in the m-trad {_ELYON} cantillation.",
             ),
             width=None,
+            boxes=_P350_BOXES,
+            viewbox=(970, 138),
         ),
         H.para(
             (
