@@ -92,6 +92,9 @@ _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
 # Link text that names the page, not the table, gets the page itself: an anchor would drop the
 # reader past the companion's own intro, mid-page, which is not what "the companion page" promises.
 _COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
+# The companion's appendix cataloguing how the two תחתון strands differ (its heading id there,
+# _TAHTON_DETAILS_ID) -- the reference for Shabbat-commandment accent details this page omits.
+_TAHTON_DETAILS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#tahton-details"
 _P83_IMG = "img/Simanim-Tiqqun-p-083-Ex-Dec-elyon-sidenote.png"
 _P246_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton-footnote.png"
 # Body-text scans (issue #62): the Simanim Decalogues whose cantillation establishes the p-trad
@@ -148,10 +151,13 @@ _TANAKH_EX_ELYON_IMG = "img/Simanim-Tanakh-p-350-Ex-Dec-elyon-m-trad.png"
 # the two traditions accent differently.
 _P247_DT_IMG = "img/Simanim-Tiqqun-p-247-Deut-Dec-m-trad-taxton-Shabbat.png"
 # Highlight rectangles in the p. 247 crop's pixel space (1474x383, the crop's own resolution = the
-# overlay viewBox). Each Box marks one of the three maqaf-joined words the two traditions accent
-# differently -- the disjunctive word ending each row of the companion page's Sabbath-diff table:
-# kol-melakha (m-trad pazer, not the p-trad geresh), ve'avdekha-va'amatekha, and vekhol-behemtekha
-# (m-trad revia, not the p-trad zaqef qatan). Coordinates come from
+# overlay viewBox). Each Box marks one of three maqaf-joined signal words -- disjunctively
+# accented words that make a handy shorthand for telling the two traditions apart (they are not
+# the only words the traditions accent differently). Each is the disjunctive word ending a row of
+# the companion page's Sabbath-diff table:
+# kol-melakha (m-trad pazer, not the p-trad geresh), ve'avdekha-va'amatekha (m-trad telisha
+# gedolah -- one on each half-word -- not the p-trad revia), and vekhol-behemtekha (m-trad revia,
+# not the p-trad zaqef qatan). Coordinates come from
 # py/accgram/gen_highlight_picker.py (drag boxes over the words, export the `px` boxes).
 _P247_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=12, y=13, w=400, h=122),
@@ -176,12 +182,12 @@ _ROM_PASHTA_ETNAHTA = rmn(pds.ROM_PASHTA_ETNAHTA)
 _ROM_TIPEHA_ETNAHTA = rmn(pds.ROM_TIPEHA_ETNAHTA)
 _ROM_TIPEHA_SILLUQ = rmn(pds.ROM_TIPEHA_SILLUQ)
 _ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
-# The Deuteronomy Shabbat-commandment accents, named in the p. 247 figure caption. The same three
-# constants the Koren page uses for its mirror caption (there the p-trad has the geresh / zaqef
-# qatan; here the m-trad has the pazer / revia). _ROM_REVIA is already defined above.
-_ROM_GERESH = rmn(pds.ROM_GERESH)
+# The Deuteronomy Shabbat-commandment m-trad accents, named in the conclusion's Shabbat scope
+# note (the p-trad counterparts -- geresh / revia / zaqef qatan -- are left to the companion
+# page's appendix; the Koren page names some of them in its own Deuteronomy prose). _ROM_REVIA is
+# already defined above.
 _ROM_PAZER = rmn(pds.ROM_PAZER)
-_ROM_ZAQEF_QATAN = rmn(pds.ROM_ZAQEF_QATAN)
+_ROM_TELISHA_GEDOLAH = rmn(pds.ROM_TELISHA_GEDOLAH)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section
 # of the very page these four strands are vendored from -- so its base URL is single-sourced from
@@ -674,7 +680,7 @@ def _conclusion() -> tuple[object, ...]:
         ),
         # The p. 247 crop below -- a reduced-resolution, grayscale crop of the pointed taxton
         # column -- is the evidence for this scope note's Shabbat caveat: it shows the m-trad
-        # accents on the three words the two traditions differ on, which _P247_BOXES highlights.
+        # accents on the three signal words _P247_BOXES highlights (see its comment).
         # (This crop was once committed but deliberately unlinked "private evidence"; issue #66 --
         # the Koren page's mirror finding at this same commandment -- is why it now earns a place.)
         H.para(
@@ -684,15 +690,26 @@ def _conclusion() -> tuple[object, ...]:
                 " both of its Decalogues: the Exodus (Yitro) one and the",
                 f" Deuteronomy (Vaetḥanan) one, whose {_ELYON} main Decalogue starts on p. 208."
                 " One caveat: in the"
-                f" Deuteronomy {_TAHTON} (appendix, p. 247), the p-trad and m-trad also diverge at"
-                " the Shabbat commandment, but there Simanim follows the m-trad, not the p-trad."
+                f" Deuteronomy {_TAHTON}, the p-trad and m-trad also diverge at"
+                " the Shabbat commandment, but there Simanim (appendix, p. 247) follows the"
+                " m-trad, not the p-trad."
                 " That divergence, though, is one of accents alone: the two traditions divide the"
                 " Shabbat commandment into chanted verses identically, differing only on some"
                 " mid-verse accents. So the precise extent of Simanim's p-trad allegiance is as"
                 " the title states it: Simanim follows the p-trad's chanted verse boundaries"
                 " without exception, but not its every cantillation detail. The scan below is"
-                " that commandment, with the three words the two traditions accent differently"
-                " highlighted.",
+                " that commandment, with three signal words highlighted — not the only words"
+                " the two traditions accent differently, but three disjunctively accented"
+                " words that make a handy shorthand for telling the p-trad from the m-trad."
+                " In the m-trad, the signal words have, respectively, a ",
+                _ROM_PAZER,
+                ", a ",
+                _ROM_TELISHA_GEDOLAH,
+                ", and a ",
+                _ROM_REVIA,
+                "; the ",
+                link("companion page's appendix", _TAHTON_DETAILS_HREF),
+                " has the full details.",
             )
         ),
         _figure(
@@ -702,14 +719,7 @@ def _conclusion() -> tuple[object, ...]:
             (
                 "The Shabbat commandment of Simanim's Tiqqun Deuteronomy (Vaetḥanan) appendix"
                 f" Decalogue (p. 247), in the m-trad {_TAHTON} — the one place its Tiqqun departs"
-                " from the p-trad. Highlighted are the three words the two traditions accent"
-                " differently. Two are easy to name: כל־מלאכה has a",
-                *[" ", _ROM_PAZER, " where the p-trad has a "],
-                _ROM_GERESH,
-                ", and וכל־בהמתך has a",
-                *[" ", _ROM_REVIA, " where the p-trad has a "],
-                _ROM_ZAQEF_QATAN,
-                "; the third is ועבדך־ואמתך.",
+                " from the p-trad. The three signal words are highlighted.",
             ),
             width=None,
             boxes=_P247_BOXES,

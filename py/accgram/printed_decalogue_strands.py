@@ -95,11 +95,13 @@ ROM_MAQAF = "maqaf"
 ROM_LEGARMEH = "legarmeh"
 ROM_PASEQ = "paseq"
 # The Shabbat-commandment accents: these fall outside the אנכי…עבדים span _ACCENT_NAMES derives,
-# and are named only in the Koren page's Deuteronomy prose (issue #66), where the p-trad/m-trad
-# also diverge -- p-trad geresh/zaqef qatan against m-trad pazer/revia.
+# and are named only in the Koren page's Deuteronomy prose (issue #66) and the Simanim page's
+# Shabbat scope note, where the p-trad/m-trad also diverge -- on the three signal words, p-trad
+# geresh/revia/zaqef qatan against m-trad pazer/telisha gedolah/revia.
 ROM_GERESH = "geresh"
 ROM_ZAQEF_QATAN = "zaqef qatan"
 ROM_PAZER = "pazer"
+ROM_TELISHA_GEDOLAH = "telisha gedolah"
 
 # Compound readings that recur verbatim in the prose (U+2026 ellipsis / U+2013 en dash between).
 ROM_PASHTA_ETNAHTA = f"{ROM_PASHTA}…{ROM_ETNAHTA}"  # the merged manuscript תחתון

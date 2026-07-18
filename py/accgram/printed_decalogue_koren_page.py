@@ -92,6 +92,9 @@ _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
 # Link text that names the page, not the table, gets the page itself: an anchor would drop the
 # reader past the companion's own intro, mid-page, which is not what "the companion page" promises.
 _COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
+# The companion's appendix cataloguing how the two תחתון strands differ (its heading id there,
+# _TAHTON_DETAILS_ID) -- the reference for the Shabbat-commandment accent details this page omits.
+_TAHTON_DETAILS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#tahton-details"
 
 # Body-text scans: the two Koren Exodus Decalogues whose cantillation establishes the p-trad
 # finding -- the תחתון in the main Decalogue (p. 113) and the עליון in the appendix (p. A38).
@@ -112,6 +115,15 @@ _P113_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=466, y=112, w=138, h=59),
     mhi.Box(x=796, y=162, w=131, h=69),
 )
+# Word-highlight boxes on the p. 281 Deuteronomy Shabbat scan, in the scan's own pixel space
+# (viewbox 913x186, its natural size). Picked with gen_highlight_picker.py; they mark the three
+# signal words the conclusion's scope note names. The middle word wraps the scan's line break
+# (וְעַבְדְּךָ ends one line, וַאֲמָתֶךָ starts the next), so it is boxed on its accent-bearing half.
+_P281_BOXES: tuple[mhi.Box, ...] = (
+    mhi.Box(x=431, y=27, w=189, h=67),
+    mhi.Box(x=791, y=92, w=118, h=73),
+    mhi.Box(x=389, y=89, w=190, h=70),
+)
 
 # Strand names and accent romanizations are single-sourced in printed_decalogue_strands (see its
 # module docstring). These thin local aliases keep the prose below unchanged.
@@ -123,11 +135,11 @@ _ELYON = pds.ELYON
 # not strings: splice them into a contents tuple, never into an f-string.
 _ROM_REVIA = rmn(pds.ROM_REVIA)
 _ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
-# The Deuteronomy Shabbat-commandment accents (issue #66), named only in the conclusion's scope
-# note and the p. 281 figure caption.
+# Koren's p-trad accents on the three Shabbat-commandment signal words (issue #66), named only in
+# the conclusion's scope note. The m-trad counterparts (pazer / telisha gedolah / revia) are left
+# to the companion page's appendix, not repeated here. _ROM_REVIA is already defined above.
 _ROM_GERESH = rmn(pds.ROM_GERESH)
 _ROM_ZAQEF_QATAN = rmn(pds.ROM_ZAQEF_QATAN)
-_ROM_PAZER = rmn(pds.ROM_PAZER)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section of
 # the very page these four strands are vendored from -- so its base URL is single-sourced from the
@@ -398,7 +410,18 @@ def _conclusion() -> tuple[object, ...]:
                 " finds Simanim's Tiqqun following the m-trad accents at that very commandment"
                 " (an accents-only departure — Simanim's Tiqqun still follows the p-trad's"
                 " chanted verse boundaries). The scan"
-                " below is that commandment. One boundary on all this: what I have checked in"
+                " below is that commandment, with three signal words highlighted — not the only"
+                " words the two traditions accent differently, but three disjunctively accented"
+                " words that make a handy shorthand for telling p-trad from m-trad. In"
+                " Koren's p-trad they have, respectively, a ",
+                _ROM_GERESH,
+                ", a ",
+                _ROM_REVIA,
+                ", and a ",
+                _ROM_ZAQEF_QATAN,
+                "; the ",
+                link("companion page's appendix", _TAHTON_DETAILS_HREF),
+                " has the full details. One boundary on all this: what I have checked in"
                 " Deuteronomy is the ",
                 _TAHTON,
                 "; I have not chased Koren's Deuteronomy ",
@@ -414,16 +437,11 @@ def _conclusion() -> tuple[object, ...]:
             " taḥton",
             (
                 "The Shabbat commandment of Koren's Deuteronomy (Vaetḥanan) main Decalogue"
-                f" (p. 281), in the p-trad {_TAHTON}. Two of the p-trad's"
-                " characteristic choices here: כָל־מְלָאכָ֜ה has a",
-                *[" ", _ROM_GERESH, " where the m-trad has a "],
-                _ROM_PAZER,
-                ", and וְכָל־בְּהֶמְתֶּ֔ךָ has a",
-                *[" ", _ROM_ZAQEF_QATAN, " where the m-trad has a "],
-                _ROM_REVIA,
-                ".",
+                f" (p. 281), in the p-trad {_TAHTON}. The three signal words are highlighted.",
             ),
             width=None,
+            boxes=_P281_BOXES,
+            viewbox=(913, 186),
         ),
     )
 
