@@ -798,11 +798,11 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                     "this document on the Decalogues in the Simanim Tiqqun",
                     "printed-decalogue-simanim.html",
                 ),
-                f" — its main Decalogue uses the p-trad {_ELYON} "
-                "and its appendix Decalogue the p-trad "
-                f"{_TAHTON}. More precisely, it follows the p-trad's chanted verse boundaries but"
-                " not its every cantillation detail: at the Shabbat commandment, its Deuteronomy"
-                " appendix Decalogue has the m-trad accents.",
+                f" — its main Decalogues follow the p-trad {_ELYON} and its appendix"
+                f" Decalogues the p-trad {_TAHTON}. It follows the p-trad's chanted verse"
+                " boundaries without exception, but not its every cantillation detail — most"
+                " consequentially at the Shabbat commandment, where its Deuteronomy appendix"
+                " Decalogue has the m-trad accents.",
             )
         ),
         H.para(

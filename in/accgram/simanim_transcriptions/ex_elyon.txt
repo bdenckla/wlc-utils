@@ -1,0 +1,36 @@
+# Simanim Tiqqun -- Exodus main Decalogue (elyon), pp. 83-84.
+#
+# Hand transcription of the printed accents, by Ben Denckla, 2026-07-19, read directly from
+# the book.  This is primary observation: it is not derivable from anything else in the repo,
+# and re-making it means re-reading the printed pages.  See doc/ or the accompanying module
+# accgram/edition_transcription.py for the shorthand and the conventions.
+#
+# Conventions in force for this file:
+#   * One token per chanted word (a maqaf compound is one word, so one token).
+#   * A postpositive/prepositive accent written twice on one word -- once at its fixed edge
+#     and once as a stress helper -- is ONE accent, so ONE token.
+#   * meteg is NOT transcribed: it is not a first-class mark of the accent system.
+#   * narrow-sense paseq is likewise not transcribed.  Where a paseq-like vertical does bear
+#     on the accent system -- munax legarmeh -- it is written "mun-leg".  Bracketed asides
+#     such as "[page break]" carry no accent and are ignored by the parser.
+#
+# Shorthand: etn etnaxta / seg segolta / zaq zaqef qatan / zaqg zaqef gadol / tip tipexa /
+# rev revia / zar zarqa / pash pashta / yet yetiv / tev tevir / ger geresh / ger2 gershayim /
+# tg telisha gedola / tq telisha qetana / paz pazer / mun munax / mun-leg munax legarmeh /
+# mah mahapakh / mer merkha / dar darga / qad qadma / silsof silluq + sof pasuq.
+
+edition: Simanim Tiqqun
+book: ex
+reading: elyon
+tradition: printed
+pages: 83-84
+transcriber: Ben Denckla
+date: 2026-07-19
+
+pash mun zaq mun tq qad ger mun rev mun tq qad ger rev mun mun mun paz mun mun paz tq qad
+ger mer mun-leg mun rev mun zar mun seg mun ger2 mah pash mun zaq tg qad dar tev mer tip etn
+mah pash zaq tip [page break] mer silsof mer tev mer tip etn mun mah pash zaq tev mer tip
+silsof tq qad ger rev mun mun zar mun seg qad ger mun-leg mun rev mun mun paz mun mun tg qad
+ger rev pash mun zaq mun tq qad ger mun rev pash zaq tip mun etn rev dar tev mer tip silsof
+mer tip etn pash mun zaq yet zaq mer tip mer silsof tip silsof tip silsof tip silsof mer tip
+mer silsof tip mun etn ger2 mun rev mah pash mun zaq tip mer silsof
