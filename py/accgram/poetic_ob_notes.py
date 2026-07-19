@@ -59,7 +59,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "img": "LC-376B-col-2-line-5-Ps-56v10.png",
         "Da-at Miqra img": "Da-at-Miqra-Ps-56v10.png",
         "comment": (
-            "Across the witnesses the two marks split cleanly one-each: MAM has azla; "
+            "Across the sources the two marks split cleanly one-each: MAM has azla; "
             "according to Breuer, the Aleppo Codex likewise has azla and Sassoon 1053 has "
             "merkha. The LC's carrying of BOTH, on a single letter, could be an attempt to "
             "preserve two single-accent traditions — recording the two options rather than "

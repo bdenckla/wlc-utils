@@ -22,11 +22,22 @@ Wikisource records as the printed tradition, and they match.  That body text is 
 not reproduced.  The two notes are secondary -- kept for the more-for-fun question of
 how aware Simanim is of having made the older, printed-tradition choice.
 
-The four cantillation strands of the opening אנכי...עבדים span are derived live from the vendored
+The four cantillation strands of the opening אנכי...מצותי span are derived live from the vendored
 ``in/accgram/printed_decalogue_teamim.json`` by the shared ``printed_decalogue_strands`` module
 and tabulated on the companion page; this page links to that table rather than duplicating it.
 The two Simanim *transcriptions* are the only hand-set Hebrew, double-checked against the
 committed scans.
+
+The trio frames that span around its two SIGNAL WORDS, עבדים and על־פני, whose accent pair
+uniquely identifies which of the four strands a text has.  This page is where the limits of that
+claim show: the pair identifies the four IDEALIZED Wikisource strands, and Simanim's Tiqqun is
+not pure -- its Deuteronomy taḥton has the m-trad accents at the Shabbat commandment, an
+accents-only departure the span pair cannot catch because it moves no chanted verse boundary.
+Catching it requires GIVING the Shabbat commandment its own signal words
+(``pds.SHABBAT_SIGNAL_SHORTHAND``,
+where the complementary-jobs doctrine is spelled out).  So this page is the canonical example
+keeping that second signal-word set load-bearing; never let a rewrite imply עבדים and על־פני
+would have sufficed here.
 
 Editorial / style conventions shared with the companion page -- bare-Hebrew strand names
 תחתון / עליון (never transliterated or translated), the single-sourced ``ROM_*`` accent
@@ -76,7 +87,7 @@ import repo_paths
 
 # "chanted verse boundaries", not a bare "the printed tradition": the Tiqqun's p-trad allegiance
 # is exceptionless for chanted verse boundaries but not for every cantillation detail -- its
-# Deuteronomy taḥton Shabbat commandment has the m-trad accents (the first scope note in
+# Deuteronomy taxton Shabbat commandment has the m-trad accents (the first scope note in
 # _conclusion). The title claims only the exceptionless part.
 REPORT_TITLE = (
     "Simanim's Tiqqun follows the printed tradition's chanted verse boundaries"
@@ -104,15 +115,17 @@ _P246_BODY_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton.png"
 # Highlight rectangles in Simanim-Tiqqun-p-083 pixel space (961x664, the scan's own
 # resolution = the overlay viewBox). Each Box marks a word named in the figcaption; the
 # coordinates come from py/accgram/gen_highlight_picker.py (drag boxes over the words, then
-# paste the exported `px` boxes here). These three mark עבדים, על־פני, and מצותי.
+# paste the exported `px` boxes here). These three mark the two signal words, עבדים and על־פני,
+# plus מצותי -- the אנכי…מצותי span's shared end, marked for orientation, not as a signal (every
+# strand closes a chanted verse there, so it distinguishes nothing).
 _P83_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=800, y=145, w=161, h=71),
     mhi.Box(x=84, y=141, w=160, h=73),
     mhi.Box(x=639, y=572, w=155, h=66),
 )
 # Highlight rectangles in Simanim-Tiqqun-p-246 pixel space (1149x327, the scan's own
-# resolution = the overlay viewBox). Mirroring the p. 83 highlights above, these two mark
-# words named in the figcaption -- עבדים (end of the אנכי…עבדים span) and על־פני. Coordinates
+# resolution = the overlay viewBox). Mirroring the p. 83 highlights above, these two mark the
+# אנכי…מצותי span's two signal words, עבדים and על־פני, both named in the figcaption. Coordinates
 # come from py/accgram/gen_highlight_picker.py (drag boxes over the words, export the `px`
 # boxes). Note the p. 246 scan is a different size than the p. 83 one (1149x327 vs 961x664).
 _P246_BOXES: tuple[mhi.Box, ...] = (
@@ -121,8 +134,8 @@ _P246_BOXES: tuple[mhi.Box, ...] = (
 )
 # Highlight rectangles in Simanim-Tanakh-p-119 pixel space (972x259, the scan's own
 # resolution = the overlay viewBox). Mirroring the p. 83 / p. 246 highlights above, these
-# two mark עבדים and על־פני -- the same two words as the p. 246 taxton, present here in the
-# m-trad taxton regardless of strand (so this span does NOT close on silluq + sof pasuq).
+# two mark the same two signal words as the p. 246 taxton, עבדים and על־פני, here in the m-trad
+# taxton (so this span does NOT close on silluq + sof pasuq at עבדים).
 # Coordinates come from py/accgram/gen_highlight_picker.py (drag boxes over the words, export
 # the `px` boxes). Note this scan is a different size again (972x259 vs 961x664 and 1149x327).
 _P119_BOXES: tuple[mhi.Box, ...] = (
@@ -131,8 +144,8 @@ _P119_BOXES: tuple[mhi.Box, ...] = (
 )
 # Highlight rectangles in Simanim-Tanakh-p-350 pixel space (970x138, the scan's own
 # resolution = the overlay viewBox). Mirroring the p. 83 / p. 246 / p. 119 highlights above,
-# these two mark עבדים and על־פני -- the same two words, present here in the m-trad elyon of
-# the Torah-section appendix regardless of strand. Coordinates come from
+# these two mark the same two signal words, עבדים and על־פני, here in the m-trad elyon of the
+# Torah-section appendix. Coordinates come from
 # py/accgram/gen_highlight_picker.py (drag boxes over the words, export the `px` boxes). Note
 # this scan is a different size again (970x138 vs 961x664, 1149x327, and 972x259).
 _P350_BOXES: tuple[mhi.Box, ...] = (
@@ -191,7 +204,7 @@ _ROM_TELISHA_GEDOLAH = rmn(pds.ROM_TELISHA_GEDOLAH)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section
 # of the very page these four strands are vendored from -- so its base URL is single-sourced from
-# the data's own provenance (see _source_section), and we append only the section anchor here.
+# the data's own provenance, and we append only the section anchor here.
 # That Exodus section holds BOTH p-trad strands (תחתון and עליון), which is exactly what the
 # spot-check compares against.  Wikisource forms a heading's anchor id by replacing spaces with
 # underscores (parentheses kept literally); the Deuteronomy copy of this heading gets a "_2"
@@ -202,17 +215,6 @@ _WIKISOURCE_PTRAD_SECTION = "הטעם התחתון מול הטעם העליון 
 def _wikisource_ptrad_href(source: dict) -> str:
     base = source["provenance"]["url"]
     return f"{base}#{_WIKISOURCE_PTRAD_SECTION.replace(' ', '_')}"
-
-
-def _path(path: str) -> object:
-    """A repo path as plain body text (no monospace <code>, whose optical size clashes with
-    the surrounding font) that may still line-break after each slash (issue #62)."""
-    contents: list[object] = []
-    for i, part in enumerate(path.split("/")):
-        if i:
-            contents += ["/", H.word_break_opportunity()]
-        contents.append(part)
-    return H.span(tuple(contents))
 
 
 # --------------------------------------------------------------------------- #
@@ -255,8 +257,10 @@ def _body_scans() -> tuple[object, ...]:
             (
                 "The (massive) verse that starts Simanim's main Decalogue (p. 83), headed",
                 *[" ", H.bdi(' "עשרת הדברות" בטעם עליון'), "."],
-                " The אנכי…עבדים span ends on a",
-                *[" ", _ROM_REVIA, "."],
+                " Both signal words have a",
+                *[" ", _ROM_REVIA, " — the p-trad ", _ELYON, "'s pair."],
+                " The highlighted מצותי is the אנכי…מצותי span's shared end, where this"
+                " long verse finally closes.",
                 H.line_break(),
                 H.small(
                     (
@@ -275,8 +279,8 @@ def _body_scans() -> tuple[object, ...]:
             (
                 "The (short) two verses that start Simanim's appendix Decalogue (p. 246), headed עשרת הדברות דיתרו בלא טעם עליון."
                 " (Heading not shown in this image though.)"
-                " The אנכי…עבדים span ends on a",
-                *[" ", _ROM_SILLUQ_SOF_PASUQ, "."],
+                " Both signal words close chanted verses, each with a",
+                *[" ", _ROM_SILLUQ_SOF_PASUQ, f" — the p-trad {_TAHTON}'s pair."],
                 " The asterisk is a callout to the footnote transcribed below.",
             ),
             width=None,
@@ -304,7 +308,7 @@ def _intro(source: dict) -> tuple[object, ...]:
                 " visually spot-checking Simanim against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
                 ". The two scans below show enough of Simanim's Exodus Decalogues to"
-                ' "diagnose" them both as p-trad.',
+                ' "diagnose" them both as p-trad by their signal words.',
             )
         ),
         *_body_scans(),
@@ -524,8 +528,15 @@ def _p246_mapping_table() -> object:
             # the page-set does -- "sof pasuq" alone named neither the accent nor the strand.
             H.table_datum(_ROM_SILLUQ_SOF_PASUQ),
             H.table_datum(_ROM_TIPEHA),
+            # "through עבדים": the two strands are word for word identical only as far as עבדים.
+            # They part at the span's other signal word, על־פני, where the p-trad תחתון ends
+            # another chanted verse and the m-trad עליון runs on -- which is why the companion
+            # page's table gives each its own row. Don't drop the qualifier.
             H.table_datum(
-                link(("p-trad ", _TAHTON, " = m-trad ", _ELYON), _FOUR_STRANDS_HREF)
+                link(
+                    ("p-trad ", _TAHTON, " = m-trad ", _ELYON, ", through עבדים"),
+                    _FOUR_STRANDS_HREF,
+                )
             ),
         )
     )
@@ -649,7 +660,8 @@ def _p246_section() -> tuple[object, ...]:
                 f" {_TAHTON} cantillations of the אנכי…עבדים span: what it prints and calls the"
                 f" “ordinary” (רגיל) {_TAHTON} — עבדים with ",
                 _ROM_SILLUQ_SOF_PASUQ,
-                f", אנכי…עבדים as its own verse, its marks identical to the m-trad {_ELYON} —"
+                f", אנכי…עבדים as its own verse, its marks identical through עבדים to the m-trad"
+                f" {_ELYON} —"
                 " versus the Keter's ",
                 _ROM_PASHTA_ETNAHTA,
                 f", the genuine m-trad {_TAHTON}, which it sets aside. Simanim thus knows the two"
@@ -668,10 +680,16 @@ def _conclusion() -> tuple[object, ...]:
                 "Simanim's Tiqqun follows the p-trad for the Decalogues, not the m-trad — fully"
                 " as to chanted verse boundaries, though (per the first scope note below) not in"
                 " every cantillation detail. The two"
-                " traditions' most consequential divergence is at the opening commandment"
-                " אנכי…עבדים — within each strand, a divergence of chanted verse boundaries: one"
-                " tradition gives that span its own chanted verse where the other runs it on."
-                " Simanim lands"
+                " traditions' most consequential divergence is over the opening span"
+                " אנכי…מצותי — within each strand, a divergence of chanted verse boundaries,"
+                " which can be read off the accents on the span's two signal words, עבדים and"
+                " על־פני: where a signal word has a ",
+                _ROM_SILLUQ_SOF_PASUQ,
+                " the strand ends a chanted verse there, and where it has an ",
+                _ROM_ETNAHTA,
+                " or a ",
+                _ROM_REVIA,
+                " the strand runs on. Simanim lands"
                 f" on the p-trad side of that divergence on both strands: the p-trad {_ELYON} in"
                 " its Exodus",
                 f" main Decalogue (p. 83), and the p-trad {_TAHTON} in its appendix Decalogue"
@@ -685,7 +703,7 @@ def _conclusion() -> tuple[object, ...]:
         # the Koren page's mirror finding at this same commandment -- is why it now earns a place.)
         H.para(
             (
-                "One scope note: the finding above rests on the אנכי…עבדים span — the most striking"
+                "One scope note: the finding above rests on the אנכי…מצותי span — the most striking"
                 " p-trad/m-trad divergence. Simanim makes the same p-trad choice at that span in"
                 " both of its Decalogues: the Exodus (Yitro) one and the",
                 f" Deuteronomy (Vaetḥanan) one, whose {_ELYON} main Decalogue starts on p. 208."
@@ -698,9 +716,12 @@ def _conclusion() -> tuple[object, ...]:
                 " mid-verse accents. So the precise extent of Simanim's p-trad allegiance is as"
                 " the title states it: Simanim follows the p-trad's chanted verse boundaries"
                 " without exception, but not its every cantillation detail. The scan below is"
-                " that commandment, with three signal words highlighted — not the only words"
-                " the two traditions accent differently, but three disjunctively accented"
-                " words that make a handy shorthand for telling the p-trad from the m-trad."
+                " that commandment, with "
+                # Single-sourced in pds and shared with the Koren page's matching scope note; the
+                # complementary-jobs doctrine (why this trio is not made redundant by the span's
+                # own signal words, עבדים and על־פני) is spelled out at that constant.
+                + pds.SHABBAT_SIGNAL_SHORTHAND
+                + " — doing for accents what עבדים and על־פני do for chanted verse boundaries."
                 " In the m-trad, the signal words have, respectively, a ",
                 _ROM_PAZER,
                 ", a ",
@@ -747,7 +768,14 @@ def _conclusion() -> tuple[object, ...]:
             "Simanim Tanakh p. 119: the Exodus main Decalogue, in the m-trad taḥton",
             (
                 "Simanim Tanakh, p. 119 — the start of the Exodus main Decalogue, in"
-                f" the m-trad {_TAHTON} cantillation.",
+                f" the m-trad {_TAHTON} cantillation. The highlighted signal words are the"
+                " m-trad ",
+                _TAHTON,
+                "'s pair: עבדים has an ",
+                _ROM_ETNAHTA,
+                " and על־פני a ",
+                _ROM_SILLUQ_SOF_PASUQ,
+                ".",
             ),
             width=None,
             boxes=_P119_BOXES,
@@ -758,7 +786,14 @@ def _conclusion() -> tuple[object, ...]:
             "Simanim Tanakh p. 350: the Exodus Decalogue in the appendix to the Torah section, in the m-trad elyon",
             (
                 "Simanim Tanakh, p. 350 — the Exodus Decalogue in the appendix to the Torah"
-                f" section, in the m-trad {_ELYON} cantillation.",
+                f" section, in the m-trad {_ELYON} cantillation. The highlighted signal words"
+                " are the m-trad ",
+                _ELYON,
+                "'s pair: עבדים has a ",
+                _ROM_SILLUQ_SOF_PASUQ,
+                " and על־פני a ",
+                _ROM_REVIA,
+                ".",
             ),
             width=None,
             boxes=_P350_BOXES,
@@ -773,28 +808,6 @@ def _conclusion() -> tuple[object, ...]:
                 " appendix. And because this is a Tanakh, not a Torah-only Tiqqun, that appendix"
                 " sits at the end of the Torah section — mid-volume, before the Prophets — not at"
                 " the back of the book.",
-            )
-        ),
-    )
-
-
-def _source_section(source: dict) -> tuple[object, ...]:
-    prov = source.get("provenance", {})
-    oldid = prov.get("oldid")
-    ts = prov.get("revision_timestamp", "")
-    rev = f" (revision {oldid}, {ts[:10]})" if oldid else ""
-    return (
-        H.heading_level_2("Source"),
-        H.para(
-            (
-                "The companion page's ",
-                link("four-strands table", _FOUR_STRANDS_HREF),
-                " is read live from the vendored Hebrew Wikisource data ",
-                _path("in/accgram/printed_decalogue_teamim.json"),
-                rev,
-                " (עשרת הדברות בסיס/טעמים). This page's own content is the two Simanim"
-                " transcriptions, hand-set from the committed scans of Simanim's Tiqqun and"
-                " credited to Simanim.",
             )
         ),
     )
@@ -849,7 +862,6 @@ def render_body_contents(source: dict) -> tuple[object, ...]:
         *_p246_section(),
         *_conclusion(),
         *_aleppo_codex_section(),
-        *_source_section(source),
     )
 
 
@@ -866,7 +878,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 def run(args: argparse.Namespace) -> None:
     # The four-strands table lives on the companion page now, so this page never grammar-checks
-    # the readings -- it only needs the source's provenance (revision + p-trad section URL). We
+    # the readings -- it only needs the source's provenance (the p-trad section URL). We
     # load the source but skip pd.check_all, a real speedup for solo regeneration.
     source = pd.load_source(args.source)
 

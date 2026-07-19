@@ -229,7 +229,7 @@ _EN: dict[str, dict[str, object]] = {
 
 # Compact decoder for the sigils used above, in MAM-with-doc's "standalone
 # passage" style: leave the sigil in Hebrew, gloss it in English.
-_WITNESS_KEY = (
+_SOURCE_KEY = (
     ("א", "Aleppo Codex (the Keter)"),
     ("א(ס)", "Aleppo Codex per Jacob Sapir's notes (Me’orot Nathan)"),
     ("ל", "Leningrad Codex (cited in prose as כתי״ל)"),
@@ -304,14 +304,14 @@ def _intro_section() -> tuple[object, ...]:
             " one word (the cross-letter words: Leviticus 10:4, Ezekiel 48:10)."
             " Most of what these notes argue is the relative order of the two"
             " marks on a shared letter — which one “comes first in the reading” —"
-            " and which witnesses write which first. In 2 Kings 17:13 the leading"
+            " and which sources have which first. In 2 Kings 17:13 the leading"
             " mark is technically a geresh muqdam, which the checker reads as a"
             " geresh."
         ),
         H.para(
             (
                 "Some reading conventions: a note opening with “=” means “MAM"
-                " follows …”; elsewhere “X=Y” means witness X reads Y. A bang"
+                " follows …”; elsewhere “X=Y” means source X has the reading Y. A bang"
                 " attaches to that equals — “X!=Y” reads “X surprisingly equals"
                 " Y”, flagging X’s reading as striking or unexpected (for"
                 " instance a transcript or edition that departs from the codex it"
@@ -341,7 +341,7 @@ def _key_section() -> tuple[object, ...]:
     return (
         H.heading_level_2("Key to the sigils", {"id": "key"}),
         H.heading_level_3("Manuscripts and editions"),
-        _key_table(_WITNESS_KEY),
+        _key_table(_SOURCE_KEY),
         H.heading_level_3("Accent terms and masoretic notation"),
         _key_table(_TERM_KEY),
     )

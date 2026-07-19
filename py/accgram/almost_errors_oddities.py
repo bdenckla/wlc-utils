@@ -82,7 +82,7 @@ _EK_MODES = (
 )
 
 # MAM's documentation note on ek20:31 (from MAM-parsed-plus / MAM-with-doc), the
-# witness that ek20:31's double accent is standard masoretic tradition, not an L
+# evidence that ek20:31's double accent is standard masoretic tradition, not an L
 # anomaly.  Quoted (Hebrew) and paraphrased (English) on the page.
 _EK2031_MAM_NOTE_HE = (
     "זאת התיבה היחידה בכל המקרא שיש בה שני טעמים מחברים בהברה אחת."
@@ -128,7 +128,7 @@ def oddities_intro() -> tuple[object, ...]:
             "The features below would make a naïve checker blink — two accents crowding"
             " one letter or one word, or the same divider written twice in a row — but"
             " none of them is a quirk of LC, BHS, or WLC to be forgiven. They are"
-            " official masoretic tradition, attested in the standard witnesses. The"
+            " official masoretic tradition, attested in the standard manuscripts. The"
             " checker accepts them; its only real decision is one of representation —"
             " whether to keep both accents as a sequence, fuse a pair into one token,"
             " carry a single accent, or collapse a repeated divider to one — and, as the"
@@ -159,7 +159,7 @@ _TELG_PARA_1_CONTENTS = (
     " (In 2K17:13, the geresh results from our charitable interpretation of a geresh muqdam.)"
     #
     " This double accent is not a quirk of WLC, BHS, or the LC:"
-    " it is attested in the standard witnesses."
+    " it is attested in the standard manuscripts."
     #
     " In three of the words, the two accents sit together on the first letter of the word"
     " (G5:29, Ts2:15, and 2K17:13)."
@@ -360,7 +360,7 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
             (
                 "MAM has this double accent,"
                 " and has a documentation note citing support for it from"
-                " three standard witnesses (Aleppo, Leningrad, Cairo) and their masorot."
+                " three standard manuscripts (Aleppo, Leningrad, Cairo) and their masorot."
                 " MAM also cites Yeivin 28.1 p. 232."
                 " MAM spells out why this double accent is puzzling yet standard:",
             )
@@ -388,7 +388,7 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
                     "MAM-with-doc Ezekiel page",
                     "https://bdenckla.github.io/MAM-with-doc/C3-Ezekiel.html#c20v31",
                 ),
-                ". Because the witnesses agree, this double accent is whitelisted"
+                ". Because the manuscripts agree, this double accent is whitelisted"
                 " rather than treated an error.",
             )
         ),
@@ -397,12 +397,12 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
                 "The instructive contrast is Lev. 25:20, the ",
                 H.bold("only other"),
                 " prose word with two accents on one letter (a mahapakh and a tipeḥa)."
-                " There the witnesses do ",
+                " There the editions do ",
                 H.bold("not"),
                 " agree — MAM keeps only the tipeḥa and WLC tags the word anomalous —"
                 " so it may well be an error in the LC, and the checker flags it (as a"
-                " lexical error). Same surface shape, opposite verdict, decided by the"
-                " witnesses. Its full treatment is on the ",
+                " lexical error). Same surface shape, opposite verdict, decided by whether"
+                " the sources agree. Its full treatment is on the ",
                 link("Goerwitz page", "goerwitz.html#oblv25v20"),
                 ". The poetic ",
                 H.code("merkha!azla"),

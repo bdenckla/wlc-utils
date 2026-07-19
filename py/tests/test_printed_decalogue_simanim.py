@@ -1,6 +1,6 @@
 """Issue #62: the Simanim-Decalogue page (printed-decalogue-simanim.html).
 
-The four cantillation strands of the opening אנכי…עבדים span are derived live from the vendored
+The four cantillation strands of the opening אנכי…מצותי span are derived live from the vendored
 ``in/accgram/printed_decalogue_teamim.json`` by the shared ``printed_decalogue_strands`` module:
 for each Exodus reading it reads the first chanted verse and derives the accent on אנכי (first
 word) and עבדים.  These tests pin that derivation (which now lives on the strands module, not on
@@ -47,7 +47,12 @@ def test_four_readings_derive_expected_accents() -> None:
 
 
 def test_printed_taxton_equals_manuscript_elyon() -> None:
-    """The page's headline identity: p-trad taḥton = m-trad elyon on both boundary words."""
+    """The page's headline identity: p-trad taḥton = m-trad elyon on both boundary words.
+
+    The identity is SPAN-LIMITED -- it holds only through עבדים. At the אנכי…מצותי span's other
+    signal word, על־פני, the two strands part (p-trad taḥton silluq, m-trad elyon revia), which is
+    what gives each its own row in the companion page's four-strands table. See
+    ``test_printed_decalogue_page.test_signal_pairs_identify_strands``."""
     readings = {r.name: r for r in pds.resolve_readings(_results_or_skip())}
     pt, me = readings["p-trad taḥton"], readings["m-trad elyon"]
     assert (pt.anokhi_accent, pt.avadim_accent) == (me.anokhi_accent, me.avadim_accent)

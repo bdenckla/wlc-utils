@@ -64,7 +64,7 @@ def _intro() -> tuple[object, ...]:
                 ": features that look error-like — two accents crowding"
                 " one letter or one word, or one divider written twice in a row — but"
                 " that are 100% official masoretic tradition, attested in the standard"
-                " witnesses, ",
+                " manuscripts, ",
                 H.bold("not"),
                 " leniencies specific to LC, BHS, or WLC. Nothing here is forgiven; the"
                 " checker accepts these, and where it must pick how to represent one for"

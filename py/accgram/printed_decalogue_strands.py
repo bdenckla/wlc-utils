@@ -1,5 +1,5 @@
 r"""Shared computation for the two printed-Decalogue pages: the four cantillation strands
-of the Exodus Decalogue's opening אנכי...עבדים span, resolved live from the vendored data.
+of the Exodus Decalogue's opening אנכי...מצותי span, resolved live from the vendored data.
 
 This module is pure computation -- no HTML, no display/editorial vocabulary in its *return
 values* -- so both companion pages can depend on it without either depending on the other:
@@ -7,15 +7,15 @@ values* -- so both companion pages can depend on it without either depending on 
   * ``printed_decalogue_page`` (issue #52) grammar-checks the printed vs manuscript Decalogue
     accentuations and now also lays out the four strands as a styled range table.
   * ``printed_decalogue_simanim_page`` (issue #62) documents Simanim's Tiqqun as an independent
-    printed-tradition witness and links back to the four-strands table on the main page.
+    printed-tradition edition and links back to the four-strands table on the main page.
 
 Each of the four Exodus readings (m-trad / p-trad x taḥton / elyon) is read from
-``in/accgram/printed_decalogue_teamim.json`` (Hebrew Wikisource data): its first chanted verse
-is pulled from the data, and the accent on אנכי (first word) and עבדים is derived from the marks,
-so the strands can never drift from the data.  ``resolve_readings`` pins each derivation against
-``READING_SPECS`` / ``STRUCTURE`` and raises ``AssertionError`` on any divergence -- this
-build-fails-on-data-drift behavior fires at page-1 generation and in the tests, and must never be
-softened to a warning.
+``in/accgram/printed_decalogue_teamim.json`` (Hebrew Wikisource data): the leading chanted verses
+covering the אנכי...מצותי span are pulled from the data, and the accents on אנכי, עבדים and
+על־פני are derived from the marks, so the strands can never drift from the data.
+``resolve_readings`` pins each derivation against ``READING_SPECS`` / ``STRUCTURE`` and raises
+``AssertionError`` on any divergence -- this build-fails-on-data-drift behavior fires at page-1
+generation and in the tests, and must never be softened to a warning.
 
 Editorial / style conventions for the rendered prose on BOTH pages (agreed with Ben; keep them
 when editing either page):
@@ -31,6 +31,16 @@ when editing either page):
   Verbatim quoted source Hebrew (e.g. ``בלא טעם עליון``) keeps whatever it says.  This is a
   cross-repo rule (cf. MAM-basics ``py/versification_and_cantillation/doc.py``).
 * Prefer "**cantillation**" to "accentuation".
+* **"Signal word" is the trio's ONE term for a word whose accent tells strands apart** -- it
+  replaced the older "milestone word", which said only "notable position" and not "this is where
+  you look".  It now names TWO distinct sets, and the pages must never collapse them into one
+  claim: (a) within the אנכי...מצותי span, עבדים and על־פני, whose accent PAIR uniquely identifies
+  which of the four strands a text has (see ``resolve_readings``' pairwise-distinctness check);
+  and (b) at the Deuteronomy Shabbat commandment, the trio of disjunctively accented words that
+  tells p-trad accents from m-trad ones (see ``SHABBAT_SIGNAL_SHORTHAND``).  Their jobs are
+  complementary, not redundant -- the doctrine is spelled out at that constant.  אנכי and מצותי
+  are the span's shared frame, NOT signal words: every strand starts at the one and ends a
+  chanted verse at the other, so neither distinguishes anything.
 * **Accent/mark romanizations are single-sourced as ``ROM_*`` constants** (pashta, tipeḥa,
   etnaḥta, revia, segolta, silluq, sof pasuq, meteg, maqaf, legarmeh, paseq, + a few compounds).
   They are shared by the ``_ACCENT_NAMES`` derivation table, the ``READING_SPECS``
@@ -122,10 +132,25 @@ _ACCENT_NAMES: dict[str, str] = {
     "\N{HEBREW ACCENT REVIA}": ROM_REVIA,
 }
 
-# The base-letter skeleton of the word עבדים -- the closing word of the first Decalogue span,
-# located within each reading's first chanted verse by matching its letters (it sits
-# mid-verse in the merged readings, verse-finally where אנכי…עבדים is its own verse).
+# Base-letter skeletons of the four words the אנכי…מצותי span is laid out over, single-sourced
+# here for all three pages and located within a strand's span by matching letters.
+#
+# עבדים and על־פני are the span's two SIGNAL WORDS: their accent pair is different in each of the
+# four strands, so the pair alone says which strand a text has (resolve_readings checks that
+# pairwise distinctness live).  Each sits mid-verse in some strands and verse-finally in others,
+# and that is exactly what it signals.
+#
+# על־פני is a maqaf compound, and the compound is the whole word here -- which is why its skeleton
+# runs both letter-groups together as עלפני, and why ``_accent_of`` reads the accent off the
+# compound rather than off a half.  Name the signal word על־פני, NEVER a bare פני: no page should
+# name פני and then qualify that it is really part of על־פני (Ben, 2026-07-19).
+#
+# אנכי and מצותי are the span's shared FRAME, not signal words: every strand starts at אנכי (never
+# verse-finally) and closes a chanted verse at מצותי, so neither tells any two strands apart.
+ANOKHI = "אנכי"
 AVADIM = "עבדים"
+AL_PENEI = "עלפני"
+MITSVOTAI = "מצותי"
 
 
 # The two chant-strands (טעם) are named in Hebrew letters throughout the rendered prose --
@@ -139,7 +164,7 @@ _STRAND_HEB: dict[str, str] = {"taḥton": TAHTON, "elyon": ELYON}
 
 
 # The one-sentence statement of what the four strands most strikingly disagree about, shared
-# VERBATIM by all three pages of the trio (main + the Simanim and Koren witnesses) so it cannot
+# VERBATIM by all three pages of the trio (main + the Simanim and Koren pages) so it cannot
 # drift between them.  Plain ``str``, not HTML: splice it into a contents tuple.
 #
 # Why this span and not the older "is אנכי…עבדים an entire chanted verse or only the start of
@@ -155,6 +180,29 @@ MOST_STRIKING = (
     "The most striking difference between the four strands is how they divide up the span"
     " אנכי…מצותי into chanted verses. (This span is typically identified as comprising the"
     " first two Commandments.)"
+)
+
+
+# The shared description of the Deuteronomy Shabbat commandment's three signal words, used
+# verbatim by both satellite pages (Simanim and Koren) where each shows its own scan of that
+# commandment.  Plain ``str``, not HTML: splice it into a contents tuple.
+#
+# THE COMPLEMENTARY-JOBS DOCTRINE (do not collapse the two signal-word sets into one claim).
+# The span's own signal words -- עבדים and על־פני -- carry a strong claim: their accent pair is
+# unique to each of the four strands, so the pair places a text among them.  But that claim is
+# about the four IDEALIZED strands as Hebrew Wikisource defines them.  A real edition need not
+# follow one strand purely: Simanim's Tiqqun follows the p-trad תחתון's chanted verse boundaries
+# throughout, yet has the m-trad accents at the Shabbat commandment of its Deuteronomy appendix
+# Decalogue.  The span pair cannot catch that -- it is an accents-only departure that moves no
+# boundary the pair reads.  The Shabbat trio can, because it compares accents at a commandment
+# the two traditions divide into chanted verses identically.  So: עבדים and על־פני place a text
+# among the four strands within אנכי…מצותי, while the Shabbat trio tells p-trad accents from
+# m-trad accents where an edition can stray from its nominal tradition.  Neither makes the other
+# redundant, and no page may imply that it does.
+SHABBAT_SIGNAL_SHORTHAND = (
+    "three signal words highlighted — not the only words the two traditions accent"
+    " differently, but three disjunctively accented words that make a handy shorthand"
+    " for telling the p-trad from the m-trad"
 )
 
 
@@ -196,6 +244,22 @@ def _find_word(words: tuple[str, ...], skeleton: str) -> str:
     raise ValueError(f"no word with skeleton {skeleton!r} in {words!r}")
 
 
+def _span_verses(vr: pd.VersionResult) -> list[pd.ChantedVerseResult]:
+    """The leading chanted verses covering the אנכי…מצותי span: every verse through the first
+    one whose last word is מצותי.  Every strand closes a chanted verse there (that is what makes
+    the span principled -- see MOST_STRIKING), so this is well defined for all eight readings;
+    an AssertionError on drift, in the style of ``resolve_readings``."""
+    out: list[pd.ChantedVerseResult] = []
+    for cv in vr.chanted_verses:
+        out.append(cv)
+        if base_skeleton(cv.words[-1]) == MITSVOTAI:
+            return out
+    raise AssertionError(
+        f"{vr.book} {vr.reading} {vr.tradition}: no chanted verse ends at {MITSVOTAI!r} "
+        "-- the vendored readings drifted"
+    )
+
+
 class Reading:
     """One of the four ways the opening Decalogue span is accented, resolved from the data."""
 
@@ -209,25 +273,41 @@ class Reading:
         self.avadim_word = _find_word(first.words, AVADIM)
         self.anokhi_accent = _accent_of(self.anokhi_word)
         self.avadim_accent = _accent_of(self.avadim_word)
+        # The whole אנכי…מצותי span: its chanted verses, its words flattened, and the letter
+        # skeletons of the words that END those verses -- the last being the set page 1's table
+        # colors red, so a cell is red exactly where its strand closes a chanted verse.
+        self.span_verses = _span_verses(vr)
+        self.span_words = tuple(w for cv in self.span_verses for w in cv.words)
+        self.span_end_skels = frozenset(
+            base_skeleton(cv.words[-1]) for cv in self.span_verses
+        )
+        # The second signal word, על־פני, and its accent -- silluq where the strand closes a
+        # chanted verse there, revia where it runs on.  Paired with avadim_accent it identifies
+        # the strand (resolve_readings checks the four pairs are pairwise distinct).
+        self.penei_word = _find_word(self.span_words, AL_PENEI)
+        self.penei_accent = _accent_of(self.penei_word)
         # How many chanted verses this strand splits the Exodus Decalogue into, and the
         # letter skeleton of its first chanted verse's last word (its span endpoint).
         self.n_verses = len(vr.chanted_verses)
         self.first_verse_end = base_skeleton(first.words[-1])
 
 
-# (display name, ex reading, ex data-tradition, expected אנכי, expected עבדים) -- the expected
-# accents pin the live derivation so a data change that moved a boundary accent would fail the
-# build rather than silently mis-render.  The first verse's span + verse count are pinned
-# separately in STRUCTURE; display extras live in the table renderers, keyed by name.
+# (display name, ex reading, ex data-tradition, expected אנכי, expected עבדים, expected על־פני) --
+# the expected accents pin the live derivation so a data change that moved a boundary accent would
+# fail the build rather than silently mis-render.  The last two are the span's signal words; their
+# PAIR is what identifies a strand, and resolve_readings additionally checks that the four pairs
+# here really are pairwise distinct rather than trusting the table to stay that way.  The first
+# verse's span + verse count are pinned separately in STRUCTURE; display extras live in the table
+# renderers, keyed by name.
 #
 # NB: the third element is the DATA lookup key (matched against vr.tradition in resolve_readings),
 # which the source emits as "manuscript"/"printed" -- NOT the "m-trad"/"p-trad" display shorthand.
 # Keep it in the source's spelling; only the display name (first element) uses the shorthand.
 READING_SPECS = (
-    ("m-trad taḥton", "taxton", "manuscript", ROM_PASHTA, ROM_ETNAHTA),
-    ("m-trad elyon", "elyon", "manuscript", ROM_TIPEHA, ROM_SILLUQ),
-    ("p-trad taḥton", "taxton", "printed", ROM_TIPEHA, ROM_SILLUQ),
-    ("p-trad elyon", "elyon", "printed", ROM_PASHTA, ROM_REVIA),
+    ("m-trad taḥton", "taxton", "manuscript", ROM_PASHTA, ROM_ETNAHTA, ROM_SILLUQ),
+    ("m-trad elyon", "elyon", "manuscript", ROM_TIPEHA, ROM_SILLUQ, ROM_REVIA),
+    ("p-trad taḥton", "taxton", "printed", ROM_TIPEHA, ROM_SILLUQ, ROM_SILLUQ),
+    ("p-trad elyon", "elyon", "printed", ROM_PASHTA, ROM_REVIA, ROM_REVIA),
 )
 
 # Per-strand opening structure: (first-verse span as short right-to-left notation, the
@@ -236,22 +316,36 @@ READING_SPECS = (
 # against the vendored data in resolve_readings so a moved boundary fails the build rather
 # than silently mislabelling.  (span endpoints from the data: אנכי…על־פני / …עבדים / …מצותי.)
 STRUCTURE: dict[str, tuple[str, str, int]] = {
-    "m-trad taḥton": ("אנכי…פני", "עלפני", 12),
+    "m-trad taḥton": ("אנכי…על־פני", "עלפני", 12),
     "m-trad elyon": ("אנכי…עבדים", "עבדים", 10),
     "p-trad taḥton": ("אנכי…עבדים", "עבדים", 13),
     "p-trad elyon": ("אנכי…מצותי", "מצותי", 9),
 }
 
 
+def _signal_pair(vr: pd.VersionResult) -> tuple[str, str]:
+    """The (עבדים, על־פני) accent pair of one reading -- the pair that identifies its strand.
+    Used to check the Deuteronomy readings against their Exodus counterparts without building a
+    whole ``Reading`` for each (the pages tabulate Exodus; the claim covers both books).
+    """
+    span_words = tuple(w for cv in _span_verses(vr) for w in cv.words)
+    return (
+        _accent_of(_find_word(span_words, AVADIM)),
+        _accent_of(_find_word(span_words, AL_PENEI)),
+    )
+
+
 def resolve_readings(results: list[pd.VersionResult]) -> list[Reading]:
     by_key = {(vr.book, vr.reading, vr.tradition): vr for vr in results}
     readings: list[Reading] = []
-    for name, reading, tradition, exp_anokhi, exp_avadim in READING_SPECS:
+    for name, reading, tradition, exp_anokhi, exp_avadim, exp_penei in READING_SPECS:
         r = Reading(name, by_key[("ex", reading, tradition)])
-        if (r.anokhi_accent, r.avadim_accent) != (exp_anokhi, exp_avadim):
+        derived = (r.anokhi_accent, r.avadim_accent, r.penei_accent)
+        expected = (exp_anokhi, exp_avadim, exp_penei)
+        if derived != expected:
             raise AssertionError(
-                f"{name}: derived ({r.anokhi_accent}, {r.avadim_accent}) from the data, "
-                f"expected ({exp_anokhi}, {exp_avadim}) -- the vendored readings drifted"
+                f"{name}: derived {derived} from the data, "
+                f"expected {expected} -- the vendored readings drifted"
             )
         _, end_skel, n_verses = STRUCTURE[name]
         if (r.first_verse_end, r.n_verses) != (end_skel, n_verses):
@@ -259,5 +353,28 @@ def resolve_readings(results: list[pd.VersionResult]) -> list[Reading]:
                 f"{name}: derived first-verse end {r.first_verse_end!r} / {r.n_verses} verses "
                 f"from the data, expected {end_skel!r} / {n_verses} -- the vendored readings drifted"
             )
+        # The pages claim the (עבדים, על־פני) pair identifies the strand in BOTH books, but
+        # tabulate only Exodus; check the Deuteronomy counterpart derives the same pair.
+        #
+        # An editorial decision this check may prompt someone to reopen: the m-trad elyon's
+        # Deuteronomy opening accents are a MAM editorial reconstruction.  The pages deliberately
+        # do NOT mention that -- Ben's call, 2026-07-19: don't get into it.  It changes nothing
+        # here (the reconstructed accents are the data, and the check below passes on them);
+        # it is purely a question of what the rendered prose discusses.  Settled; don't re-add.
+        dt_pair = _signal_pair(by_key[("dt", reading, tradition)])
+        if dt_pair != (r.avadim_accent, r.penei_accent):
+            raise AssertionError(
+                f"{name}: Deuteronomy signal pair {dt_pair} differs from Exodus's "
+                f"{(r.avadim_accent, r.penei_accent)} -- the vendored readings drifted"
+            )
         readings.append(r)
+    # The page's headline claim: no two strands share the signal pair, so the pair alone places a
+    # text among the four.  Checked live rather than trusted to READING_SPECS staying distinct.
+    pairs = {(r.avadim_accent, r.penei_accent): r.name for r in readings}
+    if len(pairs) != len(readings):
+        raise AssertionError(
+            "the four strands no longer have pairwise-distinct (עבדים, על־פני) signal pairs: "
+            f"{[(r.name, r.avadim_accent, r.penei_accent) for r in readings]} "
+            "-- the vendored readings drifted"
+        )
     return readings

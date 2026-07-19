@@ -2,7 +2,7 @@ r"""Generate gh-pages/accgram/printed-decalogue-koren.html -- does the Koren Tan
 printed or the manuscript Decalogue tradition?  Answer: the printed tradition.
 
 Companion to ``printed_decalogue_simanim_page``: the same question, asked of Koren instead of
-Simanim's Tiqqun.  The four cantillation strands of the opening אנכי…עבדים span are derived live
+Simanim's Tiqqun.  The four cantillation strands of the opening אנכי…מצותי span are derived live
 from the vendored ``in/accgram/printed_decalogue_teamim.json`` by the shared
 ``printed_decalogue_strands`` module and tabulated on the ``printed-decalogue`` companion page;
 this page links to that table rather than duplicating it, and serves only to document Koren's
@@ -108,7 +108,7 @@ _P281_DT_BODY_IMG = "img/Koren-p-281-Dt-Dec-Shabbat-p-trad-taxton.png"
 # translated below.
 _PA38_NOTE_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon-note.png"
 
-# Word-highlight boxes on the p. 113 taḥton scan, in the scan's own pixel space (viewbox 936x262,
+# Word-highlight boxes on the p. 113 taxton scan, in the scan's own pixel space (viewbox 936x262,
 # the rectified grayscale image's natural size). Picked with gen_highlight_picker.py; they mark the
 # boundary words of the אנכי…עבדים span the caption discusses.
 _P113_BOXES: tuple[mhi.Box, ...] = (
@@ -126,12 +126,14 @@ _P281_BOXES: tuple[mhi.Box, ...] = (
 )
 # Word-highlight boxes on the Koren appendix p. A38 elyon scan, in the scan's own pixel space
 # (viewbox 850x472, its natural size). Picked with gen_highlight_picker.py; the three boxes mark,
-# in text order, עבדים / על־פני / מצותי -- the three span-endpoint milestones at which the narrower
-# strands close (the p-trad elyon shown here runs the whole way to מצותי). על־פני wraps the scan's
-# line break (על ends line 2, פני starts line 3), so it is boxed on its פני half. This is the direct
-# analog of the Simanim Tiqqun p. 83 elyon (printed_decalogue_simanim_page._P83_BOXES), which marks
-# the same three words on its own elyon scan (the other Simanim scans, being taḥton or m-trad, close
-# earlier and mark only עבדים / על־פני).
+# in text order, the אנכי…מצותי span's two signal words, עבדים and על־פני, plus מצותי -- the span's
+# shared end, marked for orientation, not as a signal (every strand closes a chanted verse there,
+# so it distinguishes nothing; the p-trad elyon shown here runs the whole way to it in one verse).
+# על־פני wraps the scan's line break (על ends line 2, פני starts line 3), so it is boxed on its פני
+# half. This is the direct analog of the Simanim Tiqqun p. 83 elyon
+# (printed_decalogue_simanim_page._P83_BOXES), which marks the same three words on its own elyon
+# scan (the other Simanim scans, being taxton or m-trad, close a verse earlier and mark only the
+# two signal words).
 _PA38_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=452, y=77, w=109, h=61),  # עבדים (line 2)
     mhi.Box(x=787, y=136, w=61, h=66),  # על־פני -- its פני, start of line 3
@@ -164,16 +166,6 @@ _WIKISOURCE_PTRAD_SECTION = "הטעם התחתון מול הטעם העליון 
 def _wikisource_ptrad_href(source: dict) -> str:
     base = source["provenance"]["url"]
     return f"{base}#{_WIKISOURCE_PTRAD_SECTION.replace(' ', '_')}"
-
-
-def _path(path: str) -> object:
-    """A repo path as plain body text (no monospace <code>) that may line-break after each slash."""
-    contents: list[object] = []
-    for i, part in enumerate(path.split("/")):
-        if i:
-            contents += ["/", H.word_break_opportunity()]
-        contents.append(part)
-    return H.span(tuple(contents))
 
 
 # --------------------------------------------------------------------------- #
@@ -260,8 +252,9 @@ def _body_scans() -> tuple[object, ...]:
             "Koren p. 113: the Exodus main Decalogue in the p-trad taḥton",
             (
                 "The start of Koren's Exodus main Decalogue (p. 113), in"
-                f" the p-trad {_TAHTON}. The אנכי…עבדים span is its own chanted verse, closing",
-                *[" with a ", _ROM_SILLUQ_SOF_PASUQ, "."],
+                f" the p-trad {_TAHTON}. אנכי…עבדים is its own chanted verse — the signal word"
+                " עבדים closes it with a",
+                *[" ", _ROM_SILLUQ_SOF_PASUQ, "."],
             ),
             width=None,
             boxes=_P113_BOXES,
@@ -272,9 +265,9 @@ def _body_scans() -> tuple[object, ...]:
             "Koren appendix p. A38: the Exodus appendix Decalogue in the elyon",
             (
                 "The start of Koren's Exodus appendix Decalogue (p. A38), in the p-trad"
-                f" {_ELYON}. The אנכי…עבדים span is only the first phrase of a long"
-                " verse — עבדים has only a",
-                *[" ", _ROM_REVIA, "."],
+                f" {_ELYON}. Both signal words have a",
+                *[" ", _ROM_REVIA, " — the p-trad ", _ELYON, "'s pair."],
+                " The verse runs on to the highlighted מצותי, the אנכי…מצותי span's shared end.",
             ),
             width=None,
             boxes=_PA38_BOXES,
@@ -383,7 +376,8 @@ def _pa38_note_section() -> tuple[object, ...]:
                 _TAHTON,
                 ", identical on its boundary words to the m-trad ",
                 _ELYON,
-                "). So Koren, like Simanim, prints the p-trad structure as the norm and files the"
+                " — through עבדים; at the span's other signal word, על־פני, the two part). So"
+                " Koren, like Simanim, prints the p-trad structure as the norm and files the"
                 " standalone-verse alternative under what one authority merely recommends —"
                 " aware of the alternative, but not adopting it.",
             )
@@ -397,8 +391,10 @@ def _conclusion() -> tuple[object, ...]:
         H.para(
             (
                 "Koren follows the p-trad for the Decalogues, not the m-trad. The two traditions'"
-                " most consequential divergence is at the opening commandment אנכי…עבדים, and"
-                " Koren lands on the p-trad side of that divergence on both strands: the p-trad ",
+                " most consequential divergence is over the opening span אנכי…מצותי — a"
+                " divergence of chanted verse boundaries, which can be read off the accents on"
+                " the span's two signal words, עבדים and על־פני. Koren lands on the p-trad side of"
+                " that divergence on both strands: the p-trad ",
                 _TAHTON,
                 " in its Exodus",
                 f" main Decalogue (p. 113), and the p-trad {_ELYON} in its appendix Decalogue"
@@ -407,7 +403,7 @@ def _conclusion() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "One scope note: the finding above rests on the אנכי…עבדים span — the most striking"
+                "One scope note: the finding above rests on the אנכי…מצותי span — the most striking"
                 " p-trad/m-trad divergence. Koren makes the same p-trad choice at that span in both"
                 " of its Decalogues: the Exodus one and the",
                 f" Deuteronomy (Vaetḥanan) one, whose {_TAHTON} main Decalogue starts on p. 280"
@@ -424,11 +420,16 @@ def _conclusion() -> tuple[object, ...]:
                 link("Simanim page", _SIMANIM_PAGE),
                 " finds Simanim's Tiqqun following the m-trad accents at that very commandment"
                 " (an accents-only departure — Simanim's Tiqqun still follows the p-trad's"
-                " chanted verse boundaries). The scan"
-                " below is that commandment, with three signal words highlighted — not the only"
-                " words the two traditions accent differently, but three disjunctively accented"
-                " words that make a handy shorthand for telling p-trad from m-trad. In"
-                " Koren's p-trad they have, respectively, a ",
+                " chanted verse boundaries). So Koren happens to be pure p-trad at both"
+                " divergence points, where Simanim's Tiqqun is not — and it is exactly that"
+                " kind of impurity the Shabbat commandment's own signal words exist to catch,"
+                " since an accents-only departure moves no chanted verse boundary and so leaves"
+                " עבדים and על־פני reading p-trad throughout. The scan"
+                " below is that commandment, with "
+                # Single-sourced in pds and shared with the Simanim page's matching scope note;
+                # the complementary-jobs doctrine is spelled out at that constant.
+                + pds.SHABBAT_SIGNAL_SHORTHAND
+                + ". In Koren's p-trad they have, respectively, a ",
                 _ROM_GERESH,
                 ", a ",
                 _ROM_REVIA,
@@ -461,34 +462,11 @@ def _conclusion() -> tuple[object, ...]:
     )
 
 
-def _source_section(source: dict) -> tuple[object, ...]:
-    prov = source.get("provenance", {})
-    oldid = prov.get("oldid")
-    ts = prov.get("revision_timestamp", "")
-    rev = f" (revision {oldid}, {ts[:10]})" if oldid else ""
-    return (
-        H.heading_level_2("Source"),
-        H.para(
-            (
-                "The companion page's ",
-                link("four-strands table", _FOUR_STRANDS_HREF),
-                " is read live from the vendored Hebrew Wikisource data ",
-                _path("in/accgram/printed_decalogue_teamim.json"),
-                rev,
-                " (עשרת הדברות בסיס/טעמים). This page's own content is the Koren note"
-                " transcription, hand-set from the committed scans of the Koren Tanakh and"
-                " credited to Koren.",
-            )
-        ),
-    )
-
-
 def render_body_contents(source: dict) -> tuple[object, ...]:
     return (
         *_intro(source),
         *_pa38_note_section(),
         *_conclusion(),
-        *_source_section(source),
     )
 
 
@@ -505,7 +483,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 def run(args: argparse.Namespace) -> None:
     # The four-strands table lives on the companion page, so this page never grammar-checks the
-    # readings -- it only needs the source's provenance (revision + p-trad section URL). We load
+    # readings -- it only needs the source's provenance (the p-trad section URL). We load
     # the source but skip pd.check_all, a real speedup for solo regeneration.
     source = pd.load_source(args.source)
 

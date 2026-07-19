@@ -7,9 +7,9 @@ taxton/elyon strands by detangling WLC): this page reports whether the *printed 
 grammar checker.  It renders live from ``printed_decalogue.check_all`` over the vendored
 readings, so it can never drift from the checker's real behaviour.
 
-It also lays out the four cantillation strands of the opening אנכי...עבדים span (manuscript /
-printed x taḥton / elyon) over shared milestone words, resolved by the shared
-``printed_decalogue_strands`` module.  The Simanim- and Koren-witness companion pages
+It also lays out the four cantillation strands of the opening אנכי...מצותי span (manuscript /
+printed x taḥton / elyon) over that span's shared frame and its two signal words, resolved by the
+shared ``printed_decalogue_strands`` module.  The Simanim and Koren companion pages
 (``printed_decalogue_simanim_page``, ``printed_decalogue_koren_page``) link back to that table
 rather than duplicating it.
 
@@ -79,6 +79,7 @@ _ELYON = pds.ELYON
 # spellings stay single-sourced in pds -- don't retype them inline.
 _ROM_ETNAHTA = rmn(pds.ROM_ETNAHTA)
 _ROM_LEGARMEH = rmn(pds.ROM_LEGARMEH)
+_ROM_PASHTA = rmn(pds.ROM_PASHTA)
 _ROM_PASEQ = rmn(pds.ROM_PASEQ)
 _ROM_REVIA = rmn(pds.ROM_REVIA)
 _ROM_SEGOLTA = rmn(pds.ROM_SEGOLTA)
@@ -139,8 +140,9 @@ def _intro() -> tuple[object, ...]:
                 " differ in cantillation,",
                 f" yielding two different {_ELYON} strands and two different {_TAHTON} strands.",
                 #
-                " (The p-trad is fading, but still visible in editions like Koren and Simanim's"
-                " Tiqqun.)",
+                " (The p-trad is fading in popularity,"
+                " but still visible in editions like"
+                " Koren's Tanakh and Simanim's Tiqqun.)",
                 #
                 # Single-sourced in pds and shared verbatim with the two satellite pages; see
                 # pds.MOST_STRIKING for why the difference is stated over this span rather than
@@ -353,7 +355,7 @@ def _range_cell(first_words, last_words, *, start: bool, stop: bool) -> object:
 # --------------------------------------------------------------------------- #
 # The four-strands table (issue #52)
 # --------------------------------------------------------------------------- #
-# Two-char row-header abbreviations for the four strands, coherent with the merged table's
+# Two-char row-header abbreviations for the four strands, coherent with the nesting tables'
 # single E/T letters below; the dotted-underline title spells each out (the romanized form is
 # fine in an attribute). m/p = m-trad/p-trad, T/E = taxton/elyon strand. The titles
 # say NO "upper"/"lower" -- that gloss invites confusion with above-letter vs below-letter accents
@@ -365,144 +367,133 @@ _STRAND_ABBRS: dict[str, tuple[str, str]] = {
     "p-trad elyon": ("pE", "printed-tradition elyon"),
 }
 
-# m-trad elyon and p-trad taxton accent אנכי…עבדים identically (tipexa on אנכי, silluq on עבדים)
-# and give it the same first chanted verse, so the two collapse into a single "mE/pT" row rather
-# than two rows sharing a rowspan.
-_MERGED_STRANDS = ("m-trad elyon", "p-trad taḥton")
-
-# The opening span's four positional milestones, in verse order (rtl: אנכי rightmost →
-# מצותי leftmost). Every strand starts at אנכי (their common point) and ends at one of the later
-# three; the strands nest — m-trad elyon / p-trad taxton stop at עבדים, m-trad taxton at על־פני,
-# p-trad elyon at מצותי — so laying them over these shared columns shows that subset relation and
-# their common start at a glance (schematic: only the ORDER of the endpoints is shown, not the
-# real word-distances between them). Skeletons are letters-only (base_skeleton form), matching
-# each reading's pds.STRUCTURE end_skel so an endpoint's column is derived, never hard-assigned.
-_MILESTONES: tuple[str, ...] = ("אנכי", "עבדים", "עלפני", "מצותי")
+# The four words the אנכי…מצותי span is laid out over, in verse order (rtl: אנכי rightmost →
+# מצותי leftmost): the span's shared frame — אנכי, where every strand starts, and מצותי, where
+# every strand closes a chanted verse — wrapped around its two signal words, עבדים and על־פני.
+# Every strand shows its OWN pointed word in all four columns; no cell is ever empty. A cell is
+# red exactly where that strand ends a chanted verse, so the strands' differing chanted-verse
+# boundaries — the thing the signal accents decide — read straight down the columns.
+#
+# The table does NOT show every boundary in the span: the two תחתון strands end two further
+# chanted verses between על־פני and מצותי, at לארץ and at לשנאי, which fall between columns. The
+# prose says so; don't let a rewrite imply the four columns are the whole story.
+#
+# Skeletons are letters-only (base_skeleton form), single-sourced from pds so a column can't drift
+# from the constants the data layer locates its words by.
+_SPAN_COLUMNS: tuple[str, ...] = (pds.ANOKHI, pds.AVADIM, pds.AL_PENEI, pds.MITSVOTAI)
 
 
 def _word_at(r: pds.Reading, skeleton: str) -> str:
-    """The strand's own pointed word at a milestone, matched by letter skeleton within its
-    first chanted verse. Each strand keeps ITS OWN accent on a shared milestone (e.g. עבדים is
+    """The strand's own pointed word at one column, matched by letter skeleton within the
+    אנכי…מצותי span. Each strand keeps ITS OWN accent on a shared word (e.g. עבדים is
     etnaḥta / silluq / revia across strands), which is the structure-deciding signal, so the cell
-    must show the per-strand form rather than one canonical word per column."""
-    for word in r.first_verse_words:
+    must show the per-strand form rather than one canonical word per column.
+
+    First match wins, which matters at exactly one column: אנכי occurs TWICE in the span — once as
+    the span's opening word and again in כי אנכי. The opening one is the one the table means, and
+    it is the one this finds. Don't change the search to last-match or all-matches."""
+    for word in r.span_words:
         if pds.base_skeleton(word) == skeleton:
             return word
     raise AssertionError(
-        f"{r.name}: no word with skeleton {skeleton!r} in its first chanted verse "
+        f"{r.name}: no word with skeleton {skeleton!r} in its אנכי…מצותי span "
         "-- the vendored readings drifted"
     )
 
 
-def _milestone_cells(r: pds.Reading) -> list[object]:
-    """One strand's row of milestone cells over the shared _MILESTONES columns: its start word
-    (אנכי) green, its endpoint word red, any interior milestones neutral, and every milestone
-    LATER than its endpoint an empty cell — so a shorter verse visibly stops where the longer
-    ones keep going, making the subset relation and common start legible down the columns.
-    """
-    end = _MILESTONES.index(r.first_verse_end)
+def _span_cells(r: pds.Reading) -> list[object]:
+    """One strand's row of cells over the shared _SPAN_COLUMNS: its own pointed word in every
+    column, green at the shared start (אנכי) and red wherever the word ends one of that strand's
+    chanted verses."""
     cells: list[object] = []
-    for i, skel in enumerate(_MILESTONES):
-        if i > end:
-            cells.append(
-                H.table_datum("", {"lang": "hbo"})
-            )  # verse ends before this milestone
-            continue
-        cls = "vc-start" if i == 0 else "vc-stop" if i == end else "vc-mid"
-        span = H.span_c(_strip_pointing(_word_at(r, skel)), cls)
-        cells.append(H.table_datum((span,), {"lang": "hbo"}))
+    for i, skel in enumerate(_SPAN_COLUMNS):
+        word = _word_at(r, skel)
+        ends_verse = skel in r.span_end_skels
+        # The structural fact (this skeleton ends one of the strand's span verses) and the glyph
+        # (this word carries sof pasuq) must agree; if they ever don't, the data drifted.
+        if ends_verse != (hpunc.SOPA in word):
+            raise AssertionError(
+                f"{r.name}: {skel!r} ends a chanted verse = {ends_verse}, but its sof pasuq "
+                f"says otherwise -- the vendored readings drifted"
+            )
+        # Column 0 is אנכי, the shared start, and is never verse-final in any strand -- so the
+        # green start and a red stop can never collide in one cell.
+        cls = "vc-start" if i == 0 else "vc-stop" if ends_verse else "vc-mid"
+        cells.append(
+            H.table_datum((H.span_c(_strip_pointing(word), cls),), {"lang": "hbo"})
+        )
     return cells
 
 
-def _assert_merged_identical(r: pds.Reading, other: pds.Reading) -> None:
-    """The two merged strands share ONE row (label "mE/pT"), so they must read identically.
-    Compare the STRIPPED forms at each shared milestone, not the full words: their full אנכי /
-    עבדים differ only by an immaterial meteg, which _strip_pointing correctly drops. Do NOT "fix"
-    this to full-word equality — it would fire on that immaterial meteg. Same
-    fail-the-build-on-data-drift style as resolve_readings."""
-    for skel in _MILESTONES[: _MILESTONES.index(r.first_verse_end) + 1]:
-        if _strip_pointing(_word_at(r, skel)) != _strip_pointing(_word_at(other, skel)):
-            raise AssertionError(
-                f"{r.name} and {other.name} share one row, but their stripped "
-                f"{skel} forms differ -- the vendored readings drifted"
-            )
-
-
-def _merged_header() -> object:
-    """The single row header for the two identically-opening strands: visible "mE/pT", its title
-    stating the identity (both halves already free of any upper/lower gloss). The shared
-    "(cantillation strand)" parenthetical is factored out to the end rather than repeated.
-    """
-    la, ta = _STRAND_ABBRS[_MERGED_STRANDS[0]]
-    lb, tb = _STRAND_ABBRS[_MERGED_STRANDS[1]]
-    title = f"{ta} = {tb} (same in the first chanted verse only)"
-    return H.table_header(_abbr(f"{la}/{lb}", title))
-
-
 def _four_strands_table(readings: list[pds.Reading]) -> object:
-    by_name = {r.name: r for r in readings}
     rows: list[object] = []
     for r in readings:
-        if r.name == _MERGED_STRANDS[1]:
-            continue  # folded into the single mE/pT row emitted at _MERGED_STRANDS[0]
-        if r.name == _MERGED_STRANDS[0]:
-            _assert_merged_identical(r, by_name[_MERGED_STRANDS[1]])
-            header = _merged_header()
-        else:
-            letter, title = _STRAND_ABBRS[r.name]
-            header = H.table_header(_abbr(letter, title))
-        rows.append(H.table_row((header, *_milestone_cells(r))))
+        letter, title = _STRAND_ABBRS[r.name]
+        rows.append(
+            H.table_row((H.table_header(_abbr(letter, title)), *_span_cells(r)))
+        )
     return H.table(tuple(rows), {"class": "strand-table", "dir": "rtl"})
 
 
 _UL_ITEM_1 = (
-    H.bold(f"P-trad {_TAHTON} = m-trad {_ELYON} — but only in the first chanted verse"),
-    ", where the table gives them a single shared row, labelled mE/pT."
-    " The equality stops there: past this first"
-    " verse the two strands diverge — the p-trad ",
-    *[f"{_TAHTON} divides each Decalogue into ", H.bold("13")],
-    *[f" chanted verses, the m-trad {_ELYON} into only ", H.bold("10"), "."],
+    H.bold("The signal pair identifies the strand."),
+    " No two strands share the accent pair on the two signal words, so the pair alone says"
+    " which strand a text has. Neither word suffices by itself: עבדים cannot tell the m-trad ",
+    _ELYON,
+    f" from the p-trad {_TAHTON} (both close a chanted verse there), and על־פני cannot tell"
+    f" the two {_TAHTON} strands apart, nor the two {_ELYON} strands.",
 )
 
 _UL_ITEM_2 = (
-    H.bold(f"P-trad {_ELYON} ≠ m-trad {_ELYON}."),
-    f" The p-trad {_ELYON} puts ",
-    H.bold(_ROM_REVIA),
-    " on עבדים and runs the first two commandments together into one verse,"
-    " leading to only ",
-    H.bold("9"),
-    " chanted verses total. In contrast, the first chanted verse of the m-trad's"
-    f" {_ELYON} ends on עבדים, leading to ",
-    H.bold("10"),
-    " chanted verses total.",
+    H.bold("Everything else in the span is coupled to the signal accents."),
+    " אנכי has a ",
+    _ROM_PASHTA,
+    " in exactly the two strands whose עבדים runs on mid-verse, and a ",
+    _ROM_TIPEHA,
+    " in the two whose עבדים ends its verse; מצותי has a ",
+    _ROM_SILLUQ_SOF_PASUQ,
+    f" in all four — the shared end signals nothing. Between the columns nothing new happens:"
+    f" the two {_TAHTON} strands end two further chanted verses between על־פני and מצותי, at"
+    " לארץ and at לשנאי — the same two words in both — so strands that agree at a signal word"
+    " agree word for word over the stretch that signal governs.",
 )
 
 _UL_ITEM_3 = (
-    f"The m-trad {_TAHTON} does not give אנכי…עבדים its own verse either — it"
-    " runs אנכי…פני together (",
-    _ROM_ETNAHTA,
-    " at עבדים, ",
-    _ROM_SOF_PASUQ,
-    " at פני), a third structure again.",
+    H.bold(f"P-trad {_TAHTON} = m-trad {_ELYON} — but only through עבדים."),
+    " Over אנכי…עבדים the two are word for word identical, each giving that stretch its own"
+    " chanted verse. They part at על־פני: the p-trad ",
+    _TAHTON,
+    f" ends another chanted verse there, while the m-trad {_ELYON} has a ",
+    _ROM_REVIA,
+    " and runs on to מצותי — which is why each has its own row. Over the whole Decalogue the"
+    " p-trad ",
+    _TAHTON,
+    " has ",
+    H.bold("13"),
+    f" chanted verses, the m-trad {_ELYON} only ",
+    H.bold("10"),
+    ".",
 )
 
 
 def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
     return (
-        H.heading_level_2("The four strands of אנכי…עבדים", {"id": "four-strands"}),
+        H.heading_level_2("The four strands of אנכי…מצותי", {"id": "four-strands"}),
         H.para(
             (
-                "The m-trad and p-trad accent the Decalogue's אנכי…עבדים span differently."
-                " The accent on עבדים is what decides the structure: a ",
-                H.bold(_ROM_SILLUQ_SOF_PASUQ),
-                " there ends the verse, so אנכי…עבדים stands as its own verse; an ",
-                H.bold(_ROM_ETNAHTA),
-                " or ",
-                H.bold(_ROM_REVIA),
-                " there is mid-verse, folding אנכי…עבדים into a longer verse. The table below "
-                "lays all four strands over the same milestone words — ",
+                "Every p-trad strand accents the Decalogue's אנכי…מצותי span differently from"
+                " every m-trad strand. Two words in the span do all the deciding — its ",
+                H.bold("signal words"),
+                ", עבדים and על־פני. Where a signal word has a ",
+                _ROM_SILLUQ_SOF_PASUQ,
+                ", the strand ends a chanted verse there; where it instead has an ",
+                _ROM_ETNAHTA,
+                " or a ",
+                _ROM_REVIA,
+                ", the strand runs on. The table below lays all four strands over four shared"
+                " words — ",
                 H.bdi("אנכי"),
-                " (their common start), then ",
+                " (the span's shared start), then ",
                 # bdi_multi isolates each RTL item so the LTR list order survives however a viewer
                 # resolves the bidirectional text (else the items merge across the commas).
                 *H.bdi_multi(
@@ -510,10 +501,11 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                     "על־פני",
                     "מצותי",
                 ),
-                " — so their subset relation is plain: every "
-                "verse starts green at אנכי and ends red at its own last word, the shorter ones "
-                "stopping where the longer ones keep going. Each strand keeps its own accent on "
-                "עבדים, the structure-deciding mark:",
+                " (the two signal words and the span's shared end). Each row shows that strand's"
+                " own pointed word at all four; a word is red where it ends one of the strand's"
+                " chanted verses. So every row starts green at אנכי and ends red at מצותי, and"
+                " the reds between them are the signal accents at work — the strands' differing"
+                " chanted-verse boundaries, read straight down the columns:",
             )
         ),
         _four_strands_table(readings),
@@ -522,6 +514,25 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                 _UL_ITEM_1,
                 _UL_ITEM_2,
                 _UL_ITEM_3,
+            )
+        ),
+        H.para(
+            (
+                "These are facts about the four strands as Wikisource defines them — idealized"
+                " strands, each pure by construction. An actual edition need"
+                " not follow one strand purely, and where it strays, the two signal words above"
+                " cannot catch it. Simanim's Tiqqun, for instance, follows the p-trad ",
+                _TAHTON,
+                "'s chanted-verse boundaries throughout, yet has the m-trad accents at the"
+                " Shabbat commandment of its Deuteronomy appendix Decalogue. Catching that"
+                " departure requires giving the Shabbat commandment its own signal words — three"
+                " disjunctively accented words, ",
+                link("catalogued in the appendix below", f"#{_TAHTON_DETAILS_ID}"),
+                ", where the two traditions differ in accents while agreeing on every"
+                " chanted-verse boundary. The two sets of signal words have complementary jobs:"
+                " עבדים and על־פני place a text among the four strands within אנכי…מצותי, while the"
+                " Shabbat trio tells p-trad accents from m-trad accents at a commandment where a"
+                " real edition can stray from its nominal tradition.",
             )
         ),
         H.para(
@@ -773,8 +784,8 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 _ROM_LEGARMEH,
                 " and ",
                 _ROM_PASEQ,
-                " both conflated down to a Unicode PASEQ, qere for ketiv-qere, setumah and "
-                "petuḥah divisions dropped); the chanted "
+                " both conflated down to a Unicode PASEQ, ketiv dropped from ketiv-qere, setumah "
+                "and petuḥah divisions dropped); the chanted "
                 "verses are split at ",
                 _ROM_SOF_PASUQ,
                 ".",
@@ -832,7 +843,7 @@ _ACCENT_LO = ord("\N{HEBREW ACCENT ETNAHTA}")  # U+0591, first cantillation acce
 _ACCENT_HI = ord("\N{HEBREW ACCENT ZINOR}")  # U+05AE, last (meteg U+05BD is excluded)
 
 # The three shared boundaries at which the differing stretch is broken into aligned line-pairs.
-# Each is a letter skeleton (cf. _MILESTONES) that ends a line in BOTH strands and carries a
+# Each is a letter skeleton (cf. _SPAN_COLUMNS) that ends a line in BOTH strands and carries a
 # disjunctive accent in both — the only kind of point where a break keeps the m-trad and p-trad
 # lines aligned. These three (of the stretch's shared disjunctive boundaries) give three ~even
 # pairs. _split_into_lines asserts each lands, in order, and is genuinely disjunctive, so any drift
@@ -996,7 +1007,10 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 "of the Sabbath commandment. Below is just that stretch — the run of words the two "
                 "strands accent differently, everything before and after it being identical — shown "
                 "in each strand, m-trad above p-trad, stripped to letters and accents, "
-                "each line ending on a disjunctive accent:",
+                "each line ending on a disjunctive accent. Those three line-ending words are the"
+                " Shabbat commandment's signal words — the ones the Simanim and Koren pages"
+                " highlight on their scans to tell a p-trad Shabbat commandment from an"
+                " m-trad one:",
             )
         ),
         # Just the differing stretch of the Sabbath verse, pulled and reduced live from the data (so
@@ -1050,14 +1064,14 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         # about which PRINT editions show the cantillation. Koren prints it too, in its own
         # Deuteronomy (issue #66); an earlier draft asserted a "gap in Koren and Simanim" that was
         # simply false for Koren. Keep any rewrite of the aside scoped to the web.
-        *_chabad_witness(),
+        *_chabad_aside(),
     )
 
 
 # --------------------------------------------------------------------------- #
 # The CTR aside: a p-trad Bible on the web (see the guardrail comment at the call site above)
 # --------------------------------------------------------------------------- #
-def _chabad_witness() -> tuple[object, ...]:
+def _chabad_aside() -> tuple[object, ...]:
     return (
         H.heading_level_3("A p-trad Bible on the web: CTR"),
         H.para(
