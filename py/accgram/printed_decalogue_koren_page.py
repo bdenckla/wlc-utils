@@ -124,6 +124,19 @@ _P281_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=791, y=92, w=118, h=73),
     mhi.Box(x=389, y=89, w=190, h=70),
 )
+# Word-highlight boxes on the Koren appendix p. A38 elyon scan, in the scan's own pixel space
+# (viewbox 850x472, its natural size). Picked with gen_highlight_picker.py; the three boxes mark,
+# in text order, עבדים / על־פני / מצותי -- the three span-endpoint milestones at which the narrower
+# strands close (the p-trad elyon shown here runs the whole way to מצותי). על־פני wraps the scan's
+# line break (על ends line 2, פני starts line 3), so it is boxed on its פני half. This is the direct
+# analog of the Simanim Tiqqun p. 83 elyon (printed_decalogue_simanim_page._P83_BOXES), which marks
+# the same three words on its own elyon scan (the other Simanim scans, being taḥton or m-trad, close
+# earlier and mark only עבדים / על־פני).
+_PA38_BOXES: tuple[mhi.Box, ...] = (
+    mhi.Box(x=452, y=77, w=109, h=61),  # עבדים (line 2)
+    mhi.Box(x=787, y=136, w=61, h=66),  # על־פני -- its פני, start of line 3
+    mhi.Box(x=205, y=381, w=123, h=62),  # מצותי (last line)
+)
 
 # Strand names and accent romanizations are single-sourced in printed_decalogue_strands (see its
 # module docstring). These thin local aliases keep the prose below unchanged.
@@ -264,6 +277,8 @@ def _body_scans() -> tuple[object, ...]:
                 *[" ", _ROM_REVIA, "."],
             ),
             width=None,
+            boxes=_PA38_BOXES,
+            viewbox=(850, 472),
         ),
     )
 

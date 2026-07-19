@@ -104,7 +104,7 @@ _P246_BODY_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton.png"
 # Highlight rectangles in Simanim-Tiqqun-p-083 pixel space (961x664, the scan's own
 # resolution = the overlay viewBox). Each Box marks a word named in the figcaption; the
 # coordinates come from py/accgram/gen_highlight_picker.py (drag boxes over the words, then
-# paste the exported `px` boxes here). These three mark עבדים, אל־פני, and מצותי.
+# paste the exported `px` boxes here). These three mark עבדים, על־פני, and מצותי.
 _P83_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=800, y=145, w=161, h=71),
     mhi.Box(x=84, y=141, w=160, h=73),
