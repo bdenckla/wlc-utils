@@ -55,6 +55,14 @@ convention called *metigah* rather than *qadma*. Both contribute one token per a
 them distinct is what lets a difference still be read as word-division or not. `_` binds two
 **marks** into one accent (`מונ_לג`) and contributes one token.
 
+Where the joiners are implemented matters, because it once went wrong. `+` was added to
+`edition_transcription.py` and not to `transcription_check.py`, which split chunks by its own
+copy of the same rule; the .txt came out right while the check that guards it rejected `קד+גר`
+as an unknown abbreviation. Splitting a chunk into its accents now lives in one function,
+`edition_transcription.editor_accents`, which the check and the .txt writer both call, and
+`test_editor_export_and_txt_agree` runs an export down both routes so a future divergence fails
+a test rather than surfacing as a puzzling runtime message.
+
 ## 3. Check before committing
 
 ```bash

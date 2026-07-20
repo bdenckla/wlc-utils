@@ -96,17 +96,16 @@ def _tokens_with_origin(pages: list[dict]) -> tuple[list[str], list[tuple[str, i
     for chunk, label, n in _chunks_with_origin(pages):
         if chunk.startswith("["):
             continue  # a bracketed aside carries no accent
-        for part in chunk.split(MAQAF):
-            # A simple word may bear two accents too (qadma + geresh, the qadma then called
-            # metigah), written with the SIMPLE_JOINER rather than a maqaf.  One token per
-            # accent either way, so both joiners have to be split on here.
-            for accent in part.split(et.SIMPLE_JOINER):
-                try:
-                    tokens.append(et.hebrew_token(accent))
-                except ValueError as exc:
-                    print(f"  !! {label} line {n}: {exc}")
-                    tokens.append(UNRESOLVED)
-                origin.append((label, n))
+        # How an editor chunk comes apart is ``editor_accents``'s business, not this module's:
+        # a chunk may hold more than one accent, joined by a maqaf or by the SIMPLE_JOINER, and
+        # this loop once knew that separately and fell out of step when the latter was added.
+        for accent, _ in et.editor_accents(chunk):
+            try:
+                tokens.append(et.hebrew_token(accent))
+            except ValueError as exc:
+                print(f"  !! {label} line {n}: {exc}")
+                tokens.append(UNRESOLVED)
+            origin.append((label, n))
     return tokens, origin
 
 
@@ -120,7 +119,7 @@ def _verticals(pages: list[dict]) -> list[tuple[int, str]]:
             continue
         if et.UNIT_JOINER in chunk:
             out.append((index, "legarmeh"))
-        index += len(chunk.split(MAQAF))
+        index += len(et.editor_accents(chunk))
     return out
 
 

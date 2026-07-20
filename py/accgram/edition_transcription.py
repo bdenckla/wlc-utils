@@ -82,9 +82,17 @@ MAQAF = "\N{HEBREW PUNCTUATION MAQAF}"
 MAQAF_JOINER = "-"
 UNIT_JOINER = "_"
 SIMPLE_JOINER = "+"
-# The joiners that split a chunk into one token per accent, as against UNIT_JOINER, which
-# does not.  Order matters only in that both must be tried; a chunk uses at most one.
-ACCENT_JOINERS = (MAQAF_JOINER, SIMPLE_JOINER)
+
+# The two languages a chunk can be written in, and how each spells the joiners that split it
+# into one token per accent.  UNIT_JOINER is in neither, which is what keeps ``mun_leg`` whole.
+#
+# The .txt writes a maqaf compound with MAQAF_JOINER; the line editor records the literal
+# maqaf that was typed.  Otherwise the two agree, and both map onto the .txt's spelling, so
+# one splitter serves both -- ``_split_on_joiners`` below is the single place that knows a
+# chunk can hold more than one accent.  It used to be three places, and when SIMPLE_JOINER
+# was added to two of them the third went on rejecting ``qad+ger`` as an unknown abbreviation.
+WRITTEN_ACCENT_JOINERS = {MAQAF_JOINER: MAQAF_JOINER, SIMPLE_JOINER: SIMPLE_JOINER}
+EDITOR_ACCENT_JOINERS = {MAQAF: MAQAF_JOINER, SIMPLE_JOINER: SIMPLE_JOINER}
 
 # Accent codepoint -> the shorthand the transcriptions use.
 ACCENT_ABBREV = {
@@ -267,6 +275,42 @@ def _normalize(token: str) -> str:
     return "mun" if token in _LEGARMEH_TOKENS else token
 
 
+def _split_on_joiners(chunk: str, joiners: dict[str, str]) -> list[tuple[str, str]]:
+    """Split a chunk into ``(part, the WRITTEN joiner before it)``, in order.
+
+    The first part's joiner is ``""``.  ``joiners`` maps each joiner as the chunk spells it
+    onto the way the .txt spells it, so a caller that only wants the parts can drop the second
+    element and one that has to rebuild the .txt spelling has it to hand.
+    """
+    out: list[tuple[str, str]] = []
+    part = ""
+    joiner = ""
+    for ch in chunk:
+        if ch in joiners:
+            out.append((part, joiner))
+            part, joiner = "", joiners[ch]
+        else:
+            part += ch
+    out.append((part, joiner))
+    return out
+
+
+def written_accents(chunk: str) -> list[str]:
+    """One chunk as the .txt writes it -> its per-accent parts."""
+    return [part for part, _ in _split_on_joiners(chunk, WRITTEN_ACCENT_JOINERS)]
+
+
+def editor_accents(chunk: str) -> list[tuple[str, str]]:
+    """One chunk as the line editor records it -> ``(Hebrew accent, .txt joiner before it)``.
+
+    The one place that knows how an editor chunk holding more than one accent comes apart.
+    ``transcription_check`` needs the parts alone, to resolve each with its own printed-line
+    origin and to count how many tokens a chunk contributes; ``_hebrew_chunk`` needs the
+    joiners too, to write the .txt.  Both take them from here.
+    """
+    return _split_on_joiners(chunk, EDITOR_ACCENT_JOINERS)
+
+
 def expand_chunk(chunk: str) -> list[str]:
     """One written chunk -> the token(s) it stands for.
 
@@ -275,15 +319,7 @@ def expand_chunk(chunk: str) -> list[str]:
     accent either way.  Splitting on the ACCENT joiners alone is what makes ``mun_leg`` stay
     whole here.
     """
-    return [_normalize(part) for part in _split_accents(chunk)]
-
-
-def _split_accents(chunk: str) -> list[str]:
-    """Split a written chunk into its per-accent parts, on either accent joiner."""
-    parts = [chunk]
-    for joiner in ACCENT_JOINERS:
-        parts = [piece for part in parts for piece in part.split(joiner)]
-    return parts
+    return [_normalize(part) for part in written_accents(chunk)]
 
 
 def hebrew_chunks(lines: list[str]) -> list[str]:
@@ -319,12 +355,11 @@ def _hebrew_chunk(chunk: str) -> str:
     """One editor chunk -> the way the .txt writes it, both accent joiners preserved.
 
     The editor records a maqaf compound with a literal maqaf between its accents, and a
-    multi-accent simple word with the ``+`` that is typed.  Each maps to its own written
-    joiner, so the .txt keeps saying which of the two was seen on the page.
+    multi-accent simple word with the ``+`` that is typed.  ``editor_accents`` maps each onto
+    its own written joiner, so the .txt keeps saying which of the two was seen on the page.
     """
-    return MAQAF_JOINER.join(
-        SIMPLE_JOINER.join(hebrew_token(accent) for accent in part.split(SIMPLE_JOINER))
-        for part in chunk.split(MAQAF)
+    return "".join(
+        joiner + hebrew_token(accent) for accent, joiner in editor_accents(chunk)
     )
 
 

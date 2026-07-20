@@ -20,6 +20,7 @@ import pytest
 from accgram import edition_transcription as et
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
+from accgram import transcription_check as tc
 
 # The divergences established for each transcription, keyed by its filename stem.  Each entry
 # is (reference tokens, transcribed tokens, the reference word the region starts on).
@@ -278,6 +279,13 @@ def test_editor_export_and_txt_agree(stem: str) -> None:
     The .txt is canonical for the parser, but it is written in a shorthand nobody typed; what
     was actually typed, line by line against page coordinates, is the JSON.  Without this the
     two could drift and the audit trail would quietly stop describing the .txt beside it.
+
+    Checked along BOTH routes from the export, because there are two: ``hebrew_chunks``, which
+    writes the .txt, and ``transcription_check``, which resolves an export directly to score it
+    before it is committed.  They once split a chunk into accents separately, and when the
+    SIMPLE_JOINER was added to the first only, the second went on rejecting ``qad+ger`` as an
+    unknown abbreviation -- the .txt looked right and the check that guards it was broken.
+    Both now go through ``et.editor_accents``; this is what would notice if they stopped.
     """
     if not _stems_with_exports():
         pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
@@ -292,3 +300,63 @@ def test_editor_export_and_txt_agree(stem: str) -> None:
     from_export = [token for chunk in chunks for token in et.expand_chunk(chunk)]
     from_txt = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt").tokens
     assert from_export == list(from_txt)
+
+    from_check, origin = tc._tokens_with_origin(exports)
+    # The check side resolves but does not normalize -- normalization belongs to the
+    # comparison -- so fold legarmeh onto a plain munax before comparing with the .txt.
+    assert [et._normalize(t) for t in from_check] == list(from_txt)
+    assert tc.UNRESOLVED not in from_check
+    assert len(origin) == len(
+        from_check
+    ), "every token needs a printed line to go back to"
+
+
+def test_the_check_counts_the_same_tokens_per_chunk_as_it_resolves() -> None:
+    """``_verticals`` walks the token stream by counting, so its count must be the resolver's.
+
+    It is a third user of "how many accents does this chunk hold", and the one whose being
+    wrong is hardest to see: an undercount does not raise, it silently shifts every vertical
+    stroke reported after it onto the wrong token.  A ``qad+ger`` chunk counted as one accent
+    did exactly that to the Deuteronomy taxton's lone legarmeh.
+    """
+    for stem in _stems_with_exports():
+        record = json.loads(
+            (et.transcriptions_dir() / f"{stem}.json").read_text(encoding="utf-8")
+        )
+        exports = record.get("pages", [record])
+        counted = sum(
+            len(et.editor_accents(chunk))
+            for chunk, _, _ in tc._chunks_with_origin(exports)
+            if not chunk.startswith("[")
+        )
+        resolved, _ = tc._tokens_with_origin(exports)
+        assert counted == len(resolved), stem
+
+
+@pytest.mark.parametrize(
+    "chunk,expected",
+    [
+        ("qad", ["qad"]),
+        ("mun_leg", ["mun_leg"]),  # UNIT_JOINER binds two marks into ONE accent
+        ("mun-mer", ["mun", "mer"]),  # a maqaf compound, both atoms accented
+        ("qad+ger", ["qad", "ger"]),  # a simple word bearing two accents
+        ("mer-mun_leg", ["mer", "mun_leg"]),  # both kinds of joiner at once
+    ],
+)
+def test_written_accents_splits_on_the_accent_joiners_only(
+    chunk: str, expected: list[str]
+) -> None:
+    """A chunk holds one token per ACCENT: the maqaf and ``+`` split it, ``_`` does not."""
+    assert et.written_accents(chunk) == expected
+
+
+def test_editor_accents_maps_the_typed_maqaf_onto_the_written_joiner() -> None:
+    """The editor records the literal maqaf that was typed; the .txt writes it as ``-``.
+
+    Both joiners survive the trip, so the .txt keeps saying which of the two was on the page
+    -- the word-division fact every difference has to be read against.
+    """
+    maqaf = "\N{HEBREW PUNCTUATION MAQAF}"
+    assert et.editor_accents(f"מונח{maqaf}מרכא") == [("מונח", ""), ("מרכא", "-")]
+    assert et.editor_accents("קדמא+גרש") == [("קדמא", ""), ("גרש", "+")]
+    assert et.editor_accents("מונ_לגרמיה") == [("מונ_לגרמיה", "")]
