@@ -22,10 +22,14 @@ THREE THINGS IT REPORTS, AND WHY EACH IS SEPARATE:
   the word is printed alongside and the classification stays a human judgement.
 * Chanted verse boundaries, counted on both sides AND checked for difference regions touching
   a silsof.  A bare count would miss one boundary moving while another appeared.
-* Vertical strokes.  The vendored data folds legarmeh and narrow-sense paseq onto U+05C0, so
-  it can only say WHERE one stands; the transcription says WHICH.  Comparing the placements is
-  the part that can be checked today, and it doubles as an alignment check: these are
-  independent anchors, so several landing on their exact indices rules out a drifting diff.
+* Pasoleg positions.  The vendored data folds legarmeh and narrow-sense paseq onto the same
+  U+05C0 glyph, so it can only say WHERE a pasoleg stands; the transcription says WHICH.
+  Comparing the placements is the part that can be checked today, and it doubles as an
+  alignment check: these are independent anchors, so several landing on their exact indices
+  rules out a drifting diff.  The two sides index DIFFERENT token streams, so a transcribed
+  pasoleg is mapped through the diff into reference coordinates before any comparison -- an
+  insertion upstream of one would otherwise shift it off its reference position and the report
+  would blame the pasoleg.
 
 An unresolvable abbreviation is held as ``???`` rather than guessed, so the alignment still
 runs and the reference's own token at that spot can be shown as CONTEXT for the transcriber's
@@ -55,7 +59,6 @@ from accgram import edition_transcription as et  # noqa: E402
 from accgram import printed_decalogue as pd  # noqa: E402
 from accgram import printed_decalogue_strands as pds  # noqa: E402
 
-MAQAF = "\N{HEBREW PUNCTUATION MAQAF}"
 UNRESOLVED = "???"
 
 
@@ -67,26 +70,20 @@ def _pages_of(record: dict) -> list[dict]:
 def _chunks_with_origin(pages: list[dict]) -> list[tuple[str, str, int]]:
     """(chunk, page label, printed line) in reading order, asides kept in place.
 
-    Two things have to be undone here exactly as ``hebrew_chunks`` undoes them, or the token
-    stream silently misaligns: the editor records a multi-accent maqaf compound with a literal
-    maqaf between its accents, and when such a compound straddles a printed line break its
-    accents arrive on two different lines.  A chunk left ending in a maqaf therefore takes the
-    following chunk with it -- and keeps the origin of the line it STARTED on, which is the
-    line to go back and re-read.
+    ``rejoin_editor_chunks`` undoes the editor's line breaks -- the ONE implementation of that
+    rule, shared with ``hebrew_chunks``, so the two cannot drift apart again -- and a rejoined
+    compound keeps the origin of the line it STARTED on, which is the line to go back and
+    re-read.
     """
-    out: list[tuple[str, str, int]] = []
-    for page in pages:
-        label = page.get("stem", "?").split("_")[-1]
-        for line in page["lines"]:
-            for written in line["text"].split():
-                if written.startswith("["):
-                    out.append((written, label, line["n"]))
-                elif out and out[-1][0].endswith(MAQAF):
-                    previous, prev_label, prev_line = out[-1]
-                    out[-1] = (previous + written, prev_label, prev_line)
-                else:
-                    out.append((written, label, line["n"]))
-    return out
+    items = [
+        (written, (page.get("stem", "?").split("_")[-1], line["n"]))
+        for page in pages
+        for line in page["lines"]
+        for written in line["text"].split()
+    ]
+    return [
+        (written, label, n) for written, (label, n) in et.rejoin_editor_chunks(items)
+    ]
 
 
 def _tokens_with_origin(pages: list[dict]) -> tuple[list[str], list[tuple[str, int]]]:
@@ -109,18 +106,51 @@ def _tokens_with_origin(pages: list[dict]) -> tuple[list[str], list[tuple[str, i
     return tokens, origin
 
 
-def _verticals(pages: list[dict]) -> list[tuple[int, str]]:
-    """(token index, kind) for each vertical stroke the transcription distinguishes."""
+def _pasolegs(pages: list[dict]) -> list[tuple[int, str]]:
+    """(transcribed token index, kind) for each pasoleg the transcription records.
+
+    Indices are into the TRANSCRIBED token stream -- map through the diff before comparing
+    them with reference positions.  A pasoleg is pinned to the accent that bears it, so a
+    compound is walked part by part: a legarmeh on a compound's second atom is at the second
+    atom's index, not the compound's first.
+    """
     out: list[tuple[int, str]] = []
     index = 0
     for chunk, _, _ in _chunks_with_origin(pages):
         if chunk.startswith("["):
-            out.append((index - 1, "paseq"))  # an aside describes the token before it
+            # An aside describes the token before it; none exists yet at index 0.
+            if index:
+                out.append((index - 1, "paseq"))
             continue
-        if et.UNIT_JOINER in chunk:
-            out.append((index, "legarmeh"))
+        for offset, (accent, _) in enumerate(et.editor_accents(chunk)):
+            if et.UNIT_JOINER in accent:
+                out.append((index + offset, "legarmeh"))
         index += len(et.editor_accents(chunk))
     return out
+
+
+def _opcodes(ref: list[str], got: list[str]) -> list[tuple[str, int, int, int, int]]:
+    """The diff between the two NORMALIZED token streams, as difflib opcodes."""
+    a = [et._normalize(t) for t in ref]
+    b = [et._normalize(t) for t in got]
+    return difflib.SequenceMatcher(a=a, b=b, autojunk=False).get_opcodes()
+
+
+def _to_reference(
+    j: int, opcodes: list[tuple[str, int, int, int, int]]
+) -> tuple[int, bool]:
+    """Transcribed token index -> ``(reference index, exact)``.
+
+    The two streams index DIFFERENT sequences, so a transcribed index means nothing against a
+    reference position until it is mapped through the diff.  Inside an equal block the mapping
+    is exact.  Inside a difference region the token has no reference counterpart at all, so
+    the region's own start is returned as the nearest anchor, flagged inexact -- display it as
+    context, never as a position that agrees.
+    """
+    for tag, i1, _, j1, j2 in opcodes:
+        if j1 <= j < j2:
+            return (i1 + (j - j1), True) if tag == "equal" else (i1, False)
+    return 0, False  # unreachable for an index into the diffed stream
 
 
 def report(pages: list[dict], key: tuple[str, str, str]) -> None:
@@ -135,9 +165,7 @@ def report(pages: list[dict], key: tuple[str, str, str]) -> None:
         f" / transcribed {got.count('silsof')}"
     )
 
-    a = [et._normalize(t) for t in ref]
-    b = [et._normalize(t) for t in got]
-    opcodes = difflib.SequenceMatcher(a=a, b=b, autojunk=False).get_opcodes()
+    opcodes = _opcodes(ref, got)
     differences = [op for op in opcodes if op[0] != "equal"]
     print(f"\n-- {len(differences)} difference region(s) --")
     for tag, i1, i2, j1, j2 in differences:
@@ -153,19 +181,31 @@ def report(pages: list[dict], key: tuple[str, str, str]) -> None:
     for j, token in enumerate(got):
         if token != UNRESOLVED:
             continue
+        # An unresolved token sits inside a difference region by construction, so the mapping
+        # is inexact; its region's start is still the right place to show context around.
+        anchor, _ = _to_reference(j, opcodes)
         print(f"\n-- reference context around unresolved token {j} --")
-        for i in range(max(0, j - 3), min(len(ref), j + 4)):
-            print(f"    ref[{i:3d}] {ref[i]:8s} {words[i]}{'  <--' if i == j else ''}")
+        for i in range(max(0, anchor - 3), min(len(ref), anchor + 4)):
+            print(
+                f"    ref[{i:3d}] {ref[i]:8s} {words[i]}{'  <--' if i == anchor else ''}"
+            )
 
     spots = [i for i, w in enumerate(words) if et.PASEQ in w and ref[i] == "mun"]
-    marked = _verticals(pages)
-    print("\n-- vertical strokes --")
-    print(f"  reference positions:   {spots}")
-    print(f"  transcribed positions: {[i for i, _ in marked]}")
-    print(f"  placements agree: {[i for i, _ in marked] == spots}")
-    for i, kind in marked:
+    marked = _pasolegs(pages)
+    mapped = [_to_reference(j, opcodes) for j, _ in marked]
+    print("\n-- pasoleg positions --")
+    print(f"  reference positions:              {spots}")
+    print(f"  transcribed, mapped to reference: {[i for i, _ in mapped]}")
+    agree = [i for i, exact in mapped if exact] == spots and all(x for _, x in mapped)
+    print(f"  placements agree: {agree}")
+    for (j, kind), (i, exact) in zip(marked, mapped):
         word = words[i] if 0 <= i < len(words) else "?"
-        print(f"    token {i:3d}  {word:16s} {kind}")
+        place = f"ref {i}" if exact else f"in a difference region at ref {i}"
+        print(f"    token {j:3d} -> {place}  {word:16s} {kind}")
+    matched = {i for i, exact in mapped if exact}
+    for i in spots:
+        if i not in matched:
+            print(f"    ref {i:3d} has a pasoleg in the reference only  {words[i]}")
 
 
 def site_report(skeleton: str, next_skeleton: str) -> None:

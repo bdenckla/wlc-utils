@@ -312,12 +312,12 @@ def test_editor_export_and_txt_agree(stem: str) -> None:
 
 
 def test_the_check_counts_the_same_tokens_per_chunk_as_it_resolves() -> None:
-    """``_verticals`` walks the token stream by counting, so its count must be the resolver's.
+    """``_pasolegs`` walks the token stream by counting, so its count must be the resolver's.
 
     It is a third user of "how many accents does this chunk hold", and the one whose being
-    wrong is hardest to see: an undercount does not raise, it silently shifts every vertical
-    stroke reported after it onto the wrong token.  A ``qad+ger`` chunk counted as one accent
-    did exactly that to the Deuteronomy taxton's lone legarmeh.
+    wrong is hardest to see: an undercount does not raise, it silently shifts every pasoleg
+    reported after it onto the wrong token.  A ``qad+ger`` chunk counted as one accent did
+    exactly that to the Deuteronomy taxton's lone legarmeh.
     """
     for stem in _stems_with_exports():
         record = json.loads(
@@ -360,3 +360,102 @@ def test_editor_accents_maps_the_typed_maqaf_onto_the_written_joiner() -> None:
     assert et.editor_accents(f"מונח{maqaf}מרכא") == [("מונח", ""), ("מרכא", "-")]
     assert et.editor_accents("קדמא+גרש") == [("קדמא", ""), ("גרש", "+")]
     assert et.editor_accents("מונ_לגרמיה") == [("מונ_לגרמיה", "")]
+
+
+def test_rejoin_carries_a_split_compound_across_an_intervening_aside() -> None:
+    """A compound split by a line break rejoins even with an aside standing between.
+
+    The rejoin once lived in two places that disagreed on exactly this case: ``hebrew_chunks``
+    dropped asides before rejoining, so a compound continued across one, while the check tool
+    kept asides in place and the aside then blocked the rejoin.  One implementation now
+    (``rejoin_editor_chunks``), so pin its choice: the aside passes through, the compound
+    continues, and the joined chunk keeps the origin of the line it STARTED on -- the line to
+    go back and re-read.
+    """
+    maqaf = "\N{HEBREW PUNCTUATION MAQAF}"
+    items = [
+        (f"מונח{maqaf}", ("p246", 3)),
+        ("[פסק]", ("p246", 3)),
+        ("מרכא", ("p246", 4)),
+    ]
+    assert et.rejoin_editor_chunks(items) == [
+        (f"מונח{maqaf}מרכא", ("p246", 3)),
+        ("[פסק]", ("p246", 3)),
+    ]
+
+
+def test_to_reference_maps_through_the_diff_not_by_raw_index() -> None:
+    """A transcribed index means nothing against a reference position until mapped.
+
+    Inside an equal block the mapping is exact; inside a difference region the token has no
+    reference counterpart, so the region's start comes back as an anchor flagged inexact --
+    context to display, never a position that agrees.
+    """
+    opcodes = tc._opcodes(["a", "b", "c"], ["a", "x", "y", "b", "c"])
+    assert tc._to_reference(0, opcodes) == (0, True)
+    assert tc._to_reference(1, opcodes) == (1, False)  # inserted: no counterpart
+    assert tc._to_reference(2, opcodes) == (1, False)
+    assert tc._to_reference(3, opcodes) == (1, True)  # past the insertion: exact again
+    assert tc._to_reference(4, opcodes) == (2, True)
+
+
+def _export_pages(stem: str) -> list[dict]:
+    record = json.loads(
+        (et.transcriptions_dir() / f"{stem}.json").read_text(encoding="utf-8")
+    )
+    return record.get("pages", [record])
+
+
+@pytest.mark.parametrize("stem", _stems_with_exports() or ["(none committed)"])
+def test_pasolegs_land_on_reference_pasoleg_positions(stem: str) -> None:
+    """Every pasoleg that maps exactly through the diff lands on a reference U+05C0 position.
+
+    Pasolegs are the one check that does not share the review loop's asymmetry -- they are
+    independent anchors -- but only in reference coordinates.  ``_pasolegs`` indexes the
+    TRANSCRIBED stream, so each index goes through ``_to_reference`` first; comparing raw was
+    the report's original sin, and on the Deuteronomy taxton it looked right only because two
+    errors cancelled (see the test below).
+    """
+    if not _stems_with_exports():
+        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
+    source = _source_or_skip()
+    pages = _export_pages(stem)
+    transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
+    ref, words, _ = et.reference_tokens(source, transcription.key)
+    got, _ = tc._tokens_with_origin(pages)
+    opcodes = tc._opcodes(ref, got)
+    spots = {i for i, w in enumerate(words) if et.PASEQ in w and ref[i] == "mun"}
+    mapped = [tc._to_reference(j, opcodes) for j, _ in tc._pasolegs(pages)]
+    assert {i for i, exact in mapped if exact} <= spots
+
+
+def test_deuteronomy_taxton_pasoleg_is_transcribed_128_reference_127() -> None:
+    """The lone legarmeh: transcribed token 128, reference token 127, on למען.
+
+    Pinned numerically because this is where the two cancelling errors lived: ``_pasolegs``
+    once counted ``qad+ger`` as one token (reporting 128 as 127), and the report compared
+    that raw against reference positions -- where the net +1 of the Shabbat difference
+    regions made the wrong 127 land on the right word.  Fixing the count alone made the
+    report look WORSE (token 128 displayed as יאריכן, a word with no pasoleg at all); this
+    holds both halves of the fix in place.
+
+    The reference's own positions are pinned too: the p-trad has a second pasoleg at 84
+    (אתה׀, inside the Shabbat commandment), and its absence from the page is part of the
+    m-trad-departure finding -- the transcription and the m-trad have one pasoleg, the p-trad
+    two.
+    """
+    source = _source_or_skip()
+    pages = _export_pages("simanim_dt_taxton")
+    transcription = et.load_transcription(
+        et.transcriptions_dir() / "simanim_dt_taxton.txt"
+    )
+    ref, words, _ = et.reference_tokens(source, transcription.key)
+    got, _ = tc._tokens_with_origin(pages)
+    opcodes = tc._opcodes(ref, got)
+    marked = tc._pasolegs(pages)
+    assert [j for j, _ in marked] == [128]
+    assert [tc._to_reference(j, opcodes) for j, _ in marked] == [(127, True)]
+    assert pds.base_skeleton(words[127]) == "למען"
+    spots = [i for i, w in enumerate(words) if et.PASEQ in w and ref[i] == "mun"]
+    assert spots == [84, 127]
+    assert pds.base_skeleton(words[84]) == "אתה"

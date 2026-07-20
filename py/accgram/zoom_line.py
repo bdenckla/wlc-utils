@@ -56,7 +56,8 @@ def _zoom_page(page: dict, wanted: set[int]) -> None:
     # each line STARTS.  A zoom exists to adjudicate a mark, so it must not be bounded by the
     # same guess that may be at fault; pulling in a sliver of the neighbouring column is a
     # trivial cost next to cropping away the thing being read.
-    left, _, right, _ = page["render"]["crop"]
+    # ``crop`` is null when the page was rendered whole; the full width then IS the crop.
+    left, _, right, _ = page["render"]["crop"] or (0.0, 0.0, 1.0, 1.0)
     left = max(0.0, left - PAD_SIDES)
     right = min(1.0, right + PAD_SIDES)
     repo = Path(__file__).resolve().parent.parent.parent
@@ -68,7 +69,9 @@ def _zoom_page(page: dict, wanted: set[int]) -> None:
         lo = max(0, top - PAD_ABOVE * height) / page_height
         hi = min(page_height, bottom + PAD_BELOW * height) / page_height
         stem = f"zoom-{page['stem'].split('_')[-1]}-line{line['n']:02d}"
-        subprocess.run(
+        # Output is captured so scan_page's own line does not repeat under every zoom, which
+        # means a failure's stderr has to be surfaced here or it is silently swallowed.
+        proc = subprocess.run(
             [
                 sys.executable,
                 str(repo / "py" / "accgram" / "scan_page.py"),
@@ -84,9 +87,11 @@ def _zoom_page(page: dict, wanted: set[int]) -> None:
                 "--width",
                 str(WIDTH),
             ],
-            check=True,
             capture_output=True,
+            text=True,
         )
+        if proc.returncode:
+            sys.exit(f"scan_page failed on line {line['n']}:\n{proc.stderr}")
         print(f"line {line['n']:2d}  source rows {top}-{bottom}  -> {stem}.png")
         print(f"          {line['text']}")
 

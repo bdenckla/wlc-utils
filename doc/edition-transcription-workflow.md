@@ -72,8 +72,11 @@ a test rather than surfacing as a puzzling runtime message.
 ```
 
 It reports token and chanted-verse counts, every difference region with the reference word and
-the printed page and line it came from, and the vertical-stroke placements. Run it on a partly
-typed page too — a problem then shows up before the rest is typed.
+the printed page and line it came from, and the pasoleg placements — the transcribed side
+mapped through the diff into reference coordinates first, since the two sides index different
+token streams and an insertion upstream of a pasoleg would otherwise shift it off its
+reference position. Run it on a partly typed page too — a problem then shows up before the rest
+is typed.
 
 For any difference, before calling it an accent difference:
 

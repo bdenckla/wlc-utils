@@ -69,7 +69,7 @@ MAQAF = "\N{HEBREW PUNCTUATION MAQAF}"
 # into one chanted word: ``mun-mer`` is a compound whose atoms are separately accented, rare
 # but real, and it contributes two tokens because the reference side emits one per accent.
 # ``_`` binds two MARKS into one accent: ``mun_leg`` is munax legarmeh, conceptually a single
-# accent that merely happens to be written with a munax and a vertical stroke, and it
+# accent that merely happens to be written with a munax and a pasoleg, and it
 # contributes one token.  Tight binding reads as tighter than a maqaf, which is the point.
 #
 # ``+`` is the SIMPLE-word counterpart of ``-``: two accents on one word that is not a maqaf
@@ -192,7 +192,7 @@ HEBREW_MODIFIERS = {
 
 
 def _resolve_name(
-    written: str, names: dict[str, str], shorthand: dict[str, str] = {}
+    written: str, names: dict[str, str], shorthand: dict[str, str]
 ) -> str:
     """One thing typed into the editor -> its Latin shorthand, by exact name or unique prefix.
 
@@ -218,7 +218,7 @@ def hebrew_token(written: str) -> str:
     accent = _resolve_name(head, HEBREW_NAMES, HEBREW_SHORTHAND)
     if not joiner:
         return accent
-    return accent + UNIT_JOINER + _resolve_name(tail, HEBREW_MODIFIERS)
+    return accent + UNIT_JOINER + _resolve_name(tail, HEBREW_MODIFIERS, {})
 
 
 def transcriptions_dir() -> Path:
@@ -322,6 +322,35 @@ def expand_chunk(chunk: str) -> list[str]:
     return [_normalize(part) for part in written_accents(chunk)]
 
 
+def rejoin_editor_chunks(items: list[tuple[str, object]]) -> list[tuple[str, object]]:
+    """Rejoin maqaf compounds the editor's line breaks split, asides kept in place.
+
+    ``items`` are ``(written, payload)`` pairs in reading order -- the payload is whatever the
+    caller needs carried along, a printed-line origin or nothing at all.  The editor records a
+    multi-accent maqaf compound with a literal maqaf between its accents; when such a compound
+    straddles a printed line break its accents arrive on two different lines, so a chunk left
+    ending in a maqaf takes the following chunk with it, and keeps the payload of the piece it
+    STARTED on -- that is the line to go back and re-read.
+
+    A bracketed aside carries no accent, so it passes through untouched and never takes part
+    in the rejoining: a compound continues across an intervening aside.  This is the ONE
+    implementation of the rejoin -- ``hebrew_chunks`` here and ``transcription_check`` both
+    call it, after the two drifted apart on exactly the aside case while each had its own.
+    """
+    out: list[tuple[str, object]] = []
+    last_real = -1  # index into ``out`` of the last non-aside chunk
+    for written, payload in items:
+        if written.startswith("["):
+            out.append((written, payload))
+        elif last_real >= 0 and out[last_real][0].endswith(MAQAF):
+            joined, kept = out[last_real]
+            out[last_real] = (joined + written, kept)
+        else:
+            out.append((written, payload))
+            last_real = len(out) - 1
+    return out
+
+
 def hebrew_chunks(lines: list[str]) -> list[str]:
     """Latin shorthand for the Hebrew abbreviations typed into the line editor.
 
@@ -331,24 +360,18 @@ def hebrew_chunks(lines: list[str]) -> list[str]:
     is deliberately NOT done here.  It belongs to the comparison, not to the transcription,
     and doing it here would make the .txt this produces claim less than what was observed.
 
-    Three things have to be undone before the mapping.  The editor records a multi-accent maqaf
-    compound with a literal maqaf between its accents; when such a compound straddles a
-    printed line break its accents arrive in two different lines, so a chunk left ending in a
-    maqaf takes the following chunk with it; and a bracketed aside carries no accent, so it is
-    dropped here exactly as ``load_transcription`` drops it from the .txt.  ``[פסק]``, marking
-    where a narrow-sense paseq stands, is the one in use: worth recording on the page it was
-    read from, but not an accent and so not a token on either side of the comparison.
+    ``rejoin_editor_chunks`` undoes the editor's line breaks first; the asides it keeps in
+    place are dropped here, exactly as ``load_transcription`` drops them from the .txt.
+    ``[פסק]``, marking where a narrow-sense paseq stands, is the one in use: worth recording
+    on the page it was read from, but not an accent and so not a token on either side of the
+    comparison.
     """
-    raw: list[str] = []
-    for line in lines:
-        for chunk in line.split():
-            if chunk.startswith("["):
-                continue
-            if raw and raw[-1].endswith(MAQAF):
-                raw[-1] += chunk
-            else:
-                raw.append(chunk)
-    return [_hebrew_chunk(chunk) for chunk in raw]
+    items = [(chunk, None) for line in lines for chunk in line.split()]
+    return [
+        _hebrew_chunk(written)
+        for written, _ in rejoin_editor_chunks(items)
+        if not written.startswith("[")
+    ]
 
 
 def _hebrew_chunk(chunk: str) -> str:
