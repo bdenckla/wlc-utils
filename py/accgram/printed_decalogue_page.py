@@ -1019,42 +1019,15 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         _sabbath_diff_table(results),
         H.para(
             (
-                "Two further differences are purely vocalization — vowel-pointing, not "
-                "cantillation:",
-            )
-        ),
-        H.unordered_list(
-            (
-                (
-                    # Each "X / Y" is two adjacent RTL words separated only by a neutral slash, so
-                    # both are <bdi>-isolated (around the lang="hbo" span) to keep the pair from
-                    # rendering reversed. Lone hbo forms elsewhere, bounded by English, need no bdi.
-                    "The same ",
-                    H.bdi(hbo("תִּרְצָ֖ח")),
-                    " / ",
-                    H.bdi(hbo("תִּרְצַ֖ח")),
-                    " split as in Exodus.",
-                ),
-                (
-                    H.bold("Qamats qatan vs. plain qamats."),
-                    " Two words the m-trad points with qamats qatan but the p-trad with plain "
-                    "qamats — ",
-                    H.bdi(hbo("כׇל")),
-                    " / ",
-                    H.bdi(hbo("וְכׇל")),
-                    " against ",
-                    H.bdi(hbo("כָל")),
-                    " / ",
-                    H.bdi(hbo("וְכָל")),
-                    ". This one is not a real m-trad/p-trad difference at all, but a defect "
-                    f"in the source — its own Exodus {_TAHTON} points the same words with "
-                    "qamats qatan. Reported as ",
-                    link(
-                        "MAM-basics issue #202",
-                        "https://github.com/bdenckla/MAM-basics/issues/202",
-                    ),
-                    ".",
-                ),
+                # "X / Y" is two adjacent RTL words separated only by a neutral slash, so both
+                # are <bdi>-isolated (around the lang="hbo" span) to keep the pair from
+                # rendering reversed. Lone hbo forms elsewhere, bounded by English, need no bdi.
+                "One further difference is purely vocalization — vowel-pointing, not "
+                "cantillation: the same ",
+                H.bdi(hbo("תִּרְצָ֖ח")),
+                " / ",
+                H.bdi(hbo("תִּרְצַ֖ח")),
+                " split as in Exodus.",
             )
         ),
         # An aside (issue #52 follow-up, corrected by issue #66): the p-trad תחתון Sabbath
