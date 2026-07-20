@@ -115,36 +115,90 @@ _ALIASES = {
 # munax so that a PASOLEG position is scored as neither agreement nor disagreement.
 _LEGARMEH_TOKENS = ("mun_leg", "mun_PASOLEG")
 
-# The abbreviations actually typed into the line editor (transcription_editor.py), onto the
-# Latin shorthand the .txt is written in.  Transcribing from a Hebrew page in Latin means
-# translating every mark in your head while also holding your place on the line, so the
-# editor takes Hebrew and the mapping happens here instead.
+# What is typed into the line editor (transcription_editor.py), onto the Latin shorthand the
+# .txt is written in.  Transcribing from a Hebrew page in Latin means translating every mark
+# in your head while also holding your place on the line, so the editor takes Hebrew and the
+# mapping happens here instead.
 #
-# These are the transcriber's own spellings, not a scheme derived from the Latin: bare זקף is
-# zaqef QATAN, and תג/תק and גר/גרשיים are spelled out far enough to stay apart.  Accents that
-# have not yet turned up in a transcribed page are deliberately absent -- adding a guessed
-# spelling for one invites transcribing to it before it has been agreed.
-HEBREW_ABBREV = {
-    "מונ": "mun",
-    "מונ_לג": "mun_leg",
-    "את": "etn",
-    "דר": "dar",
-    "תב": "tev",
-    "מר": "mer",
-    "טפ": "tip",
+# The rule is ANY UNIQUE PREFIX of the accent's Hebrew name: זר is zarqa, פז is pazer, סג is
+# segolta, and the full name always works.  So there is no code to memorize, and no need to
+# agree a spelling in advance for an accent a page has not yet produced -- which the earlier
+# fixed table did require, and which was the reason six accents were deliberately missing
+# from it.  A prefix matching more than one name is an error naming the candidates, not a
+# guess: adding zaqef gadol later turns a bare זק from unambiguous into rejected, which is
+# the safe direction.
+#
+# Bare זקף is zaqef QATAN by name, not by convention -- the unqualified accent's name simply
+# is זקף, so an exact match wins over any longer name that extends it.  The same rule keeps
+# מרכא off מרכא כפולה and גרש off גרשיים.
+HEBREW_NAMES = {
+    "אתנחתא": "etn",
+    "סגולתא": "seg",
     "זקף": "zaq",
-    "זק": "zaq",
+    "טפחא": "tip",
+    "רביע": "rev",
+    "זרקא": "zar",
+    "פשטא": "pash",
+    "יתיב": "yet",
+    "תביר": "tev",
+    "גרש": "ger",
+    "גרשיים": "ger2",
+    "תלישא גדולה": "tg",
+    "פזר": "paz",
+    "מונח": "mun",
+    "מהפך": "mah",
+    "מרכא": "mer",
+    "דרגא": "dar",
+    "קדמא": "qad",
+    "תלישא קטנה": "tq",
+    "סילוק": "silsof",
+}
+
+# Spellings the prefix rule cannot reach, and that the Exodus taxton was already transcribed
+# in.  תג/תק take a letter from each word of a two-word name, which is not a prefix of it at
+# all; גר prefixes גרש and גרשיים alike, so it would be rejected as ambiguous even though
+# geresh is the unmarked member of that pair and is what גר has always meant here.
+HEBREW_SHORTHAND = {
     "תג": "tg",
     "תק": "tq",
     "גר": "ger",
-    "גרשיים": "ger2",
-    "קד": "qad",
-    "פש": "pash",
-    "מה": "mah",
-    "רביע": "rev",
-    "יתיב": "yet",
-    "סיל": "silsof",
 }
+
+# Written after UNIT_JOINER, binding a second mark into the accent named before it.  Kept
+# apart from the accent names so that a bare לג cannot resolve to a token on its own.
+HEBREW_MODIFIERS = {
+    "לגרמיה": "leg",
+}
+
+
+def _resolve_name(
+    written: str, names: dict[str, str], shorthand: dict[str, str] = {}
+) -> str:
+    """One thing typed into the editor -> its Latin shorthand, by exact name or unique prefix.
+
+    Exact matches -- a name, or an agreed shorthand -- are taken before any prefix search, so
+    that a name which merely extends another (גרשיים over גרש, זקף גדול over זקף) cannot make
+    the shorter one ambiguous.
+    """
+    if written in shorthand:
+        return shorthand[written]
+    if written in names:
+        return names[written]
+    matches = sorted(name for name in names if name.startswith(written))
+    if not matches:
+        raise ValueError(f"unknown Hebrew accent abbreviation {written!r}")
+    if len(matches) > 1:
+        raise ValueError(f"ambiguous Hebrew accent abbreviation {written!r}: {matches}")
+    return names[matches[0]]
+
+
+def hebrew_token(written: str) -> str:
+    """One thing typed into the editor -> the Latin shorthand, ``mun_leg`` included."""
+    head, joiner, tail = written.partition(UNIT_JOINER)
+    accent = _resolve_name(head, HEBREW_NAMES, HEBREW_SHORTHAND)
+    if not joiner:
+        return accent
+    return accent + UNIT_JOINER + _resolve_name(tail, HEBREW_MODIFIERS)
 
 
 def transcriptions_dir() -> Path:
@@ -220,26 +274,27 @@ def hebrew_chunks(lines: list[str]) -> list[str]:
     is deliberately NOT done here.  It belongs to the comparison, not to the transcription,
     and doing it here would make the .txt this produces claim less than what was observed.
 
-    Two things have to be undone before the mapping.  The editor records a multi-accent maqaf
-    compound with a literal maqaf between its accents; and when such a compound straddles a
+    Three things have to be undone before the mapping.  The editor records a multi-accent maqaf
+    compound with a literal maqaf between its accents; when such a compound straddles a
     printed line break its accents arrive in two different lines, so a chunk left ending in a
-    maqaf takes the following chunk with it.
+    maqaf takes the following chunk with it; and a bracketed aside carries no accent, so it is
+    dropped here exactly as ``load_transcription`` drops it from the .txt.  ``[פסק]``, marking
+    where a narrow-sense paseq stands, is the one in use: worth recording on the page it was
+    read from, but not an accent and so not a token on either side of the comparison.
     """
     raw: list[str] = []
     for line in lines:
         for chunk in line.split():
+            if chunk.startswith("["):
+                continue
             if raw and raw[-1].endswith(MAQAF):
                 raw[-1] += chunk
             else:
                 raw.append(chunk)
-    out: list[str] = []
-    for chunk in raw:
-        parts = chunk.split(MAQAF)
-        unknown = [p for p in parts if p not in HEBREW_ABBREV]
-        if unknown:
-            raise ValueError(f"unknown Hebrew accent abbreviation(s) {unknown}")
-        out.append(MAQAF_JOINER.join(HEBREW_ABBREV[p] for p in parts))
-    return out
+    return [
+        MAQAF_JOINER.join(hebrew_token(part) for part in chunk.split(MAQAF))
+        for chunk in raw
+    ]
 
 
 def _accent_tokens(verses: list[str]) -> tuple[list[str], list[str], list[str]]:
