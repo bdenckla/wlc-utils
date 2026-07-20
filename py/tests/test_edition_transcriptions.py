@@ -72,11 +72,29 @@ _EXPECTED_DIVERGENCES = {
         ("", "mun", "לאתעשה"),
         ("mer", "", "לא"),
     ],
+    # Simanim's Deuteronomy main Decalogue (elyon, pp. 208-209) diverges NOWHERE: 164 reference
+    # tokens against 164 transcribed, agreeing at every one.  It is the first transcription for
+    # which "follows the p-trad with respect to every accent" is actually true, and pinning the
+    # empty list is what keeps it honest -- a re-vendoring that moved any accent in this strand
+    # would break this test rather than quietly weaken the claim to nothing.
+    #
+    # How it was reached bears on how much it is worth, and the .txt header says so at length:
+    # the harness flags only positions where the two disagree, so only those were re-read.
+    # Three were, and all three turned out to be transcription slips rather than edition
+    # divergences.  The ~161 agreeing positions were never re-examined, so this is "no
+    # divergence survived a procedure that only inspects candidate divergences" -- and the
+    # Exodus elyon above, whose two real divergences cancelled in the token count, is the
+    # standing proof that compensating errors are possible in exactly this material.
+    "simanim_dt_elyon": [],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
 # below.  The elyon's nine and the taxton's thirteen are the p-trad's own verse divisions.
-_CHANTED_VERSES = {"simanim_ex_elyon": 9, "simanim_ex_taxton": 13}
+_CHANTED_VERSES = {
+    "simanim_ex_elyon": 9,
+    "simanim_ex_taxton": 13,
+    "simanim_dt_elyon": 9,
+}
 
 
 def _source_or_skip() -> dict:
@@ -149,6 +167,43 @@ def test_pinned_divergences_leave_the_disjunctive_skeleton_alone(stem: str) -> N
             ), f"{difference.describe()}: not conjunctive"
 
 
+@pytest.mark.parametrize(
+    "written,expected",
+    [
+        ("זר", "zar"),  # zarqa: ז alone would also reach זקף
+        ("פז", "paz"),  # pazer: פ alone would also reach פשטא
+        ("סג", "seg"),  # segolta: ס alone would also reach סילוק
+        ("סגולתא", "seg"),  # the full name always works
+        ("זקף", "zaq"),  # an exact name beats any longer name extending it
+        ("גרשיים", "ger2"),
+        ("גר", "ger"),  # agreed shorthand: a prefix of גרש and גרשיים alike
+        ("תג", "tg"),  # a letter per word, so not a prefix of תלישא גדולה at all
+        ("מונ_לגרמיה", "mun_leg"),
+        ("מונ_לג", "mun_leg"),
+    ],
+)
+def test_hebrew_token_resolves_by_unique_prefix(written: str, expected: str) -> None:
+    """Any unique prefix of an accent's Hebrew name names it; the full name always does.
+
+    This is what lets a page be transcribed without first agreeing a spelling for every
+    accent it might contain -- the rule the earlier fixed table could not offer.
+    """
+    assert et.hebrew_token(written) == expected
+
+
+@pytest.mark.parametrize("written", ["ז", "פ", "ס", "מ", "ת"])
+def test_ambiguous_prefixes_are_rejected_not_guessed(written: str) -> None:
+    """A prefix reaching more than one name is an error naming the candidates."""
+    with pytest.raises(ValueError, match="ambiguous"):
+        et.hebrew_token(written)
+
+
+def test_a_modifier_cannot_stand_alone_as_an_accent() -> None:
+    """לגרמיה names a mark bound into an accent, not an accent, so it is not a token."""
+    with pytest.raises(ValueError, match="unknown"):
+        et.hebrew_token("לגרמיה")
+
+
 def _stems_with_exports() -> list[str]:
     """Transcriptions that have the line editor's JSON export committed beside them.
 
@@ -159,7 +214,7 @@ def _stems_with_exports() -> list[str]:
 
 @pytest.mark.parametrize("stem", _stems_with_exports() or ["(none committed)"])
 def test_editor_export_and_txt_agree(stem: str) -> None:
-    """The committed export and the .txt say the same thing, through HEBREW_ABBREV.
+    """The committed export and the .txt say the same thing, through ``hebrew_token``.
 
     The .txt is canonical for the parser, but it is written in a shorthand nobody typed; what
     was actually typed, line by line against page coordinates, is the JSON.  Without this the
@@ -169,7 +224,12 @@ def test_editor_export_and_txt_agree(stem: str) -> None:
         pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
     path = et.transcriptions_dir() / f"{stem}.json"
     record = json.loads(path.read_text(encoding="utf-8"))
-    chunks = et.hebrew_chunks([line["text"] for line in record["lines"]])
+    # One Decalogue can span two printed pages, and then the audit trail holds one editor
+    # export per page under "pages", in page order.  A single-page export is its own only page.
+    exports = record.get("pages", [record])
+    chunks = et.hebrew_chunks(
+        [line["text"] for export in exports for line in export["lines"]]
+    )
     from_export = [token for chunk in chunks for token in et.expand_chunk(chunk)]
     from_txt = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt").tokens
     assert from_export == list(from_txt)
