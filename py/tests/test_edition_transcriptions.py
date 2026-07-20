@@ -13,6 +13,8 @@ Run:
 
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from accgram import edition_transcription as et
@@ -48,7 +50,33 @@ _EXPECTED_DIVERGENCES = {
         ("", "mun", "ובנךובתך"),
         ("mer", "", "לא"),
     ],
+    # Simanim's Exodus appendix Decalogue (taxton, p. 246) diverges at three points, and
+    # unlike the elyon's pair, two of them are genuine ACCENT differences:
+    #
+    #   * לא־יהיה (20:3) and לא־תעשה (20:4): Simanim accents BOTH atoms of the maqaf compound
+    #     -- munax on the joined לא, against merkha and qadma on the second atoms -- where all
+    #     eight strands have a meteg on the לא and no accent.  Two accents on one chanted word
+    #     is rare, and none of the eight does it at either site.  It is not a house habit of
+    #     the edition either: לא־תעשה recurs at 20:10 (לא־תעשה כל־מלאכה) and Simanim agrees
+    #     with the reference there.
+    #   * לא תחמד (tenth commandment): the reference sets לא free with its own merkha; Simanim
+    #     joins it by maqaf, so it takes no accent.  A word-division difference, and the SAME
+    #     one found in Simanim's Exodus elyon -- two independently transcribed Simanim
+    #     Decalogues agreeing with each other and against all eight strands, which have merkha
+    #     on the free (ו)לא and tipexa on תחמד in both books.
+    #
+    # Both munax insertions and the merkha deletion are conjunctive, so the disjunctive
+    # skeleton is untouched; see test_pinned_divergences_leave_the_disjunctive_skeleton_alone.
+    "simanim_ex_taxton": [
+        ("", "mun", "לאיהיה"),
+        ("", "mun", "לאתעשה"),
+        ("mer", "", "לא"),
+    ],
 }
+
+# Chanted verse count per transcription -- the exceptionless claim, checked in both directions
+# below.  The elyon's nine and the taxton's thirteen are the p-trad's own verse divisions.
+_CHANTED_VERSES = {"simanim_ex_elyon": 9, "simanim_ex_taxton": 13}
 
 
 def _source_or_skip() -> dict:
@@ -85,36 +113,63 @@ def test_divergences_are_exactly_as_established(stem: str) -> None:
     assert got == _EXPECTED_DIVERGENCES[stem]
 
 
-def test_simanim_ex_elyon_agrees_on_every_chanted_verse_boundary() -> None:
-    """The exceptionless claim: Simanim's Exodus elyon has the p-trad elyon's verse divisions.
+@pytest.mark.parametrize("stem", sorted(_CHANTED_VERSES))
+def test_every_chanted_verse_boundary_agrees(stem: str) -> None:
+    """The exceptionless claim: Simanim has the p-trad strand's own verse divisions.
 
-    Weaker than accent agreement and independent of it -- the two known divergences are
-    mid-verse -- and it is the claim the Simanim page's title actually rests on.
+    Weaker than accent agreement and independent of it -- every known divergence is mid-verse
+    -- and it is the claim the Simanim page's title actually rests on.  Checked in both
+    directions: the counts match, AND no difference region touches a silsof, which a bare
+    count would not catch if one boundary moved and another appeared.
     """
     source = _source_or_skip()
-    transcription = et.load_transcription(
-        et.transcriptions_dir() / "simanim_ex_elyon.txt"
-    )
+    transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
     ref, _, _ = et.reference_tokens(source, transcription.key)
-    assert ref.count("silsof") == 9
+    assert ref.count("silsof") == _CHANTED_VERSES[stem]
     assert list(transcription.tokens).count("silsof") == ref.count("silsof")
     for difference in et.compare(source, transcription):
         assert "silsof" not in difference.reference + difference.transcribed
 
 
-def test_known_divergences_leave_the_disjunctive_skeleton_alone() -> None:
-    """Neither divergence adds or removes a disjunctive: both differ only in a conjunctive.
+@pytest.mark.parametrize("stem", sorted(_EXPECTED_DIVERGENCES))
+def test_pinned_divergences_leave_the_disjunctive_skeleton_alone(stem: str) -> None:
+    """No divergence adds or removes a disjunctive: every one differs in a conjunctive only.
 
-    This is what licenses saying Simanim follows the p-trad elyon's accent STRUCTURE while
-    denying that it follows it in every accent.
+    This is what licenses saying Simanim follows the p-trad's accent STRUCTURE while denying
+    that it follows it in every accent -- a distinction the taxton makes load-bearing, since
+    two of its three divergences really are accent differences rather than word-division ones.
     """
     conjunctive_or_absent = {"", "mun", "mer", "mah", "dar", "qad", "tq", "mer2"}
     source = _source_or_skip()
-    transcription = et.load_transcription(
-        et.transcriptions_dir() / "simanim_ex_elyon.txt"
-    )
+    transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
     for difference in et.compare(source, transcription):
         for token in difference.reference + difference.transcribed:
             assert (
                 token in conjunctive_or_absent
             ), f"{difference.describe()}: not conjunctive"
+
+
+def _stems_with_exports() -> list[str]:
+    """Transcriptions that have the line editor's JSON export committed beside them.
+
+    Not all do: simanim_ex_elyon was transcribed before the editor existed.
+    """
+    return sorted(p.stem for p in et.transcriptions_dir().glob("*.json"))
+
+
+@pytest.mark.parametrize("stem", _stems_with_exports() or ["(none committed)"])
+def test_editor_export_and_txt_agree(stem: str) -> None:
+    """The committed export and the .txt say the same thing, through HEBREW_ABBREV.
+
+    The .txt is canonical for the parser, but it is written in a shorthand nobody typed; what
+    was actually typed, line by line against page coordinates, is the JSON.  Without this the
+    two could drift and the audit trail would quietly stop describing the .txt beside it.
+    """
+    if not _stems_with_exports():
+        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
+    path = et.transcriptions_dir() / f"{stem}.json"
+    record = json.loads(path.read_text(encoding="utf-8"))
+    chunks = et.hebrew_chunks([line["text"] for line in record["lines"]])
+    from_export = [token for chunk in chunks for token in et.expand_chunk(chunk)]
+    from_txt = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt").tokens
+    assert from_export == list(from_txt)

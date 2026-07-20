@@ -15,7 +15,12 @@ moves an accent fails the test rather than silently invalidating prose on a page
 
 WHAT COUNTS AS ONE TOKEN (the conventions the transcriptions are written to):
 
-* One token per chanted word.  A maqaf compound is one chanted word, hence one token.
+* One token per ACCENT, which is normally one token per chanted word, a maqaf compound being
+  one chanted word.  The exception is the compound that bears more than one accent -- its
+  atoms each accented, which happens but is rare -- written ``mun-mer``, the dash standing for
+  the maqaf itself, and contributing two tokens.  Simanim's Exodus appendix Decalogue has two
+  such compounds and they are its most interesting divergences, so this is not hypothetical.
+  Contrast ``mun_leg``, where the underscore binds two marks into ONE accent.
 * A postpositive or prepositive accent is written TWICE on a word whose stress is not where
   the accent's fixed position puts it -- once at the fixed edge and once on the stressed
   syllable.  That is ONE accent.  ``_accent_tokens`` collapses an immediate repeat of the same
@@ -31,11 +36,19 @@ WHAT COUNTS AS ONE TOKEN (the conventions the transcriptions are written to):
   this become a real check; see the issue tracking that.
 
 WHAT A DIFFERENCE MEANS.  Not every difference is a cantillation difference.  Where the two
-texts divide words differently -- maqaf vs. space -- the conjunctive/meteg marking follows
-mechanically, because a maqaf-joined proclitic cannot bear an accent while a free-standing
-word must.  Both confirmed Simanim/Wikisource differences in the Exodus elyon are of exactly
-this kind, and neither touches the disjunctive skeleton or the chanted verse boundaries.  So
-read a difference list alongside the word it sits on before calling it an accent difference.
+texts divide words differently -- maqaf vs. space -- the marking usually follows mechanically:
+a free-standing word must bear an accent, while a maqaf-joined proclitic normally takes at
+most a meteg.  Both confirmed differences in the Exodus elyon are of that kind, and so is one
+of the three in the Exodus taxton.  So read a difference list alongside the word it sits on
+before calling it an accent difference.
+
+"Normally", though, not "always", and the Exodus taxton is why the weaker word is the right
+one.  Simanim prints a munax on the joined לא of לא־יהיה and of לא־תעשה, whose second atoms
+carry merkha and qadma -- two accents on one chanted word, where all eight strands have a
+meteg.  Those are genuine accent differences, not word-division ones, and an earlier version
+of this note asserted they could not occur.  Neither they nor the elyon's pair touch the
+disjunctive skeleton or the chanted verse boundaries, which is the claim that has survived
+every transcription so far.
 """
 
 from __future__ import annotations
@@ -50,6 +63,16 @@ import repo_paths
 PASEQ = "\N{HEBREW PUNCTUATION PASEQ}"
 SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
 MTGOSLQ = "\N{HEBREW POINT METEG}"  # meteg, or silluq when verse-final
+MAQAF = "\N{HEBREW PUNCTUATION MAQAF}"
+
+# The two joiners, and the distinction they draw.  ``-`` is a maqaf, binding two ACCENTS into
+# one chanted word: ``mun-mer`` is a compound whose atoms are separately accented, rare but
+# real, and it contributes two tokens because the reference side emits one per accent.  ``_``
+# binds two MARKS into one accent: ``mun_leg`` is munax legarmeh, conceptually a single
+# accent that merely happens to be written with a munax and a vertical stroke, and it
+# contributes one token.  Tight binding reads as tighter than a maqaf, which is the point.
+MAQAF_JOINER = "-"
+UNIT_JOINER = "_"
 
 # Accent codepoint -> the shorthand the transcriptions use.
 ACCENT_ABBREV = {
@@ -90,7 +113,38 @@ _ALIASES = {
 
 # Legarmeh is set aside for now (see the module docstring): both sides collapse to a plain
 # munax so that a PASOLEG position is scored as neither agreement nor disagreement.
-_LEGARMEH_TOKENS = ("mun-leg", "mun-PASOLEG")
+_LEGARMEH_TOKENS = ("mun_leg", "mun_PASOLEG")
+
+# The abbreviations actually typed into the line editor (transcription_editor.py), onto the
+# Latin shorthand the .txt is written in.  Transcribing from a Hebrew page in Latin means
+# translating every mark in your head while also holding your place on the line, so the
+# editor takes Hebrew and the mapping happens here instead.
+#
+# These are the transcriber's own spellings, not a scheme derived from the Latin: bare זקף is
+# zaqef QATAN, and תג/תק and גר/גרשיים are spelled out far enough to stay apart.  Accents that
+# have not yet turned up in a transcribed page are deliberately absent -- adding a guessed
+# spelling for one invites transcribing to it before it has been agreed.
+HEBREW_ABBREV = {
+    "מונ": "mun",
+    "מונ_לג": "mun_leg",
+    "את": "etn",
+    "דר": "dar",
+    "תב": "tev",
+    "מר": "mer",
+    "טפ": "tip",
+    "זקף": "zaq",
+    "זק": "zaq",
+    "תג": "tg",
+    "תק": "tq",
+    "גר": "ger",
+    "גרשיים": "ger2",
+    "קד": "qad",
+    "פש": "pash",
+    "מה": "mah",
+    "רביע": "rev",
+    "יתיב": "yet",
+    "סיל": "silsof",
+}
 
 
 def transcriptions_dir() -> Path:
@@ -145,6 +199,47 @@ class Difference:
 def _normalize(token: str) -> str:
     token = _ALIASES.get(token, token)
     return "mun" if token in _LEGARMEH_TOKENS else token
+
+
+def expand_chunk(chunk: str) -> list[str]:
+    """One written chunk -> the token(s) it stands for.
+
+    Almost always one.  A maqaf compound bearing more than one accent is the exception: it is
+    one chanted word written as one chunk, but it contributes one token per accent.  Splitting
+    on the maqaf joiner alone is what makes ``mun_leg`` stay whole here.
+    """
+    return [_normalize(part) for part in chunk.split(MAQAF_JOINER)]
+
+
+def hebrew_chunks(lines: list[str]) -> list[str]:
+    """Latin shorthand for the Hebrew abbreviations typed into the line editor.
+
+    ``lines`` are the editor's per-line strings, in page order.  Returns one chunk per chanted
+    word, written the way the .txt writes it: a multi-accent maqaf compound keeps its dash and
+    ``mun_leg`` keeps its underscore.  Normalization -- folding legarmeh onto a plain munax --
+    is deliberately NOT done here.  It belongs to the comparison, not to the transcription,
+    and doing it here would make the .txt this produces claim less than what was observed.
+
+    Two things have to be undone before the mapping.  The editor records a multi-accent maqaf
+    compound with a literal maqaf between its accents; and when such a compound straddles a
+    printed line break its accents arrive in two different lines, so a chunk left ending in a
+    maqaf takes the following chunk with it.
+    """
+    raw: list[str] = []
+    for line in lines:
+        for chunk in line.split():
+            if raw and raw[-1].endswith(MAQAF):
+                raw[-1] += chunk
+            else:
+                raw.append(chunk)
+    out: list[str] = []
+    for chunk in raw:
+        parts = chunk.split(MAQAF)
+        unknown = [p for p in parts if p not in HEBREW_ABBREV]
+        if unknown:
+            raise ValueError(f"unknown Hebrew accent abbreviation(s) {unknown}")
+        out.append(MAQAF_JOINER.join(HEBREW_ABBREV[p] for p in parts))
+    return out
 
 
 def _accent_tokens(verses: list[str]) -> tuple[list[str], list[str], list[str]]:
@@ -204,7 +299,7 @@ def load_transcription(path: Path) -> Transcription:
         for chunk in re.findall(r"\[[^\]]*\]|\S+", stripped):
             if chunk.startswith("["):
                 continue  # a bracketed aside such as "[page break]" carries no accent
-            tokens.append(_normalize(chunk))
+            tokens.extend(expand_chunk(chunk))
     missing = {"book", "reading", "tradition"} - set(header)
     if missing:
         raise ValueError(f"{path}: transcription header missing {sorted(missing)}")
