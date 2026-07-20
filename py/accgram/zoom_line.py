@@ -32,6 +32,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 PAD_ABOVE = 1.0  # band heights above the line
 PAD_BELOW = 0.5  # and below
+PAD_SIDES = 0.012  # page widths beyond the transcription crop, left and right
 WIDTH = 2400  # wide, because the point is to magnify one line
 
 
@@ -49,7 +50,15 @@ def _zoom_page(page: dict, wanted: set[int]) -> None:
     book = page["source"]["book"]
     name = page["source"]["file"].removesuffix(".jpg")
     page_height = page["source"]["size"][1]
+    # Widen past the transcription crop rather than inheriting it exactly.  That crop is a
+    # guess at where the column ends, and on C247 it was set ~0.006 of the page width inside
+    # the true right edge -- clipping the first letter of every line, which in RTL is where
+    # each line STARTS.  A zoom exists to adjudicate a mark, so it must not be bounded by the
+    # same guess that may be at fault; pulling in a sliver of the neighbouring column is a
+    # trivial cost next to cropping away the thing being read.
     left, _, right, _ = page["render"]["crop"]
+    left = max(0.0, left - PAD_SIDES)
+    right = min(1.0, right + PAD_SIDES)
     repo = Path(__file__).resolve().parent.parent.parent
     for line in page["lines"]:
         if wanted and line["n"] not in wanted:

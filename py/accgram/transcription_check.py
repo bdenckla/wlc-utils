@@ -97,12 +97,16 @@ def _tokens_with_origin(pages: list[dict]) -> tuple[list[str], list[tuple[str, i
         if chunk.startswith("["):
             continue  # a bracketed aside carries no accent
         for part in chunk.split(MAQAF):
-            try:
-                tokens.append(et.hebrew_token(part))
-            except ValueError as exc:
-                print(f"  !! {label} line {n}: {exc}")
-                tokens.append(UNRESOLVED)
-            origin.append((label, n))
+            # A simple word may bear two accents too (qadma + geresh, the qadma then called
+            # metigah), written with the SIMPLE_JOINER rather than a maqaf.  One token per
+            # accent either way, so both joiners have to be split on here.
+            for accent in part.split(et.SIMPLE_JOINER):
+                try:
+                    tokens.append(et.hebrew_token(accent))
+                except ValueError as exc:
+                    print(f"  !! {label} line {n}: {exc}")
+                    tokens.append(UNRESOLVED)
+                origin.append((label, n))
     return tokens, origin
 
 

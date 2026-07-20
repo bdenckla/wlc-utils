@@ -65,14 +65,26 @@ SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
 MTGOSLQ = "\N{HEBREW POINT METEG}"  # meteg, or silluq when verse-final
 MAQAF = "\N{HEBREW PUNCTUATION MAQAF}"
 
-# The two joiners, and the distinction they draw.  ``-`` is a maqaf, binding two ACCENTS into
-# one chanted word: ``mun-mer`` is a compound whose atoms are separately accented, rare but
-# real, and it contributes two tokens because the reference side emits one per accent.  ``_``
-# binds two MARKS into one accent: ``mun_leg`` is munax legarmeh, conceptually a single
+# The three joiners, and the distinctions they draw.  ``-`` is a maqaf, binding two ACCENTS
+# into one chanted word: ``mun-mer`` is a compound whose atoms are separately accented, rare
+# but real, and it contributes two tokens because the reference side emits one per accent.
+# ``_`` binds two MARKS into one accent: ``mun_leg`` is munax legarmeh, conceptually a single
 # accent that merely happens to be written with a munax and a vertical stroke, and it
 # contributes one token.  Tight binding reads as tighter than a maqaf, which is the point.
+#
+# ``+`` is the SIMPLE-word counterpart of ``-``: two accents on one word that is not a maqaf
+# compound at all.  ``qad+ger`` is the case in hand -- qadma and geresh on a single word,
+# where the qadma is by convention called *metigah* rather than qadma (the same renaming
+# applies in the compound case).  Like a maqaf compound it contributes one token per accent,
+# because the reference side emits one per accent either way; unlike one, there is no maqaf,
+# and collapsing the two notations would lose exactly the word-division fact that every
+# difference here has to be read against.
 MAQAF_JOINER = "-"
 UNIT_JOINER = "_"
+SIMPLE_JOINER = "+"
+# The joiners that split a chunk into one token per accent, as against UNIT_JOINER, which
+# does not.  Order matters only in that both must be tried; a chunk uses at most one.
+ACCENT_JOINERS = (MAQAF_JOINER, SIMPLE_JOINER)
 
 # Accent codepoint -> the shorthand the transcriptions use.
 ACCENT_ABBREV = {
@@ -258,11 +270,20 @@ def _normalize(token: str) -> str:
 def expand_chunk(chunk: str) -> list[str]:
     """One written chunk -> the token(s) it stands for.
 
-    Almost always one.  A maqaf compound bearing more than one accent is the exception: it is
-    one chanted word written as one chunk, but it contributes one token per accent.  Splitting
-    on the maqaf joiner alone is what makes ``mun_leg`` stay whole here.
+    Almost always one.  A word bearing more than one accent is the exception -- a maqaf
+    compound (``mun-mer``) or a simple word (``qad+ger``) -- and it contributes one token per
+    accent either way.  Splitting on the ACCENT joiners alone is what makes ``mun_leg`` stay
+    whole here.
     """
-    return [_normalize(part) for part in chunk.split(MAQAF_JOINER)]
+    return [_normalize(part) for part in _split_accents(chunk)]
+
+
+def _split_accents(chunk: str) -> list[str]:
+    """Split a written chunk into its per-accent parts, on either accent joiner."""
+    parts = [chunk]
+    for joiner in ACCENT_JOINERS:
+        parts = [piece for part in parts for piece in part.split(joiner)]
+    return parts
 
 
 def hebrew_chunks(lines: list[str]) -> list[str]:
@@ -291,10 +312,20 @@ def hebrew_chunks(lines: list[str]) -> list[str]:
                 raw[-1] += chunk
             else:
                 raw.append(chunk)
-    return [
-        MAQAF_JOINER.join(hebrew_token(part) for part in chunk.split(MAQAF))
-        for chunk in raw
-    ]
+    return [_hebrew_chunk(chunk) for chunk in raw]
+
+
+def _hebrew_chunk(chunk: str) -> str:
+    """One editor chunk -> the way the .txt writes it, both accent joiners preserved.
+
+    The editor records a maqaf compound with a literal maqaf between its accents, and a
+    multi-accent simple word with the ``+`` that is typed.  Each maps to its own written
+    joiner, so the .txt keeps saying which of the two was seen on the page.
+    """
+    return MAQAF_JOINER.join(
+        SIMPLE_JOINER.join(hebrew_token(accent) for accent in part.split(SIMPLE_JOINER))
+        for part in chunk.split(MAQAF)
+    )
 
 
 def _accent_tokens(verses: list[str]) -> tuple[list[str], list[str], list[str]]:

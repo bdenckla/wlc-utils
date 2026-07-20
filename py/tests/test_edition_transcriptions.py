@@ -86,6 +86,27 @@ _EXPECTED_DIVERGENCES = {
     # Exodus elyon above, whose two real divergences cancelled in the token count, is the
     # standing proof that compensating errors are possible in exactly this material.
     "simanim_dt_elyon": [],
+    # Simanim's Deuteronomy appendix Decalogue (taxton, p. 247) is the edition's KNOWN m-trad
+    # departure, and the first transcription whose divergences are neither word-division
+    # differences nor confined to conjunctives.  All three regions fall inside the Shabbat
+    # commandment, and there the page reads m-trad throughout -- the three signal words
+    # (כל־מלאכה pazer not geresh, ועבדך־ואמתך telisha gedola not revia, וכל־בהמתך revia not
+    # zaqef qatan), the surrounding stretch token for token, and the word division too, לא and
+    # תעשה being separately accented where the p-trad joins them by maqaf.
+    #
+    # The finding does not rest on the review loop's asymmetry.  Compared against the m-trad
+    # taxton instead, this transcription is 166 tokens against 166 with three difference
+    # regions, ALL of them inside the FIRST commandment: the two strands partition the
+    # differences with nothing left over.  Agreement with a strand the harness had no stake in,
+    # over a contiguous run, is positive evidence rather than survival of a flag.
+    #
+    # What the departure does NOT extend to is the chanted verse division, which stays p-trad
+    # (13 verses, pinned below; the m-trad has 12).  Accents only.
+    "simanim_dt_taxton": [
+        ("", "mun mun paz mun mun tg", "לאתעשה"),
+        ("mun mun", "", "אתה"),
+        ("mah pash zaq", "", "ושורך"),
+    ],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
@@ -94,6 +115,19 @@ _CHANTED_VERSES = {
     "simanim_ex_elyon": 9,
     "simanim_ex_taxton": 13,
     "simanim_dt_elyon": 9,
+    "simanim_dt_taxton": 13,
+}
+
+# Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
+# intact.  This was once true of every transcription and the test below said so unconditionally
+# -- until simanim_dt_taxton, whose Shabbat commandment swaps disjunctive for disjunctive
+# (geresh -> pazer, revia -> telisha gedola, zaqef qatan -> revia).  That is what makes it a
+# TRADITION difference rather than the word-division and conjunctive-marking quirks the other
+# three amount to, so it is pinned as its own claim below rather than excused as an exception.
+_SKELETON_UNTOUCHED = {
+    "simanim_ex_elyon",
+    "simanim_ex_taxton",
+    "simanim_dt_elyon",
 }
 
 
@@ -149,22 +183,47 @@ def test_every_chanted_verse_boundary_agrees(stem: str) -> None:
         assert "silsof" not in difference.reference + difference.transcribed
 
 
-@pytest.mark.parametrize("stem", sorted(_EXPECTED_DIVERGENCES))
+_CONJUNCTIVE_OR_ABSENT = {"", "mun", "mer", "mah", "dar", "qad", "tq", "mer2"}
+
+
+@pytest.mark.parametrize("stem", sorted(_SKELETON_UNTOUCHED))
 def test_pinned_divergences_leave_the_disjunctive_skeleton_alone(stem: str) -> None:
     """No divergence adds or removes a disjunctive: every one differs in a conjunctive only.
 
     This is what licenses saying Simanim follows the p-trad's accent STRUCTURE while denying
-    that it follows it in every accent -- a distinction the taxton makes load-bearing, since
-    two of its three divergences really are accent differences rather than word-division ones.
+    that it follows it in every accent -- a distinction the Exodus taxton makes load-bearing,
+    since two of its three divergences really are accent differences rather than word-division
+    ones.  Scoped to _SKELETON_UNTOUCHED: it is not true of the Deuteronomy taxton, and the
+    test below pins that it is not.
     """
-    conjunctive_or_absent = {"", "mun", "mer", "mah", "dar", "qad", "tq", "mer2"}
     source = _source_or_skip()
     transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
     for difference in et.compare(source, transcription):
         for token in difference.reference + difference.transcribed:
             assert (
-                token in conjunctive_or_absent
+                token in _CONJUNCTIVE_OR_ABSENT
             ), f"{difference.describe()}: not conjunctive"
+
+
+def test_deuteronomy_taxton_does_touch_the_disjunctive_skeleton() -> None:
+    """The Shabbat departure swaps disjunctive for disjunctive, and that is the point.
+
+    Pinned in the positive direction so the distinction cannot erode from either end: if a
+    re-vendoring or a corrected transcription ever made these divergences conjunctive-only,
+    this fails rather than letting the page keep calling p. 247 an m-trad departure.  Every
+    other transcription's divergences leave the skeleton alone; this one's must not.
+    """
+    stem = "simanim_dt_taxton"
+    assert stem not in _SKELETON_UNTOUCHED
+    source = _source_or_skip()
+    transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
+    disjunctives = {
+        token
+        for difference in et.compare(source, transcription)
+        for token in difference.reference + difference.transcribed
+        if token not in _CONJUNCTIVE_OR_ABSENT
+    }
+    assert disjunctives == {"paz", "tg", "pash", "zaq"}
 
 
 @pytest.mark.parametrize(

@@ -32,6 +32,14 @@ Crop tight enough to exclude the neighbouring column: a sliver of foreign glyphs
 shows up in the debug overlay. Open `.novc/scans/<stem>-editor.html` in the Browser pane. A
 Decalogue spanning two printed pages gets one editor per page.
 
+**Measure the column's edges; do not eyeball them.** On C247 a crop guessed by eye landed
+~0.006 of the page width inside the true right edge and clipped the first letter of every line
+— in RTL, where the line *starts*. The debug overlay does not show this: a third of a letter
+missing still looks like a line. Profile the ink instead (dark-pixel fraction per x column over
+the text's vertical band) and set the crop from the numbers, then leave a margin. Only
+*prepositive* accents sit at a word's right edge, so a right-edge clip endangers those; a
+left-edge clip endangers postpositives.
+
 ## 2. Ben types; **Save JSON** exports to Downloads
 
 Hebrew is typed, not Latin: translating every mark in your head while holding your place on the
@@ -39,6 +47,13 @@ line is the thing to avoid. Any **unique prefix of the accent's Hebrew name** wo
 zarqa, `פז` pazer, `סג` segolta — and the full name always does. An ambiguous prefix is rejected
 with its candidates rather than guessed. `תג`/`תק` and `גר` are explicit exceptions; `מונ_לג` is
 munaḥ legarmeh; `[פסק]` records a narrow-sense paseq.
+
+Three joiners now, and they are not interchangeable. `-` is a **maqaf**, binding two accents
+into one chanted word (`mun-mer`). `+` is its **simple-word** counterpart — two accents on a
+word that is no compound at all, as in `קד+גר` on ויצאך (p. 247), where the first accent is by
+convention called *metigah* rather than *qadma*. Both contribute one token per accent; keeping
+them distinct is what lets a difference still be read as word-division or not. `_` binds two
+**marks** into one accent (`מונ_לג`) and contributes one token.
 
 ## 3. Check before committing
 
@@ -62,7 +77,10 @@ For any difference, before calling it an accent difference:
   .venv/Scripts/python.exe py/accgram/zoom_line.py <export.json> 12
   ```
   `zoom_line` pads a full band height above, because a tight crop once cut the upper dot off a
-  zaqef qatan and left something that reads exactly like a revia.
+  zaqef qatan and left something that reads exactly like a revia. It also pads *sideways* past
+  the crop it was given, so that a too-tight page crop cannot bound the zoom made to check it.
+  A zoom shows the padding band above as a second line of text — the line being adjudicated is
+  the **lower** one.
 - **Check all eight strands** before concluding whose divergence it is:
   ```bash
   .venv/Scripts/python.exe py/accgram/transcription_check.py --site השבת לקדשו
@@ -89,6 +107,16 @@ even when empty) and the chanted-verse count.
 already disagree, so only those get re-read. "No divergences" means no divergence survived a
 procedure that never inspects the agreeing majority. The Exodus elyon's two real divergences
 cancelled in the token count, so equal totals are not agreement either.
+
+**On a page where a divergence is expected, the asymmetry runs the other way** — the loop
+re-examines only positions that already disagree, so on such a page it pushes toward
+*confirming* the thing you went in expecting. Run the eight-strand `--site` check before
+forming a view, not after, and where possible get evidence the loop had no stake in. The one
+that worked on p. 247 was **re-running the whole comparison against a different strand**: the
+transcription agreed with the p-trad everywhere except the Shabbat commandment and with the
+m-trad exactly there, the two partitioning the differences with nothing left over. Agreement
+over a contiguous run with a strand nothing had flagged is positive evidence; a flagged
+position surviving a re-read is not.
 
 **Legarmeh vs. narrow-sense paseq is not checkable against the vendored data.** Its fetch folds
 `{{מ:לגרמיה}}` and `{{מ:פסק}}` both onto U+05C0, so those positions score as neither agreement
