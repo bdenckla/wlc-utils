@@ -8,7 +8,7 @@ module supports the stronger, accent-by-accent claim, by diffing a hand transcri
 printed accents against the vendored ``in/accgram/printed_decalogue_teamim.json``.
 
 A transcription is primary observation, read off the printed page (see
-``in/accgram/simanim_transcriptions/``).  It cannot be derived from anything in the repo, so it
+``in/accgram/edition_transcriptions/``).  It cannot be derived from anything in the repo, so it
 is committed input, not generated output.  What this module adds is that the comparison becomes
 mechanical and therefore repeatable: a re-vendoring or an upstream Wikisource revision that
 moves an accent fails the test rather than silently invalidating prose on a page.
@@ -94,8 +94,12 @@ _LEGARMEH_TOKENS = ("mun-leg", "mun-PASOLEG")
 
 
 def transcriptions_dir() -> Path:
-    """Committed hand transcriptions, one file per edition-Decalogue."""
-    return repo_paths.in_dir() / "accgram" / "simanim_transcriptions"
+    """Committed hand transcriptions, one file per edition-Decalogue.
+
+    Filenames are ``<edition>_<book>_<reading>``: the same Decalogue exists in more than one
+    edition, so the edition has to be in the stem for the stems to stay distinct.
+    """
+    return repo_paths.in_dir() / "accgram" / "edition_transcriptions"
 
 
 @dataclasses.dataclass(frozen=True)

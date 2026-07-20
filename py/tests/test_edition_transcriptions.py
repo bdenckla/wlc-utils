@@ -42,7 +42,7 @@ from accgram import printed_decalogue_strands as pds
 # skeleton is stable, readable in a diff, and does not embed a fragile sequence of combining
 # marks in this file.
 _EXPECTED_DIVERGENCES = {
-    "ex_elyon": [
+    "simanim_ex_elyon": [
         # base_skeleton drops the maqaf along with the points, so the reference's joining of
         # these two atoms -- the very thing at issue -- is not visible in the pinned skeleton.
         ("", "mun", "ובנךובתך"),
@@ -92,7 +92,9 @@ def test_simanim_ex_elyon_agrees_on_every_chanted_verse_boundary() -> None:
     mid-verse -- and it is the claim the Simanim page's title actually rests on.
     """
     source = _source_or_skip()
-    transcription = et.load_transcription(et.transcriptions_dir() / "ex_elyon.txt")
+    transcription = et.load_transcription(
+        et.transcriptions_dir() / "simanim_ex_elyon.txt"
+    )
     ref, _, _ = et.reference_tokens(source, transcription.key)
     assert ref.count("silsof") == 9
     assert list(transcription.tokens).count("silsof") == ref.count("silsof")
@@ -108,7 +110,9 @@ def test_known_divergences_leave_the_disjunctive_skeleton_alone() -> None:
     """
     conjunctive_or_absent = {"", "mun", "mer", "mah", "dar", "qad", "tq", "mer2"}
     source = _source_or_skip()
-    transcription = et.load_transcription(et.transcriptions_dir() / "ex_elyon.txt")
+    transcription = et.load_transcription(
+        et.transcriptions_dir() / "simanim_ex_elyon.txt"
+    )
     for difference in et.compare(source, transcription):
         for token in difference.reference + difference.transcribed:
             assert (
