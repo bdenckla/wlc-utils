@@ -252,7 +252,12 @@ _HTML = """<!doctype html>
   #status { color: #9a9; }
   #hint { color: #777; font-size: 13px; }
   #wrap { padding: 16px; }
-  #sheet { position: relative; display: inline-block; }
+  /* max-width so the page always fits its viewport.  The rendering is wider than a narrow
+     window -- 1200px by default -- and without this the document overflows horizontally,
+     which reads as the page being split rather than merely scrolled.  Scaling it down costs
+     nothing: every line coordinate below is a PERCENTAGE of the container, so the hit targets
+     and entry fields follow the image to whatever width it lands at. */
+  #sheet { position: relative; display: inline-block; max-width: 100%; }
   #sheet img { display: block; width: 100%; }
 
   /* One click target per printed line, lying over the image. */
@@ -304,6 +309,14 @@ const sheet = document.getElementById("sheet");
 const saved = JSON.parse(localStorage.getItem(KEY) || "{}");
 const hits = [], entries = [], inputs = [];
 
+// Typical distance from one line's top to the next, as a percentage of image height.  Printed
+// lines are evenly spaced, so the median is a good estimate of where a line's successor starts
+// -- which is what the LAST line needs, having no successor to measure.  Median rather than
+// mean because a band that merged two printed lines, or one holding a heading, would drag a
+// mean upward; there is at least one such band on a typical page.
+const PITCHES = ROWS.slice(1).map((r, i) => r.top - ROWS[i].top).sort((a, b) => a - b);
+const PITCH = PITCHES.length ? PITCHES[Math.floor(PITCHES.length / 2)] : 0;
+
 ROWS.forEach((r, idx) => {
   const hit = document.createElement("div");
   hit.className = "hit";
@@ -315,11 +328,17 @@ ROWS.forEach((r, idx) => {
 
   const entry = document.createElement("div");
   entry.className = "entry";
-  // Sit just below the line.  The last line has nothing beneath it on the page, so its field
-  // goes above instead rather than hanging off the bottom edge.
-  const below = r.top + r.height;
+  // Always below the line, the last one included.  Sit at the NEXT line's top, so the field
+  // covers the next line -- never the one being read -- and the whole inter-line gap below
+  // the current line stays visible, descenders and lower accents included.
+  //
+  // The last line has no next band, so estimate one at the median pitch.  Two earlier tries
+  // were worse: putting the field above the last line (to avoid the page's bottom edge)
+  // covered the very line being read, and putting it at the band's own bottom clipped that
+  // line's descenders.  The bottom edge is not a real constraint anyway -- the page's own
+  // bottom margin leaves room under the last band.
   const next = ROWS[idx + 1];
-  entry.style.top = (next ? next.top : Math.max(0, r.top - r.height)) + "%";
+  entry.style.top = (next ? next.top : r.top + PITCH) + "%";
   const num = document.createElement("span");
   num.className = "num";
   num.textContent = r.n;
