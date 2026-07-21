@@ -32,6 +32,22 @@ Crop tight enough to exclude the neighbouring column: a sliver of foreign glyphs
 shows up in the debug overlay. Open `.novc/scans/<stem>-editor.html` in the Browser pane. A
 Decalogue spanning two printed pages gets one editor per page.
 
+**Opening a local file in the Browser pane works, and sessions keep concluding it does not.**
+No dev server and no `.claude/launch.json` are needed or wanted — a `file://` URL with an
+absolute path in forward slashes is enough: `preview_start` with
+`file:///C:/.../wlc-utils/.novc/scans/<stem>-editor.html`, then `tabs_context` to see which
+tab actually holds it, then a screenshot **with an explicit `tabId`**. Four things mislead,
+each looking like "the file did not load": `computer` without a `tabId` fails
+input-validation, which reads as a load failure on the first screenshot; `navigate` reports
+success while the content lands in a different tab than the id passed, leaving the named one
+answering "No site is open in this tab"; the pane fits an image to the viewport and does not
+scroll, so a tall debug overlay is unreadable there and the Read tool on the PNG is the better
+check anyway; and the "renders as static snapshots" note means only that there is no
+live-reload — scripts run, the editor's inputs accept typing, and its `localStorage` survives
+across sessions, which is what makes the typed-line persistence below work at all.
+Regenerating a PNG in place will **not** refresh an open tab, so write a fresh filename and
+open a fresh tab, and screenshot before believing any of it.
+
 **That "tight" is about the HORIZONTAL bound only. Vertically, do the opposite: crop to the
 middle of the line above and the middle of the line below.** Hebrew stacks marks above *and*
 below its letters, so a vertical crop trimmed to the transcribed text cuts the outermost line's
