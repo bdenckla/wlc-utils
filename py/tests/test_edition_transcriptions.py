@@ -108,6 +108,18 @@ _EXPECTED_DIVERGENCES = {
         ("mun mun", "", "אתה"),
         ("mah pash zaq", "", "ושורך"),
     ],
+    # Koren's Exodus main Decalogue (taxton, pp. 113-114) diverges NOWHERE: 142 reference
+    # tokens against 142.  The second transcription for which "follows the p-trad in every
+    # accent" holds, and the first for an edition other than Simanim.
+    #
+    # What it licenses is narrower than the count suggests, and the .txt header says so at
+    # length.  The Shabbat commandment cannot discriminate in EXODUS -- ex/taxton/printed and
+    # ex/taxton/manuscript are identical at כל־מלאכה, both geresh -- so this is no support
+    # for Koren following the p-trad there; the printed/manuscript split at Shabbat is
+    # Deuteronomy-only.  Nor does the pasoleg discriminate: ex/taxton has exactly one, on אתה,
+    # in both traditions.  The one discriminator this Decalogue reaches is the CHANTED VERSE
+    # BOUNDARY at עבדים, pinned below at 13.
+    "koren_ex_taxton": [],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
@@ -117,6 +129,11 @@ _CHANTED_VERSES = {
     "simanim_ex_taxton": 13,
     "simanim_dt_elyon": 9,
     "simanim_dt_taxton": 13,
+    # The p-trad taxton's own division, and for Koren the ONE thing this Decalogue adjudicates:
+    # עבדים takes etnaxta in ex/taxton/manuscript, which runs 12 chanted verses, but closes its
+    # own verse in ex/taxton/printed, which runs 13.  Everything else on these pages is common
+    # to both traditions.
+    "koren_ex_taxton": 13,
 }
 
 # Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
@@ -129,6 +146,7 @@ _SKELETON_UNTOUCHED = {
     "simanim_ex_elyon",
     "simanim_ex_taxton",
     "simanim_dt_elyon",
+    "koren_ex_taxton",
 }
 
 # Transcriptions carrying a reading the transcriber flagged as not fully read off the page,
@@ -136,7 +154,14 @@ _SKELETON_UNTOUCHED = {
 # reading supplied from expectation agrees with the reference by construction, so it sits in
 # the agreeing majority nothing re-reads, and an empty divergence list absorbs it silently.
 # Pinning the count is what stops the flag evaporating when the .txt is re-derived.
-_UNCERTAIN_READINGS: dict[str, int] = {}
+_UNCERTAIN_READINGS = {
+    # p. 114 line 1, the לא of לא תרצח: taken as merkha partly from expectation, the mark
+    # being unclear on the scan.  Bounded by what the word discriminates -- all four taxton
+    # strands have merkha there and all four elyon tipexa, so it is a taxton/elyon
+    # discriminator, not a p-trad/m-trad one, and cannot touch the finding above.  To be
+    # checked against the physical book (Ben regains access about 2026-09-08).
+    "koren_ex_taxton": 1,
+}
 
 
 def _source_or_skip() -> dict:
