@@ -32,6 +32,21 @@ Crop tight enough to exclude the neighbouring column: a sliver of foreign glyphs
 shows up in the debug overlay. Open `.novc/scans/<stem>-editor.html` in the Browser pane. A
 Decalogue spanning two printed pages gets one editor per page.
 
+**That "tight" is about the HORIZONTAL bound only. Vertically, do the opposite: crop to the
+middle of the line above and the middle of the line below.** Hebrew stacks marks above *and*
+below its letters, so a vertical crop trimmed to the transcribed text cuts the outermost line's
+marks off — and a half-line of context is what lets its own above-marks be told apart from the
+last full line's below-marks. Be decisive about it, because the half-measure is the worst
+option: a crop that clips only a *sliver* of the next line leaves a fragment shorter than a
+half-line, which `_absorb_slivers` folds into the last real band. On Koren A5-D-281 a bottom of
+0.5945 clipped line 17, and 0.610/0.614 — chosen to avoid exactly that — gave the last band a
+height of 208 and 232 px against a true 127. Clear the next line entirely, or take half of it.
+
+The editor now says so itself: it warns when a band is too tall to be one line (the merge
+above), and notes when the first or last band touches a crop edge. The note is deliberately not
+a warning, since on a correct crop the outermost band *is* the context half-line and touches the
+edge by design — check which band number it names.
+
 **Measure the column's edges; do not eyeball them.** On C247 a crop guessed by eye landed
 ~0.006 of the page width inside the true right edge and clipped the first letter of every line
 — in RTL, where the line *starts*. The debug overlay does not show this: a third of a letter

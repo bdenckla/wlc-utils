@@ -189,6 +189,69 @@ def _absorb_slivers(bands: list[tuple[int, int]], unit: int) -> list[tuple[int, 
     return [(a, b) for a, b in out]
 
 
+def crop_warnings(bands: list[tuple[int, int]], height: int) -> list[tuple[str, str]]:
+    """Complaints about where the vertical crop was placed, as ``(level, message)``.
+
+    Both failures below are SILENT otherwise: the debug overlay draws a plausible band either
+    way, so a clipped line and a merged one look like an ordinary line in the picture.
+
+    A Hebrew crop should reach the MIDDLE of the neighbouring printed line, not stop tight at
+    the transcribed text -- Hebrew stacks marks above AND below the letters, and a half-line's
+    own above-marks are what let them be told apart from the last full line's below-marks.
+    That leaves two ways to get the vertical bound wrong, and they pull in opposite directions:
+
+    * Too tight, and the outermost line is clipped.  Koren p. 281's first crop cut the bottom
+      four source pixels off line 17, taking part of the under-letter marks with it -- and
+      tipexa, merkha and munax all sit under the letter.
+    * Not tight enough to clear the next line, but not far enough to include it either.  A
+      clipped sliver is shorter than SLIVER_FRACTION of a line, so ``_absorb_slivers`` folds
+      it into the last real band, which is right for a fragment shaved off by a split and
+      wrong for a genuine neighbour cut by the crop.  On that same page, bottoms of 0.610 and
+      0.614 gave the last band a height of 208 and 232 px against a true 127.
+
+    So: clear the next line entirely, or take half of it, and never a sliver.
+
+    LEVELS, and why they differ.  A merged band is unambiguously wrong, so it warns.  A band
+    touching the crop edge is NOT: on a correct crop the outermost band IS the half-line of
+    context the rule asks for, and it necessarily touches the edge.  Nothing in the geometry
+    separates that from a transcribed line cut short -- both are simply short -- so it is a
+    note that states both readings rather than a warning that would fire on every correct crop
+    and teach the reader to ignore it.
+    """
+    if not bands:
+        return []
+    out: list[tuple[str, str]] = []
+    heights = sorted(b - a for a, b in bands)
+    median = heights[len(heights) // 2]
+    for i, (top, bottom) in enumerate(bands, start=1):
+        if bottom - top > MAX_LINE_UNITS * median:
+            out.append(
+                (
+                    "WARNING",
+                    f"band {i} is {bottom - top}px against a median of {median}px -- it has"
+                    " probably absorbed a clipped sliver of a neighbouring line."
+                    "  Clear that line or take half of it; a sliver is the one bad choice",
+                )
+            )
+    edges = [
+        (name, i)
+        for name, i, touching in (
+            ("first", 1, bands[0][0] <= 0),
+            ("last", len(bands), bands[-1][1] >= height),
+        )
+        if touching
+    ]
+    for name, i in edges:
+        out.append(
+            (
+                "note",
+                f"the {name} band (band {i}) touches the crop edge: intended if it is the"
+                " half-line of context, clipped if it is a line you mean to transcribe",
+            )
+        )
+    return out
+
+
 def source_fingerprint(src: Path) -> dict:
     """Identify the exact scan file a transcription was read from.
 
@@ -513,6 +576,8 @@ def main() -> None:
             f"  line height min/median/max: {min(heights)}/"
             f"{sorted(heights)[len(heights) // 2]}/{max(heights)} px"
         )
+    for level, message in crop_warnings(bands, img.height):
+        print(f"  {level}: {message}")
     print(f"editor -> {html}")
 
 
