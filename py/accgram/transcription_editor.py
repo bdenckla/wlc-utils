@@ -68,6 +68,10 @@ MAX_LINE_UNITS = (
 # Safe at half a line because a SHORT line is short horizontally, not vertically: it still
 # stands a full line tall, so this cannot swallow one.
 SLIVER_FRACTION = 0.5
+# A hung closing line (see _recover_trailing_line) carries far less ink than a full line, being
+# horizontally short, but far more than a speck.  Below this fraction of a full line's ink, a
+# tail run is a smudge, not a word.
+TRAIL_INK_FRACTION = 0.03
 
 
 def _take(args: list[str], flag: str, count: int) -> list[str] | None:
@@ -98,14 +102,24 @@ def smooth(values: list[float], radius: int) -> list[float]:
     return out
 
 
-def find_bands(profile: list[float]) -> list[tuple[int, int]]:
-    """Contiguous row ranges that hold text, as (top, bottom) pairs."""
+def _ink_cutoff(profile: list[float]) -> float:
+    """The per-row ink fraction at which a row counts as text.
+
+    Relative to the page's own baseline (a 5th-percentile gap row, border rule included) and a
+    busy row (90th percentile, a full line), so a crop that clips the vertical border rule -- a
+    constant ink offset in every row, gaps included -- does not move it.
+    """
     ordered = sorted(profile)
     baseline = ordered[
         int(0.05 * (len(ordered) - 1))
     ]  # a gap row, border rule included
     busy = ordered[int(0.90 * (len(ordered) - 1))]  # a full line of text
-    cutoff = baseline + INK_CUTOFF * (busy - baseline)
+    return baseline + INK_CUTOFF * (busy - baseline)
+
+
+def find_bands(profile: list[float]) -> list[tuple[int, int]]:
+    """Contiguous row ranges that hold text, as (top, bottom) pairs."""
+    cutoff = _ink_cutoff(profile)
 
     bands, start = [], None
     for i, value in enumerate(profile):
@@ -132,7 +146,7 @@ def find_bands(profile: list[float]) -> list[tuple[int, int]]:
     heights = sorted(b - a for a, b in merged)
     median = heights[len(heights) // 2]
     kept = [(a, b) for a, b in merged if (b - a) >= MIN_LINE_FRACTION * median]
-    return _split_tall(kept, profile)
+    return _recover_trailing_line(_split_tall(kept, profile), profile)
 
 
 def _split_tall(
@@ -187,6 +201,54 @@ def _absorb_slivers(bands: list[tuple[int, int]], unit: int) -> list[tuple[int, 
         else:
             out.append([top, bottom])
     return [(a, b) for a, b in out]
+
+
+def _recover_trailing_line(
+    bands: list[tuple[int, int]], profile: list[float]
+) -> list[tuple[int, int]]:
+    """Append a genuine trailing short line that the min-height filter discarded.
+
+    Koren routinely hangs a Decalogue's closing word on a line of its own.  Such a word is short
+    HORIZONTALLY, so even its densest rows clear the ink cutoff only faintly, and the sub-cutoff
+    gaps between its letters' cores break it into fragments each below MIN_LINE_FRACTION of a
+    line -- fragments too far apart to merge -- so find_bands drops the whole word as speckle.
+    But it is a real printed line with no field to type into: a silent hole in the transcription.
+
+    Recover it, but only from the region BELOW the last kept band, so this is purely additive at
+    the tail and can never renumber a line already found.  Bracket the tail's ink and append it
+    as a final band only when it is line-like on the three counts that separate a hung word from
+    the two false positives the min-height filter exists to suppress, plus a clipped neighbour:
+
+    * tall enough -- at least half a line -- so a thin decorative rule (which survives find_bands
+      as a sliver of its own) is not taken for a line;
+    * inky enough -- a word-like fraction of a full line's ink -- so a speck or a faint smudge is
+      not, even one that happens to span half a line;
+    * clear of the crop's bottom edge, so a real next line the crop clipped to a stub at the very
+      bottom is left to ``crop_warnings`` rather than recovered as though it were a whole line.
+    """
+    if not bands:
+        return bands
+    height = len(profile)
+    heights = sorted(b - a for a, b in bands)
+    unit = heights[
+        max(0, len(heights) // 4)
+    ]  # a single line: short lines are narrow, not shallow
+    line_ink = sorted(sum(profile[a:b]) for a, b in bands)[len(bands) // 2]
+
+    cutoff = _ink_cutoff(profile)
+    inked = [i for i in range(bands[-1][1], height) if profile[i] >= cutoff]
+    if not inked:  # blank bottom margin: the ordinary, correct case
+        return bands
+    top, bottom = inked[0], inked[-1] + 1
+    if bottom - top < SLIVER_FRACTION * unit:  # a thin rule or sliver, not a line
+        return bands
+    if sum(profile[top:bottom]) < TRAIL_INK_FRACTION * line_ink:  # a speck, not a word
+        return bands
+    if (
+        height - bottom < MIN_LINE_FRACTION * unit
+    ):  # jammed on the crop edge: maybe clipped
+        return bands
+    return bands + [(top, bottom)]
 
 
 def crop_warnings(bands: list[tuple[int, int]], height: int) -> list[tuple[str, str]]:
