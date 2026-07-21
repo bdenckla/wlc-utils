@@ -45,8 +45,16 @@ left-edge clip endangers postpositives.
 Hebrew is typed, not Latin: translating every mark in your head while holding your place on the
 line is the thing to avoid. Any **unique prefix of the accent's Hebrew name** works — `זר`
 zarqa, `פז` pazer, `סג` segolta — and the full name always does. An ambiguous prefix is rejected
-with its candidates rather than guessed. `תג`/`תק` and `גר` are explicit exceptions; `מונ_לג` is
-munaḥ legarmeh; `[פסק]` records a narrow-sense paseq.
+with its candidates rather than guessed. `תג`/`תק` and `גר` are explicit exceptions.
+
+Three ways to record a pasoleg, and which one is right is a fact about the **edition**, not
+about the position: `מונ_לג` (`mun_leg` in the `.txt`) asserts munaḥ legarmeh, `[פסק]`
+(`[paseq]`) asserts a narrow-sense paseq, and `[פסלג]` (`[pasoleg]`) says only that a stroke
+stands there. The third exists because not every edition draws the distinction — Koren prints
+the stroke without saying which it is, so either of the first two would claim more than the
+book does. Record which the edition does in the `.txt` header, as
+`pasoleg_kinds: distinguished` or `not distinguished`; a test then holds a `not distinguished`
+transcription to using no kind-asserting notation, in either file and either spelling.
 
 Three joiners now, and they are not interchangeable. `-` is a **maqaf**, binding two accents
 into one chanted word (`mun-mer`). `+` is its **simple-word** counterpart — two accents on a
@@ -96,9 +104,13 @@ For any difference, before calling it an accent difference:
   ```bash
   .venv/Scripts/python.exe py/accgram/transcription_check.py --site השבת לקדשו
   ```
-  The site is located by the skeleton of the word *and* of the word after it. Confirm it returns
-  eight hits: Deuteronomy's tenth commandment opens ולא where Exodus's opens לא, and a filter
-  that misses that once made a four-strand result look like eight.
+  The site is located by the skeleton of the word *and* of the word after it. Confirm all eight
+  strands are **listed**, and that every zero-hit row has an explanation — the word is absent
+  from that strand's text, or the pair straddles a chanted-verse boundary there — rather than a
+  skeleton typo. Do not expect eight *hits*: a word present in all eight gives eight, and the
+  השבת example above is one (Deuteronomy's tenth commandment opens ולא where Exodus's opens לא,
+  and a filter that missed that once made a four-strand result look like eight), but a
+  legitimate discriminator gives fewer — `אתה ובנך` hits only the two `ex/taxton` strands.
 
 ## 4. Commit the pair
 

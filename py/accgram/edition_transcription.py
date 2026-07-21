@@ -190,6 +190,30 @@ HEBREW_MODIFIERS = {
     "לגרמיה": "leg",
 }
 
+# The bracketed asides a transcription may carry, each mapped onto the way the .txt spells it
+# and the pasoleg KIND it records.  An aside is not an accent and is dropped from both token
+# streams; what it adds is the one fact the vendored data cannot hold, since that fetch folds
+# {{מ:לגרמיה}} and {{מ:פסק}} alike onto U+05C0 -- WHICH kind of stroke stands there.
+#
+# Three kinds, not two, because an edition may not draw the distinction at all.  Koren prints
+# the stroke without saying which it is, so writing either מונ_לג (asserting legarmeh) or
+# [פסק] (asserting narrow-sense paseq) would claim something the book does not; [פסלג] says
+# "a pasoleg stands here, kind unspecified".  The name is the repo's existing portmanteau for
+# exactly this ambiguity -- PASOLEG in mb_cmn/hebrew_punctuation.py.
+#
+# Both spellings of each aside are keys, because the two serializations differ: the editor
+# takes Hebrew and the .txt is written in ASCII, and an overclaim can re-enter through either.
+PASOLEG_ASIDES = {
+    "[פסק]": ("[paseq]", "paseq"),
+    "[paseq]": ("[paseq]", "paseq"),
+    "[פסלג]": ("[pasoleg]", "unspecified"),
+    "[pasoleg]": ("[pasoleg]", "unspecified"),
+}
+
+# Notation that asserts a pasoleg's kind, in either serialization and either spelling.  An
+# edition whose header says it does not distinguish the two must contain none of these.
+KIND_ASSERTING = ("mun_leg", "מונ_לג", "[פסק]", "[paseq]")
+
 
 def _resolve_name(
     written: str, names: dict[str, str], shorthand: dict[str, str]
@@ -219,6 +243,63 @@ def hebrew_token(written: str) -> str:
     if not joiner:
         return accent
     return accent + UNIT_JOINER + _resolve_name(tail, HEBREW_MODIFIERS, {})
+
+
+def _aside(written: str) -> tuple[str, str]:
+    """One bracketed aside -> ``(the .txt's spelling of it, the pasoleg kind it records)``.
+
+    Unknown asides RAISE rather than falling back to a kind.  The fallback used to be
+    "paseq", which turned any aside nobody had taught this vocabulary into a silent claim
+    that a narrow-sense paseq stands there -- the strongest of the three kinds, asserted by
+    accident.  Positional asides such as ``[page break]`` live only in .txt bodies today, and
+    if one ever reaches an export -- plausible once Koren's two-page Deuteronomy is typed --
+    raising forces the vocabulary to be extended deliberately.
+    """
+    try:
+        return PASOLEG_ASIDES[written]
+    except KeyError:
+        raise ValueError(
+            f"unknown transcription aside {written!r}:"
+            f" expected one of {sorted(PASOLEG_ASIDES)}"
+        ) from None
+
+
+def aside_kind(written: str) -> str:
+    """The pasoleg kind a bracketed aside records: paseq, or unspecified."""
+    return _aside(written)[1]
+
+
+UNCERTAIN_FIELDS = ("word", "reading", "why")
+
+
+def uncertain_readings(pages: list[dict]) -> list[dict]:
+    """Every reading the transcriber flagged as not fully read off the page.
+
+    A transcription's authority is that it is primary observation, so a token supplied partly
+    from context or expectation -- because the scan is blotched, or the printing is -- is a
+    hole in exactly that claim.  It is also the hole the review loop can never find: a reading
+    taken from expectation matches the reference BY CONSTRUCTION, so it lands in the agreeing
+    majority the loop never inspects, and a "no divergences" result silently absorbs it.
+    Hence recorded per line in the export, reported by ``transcription_check``, and counted in
+    the .txt header, where a test holds the count to what the export actually carries.
+
+    Each entry names the ``word``, the ``reading`` taken, and ``why`` it is uncertain; the page
+    and line come from where it sits.  Resolving one means going back to the printed page --
+    the physical book, if the scan is what is at fault -- and either confirming the reading or
+    correcting it, then dropping the entry.
+    """
+    out: list[dict] = []
+    for page in pages:
+        label = page.get("stem", "?").split("_")[-1]
+        for line in page["lines"]:
+            for entry in line.get("uncertain", []):
+                missing = [f for f in UNCERTAIN_FIELDS if not entry.get(f)]
+                if missing:
+                    raise ValueError(
+                        f"{label} line {line['n']}: uncertain entry missing {missing}"
+                    )
+                out.append({**entry, "page": label, "line": line["n"]})
+    return out
 
 
 def transcriptions_dir() -> Path:
@@ -362,9 +443,9 @@ def hebrew_chunks(lines: list[str]) -> list[str]:
 
     ``rejoin_editor_chunks`` undoes the editor's line breaks first; the asides it keeps in
     place are dropped here, exactly as ``load_transcription`` drops them from the .txt.
-    ``[פסק]``, marking where a narrow-sense paseq stands, is the one in use: worth recording
-    on the page it was read from, but not an accent and so not a token on either side of the
-    comparison.
+    ``[פסק]`` and ``[פסלג]`` (see ``PASOLEG_ASIDES``) are worth recording on the page they
+    were read from, but neither is an accent and so neither is a token on either side of the
+    comparison.  ``txt_lines`` is the derivation that keeps them.
     """
     items = [(chunk, None) for line in lines for chunk in line.split()]
     return [
@@ -372,6 +453,30 @@ def hebrew_chunks(lines: list[str]) -> list[str]:
         for written, _ in rejoin_editor_chunks(items)
         if not written.startswith("[")
     ]
+
+
+def txt_lines(lines: list[str]) -> list[str]:
+    """The editor's per-line strings -> the .txt body, ONE .txt line per printed line.
+
+    The .txt a transcription is committed as is DERIVED from the corrected export rather than
+    typed a second time, so the two cannot drift; this is that derivation.  It differs from
+    ``hebrew_chunks`` in two ways, both of them about being a body rather than a token stream:
+    the printed line structure is kept, so a token can still be checked against the line it
+    was read off, and asides are kept too, spelled the way the .txt spells them.
+
+    Keeping the aside is the point of having one.  It is dropped from both token streams --
+    it is not an accent -- so the .txt body is the only place a reader of the committed file
+    can see that a stroke stood there and which kind it was; simanim_dt_elyon.txt shows its
+    ``[paseq]`` inline for exactly that reason.  A rejoined maqaf compound lands on the line
+    it STARTED on, matching what ``rejoin_editor_chunks`` carries.
+    """
+    items = [(chunk, i) for i, line in enumerate(lines) for chunk in line.split()]
+    out: list[list[str]] = [[] for _ in lines]
+    for written, i in rejoin_editor_chunks(items):
+        out[i].append(
+            _aside(written)[0] if written.startswith("[") else _hebrew_chunk(written)
+        )
+    return [" ".join(parts) for parts in out]
 
 
 def _hebrew_chunk(chunk: str) -> str:

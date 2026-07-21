@@ -113,6 +113,12 @@ def _pasolegs(pages: list[dict]) -> list[tuple[int, str]]:
     them with reference positions.  A pasoleg is pinned to the accent that bears it, so a
     compound is walked part by part: a legarmeh on a compound's second atom is at the second
     atom's index, not the compound's first.
+
+    Kind comes from the aside's own vocabulary (``et.aside_kind``), which is where the three
+    kinds are defined and where an unrecognized aside raises.  This function used to label
+    EVERY bracketed aside "paseq" regardless of what it said, so an edition that prints the
+    stroke without distinguishing its kind -- Koren does not -- had no way to be recorded
+    without asserting one.
     """
     out: list[tuple[int, str]] = []
     index = 0
@@ -120,7 +126,7 @@ def _pasolegs(pages: list[dict]) -> list[tuple[int, str]]:
         if chunk.startswith("["):
             # An aside describes the token before it; none exists yet at index 0.
             if index:
-                out.append((index - 1, "paseq"))
+                out.append((index - 1, et.aside_kind(chunk)))
             continue
         for offset, (accent, _) in enumerate(et.editor_accents(chunk)):
             if et.UNIT_JOINER in accent:
@@ -206,6 +212,19 @@ def report(pages: list[dict], key: tuple[str, str, str]) -> None:
     for i in spots:
         if i not in matched:
             print(f"    ref {i:3d} has a pasoleg in the reference only  {words[i]}")
+
+    # Printed LAST because it is the one thing a clean report does not otherwise say.  A
+    # reading supplied from expectation agrees with the reference by construction, so it sits
+    # in the agreeing majority this loop never inspects -- "0 difference regions" is exactly
+    # the result that hides it, which is why it is reported even when nothing else is wrong.
+    unresolved = et.uncertain_readings(pages)
+    if unresolved:
+        print(f"\n-- {len(unresolved)} reading(s) NOT fully read off the page --")
+        for entry in unresolved:
+            print(
+                f"  {entry['page']} line {entry['line']}: {entry['word']}"
+                f" read as {entry['reading']} -- {entry['why']}"
+            )
 
 
 def site_report(skeleton: str, next_skeleton: str) -> None:

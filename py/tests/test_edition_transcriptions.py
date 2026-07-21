@@ -131,6 +131,13 @@ _SKELETON_UNTOUCHED = {
     "simanim_dt_elyon",
 }
 
+# Transcriptions carrying a reading the transcriber flagged as not fully read off the page,
+# stem -> how many.  Pinned because this is the one doubt the review loop CANNOT surface: a
+# reading supplied from expectation agrees with the reference by construction, so it sits in
+# the agreeing majority nothing re-reads, and an empty divergence list absorbs it silently.
+# Pinning the count is what stops the flag evaporating when the .txt is re-derived.
+_UNCERTAIN_READINGS: dict[str, int] = {}
+
 
 def _source_or_skip() -> dict:
     src = pd.default_source_path()
@@ -262,6 +269,112 @@ def test_a_modifier_cannot_stand_alone_as_an_accent() -> None:
     """לגרמיה names a mark bound into an accent, not an accent, so it is not a token."""
     with pytest.raises(ValueError, match="unknown"):
         et.hebrew_token("לגרמיה")
+
+
+@pytest.mark.parametrize(
+    "written,expected",
+    [
+        ("[פסק]", "paseq"),
+        ("[paseq]", "paseq"),  # the .txt's spelling of the same aside
+        ("[פסלג]", "unspecified"),
+        ("[pasoleg]", "unspecified"),
+    ],
+)
+def test_an_aside_records_the_kind_it_names(written: str, expected: str) -> None:
+    """Three pasoleg kinds, and the aside says which -- it is no longer assumed.
+
+    ``unspecified`` is what an edition that prints the stroke WITHOUT distinguishing legarmeh
+    from narrow-sense paseq needs; Koren is one, so writing מונ_לג or [פסק] there would assert
+    something the book does not say.  Both spellings resolve, because the editor takes Hebrew
+    and the .txt is written in ASCII.
+    """
+    assert et.aside_kind(written) == expected
+
+
+@pytest.mark.parametrize("written", ["[page break]", "[p. 209]", "[]"])
+def test_an_unknown_aside_raises_rather_than_becoming_a_paseq_claim(
+    written: str,
+) -> None:
+    """The old fallback made every unrecognized aside a silent narrow-sense-paseq claim.
+
+    Positional asides like these live only in .txt bodies today, which ``_pasolegs`` never
+    reads; if one ever reaches an export, raising forces the vocabulary to be extended
+    deliberately instead of quietly asserting the strongest of the three kinds.
+    """
+    with pytest.raises(ValueError, match="unknown transcription aside"):
+        et.aside_kind(written)
+
+
+def test_txt_lines_keeps_the_printed_line_structure_and_the_asides() -> None:
+    """The .txt body is DERIVED from the export: one .txt line per printed line, asides kept.
+
+    Asides are dropped from both token streams, so the body is the only place a reader of the
+    committed file sees that a stroke stood there and which kind it was.  A maqaf compound
+    split by a line break lands on the line it STARTED on, as everywhere else.
+    """
+    maqaf = "\N{HEBREW PUNCTUATION MAQAF}"
+    lines = [f"מונח{maqaf}", "מרכא [פסלג] קדמא+גרש", "מונ_לג [פסק]"]
+    assert et.txt_lines(lines) == [
+        "mun-mer",
+        "[pasoleg] qad+ger",
+        "mun_leg [paseq]",
+    ]
+
+
+def _export_pages(stem: str) -> list[dict]:
+    """One transcription's editor export(s): a two-page Decalogue holds one per page."""
+    record = json.loads(
+        (et.transcriptions_dir() / f"{stem}.json").read_text(encoding="utf-8")
+    )
+    return record.get("pages", [record])
+
+
+def _kind_agnostic_stems() -> list[str]:
+    """Transcriptions whose header says the edition does not distinguish the two kinds."""
+    return sorted(
+        t.path.stem
+        for t in et.load_all_transcriptions()
+        if t.header.get("pasoleg_kinds") == "not distinguished"
+    )
+
+
+@pytest.mark.parametrize("stem", _kind_agnostic_stems() or ["(none committed)"])
+def test_a_kind_agnostic_edition_asserts_no_kind_anywhere(stem: str) -> None:
+    """``pasoleg_kinds: not distinguished`` must hold in BOTH files and BOTH spellings.
+
+    Whether an edition distinguishes legarmeh from narrow-sense paseq is a fact about the
+    physical book that is recorded nowhere else, so the header records it -- and this is what
+    makes the header load-bearing rather than decorative.  Checking one file or one spelling
+    would miss half the ways the overclaim can re-enter: the committed files write asides in
+    ASCII in the .txt and in Hebrew in the JSON, and מונ_לג/mun_leg asserts legarmeh without
+    an aside at all.
+
+    Scoped to where notation can actually LIVE -- the .txt's non-comment lines and the
+    export's typed line texts -- rather than to the raw bytes of each file.  Scanning whole
+    files fails on a header that explains why the edition uses none of these, which is exactly
+    the prose a reader most needs; a guard that forbids naming the thing it forbids is too
+    blunt to keep.
+    """
+    if not _kind_agnostic_stems():
+        pytest.skip("no kind-agnostic transcription committed")
+    txt = et.transcriptions_dir() / f"{stem}.txt"
+    written = [
+        line
+        for line in txt.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.strip().startswith("#")
+    ]
+    typed = [
+        text
+        for page in _export_pages(stem)
+        for line in page["lines"]
+        for text in (line["text"], line.get("corrected_from", ""))
+    ]
+    for source, lines in ((txt.name, written), (f"{stem}.json", typed)):
+        for line in lines:
+            for notation in et.KIND_ASSERTING:
+                assert (
+                    notation not in line
+                ), f"{source} asserts a pasoleg kind: {notation} in {line!r}"
 
 
 def _stems_with_exports() -> list[str]:
@@ -399,13 +512,6 @@ def test_to_reference_maps_through_the_diff_not_by_raw_index() -> None:
     assert tc._to_reference(4, opcodes) == (2, True)
 
 
-def _export_pages(stem: str) -> list[dict]:
-    record = json.loads(
-        (et.transcriptions_dir() / f"{stem}.json").read_text(encoding="utf-8")
-    )
-    return record.get("pages", [record])
-
-
 @pytest.mark.parametrize("stem", _stems_with_exports() or ["(none committed)"])
 def test_pasolegs_land_on_reference_pasoleg_positions(stem: str) -> None:
     """Every pasoleg that maps exactly through the diff lands on a reference U+05C0 position.
@@ -459,3 +565,46 @@ def test_deuteronomy_taxton_pasoleg_is_transcribed_128_reference_127() -> None:
     spots = [i for i, w in enumerate(words) if et.PASEQ in w and ref[i] == "mun"]
     assert spots == [84, 127]
     assert pds.base_skeleton(words[84]) == "אתה"
+
+
+@pytest.mark.parametrize("stem", _stems_with_exports() or ["(none committed)"])
+def test_uncertain_readings_are_pinned_in_both_the_export_and_the_txt_header(
+    stem: str,
+) -> None:
+    """A flagged reading must survive in the JSON AND be declared in the .txt header.
+
+    Both halves matter and for different reasons.  The JSON entry is the substance -- which
+    word, what was taken, why -- and is what ``transcription_check`` prints on every run.  The
+    header count is what a reader of the committed .txt sees without opening the export, and
+    what would go missing first if the .txt were ever re-derived by something that did not
+    know about the field.  Pinning them against each other, and both against this table, is
+    what keeps a doubt from quietly becoming a claim.
+    """
+    if not _stems_with_exports():
+        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
+    expected = _UNCERTAIN_READINGS.get(stem, 0)
+    found = et.uncertain_readings(_export_pages(stem))
+    assert len(found) == expected
+    header = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt").header
+    assert int(header.get("uncertain_readings", 0)) == expected
+
+
+@pytest.mark.parametrize("stem", _stems_with_exports() or ["(none committed)"])
+def test_the_derived_txt_body_holds_the_same_accents_as_the_export(stem: str) -> None:
+    """``txt_lines`` and ``hebrew_chunks`` differ only in structure, never in accents.
+
+    The derivation that writes a committed .txt is the one that keeps the printed lines and
+    the asides, so it is not the function the export/txt agreement test runs through.  Pin
+    that the two stay the same transcription: drop the asides and the line breaks from the
+    derived body and the token stream must be identical.
+    """
+    if not _stems_with_exports():
+        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
+    lines = [line["text"] for export in _export_pages(stem) for line in export["lines"]]
+    derived = [
+        chunk
+        for txt_line in et.txt_lines(lines)
+        for chunk in txt_line.split()
+        if not chunk.startswith("[")
+    ]
+    assert derived == et.hebrew_chunks(lines)
