@@ -120,6 +120,15 @@ _EXPECTED_DIVERGENCES = {
     # in both traditions.  The one discriminator this Decalogue reaches is the CHANTED VERSE
     # BOUNDARY at עבדים, pinned below at 13.
     "koren_ex_taxton": [],
+    # Also empty, but this one licenses far more than the Exodus page above.  The Deuteronomy
+    # taxton strands differ in five independent ways and Koren takes the p-trad side of every
+    # one: כל־מלאכה (geresh / pazer), ועבדך־ואמתך (revia / telisha gedola), וכל־בהמתך (zaqef /
+    # revia -- dt/taxton/printed is the ONLY one of the eight strands to depart there), the
+    # pasoleg on אתה (present / absent, so the pasoleg COUNT discriminates), and the chanted
+    # verse boundary at עבדים pinned below.  The first four sit inside the Shabbat commandment,
+    # exactly where simanim_dt_taxton departs TO the m-trad -- so these two transcriptions
+    # disagree about the same commandment, and neither is the other's rounding error.
+    "koren_dt_taxton": [],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
@@ -134,6 +143,10 @@ _CHANTED_VERSES = {
     # own verse in ex/taxton/printed, which runs 13.  Everything else on these pages is common
     # to both traditions.
     "koren_ex_taxton": 13,
+    # Same boundary, in Deuteronomy: עבדים takes etnaxta in dt/taxton/manuscript (12 verses)
+    # and closes its own verse in dt/taxton/printed (13).  Unlike Exodus, this is only one of
+    # five discriminators the page reaches -- see the divergence pin above.
+    "koren_dt_taxton": 13,
 }
 
 # Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
@@ -147,6 +160,7 @@ _SKELETON_UNTOUCHED = {
     "simanim_ex_taxton",
     "simanim_dt_elyon",
     "koren_ex_taxton",
+    "koren_dt_taxton",
 }
 
 # Transcriptions carrying a reading the transcriber flagged as not fully read off the page,
@@ -161,6 +175,12 @@ _UNCERTAIN_READINGS = {
     # discriminator, not a p-trad/m-trad one, and cannot touch the finding above.  To be
     # checked against the physical book (Ben regains access about 2026-09-08).
     "koren_ex_taxton": 1,
+    # p. 281 line 2, the tipexa on את־שמו: an artifact overlies the mark, from the scan or the
+    # printing.  Bounded even more tightly than the Exodus one -- ALL EIGHT strands have tipexa
+    # there, so it discriminates nothing whatever and at worst is a lone accent against every
+    # strand.  Ben raised the doubt during transcription with a provisional "?" suffix, which
+    # is not supported notation; it moved here and survives in the line's corrected_from.
+    "koren_dt_taxton": 1,
 }
 
 
