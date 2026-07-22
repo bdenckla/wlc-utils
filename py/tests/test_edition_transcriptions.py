@@ -129,6 +129,27 @@ _EXPECTED_DIVERGENCES = {
     # exactly where simanim_dt_taxton departs TO the m-trad -- so these two transcriptions
     # disagree about the same commandment, and neither is the other's rounding error.
     "koren_dt_taxton": [],
+    # Koren's Exodus APPENDIX Decalogue (elyon, p. 38) is the FIRST Koren page to diverge:
+    # 142 reference tokens against 144, at TWO points.  Both are WORD-DIVISION differences, not
+    # tradition ones -- at two maqaf compounds the vendored ex/elyon/printed strand writes as a
+    # single chanted word, Koren prints the two atoms as separate accented words:
+    #   * לֹא יִהְיֶה לְךָ (20:3): Koren gives יהיה its own munax where the reference joins
+    #     יהיה־לך (so יהיה carries only a meteg).  The region anchors at the reference word לא,
+    #     hence the "לא" skeleton; the inserted accent is the munax on יהיה.
+    #   * אַתָּה וּבִנְךָ וּבִתֶּךָ (Shabbat): Koren gives ובנך its own munax where the reference
+    #     joins ובנך־ובתך.  base_skeleton drops the maqaf, so it pins as "ובנךובתך" -- the same
+    #     limitation, and the SAME divergence token for token, as simanim_ex_elyon above.
+    # Both inserted accents are conjunctive (munax), so the disjunctive skeleton is untouched
+    # (koren_ex_elyon is in _SKELETON_UNTOUCHED below).  The ובנך split is corroborated: the two
+    # ex/taxton strands separate ובנך with a munax too, and simanim_ex_elyon pins the identical
+    # region -- two independently transcribed elyon editions splitting where the vendored elyon
+    # strand joins.  The יהיה split is Koren-alone: no vendored strand separates יהיה־לך and
+    # simanim_ex_elyon does not either.  The .txt header states that asymmetry rather than hiding
+    # it.  The chanted verse boundary at עבדים stays p-trad (9 verses, pinned below).
+    "koren_ex_elyon": [
+        ("", "mun", "לא"),
+        ("", "mun", "ובנךובתך"),
+    ],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
@@ -147,6 +168,11 @@ _CHANTED_VERSES = {
     # and closes its own verse in dt/taxton/printed (13).  Unlike Exodus, this is only one of
     # five discriminators the page reaches -- see the divergence pin above.
     "koren_dt_taxton": 13,
+    # The elyon's own division, and the one thing this Decalogue was expected to reach: עבדים
+    # closes its own verse in ex/elyon/manuscript (10 verses) but runs on in ex/elyon/printed
+    # (9).  This transcription has 9, the printed side.  Its two divergences are both mid-verse,
+    # so they leave the boundary count alone.
+    "koren_ex_elyon": 9,
 }
 
 # Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
@@ -161,6 +187,10 @@ _SKELETON_UNTOUCHED = {
     "simanim_dt_elyon",
     "koren_ex_taxton",
     "koren_dt_taxton",
+    # Its two divergences insert a munax each -- a conjunctive -- where Koren splits a maqaf
+    # compound the reference joins, so no disjunctive is added or removed.  A word-division
+    # difference, like simanim_ex_elyon, not the disjunctive swap simanim_dt_taxton makes.
+    "koren_ex_elyon",
 }
 
 # Transcriptions carrying a reading the transcriber flagged as not fully read off the page,
