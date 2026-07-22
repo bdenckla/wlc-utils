@@ -41,6 +41,14 @@ from accgram import transcription_check as tc
 # The two cancel in the token count (+1 munax, -1 merkha), which is why the totals match at
 # 142 despite two real divergences.  Do not read equal totals as agreement.
 #
+# RE-TRANSCRIBED 2026-07-22 with the line editor, this file having been the last one with no
+# committed export, and the divergence set came back UNCHANGED -- the same two regions, token
+# for token, from an independent second reading of the same pages.  What the redo did add is the
+# audit trail (so every export-based test below now covers this stem too) and the pasoleg KINDS,
+# which the first transcription's conventions had dropped: Simanim distinguishes the two, and
+# the four strokes split 2 narrow paseq (16 פסל, 19 בשמים) and 2 legarmeh (25 במים, 75 שבת),
+# each landing on its exact reference position.
+#
 # Words are pinned by LETTER SKELETON (``pds.base_skeleton``), not by their pointed form: the
 # skeleton is stable, readable in a diff, and does not embed a fragile sequence of combining
 # marks in this file.
@@ -476,7 +484,9 @@ def test_a_kind_agnostic_edition_asserts_no_kind_anywhere(stem: str) -> None:
 def _stems_with_exports() -> list[str]:
     """Transcriptions that have the line editor's JSON export committed beside them.
 
-    Not all do: simanim_ex_elyon was transcribed before the editor existed.
+    All of them do, as of the simanim_ex_elyon redo: it was the last one transcribed before the
+    editor existed, and re-doing it closed the gap.  The lookup stays a glob rather than a list
+    because a transcription typed but not yet exported is the state this is meant to tolerate.
     """
     return sorted(p.stem for p in et.transcriptions_dir().glob("*.json"))
 
