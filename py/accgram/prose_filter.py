@@ -36,9 +36,10 @@ _BHS_RANGE_EXCLUSIONS: frozenset[tuple[str, int, int, int]] = frozenset(
 # Within the Decalogue ranges, these verses are single-cantillation in WLC *and* MAM
 # (their only doubled marks are pashta stress-helpers, not dual cantillation), so they
 # are ordinary prose: they route through the normal checker rather than the
-# dual-cantillation detangler (issue #36; verified via
-# ``.novc/novc_dualcant_survey.py`` and cross-checked against MAM in
-# ``tests/test_dual_cant_detangle.py``).  Everything else in the ranges is dual and
+# dual-cantillation detangler (issue #36; established by a one-off corpus survey run in
+# gitignored scratch, now gone, and cross-checked against MAM in
+# ``tests/test_dual_cant_detangle.py``, which is where the finding actually lives).
+# Everything else in the ranges is dual and
 # stays excluded for the detangler.
 _BHS_SINGLE_CANT_IN_RANGE: frozenset[tuple[str, int, int]] = frozenset(
     {

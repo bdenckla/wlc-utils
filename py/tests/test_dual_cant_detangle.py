@@ -4,7 +4,9 @@ Drives all three loci (Gen 35:22 + the two Decalogues) through the detangler and
 *existing* prose grammar.  The corpus-backed assertions skip when the WLC 4.22 kq-u
 corpus or MAM-simple is absent.
 
-The fixed expectations come from the verified survey (``.novc/novc_dualcant_survey.py``):
+The fixed expectations were originally derived from a one-off corpus survey run in gitignored
+scratch, which no longer exists; this test is now their record, and the assertions below are
+what re-derives them.  They are:
 
   * exactly 5 supplied marks (clean charities; dt 5:8's taxton qadma has non-definitive
     LC support) and 1 anomaly -- WLC's dt 5:8 merkha, a stray in the elyon (a real accent

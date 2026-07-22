@@ -39,9 +39,10 @@ regress "main" to "running text" here: the Simanim page's docstring is the fulle
 rule.  (Note Koren is a **Tanakh**, not a ḥumash -- the Simanim page glosses this same pair as "the
 running ḥumash", which is right for its Torah-only Tiqqun but would be wrong here.)
 
-DRAFT-STAGE FACTS TO VERIFY (see .novc/pending_koren_page_edits.md): the page numbers (113 / A38)
-come from the committed scan filenames; and רוו״ה is *tentatively* expanded to Wolf Heidenheim
-(likely but unconfirmed, flagged as such in the rendered notation line).
+DRAFT-STAGE FACTS TO VERIFY (issue #70, which collects everything awaiting the physical book):
+the page numbers (113 / A38) come from the committed scan filenames, as does the fact that the
+page never says where the appendix physically sits; and רוו״ה is *tentatively* expanded to Wolf
+Heidenheim (likely but unconfirmed, flagged as such in the rendered notation line).
 
 The appendix's separate pagination IS now confirmed (Ben, 2026-07-15), which is why every citation
 of it reads "p. A38", never a bare "p. 38": the appendix restarts its own page numbering at 1, so

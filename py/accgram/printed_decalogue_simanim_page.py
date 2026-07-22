@@ -63,8 +63,9 @@ THIS page (keep them when editing):
 
 Regenerate with ``main_accgram.py generate-html``; test with
 ``tests/test_printed_decalogue_simanim.py`` (plus the tree-wide
-``tests/test_transliterations.py``).  A running edit log lives in the gitignored
-``.novc/pending_simanim_page_edits.md``.
+``tests/test_transliterations.py``).  The 2026-07-10 editorial pass that established the
+conventions above kept a running edit log in gitignored scratch; every item was applied and the
+durable rules were folded into this docstring, which is now their only home.
 """
 
 from __future__ import annotations
