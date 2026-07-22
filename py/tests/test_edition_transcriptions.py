@@ -150,6 +150,21 @@ _EXPECTED_DIVERGENCES = {
         ("", "mun", "לא"),
         ("", "mun", "ובנךובתך"),
     ],
+    # Koren's Deuteronomy APPENDIX Decalogue (elyon, p. 39) diverges NOWHERE: 164 reference
+    # tokens vs 164, agreeing at every accent.  It is the counterpart to koren_ex_elyon, and the
+    # contrast is the point.  Where the Exodus elyon page SPLITS two maqaf compounds the vendored
+    # strand joins (יהיה־לך and ובנך־ובתך), printing each atom as its own accented word, this page
+    # JOINS both, matching dt/elyon/printed -- so that split is a fact about Koren's Exodus page,
+    # not a house style.  Checked against all eight strands: none anywhere separates יהיה from לך,
+    # and in Deuteronomy all four dt strands JOIN ובנך־ובתך.  That last is the REVERSE of Exodus,
+    # where the two ex/taxton strands split ובנך and so corroborated the koren_ex_elyon split; in
+    # Deuteronomy no strand splits it, so a split here would have been Koren-alone -- and Koren
+    # makes none.  One token-invisible word-division difference is kept in the .txt but is not a
+    # divergence: לא־תעשה is a maqaf compound on the page (mun-mun, line 12) where the reference
+    # sets לא and תעשה apart, both munax, so the token stream is identical either way.  Three
+    # transcription slips were corrected before this list: line 5 and line 8 each skipped a munax
+    # on כי, and line 9 read ינקה as pazer where all eight strands (and the page) have pashta.
+    "koren_dt_elyon": [],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
@@ -173,6 +188,10 @@ _CHANTED_VERSES = {
     # (9).  This transcription has 9, the printed side.  Its two divergences are both mid-verse,
     # so they leave the boundary count alone.
     "koren_ex_elyon": 9,
+    # The elyon's own division again, in Deuteronomy: עבדים closes its own verse in
+    # dt/elyon/manuscript (10) but runs on in dt/elyon/printed (9).  This transcription has 9,
+    # the printed side, with no divergence anywhere to move a boundary.
+    "koren_dt_elyon": 9,
 }
 
 # Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
@@ -191,6 +210,8 @@ _SKELETON_UNTOUCHED = {
     # compound the reference joins, so no disjunctive is added or removed.  A word-division
     # difference, like simanim_ex_elyon, not the disjunctive swap simanim_dt_taxton makes.
     "koren_ex_elyon",
+    # Zero divergences at all, so nothing touches the skeleton -- the strongest case here.
+    "koren_dt_elyon",
 }
 
 # Transcriptions carrying a reading the transcriber flagged as not fully read off the page,
