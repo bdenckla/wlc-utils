@@ -13,8 +13,16 @@ Run from anywhere (each step resolves paths via ``repo_paths.repo_root()``):
 
 Five independent steps, in order:
 
-1. Wipe the gitignored ``.novc/`` scratch dir. Everything in it is a
-   regenerable download cache or tool output, never a durable result.
+1. Wipe the gitignored ``.novc/`` scratch dir. Everything in it is MEANT to be
+   a regenerable download cache or tool output, never a durable result -- but
+   that is a rule about how to use the directory, not a fact about what is in
+   it, and this step cannot tell the difference. It has already destroyed one
+   durable result: a dual-cantillation survey that ``prose_filter`` and
+   ``tests/test_dual_cant_detangle`` both cited as their provenance. Before
+   wiping, check that nothing in ``.novc/`` is the sole home of a decision or a
+   pending item, and promote anything that is -- to an issue, to ``doc/``, or
+   into the docstring of the code it explains. ``grep -rn '\.novc' py/ doc/``
+   finds the citations worth honouring.
 2. Run ``black --check py``. Check-only: drift is reported, never
    auto-reformatted -- repo-wide reformatting is its own deliberate commit.
    Like lint, failures set the overall exit status but do not block the
