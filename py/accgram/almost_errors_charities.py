@@ -1,8 +1,7 @@
 """The "Editorial charities" section of the "almost errors" page.
 
-The charities the checker quietly applies: a prose geresh muqdam read as a plain
-geresh, and a stray poetic geresh read as a geresh muqdam (Psalms 124:4).
-Pure prose -- no parse trees -- so this module needs only the shared link helpers.
+One ``*_section`` function per charity, after the section intro.  Pure prose -- no
+parse trees -- so this module needs only the shared link helpers.
 """
 
 from __future__ import annotations

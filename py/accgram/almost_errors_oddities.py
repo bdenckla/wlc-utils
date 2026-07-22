@@ -1,19 +1,9 @@
 """The "Masoretically-blessed oddities" section of the "almost errors" page.
 
-Legitimate masoretic tradition the checker accepts (not charities), where its
-only decision is one of representation.  Two exhibits, each backed by live parse
-trees from ``almost_errors_trees``:
-
-  * the **telisha gedola + geresh/gershayim** five-word exhibit, whose alternate-
-    reading trees show that the checker's choice (keep both, in the manuscript's
-    mark order) is the most faithful of several grammatically-clean options; and
-  * **Ezekiel 20:31's mahapakh + qadma**, the only word in Tanakh with two
-    conjunctive accents on one letter, where the verdict table shows the fusion
-    is all but forced by the grammar; and
-  * **Psalms 17:14's double tsinnor**, the Three Books' only run of two
-    consecutive identical dividers, which the checker accepts by collapsing the
-    repeated divider to one before parsing (the full account links out to the
-    standalone deep-dive page).
+One ``*_section`` function per exhibit, in document order.  The telisha gedola and
+Ezekiel 20:31 exhibits are backed by live trees and verdicts from
+``almost_errors_trees``; the Psalms 17:14 double tsinnor is not (see
+``double_tsinnor_section``) and links out to its standalone deep-dive page.
 """
 
 from __future__ import annotations
@@ -35,14 +25,12 @@ from accgram.prose_scanner import HasLegarmeh
 from py_html import wlc_utils_html as H
 from py_wlc import my_wlc_bcv_str
 
-# The five WLC words carrying BOTH a telg and a gerstar -- the checker keeps both,
-# reading them in their Unicode (manuscript) mark order.  (gn5:29 / zp2:15 same-letter;
-# 2k17:13 same-letter with geresh muqdam; lv10:4 / ek48:10 cross-letter, same word.)
+# The five WLC words carrying BOTH a telg and a gerstar, in page-table order.
 _TELG_EXHIBIT_REFS = ("gn5:29", "zp2:15", "2k17:13", "lv10:4", "ek48:10")
 
-# The two verses whose full alternate-reading trees the exhibit draws: one same-letter
-# (zp2:15), one cross-letter (lv10:4).  The other three get a verdict-table row only --
-# their trees differ in the same place and would only repeat the lesson.
+# The two verses whose full parse trees the exhibit draws.  The other three get a
+# forms-table row only -- their trees differ in the same place and would only repeat
+# the lesson.
 _TELG_TREE_REFS = ("zp2:15", "lv10:4")
 
 _TELG_MODES = (
@@ -463,9 +451,9 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
     )
 
 
-# The standalone Psalms 17:14 deep-dive (manuscript images, MAM documentation notes,
-# Breuer's structural analysis).  This page carries only the short summary and links out;
-# the verse left the poetic ungrammatical-verse report once the checker began accepting it.
+# The standalone Psalms 17:14 deep-dive.  This page carries only the short summary and
+# links out; the verse left the poetic ungrammatical-verse report once the checker began
+# accepting it.
 _PS17V14_DEEP_DIVE = "ps17v14-double-tsinnor.html"
 
 
@@ -473,10 +461,8 @@ def double_tsinnor_section() -> tuple[object, ...]:
     """The Psalms 17:14 double-tsinnor exhibit: a third representation choice (count a
     repeated divider once), summarized here and linked to its standalone deep dive.
 
-    No parse tree, unlike the telg / ek20:31 exhibits: the underlying LALR(1) grammar
-    cannot parse the doubled mark directly, which is exactly why the checker collapses the
-    repeat in a pre-parse step rather than admitting it through a grammar rule -- so there
-    is no alternate-reading tree to show."""
+    Takes no index or parser, unlike the telg / ek20:31 exhibits: there is no
+    alternate-reading tree to draw (the prose below says why)."""
     return (
         H.heading_level_3("Double tsinnor (Psalms 17:14)"),
         verse_links("ps17:14"),

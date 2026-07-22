@@ -96,12 +96,9 @@ def render_body_contents(
 ) -> tuple[object, ...]:
     sections: list[object] = [
         *_intro(),
-        # Charities: forgive a genuine LC/BHS/WLC quirk or anomaly.
         *charities_intro(),
         *geresh_muqdam_section(),
         *ps124_section(),
-        # Masoretically-blessed oddities: legitimate tradition the checker accepts,
-        # where the only decision is representation (which the telg exhibit makes visible).
         *oddities_intro(),
         *telg_section(index, parser, has_legarmeh),
         *ek2031_section(index, parser, has_legarmeh),
