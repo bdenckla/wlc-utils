@@ -197,6 +197,34 @@ corrected export rather than typing it, so the two cannot drift; a correction ma
 goes into the JSON with the superseded reading kept in `corrected_from`, and into the `.txt`
 header.
 
+**Both of those are one tool now — `py/accgram/transcription_build.py`. Do not write a script
+per transcription.** Thirteen near-duplicate ones had accumulated in `.novc/` before it existed
+([#72](https://github.com/bdenckla/wlc-utils/issues/72)), and the last two had already diverged
+on whether a page's trailing empty lines are dropped — which is a difference in what gets
+committed, not in style.
+
+```bash
+.venv/Scripts/python.exe py/accgram/transcription_build.py <stem> --export <path>... --corrections <path>
+```
+
+- `--export` takes one downloaded export per page, **in page order**; more than one gets the
+  `pages` wrapper, one is committed as the bare export.
+- `--corrections` and `--uncertain` are `{"p298": {"15": <value>}}`, keyed by the page label
+  `transcription_check` reports an origin as. Both are **throwaway files** — write them in
+  `.novc/`. The committed JSON is the durable record, since an applied correction keeps the
+  superseded reading in `corrected_from`; a tracked sidecar would be a third copy of the same
+  two strings. A key naming a page or a band that does not exist raises rather than silently
+  applying to nothing.
+- **The `.txt` header is never rewritten** — only the body beneath it. Write the header by hand
+  above the first derived body, and re-run with `--derive-only` after any later edit; that is
+  also the re-run after a post-export correction.
+- Empty `.txt` lines: **trailing** ones are dropped per page (the whole-page editor's bands run
+  past the Decalogue's end — eleven of them on p. 298), **interior** ones kept (a printed line
+  that really carries no accent; dropping it would shift every line number after it).
+- `--check` re-derives every committed stem's body and reports any that would change. The suite
+  runs it too (`test_the_committed_txt_is_byte_for_byte_its_own_derived_body`), so the mandatory
+  derive rule above is enforced by the tool that implements it rather than alongside it.
+
 Then pin the result in `py/tests/test_edition_transcriptions.py`: the divergence list (exactly,
 even when empty) and the chanted-verse count.
 

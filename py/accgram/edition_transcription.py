@@ -302,6 +302,21 @@ def uncertain_readings(pages: list[dict]) -> list[dict]:
     return out
 
 
+def is_header_field(stripped: str) -> bool:
+    """True when a stripped .txt line is a ``key: value`` header field, not a body line.
+
+    Shared with ``transcription_build``, which splits a committed .txt into the header it
+    preserves and the body it rewrites.  That split has to agree with what this module treats
+    as a field: a line the two classified differently would be preserved as header AND
+    regenerated as body, so it would be committed twice.  ``[paseq]`` is excluded because a
+    bracketed aside is a body chunk however it is spelled, and a field name with a space in it
+    is not a field -- a body line could otherwise open a header by accident.
+    """
+    if ":" not in stripped or stripped.startswith("["):
+        return False
+    return " " not in stripped.partition(":")[0].strip()
+
+
 def transcriptions_dir() -> Path:
     """Committed hand transcriptions, one file per edition-Decalogue.
 
@@ -540,11 +555,10 @@ def load_transcription(path: Path) -> Transcription:
         stripped = line.strip()
         if not stripped or stripped.startswith("#"):
             continue
-        if ":" in stripped and not stripped.startswith("["):
+        if is_header_field(stripped):
             field, _, value = stripped.partition(":")
-            if " " not in field.strip():
-                header[field.strip()] = value.strip()
-                continue
+            header[field.strip()] = value.strip()
+            continue
         for chunk in re.findall(r"\[[^\]]*\]|\S+", stripped):
             if chunk.startswith("["):
                 continue  # a bracketed aside such as "[page break]" carries no accent

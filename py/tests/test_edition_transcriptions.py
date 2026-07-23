@@ -20,6 +20,7 @@ import pytest
 from accgram import edition_transcription as et
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
+from accgram import transcription_build as tb
 from accgram import transcription_check as tc
 
 # The divergences established for each transcription, keyed by its filename stem.  Each entry
@@ -794,3 +795,56 @@ def test_the_derived_txt_body_holds_the_same_accents_as_the_export(stem: str) ->
         if not chunk.startswith("[")
     ]
     assert derived == et.hebrew_chunks(lines)
+
+
+@pytest.mark.parametrize("stem", _stems_with_exports() or ["(none committed)"])
+def test_the_committed_txt_is_byte_for_byte_its_own_derived_body(stem: str) -> None:
+    """``transcription_build --check``, graduated into the suite.
+
+    The workflow doc calls the derive step mandatory -- "derive the .txt from the corrected
+    export rather than typing it, so the two cannot drift" -- and the tests above enforce that
+    the two say the same ACCENTS.  This is stronger and cheaper: the committed file must be
+    exactly what re-deriving its body under its own header produces.  So the rule is now
+    enforced by the tool that implements it rather than alongside it, and a hand-edited body
+    line, a stale .txt, or a whitespace difference fails here rather than surviving because
+    the token streams happen to agree.
+
+    It is not hypothetical.  The per-transcription scratch scripts this replaced had already
+    diverged on whether a page's TRAILING empty lines are dropped, and the .txt committed by
+    the copy that did not carried a trailing blank line no derivation would produce.
+    """
+    if not _stems_with_exports():
+        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
+    committed = (et.transcriptions_dir() / f"{stem}.txt").read_text(encoding="utf-8")
+    assert tb.derived_text(stem) == committed
+
+
+def test_a_trailing_empty_band_is_dropped_per_page_and_an_interior_one_kept() -> None:
+    """The rule the two scratch copies disagreed about, pinned.
+
+    A band carrying no accent contributes an empty .txt line, and since the editor is built
+    over the whole page by default, its bands run past the Decalogue's end -- eleven of them on
+    p. 298, cleared as out of span.  Those are noise at the foot of a page and go.  An interior
+    empty line stays: it is a printed line that really carries no accent, and dropping it would
+    shift every line number after it away from the printed page.  Dropped PER PAGE, so an
+    out-of-span band at the foot of the first page does not survive into the page marker.
+    """
+    record = {
+        "pages": [
+            {
+                "stem": "demo_p350",
+                "lines": [
+                    {"n": 1, "text": "מונח"},
+                    {"n": 2, "text": ""},
+                    {"n": 3, "text": "מרכא"},
+                    {"n": 4, "text": ""},
+                    {"n": 5, "text": ""},
+                ],
+            },
+            {
+                "stem": "demo_p351",
+                "lines": [{"n": 1, "text": "טפחא"}, {"n": 2, "text": ""}],
+            },
+        ]
+    }
+    assert tb.body_lines(record) == ["mun", "", "mer", "", "[p. 351]", "tip"]
