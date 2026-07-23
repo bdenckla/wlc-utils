@@ -173,6 +173,23 @@ _EXPECTED_DIVERGENCES = {
     # transcription slips were corrected before this list: line 5 and line 8 each skipped a munax
     # on כי, and line 9 read ינקה as pazer where all eight strands (and the page) have pashta.
     "koren_dt_elyon": [],
+    # Simanim TANAKH's Exodus main Decalogue (taxton, pp. 119-120) -- a different edition from
+    # the Tiqqun though Feldheim publishes both, and the FIRST transcription pinned against a
+    # MANUSCRIPT-tradition strand: the eight above are all against a printed-tradition one.  It
+    # diverges NOWHERE: 142 reference tokens vs 142, agreeing at every accent, with the single
+    # pasoleg (אתה) on its exact reference position.
+    #
+    # What makes the empty list worth more than the usual "no divergence survived a procedure
+    # that only inspects candidate divergences" is the cross-strand re-run, and what makes it
+    # worth LESS is how little this Decalogue can decide.  Both are in the .txt header; the
+    # short form is that ex/taxton/manuscript and ex/taxton/printed differ in exactly THREE
+    # regions and nowhere else in 142 tokens -- אנכי (pashta / tipexa), אלהיך (zaqef qatan /
+    # etnaxta), and מבית עבדים (munax + etnaxta / merkha + silsof, the verse boundary pinned
+    # below at 12).  This transcription takes the m-trad side of all three; the other 133 tokens
+    # are identical in both traditions and so say nothing about which one the page follows.
+    # A re-vendoring that moved any of the three fails here rather than quietly turning the
+    # m-trad verdict into an unsupported one.
+    "simanim_tanakh_ex_taxton": [],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
@@ -200,6 +217,12 @@ _CHANTED_VERSES = {
     # dt/elyon/manuscript (10) but runs on in dt/elyon/printed (9).  This transcription has 9,
     # the printed side, with no divergence anywhere to move a boundary.
     "koren_dt_elyon": 9,
+    # The FIRST m-trad count pinned here, and the first that is not the printed tradition's.
+    # Same boundary as every entry above, taken the other way: עבדים carries an etnaxta and the
+    # chanted verse runs on into לא־יהיה לך, closing only at על־פני -- ex/taxton/manuscript's
+    # twelve, against ex/taxton/printed's thirteen.  Corroborated off the page independently of
+    # any mark, by the edition's own printed verse numbers, which run ב-יג: twelve.
+    "simanim_tanakh_ex_taxton": 12,
 }
 
 # Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
@@ -220,6 +243,8 @@ _SKELETON_UNTOUCHED = {
     "koren_ex_elyon",
     # Zero divergences at all, so nothing touches the skeleton -- the strongest case here.
     "koren_dt_elyon",
+    # Zero divergences too, and against a manuscript-tradition strand.
+    "simanim_tanakh_ex_taxton",
 }
 
 # Transcriptions carrying a reading the transcriber flagged as not fully read off the page,
