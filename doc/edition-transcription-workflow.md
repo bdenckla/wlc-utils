@@ -73,6 +73,16 @@ left-edge clip endangers postpositives.
 
 ## 2. Ben types; **Save JSON** exports to Downloads
 
+**Hand over the editor, do not merely announce that it exists.** The handoff is a step of this
+procedure, not a courtesy at the end of one: paste the `file://` URL of each page's editor in
+full so it can be clicked, say which bands to type and which are context to leave blank, and
+bring the page up in the Browser pane and screenshot it so the handoff message can state that
+the editor is live and how many bands it found. A turn that ends with the crops measured and no
+link is a turn that has not delivered the thing the transcriber needs. Keep the reasoning that
+led to the crop out of the handoff, or below the instructions; what belongs at the top is the
+URL, the band ranges, and any question only Ben can answer (whether the edition distinguishes
+paseq from legarmeh, say).
+
 Hebrew is typed, not Latin: translating every mark in your head while holding your place on the
 line is the thing to avoid. Any **unique prefix of the accent's Hebrew name** works — `זר`
 zarqa, `פז` pazer, `סג` segolta — and the full name always does. An ambiguous prefix is rejected
