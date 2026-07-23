@@ -132,6 +132,12 @@ font it may not match the body font — the introduction's rafe is a solid bar, 
 zigzag — so match a sign by the **example word**, not by its shape: the introduction's rafe
 example is Joshua 1:2 וכל־העם, and the main text at Joshua 1:2 has the zigzag over that same kaf.
 
+All sixteen of that introduction's *ma'alot* are indexed in
+[`doc/simanim-tanakh-signs.md`](simanim-tanakh-signs.md), which leads with the four signs that can
+be mistaken for accents — the rafe, the hollow-vs-solid stroke, the doubled accent of ma'ala 11
+that is nonetheless **one** accent, and the chronology ring that sits at accent height. Read it
+before transcribing anything further from that volume.
+
 Three joiners now, and they are not interchangeable. `-` is a **maqaf**, binding two accents
 into one chanted word (`mun-mer`). `+` is its **simple-word** counterpart — two accents on a
 word that is no compound at all, as in `קד+גר` on ויצאך (p. 247), where the first accent is by
