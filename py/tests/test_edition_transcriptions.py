@@ -190,6 +190,26 @@ _EXPECTED_DIVERGENCES = {
     # A re-vendoring that moved any of the three fails here rather than quietly turning the
     # m-trad verdict into an unsupported one.
     "simanim_tanakh_ex_taxton": [],
+    # Simanim TANAKH's Deuteronomy main Decalogue (taxton, pp. 297-298), the second m-trad pin
+    # here and by far the sharper test: where the Exodus taxton's two strands differ in only
+    # three regions, the two dt/taxton strands differ in EIGHT (issue #69 Result 6's five, plus
+    # the word division at לא תעשה, plus the stroke count).  This transcription takes the m-trad
+    # side of every one, so what is pinned below is the single place it agrees with NEITHER.
+    #
+    # qadma on ויום (5:13) where dt/taxton/manuscript -- and every other taxton strand -- has
+    # pashta.  Confirmed off the page rather than corrected: Ben flagged it while typing as a
+    # probable error in the edition and re-read it against a zoom.  All four ELYON strands do
+    # have qadma there, but the elyon pairs it with geresh on השביעי where this page keeps the
+    # taxton's zaqef qatan, so the page prints an elyon-shaped accent inside a taxton phrase
+    # rather than an elyon phrase.  The pair it makes, qadma before zaqef qatan, is the one the
+    # prose scanner reads as methiga-zaqef, so this is one attested zaqef phrase for another.
+    #
+    # It REMOVES a disjunctive, which is why this stem is absent from _SKELETON_UNTOUCHED -- the
+    # second transcription of the ten whose divergence touches the skeleton, after
+    # simanim_dt_taxton, and unlike that one it is a single word rather than a whole commandment.
+    "simanim_tanakh_dt_taxton": [
+        ("pash", "qad", "ויום"),
+    ],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
@@ -223,6 +243,11 @@ _CHANTED_VERSES = {
     # twelve, against ex/taxton/printed's thirteen.  Corroborated off the page independently of
     # any mark, by the edition's own printed verse numbers, which run ב-יג: twelve.
     "simanim_tanakh_ex_taxton": 12,
+    # The same m-trad twelve, in Deuteronomy: עבדים carries an etnaxta and the chanted verse
+    # runs on into לא־יהיה לך, against dt/taxton/printed's thirteen.  Corroborated off the page
+    # by the edition's own printed verse numbers, which run ו-יז: twelve.  This stem's one
+    # divergence is mid-verse, so it cannot move a boundary.
+    "simanim_tanakh_dt_taxton": 12,
 }
 
 # Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
@@ -361,6 +386,36 @@ def test_deuteronomy_taxton_does_touch_the_disjunctive_skeleton() -> None:
         if token not in _CONJUNCTIVE_OR_ABSENT
     }
     assert disjunctives == {"paz", "tg", "pash", "zaq"}
+
+
+def test_simanim_tanakh_deuteronomy_drops_one_disjunctive() -> None:
+    """The second stem to touch the skeleton, and it touches it the other way.
+
+    simanim_dt_taxton above swaps disjunctive FOR disjunctive across a whole commandment, which
+    is what makes it a tradition difference.  This one replaces a single pashta with a qadma, so
+    it REMOVES a disjunctive and adds nothing -- an edition's own departure, not a tradition's.
+    Pinned positively for the same reason as that test: a re-vendoring that made this
+    conjunctive-only, or a re-read that made the divergence vanish, should fail here rather than
+    quietly turning "follows dt/taxton/manuscript except at one word" into an unqualified claim.
+    """
+    stem = "simanim_tanakh_dt_taxton"
+    assert stem not in _SKELETON_UNTOUCHED
+    source = _source_or_skip()
+    transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
+    removed = [
+        token
+        for difference in et.compare(source, transcription)
+        for token in difference.reference
+        if token not in _CONJUNCTIVE_OR_ABSENT
+    ]
+    added = [
+        token
+        for difference in et.compare(source, transcription)
+        for token in difference.transcribed
+        if token not in _CONJUNCTIVE_OR_ABSENT
+    ]
+    assert removed == ["pash"]
+    assert added == []
 
 
 @pytest.mark.parametrize(

@@ -13,24 +13,39 @@ offer your own token readings as the transcription.
 ## 1. Find the page and build the editor
 
 Scans live outside the repo (see the `book-scan-page-naming` note; `WLC_SCANS_DIR` overrides
-the root). Render a whole page first to locate the Decalogue and pick a crop:
+the root). Render a whole page first to locate the Decalogue:
 
 ```bash
 .venv/Scripts/python.exe py/accgram/scan_page.py "Feldheim Simanim Tiqqun" C208 --width 1100
 ```
 
-Then build the per-line editor over the pointed text column only — a two-column page profiled
-whole has no clean troughs. `--debug` also writes `<stem>-lines.png` with the detected bands
-drawn on, which is worth checking before anyone types into it:
+Then build the per-line editor. **Default to the whole page — pass no `--crop` at all:**
 
 ```bash
-.venv/Scripts/python.exe py/accgram/transcription_editor.py "Feldheim Simanim Tiqqun" C208 \
-    --crop 0.452 0.540 0.856 0.830 --name simanim_dt_elyon_p208 --width 1300 --debug
+.venv/Scripts/python.exe py/accgram/transcription_editor.py "Feldheim Simanim Tanakh" A5-D-0297 \
+    --name simanim_tanakh_dt_taxton_p297 --width 2000 --debug
 ```
 
-Crop tight enough to exclude the neighbouring column: a sliver of foreign glyphs at either edge
-shows up in the debug overlay. Open `.novc/scans/<stem>-editor.html` in the Browser pane. A
-Decalogue spanning two printed pages gets one editor per page.
+**A crop is worth measuring only when a foreign column has to be excluded.** That is the
+Simanim Tiqqun and nothing else so far: it sets two columns, and a two-column page profiled
+whole has no clean troughs, since the columns' lines do not align. Marginal verse numbers and
+sidenotes are *not* a reason to crop — they fall inside their own line's band and produce no
+spurious ones. On a single-column edition a measured crop is worse than useless: it is where an
+edge lands a few pixels inside a prepositive or a postpositive, silently. Verified on Simanim
+Tanakh pp. 297–298 (2026-07-23), where the whole page gives one band per printed line on both,
+against a measured crop that had come out with 26 px of clearance at one edge.
+
+Raise `--width` rather than reaching for a crop to make the text legible on screen. Width
+affects only the reading; `zoom_line` works from the export's source-pixel coordinates and is
+unaffected by it.
+
+`--debug` writes `<stem>-lines.png` with the detected bands drawn on. **Check it before anyone
+types into the editor, and take the band NUMBERS off it** rather than counting printed lines:
+whether the running head and the ornament rule merge into one band or split into two shifts
+every number below them, and which happens turns on `--width`.
+
+Open `.novc/scans/<stem>-editor.html` in the Browser pane. A Decalogue spanning two printed
+pages gets one editor per page.
 
 **Opening a local file in the Browser pane works, and sessions keep concluding it does not.**
 No dev server and no `.claude/launch.json` are needed or wanted — a `file://` URL with an
@@ -47,6 +62,12 @@ live-reload — scripts run, the editor's inputs accept typing, and its `localSt
 across sessions, which is what makes the typed-line persistence below work at all.
 Regenerating a PNG in place will **not** refresh an open tab, so write a fresh filename and
 open a fresh tab, and screenshot before believing any of it.
+
+### When a crop IS needed
+
+Everything below applies only to the two-column case above. Crop tight enough horizontally to
+exclude the neighbouring column: a sliver of foreign glyphs at either edge shows up in the
+debug overlay.
 
 **That "tight" is about the HORIZONTAL bound only. Vertically, do the opposite: crop to the
 middle of the line above and the middle of the line below.** Hebrew stacks marks above *and*
@@ -75,13 +96,14 @@ left-edge clip endangers postpositives.
 
 **Hand over the editor, do not merely announce that it exists.** The handoff is a step of this
 procedure, not a courtesy at the end of one: paste the `file://` URL of each page's editor in
-full so it can be clicked, say which bands to type and which are context to leave blank, and
-bring the page up in the Browser pane and screenshot it so the handoff message can state that
-the editor is live and how many bands it found. A turn that ends with the crops measured and no
-link is a turn that has not delivered the thing the transcriber needs. Keep the reasoning that
-led to the crop out of the handoff, or below the instructions; what belongs at the top is the
-URL, the band ranges, and any question only Ben can answer (whether the edition distinguishes
-paseq from legarmeh, say).
+full so it can be clicked, and say which bands to type and which are context to leave blank. A
+turn that ends with the setup described and no link is a turn that has not delivered the thing
+the transcriber needs. **Do not open the editor in the in-app Browser pane to hand it over** —
+it renders badly there and the transcriber uses an external browser anyway; reach for the pane
+only when a task needs introspection an external browser cannot give. Keep the reasoning behind
+the setup out of the handoff, or below the instructions, and keep it short: what belongs at the
+top is the URL, the band ranges, and any question only Ben can answer (whether the edition
+distinguishes paseq from legarmeh, say).
 
 Hebrew is typed, not Latin: translating every mark in your head while holding your place on the
 line is the thing to avoid. Any **unique prefix of the accent's Hebrew name** works — `זר`
@@ -96,6 +118,19 @@ the stroke without saying which it is, so either of the first two would claim mo
 book does. Record which the edition does in the `.txt` header, as
 `pasoleg_kinds: distinguished` or `not distinguished`; a test then holds a `not distinguished`
 transcription to using no kind-asserting notation, in either file and either spelling.
+
+**Read the edition's own front matter before treating any of this as unobservable.** The
+Simanim Tanakh's introduction turns out to document its whole sign system, sixteen numbered
+*ma'alot* over pp. י-כז (scans `2-10`…`2-27`), and two questions that had been left open or
+assumed were answered flatly there. Its sixteenth says the narrow-sense paseq is printed as a
+**hollow** bar throughout the volume, leaving the solid bar to legarmeh — so `pasoleg_kinds` for
+that edition is documentary, not an inference from a sibling volume. Its ninth identifies the
+small **zigzag stroke above a letter**, which sits higher than any accent and is easy to mistake
+for one, as the **rafe**, restored "partially" in four listed situations. Both were noticed as
+puzzles on the page first; neither needed to be. Where the front matter draws a sign in a display
+font it may not match the body font — the introduction's rafe is a solid bar, the body's is the
+zigzag — so match a sign by the **example word**, not by its shape: the introduction's rafe
+example is Joshua 1:2 וכל־העם, and the main text at Joshua 1:2 has the zigzag over that same kaf.
 
 Three joiners now, and they are not interchangeable. `-` is a **maqaf**, binding two accents
 into one chanted word (`mun-mer`). `+` is its **simple-word** counterpart — two accents on a

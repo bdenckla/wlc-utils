@@ -72,13 +72,22 @@
 # cross-strand run above -- agreement over a contiguous run with a strand nothing had flagged --
 # not the empty difference list.
 #
-# PASOLEG KINDS: "distinguished" here is an ASSUMPTION about the edition, not yet an observation,
-# and this Decalogue cannot settle it.  ex/taxton has exactly ONE stroke in its whole span, on
-# אתה, so there is no second stroke to contrast it with and no narrow-sense paseq was seen on
-# these pages; the stroke is written mun_leg on the assumption that this edition draws the
-# distinction its sibling the Tiqqun draws.  The Deuteronomy main-text Decalogue (pp. 297-298,
-# issue #72's next box) has TWO stroke positions and is where the assumption can first be tested;
-# if it fails, this file's mun_leg becomes "[pasoleg]" and the header field "not distinguished".
+# PASOLEG KINDS: THE EDITION SAYS SO ITSELF, so "distinguished" is not an inference from the
+# sibling Tiqqun and does not wait on a second stroke to contrast with.  The sixteenth ma'ala of
+# its introduction (p. כז) is titled מונח־לגרמיה and sets out the two things the one glyph can be:
+# the ACCENT munax-legarmeh, which is in the list of accents, one of the light disjunctives; and
+# its non-accent fellow, which is not in that list but is a reading aid like maqaf, meaning only a
+# slight pause between two words, with no melody of its own.  Because the Masoretic פסיקתא lists
+# that record the second are not available to every reader, the edition prints THAT one -- the
+# narrow-sense paseq -- as a HOLLOW bar throughout the Tanakh, leaving the solid bar to legarmeh.
+# The page states the rule with the two glyphs set side by side, and its worked examples are
+# 1 Kings 7:25.  So this is a fact about the edition recorded in the edition, not a reading of any
+# one stroke.
+#
+# THE ONE STROKE HERE IS SOLID.  ex/taxton has exactly one in its whole span, on אתה in the
+# Shabbat commandment, and it is filled, not outlined -- so mun_leg is what the page says, and
+# the Deuteronomy main-text Decalogue (pp. 297-298, issue #72's next box), with TWO stroke
+# positions, is now a check on that reading rather than the first test of the assumption.
 #
 # The render crops in the JSON take the pointed text column only, measured from ink profiles
 # rather than eyeballed and then verified band by band with the editor's --debug.  Both margins
@@ -87,6 +96,21 @@
 # OUTER margin).  Each crop carries a context line the transcription does not use -- p. 119's
 # first band (וידבר אלהים, 20:1, before the strand's own span begins at אנכי) and p. 120's
 # fourth -- so that the outermost transcribed line's marks cannot be clipped.
+#
+# THE SMALL WAVY MARK ABOVE SOME WORDS IS THE RAFE.  It is NOT an accent and is NOT transcribed;
+# it is recorded here so a later reader does not take it for one.  The edition prints a short
+# zigzag stroke over a letter, sitting higher than any accent does, on words such as
+# וכל־תמונה, לא־תעשה, לא־תשתחוה, כל־מלאכה, עבדך and לא תגנב.  It is this edition's own form of
+# the rafe sign (סימן הרפה), the ninth ma'ala of its introduction (p. כב), which says the sign
+# was dropped from all existing Tanakhs and is restored here "partially", in four situations:
+# a word-initial bet/gimel/dalet/kaf/pe/tav after a word ending in alef, he, vav or yod; the same
+# after a shva na; after the he of a question; and wherever a misreading is likely.  Every
+# occurrence on these two pages falls under one of those.
+#
+# THE IDENTIFICATION IS DOCUMENTARY, NOT A GUESS FROM THE SHAPE, which matters because the
+# introduction draws the sign as a solid horizontal bar in its display font while the body font
+# draws it as the zigzag.  The introduction's own example is Joshua 1:2 וכל־העם, bar over the
+# kaf; the main text at Joshua 1:2 (p. 357) has the zigzag over that same kaf of that same word.
 #
 # Conventions in force for this file:
 #   * One token per ACCENT.  Normally that is one per chanted word, a maqaf compound being one
