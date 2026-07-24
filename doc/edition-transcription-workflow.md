@@ -10,6 +10,12 @@ divergences as established — so a machine-read token would be recorded as an e
 divergence rather than caught as an error. Offer zoomed crops to make the reading easier; never
 offer your own token readings as the transcription.
 
+**This whole procedure is for a *paper* edition — a page to read.** A *digital* edition, whose
+accents are already Unicode, is not transcribed at all: it is fetched and diffed, and none of
+§§1–4 below applies. That is a different track — no editor, no scan, no `corrected_from`, no
+uncertain readings — written up under [Digital sources](#digital-sources-fetched-not-transcribed)
+at the end.
+
 ## 1. Find the page and build the editor
 
 Scans live outside the repo (see the `book-scan-page-naming` note; `WLC_SCANS_DIR` overrides
@@ -256,3 +262,56 @@ position surviving a re-read is not.
 nor disagreement — see #69's re-vendoring item. MAM-parsed-plus *does* keep them distinct (cell
 E, per strand via `מ:כפול` א/ב), but only for the m-trad; see
 [#68](https://github.com/bdenckla/wlc-utils/issues/68).
+
+## Digital sources (fetched, not transcribed)
+
+Everything above is for a paper edition. A **digital** edition — one whose accents are already
+Unicode — has no page to read, so it is not a transcription: it is a **vendored strand**, fetched
+and diffed by machine. The one done so far is CTR, the Complete Tanach with Rashi on chabad.org
+([#73](https://github.com/bdenckla/wlc-utils/issues/73)); it is the same edition the Simanim page
+links to as "a p-trad Bible on the web". Only its two running-text Decalogues exist online, Exodus
+20 and Deuteronomy 5.
+
+**What is gone, and why.** There is no primary observation to audit, so the whole audit apparatus
+is absent: no line editor, no page scan or coordinates or sha256, no `corrected_from`, no
+`uncertain_readings`. The bytes *are* the reading. A transcription's authority is that a human read
+the marks off the page; a digital strand's is that nobody did — so the header claims a retrieval,
+not an observation, and the tests pin what the fetch found rather than what a reader saw.
+
+**The two pieces.**
+
+- `py/accgram/ctr_decalogue_fetch.py` is a network author-tool, in the mould of
+  `printed_decalogue_fetch.py`: it fetches the two chapter pages, extracts the accent-exact Hebrew
+  per verse, strips rendering cruft only (inline tags, the parenthetical ketiv note beside a qere,
+  non-breaking spaces, the bare ס/פ setuma/petuha markers) while **keeping CTR's own encoding
+  intact**, and writes the vendored `in/accgram/ctr_decalogue.json` with its provenance. Chabad
+  `403`s a bare tool User-Agent, so it sends a browser one. `--cache <dir>` re-vendors an
+  already-fetched snapshot without hitting the server again — use it rather than re-fetching.
+- `py/accgram/ctr_decalogue.py` is the comparison, and it runs **at the glyph level, not the
+  accent level**. A paper transcription resolves each mark to an accent because a reader
+  distinguishes a qadma from a pashta, or a yetiv from a mahapakh, by grammar and position — a
+  distinction the two members of each pair do not draw *graphically*. A digital source gives no
+  such reading, and CTR's encoding is nonstandard on top of that (it reuses one code point per
+  lookalike pair and leans on vowel-relative order — MAM-basics' `rocc_2_pre_vowel_accents_in_ctr`
+  documents this), so its bytes recover the **glyph** reliably but not always the accent. So each
+  lookalike pair is folded onto one glyph (qadma≡pashta, yetiv≡mahapakh, germuq≡geresh). This hides
+  nothing that matters: the accents that discriminate elyon from taxton and p-trad from m-trad are
+  not lookalike pairs, so the fold leaves every discriminator intact and gives up only the
+  azla-vs-pashta / mahapakh-vs-yetiv distinction CTR could not have expressed anyway.
+
+**The trap that replaces the review loop's asymmetry.** The glyph fold could in principle
+*manufacture* agreement, the way the paper loop's "re-read only the disagreements" can manufacture
+a clean result. The guard is the same in spirit: **the cross-strand re-run is mandatory**. Compare
+against the *other* tradition too; if agreement does not collapse there, a clean match against the
+expected strand is suspect. For CTR it collapses hard — Exodus 139/142 vs the elyon against 80/142
+vs the taxton; Deuteronomy 163/164 vs the taxton against 90/164 vs the elyon — which is the
+positive evidence, not the clean number on its own.
+
+**What it still takes a human to settle** is which strand the edition follows and what the residual
+differences mean — the same judgement §3 asks for, minus the reading. CTR's answer was a surprise
+worth stating: its **Exodus 20 carries the ta'am *elyon*** word-accents, not the taxton a running
+text was expected to hold (though it keeps its own numbered-verse division, 16 chanted verses, not
+the elyon's 9), while its **Deuteronomy 5 is the *taxton***, division and all. Every residual
+difference in both books is conjunctive — a munax CTR prints on the proclitic atom of a maqaf
+compound, or a munax/merkha swap — so the disjunctive skeleton, which is #69's surviving claim,
+holds. `py/tests/test_ctr_decalogue.py` pins all of it.
