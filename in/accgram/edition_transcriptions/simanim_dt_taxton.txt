@@ -78,6 +78,8 @@ book: dt
 reading: taxton
 tradition: printed
 pages: 247
+pasoleg_kinds: distinguished
+uncertain_readings: 0
 transcriber: Ben Denckla
 date: 2026-07-20
 
