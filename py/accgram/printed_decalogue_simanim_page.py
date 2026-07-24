@@ -22,11 +22,23 @@ Wikisource records as the printed tradition, and they match.  That body text is 
 not reproduced.  The two notes are secondary -- kept for the more-for-fun question of
 how aware Simanim is of having made the older, printed-tradition choice.
 
+Since issue #69 the finding rests on more than that comparison.  All EIGHT Decalogues on this page
+-- the Tiqqun's four and the Simanim *Tanakh*'s four -- have a committed hand transcription of
+every printed accent (``in/accgram/edition_transcriptions/simanim_*.txt``), diffed against the
+vendored strand and pinned by ``tests/test_edition_transcriptions.py``.  ``_tiqqun_verdict_table``
+and ``_tanakh_verdict_table`` render them, one row per Decalogue -- never one per edition, since
+p. 247's Shabbat departure and pp. 208-209's exact agreement cannot share a sentence.
+
+TWO SENSES OF "TRANSCRIPTION", KEPT APART (issue #69 decision 3a).  This page had the word first
+for the two *note* transcriptions -- the hand-set pointed Hebrew of the p. 83 and p. 246 notes,
+double-checked against the committed scans, and still the only hand-set Hebrew in this module.
+The accent transcriptions above are the other sense: a token per printed accent, machine-diffed,
+and never displayed as Hebrew.  On first mention call those "hand transcriptions of the printed
+accents"; where both senses appear in one section, the older one is "the note transcriptions".
+
 The four cantillation strands of the opening אנכי...מצותי span are derived live from the vendored
 ``in/accgram/printed_decalogue_teamim.json`` by the shared ``printed_decalogue_strands`` module
 and tabulated on the companion page; this page links to that table rather than duplicating it.
-The two Simanim *transcriptions* are the only hand-set Hebrew, double-checked against the
-committed scans.
 
 The trio frames that span around its two SIGNAL WORDS, עבדים and על־פני, whose accent pair
 uniquely identifies which of the four strands a text has.  This page is where the limits of that
@@ -98,6 +110,12 @@ REPORT_TITLE = (
 # _ISSUE_52 = "https://github.com/bdenckla/wlc-utils/issues/52"
 # _ISSUE_56 = "https://github.com/bdenckla/wlc-utils/issues/56"
 _PRINTED_DECALOGUE_PAGE = "printed-decalogue.html"
+# The Koren companion. Until issue #69's prose pass the cross-reference ran only Koren -> Simanim,
+# and on this side existed only in code comments -- so a reader of the rendered page had no way to
+# reach the sibling edition's document. Both links below are the return half of a link Koren
+# already makes: its p. A38 note section links to this page's p. 83 note, and its conclusion's
+# scope note links here for the Shabbat departure.
+_KOREN_PAGE = "printed-decalogue-koren.html"
 # The four-strands table now lives on the companion page (issue #52); cross-references whose link
 # text names the table land on its heading anchor there rather than on a local table.
 _FOUR_STRANDS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#four-strands"
@@ -202,6 +220,8 @@ _ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
 # already defined above.
 _ROM_PAZER = rmn(pds.ROM_PAZER)
 _ROM_TELISHA_GEDOLAH = rmn(pds.ROM_TELISHA_GEDOLAH)
+# Named only in the Simanim Tanakh verdict table, for its one divergence (issue #69, Result 8).
+_ROM_QADMA = rmn(pds.ROM_QADMA)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section
 # of the very page these four strands are vendored from -- so its base URL is single-sourced from
@@ -305,11 +325,16 @@ def _intro(source: dict) -> tuple[object, ...]:
                 ". In its Exodus"
                 " (Yitro) Decalogue, Simanim's main Decalogue (p. 83) is the p-trad"
                 f" {_ELYON} and its appendix Decalogue (p. 246) is the p-trad {_TAHTON}"
-                ". Since no digital Simanim exists, I established this by"
-                " visually spot-checking Simanim against ",
+                ". Since no digital Simanim exists, both steps were taken by hand against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
-                ". The two scans below show enough of Simanim's Exodus Decalogues to"
-                ' "diagnose" them both as p-trad by their signal words.',
+                ": first a visual spot-check of the signal words, which places each Decalogue"
+                " among the four strands, and then a hand transcription of every printed accent"
+                " of all four Decalogues, diffed against the strand each was placed in — which is"
+                " what says how far it follows that strand. The two scans below show enough of"
+                ' Simanim\'s Exodus Decalogues to "diagnose" them both as p-trad by their signal'
+                " words; ",
+                link("the conclusion's verdicts", "#simanim-conclusion"),
+                " are what the transcriptions establish.",
             )
         ),
         *_body_scans(),
@@ -472,7 +497,10 @@ def _p83_section() -> tuple[object, ...]:
                 _ROM_SILLUQ_SOF_PASUQ,
                 " at עבדים) under what merely “some books” do. So Simanim treats the p-trad"
                 " structure as the norm and the m-trad alternative as the deviation — aware of the"
-                " alternative, but not adopting it.",
+                " alternative, but not adopting it. ",
+                link("Koren's note on its own appendix Decalogue", _KOREN_PAGE),
+                " is the mirror of this one, flagging the same alternative on the authority of"
+                " רוו״ה and likewise declining to print it.",
             )
         ),
     )
@@ -673,6 +701,121 @@ def _p246_section() -> tuple[object, ...]:
     )
 
 
+# --------------------------------------------------------------------------- #
+# The per-Decalogue verdict tables (issue #69)
+# --------------------------------------------------------------------------- #
+# One row per Decalogue, never one per edition: p. 247's Shabbat departure and pp. 208-209's exact
+# agreement cannot share a sentence, which is what killed the older per-edition wording. Each
+# verdict says how far the Decalogue follows the strand it was diffed against -- the claim the
+# signal words alone cannot reach.
+#
+# The class turns OFF the shared odd-row zebra, as its three sibling printed-Decalogue tables do
+# (issue #65, finding C3): the four rows alternate main / appendix, so the stripe would tint
+# exactly the two appendix rows and read as if it ENCODED that rather than merely counting rows.
+def _verdict_table(rows: tuple[tuple[str, str, object, object], ...]) -> object:
+    header = H.table_row_of_headers(
+        ("Decalogue", "pages", "strand", "how far it follows it")
+    )
+    body = [
+        H.table_row(
+            (
+                H.table_header(which),
+                H.table_datum(pages),
+                H.table_datum(strand),
+                H.table_datum(verdict),
+            )
+        )
+        for which, pages, strand, verdict in rows
+    ]
+    return H.table(
+        (header, *body), {"class": "printed-decalogue-transcription-verdict"}
+    )
+
+
+def _tiqqun_verdict_table() -> object:
+    return _verdict_table(
+        (
+            (
+                "Exodus main",
+                "83–84",
+                ("p-trad ", _ELYON),
+                "Every accent. The only two differences are of word division: it separates"
+                " ובנך־ובתך, which the strand joins, and joins the לא of לא תחמד to the word"
+                " after it, which the strand leaves free.",
+            ),
+            (
+                "Exodus appendix",
+                "246",
+                ("p-trad ", _TAHTON),
+                "Every chanted verse boundary and the whole disjunctive skeleton. Three"
+                " differences, every one of them in a conjunctive.",
+            ),
+            (
+                "Deuteronomy main",
+                "208–209",
+                ("p-trad ", _ELYON),
+                "Every accent, with no difference anywhere — 164 accents against 164.",
+            ),
+            (
+                "Deuteronomy appendix",
+                "247",
+                ("p-trad ", _TAHTON),
+                (
+                    "p-trad throughout ",
+                    H.bold("except the Shabbat commandment"),
+                    ", whose accents are m-trad. The chanted verse division stays p-trad —"
+                    " thirteen chanted verses, not the m-trad's twelve — so the departure is one"
+                    " of accents alone.",
+                ),
+            ),
+        )
+    )
+
+
+def _tanakh_verdict_table() -> object:
+    return _verdict_table(
+        (
+            (
+                "Exodus main",
+                "119–120",
+                ("m-trad ", _TAHTON),
+                "Every accent, with no difference anywhere. Its twelve chanted verses are"
+                " corroborated independently of any mark, by the edition's own printed verse"
+                " numbers.",
+            ),
+            (
+                "Deuteronomy main",
+                "297–298",
+                ("m-trad ", _TAHTON),
+                (
+                    "Every accent but one: a ",
+                    _ROM_QADMA,
+                    " on ויום where every ",
+                    _TAHTON,
+                    " strand has a ",
+                    _ROM_PASHTA,
+                    ". It agrees with neither ",
+                    _TAHTON,
+                    " strand there, so it is this edition's own departure rather than the other"
+                    " tradition's.",
+                ),
+            ),
+            (
+                "Exodus appendix",
+                "350",
+                ("m-trad ", _ELYON),
+                "Every accent, with no difference anywhere.",
+            ),
+            (
+                "Deuteronomy appendix",
+                "351",
+                ("m-trad ", _ELYON),
+                "Every accent, with no difference anywhere.",
+            ),
+        )
+    )
+
+
 def _conclusion() -> tuple[object, ...]:
     return (
         H.heading_level_2("Conclusion", {"id": "simanim-conclusion"}),
@@ -697,6 +840,18 @@ def _conclusion() -> tuple[object, ...]:
                 " (p. 246).",
             )
         ),
+        # The transcription verdicts (issue #69). This is what the signal words alone could not
+        # reach: they place a Decalogue among the four strands, and only an accent-by-accent
+        # comparison says how far it then follows the strand it was placed in.
+        H.para(
+            (
+                "How far each of the four Decalogues follows that strand is a separate question"
+                " from which strand it is, and one the signal words cannot answer. Every printed"
+                " accent of all four has been transcribed by hand off the page and diffed against"
+                " the strand it follows; the verdicts are per Decalogue, since they differ:",
+            )
+        ),
+        _tiqqun_verdict_table(),
         # The p. 247 crop below -- a reduced-resolution, grayscale crop of the pointed taxton
         # column -- is the evidence for this scope note's Shabbat caveat: it shows the m-trad
         # accents on the three signal words _P247_BOXES highlights (see its comment).
@@ -731,7 +886,11 @@ def _conclusion() -> tuple[object, ...]:
                 _ROM_REVIA,
                 "; the ",
                 link("companion page's appendix", _TAHTON_DETAILS_HREF),
-                " has the full details.",
+                " has the full details. At this same commandment ",
+                link("the Koren Tanakh", _KOREN_PAGE),
+                " makes the opposite choice, keeping the p-trad accents where the Tiqqun takes"
+                " the m-trad's — so the two printed-tradition editions disagree about the Shabbat"
+                " commandment in opposite directions.",
             )
         ),
         _figure(
@@ -764,6 +923,15 @@ def _conclusion() -> tuple[object, ...]:
                 " should not assume they agree.",
             )
         ),
+        H.para(
+            (
+                "All four of the Tanakh's Decalogues have been transcribed accent by accent too,"
+                " against their m-trad strands, so the split between the two editions is checked"
+                " at the same grain as the Tiqqun's p-trad allegiance above and not merely read"
+                " off the signal words:",
+            )
+        ),
+        _tanakh_verdict_table(),
         _figure(
             _TANAKH_EX_TAHTON_IMG,
             "Simanim Tanakh p. 119: the Exodus main Decalogue, in the m-trad taḥton",

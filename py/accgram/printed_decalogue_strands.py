@@ -112,6 +112,10 @@ ROM_GERESH = "geresh"
 ROM_ZAQEF_QATAN = "zaqef qatan"
 ROM_PAZER = "pazer"
 ROM_TELISHA_GEDOLAH = "telisha gedolah"
+# Named only in the Simanim page's Simanim *Tanakh* verdict table (issue #69, Result 8), for the
+# one divergence that agrees with neither תחתון strand: a qadma on ויום where every תחתון strand
+# has a pashta.
+ROM_QADMA = "qadma"
 
 # Compound readings that recur verbatim in the prose (U+2026 ellipsis / U+2013 en dash between).
 ROM_PASHTA_ETNAHTA = f"{ROM_PASHTA}…{ROM_ETNAHTA}"  # the merged manuscript תחתון

@@ -222,6 +222,14 @@ table.printed-decalogue-strand-mapping tr td { background-color: transparent; }
    Sabbath verse. Otherwise unstyled -- it takes the shared centered layout and lang="hbo" font. */
 table.printed-decalogue-sabbath-diff tr td { background-color: transparent; }
 
+/* printed-decalogue-simanim.html and printed-decalogue-koren.html: the per-Decalogue transcription
+   verdict tables (issue #69), one row per Decalogue. Same zebra opt-out as the three above, for
+   the same reason: the four rows alternate main / appendix, so the stripe would tint exactly the
+   two appendix rows and read as if it encoded that rather than merely counting rows. The verdict
+   column is prose, so it is left-aligned against the shared centering. */
+table.printed-decalogue-transcription-verdict tr td { background-color: transparent; }
+table.printed-decalogue-transcription-verdict td:last-child { text-align: left; }
+
 /* The strand tables (printed-decalogue.html, issues #59 / #52): range-divided views of a
    cantillation strand, ported from MAM-simple's TEMBte tables. Two of them share this style:
    the four-strands table (one row per strand, first…last range cells) and the merged-verse

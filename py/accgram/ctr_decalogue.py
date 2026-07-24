@@ -5,11 +5,22 @@ CTR (``ctr_decalogue_fetch.py``) is a VENDORED STRAND: digital, accent-exact Heb
 marks are compared mechanically against the reference ``printed_decalogue_teamim.json`` rather
 than read off a page.  What it turns out to follow is the surprise this module reports:
 
-* CTR's **Exodus 20** carries the ta'am **elyon** word-accents (not the taxton the running
-  text was expected to hold), but keeps the ordinary numbered-verse division -- a sof pasuq at
-  every numbered verse, where the elyon groups the commandments into nine long chanted verses.
-* CTR's **Deuteronomy 5** is the **taxton**, verse division and all (the taxton's own division
-  IS the numbered verses, which is why that book is clean where Exodus is not).
+* CTR's **Exodus 20** has the ta'am **elyon** word-accents (not the taxton the running text was
+  expected to hold), on a chanted-verse division that is NEITHER strand's: the taxton's thirteen,
+  with each of the three short prohibitions split off into a chanted verse of its own, as only an
+  elyon strand does.  Sixteen chanted verses -- the taxton's boundaries with its twelfth (ending
+  at שקר) expanded into four (תרצח, תנאף, תגנב, שקר), against the elyon's nine.
+* CTR's **Deuteronomy 5** is the **taxton**, chanted-verse division and all: thirteen, matching
+  dt/taxton/printed boundary for boundary, which is why that book is clean where Exodus is not.
+
+STATE THE DIVISION IN CHANTED VERSES, NEVER IN NUMBERED ONES.  An earlier draft of the two bullets
+above described the Exodus division as "the ordinary numbered-verse division -- a sof pasuq at
+every numbered verse".  That is both off-subject and false.  Off-subject because these pages and
+this comparison are about chanted verse structure only, numbering being a different concept
+(Ben, 2026-07-24).  False because Exodus 20:13 holds FOUR sof pasuqs, which is exactly where three
+of the sixteen come from -- ``chanted_verses`` below says so, and the file contradicted itself for
+as long as both texts stood.  Issue #69's Result 11 carried the same phrasing and was corrected
+with this.
 
 WHY THE COMPARISON IS AT THE GLYPH LEVEL, NOT THE ACCENT LEVEL.  The eight paper Decalogues of
 #69 were HAND transcriptions: a reader resolved each mark to an accent, distinguishing a qadma

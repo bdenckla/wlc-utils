@@ -9,10 +9,17 @@ this page links to that table rather than duplicating it, and serves only to doc
 place in the p-trad camp -- plus one Koren note that shows the same editorial self-awareness the
 Simanim page found in Simanim.
 
-What establishes the answer is Koren's *body text*: its Exodus main Decalogue (p. 113) is the
+What establishes the answer is Koren's *body text*: its Exodus main Decalogue (pp. 113-114) is the
 p-trad תחתון and its appendix Decalogue (p. A38) the p-trad עליון, and both are compared, by
 the author, against what Hebrew Wikisource records as the printed tradition, and they match.  That
 body text is asserted here, not transcribed word-for-word (only shown as scans).
+
+Since issue #69 the claim rests on more than a spot-check: all FOUR Koren Decalogues have a
+committed hand transcription of every printed accent (``in/accgram/edition_transcriptions/
+koren_*.txt``), diffed against the vendored strand and pinned by
+``tests/test_edition_transcriptions.py``.  Three follow their strand in every accent; the Exodus
+appendix one differs only in word division.  ``_verdict_table`` renders the four, one row per
+Decalogue -- never one per edition, since the four verdicts differ.
 The one *note* is the secondary, more-for-fun material -- kept for how aware Koren is of the older,
 printed-tradition choice it makes:
 
@@ -40,9 +47,19 @@ rule.  (Note Koren is a **Tanakh**, not a ḥumash -- the Simanim page glosses t
 running ḥumash", which is right for its Torah-only Tiqqun but would be wrong here.)
 
 DRAFT-STAGE FACTS TO VERIFY (issue #70, which collects everything awaiting the physical book):
-the page numbers (113 / A38) come from the committed scan filenames, as does the fact that the
-page never says where the appendix physically sits; and רוו״ה is *tentatively* expanded to Wolf
-Heidenheim (likely but unconfirmed, flagged as such in the rendered notation line).
+the appendix page numbers (A38 / A39) come from the committed scan filenames, as does the fact
+that the page never says where the appendix physically sits; and רוו״ה is *tentatively* expanded
+to Wolf Heidenheim (likely but unconfirmed, flagged as such in the rendered notation line).
+The Exodus main Decalogue's extent is NO LONGER draft-stage: transcribing it settled that it runs
+pp. 113-114, p. 113 breaking mid-20:12, so every prose citation reads "pp. 113-114".  (The p. 113
+figure caption stays a bare "p. 113" on purpose -- it captions a scan of the Decalogue's start,
+which really is on p. 113.)
+
+Two readings on these pages were flagged uncertain during transcription and are pinned in
+``_UNCERTAIN_READINGS``: p. 114's לא of לא תרצח and p. 281's tipexa on את־שמו.  Neither appears on
+the rendered page in any form -- Ben's call, 2026-07-24 (issue #69 decision 8): both are bounded to
+discriminate nothing this page claims, neither can move a verdict, their reader-facing home is
+issue #70, and the page assumes them true.  Don't add a hedge or a footnote for them.
 
 The appendix's separate pagination IS now confirmed (Ben, 2026-07-15), which is why every citation
 of it reads "p. A38", never a bare "p. 38": the appendix restarts its own page numbering at 1, so
@@ -57,6 +74,11 @@ no longer Exodus-scoped: Koren shows the p-trad in both books.  The Deuteronomy 
 a second divergence point the Exodus scans cannot -- the Shabbat commandment -- where Koren again
 shows the p-trad, and where Simanim's Tiqqun does not (an accents-only departure: Simanim's Tiqqun
 still follows the p-trad's chanted verse boundaries).  See the conclusion's scope note.
+
+Its Deuteronomy עליון is no longer unchased either.  The page long carried a sentence saying the
+Deuteronomy half of the claim rested on the תחתון alone because that appendix Decalogue had never
+been checked; ``koren_dt_elyon`` (p. A39) transcribes it, with zero divergences, so the sentence
+was false and is gone.  Don't reinstate it.
 
 Regenerate with ``main_accgram.py generate-html``; test with
 ``tests/test_printed_decalogue_koren.py`` (plus the tree-wide ``tests/test_transliterations.py``).
@@ -285,13 +307,17 @@ def _intro(source: dict) -> tuple[object, ...]:
         H.para(
             (
                 "Koren follows the p-trad for the Decalogues. In its Exodus"
-                " Decalogue, Koren's main Decalogue (p. 113) is the p-trad"
+                " Decalogue, Koren's main Decalogue (pp. 113–114) is the p-trad"
                 f" {_TAHTON} and its appendix Decalogue (p. A38) is the p-trad {_ELYON}"
-                ". Since no digital Koren exists, I established this by"
-                " visually spot-checking Koren against ",
+                ". Since no digital Koren exists, both steps were taken by hand against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
-                ". The two scans below show enough of Koren's Exodus Decalogues to"
-                ' "diagnose" them both as p-trad.',
+                ": first a visual spot-check of the signal words, which places each Decalogue"
+                " among the four strands, and then a hand transcription of every printed accent"
+                " of all four Decalogues, diffed against the strand each was placed in — which is"
+                " what says how far it follows that strand. The two scans below show enough of"
+                ' Koren\'s Exodus Decalogues to "diagnose" them both as p-trad; ',
+                link("the conclusion's verdicts", "#koren-conclusion"),
+                " are what the transcriptions establish.",
             )
         ),
         *_body_scans(),
@@ -386,6 +412,79 @@ def _pa38_note_section() -> tuple[object, ...]:
     )
 
 
+# --------------------------------------------------------------------------- #
+# The per-Decalogue verdict table (issue #69)
+# --------------------------------------------------------------------------- #
+# One row per Decalogue, never one per edition -- the rule the Simanim page's own table follows,
+# and for the same reason: how far a Decalogue follows its strand differs between the four, so a
+# single per-edition verdict would have to be either false or vacuous. The class turns OFF the
+# shared odd-row zebra as its sibling printed-Decalogue tables do (issue #65, finding C3): the
+# rows alternate main / appendix, so the stripe would tint exactly the two appendix rows and read
+# as if it encoded that.
+#
+# The two readings flagged uncertain during transcription (p. 114's לא of לא תרצח, p. 281's tipexa
+# on את־שמו) are deliberately NOT mentioned here or anywhere on this page -- Ben's call,
+# 2026-07-24. Both are bounded to discriminate nothing this page claims, neither can move a
+# verdict, and their reader-facing home is issue #70; the page assumes both readings true and
+# states its verdicts flat. Don't reintroduce them as a hedge or a footnote.
+def _verdict_table() -> object:
+    header = H.table_row_of_headers(
+        ("Decalogue", "pages", "strand", "how far it follows it")
+    )
+    rows = (
+        (
+            "Exodus main",
+            "113–114",
+            ("p-trad ", _TAHTON),
+            "Every accent, with no difference anywhere — though this Decalogue settles less than"
+            " that suggests. In Exodus the two traditions accent the Shabbat commandment"
+            " identically, so the one thing it can adjudicate is the chanted verse boundary at"
+            " עבדים, which it takes the p-trad way.",
+        ),
+        (
+            "Deuteronomy main",
+            "280–281",
+            ("p-trad ", _TAHTON),
+            (
+                "Every accent, and ",
+                H.bold("this is the Decalogue that tests the claim"),
+                ": here the two traditions part in five independent ways, and Koren takes the"
+                " p-trad side of every one.",
+            ),
+        ),
+        (
+            "Exodus appendix",
+            "A38",
+            ("p-trad ", _ELYON),
+            "Every accent. The only two differences are of word division: it prints both"
+            " יהיה־לך and ובנך־ובתך as two separately accented chanted words where the strand"
+            " makes each one.",
+        ),
+        (
+            "Deuteronomy appendix",
+            "A39",
+            ("p-trad ", _ELYON),
+            "Every accent, with no difference anywhere — and it joins both compounds its Exodus"
+            " counterpart splits, so that splitting is a fact about the one page rather than a"
+            " habit of the edition.",
+        ),
+    )
+    body = [
+        H.table_row(
+            (
+                H.table_header(which),
+                H.table_datum(pages),
+                H.table_datum(strand),
+                H.table_datum(verdict),
+            )
+        )
+        for which, pages, strand, verdict in rows
+    ]
+    return H.table(
+        (header, *body), {"class": "printed-decalogue-transcription-verdict"}
+    )
+
+
 def _conclusion() -> tuple[object, ...]:
     return (
         H.heading_level_2("Conclusion", {"id": "koren-conclusion"}),
@@ -398,8 +497,29 @@ def _conclusion() -> tuple[object, ...]:
                 " that divergence on both strands: the p-trad ",
                 _TAHTON,
                 " in its Exodus",
-                f" main Decalogue (p. 113), and the p-trad {_ELYON} in its appendix Decalogue"
-                " (p. A38).",
+                f" main Decalogue (pp. 113–114), and the p-trad {_ELYON} in its appendix"
+                " Decalogue (p. A38).",
+            )
+        ),
+        # The transcription verdicts (issue #69). The signal words place each Decalogue among the
+        # four strands; only this says how far it then follows the strand it was placed in.
+        H.para(
+            (
+                "How far each of the four Decalogues follows that strand is a separate question"
+                " from which strand it is, and one the signal words cannot answer. Every printed"
+                " accent of all four has been transcribed by hand off the page and diffed against"
+                " the strand it follows:",
+            )
+        ),
+        _verdict_table(),
+        H.para(
+            (
+                "Three of the four follow their strand in ",
+                H.bold("every"),
+                " accent, and the fourth differs only in how it divides two chanted words. Not"
+                " one difference anywhere in the four takes the m-trad's side of anything: no"
+                " strand at all, in either tradition, separates יהיה from לך, so that division is"
+                " Koren's own and says nothing about which tradition it follows.",
             )
         ),
         H.para(
@@ -438,14 +558,12 @@ def _conclusion() -> tuple[object, ...]:
                 _ROM_ZAQEF_QATAN,
                 "; the ",
                 link("companion page's appendix", _TAHTON_DETAILS_HREF),
-                " has the full details. One boundary on all this: what I have checked in"
-                " Deuteronomy is the ",
+                " has the full details. The Deuteronomy half of the claim no longer rests on the ",
                 _TAHTON,
-                "; I have not chased Koren's Deuteronomy ",
+                " alone: Koren's Deuteronomy ",
                 _ELYON,
-                " through its appendix, so the Deuteronomy half of the claim rests on the ",
-                _TAHTON,
-                " alone.",
+                ", in its appendix (p. A39), has since been transcribed too, and follows the"
+                " p-trad in every accent.",
             )
         ),
         _figure(

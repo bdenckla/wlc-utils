@@ -535,6 +535,27 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                 " real edition can stray from its nominal tradition.",
             )
         ),
+        # The transcription basis (issue #69). The hub states only what is a fact about the
+        # STRANDS; the per-Decalogue verdicts live on the two satellite pages, and this page must
+        # not assert what they do not document. The ובנך־ובתך sentence is here rather than there
+        # precisely because neither satellite can tell it alone: it takes both editions.
+        H.para(
+            (
+                "That Simanim departure is checked, not supposed. Every accent of ",
+                H.bold("twelve"),
+                " printed Decalogues — four each from Simanim's Tiqqun, Simanim's Tanakh and"
+                " Koren's Classic Tanakh — has been transcribed by hand off the page and diffed"
+                " against the strand it follows; the two satellite pages linked below report the"
+                " verdicts, which are per Decalogue rather than per edition. Two results belong"
+                " here instead, being facts about the strands rather than about one edition. All"
+                " twelve follow their strand's chanted verse boundaries ",
+                H.bold("without exception"),
+                f", whatever else they do. And at ובנך־ובתך, Simanim's Tiqqun and Koren each print"
+                f" two separately accented chanted words where the p-trad {_ELYON} has one — two"
+                " editions dividing the same chanted word alike, and against the strand they"
+                " otherwise follow.",
+            )
+        ),
         H.para(
             (
                 f"Of these four strands, only the p-trad {_ELYON} is ungrammatical — the "
@@ -800,9 +821,12 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 ),
                 f" — its main Decalogues follow the p-trad {_ELYON} and its appendix"
                 f" Decalogues the p-trad {_TAHTON}. It follows the p-trad's chanted verse"
-                " boundaries without exception, but not its every cantillation detail — most"
-                " consequentially at the Shabbat commandment, where its Deuteronomy appendix"
-                " Decalogue has the m-trad accents.",
+                " boundaries without exception, and its Deuteronomy main Decalogue follows the"
+                " p-trad in every accent; what it does not follow is every cantillation detail"
+                " elsewhere — most consequentially at the Shabbat commandment, where its"
+                " Deuteronomy appendix Decalogue has the m-trad accents. That page also covers"
+                " the separately published Simanim Tanakh, which is m-trad in all four of its"
+                " Decalogues: the same publishing house, the opposite tradition.",
             )
         ),
         H.para(
@@ -812,8 +836,10 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                     "this document on the Decalogues in the Koren Tanakh",
                     "printed-decalogue-koren.html",
                 ),
-                f" — it has the p-trad {_TAHTON} in its "
-                f"Exodus main Decalogue and the p-trad {_ELYON} in its appendix Decalogue.",
+                f" — it has the p-trad {_TAHTON} in its main Decalogues and the p-trad"
+                f" {_ELYON} in its appendix ones, in Exodus and Deuteronomy alike. Three of its"
+                " four follow their strand in every accent; the fourth differs only in how it"
+                " divides two chanted words.",
             )
         ),
     )
@@ -1052,8 +1078,26 @@ def _chabad_aside() -> tuple[object, ...]:
                 "Possibly the only p-trad Bible on the web is ",
                 link("CTR", _CHABAD_DT5_URL),
                 ": a web version of The Complete Tanach with Rashi, served from Chabad.org."
-                f" CTR has not only the characteristic opening verse of the p-trad {_TAHTON}"
-                f" but also the p-trad {_TAHTON} accents in the Sabbath commandment.",
+                f" Its Deuteronomy 5 has not only the characteristic opening verse of the p-trad"
+                f" {_TAHTON} but also the p-trad {_TAHTON} accents in the Sabbath commandment —"
+                " that whole Decalogue, chanted verse division and all.",
+            )
+        ),
+        # CTR's Exodus (issue #69, Result 11). It stays an aside, deliberately: CTR is a curiosity
+        # beside the twelve hand-transcribed Decalogues, not a thirteenth, and no claim on this
+        # page or its satellites rests on it. Say the division in CHANTED VERSES only -- an earlier
+        # draft called it "the ordinary numbered-verse division", which is both off-subject (these
+        # pages are about chanted verse structure, never numbering) and wrong (Ex 20:13 holds four
+        # sof pasuqs, which is where three of the sixteen come from).
+        H.para(
+            (
+                "Its Exodus 20 is stranger. The word-accents are the ",
+                _ELYON,
+                "'s, but the chanted verse division belongs to neither strand: it is the ",
+                _TAHTON,
+                "'s thirteen, with each of the three short prohibitions split off into a chanted"
+                f" verse of its own — which only an {_ELYON} strand does. Sixteen chanted verses,"
+                " and no tradition to call them.",
             )
         ),
         H.para(
