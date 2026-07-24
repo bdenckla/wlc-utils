@@ -75,20 +75,32 @@ Everything below applies only to the two-column case above. Crop tight enough ho
 exclude the neighbouring column: a sliver of foreign glyphs at either edge shows up in the
 debug overlay.
 
-**That "tight" is about the HORIZONTAL bound only. Vertically, do the opposite: crop to the
-middle of the line above and the middle of the line below.** Hebrew stacks marks above *and*
-below its letters, so a vertical crop trimmed to the transcribed text cuts the outermost line's
-marks off — and a half-line of context is what lets its own above-marks be told apart from the
-last full line's below-marks. Be decisive about it, because the half-measure is the worst
-option: a crop that clips only a *sliver* of the next line leaves a fragment shorter than a
-half-line, which `_absorb_slivers` folds into the last real band. On Koren A5-D-281 a bottom of
-0.5945 clipped line 17, and 0.610/0.614 — chosen to avoid exactly that — gave the last band a
-height of 208 and 232 px against a true 127. Clear the next line entirely, or take half of it.
+**That "tight" is about the HORIZONTAL bound only. Vertically, just crop to the lines you want.**
+`--crop`'s top and bottom name the lines to transcribe, not the region to detect over. The editor
+grows the detected region about a line past them each way, gives an entry field only to the bands
+whose centre falls inside what you asked for, and renders the neighbours it pulled in as dimmed
+**context** strips. That context is the point — Hebrew stacks marks above *and* below its letters,
+and a line's own above-marks are what let them be told apart from the line above's below-marks —
+but including it is now the editor's job, not a bound you have to land by hand.
 
-The editor now says so itself: it warns when a band is too tall to be one line (the merge
-above), and notes when the first or last band touches a crop edge. The note is deliberately not
-a warning, since on a correct crop the outermost band *is* the context half-line and touches the
-edge by design — check which band number it names.
+The old dead zone went with it. There used to be no safe tight vertical bound: a crop trimmed to
+the text clipped the outermost line's marks, while a crop clipping only a *sliver* of the next
+line left a fragment that `_absorb_slivers` folded into the last real band — on Koren A5-D-281 a
+bottom of 0.5945 clipped line 17, and 0.610/0.614, chosen to dodge exactly that, gave the last
+band 208 and 232 px against a true 127. The grow makes the requested boundary lines interior, so
+neither can happen; the region detected over is no longer yours to choose. See
+[#71](https://github.com/bdenckla/wlc-utils/issues/71).
+
+The export records both meanings: `render.crop` is the lines you requested, `render.detect_crop`
+the grown region actually rendered. An export with no `detect_crop` predates this change and its
+`render.crop` still means the region that was rendered — every transcription committed before it
+is of that kind. `zoom_line` reads only `render.crop`'s left and right, so it is unaffected either
+way.
+
+The merge warning survives as a backstop — the editor still complains when a transcribable band is
+too tall to be one line — but the old edge-touching *note* no longer fires on the lines you type:
+on a grown crop the edge bands are context, drawn dimmed and unnumbered, so the debug overlay tells
+context from transcribed line by colour, not by a warning to read.
 
 **Measure the column's edges; do not eyeball them.** On C247 a crop guessed by eye landed
 ~0.006 of the page width inside the true right edge and clipped the first letter of every line

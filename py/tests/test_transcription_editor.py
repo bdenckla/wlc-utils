@@ -10,7 +10,21 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from accgram.transcription_editor import crop_warnings, find_bands  # noqa: E402
+from PIL import Image, ImageDraw  # noqa: E402
+
+from accgram.transcription_editor import (  # noqa: E402
+    DETECT_MARGIN_FALLBACK,
+    SMOOTH_RADIUS,
+    band_context,
+    band_rows,
+    crop_and_resize,
+    crop_warnings,
+    detect_margin,
+    find_bands,
+    median_pitch,
+    row_profile,
+    smooth,
+)
 
 MEDIAN = 64  # a printed line on that page, in rendered pixels
 
@@ -145,3 +159,136 @@ def test_a_line_clipped_to_a_stub_at_the_crop_bottom_is_not_recovered():
         (605, 611, 0.06),  # runs to the image bottom at 612
     ]
     assert len(find_bands(_profile(612, clipped))) == 5
+
+
+# ---------------------------------------------------------------------------
+# Crop split (issue #71).  --crop's top/bottom name the lines to transcribe; detection runs over
+# a region grown about a line past them, and the neighbours it pulls in are classified as context
+# by where their centres fall.  So the reader crops to just the wanted lines and the old dead zone
+# -- a vertical bound between the two good placements that clipped a line or absorbed a sliver --
+# is unreachable, since the region detected over is no longer theirs to choose.
+
+
+def test_median_pitch_is_the_line_to_line_spacing():
+    assert median_pitch([(0, 50), (100, 150), (200, 250)]) == 100  # tops 0,100,200
+
+
+def test_median_pitch_needs_two_bands():
+    assert median_pitch([(0, 50)]) is None
+    assert median_pitch([]) is None
+
+
+def test_detect_margin_is_one_pitch_in_source_fractions():
+    """Two-plus bands: a whole pitch, converted from rendered to source px and to a page fraction.
+    100px pitch * scale 2.0 = 200 source px, over a 1000px page = 0.2."""
+    assert (
+        detect_margin([(0, 40), (100, 140)], probe_scale=2.0, source_height=1000) == 0.2
+    )
+
+
+def test_detect_margin_falls_back_to_a_lone_lines_own_height():
+    """One requested line has no pitch, so its own height stands in: the line is kept off the edge
+    even though its neighbours are not pulled into view.  50px * 2.0 / 1000 = 0.1."""
+    assert detect_margin([(10, 60)], probe_scale=2.0, source_height=1000) == 0.1
+
+
+def test_detect_margin_falls_back_to_a_page_fraction_when_nothing_detected():
+    assert (
+        detect_margin([], probe_scale=2.0, source_height=1000) == DETECT_MARGIN_FALLBACK
+    )
+
+
+def test_band_context_is_by_centre_against_the_requested_range():
+    """crop [_, 0.2, _, 0.6] over a 1000px page asks for source rows 200..600.  With origin 100
+    and scale 1.0 (source = 100 + rendered), the outer two bands centre outside it and are
+    context; the inner two centre inside and are lines to transcribe."""
+    bands = [
+        (40, 60),
+        (140, 160),
+        (440, 460),
+        (540, 560),
+    ]  # centres 50,150,450,550 rendered
+    flags = band_context(
+        bands, [0.0, 0.2, 1.0, 0.6], origin=100, scale=1.0, source_height=1000
+    )
+    assert flags == [True, False, False, True]  # source centres 150,250,550,650
+
+
+def test_band_rows_numbers_transcribable_lines_and_sets_context_aside():
+    bands = [(40, 60), (140, 160), (440, 460), (540, 560)]
+    flags = [True, False, False, True]
+    rows, context_rows = band_rows(bands, flags, height=800, origin=100, scale=1.0)
+    assert [r["n"] for r in rows] == [
+        1,
+        2,
+    ]  # numbered 1..k over the transcribable bands alone
+    assert [r["px"] for r in rows] == [[140, 160], [440, 460]]
+    assert rows[0]["px_source"] == [240, 260]  # origin 100 + rendered, scale 1.0
+    assert [c["px"] for c in context_rows] == [[40, 60], [540, 560]]
+    assert all("n" not in c for c in context_rows)  # context has no line number
+
+
+def _page(width, height, pitch, band_h, top0, n_lines):
+    """A plain synthetic page: ``n_lines`` full-width ink bars, evenly spaced, on white."""
+    img = Image.new("L", (width, height), 255)
+    draw = ImageDraw.Draw(img)
+    lines = []
+    for i in range(n_lines):
+        top = top0 + i * pitch
+        draw.rectangle([width // 8, top, width - width // 8, top + band_h], fill=0)
+        lines.append((top, top + band_h))
+    return img, lines
+
+
+def _grow_and_classify(img, lines, lo_idx, hi_idx, width=1200):
+    """Run the editor's grow-then-classify pipeline exactly as ``main`` composes it, over a crop
+    set tight to lines ``lo_idx..hi_idx`` -- the new 'the lines I want' meaning."""
+    height = img.height
+    crop = [0.05, lines[lo_idx][0] / height, 0.95, lines[hi_idx][1] / height]
+    probe, _, probe_scale = crop_and_resize(img, crop, width)
+    probe_bands = find_bands(smooth(row_profile(probe), SMOOTH_RADIUS))
+    margin = detect_margin(probe_bands, probe_scale, height)
+    detect_crop = [
+        crop[0],
+        max(0.0, crop[1] - margin),
+        crop[2],
+        min(1.0, crop[3] + margin),
+    ]
+    rendered, origin, scale = crop_and_resize(img, detect_crop, width)
+    bands = find_bands(smooth(row_profile(rendered), SMOOTH_RADIUS))
+    flags = band_context(bands, crop, origin, scale, height)
+    return band_rows(bands, flags, rendered.height, origin, scale)
+
+
+def test_a_tight_crop_of_a_middle_run_transcribes_exactly_those_lines():
+    """The whole point: crop to just the wanted lines and get exactly them, their neighbours held
+    aside as context rather than clipped into the boundary bands or merged with them."""
+    img, lines = _page(400, 1600, pitch=130, band_h=40, top0=150, n_lines=10)
+    rows, context_rows = _grow_and_classify(img, lines, 3, 6)
+
+    assert len(rows) == 4  # exactly the four requested lines
+    assert len(context_rows) >= 1  # at least one neighbour pulled in as context
+    centres = [sum(r["px_source"]) / 2 for r in rows]
+    matched = {
+        min(range(len(lines)), key=lambda i: abs(sum(lines[i]) / 2 - c))
+        for c in centres
+    }
+    assert matched == {
+        3,
+        4,
+        5,
+        6,
+    }  # each transcribable row sits on a requested source line
+
+
+def test_a_crop_at_the_top_grows_only_downward():
+    """The grow clamps at the page edge, so a top-of-page run has context only below it -- and
+    still transcribes exactly its own lines, none clipped by sitting against the top."""
+    img, lines = _page(400, 1600, pitch=130, band_h=40, top0=150, n_lines=10)
+    rows, _ = _grow_and_classify(img, lines, 0, 2)
+    centres = [sum(r["px_source"]) / 2 for r in rows]
+    matched = {
+        min(range(len(lines)), key=lambda i: abs(sum(lines[i]) / 2 - c))
+        for c in centres
+    }
+    assert len(rows) == 3 and matched == {0, 1, 2}

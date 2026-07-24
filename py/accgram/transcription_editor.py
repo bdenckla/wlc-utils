@@ -20,6 +20,17 @@ directly, which is why this needs no numpy.
 
 The projection is taken over the CROPPED region, so crop to a single text column first: a
 two-column page profiled whole has no clean troughs, since the columns' lines do not align.
+
+--crop's LEFT and RIGHT bound the text column, as before.  Its TOP and BOTTOM name the LINES
+TO TRANSCRIBE, not the region to run band detection over.  When they crop into the page (are
+not the full 0..1 height), detection runs over a region grown about a line past them each way,
+and only bands whose centre falls within the requested range get a field to type into; the
+neighbours are rendered too, dimmed as context, since a Hebrew line's own above-marks are what
+tell it apart from the line above's below-marks.  So the crop is set to just the wanted lines,
+and the old "reach the middle of the neighbouring line" dead zone -- a bound between the two
+good placements that clipped a line or let ``_absorb_slivers`` swallow a sliver of the next --
+is unreachable, because the region detected over is no longer the reader's to choose.  See
+issue #71.
 """
 
 from __future__ import annotations
@@ -72,6 +83,15 @@ SLIVER_FRACTION = 0.5
 # horizontally short, but far more than a speck.  Below this fraction of a full line's ink, a
 # tail run is a smudge, not a word.
 TRAIL_INK_FRACTION = 0.03
+# How far past the requested lines to grow the detection region, in line pitches each way (see
+# the module docstring and issue #71).  One whole pitch puts each neighbour fully in view, so it
+# detects as a complete band whose centre lies clearly outside the requested range -- context,
+# not a line to type into -- while the requested boundary line sits fully interior and so is
+# never clipped nor sliver-absorbed.
+DETECT_MARGIN_PITCHES = 1.0
+# The grow when a single requested line offers no pitch to measure: a fraction of page height
+# safely over one line on every edition transcribed so far.
+DETECT_MARGIN_FALLBACK = 0.04
 
 
 def _take(args: list[str], flag: str, count: int) -> list[str] | None:
@@ -81,6 +101,61 @@ def _take(args: list[str], flag: str, count: int) -> list[str] | None:
     values = args[i + 1 : i + 1 + count]
     del args[i : i + 1 + count]
     return values
+
+
+def crop_and_resize(
+    src_img: Image.Image, crop: list[float] | None, width: int
+) -> tuple[Image.Image, int, float]:
+    """Crop by fractions ``[L, T, R, B]`` (or not at all) and resize to ``width`` px wide.
+
+    Returns ``(img, origin, scale)``: ``origin`` is the source-pixel row of the crop's top and
+    ``scale`` converts a rendered-image row back to source pixels (``source = origin + row *
+    scale``), so a band found in the rendering can be reported against the original scan too.
+    """
+    sw, sh = src_img.width, src_img.height
+    if crop:
+        left, top, right, bottom = crop
+        img = src_img.crop(
+            (round(left * sw), round(top * sh), round(right * sw), round(bottom * sh))
+        )
+        origin = round(top * sh)
+    else:
+        img, origin = src_img, 0
+    cropped_h = img.height
+    img = img.resize((width, round(img.height * width / img.width)), Image.LANCZOS)
+    return img, origin, cropped_h / img.height
+
+
+def median_pitch(bands: list[tuple[int, int]]) -> int | None:
+    """Median top-to-top spacing of consecutive bands, or ``None`` with fewer than two.
+
+    Printed lines are evenly spaced, so this is a stable estimate of one line even when a tight
+    crop has clipped a boundary band -- exactly the case the detection grow then fixes -- since
+    the median rides over one or two bad bands.
+    """
+    if len(bands) < 2:
+        return None
+    tops = [top for top, _ in bands]
+    gaps = sorted(b - a for a, b in zip(tops, tops[1:]))
+    return gaps[len(gaps) // 2]
+
+
+def detect_margin(
+    probe_bands: list[tuple[int, int]], probe_scale: float, source_height: int
+) -> float:
+    """Source-height fraction to grow the requested crop by, from a probe over those lines alone.
+
+    One line's pitch where the probe found two lines or more; a single line's own height where it
+    found just one (enough that the line is never at an edge, though its neighbours stay out of
+    view); a fixed fraction of the page where it found none.  ``probe_scale`` converts the probe's
+    rendered pixels back to source pixels, so the grow is expressed against the original scan.
+    """
+    pitch = median_pitch(probe_bands)
+    if pitch is None and probe_bands:  # a single requested line: use its own height
+        pitch = probe_bands[0][1] - probe_bands[0][0]
+    if pitch is None:
+        return DETECT_MARGIN_FALLBACK
+    return DETECT_MARGIN_PITCHES * pitch * probe_scale / source_height
 
 
 def row_profile(img: Image.Image) -> list[float]:
@@ -327,37 +402,73 @@ def source_fingerprint(src: Path) -> dict:
     return {"file": src.name, "book": src.parent.name, "sha256": digest, "size": size}
 
 
-def build_html(
-    stem: str,
-    image_name: str,
+def band_context(
     bands: list[tuple[int, int]],
-    height: int,
-    meta: dict,
+    crop: list[float],
     origin: int,
     scale: float,
-) -> str:
-    """Positions are percentages of image height, so any display width works.
+    source_height: int,
+) -> list[bool]:
+    """Which detected bands are context: centred outside the requested vertical range.
 
-    Each band is also recorded twice in pixels: ``px`` in the rendered PNG, and ``px_source``
-    in the original scan.  The rendered PNG is disposable -- regenerate at another --width and
-    its coordinates mean something different -- so an audit trail that cited only those would
-    decay.  ``px_source`` stays valid for as long as the scan does, which is what the sha256
-    pins.
+    ``crop`` is the requested ``[L, T, R, B]``; ``origin`` and ``scale`` place a rendered-image
+    row in source pixels (see ``crop_and_resize``).  A band whose centre lands outside ``[T, B]``
+    in source pixels is a neighbour the detection grow pulled in, not a line to transcribe.  The
+    centre, not an edge, so a boundary line that detects a little tall or short still counts as
+    requested and its neighbour, sitting a whole pitch away, still counts as context.
     """
-    rows = [
-        {
-            "n": i + 1,
+    lo, hi = crop[1] * source_height, crop[3] * source_height
+    return [
+        not (lo <= origin + (top + bottom) / 2 * scale <= hi) for top, bottom in bands
+    ]
+
+
+def band_rows(
+    bands: list[tuple[int, int]],
+    context: list[bool],
+    height: int,
+    origin: int,
+    scale: float,
+) -> tuple[list[dict], list[dict]]:
+    """Split detected bands into transcribable rows and context rows.
+
+    Positions are percentages of image height, so any display width works.  A transcribable band
+    also carries its pixels twice: ``px`` in the rendered PNG, and ``px_source`` in the original
+    scan.  The rendered PNG is disposable -- regenerate at another --width and its coordinates
+    mean something different -- so an audit trail that cited only those would decay; ``px_source``
+    stays valid for as long as the scan does, which is what the sha256 pins.
+
+    A context band -- a neighbour pulled into view only so its marks help place the boundary
+    line's, never typed -- carries just enough to draw its dimmed strip.  Line numbers count the
+    transcribable bands alone, 1..k, so what is typed matches what was asked for.
+    """
+
+    def coords(top: int, bottom: int) -> dict:
+        return {
             "top": 100.0 * top / height,
             "height": 100.0 * (bottom - top) / height,
             "px": [top, bottom],
             "px_source": [round(origin + top * scale), round(origin + bottom * scale)],
         }
-        for i, (top, bottom) in enumerate(bands)
-    ]
+
+    rows, context_rows, n = [], [], 0
+    for (top, bottom), is_context in zip(bands, context):
+        if is_context:
+            context_rows.append(coords(top, bottom))
+        else:
+            n += 1
+            rows.append({"n": n, **coords(top, bottom)})
+    return rows, context_rows
+
+
+def build_html(
+    stem: str, image_name: str, rows: list[dict], context_rows: list[dict], meta: dict
+) -> str:
     return (
         _HTML.replace("__STEM__", stem)
         .replace("__IMAGE__", image_name)
         .replace("__ROWS__", json.dumps(rows))
+        .replace("__CONTEXT__", json.dumps(context_rows))
         .replace("__META__", json.dumps(meta))
     )
 
@@ -391,6 +502,17 @@ _HTML = """<!doctype html>
             box-shadow: inset 0 0 0 1px rgba(110, 200, 255, 0.7); }
   /* A line already typed keeps a marker, since its text is hidden once focus moves on. */
   .hit.done { border-left: 6px solid rgba(80, 200, 110, 0.85); }
+
+  /* A context band: a neighbouring line rendered only so its marks help place the boundary
+     line's, never transcribed.  Dimmed and inert -- pointer-events none, so a click falls
+     through to nothing -- so it reads as off-limits and has no field of its own. */
+  .ctx { position: absolute; left: 0; width: 100%; pointer-events: none;
+         background: rgba(10, 10, 10, 0.4);
+         border-top: 1px dashed rgba(200, 200, 200, 0.35);
+         border-bottom: 1px dashed rgba(200, 200, 200, 0.35); }
+  .ctx span { position: absolute; right: 6px; top: 2px; font: 11px system-ui, sans-serif;
+              color: #bbb; background: rgba(0, 0, 0, 0.55); padding: 1px 6px;
+              border-radius: 3px; }
 
   /* The entry field sits UNDER its line rather than in a side gutter: a gutter is a
      horizontal eye-jump on every single line, which is the thing this is meant to avoid.
@@ -428,6 +550,7 @@ _HTML = """<!doctype html>
   placeholder="Copy transcription puts the text here"></textarea></div>
 <script>
 const ROWS = __ROWS__;
+const CONTEXT = __CONTEXT__;
 const META = __META__;
 const KEY = "linetx:__STEM__";
 const sheet = document.getElementById("sheet");
@@ -484,6 +607,19 @@ ROWS.forEach((r, idx) => {
   sheet.appendChild(entry);
   entries.push(entry);
   inputs.push(input);
+});
+
+// Dim each context band and label it, so the reader sees why the image runs past the lines to
+// transcribe: the neighbours give the boundary lines their above/below-mark context.  Inert.
+CONTEXT.forEach(c => {
+  const ctx = document.createElement("div");
+  ctx.className = "ctx";
+  ctx.style.top = c.top + "%";
+  ctx.style.height = c.height + "%";
+  const tag = document.createElement("span");
+  tag.textContent = "context";
+  ctx.appendChild(tag);
+  sheet.appendChild(ctx);
 });
 
 function close() {
@@ -572,73 +708,93 @@ def main() -> None:
     args = [a for a in args if a != "--debug"]
     width_arg = _take(args, "--width", 1)
     width = int(width_arg[0]) if width_arg else 1200
-    crop = _take(args, "--crop", 4)
+    crop_arg = _take(args, "--crop", 4)
     name_arg = _take(args, "--name", 1)
     book, name = args[0], args[1]
 
     stem = name_arg[0] if name_arg else name.removesuffix(".jpg")
     src = SCANS / book / f"{name.removesuffix('.jpg')}.jpg"
-    img = Image.open(src)
-    source_height = img.height
-    if crop:
-        left, top, right, bottom = (float(v) for v in crop)
-        img = img.crop(
-            (
-                round(left * img.width),
-                round(top * img.height),
-                round(right * img.width),
-                round(bottom * img.height),
-            )
-        )
-    # Remember where the crop started and how far it was scaled, so line coordinates can be
-    # reported against the original scan as well as against the rendering.
-    crop_top_px = round(float(crop[1]) * source_height) if crop else 0
-    cropped_height = img.height
-    img = img.resize((width, round(img.height * width / img.width)), Image.LANCZOS)
-    source_scale = cropped_height / img.height
+    src_img = Image.open(src)
+    source_height = src_img.height
 
+    crop = [float(v) for v in crop_arg] if crop_arg else None
+    # A crop that reaches INTO the page vertically (not the full 0..1 height) names the lines to
+    # transcribe; detection then runs over a grown region so those lines never sit at an edge.  A
+    # horizontal-only crop -- the two-column case -- leaves detection over the whole height as
+    # before, there being no vertical dead zone to avoid.
+    crops_vertically = bool(crop) and (crop[1] > 1e-4 or crop[3] < 1 - 1e-4)
+
+    detect_crop = None
+    if crops_vertically:
+        # Pass 1, over the requested lines alone, only to size the grow.  The median pitch holds
+        # even if this tight crop clipped a boundary band -- the very failure the grow removes --
+        # so a bad requested crop does not spoil the estimate.
+        probe, _, probe_scale = crop_and_resize(src_img, crop, width)
+        probe_bands = find_bands(smooth(row_profile(probe), SMOOTH_RADIUS))
+        margin = detect_margin(probe_bands, probe_scale, source_height)
+        left, top, right, bottom = crop
+        detect_crop = [left, max(0.0, top - margin), right, min(1.0, bottom + margin)]
+
+    img, origin, scale = crop_and_resize(src_img, detect_crop or crop, width)
     bands = find_bands(smooth(row_profile(img), SMOOTH_RADIUS))
+
+    # With no vertical crop every band is a line to transcribe; otherwise the grow pulled in
+    # neighbours that must be told apart by where their centres fall.
+    context = (
+        band_context(bands, crop, origin, scale, source_height)
+        if crops_vertically
+        else [False] * len(bands)
+    )
+    rows, context_rows = band_rows(bands, context, img.height, origin, scale)
+
     OUT.mkdir(parents=True, exist_ok=True)
     image_name = f"{stem}.png"
     img.save(OUT / image_name)
 
-    meta = {
-        "stem": stem,
-        "source": source_fingerprint(src),
-        # Enough to redo the exact rendering the line coordinates refer to.
-        "render": {
-            "crop": [float(v) for v in crop] if crop else None,
-            "width": width,
-            "size": [img.width, img.height],
-        },
-    }
+    # Enough to redo the exact rendering the line coordinates refer to.  ``crop`` names the lines
+    # requested; ``detect_crop``, present only when the crop grew, is the region detection and
+    # the PNG actually cover.  Its absence marks a pre-#71 export, whose ``crop`` instead means
+    # "the region rendered".
+    render = {"crop": crop, "width": width, "size": [img.width, img.height]}
+    if detect_crop is not None:
+        render["detect_crop"] = detect_crop
+    meta = {"stem": stem, "source": source_fingerprint(src), "render": render}
 
     if debug:
         marked = img.convert("RGB")
         draw = ImageDraw.Draw(marked, "RGBA")
-        for i, (top, bottom) in enumerate(bands):
+        for r in context_rows:  # gray and unnumbered: not a line to type into
+            top, bottom = r["px"]
+            draw.rectangle([0, top, marked.width - 1, bottom], fill=(150, 150, 150, 40))
+            draw.line([0, top, marked.width, top], fill=(140, 140, 140), width=1)
+            draw.line([0, bottom, marked.width, bottom], fill=(140, 140, 140), width=1)
+            draw.text((6, top + 2), "ctx", fill=(120, 120, 120))
+        for r in rows:  # the transcribable lines, numbered as the editor numbers them
+            top, bottom = r["px"]
             draw.rectangle([0, top, marked.width - 1, bottom], fill=(255, 40, 40, 40))
             draw.line([0, top, marked.width, top], fill=(255, 0, 0), width=2)
             draw.line([0, bottom, marked.width, bottom], fill=(0, 120, 255), width=2)
-            draw.text((6, top + 2), str(i + 1), fill=(200, 0, 0))
+            draw.text((6, top + 2), str(r["n"]), fill=(200, 0, 0))
         marked.save(OUT / f"{stem}-lines.png")
         print(f"debug overlay -> {OUT / f'{stem}-lines.png'}")
 
     html = OUT / f"{stem}-editor.html"
     html.write_text(
-        build_html(
-            stem, image_name, bands, img.height, meta, crop_top_px, source_scale
-        ),
-        encoding="utf-8",
+        build_html(stem, image_name, rows, context_rows, meta), encoding="utf-8"
     )
-    heights = [b - a for a, b in bands]
-    print(f"{src.name}: {len(bands)} lines detected")
+    if context_rows:
+        print(
+            f"{src.name}: {len(rows)} lines to transcribe, {len(context_rows)} context"
+        )
+    else:
+        print(f"{src.name}: {len(rows)} lines detected")
+    heights = [r["px"][1] - r["px"][0] for r in rows]
     if heights:
         print(
             f"  line height min/median/max: {min(heights)}/"
             f"{sorted(heights)[len(heights) // 2]}/{max(heights)} px"
         )
-    for level, message in crop_warnings(bands, img.height):
+    for level, message in crop_warnings([tuple(r["px"]) for r in rows], img.height):
         print(f"  {level}: {message}")
     print(f"editor -> {html}")
 
