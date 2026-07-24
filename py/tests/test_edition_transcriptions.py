@@ -236,6 +236,32 @@ _EXPECTED_DIVERGENCES = {
     # the repo: the identical 2-and-2 split, at these same positions, is already on record in the
     # sibling Tiqqun's simanim_ex_elyon, the same reading in the other Feldheim edition.
     "simanim_tanakh_ex_elyon": [],
+    # Simanim TANAKH's Deuteronomy APPENDIX Decalogue (elyon, p. 351) -- the LAST of issue #69's
+    # fourteen, closing issue #72, and the fourth m-trad pin here.  It diverges NOWHERE: 164
+    # reference tokens vs 164, agreeing at every accent, with all SEVEN pasoleg strokes on their
+    # exact reference positions (16 פסל, 19 בשמים, 25 במים, 69 צוך, 79 שבת, 101 היית, 126 למען).
+    #
+    # The empty list is worth more than the usual "no divergence survived a procedure that only
+    # inspects candidate divergences", and for the same reason its Exodus counterpart's is: the
+    # cross-strand re-run.  dt/elyon/manuscript and dt/elyon/printed differ in exactly TWO regions
+    # and nowhere else in 164 tokens -- אנכי (tipexa / pashta) and אלהיך ... עבדים (m-trad closing
+    # the chanted verse at עבדים / p-trad running on, the boundary pinned below at 10) -- and this
+    # transcription takes the m-trad side of both, the other ~155 tokens being common to both
+    # traditions.  It is the taxton pages' signature mirrored, exactly as p. 350 is: there the
+    # m-trad ran ON at עבדים, here it CLOSES there.
+    #
+    # Two corrections preceded this list, both transcription slips and neither an edition
+    # divergence: band 2 dropped the darga on אשר (5:6), which every manuscript strand has; band
+    # 23 typed the geresh on שדהו (5:18) as a qadma, and geresh is what all four Deuteronomy
+    # strands have there.  Both restored on a re-read of the page, the שדהו one flagged against
+    # BOTH dt/elyon strands (the slip signature).
+    #
+    # The seven strokes split two HOLLOW (narrow-sense paseq: 16 פסל, 19 בשמים, each before a
+    # pazer) and five SOLID (legarmeh: 25 במים, 69 צוך, 79 שבת, 101 היית, 126 למען, each before a
+    # revia).  It is the richest stroke page from this edition -- the two taxton pages had one each
+    # and p. 350 four -- but the 2-and-5 split is not new: the sibling Tiqqun's simanim_dt_elyon
+    # has the same seven at the same positions, the same reading in the other Feldheim edition.
+    "simanim_tanakh_dt_elyon": [],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
@@ -279,6 +305,11 @@ _CHANTED_VERSES = {
     # ex/elyon/manuscript (10 verses) but runs on in ex/elyon/printed (9).  This transcription has
     # 10, the m-trad side, with no divergence anywhere to move a boundary.
     "simanim_tanakh_ex_elyon": 10,
+    # The second ELYON count pinned here, in Deuteronomy, and the same m-trad ten as its Exodus
+    # counterpart: עבדים CLOSES its own chanted verse in dt/elyon/manuscript (10 verses) but runs
+    # on in dt/elyon/printed (9).  This transcription has 10, the m-trad side, with no divergence
+    # anywhere to move a boundary.
+    "simanim_tanakh_dt_elyon": 10,
 }
 
 # Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
@@ -304,6 +335,9 @@ _SKELETON_UNTOUCHED = {
     # Zero divergences too -- the elyon counterpart of simanim_tanakh_ex_taxton, against a
     # manuscript-tradition strand.
     "simanim_tanakh_ex_elyon",
+    # Zero divergences too, and the last of the fourteen -- the Deuteronomy counterpart of
+    # simanim_tanakh_ex_elyon, against a manuscript-tradition strand.
+    "simanim_tanakh_dt_elyon",
 }
 
 # Transcriptions carrying a reading the transcriber flagged as not fully read off the page,
