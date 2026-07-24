@@ -211,6 +211,31 @@ _EXPECTED_DIVERGENCES = {
     "simanim_tanakh_dt_taxton": [
         ("pash", "qad", "ויום"),
     ],
+    # Simanim TANAKH's Exodus APPENDIX Decalogue (elyon, p. 350), the first ELYON pin from this
+    # edition -- its two main-text Decalogues above are taxton -- and the third m-trad pin here.
+    # It diverges NOWHERE: 142 reference tokens vs 142, agreeing at every accent, with all four
+    # pasoleg strokes on their exact reference positions (16 פסל, 19 בשמים, 25 במים, 75 שבת).
+    #
+    # The empty list is worth more than the usual "no divergence survived a procedure that only
+    # inspects candidate divergences", and for the same reason the Exodus taxton's is: the
+    # cross-strand re-run.  ex/elyon/manuscript and ex/elyon/printed differ in exactly TWO regions
+    # and nowhere else in 142 tokens -- אנכי (tipexa / pashta) and אלהיך ... עבדים (m-trad closing
+    # the chanted verse at עבדים / p-trad running on, the boundary pinned below at 10) -- and this
+    # transcription takes the m-trad side of both, the other 133 tokens being common to both
+    # traditions.  It is the taxton pages' signature mirrored: there the m-trad ran ON at עבדים,
+    # here it CLOSES there.
+    #
+    # One correction preceded this list, a transcription slip and not an edition divergence: p. 350
+    # line 3 dropped one of the three munax that close on לא תעשה־לך פסל (20:4), the only difference
+    # that survived against BOTH ex/elyon strands.  Restored on a re-read of the page.
+    #
+    # The four pasoleg strokes split two HOLLOW (narrow-sense paseq: 16 פסל, 19 בשמים) and two
+    # SOLID (legarmeh: 25 במים, 75 שבת), each on its exact reference position and each solid one in
+    # the legarmeh-before-revia environment.  It is the first Simanim TANAKH page to carry a hollow
+    # bar at all -- both taxton pages had a single solid stroke -- but the contrast is not new to
+    # the repo: the identical 2-and-2 split, at these same positions, is already on record in the
+    # sibling Tiqqun's simanim_ex_elyon, the same reading in the other Feldheim edition.
+    "simanim_tanakh_ex_elyon": [],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
@@ -249,6 +274,11 @@ _CHANTED_VERSES = {
     # by the edition's own printed verse numbers, which run ו-יז: twelve.  This stem's one
     # divergence is mid-verse, so it cannot move a boundary.
     "simanim_tanakh_dt_taxton": 12,
+    # The first ELYON count pinned here, and the mirror of the taxton twelves above: in the elyon
+    # the boundary at עבדים falls the OTHER way -- עבדים CLOSES its own chanted verse in
+    # ex/elyon/manuscript (10 verses) but runs on in ex/elyon/printed (9).  This transcription has
+    # 10, the m-trad side, with no divergence anywhere to move a boundary.
+    "simanim_tanakh_ex_elyon": 10,
 }
 
 # Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
@@ -271,6 +301,9 @@ _SKELETON_UNTOUCHED = {
     "koren_dt_elyon",
     # Zero divergences too, and against a manuscript-tradition strand.
     "simanim_tanakh_ex_taxton",
+    # Zero divergences too -- the elyon counterpart of simanim_tanakh_ex_taxton, against a
+    # manuscript-tradition strand.
+    "simanim_tanakh_ex_elyon",
 }
 
 # Transcriptions carrying a reading the transcriber flagged as not fully read off the page,
