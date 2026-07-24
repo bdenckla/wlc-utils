@@ -28,12 +28,15 @@ WHAT COUNTS AS ONE TOKEN (the conventions the transcriptions are written to):
   differences.
 * meteg (U+05BD) is dropped: it is not an accent.  Verse-finally the same codepoint is silluq,
   which IS an accent -- emitted, with sof pasuq, as the single token ``silsof``.
-* Narrow-sense paseq is not an accent either.  Munax legarmeh is, but the vendored data cannot
-  tell the two apart: its own ``resolution_notes`` record that the Wikisource templates
-  for legarmeh and for paseq were BOTH folded to U+05C0 at fetch time.  So a munax + U+05C0
-  is reported as a PASOLEG position and scored as a plain munax on both sides -- neither
-  agreement nor disagreement.  Re-vendoring with the two templates kept distinct would let
-  this become a real check; see the issue tracking that.
+* Narrow-sense paseq is not an accent either.  Munax legarmeh is, but in the ACCENT TOKEN
+  stream the two are folded together: a munax + U+05C0 is normalized to a plain munax on both
+  sides (see ``_LEGARMEH_TOKENS``), so a legarmeh-vs-paseq difference is neither agreement nor
+  disagreement THERE.  The kind is checked separately, off to the side of the token diff.  The
+  #74 re-vendoring added ``faithful_chanted_verses`` to the source, which keeps the two
+  Wikisource templates distinct where the folded ``chanted_verses`` collapses both to U+05C0;
+  ``reference_pasoleg_kinds`` reads the reference kind of each stroke back out, so a
+  transcription's own legarmeh/paseq claims can be checked against the strand's OWN reference
+  rather than only against glyph shape and a cross-tradition nod to MAM-parsed-plus.
 
 WHAT A DIFFERENCE MEANS.  Not every difference is a cantillation difference.  Where the two
 texts divide words differently -- maqaf vs. space -- the marking usually follows mechanically:
@@ -536,15 +539,57 @@ def _accent_tokens(verses: list[str]) -> tuple[list[str], list[str], list[str]]:
     return tokens, words, pasoleg
 
 
-def reference_tokens(source: dict, key: tuple[str, str, str]):
-    """The reference accent tokens for one ``(book, reading, tradition)`` strand."""
+def _version_of(source: dict, key: tuple[str, str, str]) -> dict:
     book, reading, tradition = key
-    version = next(
+    return next(
         v
         for v in source["versions"]
         if v["book"] == book and v["reading"] == reading and v["tradition"] == tradition
     )
-    return _accent_tokens(version["chanted_verses"])
+
+
+def reference_tokens(source: dict, key: tuple[str, str, str]):
+    """The reference accent tokens for one ``(book, reading, tradition)`` strand."""
+    return _accent_tokens(_version_of(source, key)["chanted_verses"])
+
+
+def _faithful_pasoleg_kinds(faithful_verse: str) -> list[str]:
+    """The stroke kinds in one faithful (unfolded) verse, in reading order.
+
+    ``legarmeh`` for ``{{מ:לגרמיה}}`` and ``paseq`` for ``{{מ:פסק}}`` -- the two Wikisource
+    templates that the folded ``chanted_verses`` collapses to an indistinguishable U+05C0.
+    """
+    return [
+        "legarmeh" if m.group(1) == "לגרמיה" else "paseq"
+        for m in re.finditer(r"\{\{מ:(לגרמיה|פסק)\}\}", faithful_verse)
+    ]
+
+
+def reference_pasoleg_kinds(source: dict, key: tuple[str, str, str]) -> list[str]:
+    """The kind of each U+05C0 stroke in a strand's reference, in reading order.
+
+    ``legarmeh`` or ``paseq``, read from the version's ``faithful_chanted_verses`` -- the
+    distinction the folded ``chanted_verses`` cannot express, vendored by the #74 re-vendor.
+    Aligned with the reference pasoleg positions ``_accent_tokens`` finds in the folded text:
+    the k-th kind is the k-th pasoleg in reading order, which is what lets ``transcription_check``
+    map a transcribed stroke to a reference kind.  A count mismatch means the faithful and
+    folded forms have drifted, so it raises rather than return a silently misaligned list.
+    """
+    version = _version_of(source, key)
+    faithful = version.get("faithful_chanted_verses")
+    if faithful is None:
+        raise ValueError(
+            f"{'/'.join(key)}: vendored source has no faithful_chanted_verses -- re-vendor "
+            "via printed_decalogue_fetch.py (issue #74)"
+        )
+    kinds = [kind for fv in faithful for kind in _faithful_pasoleg_kinds(fv)]
+    _, _, pasoleg = _accent_tokens(version["chanted_verses"])
+    if len(kinds) != len(pasoleg):
+        raise ValueError(
+            f"{'/'.join(key)}: {len(kinds)} faithful strokes but {len(pasoleg)} folded "
+            "pasoleg positions -- the faithful and folded forms disagree"
+        )
+    return kinds
 
 
 def load_transcription(path: Path) -> Transcription:

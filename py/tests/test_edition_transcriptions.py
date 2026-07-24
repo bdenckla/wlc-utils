@@ -19,6 +19,7 @@ import pytest
 
 from accgram import edition_transcription as et
 from accgram import printed_decalogue as pd
+from accgram import printed_decalogue_fetch as pdf
 from accgram import printed_decalogue_strands as pds
 from accgram import transcription_build as tb
 from accgram import transcription_check as tc
@@ -819,6 +820,154 @@ def test_deuteronomy_taxton_pasoleg_is_transcribed_128_reference_127() -> None:
     spots = [i for i, w in enumerate(words) if et.PASEQ in w and ref[i] == "mun"]
     assert spots == [84, 127]
     assert pds.base_skeleton(words[84]) == "אתה"
+
+
+# The kind of each U+05C0 stroke in each vendored strand, in reading order -- the distinction
+# the folded chanted_verses cannot express and the #74 re-vendor preserves in
+# faithful_chanted_verses.  These are the numbers issue #69's results turned on, now readable
+# from the strand's OWN reference rather than only cross-tradition from MAM-parsed-plus: the
+# elyon strands split 2 narrow paseq (פסל, בשמים) + N legarmeh (Deuteronomy adds צוך, היית,
+# למען to Exodus's במים, שבת), and each taxton has only legarmeh (ex one on אתה; dt/taxton/printed
+# two, on אתה and למען, the second of which is the p-trad's alone).  Pinned so a future re-vendor
+# that dropped or swapped the templates fails here rather than silently un-checking every
+# transcription's legarmeh/paseq claim.
+_REFERENCE_PASOLEG_KINDS = {
+    ("ex", "taxton", "manuscript"): ["legarmeh"],
+    ("ex", "elyon", "manuscript"): ["paseq", "paseq", "legarmeh", "legarmeh"],
+    ("ex", "taxton", "printed"): ["legarmeh"],
+    ("ex", "elyon", "printed"): ["paseq", "paseq", "legarmeh", "legarmeh"],
+    ("dt", "taxton", "manuscript"): ["legarmeh"],
+    ("dt", "elyon", "manuscript"): [
+        "paseq",
+        "paseq",
+        "legarmeh",
+        "legarmeh",
+        "legarmeh",
+        "legarmeh",
+        "legarmeh",
+    ],
+    ("dt", "taxton", "printed"): ["legarmeh", "legarmeh"],
+    ("dt", "elyon", "printed"): [
+        "paseq",
+        "paseq",
+        "legarmeh",
+        "legarmeh",
+        "legarmeh",
+        "legarmeh",
+        "legarmeh",
+    ],
+}
+
+
+@pytest.mark.parametrize("key", sorted(_REFERENCE_PASOLEG_KINDS))
+def test_vendored_reference_preserves_the_pasoleg_kinds(key: tuple) -> None:
+    """The re-vendor kept legarmeh vs narrow-sense paseq, and it round-trips out of the file.
+
+    ``reference_pasoleg_kinds`` reads the kind of each stroke from ``faithful_chanted_verses``;
+    pinning its result per strand is the direct check that the #74 re-vendoring vendored the
+    distinction faithfully.  It also proves the alignment the accessor asserts -- a stroke count
+    that disagreed with the folded ``chanted_verses`` would raise before reaching this compare.
+    """
+    source = _source_or_skip()
+    assert et.reference_pasoleg_kinds(source, key) == _REFERENCE_PASOLEG_KINDS[key]
+
+
+def test_faithful_verses_fold_to_the_folded_chanted_verses() -> None:
+    """``chanted_verses`` is exactly the fold of ``faithful_chanted_verses``, verse for verse.
+
+    The re-vendor stores both forms; the folded one is what every existing consumer reads, so
+    it must stay the derived twin of the faithful one.  The fetch asserts this at build time;
+    pinning it here holds the committed file to it too, so a hand-edit to either field that
+    broke the correspondence fails rather than silently making the folded form claim something
+    the faithful form does not.
+    """
+    source = _source_or_skip()
+    for version in source["versions"]:
+        faithful = version.get("faithful_chanted_verses")
+        assert faithful is not None, (
+            f"{version['book']}/{version['reading']}/{version['tradition']}: no"
+            " faithful_chanted_verses -- re-vendor via printed_decalogue_fetch.py (issue #74)"
+        )
+        refolded = [pdf._fold_verse(fv) for fv in faithful]
+        assert refolded == version["chanted_verses"], (
+            version["book"],
+            version["reading"],
+            version["tradition"],
+        )
+
+
+# How many strokes each transcription states a DEFINITE kind for that maps exactly onto a
+# reference position -- i.e. how many legarmeh/paseq claims the re-vendor now lets us check
+# against the strand's own reference.  Koren does not distinguish the two (every stroke is
+# "unspecified"), so nothing is compared and the count is 0; the Simanim editions do, and every
+# one of their claims agrees with the reference (the mismatch list is empty for all).  This is
+# the concrete payoff of issue #74: the p-trad legarmeh/paseq is checkable against the p-trad's
+# OWN reference, no longer only against glyph shape and a cross-tradition nod to MAM.
+_PASOLEG_KIND_ROUNDTRIP = {
+    "koren_dt_elyon": 0,
+    "koren_dt_taxton": 0,
+    "koren_ex_elyon": 0,
+    "koren_ex_taxton": 0,
+    "simanim_dt_elyon": 7,
+    "simanim_dt_taxton": 1,
+    "simanim_ex_elyon": 4,
+    "simanim_ex_taxton": 1,
+    "simanim_tanakh_dt_elyon": 7,
+    "simanim_tanakh_dt_taxton": 1,
+    "simanim_tanakh_ex_elyon": 4,
+    "simanim_tanakh_ex_taxton": 1,
+}
+
+
+def _pasoleg_kind_roundtrip(source: dict, stem: str) -> tuple[int, list]:
+    """(strokes compared, mismatches) for one transcription's kinds against the reference.
+
+    Mirrors ``transcription_check.report``'s pasoleg-kind comparison so the test checks what
+    the tool does: map each transcribed stroke into reference coordinates, and where BOTH sides
+    state a definite kind, compare them.  A stroke whose edition does not distinguish the two
+    ("unspecified") or that lands in a difference region (no exact reference counterpart) is not
+    compared.  A mismatch is recorded as (word skeleton, transcribed kind, reference kind).
+    """
+    pages = _export_pages(stem)
+    transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
+    ref, words, _ = et.reference_tokens(source, transcription.key)
+    got, _ = tc._tokens_with_origin(pages)
+    opcodes = tc._opcodes(ref, got)
+    spots = [i for i, w in enumerate(words) if et.PASEQ in w and ref[i] == "mun"]
+    spot_kind = dict(zip(spots, et.reference_pasoleg_kinds(source, transcription.key)))
+    marked = tc._pasolegs(pages)
+    mapped = [tc._to_reference(j, opcodes) for j, _ in marked]
+    compared = 0
+    mismatches: list[tuple[str, str, str]] = []
+    for (_, kind), (i, exact) in zip(marked, mapped):
+        ref_kind = spot_kind.get(i) if exact else None
+        if kind == "unspecified" or ref_kind is None:
+            continue
+        compared += 1
+        if kind != ref_kind:
+            mismatches.append((pds.base_skeleton(words[i]), kind, ref_kind))
+    return compared, mismatches
+
+
+@pytest.mark.parametrize("stem", sorted(_PASOLEG_KIND_ROUNDTRIP))
+def test_transcription_pasoleg_kinds_round_trip_against_the_reference(
+    stem: str,
+) -> None:
+    """Every legarmeh/paseq claim a transcription makes agrees with the strand's reference.
+
+    The check the re-vendor unblocks.  Before it, a transcription's ``mun_leg`` / ``[paseq]``
+    could only be read against glyph shape and grammar; now the p-trad strand's OWN reference
+    states the kind, so the claim is machine-checkable.  Both halves are pinned: no mismatch
+    anywhere, AND the exact number of strokes compared, so a regression that quietly stopped
+    comparing (a dropped faithful field, an edition wrongly marked kind-agnostic) fails here
+    rather than passing vacuously.
+    """
+    source = _source_or_skip()
+    if not _stems_with_exports():
+        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
+    compared, mismatches = _pasoleg_kind_roundtrip(source, stem)
+    assert mismatches == []
+    assert compared == _PASOLEG_KIND_ROUNDTRIP[stem]
 
 
 @pytest.mark.parametrize("stem", _stems_with_exports() or ["(none committed)"])

@@ -22,14 +22,16 @@ THREE THINGS IT REPORTS, AND WHY EACH IS SEPARATE:
   the word is printed alongside and the classification stays a human judgement.
 * Chanted verse boundaries, counted on both sides AND checked for difference regions touching
   a silsof.  A bare count would miss one boundary moving while another appeared.
-* Pasoleg positions.  The vendored data folds legarmeh and narrow-sense paseq onto the same
-  U+05C0 glyph, so it can only say WHERE a pasoleg stands; the transcription says WHICH.
-  Comparing the placements is the part that can be checked today, and it doubles as an
-  alignment check: these are independent anchors, so several landing on their exact indices
-  rules out a drifting diff.  The two sides index DIFFERENT token streams, so a transcribed
-  pasoleg is mapped through the diff into reference coordinates before any comparison -- an
-  insertion upstream of one would otherwise shift it off its reference position and the report
-  would blame the pasoleg.
+* Pasoleg positions AND kinds.  The folded ``chanted_verses`` collapses legarmeh and
+  narrow-sense paseq onto the same U+05C0 glyph, but ``faithful_chanted_verses`` keeps them
+  apart (issue #74), so the reference now says both WHERE a stroke stands and WHICH kind it is
+  -- and the transcription's own legarmeh/paseq claim is checked against it, not only against
+  glyph shape.  Comparing the placements doubles as an alignment check: these are independent
+  anchors, so several landing on their exact indices rules out a drifting diff.  The two sides
+  index DIFFERENT token streams, so a transcribed pasoleg is mapped through the diff into
+  reference coordinates before any comparison -- an insertion upstream of one would otherwise
+  shift it off its reference position and the report would blame the pasoleg.  An edition that
+  does not distinguish the two kinds (Koren) prints ``unspecified`` and no kind is compared.
 
 An unresolvable abbreviation is held as ``???`` rather than guessed, so the alignment still
 runs and the reference's own token at that spot can be shown as CONTEXT for the transcriber's
@@ -199,19 +201,37 @@ def report(pages: list[dict], key: tuple[str, str, str]) -> None:
     spots = [i for i, w in enumerate(words) if et.PASEQ in w and ref[i] == "mun"]
     marked = _pasolegs(pages)
     mapped = [_to_reference(j, opcodes) for j, _ in marked]
+    # The reference kind of each stroke, now that faithful_chanted_verses keeps it (issue #74).
+    # Aligned with ``spots`` in reading order, so spot_kind maps a reference index to its kind.
+    ref_kinds = et.reference_pasoleg_kinds(source, key)
+    spot_kind = dict(zip(spots, ref_kinds))
     print("\n-- pasoleg positions --")
     print(f"  reference positions:              {spots}")
+    print(f"  reference kinds:                  {ref_kinds}")
     print(f"  transcribed, mapped to reference: {[i for i, _ in mapped]}")
     agree = [i for i, exact in mapped if exact] == spots and all(x for _, x in mapped)
     print(f"  placements agree: {agree}")
     for (j, kind), (i, exact) in zip(marked, mapped):
         word = words[i] if 0 <= i < len(words) else "?"
         place = f"ref {i}" if exact else f"in a difference region at ref {i}"
-        print(f"    token {j:3d} -> {place}  {word:16s} {kind}")
+        # The transcription asserts a kind; the reference now states one too.  Compare them
+        # only where both are definite -- an edition that does not distinguish the two prints
+        # "unspecified", and there is nothing to check against the reference's legarmeh/paseq.
+        ref_kind = spot_kind.get(i) if exact else None
+        if kind == "unspecified" or ref_kind is None:
+            verdict = ""
+        elif kind == ref_kind:
+            verdict = f"  == reference {ref_kind}"
+        else:
+            verdict = f"  != reference {ref_kind}  <-- KIND MISMATCH"
+        print(f"    token {j:3d} -> {place}  {word:16s} {kind}{verdict}")
     matched = {i for i, exact in mapped if exact}
     for i in spots:
         if i not in matched:
-            print(f"    ref {i:3d} has a pasoleg in the reference only  {words[i]}")
+            print(
+                f"    ref {i:3d} has a pasoleg in the reference only  {words[i]:16s}"
+                f" {spot_kind.get(i, '')}"
+            )
 
     # Printed LAST because it is the one thing a clean report does not otherwise say.  A
     # reading supplied from expectation agrees with the reference by construction, so it sits
