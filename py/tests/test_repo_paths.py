@@ -60,6 +60,7 @@ def test_accessor_suffixes(monkeypatch) -> None:
     monkeypatch.delenv("WLC_SIBLINGS_ROOT", raising=False)
     for name in (
         "WLC_MAM_SIMPLE_DIR",
+        "WLC_MAM_PARSED_DIR",
         "WLC_WLC_UTILS_PRIVATE_DIR",
         "WLC_MAM_BASICS_DIR",
         "WLC_UXLC_UTILS_DIR",
@@ -67,6 +68,7 @@ def test_accessor_suffixes(monkeypatch) -> None:
         monkeypatch.delenv(name, raising=False)
     parent = repo_paths.repo_root().parent
     assert repo_paths.mam_simple_dir() == parent / "MAM-simple" / "json-vtrad-bhs"
+    assert repo_paths.mam_parsed_plus_dir() == parent / "MAM-parsed" / "plus"
     assert repo_paths.wlc_utils_private_dir() == parent / "wlc-utils-private"
     assert repo_paths.mam_basics_dir() == parent / "MAM-basics"
     assert repo_paths.uxlc_utils_dir() == parent / "UXLC-utils"

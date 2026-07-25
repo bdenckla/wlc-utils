@@ -87,6 +87,11 @@ def mam_simple_dir() -> Path:
     return sibling("MAM-simple") / "json-vtrad-bhs"
 
 
+def mam_parsed_plus_dir() -> Path:
+    """MAM-parsed's ``plus`` subtree: one JSON per book24, minirow cells C/D/E."""
+    return sibling("MAM-parsed") / "plus"
+
+
 def wlc_utils_private_dir() -> Path:
     return sibling("wlc-utils-private")
 

@@ -15,7 +15,10 @@ verse through the shared pipeline #36 uses -- ``uni_to_marks.verse_to_marks`` ->
 records clean / ungrammatical per chanted verse.
 
 Both manuscript versions serve as the baseline (MAM's own authoritative text: expected all
-clean); the printed versions are the object of study.  The verdict is stable and stark:
+clean); the printed versions are the object of study.  That baseline is not taken on trust:
+``decalogue_m_trad`` checks all four m-trad strands, word for word and stroke for stroke,
+against MAM's own parse of its own text in the sibling repo MAM-parsed's ``plus`` tree, and
+they agree exactly (issue #68).  The verdict is stable and stark:
 
   * **taxton** parses clean in both books and both traditions;
   * **elyon** parses clean in the manuscript, but in the *printed* editions of *both*

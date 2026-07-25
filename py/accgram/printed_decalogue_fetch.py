@@ -28,9 +28,11 @@ The three distinctions the fold discards and the faithful field keeps:
     preceding word (WLC's attached convention; a munax+paseq is then read as legarmeh by the
     scanner), so the folded form cannot say WHICH kind of vertical stroke stands there.  The
     faithful form can, which is what lets a printed-tradition transcription's legarmeh/paseq
-    claims be checked against the p-trad strand's OWN reference (issue #74; the m-trad half is
-    better taken from MAM-parsed-plus, per #68).  ``edition_transcription.reference_pasoleg_kinds``
-    reads them back out.
+    claims be checked against the p-trad strand's OWN reference (issue #74).  For the m-trad
+    half, issue #68 checked this field against MAM-parsed-plus -- which carries the same
+    distinction in its own ``מ:לגרמיה-2``/``מ:פסק`` templates -- and found the two agree on
+    every stroke, so either may be used; ``decalogue_m_trad`` is the comparison.
+    ``edition_transcription.reference_pasoleg_kinds`` reads them back out.
   * ``{{כו"ק|ketiv|qere}}`` -- folds to the qere (the accented form the reading chants); the
     faithful form keeps the ketiv too.
   * paragraph / pisqa markers ``{{ססס}}`` ``{{סס2}}`` ``{{סס}}`` ``{{פפ}}`` -- fold to nothing
