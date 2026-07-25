@@ -34,14 +34,23 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
 
-    _require_dir(_SOURCE_REPO)
+    # Each sibling ROOT is checked through repo_paths, whose message names both env
+    # overrides: an absent root means the clone is misplaced -- or, far likelier, that
+    # this checkout is a git worktree nested under .claude/worktrees/ and so has no
+    # siblings at all -- and that is fixable advice.  Each root's own SUBTREES stay on
+    # the bare _require_dir deliberately: with the root confirmed present, the clone is
+    # already where this repo expects it, so a missing subtree means a wrong or stale
+    # version of the sibling, and pointing the reader at WLC_SIBLINGS_ROOT would send
+    # them to relocate a clone that is not the problem.  That reasoning holds only if
+    # each root is checked BEFORE its subtrees, so the order below is load-bearing.
+    repo_paths.require_mam_basics_dir()
     _require_dir(_SOURCE_PYCMN)
     _require_dir(_DEST_PYCMN)
     _require_dir(_SOURCE_PYMISC)
     _require_dir(_DEST_PYMISC)
     _require_dir(_SOURCE_MBDIFF)
     _require_dir(_DEST_MBDIFF)
-    _require_dir(_UXLC_SOURCE_REPO)
+    repo_paths.require_uxlc_utils_dir()
     _require_dir(_SOURCE_UXLC39)
     _require_dir(_DEST_UXLC39)
     _require_dir(_SOURCE_UXLCMISC)
@@ -197,6 +206,14 @@ def _report(dest_dir: Path, copied: list[str], changed: bool, wrote: bool) -> No
 
 
 def _require_dir(path: Path) -> None:
+    """Fail on a missing directory whose absence needs no advice beyond its own path.
+
+    Now that ``repo_paths.require_sibling`` exists beside it, this is the deliberate
+    remainder rather than a half-finished conversion: it is what checks the two kinds of
+    directory for which the sibling overrides would be the wrong answer -- destinations
+    inside this repo, and subtrees of a sibling root that ``main`` has already confirmed
+    present.  For both, naming the path IS the whole diagnosis.
+    """
     if not path.is_dir():
         raise FileNotFoundError(f"Directory does not exist: {path}")
 

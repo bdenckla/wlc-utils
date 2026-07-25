@@ -137,5 +137,15 @@ def mam_basics_dir() -> Path:
     return sibling("MAM-basics")
 
 
+def require_mam_basics_dir() -> Path:
+    """``mam_basics_dir``, checked -- see ``require_sibling`` for why this is not a skip."""
+    return require_sibling("MAM-basics", mam_basics_dir())
+
+
 def uxlc_utils_dir() -> Path:
     return sibling("UXLC-utils")
+
+
+def require_uxlc_utils_dir() -> Path:
+    """``uxlc_utils_dir``, checked -- see ``require_sibling`` for why this is not a skip."""
+    return require_sibling("UXLC-utils", uxlc_utils_dir())

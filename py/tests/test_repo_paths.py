@@ -127,6 +127,27 @@ def test_require_mam_simple_dir_checks_the_resolved_path(monkeypatch, tmp_path) 
         repo_paths.require_mam_simple_dir()
 
 
+@pytest.mark.parametrize(
+    "env_var, accessor",
+    [
+        ("WLC_MAM_BASICS_DIR", "require_mam_basics_dir"),
+        ("WLC_UXLC_UTILS_DIR", "require_uxlc_utils_dir"),
+    ],
+)
+def test_require_vendoring_source_checks_the_resolved_path(
+    monkeypatch, tmp_path, env_var: str, accessor: str
+) -> None:
+    """Same contract again, for the two roots ``main_update_vendored_files`` vendors from.
+
+    Those two are the only checks in that script that reach outside this repo, so they are
+    the only ones whose failure a reader cannot act on unaided -- which is why they, and
+    not the sibling SUBTREES beneath them, are the ones routed through here.
+    """
+    monkeypatch.setenv(env_var, str(tmp_path / "nowhere"))
+    with pytest.raises(FileNotFoundError, match="nowhere"):
+        getattr(repo_paths, accessor)()
+
+
 def test_data_path_accessors() -> None:
     # The in-repo data-tree accessors (issue #33).
     root = repo_paths.repo_root()
