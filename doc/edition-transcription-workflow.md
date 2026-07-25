@@ -180,11 +180,22 @@ a test rather than surfacing as a puzzling runtime message.
 ```
 
 It reports token and chanted-verse counts, every difference region with the reference word and
-the printed page and line it came from, and the pasoleg placements — the transcribed side
-mapped through the diff into reference coordinates first, since the two sides index different
-token streams and an insertion upstream of a pasoleg would otherwise shift it off its
-reference position. Run it on a partly typed page too — a problem then shows up before the rest
-is typed.
+the printed page and line it came from, and the pasoleg placements **and kinds** — the
+transcribed side mapped through the diff into reference coordinates first, since the two sides
+index different token streams and an insertion upstream of a pasoleg would otherwise shift it
+off its reference position. Run it on a partly typed page too — a problem then shows up before
+the rest is typed.
+
+The **kind** is comparable because the vendored source keeps `{{מ:לגרמיה}}` and `{{מ:פסק}}` apart
+in `faithful_chanted_verses` ([#74](https://github.com/bdenckla/wlc-utils/issues/74)), beside the
+folded `chanted_verses` that collapses both to U+05C0 and that every other consumer reads;
+`edition_transcription.reference_pasoleg_kinds` reads them back out. So a transcribed `mun_leg`
+or `[paseq]` is checked against the strand's **own** reference rather than against glyph shape
+and grammar, and `[pasoleg]` asserts no kind and leaves nothing to compare. Both halves are
+pinned in `test_edition_transcriptions.py`: the reference kinds per strand
+(`test_vendored_reference_preserves_the_pasoleg_kinds`) and every kind claim each transcription
+makes (`test_transcription_pasoleg_kinds_round_trip_against_the_reference`, which pins the number
+of strokes compared too, so a regression that quietly stopped comparing cannot pass vacuously).
 
 For any difference, before calling it an accent difference:
 
@@ -287,11 +298,32 @@ m-trad exactly there, the two partitioning the differences with nothing left ove
 over a contiguous run with a strand nothing had flagged is positive evidence; a flagged
 position surviving a re-read is not.
 
-**Legarmeh vs. narrow-sense paseq is not checkable against the vendored data.** Its fetch folds
-`{{מ:לגרמיה}}` and `{{מ:פסק}}` both onto U+05C0, so those positions score as neither agreement
-nor disagreement — see #69's re-vendoring item. MAM-parsed-plus *does* keep them distinct (cell
-E, per strand via `מ:כפול` א/ב), but only for the m-trad; see
-[#68](https://github.com/bdenckla/wlc-utils/issues/68).
+**A stroke is invisible to the token diff — its kind, and its presence.** Legarmeh and
+narrow-sense paseq both fold onto a plain munaḥ on either side of the comparison
+(`edition_transcription._LEGARMEH_TOKENS`), so exchanging the two, or omitting a stroke
+outright, moves neither the difference list nor the token counts. `simanim_dt_taxton` is the
+live case: the page prints one stroke where its p-trad strand has two — nothing on אתה, which is
+part of what makes it depart to the m-trad there — and no difference region says so. The strokes
+are checked separately, in the report's own pasoleg section (§3), so read that section: "0
+difference regions" is not a statement about them. The scanner layer is only partly better — a
+stroke in a legarmeh position does change its token, but one the positional rule does not fire on
+comes out as a plain munaḥ, indistinguishable from no stroke at all, and the stream-for-stream
+comparison against the strand runs only for the seven stems that diverge nowhere.
+
+**What the separate check on the strokes still cannot reach.** An edition that does not draw the
+distinction is not checked at all: Koren prints the stroke without saying which kind it is, so all
+fourteen of its strokes are written `[pasoleg]` and the round trip compares none of them.
+`transcription_parse.scanner_pasoleg_kinds` does determine all fourteen — the scanner's
+positional rule, a munaḥ + stroke before a revia — and agrees with the vendored reference at
+every one; but that is the grammar's answer rather than the book's, and being positional it is
+blind to what is printed, so it can supply a kind an edition withholds and could never
+corroborate one an edition states. A stroke landing inside a difference region has no exact
+reference counterpart and goes uncompared too — none does in any of the twelve, and the report
+prints `in a difference region at ref N` where it would. And the kinds have a second,
+independent source only for the m-trad: MAM-parsed-plus carries them per stroke (cell E, the two
+strands split by `מ:כפול` א/ב) and `test_decalogue_m_trad` pins that the two sources agree stroke
+for stroke, but the plus tree holds no printed tradition, so the four p-trad strands rest on the
+single vendored copy — see [#68](https://github.com/bdenckla/wlc-utils/issues/68).
 
 ## Digital sources (fetched, not transcribed)
 
