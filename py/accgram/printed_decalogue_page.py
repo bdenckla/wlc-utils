@@ -254,8 +254,8 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
                 f"p-trad {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse "
                 "than the m-trad, whose first verse runs on to על־פני instead). Both "
                 "are grammatical. It also differs in some further details — several of them "
-                "changes of cantillation that give the two strands genuinely different parses, "
-                "but none that costs either its grammaticality (",
+                "changes of cantillation that give the two strands genuinely different "
+                "accent-grammar trees, but none that costs either its grammaticality (",
                 link("catalogued in an appendix below", f"#{_TAHTON_DETAILS_ID}"),
                 ").",
             )
@@ -1070,6 +1070,37 @@ def _sabbath_diff_table(results: list[pd.VersionResult]) -> object:
     return H.table(tuple(rows), {"class": "printed-decalogue-sabbath-diff"})
 
 
+# The two strands' one vocalization difference, stacked as a table rather than run together in
+# prose (Ben, 2026-07-25). The prose form put the two pointed words side by side, each followed by
+# an English parenthetical: two RTL words on one line separated only by neutral characters, which
+# BiDi is free to reorder, so a reader could not be sure which vowel went with which tradition.
+# Stacked, the two forms sit one directly above the other and the vowel is comparable at a glance.
+# Name the word bare -- תרצח, not לא תרצח: the two words are separately accented rather than one
+# maqaf compound, and only this one differs, so the לא bought nothing but a second RTL word.
+_VOWEL_DIFF_ROWS: tuple[tuple[str, str, str], ...] = (
+    ("m-trad", "תִּרְצָ֖ח", "qamats"),
+    ("p-trad", "תִּרְצַ֖ח", "patax"),
+)
+
+
+def _vowel_diff_table() -> object:
+    """The one difference of vocalization, as an m-trad row above its p-trad row: label, the
+    pointed word, and the vowel's name. The mirror image of ``_diff_row`` above, which strips the
+    pointing off to leave the cantillation bare -- here the pointing IS the difference, and the
+    two rows carry the same tipexa."""
+    rows = tuple(
+        H.table_row(
+            (
+                H.table_datum(H.bold(label)),
+                H.table_datum(hbo(word), {"dir": "rtl"}),
+                H.table_datum(vowel),
+            )
+        )
+        for label, word, vowel in _VOWEL_DIFF_ROWS
+    )
+    return H.table(rows, {"class": "printed-decalogue-vowel-diff"})
+
+
 def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
     # Every number in this appendix is DERIVED, and the derivation raises on drift: this one call
     # re-counts the whole Deuteronomy divergence set from the vendored words and fails the build
@@ -1086,7 +1117,8 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
             (
                 f"Both {_TAHTON} strands are grammatical, so the differences below "
                 "do not bear on the grammaticality question this page asks — not even the several "
-                "that do change the parse. They are gathered here only to make concrete the "
+                "that do change the accent-grammar tree. They are gathered here only to make "
+                "concrete the "
                 "verdict's point that the strands differ in ways that never cost either strand "
                 "grammaticality. "
                 "The one structural difference — the p-trad ending its first verse at מבית עבדים, "
@@ -1100,16 +1132,16 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                "In Exodus, those four words aside, the two strands part at exactly one more: the "
-                "vocalization of לא תרצח — ",
-                hbo("תִּרְצָ֖ח"),
-                " (m-trad, qamats) against ",
-                hbo("תִּרְצַ֖ח"),
-                " (p-trad, patax). Both have the same ",
+                "In Exodus, those four words aside, the two strands part at exactly one more, "
+                "the vocalization of תרצח:",
+            )
+        ),
+        _vowel_diff_table(),
+        H.para(
+            (
+                "Both have the same ",
                 _ROM_TIPEHA,
-                "; only the vowel differs. So an Exodus Decalogue reaches no difference at all in "
-                "the Shabbat commandment — which is why the Simanim and Koren pages say their "
-                "Exodus Decalogues cannot adjudicate it.",
+                "; only the vowel differs.",
             )
         ),
         # GUARDRAIL (2026-07-25 claim audit, finding 1). This paragraph used to open "Deuteronomy
@@ -1128,20 +1160,19 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 "Deuteronomy differs in more ways. Over the whole Decalogue the two strands part "
                 "at ",
                 H.bold(str(counts["total"])),
-                " chanted words: the four boundary words just set aside, one that differs in "
-                "vocalization alone (the same לא תרצח, noted again below), and ",
+                " chanted words: the four boundary words already discussed above, one that "
+                "differs in vocalization alone (the same תרצח, noted again below), and ",
                 H.bold(str(counts["sabbath"])),
                 " that all fall within a single stretch of the Sabbath commandment. Those "
                 f"{counts['sabbath']} are differences of cantillation, so unlike the Exodus "
-                "vowel-swap they give the two strands genuinely different parses. Below is just "
-                "that stretch — the run of words the two strands accent differently, everything "
+                "vowel-swap they give the two strands genuinely different accent-grammar trees. "
+                "Below is that stretch — the run of words the two strands accent differently, "
+                "everything "
                 "before and after it being identical — shown in each strand, m-trad above p-trad, "
                 "stripped to letters and accents, each line ending on a disjunctive accent. The ",
                 H.bold(str(len(_SABBATH_LINE_ENDS))),
-                " words those lines end on are the Shabbat commandment's signal words — the ones "
-                "the Simanim and Koren pages highlight on their scans to tell a p-trad Shabbat "
-                "commandment from an m-trad one. They are a shorthand for the stretch, not the "
-                "whole of it:",
+                " words those lines end on are the Shabbat commandment's signal words — a "
+                "shorthand for the stretch, not the whole of it:",
             )
         ),
         # Just the differing stretch of the Sabbath verse, pulled and reduced live from the data (so
