@@ -1158,9 +1158,18 @@ def _pausal_table(results: list[pd.VersionResult]) -> object:
 #
 # Two rules for editing this passage.
 #
-# (1) NAME AND GLOSS BOTH TERMS. "Pausal" and "contextual" are the standard names and belong here,
-# but neither is a term a reader of a published page has met (cf. the rendered-prose rule that
-# "parses clean" gets expanded). Give the plain-English sense alongside the name, once each.
+# (1) GLOSS THE IDEA ONCE, THEN JUST USE THE NAMES. "Pausal" and "contextual" are the standard
+# terms and a reader of a published page has not met them, so the opening sentence says in plain
+# words what the alternation is ("one vowel where the reading pauses and another where it runs
+# on"). After that, write "the pausal form" and leave it at that. An earlier draft glossed each
+# name in apposition as it arrived -- "the pause form, the pausal one" -- which Ben cut as weird
+# and unnecessary (2026-07-25): once the idea is glossed, the name needs no second explanation.
+#
+# (1a) NO EMPHASIS WORD THAT GESTURES AT A CONTRAST THE READER HAS NOT REACHED. Three cuts on
+# 2026-07-25 shared one cause: "outright", and "the two strands REALLY DO accent those words
+# differently", were both leaning on the תרצח paragraph that comes AFTER them -- an emphasis
+# whose contrast is still in the future reads as noise, and this is the standing no-previews rule
+# in miniature. State the two words' case flatly; let the contrast land when תרצח arrives.
 #
 # (2) EVERY FACTUAL CLAIM IS DERIVED OR PINNED. The vowels and accents in the table come off the
 # vendored marks (pds.resolve_pausal), which additionally checks all eight readings agree at both
@@ -1170,8 +1179,21 @@ def _pausal_table(results: list[pd.VersionResult]) -> object:
 # precisely where that recurs. Do not add a further claim about the pointing here without a pin.
 # The citation, in the trio's bare form -- "Yeivin §199", matching "(Yeivin §246)" on the
 # almost-errors page. The section is §199 of Yeivin's *Introduction to the Tiberian Masorah*, whose
-# §197 supplies the ranking that "weaker than those two" below leans on (tipexa sits a grade below
-# etnaxta and silluq); §199 is where the pausal/contextual rule and its exceptions are stated.
+# §197 supplies the ranking the closing sentence leans on (tipexa sits one grade below etnaxta and
+# silluq); §199 is where the pausal/contextual rule and its exceptions are stated.
+#
+# NAME BOTH ACCENTS THERE, DON'T SHORTEN TO ONE. Yeivin's §197 puts silluq and etnaxta in the SAME
+# grade (his grade I), so "weaker than etnaxta" alone would set the same threshold but would imply
+# a ranking between the two that he does not make. It also replaced a "weaker than those two",
+# which made the reader hold two accents in mind from an earlier paragraph (Ben, 2026-07-25). The
+# order matches the rule as first stated above, etnaxta before silluq, so the back-reference is
+# unmistakable.
+#
+# "CONTEXTUAL" IS YEIVIN'S OWN TERM, NOT A COINAGE OF THIS PAGE (asked 2026-07-25; recorded so it
+# is not asked twice). §199 states the rule with both words -- "contextual forms are used with the
+# other accents" -- and ITM uses the pair elsewhere too ("contextual or pausal situations", and
+# "contextual and pausal forms" among the topics early grammarians took from the Masorah). So the
+# prose keeps "contextual" rather than falling back on a descriptive "non-pausal".
 _PAUSAL_CITE = "Yeivin §199"
 
 
@@ -1183,15 +1205,11 @@ def _pausal_paras(results: list[pd.VersionResult]) -> tuple[object, ...]:
             (
                 "Those two vowels are the two halves of a pausal alternation: a great many Hebrew"
                 " words take one vowel where the reading pauses and another where it runs on. The"
-                f" general rule ({_PAUSAL_CITE}) is that the pause form — the ",
-                H.bold("pausal"),
-                " one — goes with an ",
+                f" general rule ({_PAUSAL_CITE}) is that the pausal form goes with an ",
                 _ROM_ETNAHTA,
                 " or a ",
                 _ROM_SILLUQ,
-                ", and the run-on form — the ",
-                H.bold("contextual"),
-                " one — with every other accent.",
+                ", and the contextual form with every other accent.",
             )
         ),
         H.para(
@@ -1199,7 +1217,7 @@ def _pausal_paras(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 "Two other words of the Decalogue alternate the same way, and at both of them it is"
                 " the strand that decides and not the tradition: all eight strands have the pausal"
                 f" {_QAMATS} in the {_TAHTON} and the contextual {_PATAX} in the {_ELYON}. There the"
-                " rule accounts for the vowel outright, because the two strands really do accent"
+                " rule accounts for the vowel, because the two strands accent"
                 f" those words differently. The {_TAHTON} ends a chanted verse at על־פני and puts"
                 f" its verse's main break at מתחת; the {_ELYON} runs on through both. In each pair"
                 f" below the {_TAHTON} comes first:",
@@ -1208,17 +1226,24 @@ def _pausal_paras(results: list[pd.VersionResult]) -> tuple[object, ...]:
         _pausal_table(results),
         H.para(
             (
-                "תרצח is that same alternation with the accent held fixed. In the ",
+                "With תרצח, we have that same alternation, this time splitting the two"
+                " traditions. In the ",
                 _ELYON,
-                f" the word is a chanted verse of its own, so both traditions have the pausal"
-                f" {_QAMATS} on its ",
+                " it is the second and last word of the two-word chanted verse ",
+                H.bdi("לא תרצח"),
+                ", so it carries a ",
                 _ROM_SILLUQ,
-                f". In the {_TAHTON} it sits mid-verse under a ",
+                f" and both traditions have the pausal {_QAMATS} on it. In the {_TAHTON} it sits"
+                " mid-verse under a ",
                 _ROM_TIPEHA,
                 f", which by the rule above should take the contextual {_PATAX} — and that is what"
                 f" the p-trad has, while the m-trad keeps the pausal {_QAMATS}. A pausal vowel under"
-                " a disjunctive weaker than those two is common enough for Yeivin to catalogue it;"
-                " what the two traditions differ over here is only whether to do it at this word.",
+                " a disjunctive weaker than either ",
+                _ROM_ETNAHTA,
+                " or ",
+                _ROM_SILLUQ,
+                " is common enough for Yeivin to catalogue it; what the two traditions differ over"
+                " here is only whether to do it at this word.",
             )
         ),
     )
@@ -1278,10 +1303,20 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         # against without saying what it counts; and never let this page's "three" imply the table
         # shows three rows' worth of difference. Every number below is now derived (see the counts
         # call above), so the failure mode left is a WORDING one -- keep the scopes explicit.
+        #
+        # The paragraph now opens by RESTATING WHAT THE SECTION IS COMPARING before switching books
+        # (Ben, 2026-07-25). Its old opener, a bare "Deuteronomy differs in more ways", assumed the
+        # reader still had "p-trad against m-trad, within the תחתון" in mind -- and by this point
+        # three paragraphs and a table of the pausal aside sit between that framing and here, with
+        # the aside's own comparison running along the OTHER axis (תחתון against עליון). Naming both
+        # the axis and the book at the hand-off costs a sentence and removes the ambiguity. If the
+        # aside above is ever moved or dropped, this restatement should stay: the appendix's two
+        # halves are far enough apart to want it regardless.
         H.para(
             (
-                "Deuteronomy differs in more ways. Over the whole Decalogue the two strands part"
-                " at ",
+                f"So that is how the p-trad and m-trad of the {_TAHTON} differ in Exodus. In"
+                " Deuteronomy, they differ more than in Exodus. Over the whole Decalogue the two"
+                " strands part at ",
                 H.bold(str(counts["total"])),
                 " chanted words: the four boundary words already discussed above, one that"
                 " differs in vocalization alone (the same תרצח, noted again below), and ",

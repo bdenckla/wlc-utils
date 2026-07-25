@@ -113,6 +113,14 @@ when editing either page):
   Tiqqun p. 83: the Exodus main Decalogue in the elyon"), ``img alt`` text, and image filenames.
 * Rendered prose uses the **real Unicode em dash** ``—`` (U+2014), not ASCII ``--`` (``--`` is
   fine in code/comments/docstrings, like this one).
+* **Never open an English sentence with a Hebrew word** (Ben, 2026-07-25).  "תרצח is that same
+  alternation…" became "With תרצח, we have that same alternation…"; give the sentence an English
+  runway and let the Hebrew arrive inside it.  A sentence-initial RTL run makes the reader resolve
+  the direction switch before there is any English context to switch back to, and at a paragraph
+  start there is not even a preceding word to anchor it.  Scoped to *English* prose: a quoted
+  Biblical verse, a Hebrew-language note (``telg-doc-notes``) and the Hebrew cells of a table all
+  begin with Hebrew and are untouched by this.  As of that date the trio and its sibling accgram
+  pages have no other violation, so any new one is newly introduced.
 * **Attribute contexts are EXEMPT from the Hebrew-letter rule, by design -- do not "fix" them.**
   Romanized "taḥton"/"elyon" is correct, and stays, inside ``img alt`` text and ``abbr title``
   text (and any similar attribute); only *visible prose* takes the Hebrew letters of bullet 1.
@@ -604,10 +612,16 @@ def resolve_pausal(results: list[pd.VersionResult]) -> tuple[PausalForm, ...]:
 # The rest of what the appendix says about תרצח, pinned the same way.  Two claims live here that
 # the vocalization table alone does not carry: that the two תחתון strands' split is a vowel and
 # nothing else (the same tipexa in both), and that it is confined to the תחתון -- in the עליון the
-# word is a chanted verse of its own, and BOTH traditions have the pausal qamats on its silluq.
-# That second one is what makes תרצח the odd case beside על־פני and מתחת, so it is checked rather
-# than typed.  Unlike the two pausal words, תרצח falls outside the אנכי…מצותי span, so
-# ``check_tirtsax`` scans a reading's whole Decalogue for it.
+# word ends the two-word chanted verse לא תרצח, so it carries silluq and BOTH traditions have the
+# pausal qamats on it.  That second one is what makes תרצח the odd case beside על־פני and מתחת, so
+# it is checked rather than typed.  Unlike the two pausal words, תרצח falls outside the אנכי…מצותי
+# span, so ``check_tirtsax`` scans a reading's whole Decalogue for it.
+#
+# SAY WHAT ENDS THE VERSE, NOT WHAT IS ONE (Ben, 2026-07-25).  This prose first read "in the עליון
+# the word is a chanted verse of its own", which is flatly false: the verse is לא תרצח, two
+# separately accented words (the same reason _VOWEL_DIFF_ROWS names the word bare rather than
+# naming the pair).  A word ENDS a chanted verse; only a one-word verse would BE one.  The same
+# slip is easy at על־פני, which likewise ends a verse in two strands without being one.
 TIRTSAX = "תרצח"
 _TIRTSAX_PINS: dict[tuple[str, str], tuple[str, str]] = {
     ("taxton", "manuscript"): (ROM_QAMATS, ROM_TIPEHA),
