@@ -2,7 +2,7 @@ r"""Grammar-check the printed-tradition Decalogue accentuations (issue #52).
 
 Issue #36 grammar-checks the *manuscript* (Tiberian, WLC/MAM) taxton/elyon threads of the
 two Decalogues by detangling WLC's dual cantillation.  This module answers the companion
-question for the *printed* tradition (דפוסים / Koren / Simanim): fed through the very same
+question for the *printed* tradition (דפוסים / Koren / Simanim's Tiqqun): fed through the same
 prose grammar checker, are the printed editions' taxton and elyon accentuations grammatical
 too, for both Exodus 20 and Deuteronomy 5?
 
