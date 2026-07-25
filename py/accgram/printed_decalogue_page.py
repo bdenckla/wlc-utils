@@ -13,6 +13,14 @@ shared ``printed_decalogue_strands`` module.  The Simanim and Koren companion pa
 (``printed_decalogue_simanim_page``, ``printed_decalogue_koren_page``) link back to that table
 rather than duplicating it.
 
+The strands are IDEALIZED, and since issue #52's transcription work the page also says, in one
+paragraph, how the twelve hand-transcribed real Decalogues fare under the same checker: eleven
+give their strand's verdicts at every chanted verse -- four of them by printing the p-trad elyon's
+ungrammatical merged opening verse, which is what stops that finding being an artifact of the
+idealization -- and one departs.  Those counts come live from ``transcription_parse.check_all``,
+and the per-Decalogue verdicts stay on the two satellite pages, which is where they are
+documented; the hub must not assert what a satellite does not.
+
 Editorial / style conventions for the rendered prose are single-sourced in
 ``printed_decalogue_strands`` (bare-Hebrew strand names תחתון / עליון in output, romanized only
 in ``title`` / ``alt`` attributes and internal keys; ``ROM_*`` accent names never retyped; real
@@ -29,6 +37,7 @@ from pathlib import Path
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
 from accgram import rtms_report
+from accgram import transcription_parse as tp
 from accgram.almost_errors_html_shared import hbo, link
 from cmn.utf8_io import force_utf8_io
 from mb_cmn import hebrew_accent_strip as has
@@ -46,6 +55,10 @@ REPORT_TITLE = "In the printed tradition, are the accents of the Decalogue gramm
 _GOERWITZ_URL = "goerwitz.html"
 _SOURCE_URL = "https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/טעמים"
 
+# The two satellite pages, which document the per-Decalogue verdicts this page only totals.
+_SIMANIM_PAGE = "printed-decalogue-simanim.html"
+_KOREN_PAGE = "printed-decalogue-koren.html"
+
 _CTR_REVIEW_URL = (
     "https://bdenckla.github.io/MAM-with-doc/misc/rocc_0_review_of_ctr.html"
 )
@@ -61,6 +74,11 @@ _CHABAD_DT5_URL = (
 # differences (single-sourced: used as both the verdict-paragraph link's href fragment and the
 # appendix heading's id, matching the #four-strands / #why-the-printed-elyon-fails style).
 _TAHTON_DETAILS_ID = "tahton-details"
+
+# In-page anchor for the paragraph totalling how the twelve transcribed real Decalogues fare
+# under the checker -- the one thing on this page that is about editions rather than strands, and
+# the target of the verdict section's forward reference to it.
+_TRANSCRIPTIONS_ID = "real-editions"
 
 
 # Strand names are single-sourced in printed_decalogue_strands (see its module docstring). These
@@ -238,7 +256,10 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
                 H.bold("not"),
                 f" in the p-trad: the p-trad {_ELYON} of ",
                 H.bold("each"),
-                " Decalogue has exactly one ungrammatical chanted verse — its opening one.",
+                " Decalogue has exactly one ungrammatical chanted verse — its opening one. That"
+                " verse is not only an idealized strand's: real editions print it, as ",
+                link("the transcription totals below", f"#{_TRANSCRIPTIONS_ID}"),
+                " say.",
             )
         ),
     )
@@ -476,7 +497,62 @@ _UL_ITEM_3 = (
 )
 
 
-def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
+# --------------------------------------------------------------------------- #
+# What the twelve real editions do under the checker (issue #52)
+# --------------------------------------------------------------------------- #
+# The hub states only the TOTALS; the per-Decalogue verdicts are the satellite pages', which is
+# where they are documented. Every number below is counted from the checker's own results rather
+# than written out, and the one claim the prose makes about WHICH transcriptions share their
+# strand's failure is checked rather than trusted -- the drift-fails-the-build habit of
+# printed_decalogue_strands, applied to a sentence instead of a table cell.
+def _strand_ungrammatical(
+    verdicts: list[tp.TranscriptionResult],
+) -> list[tp.TranscriptionResult]:
+    """The transcriptions that agree with their strand AND are ungrammatical somewhere.
+
+    Being ungrammatical is then the strand's doing, not the edition's, so the prose says these
+    editions PRINT the p-trad עליון's merged opening verse.  That is only worth saying if they
+    really do all follow a p-trad עליון, so this raises rather than let the sentence outlive the
+    fact.
+    """
+    shared = [r for r in verdicts if not r.departures and r.ungrammatical]
+    odd = [r.stem for r in shared if r.key[1:] != ("elyon", "printed")]
+    if odd:
+        raise AssertionError(
+            f"{odd} share their strand's ungrammaticality without following a p-trad "
+            f"{pds.ELYON} -- the prose here no longer describes the data"
+        )
+    return shared
+
+
+def _transcription_grammar_para(verdicts: list[tp.TranscriptionResult]) -> object:
+    shared = _strand_ungrammatical(verdicts)
+    departing = [r for r in verdicts if r.departures]
+    return H.para(
+        (
+            "The twelve transcribed Decalogues have been through this same checker, chanted verse"
+            " by chanted verse, and what that shows first is that following a strand and parsing"
+            " are separate things. ",
+            H.bold(f"{len(verdicts) - len(departing)} of the {len(verdicts)}"),
+            " give their strand's verdicts at every chanted verse — which for the ",
+            H.bold(str(len(shared))),
+            f" of them that follow a p-trad {_ELYON} means printing that ungrammatical opening"
+            " verse. Simanim's Tiqqun does, in both of its main Decalogues, and Koren in both of"
+            " its appendix ones: the merged first two commandments are in books in print, not only"
+            " in an idealized strand. The remaining"
+            " one is Simanim's Tiqqun Exodus appendix Decalogue, which is ungrammatical at a"
+            " chanted verse where its strand is clean, over a single added conjunctive; the ",
+            link("Simanim page", _SIMANIM_PAGE),
+            " has it. Every rejection here is a diagnostic of the checker, which is tuned to the"
+            " prose grammar of the Tiberian manuscripts, and not a fault found in an edition.",
+        ),
+        {"id": _TRANSCRIPTIONS_ID},
+    )
+
+
+def _four_strands_section(
+    readings: list[pds.Reading], verdicts: list[tp.TranscriptionResult]
+) -> tuple[object, ...]:
     return (
         H.heading_level_2("The four strands of אנכי…מצותי", {"id": "four-strands"}),
         H.para(
@@ -564,6 +640,10 @@ def _four_strands_section(readings: list[pds.Reading]) -> tuple[object, ...]:
                 " dissects its merged opening verse.",
             )
         ),
+        # And what the twelve do under the same checker, which is the one thing on this page that
+        # is about editions rather than strands. It follows the sentence above rather than
+        # preceding it, since its point is that the strand's failure is in books too.
+        _transcription_grammar_para(verdicts),
     )
 
 
@@ -1111,14 +1191,16 @@ def _chabad_aside() -> tuple[object, ...]:
 
 
 def render_body_contents(
-    results: list[pd.VersionResult], source: dict
+    results: list[pd.VersionResult],
+    source: dict,
+    verdicts: list[tp.TranscriptionResult],
 ) -> tuple[object, ...]:
     by_key = _by_key(results)
     readings = pds.resolve_readings(results)
     return (
         *_intro(),
         *_verdict_section(by_key),
-        *_four_strands_section(readings),
+        *_four_strands_section(readings, verdicts),
         *_finding_section(by_key),
         *_provenance_section(source),
         *_appendix_section(results),
@@ -1128,11 +1210,12 @@ def render_body_contents(
 def run(args: argparse.Namespace) -> None:
     source = pd.load_source(args.source)
     results = pd.check_all(source)
+    verdicts = tp.check_all(results)
 
     html_out: Path = args.html_out
     html_out.parent.mkdir(parents=True, exist_ok=True)
     H.write_html_to_file(
-        body_contents=render_body_contents(results, source),
+        body_contents=render_body_contents(results, source, verdicts),
         write_ctx=H.WriteCtx(
             title=REPORT_TITLE,
             path=str(html_out),

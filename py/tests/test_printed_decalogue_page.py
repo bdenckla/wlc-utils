@@ -19,6 +19,7 @@ import pytest
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_page as page
 from accgram import printed_decalogue_strands as pds
+from accgram import transcription_parse as tp
 
 # Marks referenced below, spelled with \N{} escapes rather than bare (orphan) combining marks
 # in a literal (CLAUDE.md). U+05BD is the meteg/silluq glyph -- kept by _strip_pointing only
@@ -43,10 +44,13 @@ def test_body_renders() -> None:
     per-strand drift assertions, Ex/Dt signal-pair agreement check, and pairwise-distinctness
     check all fire here) and _four_strands_table (whose per-cell assert pins each word's sof pasuq
     against whether its strand ends a chanted verse there), so a data drift fails this test loudly.
+
+    It also runs the transcription paragraph's own guard (issue #52): the editions said to print
+    the p-trad elyon's ungrammatical opening verse must really be the ones following it.
     """
     source = _source_or_skip()
     results = pd.check_all(source)
-    body = page.render_body_contents(results, source)
+    body = page.render_body_contents(results, source, tp.check_all(results))
     assert isinstance(body, tuple) and len(body) > 0
 
 

@@ -1,7 +1,9 @@
 """Issue #52: grammar-check the printed-tradition Decalogue accentuations.
 
 Feeds the eight vendored Decalogue readings ({Exodus, Deuteronomy} x {taxton, elyon} x
-{manuscript, printed}) through the prose grammar and pins the verdict:
+{manuscript, printed}) through the prose grammar and pins the verdict, and then pins the
+``transcriptions`` section in which the output file records the same verdict for the twelve
+hand-transcribed real editions:
 
   * every taxton chanted verse parses clean, both books and both traditions;
   * the manuscript elyon parses clean in both books (MAM's own authoritative text);
@@ -21,6 +23,7 @@ from __future__ import annotations
 import pytest
 
 from accgram import printed_decalogue as pd
+from accgram import transcription_parse as tp
 
 _SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
 
@@ -100,3 +103,59 @@ def test_total_ungrammatical_is_two() -> None:
     results = _results_or_skip()
     total = sum(len(vr.ungrammatical) for vr in results)
     assert total == 2
+
+
+# --------------------------------------------------------------------------- #
+# The output file's transcriptions section (issue #52)
+# --------------------------------------------------------------------------- #
+def test_the_transcriptions_section_records_every_page_against_its_strand() -> None:
+    """The recorded verdict for the REAL editions, which is this issue's definition of done.
+
+    The strands' verdicts have been in this file all along; the twelve hand-transcribed printed
+    Decalogues' were only ever pinned in ``test_edition_transcriptions``. So pin the section that
+    records them: one entry per transcription, its strand named, and both counts. The single
+    departure is pinned exactly -- Simanim's Tiqqun Exodus appendix taḥton, chanted verse 3,
+    ungrammatical where its strand is clean -- and the other eleven must show none, which is the
+    half that would fail if a re-vendoring quietly made some other page depart.
+    """
+    results = _results_or_skip()
+    section = tp.payload_objs(tp.check_all(results))
+    assert len(section) == 12
+    by_stem = {entry["stem"]: entry for entry in section}
+    assert by_stem["simanim_ex_taxton"]["departures"] == [
+        {"index": 3, "strand_status": "clean", "status": "ungrammatical"}
+    ]
+    assert [s for s, e in by_stem.items() if e["departures"]] == ["simanim_ex_taxton"]
+    # Every entry names the strand it was checked against, and carries one chanted verse record
+    # per chanted verse, each with the strand's own status beside its own.
+    for entry in section:
+        key = (entry["book"], entry["reading"], entry["tradition"])
+        assert key in _by_key(results)
+        verses = entry["chanted_verses"]
+        assert len(verses) == entry["chanted_verse_count"]
+        assert [cv["index"] for cv in verses] == list(range(1, len(verses) + 1))
+        assert all("strand_status" in cv for cv in verses)
+        bad = [cv for cv in verses if cv["status"] != "clean"]
+        assert len(bad) == entry["ungrammatical_count"]
+
+
+def test_the_four_ungrammatical_pages_are_the_ones_printing_the_merged_verse() -> None:
+    """Five ungrammatical chanted verses across the twelve, and only one is an edition's own.
+
+    The other four are the p-trad עליון's merged opening verse, printed as the strand has it --
+    which is what makes "ungrammatical somewhere" the wrong summary and ``departures`` the right
+    one. Pinned because both satellite pages now say this in prose.
+    """
+    verdicts = tp.check_all(_results_or_skip())
+    shared = {
+        r.stem: [cv.index for cv in r.ungrammatical]
+        for r in verdicts
+        if r.ungrammatical and not r.departures
+    }
+    assert shared == {
+        "koren_dt_elyon": [1],
+        "koren_ex_elyon": [1],
+        "simanim_dt_elyon": [1],
+        "simanim_ex_elyon": [1],
+    }
+    assert all(r.key[1:] == ("elyon", "printed") for r in verdicts if r.stem in shared)

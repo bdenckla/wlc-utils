@@ -29,6 +29,15 @@ vendored strand and pinned by ``tests/test_edition_transcriptions.py``.  ``_tiqq
 and ``_tanakh_verdict_table`` render them, one row per Decalogue -- never one per edition, since
 p. 247's Shabbat departure and pp. 208-209's exact agreement cannot share a sentence.
 
+Each table's LAST column is issue #52's question asked of these eight: fed through accgram's
+prose checker, is what the page prints grammatical, and as grammatical as the strand it follows?
+The cells come live from ``transcription_verdict_column`` (shared with the Koren page) so no row
+can claim a verdict the checker does not give.  Seven of the eight give their strand's verdicts
+exactly.  p. 246 does not, and the prose after that table has to hold two true things together:
+its divergences are all conjunctive, so its disjunctive skeleton is intact, AND one of its
+chanted verses is ungrammatical where the strand is clean.  Frame that as a diagnostic of the
+checker -- tuned to Tiberian-manuscript prose grammar -- never as an error in the edition.
+
 TWO SENSES OF "TRANSCRIPTION", KEPT APART (issue #69 decision 3a).  This page had the word first
 for the two *note* transcriptions -- the hand-set pointed Hebrew of the p. 83 and p. 246 notes,
 double-checked against the committed scans, and still the only hand-set Hebrew in this module.
@@ -88,6 +97,8 @@ from pathlib import Path
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
 from accgram import rtms_report
+from accgram import transcription_parse as tp
+from accgram import transcription_verdict_column as tvc
 from accgram.almost_errors_html_shared import hbo, link
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
@@ -222,6 +233,12 @@ _ROM_PAZER = rmn(pds.ROM_PAZER)
 _ROM_TELISHA_GEDOLAH = rmn(pds.ROM_TELISHA_GEDOLAH)
 # Named only in the Simanim Tanakh verdict table, for its one divergence (issue #69, Result 8).
 _ROM_QADMA = rmn(pds.ROM_QADMA)
+# Named only in the conclusion's grammaticality prose (issue #52), for the p. 246 chanted verse
+# the prose checker rejects: an inserted munax makes a third conjunctive before the pashta, where
+# all eight strands have a meteg and no accent, and where a tevir would have allowed it.
+_ROM_MUNAX = rmn(pds.ROM_MUNAX)
+_ROM_METEG = rmn(pds.ROM_METEG)
+_ROM_TEVIR = rmn(pds.ROM_TEVIR)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section
 # of the very page these four strands are vendored from -- so its base URL is single-sourced from
@@ -712,9 +729,17 @@ def _p246_section() -> tuple[object, ...]:
 # The class turns OFF the shared odd-row zebra, as its three sibling printed-Decalogue tables do
 # (issue #65, finding C3): the four rows alternate main / appendix, so the stripe would tint
 # exactly the two appendix rows and read as if it ENCODED that rather than merely counting rows.
-def _verdict_table(rows: tuple[tuple[str, str, object, object], ...]) -> object:
+#
+# The last column (issue #52) is the grammaticality verdict, and it is NOT written out per row:
+# each cell is derived from the checker's own result for that transcription, looked up by the
+# stem each row names, so the column cannot claim a verdict the checker does not give. The prose
+# is shared with the Koren page's table -- see transcription_verdict_column.
+def _verdict_table(
+    rows: tuple[tuple[str, str, str, object, object], ...],
+    verdicts: dict[str, tp.TranscriptionResult],
+) -> object:
     header = H.table_row_of_headers(
-        ("Decalogue", "pages", "strand", "how far it follows it")
+        ("Decalogue", "pages", "strand", "how far it follows it", tvc.HEADER)
     )
     body = [
         H.table_row(
@@ -723,20 +748,22 @@ def _verdict_table(rows: tuple[tuple[str, str, object, object], ...]) -> object:
                 H.table_datum(pages),
                 H.table_datum(strand),
                 H.table_datum(verdict),
+                H.table_datum(tvc.cell(verdicts[stem])),
             )
         )
-        for which, pages, strand, verdict in rows
+        for which, stem, pages, strand, verdict in rows
     ]
     return H.table(
         (header, *body), {"class": "printed-decalogue-transcription-verdict"}
     )
 
 
-def _tiqqun_verdict_table() -> object:
+def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object:
     return _verdict_table(
         (
             (
                 "Exodus main",
+                "simanim_ex_elyon",
                 "83–84",
                 ("p-trad ", _ELYON),
                 "Every accent. The only two differences are of word division: it separates"
@@ -745,6 +772,7 @@ def _tiqqun_verdict_table() -> object:
             ),
             (
                 "Exodus appendix",
+                "simanim_ex_taxton",
                 "246",
                 ("p-trad ", _TAHTON),
                 "Every chanted verse boundary and the whole disjunctive skeleton. Three"
@@ -752,12 +780,14 @@ def _tiqqun_verdict_table() -> object:
             ),
             (
                 "Deuteronomy main",
+                "simanim_dt_elyon",
                 "208–209",
                 ("p-trad ", _ELYON),
                 "Every accent, with no difference anywhere — 164 accents against 164.",
             ),
             (
                 "Deuteronomy appendix",
+                "simanim_dt_taxton",
                 "247",
                 ("p-trad ", _TAHTON),
                 (
@@ -768,15 +798,17 @@ def _tiqqun_verdict_table() -> object:
                     " of accents alone.",
                 ),
             ),
-        )
+        ),
+        verdicts,
     )
 
 
-def _tanakh_verdict_table() -> object:
+def _tanakh_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object:
     return _verdict_table(
         (
             (
                 "Exodus main",
+                "simanim_tanakh_ex_taxton",
                 "119–120",
                 ("m-trad ", _TAHTON),
                 "Every accent, with no difference anywhere. Its twelve chanted verses are"
@@ -785,6 +817,7 @@ def _tanakh_verdict_table() -> object:
             ),
             (
                 "Deuteronomy main",
+                "simanim_tanakh_dt_taxton",
                 "297–298",
                 ("m-trad ", _TAHTON),
                 (
@@ -802,21 +835,24 @@ def _tanakh_verdict_table() -> object:
             ),
             (
                 "Exodus appendix",
+                "simanim_tanakh_ex_elyon",
                 "350",
                 ("m-trad ", _ELYON),
                 "Every accent, with no difference anywhere.",
             ),
             (
                 "Deuteronomy appendix",
+                "simanim_tanakh_dt_elyon",
                 "351",
                 ("m-trad ", _ELYON),
                 "Every accent, with no difference anywhere.",
             ),
-        )
+        ),
+        verdicts,
     )
 
 
-def _conclusion() -> tuple[object, ...]:
+def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ...]:
     return (
         H.heading_level_2("Conclusion", {"id": "simanim-conclusion"}),
         H.para(
@@ -848,10 +884,70 @@ def _conclusion() -> tuple[object, ...]:
                 "How far each of the four Decalogues follows that strand is a separate question"
                 " from which strand it is, and one the signal words cannot answer. Every printed"
                 " accent of all four has been transcribed by hand off the page and diffed against"
-                " the strand it follows; the verdicts are per Decalogue, since they differ:",
+                " the strand it follows; the verdicts are per Decalogue, since they differ. The"
+                " last column adds the question ",
+                link("the companion page", _COMPANION_PAGE_HREF),
+                " asks of the four idealized strands, asked here of what this book actually"
+                " prints: run through the same prose grammar checker, does it parse?",
             )
         ),
-        _tiqqun_verdict_table(),
+        _tiqqun_verdict_table(verdicts),
+        # The grammaticality column's two findings on this page (issue #52). The four p-trad
+        # elyon Decalogues across this page and the Koren page print the strand's ungrammatical
+        # merged opening verse, and p. 246 departs from its strand. Both paragraphs below have to
+        # keep the middle column's claim standing while adding the last column's: an intact
+        # disjunctive skeleton is a token-identity fact and entails nothing about parsing.
+        H.para(
+            (
+                "Two of the four follow the p-trad ",
+                _ELYON,
+                ", whose opening chanted verse merges the first two commandments — the only"
+                " chanted verse in any of the four strands that the checker rejects. Simanim's"
+                " Tiqqun prints that verse in both of them, so pp. 83–84 and pp. 208–209 are"
+                " ungrammatical there exactly as their strand is: the ",
+                link("companion page's finding", _COMPANION_PAGE_HREF),
+                " in a book, rather than in an idealization of one.",
+            )
+        ),
+        H.para(
+            (
+                "p. 246 is the only Decalogue here whose verdict is its own rather than its"
+                " strand's, and its last two columns have to be read together. Its three"
+                " differences are all conjunctive, so the disjunctive skeleton it is credited"
+                " with really is intact — and its third chanted verse, the one"
+                " beginning לא־תעשה, is ungrammatical all the same, where the p-trad ",
+                _TAHTON,
+                " parses clean. The page accents ",
+                H.bold("both"),
+                " atoms of that לא־תעשה, a ",
+                _ROM_MUNAX,
+                " on the joined לא against the ",
+                _ROM_QADMA,
+                " on תעשה, where all eight strands have a ",
+                _ROM_METEG,
+                " and no accent. That makes three conjunctives before the ",
+                _ROM_PASHTA,
+                " where the grammar takes two, and the checker cannot build the phrase they"
+                " belong to. Take that one ",
+                _ROM_MUNAX,
+                " away and what is left is the strand's own accents, which parse. So an intact"
+                " disjunctive skeleton does not carry a parse with it, and this is the Decalogue"
+                " that shows it.",
+            )
+        ),
+        H.para(
+            (
+                "Read that as a diagnostic of the checker rather than as a fault in the edition."
+                " The checker is built and tuned on the prose grammar of the Tiberian"
+                " manuscripts, and what it objects to is not the insertion as such: the same ",
+                _ROM_MUNAX,
+                " one chanted verse earlier, on the joined לא of לא־יהיה, costs nothing, because"
+                " the conjunctives there run into a ",
+                _ROM_TEVIR,
+                ", which allows the longer chain. What the checker has found is a place where"
+                " this page's cantillation and that grammar do not fit each other.",
+            )
+        ),
         # The p. 247 crop below -- a reduced-resolution, grayscale crop of the pointed taxton
         # column -- is the evidence for this scope note's Shabbat caveat: it shows the m-trad
         # accents on the three signal words _P247_BOXES highlights (see its comment).
@@ -928,10 +1024,16 @@ def _conclusion() -> tuple[object, ...]:
                 "All four of the Tanakh's Decalogues have been transcribed accent by accent too,"
                 " against their m-trad strands, so the split between the two editions is checked"
                 " at the same grain as the Tiqqun's p-trad allegiance above and not merely read"
-                " off the signal words:",
+                " off the signal words. Under the checker all four parse clean throughout — the"
+                " m-trad strands have no counterpart to the p-trad ",
+                _ELYON,
+                "'s merged opening chanted verse, so nothing here meets the objection the"
+                " Tiqqun's two ",
+                _ELYON,
+                " Decalogues do.",
             )
         ),
-        _tanakh_verdict_table(),
+        _tanakh_verdict_table(verdicts),
         _figure(
             _TANAKH_EX_TAHTON_IMG,
             "Simanim Tanakh p. 119: the Exodus main Decalogue, in the m-trad taḥton",
@@ -1024,12 +1126,14 @@ def _aleppo_codex_section() -> tuple[object, ...]:
     )
 
 
-def render_body_contents(source: dict) -> tuple[object, ...]:
+def render_body_contents(
+    source: dict, verdicts: dict[str, tp.TranscriptionResult]
+) -> tuple[object, ...]:
     return (
         *_intro(source),
         *_p83_section(),
         *_p246_section(),
-        *_conclusion(),
+        *_conclusion(verdicts),
         *_aleppo_codex_section(),
     )
 
@@ -1046,15 +1150,17 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 
 def run(args: argparse.Namespace) -> None:
-    # The four-strands table lives on the companion page now, so this page never grammar-checks
-    # the readings -- it only needs the source's provenance (the p-trad section URL). We
-    # load the source but skip pd.check_all, a real speedup for solo regeneration.
+    # The four-strands table lives on the companion page, so this page tabulates none of the
+    # strands' own verdicts -- but it does need them, since the verdict tables' last column
+    # states each transcription's verdict AGAINST its strand's (issue #52). Both checks together
+    # are a fraction of a second, so nothing here is worth skipping for regeneration speed.
     source = pd.load_source(args.source)
+    verdicts = tvc.by_stem(tp.check_all(pd.check_all(source)))
 
     html_out: Path = args.html_out
     html_out.parent.mkdir(parents=True, exist_ok=True)
     H.write_html_to_file(
-        body_contents=render_body_contents(source),
+        body_contents=render_body_contents(source, verdicts),
         write_ctx=H.WriteCtx(
             title=REPORT_TITLE,
             path=str(html_out),

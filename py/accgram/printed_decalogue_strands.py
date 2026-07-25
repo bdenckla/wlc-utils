@@ -116,6 +116,11 @@ ROM_TELISHA_GEDOLAH = "telisha gedolah"
 # one divergence that agrees with neither תחתון strand: a qadma on ויום where every תחתון strand
 # has a pashta.
 ROM_QADMA = "qadma"
+# Named in the Simanim page's grammaticality prose (issue #52): p. 246 accents both atoms of
+# לא־תעשה, and the munax on the joined לא makes one conjunctive too many before the pashta --
+# where the same insertion one chanted verse earlier, before a tevir, costs nothing.
+ROM_MUNAX = "munaḥ"
+ROM_TEVIR = "tevir"
 
 # Compound readings that recur verbatim in the prose (U+2026 ellipsis / U+2013 en dash between).
 ROM_PASHTA_ETNAHTA = f"{ROM_PASHTA}…{ROM_ETNAHTA}"  # the merged manuscript תחתון

@@ -33,7 +33,8 @@ Those are the IDEALIZED strands.  ``transcription_parse`` asks the same question
 real edition prints, feeding the committed hand transcriptions through ``parse_marks_body``
 below -- the same scanner, grammar and status vocabulary, so the two sets of verdicts are
 comparable.  Eleven of the twelve transcribed Decalogues match their strand at every chanted
-verse; the one that does not is Simanim's Exodus appendix taxton.
+verse; the one that does not is Simanim's Exodus appendix taxton.  ``run`` records those
+verdicts as the output file's ``transcriptions`` section, beside the strands' ``versions``.
 
 Pure computation (no I/O); the driver (``run``) loads the vendored JSON, parses, and writes
 ``out/accgram/printed-decalogue/_printed_decalogue.json``.  The gh-pages report is rendered
@@ -209,15 +210,38 @@ def _version_obj(vr: VersionResult) -> dict[str, object]:
     }
 
 
-def _payload(results: list[VersionResult], source: dict) -> dict[str, object]:
+def _payload(
+    results: list[VersionResult], source: dict, transcriptions: list[dict]
+) -> dict[str, object]:
+    """The output file: the strands' verdicts, then the real editions' (issue #52).
+
+    ``transcriptions`` is already-serialized (``transcription_parse.payload_objs``), which is
+    what keeps this module free of any import of that one -- the dependency runs the other way,
+    since a transcription reaches the grammar through ``parse_marks_body`` above.  Its totals
+    are summarized under their own keys rather than added into the strands': the strands are
+    eight idealized readings and the transcriptions twelve real Decalogues, and four of the
+    twelve follow a strand that is itself ungrammatical at its opening chanted verse, so a
+    pooled "ungrammatical" count would mean nothing.
+    """
     return {
         "summary": {
             "versions": len(results),
             "chanted_verses": sum(len(vr.chanted_verses) for vr in results),
             "ungrammatical": sum(len(vr.ungrammatical) for vr in results),
+            "transcriptions": len(transcriptions),
+            "transcription_chanted_verses": sum(
+                t["chanted_verse_count"] for t in transcriptions
+            ),
+            "transcription_ungrammatical": sum(
+                t["ungrammatical_count"] for t in transcriptions
+            ),
+            "transcription_departures": sum(
+                len(t["departures"]) for t in transcriptions
+            ),
         },
         "source_provenance": source.get("provenance", {}),
         "versions": [_version_obj(vr) for vr in results],
+        "transcriptions": transcriptions,
     }
 
 
@@ -227,11 +251,22 @@ def add_args(parser, repo_root: Path) -> None:
 
 
 def run(args) -> None:
+    # Both imports are deferred, for different reasons: wlc_provenance to keep this module's
+    # import graph light, and transcription_parse because it imports THIS module (for the shared
+    # parse path above), so importing it at the top would be a cycle.
+    from accgram import transcription_parse
+
     import wlc_provenance as provenance
 
     source = load_source(args.source)
-    results = check_all(source)
-    payload = provenance.with_json_provenance(_payload(results, source), __file__)
+    parser = build_parser()
+    results = check_all(source, parser)
+    transcriptions = transcription_parse.payload_objs(
+        transcription_parse.check_all(results, parser)
+    )
+    payload = provenance.with_json_provenance(
+        _payload(results, source, transcriptions), __file__
+    )
 
     out_path: Path = args.out
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -242,7 +277,9 @@ def run(args) -> None:
     s = payload["summary"]
     print(
         f"printed-decalogue: {s['versions']} versions, {s['chanted_verses']} chanted verses, "
-        f"{s['ungrammatical']} ungrammatical -> {out_path}"
+        f"{s['ungrammatical']} ungrammatical; {s['transcriptions']} transcriptions, "
+        f"{s['transcription_chanted_verses']} chanted verses, "
+        f"{s['transcription_departures']} departing from their strand -> {out_path}"
     )
 
 

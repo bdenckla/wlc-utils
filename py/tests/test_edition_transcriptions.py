@@ -15,9 +15,11 @@ from __future__ import annotations
 
 import functools
 import json
+import re
 
 import pytest
 
+from accgram import accent_marks as am
 from accgram import edition_transcription as et
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_fetch as pdf
@@ -26,6 +28,9 @@ from accgram import prose_ply_grammar as pdg
 from accgram import transcription_build as tb
 from accgram import transcription_check as tc
 from accgram import transcription_parse as tp
+from accgram import transcription_verdict_column as tvc
+
+from py_html import wlc_utils_html as H
 
 # The divergences established for each transcription, keyed by its filename stem.  Each entry
 # is (reference tokens, transcribed tokens, the reference word the region starts on).
@@ -1200,10 +1205,48 @@ def test_the_exodus_appendix_taxton_prints_an_ungrammatical_chanted_verse() -> N
         "ZAQEF",
     )
     assert pd.parse_marks_body(verse, "ex", 3, _parser()).status == "ungrammatical"
-    # The same chanted verse with the inserted munax alone removed -- its own chanted word,
-    # hence the first space-delimited piece.
-    without = verse.split(" ", 1)[1]
+    # The same chanted verse with the inserted munax alone removed: the maqaf compound and the
+    # qadma on its second atom both stay, so what is left is one accent short of what the page
+    # prints and nothing else. Dropping the whole first chanted word would take the qadma with
+    # it and so isolate nothing -- the removal has to be of one mark.
+    without = verse.replace(am.LETTER + am.MUNAX + am.MAQAF, am.LETTER + am.MAQAF, 1)
     assert pd.parse_marks_body(without, "ex", 3, _parser()).status == "clean"
+    # And what is left is exactly the strand's own token stream, which is the strongest form of
+    # the claim: the page's stream differs from a clean one by this one munax.
+    strand = _strand_results()[transcription.key].chanted_verses[2]
+    assert tp.token_types(without, "ex") == strand.tokens[1:]
+
+
+def test_the_verdict_column_says_one_of_three_things_and_the_right_one() -> None:
+    """The cell each satellite page renders, for one transcription of each of the three kinds.
+
+    The column is the rendered form of everything above it in this section, so pin its prose
+    where a claim about an edition is actually being made: the departure cell must SAY that it
+    departs and where, a page sharing its strand's ungrammatical opening verse must not be
+    reported as departing, and a clean page must not be hedged. Text-compared through
+    ``py_html``'s renderer, since the departure cell is a node rather than a string.
+    """
+    verdicts = tvc.by_stem(tp.check_all(_strand_list()))
+    assert _text(tvc.cell(verdicts["koren_ex_taxton"])) == (
+        "Clean at all 13 chanted verses, as its strand is."
+    )
+    assert _text(tvc.cell(verdicts["simanim_dt_elyon"])) == (
+        "Its strand's own verdicts: chanted verse 1 ungrammatical, the other 8 clean."
+    )
+    assert _text(tvc.cell(verdicts["simanim_ex_taxton"])) == (
+        "Not as grammatical as its strand: chanted verse 3 is ungrammatical where the "
+        "strand is clean."
+    )
+
+
+def _strand_list() -> list:
+    return list(_strand_results().values())
+
+
+def _text(cell: object) -> str:
+    """One rendered table cell as plain text -- tags dropped, so the prose can be pinned."""
+    rendered = H.el_to_str_no_wbr(H.table_datum(cell))
+    return re.sub(r"<[^>]*>", "", rendered).strip()
 
 
 # How many pasoleg strokes the scanner judges per transcription, so the comparison below cannot

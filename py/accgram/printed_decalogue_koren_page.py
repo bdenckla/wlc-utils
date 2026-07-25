@@ -20,6 +20,7 @@ koren_*.txt``), diffed against the vendored strand and pinned by
 ``tests/test_edition_transcriptions.py``.  Three follow their strand in every accent; the Exodus
 appendix one differs only in word division.  ``_verdict_table`` renders the four, one row per
 Decalogue -- never one per edition, since the four verdicts differ.
+
 The one *note* is the secondary, more-for-fun material -- kept for how aware Koren is of the older,
 printed-tradition choice it makes:
 
@@ -29,6 +30,16 @@ printed-tradition choice it makes:
     long opening verse the עליון body prints.  This is the exact mirror of Simanim's p. 83
     side-margin note: the עליון body ends אנכי…עבדים on a revia, and the note flags the
     standalone-verse (ten-commandment) alternative it declines to print.
+
+The verdict table's LAST column is issue #52's question asked of these four: run through accgram's
+prose checker, is what Koren prints grammatical, and as grammatical as the strand it follows?  All
+four give their strand's verdicts exactly, which for the two APPENDIX (עליון) Decalogues means
+printing the p-trad עליון's merged opening chanted verse -- the one the checker rejects.  So the
+p. A38 note above happens to name the alternative the checker's objection points at: read the
+First Commandment in the תחתון and the merged verse never arises.  The note argues from the count
+of ten commandments and says nothing about grammar, so the conclusion states that as a coincidence
+of subject and credits Koren with no grammatical motive.  The cells come live from
+``transcription_verdict_column``, shared with the Simanim page so the two cannot drift.
 
 Editorial / style conventions are shared with the two companion pages and documented on
 ``printed_decalogue_strands`` (bare-Hebrew strand names תחתון / עליון -- never transliterated or
@@ -92,6 +103,8 @@ from pathlib import Path
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
 from accgram import rtms_report
+from accgram import transcription_parse as tp
+from accgram import transcription_verdict_column as tvc
 from accgram.almost_errors_html_shared import link
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
@@ -118,6 +131,11 @@ _COMPANION_PAGE_HREF = _PRINTED_DECALOGUE_PAGE
 # The companion's appendix cataloguing how the two תחתון strands differ (its heading id there,
 # _TAHTON_DETAILS_ID) -- the reference for the Shabbat-commandment accent details this page omits.
 _TAHTON_DETAILS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#tahton-details"
+# The companion's dissection of the one chanted verse the prose checker rejects -- the merged
+# opening verse of the p-trad עליון, which is what this page's two appendix Decalogues print.
+_ELYON_FAILS_HREF = f"{_PRINTED_DECALOGUE_PAGE}#why-the-printed-elyon-fails"
+# This page's own p. A38 note section, linked from the conclusion's grammaticality paragraph.
+_PA38_NOTE_ID = "koren-pa38-note"
 
 # Body-text scans: the two Koren Exodus Decalogues whose cantillation establishes the p-trad
 # finding -- the תחתון in the main Decalogue (p. 113) and the עליון in the appendix (p. A38).
@@ -335,7 +353,10 @@ _PA38_NOTE_LINES = (
 
 def _pa38_note_section() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Note on the appendix (עליון) Decalogue — Koren p. A38"),
+        H.heading_level_2(
+            "Note on the appendix (עליון) Decalogue — Koren p. A38",
+            {"id": _PA38_NOTE_ID},
+        ),
         H.para(
             (
                 "A note on the appendix Decalogue, keyed to the opening commandment אנכי…עבדים and"
@@ -427,13 +448,19 @@ def _pa38_note_section() -> tuple[object, ...]:
 # 2026-07-24. Both are bounded to discriminate nothing this page claims, neither can move a
 # verdict, and their reader-facing home is issue #70; the page assumes both readings true and
 # states its verdicts flat. Don't reintroduce them as a hedge or a footnote.
-def _verdict_table() -> object:
+#
+# The last column (issue #52) is the grammaticality verdict, and it is NOT written out per row:
+# each cell comes from the checker's own result for the transcription the row names, so the column
+# cannot claim a verdict the checker does not give. Its prose is shared with the Simanim page's
+# table -- see transcription_verdict_column.
+def _verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object:
     header = H.table_row_of_headers(
-        ("Decalogue", "pages", "strand", "how far it follows it")
+        ("Decalogue", "pages", "strand", "how far it follows it", tvc.HEADER)
     )
     rows = (
         (
             "Exodus main",
+            "koren_ex_taxton",
             "113–114",
             ("p-trad ", _TAHTON),
             "Every accent, with no difference anywhere — though this Decalogue settles less than"
@@ -443,6 +470,7 @@ def _verdict_table() -> object:
         ),
         (
             "Deuteronomy main",
+            "koren_dt_taxton",
             "280–281",
             ("p-trad ", _TAHTON),
             (
@@ -454,6 +482,7 @@ def _verdict_table() -> object:
         ),
         (
             "Exodus appendix",
+            "koren_ex_elyon",
             "A38",
             ("p-trad ", _ELYON),
             "Every accent. The only two differences are of word division: it prints both"
@@ -462,6 +491,7 @@ def _verdict_table() -> object:
         ),
         (
             "Deuteronomy appendix",
+            "koren_dt_elyon",
             "A39",
             ("p-trad ", _ELYON),
             "Every accent, with no difference anywhere — and it joins both compounds its Exodus"
@@ -476,16 +506,17 @@ def _verdict_table() -> object:
                 H.table_datum(pages),
                 H.table_datum(strand),
                 H.table_datum(verdict),
+                H.table_datum(tvc.cell(verdicts[stem])),
             )
         )
-        for which, pages, strand, verdict in rows
+        for which, stem, pages, strand, verdict in rows
     ]
     return H.table(
         (header, *body), {"class": "printed-decalogue-transcription-verdict"}
     )
 
 
-def _conclusion() -> tuple[object, ...]:
+def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ...]:
     return (
         H.heading_level_2("Conclusion", {"id": "koren-conclusion"}),
         H.para(
@@ -508,10 +539,13 @@ def _conclusion() -> tuple[object, ...]:
                 "How far each of the four Decalogues follows that strand is a separate question"
                 " from which strand it is, and one the signal words cannot answer. Every printed"
                 " accent of all four has been transcribed by hand off the page and diffed against"
-                " the strand it follows:",
+                " the strand it follows. The last column adds the question ",
+                link("the companion page", _COMPANION_PAGE_HREF),
+                " asks of the four idealized strands, asked here of what Koren actually prints:"
+                " run through the same prose grammar checker, does it parse?",
             )
         ),
-        _verdict_table(),
+        _verdict_table(verdicts),
         H.para(
             (
                 "Three of the four follow their strand in ",
@@ -520,6 +554,32 @@ def _conclusion() -> tuple[object, ...]:
                 " one difference anywhere in the four takes the m-trad's side of anything: no"
                 " strand at all, in either tradition, separates יהיה from לך, so that division is"
                 " Koren's own and says nothing about which tradition it follows.",
+            )
+        ),
+        # The grammaticality column (issue #52). All four agree with their strand, so what the
+        # column shows here is what following the p-trad elyon COSTS: the merged opening verse the
+        # companion page's finding is about is on Koren's appendix pages, not only in an idealized
+        # strand. The p. A38 note connection is deliberately stated as a coincidence of subject
+        # rather than a grammatical motive -- the note argues from the count of commandments.
+        H.para(
+            (
+                "Under the checker, too, each of the four is exactly as grammatical as the strand"
+                " it follows — and for the two appendix Decalogues that is worth spelling out,"
+                " because the strand they follow is not clean. The p-trad ",
+                _ELYON,
+                " merges the first two commandments into one chanted verse, and that verse is the"
+                " one the ",
+                link("companion page's grammar check", _ELYON_FAILS_HREF),
+                " rejects. Koren prints it, in both books. So the companion page's finding is not"
+                " a property of an idealized strand: it is on the page of a book in print. It is"
+                " also, as it happens, the very reading the ",
+                link("p. A38 note", f"#{_PA38_NOTE_ID}"),
+                " above offers an alternative to — read the First Commandment in the ",
+                _TAHTON,
+                ", as its own chanted verse, and the merged verse never arises. The note argues"
+                " from the count of ten commandments and says nothing about grammar, so this is a"
+                " coincidence of subject rather than a grammatical motive; but the alternative it"
+                " declines to print is the one the checker's objection points at.",
             )
         ),
         H.para(
@@ -581,11 +641,13 @@ def _conclusion() -> tuple[object, ...]:
     )
 
 
-def render_body_contents(source: dict) -> tuple[object, ...]:
+def render_body_contents(
+    source: dict, verdicts: dict[str, tp.TranscriptionResult]
+) -> tuple[object, ...]:
     return (
         *_intro(source),
         *_pa38_note_section(),
-        *_conclusion(),
+        *_conclusion(verdicts),
     )
 
 
@@ -601,15 +663,17 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 
 
 def run(args: argparse.Namespace) -> None:
-    # The four-strands table lives on the companion page, so this page never grammar-checks the
-    # readings -- it only needs the source's provenance (the p-trad section URL). We load
-    # the source but skip pd.check_all, a real speedup for solo regeneration.
+    # The four-strands table lives on the companion page, so this page tabulates none of the
+    # strands' own verdicts -- but it does need them, since the verdict table's last column states
+    # each transcription's verdict AGAINST its strand's (issue #52). Both checks together are a
+    # fraction of a second, so nothing here is worth skipping for regeneration speed.
     source = pd.load_source(args.source)
+    verdicts = tvc.by_stem(tp.check_all(pd.check_all(source)))
 
     html_out: Path = args.html_out
     html_out.parent.mkdir(parents=True, exist_ok=True)
     H.write_html_to_file(
-        body_contents=render_body_contents(source),
+        body_contents=render_body_contents(source, verdicts),
         write_ctx=H.WriteCtx(
             title=REPORT_TITLE,
             path=str(html_out),

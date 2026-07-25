@@ -248,7 +248,9 @@ def main() -> None:
             "Grammar-check the printed-tradition (דפוסים) Decalogue accentuations "
             "against the manuscript baseline -- both books, taxton and elyon -- and write "
             "out/accgram/printed-decalogue/_printed_decalogue.json (issue #52). Reads the "
-            "vendored in/accgram/printed_decalogue_teamim.json."
+            "vendored in/accgram/printed_decalogue_teamim.json, plus the committed hand "
+            "transcriptions under in/accgram/edition_transcriptions, whose own verdicts "
+            "against the strand each follows go in the file's transcriptions section."
         ),
     )
     printed_decalogue.add_args(run_printed_decalogue_parser, repo_root=_repo_root())

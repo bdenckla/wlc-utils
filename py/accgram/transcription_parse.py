@@ -43,9 +43,18 @@ kind where an edition withholds one, which is the whole stroke inventory of the 
 transcriptions (Koren prints the bar without saying which it is, so every one of its strokes
 is transcribed ``[pasoleg]``, kind unspecified, and the round-trip against the reference
 compares none of them).  ``scanner_pasoleg_kinds`` is that determination.
+
+WHERE THE VERDICTS ARE RECORDED.  ``TranscriptionResult`` pairs each transcription's verdicts
+with the strand's own, chanted verse by chanted verse, and ``payload_objs`` serializes them as
+the ``transcriptions`` section of ``out/accgram/printed-decalogue/_printed_decalogue.json``,
+beside the ``versions`` section holding the strands'.  The rendered statement of the same
+verdicts is a column on each satellite page's per-Decalogue verdict table, whose shared prose
+lives in ``transcription_verdict_column``.
 """
 
 from __future__ import annotations
+
+import dataclasses
 
 from accgram import accent_marks as am
 from accgram import edition_transcription as et
@@ -134,29 +143,45 @@ def chunk_to_marks(chunk: str) -> str:
     return frag
 
 
-def chanted_verse_bodies(transcription: et.Transcription) -> list[str]:
-    """A transcription -> one scanner mark body per chanted verse.
+def chanted_verses(
+    transcription: et.Transcription,
+) -> list[tuple[tuple[str, ...], str]]:
+    """A transcription -> ``(written chunks, scanner mark body)`` per chanted verse.
 
     Chanted words are space-separated and a verse closes where a word's marks end in sof
     pasuq, mirroring how ``edition_transcription._accent_tokens`` finds the same boundaries
     on the reference side.  A pasoleg aside is folded onto the word it follows, matching both
     WLC's attached convention and ``printed_decalogue._to_vels``; a positional aside such as
     ``[p. 298]`` carries no mark and is skipped.
+
+    The chunks are folded the same way -- ``mer [paseq]`` is one entry, not two -- so a verse's
+    chunks stand one for one against its body's chanted words, and can be carried as the
+    ``words`` of a ``ChantedVerseResult`` where a strand carries pointed Hebrew.
     """
-    verses: list[str] = []
-    words: list[str] = []
+    verses: list[tuple[tuple[str, ...], str]] = []
+    words: list[tuple[str, str]] = []
     for chunk in transcription.chunks:
         if chunk.startswith("["):
             if chunk in et.PASOLEG_ASIDES and words:
-                words[-1] += am.PASEQ
+                written, marks = words[-1]
+                words[-1] = (f"{written} {chunk}", marks + am.PASEQ)
             continue
-        words.append(chunk_to_marks(chunk))
-        if words[-1].endswith(am.SOF_PASUQ):
-            verses.append(" ".join(words))
+        words.append((chunk, chunk_to_marks(chunk)))
+        if words[-1][1].endswith(am.SOF_PASUQ):
+            verses.append(_verse(words))
             words = []
     if words:
-        verses.append(" ".join(words))
+        verses.append(_verse(words))
     return verses
+
+
+def _verse(words: list[tuple[str, str]]) -> tuple[tuple[str, ...], str]:
+    return tuple(w for w, _ in words), " ".join(marks for _, marks in words)
+
+
+def chanted_verse_bodies(transcription: et.Transcription) -> list[str]:
+    """A transcription -> one scanner mark body per chanted verse."""
+    return [body for _, body in chanted_verses(transcription)]
 
 
 def check(transcription: et.Transcription, parser=None) -> list[pd.ChantedVerseResult]:
@@ -168,11 +193,148 @@ def check(transcription: et.Transcription, parser=None) -> list[pd.ChantedVerseR
     """
     parser = parser or build_parser()
     book = transcription.header["book"]
-    bodies = chanted_verse_bodies(transcription)
     return [
-        pd.parse_marks_body(body, book, i, parser)
-        for i, body in enumerate(bodies, start=1)
+        pd.parse_marks_body(body, book, i, parser, chunks)
+        for i, (chunks, body) in enumerate(chanted_verses(transcription), start=1)
     ]
+
+
+# --------------------------------------------------------------------------- #
+# One transcription's verdicts, beside its strand's (issue #52)
+# --------------------------------------------------------------------------- #
+@dataclasses.dataclass(frozen=True)
+class TranscriptionResult:
+    """One hand transcription's grammar verdicts, paired with the strand's own.
+
+    The pairing is the point: a page's verdict is only ever interesting against the verdict of
+    the strand it follows, since four of the twelve transcribed Decalogues follow a strand that
+    is itself ungrammatical at its opening chanted verse (the p-trad עליון's merged first two
+    commandments).  So "ungrammatical somewhere" is not the finding; ``departures`` is.
+    """
+
+    stem: str  # the transcription's filename stem, e.g. "simanim_ex_taxton"
+    edition: str
+    pages: str
+    key: tuple[str, str, str]  # (book, reading, tradition) -- the strand followed
+    chanted_verses: tuple[pd.ChantedVerseResult, ...]
+    strand_statuses: tuple[str, ...]  # the strand's own status, verse for verse
+
+    @property
+    def ungrammatical(self) -> tuple[pd.ChantedVerseResult, ...]:
+        return tuple(cv for cv in self.chanted_verses if cv.status != "clean")
+
+    @property
+    def departures(self) -> tuple[tuple[int, str, str], ...]:
+        """``(1-based chanted verse, the strand's status, this page's status)``, where they differ."""
+        return tuple(
+            (cv.index, strand, cv.status)
+            for cv, strand in zip(self.chanted_verses, self.strand_statuses)
+            if cv.status != strand
+        )
+
+
+def strand_key(strand: pd.VersionResult) -> tuple[str, str, str]:
+    """A strand's ``(book, reading, tradition)`` triple -- the form a transcription's key takes."""
+    return (strand.book, strand.reading, strand.tradition)
+
+
+def check_one(
+    transcription: et.Transcription, strand: pd.VersionResult, parser=None
+) -> TranscriptionResult:
+    """One transcription against one strand, chanted verse by chanted verse.
+
+    A chanted verse count that disagrees with the strand's raises rather than being compared
+    position by position: a moved boundary would line the two status lists up by accident and
+    make every verdict after it a comparison of different verses.  Every committed
+    transcription has its strand's own count, and ``test_edition_transcriptions`` pins that
+    independently, so this is a drift guard rather than a case to handle.
+    """
+    got = tuple(check(transcription, parser))
+    want = tuple(cv.status for cv in strand.chanted_verses)
+    if len(got) != len(want):
+        raise AssertionError(
+            f"{transcription.path.stem}: {len(got)} chanted verses against "
+            f"{'/'.join(strand_key(strand))}'s {len(want)} -- a boundary moved, so the "
+            "verdicts cannot be compared verse for verse"
+        )
+    return TranscriptionResult(
+        stem=transcription.path.stem,
+        edition=transcription.header.get("edition", "?"),
+        pages=transcription.header.get("pages", "?"),
+        key=transcription.key,
+        chanted_verses=got,
+        strand_statuses=want,
+    )
+
+
+def check_all(
+    strands: list[pd.VersionResult], parser=None
+) -> list[TranscriptionResult]:
+    """Every committed transcription against the strand its header names, in filename order."""
+    parser = parser or build_parser()
+    by_key = {strand_key(vr): vr for vr in strands}
+    out: list[TranscriptionResult] = []
+    for transcription in et.load_all_transcriptions():
+        strand = by_key.get(transcription.key)
+        if strand is None:
+            raise AssertionError(
+                f"{transcription.path.stem}: no vendored strand "
+                f"{'/'.join(transcription.key)} to compare against"
+            )
+        out.append(check_one(transcription, strand, parser))
+    return out
+
+
+def _chanted_verse_obj(
+    cv: pd.ChantedVerseResult, strand_status: str
+) -> dict[str, object]:
+    """One chanted verse, shaped as ``printed_decalogue._version_obj`` shapes a strand's.
+
+    ``words`` holds the written chunks rather than pointed Hebrew (see ``check``), and
+    ``strand_status`` is the extra field a transcription has and a strand does not: the verdict
+    of the strand at the same chanted verse, so a departure is readable off one entry.
+    """
+    return {
+        "index": cv.index,
+        "words": list(cv.words),
+        "marks": cv.body,
+        "tokens": list(cv.tokens),
+        "status": cv.status,
+        "strand_status": strand_status,
+        "tree": cv.tree,
+    }
+
+
+def _transcription_obj(result: TranscriptionResult) -> dict[str, object]:
+    book, reading, tradition = result.key
+    return {
+        "stem": result.stem,
+        "edition": result.edition,
+        "pages": result.pages,
+        "book": book,
+        "reading": reading,
+        "tradition": tradition,
+        "chanted_verse_count": len(result.chanted_verses),
+        "ungrammatical_count": len(result.ungrammatical),
+        "departures": [
+            {"index": index, "strand_status": strand, "status": status}
+            for index, strand, status in result.departures
+        ],
+        "chanted_verses": [
+            _chanted_verse_obj(cv, strand)
+            for cv, strand in zip(result.chanted_verses, result.strand_statuses)
+        ],
+    }
+
+
+def payload_objs(results: list[TranscriptionResult]) -> list[dict[str, object]]:
+    """The ``transcriptions`` section of ``_printed_decalogue.json``.
+
+    Kept here rather than in ``printed_decalogue`` so that module needs no import of this one
+    (this one imports it, for the shared parse path), and so the section's shape sits beside the
+    record it serializes.
+    """
+    return [_transcription_obj(r) for r in results]
 
 
 def token_types(body: str, book: str) -> tuple[str, ...]:

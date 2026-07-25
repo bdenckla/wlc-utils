@@ -252,6 +252,24 @@ committed, not in style.
 Then pin the result in `py/tests/test_edition_transcriptions.py`: the divergence list (exactly,
 even when empty) and the chanted-verse count.
 
+**A new transcription also gets a grammaticality verdict, and three things have to be regenerated
+for it to be recorded** ([#52](https://github.com/bdenckla/wlc-utils/issues/52)).
+`transcription_parse` runs every committed transcription through the prose checker against the
+strand its header names, so:
+
+```bash
+.venv/Scripts/python.exe py/main_accgram.py run-printed-decalogue
+```
+
+writes it into the `transcriptions` section of
+`out/accgram/printed-decalogue/_printed_decalogue.json` — per chanted verse, its status beside the
+strand's, plus any `departures`. Then add the stem to its edition's verdict table on the Simanim or
+Koren page (the row's fourth cell is written by hand; the fifth comes from the checker, so a stem
+with no committed transcription fails the page build) and regenerate the three pages with
+`generate-html`. Pin the verdict in `test_edition_transcriptions.py` too: a departure appearing
+where none is pinned means an edition prints an accent sequence the prose grammar rejects and
+nobody has looked at it.
+
 ## What the harness cannot tell you
 
 **The review loop is asymmetric.** It flags only positions where transcription and reference

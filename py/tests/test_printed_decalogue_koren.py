@@ -14,6 +14,8 @@ from __future__ import annotations
 
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_koren_page as kor
+from accgram import transcription_parse as tp
+from accgram import transcription_verdict_column as tvc
 
 import pytest
 
@@ -21,12 +23,18 @@ import repo_paths
 
 
 def test_body_renders() -> None:
-    """The full Koren page body builds without error and is non-empty. Like the Simanim page it
-    needs only the source's provenance, not the grammar-check results."""
+    """The full Koren page body builds without error and is non-empty.
+
+    Like the Simanim page it needs the grammar-check results, for the verdict table's last column
+    (issue #52): each cell is the checker's verdict for one transcription against its strand's, so
+    a row naming a stem with no committed transcription fails here, on the lookup.
+    """
     src = pd.default_source_path()
     if not src.is_file():
         pytest.skip(f"vendored printed-Decalogue source not present at {src}")
-    body = kor.render_body_contents(pd.load_source(src))
+    source = pd.load_source(src)
+    verdicts = tvc.by_stem(tp.check_all(pd.check_all(source)))
+    body = kor.render_body_contents(source, verdicts)
     assert isinstance(body, tuple) and len(body) > 0
 
 

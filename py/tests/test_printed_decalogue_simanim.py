@@ -19,6 +19,8 @@ import pytest
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_simanim_page as sim
 from accgram import printed_decalogue_strands as pds
+from accgram import transcription_parse as tp
+from accgram import transcription_verdict_column as tvc
 
 import repo_paths
 
@@ -67,12 +69,19 @@ def test_avadim_located_within_each_first_verse() -> None:
 
 
 def test_body_renders() -> None:
-    """The full Simanim page body builds without error and is non-empty. It no longer needs the
-    grammar-check results -- only the source's provenance."""
+    """The full Simanim page body builds without error and is non-empty.
+
+    It needs the grammar-check results again, and for a different reason than it once did: not to
+    tabulate the strands (that moved to the companion page) but because each verdict table's last
+    column states a transcription's verdict against its strand's (issue #52). A row naming a stem
+    with no committed transcription fails here, on the lookup.
+    """
     src = pd.default_source_path()
     if not src.is_file():
         pytest.skip(f"vendored printed-Decalogue source not present at {src}")
-    body = sim.render_body_contents(pd.load_source(src))
+    source = pd.load_source(src)
+    verdicts = tvc.by_stem(tp.check_all(pd.check_all(source)))
+    body = sim.render_body_contents(source, verdicts)
     assert isinstance(body, tuple) and len(body) > 0
 
 
