@@ -377,6 +377,18 @@ def _source_or_skip() -> dict:
     return pd.load_source(src)
 
 
+def _require_source() -> None:
+    """Skip early, for a test that needs the vendored source only INDIRECTLY.
+
+    The grammaticality tests below reach it through ``_strand_results`` rather than by hand,
+    so they would skip anyway -- but only after the transcription work above that call had
+    run.  Calling this first keeps the skip at the top of the test, where a missing vendored
+    file is a skip rather than a half-executed test.  It is this and not ``_source_or_skip``
+    because there is no source to bind: a binding nothing reads is what ruff flags (F841).
+    """
+    _source_or_skip()
+
+
 def _transcriptions() -> list[et.Transcription]:
     found = et.load_all_transcriptions()
     if not found:
@@ -1121,7 +1133,7 @@ def test_the_synthesized_mark_body_reproduces_the_scanner_on_an_agreeing_page(
         pytest.skip(
             f"{stem} diverges from its strand; the control needs an agreeing page"
         )
-    source = _source_or_skip()
+    _require_source()
     transcription = _transcription(stem)
     book = transcription.header["book"]
     got = [
@@ -1157,7 +1169,7 @@ def test_each_page_is_as_grammatical_as_its_strand_except_where_pinned(
     The chanted verse COUNTS are asserted first, since a status list compared across a boundary
     shift would line up by position and mean nothing.
     """
-    source = _source_or_skip()
+    _require_source()
     transcription = _transcription(stem)
     strand = _strand_results()[transcription.key]
     got = [cv.status for cv in tp.check(transcription, _parser())]
@@ -1190,7 +1202,7 @@ def test_the_exodus_appendix_taxton_prints_an_ungrammatical_chanted_verse() -> N
     Tiberian-manuscript prose grammar, a clean rate is not the objective, and the natural
     follow-up is a re-read of the word against the physical book.
     """
-    source = _source_or_skip()
+    _require_source()
     transcription = _transcription("simtiq_ex_taxton")
     bodies = tp.chanted_verse_bodies(transcription)
     verse = bodies[2]
