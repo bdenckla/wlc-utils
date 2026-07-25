@@ -511,7 +511,7 @@ def _verdict_table(
             " than that suggests. In Exodus the two traditions accent the Shabbat commandment"
             " identically, so the only difference of accent it can adjudicate is the chanted"
             " verse boundary at עבדים. Koren takes the p-trad side of that, and of the"
-            " traditions' one difference of vowel, the qamats/patax of לא תרצח.",
+            " traditions' one difference of vowel, the qamats/pataḥ of לא תרצח.",
         ),
         (
             "Deuteronomy main",
@@ -526,8 +526,8 @@ def _verdict_table(
                 " chanted words, and Koren takes the p-trad side of every one. ",
                 H.bold(str(counts["total"] - counts["vocalization"])),
                 " of them are differences of accent, which the transcription diffs; the last is"
-                " the qamats/patax of לא תרצח — a vowel, so outside what a transcription of"
-                " accents records, and read off the page separately: Koren has the p-trad patax. ",
+                " the qamats/pataḥ of לא תרצח — a vowel, so outside what a transcription of"
+                " accents records, and read off the page separately: Koren has the p-trad pataḥ. ",
                 # The 7 Shabbat-commandment sites are the ones Exodus cannot reach: there the two
                 # taxton strands are identical throughout that commandment (pdt's EX
                 # decomposition, 4 boundary + 1 vocalization, leaves no remainder), which is what

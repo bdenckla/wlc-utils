@@ -250,12 +250,12 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
             (
                 f"The {_TAHTON}"
                 f" is grammatical everywhere — both books, both traditions. In terms of verse"
-                f" boundaries, the p-trad {_TAHTON} differs from the m-trad in only one place: the "
-                f"p-trad {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse "
-                "than the m-trad, whose first verse runs on to על־פני instead). Both "
-                "are grammatical. It also differs in some further details — several of them "
-                "changes of cantillation that give the two strands genuinely different "
-                "accent-grammar trees, but none that costs either its grammaticality (",
+                f" boundaries, the p-trad {_TAHTON} differs from the m-trad in only one place: the"
+                f" p-trad {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse"
+                " than the m-trad, whose first verse runs on to על־פני instead). Both"
+                " are grammatical. It also differs in some further details — several of them"
+                " changes of cantillation that give the two strands genuinely different"
+                " accent-grammar trees, but none that costs either its grammaticality (",
                 link("catalogued in an appendix below", f"#{_TAHTON_DETAILS_ID}"),
                 ").",
             )
@@ -338,8 +338,8 @@ def _balance_boundary(
         room = (t_take < len(t_words)) if grow_t else (e_take < len(e_words))
         if not aligned or not room:
             raise AssertionError(
-                f"cannot letter-equalize the {label} boundary — taxton skeleton {ts!r} vs "
-                f"elyon skeleton {es!r}; taxton words={t_words!r}, elyon words={e_words!r}"
+                f"cannot letter-equalize the {label} boundary — taxton skeleton {ts!r} vs"
+                f" elyon skeleton {es!r}; taxton words={t_words!r}, elyon words={e_words!r}"
             )
         if grow_t:
             t_take += 1
@@ -427,8 +427,8 @@ def _word_at(r: pds.Reading, skeleton: str) -> str:
         if pds.base_skeleton(word) == skeleton:
             return word
     raise AssertionError(
-        f"{r.name}: no word with skeleton {skeleton!r} in its אנכי…מצותי span "
-        "-- the vendored readings drifted"
+        f"{r.name}: no word with skeleton {skeleton!r} in its אנכי…מצותי span"
+        " -- the vendored readings drifted"
     )
 
 
@@ -444,8 +444,8 @@ def _span_cells(r: pds.Reading) -> list[object]:
         # (this word carries sof pasuq) must agree; if they ever don't, the data drifted.
         if ends_verse != (hpunc.SOPA in word):
             raise AssertionError(
-                f"{r.name}: {skel!r} ends a chanted verse = {ends_verse}, but its sof pasuq "
-                f"says otherwise -- the vendored readings drifted"
+                f"{r.name}: {skel!r} ends a chanted verse = {ends_verse}, but its sof pasuq"
+                f" says otherwise -- the vendored readings drifted"
             )
         # Column 0 is אנכי, the shared start, and is never verse-final in any strand -- so the
         # green start and a red stop can never collide in one cell.
@@ -529,8 +529,8 @@ def _strand_ungrammatical(
     odd = [r.stem for r in shared if r.key[1:] != ("elyon", "printed")]
     if odd:
         raise AssertionError(
-            f"{odd} share their strand's ungrammaticality without following a p-trad "
-            f"{pds.ELYON} -- the prose here no longer describes the data"
+            f"{odd} share their strand's ungrammaticality without following a p-trad"
+            f" {pds.ELYON} -- the prose here no longer describes the data"
         )
     return shared
 
@@ -649,8 +649,8 @@ def _four_strands_section(
         H.para((pds.WORD_DIVISION_IS_NOT_AN_ACCENT,)),
         H.para(
             (
-                f"Of these four strands, only the p-trad {_ELYON} is ungrammatical — the "
-                "verdict above already said so — and the ",
+                f"Of these four strands, only the p-trad {_ELYON} is ungrammatical — the"
+                " verdict above already said so — and the ",
                 link("section below", "#why-the-printed-elyon-fails"),
                 " dissects its merged opening verse.",
             )
@@ -812,16 +812,16 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
             (
                 "As the ",
                 link("four-strands table above", "#four-strands"),
-                f" laid out, in the m-trad {_ELYON} the first commandment אנכי…עבדים is its "
-                "own chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
-                "separate verses, ",
+                f" laid out, in the m-trad {_ELYON} the first commandment אנכי…עבדים is its"
+                " own chanted verse, and לא יהיה לך אלהים אחרים begins the next — two"
+                " separate verses, ",
                 H.bold("both of which are grammatical"),
-                ". The p-trad instead merges the first two commandments into a single "
-                "verse. That one "
-                "merged verse is what the grammar rejects. Shown stripped to letters and "
-                f"accents and divided at the p-trad {_TAHTON}'s verse boundaries — one p-trad "
-                f"{_ELYON} verse (pE) spanning the five ordinary p-trad {_TAHTON} verses (pT) "
-                "it merges:",
+                ". The p-trad instead merges the first two commandments into a single"
+                " verse. That one"
+                " merged verse is what the grammar rejects. Shown stripped to letters and"
+                f" accents and divided at the p-trad {_TAHTON}'s verse boundaries — one p-trad"
+                f" {_ELYON} verse (pE) spanning the five ordinary p-trad {_TAHTON} verses (pT)"
+                " it merges:",
             )
         ),
         p_table,
@@ -844,40 +844,40 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
             (
                 "The cause is the merged ",
                 H.bold("structure"),
-                f", not sheer length: Deuteronomy's p-trad {_ELYON} Sabbath verse runs 55 "
-                "words and parses clean, while this merged verse (51 words) does not. Keeping "
-                "the two commandments as the m-trad's two separate verses (",
-                f"{len(ms_cmd1.words)} and {len(ms_cmd2.words)} words) ",
-                "is exactly what lets them parse.",
+                f", not sheer length: Deuteronomy's p-trad {_ELYON} Sabbath verse runs 55"
+                " words and parses clean, while this merged verse (51 words) does not. Keeping"
+                " the two commandments as the m-trad's two separate verses (",
+                f"{len(ms_cmd1.words)} and {len(ms_cmd2.words)} words)",
+                " is exactly what lets them parse.",
             )
         ),
         H.heading_level_3("A tidier nesting — until you scrutinize it"),
         H.para(
             (
-                f"It is tempting to call the p-trad's arrangement the neater one. Its five "
-                f"{_TAHTON} verses nest perfectly inside a single {_ELYON} verse — a clean "
-                "five-in-one — whereas the m-trad divides the very same words into ",
+                f"It is tempting to call the p-trad's arrangement the neater one. Its five"
+                f" {_TAHTON} verses nest perfectly inside a single {_ELYON} verse — a clean"
+                " five-in-one — whereas the m-trad divides the very same words into ",
                 H.bold("two"),
                 f" {_ELYON} verses and ",
                 H.bold("four"),
-                f" {_TAHTON} verses that do not nest cleanly at all: the m-trad ",
-                f"{_TAHTON}'s opening verse אנכי…על־פני straddles the {_ELYON}'s break "
-                f"after עבדים, so neither strand's verses sit wholly inside the other's. In "
-                "the gradient "
-                "bars below, mE's first break lands inside mT's first verse, which runs on to "
-                "על־פני — that is the straddle:",
+                f" {_TAHTON} verses that do not nest cleanly at all: the m-trad",
+                f" {_TAHTON}'s opening verse אנכי…על־פני straddles the {_ELYON}'s break"
+                f" after עבדים, so neither strand's verses sit wholly inside the other's. In"
+                " the gradient"
+                " bars below, mE's first break lands inside mT's first verse, which runs on to"
+                " על־פני — that is the straddle:",
             )
         ),
         m_table,
         H.para(
             (
-                "But the p-trad's tidiness is bought with an ungrammatical cantillation — the "
-                "very one dissected above. Once you see the accents that buy the five-in-one, "
-                "its neatness evaporates. This is ",
+                "But the p-trad's tidiness is bought with an ungrammatical cantillation — the"
+                " very one dissected above. Once you see the accents that buy the five-in-one,"
+                " its neatness evaporates. This is ",
                 H.bold("not"),
-                " to say the tidier nesting could not have been cantillated grammatically; "
-                "perhaps some other accentuation would have carried it off. That is a "
-                "theoretical question I am not prepared to settle here.",
+                " to say the tidier nesting could not have been cantillated grammatically;"
+                " perhaps some other accentuation would have carried it off. That is a"
+                " theoretical question I am not prepared to settle here.",
             )
         ),
     )
@@ -891,18 +891,18 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
         H.heading_level_2("Source"),
         H.para(
             (
-                f"All eight strands (two books × {_TAHTON}/{_ELYON} × m-trad/p-trad) are "
-                "taken from the Wikisource base page ",
+                f"All eight strands (two books × {_TAHTON}/{_ELYON} × m-trad/p-trad) are"
+                " taken from the Wikisource base page ",
                 link("עשרת הדברות בסיס/טעמים", _SOURCE_URL),
-                f" (revision {oldid}, {ts[:10]}), which every p-trad-vs-m-trad comparison "
-                "table there transcludes. A handful of wiki templates are resolved to plain "
-                "pointed text for accent-grammar parsing (",
+                f" (revision {oldid}, {ts[:10]}), which every p-trad-vs-m-trad comparison"
+                " table there transcludes. A handful of wiki templates are resolved to plain"
+                " pointed text for accent-grammar parsing (",
                 _ROM_LEGARMEH,
                 " and ",
                 _ROM_PASEQ,
-                " both conflated down to a Unicode PASEQ, ketiv dropped from ketiv-qere, setumah "
-                "and petuḥah divisions dropped); the chanted "
-                "verses are split at ",
+                " both conflated down to a Unicode PASEQ, ketiv dropped from ketiv-qere, setumah"
+                " and petuḥah divisions dropped); the chanted"
+                " verses are split at ",
                 _ROM_SOF_PASUQ,
                 ".",
             )
@@ -1027,8 +1027,8 @@ def _split_into_lines(words: list[str], line_ends: tuple[str, ...]) -> list[list
             cur, pending = [], pending[1:]
     if cur or pending:
         raise AssertionError(
-            f"sabbath line split: leftover words {cur!r} / unconsumed line-ends {pending!r} "
-            "-- the vendored readings drifted"
+            f"sabbath line split: leftover words {cur!r} / unconsumed line-ends {pending!r}"
+            " -- the vendored readings drifted"
         )
     return lines
 
@@ -1079,7 +1079,7 @@ def _sabbath_diff_table(results: list[pd.VersionResult]) -> object:
 # maqaf compound, and only this one differs, so the לא bought nothing but a second RTL word.
 _VOWEL_DIFF_ROWS: tuple[tuple[str, str, str], ...] = (
     ("m-trad", "תִּרְצָ֖ח", "qamats"),
-    ("p-trad", "תִּרְצַ֖ח", "patax"),
+    ("p-trad", "תִּרְצַ֖ח", "pataḥ"),
 )
 
 
@@ -1115,14 +1115,13 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                f"Both {_TAHTON} strands are grammatical, so the differences below "
-                "do not bear on the grammaticality question this page asks — not even the several "
-                "that do change the accent-grammar tree. They are gathered here only to make "
-                "concrete the "
-                "verdict's point that the strands differ in ways that never cost either strand "
-                "grammaticality. "
-                "The one structural difference — the p-trad ending its first verse at מבית עבדים, "
-                "and the boundary accents on ",
+                f"Both {_TAHTON} strands are grammatical, so the differences below do not"
+                " bear on the grammaticality question this page asks, though several of"
+                " these differences do change the accent-grammar tree. I gather these"
+                " differences here only to make concrete the verdict's point that the"
+                " strands differ in ways that never cost either strand grammaticality."
+                " The one structural difference — the p-trad ending its first verse at"
+                " מבית עבדים, and the boundary accents on ",
                 # The four boundary words come from printed_decalogue_taxton_diff, which also
                 # classifies a difference site as "boundary" by matching these skeletons -- so the
                 # words named here and the four excluded from the counts below cannot come apart.
@@ -1132,8 +1131,8 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                "In Exodus, those four words aside, the two strands part at exactly one more, "
-                "the vocalization of תרצח:",
+                "In Exodus, those four words aside, the two strands part at exactly one more,"
+                " the vocalization of תרצח:",
             )
         ),
         _vowel_diff_table(),
@@ -1157,22 +1156,22 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         # call above), so the failure mode left is a WORDING one -- keep the scopes explicit.
         H.para(
             (
-                "Deuteronomy differs in more ways. Over the whole Decalogue the two strands part "
-                "at ",
+                "Deuteronomy differs in more ways. Over the whole Decalogue the two strands part"
+                " at ",
                 H.bold(str(counts["total"])),
-                " chanted words: the four boundary words already discussed above, one that "
-                "differs in vocalization alone (the same תרצח, noted again below), and ",
+                " chanted words: the four boundary words already discussed above, one that"
+                " differs in vocalization alone (the same תרצח, noted again below), and ",
                 H.bold(str(counts["sabbath"])),
-                " that all fall within a single stretch of the Sabbath commandment. Those "
-                f"{counts['sabbath']} are differences of cantillation, so unlike the Exodus "
-                "vowel-swap they give the two strands genuinely different accent-grammar trees. "
-                "Below is that stretch — the run of words the two strands accent differently, "
-                "everything "
-                "before and after it being identical — shown in each strand, m-trad above p-trad, "
-                "stripped to letters and accents, each line ending on a disjunctive accent. The ",
+                " that all fall within a single stretch of the Sabbath commandment. Those"
+                f" {counts['sabbath']} are differences of cantillation, so unlike the Exodus"
+                " vowel-swap they give the two strands genuinely different accent-grammar trees."
+                " Below is that stretch — the run of words the two strands accent differently,"
+                " everything"
+                " before and after it being identical — shown in each strand, m-trad above p-trad,"
+                " stripped to letters and accents, each line ending on a disjunctive accent. The ",
                 H.bold(str(len(_SABBATH_LINE_ENDS))),
-                " words those lines end on are the Shabbat commandment's signal words — a "
-                "shorthand for the stretch, not the whole of it:",
+                " words those lines end on are the Shabbat commandment's signal words — a"
+                " shorthand for the stretch, not the whole of it:",
             )
         ),
         # Just the differing stretch of the Sabbath verse, pulled and reduced live from the data (so
@@ -1184,8 +1183,8 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 # "X / Y" is two adjacent RTL words separated only by a neutral slash, so both
                 # are <bdi>-isolated (around the lang="hbo" span) to keep the pair from
                 # rendering reversed. Lone hbo forms elsewhere, bounded by English, need no bdi.
-                "The one difference outside that stretch is purely vocalization — "
-                "vowel-pointing, not cantillation: the same ",
+                "The one difference outside that stretch is purely vocalization —"
+                " vowel-pointing, not cantillation: the same ",
                 H.bdi(hbo("תִּרְצָ֖ח")),
                 " / ",
                 H.bdi(hbo("תִּרְצַ֖ח")),
