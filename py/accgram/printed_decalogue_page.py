@@ -881,7 +881,7 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 link("עשרת הדברות בסיס/טעמים", _SOURCE_URL),
                 f" (revision {oldid}, {ts[:10]}), which every p-trad-vs-m-trad comparison "
                 "table there transcludes. A handful of wiki templates are resolved to plain "
-                "pointed text (",
+                "pointed text for accent-grammar parsing (",
                 _ROM_LEGARMEH,
                 " and ",
                 _ROM_PASEQ,
