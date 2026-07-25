@@ -3,7 +3,7 @@
 # Hand transcription of the printed accents, by Ben Denckla, 2026-07-24, read directly from the
 # book, via the per-line editor (accgram/transcription_editor.py).  Primary observation: not
 # derivable from anything else in the repo.  The editor's export is committed beside this file
-# as simanim_tanakh_dt_elyon.json, and a test checks the two agree.
+# as simtan_dt_elyon.json, and a test checks the two agree.
 #
 # One .txt line per PRINTED line, so a token can be checked against the line it was read off.
 # Bracketed asides carry no accent.  ONE PAGE, so there is no page marker: the whole Decalogue
@@ -12,7 +12,7 @@
 #
 # THE LAST OF THE FOURTEEN.  It closes issue #72's checklist and the whole 14-Decalogue scope of
 # issue #69: the Deuteronomy half of the Simanim Tanakh's back-of-book appendix elyon pair, whose
-# Exodus counterpart is simanim_tanakh_ex_elyon (p. 350).  The edition's two main-text Decalogues
+# Exodus counterpart is simtan_ex_elyon (p. 350).  The edition's two main-text Decalogues
 # (Exodus pp. 119-120, Deuteronomy pp. 297-298) are both taxton; the appendix carries the elyon
 # pair, the Koren layout -- running text taxton, appendix elyon -- and band 1 (context, left
 # blank) is the running head naming the elyon reading.  Diffed against a MANUSCRIPT-tradition
@@ -76,7 +76,7 @@
 # PASOLEG KINDS: "distinguished" on the edition's own authority -- the sixteenth ma'ala of its
 # introduction (p. כז) prints the narrow-sense paseq as a HOLLOW bar throughout the Tanakh and
 # reserves the SOLID bar for munax-legarmeh, so the kind is read off the glyph (see
-# simanim_tanakh_ex_taxton's header for the fuller account).
+# simtan_ex_taxton's header for the fuller account).
 #
 # SEVEN STROKES, the most of any Simanim Tanakh page so far -- the two taxton pages carried one
 # each and the Exodus appendix elyon (p. 350) four.  They split TWO HOLLOW and FIVE SOLID:
@@ -88,7 +88,7 @@
 #   * היית  (token 101, band 15) -- SOLID, munax legarmeh; mun_leg mun rev
 #   * למען  (token 126, band 18) -- SOLID, munax legarmeh; mun_leg mun rev (across the band 18/19 break)
 # The contrast is NOT new to the repo, and this exact 2-and-5 split, at these same seven positions,
-# is already on record in the sibling Simanim TIQQUN's Deuteronomy elyon (simanim_dt_elyon) -- the
+# is already on record in the sibling Simanim TIQQUN's Deuteronomy elyon (simtiq_dt_elyon) -- the
 # same Decalogue reading in the other Feldheim edition, whose header also carries pasoleg_kinds:
 # distinguished.  What is new is the count in the Tanakh, whose earlier pages reached at most four.
 # The split is also grammatically coherent, which is evidence the review loop had no stake in:
@@ -97,7 +97,7 @@
 # reading and the grammar agree, independently of the introduction's rule.
 #
 # THE SMALL WAVY MARK ABOVE SOME WORDS IS THE RAFE, not an accent, and is not transcribed -- see
-# simanim_tanakh_ex_taxton's header, which identifies it documentarily from the ninth ma'ala of
+# simtan_ex_taxton's header, which identifies it documentarily from the ninth ma'ala of
 # the introduction (p. כב).  It occurs on this page as well.
 #
 # THE RENDER IN THE JSON TAKES THE WHOLE PAGE, no crop, the workflow doc's default.  Measuring a

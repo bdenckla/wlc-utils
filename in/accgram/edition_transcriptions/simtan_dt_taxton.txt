@@ -4,7 +4,7 @@
 # Hand transcription of the printed accents, by Ben Denckla, 2026-07-23, read directly from the
 # book, via the per-line editor (accgram/transcription_editor.py).  Primary observation: not
 # derivable from anything else in the repo.  The editor's exports for both pages are committed
-# beside this file as simanim_tanakh_dt_taxton.json, and a test checks the two agree.
+# beside this file as simtan_dt_taxton.json, and a test checks the two agree.
 #
 # One .txt line per PRINTED line, so a token can be checked against the line it was read off.
 # "[p. 298]" marks where the second page begins; bracketed asides carry no accent.
@@ -32,7 +32,7 @@
 #     one attested zaqef phrase (pashta + zaqef) with another (methiga + zaqef).
 #
 # IT TOUCHES THE DISJUNCTIVE SKELETON, and is only the SECOND transcription that does, after
-# simanim_dt_taxton (issue #69 Result 4).  Pashta is a disjunctive and qadma a conjunctive, so
+# simtiq_dt_taxton (issue #69 Result 4).  Pashta is a disjunctive and qadma a conjunctive, so
 # this one does not swap disjunctive for disjunctive the way p. 247's Shabbat commandment does;
 # it REMOVES a disjunctive.  Hence this stem is not in the test module's _SKELETON_UNTOUCHED.
 # The chanted verse division is untouched -- the divergence is mid-verse, and both sides run 12.
@@ -64,7 +64,7 @@
 # itself still rests on the independent evidence at לא תרצח, which this Decalogue runs into one
 # chanted verse with ולא תנאף and ולא תגנב, as all four taxton strands do and no elyon strand.
 #
-# PASOLEG KINDS: "distinguished" on the edition's own authority -- see simanim_tanakh_ex_taxton's
+# PASOLEG KINDS: "distinguished" on the edition's own authority -- see simtan_ex_taxton's
 # header, which records the sixteenth ma'ala of the introduction (p. כז): the narrow-sense paseq
 # is printed as a HOLLOW bar throughout the Tanakh, the solid bar left to munax-legarmeh.  So the
 # kind is read off the glyph, not inferred from position or from the sibling Tiqqun.
@@ -77,7 +77,7 @@
 # likeliest, dt/elyon having SEVEN strokes.
 #
 # THE SMALL WAVY MARK ABOVE SOME WORDS IS THE RAFE, not an accent, and is not transcribed --
-# again see simanim_tanakh_ex_taxton's header, which identifies it documentarily from the ninth
+# again see simtan_ex_taxton's header, which identifies it documentarily from the ninth
 # ma'ala of the introduction (p. כב).  It occurs on these two pages as well.
 #
 # TWO PAGES, and the break is where issue #72's step-0 comment puts it: p. 297 ends on the bare

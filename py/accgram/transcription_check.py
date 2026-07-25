@@ -3,10 +3,10 @@
 Usage:
     # a transcription still in progress, from the editor's downloaded exports
     .venv/Scripts/python.exe py/accgram/transcription_check.py \
-        ~/Downloads/simanim_dt_elyon_p208-transcription.json ... --key dt elyon printed
+        ~/Downloads/simtiq_dt_elyon_p208-transcription.json ... --key dt elyon printed
 
     # one already committed, taking its strand from the .txt header
-    .venv/Scripts/python.exe py/accgram/transcription_check.py --stem simanim_dt_elyon
+    .venv/Scripts/python.exe py/accgram/transcription_check.py --stem simtiq_dt_elyon
 
     # what all eight strands do at one site, located by letter skeleton
     .venv/Scripts/python.exe py/accgram/transcription_check.py --site השבת לקדשו

@@ -178,6 +178,6 @@ sign identified from the introduction's drawing alone may not be the thing you a
 - [`doc/edition-transcription-workflow.md`](edition-transcription-workflow.md) — the transcription
   procedure these signs feed into, and where the rafe and the hollow/solid stroke are recorded as
   standing facts about the edition.
-- [`in/accgram/edition_transcriptions/simanim_tanakh_ex_taxton.txt`](../in/accgram/edition_transcriptions/simanim_tanakh_ex_taxton.txt)
+- [`in/accgram/edition_transcriptions/simtan_ex_taxton.txt`](../in/accgram/edition_transcriptions/simtan_ex_taxton.txt)
   — the Exodus *taxton* transcription, whose header works out what ma'alot 9 and 16 mean for
   transcribing this edition in particular.

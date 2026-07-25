@@ -3,7 +3,7 @@
 # Hand transcription of the printed accents, by Ben Denckla, 2026-07-20, read directly from
 # the book, via the per-line editor (accgram/transcription_editor.py).  Primary observation:
 # not derivable from anything else in the repo.  The editor's exports for both pages are
-# committed beside this file as simanim_dt_elyon.json, and a test checks the two agree.
+# committed beside this file as simtiq_dt_elyon.json, and a test checks the two agree.
 #
 # One .txt line per PRINTED line, so a token can be checked against the line it was read off.
 # "[p. 209]" marks where the second page begins; bracketed asides carry no accent.

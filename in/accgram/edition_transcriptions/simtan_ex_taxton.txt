@@ -4,7 +4,7 @@
 # Hand transcription of the printed accents, by Ben Denckla, 2026-07-23, read directly from the
 # book, via the per-line editor (accgram/transcription_editor.py).  Primary observation: not
 # derivable from anything else in the repo.  The editor's exports for both pages are committed
-# beside this file as simanim_tanakh_ex_taxton.json, and a test checks the two agree.
+# beside this file as simtan_ex_taxton.json, and a test checks the two agree.
 #
 # One .txt line per PRINTED line, so a token can be checked against the line it was read off.
 # "[p. 120]" marks where the second page begins; bracketed asides carry no accent.

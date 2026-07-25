@@ -212,7 +212,7 @@ class TranscriptionResult:
     commandments).  So "ungrammatical somewhere" is not the finding; ``departures`` is.
     """
 
-    stem: str  # the transcription's filename stem, e.g. "simanim_ex_taxton"
+    stem: str  # the transcription's filename stem, e.g. "simtiq_ex_taxton"
     edition: str
     pages: str
     key: tuple[str, str, str]  # (book, reading, tradition) -- the strand followed

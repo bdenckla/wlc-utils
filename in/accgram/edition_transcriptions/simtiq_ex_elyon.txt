@@ -5,7 +5,7 @@
 # via the per-line editor (accgram/transcription_editor.py), replacing the first transcription
 # of these pages (2026-07-19), which predated both the editor and the JSON export and so was
 # the one committed transcription with no audit trail.  The editor's exports for both pages are
-# committed beside this file as simanim_ex_elyon.json, and a test checks the two agree.
+# committed beside this file as simtiq_ex_elyon.json, and a test checks the two agree.
 #
 # One .txt line per PRINTED line, so a token can be checked against the line it was read off.
 # "[p. 84]" marks where the second page begins; bracketed asides carry no accent.
@@ -24,7 +24,7 @@
 #     anchors the region on the following line): SimTiq prints לא־ with a maqaf and NO accent,
 #     so the compound is one chanted word carrying the tipexa on תחמד,
 #     where the reference sets לא free with its own merkha.  All four Exodus strands agree with
-#     the reference here, so it is SimTiq that diverges -- and simanim_ex_taxton, transcribed
+#     the reference here, so it is SimTiq that diverges -- and simtiq_ex_taxton, transcribed
 #     separately, diverges the same way at the same words.
 # The two cancel in the token count (+1 munax, -1 merkha), which is why the totals match at 142
 # despite two real divergences.  Equal totals are not agreement.
@@ -69,7 +69,7 @@
 # Conventions in force for this file:
 #   * One token per ACCENT.  Normally that is one per chanted word, a maqaf compound being one
 #     chanted word; the exception is a word bearing more than one accent.  None occurs here --
-#     unlike simanim_ex_taxton (p. 246), where two maqaf compounds bear two accents each.
+#     unlike simtiq_ex_taxton (p. 246), where two maqaf compounds bear two accents each.
 #   * "-" is a maqaf binding two ACCENTS into one chanted word ("mun-mer"), "+" its simple-word
 #     counterpart, "_" binds two MARKS into ONE accent ("mun_leg").  Only "_" occurs here.
 #   * A postpositive/prepositive accent written twice on one word -- once at its fixed edge and

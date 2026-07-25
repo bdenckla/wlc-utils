@@ -1,9 +1,9 @@
 {
-  "stem": "simanim_dt_elyon",
+  "stem": "simtiq_dt_elyon",
   "note": "One Decalogue spanning two printed pages, so one audit trail holding both editor exports in page order.",
   "pages": [
     {
-      "stem": "simanim_dt_elyon_p208",
+      "stem": "simtiq_dt_elyon_p208",
       "source": {
         "file": "C208.jpg",
         "book": "Feldheim Simanim Tiqqun",
@@ -214,7 +214,7 @@
       ]
     },
     {
-      "stem": "simanim_dt_elyon_p209",
+      "stem": "simtiq_dt_elyon_p209",
       "source": {
         "file": "C209.jpg",
         "book": "Feldheim Simanim Tiqqun",

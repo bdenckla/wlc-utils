@@ -3,7 +3,7 @@
 # Hand transcription of the printed accents, by Ben Denckla, 2026-07-23, read directly from the
 # book, via the per-line editor (accgram/transcription_editor.py).  Primary observation: not
 # derivable from anything else in the repo.  The editor's export is committed beside this file
-# as simanim_tanakh_ex_elyon.json, and a test checks the two agree.
+# as simtan_ex_elyon.json, and a test checks the two agree.
 #
 # One .txt line per PRINTED line, so a token can be checked against the line it was read off.
 # Bracketed asides carry no accent.  ONE PAGE, so there is no page marker: the whole Decalogue
@@ -70,7 +70,7 @@
 # PASOLEG KINDS: "distinguished" on the edition's own authority -- the sixteenth ma'ala of its
 # introduction (p. כז) prints the narrow-sense paseq as a HOLLOW bar throughout the Tanakh and
 # reserves the SOLID bar for munax-legarmeh, so the kind is read off the glyph (see
-# simanim_tanakh_ex_taxton's header for the fuller account).
+# simtan_ex_taxton's header for the fuller account).
 #
 # BOTH KINDS APPEAR HERE, and it is the first Simanim TANAKH page where they can be contrasted
 # directly: its two taxton pages each carried a single SOLID stroke (ex/taxton אתה, dt/taxton
@@ -81,7 +81,7 @@
 #   * במים  (token 25, band 5)  -- SOLID, munax legarmeh; mun_leg mun rev (מתחת, then לארץ)
 #   * שבת   (token 75, band 12) -- SOLID, munax legarmeh; mun_leg mun rev (ליהוה, then אלהיך)
 # The contrast itself is NOT new to the repo: this exact 2-and-2 split, at these same four
-# positions, is already on record in the sibling Simanim TIQQUN's Exodus elyon (simanim_ex_elyon)
+# positions, is already on record in the sibling Simanim TIQQUN's Exodus elyon (simtiq_ex_elyon)
 # -- the same Decalogue reading in the other Feldheim edition, whose header also carries
 # pasoleg_kinds: distinguished.  What is new is seeing it in the Tanakh, whose taxton pages could
 # not.  The split is also grammatically coherent, which is evidence the review loop had no stake
@@ -98,7 +98,7 @@
 # page number.
 #
 # THE SMALL WAVY MARK ABOVE SOME WORDS IS THE RAFE, not an accent, and is not transcribed -- see
-# simanim_tanakh_ex_taxton's header, which identifies it documentarily from the ninth ma'ala of
+# simtan_ex_taxton's header, which identifies it documentarily from the ninth ma'ala of
 # the introduction (p. כב).  It occurs on this page as well.
 #
 # Conventions in force for this file:

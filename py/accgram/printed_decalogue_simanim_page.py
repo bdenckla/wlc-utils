@@ -24,8 +24,9 @@ how aware SimTiq is of having made the older, printed-tradition choice.
 
 Since issue #69 the finding rests on more than that comparison.  All EIGHT Decalogues on this page
 -- the Tiqqun's four and the Simanim *Tanakh*'s four -- have a committed hand transcription of
-every printed accent (``in/accgram/edition_transcriptions/simanim_*.txt``), diffed against the
-vendored strand and pinned by ``tests/test_edition_transcriptions.py``.  ``_tiqqun_verdict_table``
+every printed accent (``in/accgram/edition_transcriptions/simtiq_*.txt`` and ``simtan_*.txt``),
+diffed against the vendored strand and pinned by
+``tests/test_edition_transcriptions.py``.  ``_tiqqun_verdict_table``
 and ``_tanakh_verdict_table`` render them, one row per Decalogue -- never one per edition, since
 p. 247's Shabbat departure and pp. 208-209's exact agreement cannot share a sentence.
 
@@ -765,7 +766,7 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
         (
             (
                 "Exodus main",
-                "simanim_ex_elyon",
+                "simtiq_ex_elyon",
                 "83–84",
                 ("p-trad ", _ELYON),
                 "Every accent. The only two differences are of word division: it separates"
@@ -774,7 +775,7 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
             ),
             (
                 "Exodus appendix",
-                "simanim_ex_taxton",
+                "simtiq_ex_taxton",
                 "246",
                 ("p-trad ", _TAHTON),
                 "Every chanted verse boundary and the whole disjunctive skeleton. Three"
@@ -782,14 +783,14 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
             ),
             (
                 "Deuteronomy main",
-                "simanim_dt_elyon",
+                "simtiq_dt_elyon",
                 "208–209",
                 ("p-trad ", _ELYON),
                 "Every accent, with no difference anywhere — 164 accents against 164.",
             ),
             (
                 "Deuteronomy appendix",
-                "simanim_dt_taxton",
+                "simtiq_dt_taxton",
                 "247",
                 ("p-trad ", _TAHTON),
                 (
@@ -810,7 +811,7 @@ def _tanakh_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
         (
             (
                 "Exodus main",
-                "simanim_tanakh_ex_taxton",
+                "simtan_ex_taxton",
                 "119–120",
                 ("m-trad ", _TAHTON),
                 "Every accent, with no difference anywhere. Its twelve chanted verses are"
@@ -819,7 +820,7 @@ def _tanakh_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
             ),
             (
                 "Deuteronomy main",
-                "simanim_tanakh_dt_taxton",
+                "simtan_dt_taxton",
                 "297–298",
                 ("m-trad ", _TAHTON),
                 (
@@ -837,14 +838,14 @@ def _tanakh_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
             ),
             (
                 "Exodus appendix",
-                "simanim_tanakh_ex_elyon",
+                "simtan_ex_elyon",
                 "350",
                 ("m-trad ", _ELYON),
                 "Every accent, with no difference anywhere.",
             ),
             (
                 "Deuteronomy appendix",
-                "simanim_tanakh_dt_elyon",
+                "simtan_dt_elyon",
                 "351",
                 ("m-trad ", _ELYON),
                 "Every accent, with no difference anywhere.",

@@ -1,12 +1,12 @@
 """Wrap the line editor's export(s) into the committed JSON, and derive the .txt body.
 
     # a new transcription: both jobs at once
-    .venv/Scripts/python.exe py/accgram/transcription_build.py simanim_tanakh_ex_elyon \
-        --export ~/Downloads/simanim_tanakh_ex_elyon_p350-transcription.json \
+    .venv/Scripts/python.exe py/accgram/transcription_build.py simtan_ex_elyon \
+        --export ~/Downloads/simtan_ex_elyon_p350-transcription.json \
         --corrections .novc/ex_elyon_corrections.json
 
     # after a post-export correction or a header edit: re-derive from the committed JSON
-    .venv/Scripts/python.exe py/accgram/transcription_build.py simanim_tanakh_ex_elyon --derive-only
+    .venv/Scripts/python.exe py/accgram/transcription_build.py simtan_ex_elyon --derive-only
 
     # idempotence: re-derive every committed stem and report any that would change
     .venv/Scripts/python.exe py/accgram/transcription_build.py --check
@@ -59,7 +59,7 @@ from accgram import edition_transcription as et  # noqa: E402
 from cmn.utf8_io import force_utf8_io  # noqa: E402
 
 # A page label is the export stem's last underscore-separated part -- "p298" for
-# simanim_tanakh_dt_taxton_p298 -- which is what transcription_check reports a difference's
+# simtan_dt_taxton_p298 -- which is what transcription_check reports a difference's
 # origin as, so a correction is keyed by the same label the check tool named it with.
 _PAGE_NUMBER = re.compile(r"^p(\d+)$")
 
@@ -241,7 +241,7 @@ def _warn_dropped_keys(path: Path, record: dict) -> None:
     """Name any top-level key a rebuild would drop from an existing committed JSON.
 
     A rebuild writes the wrapper this tool knows about and nothing else, so a hand-added
-    top-level field would go with it -- simanim_dt_elyon.json carries a ``note`` and a
+    top-level field would go with it -- simtiq_dt_elyon.json carries a ``note`` and a
     ``stem`` beside its ``pages``.  Printed rather than refused: rebuilding an already
     committed stem is the rare path, and the loss is recoverable from git as long as somebody
     is told it happened.

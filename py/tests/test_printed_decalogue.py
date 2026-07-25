@@ -122,10 +122,10 @@ def test_the_transcriptions_section_records_every_page_against_its_strand() -> N
     section = tp.payload_objs(tp.check_all(results))
     assert len(section) == 12
     by_stem = {entry["stem"]: entry for entry in section}
-    assert by_stem["simanim_ex_taxton"]["departures"] == [
+    assert by_stem["simtiq_ex_taxton"]["departures"] == [
         {"index": 3, "strand_status": "clean", "status": "ungrammatical"}
     ]
-    assert [s for s, e in by_stem.items() if e["departures"]] == ["simanim_ex_taxton"]
+    assert [s for s, e in by_stem.items() if e["departures"]] == ["simtiq_ex_taxton"]
     # Every entry names the strand it was checked against, and carries one chanted verse record
     # per chanted verse, each with the strand's own status beside its own.
     for entry in section:
@@ -155,7 +155,7 @@ def test_the_four_ungrammatical_pages_are_the_ones_printing_the_merged_verse() -
     assert shared == {
         "koren_dt_elyon": [1],
         "koren_ex_elyon": [1],
-        "simanim_dt_elyon": [1],
-        "simanim_ex_elyon": [1],
+        "simtiq_dt_elyon": [1],
+        "simtiq_ex_elyon": [1],
     }
     assert all(r.key[1:] == ("elyon", "printed") for r in verdicts if r.stem in shared)

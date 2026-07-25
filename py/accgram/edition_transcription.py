@@ -516,7 +516,7 @@ def txt_lines(lines: list[str]) -> list[str]:
 
     Keeping the aside is the point of having one.  It is dropped from both token streams --
     it is not an accent -- so the .txt body is the only place a reader of the committed file
-    can see that a stroke stood there and which kind it was; simanim_dt_elyon.txt shows its
+    can see that a stroke stood there and which kind it was; simtiq_dt_elyon.txt shows its
     ``[paseq]`` inline for exactly that reason.  A rejoined maqaf compound lands on the line
     it STARTED on, matching what ``rejoin_editor_chunks`` carries.
     """

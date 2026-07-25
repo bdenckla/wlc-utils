@@ -63,7 +63,7 @@ from py_html import wlc_utils_html as H
 # skeleton is stable, readable in a diff, and does not embed a fragile sequence of combining
 # marks in this file.
 _EXPECTED_DIVERGENCES = {
-    "simanim_ex_elyon": [
+    "simtiq_ex_elyon": [
         # base_skeleton drops the maqaf along with the points, so the reference's joining of
         # these two atoms -- the very thing at issue -- is not visible in the pinned skeleton.
         ("", "mun", "ובנךובתך"),
@@ -86,7 +86,7 @@ _EXPECTED_DIVERGENCES = {
     #
     # Both munax insertions and the merkha deletion are conjunctive, so the disjunctive
     # skeleton is untouched; see test_pinned_divergences_leave_the_disjunctive_skeleton_alone.
-    "simanim_ex_taxton": [
+    "simtiq_ex_taxton": [
         ("", "mun", "לאיהיה"),
         ("", "mun", "לאתעשה"),
         ("mer", "", "לא"),
@@ -104,7 +104,7 @@ _EXPECTED_DIVERGENCES = {
     # divergence survived a procedure that only inspects candidate divergences" -- and the
     # Exodus elyon above, whose two real divergences cancelled in the token count, is the
     # standing proof that compensating errors are possible in exactly this material.
-    "simanim_dt_elyon": [],
+    "simtiq_dt_elyon": [],
     # SimTiq's Deuteronomy appendix Decalogue (taxton, p. 247) is the edition's KNOWN m-trad
     # departure, and the first transcription whose divergences are neither word-division
     # differences nor confined to conjunctives.  All three regions fall inside the Shabbat
@@ -121,7 +121,7 @@ _EXPECTED_DIVERGENCES = {
     #
     # What the departure does NOT extend to is the chanted verse division, which stays p-trad
     # (13 verses, pinned below; the m-trad has 12).  Accents only.
-    "simanim_dt_taxton": [
+    "simtiq_dt_taxton": [
         ("", "mun mun paz mun mun tg", "לאתעשה"),
         ("mun mun", "", "אתה"),
         ("mah pash zaq", "", "ושורך"),
@@ -144,7 +144,7 @@ _EXPECTED_DIVERGENCES = {
     # revia -- ws/dt/taxton/printed is the ONLY one of the eight strands to depart there), the
     # pasoleg on אתה (present / absent, so the pasoleg COUNT discriminates), and the chanted
     # verse boundary at עבדים pinned below.  The first four sit inside the Shabbat commandment,
-    # exactly where simanim_dt_taxton departs TO the m-trad -- so these two transcriptions
+    # exactly where simtiq_dt_taxton departs TO the m-trad -- so these two transcriptions
     # disagree about the same commandment, and neither is the other's rounding error.
     "koren_dt_taxton": [],
     # Koren's Exodus APPENDIX Decalogue (elyon, p. 38) is the FIRST Koren page to diverge:
@@ -156,13 +156,13 @@ _EXPECTED_DIVERGENCES = {
     #     hence the "לא" skeleton; the inserted accent is the munax on יהיה.
     #   * אַתָּה וּבִנְךָ וּבִתֶּךָ (Shabbat): Koren gives ובנך its own munax where the reference
     #     joins ובנך־ובתך.  base_skeleton drops the maqaf, so it pins as "ובנךובתך" -- the same
-    #     limitation, and the SAME divergence token for token, as simanim_ex_elyon above.
+    #     limitation, and the SAME divergence token for token, as simtiq_ex_elyon above.
     # Both inserted accents are conjunctive (munax), so the disjunctive skeleton is untouched
     # (koren_ex_elyon is in _SKELETON_UNTOUCHED below).  The ובנך split is corroborated: the two
-    # ex/taxton strands separate ובנך with a munax too, and simanim_ex_elyon pins the identical
+    # ex/taxton strands separate ובנך with a munax too, and simtiq_ex_elyon pins the identical
     # region -- two independently transcribed elyon editions splitting where the vendored elyon
     # strand joins.  The יהיה split is Koren-alone: no vendored strand separates יהיה־לך and
-    # simanim_ex_elyon does not either.  The .txt header states that asymmetry rather than hiding
+    # simtiq_ex_elyon does not either.  The .txt header states that asymmetry rather than hiding
     # it.  The chanted verse boundary at עבדים stays p-trad (9 verses, pinned below).
     "koren_ex_elyon": [
         ("", "mun", "לא"),
@@ -199,7 +199,7 @@ _EXPECTED_DIVERGENCES = {
     # are identical in both traditions and so say nothing about which one the page follows.
     # A re-vendoring that moved any of the three fails here rather than quietly turning the
     # m-trad verdict into an unsupported one.
-    "simanim_tanakh_ex_taxton": [],
+    "simtan_ex_taxton": [],
     # SimTan's Deuteronomy main Decalogue (taxton, pp. 297-298), the second m-trad pin
     # here and by far the sharper test: where the Exodus taxton's two strands differ in only
     # three regions, the two dt/taxton strands differ in EIGHT (issue #69 Result 6's five, plus
@@ -216,8 +216,8 @@ _EXPECTED_DIVERGENCES = {
     #
     # It REMOVES a disjunctive, which is why this stem is absent from _SKELETON_UNTOUCHED -- the
     # second transcription of the ten whose divergence touches the skeleton, after
-    # simanim_dt_taxton, and unlike that one it is a single word rather than a whole commandment.
-    "simanim_tanakh_dt_taxton": [
+    # simtiq_dt_taxton, and unlike that one it is a single word rather than a whole commandment.
+    "simtan_dt_taxton": [
         ("pash", "qad", "ויום"),
     ],
     # SimTan's Exodus APPENDIX Decalogue (elyon, p. 350), the first ELYON pin from this
@@ -243,8 +243,8 @@ _EXPECTED_DIVERGENCES = {
     # the legarmeh-before-revia environment.  It is the first SimTan page to carry a hollow
     # bar at all -- both taxton pages had a single solid stroke -- but the contrast is not new to
     # the repo: the identical 2-and-2 split, at these same positions, is already on record in the
-    # sibling Tiqqun's simanim_ex_elyon, the same reading in the other Feldheim edition.
-    "simanim_tanakh_ex_elyon": [],
+    # sibling Tiqqun's simtiq_ex_elyon, the same reading in the other Feldheim edition.
+    "simtan_ex_elyon": [],
     # SimTan's Deuteronomy APPENDIX Decalogue (elyon, p. 351) -- the LAST of issue #69's
     # fourteen, closing issue #72, and the fourth m-trad pin here.  It diverges NOWHERE: 164
     # reference tokens vs 164, agreeing at every accent, with all SEVEN pasoleg strokes on their
@@ -268,18 +268,18 @@ _EXPECTED_DIVERGENCES = {
     # The seven strokes split two HOLLOW (narrow-sense paseq: 16 פסל, 19 בשמים, each before a
     # pazer) and five SOLID (legarmeh: 25 במים, 69 צוך, 79 שבת, 101 היית, 126 למען, each before a
     # revia).  It is the richest stroke page from this edition -- the two taxton pages had one each
-    # and p. 350 four -- but the 2-and-5 split is not new: the sibling Tiqqun's simanim_dt_elyon
+    # and p. 350 four -- but the 2-and-5 split is not new: the sibling Tiqqun's simtiq_dt_elyon
     # has the same seven at the same positions, the same reading in the other Feldheim edition.
-    "simanim_tanakh_dt_elyon": [],
+    "simtan_dt_elyon": [],
 }
 
 # Chanted verse count per transcription -- the exceptionless claim, checked in both directions
 # below.  The elyon's nine and the taxton's thirteen are the p-trad's own verse divisions.
 _CHANTED_VERSES = {
-    "simanim_ex_elyon": 9,
-    "simanim_ex_taxton": 13,
-    "simanim_dt_elyon": 9,
-    "simanim_dt_taxton": 13,
+    "simtiq_ex_elyon": 9,
+    "simtiq_ex_taxton": 13,
+    "simtiq_dt_elyon": 9,
+    "simtiq_dt_taxton": 13,
     # The p-trad taxton's own division, and for Koren the ONE thing this Decalogue adjudicates:
     # עבדים takes etnaxta in ws/ex/taxton/manuscript, which runs 12 chanted verses, but closes its
     # own verse in ws/ex/taxton/printed, which runs 13.  Everything else on these pages is common
@@ -303,50 +303,50 @@ _CHANTED_VERSES = {
     # chanted verse runs on into לא־יהיה לך, closing only at על־פני -- ws/ex/taxton/manuscript's
     # twelve, against ws/ex/taxton/printed's thirteen.  Corroborated off the page independently of
     # any mark, by the edition's own printed verse numbers, which run ב-יג: twelve.
-    "simanim_tanakh_ex_taxton": 12,
+    "simtan_ex_taxton": 12,
     # The same m-trad twelve, in Deuteronomy: עבדים carries an etnaxta and the chanted verse
     # runs on into לא־יהיה לך, against ws/dt/taxton/printed's thirteen.  Corroborated off the page
     # by the edition's own printed verse numbers, which run ו-יז: twelve.  This stem's one
     # divergence is mid-verse, so it cannot move a boundary.
-    "simanim_tanakh_dt_taxton": 12,
+    "simtan_dt_taxton": 12,
     # The first ELYON count pinned here, and the mirror of the taxton twelves above: in the elyon
     # the boundary at עבדים falls the OTHER way -- עבדים CLOSES its own chanted verse in
     # ws/ex/elyon/manuscript (10 verses) but runs on in ws/ex/elyon/printed (9).  This
     # transcription has 10, the m-trad side, with no divergence anywhere to move a boundary.
-    "simanim_tanakh_ex_elyon": 10,
+    "simtan_ex_elyon": 10,
     # The second ELYON count pinned here, in Deuteronomy, and the same m-trad ten as its Exodus
     # counterpart: עבדים CLOSES its own chanted verse in ws/dt/elyon/manuscript (10 verses) but
     # runs on in ws/dt/elyon/printed (9).  This transcription has 10, the m-trad side, with no
     # divergence anywhere to move a boundary.
-    "simanim_tanakh_dt_elyon": 10,
+    "simtan_dt_elyon": 10,
 }
 
 # Stems whose every divergence differs in a CONJUNCTIVE only, leaving the disjunctive skeleton
 # intact.  This was once true of every transcription and the test below said so unconditionally
-# -- until simanim_dt_taxton, whose Shabbat commandment swaps disjunctive for disjunctive
+# -- until simtiq_dt_taxton, whose Shabbat commandment swaps disjunctive for disjunctive
 # (geresh -> pazer, revia -> telisha gedola, zaqef qatan -> revia).  That is what makes it a
 # TRADITION difference rather than the word-division and conjunctive-marking quirks the other
 # three amount to, so it is pinned as its own claim below rather than excused as an exception.
 _SKELETON_UNTOUCHED = {
-    "simanim_ex_elyon",
-    "simanim_ex_taxton",
-    "simanim_dt_elyon",
+    "simtiq_ex_elyon",
+    "simtiq_ex_taxton",
+    "simtiq_dt_elyon",
     "koren_ex_taxton",
     "koren_dt_taxton",
     # Its two divergences insert a munax each -- a conjunctive -- where Koren splits a maqaf
     # compound the reference joins, so no disjunctive is added or removed.  A word-division
-    # difference, like simanim_ex_elyon, not the disjunctive swap simanim_dt_taxton makes.
+    # difference, like simtiq_ex_elyon, not the disjunctive swap simtiq_dt_taxton makes.
     "koren_ex_elyon",
     # Zero divergences at all, so nothing touches the skeleton -- the strongest case here.
     "koren_dt_elyon",
     # Zero divergences too, and against a manuscript-tradition strand.
-    "simanim_tanakh_ex_taxton",
-    # Zero divergences too -- the elyon counterpart of simanim_tanakh_ex_taxton, against a
+    "simtan_ex_taxton",
+    # Zero divergences too -- the elyon counterpart of simtan_ex_taxton, against a
     # manuscript-tradition strand.
-    "simanim_tanakh_ex_elyon",
+    "simtan_ex_elyon",
     # Zero divergences too, and the last of the fourteen -- the Deuteronomy counterpart of
-    # simanim_tanakh_ex_elyon, against a manuscript-tradition strand.
-    "simanim_tanakh_dt_elyon",
+    # simtan_ex_elyon, against a manuscript-tradition strand.
+    "simtan_dt_elyon",
 }
 
 # Transcriptions carrying a reading the transcriber flagged as not fully read off the page,
@@ -452,7 +452,7 @@ def test_deuteronomy_taxton_does_touch_the_disjunctive_skeleton() -> None:
     this fails rather than letting the page keep calling p. 247 an m-trad departure.  Every
     other transcription's divergences leave the skeleton alone; this one's must not.
     """
-    stem = "simanim_dt_taxton"
+    stem = "simtiq_dt_taxton"
     assert stem not in _SKELETON_UNTOUCHED
     source = _source_or_skip()
     transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
@@ -465,17 +465,17 @@ def test_deuteronomy_taxton_does_touch_the_disjunctive_skeleton() -> None:
     assert disjunctives == {"paz", "tg", "pash", "zaq"}
 
 
-def test_simanim_tanakh_deuteronomy_drops_one_disjunctive() -> None:
+def test_simtan_deuteronomy_drops_one_disjunctive() -> None:
     """The second stem to touch the skeleton, and it touches it the other way.
 
-    simanim_dt_taxton above swaps disjunctive FOR disjunctive across a whole commandment, which
+    simtiq_dt_taxton above swaps disjunctive FOR disjunctive across a whole commandment, which
     is what makes it a tradition difference.  This one replaces a single pashta with a qadma, so
     it REMOVES a disjunctive and adds nothing -- an edition's own departure, not a tradition's.
     Pinned positively for the same reason as that test: a re-vendoring that made this
     conjunctive-only, or a re-read that made the divergence vanish, should fail here rather than
     quietly turning "follows ws/dt/taxton/manuscript except at one word" into an unqualified claim.
     """
-    stem = "simanim_tanakh_dt_taxton"
+    stem = "simtan_dt_taxton"
     assert stem not in _SKELETON_UNTOUCHED
     source = _source_or_skip()
     transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
@@ -641,7 +641,7 @@ def test_a_kind_agnostic_edition_asserts_no_kind_anywhere(stem: str) -> None:
 def _stems_with_exports() -> list[str]:
     """Transcriptions that have the line editor's JSON export committed beside them.
 
-    All of them do, as of the simanim_ex_elyon redo: it was the last one transcribed before the
+    All of them do, as of the simtiq_ex_elyon redo: it was the last one transcribed before the
     editor existed, and re-doing it closed the gap.  The lookup stays a glob rather than a list
     because a transcription typed but not yet exported is the state this is meant to tolerate.
     """
@@ -814,9 +814,9 @@ def test_deuteronomy_taxton_pasoleg_is_transcribed_128_reference_127() -> None:
     two.
     """
     source = _source_or_skip()
-    pages = _export_pages("simanim_dt_taxton")
+    pages = _export_pages("simtiq_dt_taxton")
     transcription = et.load_transcription(
-        et.transcriptions_dir() / "simanim_dt_taxton.txt"
+        et.transcriptions_dir() / "simtiq_dt_taxton.txt"
     )
     ref, words, _ = et.reference_tokens(source, transcription.key)
     got, _ = tc._tokens_with_origin(pages)
@@ -913,14 +913,14 @@ _PASOLEG_KIND_ROUNDTRIP = {
     "koren_dt_taxton": 0,
     "koren_ex_elyon": 0,
     "koren_ex_taxton": 0,
-    "simanim_dt_elyon": 7,
-    "simanim_dt_taxton": 1,
-    "simanim_ex_elyon": 4,
-    "simanim_ex_taxton": 1,
-    "simanim_tanakh_dt_elyon": 7,
-    "simanim_tanakh_dt_taxton": 1,
-    "simanim_tanakh_ex_elyon": 4,
-    "simanim_tanakh_ex_taxton": 1,
+    "simtiq_dt_elyon": 7,
+    "simtiq_dt_taxton": 1,
+    "simtiq_ex_elyon": 4,
+    "simtiq_ex_taxton": 1,
+    "simtan_dt_elyon": 7,
+    "simtan_dt_taxton": 1,
+    "simtan_ex_elyon": 4,
+    "simtan_ex_taxton": 1,
 }
 
 
@@ -1136,12 +1136,12 @@ def test_the_synthesized_mark_body_reproduces_the_scanner_on_an_agreeing_page(
 # chanted verse: stem -> [(1-based index, the strand's status, the page's status)].  Every stem
 # not listed matches its strand at every chanted verse, which eleven of the twelve do.
 #
-# The one departure is the point of doing this at all.  simanim_ex_taxton's divergences are
+# The one departure is the point of doing this at all.  simtiq_ex_taxton's divergences are
 # CONJUNCTIVE-ONLY -- the stem is in _SKELETON_UNTOUCHED above, correctly -- and its third
 # chanted verse is ungrammatical anyway, so the skeleton test and this one are not two spellings
 # of one claim.  The mechanism is pinned separately below.
 _GRAMMATICALITY_DEPARTURES = {
-    "simanim_ex_taxton": [(3, "clean", "ungrammatical")],
+    "simtiq_ex_taxton": [(3, "clean", "ungrammatical")],
 }
 
 
@@ -1191,7 +1191,7 @@ def test_the_exodus_appendix_taxton_prints_an_ungrammatical_chanted_verse() -> N
     follow-up is a re-read of the word against the physical book.
     """
     source = _source_or_skip()
-    transcription = _transcription("simanim_ex_taxton")
+    transcription = _transcription("simtiq_ex_taxton")
     bodies = tp.chanted_verse_bodies(transcription)
     verse = bodies[2]
     assert tp.token_types(verse, "ex")[:5] == (
@@ -1227,10 +1227,10 @@ def test_the_verdict_column_says_one_of_three_things_and_the_right_one() -> None
     assert _text(tvc.cell(verdicts["koren_ex_taxton"])) == (
         "Clean at all 13 chanted verses, as its strand is."
     )
-    assert _text(tvc.cell(verdicts["simanim_dt_elyon"])) == (
+    assert _text(tvc.cell(verdicts["simtiq_dt_elyon"])) == (
         "Its strand's own verdicts: chanted verse 1 ungrammatical, the other 8 clean."
     )
-    assert _text(tvc.cell(verdicts["simanim_ex_taxton"])) == (
+    assert _text(tvc.cell(verdicts["simtiq_ex_taxton"])) == (
         "Not as grammatical as its strand: chanted verse 3 is ungrammatical where the "
         "strand is clean."
     )
@@ -1248,20 +1248,20 @@ def _text(cell: object) -> str:
 
 # How many pasoleg strokes the scanner judges per transcription, so the comparison below cannot
 # pass by comparing nothing.  It is the stroke count each page prints, which for
-# simanim_dt_taxton is one fewer than its (p-trad) strand's -- the pinned m-trad departure.
+# simtiq_dt_taxton is one fewer than its (p-trad) strand's -- the pinned m-trad departure.
 _SCANNER_PASOLEG_STROKES = {
     "koren_dt_elyon": 7,
     "koren_dt_taxton": 2,
     "koren_ex_elyon": 4,
     "koren_ex_taxton": 1,
-    "simanim_dt_elyon": 7,
-    "simanim_dt_taxton": 1,
-    "simanim_ex_elyon": 4,
-    "simanim_ex_taxton": 1,
-    "simanim_tanakh_dt_elyon": 7,
-    "simanim_tanakh_dt_taxton": 1,
-    "simanim_tanakh_ex_elyon": 4,
-    "simanim_tanakh_ex_taxton": 1,
+    "simtiq_dt_elyon": 7,
+    "simtiq_dt_taxton": 1,
+    "simtiq_ex_elyon": 4,
+    "simtiq_ex_taxton": 1,
+    "simtan_dt_elyon": 7,
+    "simtan_dt_taxton": 1,
+    "simtan_ex_elyon": 4,
+    "simtan_ex_taxton": 1,
 }
 
 
@@ -1286,7 +1286,7 @@ def test_the_scanner_determines_every_stroke_kind_and_agrees_with_the_reference(
     kinds = tp.scanner_pasoleg_kinds(transcription)
     assert len(kinds) == _SCANNER_PASOLEG_STROKES[stem]
     reference = et.reference_pasoleg_kinds(source, transcription.key)
-    if stem == "simanim_dt_taxton":
+    if stem == "simtiq_dt_taxton":
         # The page prints one stroke where its p-trad strand has two: it follows the m-trad
         # here and there is nothing printed on אתה.  So compare what it does print, and pin
         # the shortfall rather than let a length mismatch pass as a kind disagreement.

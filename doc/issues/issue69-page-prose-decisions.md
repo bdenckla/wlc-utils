@@ -23,7 +23,7 @@ longer true as a blanket. Scoped to the twelve it is true again, and needs no ex
 |---|---|
 | every chanted verse boundary agrees with the strand followed | **12 of 12 — exceptionless** |
 | follows its strand in every accent | 7 of 12 |
-| the disjunctive skeleton is untouched | 10 of 12 (`simanim_dt_taxton`, `simanim_tanakh_dt_taxton` excepted) |
+| the disjunctive skeleton is untouched | 10 of 12 (`simtiq_dt_taxton`, `simtan_dt_taxton` excepted) |
 
 ## 1. Word-division and two-accent-compound findings
 

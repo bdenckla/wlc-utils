@@ -29,7 +29,7 @@ Then build the per-line editor. **Default to the whole page — pass no `--crop`
 
 ```bash
 .venv/Scripts/python.exe py/accgram/transcription_editor.py "Feldheim Simanim Tanakh" A5-D-0297 \
-    --name simanim_tanakh_dt_taxton_p297 --width 2000 --debug
+    --name simtan_dt_taxton_p297 --width 2000 --debug
 ```
 
 **A crop is worth measuring only when a foreign column has to be excluded.** That is the
@@ -175,8 +175,8 @@ a test rather than surfacing as a puzzling runtime message.
 
 ```bash
 .venv/Scripts/python.exe py/accgram/transcription_check.py \
-    ~/Downloads/simanim_dt_elyon_p208-transcription.json \
-    ~/Downloads/simanim_dt_elyon_p209-transcription.json --key dt elyon printed
+    ~/Downloads/simtiq_dt_elyon_p208-transcription.json \
+    ~/Downloads/simtiq_dt_elyon_p209-transcription.json --key dt elyon printed
 ```
 
 It reports token and chanted-verse counts, every difference region with the reference word and
@@ -301,7 +301,7 @@ position surviving a re-read is not.
 **A stroke is invisible to the token diff — its kind, and its presence.** Legarmeh and
 narrow-sense paseq both fold onto a plain munaḥ on either side of the comparison
 (`edition_transcription._LEGARMEH_TOKENS`), so exchanging the two, or omitting a stroke
-outright, moves neither the difference list nor the token counts. `simanim_dt_taxton` is the
+outright, moves neither the difference list nor the token counts. `simtiq_dt_taxton` is the
 live case: the page prints one stroke where its p-trad strand has two — nothing on אתה, which is
 part of what makes it depart to the m-trad there — and no difference region says so. The strokes
 are checked separately, in the report's own pasoleg section (§3), so read that section: "0

@@ -1,7 +1,7 @@
 {
   "pages": [
     {
-      "stem": "simanim_tanakh_dt_taxton_p297",
+      "stem": "simtan_dt_taxton_p297",
       "source": {
         "file": "A5-D-0297.jpg",
         "book": "Feldheim Simanim Tanakh",
@@ -133,7 +133,7 @@
       ]
     },
     {
-      "stem": "simanim_tanakh_dt_taxton_p298",
+      "stem": "simtan_dt_taxton_p298",
       "source": {
         "file": "A5-D-0298.jpg",
         "book": "Feldheim Simanim Tanakh",
