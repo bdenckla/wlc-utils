@@ -195,7 +195,7 @@ img {
    ps17v14-double-tsinnor.html), generated from their former hand-authored
    bodies.  These reuse the shared shell above; the few classes below preserve
    the lead/lemma/source styling those pages carried inline. */
-/* The four printed-Decalogue tables below each neutralize the shared odd-row zebra
+/* The five printed-Decalogue tables below each neutralize the shared odd-row zebra
    (tr:nth-of-type(odd) td above), the same way table.strand-table does (issue #65, finding C3).
    The tint is a row-tracking aid for long tables, but each of these is short AND has rows that
    alternate by category, so the stripe lands on every other category row and reads as if it
@@ -204,7 +204,9 @@ img {
        it marks the עליון strand;
      - the Simanim strand-mapping table: its one tinted row (row 3) is the m-trad row;
      - the Sabbath m/p-diff table: odd rows are exactly its three m-trad rows;
-     - the vocalization-diff table: two rows, so the tint lands on the m-trad one alone.
+     - the vocalization-diff table: two rows, so the tint lands on the m-trad one alone;
+     - the pausal table: four rows alternating תחתון/עליון, so the tint lands on exactly the two
+       תחתון rows.
    (The Simanim scan/transcription table needs no opt-out: its only odd row is the all-<th> header,
    and the zebra rule targets td, so nothing there is tinted.) */
 
@@ -228,6 +230,13 @@ table.printed-decalogue-sabbath-diff tr td { background-color: transparent; }
    the whole of the difference; the Hebrew cell is dir=rtl so the two forms stack flush-right and
    the vowel under the tsadi lines up. */
 table.printed-decalogue-vowel-diff tr td { background-color: transparent; }
+
+/* printed-decalogue.html appendix: the pausal alternation at על־פני and מתחת -- four rows, a
+   תחתון row above its עליון row for each word, each showing the pointed form with the vowel and
+   accent on its accented letter. Like the vowel-diff table above it keeps the full pointing (the
+   vowel is the point) and sets the Hebrew cell dir=rtl; the vowel and accent names beside it are
+   ordinary LTR prose cells. */
+table.printed-decalogue-pausal tr td { background-color: transparent; }
 
 /* printed-decalogue-simanim.html and printed-decalogue-koren.html: the per-Decalogue transcription
    verdict tables (issue #69), one row per Decalogue. Same zebra opt-out as the four above, for

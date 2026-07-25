@@ -27,6 +27,12 @@ the vendored words on each generation and raises unless it still decomposes as p
 2026-07-25 claim audit found the appendix asserting "three" against a table showing seven, which
 is why no number in it is typed any more.
 
+That appendix also explains its one Exodus difference rather than only recording it: the qamats /
+patax at תרצח is the pausal alternation, which the Decalogue shows working ordinarily at על־פני and
+מתחת, where the two strands' own accents differ and the vowel follows them (``_pausal_paras``).
+Those forms are derived and pinned by ``printed_decalogue_strands.resolve_pausal`` /
+``check_tirtsax``, on the same fail-on-drift terms as everything else here.
+
 Editorial / style conventions for the rendered prose are single-sourced in
 ``printed_decalogue_strands`` (bare-Hebrew strand names תחתון / עליון in output, romanized only
 in ``title`` / ``alt`` attributes and internal keys; ``ROM_*`` accent names never retyped; real
@@ -104,6 +110,7 @@ _ELYON = pds.ELYON
 # nodes, not strings: splice them into a contents tuple, never into an f-string. The underlying
 # spellings stay single-sourced in pds -- don't retype them inline.
 _ROM_ETNAHTA = rmn(pds.ROM_ETNAHTA)
+_ROM_GERESH = rmn(pds.ROM_GERESH)
 _ROM_LEGARMEH = rmn(pds.ROM_LEGARMEH)
 _ROM_PASHTA = rmn(pds.ROM_PASHTA)
 _ROM_PASEQ = rmn(pds.ROM_PASEQ)
@@ -114,6 +121,24 @@ _ROM_SOF_PASUQ = rmn(pds.ROM_SOF_PASUQ)
 _ROM_TIPEHA = rmn(pds.ROM_TIPEHA)
 _ROM_ZAQEF_QATAN = rmn(pds.ROM_ZAQEF_QATAN)
 _ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
+
+# Accent names reach the pausal table as pds.ROM_* strings derived from the data, not as one of the
+# aliases above; this maps each back to its wrapped node, so a derived name renders italic like
+# every typed one. Only the four accents _PAUSAL_PINS can yield need to be here -- a fifth would
+# KeyError, which is the same fail-on-drift behavior the derivation itself has.
+_ROM_NODE_BY_NAME: dict[str, object] = {
+    pds.ROM_ETNAHTA: _ROM_ETNAHTA,
+    pds.ROM_GERESH: _ROM_GERESH,
+    pds.ROM_REVIA: _ROM_REVIA,
+    pds.ROM_SILLUQ: _ROM_SILLUQ,
+}
+
+# The two vowel names. Single-sourced in pds like the accent names above, so the vocalization
+# table, the pausal table's derived cells and the prose cannot spell them three ways. Plain str
+# rather than rmn() nodes: vowel names render upright on this page, where accent names are italic
+# (see _pausal_table's docstring), so these DO drop into an f-string.
+_QAMATS = pds.ROM_QAMATS
+_PATAX = pds.ROM_PATAX
 
 
 def default_html_out_path(repo_root: Path) -> Path:
@@ -1078,8 +1103,8 @@ def _sabbath_diff_table(results: list[pd.VersionResult]) -> object:
 # Name the word bare -- תרצח, not לא תרצח: the two words are separately accented rather than one
 # maqaf compound, and only this one differs, so the לא bought nothing but a second RTL word.
 _VOWEL_DIFF_ROWS: tuple[tuple[str, str, str], ...] = (
-    ("m-trad", "תִּרְצָ֖ח", "qamats"),
-    ("p-trad", "תִּרְצַ֖ח", "pataḥ"),
+    ("m-trad", "תִּרְצָ֖ח", _QAMATS),
+    ("p-trad", "תִּרְצַ֖ח", _PATAX),
 )
 
 
@@ -1099,6 +1124,104 @@ def _vowel_diff_table() -> object:
         for label, word, vowel in _VOWEL_DIFF_ROWS
     )
     return H.table(rows, {"class": "printed-decalogue-vowel-diff"})
+
+
+def _pausal_table(results: list[pd.VersionResult]) -> object:
+    """The pausal alternation at the appendix's two other Decalogue words, as four rows -- על־פני
+    then מתחת, each strand's row labelled with the strand rather than a tradition, because these
+    two words differ by strand and not by tradition (which ``pds.resolve_pausal`` checks against
+    all eight readings before handing back a single form).
+
+    Every cell is derived: the pointed word comes from the vendored data and its vowel and accent
+    are read off its marks, so the table cannot claim a vowel or an accent the text does not have.
+    Vowel names render plain and accent names italic, matching the vocalization table above and the
+    page's prose respectively."""
+    rows = tuple(
+        H.table_row(
+            (
+                H.table_datum(H.bold(f.strand)),
+                H.table_datum(hbo(f.word), {"dir": "rtl"}),
+                H.table_datum(f.vowel),
+                H.table_datum(_ROM_NODE_BY_NAME[f.accent]),
+            )
+        )
+        for f in pds.resolve_pausal(results)
+    )
+    return H.table(rows, {"class": "printed-decalogue-pausal"})
+
+
+# Why the appendix explains the תרצח vowel instead of just recording it (Ben, 2026-07-25). The
+# qamats/patax pair is not a spelling accident: it is the pausal alternation, and the Decalogue
+# shows that alternation working ordinarily at two OTHER words, על־פני and מתחת, where the strands'
+# own accents differ and the vowel follows them. Saying so is what makes תרצח legible as the odd
+# case -- same accent in both traditions, so the accent cannot be what decides the vowel.
+#
+# Two rules for editing this passage.
+#
+# (1) NAME AND GLOSS BOTH TERMS. "Pausal" and "contextual" are the standard names and belong here,
+# but neither is a term a reader of a published page has met (cf. the rendered-prose rule that
+# "parses clean" gets expanded). Give the plain-English sense alongside the name, once each.
+#
+# (2) EVERY FACTUAL CLAIM IS DERIVED OR PINNED. The vowels and accents in the table come off the
+# vendored marks (pds.resolve_pausal), which additionally checks all eight readings agree at both
+# words -- the "by strand, not by tradition" claim. The prose's claims about תרצח in the עליון are
+# pinned by pds.check_tirtsax, called below for exactly that reason: a 2026-07-25 claim audit found
+# this appendix asserting things its own tables contradicted, and prose about a fourth word is
+# precisely where that recurs. Do not add a further claim about the pointing here without a pin.
+# The citation, in the trio's bare form -- "Yeivin §199", matching "(Yeivin §246)" on the
+# almost-errors page. The section is §199 of Yeivin's *Introduction to the Tiberian Masorah*, whose
+# §197 supplies the ranking that "weaker than those two" below leans on (tipexa sits a grade below
+# etnaxta and silluq); §199 is where the pausal/contextual rule and its exceptions are stated.
+_PAUSAL_CITE = "Yeivin §199"
+
+
+def _pausal_paras(results: list[pd.VersionResult]) -> tuple[object, ...]:
+    # Not a display value -- called for its assertions, which stand behind the prose below.
+    pds.check_tirtsax(results)
+    return (
+        H.para(
+            (
+                "Those two vowels are the two halves of a pausal alternation: a great many Hebrew"
+                " words take one vowel where the reading pauses and another where it runs on. The"
+                f" general rule ({_PAUSAL_CITE}) is that the pause form — the ",
+                H.bold("pausal"),
+                " one — goes with an ",
+                _ROM_ETNAHTA,
+                " or a ",
+                _ROM_SILLUQ,
+                ", and the run-on form — the ",
+                H.bold("contextual"),
+                " one — with every other accent.",
+            )
+        ),
+        H.para(
+            (
+                "Two other words of the Decalogue alternate the same way, and at both of them it is"
+                " the strand that decides and not the tradition: all eight strands have the pausal"
+                f" {_QAMATS} in the {_TAHTON} and the contextual {_PATAX} in the {_ELYON}. There the"
+                " rule accounts for the vowel outright, because the two strands really do accent"
+                f" those words differently. The {_TAHTON} ends a chanted verse at על־פני and puts"
+                f" its verse's main break at מתחת; the {_ELYON} runs on through both. In each pair"
+                f" below the {_TAHTON} comes first:",
+            )
+        ),
+        _pausal_table(results),
+        H.para(
+            (
+                "תרצח is that same alternation with the accent held fixed. In the ",
+                _ELYON,
+                f" the word is a chanted verse of its own, so both traditions have the pausal"
+                f" {_QAMATS} on its ",
+                _ROM_SILLUQ,
+                f". In the {_TAHTON} it sits mid-verse under a ",
+                _ROM_TIPEHA,
+                f", which by the rule above should take the contextual {_PATAX} — and that is what"
+                f" the p-trad has, while the m-trad keeps the pausal {_QAMATS}. A pausal vowel under"
+                " a disjunctive weaker than those two is common enough for Yeivin to catalogue it;"
+                " what the two traditions differ over here is only whether to do it at this word.",
+            )
+        ),
+    )
 
 
 def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
@@ -1143,6 +1266,7 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 "; only the vowel differs.",
             )
         ),
+        *_pausal_paras(results),
         # GUARDRAIL (2026-07-25 claim audit, finding 1). This paragraph used to open "Deuteronomy
         # differs in more ways. Three are differences of cantillation ... and all three fall within
         # a single stretch of the Sabbath commandment" -- and the table rendered directly beneath it

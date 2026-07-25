@@ -15,7 +15,9 @@ covering the אנכי...מצותי span are pulled from the data, and the accent
 על־פני are derived from the marks, so the strands can never drift from the data.
 ``resolve_readings`` pins each derivation against ``READING_SPECS`` / ``STRUCTURE`` and raises
 ``AssertionError`` on any divergence -- this build-fails-on-data-drift behavior fires at page-1
-generation and in the tests, and must never be softened to a warning.
+generation and in the tests, and must never be softened to a warning.  ``resolve_pausal`` and
+``check_tirtsax`` do the same for the appendix's vowels: the pausal alternation at על־פני and מתחת,
+and the vocalization of תרצח in all eight readings.
 
 Editorial / style conventions for the rendered prose on BOTH pages (agreed with Ben; keep them
 when editing either page):
@@ -70,7 +72,8 @@ when editing either page):
   evidence in the transcription's ``.txt`` comment block -- that is a primary observation about the
   edition, not something the harness establishes, and no test will defend it.
 * **Accent/mark romanizations are single-sourced as ``ROM_*`` constants** (pashta, tipeḥa,
-  etnaḥta, revia, segolta, silluq, sof pasuq, meteg, maqaf, legarmeh, paseq, + a few compounds).
+  etnaḥta, revia, segolta, silluq, sof pasuq, meteg, maqaf, legarmeh, paseq, the two vowels of
+  the pausal alternation, + a few compounds).
   They are shared by the ``_ACCENT_NAMES`` derivation table, the ``READING_SPECS``
   expected-accent pins, and the prose of all three pages -- so a printed name can't drift from
   the derived one.  Don't retype these spellings inline; ``tests/test_transliterations.py``
@@ -171,6 +174,11 @@ ROM_QADMA = "qadma"
 # where the same insertion one chanted verse earlier, before a tevir, costs nothing.
 ROM_MUNAX = "munaḥ"
 ROM_TEVIR = "tevir"
+# The two vowels of the pausal alternation (see ``resolve_pausal``), named in the main page's
+# appendix.  Vowels are not accents, but the same single-sourcing rule applies: the appendix's
+# vocalization table and its pausal table both name them, and they must not drift apart.
+ROM_QAMATS = "qamats"
+ROM_PATAX = "pataḥ"
 
 # Compound readings that recur verbatim in the prose (U+2026 ellipsis / U+2013 en dash between).
 ROM_PASHTA_ETNAHTA = f"{ROM_PASHTA}…{ROM_ETNAHTA}"  # the merged manuscript תחתון
@@ -180,15 +188,25 @@ ROM_TIPEHA_SILLUQ = (
 )
 ROM_SILLUQ_SOF_PASUQ = f"{ROM_SILLUQ} + {ROM_SOF_PASUQ}"  # the standalone-verse close
 
-# The accent codepoints that fall on the two boundary words of the first Decalogue span,
-# mapped to the romanizations above.  U+05BD (meteg/silluq) is deliberately absent: it is not a
-# cantillation accent, and is resolved to silluq only in verse-final position (see ``_accent_of``
-# and CLAUDE.md on meteg-vs-silluq).
+# The accent codepoints that fall on the words these pages derive an accent for -- the first
+# Decalogue span's two boundary words, plus the two pausal words of ``resolve_pausal`` (geresh is
+# there for מתחת in the עליון) -- mapped to the romanizations above.  U+05BD (meteg/silluq) is
+# deliberately absent: it is not a cantillation accent, and is resolved to silluq only in
+# verse-final position (see ``_accent_of`` and CLAUDE.md on meteg-vs-silluq).
 _ACCENT_NAMES: dict[str, str] = {
     "\N{HEBREW ACCENT PASHTA}": ROM_PASHTA,
     "\N{HEBREW ACCENT TIPEHA}": ROM_TIPEHA,
     "\N{HEBREW ACCENT ETNAHTA}": ROM_ETNAHTA,
     "\N{HEBREW ACCENT REVIA}": ROM_REVIA,
+    "\N{HEBREW ACCENT GERESH}": ROM_GERESH,
+}
+
+# The vowels ``_vowel_and_accent`` recognizes: just the two the pausal alternation turns on.  A
+# third vowel showing up in that position would be a data change worth failing on, not something
+# to name silently, so this table stays minimal on purpose.
+_VOWEL_NAMES: dict[str, str] = {
+    "\N{HEBREW POINT QAMATS}": ROM_QAMATS,
+    "\N{HEBREW POINT PATAH}": ROM_PATAX,
 }
 
 # Base-letter skeletons of the four words the אנכי…מצותי span is laid out over, single-sourced
@@ -210,6 +228,14 @@ ANOKHI = "אנכי"
 AVADIM = "עבדים"
 AL_PENEI = "עלפני"
 MITSVOTAI = "מצותי"
+
+# The span's other pausal word (``resolve_pausal``): מתחת, in ואשר בארץ מתחת.  It occurs TWICE in
+# the second commandment -- again in מתחת לארץ, a few words later -- and this is the first, which is
+# the one ``_find_word`` returns.  The second one has neither of the two accents the pins expect
+# (merkha in the תחתון, munax in the עליון), so picking up the wrong one would fail the build
+# rather than mis-render.  על־פני, the other pausal word, is already AL_PENEI above: it does double
+# duty as a signal word.
+MITAXAT = "מתחת"
 
 
 # The two chant-strands (טעם) are named in Hebrew letters throughout the rendered prose --
@@ -302,6 +328,19 @@ def base_skeleton(word: str) -> str:
     return "".join(ch for ch in word if is_base_letter(ch))
 
 
+def _accent_index_and_name(word: str) -> tuple[int, str]:
+    """Where the word's accent mark sits, and its romanized name.  The index is what
+    ``_vowel_and_accent`` needs in order to find the vowel that shares the accent's letter;
+    ``_accent_of`` wants only the name."""
+    for i, ch in enumerate(word):
+        name = _ACCENT_NAMES.get(ch)
+        if name is not None:
+            return i, name
+    if _CP_SOF_PASUQ in word and _CP_METEG in word:
+        return word.index(_CP_METEG), ROM_SILLUQ
+    raise ValueError(f"no recognized boundary accent on {word!r}")
+
+
 def _accent_of(word: str) -> str:
     """The cantillation accent on one pointed word, as a romanized name derived from its marks.
 
@@ -310,13 +349,32 @@ def _accent_of(word: str) -> str:
     (the one carrying *sof pasuq*); so a sof-pasuq word whose only accent-like mark is U+05BD
     is reported as silluq.  Never called on a non-verse-final U+05BD (that is an ordinary
     meteg -- see CLAUDE.md)."""
-    for ch in word:
-        name = _ACCENT_NAMES.get(ch)
+    return _accent_index_and_name(word)[1]
+
+
+def _vowel_and_accent(word: str) -> tuple[str, str]:
+    """The (vowel, accent) pair of one pointed word, where "the vowel" is the one on the SAME
+    letter as the accent -- which is the only vowel the pausal alternation is about.
+
+    Reading it off the accent's own letter is what makes this safe on a word with more than one
+    of the two vowels in the table: עַל־פָּנָֽי has a qamats under the pe as well as the one under
+    the accented nun, and only the second is at issue.  So: walk back from the accent mark to the
+    base letter it sits on, and take the vowel found in between.  Raises unless exactly one
+    turns up, so an unforeseen pointing fails the build instead of being reported as a vowel it
+    is not."""
+    accent_i, accent = _accent_index_and_name(word)
+    vowels = []
+    for ch in reversed(word[:accent_i]):
+        if is_base_letter(ch):
+            break
+        name = _VOWEL_NAMES.get(ch)
         if name is not None:
-            return name
-    if _CP_SOF_PASUQ in word and _CP_METEG in word:
-        return ROM_SILLUQ
-    raise ValueError(f"no recognized boundary accent on {word!r}")
+            vowels.append(name)
+    if len(vowels) != 1:
+        raise ValueError(
+            f"expected exactly one vowel on the accented letter of {word!r}, found {vowels}"
+        )
+    return vowels[0], accent
 
 
 def _find_word(words: tuple[str, ...], skeleton: str) -> str:
@@ -460,3 +518,115 @@ def resolve_readings(results: list[pd.VersionResult]) -> list[Reading]:
             "-- the vendored readings drifted"
         )
     return readings
+
+
+# --------------------------------------------------------------------------- #
+# The pausal alternation at על־פני and מתחת
+# --------------------------------------------------------------------------- #
+# Why the main page's appendix wants these two words at all.  The appendix's one Exodus difference
+# between the two תחתון strands is a VOWEL -- qamats m-trad against patax p-trad at תרצח, on the
+# same tipexa -- and that pair of vowels is not arbitrary: it is the pausal alternation, the
+# general rule for which (Yeivin ITM §199) is that the pausal vowel goes with etnaxta and silluq
+# and the contextual one with every other accent.  על־פני and מתחת are where the Decalogue shows
+# that rule doing exactly what it says: at both, the תחתון has the pausal qamats under the heavier
+# accent its own verse division gives the word, and the עליון the contextual patax under a lighter
+# one.  So the appendix can say what makes תרצח the odd case -- there the two strands have the SAME
+# accent, so the rule does not decide the vowel and the two traditions differ.
+#
+# The pins below are what license the appendix's claim that neither of these two words is a
+# p-trad-vs-m-trad difference: ``resolve_pausal`` derives the (vowel, accent) pair at both words
+# from ALL EIGHT readings and requires each to match its strand's pin, so the claim is checked on
+# every generation rather than asserted once.  Keyed by (skeleton, reading) -- the vowel and the
+# accent both turn on the strand alone, identically in Exodus and Deuteronomy and in both
+# traditions, which is the whole point.
+PAUSAL_SKELETONS: tuple[str, ...] = (AL_PENEI, MITAXAT)
+_PAUSAL_PINS: dict[tuple[str, str], tuple[str, str]] = {
+    (AL_PENEI, "taxton"): (ROM_QAMATS, ROM_SILLUQ),
+    (AL_PENEI, "elyon"): (ROM_PATAX, ROM_REVIA),
+    (MITAXAT, "taxton"): (ROM_QAMATS, ROM_ETNAHTA),
+    (MITAXAT, "elyon"): (ROM_PATAX, ROM_GERESH),
+}
+
+# The data's own reading keys -> the Hebrew strand words.  Distinct from _STRAND_HEB, which is
+# keyed by the display names, which spell that strand's name with an h-with-dot-below where the
+# vendored source spells it "taxton".
+_STRAND_HEB_BY_READING: dict[str, str] = {"taxton": TAHTON, "elyon": ELYON}
+
+
+class PausalForm:
+    """One strand's pointed form of one of the two pausal words, with the vowel and accent on its
+    accented letter.  ``strand`` is already the Hebrew word, ready for the prose."""
+
+    def __init__(self, strand: str, word: str, vowel: str, accent: str):
+        self.strand = strand
+        self.word = word
+        self.vowel = vowel
+        self.accent = accent
+
+
+def resolve_pausal(results: list[pd.VersionResult]) -> tuple[PausalForm, ...]:
+    """The four forms the appendix's pausal table displays -- על־פני then מתחת, תחתון before
+    עליון in each -- taken from the two Exodus manuscript readings, but only after every one of
+    the eight readings has been checked to derive the same (vowel, accent) at both words.
+
+    That check is the claim, not a formality: the appendix says these two words differ by strand
+    and not by tradition, and the eight-way agreement is what makes it true.  AssertionError on
+    drift, in the style of ``resolve_readings``."""
+    forms: dict[tuple[str, str], PausalForm] = {}
+    for vr in results:
+        span_words = tuple(w for cv in _span_verses(vr) for w in cv.words)
+        for skeleton in PAUSAL_SKELETONS:
+            word = _find_word(span_words, skeleton)
+            derived = _vowel_and_accent(word)
+            expected = _PAUSAL_PINS[(skeleton, vr.reading)]
+            if derived != expected:
+                raise AssertionError(
+                    f"{vr.book} {vr.reading} {vr.tradition}: derived {derived} at {skeleton!r} "
+                    f"({word!r}), expected {expected} -- the vendored readings drifted"
+                )
+            if (vr.book, vr.tradition) == ("ex", "manuscript"):
+                forms[(skeleton, vr.reading)] = PausalForm(
+                    _STRAND_HEB_BY_READING[vr.reading], word, *derived
+                )
+    ordered = [
+        (skeleton, reading)
+        for skeleton in PAUSAL_SKELETONS
+        for reading in ("taxton", "elyon")
+    ]
+    missing = [key for key in ordered if key not in forms]
+    if missing:
+        raise AssertionError(
+            f"no Exodus manuscript reading supplied {missing} -- the vendored readings drifted"
+        )
+    return tuple(forms[key] for key in ordered)
+
+
+# The rest of what the appendix says about תרצח, pinned the same way.  Two claims live here that
+# the vocalization table alone does not carry: that the two תחתון strands' split is a vowel and
+# nothing else (the same tipexa in both), and that it is confined to the תחתון -- in the עליון the
+# word is a chanted verse of its own, and BOTH traditions have the pausal qamats on its silluq.
+# That second one is what makes תרצח the odd case beside על־פני and מתחת, so it is checked rather
+# than typed.  Unlike the two pausal words, תרצח falls outside the אנכי…מצותי span, so
+# ``check_tirtsax`` scans a reading's whole Decalogue for it.
+TIRTSAX = "תרצח"
+_TIRTSAX_PINS: dict[tuple[str, str], tuple[str, str]] = {
+    ("taxton", "manuscript"): (ROM_QAMATS, ROM_TIPEHA),
+    ("taxton", "printed"): (ROM_PATAX, ROM_TIPEHA),
+    ("elyon", "manuscript"): (ROM_QAMATS, ROM_SILLUQ),
+    ("elyon", "printed"): (ROM_QAMATS, ROM_SILLUQ),
+}
+
+
+def check_tirtsax(results: list[pd.VersionResult]) -> None:
+    """Check all eight readings' vocalization of תרצח against ``_TIRTSAX_PINS``.  Raises rather
+    than let the appendix's prose about that word outlive the data it describes."""
+    for vr in results:
+        words = tuple(w for cv in vr.chanted_verses for w in cv.words)
+        word = _find_word(words, TIRTSAX)
+        derived = _vowel_and_accent(word)
+        expected = _TIRTSAX_PINS[(vr.reading, vr.tradition)]
+        if derived != expected:
+            raise AssertionError(
+                f"{vr.book} {vr.reading} {vr.tradition}: derived {derived} at {TIRTSAX!r} "
+                f"({word!r}), expected {expected} -- the vendored readings drifted"
+            )
