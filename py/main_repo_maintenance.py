@@ -1,17 +1,18 @@
-"""Repo maintenance: clean .novc/, check formatting, lint, run the pytest
-suite, run the routine rebuild.
+r"""Repo maintenance: clean .novc/, clean up finished agent worktrees, check
+formatting, lint, run the pytest suite, run the routine rebuild.
 
 Run from anywhere (each step resolves paths via ``repo_paths.repo_root()``):
 
     python py/main_repo_maintenance.py
     python py/main_repo_maintenance.py --skip-novc
+    python py/main_repo_maintenance.py --skip-worktrees
     python py/main_repo_maintenance.py --skip-black
     python py/main_repo_maintenance.py --skip-lint
     python py/main_repo_maintenance.py --skip-tests
     python py/main_repo_maintenance.py --skip-rebuild
     python py/main_repo_maintenance.py --continue-on-test-failure
 
-Five independent steps, in order:
+Six independent steps, in order:
 
 1. Wipe the gitignored ``.novc/`` scratch dir. Everything in it is MEANT to be
    a regenerable download cache or tool output, never a durable result -- but
@@ -23,14 +24,21 @@ Five independent steps, in order:
    pending item, and promote anything that is -- to an issue, to ``doc/``, or
    into the docstring of the code it explains. ``grep -rn '\.novc' py/ doc/``
    finds the citations worth honouring.
-2. Run ``black --check py``. Check-only: drift is reported, never
+2. Remove finished agent worktrees under ``.claude/worktrees/`` and the merged
+   ``claude/*`` branches they leave behind (``cmn.git_worktree_cleanup``).
+   Unlike step 1 this one cannot destroy work: a worktree with any uncommitted
+   change or any commit not yet in the default branch is spared and reported,
+   never forced. This step is a repo-maintenance STANDARD, not a wlc-utils
+   quirk -- see ``check_repo_standards.py``'s ``worktree_hygiene`` check in
+   MAM-basics, which measures every repo against it.
+3. Run ``black --check py``. Check-only: drift is reported, never
    auto-reformatted -- repo-wide reformatting is its own deliberate commit.
    Like lint, failures set the overall exit status but do not block the
    later steps.
-3. Run ``ruff check py`` (the linter, configured by ``ruff.toml``). Lint
+4. Run ``ruff check py`` (the linter, configured by ``ruff.toml``). Lint
    failures set the overall exit status but do not block the later steps.
-4. Run ``pytest py/tests`` (the whole repo's test suite).
-5. Run ``py/main_0_mega.py``, the routine downstream rebuild -- every
+5. Run ``pytest py/tests`` (the whole repo's test suite).
+6. Run ``py/main_0_mega.py``, the routine downstream rebuild -- every
    parameterless, non-download rebuild step (vendored-file sync, WLC
    JSON/Unicode, accgram, the 4.20/4.22 diffs, and the a-notes build).
 
@@ -43,6 +51,7 @@ import shutil
 import subprocess
 import sys
 
+from cmn import git_worktree_cleanup
 from cmn.utf8_io import force_utf8_io
 
 import repo_paths
@@ -54,6 +63,11 @@ _NOVC = _REPO / ".novc"
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--skip-novc", action="store_true", help="don't clean .novc/")
+    parser.add_argument(
+        "--skip-worktrees",
+        action="store_true",
+        help="don't remove finished agent worktrees and their merged branches",
+    )
     parser.add_argument(
         "--skip-black", action="store_true", help="don't run black --check"
     )
@@ -83,6 +97,13 @@ def clean_novc() -> None:
         print(f".novc: removed {len(removed)} entries: {', '.join(removed)}")
     else:
         print(".novc: already empty")
+
+
+def clean_worktrees() -> bool:
+    """Returns False only on a real failure -- a spared worktree is not one."""
+    report = git_worktree_cleanup.clean_worktrees(_REPO)
+    git_worktree_cleanup.print_report(report)
+    return not report.errors
 
 
 def run_black() -> bool:
@@ -128,6 +149,9 @@ def main() -> None:
 
     if not args.skip_novc:
         clean_novc()
+
+    if not args.skip_worktrees:
+        ok = clean_worktrees() and ok
 
     if not args.skip_black:
         ok = run_black() and ok

@@ -1,0 +1,312 @@
+"""Remove finished agent git worktrees and the branches they left behind.
+
+Agent sessions that run in isolation create a worktree plus, usually, a matching
+``claude/<name>`` branch, and clean up neither when the session ends, so both
+accumulate: at the time this module was written wlc-utils carried two orphaned
+worktrees and three orphaned branches, every one of them clean and already
+merged into main.  They are not harmless clutter -- a worktree is a second full
+checkout, and a stale one is a place where a later session can do real work in
+the wrong tree.
+
+TWO LOCATIONS, BOTH IN SCOPE.  The harness default is
+``<repo>/.claude/worktrees/<name>``, whose nesting depth breaks the
+``../<sibling>`` lookups that this repo's cross-repo code depends on (see
+``repo_paths``).  The workaround for that is a worktree placed as a SIBLING of
+the repo instead, ``GitRepos/wlc-utils-<topic>``, where those lookups resolve --
+a deliberate practice, not a mistake, and the one that accumulates in the more
+annoying place.  Removal is driven off ``git worktree list``, so it covers both
+without caring which is which.  The empty-husk sweep below is the sole exception
+and stays confined to ``.claude/worktrees/``: it deletes directories by
+enumeration rather than by asking git, which is safe inside a directory that
+exists only to hold worktrees and would not be safe loose in ``GitRepos``.
+
+REMOVAL IS CONSERVATIVE, AND NEVER USES ``--force``.  Three separate conditions
+each spare a worktree, and every spared one is reported with its reason rather
+than passed over in silence:
+
+- The main worktree (the repo clone itself) is never a candidate.
+- Neither is whichever worktree is running this code -- an agent housekeeping
+  its own checkout must not delete the ground it stands on.
+- A worktree with any uncommitted change, tracked or untracked, is left alone,
+  as is one whose HEAD is not an ancestor of the default branch.  Untracked
+  files count deliberately: git's own ``worktree remove`` refuses on them too,
+  and in a repo whose real deliverables are generated files, an unexpected
+  untracked file is exactly the kind of thing worth looking at before it is
+  destroyed.
+
+Branch deletion is likewise narrow.  Only branches under ``claude/`` are
+considered -- the prefix the agent harness uses -- so a topic branch created by
+hand is never a candidate however merged it may be.  Deletion goes through
+``git branch -d``, which refuses an unmerged branch on its own; the ancestor
+check here is for the report, not for safety.
+
+Worktrees are removed before branches, because a branch checked out in a
+worktree cannot be deleted while that worktree exists.  That ordering matters
+in practice: the worktree and the branch it holds often do not share a name.
+
+What this deliberately does NOT try to detect is a worktree some other session
+is using RIGHT NOW -- git has no notion of a worktree being in use, and any
+heuristic for it would be guesswork.  The dirty check covers the case that
+matters, and it is not a theoretical safeguard: a concurrent session held
+``wlc-utils-decalogue-claims`` while this module was being written, sitting
+exactly on the default branch's tip, and nine modified files plus one untracked
+new module are the only reason it was spared.  A session between commits with a
+clean tree WOULD be removed from under itself.  Note what is and is not at stake
+there -- a clean, fully-merged worktree holds nothing that does not also exist
+in the repo, so the loss is the session's workspace, never its work.  On Windows
+the OS adds a second line of defence for free: a held file handle turns the
+removal into a reported "Permission denied" rather than a silent loss.
+"""
+
+from __future__ import annotations
+
+import subprocess
+from dataclasses import dataclass, field
+from pathlib import Path
+
+_AGENT_BRANCH_PREFIX = "claude/"
+
+# Where the agent harness puts its worktrees. Emptied of its last worktree, this
+# directory is removed too, so a clean repo shows no trace of the machinery.
+_WORKTREE_PARENT = Path(".claude") / "worktrees"
+
+
+@dataclass
+class CleanupReport:
+    """What one ``clean_worktrees`` pass did, for printing by the caller."""
+
+    pruned: bool = False
+    removed_worktrees: list[str] = field(default_factory=list)
+    kept_worktrees: list[tuple[str, str]] = field(default_factory=list)
+    deleted_branches: list[str] = field(default_factory=list)
+    kept_branches: list[tuple[str, str]] = field(default_factory=list)
+    errors: list[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class _Worktree:
+    path: Path
+    head: str | None
+    branch: str | None  # short name, or None when detached
+
+
+def _git(repo_dir: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        ["git", "-C", str(repo_dir), *args],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+
+
+def _list_worktrees(repo_dir: Path) -> list[_Worktree]:
+    """Parse ``git worktree list --porcelain``.
+
+    The main worktree is always the first record, which is how the caller
+    identifies it -- there is no per-record flag saying so.
+    """
+    result = _git(repo_dir, "worktree", "list", "--porcelain")
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or "git worktree list failed")
+
+    worktrees: list[_Worktree] = []
+    path: Path | None = None
+    head: str | None = None
+    branch: str | None = None
+    for line in result.stdout.splitlines():
+        if line.startswith("worktree "):
+            path = Path(line[len("worktree ") :])
+            head = None
+            branch = None
+        elif line.startswith("HEAD "):
+            head = line[len("HEAD ") :]
+        elif line.startswith("branch "):
+            branch = line[len("branch refs/heads/") :]
+        elif not line.strip() and path is not None:
+            worktrees.append(_Worktree(path, head, branch))
+            path = None
+    if path is not None:
+        worktrees.append(_Worktree(path, head, branch))
+    return worktrees
+
+
+def _default_branch(repo_dir: Path) -> str | None:
+    """The branch everything is measured as merged into, or None if unresolvable.
+
+    ``origin/HEAD`` is the honest answer where a remote exists; ``main`` is the
+    fallback, and is itself verified rather than assumed, so a repo with neither
+    disables the merged-ness checks instead of comparing against nothing.
+    """
+    result = _git(repo_dir, "symbolic-ref", "--short", "refs/remotes/origin/HEAD")
+    if result.returncode == 0 and "/" in result.stdout:
+        return result.stdout.strip().split("/", 1)[1]
+    if _git(repo_dir, "rev-parse", "--verify", "--quiet", "main").returncode == 0:
+        return "main"
+    return None
+
+
+def _is_ancestor(repo_dir: Path, commit: str, of: str) -> bool:
+    return _git(repo_dir, "merge-base", "--is-ancestor", commit, of).returncode == 0
+
+
+def _is_dirty(worktree: Path) -> bool:
+    """True if the worktree has any uncommitted change, untracked files included."""
+    result = _git(worktree, "status", "--porcelain")
+    if result.returncode != 0:
+        return True  # unreadable state is not a state to delete on
+    return bool(result.stdout.strip())
+
+
+def _agent_branches(repo_dir: Path) -> list[str]:
+    result = _git(
+        repo_dir,
+        "for-each-ref",
+        "--format=%(refname:short)",
+        f"refs/heads/{_AGENT_BRANCH_PREFIX}",
+    )
+    if result.returncode != 0:
+        return []
+    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+
+
+def _self_worktree(worktrees: list[_Worktree]) -> Path | None:
+    """The worktree this module is executing from, if it is one of ``worktrees``."""
+    here = Path(__file__).resolve()
+    for worktree in worktrees:
+        try:
+            if here.is_relative_to(worktree.path.resolve()):
+                return worktree.path.resolve()
+        except OSError:
+            continue
+    return None
+
+
+def _sweep_empty_dirs(repo_dir: Path, report: CleanupReport) -> None:
+    """Delete empty directories left under ``.claude/worktrees/``, then the parent.
+
+    Git never removes these, and two ordinary paths produce them, both seen on
+    the first real run of this module: ``worktree prune`` drops the admin record
+    of a worktree whose directory was deleted by hand but leaves any surviving
+    directory skeleton, and on Windows a ``worktree remove`` that trips over a
+    held file handle can empty the directory and still fail to unlink it
+    ("Permission denied"), leaving a husk that no later pass would ever revisit.
+
+    Only a LITERALLY empty directory is removed, which is what makes this safe
+    against a session concurrently setting one up: a live worktree holds a
+    checkout within moments of being created.
+
+    A husk that will not unlink is noted, not counted as an error.  It holds no
+    work and no git state, and the handle pinning it belongs to some process
+    that will exit -- letting that raise the whole run's exit status would mean
+    a red maintenance run every time until someone hunts down a locked empty
+    folder.  ``report.errors`` stays reserved for failing to remove a real
+    worktree or a real branch.
+    """
+    parent = repo_dir / _WORKTREE_PARENT
+    if not parent.is_dir():
+        return
+    for child in sorted(parent.iterdir()):
+        if not child.is_dir() or any(child.iterdir()):
+            continue
+        try:
+            child.rmdir()
+            report.removed_worktrees.append(f"{child} (empty leftover directory)")
+        except OSError as exc:
+            report.kept_worktrees.append((str(child), f"empty but unremovable: {exc}"))
+    try:
+        if not any(parent.iterdir()):
+            parent.rmdir()
+    except OSError:
+        pass  # the parent surviving is the normal case, not a finding
+
+
+def clean_worktrees(repo_dir: Path) -> CleanupReport:
+    """Prune, remove finished agent worktrees, then delete their merged branches.
+
+    Nothing here raises on a per-item failure: a worktree that will not remove
+    or a branch that will not delete lands in ``report.errors`` and the pass
+    continues, so one wedged leftover cannot block the rest of the cleanup.
+    """
+    report = CleanupReport()
+
+    prune = _git(repo_dir, "worktree", "prune")
+    report.pruned = prune.returncode == 0
+    if not report.pruned:
+        report.errors.append(f"worktree prune: {prune.stderr.strip()}")
+
+    worktrees = _list_worktrees(repo_dir)
+    default = _default_branch(repo_dir)
+    self_path = _self_worktree(worktrees)
+
+    # worktrees[0] is the main worktree; the rest are the linked ones.
+    for worktree in worktrees[1:]:
+        name = str(worktree.path)
+        if self_path is not None and worktree.path.resolve() == self_path:
+            report.kept_worktrees.append((name, "is the running checkout"))
+            continue
+        if not worktree.path.is_dir():
+            report.kept_worktrees.append((name, "directory is gone but prune kept it"))
+            continue
+        if _is_dirty(worktree.path):
+            report.kept_worktrees.append((name, "has uncommitted or untracked changes"))
+            continue
+        if default is None:
+            report.kept_worktrees.append((name, "no default branch to compare against"))
+            continue
+        if worktree.head is None or not _is_ancestor(repo_dir, worktree.head, default):
+            report.kept_worktrees.append((name, f"HEAD is not merged into {default}"))
+            continue
+        result = _git(repo_dir, "worktree", "remove", str(worktree.path))
+        if result.returncode == 0:
+            report.removed_worktrees.append(name)
+        else:
+            report.errors.append(f"worktree remove {name}: {result.stderr.strip()}")
+
+    _sweep_empty_dirs(repo_dir, report)
+
+    # Re-list: a branch held by a worktree removed above is only now deletable.
+    still_checked_out = {
+        worktree.branch for worktree in _list_worktrees(repo_dir) if worktree.branch
+    }
+    for branch in _agent_branches(repo_dir):
+        if branch in still_checked_out:
+            report.kept_branches.append((branch, "still checked out in a worktree"))
+            continue
+        if default is None:
+            report.kept_branches.append(
+                (branch, "no default branch to compare against")
+            )
+            continue
+        if not _is_ancestor(repo_dir, branch, default):
+            report.kept_branches.append((branch, f"not merged into {default}"))
+            continue
+        result = _git(repo_dir, "branch", "-d", branch)
+        if result.returncode == 0:
+            report.deleted_branches.append(branch)
+        else:
+            report.errors.append(f"branch -d {branch}: {result.stderr.strip()}")
+
+    return report
+
+
+def print_report(report: CleanupReport) -> None:
+    """Print the pass in the one-line-per-fact style the maintenance script uses."""
+    for name in report.removed_worktrees:
+        print(f"worktrees: removed {name}")
+    for name, reason in report.kept_worktrees:
+        print(f"worktrees: kept {name} ({reason})")
+    for branch in report.deleted_branches:
+        print(f"worktrees: deleted branch {branch}")
+    for branch, reason in report.kept_branches:
+        print(f"worktrees: kept branch {branch} ({reason})")
+    for error in report.errors:
+        print(f"worktrees: ERROR {error}")
+    if not (
+        report.removed_worktrees
+        or report.kept_worktrees
+        or report.deleted_branches
+        or report.kept_branches
+        or report.errors
+    ):
+        print("worktrees: nothing to clean")
