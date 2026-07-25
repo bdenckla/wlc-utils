@@ -26,6 +26,12 @@ clean); the printed versions are the object of study.  The verdict is stable and
     (a ``pashta_phrase`` ERROR), where the manuscript -- keeping the two commandments as two
     separate chanted verses -- parses both clean.
 
+Those are the IDEALIZED strands.  ``transcription_parse`` asks the same question of what a
+real edition prints, feeding the committed hand transcriptions through ``parse_marks_body``
+below -- the same scanner, grammar and status vocabulary, so the two sets of verdicts are
+comparable.  Eleven of the twelve transcribed Decalogues match their strand at every chanted
+verse; the one that does not is Simanim's Exodus appendix taxton.
+
 Pure computation (no I/O); the driver (``run``) loads the vendored JSON, parses, and writes
 ``out/accgram/printed-decalogue/_printed_decalogue.json``.  The gh-pages report is rendered
 separately by ``printed_decalogue_page``.
@@ -109,11 +115,17 @@ def _to_vels(chanted_verse: str) -> list[str]:
     return vels
 
 
-def _parse_chanted_verse(
-    text: str, book: str, index: int, parser
+def parse_marks_body(
+    body: str, book: str, index: int, parser, words: tuple[str, ...] = ()
 ) -> ChantedVerseResult:
-    vels = _to_vels(text)
-    body = uni_to_marks.verse_to_marks({"vels": vels})
+    """One scanner mark body -> its grammar verdict.
+
+    Split out from ``_parse_chanted_verse`` so that a source which is NOT pointed Hebrew can
+    reach the same pipeline: ``transcription_parse`` builds a mark body straight from a hand
+    transcription's accent shorthand, and must run through this exact path -- same scanner,
+    same grammar, same status vocabulary -- for its verdicts to be comparable with the
+    strands' own.  ``words`` is carried only for the record; nothing keys on it.
+    """
     # None of the Decalogue readings is a HasLegarmeh corpus; a fresh per-verse instance is
     # immaterial. Chapter/verse are only for scanner diagnostics, unused on this path.
     tokens = [Token("TILDE", "")] + scan_accents(body, book, 20, 2, HasLegarmeh())
@@ -127,12 +139,20 @@ def _parse_chanted_verse(
         tree_obj = tree_to_obj(tree)
     return ChantedVerseResult(
         index=index,
-        words=tuple(vels),
+        words=words,
         body=body,
         tokens=tuple(t.type for t in tokens),
         status=status,
         tree=tree_obj,
     )
+
+
+def _parse_chanted_verse(
+    text: str, book: str, index: int, parser
+) -> ChantedVerseResult:
+    vels = _to_vels(text)
+    body = uni_to_marks.verse_to_marks({"vels": vels})
+    return parse_marks_body(body, book, index, parser, tuple(vels))
 
 
 def load_source(source_path: Path | None = None) -> dict:

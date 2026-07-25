@@ -52,6 +52,12 @@ meteg.  Those are genuine accent differences, not word-division ones, and an ear
 of this note asserted they could not occur.  Neither they nor the elyon's pair touch the
 disjunctive skeleton or the chanted verse boundaries, which is the claim that has survived
 every transcription so far.
+
+That claim is true and NOT the whole story, which is why ``transcription_parse`` exists
+(issue #52).  An intact skeleton is a token-identity fact and says nothing about whether the
+resulting sequence parses: the munax on the joined לא of לא־תעשה makes three servi before the
+pashta where the grammar takes two, so that chanted verse is ungrammatical under the prose
+checker even though every one of the page's divergences is conjunctive.
 """
 
 from __future__ import annotations
@@ -331,11 +337,21 @@ def transcriptions_dir() -> Path:
 
 @dataclasses.dataclass(frozen=True)
 class Transcription:
-    """One hand-transcribed Decalogue: its header fields and its accent tokens."""
+    """One hand-transcribed Decalogue: its header fields, accent tokens, and body chunks.
+
+    ``tokens`` is the ACCENT stream the comparison runs on: legarmeh folded onto a plain
+    munax, asides dropped, one entry per accent.  ``chunks`` is the body as written, one
+    entry per whitespace-separated piece and asides KEPT -- so a multi-accent word is still
+    one chunk and a ``[paseq]`` still stands where it was read.  ``transcription_parse``
+    needs both facts to build a scanner mark body: the stroke is a mark the scanner reads
+    (it decides legarmeh from a munax + stroke before a revia), and a maqaf compound has to
+    stay one chanted word.
+    """
 
     path: Path
     header: dict[str, str]
     tokens: tuple[str, ...]
+    chunks: tuple[str, ...]
 
     @property
     def key(self) -> tuple[str, str, str]:
@@ -596,6 +612,7 @@ def load_transcription(path: Path) -> Transcription:
     """Parse a transcription file: ``#`` comments, ``key: value`` header, then tokens."""
     header: dict[str, str] = {}
     tokens: list[str] = []
+    chunks: list[str] = []
     for line in path.read_text(encoding="utf-8").splitlines():
         stripped = line.strip()
         if not stripped or stripped.startswith("#"):
@@ -605,13 +622,16 @@ def load_transcription(path: Path) -> Transcription:
             header[field.strip()] = value.strip()
             continue
         for chunk in re.findall(r"\[[^\]]*\]|\S+", stripped):
+            chunks.append(chunk)
             if chunk.startswith("["):
                 continue  # a bracketed aside such as "[page break]" carries no accent
             tokens.extend(expand_chunk(chunk))
     missing = {"book", "reading", "tradition"} - set(header)
     if missing:
         raise ValueError(f"{path}: transcription header missing {sorted(missing)}")
-    return Transcription(path=path, header=header, tokens=tuple(tokens))
+    return Transcription(
+        path=path, header=header, tokens=tuple(tokens), chunks=tuple(chunks)
+    )
 
 
 def load_all_transcriptions() -> list[Transcription]:

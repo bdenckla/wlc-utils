@@ -13,6 +13,7 @@ Run:
 
 from __future__ import annotations
 
+import functools
 import json
 
 import pytest
@@ -21,8 +22,10 @@ from accgram import edition_transcription as et
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_fetch as pdf
 from accgram import printed_decalogue_strands as pds
+from accgram import prose_ply_grammar as pdg
 from accgram import transcription_build as tb
 from accgram import transcription_check as tc
+from accgram import transcription_parse as tp
 
 # The divergences established for each transcription, keyed by its filename stem.  Each entry
 # is (reference tokens, transcribed tokens, the reference word the region starts on).
@@ -1064,3 +1067,221 @@ def test_a_trailing_empty_band_is_dropped_per_page_and_an_interior_one_kept() ->
         ]
     }
     assert tb.body_lines(record) == ["mun", "", "mer", "", "[p. 351]", "tip"]
+
+
+# --------------------------------------------------------------------------- #
+# Through the prose grammar checker (issue #52)
+# --------------------------------------------------------------------------- #
+# Everything above is a token-IDENTITY claim: which accents a page prints, whether they match
+# the strand, and whether a divergence leaves the disjunctive skeleton intact.  None of it says
+# whether what the page prints is GRAMMATICAL.  ``transcription_parse`` answers that by
+# building a scanner mark body straight from the transcription and running it through
+# ``printed_decalogue``'s pipeline, so a page's verdicts are directly comparable with its
+# strand's.  See that module's docstring for why the shorthand suffices as input.
+
+
+@functools.lru_cache(maxsize=1)
+def _parser():
+    return pdg.build_parser()
+
+
+@functools.lru_cache(maxsize=1)
+def _strand_results() -> dict:
+    """Every vendored strand's own grammaticality result, keyed by (book, reading, tradition)."""
+    return {
+        (vr.book, vr.reading, vr.tradition): vr
+        for vr in pd.check_all(_source_or_skip(), _parser())
+    }
+
+
+def _transcription(stem: str) -> et.Transcription:
+    return et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
+
+
+@pytest.mark.parametrize("stem", sorted(_EXPECTED_DIVERGENCES))
+def test_the_synthesized_mark_body_reproduces_the_scanner_on_an_agreeing_page(
+    stem: str,
+) -> None:
+    """The control that licenses the whole approach, run where its answer is knowable.
+
+    A transcription records accents, a pasoleg stroke and the chanted verse boundaries -- not
+    meteg, not the pointing, and not every maqaf.  The claim is that none of what it drops can
+    change PROSE tokenization.  Where a transcription diverges from its strand nowhere, that
+    claim is checkable outright: the body built from the shorthand must yield the strand's own
+    scanner token stream, token for token, positional calls included -- azla vs. qadma,
+    methiga-zaqef, mayela, legarmeh, and the stress-helper pashta and telisha the scanner fuses.
+
+    Scoped to the stems that agree at every accent, which is where a difference would have to be
+    the adapter's rather than the edition's.  Seven of the twelve qualify, 76 chanted verses in
+    all; the five that diverge are covered by the grammaticality test below instead.
+    """
+    if _EXPECTED_DIVERGENCES[stem]:
+        pytest.skip(
+            f"{stem} diverges from its strand; the control needs an agreeing page"
+        )
+    source = _source_or_skip()
+    transcription = _transcription(stem)
+    book = transcription.header["book"]
+    got = [
+        tp.token_types(body, book) for body in tp.chanted_verse_bodies(transcription)
+    ]
+    # The strand's own streams, minus the leading TILDE the scanner is fed rather than emits.
+    want = [cv.tokens[1:] for cv in _strand_results()[transcription.key].chanted_verses]
+    assert got == want
+
+
+# Where a transcription's grammaticality verdict departs from its strand's, chanted verse by
+# chanted verse: stem -> [(1-based index, the strand's status, the page's status)].  Every stem
+# not listed matches its strand at every chanted verse, which eleven of the twelve do.
+#
+# The one departure is the point of doing this at all.  simanim_ex_taxton's divergences are
+# CONJUNCTIVE-ONLY -- the stem is in _SKELETON_UNTOUCHED above, correctly -- and its third
+# chanted verse is ungrammatical anyway, so the skeleton test and this one are not two spellings
+# of one claim.  The mechanism is pinned separately below.
+_GRAMMATICALITY_DEPARTURES = {
+    "simanim_ex_taxton": [(3, "clean", "ungrammatical")],
+}
+
+
+@pytest.mark.parametrize("stem", sorted(_EXPECTED_DIVERGENCES))
+def test_each_page_is_as_grammatical_as_its_strand_except_where_pinned(
+    stem: str,
+) -> None:
+    """Per chanted verse, the page's verdict against the strand's, departures pinned exactly.
+
+    Both halves matter.  A departure appearing where none is pinned means an edition prints an
+    accent sequence the prose grammar rejects and nobody has looked at it; a pinned departure
+    going away means a re-vendoring or a corrected reading has quietly changed the finding.
+    The chanted verse COUNTS are asserted first, since a status list compared across a boundary
+    shift would line up by position and mean nothing.
+    """
+    source = _source_or_skip()
+    transcription = _transcription(stem)
+    strand = _strand_results()[transcription.key]
+    got = [cv.status for cv in tp.check(transcription, _parser())]
+    want = [cv.status for cv in strand.chanted_verses]
+    assert len(got) == len(want)
+    departures = [
+        (i, w, g) for i, (g, w) in enumerate(zip(got, want), start=1) if g != w
+    ]
+    assert departures == _GRAMMATICALITY_DEPARTURES.get(stem, [])
+
+
+def test_the_exodus_appendix_taxton_prints_an_ungrammatical_chanted_verse() -> None:
+    """Simanim's p. 246, chanted verse 3, and the single accent that costs it its parse.
+
+    Pinned in the positive direction, like the two skeleton tests above: the finding is that a
+    page whose divergences are conjunctive-only, and whose disjunctive skeleton is therefore
+    intact, nonetheless prints a chanted verse the prose grammar rejects.  If a re-read or a
+    re-vendoring ever made this parse clean, that should fail here rather than silently
+    strengthening what the transcription is taken to show.
+
+    The mechanism, isolated: the page accents BOTH atoms of לא־תעשה (20:4), a munax on the
+    joined לא against the qadma on תעשה, where all eight strands have a meteg and no accent
+    there.  That makes three servi -- munax, qadma, merkha -- before the pashta, where the
+    grammar takes two, and the pashta phrase fails.  Dropping just that munax leaves the same
+    verse clean, which is what identifies it as the cause rather than a coincidence of the
+    stretch it sits in.  Its sibling insertion at לא־יהיה (chanted verse 2) is harmless: the
+    servi there run into a tevir, which tolerates the longer chain.
+
+    Read as a diagnostic and not as a verdict on the edition.  The checker is tuned to
+    Tiberian-manuscript prose grammar, a clean rate is not the objective, and the natural
+    follow-up is a re-read of the word against the physical book.
+    """
+    source = _source_or_skip()
+    transcription = _transcription("simanim_ex_taxton")
+    bodies = tp.chanted_verse_bodies(transcription)
+    verse = bodies[2]
+    assert tp.token_types(verse, "ex")[:5] == (
+        "MUNAX",
+        "QADMA",
+        "MERKHA",
+        "PASHTA",
+        "ZAQEF",
+    )
+    assert pd.parse_marks_body(verse, "ex", 3, _parser()).status == "ungrammatical"
+    # The same chanted verse with the inserted munax alone removed -- its own chanted word,
+    # hence the first space-delimited piece.
+    without = verse.split(" ", 1)[1]
+    assert pd.parse_marks_body(without, "ex", 3, _parser()).status == "clean"
+
+
+# How many pasoleg strokes the scanner judges per transcription, so the comparison below cannot
+# pass by comparing nothing.  It is the stroke count each page prints, which for
+# simanim_dt_taxton is one fewer than its (p-trad) strand's -- the pinned m-trad departure.
+_SCANNER_PASOLEG_STROKES = {
+    "koren_dt_elyon": 7,
+    "koren_dt_taxton": 2,
+    "koren_ex_elyon": 4,
+    "koren_ex_taxton": 1,
+    "simanim_dt_elyon": 7,
+    "simanim_dt_taxton": 1,
+    "simanim_ex_elyon": 4,
+    "simanim_ex_taxton": 1,
+    "simanim_tanakh_dt_elyon": 7,
+    "simanim_tanakh_dt_taxton": 1,
+    "simanim_tanakh_ex_elyon": 4,
+    "simanim_tanakh_ex_taxton": 1,
+}
+
+
+@pytest.mark.parametrize("stem", sorted(_SCANNER_PASOLEG_STROKES))
+def test_the_scanner_determines_every_stroke_kind_and_agrees_with_the_reference(
+    stem: str,
+) -> None:
+    """The scanner's POSITIONAL legarmeh call, stroke by stroke, against the vendored kind.
+
+    Two independent determinations of the same fact: Wikisource's own ``{{מ:לגרמיה}}`` /
+    ``{{מ:פסק}}`` templates, vendored by #74, and the scanner's rule that a munax + stroke
+    before a revia is a legarmeh.  They agree at every stroke of every transcription.
+
+    The agreement is expected rather than surprising -- legarmeh almost always precedes revia,
+    and neither Decalogue holds an exception -- so what this pins is not a discovery but a
+    capability: the determination exists for strokes whose EDITION states no kind, which is
+    what the four Koren stems are made of (see the test below).  It is #17's "distinguish by
+    algorithm, encode only exceptions" as it applies to prose.
+    """
+    source = _source_or_skip()
+    transcription = _transcription(stem)
+    kinds = tp.scanner_pasoleg_kinds(transcription)
+    assert len(kinds) == _SCANNER_PASOLEG_STROKES[stem]
+    reference = et.reference_pasoleg_kinds(source, transcription.key)
+    if stem == "simanim_dt_taxton":
+        # The page prints one stroke where its p-trad strand has two: it follows the m-trad
+        # here and there is nothing printed on אתה.  So compare what it does print, and pin
+        # the shortfall rather than let a length mismatch pass as a kind disagreement.
+        assert reference == ["legarmeh", "legarmeh"]
+        assert kinds == reference[:1]
+        return
+    assert kinds == reference
+
+
+@pytest.mark.parametrize(
+    "stem", sorted(s for s in _SCANNER_PASOLEG_STROKES if s.startswith("koren_"))
+)
+def test_the_scanner_supplies_the_stroke_kinds_koren_declines_to_state(
+    stem: str,
+) -> None:
+    """What the parser adds that #74 could not: a kind for a kind-agnostic edition.
+
+    Koren prints the vertical without saying which kind it is, so every one of its strokes is
+    transcribed ``[pasoleg]`` -- kind unspecified, asserting nothing the book does not -- and
+    ``test_transcription_pasoleg_kinds_round_trip_against_the_reference`` therefore compares
+    ZERO strokes for all four Koren stems.  The scanner's positional rule determines all
+    fourteen, and they agree with the vendored reference.  Both facts are asserted here: that
+    the transcription states no kind, so the determination is not a restatement of one, and
+    that the round trip really does compare nothing for this stem.
+    """
+    source = _source_or_skip()
+    transcription = _transcription(stem)
+    stated = [
+        et.aside_kind(chunk)
+        for chunk in transcription.chunks
+        if chunk in et.PASOLEG_ASIDES
+    ]
+    assert stated == ["unspecified"] * _SCANNER_PASOLEG_STROKES[stem]
+    assert et.KIND_ASSERTING[0] not in transcription.chunks  # no mun_leg either
+    assert _PASOLEG_KIND_ROUNDTRIP[stem] == 0
+    assert tp.scanner_pasoleg_kinds(transcription) == et.reference_pasoleg_kinds(
+        source, transcription.key
+    )
