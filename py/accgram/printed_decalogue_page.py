@@ -1151,6 +1151,12 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
 
 # --------------------------------------------------------------------------- #
 # The CTR aside: a p-trad Bible on the web (see the guardrail comment at the call site above)
+#
+# Name BOTH signal words when placing CTR's Deuteronomy among the four strands. An earlier draft
+# credited it with "the characteristic opening verse of the p-trad taxton", which contradicts this
+# page's own signal-pair section: the opening verse ends at עבדים, and there the p-trad taxton and
+# the m-trad elyon are word for word identical. It takes על־פני too -- one signal word never
+# places a text among the four strands.
 # --------------------------------------------------------------------------- #
 def _chabad_aside() -> tuple[object, ...]:
     return (
@@ -1160,8 +1166,9 @@ def _chabad_aside() -> tuple[object, ...]:
                 "Possibly the only p-trad Bible on the web is ",
                 link("CTR", _CHABAD_DT5_URL),
                 ": a web version of The Complete Tanach with Rashi, served from Chabad.org."
-                f" Its Deuteronomy 5 has not only the characteristic opening verse of the p-trad"
-                f" {_TAHTON} but also the p-trad {_TAHTON} accents in the Sabbath commandment —"
+                f" Its Deuteronomy 5 has not only the p-trad {_TAHTON}'s signal pair, chanted"
+                " verses ending at both עבדים and על־פני, but also the p-trad"
+                f" {_TAHTON} accents in the Sabbath commandment —"
                 " that whole Decalogue, chanted verse division and all.",
             )
         ),
@@ -1204,14 +1211,14 @@ def _chabad_aside() -> tuple[object, ...]:
                 _ELYON,
                 " has no ",
                 _ROM_SILLUQ,
-                ", and neither does CTR: the word before the mark has a ",
+                ", and neither does CTR: the seven words before those marks carry four ",
                 _ROM_REVIA,
-                ", a ",
-                _ROM_SEGOLTA,
-                ", a ",
-                _ROM_ZAQEF_QATAN,
                 ", an ",
                 _ROM_ETNAHTA,
+                ", a ",
+                _ROM_SEGOLTA,
+                ", and a ",
+                _ROM_ZAQEF_QATAN,
                 ". What those seven close is a ",
                 _ROM_SOF_PASUQ,
                 " span, not a chanted verse. CTR's Exodus is the ",
