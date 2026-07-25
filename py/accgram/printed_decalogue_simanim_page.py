@@ -915,12 +915,20 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
         # merged opening verse, and p. 246 departs from its strand. Both paragraphs below have to
         # keep the middle column's claim standing while adding the last column's: an intact
         # disjunctive skeleton is a token-identity fact and entails nothing about parsing.
+        # GUARDRAIL (2026-07-25 claim audit, finding 5). "the only chanted verse in any of the four
+        # strands that the checker rejects" left its scope to be guessed. Read per Decalogue -- the
+        # four strands ARE a Decalogue's four, which is this page's frame -- it is true: exactly one
+        # rejected verse among the four. Read across both books, as the rest of this very paragraph
+        # is ("in both of them", two page ranges), it is false: the payload holds TWO such verses,
+        # the p-trad elyon opening verse of each Decalogue. Naming the scope is the whole fix; don't
+        # drop it back to a bare "the only chanted verse".
         H.para(
             (
                 "Two of the four follow the p-trad ",
                 _ELYON,
-                ", whose opening chanted verse merges the first two commandments — the only"
-                " chanted verse in any of the four strands that the checker rejects. Simanim's"
+                ", whose opening chanted verse merges the first two commandments — the only chanted"
+                " verse the checker rejects in any of a Decalogue's four strands, in Exodus and"
+                " Deuteronomy alike. Simanim's"
                 " Tiqqun prints that verse in both of them, so pp. 83–84 and pp. 208–209 are"
                 " ungrammatical there exactly as their strand is: the ",
                 link("companion page's finding", _COMPANION_PAGE_HREF),
