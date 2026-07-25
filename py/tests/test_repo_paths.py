@@ -114,6 +114,19 @@ def test_require_mam_parsed_plus_dir_checks_the_resolved_path(
         repo_paths.require_mam_parsed_plus_dir()
 
 
+def test_require_mam_simple_dir_checks_the_resolved_path(monkeypatch, tmp_path) -> None:
+    """Same contract as the MAM-parsed twin, for the sibling the detangler tests need.
+
+    Their old ``pytest.skip(f"MAM-simple not present at {mam_dir}")`` named the path but
+    neither override, so the one thing a reader had to be told -- how to point this repo at
+    a clone that is not a sibling, which in a git worktree it never is -- was missing from
+    the very message meant to explain the absence.
+    """
+    monkeypatch.setenv("WLC_MAM_SIMPLE_DIR", str(tmp_path / "nowhere"))
+    with pytest.raises(FileNotFoundError, match="nowhere"):
+        repo_paths.require_mam_simple_dir()
+
+
 def test_data_path_accessors() -> None:
     # The in-repo data-tree accessors (issue #33).
     root = repo_paths.repo_root()

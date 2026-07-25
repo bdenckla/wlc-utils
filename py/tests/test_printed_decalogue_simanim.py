@@ -6,7 +6,8 @@ for each Exodus reading it reads the first chanted verse and derives the accent 
 word) and עבדים.  These tests pin that derivation (which now lives on the strands module, not on
 this page) and confirm the Simanim page body renders.
 
-Skips if the vendored source JSON is absent (regenerate via printed_decalogue_fetch.py).
+The vendored source JSON is committed here, so these FAIL rather than skip if it is absent --
+see ``test_printed_decalogue``'s docstring and ``repo_paths.require_sibling``.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_printed_decalogue_simanim.py -v
@@ -14,7 +15,6 @@ Run:
 
 from __future__ import annotations
 
-import pytest
 
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_simanim_page as sim
@@ -25,11 +25,8 @@ from accgram import transcription_verdict_column as tvc
 import repo_paths
 
 
-def _results_or_skip() -> list[pd.VersionResult]:
-    src = pd.default_source_path()
-    if not src.is_file():
-        pytest.skip(f"vendored printed-Decalogue source not present at {src}")
-    return pd.check_all(pd.load_source(src))
+def _results() -> list[pd.VersionResult]:
+    return pd.check_all(pd.load_source())
 
 
 def test_four_readings_derive_expected_accents() -> None:
@@ -38,7 +35,7 @@ def test_four_readings_derive_expected_accents() -> None:
     ``pds.resolve_readings`` itself raises if a derived accent diverges from its expected value,
     so this both exercises the derivation and pins the (accent-on-אנכי, accent-on-עבדים) pairs.
     """
-    readings = pds.resolve_readings(_results_or_skip())
+    readings = pds.resolve_readings(_results())
     got = {r.name: (r.anokhi_accent, r.avadim_accent) for r in readings}
     assert got == {
         "m-trad taḥton": ("pashta", "etnaḥta"),
@@ -55,7 +52,7 @@ def test_printed_taxton_equals_manuscript_elyon() -> None:
     signal word, על־פני, the two strands part (p-trad taḥton silluq, m-trad elyon revia), which is
     what gives each its own row in the companion page's four-strands table. See
     ``test_printed_decalogue_page.test_signal_pairs_identify_strands``."""
-    readings = {r.name: r for r in pds.resolve_readings(_results_or_skip())}
+    readings = {r.name: r for r in pds.resolve_readings(_results())}
     pt, me = readings["p-trad taḥton"], readings["m-trad elyon"]
     assert (pt.anokhi_accent, pt.avadim_accent) == (me.anokhi_accent, me.avadim_accent)
 
@@ -63,7 +60,7 @@ def test_printed_taxton_equals_manuscript_elyon() -> None:
 def test_avadim_located_within_each_first_verse() -> None:
     """עבדים is found (by letter skeleton) in every reading's first chanted verse --
     verse-finally in the standalone readings, mid-verse in the merged ones."""
-    readings = pds.resolve_readings(_results_or_skip())
+    readings = pds.resolve_readings(_results())
     for r in readings:
         assert pds.base_skeleton(r.avadim_word) == pds.AVADIM
 
@@ -76,10 +73,7 @@ def test_body_renders() -> None:
     column states a transcription's verdict against its strand's (issue #52). A row naming a stem
     with no committed transcription fails here, on the lookup.
     """
-    src = pd.default_source_path()
-    if not src.is_file():
-        pytest.skip(f"vendored printed-Decalogue source not present at {src}")
-    source = pd.load_source(src)
+    source = pd.load_source()
     verdicts = tvc.by_stem(tp.check_all(pd.check_all(source)))
     body = sim.render_body_contents(source, verdicts)
     assert isinstance(body, tuple) and len(body) > 0

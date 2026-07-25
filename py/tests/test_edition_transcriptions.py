@@ -5,7 +5,11 @@ machine-checked claim.  Each transcription's divergences from its strand are pin
 a re-vendoring, an upstream Wikisource revision, or a corrected transcription that changes
 the divergence set fails here instead of quietly falsifying a page.
 
-Skips if the vendored source JSON is absent (regenerate via printed_decalogue_fetch.py).
+``pytest.skip`` in this file means ONE thing, and it is a finding, not an absence: a page that
+diverges from its strand, for which the token-stream control below has no knowable answer.  Five
+cases skip on a clean run, all of them that.  Nothing here skips on missing data -- the vendored
+strand JSON and all twelve transcriptions and their exports are committed under ``in/accgram``,
+so an absent one is a deleted tracked file and fails.  See ``repo_paths.require_sibling``.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_edition_transcriptions.py -v
@@ -370,36 +374,19 @@ _UNCERTAIN_READINGS = {
 }
 
 
-def _source_or_skip() -> dict:
-    src = pd.default_source_path()
-    if not src.is_file():
-        pytest.skip(f"vendored printed-Decalogue source not present at {src}")
-    return pd.load_source(src)
-
-
-def _require_source() -> None:
-    """Skip early, for a test that needs the vendored source only INDIRECTLY.
-
-    The grammaticality tests below reach it through ``_strand_results`` rather than by hand,
-    so they would skip anyway -- but only after the transcription work above that call had
-    run.  Calling this first keeps the skip at the top of the test, where a missing vendored
-    file is a skip rather than a half-executed test.  It is this and not ``_source_or_skip``
-    because there is no source to bind: a binding nothing reads is what ruff flags (F841).
-    """
-    _source_or_skip()
-
-
-def _transcriptions() -> list[et.Transcription]:
-    found = et.load_all_transcriptions()
-    if not found:
-        pytest.skip(f"no transcriptions committed under {et.transcriptions_dir()}")
-    return found
-
-
 def test_every_transcription_names_a_real_strand() -> None:
-    """Each transcription's (book, reading, tradition) triple resolves in the vendored data."""
-    source = _source_or_skip()
-    for transcription in _transcriptions():
+    """Each transcription's (book, reading, tradition) triple resolves in the vendored data.
+
+    The stem set is asserted before the loop, and not only for its own sake.
+    ``load_all_transcriptions`` globs, so a deleted tracked .txt comes back as a shorter list
+    rather than an error, and the loop would then pass having checked one page fewer -- the
+    silent-green shape the skip this replaced also had.  Pinning the twelve is what makes the
+    deletion fail here.
+    """
+    found = et.load_all_transcriptions()
+    assert {t.path.stem for t in found} == set(_EXPECTED_DIVERGENCES)
+    source = pd.load_source()
+    for transcription in found:
         tokens, _, _ = et.reference_tokens(source, transcription.key)
         assert tokens, f"{transcription.label}: strand resolved to no accents"
 
@@ -407,7 +394,7 @@ def test_every_transcription_names_a_real_strand() -> None:
 @pytest.mark.parametrize("stem", sorted(_EXPECTED_DIVERGENCES))
 def test_divergences_are_exactly_as_established(stem: str) -> None:
     """The divergence set is pinned, region by region, with the word each sits on."""
-    source = _source_or_skip()
+    source = pd.load_source()
     transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
     got = [
         (" ".join(d.reference), " ".join(d.transcribed), pds.base_skeleton(d.word))
@@ -425,7 +412,7 @@ def test_every_chanted_verse_boundary_agrees(stem: str) -> None:
     directions: the counts match, AND no difference region touches a silsof, which a bare
     count would not catch if one boundary moved and another appeared.
     """
-    source = _source_or_skip()
+    source = pd.load_source()
     transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
     ref, _, _ = et.reference_tokens(source, transcription.key)
     assert ref.count("silsof") == _CHANTED_VERSES[stem]
@@ -447,7 +434,7 @@ def test_pinned_divergences_leave_the_disjunctive_skeleton_alone(stem: str) -> N
     ones.  Scoped to _SKELETON_UNTOUCHED: it is not true of the Deuteronomy taxton, and the
     test below pins that it is not.
     """
-    source = _source_or_skip()
+    source = pd.load_source()
     transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
     for difference in et.compare(source, transcription):
         for token in difference.reference + difference.transcribed:
@@ -466,7 +453,7 @@ def test_deuteronomy_taxton_does_touch_the_disjunctive_skeleton() -> None:
     """
     stem = "simtiq_dt_taxton"
     assert stem not in _SKELETON_UNTOUCHED
-    source = _source_or_skip()
+    source = pd.load_source()
     transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
     disjunctives = {
         token
@@ -489,7 +476,7 @@ def test_simtan_deuteronomy_drops_one_disjunctive() -> None:
     """
     stem = "simtan_dt_taxton"
     assert stem not in _SKELETON_UNTOUCHED
-    source = _source_or_skip()
+    source = pd.load_source()
     transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
     removed = [
         token
@@ -603,7 +590,14 @@ def _export_pages(stem: str) -> list[dict]:
 
 
 def _kind_agnostic_stems() -> list[str]:
-    """Transcriptions whose header says the edition does not distinguish the two kinds."""
+    """Transcriptions whose header says the edition does not distinguish the two kinds.
+
+    Four commit one (the Koren pages).  The ``or ["(none committed)"]`` on the parametrize
+    below is what makes an empty result FAIL: pytest reports an empty parameter set as a
+    SKIP, and nothing about this list going empty -- a deleted .txt, a dropped header field
+    -- deserves the channel this file reserves for the divergent-page finding.  The fallback
+    stem has no file, so the test errors on the read instead.
+    """
     return sorted(
         t.path.stem
         for t in et.load_all_transcriptions()
@@ -628,8 +622,6 @@ def test_a_kind_agnostic_edition_asserts_no_kind_anywhere(stem: str) -> None:
     the prose a reader most needs; a guard that forbids naming the thing it forbids is too
     blunt to keep.
     """
-    if not _kind_agnostic_stems():
-        pytest.skip("no kind-agnostic transcription committed")
     txt = et.transcriptions_dir() / f"{stem}.txt"
     written = [
         line
@@ -653,9 +645,13 @@ def test_a_kind_agnostic_edition_asserts_no_kind_anywhere(stem: str) -> None:
 def _stems_with_exports() -> list[str]:
     """Transcriptions that have the line editor's JSON export committed beside them.
 
-    All of them do, as of the simtiq_ex_elyon redo: it was the last one transcribed before the
+    All twelve do, as of the simtiq_ex_elyon redo: it was the last one transcribed before the
     editor existed, and re-doing it closed the gap.  The lookup stays a glob rather than a list
     because a transcription typed but not yet exported is the state this is meant to tolerate.
+
+    Going empty is a different matter, and the ``or ["(none committed)"]`` on each parametrize
+    below is what makes it FAIL -- see ``_kind_agnostic_stems`` for why an empty parameter set
+    would otherwise skip.
     """
     return sorted(p.stem for p in et.transcriptions_dir().glob("*.json"))
 
@@ -675,8 +671,6 @@ def test_editor_export_and_txt_agree(stem: str) -> None:
     unknown abbreviation -- the .txt looked right and the check that guards it was broken.
     Both now go through ``et.editor_accents``; this is what would notice if they stopped.
     """
-    if not _stems_with_exports():
-        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
     path = et.transcriptions_dir() / f"{stem}.json"
     record = json.loads(path.read_text(encoding="utf-8"))
     # One Decalogue can span two printed pages, and then the audit trail holds one editor
@@ -797,9 +791,7 @@ def test_pasolegs_land_on_reference_pasoleg_positions(stem: str) -> None:
     the report's original sin, and on the Deuteronomy taxton it looked right only because two
     errors cancelled (see the test below).
     """
-    if not _stems_with_exports():
-        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
-    source = _source_or_skip()
+    source = pd.load_source()
     pages = _export_pages(stem)
     transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
     ref, words, _ = et.reference_tokens(source, transcription.key)
@@ -825,7 +817,7 @@ def test_deuteronomy_taxton_pasoleg_is_transcribed_128_reference_127() -> None:
     m-trad-departure finding -- the transcription and the m-trad have one pasoleg, the p-trad
     two.
     """
-    source = _source_or_skip()
+    source = pd.load_source()
     pages = _export_pages("simtiq_dt_taxton")
     transcription = et.load_transcription(
         et.transcriptions_dir() / "simtiq_dt_taxton.txt"
@@ -888,7 +880,7 @@ def test_vendored_reference_preserves_the_pasoleg_kinds(key: tuple) -> None:
     distinction faithfully.  It also proves the alignment the accessor asserts -- a stroke count
     that disagreed with the folded ``chanted_verses`` would raise before reaching this compare.
     """
-    source = _source_or_skip()
+    source = pd.load_source()
     assert et.reference_pasoleg_kinds(source, key) == _REFERENCE_PASOLEG_KINDS[key]
 
 
@@ -901,7 +893,7 @@ def test_faithful_verses_fold_to_the_folded_chanted_verses() -> None:
     broke the correspondence fails rather than silently making the folded form claim something
     the faithful form does not.
     """
-    source = _source_or_skip()
+    source = pd.load_source()
     for version in source["versions"]:
         faithful = version.get("faithful_chanted_verses")
         key = (version["book"], version["reading"], version["tradition"])
@@ -979,9 +971,7 @@ def test_transcription_pasoleg_kinds_round_trip_against_the_reference(
     comparing (a dropped faithful field, an edition wrongly marked kind-agnostic) fails here
     rather than passing vacuously.
     """
-    source = _source_or_skip()
-    if not _stems_with_exports():
-        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
+    source = pd.load_source()
     compared, mismatches = _pasoleg_kind_roundtrip(source, stem)
     assert mismatches == []
     assert compared == _PASOLEG_KIND_ROUNDTRIP[stem]
@@ -1000,8 +990,6 @@ def test_uncertain_readings_are_pinned_in_both_the_export_and_the_txt_header(
     know about the field.  Pinning them against each other, and both against this table, is
     what keeps a doubt from quietly becoming a claim.
     """
-    if not _stems_with_exports():
-        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
     expected = _UNCERTAIN_READINGS.get(stem, 0)
     found = et.uncertain_readings(_export_pages(stem))
     assert len(found) == expected
@@ -1018,8 +1006,6 @@ def test_the_derived_txt_body_holds_the_same_accents_as_the_export(stem: str) ->
     that the two stay the same transcription: drop the asides and the line breaks from the
     derived body and the token stream must be identical.
     """
-    if not _stems_with_exports():
-        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
     lines = [line["text"] for export in _export_pages(stem) for line in export["lines"]]
     derived = [
         chunk
@@ -1046,8 +1032,6 @@ def test_the_committed_txt_is_byte_for_byte_its_own_derived_body(stem: str) -> N
     diverged on whether a page's TRAILING empty lines are dropped, and the .txt committed by
     the copy that did not carried a trailing blank line no derivation would produce.
     """
-    if not _stems_with_exports():
-        pytest.skip(f"no editor exports committed under {et.transcriptions_dir()}")
     committed = (et.transcriptions_dir() / f"{stem}.txt").read_text(encoding="utf-8")
     assert tb.derived_text(stem) == committed
 
@@ -1104,7 +1088,7 @@ def _strand_results() -> dict:
     """Every vendored strand's own grammaticality result, keyed by (book, reading, tradition)."""
     return {
         (vr.book, vr.reading, vr.tradition): vr
-        for vr in pd.check_all(_source_or_skip(), _parser())
+        for vr in pd.check_all(pd.load_source(), _parser())
     }
 
 
@@ -1130,10 +1114,13 @@ def test_the_synthesized_mark_body_reproduces_the_scanner_on_an_agreeing_page(
     all; the five that diverge are covered by the grammaticality test below instead.
     """
     if _EXPECTED_DIVERGENCES[stem]:
+        # The suite's ONE skip, and it states a finding rather than an absence: this page
+        # disagrees with its strand somewhere, so the token-for-token control has no knowable
+        # answer here.  Five stems land here on a clean run; see the module docstring for why
+        # nothing else in this file is allowed to share the channel.
         pytest.skip(
             f"{stem} diverges from its strand; the control needs an agreeing page"
         )
-    _require_source()
     transcription = _transcription(stem)
     book = transcription.header["book"]
     got = [
@@ -1169,7 +1156,6 @@ def test_each_page_is_as_grammatical_as_its_strand_except_where_pinned(
     The chanted verse COUNTS are asserted first, since a status list compared across a boundary
     shift would line up by position and mean nothing.
     """
-    _require_source()
     transcription = _transcription(stem)
     strand = _strand_results()[transcription.key]
     got = [cv.status for cv in tp.check(transcription, _parser())]
@@ -1202,7 +1188,6 @@ def test_the_exodus_appendix_taxton_prints_an_ungrammatical_chanted_verse() -> N
     Tiberian-manuscript prose grammar, a clean rate is not the objective, and the natural
     follow-up is a re-read of the word against the physical book.
     """
-    _require_source()
     transcription = _transcription("simtiq_ex_taxton")
     bodies = tp.chanted_verse_bodies(transcription)
     verse = bodies[2]
@@ -1293,7 +1278,7 @@ def test_the_scanner_determines_every_stroke_kind_and_agrees_with_the_reference(
     what the four Koren stems are made of (see the test below).  It is #17's "distinguish by
     algorithm, encode only exceptions" as it applies to prose.
     """
-    source = _source_or_skip()
+    source = pd.load_source()
     transcription = _transcription(stem)
     kinds = tp.scanner_pasoleg_kinds(transcription)
     assert len(kinds) == _SCANNER_PASOLEG_STROKES[stem]
@@ -1324,7 +1309,7 @@ def test_the_scanner_supplies_the_stroke_kinds_koren_declines_to_state(
     the transcription states no kind, so the determination is not a restatement of one, and
     that the round trip really does compare nothing for this stem.
     """
-    source = _source_or_skip()
+    source = pd.load_source()
     transcription = _transcription(stem)
     stated = [
         et.aside_kind(chunk)

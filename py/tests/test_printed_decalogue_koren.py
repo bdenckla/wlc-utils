@@ -4,7 +4,8 @@ Companion to ``test_printed_decalogue_simanim``. The four-strands derivation its
 that test and by ``printed_decalogue_strands``; here we only confirm the Koren page body renders
 and that its scans are committed.
 
-Skips if the vendored source JSON is absent (regenerate via printed_decalogue_fetch.py).
+The vendored source JSON is committed here, so these FAIL rather than skip if it is absent --
+see ``test_printed_decalogue``'s docstring and ``repo_paths.require_sibling``.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_printed_decalogue_koren.py -v
@@ -17,8 +18,6 @@ from accgram import printed_decalogue_koren_page as kor
 from accgram import transcription_parse as tp
 from accgram import transcription_verdict_column as tvc
 
-import pytest
-
 import repo_paths
 
 
@@ -29,10 +28,7 @@ def test_body_renders() -> None:
     (issue #52): each cell is the checker's verdict for one transcription against its strand's, so
     a row naming a stem with no committed transcription fails here, on the lookup.
     """
-    src = pd.default_source_path()
-    if not src.is_file():
-        pytest.skip(f"vendored printed-Decalogue source not present at {src}")
-    source = pd.load_source(src)
+    source = pd.load_source()
     verdicts = tvc.by_stem(tp.check_all(pd.check_all(source)))
     body = kor.render_body_contents(source, verdicts)
     assert isinstance(body, tuple) and len(body) > 0

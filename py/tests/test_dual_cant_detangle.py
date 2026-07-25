@@ -1,8 +1,11 @@
 """Stage-2 of issue #36: the dual-cantillation detangler.
 
 Drives all three loci (Gen 35:22 + the two Decalogues) through the detangler and the
-*existing* prose grammar.  The corpus-backed assertions skip when the WLC 4.22 kq-u
-corpus or MAM-simple is absent.
+*existing* prose grammar.  The corpus-backed assertions FAIL, rather than skipping, when the
+WLC 4.22 kq-u corpus or MAM-simple is missing: the corpus is committed in this repo's ``out/``,
+so its absence means a tracked file was deleted, and MAM-simple's absence is a
+misconfiguration ``repo_paths.require_mam_simple_dir`` answers with both env overrides.  See
+``repo_paths.require_sibling`` for the argument.
 
 The fixed expectations were originally derived from a one-off corpus survey run in gitignored
 scratch, which no longer exists; this test is now their record, and the assertions below are
@@ -34,16 +37,13 @@ from accgram.prose_ply_grammar import build_parser
 import repo_paths
 
 
-def _detangle_or_skip() -> list[dcd.PassageResult]:
+def _detangle() -> list[dcd.PassageResult]:
     kq_u_dir = rtms_data.default_wlc422_kq_u_dir(repo_paths.repo_root())
-    mam_dir = repo_paths.mam_simple_dir()
-    if not kq_u_dir.is_dir():
-        pytest.skip(f"WLC 4.22 kq-u corpus not present at {kq_u_dir}")
-    if not mam_dir.is_dir():
-        pytest.skip(f"MAM-simple not present at {mam_dir}")
     wlc_index = rtms_data.load_wlc422_index(kq_u_dir)
     mam = load_mam_simple_for_refs(
-        mam_dir, dcd.all_refs_by_book(), include_strands=True
+        repo_paths.require_mam_simple_dir(),
+        dcd.all_refs_by_book(),
+        include_strands=True,
     )
     return dcd.detangle_all(wlc_index, mam, build_parser())
 
@@ -55,7 +55,7 @@ def _all_chanted_verses(
 
 
 def test_gen3522_splits_into_two_and_one_chanted_verse_all_parsing() -> None:
-    results = _detangle_or_skip()
+    results = _detangle()
     gen = next(pr for pr in results if pr.passage.bb == "gn")
     alef, bet = gen.strands
     assert alef.strand_label == "pashut" and bet.strand_label == "midrashit"
@@ -65,7 +65,7 @@ def test_gen3522_splits_into_two_and_one_chanted_verse_all_parsing() -> None:
 
 
 def test_supplied_marks_are_exactly_the_five_clean_supplies() -> None:
-    results = _detangle_or_skip()
+    results = _detangle()
     supplies = [s for pr in results for s in pr.supplied_marks]
     keyed = {(s.bcv, s.strand, s.accent) for s in supplies}  # one row per supply
     assert len(supplies) == 5
@@ -91,7 +91,7 @@ def test_dt58_merkha_is_a_stray_anomaly_in_the_elyon() -> None:
     # is not due: it is emitted as a stray and flagged (a no-accent-due anomaly).  The
     # taxton's omitted qadma is supplied instead (no taxton anomaly).  This is the only
     # anomaly across the three loci.
-    results = _detangle_or_skip()
+    results = _detangle()
     anomalies = [a for pr in results for a in pr.anomalies]
     assert len(anomalies) == 1
     anomaly = anomalies[0]
@@ -103,7 +103,7 @@ def test_dt58_merkha_is_a_stray_anomaly_in_the_elyon() -> None:
 def test_supplied_mark_words_parse_clean() -> None:
     # The supply is precisely what lets the chanted verse parse: a supplied-mark word's
     # chanted verse must be clean and NOT an ungrammatical verse (the issue's reporting requirement).
-    results = _detangle_or_skip()
+    results = _detangle()
     supply_bcvs = {(s.bcv, s.strand) for pr in results for s in pr.supplied_marks}
     for pr in results:
         for tr in pr.strands:
@@ -114,7 +114,7 @@ def test_supplied_mark_words_parse_clean() -> None:
 
 
 def test_dt58_anomaly_surfaces_as_attributed_error_not_crash() -> None:
-    results = _detangle_or_skip()
+    results = _detangle()
     dt = next(pr for pr in results if pr.passage.bb == "dt")
     elyon = next(
         tr for tr in dt.strands if tr.strand == "bet"
@@ -131,7 +131,7 @@ def test_dt58_anomaly_surfaces_as_attributed_error_not_crash() -> None:
 def test_every_chanted_verse_parses_or_is_attributed_only_dt58_is_an_oddity() -> None:
     # The lone dt 5:8 merkha spoils only the elyon's 5:7-10 chanted verse (which contains
     # 5:8); the taxton's 5:8 is rescued by supplying its qadma.  Nothing else is non-clean.
-    results = _detangle_or_skip()
+    results = _detangle()
     cvs = _all_chanted_verses(results)
     bad = [cv.ref for cv in cvs if cv.status not in ("clean", "error")]
     assert not bad, f"unexpected no_parse/location_only: {bad}"
@@ -144,12 +144,11 @@ def test_every_chanted_verse_parses_or_is_attributed_only_dt58_is_an_oddity() ->
 # --------------------------------------------------------------------------- #
 # Stage 3: routing (prose_filter) and fold-in / supplied-marks surfaces.
 # --------------------------------------------------------------------------- #
-def _mam_with_strands_or_skip() -> dict[str, dict]:
-    mam_dir = repo_paths.mam_simple_dir()
-    if not mam_dir.is_dir():
-        pytest.skip(f"MAM-simple not present at {mam_dir}")
+def _mam_with_strands() -> dict[str, dict]:
     return load_mam_simple_for_refs(
-        mam_dir, dcd.all_refs_by_book(), include_strands=True
+        repo_paths.require_mam_simple_dir(),
+        dcd.all_refs_by_book(),
+        include_strands=True,
     )
 
 
@@ -163,7 +162,7 @@ def _range_verses() -> list[tuple[str, int, int]]:
 def test_prose_filter_single_cant_exceptions_match_mam_and_routing() -> None:
     # The hardcoded "un-exclude these 9" set must equal exactly the in-range verses MAM
     # marks single-cantillation (no cant-all-three) -- so it can't silently drift.
-    mam = _mam_with_strands_or_skip()
+    mam = _mam_with_strands()
     derived_single_cant = set()
     for bb, chnu, vrnu in _range_verses():
         verse = mam[f"{bb}{chnu}:{vrnu}"]["mam_simple_verse"]
@@ -183,10 +182,8 @@ def test_prose_filter_single_cant_exceptions_match_mam_and_routing() -> None:
 
 def test_fold_in_yields_one_dt58_ungrammatical_record() -> None:
     kq_u_dir = rtms_data.default_wlc422_kq_u_dir(repo_paths.repo_root())
-    if not kq_u_dir.is_dir():
-        pytest.skip("WLC 4.22 kq-u corpus not present")
     wlc_index = rtms_data.load_wlc422_index(kq_u_dir)
-    mam = _mam_with_strands_or_skip()
+    mam = _mam_with_strands()
     parser = build_parser()
 
     # Genesis 35:22 and the Exodus Decalogue fold in nothing (no oddities).
@@ -206,7 +203,7 @@ def test_fold_in_yields_one_dt58_ungrammatical_record() -> None:
 
 
 def test_supplied_marks_page_renders_all_five_cases_and_punctuation_inventory() -> None:
-    results = _detangle_or_skip()
+    results = _detangle()
     supplies = [s for pr in results for s in pr.supplied_marks]
     punctuation_changes = [d for pr in results for d in pr.punctuation_changes]
     body = supplied_marks.render_body_contents(supplies, punctuation_changes)

@@ -1,8 +1,11 @@
 """Unit tests for the "almost errors" page generator (Plan B).
 
 The pure-logic tests (mode-aware ``word_to_marks`` variant, clean-tree table
-rendering) run anywhere; the end-to-end generation test needs the WLC 4.22 kq-u
-corpus (a sibling repo) and skips when it is absent.
+rendering) run anywhere; the end-to-end generation tests need the WLC 4.22 kq-u
+corpus, which is committed in this repo under ``out/wlc422-kq-u`` -- not, as this said
+before, a sibling repo.  Being tracked here is why its absence FAILS rather than skipping:
+it can only be missing if someone deleted tracked files, and going quiet about that is going
+quiet at the worst moment.  See ``repo_paths.require_sibling`` for the argument.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_almost_errors.py -v
@@ -10,8 +13,6 @@ Run:
 
 from __future__ import annotations
 
-
-import pytest
 
 from accgram import accent_marks as am
 from accgram import almost_errors_html as aeh
@@ -101,20 +102,19 @@ def test_parse_tree_from_text_empty_is_none() -> None:
 
 
 # --------------------------------------------------------------------------- #
-# Corpus-backed end-to-end generation (skips when the kq-u corpus is absent).
+# Corpus-backed end-to-end generation.
 # --------------------------------------------------------------------------- #
 _REPO_ROOT = repo_paths.repo_root()
 
 
-def _load_index_or_skip():
-    kq_u_dir = rtms_data.default_wlc422_kq_u_dir(_REPO_ROOT)
-    if not kq_u_dir.is_dir():
-        pytest.skip(f"WLC 4.22 kq-u corpus not present at {kq_u_dir}")
-    return rtms_data.load_wlc422_index(kq_u_dir)
+def _load_index():
+    # No presence guard: ``load_wlc422_index`` already raises FileNotFoundError naming the
+    # directory it looked in, which is the whole of what a guard here could have said.
+    return rtms_data.load_wlc422_index(rtms_data.default_wlc422_kq_u_dir(_REPO_ROOT))
 
 
 def test_all_five_telg_verses_parse_clean_in_all_three_readings() -> None:
-    index = _load_index_or_skip()
+    index = _load_index()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
     for bcv in aeo._TELG_EXHIBIT_REFS:
         for mode, _label in aeo._TELG_MODES:
@@ -125,7 +125,7 @@ def test_all_five_telg_verses_parse_clean_in_all_three_readings() -> None:
 def test_exactly_three_telg_exhibit_words_are_same_letter() -> None:
     # gn5:29, zp2:15 (telg + gershayim) and 2k17:13 (telg + geresh muqdam) stack both marks
     # on one base letter; lv10:4 and ek48:10 spread them across two letters of one word.
-    index = _load_index_or_skip()
+    index = _load_index()
     same_letter = sum(
         aet._telg_marks_share_letter(aet._telg_gerstar_word(index[bcv]))
         for bcv in aeo._TELG_EXHIBIT_REFS
@@ -134,7 +134,7 @@ def test_exactly_three_telg_exhibit_words_are_same_letter() -> None:
 
 
 def test_ek2031_tree_fuses_mahapakh_qadma() -> None:
-    index = _load_index_or_skip()
+    index = _load_index()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
     text = aet._prose_verse_tree_text("ek20:31", index, parser, has_legarmeh)
     assert "mahapakh!qadma" in text
@@ -146,7 +146,7 @@ def test_ek2031_verdict_table_only_fused_and_qadma_mah_parse() -> None:
     # qadma-then-mahapakh sequence parse (the grammar's pashta_phrase has rules for
     # MAHAPAKHQADMA and the cross-letter QADMA MAHAPAKH pair, but not for a bare mahapakh, a
     # bare qadma, or a mahapakh-then-qadma order).
-    index = _load_index_or_skip()
+    index = _load_index()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
     verdicts = {
         mode: aet._ek_verdict_for(mode, index, parser, has_legarmeh)
@@ -159,7 +159,7 @@ def test_ek2031_verdict_table_only_fused_and_qadma_mah_parse() -> None:
 
 
 def test_lv2520_tree_is_illegal_mark() -> None:
-    index = _load_index_or_skip()
+    index = _load_index()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
     text = aet._prose_verse_tree_text("lv25:20", index, parser, has_legarmeh)
     assert "illegal_mark" in text
@@ -167,7 +167,7 @@ def test_lv2520_tree_is_illegal_mark() -> None:
 
 
 def test_render_body_contents_smoke() -> None:
-    index = _load_index_or_skip()
+    index = _load_index()
     parser, has_legarmeh = build_parser(), HasLegarmeh()
     body = aeh.render_body_contents(index, parser, has_legarmeh)
     rendered = H.el_to_str_no_wbr(body[0])

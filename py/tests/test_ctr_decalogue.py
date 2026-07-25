@@ -16,8 +16,11 @@ against a re-fetch or a re-vendoring that would quietly change it:
 Every residual difference from the followed strand is CONJUNCTIVE -- the disjunctive skeleton,
 which is what #69 claims survives, is intact in both books.
 
-Skips if either vendored JSON is absent (regenerate via ctr_decalogue_fetch.py /
-printed_decalogue_fetch.py).
+Both vendored JSONs are committed here under ``in/accgram``, so these FAIL rather than skip if
+one is absent: the fetch scripts are how the file is regenerated, not a dependency a runner may
+be missing, and a tracked file having been deleted is the last moment to go quiet.  ``load_ctr``
+and ``load_source`` already raise naming the file, which is the whole of what a guard could say.
+See ``repo_paths.require_sibling`` for the argument.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_ctr_decalogue.py -v
@@ -70,25 +73,17 @@ _EXPECTED = {
 }
 
 
-def _ctr_or_skip() -> dict:
-    path = cd.default_ctr_path()
-    if not path.is_file():
-        pytest.skip(
-            f"vendored CTR Decalogue not present at {path} (run ctr_decalogue_fetch.py)"
-        )
-    return cd.load_ctr(path)
+def _ctr() -> dict:
+    return cd.load_ctr()
 
 
-def _source_or_skip() -> dict:
-    src = pd.default_source_path()
-    if not src.is_file():
-        pytest.skip(f"vendored printed-Decalogue source not present at {src}")
-    return pd.load_source(src)
+def _source() -> dict:
+    return pd.load_source()
 
 
 def test_vendored_ctr_has_both_decalogue_spans() -> None:
     """The snapshot holds Exodus 20:2-14 and Deuteronomy 5:6-18, 13 verses each."""
-    ctr = _ctr_or_skip()
+    ctr = _ctr()
     assert set(ctr["chapters"]) == {"ex", "dt"}
     assert list(ctr["chapters"]["ex"]["decalogue_verses"]) == [
         f"20:{v}" for v in range(2, 15)
@@ -101,7 +96,7 @@ def test_vendored_ctr_has_both_decalogue_spans() -> None:
 @pytest.mark.parametrize("book", ["ex", "dt"])
 def test_ctr_follows_its_strand_at_the_glyph_level(book: str) -> None:
     """CTR agrees with its followed strand at exactly the pinned word count."""
-    ctr, source = _ctr_or_skip(), _source_or_skip()
+    ctr, source = _ctr(), _source()
     exp = _EXPECTED[book]
     cmp = cd.compare(ctr, source, book, exp["primary"])
     assert cmp.agree == exp["agree"]
@@ -111,7 +106,7 @@ def test_ctr_follows_its_strand_at_the_glyph_level(book: str) -> None:
 @pytest.mark.parametrize("book", ["ex", "dt"])
 def test_residual_differences_are_exactly_these_and_all_conjunctive(book: str) -> None:
     """The residuals are the pinned words, and every one leaves the disjunctive skeleton intact."""
-    ctr, source = _ctr_or_skip(), _source_or_skip()
+    ctr, source = _ctr(), _source()
     exp = _EXPECTED[book]
     cmp = cd.compare(ctr, source, book, exp["primary"])
     assert {d.skeleton for d in cmp.diffs} == exp["residuals"]
@@ -131,7 +126,7 @@ def test_the_cross_strand_agreement_collapses(book: str) -> None:
     out.  Pinned loosely (a wide margin) rather than to an exact count, since the cross diff is
     not the finding and its exact difflib alignment is not worth freezing.
     """
-    ctr, source = _ctr_or_skip(), _source_or_skip()
+    ctr, source = _ctr(), _source()
     exp = _EXPECTED[book]
     primary = cd.compare(ctr, source, book, exp["primary"])
     cross = cd.compare(ctr, source, book, cd.CROSS[book])
@@ -143,7 +138,7 @@ def test_ctr_sof_pasuq_span_structure(book: str) -> None:
     """Deuteronomy shares the taxton's 13-verse division; Exodus has its own 16 sof pasuqs, the
     elyon accents notwithstanding -- it does not group the commandments the elyon way.
     """
-    ctr, source = _ctr_or_skip(), _source_or_skip()
+    ctr, source = _ctr(), _source()
     exp = _EXPECTED[book]
     n_spans = len(cd.sof_pasuq_spans(ctr, book))
     assert n_spans == exp["ctr_spans"]
@@ -164,7 +159,7 @@ def test_only_spans_with_a_silluq_are_chanted_verses(book: str) -> None:
     sixteen spans have a silluq, and the other seven still have the elyon's mid-verse
     disjunctive where a silluq would have to be.  Deuteronomy's thirteen all have one.
     """
-    ctr = _ctr_or_skip()
+    ctr = _ctr()
     exp = _EXPECTED[book]
     spans = cd.span_silluq_status(ctr, book)
     assert len(spans) == exp["ctr_spans"]
@@ -181,7 +176,7 @@ def test_the_sixteen_exodus_marks_are_the_union_of_both_strands_boundaries() -> 
     what "belongs to neither strand" means here, and it is a stronger claim than the count
     alone: every one of CTR's marks is some strand's, and no strand's mark is missing.
     """
-    ctr, source = _ctr_or_skip(), _source_or_skip()
+    ctr, source = _ctr(), _source()
     ctr_ends = {s.skeleton for s in cd.span_silluq_status(ctr, "ex")}
     strand_ends = {}
     for reading in ("elyon", "taxton"):

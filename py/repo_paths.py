@@ -83,10 +83,6 @@ def sibling(name: str) -> Path:
     return siblings_root() / name
 
 
-def mam_simple_dir() -> Path:
-    return sibling("MAM-simple") / "json-vtrad-bhs"
-
-
 def require_sibling(name: str, path: Path) -> Path:
     """Return ``path``, or raise saying both ways to point this repo at ``name``.
 
@@ -111,6 +107,16 @@ def require_sibling(name: str, path: Path) -> Path:
         f"  {_env_name(name)}=<path to the {name} clone>\n"
         f"  WLC_SIBLINGS_ROOT=<directory holding all the sibling clones>"
     )
+
+
+def mam_simple_dir() -> Path:
+    """MAM-simple's ``json-vtrad-bhs`` subtree: one JSON per book, verse-element streams."""
+    return sibling("MAM-simple") / "json-vtrad-bhs"
+
+
+def require_mam_simple_dir() -> Path:
+    """``mam_simple_dir``, checked -- see ``require_sibling`` for why this is not a skip."""
+    return require_sibling("MAM-simple", mam_simple_dir())
 
 
 def mam_parsed_plus_dir() -> Path:

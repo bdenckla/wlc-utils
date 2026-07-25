@@ -6,7 +6,8 @@ per-cell check that a word's sof pasuq agrees with whether its strand ends a cha
 there), that the two signal words identify the strands, and that ``_strip_pointing`` keeps the
 cantillation signal (accents + sof pasuq) while dropping vowels, MAM-simple style.
 
-Skips if the vendored source JSON is absent (regenerate via printed_decalogue_fetch.py).
+The vendored source JSON is committed here, so these FAIL rather than skip if it is absent --
+see ``test_printed_decalogue``'s docstring and ``repo_paths.require_sibling``.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_printed_decalogue_page.py -v
@@ -14,7 +15,6 @@ Run:
 
 from __future__ import annotations
 
-import pytest
 
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_page as page
@@ -32,11 +32,8 @@ _QAMATS = "\N{HEBREW POINT QAMATS}"  # U+05B8, a vowel -- must be dropped
 _HATAF_PATAH = "\N{HEBREW POINT HATAF PATAH}"  # U+05B2, a vowel -- must be dropped
 
 
-def _source_or_skip() -> dict:
-    src = pd.default_source_path()
-    if not src.is_file():
-        pytest.skip(f"vendored printed-Decalogue source not present at {src}")
-    return pd.load_source(src)
+def _source() -> dict:
+    return pd.load_source()
 
 
 def test_body_renders() -> None:
@@ -48,7 +45,7 @@ def test_body_renders() -> None:
     It also runs the transcription paragraph's own guard (issue #52): the editions said to print
     the p-trad elyon's ungrammatical opening verse must really be the ones following it.
     """
-    source = _source_or_skip()
+    source = _source()
     results = pd.check_all(source)
     body = page.render_body_contents(results, source, tp.check_all(results))
     assert isinstance(body, tuple) and len(body) > 0
@@ -57,7 +54,7 @@ def test_body_renders() -> None:
 def test_strip_pointing_keeps_accent_and_sof_pasuq_drops_vowels() -> None:
     """On a verse-final עבדים (silluq + sof pasuq): letters and the two signal marks survive,
     the vowels do not."""
-    results = pd.check_all(_source_or_skip())
+    results = pd.check_all(_source())
     readings = {r.name: r for r in pds.resolve_readings(results)}
     # m-trad elyon gives אנכי…עבדים its own verse, so its עבדים is verse-final (silluq + sof pasuq).
     avadim = readings["m-trad elyon"].avadim_word
@@ -74,7 +71,7 @@ def test_me_pt_identical_through_avadim() -> None:
     bullet claims. The two part at the span's OTHER signal word, על־פני, which is why each now has
     its own table row; that parting is pinned by test_signal_pairs_identify_strands below.
     """
-    results = pd.check_all(_source_or_skip())
+    results = pd.check_all(_source())
     readings = {r.name: r for r in pds.resolve_readings(results)}
     me, pt = readings["m-trad elyon"], readings["p-trad taḥton"]
     assert page._strip_pointing(me.first_verse_words[0]) == page._strip_pointing(
@@ -90,7 +87,7 @@ def test_signal_pairs_identify_strands() -> None:
     strands, so the pair alone places a text among them. ``pds.resolve_readings`` checks the
     pairwise distinctness itself; this pins the actual four pairs from outside, so a data change
     that merely permuted them (still distinct, but no longer these) also fails."""
-    readings = pds.resolve_readings(pd.check_all(_source_or_skip()))
+    readings = pds.resolve_readings(pd.check_all(_source()))
     pairs = {r.name: (r.avadim_accent, r.penei_accent) for r in readings}
     assert pairs == {
         "m-trad taḥton": (pds.ROM_ETNAHTA, pds.ROM_SILLUQ),

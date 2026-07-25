@@ -12,7 +12,10 @@ hand-transcribed real editions:
     single verse (nine verses total vs the manuscript's ten). That merged verse is far the
     longest of its version.
 
-Skips if the vendored source JSON is absent (regenerate via printed_decalogue_fetch.py).
+The vendored source JSON is committed here as ``in/accgram/printed_decalogue_teamim.json``, so
+these FAIL rather than skip if it is absent -- printed_decalogue_fetch.py regenerates it, but a
+tracked file being gone is a deletion to shout about, not an optional dependency.  See
+``repo_paths.require_sibling`` for the argument.
 
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_printed_decalogue.py -v
@@ -20,7 +23,6 @@ Run:
 
 from __future__ import annotations
 
-import pytest
 
 from accgram import printed_decalogue as pd
 from accgram import transcription_parse as tp
@@ -28,11 +30,8 @@ from accgram import transcription_parse as tp
 _SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
 
 
-def _results_or_skip() -> list[pd.VersionResult]:
-    src = pd.default_source_path()
-    if not src.is_file():
-        pytest.skip(f"vendored printed-Decalogue source not present at {src}")
-    return pd.check_all(pd.load_source(src))
+def _results() -> list[pd.VersionResult]:
+    return pd.check_all(pd.load_source())
 
 
 def _by_key(
@@ -42,7 +41,7 @@ def _by_key(
 
 
 def test_eight_versions_present() -> None:
-    results = _results_or_skip()
+    results = _results()
     keys = set(_by_key(results))
     expected = {
         (book, reading, tradition)
@@ -55,7 +54,7 @@ def test_eight_versions_present() -> None:
 
 def test_taxton_all_clean() -> None:
     """taxton parses clean in both books and both traditions."""
-    results = _results_or_skip()
+    results = _results()
     for vr in results:
         if vr.reading == "taxton":
             assert (
@@ -65,7 +64,7 @@ def test_taxton_all_clean() -> None:
 
 def test_manuscript_elyon_all_clean() -> None:
     """MAM's own manuscript elyon parses clean in both books."""
-    results = _results_or_skip()
+    results = _results()
     by_key = _by_key(results)
     for book in ("ex", "dt"):
         vr = by_key[(book, "elyon", "manuscript")]
@@ -79,7 +78,7 @@ def test_printed_elyon_one_ungrammatical_merged_first_verse() -> None:
     length -- Deuteronomy's 55-word Sabbath elyon verse parses clean, while this merged
     verse (51 words) does not; it is the merged structure, not the size, that defeats the
     grammar."""
-    results = _results_or_skip()
+    results = _results()
     by_key = _by_key(results)
     for book in ("ex", "dt"):
         vr = by_key[(book, "elyon", "printed")]
@@ -100,7 +99,7 @@ def test_printed_elyon_one_ungrammatical_merged_first_verse() -> None:
 
 
 def test_total_ungrammatical_is_two() -> None:
-    results = _results_or_skip()
+    results = _results()
     total = sum(len(vr.ungrammatical) for vr in results)
     assert total == 2
 
@@ -118,7 +117,7 @@ def test_the_transcriptions_section_records_every_page_against_its_strand() -> N
     ungrammatical where its strand is clean -- and the other eleven must show none, which is the
     half that would fail if a re-vendoring quietly made some other page depart.
     """
-    results = _results_or_skip()
+    results = _results()
     section = tp.payload_objs(tp.check_all(results))
     assert len(section) == 12
     by_stem = {entry["stem"]: entry for entry in section}
@@ -146,7 +145,7 @@ def test_the_four_ungrammatical_pages_are_the_ones_printing_the_merged_verse() -
     which is what makes "ungrammatical somewhere" the wrong summary and ``departures`` the right
     one. Pinned because both satellite pages now say this in prose.
     """
-    verdicts = tp.check_all(_results_or_skip())
+    verdicts = tp.check_all(_results())
     shared = {
         r.stem: [cv.index for cv in r.ungrammatical]
         for r in verdicts
