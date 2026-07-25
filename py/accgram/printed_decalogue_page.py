@@ -21,10 +21,17 @@ idealization -- and one departs.  Those counts come live from ``transcription_pa
 and the per-Decalogue verdicts stay on the two satellite pages, which is where they are
 documented; the hub must not assert what a satellite does not.
 
+The appendix cataloguing how the two taxton strands differ states counts, and every one of them
+is derived: ``printed_decalogue_taxton_diff`` re-counts the whole Deuteronomy divergence set from
+the vendored words on each generation and raises unless it still decomposes as pinned there.  A
+2026-07-25 claim audit found the appendix asserting "three" against a table showing seven, which
+is why no number in it is typed any more.
+
 Editorial / style conventions for the rendered prose are single-sourced in
 ``printed_decalogue_strands`` (bare-Hebrew strand names תחתון / עליון in output, romanized only
 in ``title`` / ``alt`` attributes and internal keys; ``ROM_*`` accent names never retyped; real
-em dashes).
+em dashes; and ``WORD_DIVISION_IS_NOT_AN_ACCENT``, the convention this page states on behalf of
+the whole trio).
 
 Run via ``main_accgram.py generate-html``.
 """
@@ -36,6 +43,7 @@ from pathlib import Path
 
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
+from accgram import printed_decalogue_taxton_diff as pdt
 from accgram import rtms_report
 from accgram import transcription_parse as tp
 from accgram.almost_errors_html_shared import hbo, link
@@ -634,6 +642,11 @@ def _four_strands_section(
                 " otherwise follow.",
             )
         ),
+        # The hub is where a reader of the trio first meets a word-division difference, so it is
+        # where the convention governing every "every accent" verdict on all three pages is stated.
+        # Single-sourced in pds and shared verbatim with both satellites; see the guardrail comment
+        # at that constant for the self-contradiction on the Koren page that made it necessary.
+        H.para((pds.WORD_DIVISION_IS_NOT_AN_ACCENT,)),
         H.para(
             (
                 f"Of these four strands, only the p-trad {_ELYON} is ungrammatical — the "
@@ -911,6 +924,13 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 " Decalogues: the same publishing house, the opposite tradition.",
             )
         ),
+        # GUARDRAIL (2026-07-25 claim audit, finding 3). This paragraph used to say "Three of its
+        # four follow their strand in every accent; the fourth differs only in how it divides two
+        # chanted words" -- the Koren page's own summary, repeated here, and wrong twice over: TWO
+        # of the four have word-division differences (the Exodus appendix splits two compounds, the
+        # Deuteronomy appendix joins one), and under the convention stated above a word division is
+        # not an accent difference, so all four follow their strand in every accent. Keep the two
+        # claims separate here, as the Koren page now does: accents, then word division.
         H.para(
             (
                 "See also ",
@@ -919,9 +939,10 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                     "printed-decalogue-koren.html",
                 ),
                 f" — it has the p-trad {_TAHTON} in its main Decalogues and the p-trad"
-                f" {_ELYON} in its appendix ones, in Exodus and Deuteronomy alike. Three of its"
-                " four follow their strand in every accent; the fourth differs only in how it"
-                " divides two chanted words.",
+                f" {_ELYON} in its appendix ones, in Exodus and Deuteronomy alike. All four of its"
+                " Decalogues follow their strand in every accent, and two of the four divide a"
+                " chanted word differently from it — which, by the convention above, is not an"
+                " accent difference.",
             )
         ),
     )
@@ -966,28 +987,6 @@ def _ends_on_disjunctive(word: str) -> bool:
         _ACCENT_LO <= ord(ch) <= _ACCENT_HI and ch not in _PROSE_CONJUNCTIVES
         for ch in word
     )
-
-
-def _dt_taxton_sabbath_words(
-    results: list[pd.VersionResult], tradition: str
-) -> list[str]:
-    """The words of the Deuteronomy תחתון Sabbath chanted verse (``tradition`` = "manuscript" /
-    "printed"), pulled live from the vendored data — the one chanted verse whose words include the
-    skeleton בהמתך. Asserts exactly one match so a data change that moved or renumbered the verse
-    fails the build rather than silently mis-rendering."""
-    by_key = {(vr.book, vr.reading, vr.tradition): vr for vr in results}
-    vr = by_key[("dt", "taxton", tradition)]
-    sabbath = [
-        cv
-        for cv in vr.chanted_verses
-        if any("בהמתך" in pds.base_skeleton(w) for w in cv.words)
-    ]
-    if len(sabbath) != 1:
-        raise AssertionError(
-            f"dt taxton {tradition}: expected exactly 1 Sabbath verse (skeleton בהמתך), "
-            f"found {len(sabbath)} -- the vendored readings drifted"
-        )
-    return sabbath[0].words
 
 
 def _differing_span(
@@ -1059,8 +1058,8 @@ def _sabbath_diff_table(results: list[pd.VersionResult]) -> object:
     disjunctive check are all derived live from the data, so nothing here can drift from the
     grammar-checked text."""
     m_span, p_span = _differing_span(
-        _dt_taxton_sabbath_words(results, "manuscript"),
-        _dt_taxton_sabbath_words(results, "printed"),
+        pdt.sabbath_verse_words(results, "manuscript"),
+        pdt.sabbath_verse_words(results, "printed"),
     )
     m_lines = _split_into_lines(m_span, _SABBATH_LINE_ENDS)
     p_lines = _split_into_lines(p_span, _SABBATH_LINE_ENDS)
@@ -1072,6 +1071,12 @@ def _sabbath_diff_table(results: list[pd.VersionResult]) -> object:
 
 
 def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
+    # Every number in this appendix is DERIVED, and the derivation raises on drift: this one call
+    # re-counts the whole Deuteronomy divergence set from the vendored words and fails the build
+    # unless it still decomposes as printed_decalogue_taxton_diff pins it (12 = 4 boundary + 7
+    # Sabbath + 1 vocalization), and unless the seven really do all fall inside the Sabbath chanted
+    # verse. That last check is what licenses the prose's "a single stretch".
+    counts = pdt.dt_taxton_diff_counts(results)
     return (
         H.heading_level_2(
             f"Appendix: how the two {_TAHTON} strands differ",
@@ -1086,39 +1091,57 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 "grammaticality. "
                 "The one structural difference — the p-trad ending its first verse at מבית עבדים, "
                 "and the boundary accents on ",
-                *H.bdi_multi(
-                    "אנכי",
-                    "אלהיך",
-                    "מבית",
-                    "עבדים",
-                ),
+                # The four boundary words come from printed_decalogue_taxton_diff, which also
+                # classifies a difference site as "boundary" by matching these skeletons -- so the
+                # words named here and the four excluded from the counts below cannot come apart.
+                *H.bdi_multi(*pdt.BOUNDARY_SKELETONS),
                 " that follow from it — is the verdict's own point and is not repeated here.",
             )
         ),
         H.para(
             (
-                "In Exodus the two strands differ in essentially one grammar-irrelevant respect: "
-                "the vocalization of לא תרצח — ",
+                "In Exodus, those four words aside, the two strands part at exactly one more: the "
+                "vocalization of לא תרצח — ",
                 hbo("תִּרְצָ֖ח"),
                 " (m-trad, qamats) against ",
                 hbo("תִּרְצַ֖ח"),
                 " (p-trad, patax). Both have the same ",
                 _ROM_TIPEHA,
-                "; only the vowel differs.",
+                "; only the vowel differs. So an Exodus Decalogue reaches no difference at all in "
+                "the Shabbat commandment — which is why the Simanim and Koren pages say their "
+                "Exodus Decalogues cannot adjudicate it.",
             )
         ),
+        # GUARDRAIL (2026-07-25 claim audit, finding 1). This paragraph used to open "Deuteronomy
+        # differs in more ways. Three are differences of cantillation ... and all three fall within
+        # a single stretch of the Sabbath commandment" -- and the table rendered directly beneath it
+        # displays SEVEN word-level differences in that stretch, so the sentence was false as
+        # written. "Three" was never a count of differences: it is the number of DISJUNCTIVELY
+        # ACCENTED words the table's line-pairs end on, the Shabbat signal-word shorthand both
+        # satellite pages correctly describe as "not the only words the two traditions accent
+        # differently". Two rules follow. Never state a bare count here that the table can be read
+        # against without saying what it counts; and never let this page's "three" imply the table
+        # shows three rows' worth of difference. Every number below is now derived (see the counts
+        # call above), so the failure mode left is a WORDING one -- keep the scopes explicit.
         H.para(
             (
-                "Deuteronomy differs in more ways. Three are differences of cantillation — "
-                "which, unlike the Exodus vowel-swap, do change the parse — and all three fall "
-                "within a single stretch "
-                "of the Sabbath commandment. Below is just that stretch — the run of words the two "
-                "strands accent differently, everything before and after it being identical — shown "
-                "in each strand, m-trad above p-trad, stripped to letters and accents, "
-                "each line ending on a disjunctive accent. Those three line-ending words are the"
-                " Shabbat commandment's signal words — the ones the Simanim and Koren pages"
-                " highlight on their scans to tell a p-trad Shabbat commandment from an"
-                " m-trad one:",
+                "Deuteronomy differs in more ways. Over the whole Decalogue the two strands part "
+                "at ",
+                H.bold(str(counts["total"])),
+                " chanted words: the four boundary words just set aside, one that differs in "
+                "vocalization alone (the same לא תרצח, noted again below), and ",
+                H.bold(str(counts["sabbath"])),
+                " that all fall within a single stretch of the Sabbath commandment. Those "
+                f"{counts['sabbath']} are differences of cantillation, so unlike the Exodus "
+                "vowel-swap they give the two strands genuinely different parses. Below is just "
+                "that stretch — the run of words the two strands accent differently, everything "
+                "before and after it being identical — shown in each strand, m-trad above p-trad, "
+                "stripped to letters and accents, each line ending on a disjunctive accent. The ",
+                H.bold(str(len(_SABBATH_LINE_ENDS))),
+                " words those lines end on are the Shabbat commandment's signal words — the ones "
+                "the Simanim and Koren pages highlight on their scans to tell a p-trad Shabbat "
+                "commandment from an m-trad one. They are a shorthand for the stretch, not the "
+                "whole of it:",
             )
         ),
         # Just the differing stretch of the Sabbath verse, pulled and reduced live from the data (so
@@ -1130,8 +1153,8 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 # "X / Y" is two adjacent RTL words separated only by a neutral slash, so both
                 # are <bdi>-isolated (around the lang="hbo" span) to keep the pair from
                 # rendering reversed. Lone hbo forms elsewhere, bounded by English, need no bdi.
-                "One further difference is purely vocalization — vowel-pointing, not "
-                "cantillation: the same ",
+                "The one difference outside that stretch is purely vocalization — "
+                "vowel-pointing, not cantillation: the same ",
                 H.bdi(hbo("תִּרְצָ֖ח")),
                 " / ",
                 H.bdi(hbo("תִּרְצַ֖ח")),

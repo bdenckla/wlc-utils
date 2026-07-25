@@ -142,14 +142,25 @@ _EXPECTED_DIVERGENCES = {
     # in both traditions.  The one discriminator this Decalogue reaches is the CHANTED VERSE
     # BOUNDARY at עבדים, pinned below at 13.
     "koren_ex_taxton": [],
-    # Also empty, but this one licenses far more than the Exodus page above.  The Deuteronomy
-    # taxton strands differ in five independent ways and Koren takes the p-trad side of every
-    # one: כל־מלאכה (geresh / pazer), ועבדך־ואמתך (revia / telisha gedola), וכל־בהמתך (zaqef /
-    # revia -- ws/dt/taxton/printed is the ONLY one of the eight strands to depart there), the
-    # pasoleg on אתה (present / absent, so the pasoleg COUNT discriminates), and the chanted
-    # verse boundary at עבדים pinned below.  The first four sit inside the Shabbat commandment,
-    # exactly where simtiq_dt_taxton departs TO the m-trad -- so these two transcriptions
-    # disagree about the same commandment, and neither is the other's rounding error.
+    # Also empty, but this one licenses far more than the Exodus page above.  The two Deuteronomy
+    # taxton strands part at TWELVE chanted words, and Koren takes the p-trad side of all eleven
+    # that a transcription of accents can see -- the twelfth is the qamats/patax of לא תרצח, which
+    # no accent transcription reaches.  Five of the twelve are the ones this comment used to list
+    # on their own: כל־מלאכה (geresh / pazer), ועבדך־ואמתך (revia / telisha gedola), וכל־בהמתך
+    # (zaqef / revia -- ws/dt/taxton/printed is the ONLY one of the eight strands to depart there),
+    # the pasoleg on אתה (present / absent, so the pasoleg COUNT discriminates), and the chanted
+    # verse boundary at עבדים pinned below.
+    #
+    # Counting them as "five independent ways" is what the Koren page said until the 2026-07-25
+    # claim audit: a number with no stated criterion, and unreconcilable with the hub's "three" and
+    # this file's own "eight" (see simtan_dt_taxton) for the same divergence set.  The criterion is
+    # now single-sourced in accgram/printed_decalogue_taxton_diff.py -- one site per chanted word,
+    # with a word division counting once -- which derives twelve and decomposes them 4 boundary +
+    # 7 Sabbath + 1 vocalization.  Cite that module, not a fresh count, when a page needs a number.
+    #
+    # Seven of the twelve sit inside the Shabbat commandment, exactly where simtiq_dt_taxton departs
+    # TO the m-trad -- so these two transcriptions disagree about the same commandment, and neither
+    # is the other's rounding error.
     "koren_dt_taxton": [],
     # Koren's Exodus APPENDIX Decalogue (elyon, p. 38) is the FIRST Koren page to diverge:
     # 142 reference tokens against 144, at TWO points.  Both are WORD-DIVISION differences, not
@@ -177,8 +188,14 @@ _EXPECTED_DIVERGENCES = {
     # is the point.  Where the Exodus elyon page SPLITS two maqaf compounds the vendored strand
     # joins (יהיה־לך and ובנך־ובתך), printing each atom as its own accented word, this page JOINS
     # both, matching ws/dt/elyon/printed -- so that split is a fact about Koren's Exodus page, not
-    # a house style.  Checked against all eight strands: none anywhere separates יהיה from לך, and
-    # in Deuteronomy all four dt strands JOIN ובנך־ובתך.  That last is the REVERSE of Exodus,
+    # a house style.  Checked against all eight strands: none of them SPLITS THE COMPOUND יהיה־לך,
+    # and in Deuteronomy all four dt strands JOIN ובנך־ובתך.  Say it about the compound, never as
+    # "no strand separates יהיה from לך" -- the four taxton strands separate those two words as a
+    # matter of course, binding לא to יהיה (לא־יהיה, merkha) and leaving לך alone with a tevir, so
+    # only the four elyon strands have the compound at all.  The looser wording reached the Koren
+    # page's rendered prose and the 2026-07-25 claim audit found it refuted by the hub's own
+    # four-strands table, which shows the taxton division in its pT row.  That last is the REVERSE
+    # of Exodus,
     # where the two ex/taxton strands split ובנך and so corroborated the koren_ex_elyon split; in
     # Deuteronomy no strand splits it, so a split here would have been Koren-alone -- and Koren
     # makes none.  One token-invisible word-division difference is kept in the .txt but is not a
@@ -205,10 +222,18 @@ _EXPECTED_DIVERGENCES = {
     # m-trad verdict into an unsupported one.
     "simtan_ex_taxton": [],
     # SimTan's Deuteronomy main Decalogue (taxton, pp. 297-298), the second m-trad pin
-    # here and by far the sharper test: where the Exodus taxton's two strands differ in only
-    # three regions, the two dt/taxton strands differ in EIGHT (issue #69 Result 6's five, plus
-    # the word division at לא תעשה, plus the stroke count).  This transcription takes the m-trad
-    # side of every one, so what is pinned below is the single place it agrees with NEITHER.
+    # here and by far the sharper test: where the Exodus taxton's two strands part at only FIVE
+    # chanted words (three difference regions in the token stream, since מבית and עבדים are
+    # adjacent and תרצח's is a vowel), the two dt/taxton strands part at TWELVE -- the same five
+    # plus the whole Sabbath stretch.  This transcription takes the m-trad side of every one it
+    # reaches, so what is pinned below is the single place it agrees with NEITHER.
+    #
+    # This comment said EIGHT until the 2026-07-25 claim audit, glossed as "issue #69 Result 6's
+    # five, plus the word division at לא תעשה, plus the stroke count" -- which is seven, and
+    # double-counts, the stroke on אתה being one of the five.  Both counts are superseded: the
+    # criterion and the decomposition are single-sourced in
+    # accgram/printed_decalogue_taxton_diff.py, which derives them from the vendored words on every
+    # page generation.  Take the number from there rather than recounting here.
     #
     # qadma on ויום (5:13) where ws/dt/taxton/manuscript -- and every other taxton strand -- has
     # pashta.  Confirmed off the page rather than corrected: Ben flagged it while typing as a

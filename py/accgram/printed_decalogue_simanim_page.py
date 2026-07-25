@@ -780,8 +780,14 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 "simtiq_ex_taxton",
                 "246",
                 ("p-trad ", _TAHTON),
-                "Every chanted verse boundary and the whole disjunctive skeleton. Three"
-                " differences, every one of them in a conjunctive.",
+                # Not "every accent": two of its three differences really are accent differences,
+                # which is what distinguishes this row from pp. 83-84's word-division-only pair.
+                # The third IS a word division, named as such so this row and the convention above
+                # it stay consistent (2026-07-25 claim audit, finding 3).
+                "Every chanted verse boundary and the whole disjunctive skeleton, but not every"
+                " accent: three differences, each of them in a conjunctive. Two are accents it"
+                " adds; the third follows from the same word division as the Exodus main"
+                " Decalogue's, the לא of לא תחמד joined here where the strand leaves it free.",
             ),
             (
                 "Deuteronomy main",
@@ -798,9 +804,10 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 (
                     "p-trad throughout ",
                     H.bold("except the Shabbat commandment"),
-                    ", whose accents are m-trad. The chanted verse division stays p-trad —"
-                    " thirteen chanted verses, not the m-trad's twelve — so the departure is one"
-                    " of accents alone.",
+                    ", whose accents are m-trad — and with them the m-trad's word division there,"
+                    " לא and תעשה standing apart where the p-trad joins them by maqaf. The"
+                    " chanted verse division stays p-trad — thirteen chanted verses, not the"
+                    " m-trad's twelve — so not one verse boundary moves.",
                 ),
             ),
         ),
@@ -896,6 +903,12 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 " prints: run through the same prose grammar checker, does it parse?",
             )
         ),
+        # Single-sourced in pds and stated verbatim on all three pages of the trio (2026-07-25 claim
+        # audit, finding 3), since both verdict tables below are written in its terms: pp. 83-84
+        # follow their strand in every accent AND divide two chanted words differently from it, and
+        # with the convention unstated those two claims read as contradicting each other. Splice the
+        # constant; don't paraphrase it, and don't scope it to one of the two tables.
+        H.para((pds.WORD_DIVISION_IS_NOT_AN_ACCENT,)),
         _tiqqun_verdict_table(verdicts),
         # The grammaticality column's two findings on this page (issue #52). The four p-trad
         # elyon Decalogues across this page and the Koren page print the strand's ungrammatical
@@ -969,9 +982,10 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 f" Deuteronomy {_TAHTON}, the p-trad and m-trad also diverge at"
                 " the Shabbat commandment, but there the Tiqqun (appendix, p. 247) follows the"
                 " m-trad, not the p-trad."
-                " That divergence, though, is one of accents alone: the two traditions divide the"
-                " Shabbat commandment into chanted verses identically, differing only on some"
-                " mid-verse accents. So the precise extent of the Tiqqun's p-trad allegiance is as"
+                " That divergence, though, moves no chanted verse boundary: the two traditions"
+                " divide the Shabbat commandment into chanted verses identically, differing only"
+                " on some mid-verse accents and, at לא תעשה, on word division. So the precise"
+                " extent of the Tiqqun's p-trad allegiance is as"
                 " the title states it: the Tiqqun follows the p-trad's chanted verse boundaries"
                 " without exception, but not its every cantillation detail. The scan below is"
                 " that commandment, with "

@@ -17,8 +17,13 @@ body text is asserted here, not transcribed word-for-word (only shown as scans).
 Since issue #69 the claim rests on more than a spot-check: all FOUR Koren Decalogues have a
 committed hand transcription of every printed accent (``in/accgram/edition_transcriptions/
 koren_*.txt``), diffed against the vendored strand and pinned by
-``tests/test_edition_transcriptions.py``.  Three follow their strand in every accent; the Exodus
-appendix one differs only in word division.  ``_verdict_table`` renders the four, one row per
+``tests/test_edition_transcriptions.py``.  All four follow their strand in every accent, and TWO
+of them -- both appendix ones -- divide a chanted word differently from it: the Exodus one splits
+two maqaf compounds the strand joins, the Deuteronomy one joins one the strand leaves apart.  Word
+division is counted apart from accents across the whole trio, and the convention is stated to the
+reader via ``printed_decalogue_strands.WORD_DIVISION_IS_NOT_AN_ACCENT``; a 2026-07-25 claim audit
+found this page using "every accent" both ways at once (see the guardrail comments below), so keep
+the two claims separate in every verdict here.  ``_verdict_table`` renders the four, one row per
 Decalogue -- never one per edition, since the four verdicts differ.
 
 The one *note* is the secondary, more-for-fun material -- kept for how aware Koren is of the older,
@@ -102,6 +107,7 @@ from pathlib import Path
 
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
+from accgram import printed_decalogue_taxton_diff as pdt
 from accgram import rtms_report
 from accgram import transcription_parse as tp
 from accgram import transcription_verdict_column as tvc
@@ -196,6 +202,10 @@ _ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
 # to the companion page's appendix, not repeated here. _ROM_REVIA is already defined above.
 _ROM_GERESH = rmn(pds.ROM_GERESH)
 _ROM_ZAQEF_QATAN = rmn(pds.ROM_ZAQEF_QATAN)
+# Named only in the conclusion's word-division paragraph, for the accent לך carries where the
+# תחתון strands leave it standing alone -- the reading that refutes this page's old "no strand at
+# all separates יהיה from לך" (see the guardrail comment there).
+_ROM_TEVIR = rmn(pds.ROM_TEVIR)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section of
 # the very page these four strands are vendored from -- so its base URL is single-sourced from the
@@ -454,7 +464,20 @@ def _pa38_note_section() -> tuple[object, ...]:
 # each cell comes from the checker's own result for the transcription the row names, so the column
 # cannot claim a verdict the checker does not give. Its prose is shared with the Simanim page's
 # table -- see transcription_verdict_column.
-def _verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object:
+#
+# GUARDRAIL on the "how far it follows it" column (2026-07-25 claim audit, finding 3). Two rows
+# said more than they had. The Deuteronomy appendix row claimed "Every accent, with no difference
+# anywhere" although that page JOINS לא־תעשה into a maqaf compound where ws/dt/elyon/printed sets
+# the two words apart -- token-invisible (the streams are identical with the maqaf dropped) but a
+# real difference, so "no difference anywhere" was false and only "no ACCENT difference" is true.
+# And the Deuteronomy main row's "five independent ways" was a count with no stated criterion,
+# unreconcilable with the hub's "three" and the test suite's "eight" for the same divergence set.
+# Both are fixed by the same two moves, which any rewrite must keep: scope every "no difference"
+# to accents, and take the divergence-set counts from printed_decalogue_taxton_diff rather than
+# typing them (``counts`` below is derived and raises on drift).
+def _verdict_table(
+    verdicts: dict[str, tp.TranscriptionResult], counts: dict[str, int]
+) -> object:
     header = H.table_row_of_headers(
         ("Decalogue", "pages", "strand", "how far it follows it", tvc.HEADER)
     )
@@ -477,8 +500,21 @@ def _verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object:
             (
                 "Every accent, and ",
                 H.bold("this is the Decalogue that tests the claim"),
-                ": here the two traditions part in five independent ways, and Koren takes the"
-                " p-trad side of every one.",
+                f": in Deuteronomy the two {_TAHTON} strands part at ",
+                H.bold(str(counts["total"])),
+                " chanted words — ",
+                H.bold(str(counts["total"] - counts["vocalization"])),
+                " of them differences a transcription of accents can see, the last one of vowels"
+                " alone — and Koren takes the p-trad side of every one of those. ",
+                # The 7 Shabbat-commandment sites are the ones Exodus cannot reach: there the two
+                # taxton strands are identical throughout that commandment (pdt's EX
+                # decomposition, 4 boundary + 1 vocalization, leaves no remainder), which is what
+                # the Exodus main row above means by settling less than it seems to.
+                H.bold(str(counts["sabbath"])),
+                " of them fall inside the Shabbat commandment, where Exodus reaches nothing at"
+                " all; the ",
+                link("companion page's appendix", _TAHTON_DETAILS_HREF),
+                " catalogues them.",
             ),
         ),
         (
@@ -486,7 +522,7 @@ def _verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object:
             "koren_ex_elyon",
             "A38",
             ("p-trad ", _ELYON),
-            "Every accent. The only two differences are of word division: it prints both"
+            "Every accent. Its only two differences are of word division: it prints both"
             " יהיה־לך and ובנך־ובתך as two separately accented chanted words where the strand"
             " makes each one.",
         ),
@@ -495,9 +531,10 @@ def _verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object:
             "koren_dt_elyon",
             "A39",
             ("p-trad ", _ELYON),
-            "Every accent, with no difference anywhere — and it joins both compounds its Exodus"
-            " counterpart splits, so that splitting is a fact about the one page rather than a"
-            " habit of the edition.",
+            "Every accent, with no accent difference anywhere — and it joins both compounds its"
+            " Exodus counterpart splits, so that splitting is a fact about the one page rather"
+            " than a habit of the edition. Its one word division goes the other way: it joins"
+            " לא־תעשה, which the strand leaves as two words.",
         ),
     )
     body = [
@@ -517,7 +554,9 @@ def _verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object:
     )
 
 
-def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ...]:
+def _conclusion(
+    verdicts: dict[str, tp.TranscriptionResult], counts: dict[str, int]
+) -> tuple[object, ...]:
     return (
         H.heading_level_2("Conclusion", {"id": "koren-conclusion"}),
         H.para(
@@ -546,15 +585,42 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 " run through the same prose grammar checker, does it parse?",
             )
         ),
-        _verdict_table(verdicts),
+        # Single-sourced in pds and stated verbatim on all three pages of the trio, here because
+        # the table's middle column is written in its terms. Splice the constant; don't paraphrase.
+        H.para((pds.WORD_DIVISION_IS_NOT_AN_ACCENT,)),
+        _verdict_table(verdicts, counts),
+        # GUARDRAIL (2026-07-25 claim audit, findings 2 and 3). This paragraph made two claims that
+        # the page's own evidence refuted.
+        #
+        # (1) "Three of the four follow their strand in every accent, and the fourth differs only
+        # in how it divides two chanted words." TWO of the four have word-division differences, not
+        # one -- besides the Exodus appendix's two splits, the Deuteronomy appendix one joins
+        # לא־תעשה where its strand leaves the words apart -- and under the convention stated just
+        # above, all four do follow their strand in every accent. Say both things separately.
+        #
+        # (2) "no strand at all, in either tradition, separates יהיה from לך". Flatly false: all
+        # four תחתון strands separate those two words, binding לא to יהיה (לא־יהיה, one chanted
+        # word, merkha) and leaving לך alone with a tevir -- as the hub's own four-strands table
+        # shows in its pT row, so the page a reader is sent to refuted the sentence. What is true,
+        # and what the conclusion actually needs, is that no strand SPLITS THE COMPOUND יהיה־לך:
+        # only the four עליון strands have that compound, and none of them divides it. Keep the
+        # claim about the compound, and keep the תחתון strands' own division visible so the next
+        # reader who checks the hub's table finds the two pages agreeing.
         H.para(
             (
-                "Three of the four follow their strand in ",
+                "All four follow their strand in ",
                 H.bold("every"),
-                " accent, and the fourth differs only in how it divides two chanted words. Not"
-                " one difference anywhere in the four takes the m-trad's side of anything: no"
-                " strand at all, in either tradition, separates יהיה from לך, so that division is"
-                " Koren's own and says nothing about which tradition it follows.",
+                " accent. Two of the four divide a chanted word differently from it, which by the"
+                " convention above is not an accent difference: the Exodus appendix Decalogue"
+                " splits both יהיה־לך and ובנך־ובתך, and the Deuteronomy appendix one joins"
+                " לא־תעשה. And not one difference anywhere in the four takes the m-trad's side of"
+                " anything. The יהיה־לך split in particular is Koren's own rather than a"
+                f" tradition's: only the {_ELYON} strands have that compound at all — the ",
+                _TAHTON,
+                " strands instead bind לא to יהיה, leaving לך standing on its own with a ",
+                _ROM_TEVIR,
+                f" — and not one of the four {_ELYON} strands splits it. So that division says"
+                " nothing about which tradition Koren follows.",
             )
         ),
         # The grammaticality column (issue #52). All four agree with their strand, so what the
@@ -643,12 +709,20 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
 
 
 def render_body_contents(
-    source: dict, verdicts: dict[str, tp.TranscriptionResult]
+    source: dict,
+    results: list[pd.VersionResult],
+    verdicts: dict[str, tp.TranscriptionResult],
 ) -> tuple[object, ...]:
+    # ``results`` is here only for this call, and it is the reason the verdict table can state how
+    # many ways the two Deuteronomy תחתון strands part: the count is re-derived from the vendored
+    # words on every generation and raises unless the divergence set is still the pinned one. It
+    # was a typed "five" until the 2026-07-25 claim audit found no two pages of the trio agreeing
+    # on it -- see printed_decalogue_taxton_diff.
+    counts = pdt.dt_taxton_diff_counts(results)
     return (
         *_intro(source),
         *_pa38_note_section(),
-        *_conclusion(verdicts),
+        *_conclusion(verdicts, counts),
     )
 
 
@@ -669,12 +743,13 @@ def run(args: argparse.Namespace) -> None:
     # each transcription's verdict AGAINST its strand's (issue #52). Both checks together are a
     # fraction of a second, so nothing here is worth skipping for regeneration speed.
     source = pd.load_source(args.source)
-    verdicts = tvc.by_stem(tp.check_all(pd.check_all(source)))
+    results = pd.check_all(source)
+    verdicts = tvc.by_stem(tp.check_all(results))
 
     html_out: Path = args.html_out
     html_out.parent.mkdir(parents=True, exist_ok=True)
     H.write_html_to_file(
-        body_contents=render_body_contents(source, verdicts),
+        body_contents=render_body_contents(source, results, verdicts),
         write_ctx=H.WriteCtx(
             title=REPORT_TITLE,
             path=str(html_out),

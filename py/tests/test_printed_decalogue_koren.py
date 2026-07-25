@@ -27,10 +27,16 @@ def test_body_renders() -> None:
     Like the Simanim page it needs the grammar-check results, for the verdict table's last column
     (issue #52): each cell is the checker's verdict for one transcription against its strand's, so
     a row naming a stem with no committed transcription fails here, on the lookup.
+
+    The results are now passed in their own right rather than only relayed to the transcription
+    check: the verdict table states how many ways the two Deuteronomy תחתון strands part, derived
+    live by ``printed_decalogue_taxton_diff``, which raises unless the divergence set is still the
+    pinned one -- so building the body also exercises that derivation.
     """
     source = pd.load_source()
-    verdicts = tvc.by_stem(tp.check_all(pd.check_all(source)))
-    body = kor.render_body_contents(source, verdicts)
+    results = pd.check_all(source)
+    verdicts = tvc.by_stem(tp.check_all(results))
+    body = kor.render_body_contents(source, results, verdicts)
     assert isinstance(body, tuple) and len(body) > 0
 
 

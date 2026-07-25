@@ -41,6 +41,19 @@ when editing either page):
   complementary, not redundant -- the doctrine is spelled out at that constant.  אנכי and מצותי
   are the span's shared frame, NOT signal words: every strand starts at the one and ends a
   chanted verse at the other, so neither distinguishes anything.
+* **"Follows its strand in every accent" is a claim about accents; word division is counted
+  apart from it.**  The trio used the phrase both ways -- one page crediting a Decalogue with
+  "every accent" while listing its word-division differences, another crediting a second one with
+  "no difference anywhere" although it joins a maqaf compound its strand leaves apart -- so a
+  2026-07-25 claim audit could not reconcile the four Koren verdicts with the summary above them.
+  Settled: an accent difference is a difference in WHICH accent falls on a chanted word; where an
+  edition groups the text into chanted words differently, the conjunctive marking that follows is
+  mechanical (a maqaf-joined proclitic cannot bear an accent, a free-standing word must) and counts
+  as part of that word-division difference rather than as an accent of its own.  So a Decalogue can
+  follow its strand in every accent AND divide a chanted word differently -- and where one does,
+  say both rather than letting either claim stand alone.  The convention is stated to the reader
+  verbatim on all three pages via ``WORD_DIVISION_IS_NOT_AN_ACCENT``: splice that constant, don't
+  paraphrase it.
 * **Accent/mark romanizations are single-sourced as ``ROM_*`` constants** (pashta, tipeḥa,
   etnaḥta, revia, segolta, silluq, sof pasuq, meteg, maqaf, legarmeh, paseq, + a few compounds).
   They are shared by the ``_ACCENT_NAMES`` derivation table, the ``READING_SPECS``
@@ -234,6 +247,29 @@ SHABBAT_SIGNAL_SHORTHAND = (
     "three signal words highlighted — not the only words the two traditions accent"
     " differently, but three disjunctively accented words that make a handy shorthand"
     " for telling the p-trad from the m-trad"
+)
+
+
+# What "follows its strand in every accent" means, stated to the reader verbatim on all three
+# pages of the trio -- the hub where it first says two editions divide a chanted word alike, and
+# each satellite where it introduces its own per-Decalogue verdict table.  Plain ``str``, not
+# HTML: splice it into a contents tuple.
+#
+# WHY IT IS SAID AT ALL (2026-07-25 claim audit, finding 3).  The trio used "every accent" both
+# ways at once.  Koren's Exodus appendix Decalogue was credited with "Every accent. The only two
+# differences are of word division", while the summary directly under the same table counted that
+# very Decalogue as the one of four that does NOT follow its strand in every accent -- and the
+# Deuteronomy appendix one was credited with "no difference anywhere" although it joins לא־תעשה
+# into a maqaf compound where its strand sets the two words apart.  With the definition unstated,
+# both readings were available and the page contradicted itself.  See the module docstring's
+# bullet for the rule; this constant is the rule as a reader meets it.
+WORD_DIVISION_IS_NOT_AN_ACCENT = (
+    "One convention, since it decides what these verdicts mean: word division is counted apart"
+    " from accents. Following a strand “in every accent” says that every chanted word carries the"
+    " strand's own accent; it says nothing about where the edition puts a maqaf. Where an edition"
+    " groups the words differently, the conjunctive marking follows mechanically — a maqaf-joined"
+    " proclitic cannot bear an accent, and a free-standing word must — so that marking counts as"
+    " part of the word-division difference rather than as an accent of its own."
 )
 
 
