@@ -654,7 +654,7 @@ def _conclusion(
             (
                 "Under the checker, too, each of the four is exactly as grammatical as the strand"
                 " it follows — and for the two appendix Decalogues that is worth spelling out,"
-                " because the strand they follow is not clean. The p-trad ",
+                " because the strand they follow is ungrammatical. The p-trad ",
                 _ELYON,
                 " merges the first two commandments into one chanted verse, and that verse is the"
                 " one the ",

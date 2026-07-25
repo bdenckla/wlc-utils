@@ -197,7 +197,7 @@ def _intro() -> tuple[object, ...]:
                 _ROM_SOF_PASUQ,
                 ") is grammar-checked on its own. The"
                 " m-trad is the baseline — MAM's own authoritative text, expected"
-                " to parse clean throughout — and the p-trad is the object of study.",
+                " to be grammatical throughout — and the p-trad is the object of study.",
             )
         ),
     )
@@ -253,7 +253,7 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
                 f" boundaries, the p-trad {_TAHTON} differs from the m-trad in only one place: the "
                 f"p-trad {_TAHTON} ends its first verse at מבית עבדים (so it has one more verse "
                 "than the m-trad, whose first verse runs on to על־פני instead). Both "
-                "parse clean. It also differs in some further details — several of them "
+                "are grammatical. It also differs in some further details — several of them "
                 "changes of cantillation that give the two strands genuinely different parses, "
                 "but none that costs either its grammaticality (",
                 link("catalogued in an appendix below", f"#{_TAHTON_DETAILS_ID}"),
@@ -815,7 +815,7 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
                 f" laid out, in the m-trad {_ELYON} the first commandment אנכי…עבדים is its "
                 "own chanted verse, and לא יהיה לך אלהים אחרים begins the next — two "
                 "separate verses, ",
-                H.bold("both of which parse clean"),
+                H.bold("both of which are grammatical"),
                 ". The p-trad instead merges the first two commandments into a single "
                 "verse. That one "
                 "merged verse is what the grammar rejects. Shown stripped to letters and "
@@ -954,7 +954,7 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
 # Spun out of the verdict paragraph's parenthetical (which now just links here): a plain-prose
 # catalogue of how the p-trad and m-trad תחתון differ WITHOUT touching grammaticality (several DO
 # change the parse tree — e.g. a disjunctive-rank accent swap — but leave both strands well-formed).
-# Both strands parse clean everywhere, so none of this bears on the page's question; it is here only
+# Both strands are grammatical everywhere, so none of this bears on the page's question; it is here only
 # to substantiate the verdict's point that these differences never cost either strand its
 # grammaticality. The prose is hand-written documentary colour, not part of the live grammaticality
 # result; but the Hebrew it displays for the Deuteronomy differences — where the תחתון cantillation
@@ -1084,7 +1084,7 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                f"Both {_TAHTON} strands parse clean everywhere, so the differences below "
+                f"Both {_TAHTON} strands are grammatical, so the differences below "
                 "do not bear on the grammaticality question this page asks — not even the several "
                 "that do change the parse. They are gathered here only to make concrete the "
                 "verdict's point that the strands differ in ways that never cost either strand "

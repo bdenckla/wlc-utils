@@ -943,7 +943,7 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 " with really is intact — and its third chanted verse, the one"
                 " beginning לא־תעשה, is ungrammatical all the same, where the p-trad ",
                 _TAHTON,
-                " parses clean. The page accents ",
+                " is grammatical. The page accents ",
                 H.bold("both"),
                 " atoms of that לא־תעשה, a ",
                 _ROM_MUNAX,
@@ -1052,7 +1052,7 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 "All four of the Tanakh's Decalogues have been transcribed accent by accent too,"
                 " against their m-trad strands, so the split between the two editions is checked"
                 " at the same grain as the Tiqqun's p-trad allegiance above and not merely read"
-                " off the signal words. Under the checker all four parse clean throughout — the"
+                " off the signal words. Under the checker all four are grammatical throughout — the"
                 " m-trad strands have no counterpart to the p-trad ",
                 _ELYON,
                 "'s merged opening chanted verse, so nothing here meets the objection the"
