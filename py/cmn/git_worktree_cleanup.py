@@ -20,13 +20,21 @@ and stays confined to ``.claude/worktrees/``: it deletes directories by
 enumeration rather than by asking git, which is safe inside a directory that
 exists only to hold worktrees and would not be safe loose in ``GitRepos``.
 
-REMOVAL IS CONSERVATIVE, AND NEVER USES ``--force``.  Three separate conditions
-each spare a worktree, and every spared one is reported with its reason rather
-than passed over in silence:
+REMOVAL IS CONSERVATIVE, AND NEVER USES ``--force``.  Several conditions each
+spare a worktree, and every spared one is reported with its reason rather than
+passed over in silence:
 
 - The main worktree (the repo clone itself) is never a candidate.
 - Neither is whichever worktree is running this code -- an agent housekeeping
   its own checkout must not delete the ground it stands on.
+- A worktree locked with ``git worktree lock`` is skipped.  That is git's own
+  sanctioned "leave this alone" flag and the right way to protect a worktree
+  indefinitely; ``git worktree remove`` refuses a locked one, so never passing
+  ``--force`` honours it automatically.  It is still checked explicitly, so a
+  deliberately locked worktree reports as a considered decision instead of
+  failing noisily every single run.
+- A worktree with recent git activity is skipped -- see
+  ``_seconds_since_activity``.
 - A worktree with any uncommitted change, tracked or untracked, is left alone,
   as is one whose HEAD is not an ancestor of the default branch.  Untracked
   files count deliberately: git's own ``worktree remove`` refuses on them too,
@@ -44,23 +52,32 @@ Worktrees are removed before branches, because a branch checked out in a
 worktree cannot be deleted while that worktree exists.  That ordering matters
 in practice: the worktree and the branch it holds often do not share a name.
 
-What this deliberately does NOT try to detect is a worktree some other session
-is using RIGHT NOW -- git has no notion of a worktree being in use, and any
-heuristic for it would be guesswork.  The dirty check covers the case that
-matters, and it is not a theoretical safeguard: a concurrent session held
-``wlc-utils-decalogue-claims`` while this module was being written, sitting
-exactly on the default branch's tip, and nine modified files plus one untracked
-new module are the only reason it was spared.  A session between commits with a
-clean tree WOULD be removed from under itself.  Note what is and is not at stake
-there -- a clean, fully-merged worktree holds nothing that does not also exist
-in the repo, so the loss is the session's workspace, never its work.  On Windows
-the OS adds a second line of defence for free: a held file handle turns the
-removal into a reported "Permission denied" rather than a silent loss.
+THE CASE THE ACTIVITY CHECK EXISTS FOR is a worktree another session is using
+right now.  Git has no notion of a worktree being "in use", so this cannot be
+known, only estimated.  The dirty check catches nearly all of it and is not a
+theoretical safeguard: a concurrent session held ``wlc-utils-decalogue-claims``
+while this module was being written, sitting exactly on the default branch's
+tip, and nine modified files plus one untracked new module are the only reason
+it was spared.  What that leaves is a narrow window -- a live session momentarily
+between commits, with a clean tree -- which is what ``_seconds_since_activity``
+closes.
+
+Be exact about the stakes rather than alarmed: a clean, fully-merged worktree
+holds nothing that does not also exist in the repo, so what a wrong removal
+costs is the session's workspace, never its work.
+
+Do NOT count the operating system as a further line of defence.  An earlier
+version of this docstring did, on the grounds that a held file handle makes the
+removal fail -- true on Windows, but it fails LATE.  Git deletes the worktree's
+contents and only then cannot unlink the directory, which is exactly how the
+husk that ``_sweep_empty_dirs`` now collects came to exist.  A held handle turns
+a silent removal into a noisy one; it does not prevent it.
 """
 
 from __future__ import annotations
 
 import subprocess
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -69,6 +86,14 @@ _AGENT_BRANCH_PREFIX = "claude/"
 # Where the agent harness puts its worktrees. Emptied of its last worktree, this
 # directory is removed too, so a clean repo shows no trace of the machinery.
 _WORKTREE_PARENT = Path(".claude") / "worktrees"
+
+# How long after its last git command a worktree is presumed still in use. An
+# hour is deliberately generous: the cost of waiting is one more maintenance run
+# before an abandoned worktree goes, while the cost of being wrong is deleting a
+# live session's checkout. A session idling on a prompt for over an hour and
+# holding a clean tree is the residual case, and `git worktree lock` is the
+# answer for anyone who wants a guarantee rather than a heuristic.
+_ACTIVITY_GRACE_SECONDS = 60 * 60
 
 
 @dataclass
@@ -88,6 +113,7 @@ class _Worktree:
     path: Path
     head: str | None
     branch: str | None  # short name, or None when detached
+    locked: bool = False
 
 
 def _git(repo_dir: Path, *args: str) -> subprocess.CompletedProcess[str]:
@@ -114,20 +140,26 @@ def _list_worktrees(repo_dir: Path) -> list[_Worktree]:
     path: Path | None = None
     head: str | None = None
     branch: str | None = None
+    locked = False
     for line in result.stdout.splitlines():
         if line.startswith("worktree "):
             path = Path(line[len("worktree ") :])
             head = None
             branch = None
+            locked = False
         elif line.startswith("HEAD "):
             head = line[len("HEAD ") :]
         elif line.startswith("branch "):
             branch = line[len("branch refs/heads/") :]
+        elif line == "locked" or line.startswith("locked "):
+            # Bare when `git worktree lock` was given no reason, else
+            # "locked <reason>". Either way the flag is what matters.
+            locked = True
         elif not line.strip() and path is not None:
-            worktrees.append(_Worktree(path, head, branch))
+            worktrees.append(_Worktree(path, head, branch, locked))
             path = None
     if path is not None:
-        worktrees.append(_Worktree(path, head, branch))
+        worktrees.append(_Worktree(path, head, branch, locked))
     return worktrees
 
 
@@ -148,6 +180,54 @@ def _default_branch(repo_dir: Path) -> str | None:
 
 def _is_ancestor(repo_dir: Path, commit: str, of: str) -> bool:
     return _git(repo_dir, "merge-base", "--is-ancestor", commit, of).returncode == 0
+
+
+def _admin_dir(worktree: Path) -> Path | None:
+    """A linked worktree's per-worktree git directory, or None.
+
+    Read out of the worktree's own ``.git``, which for a linked worktree is a
+    FILE holding ``gitdir: <path>``, rather than guessed as
+    ``<repo>/.git/worktrees/<basename>``: git disambiguates colliding basenames
+    by suffixing them, so the guess is wrong exactly when two worktrees are
+    named alike, and silently wrong at that.
+    """
+    dot_git = worktree / ".git"
+    if not dot_git.is_file():
+        return None
+    try:
+        text = dot_git.read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+    if not text.startswith("gitdir:"):
+        return None
+    path = Path(text[len("gitdir:") :].strip())
+    return path if path.is_dir() else None
+
+
+def _seconds_since_activity(worktree: Path) -> float | None:
+    """Seconds since the last git command in ``worktree``, or None if unknown.
+
+    Times the per-worktree ``index``, which every ordinary git command in a
+    worktree rewrites -- verified for a bare ``git status``, the cheapest thing
+    a session does. One ``stat``, no directory walk, so it stays cheap on a
+    checkout of this size.
+
+    MUST BE READ BEFORE ``_is_dirty``, whose own ``git status`` refreshes the
+    very index being timed and would therefore report every worktree as active.
+
+    ``HEAD`` is the fallback for a worktree with no index yet, which is what a
+    just-created one looks like for the moment before anything stages.
+    """
+    admin = _admin_dir(worktree)
+    if admin is None:
+        return None
+    for name in ("index", "HEAD"):
+        candidate = admin / name
+        try:
+            return max(0.0, time.time() - candidate.stat().st_mtime)
+        except OSError:
+            continue
+    return None
 
 
 def _is_dirty(worktree: Path) -> bool:
@@ -221,7 +301,9 @@ def _sweep_empty_dirs(repo_dir: Path, report: CleanupReport) -> None:
         pass  # the parent surviving is the normal case, not a finding
 
 
-def clean_worktrees(repo_dir: Path) -> CleanupReport:
+def clean_worktrees(
+    repo_dir: Path, *, activity_grace_seconds: float = _ACTIVITY_GRACE_SECONDS
+) -> CleanupReport:
     """Prune, remove finished agent worktrees, then delete their merged branches.
 
     Nothing here raises on a per-item failure: a worktree that will not remove
@@ -247,6 +329,20 @@ def clean_worktrees(repo_dir: Path) -> CleanupReport:
             continue
         if not worktree.path.is_dir():
             report.kept_worktrees.append((name, "directory is gone but prune kept it"))
+            continue
+        if worktree.locked:
+            report.kept_worktrees.append((name, "locked via `git worktree lock`"))
+            continue
+        # Before _is_dirty, which would refresh the index this reads. See
+        # _seconds_since_activity.
+        idle = _seconds_since_activity(worktree.path)
+        if idle is None:
+            report.kept_worktrees.append((name, "cannot read its git activity stamp"))
+            continue
+        if idle < activity_grace_seconds:
+            report.kept_worktrees.append(
+                (name, f"git activity {int(idle // 60)} min ago; may be in use")
+            )
             continue
         if _is_dirty(worktree.path):
             report.kept_worktrees.append((name, "has uncommitted or untracked changes"))
