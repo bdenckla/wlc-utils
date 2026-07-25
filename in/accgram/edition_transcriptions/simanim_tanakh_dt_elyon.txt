@@ -20,12 +20,12 @@
 #
 # RESULT: 164 reference tokens vs 164 transcribed, 10 chanted verses vs 10, and NO divergence
 # anywhere.  All SEVEN pasoleg strokes land on their exact reference positions (tokens 16, 19,
-# 25, 69, 79, 101 and 126).  So "follows dt/elyon/manuscript with respect to every accent" is
+# 25, 69, 79, 101 and 126).  So "follows ws/dt/elyon/manuscript with respect to every accent" is
 # true of this Decalogue -- after the two corrections below, both transcription slips a first
 # pass made and neither an edition divergence.
 #
 # THE CROSS-STRAND RE-RUN, and it carries more weight here than the clean result does.  Against
-# dt/elyon/printed this transcription is 164 tokens against 164 but 10 chanted verses against 9,
+# ws/dt/elyon/printed this transcription is 164 tokens against 164 but 10 chanted verses against 9,
 # with exactly TWO difference regions, both inside the first commandment:
 #   * אנכי                 -- tipexa here, pashta in the p-trad
 #   * אלהיך ... מבית עבדים  -- etnaxta/darga/tevir/merkha/tipexa/merkha/silluq here, closing the

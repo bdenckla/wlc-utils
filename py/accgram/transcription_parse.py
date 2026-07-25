@@ -254,7 +254,7 @@ def check_one(
     if len(got) != len(want):
         raise AssertionError(
             f"{transcription.path.stem}: {len(got)} chanted verses against "
-            f"{'/'.join(strand_key(strand))}'s {len(want)} -- a boundary moved, so the "
+            f"{et.strand_name(strand_key(strand))}'s {len(want)} -- a boundary moved, so the "
             "verdicts cannot be compared verse for verse"
         )
     return TranscriptionResult(
@@ -279,7 +279,7 @@ def check_all(
         if strand is None:
             raise AssertionError(
                 f"{transcription.path.stem}: no vendored strand "
-                f"{'/'.join(transcription.key)} to compare against"
+                f"{et.strand_name(transcription.key)} to compare against"
             )
         out.append(check_one(transcription, strand, parser))
     return out

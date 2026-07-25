@@ -18,11 +18,11 @@
 #
 # RESULT: 142 reference tokens vs 142 transcribed, 12 chanted verses vs 12, and NO divergence
 # anywhere.  The single pasoleg stroke, on אתה in the Shabbat commandment, lands on its exact
-# reference position (token 80).  So "follows ex/taxton/manuscript with respect to every accent"
+# reference position (token 80).  So "follows ws/ex/taxton/manuscript with respect to every accent"
 # is true of this Decalogue -- the third transcription for which the strong claim holds.
 #
 # THE CROSS-STRAND RE-RUN, and it carries more weight here than the clean result does.  Against
-# ex/taxton/printed this transcription is 142 tokens against 142 but 13 chanted verses against
+# ws/ex/taxton/printed this transcription is 142 tokens against 142 but 13 chanted verses against
 # 12, with THREE difference regions, all inside the first commandment:
 #   * אנכי       -- pashta here, tipexa in the p-trad
 #   * אלהיך      -- zaqef qatan here, etnaxta in the p-trad
@@ -39,10 +39,10 @@
 # 133, are identical in both traditions, so the whole stretch from לא־יהיה to לרעך is evidence
 # that this page follows ex/taxton, and no evidence at all about which tradition.  The Exodus
 # taxton is as weak a discriminator here as it was for Koren (issue #69 Result 5), only mirrored.
-# Worse, at all three sites ex/taxton/manuscript agrees with ex/elyon/printed and vice versa, so
-# the sites separate tradition only GIVEN the strand; the taxton identity itself rests on the
-# independent evidence at לא תרצח, which this Decalogue runs into one chanted verse with לא תנאף
-# and לא תגנב, as all four taxton strands do and no elyon strand does.
+# Worse, at all three sites ws/ex/taxton/manuscript agrees with ws/ex/elyon/printed and vice
+# versa, so the sites separate tradition only GIVEN the strand; the taxton identity itself rests
+# on the independent evidence at לא תרצח, which this Decalogue runs into one chanted verse with לא
+# תנאף and לא תגנב, as all four taxton strands do and no elyon strand does.
 #
 # TWO PAGES, and the break is not where issue #72's step-0 comment puts it.  That comment has
 # p. 120 opening at לך: and carrying לא תרצח onward.  It does not: p. 119 runs through

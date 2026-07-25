@@ -11,7 +11,7 @@
 # reads עשרת הדיברות שבפרשת ואתחנן / בטעם העליון.
 #
 # RESULT: 164 reference tokens vs 164 transcribed, 9 chanted verses vs 9, and ZERO divergences.
-# Koren's Deuteronomy elyon follows dt/elyon/printed in EVERY accent.  All seven pasolegs land
+# Koren's Deuteronomy elyon follows ws/dt/elyon/printed in EVERY accent.  All seven pasolegs land
 # on their exact reference positions (tokens 16 פסל, 19 בשמים, 25 במים, 69 צוך, 79 שבת, 101 היית,
 # 126 למען).
 #
@@ -21,17 +21,17 @@
 # accented word.  THIS page does the OPPOSITE at both sites -- it JOINS them, matching the
 # reference -- so the split is a fact about Koren's Exodus page, not a house habit:
 #   * לֹא יִהְיֶה־לְךָ (5:7): Koren joins יהיה־לך (telisha qetana) with לא separate (munax), exactly
-#     as dt/elyon/printed has it.  No vendored strand anywhere -- taxton or elyon, manuscript or
+#     as ws/dt/elyon/printed has it.  No vendored strand anywhere -- taxton or elyon, manuscript or
 #     printed -- separates יהיה from לך as its own word, so a split here would have been
 #     Koren-alone; Koren does not split it.
-#   * אַתָּה וּבִנְךָ־וּבִתֶּךָ (Shabbat): Koren joins ובנך־ובתך (munax), as dt/elyon/printed has it.
+#   * אַתָּה וּבִנְךָ־וּבִתֶּךָ (Shabbat): Koren joins ובנך־ובתך (munax), as ws/dt/elyon/printed has it.
 #     Note the corroboration is REVERSED from Exodus: there the two ex/taxton strands split ובנך,
 #     which is what corroborated the koren_ex_elyon split; in DEUTERONOMY all four dt strands
 #     (elyon+taxton, manuscript+printed) JOIN ובנך־ובתך, so no strand splits it and a split would
 #     have been Koren-alone and uncorroborated.  Koren joins it -- no divergence either way.
 #
 # ONE token-invisible word-division difference, recorded but not a divergence: at לֹא־תַעֲשֶׂה
-# (5:8) Koren prints a maqaf compound (line 12, written mun-mun) where dt/elyon/printed sets
+# (5:8) Koren prints a maqaf compound (line 12, written mun-mun) where ws/dt/elyon/printed sets
 # לא and תעשה as two separate words, each a munax.  Both emit the same two tokens (mun, mun),
 # so the token comparison sees no difference; the maqaf is kept in the line so the .txt still
 # says which the page had.  This is the mirror of the koren_ex_elyon splits -- Koren joining
@@ -59,8 +59,8 @@
 # ~161 agreeing positions were not.  What this page adds beyond koren_ex_elyon is that the two
 # word-division sites, checked against all eight strands, come out agreeing rather than splitting.
 #
-# The chanted verse boundary at עבדים stays p-trad (9 verses): ex/elyon/manuscript closes its
-# own verse there (10) but ex/elyon/printed runs on (9), and this transcription has 9.
+# The chanted verse boundary at עבדים stays p-trad (9 verses): ws/ex/elyon/manuscript closes its
+# own verse there (10) but ws/ex/elyon/printed runs on (9), and this transcription has 9.
 #
 # Koren does NOT distinguish narrow-sense paseq from legarmeh (Ben, primary observation about the
 # physical book, recorded nowhere else -- hence the pasoleg_kinds header field).  So all seven

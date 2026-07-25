@@ -19,13 +19,13 @@
 # Both pasolegs land on their exact reference positions (tokens 84 אתה and 127 למען).
 #
 # THIS PAGE DISCRIMINATES, WHICH THE EXODUS ONE DID NOT.  koren_ex_taxton could test only a
-# chanted verse boundary: at the Shabbat commandment ex/taxton/printed and ex/taxton/manuscript
-# are identical, so a clean result there said nothing about the p-trad at that commandment.
-# The Deuteronomy taxton strands differ in FIVE independent ways, and this transcription takes
-# the p-trad side of every one:
+# chanted verse boundary: at the Shabbat commandment ws/ex/taxton/printed and
+# ws/ex/taxton/manuscript are identical, so a clean result there said nothing about the p-trad at
+# that commandment. The Deuteronomy taxton strands differ in FIVE independent ways, and this
+# transcription takes the p-trad side of every one:
 #   * כל־מלאכה           geresh p-trad / pazer m-trad
 #   * ועבדך־ואמתך        revia p-trad / telisha gedola m-trad
-#   * וכל־בהמתך          zaqef p-trad / revia m-trad -- dt/taxton/printed is the ONLY one of
+#   * וכל־בהמתך          zaqef p-trad / revia m-trad -- ws/dt/taxton/printed is the ONLY one of
 #                        the eight strands to depart here, which makes it the sharpest of the
 #                        four accent sites
 #   * אתה                a pasoleg in the p-trad, none in the m-trad; hence two pasolegs
@@ -35,7 +35,7 @@
 # The first four all sit inside the Shabbat commandment -- exactly where Simanim's Tiqqun
 # departs to the m-trad (p. 247).  Koren does not: it is the p-trad at that commandment too.
 #
-# THE CROSS-STRAND RE-RUN, which the review loop had no stake in.  Against dt/taxton/manuscript
+# THE CROSS-STRAND RE-RUN, which the review loop had no stake in.  Against ws/dt/taxton/manuscript
 # this transcription is 165 tokens against 166 with SIX difference regions, and they partition
 # with nothing left over: three in the first chanted verse (אנכי pashta vs tipexa, אלהיך zaqef
 # vs etnaxta, מבית־עבדים munax+etnaxta vs merkha+silluq -- the re-accentuation the moved

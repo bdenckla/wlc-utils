@@ -335,6 +335,22 @@ def transcriptions_dir() -> Path:
     return repo_paths.in_dir() / "accgram" / "edition_transcriptions"
 
 
+def strand_name(key: tuple[str, str, str]) -> str:
+    """One vendored strand's display name: ``ws/ex/taxton/printed``.
+
+    The ``(book, reading, tradition)`` triple alone was only sort of clear from context.  The
+    ``ws/`` prefix says outright that the strand is one of the eight IDEALIZED Wikisource
+    strands vendored in ``in/accgram/printed_decalogue_teamim.json``, and it earns its keep
+    most on the manuscript triples, where ``ws/dt/elyon/manuscript`` reads plainly as a
+    Wikisource-vendored idealization OF the manuscript tradition rather than as a manuscript.
+
+    DISPLAY ONLY.  The data keys -- the triple itself, and the ``book``/``reading``/
+    ``tradition`` fields in the vendored JSON -- keep the bare form.  CTR is a separately
+    vendored strand (issue #73) and is never named this way.
+    """
+    return "/".join(("ws",) + tuple(key))
+
+
 @dataclasses.dataclass(frozen=True)
 class Transcription:
     """One hand-transcribed Decalogue: its header fields, accent tokens, and body chunks.
@@ -362,7 +378,7 @@ class Transcription:
     def label(self) -> str:
         edition = self.header.get("edition", "?")
         pages = self.header.get("pages", "?")
-        return f"{edition} {'/'.join(self.key)} (pp. {pages})"
+        return f"{edition} {strand_name(self.key)} (pp. {pages})"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -595,14 +611,14 @@ def reference_pasoleg_kinds(source: dict, key: tuple[str, str, str]) -> list[str
     faithful = version.get("faithful_chanted_verses")
     if faithful is None:
         raise ValueError(
-            f"{'/'.join(key)}: vendored source has no faithful_chanted_verses -- re-vendor "
+            f"{strand_name(key)}: vendored source has no faithful_chanted_verses -- re-vendor "
             "via printed_decalogue_fetch.py (issue #74)"
         )
     kinds = [kind for fv in faithful for kind in _faithful_pasoleg_kinds(fv)]
     _, _, pasoleg = _accent_tokens(version["chanted_verses"])
     if len(kinds) != len(pasoleg):
         raise ValueError(
-            f"{'/'.join(key)}: {len(kinds)} faithful strokes but {len(pasoleg)} folded "
+            f"{strand_name(key)}: {len(kinds)} faithful strokes but {len(pasoleg)} folded "
             "pasoleg positions -- the faithful and folded forms disagree"
         )
     return kinds

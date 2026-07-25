@@ -19,7 +19,7 @@
 #
 # Two lines were corrected after the export, each against a re-cropped zoom of the printed
 # line; the committed JSON carries the corrections and records what each replaced.  Both are
-# transcription slips, not edition divergences -- ex/taxton/printed has the corrected reading
+# transcription slips, not edition divergences -- ws/ex/taxton/printed has the corrected reading
 # at both sites.
 #   * p. 113 line 7, the free-standing לא opening לא תשא: skipped entirely, and it has a
 #     merkha.  Koren hangs a line's last word far to the left after a wide gap, which is easy
@@ -56,18 +56,18 @@
 # The pasoleg lands on its exact reference position (token 80, אתה).
 #
 # READ THAT NARROWLY.  What this page can adjudicate is much less than it looks:
-#   * The Shabbat commandment does NOT discriminate here.  ex/taxton/printed and
-#     ex/taxton/manuscript are IDENTICAL at כל־מלאכה (both geresh); the printed-vs-manuscript
+#   * The Shabbat commandment does NOT discriminate here.  ws/ex/taxton/printed and
+#     ws/ex/taxton/manuscript are IDENTICAL at כל־מלאכה (both geresh); the printed-vs-manuscript
 #     split at Shabbat is Deuteronomy-only (dt/taxton: pazer m-trad vs geresh p-trad, plus
 #     וכל־בהמתך, a word Exodus lacks entirely).  So a clean result here is NOT support for
 #     Koren following the p-trad at the Shabbat commandment.  It says nothing either way.
 #   * The pasoleg does not discriminate either: ex/taxton has exactly one, on אתה, in BOTH
 #     traditions.  It is a strong ALIGNMENT anchor and no evidence of tradition.
 #   * The one discriminator this Decalogue reaches is a CHANTED VERSE BOUNDARY: עבדים takes
-#     etnaxta in ex/taxton/manuscript (12 chanted verses) but closes its own verse in
-#     ex/taxton/printed (13).  This transcription has 13, with silluq and sof pasuq on עבדים.
+#     etnaxta in ws/ex/taxton/manuscript (12 chanted verses) but closes its own verse in
+#     ws/ex/taxton/printed (13).  This transcription has 13, with silluq and sof pasuq on עבדים.
 #
-# The cross-strand re-run, which the review loop had no stake in: against ex/taxton/manuscript
+# The cross-strand re-run, which the review loop had no stake in: against ws/ex/taxton/manuscript
 # this transcription is 142 tokens against 142 with three difference regions, ALL of them
 # inside the first chanted verse (אנכי pashta vs tipexa, אלהיך zaqef vs etnaxta, מבית־עבדים
 # munax+etnaxta vs merkha+silluq) -- that is, all of them are the re-accentuation the moved

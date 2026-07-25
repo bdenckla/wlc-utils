@@ -15,7 +15,7 @@
 #
 # Pasoleg re-read (2026-07-24): the page's one vertical stroke, on אתה, is SOLID -- munax
 # legarmeh, written mun_leg, not a narrow-sense paseq -- and the page has no other stroke.
-# So the accent stream stands as first typed, matching ex/taxton/printed's reference, which
+# So the accent stream stands as first typed, matching ws/ex/taxton/printed's reference, which
 # has this same single stroke of kind legarmeh.  The file predates both the [paseq] aside and
 # the header fields below; it needs no [paseq], and now declares that it distinguishes the two
 # kinds (pasoleg_kinds), as its sibling Simanim files do.

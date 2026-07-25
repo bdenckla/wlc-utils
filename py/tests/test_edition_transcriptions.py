@@ -131,8 +131,8 @@ _EXPECTED_DIVERGENCES = {
     # accent" holds, and the first for an edition other than Simanim.
     #
     # What it licenses is narrower than the count suggests, and the .txt header says so at
-    # length.  The Shabbat commandment cannot discriminate in EXODUS -- ex/taxton/printed and
-    # ex/taxton/manuscript are identical at כל־מלאכה, both geresh -- so this is no support
+    # length.  The Shabbat commandment cannot discriminate in EXODUS -- ws/ex/taxton/printed and
+    # ws/ex/taxton/manuscript are identical at כל־מלאכה, both geresh -- so this is no support
     # for Koren following the p-trad there; the printed/manuscript split at Shabbat is
     # Deuteronomy-only.  Nor does the pasoleg discriminate: ex/taxton has exactly one, on אתה,
     # in both traditions.  The one discriminator this Decalogue reaches is the CHANTED VERSE
@@ -141,7 +141,7 @@ _EXPECTED_DIVERGENCES = {
     # Also empty, but this one licenses far more than the Exodus page above.  The Deuteronomy
     # taxton strands differ in five independent ways and Koren takes the p-trad side of every
     # one: כל־מלאכה (geresh / pazer), ועבדך־ואמתך (revia / telisha gedola), וכל־בהמתך (zaqef /
-    # revia -- dt/taxton/printed is the ONLY one of the eight strands to depart there), the
+    # revia -- ws/dt/taxton/printed is the ONLY one of the eight strands to depart there), the
     # pasoleg on אתה (present / absent, so the pasoleg COUNT discriminates), and the chanted
     # verse boundary at עבדים pinned below.  The first four sit inside the Shabbat commandment,
     # exactly where simanim_dt_taxton departs TO the m-trad -- so these two transcriptions
@@ -149,7 +149,7 @@ _EXPECTED_DIVERGENCES = {
     "koren_dt_taxton": [],
     # Koren's Exodus APPENDIX Decalogue (elyon, p. 38) is the FIRST Koren page to diverge:
     # 142 reference tokens against 144, at TWO points.  Both are WORD-DIVISION differences, not
-    # tradition ones -- at two maqaf compounds the vendored ex/elyon/printed strand writes as a
+    # tradition ones -- at two maqaf compounds the vendored ws/ex/elyon/printed strand writes as a
     # single chanted word, Koren prints the two atoms as separate accented words:
     #   * לֹא יִהְיֶה לְךָ (20:3): Koren gives יהיה its own munax where the reference joins
     #     יהיה־לך (so יהיה carries only a meteg).  The region anchors at the reference word לא,
@@ -168,13 +168,13 @@ _EXPECTED_DIVERGENCES = {
         ("", "mun", "לא"),
         ("", "mun", "ובנךובתך"),
     ],
-    # Koren's Deuteronomy APPENDIX Decalogue (elyon, p. 39) diverges NOWHERE: 164 reference
-    # tokens vs 164, agreeing at every accent.  It is the counterpart to koren_ex_elyon, and the
-    # contrast is the point.  Where the Exodus elyon page SPLITS two maqaf compounds the vendored
-    # strand joins (יהיה־לך and ובנך־ובתך), printing each atom as its own accented word, this page
-    # JOINS both, matching dt/elyon/printed -- so that split is a fact about Koren's Exodus page,
-    # not a house style.  Checked against all eight strands: none anywhere separates יהיה from לך,
-    # and in Deuteronomy all four dt strands JOIN ובנך־ובתך.  That last is the REVERSE of Exodus,
+    # Koren's Deuteronomy APPENDIX Decalogue (elyon, p. 39) diverges NOWHERE: 164 reference tokens
+    # vs 164, agreeing at every accent.  It is the counterpart to koren_ex_elyon, and the contrast
+    # is the point.  Where the Exodus elyon page SPLITS two maqaf compounds the vendored strand
+    # joins (יהיה־לך and ובנך־ובתך), printing each atom as its own accented word, this page JOINS
+    # both, matching ws/dt/elyon/printed -- so that split is a fact about Koren's Exodus page, not
+    # a house style.  Checked against all eight strands: none anywhere separates יהיה from לך, and
+    # in Deuteronomy all four dt strands JOIN ובנך־ובתך.  That last is the REVERSE of Exodus,
     # where the two ex/taxton strands split ובנך and so corroborated the koren_ex_elyon split; in
     # Deuteronomy no strand splits it, so a split here would have been Koren-alone -- and Koren
     # makes none.  One token-invisible word-division difference is kept in the .txt but is not a
@@ -192,7 +192,7 @@ _EXPECTED_DIVERGENCES = {
     # What makes the empty list worth more than the usual "no divergence survived a procedure
     # that only inspects candidate divergences" is the cross-strand re-run, and what makes it
     # worth LESS is how little this Decalogue can decide.  Both are in the .txt header; the
-    # short form is that ex/taxton/manuscript and ex/taxton/printed differ in exactly THREE
+    # short form is that ws/ex/taxton/manuscript and ws/ex/taxton/printed differ in exactly THREE
     # regions and nowhere else in 142 tokens -- אנכי (pashta / tipexa), אלהיך (zaqef qatan /
     # etnaxta), and מבית עבדים (munax + etnaxta / merkha + silsof, the verse boundary pinned
     # below at 12).  This transcription takes the m-trad side of all three; the other 133 tokens
@@ -206,7 +206,7 @@ _EXPECTED_DIVERGENCES = {
     # the word division at לא תעשה, plus the stroke count).  This transcription takes the m-trad
     # side of every one, so what is pinned below is the single place it agrees with NEITHER.
     #
-    # qadma on ויום (5:13) where dt/taxton/manuscript -- and every other taxton strand -- has
+    # qadma on ויום (5:13) where ws/dt/taxton/manuscript -- and every other taxton strand -- has
     # pashta.  Confirmed off the page rather than corrected: Ben flagged it while typing as a
     # probable error in the edition and re-read it against a zoom.  All four ELYON strands do
     # have qadma there, but the elyon pairs it with geresh on השביעי where this page keeps the
@@ -227,12 +227,12 @@ _EXPECTED_DIVERGENCES = {
     #
     # The empty list is worth more than the usual "no divergence survived a procedure that only
     # inspects candidate divergences", and for the same reason the Exodus taxton's is: the
-    # cross-strand re-run.  ex/elyon/manuscript and ex/elyon/printed differ in exactly TWO regions
-    # and nowhere else in 142 tokens -- אנכי (tipexa / pashta) and אלהיך ... עבדים (m-trad closing
-    # the chanted verse at עבדים / p-trad running on, the boundary pinned below at 10) -- and this
-    # transcription takes the m-trad side of both, the other 133 tokens being common to both
-    # traditions.  It is the taxton pages' signature mirrored: there the m-trad ran ON at עבדים,
-    # here it CLOSES there.
+    # cross-strand re-run.  ws/ex/elyon/manuscript and ws/ex/elyon/printed differ in exactly TWO
+    # regions and nowhere else in 142 tokens -- אנכי (tipexa / pashta) and אלהיך ... עבדים (m-trad
+    # closing the chanted verse at עבדים / p-trad running on, the boundary pinned below at 10) --
+    # and this transcription takes the m-trad side of both, the other 133 tokens being common to
+    # both traditions.  It is the taxton pages' signature mirrored: there the m-trad ran ON at
+    # עבדים, here it CLOSES there.
     #
     # One correction preceded this list, a transcription slip and not an edition divergence: p. 350
     # line 3 dropped one of the three munax that close on לא תעשה־לך פסל (20:4), the only difference
@@ -252,12 +252,12 @@ _EXPECTED_DIVERGENCES = {
     #
     # The empty list is worth more than the usual "no divergence survived a procedure that only
     # inspects candidate divergences", and for the same reason its Exodus counterpart's is: the
-    # cross-strand re-run.  dt/elyon/manuscript and dt/elyon/printed differ in exactly TWO regions
-    # and nowhere else in 164 tokens -- אנכי (tipexa / pashta) and אלהיך ... עבדים (m-trad closing
-    # the chanted verse at עבדים / p-trad running on, the boundary pinned below at 10) -- and this
-    # transcription takes the m-trad side of both, the other ~155 tokens being common to both
-    # traditions.  It is the taxton pages' signature mirrored, exactly as p. 350 is: there the
-    # m-trad ran ON at עבדים, here it CLOSES there.
+    # cross-strand re-run.  ws/dt/elyon/manuscript and ws/dt/elyon/printed differ in exactly TWO
+    # regions and nowhere else in 164 tokens -- אנכי (tipexa / pashta) and אלהיך ... עבדים (m-trad
+    # closing the chanted verse at עבדים / p-trad running on, the boundary pinned below at 10) --
+    # and this transcription takes the m-trad side of both, the other ~155 tokens being common to
+    # both traditions.  It is the taxton pages' signature mirrored, exactly as p. 350 is: there
+    # the m-trad ran ON at עבדים, here it CLOSES there.
     #
     # Two corrections preceded this list, both transcription slips and neither an edition
     # divergence: band 2 dropped the darga on אשר (5:6), which every manuscript strand has; band
@@ -281,43 +281,43 @@ _CHANTED_VERSES = {
     "simanim_dt_elyon": 9,
     "simanim_dt_taxton": 13,
     # The p-trad taxton's own division, and for Koren the ONE thing this Decalogue adjudicates:
-    # עבדים takes etnaxta in ex/taxton/manuscript, which runs 12 chanted verses, but closes its
-    # own verse in ex/taxton/printed, which runs 13.  Everything else on these pages is common
+    # עבדים takes etnaxta in ws/ex/taxton/manuscript, which runs 12 chanted verses, but closes its
+    # own verse in ws/ex/taxton/printed, which runs 13.  Everything else on these pages is common
     # to both traditions.
     "koren_ex_taxton": 13,
-    # Same boundary, in Deuteronomy: עבדים takes etnaxta in dt/taxton/manuscript (12 verses)
-    # and closes its own verse in dt/taxton/printed (13).  Unlike Exodus, this is only one of
+    # Same boundary, in Deuteronomy: עבדים takes etnaxta in ws/dt/taxton/manuscript (12 verses)
+    # and closes its own verse in ws/dt/taxton/printed (13).  Unlike Exodus, this is only one of
     # five discriminators the page reaches -- see the divergence pin above.
     "koren_dt_taxton": 13,
     # The elyon's own division, and the one thing this Decalogue was expected to reach: עבדים
-    # closes its own verse in ex/elyon/manuscript (10 verses) but runs on in ex/elyon/printed
+    # closes its own verse in ws/ex/elyon/manuscript (10 verses) but runs on in ws/ex/elyon/printed
     # (9).  This transcription has 9, the printed side.  Its two divergences are both mid-verse,
     # so they leave the boundary count alone.
     "koren_ex_elyon": 9,
     # The elyon's own division again, in Deuteronomy: עבדים closes its own verse in
-    # dt/elyon/manuscript (10) but runs on in dt/elyon/printed (9).  This transcription has 9,
-    # the printed side, with no divergence anywhere to move a boundary.
+    # ws/dt/elyon/manuscript (10) but runs on in ws/dt/elyon/printed (9).  This transcription has
+    # 9, the printed side, with no divergence anywhere to move a boundary.
     "koren_dt_elyon": 9,
     # The FIRST m-trad count pinned here, and the first that is not the printed tradition's.
     # Same boundary as every entry above, taken the other way: עבדים carries an etnaxta and the
-    # chanted verse runs on into לא־יהיה לך, closing only at על־פני -- ex/taxton/manuscript's
-    # twelve, against ex/taxton/printed's thirteen.  Corroborated off the page independently of
+    # chanted verse runs on into לא־יהיה לך, closing only at על־פני -- ws/ex/taxton/manuscript's
+    # twelve, against ws/ex/taxton/printed's thirteen.  Corroborated off the page independently of
     # any mark, by the edition's own printed verse numbers, which run ב-יג: twelve.
     "simanim_tanakh_ex_taxton": 12,
     # The same m-trad twelve, in Deuteronomy: עבדים carries an etnaxta and the chanted verse
-    # runs on into לא־יהיה לך, against dt/taxton/printed's thirteen.  Corroborated off the page
+    # runs on into לא־יהיה לך, against ws/dt/taxton/printed's thirteen.  Corroborated off the page
     # by the edition's own printed verse numbers, which run ו-יז: twelve.  This stem's one
     # divergence is mid-verse, so it cannot move a boundary.
     "simanim_tanakh_dt_taxton": 12,
     # The first ELYON count pinned here, and the mirror of the taxton twelves above: in the elyon
     # the boundary at עבדים falls the OTHER way -- עבדים CLOSES its own chanted verse in
-    # ex/elyon/manuscript (10 verses) but runs on in ex/elyon/printed (9).  This transcription has
-    # 10, the m-trad side, with no divergence anywhere to move a boundary.
+    # ws/ex/elyon/manuscript (10 verses) but runs on in ws/ex/elyon/printed (9).  This
+    # transcription has 10, the m-trad side, with no divergence anywhere to move a boundary.
     "simanim_tanakh_ex_elyon": 10,
     # The second ELYON count pinned here, in Deuteronomy, and the same m-trad ten as its Exodus
-    # counterpart: עבדים CLOSES its own chanted verse in dt/elyon/manuscript (10 verses) but runs
-    # on in dt/elyon/printed (9).  This transcription has 10, the m-trad side, with no divergence
-    # anywhere to move a boundary.
+    # counterpart: עבדים CLOSES its own chanted verse in ws/dt/elyon/manuscript (10 verses) but
+    # runs on in ws/dt/elyon/printed (9).  This transcription has 10, the m-trad side, with no
+    # divergence anywhere to move a boundary.
     "simanim_tanakh_dt_elyon": 10,
 }
 
@@ -473,7 +473,7 @@ def test_simanim_tanakh_deuteronomy_drops_one_disjunctive() -> None:
     it REMOVES a disjunctive and adds nothing -- an edition's own departure, not a tradition's.
     Pinned positively for the same reason as that test: a re-vendoring that made this
     conjunctive-only, or a re-read that made the divergence vanish, should fail here rather than
-    quietly turning "follows dt/taxton/manuscript except at one word" into an unqualified claim.
+    quietly turning "follows ws/dt/taxton/manuscript except at one word" into an unqualified claim.
     """
     stem = "simanim_tanakh_dt_taxton"
     assert stem not in _SKELETON_UNTOUCHED
@@ -835,7 +835,7 @@ def test_deuteronomy_taxton_pasoleg_is_transcribed_128_reference_127() -> None:
 # faithful_chanted_verses.  These are the numbers issue #69's results turned on, now readable
 # from the strand's OWN reference rather than only cross-tradition from MAM-parsed-plus: the
 # elyon strands split 2 narrow paseq (פסל, בשמים) + N legarmeh (Deuteronomy adds צוך, היית,
-# למען to Exodus's במים, שבת), and each taxton has only legarmeh (ex one on אתה; dt/taxton/printed
+# למען to Exodus's במים, שבת), and each taxton has only legarmeh (ex one on אתה; ws/dt/taxton/printed
 # two, on אתה and למען, the second of which is the p-trad's alone).  Pinned so a future re-vendor
 # that dropped or swapped the templates fails here rather than silently un-checking every
 # transcription's legarmeh/paseq claim.
@@ -892,16 +892,13 @@ def test_faithful_verses_fold_to_the_folded_chanted_verses() -> None:
     source = _source_or_skip()
     for version in source["versions"]:
         faithful = version.get("faithful_chanted_verses")
+        key = (version["book"], version["reading"], version["tradition"])
         assert faithful is not None, (
-            f"{version['book']}/{version['reading']}/{version['tradition']}: no"
-            " faithful_chanted_verses -- re-vendor via printed_decalogue_fetch.py (issue #74)"
+            f"{et.strand_name(key)}: no faithful_chanted_verses"
+            " -- re-vendor via printed_decalogue_fetch.py (issue #74)"
         )
         refolded = [pdf._fold_verse(fv) for fv in faithful]
-        assert refolded == version["chanted_verses"], (
-            version["book"],
-            version["reading"],
-            version["tradition"],
-        )
+        assert refolded == version["chanted_verses"], et.strand_name(key)
 
 
 # How many strokes each transcription states a DEFINITE kind for that maps exactly onto a

@@ -16,7 +16,7 @@
 #
 # THE TWO DIVERGENCES, each adjudicated by re-reading the page:
 #   * אַתָּה וּבִנְךָ וּבִתֶּךָ (Shabbat, p. 84 line 6): Simanim prints NO maqaf after ובנך and accents
-#     it munax, so it sets as two chanted words what ex/elyon/printed joins under the single
+#     it munax, so it sets as two chanted words what ws/ex/elyon/printed joins under the single
 #     telisha gedola of ובנך־ובתך (where ובנך takes a meteg and no accent).  Corroborated twice
 #     over: the two ex/taxton strands separate ובנך with a munax too, and koren_ex_elyon -- an
 #     independently transcribed elyon edition -- splits the identical compound.
@@ -30,7 +30,7 @@
 # despite two real divergences.  Equal totals are not agreement.
 #
 # THE CROSS-STRAND RE-RUN, taken before either position was adjudicated and so with no stake in
-# the outcome.  Against ex/elyon/manuscript this transcription is 142 tokens against 142 but
+# the outcome.  Against ws/ex/elyon/manuscript this transcription is 142 tokens against 142 but
 # 10 chanted verses against 9, with FOUR difference regions: אנכי (tipexa in the m-trad, pashta
 # here) and a seven-token run at אלהיך where the m-trad closes a chanted verse and this
 # transcription runs on.  The transcription takes the p-trad side of both, over a contiguous run

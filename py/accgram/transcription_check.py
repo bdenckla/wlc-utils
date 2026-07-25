@@ -166,7 +166,7 @@ def report(pages: list[dict], key: tuple[str, str, str]) -> None:
     ref, words, _ = et.reference_tokens(source, key)
     got, origin = _tokens_with_origin(pages)
 
-    print(f"\nstrand {'/'.join(key)}")
+    print(f"\nstrand {et.strand_name(key)}")
     print(f"  reference {len(ref)} tokens / transcribed {len(got)} tokens")
     print(
         f"  chanted verses: reference {ref.count('silsof')}"
@@ -275,7 +275,7 @@ def site_report(skeleton: str, next_skeleton: str) -> None:
                         marks.append(abbrev)
                 paseq = " +PASEQ" if et.PASEQ in word else ""
                 hits.append(f"{word} -> {'+'.join(marks) or '(none)'}{paseq}")
-        print(f"  {'/'.join(key):28s} {len(hits)} hit(s): {', '.join(hits)}")
+        print(f"  {et.strand_name(key):28s} {len(hits)} hit(s): {', '.join(hits)}")
 
 
 def main() -> None:

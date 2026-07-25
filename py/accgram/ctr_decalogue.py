@@ -11,7 +11,7 @@ than read off a page.  What it turns out to follow is the surprise this module r
   elyon strand does.  Sixteen chanted verses -- the taxton's boundaries with its twelfth (ending
   at שקר) expanded into four (תרצח, תנאף, תגנב, שקר), against the elyon's nine.
 * CTR's **Deuteronomy 5** is the **taxton**, chanted-verse division and all: thirteen, matching
-  dt/taxton/printed boundary for boundary, which is why that book is clean where Exodus is not.
+  ws/dt/taxton/printed boundary for boundary, which is why that book is clean where Exodus is not.
 
 STATE THE DIVISION IN CHANTED VERSES, NEVER IN NUMBERED ONES.  An earlier draft of the two bullets
 above described the Exodus division as "the ordinary numbered-verse division -- a sof pasuq at

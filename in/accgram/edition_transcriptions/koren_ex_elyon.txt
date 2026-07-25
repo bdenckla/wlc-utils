@@ -10,8 +10,9 @@
 # Decalogue on p. 38 (the appendix is its own scan sequence, V-038, not the Torah's A{n}-...).
 #
 # This is the FIRST Koren page to diverge from its vendored strand.  Both Koren taxton pages
-# (Exodus main pp. 113-114, Deuteronomy main pp. 280-281) matched ex/dt/taxton/printed in
-# every accent; this elyon page does not match ex/elyon/printed in every accent.
+# (Exodus main pp. 113-114, Deuteronomy main pp. 280-281) matched ws/ex/taxton/printed and
+# ws/dt/taxton/printed in every accent; this elyon page does not match ws/ex/elyon/printed in
+# every accent.
 #
 # The strand starts at אנכי, and the elyon has no preceding לאמר to skip: p. 38's first line
 # opens the Decalogue at אָנֹכִי.
@@ -21,7 +22,7 @@
 # 75 שבת).
 #
 # THE TWO DIVERGENCES ARE WORD-DIVISION differences, not tradition differences: at two maqaf
-# compounds the vendored ex/elyon/printed strand writes as a single chanted word, Koren prints
+# compounds the vendored ws/ex/elyon/printed strand writes as a single chanted word, Koren prints
 # the two atoms as SEPARATE chanted words, each accented.  Both inserted accents are a munax, a
 # conjunctive, so the disjunctive skeleton is untouched (see the skeleton test) -- this is the
 # same KIND of divergence as Simanim's Exodus elyon ובנך ובתך, not the accent-swap Simanim's
@@ -55,8 +56,8 @@
 # limitation noted for simanim_ex_elyon.
 #
 # WHAT THE PAGE DOES NOT DISCRIMINATE.  The one thing this Decalogue was expected to reach is
-# the CHANTED VERSE BOUNDARY at עבדים: ex/elyon/manuscript closes its own verse there (10
-# chanted verses) but ex/elyon/printed runs on through the second commandment (9).  This
+# the CHANTED VERSE BOUNDARY at עבדים: ws/ex/elyon/manuscript closes its own verse there (10
+# chanted verses) but ws/ex/elyon/printed runs on through the second commandment (9).  This
 # transcription has 9, the printed side, with אנכי..עבדים all inside the first chanted verse.
 # The four pasolegs do NOT discriminate: ex/elyon has exactly these four, on פסל, בשמים, במים
 # and שבת, in BOTH traditions, so they are strong ALIGNMENT anchors and no evidence of
