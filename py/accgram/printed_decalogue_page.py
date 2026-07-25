@@ -617,7 +617,7 @@ def _four_strands_section(
         # precisely because neither satellite can tell it alone: it takes both editions.
         H.para(
             (
-                "That Simanim departure is checked, not supposed. Every accent of ",
+                "That Simanim Tiqqun departure is checked, not supposed. Every accent of ",
                 H.bold("twelve"),
                 " printed Decalogues — four each from Simanim's Tiqqun, Simanim's Tanakh and"
                 " Koren's Classic Tanakh — has been transcribed by hand off the page and diffed"

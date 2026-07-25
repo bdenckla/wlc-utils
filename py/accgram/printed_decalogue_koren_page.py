@@ -7,7 +7,7 @@ from the vendored ``in/accgram/printed_decalogue_teamim.json`` by the shared
 ``printed_decalogue_strands`` module and tabulated on the ``printed-decalogue`` companion page;
 this page links to that table rather than duplicating it, and serves only to document Koren's
 place in the p-trad camp -- plus one Koren note that shows the same editorial self-awareness the
-Simanim page found in Simanim.
+Simanim page found in SimTiq.
 
 What establishes the answer is Koren's *body text*: its Exodus main Decalogue (pp. 113-114) is the
 p-trad תחתון and its appendix Decalogue (p. A38) the p-trad עליון, and both are compared, by
@@ -27,7 +27,7 @@ printed-tradition choice it makes:
   * **appendix p. A38** (עליון): a note on the merged עליון Decalogue, citing רוו״ה
     (= ר' וולף היידנהיים, R. Wolf Heidenheim), directing that the First Commandment -- through
     מבית עבדים -- be read בטעם התחתון, i.e. as its own chanted verse rather than merged into the
-    long opening verse the עליון body prints.  This is the exact mirror of Simanim's p. 83
+    long opening verse the עליון body prints.  This is the exact mirror of SimTiq's p. 83
     side-margin note: the עליון body ends אנכי…עבדים on a revia, and the note flags the
     standalone-verse (ten-commandment) alternative it declines to print.
 
@@ -173,7 +173,7 @@ _P281_BOXES: tuple[mhi.Box, ...] = (
 # על־פני wraps the scan's line break (על ends line 2, פני starts line 3), so it is boxed on its פני
 # half. This is the direct analog of the Simanim Tiqqun p. 83 elyon
 # (printed_decalogue_simanim_page._P83_BOXES), which marks the same three words on its own elyon
-# scan (the other Simanim scans, being taxton or m-trad, close a verse earlier and mark only the
+# scan (the Simanim page's other scans, being taxton or m-trad, close a verse earlier and mark
 # two signal words).
 _PA38_BOXES: tuple[mhi.Box, ...] = (
     mhi.Box(x=452, y=77, w=109, h=61),  # עבדים (line 2)
@@ -343,7 +343,7 @@ def _intro(source: dict) -> tuple[object, ...]:
 
 
 # The Koren note, following the scan's own two line breaks. It is unpointed prose (no cantillation),
-# so unlike the Simanim transcriptions there is no hand-set pointed verse to check. רוו״ה carries a
+# so unlike the SimTiq note transcriptions there is no hand-set pointed verse to check. רוו״ה carries a
 # gershayim (U+05F4); the quoted lemma "מבית עבדים" reproduces the note's own straight quotes.
 _PA38_NOTE_LINES = (
     'לדעת רוו״ה, יש לקרוא את הדיבר הראשון עד "מבית עבדים"',
@@ -405,7 +405,7 @@ def _pa38_note_section() -> tuple[object, ...]:
         H.para(
             (
                 "The note is the mirror of ",
-                link("Simanim's p. 83 side-margin note", _SIMANIM_PAGE),
+                link("Simanim Tiqqun's p. 83 side-margin note", _SIMANIM_PAGE),
                 ". Koren's appendix prints the ",
                 _ELYON,
                 " by default — the merged, nine-verse p-trad structure, in which אנכי…עבדים ends"
@@ -425,7 +425,7 @@ def _pa38_note_section() -> tuple[object, ...]:
                 ", identical on its boundary words to the m-trad ",
                 _ELYON,
                 " — through עבדים; at the span's other signal word, על־פני, the two part). So"
-                " Koren, like Simanim, prints the p-trad structure as the norm and files the"
+                " Koren, like Simanim Tiqqun, prints the p-trad structure as the norm and files the"
                 " standalone-verse alternative under what one authority merely recommends —"
                 " aware of the alternative, but not adopting it.",
             )

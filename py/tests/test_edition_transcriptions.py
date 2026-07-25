@@ -35,18 +35,18 @@ from py_html import wlc_utils_html as H
 # The divergences established for each transcription, keyed by its filename stem.  Each entry
 # is (reference tokens, transcribed tokens, the reference word the region starts on).
 #
-# Simanim's Exodus main Decalogue (elyon, pp. 83-84) diverges from the Wikisource p-trad elyon
+# SimTiq's Exodus main Decalogue (elyon, pp. 83-84) diverges from the Wikisource p-trad elyon
 # at exactly two points, and BOTH are word-division differences rather than cantillation
-# choices -- Simanim splits a maqaf compound the reference joins, and joins one the reference
+# choices -- SimTiq splits a maqaf compound the reference joins, and joins one the reference
 # splits.  The conjunctive/meteg marking then follows mechanically, because a maqaf-joined
 # proclitic cannot bear an accent while a free-standing word must:
 #
 #   * ובנך ובתך (Shabbat commandment): reference joins them under one telisha gedola, so ובנך
-#     takes a meteg and no accent; Simanim sets them as two words, so ובנך takes a munax.
-#     Simanim's reading here is attested by none of the eight Wikisource strands.
-#   * לא תחמד בית (tenth commandment): reference sets לא free with its own merkha; Simanim
+#     takes a meteg and no accent; SimTiq sets them as two words, so ובנך takes a munax.
+#     SimTiq's reading here is attested by none of the eight Wikisource strands.
+#   * לא תחמד בית (tenth commandment): reference sets לא free with its own merkha; SimTiq
 #     joins it by maqaf, so לא takes a meteg and no accent.  All four Exodus strands agree
-#     with the reference here, so it is Simanim that diverges.
+#     with the reference here, so it is SimTiq that diverges.
 #
 # The two cancel in the token count (+1 munax, -1 merkha), which is why the totals match at
 # 142 despite two real divergences.  Do not read equal totals as agreement.
@@ -55,7 +55,7 @@ from py_html import wlc_utils_html as H
 # committed export, and the divergence set came back UNCHANGED -- the same two regions, token
 # for token, from an independent second reading of the same pages.  What the redo did add is the
 # audit trail (so every export-based test below now covers this stem too) and the pasoleg KINDS,
-# which the first transcription's conventions had dropped: Simanim distinguishes the two, and
+# which the first transcription's conventions had dropped: SimTiq distinguishes the two, and
 # the four strokes split 2 narrow paseq (16 פסל, 19 בשמים) and 2 legarmeh (25 במים, 75 שבת),
 # each landing on its exact reference position.
 #
@@ -69,18 +69,18 @@ _EXPECTED_DIVERGENCES = {
         ("", "mun", "ובנךובתך"),
         ("mer", "", "לא"),
     ],
-    # Simanim's Exodus appendix Decalogue (taxton, p. 246) diverges at three points, and
+    # SimTiq's Exodus appendix Decalogue (taxton, p. 246) diverges at three points, and
     # unlike the elyon's pair, two of them are genuine ACCENT differences:
     #
-    #   * לא־יהיה (20:3) and לא־תעשה (20:4): Simanim accents BOTH atoms of the maqaf compound
+    #   * לא־יהיה (20:3) and לא־תעשה (20:4): SimTiq accents BOTH atoms of the maqaf compound
     #     -- munax on the joined לא, against merkha and qadma on the second atoms -- where all
     #     eight strands have a meteg on the לא and no accent.  Two accents on one chanted word
     #     is rare, and none of the eight does it at either site.  It is not a house habit of
-    #     the edition either: לא־תעשה recurs at 20:10 (לא־תעשה כל־מלאכה) and Simanim agrees
+    #     the edition either: לא־תעשה recurs at 20:10 (לא־תעשה כל־מלאכה) and SimTiq agrees
     #     with the reference there.
-    #   * לא תחמד (tenth commandment): the reference sets לא free with its own merkha; Simanim
+    #   * לא תחמד (tenth commandment): the reference sets לא free with its own merkha; SimTiq
     #     joins it by maqaf, so it takes no accent.  A word-division difference, and the SAME
-    #     one found in Simanim's Exodus elyon -- two independently transcribed Simanim
+    #     one found in SimTiq's Exodus elyon -- two independently transcribed SimTiq
     #     Decalogues agreeing with each other and against all eight strands, which have merkha
     #     on the free (ו)לא and tipexa on תחמד in both books.
     #
@@ -91,7 +91,7 @@ _EXPECTED_DIVERGENCES = {
         ("", "mun", "לאתעשה"),
         ("mer", "", "לא"),
     ],
-    # Simanim's Deuteronomy main Decalogue (elyon, pp. 208-209) diverges NOWHERE: 164 reference
+    # SimTiq's Deuteronomy main Decalogue (elyon, pp. 208-209) diverges NOWHERE: 164 reference
     # tokens against 164 transcribed, agreeing at every one.  It is the first transcription for
     # which "follows the p-trad with respect to every accent" is actually true, and pinning the
     # empty list is what keeps it honest -- a re-vendoring that moved any accent in this strand
@@ -105,7 +105,7 @@ _EXPECTED_DIVERGENCES = {
     # Exodus elyon above, whose two real divergences cancelled in the token count, is the
     # standing proof that compensating errors are possible in exactly this material.
     "simanim_dt_elyon": [],
-    # Simanim's Deuteronomy appendix Decalogue (taxton, p. 247) is the edition's KNOWN m-trad
+    # SimTiq's Deuteronomy appendix Decalogue (taxton, p. 247) is the edition's KNOWN m-trad
     # departure, and the first transcription whose divergences are neither word-division
     # differences nor confined to conjunctives.  All three regions fall inside the Shabbat
     # commandment, and there the page reads m-trad throughout -- the three signal words
@@ -128,7 +128,7 @@ _EXPECTED_DIVERGENCES = {
     ],
     # Koren's Exodus main Decalogue (taxton, pp. 113-114) diverges NOWHERE: 142 reference
     # tokens against 142.  The second transcription for which "follows the p-trad in every
-    # accent" holds, and the first for an edition other than Simanim.
+    # accent" holds, and the first for an edition other than SimTiq.
     #
     # What it licenses is narrower than the count suggests, and the .txt header says so at
     # length.  The Shabbat commandment cannot discriminate in EXODUS -- ws/ex/taxton/printed and
@@ -183,8 +183,8 @@ _EXPECTED_DIVERGENCES = {
     # transcription slips were corrected before this list: line 5 and line 8 each skipped a munax
     # on כי, and line 9 read ינקה as pazer where all eight strands (and the page) have pashta.
     "koren_dt_elyon": [],
-    # Simanim TANAKH's Exodus main Decalogue (taxton, pp. 119-120) -- a different edition from
-    # the Tiqqun though Feldheim publishes both, and the FIRST transcription pinned against a
+    # SimTan's Exodus main Decalogue (taxton, pp. 119-120) -- a different edition from
+    # SimTiq though Feldheim publishes both, and the FIRST transcription pinned against a
     # MANUSCRIPT-tradition strand: the eight above are all against a printed-tradition one.  It
     # diverges NOWHERE: 142 reference tokens vs 142, agreeing at every accent, with the single
     # pasoleg (אתה) on its exact reference position.
@@ -200,7 +200,7 @@ _EXPECTED_DIVERGENCES = {
     # A re-vendoring that moved any of the three fails here rather than quietly turning the
     # m-trad verdict into an unsupported one.
     "simanim_tanakh_ex_taxton": [],
-    # Simanim TANAKH's Deuteronomy main Decalogue (taxton, pp. 297-298), the second m-trad pin
+    # SimTan's Deuteronomy main Decalogue (taxton, pp. 297-298), the second m-trad pin
     # here and by far the sharper test: where the Exodus taxton's two strands differ in only
     # three regions, the two dt/taxton strands differ in EIGHT (issue #69 Result 6's five, plus
     # the word division at לא תעשה, plus the stroke count).  This transcription takes the m-trad
@@ -220,7 +220,7 @@ _EXPECTED_DIVERGENCES = {
     "simanim_tanakh_dt_taxton": [
         ("pash", "qad", "ויום"),
     ],
-    # Simanim TANAKH's Exodus APPENDIX Decalogue (elyon, p. 350), the first ELYON pin from this
+    # SimTan's Exodus APPENDIX Decalogue (elyon, p. 350), the first ELYON pin from this
     # edition -- its two main-text Decalogues above are taxton -- and the third m-trad pin here.
     # It diverges NOWHERE: 142 reference tokens vs 142, agreeing at every accent, with all four
     # pasoleg strokes on their exact reference positions (16 פסל, 19 בשמים, 25 במים, 75 שבת).
@@ -240,12 +240,12 @@ _EXPECTED_DIVERGENCES = {
     #
     # The four pasoleg strokes split two HOLLOW (narrow-sense paseq: 16 פסל, 19 בשמים) and two
     # SOLID (legarmeh: 25 במים, 75 שבת), each on its exact reference position and each solid one in
-    # the legarmeh-before-revia environment.  It is the first Simanim TANAKH page to carry a hollow
+    # the legarmeh-before-revia environment.  It is the first SimTan page to carry a hollow
     # bar at all -- both taxton pages had a single solid stroke -- but the contrast is not new to
     # the repo: the identical 2-and-2 split, at these same positions, is already on record in the
     # sibling Tiqqun's simanim_ex_elyon, the same reading in the other Feldheim edition.
     "simanim_tanakh_ex_elyon": [],
-    # Simanim TANAKH's Deuteronomy APPENDIX Decalogue (elyon, p. 351) -- the LAST of issue #69's
+    # SimTan's Deuteronomy APPENDIX Decalogue (elyon, p. 351) -- the LAST of issue #69's
     # fourteen, closing issue #72, and the fourth m-trad pin here.  It diverges NOWHERE: 164
     # reference tokens vs 164, agreeing at every accent, with all SEVEN pasoleg strokes on their
     # exact reference positions (16 פסל, 19 בשמים, 25 במים, 69 צוך, 79 שבת, 101 היית, 126 למען).
@@ -406,7 +406,7 @@ def test_divergences_are_exactly_as_established(stem: str) -> None:
 
 @pytest.mark.parametrize("stem", sorted(_CHANTED_VERSES))
 def test_every_chanted_verse_boundary_agrees(stem: str) -> None:
-    """The exceptionless claim: Simanim has the p-trad strand's own verse divisions.
+    """The exceptionless claim: SimTiq has the p-trad strand's own verse divisions.
 
     Weaker than accent agreement and independent of it -- every known divergence is mid-verse
     -- and it is the claim the Simanim page's title actually rests on.  Checked in both
@@ -429,7 +429,7 @@ _CONJUNCTIVE_OR_ABSENT = {"", "mun", "mer", "mah", "dar", "qad", "tq", "mer2"}
 def test_pinned_divergences_leave_the_disjunctive_skeleton_alone(stem: str) -> None:
     """No divergence adds or removes a disjunctive: every one differs in a conjunctive only.
 
-    This is what licenses saying Simanim follows the p-trad's accent STRUCTURE while denying
+    This is what licenses saying SimTiq follows the p-trad's accent STRUCTURE while denying
     that it follows it in every accent -- a distinction the Exodus taxton makes load-bearing,
     since two of its three divergences really are accent differences rather than word-division
     ones.  Scoped to _SKELETON_UNTOUCHED: it is not true of the Deuteronomy taxton, and the
@@ -1170,7 +1170,7 @@ def test_each_page_is_as_grammatical_as_its_strand_except_where_pinned(
 
 
 def test_the_exodus_appendix_taxton_prints_an_ungrammatical_chanted_verse() -> None:
-    """Simanim's p. 246, chanted verse 3, and the single accent that costs it its parse.
+    """SimTiq's p. 246, chanted verse 3, and the single accent that costs it its parse.
 
     Pinned in the positive direction, like the two skeleton tests above: the finding is that a
     page whose divergences are conjunctive-only, and whose disjunctive skeleton is therefore

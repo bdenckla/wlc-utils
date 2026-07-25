@@ -86,7 +86,7 @@ def test_body_renders() -> None:
 
 
 def test_scan_images_committed() -> None:
-    """Both Simanim scans are committed locally (the page references them by relative path,
+    """Both SimTiq note scans are committed locally (the page references them by relative path,
     not the issue CDN)."""
     img_dir = repo_paths.gh_pages_dir() / "accgram" / "img"
     for name in (

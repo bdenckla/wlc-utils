@@ -279,7 +279,7 @@ table.strand-table td.vc-grad {
 table.strand-table td[lang="hbo"] { font-size: 120%; }
 
 .lemma { font-weight: bold; }
-/* Simanim p. 246 lemma (printed-decalogue-simanim.html): coloured instead of bold, since
+/* SimTiq p. 246 lemma (printed-decalogue-simanim.html): coloured instead of bold, since
    bold renders many Hebrew fonts' points/accents hard to read. light-dark() gives dark blue
    on a light background, light blue on a dark one. */
 span.simanim-lemma { color: light-dark(#0b57d0, #7bb4ff); }

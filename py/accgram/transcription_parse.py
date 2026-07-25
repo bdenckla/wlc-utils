@@ -28,7 +28,7 @@ and the fused stress-helper pashta and telisha.  See ``test_edition_transcriptio
 WHAT THIS ADDS OVER THE TOKEN DIFF.  ``edition_transcription.compare`` scores a divergence
 accent by accent, and the test module pins whether it leaves the disjunctive skeleton intact.
 Both are token-IDENTITY claims; neither says whether the resulting accent sequence is
-GRAMMATICAL, and one divergence shows the two come apart.  Simanim's Exodus appendix taxton
+GRAMMATICAL, and one divergence shows the two come apart.  SimTiq's Exodus appendix taxton
 (p. 246) diverges from its strand only in conjunctives -- the skeleton is untouched, which is
 correct and pinned -- and its third chanted verse is ungrammatical all the same: the page's
 munax on the joined לא of לא־תעשה makes three servi where the grammar takes two, and the

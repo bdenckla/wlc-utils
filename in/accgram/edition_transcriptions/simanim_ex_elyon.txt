@@ -15,16 +15,16 @@
 # land on their exact reference positions (tokens 16 פסל, 19 בשמים, 25 במים, 75 שבת).
 #
 # THE TWO DIVERGENCES, each adjudicated by re-reading the page:
-#   * אַתָּה וּבִנְךָ וּבִתֶּךָ (Shabbat, p. 84 line 6): Simanim prints NO maqaf after ובנך and accents
+#   * אַתָּה וּבִנְךָ וּבִתֶּךָ (Shabbat, p. 84 line 6): SimTiq prints NO maqaf after ובנך and accents
 #     it munax, so it sets as two chanted words what ws/ex/elyon/printed joins under the single
 #     telisha gedola of ובנך־ובתך (where ובנך takes a meteg and no accent).  Corroborated twice
 #     over: the two ex/taxton strands separate ובנך with a munax too, and koren_ex_elyon -- an
 #     independently transcribed elyon edition -- splits the identical compound.
 #   * לֹא־תַחְמֹד (tenth commandment; the word ends p. 84 line 15, though transcription_check
-#     anchors the region on the following line): Simanim prints לא־ with a maqaf and NO accent,
+#     anchors the region on the following line): SimTiq prints לא־ with a maqaf and NO accent,
 #     so the compound is one chanted word carrying the tipexa on תחמד,
 #     where the reference sets לא free with its own merkha.  All four Exodus strands agree with
-#     the reference here, so it is Simanim that diverges -- and simanim_ex_taxton, transcribed
+#     the reference here, so it is SimTiq that diverges -- and simanim_ex_taxton, transcribed
 #     separately, diverges the same way at the same words.
 # The two cancel in the token count (+1 munax, -1 merkha), which is why the totals match at 142
 # despite two real divergences.  Equal totals are not agreement.
@@ -35,9 +35,9 @@
 # here) and a seven-token run at אלהיך where the m-trad closes a chanted verse and this
 # transcription runs on.  The transcription takes the p-trad side of both, over a contiguous run
 # nothing had flagged.  The two divergences above depart from BOTH strands identically, so no
-# strand supports them: they are Simanim's own word division, not a tradition.
+# strand supports them: they are SimTiq's own word division, not a tradition.
 #
-# Simanim DOES distinguish narrow-sense paseq from legarmeh (Ben, primary observation about the
+# SimTiq DOES distinguish narrow-sense paseq from legarmeh (Ben, primary observation about the
 # physical book, recorded nowhere else -- hence the pasoleg_kinds header field, and the contrast
 # with Koren, which does not).  The four strokes here split 2 and 2, as MAM's Exodus elyon does:
 # "[paseq]" on פסל and on בשמים, "mun_leg" on במים and on שבת.

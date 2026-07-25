@@ -25,7 +25,7 @@
 # compounds the vendored ws/ex/elyon/printed strand writes as a single chanted word, Koren prints
 # the two atoms as SEPARATE chanted words, each accented.  Both inserted accents are a munax, a
 # conjunctive, so the disjunctive skeleton is untouched (see the skeleton test) -- this is the
-# same KIND of divergence as Simanim's Exodus elyon ובנך ובתך, not the accent-swap Simanim's
+# same KIND of divergence as SimTiq's Exodus elyon ובנך ובתך, not the accent-swap SimTiq's
 # Deuteronomy taxton makes at the Shabbat commandment.
 #
 #   * לֹא יִהְיֶה לְךָ (20:3): Koren accents לא(munax), יהיה(munax), לך(telisha qetana) as three

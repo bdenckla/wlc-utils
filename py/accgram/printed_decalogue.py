@@ -33,7 +33,7 @@ Those are the IDEALIZED strands.  ``transcription_parse`` asks the same question
 real edition prints, feeding the committed hand transcriptions through ``parse_marks_body``
 below -- the same scanner, grammar and status vocabulary, so the two sets of verdicts are
 comparable.  Eleven of the twelve transcribed Decalogues match their strand at every chanted
-verse; the one that does not is Simanim's Exodus appendix taxton.  ``run`` records those
+verse; the one that does not is SimTiq's Exodus appendix taxton.  ``run`` records those
 verdicts as the output file's ``transcriptions`` section, beside the strands' ``versions``.
 
 Pure computation (no I/O); the driver (``run``) loads the vendored JSON, parses, and writes

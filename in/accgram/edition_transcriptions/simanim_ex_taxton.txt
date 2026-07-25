@@ -18,7 +18,7 @@
 # So the accent stream stands as first typed, matching ws/ex/taxton/printed's reference, which
 # has this same single stroke of kind legarmeh.  The file predates both the [paseq] aside and
 # the header fields below; it needs no [paseq], and now declares that it distinguishes the two
-# kinds (pasoleg_kinds), as its sibling Simanim files do.
+# kinds (pasoleg_kinds), as its sibling SimTiq files do.
 #
 # Conventions in force for this file:
 #   * One token per ACCENT.  Normally that is one per chanted word, a maqaf compound being

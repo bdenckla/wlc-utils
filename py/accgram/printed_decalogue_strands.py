@@ -58,6 +58,18 @@ when editing either page):
   into a contents tuple instead.  Book/apparatus terms (Tiqqun, ḥumash, Keter, qere/ketiv,
   pisqa) are NOT accent names and stay unwrapped; so does the ``pashta_phrase`` code identifier,
   which is a checker error name rather than a transliteration.
+* **A bare "Simanim" never names an edition.**  Feldheim publishes two that this trio reads --
+  the *Simanim Tiqqun* (the tiqqun qorim; Decalogues on pp. 83-84, 208-209, 246, 247) and the
+  *Simanim Tanakh* (pp. 119-120, 297-298, 350, 351) -- and they do not even agree: the Tiqqun is
+  p-trad and the Tanakh m-trad.  The repo's vocabulary predates the second, so an unqualified
+  "Simanim" reads as the Tiqqun by historical accident alone.  Write **SimTiq** / **SimTan**
+  (lowercase ``simtiq`` / ``simtan`` in identifiers and transcription stems) in code, comments,
+  docstrings, tests and docs; in RENDERED prose write the full "Simanim Tiqqun" / "Simanim
+  Tanakh", or a bare "the Tiqqun" once the passage has named it, since the shorthand is repo
+  jargon that a reader of a published page has not met.  Two things a bare "Simanim" may still
+  do: name the *page* (``printed-decalogue-simanim.html`` documents BOTH editions, so "the
+  Simanim page" is right), and name the publisher or both books at once ("the two Simanim
+  editions", "no digital Simanim edition exists").
 * Rendered prose uses the **real Unicode em dash** ``—`` (U+2014), not ASCII ``--`` (``--`` is
   fine in code/comments/docstrings, like this one).
 * **Attribute contexts are EXEMPT from the Hebrew-letter rule, by design -- do not "fix" them.**

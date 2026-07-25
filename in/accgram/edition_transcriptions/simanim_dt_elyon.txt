@@ -19,7 +19,7 @@
 #
 # RESULT: 164 reference tokens vs 164 transcribed, and NO divergence -- this Decalogue does
 # follow the Wikisource p-trad elyon in every accent.  It is the first transcription for which
-# that holds; both Simanim Exodus Decalogues falsified it.  Read that against how it was
+# that holds; both SimTiq Exodus Decalogues falsified it.  Read that against how it was
 # reached: the harness only ever flags positions where the two already disagree, so only those
 # were re-read, and the ~161 agreeing positions were never re-examined by anyone.  A
 # compensating pair of errors would be invisible to this procedure, and the Exodus elyon's two

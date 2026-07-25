@@ -18,7 +18,7 @@ WHAT COUNTS AS ONE TOKEN (the conventions the transcriptions are written to):
 * One token per ACCENT, which is normally one token per chanted word, a maqaf compound being
   one chanted word.  The exception is the compound that bears more than one accent -- its
   atoms each accented, which happens but is rare -- written ``mun-mer``, the dash standing for
-  the maqaf itself, and contributing two tokens.  Simanim's Exodus appendix Decalogue has two
+  the maqaf itself, and contributing two tokens.  SimTiq's Exodus appendix Decalogue has two
   such compounds and they are its most interesting divergences, so this is not hypothetical.
   Contrast ``mun_leg``, where the underscore binds two marks into ONE accent.
 * A postpositive or prepositive accent is written TWICE on a word whose stress is not where
@@ -46,7 +46,7 @@ of the three in the Exodus taxton.  So read a difference list alongside the word
 before calling it an accent difference.
 
 "Normally", though, not "always", and the Exodus taxton is why the weaker word is the right
-one.  Simanim prints a munax on the joined לא of לא־יהיה and of לא־תעשה, whose second atoms
+one.  SimTiq prints a munax on the joined לא of לא־יהיה and of לא־תעשה, whose second atoms
 carry merkha and qadma -- two accents on one chanted word, where all eight strands have a
 meteg.  Those are genuine accent differences, not word-division ones, and an earlier version
 of this note asserted they could not occur.  Neither they nor the elyon's pair touch the
