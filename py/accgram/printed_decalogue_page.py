@@ -1166,10 +1166,11 @@ def _chabad_aside() -> tuple[object, ...]:
                 "Possibly the only p-trad Bible on the web is ",
                 link("CTR", _CHABAD_DT5_URL),
                 ": a web version of The Complete Tanach with Rashi, served from Chabad.org."
-                f" Its Deuteronomy 5 has not only the p-trad {_TAHTON}'s signal pair, chanted"
-                " verses ending at both עבדים and על־פני, but also the p-trad"
-                f" {_TAHTON} accents in the Sabbath commandment —"
-                " that whole Decalogue, chanted verse division and all.",
+                f" Its Deuteronomy 5 has not only the p-trad {_TAHTON}'s signal pair (chanted"
+                " verses ending at both עבדים and על־פני), but also the p-trad"
+                f" {_TAHTON} accents in the Sabbath commandment."
+                f" Its whole Decalogue, in fact, is the p-trad {_TAHTON} as Wikisource"
+                " defines it, down to all but one conjunctive accent.",
             )
         ),
         # CTR's Exodus (issue #69, Result 11). It stays an aside, deliberately: CTR is a curiosity
