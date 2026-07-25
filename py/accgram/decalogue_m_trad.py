@@ -293,8 +293,15 @@ def _decalogue_cells(book: str, plus_dir: Path) -> list[list]:
 
 
 def from_mam_plus(book: str, reading: str, plus_dir: Path | None = None) -> Strand:
-    """One m-trad Decalogue strand, read from the MAM-parsed-plus tree."""
-    plus_dir = plus_dir or repo_paths.mam_parsed_plus_dir()
+    """One m-trad Decalogue strand, read from the MAM-parsed-plus tree.
+
+    ``plus_dir`` is the explicit path argument; defaulted, it resolves through
+    ``repo_paths`` and is CHECKED there, so an absent sibling clone fails with the two
+    overrides spelled out instead of a bare ``FileNotFoundError`` from ``_load_plus_book``.
+    An explicitly passed path is not second-guessed -- the caller named it, and the advice
+    ``require_sibling`` gives would be beside the point.
+    """
+    plus_dir = plus_dir or repo_paths.require_mam_parsed_plus_dir()
     parts: list[str] = []
     kinds: list[str] = []
     for i, cell in enumerate(_decalogue_cells(book, plus_dir)):

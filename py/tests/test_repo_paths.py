@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 import repo_paths
 
 
@@ -80,6 +82,36 @@ def test_default_matches_legacy_repo_root_parent_formula(monkeypatch) -> None:
     monkeypatch.delenv("WLC_MAM_SIMPLE_DIR", raising=False)
     legacy = repo_paths.repo_root().parent / "MAM-simple" / "json-vtrad-bhs"
     assert repo_paths.mam_simple_dir() == legacy
+
+
+def test_require_sibling_returns_a_present_directory() -> None:
+    # Any directory that certainly exists; the check is is_dir, not the name.
+    root = repo_paths.repo_root()
+    assert repo_paths.require_sibling("MAM-parsed", root / "py") == root / "py"
+
+
+def test_require_sibling_failure_advertises_both_overrides(tmp_path) -> None:
+    """The message IS the feature: a missing sibling is a misconfiguration, and the fix has to
+    travel with the failure.  A cross-repo check that skipped here would report green having
+    verified nothing, so this path must raise -- and raise something actionable."""
+    missing = tmp_path / "MAM-parsed" / "plus"
+    with pytest.raises(FileNotFoundError) as excinfo:
+        repo_paths.require_sibling("MAM-parsed", missing)
+    message = str(excinfo.value)
+    assert str(missing) in message  # the path actually looked for
+    assert "WLC_MAM_PARSED_DIR" in message  # the per-repo override, correctly derived
+    assert "WLC_SIBLINGS_ROOT" in message  # the all-siblings override
+    assert str(repo_paths.repo_root()) in message  # where a sibling clone belongs
+
+
+def test_require_mam_parsed_plus_dir_checks_the_resolved_path(
+    monkeypatch, tmp_path
+) -> None:
+    """The accessor checks what it resolves, overrides included -- so pointing the env var at
+    a wrong path fails naming that path, not the default one."""
+    monkeypatch.setenv("WLC_MAM_PARSED_DIR", str(tmp_path / "nowhere"))
+    with pytest.raises(FileNotFoundError, match="nowhere"):
+        repo_paths.require_mam_parsed_plus_dir()
 
 
 def test_data_path_accessors() -> None:

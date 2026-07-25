@@ -87,9 +87,40 @@ def mam_simple_dir() -> Path:
     return sibling("MAM-simple") / "json-vtrad-bhs"
 
 
+def require_sibling(name: str, path: Path) -> Path:
+    """Return ``path``, or raise saying both ways to point this repo at ``name``.
+
+    A MISSING SIBLING IS A MISCONFIGURATION, NOT A REASON TO CHECK LESS.  Nothing runs the
+    test suite without the siblings present -- the only CI here is the Pages deploy, which
+    runs no tests -- so a cross-repo check that quietly skips on an absent sibling reports
+    green having verified nothing, and does it in the same channel this suite uses for
+    SEMANTIC skips ("this page diverges from its strand; the control needs an agreeing
+    page").  Fail instead, and make the failure carry its own fix: the overrides documented
+    in this module's docstring are the answer, and a bare ``FileNotFoundError`` from deep in
+    a loader does not mention them.
+
+    ``path`` is passed in rather than recomputed because a sibling accessor usually wants a
+    subtree of the clone (``MAM-parsed/plus``), and the message should name the path actually
+    looked for while the override it advertises is keyed to the clone.
+    """
+    if path.is_dir():
+        return path
+    raise FileNotFoundError(
+        f"sibling repo {name} not found: no directory at {path}.\n"
+        f"Clone {name} beside {repo_root()}, or point at it explicitly:\n"
+        f"  {_env_name(name)}=<path to the {name} clone>\n"
+        f"  WLC_SIBLINGS_ROOT=<directory holding all the sibling clones>"
+    )
+
+
 def mam_parsed_plus_dir() -> Path:
     """MAM-parsed's ``plus`` subtree: one JSON per book24, minirow cells C/D/E."""
     return sibling("MAM-parsed") / "plus"
+
+
+def require_mam_parsed_plus_dir() -> Path:
+    """``mam_parsed_plus_dir``, checked -- see ``require_sibling`` for why this is not a skip."""
+    return require_sibling("MAM-parsed", mam_parsed_plus_dir())
 
 
 def wlc_utils_private_dir() -> Path:

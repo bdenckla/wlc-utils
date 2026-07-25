@@ -29,6 +29,14 @@ import pytest
 from accgram import decalogue_m_trad as dmt
 from accgram import printed_decalogue as pd
 
+# NOTHING HERE SKIPS ON A MISSING SOURCE, deliberately.  Both sides of the comparison are
+# supposed to be on disk -- the vendored one is committed in this repo, and the MAM-parsed
+# clone is a hard dependency of the check, not an optional enrichment -- so an absent one is
+# a misconfiguration.  Skipping would report green having compared nothing, in the very
+# channel this suite reserves for SEMANTIC skips (see test_edition_transcriptions' "diverges
+# from its strand; the control needs an agreeing page").  ``repo_paths.require_sibling``
+# turns the sibling's absence into a failure that names the two overrides that fix it.
+
 # Per strand: chanted verses, chanted words, and the kind of every vertical stroke in
 # reading order.  Derived from MAM-parsed-plus and equally true of the vendored side --
 # pinned here so a change that moved both in step still has to be looked at.  The verse
@@ -56,6 +64,7 @@ def _letters(word: str) -> str:
 
 @pytest.fixture(scope="module")
 def source() -> dict:
+    """The vendored side of the comparison -- committed in this repo, so simply read it."""
     return pd.load_source(pd.default_source_path())
 
 
