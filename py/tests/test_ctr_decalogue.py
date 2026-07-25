@@ -6,9 +6,12 @@ cannot distinguish the lookalike accent pairs a reader resolves by grammar (see
 ``accgram/ctr_decalogue.py``).  These tests pin the surprise the comparison found and guard it
 against a re-fetch or a re-vendoring that would quietly change it:
 
-* CTR's Exodus 20 carries the ta'am ELYON word-accents (not the taxton expected of a running
-  text), with its own numbered-verse-based division.
-* CTR's Deuteronomy 5 is the taxton, division and all.
+* CTR's Exodus 20 has the ta'am ELYON accents (not the taxton expected of a running text) under
+  a punctuation that is neither strand's: sixteen sof pasuqs, the union of the two strands'
+  boundaries.  Only nine of the sixteen spans have a silluq, so only nine are chanted verses --
+  say SOF PASUQ SPAN for the rest, which is what makes the finding statable at all (a real
+  re-division would have moved the silluqs, and silluq is an accent).
+* CTR's Deuteronomy 5 is the taxton, division and all: thirteen spans, all with a silluq.
 
 Every residual difference from the followed strand is CONJUNCTIVE -- the disjunctive skeleton,
 which is what #69 claims survives, is intact in both books.
@@ -27,6 +30,7 @@ import pytest
 from accgram import ctr_decalogue as cd
 from accgram import ctr_decalogue_fetch as cdf
 from accgram import printed_decalogue as pd
+from accgram import printed_decalogue_strands as pds
 
 # (glyph-agreeing words, total words) established against the followed strand, and the exact
 # set of residual chanted-word skeletons -- every one conjunctive-only.  Pinned so a re-fetch
@@ -36,10 +40,22 @@ _EXPECTED = {
         "primary": "elyon",
         "agree": 139,
         "total": 142,
-        # CTR prints a munax on the proclitic atom of two maqaf compounds (יהיה־לך, ובנך־ובתך)
+        # CTR has a munax on the proclitic atom of two maqaf compounds (יהיה־לך, ובנך־ובתך)
         # and swaps a munax for the reference's merkha on one ואשר.  All conjunctive.
         "residuals": {"יהיהלך", "ואשר", "ובנךובתך"},
-        "ctr_chanted_verses": 16,
+        "ctr_spans": 16,
+        "ctr_chanted_verses": 9,
+        # The seven spans that close on no silluq, each with the elyon's own mid-verse
+        # disjunctive still standing where a silluq would have to be.
+        "silluqless": {
+            "עבדים": ("rev",),
+            "עלפני": ("rev",),
+            "לארץ": ("rev",),
+            "לשנאי": ("etn",),
+            "לקדשו": ("rev",),
+            "כלמלאכתך": ("seg",),
+            "בשעריך": ("zaq",),
+        },
     },
     "dt": {
         "primary": "taxton",
@@ -47,7 +63,9 @@ _EXPECTED = {
         "total": 164,
         # A single munax/merkha swap on ולא.
         "residuals": {"ולא"},
+        "ctr_spans": 13,
         "ctr_chanted_verses": 13,
+        "silluqless": {},
     },
 }
 
@@ -121,18 +139,72 @@ def test_the_cross_strand_agreement_collapses(book: str) -> None:
 
 
 @pytest.mark.parametrize("book", ["ex", "dt"])
-def test_ctr_chanted_verse_structure(book: str) -> None:
-    """Deuteronomy shares the taxton's 13-verse division; Exodus keeps its own (16), the elyon
-    word-accents notwithstanding -- it does not group the commandments the elyon way."""
+def test_ctr_sof_pasuq_span_structure(book: str) -> None:
+    """Deuteronomy shares the taxton's 13-verse division; Exodus has its own 16 sof pasuqs, the
+    elyon accents notwithstanding -- it does not group the commandments the elyon way.
+    """
     ctr, source = _ctr_or_skip(), _source_or_skip()
     exp = _EXPECTED[book]
-    n_cv = len(cd.chanted_verses(ctr, book))
-    assert n_cv == exp["ctr_chanted_verses"]
+    n_spans = len(cd.sof_pasuq_spans(ctr, book))
+    assert n_spans == exp["ctr_spans"]
     strand_cv = cd.strand_chanted_verse_count(source, book, exp["primary"])
     if book == "dt":
-        assert n_cv == strand_cv  # taxton division IS the numbered verses
+        assert n_spans == strand_cv  # taxton division IS the numbered verses
     else:
-        assert n_cv != strand_cv  # elyon groups into 9; CTR does not
+        assert n_spans != strand_cv  # elyon groups into 9; CTR does not
+
+
+@pytest.mark.parametrize("book", ["ex", "dt"])
+def test_only_spans_with_a_silluq_are_chanted_verses(book: str) -> None:
+    """The silluq check the glyph comparison cannot do -- and the page's claim rests on it.
+
+    ``word_glyphs`` drops U+05BD, so 139/142 is silluq-BLIND: it would report the same score if
+    CTR had re-silluqed its sixteen boundaries, which is exactly the reading that would make
+    "the accents are the elyon's" false.  Pin what is actually there instead: nine of Exodus's
+    sixteen spans have a silluq, and the other seven still have the elyon's mid-verse
+    disjunctive where a silluq would have to be.  Deuteronomy's thirteen all have one.
+    """
+    ctr = _ctr_or_skip()
+    exp = _EXPECTED[book]
+    spans = cd.span_silluq_status(ctr, book)
+    assert len(spans) == exp["ctr_spans"]
+    assert sum(s.is_chanted_verse for s in spans) == exp["ctr_chanted_verses"]
+    assert {s.skeleton: s.final_glyphs for s in spans if not s.is_chanted_verse} == exp[
+        "silluqless"
+    ]
+
+
+def test_the_sixteen_exodus_marks_are_the_union_of_both_strands_boundaries() -> None:
+    """CTR's Exodus punctuation is not a third division: it is elyon's 9 ∪ taxton's 13.
+
+    The two strands share six boundaries, so the union is 16 -- the count CTR has.  This is
+    what "belongs to neither strand" means here, and it is a stronger claim than the count
+    alone: every one of CTR's marks is some strand's, and no strand's mark is missing.
+    """
+    ctr, source = _ctr_or_skip(), _source_or_skip()
+    ctr_ends = {s.skeleton for s in cd.span_silluq_status(ctr, "ex")}
+    strand_ends = {}
+    for reading in ("elyon", "taxton"):
+        version = next(
+            v
+            for v in source["versions"]
+            if v["book"] == "ex"
+            and v["reading"] == reading
+            and v["tradition"] == "printed"
+        )
+        strand_ends[reading] = {
+            pds.base_skeleton(cv.split()[-1]) for cv in version["chanted_verses"]
+        }
+    assert len(strand_ends["elyon"]) == 9
+    assert len(strand_ends["taxton"]) == 13
+    assert ctr_ends == strand_ends["elyon"] | strand_ends["taxton"]
+    # The nine chanted verses are exactly the elyon's, and the seven silluq-less spans are
+    # exactly the boundaries only the taxton has.
+    chanted = {
+        s.skeleton for s in cd.span_silluq_status(ctr, "ex") if s.is_chanted_verse
+    }
+    assert chanted == strand_ends["elyon"]
+    assert ctr_ends - chanted == strand_ends["taxton"] - strand_ends["elyon"]
 
 
 def test_clean_verse_drops_rendering_cruft_but_keeps_the_qere() -> None:

@@ -95,6 +95,24 @@ verse, as only an עליון strand does. Its word-accents are the עליון's.
 strand. Deuteronomy 5 is 13, identical to the p-trad תחתון. Numbering is not the subject anywhere
 on these pages.
 
+> **CORRECTED 2026-07-24 — they are not sixteen chanted verses.** Ben, reading the rendered
+> sentence: *"what kind of crazy distinction is being drawn between 'word accents' and chanted
+> verse divisions? Even if sof pasuq is not classed a 'word accent', surely silluq is, and this
+> distinction is rendered meaningless."* The objection is right against the paragraph as it stood,
+> and the underlying facts turn out to be stranger than it said. CTR's sixteen sof pasuqs are the
+> exact **union** of the two strands' boundaries (עליון 9 + תחתון 13, sharing 6), laid over an
+> **untouched** עליון accent stream. Nothing was re-accented to fit them: at the 9 עליון
+> boundaries CTR has the עליון's silluq, and at the 7 that are the תחתון's alone it has **no
+> silluq at all** — the mark stands after the עליון's own mid-verse disjunctive (revia ×4,
+> atnaḥta, segolta, zaqef, on עבדים / על־פני / לארץ / לשנאי / לקדשו / כל־מלאכתך / בשעריך). That is
+> why the accents and the punctuation can come apart: a real re-division would have *moved* the
+> silluqs, and silluq is an accent. **Terminology (Ben):** a chanted verse needs a silluq, so a
+> span that "doesn't even seem to be trying to obey the rules of cantillation" is a **sof pasuq
+> span**. CTR's Exodus = the עליון's **nine chanted verses** cut into **sixteen sof pasuq spans**.
+> `ctr_decalogue.chanted_verses` was renamed `sof_pasuq_spans` accordingly, and the silluq check
+> the glyph comparison could not do (`word_glyphs` drops U+05BD, so 139/142 was silluq-blind) is
+> now `span_silluq_status`, pinned by `test_ctr_decalogue.py`.
+
 **The numbered-verse phrasing was fixed in code and in the issue too** (Ben, 2026-07-24 — raised as
 a loose end, then fixed on the spot rather than filed). `ctr_decalogue.py`'s module docstring had
 said CTR's Exodus "keeps the ordinary numbered-verse division — a sof pasuq at every numbered

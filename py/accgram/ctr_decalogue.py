@@ -5,22 +5,39 @@ CTR (``ctr_decalogue_fetch.py``) is a VENDORED STRAND: digital, accent-exact Heb
 marks are compared mechanically against the reference ``printed_decalogue_teamim.json`` rather
 than read off a page.  What it turns out to follow is the surprise this module reports:
 
-* CTR's **Exodus 20** has the ta'am **elyon** word-accents (not the taxton the running text was
-  expected to hold), on a chanted-verse division that is NEITHER strand's: the taxton's thirteen,
-  with each of the three short prohibitions split off into a chanted verse of its own, as only an
-  elyon strand does.  Sixteen chanted verses -- the taxton's boundaries with its twelfth (ending
-  at שקר) expanded into four (תרצח, תנאף, תגנב, שקר), against the elyon's nine.
+* CTR's **Exodus 20** has the ta'am **elyon** accents (not the taxton the running text was
+  expected to hold) under a punctuation that is NEITHER strand's: sixteen sof pasuqs, the exact
+  UNION of the two strands' boundaries (the elyon's 9 and the taxton's 13, sharing 6).  Nothing
+  was re-accented to fit them.  At the 9 elyon boundaries CTR has the elyon's silluq; at the 7
+  taxton-only ones it has no silluq at all, the mark standing after the elyon's own mid-verse
+  disjunctive (revia, revia, revia, atnaxta, revia, segolta, zaqef, on עבדים / על־פני / לארץ /
+  לשנאי / לקדשו / כל־מלאכתך / בשעריך).  So only 9 of the 16 are chanted verses; see the naming
+  section below.
 * CTR's **Deuteronomy 5** is the **taxton**, chanted-verse division and all: thirteen, matching
   ws/dt/taxton/printed boundary for boundary, which is why that book is clean where Exodus is not.
 
-STATE THE DIVISION IN CHANTED VERSES, NEVER IN NUMBERED ONES.  An earlier draft of the two bullets
-above described the Exodus division as "the ordinary numbered-verse division -- a sof pasuq at
-every numbered verse".  That is both off-subject and false.  Off-subject because these pages and
-this comparison are about chanted verse structure only, numbering being a different concept
-(Ben, 2026-07-24).  False because Exodus 20:13 holds FOUR sof pasuqs, which is exactly where three
-of the sixteen come from -- ``chanted_verses`` below says so, and the file contradicted itself for
-as long as both texts stood.  Issue #69's Result 11 carried the same phrasing and was corrected
-with this.
+SAY "SOF PASUQ SPAN", NOT "CHANTED VERSE", FOR THE SIXTEEN (Ben, 2026-07-24).  A chanted verse is
+a well-formed cantillation unit, which minimally means a SILLUQ on the last word before the sof
+pasuq; a span that, in Ben's words, "doesn't even seem to be trying to obey the rules of
+cantillation" is only a sof pasuq span.  Splitting at the mark and calling every result a chanted
+verse -- which this module did -- begs the question for exactly the seven spans that are the
+finding.  ``sof_pasuq_spans`` is named for this, and ``span_silluq_status`` is what checks it.
+
+The claim the page makes needs that check to be REAL: "the accents are the elyon's, silluq
+included, but the punctuation is neither strand's" invites the objection that sinks a sloppier
+version of it -- silluq IS an accent, so a genuine re-division would have MOVED the silluqs and
+the two halves could not come apart.  They come apart here only because CTR moved nothing.  Note
+that the glyph comparison below cannot see this on its own: ``word_glyphs`` drops U+05BD, so
+139/142 is silluq-BLIND and would agree just as happily if CTR had re-silluqed the seven.
+
+STATE THE DIVISION IN CHANTED VERSES OR SPANS, NEVER IN NUMBERED ONES.  An earlier draft of the
+two bullets above described the Exodus division as "the ordinary numbered-verse division -- a sof
+pasuq at every numbered verse".  That is both off-subject and false.  Off-subject because these
+pages and this comparison are about chanted verse structure only, numbering being a different
+concept (Ben, 2026-07-24).  False because Exodus 20:13 holds FOUR sof pasuqs, which is exactly
+where three of the sixteen come from -- ``sof_pasuq_spans`` below says so, and the file
+contradicted itself for as long as both texts stood.  Issue #69's Result 11 carried the same
+phrasing and was corrected with this.
 
 WHY THE COMPARISON IS AT THE GLYPH LEVEL, NOT THE ACCENT LEVEL.  The eight paper Decalogues of
 #69 were HAND transcriptions: a reader resolved each mark to an accent, distinguishing a qadma
@@ -42,7 +59,7 @@ mahapakh-vs-yetiv distinction CTR could not have expressed anyway.
 WHAT THE VERDICT CLAIMS.  Only what #69 says survives every transcription -- the chanted-verse
 boundaries plus the disjunctive skeleton -- read at the glyph level.  CTR's marks agree with
 ex/elyon (Exodus) and dt/taxton (Deuteronomy) at all but a few words, and every disagreement is
-CONJUNCTIVE: a munax CTR prints on the proclitic atom of a maqaf compound, or a munax/merkha
+CONJUNCTIVE: a munax CTR has on the proclitic atom of a maqaf compound, or a munax/merkha
 swap.  None touches a disjunctive.  The cross-strand re-run -- the same comparison against the
 OTHER tradition -- is where the evidence is: agreement collapses, which is what rules out the
 clean match being an artifact of the fold.
@@ -66,6 +83,9 @@ COLON = "\N{COLON}"
 VBAR = "\N{VERTICAL LINE}"
 SOF_PASUQ = "\N{HEBREW PUNCTUATION SOF PASUQ}"
 PASEQ = "\N{HEBREW PUNCTUATION PASEQ}"
+# One codepoint, two readings -- meteg or silluq, told apart by context, never by the bytes.
+# ``_has_silluq`` is this module's context rule; ``meteg_silluq_context`` is the corpus-wide one.
+MTGOSLQ = "\N{HEBREW POINT METEG}"
 
 # Which reference strand each book is compared against first, and which is the cross-strand
 # re-run whose collapse is the evidence.  Both are the PRINTED tradition (the p-trad edition).
@@ -102,12 +122,18 @@ def _normalize(verse: str) -> str:
     return verse.replace(COLON, SOF_PASUQ)
 
 
-def chanted_verses(ctr: dict, book: str) -> list[str]:
-    """CTR's Decalogue for one book as chanted verses -- split at sof pasuq, not numbered verse.
+def sof_pasuq_spans(ctr: dict, book: str) -> list[str]:
+    """CTR's Decalogue for one book split at sof pasuq -- SPANS, not necessarily chanted verses.
 
-    Exodus 20:13 prints three prohibitions each with its own colon, so a numbered verse is not a
-    chanted verse; splitting the joined, normalized text at sof pasuq is what recovers the
-    chanted-verse structure CTR actually shows.
+    The neutral name is the point: this splits at the MARK and claims nothing about
+    chantability.  A chanted verse needs a silluq before its sof pasuq, and CTR's Exodus has
+    sixteen sof pasuqs over an accent stream supplying only nine silluqs, so seven of its spans
+    close on a mid-verse disjunctive and are no kind of verse (see the module docstring and
+    ``span_silluq_status``).  Deuteronomy's thirteen spans all have a silluq, so there they are
+    chanted verses.
+
+    Splitting is still the right recovery step: Exodus 20:13 has three prohibitions each with
+    its own colon, so a numbered verse is not a span either.
     """
     verses = ctr["chapters"][book]["decalogue_verses"]
     joined = " ".join(_normalize(verses[k]) for k in verses)
@@ -146,8 +172,58 @@ def word_glyphs(word: str) -> tuple[str, ...]:
     return tuple(out)
 
 
+def _has_silluq(word: str) -> bool:
+    """True when this span-final word's U+05BD reads as a silluq rather than an ordinary meteg.
+
+    The context rule, at the resolution this data supports: a silluq is the mark that CLOSES the
+    word, so a U+05BD with no cantillation accent after it inside the word is a silluq, and one
+    with an accent still to come is a meteg.  CTR's לְשֽׂנְאָ֑י is the case that needs the rule --
+    its U+05BD sits two letters in, before an etnaxta, so the word has a meteg and no silluq,
+    and mere PRESENCE of U+05BD would have called it verse-final.  (Scoped to span-final words
+    of these Decalogues; ``meteg_silluq_context.u05bd_is_silluq`` is the corpus-wide version.)
+    """
+    if MTGOSLQ not in word:
+        return False
+    return not word_glyphs(word.rsplit(MTGOSLQ, 1)[1])
+
+
+@dataclasses.dataclass(frozen=True)
+class SpanSilluq:
+    """One sof pasuq span, judged on the only thing that makes it a chanted verse: a silluq."""
+
+    last_word: str
+    skeleton: str
+    has_silluq: bool
+    final_glyphs: tuple[str, ...]
+
+    @property
+    def is_chanted_verse(self) -> bool:
+        return self.has_silluq
+
+
+def span_silluq_status(ctr: dict, book: str) -> tuple[SpanSilluq, ...]:
+    """Per sof pasuq span: does its last word have a silluq -- i.e. is it a chanted verse at all?
+
+    This is what keeps the page's claim honest.  ``word_glyphs`` drops U+05BD, so the glyph
+    comparison is silluq-blind and would report the same 139/142 whether or not CTR had moved
+    the silluqs to its own sixteen boundaries.  It did not, and this is where that is checked.
+    """
+    out: list[SpanSilluq] = []
+    for span in sof_pasuq_spans(ctr, book):
+        word = span.split()[-1]
+        out.append(
+            SpanSilluq(
+                last_word=word,
+                skeleton=pds.base_skeleton(word),
+                has_silluq=_has_silluq(word),
+                final_glyphs=word_glyphs(word),
+            )
+        )
+    return tuple(out)
+
+
 def _flat(verses: list[str]) -> list[tuple[str, tuple[str, ...]]]:
-    """(consonant skeleton, glyph tuple) per chanted word across a reading's verses."""
+    """(consonant skeleton, glyph tuple) per chanted word across a reading's spans."""
     return [(pds.base_skeleton(w), word_glyphs(w)) for v in verses for w in v.split()]
 
 
@@ -191,7 +267,7 @@ def compare(ctr: dict, source: dict, book: str, reading: str) -> Comparison:
     region rather than shifting every accent after it, then compares the glyph tuples of the
     words that line up.
     """
-    ctr_flat = _flat(chanted_verses(ctr, book))
+    ctr_flat = _flat(sof_pasuq_spans(ctr, book))
     version = next(
         v
         for v in source["versions"]
@@ -240,13 +316,22 @@ def _report_book(ctr: dict, source: dict, book: str) -> None:
     primary, cross = PRIMARY[book], CROSS[book]
     cmp_primary = compare(ctr, source, book, primary)
     cmp_cross = compare(ctr, source, book, cross)
-    n_cv = len(chanted_verses(ctr, book))
+    spans = span_silluq_status(ctr, book)
+    n_cv = len(spans)
+    chanted = [s for s in spans if s.is_chanted_verse]
 
     print(f"\n===== CTR {book.upper()} =====")
-    print(f"  chanted verses (sof pasuq): CTR {n_cv}")
+    print(f"  sof pasuq spans: CTR {n_cv}")
+    print(
+        f"     of which chanted verses (silluq before the mark): {len(chanted)}"
+        f" -- {n_cv - len(chanted)} span(s) close on no silluq"
+    )
+    for s in spans:
+        if not s.is_chanted_verse:
+            print(f"        {s.skeleton:26s} closes on {s.final_glyphs}, no silluq")
     for reading in (primary, cross):
         print(
-            f"     strand {book}/{reading}/printed: "
+            f"     strand {book}/{reading}/printed chanted verses: "
             f"{strand_chanted_verse_count(source, book, reading)}"
         )
     for label, cmp in (
@@ -268,10 +353,16 @@ def _report_book(ctr: dict, source: dict, book: str) -> None:
 
     total = cmp_primary.agree + len(cmp_primary.diffs)
     strand_cv = strand_chanted_verse_count(source, book, primary)
+    # The Exodus branch is the finding: same accents, MORE sof pasuqs, and the surplus ones with
+    # no silluq under them.  Say punctuation, not "its own verse division" -- CTR did not divide
+    # the text a third way, it laid the union of both strands' marks over one strand's accents.
     division = (
-        "same verse division"
+        "same chanted verse division"
         if n_cv == strand_cv
-        else f"but its own verse division ({n_cv} chanted verses, not the strand's {strand_cv})"
+        else (
+            f"but its own punctuation ({n_cv} sof pasuq spans over the strand's"
+            f" {strand_cv} chanted verses, {n_cv - len(chanted)} of them closing on no silluq)"
+        )
     )
     print(
         f"  VERDICT: CTR {book} follows {book}/{primary}/printed at the glyph level "

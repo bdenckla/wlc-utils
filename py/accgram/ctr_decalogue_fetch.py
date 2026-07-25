@@ -21,7 +21,7 @@ codepoints (qadma for pashta, yetiv-order for mahapakh; see MAM-basics' review o
 ``ctr_decalogue.py``).  Only rendering cruft that is not part of the pointed text is
 removed at extraction: inline HTML tags, the parenthetical *ketiv* note beside a qere (the
 accented qere itself is kept), non-breaking spaces, and the bare ס/פ setuma/petuha
-markers Chabad prints between verses.  Normalizing CTR's encoding is the comparison's job,
+markers Chabad shows between verses.  Normalizing CTR's encoding is the comparison's job,
 not the vendoring's, so the snapshot stays faithful to what the page serves.
 
 This is a network tool run by hand.  The committed JSON records the source URLs, the aids,
@@ -82,7 +82,7 @@ _HEBREW_VERSE = re.compile(
     r'<span class="co_VerseText">(.*?)</span></td>',
     re.S,
 )
-# The parenthetical ketiv note Chabad prints beside a qere, e.g. ``(כתיב מצותו)``; the
+# The parenthetical ketiv note Chabad shows beside a qere, e.g. ``(כתיב מצותו)``; the
 # accented qere it annotates sits in the sibling <co:instructional> and is kept.
 _KETIV_NOTE = re.compile(r'<span class="instructional[^"]*">.*?</span>', re.S)
 _ANY_TAG = re.compile(r"<[^>]+>")

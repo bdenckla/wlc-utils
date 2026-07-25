@@ -101,8 +101,10 @@ _ROM_PASHTA = rmn(pds.ROM_PASHTA)
 _ROM_PASEQ = rmn(pds.ROM_PASEQ)
 _ROM_REVIA = rmn(pds.ROM_REVIA)
 _ROM_SEGOLTA = rmn(pds.ROM_SEGOLTA)
+_ROM_SILLUQ = rmn(pds.ROM_SILLUQ)
 _ROM_SOF_PASUQ = rmn(pds.ROM_SOF_PASUQ)
 _ROM_TIPEHA = rmn(pds.ROM_TIPEHA)
+_ROM_ZAQEF_QATAN = rmn(pds.ROM_ZAQEF_QATAN)
 _ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
 
 
@@ -1169,15 +1171,56 @@ def _chabad_aside() -> tuple[object, ...]:
         # draft called it "the ordinary numbered-verse division", which is both off-subject (these
         # pages are about chanted verse structure, never numbering) and wrong (Ex 20:13 holds four
         # sof pasuqs, which is where three of the sixteen come from).
+        #
+        # And do NOT call CTR's sixteen spans chanted verses (Ben, 2026-07-24).  A chanted verse
+        # needs a SILLUQ, and seven of the sixteen have none, so they are SOF PASUQ SPANS -- a
+        # span that, in Ben's words, "doesn't even seem to be trying to obey the rules of
+        # cantillation".  The draft this replaced said "the word-accents are the elyon's, but the
+        # chanted verse division belongs to neither strand", which invites the objection that
+        # sinks it: silluq IS a word-accent, so a real re-division would have MOVED the silluqs
+        # and the two halves could not come apart.  They come apart here only because CTR moved
+        # nothing.  Its sixteen sof pasuqs are the exact UNION of the two strands' boundaries
+        # (elyon 9 + taxton 13, sharing 6), laid over an untouched elyon accent stream: at the 9
+        # elyon boundaries CTR has the elyon's silluq, and at the 7 taxton-only ones it has no
+        # silluq at all -- the mark stands after the elyon's own mid-verse disjunctive (revia x3,
+        # atnaxta, revia, segolta, zaqef, on עבדים / על־פני / לארץ / לשנאי / לקדשו / כל־מלאכתך /
+        # בשעריך).  Pinned by tests/test_ctr_decalogue.py; ctr_decalogue.sof_pasuq_spans is named
+        # for this.
         H.para(
             (
-                "Its Exodus 20 is stranger. The word-accents are the ",
+                "Its Exodus 20 is stranger. The accents are the ",
                 _ELYON,
-                "'s, but the chanted verse division belongs to neither strand: it is the ",
+                "'s throughout, ",
+                _ROM_SILLUQ,
+                " included — but it has a ",
+                _ROM_SOF_PASUQ,
+                " at every boundary of both strands: the ",
+                _ELYON,
+                "'s nine and the ",
                 _TAHTON,
-                "'s thirteen, with each of the three short prohibitions split off into a chanted"
-                f" verse of its own — which only an {_ELYON} strand does. Sixteen chanted verses,"
-                " and no tradition to call them.",
+                "'s thirteen, sixteen marks in all. Seven of the sixteen are the ",
+                _TAHTON,
+                "'s alone, and at those the ",
+                _ELYON,
+                " has no ",
+                _ROM_SILLUQ,
+                ", and neither does CTR: the word before the mark has a ",
+                _ROM_REVIA,
+                ", a ",
+                _ROM_SEGOLTA,
+                ", a ",
+                _ROM_ZAQEF_QATAN,
+                ", an ",
+                _ROM_ETNAHTA,
+                ". What those seven close is a ",
+                _ROM_SOF_PASUQ,
+                " span, not a chanted verse. CTR's Exodus is the ",
+                _ELYON,
+                "'s nine chanted verses under the ",
+                _TAHTON,
+                "'s punctuation — sixteen ",
+                _ROM_SOF_PASUQ,
+                " spans.",
             )
         ),
         H.para(
