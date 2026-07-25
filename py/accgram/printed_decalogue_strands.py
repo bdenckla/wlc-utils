@@ -54,6 +54,21 @@ when editing either page):
   say both rather than letting either claim stand alone.  The convention is stated to the reader
   verbatim on all three pages via ``WORD_DIVISION_IS_NOT_AN_ACCENT``: splice that constant, don't
   paraphrase it.
+* **Never write a bare "no difference anywhere" in a verdict cell; scope it, "no ACCENT difference
+  anywhere".**  The corollary of the bullet above, and swept across all three pages on 2026-07-25
+  after the vowel below made it concrete.  What backs these cells is a hand transcription of the
+  printed ACCENTS, so "anywhere" can only ever mean "anywhere the transcription looks", and an
+  unscoped phrasing invites a reader to take it for the whole page.  Two things fall outside:
+  a word division, which the bullet above already separates and which can be token-INVISIBLE
+  (``koren_dt_elyon`` joins לא־תעשה where its strand sets the two words apart, with the same accents
+  either way -- so a zero-divergence result is not evidence of none); and the POINTING.  The trio's
+  own data has a live example of the second: the two תחתון strands part at תרצח in a vowel and
+  nothing else, qamats m-trad against patax p-trad on the same tipexa, which the diff cannot see in
+  either book.  The scoped phrasing costs one word and is true; the bare one was already false once
+  (the Koren Deuteronomy appendix row, 2026-07-25 claim audit finding 3).
+  Where a vowel or a word division HAS been checked off the page, say so in the cell and put the
+  evidence in the transcription's ``.txt`` comment block -- that is a primary observation about the
+  edition, not something the harness establishes, and no test will defend it.
 * **Accent/mark romanizations are single-sourced as ``ROM_*`` constants** (pashta, tipeḥa,
   etnaḥta, revia, segolta, silluq, sof pasuq, meteg, maqaf, legarmeh, paseq, + a few compounds).
   They are shared by the ``_ACCENT_NAMES`` derivation table, the ``READING_SPECS``

@@ -8,11 +8,13 @@
 # One .txt line per PRINTED line, so a token can be checked against the line it was read off.
 # "[p. 114]" marks where the second page begins; bracketed asides carry no accent.
 #
-# TWO PAGES, not one.  printed_decalogue_koren_page's prose gives this Decalogue as p. 113
-# alone (against Deuteronomy's "starts on p. 280 and runs onto p. 281").  It is wrong: p. 113
-# breaks mid-20:12, after אשר־יהוה אלהיך, and p. 114's first six lines carry נתן לך through
-# לרעך.  The page prose is out of scope here (#69 blocks it until every transcription is in),
-# but that sentence needs fixing when it is unblocked.
+# TWO PAGES, not one.  p. 113 breaks mid-20:12, after אשר־יהוה אלהיך, and p. 114's first six
+# lines carry נתן לך through לרעך.  Transcribing the Decalogue is what settled its extent:
+# printed_decalogue_koren_page's prose used to give it as p. 113 alone (against Deuteronomy's
+# "starts on p. 280 and runs onto p. 281"), which was wrong, and #69 blocked fixing it until
+# every transcription was in.  FIXED -- every prose citation on that page now reads
+# "pp. 113-114".  Its two bare "p. 113"s are deliberate and should stay: they are the scan
+# figure's alt text and caption, and that scan really does show the Decalogue's start on p. 113.
 #
 # The strand starts at אנכי, so 20:1 is not transcribed: p. 113's first line opens with
 # לאמר, the tail of that verse, and the transcription begins at the word after it.
@@ -66,6 +68,18 @@
 #   * The one discriminator this Decalogue reaches is a CHANTED VERSE BOUNDARY: עבדים takes
 #     etnaxta in ws/ex/taxton/manuscript (12 chanted verses) but closes its own verse in
 #     ws/ex/taxton/printed (13).  This transcription has 13, with silluq and sof pasuq on עבדים.
+#
+# ONE DISCRIMINATOR MORE, WHICH THIS FILE CANNOT CARRY BECAUSE IT IS A VOWEL (read 2026-07-25,
+# off this same scan; not part of the transcription).  The two ex/taxton strands also part at
+# תרצח: ws/ex/taxton/manuscript has qamats (תִרְצָ֖ח), ws/ex/taxton/printed patax (תִרְצַ֖ח), on the
+# same tipexa either way.  Accents are all this file records, so nothing above sees it and the
+# "one discriminator" bullet is about accents only.  Read off the page instead: p. 114 line 1 has
+# PATAX -- the p-trad vowel, agreeing with everything else here.  Decidable rather than a
+# judgement call, because this type tells the two apart plainly: its qamats is a bar with a blob
+# attached below the bar's centre, its patax a bare bar, and under the tsadi here there is a bare
+# bar plus, lower and to its left, the detached hook this type uses for tipexa.  No blob.
+# (The same site and the same reading in Deuteronomy: see koren_dt_taxton.txt, where it carries
+# more weight -- that page's divergence set is the one the Koren page's verdict counts.)
 #
 # The cross-strand re-run, which the review loop had no stake in: against ws/ex/taxton/manuscript
 # this transcription is 142 tokens against 142 with three difference regions, ALL of them

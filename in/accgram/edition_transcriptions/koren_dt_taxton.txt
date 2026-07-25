@@ -21,19 +21,40 @@
 # THIS PAGE DISCRIMINATES, WHICH THE EXODUS ONE DID NOT.  koren_ex_taxton could test only a
 # chanted verse boundary: at the Shabbat commandment ws/ex/taxton/printed and
 # ws/ex/taxton/manuscript are identical, so a clean result there said nothing about the p-trad at
-# that commandment. The Deuteronomy taxton strands differ in FIVE independent ways, and this
-# transcription takes the p-trad side of every one:
+# that commandment. The two dt/taxton strands part at TWELVE chanted words, and this transcription
+# takes the p-trad side of every one it can reach.  TAKE THAT NUMBER, AND ITS DECOMPOSITION INTO
+# 4 boundary + 7 Sabbath + 1 vocalization, FROM accgram/printed_decalogue_taxton_diff.py, which
+# derives them from the vendored words on every page generation -- never from a fresh count here.
+# This note said "FIVE independent ways" until the 2026-07-25 claim audit: a number with no stated
+# criterion, and unreconcilable with the hub's "three" and test_edition_transcriptions.py's own
+# "eight" for the same set.  Five of the twelve are the ones this page reads most directly:
 #   * כל־מלאכה           geresh p-trad / pazer m-trad
 #   * ועבדך־ואמתך        revia p-trad / telisha gedola m-trad
 #   * וכל־בהמתך          zaqef p-trad / revia m-trad -- ws/dt/taxton/printed is the ONLY one of
 #                        the eight strands to depart here, which makes it the sharpest of the
-#                        four accent sites
+#                        four listed here that fall in the Shabbat commandment
 #   * אתה                a pasoleg in the p-trad, none in the m-trad; hence two pasolegs
 #                        against the m-trad's one, so the COUNT itself discriminates
 #   * עבדים              closes its own chanted verse in the p-trad (13 verses) but takes
 #                        etnaxta in the m-trad (12)
-# The first four all sit inside the Shabbat commandment -- exactly where Simanim's Tiqqun
-# departs to the m-trad (p. 247).  Koren does not: it is the p-trad at that commandment too.
+# The first four sit inside the Shabbat commandment (which holds seven of the twelve in all) --
+# exactly where Simanim's Tiqqun departs to the m-trad (p. 247).  Koren does not: it is the p-trad
+# at that commandment too.  The fifth, עבדים, is one of the four boundary words.
+#
+# ONE DISCRIMINATOR MORE, WHICH THIS FILE CANNOT CARRY BECAUSE IT IS A VOWEL (read 2026-07-25,
+# off this same scan; not part of the transcription).  The two dt/taxton strands also part at
+# תרצח: ws/dt/taxton/manuscript has qamats (תִרְצָ֖ח), ws/dt/taxton/printed patax (תִרְצַ֖ח), on the
+# same tipexa either way.  Accents are all this file records, so the divergence harness is blind
+# to it and it is not one of the five listed above.  Read off the page instead: p. 281 printed
+# line 12 -- the "silsof mer tip mun" line, לך׃ לא תרצח ולא -- has PATAX, the p-trad vowel.
+# Decidable rather than a judgement call, and both controls are on the line above it: this type's
+# qamats is a bar with a blob attached below the bar's centre (line 11, the final kaf of אלהיך)
+# and its patax a bare bar (the same line's xataf patax under the alef of אשר).  Under the tsadi
+# here there is a bare bar plus, lower and to its left, the detached hook this type uses for
+# tipexa -- the same hook that sits under the he of that line's own אלהיך.  No blob.
+# So Koren takes the p-trad side of every site at which the two dt/taxton strands part, vowel
+# included, not only of the accent sites.  printed_decalogue_koren_page's verdict table says
+# exactly that, and this note is the whole of its evidence for the vowel.
 #
 # THE CROSS-STRAND RE-RUN, which the review loop had no stake in.  Against ws/dt/taxton/manuscript
 # this transcription is 165 tokens against 166 with SIX difference regions, and they partition

@@ -475,6 +475,26 @@ def _pa38_note_section() -> tuple[object, ...]:
 # Both are fixed by the same two moves, which any rewrite must keep: scope every "no difference"
 # to accents, and take the divergence-set counts from printed_decalogue_taxton_diff rather than
 # typing them (``counts`` below is derived and raises on drift).
+#
+# THE ONE VOWEL, and why the two rows may state it (2026-07-25). The twelfth Deuteronomy site and
+# the fifth Exodus one are the same word and are not accent differences at all: the m-trad has
+# qamats in תִרְצָ֖ח where the p-trad has patax, on the same tipexa. A transcription of accents
+# cannot carry that, so until now the Deuteronomy row hedged it as "the last one of vowels alone"
+# and claimed nothing about which vowel Koren prints -- nobody had looked. Both were then read off
+# the committed page scans, and both are patax, the p-trad vowel:
+#   * Deuteronomy, A5-D-281.jpg p. 281 printed line 12 (the line the .txt gives as "silsof mer tip
+#     mun", לך׃ לא תרצח ולא);
+#   * Exodus, A2-E-114.jpg p. 114 printed line 1.
+# The reading is decidable rather than a judgement call because this type distinguishes the two
+# unmistakably and both controls sit on the same page: its qamats is a bar with a blob attached
+# below the bar's centre (p. 281 line 11, the final kaf of אלהיך), its patax a bare bar (the same
+# line's xataf patax under the alef of אשר). Under the tsadi of תרצח there is a bare bar plus,
+# lower and to its left, the detached hook this type uses for tipexa -- the same hook that sits
+# under the he of that line's own אלהיך. No blob: patax.
+# This is a primary observation about the physical edition and it is NOT in the transcription
+# apparatus, which by design records accents only. Its home is the note in each transcription's
+# .txt comment block (the same place the pasoleg_kinds observation lives). Do not restate it as a
+# fact the diff establishes, and do not expect a test to defend it.
 def _verdict_table(
     verdicts: dict[str, tp.TranscriptionResult], counts: dict[str, int]
 ) -> object:
@@ -487,10 +507,11 @@ def _verdict_table(
             "koren_ex_taxton",
             "113–114",
             ("p-trad ", _TAHTON),
-            "Every accent, with no difference anywhere — though this Decalogue settles less than"
-            " that suggests. In Exodus the two traditions accent the Shabbat commandment"
-            " identically, so the one thing it can adjudicate is the chanted verse boundary at"
-            " עבדים, which it takes the p-trad way.",
+            "Every accent, with no accent difference anywhere — though this Decalogue settles less"
+            " than that suggests. In Exodus the two traditions accent the Shabbat commandment"
+            " identically, so the only difference of accent it can adjudicate is the chanted"
+            " verse boundary at עבדים. Koren takes the p-trad side of that, and of the"
+            " traditions' one difference of vowel, the qamats/patax of לא תרצח.",
         ),
         (
             "Deuteronomy main",
@@ -502,10 +523,11 @@ def _verdict_table(
                 H.bold("this is the Decalogue that tests the claim"),
                 f": in Deuteronomy the two {_TAHTON} strands part at ",
                 H.bold(str(counts["total"])),
-                " chanted words — ",
+                " chanted words, and Koren takes the p-trad side of every one. ",
                 H.bold(str(counts["total"] - counts["vocalization"])),
-                " of them differences a transcription of accents can see, the last one of vowels"
-                " alone — and Koren takes the p-trad side of every one of those. ",
+                " of them are differences of accent, which the transcription diffs; the last is"
+                " the qamats/patax of לא תרצח — a vowel, so outside what a transcription of"
+                " accents records, and read off the page separately: Koren has the p-trad patax. ",
                 # The 7 Shabbat-commandment sites are the ones Exodus cannot reach: there the two
                 # taxton strands are identical throughout that commandment (pdt's EX
                 # decomposition, 4 boundary + 1 vocalization, leaves no remainder), which is what

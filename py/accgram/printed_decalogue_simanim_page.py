@@ -794,7 +794,7 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 "simtiq_dt_elyon",
                 "208–209",
                 ("p-trad ", _ELYON),
-                "Every accent, with no difference anywhere — 164 accents against 164.",
+                "Every accent, with no accent difference anywhere — 164 accents against 164.",
             ),
             (
                 "Deuteronomy appendix",
@@ -823,7 +823,7 @@ def _tanakh_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 "simtan_ex_taxton",
                 "119–120",
                 ("m-trad ", _TAHTON),
-                "Every accent, with no difference anywhere. Its twelve chanted verses are"
+                "Every accent, with no accent difference anywhere. Its twelve chanted verses are"
                 " corroborated independently of any mark, by the edition's own printed verse"
                 " numbers.",
             ),
@@ -850,14 +850,14 @@ def _tanakh_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 "simtan_ex_elyon",
                 "350",
                 ("m-trad ", _ELYON),
-                "Every accent, with no difference anywhere.",
+                "Every accent, with no accent difference anywhere.",
             ),
             (
                 "Deuteronomy appendix",
                 "simtan_dt_elyon",
                 "351",
                 ("m-trad ", _ELYON),
-                "Every accent, with no difference anywhere.",
+                "Every accent, with no accent difference anywhere.",
             ),
         ),
         verdicts,
