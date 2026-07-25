@@ -404,7 +404,7 @@ def _pa38_note_section() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "The note is the mirror of ",
+                "The note is the mirror of the ",
                 link("Simanim Tiqqun's p. 83 side-margin note", _SIMANIM_PAGE),
                 ". Koren's appendix prints the ",
                 _ELYON,
@@ -425,8 +425,9 @@ def _pa38_note_section() -> tuple[object, ...]:
                 ", identical on its boundary words to the m-trad ",
                 _ELYON,
                 " — through עבדים; at the span's other signal word, על־פני, the two part). So"
-                " Koren, like Simanim Tiqqun, prints the p-trad structure as the norm and files the"
-                " standalone-verse alternative under what one authority merely recommends —"
+                " Koren, like the Simanim Tiqqun, prints the p-trad structure as the norm and"
+                " files the standalone-verse alternative under what one authority merely"
+                " recommends —"
                 " aware of the alternative, but not adopting it.",
             )
         ),

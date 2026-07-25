@@ -542,7 +542,7 @@ def _transcription_grammar_para(verdicts: list[tp.TranscriptionResult]) -> objec
             " verse. Simanim's Tiqqun does, in both of its main Decalogues, and Koren in both of"
             " its appendix ones: the merged first two commandments are in books in print, not only"
             " in an idealized strand. The remaining"
-            " one is Simanim's Tiqqun Exodus appendix Decalogue, which is ungrammatical at a"
+            " one is the Simanim Tiqqun's Exodus appendix Decalogue, which is ungrammatical at a"
             " chanted verse where its strand is clean, over a single added conjunctive; the ",
             link("Simanim page", _SIMANIM_PAGE),
             " has it. Every rejection here is a diagnostic of the checker, which is tuned to the"
@@ -619,7 +619,7 @@ def _four_strands_section(
         # precisely because neither satellite can tell it alone: it takes both editions.
         H.para(
             (
-                "That Simanim Tiqqun departure is checked, not supposed. Every accent of ",
+                "That departure by the Simanim Tiqqun is checked, not supposed. Every accent of ",
                 H.bold("twelve"),
                 " printed Decalogues — four each from Simanim's Tiqqun, Simanim's Tanakh and"
                 " Koren's Classic Tanakh — has been transcribed by hand off the page and diffed"

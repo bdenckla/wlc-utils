@@ -70,6 +70,16 @@ when editing either page):
   do: name the *page* (``printed-decalogue-simanim.html`` documents BOTH editions, so "the
   Simanim page" is right), and name the publisher or both books at once ("the two Simanim
   editions", "no digital Simanim edition exists").
+* **The edition name takes a determiner in running prose: "the Simanim Tiqqun" or "Simanim's
+  Tiqqun", never a bare "Simanim Tiqqun prints ...".**  "Simanim" is the publisher, not part of
+  a title, so it is doing a possessive's work; the bare noun-noun compound instead reads as a
+  fixed brand name.  Contrast "Koren", which by metonymy IS the edition's name and so correctly
+  takes no determiner ("Koren has X at Y" is fine, "Simanim Tiqqun has X at Y" is not).  Between
+  the two forms, prefer the ARTICLE whenever a genitive follows -- "the Simanim Tiqqun's own
+  stance", not the double-genitive "Simanim's Tiqqun's own stance" -- and the possessive when it
+  parallels a neighbouring "Koren's Classic Tanakh".  EXEMPT, because they are reference tags
+  rather than sentences: citation labels and the captions/headings built on them ("Simanim
+  Tiqqun p. 83: the Exodus main Decalogue in the elyon"), ``img alt`` text, and image filenames.
 * Rendered prose uses the **real Unicode em dash** ``—`` (U+2014), not ASCII ``--`` (``--`` is
   fine in code/comments/docstrings, like this one).
 * **Attribute contexts are EXEMPT from the Hebrew-letter rule, by design -- do not "fix" them.**

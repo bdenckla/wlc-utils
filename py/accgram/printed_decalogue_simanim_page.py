@@ -294,7 +294,8 @@ def _body_scans() -> tuple[object, ...]:
             _P83_BODY_IMG,
             "Simanim Tiqqun p. 83: the Exodus main Decalogue in the elyon",
             (
-                "The (massive) verse that starts Simanim Tiqqun's main Decalogue (p. 83), headed",
+                "The (massive) verse that starts the Simanim Tiqqun's main Decalogue (p. 83),"
+                " headed",
                 *[" ", H.bdi(' "עשרת הדברות" בטעם עליון'), "."],
                 " Both signal words have a",
                 *[" ", _ROM_REVIA, " — the p-trad ", _ELYON, "'s pair."],
@@ -316,7 +317,7 @@ def _body_scans() -> tuple[object, ...]:
             _P246_BODY_IMG,
             "Simanim Tiqqun p. 246: the Exodus appendix Decalogue in the taḥton",
             (
-                "The (short) two verses that start Simanim Tiqqun's appendix Decalogue (p. 246), headed עשרת הדברות דיתרו בלא טעם עליון."
+                "The (short) two verses that start the Simanim Tiqqun's appendix Decalogue (p. 246), headed עשרת הדברות דיתרו בלא טעם עליון."
                 " (Heading not shown in this image though.)"
                 " Both signal words close chanted verses, each with a",
                 *[" ", _ROM_SILLUQ_SOF_PASUQ, f" — the p-trad {_TAHTON}'s pair."],
@@ -508,8 +509,8 @@ def _p83_section() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "The note is worth reading for what it reveals about Simanim Tiqqun's own stance:"
-                " its default"
+                "The note is worth reading for what it reveals about the Simanim Tiqqun's own"
+                " stance: its default"
                 f" {_ELYON} ends the אנכי…עבדים span on a ",
                 _ROM_REVIA,
                 " — the nine-verse p-trad structure — and it files the standalone,"
@@ -612,8 +613,9 @@ def _p246_section() -> tuple[object, ...]:
         ),
         H.para(
             (
-                f"The mirror footnote, from the appendix's {_TAHTON} Decalogue (which Simanim"
-                f" Tiqqun heads only negatively, בלא טעם עליון — lacking the {_ELYON}), on the lemma"
+                f"The mirror footnote, from the appendix's {_TAHTON} Decalogue (which the"
+                f" Simanim Tiqqun heads only negatively, בלא טעם עליון — lacking the {_ELYON}), on"
+                " the lemma"
                 " אנכי.",
             )
         ),
@@ -686,7 +688,7 @@ def _p246_section() -> tuple[object, ...]:
             (
                 H.small(
                     (
-                        "On Simanim Tiqqun's citing the כתר אר״ץ (Aleppo Codex) here — what that citation"
+                        "On the Simanim Tiqqun's citing the כתר אר״ץ (Aleppo Codex) here — what that citation"
                         " can and cannot mean — see ",
                         link("the note below", "#simanim-aleppo-codex"),
                         ".",
@@ -705,7 +707,7 @@ def _p246_section() -> tuple[object, ...]:
         _p246_mapping_table(),
         H.para(
             (
-                f"So the note has Simanim Tiqqun, in its own editorial voice, distinguishing two"
+                f"So the note has the Simanim Tiqqun, in its own editorial voice, distinguishing two"
                 f" {_TAHTON} cantillations of the אנכי…עבדים span: what it prints and calls the"
                 f" “ordinary” (רגיל) {_TAHTON} — עבדים with ",
                 _ROM_SILLUQ_SOF_PASUQ,
@@ -872,7 +874,7 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 _ROM_ETNAHTA,
                 " or a ",
                 _ROM_REVIA,
-                " the strand runs on. Simanim Tiqqun lands"
+                " the strand runs on. The Simanim Tiqqun lands"
                 f" on the p-trad side of that divergence on both strands: the p-trad {_ELYON} in"
                 " its Exodus",
                 f" main Decalogue (p. 83), and the p-trad {_TAHTON} in its appendix Decalogue"
@@ -959,7 +961,8 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
         H.para(
             (
                 "One scope note: the finding above rests on the אנכי…מצותי span — the most striking"
-                " p-trad/m-trad divergence. Simanim Tiqqun makes the same p-trad choice at that span in"
+                " p-trad/m-trad divergence. The Simanim Tiqqun makes the same p-trad choice at that"
+                " span in"
                 " both of its Decalogues: the Exodus (Yitro) one and the",
                 f" Deuteronomy (Vaetḥanan) one, whose {_ELYON} main Decalogue starts on p. 208."
                 " One caveat: in the"
@@ -997,8 +1000,8 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
             "Simanim Tiqqun p. 247: the Shabbat commandment of the Deuteronomy appendix Decalogue,"
             " in the m-trad taḥton",
             (
-                "The Shabbat commandment of Simanim's Tiqqun Deuteronomy (Vaetḥanan) appendix"
-                f" Decalogue (p. 247), in the m-trad {_TAHTON} — the one place its Tiqqun departs"
+                "The Shabbat commandment of the Simanim Tiqqun's Deuteronomy (Vaetḥanan) appendix"
+                f" Decalogue (p. 247), in the m-trad {_TAHTON} — the one place the Tiqqun departs"
                 " from the p-trad. The three signal words are highlighted.",
             ),
             width=None,
@@ -1090,7 +1093,7 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
 def _aleppo_codex_section() -> tuple[object, ...]:
     return (
         H.heading_level_2(
-            "On Simanim Tiqqun's citation of the Aleppo Codex",
+            "On the Simanim Tiqqun's citation of the Aleppo Codex",
             {"id": "simanim-aleppo-codex"},
         ),
         H.para(
@@ -1121,7 +1124,8 @@ def _aleppo_codex_section() -> tuple[object, ...]:
                     " The Aleppo Codex's Torah survives only from Deut 28:17 onward, so the"
                     " physical Codex contains neither Decalogue; any statement about how “the"
                     " Keter” points אנכי…עבדים rests on reconstruction or pre-1947 testimony."
-                    " Simanim Tiqqun, in a passing reference, has no room to say so — but strictly it"
+                    " The Simanim Tiqqun, in a passing reference, has no room to say so — but"
+                    " strictly it"
                     " should read “one of the two cantillations reconstructed for the Aleppo Codex"
                     " is …”.",
                 ),
