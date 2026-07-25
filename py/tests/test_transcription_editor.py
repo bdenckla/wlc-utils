@@ -22,6 +22,7 @@ from accgram.transcription_editor import (  # noqa: E402
     detect_margin,
     find_bands,
     median_pitch,
+    rendered_region,
     row_profile,
     smooth,
 )
@@ -292,3 +293,49 @@ def test_a_crop_at_the_top_grows_only_downward():
         for c in centres
     }
     assert len(rows) == 3 and matched == {0, 1, 2}
+
+
+# --------------------------------------------------------------------------- #
+# The export-format rule #71 introduced (see ``rendered_region``)
+# --------------------------------------------------------------------------- #
+def test_rendered_region_reads_a_post_71_export_off_detect_crop():
+    """With a grow, ``crop`` is the lines requested and ``detect_crop`` the region rendered."""
+    render = {
+        "crop": [0.05, 0.30, 0.95, 0.50],
+        "detect_crop": [0.05, 0.26, 0.95, 0.54],
+        "width": 1200,
+    }
+    assert rendered_region(render) == [0.05, 0.26, 0.95, 0.54]
+
+
+def test_rendered_region_reads_a_pre_71_export_off_crop():
+    """No ``detect_crop`` is the OLD format, whose ``crop`` already meant the region rendered --
+    every transcription committed so far is this shape, and none will be rewritten."""
+    render = {"crop": [0.05, 0.26, 0.95, 0.54], "width": 1200}
+    assert rendered_region(render) == [0.05, 0.26, 0.95, 0.54]
+
+
+def test_rendered_region_is_none_for_a_whole_page_export():
+    """A whole-page render grows nothing and writes ``crop: null``; the region is the page."""
+    assert rendered_region({"crop": None, "width": 1200}) is None
+
+
+def test_rendered_region_agrees_with_crop_horizontally_on_every_committed_export():
+    """The two formats never differed left-to-right, which is what lets ``zoom_line`` keep
+    reading ``crop`` for its column bounds.  Asserted over the real exports, not a fixture.
+    """
+    import json
+
+    from accgram import edition_transcription as et
+
+    exports = sorted(et.transcriptions_dir().glob("*.json"))
+    assert exports, "no editor exports committed"
+    for path in exports:
+        record = json.loads(path.read_text(encoding="utf-8"))
+        for page in record.get("pages", [record]):
+            render = page["render"]
+            region, crop = rendered_region(render), render["crop"]
+            if crop is None:
+                assert region is None
+            else:
+                assert (region[0], region[2]) == (crop[0], crop[2]), path.name
