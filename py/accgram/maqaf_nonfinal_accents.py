@@ -1,6 +1,6 @@
 r"""Survey: accents on the NON-FINAL atom of a maqaf compound, across the whole Tanakh.
 
-An accent on the joined atom of a maqaf compound is the phenomenon behind ``koren_dt_elyon``'s
+An accent on a non-final atom of a maqaf compound is the phenomenon behind ``koren_dt_elyon``'s
 ``mun-mun`` on לא־תעשה and SimTiq's two munax-on-לא (see ``edition_transcription``).  This module
 measures it mechanically so the printed-Decalogue pages' claims about how rare it is rest on a
 count that can be regenerated, rather than on prose that has to be re-derived every time someone
@@ -24,18 +24,18 @@ THE TWO ROUTES.  A single bucket of "compounds with two accents" hides the disti
 matters, so every hit is sorted into one of two routes:
 
 * **(a) A secondary accent the compound inherits.**  Yeivin's own term, and his prose inventory
-  is a CLOSED LIST of configurations -- which accent sits on the joined atom and which the
-  compound bears: metigah-zaqef (ITM §224), munax-zaqef (§221), a secondary merkha in the chanted word of a
+  is a CLOSED LIST of configurations -- which accent sits on the non-final atom and which the
+  compound has: metigah-zaqef (ITM §224), munax-zaqef (§221), a secondary merkha in the chanted word of a
   tipexa (§233) or of a tevir (§§233/241), and the mayela tipexa before an etnaxta or a silluq.
   ``_NAMED_CONFIGURATIONS`` is that list.
 * **(b) A maqaf written after an atom that keeps its own conjunctive.**  ITM §293: a manuscript
   habit with no grammatical trigger, "most common where the word has penultimate stress", and L
   -- WLC's own base -- is named for it (§21, §293).
 
-POSITION IS EVIDENCE, NOT THE CRITERION.  Whether the joined atom's accent sits where that atom's
+POSITION IS EVIDENCE, NOT THE CRITERION.  Whether a non-final atom's accent sits where that atom's
 own accent sits is answered exactly, with no phonology, by an in-corpus oracle: the same spelling
 standing FREE elsewhere in the same corpus -- an atom that is a whole chanted word by itself, so
-it bears its own accent (``build_oracle``).  Key each atom by its letters and points with accents
+it has its own accent (``build_oracle``).  Key each atom by its letters and points with accents
 stripped, and compare base letters after the accent.
 
 * A **no** is decisive.  Nu 9:17 ואחרי־כן has its munax three letters from the end where 21 free
@@ -60,7 +60,7 @@ records that it was produced from WLC 4.20 by WLC2XML -- so it is the same trans
 Kimball's corrections, and agreement between the two is not corroboration by a second hand.
 MAM-simple is Breuer's EDITION.  There is therefore no independent manuscript here at all: the
 counts measure L as Westminster reads it, and what an edition does with it.  ``CORPUS_KIND``
-carries that so the page cannot state a corpus's standing wrongly.
+records that so the page cannot state a corpus's standing wrongly.
 
 Run via ``main_accgram.py generate-html-maqaf-nonfinal-accents``.
 """
@@ -90,7 +90,7 @@ NUN_HAFUKHA = "\N{HEBREW PUNCTUATION NUN HAFUKHA}"
 SILLUQ = "silluq"
 
 # Marks stripped when keying an atom for the free-standing oracle: two spellings of one atom must
-# key alike whether or not one of them carries punctuation.
+# key alike whether or not one of them has punctuation.
 _STRIPPED_FOR_KEY = frozenset((METEG, PASEQ, SOF_PASUQ, NUN_HAFUKHA))
 
 # Accents written at a fixed EDGE of the chanted word rather than on its stress.  Their position
@@ -109,8 +109,8 @@ _NOT_IMPOSITIVE = frozenset(
     )
 )
 
-# Route (a): Yeivin's closed prose list, keyed by (accent on the joined atom, accent the compound
-# bears).  Membership is a fact about the configuration, not about the mark's position -- see the
+# Route (a): Yeivin's closed prose list, keyed by (accent on the non-final atom, accent the
+# compound has).  Membership is a fact about the configuration, not about the mark's position -- see the
 # module docstring on why position cannot be the criterion.
 _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
     (am.QADMA, am.ZAQEF_QATAN): "metigah-zaqef (ITM §224)",
@@ -131,7 +131,7 @@ _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
 
 ROUTE_SECONDARY = "a: a secondary accent the compound inherits"
 ROUTE_HABIT = "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)"
-ROUTE_UNDECIDED = "?: undecided -- the joined atom never stands free"
+ROUTE_UNDECIDED = "?: undecided -- the non-final atom never stands free"
 # The poetic corpus is deliberately left unrouted; see ``classify``.
 ROUTE_NOT_ATTEMPTED = "(not attempted -- the route split is prose doctrine)"
 
@@ -226,7 +226,7 @@ def _wlc_vel_atoms(vel: object) -> list[str]:
     """The pointed atoms of one verse element; the ketiv is dropped, the qere kept.
 
     A ketiv is unpointed and never accented, so it can only add spurious unaccented atoms;
-    the qere is the side that carries the marks the scanners read.
+    the qere is the side that has the marks the scanners read.
     """
     if isinstance(vel, str):
         return [vel]
@@ -316,7 +316,7 @@ def atom_accents(word: str, verse_final: bool) -> list[list[str]]:
     """Accents per atom of one chanted word, silluq included when it is the verse's last.
 
     Elsewhere a U+05BD is an ordinary meteg and is dropped: it is not an accent, and counting
-    it would turn every maqaf-joined atom bearing ITM §337's ga'ya into a false hit.
+    it would turn every non-final atom that has ITM §337's ga'ya into a false hit.
     """
     atoms = word.split(MAQAF)
     per_atom = [[c for c in atom if is_accent(c)] for atom in atoms]
@@ -364,12 +364,12 @@ def oracle_key(atom: str) -> str:
 
 
 def letters_after_accent(atom: str, *, main_only: bool = False) -> int | None:
-    """Base letters strictly after the accent-bearing letter; None if there is no accent.
+    """Base letters strictly after the letter that has the accent; None if there is no accent.
 
     ``main_only`` takes the last IMPOSITIVE accent, which is the atom's own: a secondary
     accent always precedes the main one, so taking the first would read a restored secondary
     as the atom's own position -- which is exactly what MAM's שלף does.  Without it, take the
-    sole accent, which is all a joined atom ever has.
+    sole accent, which is all a non-final atom ever has.
     """
     letters_before: list[int] = []
     seen = 0
@@ -385,7 +385,7 @@ def letters_after_accent(atom: str, *, main_only: bool = False) -> int | None:
 
 def build_oracle(words_by_bcv: dict[str, list[str]], keep) -> dict[str, Counter]:
     """key -> Counter of letters-after-accent, over atoms standing FREE -- that is, over
-    chanted words of one atom, which therefore bear that atom's own accent.
+    chanted words of one atom, which therefore have that atom's own accent.
 
     Verse-final ones are excluded along with the joined: there the U+05BD is a silluq that
     this counter does not see, so such an atom would look unaccented or mis-positioned.
@@ -512,7 +512,7 @@ def build_survey() -> dict:
         "criterion": (
             "Within one whitespace-delimited chanted word, an accent both before and after a"
             " maqaf -- that is, on an atom the maqaf joins to the next as well as on the atom"
-            " bearing the compound's own accent. A U+05BD counts as an accent only on the"
+            " that has the compound's own accent. A U+05BD counts as an accent only on the"
             " verse's last chanted word, where it is silluq."
         ),
         "poetic_caveat": (

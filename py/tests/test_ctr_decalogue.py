@@ -43,7 +43,7 @@ _EXPECTED = {
         "primary": "elyon",
         "agree": 139,
         "total": 142,
-        # CTR has a munax on the proclitic atom of two maqaf compounds (יהיה־לך, ובנך־ובתך)
+        # CTR has a munax on the non-final atom of two maqaf compounds (יהיה־לך, ובנך־ובתך)
         # and swaps a munax for the reference's merkha on one ואשר.  All conjunctive.
         "residuals": {"יהיהלך", "ואשר", "ובנךובתך"},
         "ctr_spans": 16,

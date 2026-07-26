@@ -49,8 +49,8 @@ pages' verdicts are graded by that, not split into two ledgers.  (The trio brief
 declaring a maqaf difference to be no accent difference at all; ``printed_decalogue_strands``'
 ``MAQAF_IS_THE_LAST_RUNG`` records why that was wrong.)
 
-A maqaf USUALLY takes the place of the joined atom's accent -- an atom standing as its own
-chanted word must bear one, while a maqaf-joined proclitic normally takes at most a meteg --
+A maqaf USUALLY takes the place of a non-final atom's accent -- an atom standing as its own
+chanted word must have one, while a non-final atom normally takes at most a meteg --
 but usually is not always,
 and the Exodus taxton is why the weaker word is the right one.  SimTiq prints a munax on the
 joined לא of לא־יהיה and of לא־תעשה, whose second atoms carry merkha and qadma -- two accents on
@@ -83,8 +83,8 @@ compound as unremarkable.  Two different things put one there, and they license 
   -- is named for doing it: L "marks maqqef after words with conjunctive accents, as ועזר־מצריו
   (Dt 33:7), showing, in this respect, a tradition somewhat different from the standard".  (§357
   is the neighbouring case, a maqaf after a word bearing a ga'ya that follows the accent.)  So an
-  accented proclitic in prose is neither unheard-of nor evenly distributed, and WHOSE habit it is
-  is part of any question about one.
+  accent on a non-final atom in prose is neither unheard-of nor evenly distributed, and WHOSE
+  habit it is is part of any question about one.
 
 Two things Yeivin settles for the framing itself, worth not re-deriving.  §291: a maqaf "has no
 musical motif of its own, and is therefore not considered an 'accent', either conjunctive or
@@ -113,7 +113,7 @@ Tanakh-wide survey lives in ``maqaf_nonfinal_accents`` (+ ``_page``), which writ
 ``gh-pages/accgram/maqaf-nonfinal-accents.html`` from one run, and is where this note's claims
 about rarity get their numbers.  Deliberately NO counts here: a number restated in a second file
 is a number nothing keeps in step, which is the whole reason the survey was moved out of this
-docstring.  What the page settles, qualitatively, is that an accent on a joined atom happens in
+docstring.  What the page settles, qualitatively, is that an accent on a non-final atom happens in
 well under one percent of prose maqaf compounds; that those cases split into Yeivin's grammatical
 secondary accents and §293's bare scribal habit, most of them the former; and that Koren's
 ``mun-mun`` is NOT unprecedented -- 2 Chr 1:11 ויאמר־אלהים ׀ לשלמה is the same shape doing the

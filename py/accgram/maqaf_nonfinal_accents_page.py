@@ -1,7 +1,7 @@
 r"""Generate gh-pages/accgram/maqaf-nonfinal-accents.html, and the JSON behind it.
 
-The rendered account of ``maqaf_nonfinal_accents``' survey: how often a maqaf-joined atom
-carries an accent of its own, what the two routes to that are, and what it means for
+The rendered account of ``maqaf_nonfinal_accents``' survey: how often a non-final atom of a
+compound has an accent of its own, what the two routes to that are, and what it means for
 ``koren_dt_elyon``'s ``mun-mun`` on לא־תעשה.  Every number on the page is spliced from the survey
 this run computes, and the same run writes ``out/accgram/maqaf-nonfinal-accents.json``, so page
 and data cannot drift.
@@ -38,11 +38,15 @@ from py_html import wlc_utils_html as H
 
 import repo_paths
 
-# "Maqaf-joined atom" rather than "proclitic": every atom of a compound but the last is the
-# maqaf-joined one, so the title names exactly what the scan measures, where "proclitic" asserted
-# a grammatical role the scan never checks.  Matches the module basenames (#81's sweep settled
-# "atom" as a reader-facing term, which is what lets the title use it bare).
-PAGE_TITLE = "Accents on a Maqaf-Joined Atom"
+# "Non-final atom of a compound", not "proclitic" and not "maqaf-joined atom".  "Proclitic"
+# asserted a grammatical role the scan never checks -- route (b) is precisely an atom that keeps
+# its own accent, so it is proclitic by position only.  And a lone atom is never "maqaf-joined"
+# full stop: it is joined TO the next one, or else the two of them are joined to each other.
+# Naming the atom by its POSITION in the compound says what the scan measures and nothing more,
+# and it matches the module basenames.  A title is short on space and there is no other kind of
+# compound here, so "maqaf" is dropped from "maqaf compound" in this one place; the body says it
+# in full.  (#81's sweep settled "atom" as a reader-facing term, which is what lets it stand bare.)
+PAGE_TITLE = "Accents on a Non-Final Atom of a Compound"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 # The corpora, in the order the page discusses them, with the standing each has.  A reader must
@@ -112,9 +116,9 @@ def _intro(survey: dict) -> tuple[object, ...]:
             wrap_hebrew_runs(
                 "A maqaf joins one atom — one written word, between spaces or maqafs — to the"
                 " next, and what the two of them become is a single chanted word, the unit an"
-                " accent marks. The joined atom normally gives up its own accent to do so."
+                " accent marks. The non-final atom normally gives up its own accent to do so."
                 f" Normally, but not always: in {wlc_prose['maqaf_compounds']:,} maqaf"
-                f" compounds across the prose books, {wlc_prose['hits']} ({pct:.2f}%) carry an"
+                f" compounds across the prose books, {wlc_prose['hits']} ({pct:.2f}%) have an"
                 " accent on a non-final atom. This page counts those, sorts them, and asks what"
                 " they mean for one printed reading in particular."
             )
@@ -134,7 +138,7 @@ def _intro(survey: dict) -> tuple[object, ...]:
         H.para(
             wrap_hebrew_runs(
                 "There is. The answer, with the counts below behind it: two prose compounds"
-                f" carry a {ROM_MUNAX} on each atom, and the closer of them matches Koren not"
+                f" have a {ROM_MUNAX} on each atom, and the closer of them matches Koren not"
                 " only in shape but in its surroundings. The reading is rare, and it is the"
                 " kind of thing the Leningrad Codex itself does — but no printed edition is"
                 " known to have done it before."
@@ -160,8 +164,8 @@ def _what_is_counted() -> tuple[object, ...]:
             wrap_hebrew_runs(
                 "Shapes are written the way the edition transcriptions write them, one field"
                 " per atom with the dash standing for the maqaf itself: qad-zaq is a qadma on"
-                " the joined atom and a zaqef qatan on the atom it is joined to, and 0-mer-sil"
-                " is a three-atom compound whose first atom carries nothing."
+                " the non-final atom and a zaqef qatan on the final one, and 0-mer-sil"
+                " is a three-atom compound whose first atom has nothing."
             )
         ),
     )
@@ -213,7 +217,7 @@ def _two_routes() -> tuple[object, ...]:
         H.heading_level_2("Two routes, and why they must be counted apart"),
         H.para(
             "One bucket of “compounds with two accents” hides the distinction that decides"
-            " what any of this means. There are two quite different reasons a joined atom can"
+            " what any of this means. There are two quite different reasons a non-final atom can"
             " end up with an accent."
         ),
         H.unordered_list(
@@ -221,20 +225,20 @@ def _two_routes() -> tuple[object, ...]:
                 (
                     H.bold("A secondary accent the compound inherits."),
                     " The compound is one chanted word, and a mark that belongs to the"
-                    " chanted word as a whole lands on the joined atom. This is a"
+                    " chanted word as a whole lands on the non-final atom. This is a"
                     " grammatical category with a closed list, which Yeivin gives for the"
                     f" prose books: {ROM_QADMA} before a {ROM_ZAQEF_QATAN} (metigah-zaqef,"
                     f" §224), {ROM_MUNAX} before a {ROM_ZAQEF_QATAN} (§221), a secondary"
                     f" {ROM_MERKHA} in the chanted word of a {ROM_TIPEHA} or of a tevir"
                     f" (§§233, 241), and the mayela {ROM_TIPEHA} before an {ROM_ETNAHTA} or"
                     f" a {ROM_SILLUQ}. Membership is decided by which accent sits on the"
-                    " joined atom and which the compound bears.",
+                    " non-final atom and which the compound has.",
                 ),
                 (
                     H.bold("A maqaf written after an atom that keeps its own accent."),
                     " No grammatical trigger at all — a habit of the scribe who did the"
                     " pointing. Yeivin (§293) reports it of several manuscripts, notes it"
-                    " is commonest where the joined atom is stressed on its next-to-last"
+                    " is commonest where the non-final atom is stressed on its next-to-last"
                     " syllable, and names the Leningrad Codex for it specifically, as"
                     " showing “a tradition somewhat different from the standard”. §21"
                     " lists the habit among the features by which one manuscript is told"
@@ -253,7 +257,7 @@ def _position_is_evidence() -> tuple[object, ...]:
                 "The configuration decides, and one further question corroborates it: does the"
                 " accent sit where THAT ATOM's own accent sits? That is answered without any"
                 " phonology, by looking the atom up elsewhere in the same text standing free —"
-                " a chanted word by itself, so it bears its own accent — and comparing how many"
+                " a chanted word by itself, so it has its own accent — and comparing how many"
                 " letters follow the accent in each. No syllable counting, no maters, no"
                 " furtive vowels — the two spellings compared are the same spelling."
             )
@@ -349,7 +353,7 @@ def _koren_section(survey: dict) -> tuple[object, ...]:
         H.heading_level_2("Koren's reading, and what precedes it"),
         H.para(
             wrap_hebrew_runs(
-                "Both prose compounds bearing a munaḥ on each atom fall on the habit side, not"
+                "Both prose compounds with a munaḥ on each atom fall on the habit side, not"
                 " the grammatical one — so neither is a category Koren could be said to be"
                 " following."
             )
@@ -393,7 +397,7 @@ def _koren_section(survey: dict) -> tuple[object, ...]:
                 link("Simanim Tiqqun", "printed-decalogue-simanim.html"),
                 *wrap_hebrew_runs(
                     "'s munaḥ on the joined לא of לא־יהיה and of לא־תעשה — the same phenomenon,"
-                    " a joined atom keeping its accent, one step short of the same shape, and"
+                    " a non-final atom keeping its accent, one step short of the same shape, and"
                     " in this very passage."
                 ),
             )

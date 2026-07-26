@@ -50,7 +50,7 @@
 # the break falls INSIDE a maqaf compound -- reference token 124, לֹֽא־תַעֲנֶ֥ה -- which is why
 # p. 119's last band ends on the zaqef qatan of תגנב rather than on a silluq: that chanted verse
 # closes on p. 120, at שקר.  The compound bears one accent, on its second atom, so nothing was
-# typed for the לא־ and no cross-page rejoin was needed; had the edition accented the proclitic
+# typed for the לא־ and no cross-page rejoin was needed; had the edition accented the לא־
 # too, as the Tiqqun does at לא־יהיה and לא־תעשה (p. 246), rejoin_editor_chunks would have had
 # to carry it across the page boundary.
 #

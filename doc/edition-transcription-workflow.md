@@ -375,6 +375,6 @@ differences mean — the same judgement §3 asks for, minus the reading. CTR's a
 worth stating: its **Exodus 20 carries the ta'am *elyon*** word-accents, not the taxton a running
 text was expected to hold (though it keeps its own numbered-verse division, 16 chanted verses, not
 the elyon's 9), while its **Deuteronomy 5 is the *taxton***, division and all. Every residual
-difference in both books is conjunctive — a munax CTR prints on the proclitic atom of a maqaf
+difference in both books is conjunctive — a munax CTR prints on a non-final atom of a maqaf
 compound, or a munax/merkha swap — so the disjunctive skeleton, which is #69's surviving claim,
 holds. `py/tests/test_ctr_decalogue.py` pins all of it.

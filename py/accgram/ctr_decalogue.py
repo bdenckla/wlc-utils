@@ -59,7 +59,7 @@ mahapakh-vs-yetiv distinction CTR could not have expressed anyway.
 WHAT THE VERDICT CLAIMS.  Only what #69 says survives every transcription -- the chanted-verse
 boundaries plus the disjunctive skeleton -- read at the glyph level.  CTR's marks agree with
 ex/elyon (Exodus) and dt/taxton (Deuteronomy) at all but a few words, and every disagreement is
-CONJUNCTIVE: a munax CTR has on the proclitic atom of a maqaf compound where the strand has a
+CONJUNCTIVE: a munax CTR has on a non-final atom of a maqaf compound where the strand has a
 meteg, or a munax/merkha swap.  None touches a disjunctive.  The cross-strand re-run -- the same
 comparison against the OTHER tradition -- is where the evidence is: agreement collapses, which is
 what rules out the clean match being an artifact of the fold.
@@ -77,7 +77,7 @@ has to be: the two sides segment into the same words (142 against 142 in Exodus,
 27 and 24 against 24.  So all four residuals are accent differences and nothing else.
 
 Note what the two compound ones are, but do not lean on them: on יהיה־לך and on ובנך־ובתך the
-strand has a meteg on the proclitic atom and CTR a munax there instead, which is a second accent
+strand has a meteg on the non-final atom and CTR a munax there instead, which is a second accent
 on a chanted word.  That is worth recording about CTR and is NOT a precedent for anything -- CTR
 is a nonstandard digital encoding this module already distrusts enough to compare at glyph level,
 so it is evidence about CTR and about nothing else (Ben, 2026-07-26).  A prose compound carrying

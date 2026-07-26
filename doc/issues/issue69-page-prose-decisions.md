@@ -34,7 +34,7 @@ against the strand they otherwise follow is a fact about the strand, not about e
 it belongs on the hub rather than half-told on each satellite.
 
 The two-accent-compound finding gets a clause, not a sentence: what it bears on is the apparatus
-(it falsified `edition_transcription.py`'s "a maqaf-joined proclitic cannot bear an accent"), not
+(it falsified `edition_transcription.py`'s claim that a non-final atom cannot have an accent), not
 the tradition question.
 
 ## 2. Verdicts are per-Decalogue, at four levels

@@ -44,7 +44,8 @@ from py_html import wlc_utils_html as H
 # the conjunctives -- rather than in an accent: SimTiq splits a maqaf compound the reference
 # joins, and joins one the reference splits.  Each counts once, at the word whose marking
 # changed; the accent that appears or disappears with the maqaf is not a second difference,
-# since a maqaf-joined proclitic cannot bear an accent while a free-standing word must:
+# since a non-final atom of a compound normally has no accent while a free-standing word
+# must have one:
 #
 #   * ובנך ובתך (Shabbat commandment): reference joins them under one telisha gedola, so ובנך
 #     takes a meteg and no accent; SimTiq sets them as two words, so ובנך takes a munax.
