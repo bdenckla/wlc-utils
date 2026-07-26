@@ -9,21 +9,30 @@ in the tree referenced it, so for a long time no agent ever loaded it — hence 
 ## Rendered-prose conventions: `py/accgram/printed_decalogue_strands.py`'s module docstring
 
 That docstring is where the editorial conventions for accgram's **rendered prose** are recorded
-— strand names in Hebrew letters and never transliterated, the two signal-word sets, the
-single-sourced `ROM_*` romanizations and their italic wrapper, "the Simanim Tiqqun" and never a
-bare "Simanim", real em dashes, no English sentence opening on a Hebrew word. It lives in the
-printed-Decalogue trio because that is where each rule was settled, but the rules are not
-trio-specific: read it before writing or editing prose on **any** accgram page. Same problem as
-the pointer above — nothing referenced it, so it was discoverable only by already editing the
-file it governs.
+— strand names in Hebrew letters and never transliterated, the two signal-word sets, atom vs
+chanted word, the single-sourced `ROM_*` romanizations and their italic wrapper, "the Simanim
+Tiqqun" and never a bare "Simanim", real em dashes, no English sentence opening on a Hebrew word.
+It lives in the printed-Decalogue trio because that is where each rule was settled, but the rules
+are not all trio-specific — its SCOPE paragraph says which are which: read it before writing or
+editing prose on **any** accgram page. Same problem as the pointer above — nothing referenced it,
+so it was discoverable only by already editing the file it governs.
 
-One of those conventions is a claim about Hebrew accentuation rather than about this repo:
+Two of those conventions are claims about Hebrew accentuation rather than about this repo:
+
+**Never a loose "word"** (#81). An **atom** is one written word, between spaces or maqafs — the
+thing a maqaf joins to the next. A **chanted word** is a lone atom *or* a whole maqaf compound:
+the unit cantillation operates on, normally bearing one accent. Say which you mean, and name a
+compound whole (על־פני, לא־תעשה), never a bare half of one. Plain "word" survives only for an
+ordinary English word, and inside quoted or translated source material, which keeps whatever it
+says. `MAQAF_IS_THE_LAST_RUNG` is where "atom" is glossed for the reader; that gloss is what
+licenses the bare term on the pages. Note that the two senses come apart exactly where the rung
+below matters, so the two rules are best read together.
 
 **Maqaf is the last rung of one scale.** Disjunctives, then conjunctives, then maqaf — a maqaf
-separates the word it sits on from the next even less than a conjunctive does, so it carries the
+separates the atom it sits on from the next even less than a conjunctive does, so it carries the
 weakest *separating* force on the scale. (Never write a bare "weakest": a maqaf *binds* tightest,
 so unqualified it reads as backwards.) There is no second ledger for "word division". A maqaf
-difference is counted **once**, at the word whose marking changed, never as a regrouping plus an
+difference is counted **once**, at the atom whose marking changed, never as a regrouping plus an
 accent; and it is stated as an **exchange with both marks named** — "a maqaf where its Wikisource
 strand has a merkha" — never as the absent maqaf alone. Do not define a maqaf as "the atom left
 blank of an accent": that is only the normal case, and `koren_dt_elyon`'s `mun-mun` on לא־תעשה is
