@@ -1,15 +1,15 @@
-r"""Generate gh-pages/accgram/maqaf-proclitic-accents.html, and the JSON behind it.
+r"""Generate gh-pages/accgram/maqaf-nonfinal-accents.html, and the JSON behind it.
 
-The rendered account of ``maqaf_proclitic_accents``' survey: how often a maqaf-joined proclitic
+The rendered account of ``maqaf_nonfinal_accents``' survey: how often a maqaf-joined atom
 carries an accent of its own, what the two routes to that are, and what it means for
 ``koren_dt_elyon``'s ``mun-mun`` on לא־תעשה.  Every number on the page is spliced from the survey
-this run computes, and the same run writes ``out/accgram/maqaf-proclitic-accents.json``, so page
+this run computes, and the same run writes ``out/accgram/maqaf-nonfinal-accents.json``, so page
 and data cannot drift.
 
 Rendered-prose conventions are ``printed_decalogue_strands``' module docstring; the romanizations
 come from its ``ROM_*`` constants and are never retyped here.
 
-Run via ``main_accgram.py generate-html-maqaf-proclitic-accents``.
+Run via ``main_accgram.py generate-html-maqaf-nonfinal-accents``.
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ import argparse
 from pathlib import Path
 
 from accgram import accent_marks as am
-from accgram import maqaf_proclitic_accents as mpa
+from accgram import maqaf_nonfinal_accents as mpa
 from accgram import rtms_report
 from accgram.almost_errors_html_shared import link, wrap_hebrew_runs
 from accgram.printed_decalogue_strands import (
@@ -38,7 +38,11 @@ from py_html import wlc_utils_html as H
 
 import repo_paths
 
-PAGE_TITLE = "Accents on a Maqaf-Joined Proclitic"
+# "Maqaf-joined atom" rather than "proclitic": every atom of a compound but the last is the
+# maqaf-joined one, so the title names exactly what the scan measures, where "proclitic" asserted
+# a grammatical role the scan never checks.  Matches the module basenames (#81's sweep settled
+# "atom" as a reader-facing term, which is what lets the title use it bare).
+PAGE_TITLE = "Accents on a Maqaf-Joined Atom"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 # The corpora, in the order the page discusses them, with the standing each has.  A reader must
@@ -106,12 +110,13 @@ def _intro(survey: dict) -> tuple[object, ...]:
         H.heading_level_1(PAGE_TITLE),
         H.para(
             wrap_hebrew_runs(
-                "A maqaf joins two words into one chanted word, and the joined word normally"
-                f" gives up its own accent to do so. Normally, but not always: in"
-                f" {wlc_prose['maqaf_compounds']:,} maqaf compounds across the prose books,"
-                f" {wlc_prose['hits']} ({pct:.2f}%) carry an accent on a non-final atom. This"
-                " page counts those, sorts them, and asks what they mean for one printed"
-                " reading in particular."
+                "A maqaf joins one atom — one written word, between spaces or maqafs — to the"
+                " next, and what the two of them become is a single chanted word, the unit an"
+                " accent marks. The joined atom normally gives up its own accent to do so."
+                f" Normally, but not always: in {wlc_prose['maqaf_compounds']:,} maqaf"
+                f" compounds across the prose books, {wlc_prose['hits']} ({pct:.2f}%) carry an"
+                " accent on a non-final atom. This page counts those, sorts them, and asks what"
+                " they mean for one printed reading in particular."
             )
         ),
         H.para(
@@ -121,7 +126,8 @@ def _intro(survey: dict) -> tuple[object, ...]:
                 *wrap_hebrew_runs(
                     "which sets לא־תעשה as a maqaf compound and accents BOTH atoms with a"
                     f" {ROM_MUNAX}, where the strand it otherwise follows in every accent sets"
-                    " the two words apart. Is there anything in Tanakh like it?"
+                    " the two atoms apart as chanted words of their own. Is there anything in"
+                    " Tanakh like it?"
                 ),
             )
         ),
@@ -142,17 +148,19 @@ def _what_is_counted() -> tuple[object, ...]:
         H.heading_level_2("What is counted"),
         H.para(
             wrap_hebrew_runs(
-                "The test is mechanical: inside one space-delimited word, is there an accent"
-                " both before and after a maqaf? A meteg counts as an accent only on the last"
-                f" chanted word of a verse, where the same sign is a {ROM_SILLUQ}; anywhere"
-                " else it is a meteg, which is not an accent at all."
+                "The test is mechanical: inside one space-delimited chanted word, is there an"
+                " accent both before and after a maqaf? A maqaf compound has no space in it, so"
+                " splitting on spaces really does give chanted words, and splitting those on"
+                " maqaf gives their atoms. A meteg counts as an accent only on the last chanted"
+                f" word of a verse, where the same sign is a {ROM_SILLUQ}; anywhere else it is a"
+                " meteg, which is not an accent at all."
             )
         ),
         H.para(
             wrap_hebrew_runs(
                 "Shapes are written the way the edition transcriptions write them, one field"
                 " per atom with the dash standing for the maqaf itself: qad-zaq is a qadma on"
-                " the joined word and a zaqef qatan on the word it is joined to, and 0-mer-sil"
+                " the joined atom and a zaqef qatan on the atom it is joined to, and 0-mer-sil"
                 " is a three-atom compound whose first atom carries nothing."
             )
         ),
@@ -194,7 +202,7 @@ def _corpus_caveat(survey: dict) -> tuple[object, ...]:
                 " transcription: he reports that the manuscript marks a maqaf in ועזר־מצריו"
                 " (Deuteronomy 33:7) and omits one in כל קדשיו (Deuteronomy 33:3), and WLC has"
                 " the opposite of both. (His third, שנאי־בצע at Exodus 18:21, he gives for a"
-                " different manuscript, and WLC duly sets those two words apart.)"
+                " different manuscript, and WLC duly sets those two atoms apart.)"
             )
         ),
     )
@@ -205,7 +213,7 @@ def _two_routes() -> tuple[object, ...]:
         H.heading_level_2("Two routes, and why they must be counted apart"),
         H.para(
             "One bucket of “compounds with two accents” hides the distinction that decides"
-            " what any of this means. There are two quite different reasons a joined word can"
+            " what any of this means. There are two quite different reasons a joined atom can"
             " end up with an accent."
         ),
         H.unordered_list(
@@ -213,20 +221,20 @@ def _two_routes() -> tuple[object, ...]:
                 (
                     H.bold("A secondary accent the compound inherits."),
                     " The compound is one chanted word, and a mark that belongs to the"
-                    " chanted word as a whole lands on the joined half. This is a"
+                    " chanted word as a whole lands on the joined atom. This is a"
                     " grammatical category with a closed list, which Yeivin gives for the"
                     f" prose books: {ROM_QADMA} before a {ROM_ZAQEF_QATAN} (metigah-zaqef,"
                     f" §224), {ROM_MUNAX} before a {ROM_ZAQEF_QATAN} (§221), a secondary"
-                    f" {ROM_MERKHA} on the word of a {ROM_TIPEHA} or of a tevir (§§233,"
-                    f" 241), and the mayela {ROM_TIPEHA} before an {ROM_ETNAHTA} or a"
-                    f" {ROM_SILLUQ}. Membership is decided by which accent sits on the"
-                    " joined word and which the compound bears.",
+                    f" {ROM_MERKHA} in the chanted word of a {ROM_TIPEHA} or of a tevir"
+                    f" (§§233, 241), and the mayela {ROM_TIPEHA} before an {ROM_ETNAHTA} or"
+                    f" a {ROM_SILLUQ}. Membership is decided by which accent sits on the"
+                    " joined atom and which the compound bears.",
                 ),
                 (
-                    H.bold("A maqaf written after a word that keeps its own accent."),
+                    H.bold("A maqaf written after an atom that keeps its own accent."),
                     " No grammatical trigger at all — a habit of the scribe who did the"
                     " pointing. Yeivin (§293) reports it of several manuscripts, notes it"
-                    " is commonest where the joined word is stressed on its next-to-last"
+                    " is commonest where the joined atom is stressed on its next-to-last"
                     " syllable, and names the Leningrad Codex for it specifically, as"
                     " showing “a tradition somewhat different from the standard”. §21"
                     " lists the habit among the features by which one manuscript is told"
@@ -243,25 +251,25 @@ def _position_is_evidence() -> tuple[object, ...]:
         H.para(
             wrap_hebrew_runs(
                 "The configuration decides, and one further question corroborates it: does the"
-                " accent sit where THAT WORD's own accent sits? That is answered without any"
-                " phonology, by looking the word up elsewhere in the same text standing free"
-                " and bearing its own accent, and comparing how many letters follow the accent"
-                " in each. No syllable counting, no maters, no furtive vowels — the two"
-                " spellings compared are the same spelling."
+                " accent sit where THAT ATOM's own accent sits? That is answered without any"
+                " phonology, by looking the atom up elsewhere in the same text standing free —"
+                " a chanted word by itself, so it bears its own accent — and comparing how many"
+                " letters follow the accent in each. No syllable counting, no maters, no"
+                " furtive vowels — the two spellings compared are the same spelling."
             )
         ),
         H.para(
             wrap_hebrew_runs(
                 "A NO settles it. Numbers 9:17 ואחרי־כן puts its munaḥ three letters from the"
                 " end, where the twenty-one free-standing ואחרי put theirs one letter from the"
-                " end; so the mark cannot be that word's own accent, and it is the secondary"
+                " end; so the mark cannot be that atom's own accent, and it is the secondary"
                 " munaḥ of §221."
             )
         ),
         H.para(
             wrap_hebrew_runs(
                 "A YES settles nothing, which is the trap. A secondary accent can land on the"
-                " word's own stress anyway. MAM's שלף־חרב agrees with all six free-standing"
+                " atom's own stress anyway. MAM's שלף־חרב agrees with all six free-standing"
                 " שלף — because the stress has retracted before חרב — and it is still a"
                 " secondary merkha. So position corroborates the configuration; it never"
                 " overrules it."
@@ -320,7 +328,7 @@ def _prose_section(survey: dict) -> tuple[object, ...]:
                 " grammatical configurations and never the bare habit — consistent with his"
                 " own rule that an accent and a maqaf are mutually exclusive, a mark following"
                 " the regular order of the accents cancelling the maqaf, while the secondary"
-                " marks, which are in that word only BECAUSE it is joined, never do."
+                " marks, which are there only BECAUSE the atom is joined, never do."
             )
         ),
         H.para(
@@ -352,7 +360,8 @@ def _koren_section(survey: dict) -> tuple[object, ...]:
                 f" exactly where all {free_n:,} free-standing ויאמר put theirs, so it is not a"
                 " slip of the pointing. And the surroundings match: the stroke after אלהים is"
                 f" a narrow-sense {ROM_PASEQ} rather than a legarmeh, which leaves both"
-                f" {ROM_MUNAX}s plain servants of the {ROM_PAZER} on the following word — which"
+                f" {ROM_MUNAX}s plain servants of the {ROM_PAZER} on the next chanted word —"
+                " which"
                 " is precisely what Koren has, a revia, then the two-munaḥ compound, then a"
                 " pazer. Breuer's edition cancels that maqaf."
             )
@@ -368,7 +377,8 @@ def _koren_section(survey: dict) -> tuple[object, ...]:
                 "The Decalogue's own Exodus 20:10 לא־תעשה shows a munaḥ on each atom in all"
                 " three texts, but that is the two cantillations tangled together rather than"
                 " either one of them: untangled, MAM's עליון cancels the maqaf and sets לא and"
-                " תעשה as two separate munaḥ words — which is exactly what Koren joins."
+                " תעשה apart as two chanted words, each with a munaḥ of its own — which is"
+                " exactly the pair Koren joins."
             )
         ),
         H.heading_level_3("Ask it of manuscripts and of printed editions separately"),
@@ -383,7 +393,7 @@ def _koren_section(survey: dict) -> tuple[object, ...]:
                 link("Simanim Tiqqun", "printed-decalogue-simanim.html"),
                 *wrap_hebrew_runs(
                     "'s munaḥ on the joined לא of לא־יהיה and of לא־תעשה — the same phenomenon,"
-                    " a joined word keeping its accent, one step short of the same shape, and"
+                    " a joined atom keeping its accent, one step short of the same shape, and"
                     " in this very passage."
                 ),
             )
@@ -412,7 +422,7 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
             wrap_hebrew_runs(
                 "These numbers are a floor, and they are not comparable with the prose ones."
                 " Breuer records that in the three poetic books the maqaf after a secondary"
-                " mark is customarily left unwritten while the word still counts as joined —"
+                " mark is customarily left unwritten while the atom still counts as joined —"
                 " so most of what would be counted here is invisible to a maqaf test by"
                 " construction."
             )
@@ -450,7 +460,7 @@ def render_body_contents(survey: dict) -> tuple[object, ...]:
 
 
 def default_html_out_path(repo_root: Path) -> Path:
-    return repo_paths.gh_pages_dir() / "accgram" / "maqaf-proclitic-accents.html"
+    return repo_paths.gh_pages_dir() / "accgram" / "maqaf-nonfinal-accents.html"
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
@@ -458,7 +468,7 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
         "--html-out",
         type=Path,
         default=default_html_out_path(repo_root),
-        help="Output HTML path for the maqaf-proclitic-accents page.",
+        help="Output HTML path for the maqaf-nonfinal-accents page.",
     )
     parser.add_argument(
         "--json-out",

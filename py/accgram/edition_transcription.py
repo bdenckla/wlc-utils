@@ -108,9 +108,9 @@ word still COUNTS as hyphenated, not in anything a scan can see.  So SimTiq's tw
 worth the attention this note gives them, and Koren's ``mun-mun`` on לא־תעשה more still.
 
 HOW OFTEN IT ACTUALLY HAPPENS is measured, not asserted, and the measurement is NOT here.  The
-Tanakh-wide survey lives in ``maqaf_proclitic_accents`` (+ ``_page``), which writes
-``out/accgram/maqaf-proclitic-accents.json`` and
-``gh-pages/accgram/maqaf-proclitic-accents.html`` from one run, and is where this note's claims
+Tanakh-wide survey lives in ``maqaf_nonfinal_accents`` (+ ``_page``), which writes
+``out/accgram/maqaf-nonfinal-accents.json`` and
+``gh-pages/accgram/maqaf-nonfinal-accents.html`` from one run, and is where this note's claims
 about rarity get their numbers.  Deliberately NO counts here: a number restated in a second file
 is a number nothing keeps in step, which is the whole reason the survey was moved out of this
 docstring.  What the page settles, qualitatively, is that an accent on a joined atom happens in

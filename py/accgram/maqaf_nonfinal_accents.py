@@ -1,18 +1,22 @@
 r"""Survey: accents on the NON-FINAL atom of a maqaf compound, across the whole Tanakh.
 
-An accent on a maqaf-joined proclitic is the phenomenon behind ``koren_dt_elyon``'s ``mun-mun``
-on לא־תעשה and SimTiq's two munax-on-לא (see ``edition_transcription``).  This module measures it
-mechanically so the printed-Decalogue pages' claims about how rare it is rest on a count that can
-be regenerated, rather than on prose that has to be re-derived every time someone asks.
+An accent on the joined atom of a maqaf compound is the phenomenon behind ``koren_dt_elyon``'s
+``mun-mun`` on לא־תעשה and SimTiq's two munax-on-לא (see ``edition_transcription``).  This module
+measures it mechanically so the printed-Decalogue pages' claims about how rare it is rest on a
+count that can be regenerated, rather than on prose that has to be re-derived every time someone
+asks.
 
-Pure computation and a JSON writer -- no HTML.  ``maqaf_proclitic_accents_page`` renders it, and
+Pure computation and a JSON writer -- no HTML.  ``maqaf_nonfinal_accents_page`` renders it, and
 runs this to write the JSON, so the page's numbers can never drift from the data.
 
-THE CRITERION is mechanical: within one whitespace-delimited word, is there an accent both before
-and after a maqaf?  A U+05BD counts as an accent only on the verse's last chanted word, where it
-is silluq (see CLAUDE.md on meteg-vs-silluq).  Read off the Unicode verses and NOT off
-``uni_to_marks``' mark bodies: ``word_to_marks`` front-loads prepositive accents to the front of
-the whole COMPOUND, which would move an atom-2 telisha gedolah onto atom 1 and manufacture hits.
+THE CRITERION is mechanical: within one whitespace-delimited chanted word, is there an accent both
+before and after a maqaf?  A maqaf compound has no space in it, so splitting on whitespace really
+does give chanted words, and splitting those on maqaf gives their atoms -- the two units this
+module counts, and the two the question is about.  A U+05BD counts as an accent only on the
+verse's last chanted word, where it is silluq (see CLAUDE.md on meteg-vs-silluq).  Read off the
+Unicode verses and NOT off ``uni_to_marks``' mark bodies: ``word_to_marks`` front-loads prepositive
+accents to the front of the whole COMPOUND, which would move an atom-2 telisha gedolah onto atom 1
+and manufacture hits.
 Prose and poetic are routed by ``prose_filter`` / ``poetic_filter`` and counted separately, since
 the two systems differ here and a merged count would say nothing about either.
 
@@ -20,31 +24,32 @@ THE TWO ROUTES.  A single bucket of "compounds with two accents" hides the disti
 matters, so every hit is sorted into one of two routes:
 
 * **(a) A secondary accent the compound inherits.**  Yeivin's own term, and his prose inventory
-  is a CLOSED LIST of configurations -- which accent sits on the proclitic and which the compound
-  bears: metigah-zaqef (ITM §224), munax-zaqef (§221), a secondary merkha on the word of a tipexa
-  (§233) or of a tevir (§§233/241), and the mayela tipexa before an etnaxta or a silluq.
+  is a CLOSED LIST of configurations -- which accent sits on the joined atom and which the
+  compound bears: metigah-zaqef (ITM §224), munax-zaqef (§221), a secondary merkha in the chanted word of a
+  tipexa (§233) or of a tevir (§§233/241), and the mayela tipexa before an etnaxta or a silluq.
   ``_NAMED_CONFIGURATIONS`` is that list.
-* **(b) A maqaf written after a word that keeps its own conjunctive.**  ITM §293: a manuscript
+* **(b) A maqaf written after an atom that keeps its own conjunctive.**  ITM §293: a manuscript
   habit with no grammatical trigger, "most common where the word has penultimate stress", and L
   -- WLC's own base -- is named for it (§21, §293).
 
-POSITION IS EVIDENCE, NOT THE CRITERION.  Whether the proclitic's accent sits where that word's
+POSITION IS EVIDENCE, NOT THE CRITERION.  Whether the joined atom's accent sits where that atom's
 own accent sits is answered exactly, with no phonology, by an in-corpus oracle: the same spelling
-standing FREE elsewhere in the same corpus, bearing its own accent (``_build_oracle``).  Key each
-word by its letters and points with accents stripped, and compare base letters after the accent.
+standing FREE elsewhere in the same corpus -- an atom that is a whole chanted word by itself, so
+it bears its own accent (``build_oracle``).  Key each atom by its letters and points with accents
+stripped, and compare base letters after the accent.
 
 * A **no** is decisive.  Nu 9:17 ואחרי־כן has its munax three letters from the end where 21 free
-  ואחרי put theirs one from the end, so it cannot be the word's own accent.
-* A **yes is not decisive**, which is the trap.  A secondary accent can land on the word's own
+  ואחרי put theirs one from the end, so it cannot be that atom's own accent.
+* A **yes is not decisive**, which is the trap.  A secondary accent can land on the atom's own
   stress anyway: MAM's שלף־חרב matches all six free שלף, because nasog axor has retracted the
   stress before חרב, and it is still §233's secondary merkha.  So the CONFIGURATION decides the
   route and the oracle corroborates -- never the other way round.
 
 Two refinements the oracle needs, both of which silently inverted verdicts before they were made:
 the free side takes the LAST IMPOSITIVE accent, because a secondary accent always precedes the
-main one in a word and taking the first reads a restored secondary as the word's own position;
-and postpositive/prepositive accents are skipped entirely, since their position is a fact about
-the word's edge rather than about its stress.
+main one and taking the first reads a restored secondary as the atom's own position; and
+postpositive/prepositive accents are skipped entirely, since their position is a fact about the
+chanted word's edge rather than about any atom's stress.
 
 §293's further claim -- that the habit correlates with penultimate stress -- is NOT tested here.
 That needs a real stress model; ``../al-hatorah/py/aht_phon/stress.py`` is the prior art.
@@ -57,7 +62,7 @@ MAM-simple is Breuer's EDITION.  There is therefore no independent manuscript he
 counts measure L as Westminster reads it, and what an edition does with it.  ``CORPUS_KIND``
 carries that so the page cannot state a corpus's standing wrongly.
 
-Run via ``main_accgram.py generate-html-maqaf-proclitic-accents``.
+Run via ``main_accgram.py generate-html-maqaf-nonfinal-accents``.
 """
 
 from __future__ import annotations
@@ -84,12 +89,12 @@ NUN_HAFUKHA = "\N{HEBREW PUNCTUATION NUN HAFUKHA}"
 # in the shape strings and in the configuration table.
 SILLUQ = "silluq"
 
-# Marks stripped when keying a word for the free-standing oracle: two spellings of one word must
+# Marks stripped when keying an atom for the free-standing oracle: two spellings of one atom must
 # key alike whether or not one of them carries punctuation.
 _STRIPPED_FOR_KEY = frozenset((METEG, PASEQ, SOF_PASUQ, NUN_HAFUKHA))
 
-# Accents written at a fixed EDGE of the word rather than on its stress.  Their position says
-# nothing about where the word's own accent falls, so the oracle ignores them.
+# Accents written at a fixed EDGE of the chanted word rather than on its stress.  Their position
+# says nothing about where an atom's own accent falls, so the oracle ignores them.
 _NOT_IMPOSITIVE = frozenset(
     (
         am.PASHTA,
@@ -104,7 +109,7 @@ _NOT_IMPOSITIVE = frozenset(
     )
 )
 
-# Route (a): Yeivin's closed prose list, keyed by (accent on the proclitic, accent the compound
+# Route (a): Yeivin's closed prose list, keyed by (accent on the joined atom, accent the compound
 # bears).  Membership is a fact about the configuration, not about the mark's position -- see the
 # module docstring on why position cannot be the criterion.
 _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
@@ -112,15 +117,21 @@ _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
     (am.MUNAX, am.ZAQEF_QATAN): "munax-zaqef (ITM §221)",
     (am.TIPEXA, am.ATNAX): "mayela before an etnaxta",
     (am.TIPEXA, SILLUQ): "mayela before a silluq",
-    (am.MERKHA, am.TIPEXA): "secondary merkha on the tipexa word (ITM §233)",
-    (am.MERKHA, SILLUQ): "secondary merkha on the silluq word (ITM §233)",
-    (am.MERKHA, am.TEVIR): "secondary merkha on the tevir word (ITM §§233, 241)",
-    (am.MAHAPAKH, am.TEVIR): "secondary mahapakh on the tevir word (ITM §241)",
+    (am.MERKHA, am.TIPEXA): "secondary merkha in the tipexa's chanted word (ITM §233)",
+    (am.MERKHA, SILLUQ): "secondary merkha in the silluq's chanted word (ITM §233)",
+    (
+        am.MERKHA,
+        am.TEVIR,
+    ): "secondary merkha in the tevir's chanted word (ITM §§233, 241)",
+    (
+        am.MAHAPAKH,
+        am.TEVIR,
+    ): "secondary mahapakh in the tevir's chanted word (ITM §241)",
 }
 
 ROUTE_SECONDARY = "a: a secondary accent the compound inherits"
-ROUTE_HABIT = "b: a maqaf after a word that keeps its own conjunctive (ITM §293)"
-ROUTE_UNDECIDED = "?: undecided -- the proclitic never stands free"
+ROUTE_HABIT = "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)"
+ROUTE_UNDECIDED = "?: undecided -- the joined atom never stands free"
 # The poetic corpus is deliberately left unrouted; see ``classify``.
 ROUTE_NOT_ATTEMPTED = "(not attempted -- the route split is prose doctrine)"
 
@@ -177,14 +188,17 @@ def is_base_letter(ch: str) -> bool:
     return "א" <= ch <= "ת"
 
 
-# --- reading the three corpora into {bcv: [word, ...]} ------------------------
+# --- reading the three corpora into {bcv: [chanted word, ...]} ----------------
 
 
 def _join_on_maqaf(atoms: list[str]) -> list[str]:
-    """Fold a flat atom list into words, an atom ending in a maqaf continuing into the next.
+    """Fold a flat atom list into CHANTED WORDS, an atom ending in a maqaf continuing into
+    the next.
 
     Mirrors ``uni_to_marks.verse_to_marks``' boundary logic, which is what makes a maqaf
-    compound one word here as it is one chanted word there.
+    compound one chanted word here as it is there.  Every ``words``-named local and every
+    ``[word, ...]`` value in this module is a list of chanted words in this sense; the
+    identifiers keep the shorter name, as the #81 sweep left the repo's others.
     """
     words: list[str] = []
     pending = ""
@@ -299,10 +313,10 @@ def split_bcv(bcv: str) -> tuple[str, int, int]:
 
 
 def atom_accents(word: str, verse_final: bool) -> list[list[str]]:
-    """Accents per maqaf-delimited atom, silluq included on the verse's last chanted word.
+    """Accents per atom of one chanted word, silluq included when it is the verse's last.
 
     Elsewhere a U+05BD is an ordinary meteg and is dropped: it is not an accent, and counting
-    it would turn every maqaf-joined word bearing ITM §337's ga'ya into a false hit.
+    it would turn every maqaf-joined atom bearing ITM §337's ga'ya into a false hit.
     """
     atoms = word.split(MAQAF)
     per_atom = [[c for c in atom if is_accent(c)] for atom in atoms]
@@ -345,17 +359,17 @@ def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int
 
 def oracle_key(atom: str) -> str:
     """The atom's letters and points, accents and punctuation stripped, so a joined and a
-    free occurrence of one word key alike."""
+    free occurrence of one atom key alike."""
     return "".join(c for c in atom if not is_accent(c) and c not in _STRIPPED_FOR_KEY)
 
 
 def letters_after_accent(atom: str, *, main_only: bool = False) -> int | None:
     """Base letters strictly after the accent-bearing letter; None if there is no accent.
 
-    ``main_only`` takes the last IMPOSITIVE accent, which is the word's own: a secondary
+    ``main_only`` takes the last IMPOSITIVE accent, which is the atom's own: a secondary
     accent always precedes the main one, so taking the first would read a restored secondary
-    as the word's own position -- which is exactly what MAM's שלף does.  Without it, take the
-    sole accent, which is all a joined proclitic ever has.
+    as the atom's own position -- which is exactly what MAM's שלף does.  Without it, take the
+    sole accent, which is all a joined atom ever has.
     """
     letters_before: list[int] = []
     seen = 0
@@ -370,10 +384,11 @@ def letters_after_accent(atom: str, *, main_only: bool = False) -> int | None:
 
 
 def build_oracle(words_by_bcv: dict[str, list[str]], keep) -> dict[str, Counter]:
-    """key -> Counter of letters-after-accent, over FREE-STANDING accented words.
+    """key -> Counter of letters-after-accent, over atoms standing FREE -- that is, over
+    chanted words of one atom, which therefore bear that atom's own accent.
 
-    Verse-final words are excluded along with joined ones: there the U+05BD is a silluq that
-    this counter does not see, so such a word would look unaccented or mis-positioned.
+    Verse-final ones are excluded along with the joined: there the U+05BD is a silluq that
+    this counter does not see, so such an atom would look unaccented or mis-positioned.
     """
     oracle: dict[str, Counter] = defaultdict(Counter)
     for bcv, words in words_by_bcv.items():
@@ -392,7 +407,7 @@ def build_oracle(words_by_bcv: dict[str, list[str]], keep) -> dict[str, Counter]
 # --- classification -----------------------------------------------------------
 
 
-def _accented_proclitic(hit: dict) -> str:
+def _accented_nonfinal_atom(hit: dict) -> str:
     return next(
         a for a in hit["word"].split(MAQAF)[:-1] if any(is_accent(c) for c in a)
     )
@@ -405,6 +420,11 @@ def _single(accents: list[str]) -> str | None:
 def classify(hit: dict, oracle: dict[str, Counter], *, routed: bool) -> dict:
     """Route, configuration and oracle evidence for one hit.
 
+    The returned record is what lands in the tracked JSON, so its keys are read by people, not
+    only by code: ``word`` is the whole CHANTED WORD (the maqaf compound, joined atoms and all),
+    ``shape`` its per-atom accents, and the oracle fields count base letters, not syllables.
+    The key keeps the short name, as #81 left the repo's other ``word``-named identifiers.
+
     ``routed`` is false for the poetic corpus, where the route split is NOT attempted: both
     halves of it are prose doctrine.  ``_NAMED_CONFIGURATIONS`` is Yeivin's PROSE inventory,
     and the poetic counterpart is a different list (his §372 tsinnorit -- ITM spells it with
@@ -414,7 +434,7 @@ def classify(hit: dict, oracle: dict[str, Counter], *, routed: bool) -> dict:
     which is why the poetic side reports shapes and counts only.
     """
     per_atom = hit["atoms"]
-    atom = _accented_proclitic(hit)
+    atom = _accented_nonfinal_atom(hit)
     joined = letters_after_accent(atom)
     free = oracle.get(oracle_key(atom))
     free_usual = free.most_common(1)[0][0] if free else None
@@ -427,9 +447,9 @@ def classify(hit: dict, oracle: dict[str, Counter], *, routed: bool) -> dict:
     if not routed:
         route, named = ROUTE_NOT_ATTEMPTED, None
     else:
-        proclitic_accent = _single([a for atom_ in per_atom[:-1] for a in atom_])
+        nonfinal_accent = _single([a for atom_ in per_atom[:-1] for a in atom_])
         compound_accent = _single(per_atom[-1])
-        named = _NAMED_CONFIGURATIONS.get((proclitic_accent, compound_accent))
+        named = _NAMED_CONFIGURATIONS.get((nonfinal_accent, compound_accent))
         if named is not None:
             route = ROUTE_SECONDARY
         elif free_usual is None:
@@ -437,7 +457,7 @@ def classify(hit: dict, oracle: dict[str, Counter], *, routed: bool) -> dict:
         elif joined != free_usual:
             route, named = (
                 ROUTE_SECONDARY,
-                "unnamed -- not at the word's own accent position",
+                "unnamed -- not at the atom's own accent position",
             )
         else:
             route, named = ROUTE_HABIT, "unnamed"
@@ -490,15 +510,16 @@ def build_survey() -> dict:
 
     survey: dict[str, object] = {
         "criterion": (
-            "Within one whitespace-delimited word, an accent both before and after a maqaf."
-            " A U+05BD counts as an accent only on the verse's last chanted word, where it is"
-            " silluq."
+            "Within one whitespace-delimited chanted word, an accent both before and after a"
+            " maqaf -- that is, on an atom the maqaf joins to the next as well as on the atom"
+            " bearing the compound's own accent. A U+05BD counts as an accent only on the"
+            " verse's last chanted word, where it is silluq."
         ),
         "poetic_caveat": (
             "The poetic counts are a FLOOR and are not comparable with the prose ones."
             " Breuer (Chapter 9 §§27, 37) records that in the Three Books the maqaf after a"
             " secondary mahapakh, merkha or tsinnorit is customarily omitted in writing while"
-            " the word still counts as joined -- so most of the poetic phenomenon is invisible"
+            " the atom still counts as joined -- so most of the poetic phenomenon is invisible"
             " to a maqaf scan by construction. His own 'few cases where the hyphen is not"
             " omitted' bear this out from the other side: Job 6:10 and Prov 25:20 are written"
             " WITHOUT a maqaf in WLC and UXLC, and with one only in MAM. The routes are not"
@@ -517,7 +538,7 @@ def build_survey() -> dict:
 
 
 def default_json_out_path() -> Path:
-    return repo_paths.out_dir() / "accgram" / "maqaf-proclitic-accents.json"
+    return repo_paths.out_dir() / "accgram" / "maqaf-nonfinal-accents.json"
 
 
 def write_json(survey: dict, path: Path) -> None:
