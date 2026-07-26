@@ -43,34 +43,32 @@ when editing either page):
   complementary, not redundant -- the doctrine is spelled out at that constant.  אנכי and מצותי
   are the span's shared frame, NOT signal words: every strand starts at the one and ends a
   chanted verse at the other, so neither distinguishes anything.
-* **"Follows its strand in every accent" is a claim about accents; word division is counted
-  apart from it.**  The trio used the phrase both ways -- one page crediting a Decalogue with
-  "every accent" while listing its word-division differences, another crediting a second one with
-  "no difference anywhere" although it joins a maqaf compound its strand leaves apart -- so a
-  2026-07-25 claim audit could not reconcile the four Koren verdicts with the summary above them.
-  Settled: an accent difference is a difference in WHICH accent falls on a chanted word; where an
-  edition groups the text into chanted words differently, the conjunctive marking that follows is
-  mechanical (a maqaf-joined proclitic cannot bear an accent, a free-standing word must) and counts
-  as part of that word-division difference rather than as an accent of its own.  So a Decalogue can
-  follow its strand in every accent AND divide a chanted word differently -- and where one does,
-  say both rather than letting either claim stand alone.  The convention is stated to the reader
-  verbatim on all three pages via ``WORD_DIVISION_IS_NOT_AN_ACCENT``: splice that constant, don't
-  paraphrase it.
-* **Never write a bare "no difference anywhere" in a verdict cell; scope it, "no ACCENT difference
-  anywhere".**  The corollary of the bullet above, and swept across all three pages on 2026-07-25
-  after the vowel below made it concrete.  What backs these cells is a hand transcription of the
-  printed ACCENTS, so "anywhere" can only ever mean "anywhere the transcription looks", and an
-  unscoped phrasing invites a reader to take it for the whole page.  Two things fall outside:
-  a word division, which the bullet above already separates and which can be token-INVISIBLE
-  (``koren_dt_elyon`` joins לא־תעשה where its strand sets the two words apart, with the same accents
-  either way -- so a zero-divergence result is not evidence of none); and the POINTING.  The trio's
-  own data has a live example of the second: the two תחתון strands part at תרצח in a vowel and
-  nothing else, qamats m-trad against patax p-trad on the same tipexa, which the diff cannot see in
-  either book.  The scoped phrasing costs one word and is true; the bare one was already false once
-  (the Koren Deuteronomy appendix row, 2026-07-25 claim audit finding 3).
-  Where a vowel or a word division HAS been checked off the page, say so in the cell and put the
-  evidence in the transcription's ``.txt`` comment block -- that is a primary observation about the
-  edition, not something the harness establishes, and no test will defend it.
+* **ONE scale, with maqaf at the bottom of it -- there is no second ledger for maqaf
+  differences.**  A verdict measures how far down that scale a Decalogue's agreement with its
+  strand reaches: chanted verse boundaries, then the disjunctive skeleton, then the conjunctives,
+  then the maqafs.  A maqaf an edition adds or drops IS a difference in how the text is marked --
+  the mildest one there is, since a maqaf separates its word from the next even less than a
+  conjunctive does -- and it is counted ONCE, at the word whose marking changed, never as a
+  regrouping plus an accent.  So a verdict cell names the first rung that breaks and what breaks
+  it, and "every accent" is never said with a maqaf difference tucked underneath it.  The scale is
+  stated to the reader verbatim on all three pages via ``MAQAF_IS_THE_LAST_RUNG``: splice that
+  constant, don't paraphrase it.  Its guardrail comment records the convention this replaced (a
+  2026-07-25 audit fix that made maqaf differences non-differences) and why that one was wrong.
+* **Never write a bare "no difference anywhere" in a verdict cell; scope it, "no difference
+  anywhere the comparison reaches".**  What backs these cells is a hand transcription of the
+  printed ACCENTS, so "anywhere" can only ever mean "anywhere the comparison reaches", and an
+  unscoped phrasing invites a reader to take it for the whole page.  Two things fall outside.  A
+  maqaf, which the .txt line records but the token stream drops: ``koren_dt_elyon`` joins לא־תעשה where its strand sets the two
+  words apart, and since Koren accents BOTH atoms of the compound the two sides emit the same two
+  tokens, so a zero-divergence result is not evidence of no difference.  (That blindness is a gap
+  now that the scale above counts such a difference; making maqaf a token of its own is issue
+  #75.)  And the POINTING: the two תחתון strands part at תרצח in a vowel and nothing
+  else, qamats m-trad against patax p-trad on the same tipexa, which the diff cannot see in either
+  book.  The scoped phrasing costs one word and is true; the bare one was already false once (the
+  Koren Deuteronomy appendix row, 2026-07-25 claim audit finding 3).  Where a vowel or a maqaf HAS
+  been checked off the page, say so in the cell and put the evidence in the transcription's
+  ``.txt`` comment block -- that is a primary observation about the edition, not something the
+  harness establishes, and no test will defend it.
 * **Accent/mark romanizations are single-sourced as ``ROM_*`` constants** (pashta, tipeḥa,
   etnaḥta, revia, segolta, silluq, sof pasuq, meteg, maqaf, legarmeh, paseq, the two vowels of
   the pausal alternation, + a few compounds).
@@ -299,26 +297,40 @@ SHABBAT_SIGNAL_SHORTHAND = (
 )
 
 
-# What "follows its strand in every accent" means, stated to the reader verbatim on all three
-# pages of the trio -- the hub where it first says two editions divide a chanted word alike, and
-# each satellite where it introduces its own per-Decalogue verdict table.  Plain ``str``, not
-# HTML: splice it into a contents tuple.
+# Where maqaf sits relative to the accents, and what the verdicts therefore measure, stated to
+# the reader verbatim on all three pages of the trio -- the hub where it first says two editions
+# put their maqafs differently, and each satellite where it introduces its own per-Decalogue
+# verdict table.  Plain ``str``, not HTML: splice it into a contents tuple.
 #
-# WHY IT IS SAID AT ALL (2026-07-25 claim audit, finding 3).  The trio used "every accent" both
+# WHY IT IS SAID AT ALL (2026-07-25 claim audit, finding 3).  The trio used "every accent" two
 # ways at once.  Koren's Exodus appendix Decalogue was credited with "Every accent. The only two
 # differences are of word division", while the summary directly under the same table counted that
 # very Decalogue as the one of four that does NOT follow its strand in every accent -- and the
 # Deuteronomy appendix one was credited with "no difference anywhere" although it joins לא־תעשה
-# into a maqaf compound where its strand sets the two words apart.  With the definition unstated,
-# both readings were available and the page contradicted itself.  See the module docstring's
-# bullet for the rule; this constant is the rule as a reader meets it.
-WORD_DIVISION_IS_NOT_AN_ACCENT = (
-    "One convention, since it decides what these verdicts mean: word division is counted apart"
-    " from accents. Following a strand “in every accent” says that every chanted word carries the"
-    " strand's own accent; it says nothing about where the edition puts a maqaf. Where an edition"
-    " groups the words differently, the conjunctive marking follows mechanically — a maqaf-joined"
-    " proclitic cannot bear an accent, and a free-standing word must — so that marking counts as"
-    " part of the word-division difference rather than as an accent of its own."
+# into a maqaf compound where its strand sets the two words apart.  Both readings were available
+# and the page contradicted itself.
+#
+# WHY THIS ANSWER AND NOT THE FIRST ONE (Ben, 2026-07-25).  That contradiction was first settled
+# the other way, by declaring a maqaf difference to be no accent difference at all -- a second
+# ledger, kept apart from the accents.  That convention was wrong, and wrong in a way the repo
+# had already ruled on: ``supplied_marks``' punctuation intro tells its own reader that maqaf is
+# "so tightly coupled" to the lack of an accent "that detangling accents and detangling
+# punctuation can be regarded as one and the same activity", and ``printed_decalogue_taxton_diff``
+# already counts a maqaf difference as one ordinary difference SITE.  The real problem the old
+# convention solved was double counting -- reporting a split compound as a division AND as a new
+# accent -- and the honest fix is that those were never two facts.  One atom's marking changed.
+# So: one scale, maqaf at the bottom of it, each difference counted once at the word it sits on.
+MAQAF_IS_THE_LAST_RUNG = (
+    "One thing to settle first, since it decides what these verdicts mean. A maqaf belongs on the"
+    " same scale"
+    " as the accents, at the bottom of it: it separates the word it sits on from the next one"
+    " even less than a conjunctive accent does, binding the two into a single chanted word. So"
+    " where an edition puts a maqaf its strand does not, or leaves one out, that is a difference"
+    " in how the text is marked — counted once, at the word whose marking changed, not twice as"
+    " a regrouping plus an accent. It is, though, the mildest difference there is, and that is"
+    " what these verdicts measure: how far down the scale each Decalogue's agreement with its"
+    " strand reaches — the chanted verse boundaries, then the disjunctive skeleton, then the"
+    " conjunctives, then the maqafs."
 )
 
 

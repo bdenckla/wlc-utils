@@ -263,7 +263,7 @@ class Comparison:
 def compare(ctr: dict, source: dict, book: str, reading: str) -> Comparison:
     """Glyph-level word-by-word comparison of CTR's ``book`` against one printed strand.
 
-    Aligns by consonant skeleton (difflib), so a different word division shows up as an aligned
+    Aligns by consonant skeleton (difflib), so a differently placed maqaf shows up as an aligned
     region rather than shifting every accent after it, then compares the glyph tuples of the
     words that line up.
     """

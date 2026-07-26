@@ -35,7 +35,7 @@ prose checker, is what the page prints grammatical, and as grammatical as the st
 The cells come live from ``transcription_verdict_column`` (shared with the Koren page) so no row
 can claim a verdict the checker does not give.  Seven of the eight give their strand's verdicts
 exactly.  p. 246 does not, and the prose after that table has to hold two true things together:
-its divergences are all conjunctive, so its disjunctive skeleton is intact, AND one of its
+no divergence of its reaches a disjunctive, so its skeleton is intact, AND one of its
 chanted verses is ungrammatical where the strand is clean.  Frame that as a diagnostic of the
 checker -- tuned to Tiberian-manuscript prose grammar -- never as an error in the edition.
 
@@ -771,7 +771,8 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 "simtiq_ex_elyon",
                 "83–84",
                 ("p-trad ", _ELYON),
-                "Every accent. The only two differences are of word division: it separates"
+                "Every chanted verse boundary, the whole disjunctive skeleton and every accent."
+                " Its two differences are both at the maqaf, the last rung: it separates"
                 " ובנך־ובתך, which the strand joins, and joins the לא of לא תחמד to the word"
                 " after it, which the strand leaves free.",
             ),
@@ -780,21 +781,22 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 "simtiq_ex_taxton",
                 "246",
                 ("p-trad ", _TAHTON),
-                # Not "every accent": two of its three differences really are accent differences,
-                # which is what distinguishes this row from pp. 83-84's word-division-only pair.
-                # The third IS a word division, named as such so this row and the convention above
-                # it stay consistent (2026-07-25 claim audit, finding 3).
+                # Not "every accent": two of its three differences are accents it adds, which is
+                # what puts this row a rung above pp. 83-84's maqaf-only pair. The third is the
+                # same maqaf as pp. 83-84's, named as such so this row and the scale above it stay
+                # consistent (2026-07-25 claim audit, finding 3).
                 "Every chanted verse boundary and the whole disjunctive skeleton, but not every"
-                " accent: three differences, each of them in a conjunctive. Two are accents it"
-                " adds; the third follows from the same word division as the Exodus main"
-                " Decalogue's, the לא of לא תחמד joined here where the strand leaves it free.",
+                " accent: three differences, none of them in a disjunctive. Two are conjunctive"
+                " accents it adds; the third is the same maqaf as the Exodus main Decalogue's,"
+                " the לא of לא תחמד joined here where the strand leaves it free.",
             ),
             (
                 "Deuteronomy main",
                 "simtiq_dt_elyon",
                 "208–209",
                 ("p-trad ", _ELYON),
-                "Every accent, with no accent difference anywhere — 164 accents against 164.",
+                "Every accent, with no difference anywhere the comparison reaches — 164 accents"
+                " against 164.",
             ),
             (
                 "Deuteronomy appendix",
@@ -804,9 +806,9 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 (
                     "p-trad throughout ",
                     H.bold("except the Shabbat commandment"),
-                    ", whose accents are m-trad — and with them the m-trad's word division there,"
-                    " לא and תעשה standing apart where the p-trad joins them by maqaf. The"
-                    " chanted verse division stays p-trad — thirteen chanted verses, not the"
+                    ", whose accents are m-trad — and with them the m-trad's maqaf there, or"
+                    " rather its absence: לא and תעשה stand apart where the p-trad binds them."
+                    " The chanted verse division stays p-trad — thirteen chanted verses, not the"
                     " m-trad's twelve — so not one verse boundary moves.",
                 ),
             ),
@@ -823,7 +825,8 @@ def _tanakh_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 "simtan_ex_taxton",
                 "119–120",
                 ("m-trad ", _TAHTON),
-                "Every accent, with no accent difference anywhere. Its twelve chanted verses are"
+                "Every accent, with no difference anywhere the comparison reaches. Its twelve"
+                " chanted verses are"
                 " corroborated independently of any mark, by the edition's own printed verse"
                 " numbers.",
             ),
@@ -850,14 +853,14 @@ def _tanakh_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 "simtan_ex_elyon",
                 "350",
                 ("m-trad ", _ELYON),
-                "Every accent, with no accent difference anywhere.",
+                "Every accent, with no difference anywhere the comparison reaches.",
             ),
             (
                 "Deuteronomy appendix",
                 "simtan_dt_elyon",
                 "351",
                 ("m-trad ", _ELYON),
-                "Every accent, with no accent difference anywhere.",
+                "Every accent, with no difference anywhere the comparison reaches.",
             ),
         ),
         verdicts,
@@ -905,10 +908,10 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
         ),
         # Single-sourced in pds and stated verbatim on all three pages of the trio (2026-07-25 claim
         # audit, finding 3), since both verdict tables below are written in its terms: pp. 83-84
-        # follow their strand in every accent AND divide two chanted words differently from it, and
-        # with the convention unstated those two claims read as contradicting each other. Splice the
+        # follow their strand in every accent and part from it at two maqafs, and the reader needs
+        # the scale to see that as one graded verdict rather than two claims at odds. Splice the
         # constant; don't paraphrase it, and don't scope it to one of the two tables.
-        H.para((pds.WORD_DIVISION_IS_NOT_AN_ACCENT,)),
+        H.para((pds.MAQAF_IS_THE_LAST_RUNG,)),
         _tiqqun_verdict_table(verdicts),
         # The grammaticality column's two findings on this page (issue #52). The four p-trad
         # elyon Decalogues across this page and the Koren page print the strand's ungrammatical
@@ -938,9 +941,10 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
         H.para(
             (
                 "p. 246 is the only Decalogue here whose verdict is its own rather than its"
-                " strand's, and its last two columns have to be read together. Its three"
-                " differences are all conjunctive, so the disjunctive skeleton it is credited"
-                " with really is intact — and its third chanted verse, the one"
+                " strand's, and its last two columns have to be read together. Not one of its"
+                " three differences reaches a disjunctive — two are conjunctives and the third a"
+                " maqaf — so the disjunctive skeleton it is credited"
+                " with really is intact, and its third chanted verse, the one"
                 " beginning לא־תעשה, is ungrammatical all the same, where the p-trad ",
                 _TAHTON,
                 " is grammatical. The page accents ",
@@ -992,7 +996,7 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 " m-trad, not the p-trad."
                 " That divergence, though, moves no chanted verse boundary: the two traditions"
                 " divide the Shabbat commandment into chanted verses identically, differing only"
-                " on some mid-verse accents and, at לא תעשה, on word division. So the precise"
+                " on some mid-verse accents and, at לא תעשה, on a maqaf. So the precise"
                 " extent of the Tiqqun's p-trad allegiance is as"
                 " the title states it: the Tiqqun follows the p-trad's chanted verse boundaries"
                 " without exception, but not its every cantillation detail. The scan below is"

@@ -41,7 +41,7 @@
 # stake in:
 #   * ובנך is CORROBORATED.  The two ex/taxton strands also separate ובנך as its own word with
 #     a munax (וּבִנְךָ֣); only the ex/elyon strands join it.  So Koren's elyon takes the taxton
-#     word-division here.  And it is the SAME divergence, token for token, that
+#     maqaf placement here.  And it is the SAME divergence, token for token, that
 #     simtiq_ex_elyon already pins -- ("", "mun", "ובנךובתך") -- so two independently
 #     transcribed elyon editions separate ובנך where the vendored elyon strand joins it.  That
 #     points at the vendored elyon strand as the outlier, not at Koren.

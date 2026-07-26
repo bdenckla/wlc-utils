@@ -160,7 +160,8 @@ Three joiners now, and they are not interchangeable. `-` is a **maqaf**, binding
 into one chanted word (`mun-mer`). `+` is its **simple-word** counterpart — two accents on a
 word that is no compound at all, as in `קד+גר` on ויצאך (p. 247), where the first accent is by
 convention called *metigah* rather than *qadma*. Both contribute one token per accent; keeping
-them distinct is what lets a difference still be read as word-division or not. `_` binds two
+them distinct is what lets a difference still be placed on the scale — at the maqaf, or a rung
+up in the accents themselves. `_` binds two
 **marks** into one accent (`מונ_לג`) and contributes one token.
 
 Where the joiners are implemented matters, because it once went wrong. `+` was added to

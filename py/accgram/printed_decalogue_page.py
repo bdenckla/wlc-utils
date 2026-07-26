@@ -36,8 +36,8 @@ Those forms are derived and pinned by ``printed_decalogue_strands.resolve_pausal
 Editorial / style conventions for the rendered prose are single-sourced in
 ``printed_decalogue_strands`` (bare-Hebrew strand names תחתון / עליון in output, romanized only
 in ``title`` / ``alt`` attributes and internal keys; ``ROM_*`` accent names never retyped; real
-em dashes; and ``WORD_DIVISION_IS_NOT_AN_ACCENT``, the convention this page states on behalf of
-the whole trio).
+em dashes; and ``MAQAF_IS_THE_LAST_RUNG``, the scale this page states on behalf of the whole
+trio).
 
 Run via ``main_accgram.py generate-html``.
 """
@@ -663,15 +663,15 @@ def _four_strands_section(
                 H.bold("without exception"),
                 f", whatever else they do. And at ובנך־ובתך, Simanim's Tiqqun and Koren each print"
                 f" two separately accented chanted words where the p-trad {_ELYON} has one — two"
-                " editions dividing the same chanted word alike, and against the strand they"
-                " otherwise follow.",
+                " editions dropping the same maqaf, and against the strand they otherwise follow.",
             )
         ),
-        # The hub is where a reader of the trio first meets a word-division difference, so it is
-        # where the convention governing every "every accent" verdict on all three pages is stated.
-        # Single-sourced in pds and shared verbatim with both satellites; see the guardrail comment
-        # at that constant for the self-contradiction on the Koren page that made it necessary.
-        H.para((pds.WORD_DIVISION_IS_NOT_AN_ACCENT,)),
+        # The hub is where a reader of the trio first meets a maqaf difference, so it is where the
+        # scale that every verdict on all three pages is written against is stated.  Single-sourced
+        # in pds and shared verbatim with both satellites; see the guardrail comment at that
+        # constant for the self-contradiction on the Koren page that first made it necessary, and
+        # for why the convention it originally carried was replaced.
+        H.para((pds.MAQAF_IS_THE_LAST_RUNG,)),
         H.para(
             (
                 f"Of these four strands, only the p-trad {_ELYON} is ungrammatical — the"
@@ -951,11 +951,12 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
         ),
         # GUARDRAIL (2026-07-25 claim audit, finding 3). This paragraph used to say "Three of its
         # four follow their strand in every accent; the fourth differs only in how it divides two
-        # chanted words" -- the Koren page's own summary, repeated here, and wrong twice over: TWO
-        # of the four have word-division differences (the Exodus appendix splits two compounds, the
-        # Deuteronomy appendix joins one), and under the convention stated above a word division is
-        # not an accent difference, so all four follow their strand in every accent. Keep the two
-        # claims separate here, as the Koren page now does: accents, then word division.
+        # chanted words" -- the Koren page's own summary, repeated here, and wrong on the count:
+        # TWO of the four have a maqaf difference, the Exodus appendix splitting two compounds and
+        # the Deuteronomy appendix joining one. Keep the count right and keep it on the one scale
+        # stated above -- the four differences ARE differences, at its bottom rung. What must not
+        # come back is the intermediate wording, which fixed the count by declaring a maqaf
+        # difference not to be a difference at all.
         H.para(
             (
                 "See also ",
@@ -964,10 +965,9 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                     "printed-decalogue-koren.html",
                 ),
                 f" — it has the p-trad {_TAHTON} in its main Decalogues and the p-trad"
-                f" {_ELYON} in its appendix ones, in Exodus and Deuteronomy alike. All four of its"
-                " Decalogues follow their strand in every accent, and two of the four divide a"
-                " chanted word differently from it — which, by the convention above, is not an"
-                " accent difference.",
+                f" {_ELYON} in its appendix ones, in Exodus and Deuteronomy alike. Two of its four"
+                " Decalogues match their strand mark for mark; the other two differ from it only"
+                " at the maqaf, the last rung of the scale above.",
             )
         ),
     )

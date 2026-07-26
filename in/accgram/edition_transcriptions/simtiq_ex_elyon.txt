@@ -11,7 +11,7 @@
 # "[p. 84]" marks where the second page begins; bracketed asides carry no accent.
 #
 # RESULT: 142 reference tokens vs 142 transcribed, 9 chanted verses vs 9, and TWO divergences,
-# both of them word-division differences rather than accent choices.  All four pasoleg strokes
+# both of them at the maqaf rather than in an accent.  All four pasoleg strokes
 # land on their exact reference positions (tokens 16 פסל, 19 בשמים, 25 במים, 75 שבת).
 #
 # THE TWO DIVERGENCES, each adjudicated by re-reading the page:
@@ -35,7 +35,7 @@
 # here) and a seven-token run at אלהיך where the m-trad closes a chanted verse and this
 # transcription runs on.  The transcription takes the p-trad side of both, over a contiguous run
 # nothing had flagged.  The two divergences above depart from BOTH strands identically, so no
-# strand supports them: they are SimTiq's own word division, not a tradition.
+# strand supports them: they are SimTiq's own maqaf placement, not a tradition.
 #
 # SimTiq DOES distinguish narrow-sense paseq from legarmeh (Ben, primary observation about the
 # physical book, recorded nowhere else -- hence the pasoleg_kinds header field, and the contrast

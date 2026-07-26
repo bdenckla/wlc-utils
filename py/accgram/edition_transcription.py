@@ -38,20 +38,33 @@ WHAT COUNTS AS ONE TOKEN (the conventions the transcriptions are written to):
   transcription's own legarmeh/paseq claims can be checked against the strand's OWN reference
   rather than only against glyph shape and a cross-tradition nod to MAM-parsed-plus.
 
-WHAT A DIFFERENCE MEANS.  Not every difference is a cantillation difference.  Where the two
-texts divide words differently -- maqaf vs. space -- the marking usually follows mechanically:
-a free-standing word must bear an accent, while a maqaf-joined proclitic normally takes at
-most a meteg.  Both confirmed differences in the Exodus elyon are of that kind, and so is one
-of the three in the Exodus taxton.  So read a difference list alongside the word it sits on
-before calling it an accent difference.
+WHAT A DIFFERENCE MEANS.  Differences are not all of one weight, but they are all on one
+scale, and maqaf is its bottom rung: a maqaf separates the word it sits on from the next even
+less than a conjunctive accent does.  So where the two texts put their maqafs differently, that
+IS a difference in how the text is marked -- the mildest kind -- and it is counted ONCE, at the
+word whose marking changed, never as a regrouping plus a separate accent.  Both confirmed
+differences in the Exodus elyon are of that kind, and so is one of the three in the Exodus
+taxton.  Read a difference list alongside the word it sits on to see which rung it is on: the
+pages' verdicts are graded by that, not split into two ledgers.  (The trio briefly did keep two,
+declaring a maqaf difference to be no accent difference at all; ``printed_decalogue_strands``'
+``MAQAF_IS_THE_LAST_RUNG`` records why that was wrong.)
 
-"Normally", though, not "always", and the Exodus taxton is why the weaker word is the right
-one.  SimTiq prints a munax on the joined לא of לא־יהיה and of לא־תעשה, whose second atoms
-carry merkha and qadma -- two accents on one chanted word, where all eight strands have a
-meteg.  Those are genuine accent differences, not word-division ones, and an earlier version
-of this note asserted they could not occur.  Neither they nor the elyon's pair touch the
-disjunctive skeleton or the chanted verse boundaries, which is the claim that has survived
-every transcription so far.
+A maqaf USUALLY takes the place of the joined word's accent -- a free-standing word must bear
+one, while a maqaf-joined proclitic normally takes at most a meteg -- but usually is not always,
+and the Exodus taxton is why the weaker word is the right one.  SimTiq prints a munax on the
+joined לא of לא־יהיה and of לא־תעשה, whose second atoms carry merkha and qadma -- two accents on
+one chanted word, where all eight strands have a meteg.  Those differences are two rungs up,
+in the accents themselves, and an earlier version of this note asserted they could not occur.
+Neither they nor the elyon's pair touch the disjunctive skeleton or the chanted verse
+boundaries, which is the claim that has survived every transcription so far.
+
+WHAT THE TOKEN STREAM CANNOT SEE.  One token per ACCENT means a maqaf leaves no token of its
+own, so a maqaf difference registers only through the accent count it changes.  Where an
+edition joins two words and accents BOTH atoms of the resulting compound -- ``koren_dt_elyon``'s
+mun-mun on לא־תעשה -- the two sides emit identical tokens and the diff sees nothing.  Such a
+difference is recorded by hand in the transcription's ``.txt`` and stated in the page's verdict
+cell.  Making maqaf a token of its own would close the gap; that is issue #75, left undone here
+because it touches every transcription and the reference derivation alike.
 
 That claim is true and NOT the whole story, which is why ``transcription_parse`` exists
 (issue #52).  An intact skeleton is a token-identity fact and says nothing about whether the
@@ -86,8 +99,8 @@ MAQAF = "\N{HEBREW PUNCTUATION MAQAF}"
 # where the qadma is by convention called *metigah* rather than qadma (the same renaming
 # applies in the compound case).  Like a maqaf compound it contributes one token per accent,
 # because the reference side emits one per accent either way; unlike one, there is no maqaf,
-# and collapsing the two notations would lose exactly the word-division fact that every
-# difference here has to be read against.
+# and collapsing the two notations would lose exactly the maqaf that every difference here has
+# to be read against.
 MAQAF_JOINER = "-"
 UNIT_JOINER = "_"
 SIMPLE_JOINER = "+"
@@ -385,8 +398,8 @@ class Transcription:
 class Difference:
     """One region where transcription and reference disagree.
 
-    ``word`` is the reference word the region starts on -- the thing to look at before
-    calling the difference an accent difference rather than a word-division one.
+    ``word`` is the reference word the region starts on -- the thing to look at to see which
+    rung of the scale the difference is on, an accent or the maqaf below them.
     """
 
     kind: str  # difflib opcode: "replace", "delete", "insert"
@@ -545,7 +558,7 @@ def _accent_tokens(verses: list[str]) -> tuple[list[str], list[str], list[str]]:
     """(tokens, words, pasoleg_words) for a vendored strand's chanted verses.
 
     ``words[k]`` is the chanted word token ``k`` sits on, so a caller can see whether a
-    difference is really about the word division rather than about an accent.
+    difference is at the maqaf rather than in an accent.
     """
     tokens: list[str] = []
     words: list[str] = []

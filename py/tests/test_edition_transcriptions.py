@@ -40,10 +40,11 @@ from py_html import wlc_utils_html as H
 # is (reference tokens, transcribed tokens, the reference word the region starts on).
 #
 # SimTiq's Exodus main Decalogue (elyon, pp. 83-84) diverges from the Wikisource p-trad elyon
-# at exactly two points, and BOTH are word-division differences rather than cantillation
-# choices -- SimTiq splits a maqaf compound the reference joins, and joins one the reference
-# splits.  The conjunctive/meteg marking then follows mechanically, because a maqaf-joined
-# proclitic cannot bear an accent while a free-standing word must:
+# at exactly two points, and BOTH are at the maqaf -- the bottom rung of the one scale, below
+# the conjunctives -- rather than in an accent: SimTiq splits a maqaf compound the reference
+# joins, and joins one the reference splits.  Each counts once, at the word whose marking
+# changed; the accent that appears or disappears with the maqaf is not a second difference,
+# since a maqaf-joined proclitic cannot bear an accent while a free-standing word must:
 #
 #   * ובנך ובתך (Shabbat commandment): reference joins them under one telisha gedola, so ובנך
 #     takes a meteg and no accent; SimTiq sets them as two words, so ובנך takes a munax.
@@ -83,7 +84,7 @@ _EXPECTED_DIVERGENCES = {
     #     the edition either: לא־תעשה recurs at 20:10 (לא־תעשה כל־מלאכה) and SimTiq agrees
     #     with the reference there.
     #   * לא תחמד (tenth commandment): the reference sets לא free with its own merkha; SimTiq
-    #     joins it by maqaf, so it takes no accent.  A word-division difference, and the SAME
+    #     joins it by maqaf, so it takes no accent.  A maqaf difference, and the SAME
     #     one found in SimTiq's Exodus elyon -- two independently transcribed SimTiq
     #     Decalogues agreeing with each other and against all eight strands, which have merkha
     #     on the free (ו)לא and tipexa on תחמד in both books.
@@ -110,12 +111,12 @@ _EXPECTED_DIVERGENCES = {
     # standing proof that compensating errors are possible in exactly this material.
     "simtiq_dt_elyon": [],
     # SimTiq's Deuteronomy appendix Decalogue (taxton, p. 247) is the edition's KNOWN m-trad
-    # departure, and the first transcription whose divergences are neither word-division
-    # differences nor confined to conjunctives.  All three regions fall inside the Shabbat
+    # departure, and the first transcription whose divergences are neither maqafs nor confined
+    # to conjunctives.  All three regions fall inside the Shabbat
     # commandment, and there the page reads m-trad throughout -- the three signal words
     # (כל־מלאכה pazer not geresh, ועבדך־ואמתך telisha gedola not revia, וכל־בהמתך revia not
-    # zaqef qatan), the surrounding stretch token for token, and the word division too, לא and
-    # תעשה being separately accented where the p-trad joins them by maqaf.
+    # zaqef qatan), the surrounding stretch token for token, and the maqaf too -- or rather its
+    # absence, לא and תעשה standing separately accented where the p-trad binds them.
     #
     # The finding does not rest on the review loop's asymmetry.  Compared against the m-trad
     # taxton instead, this transcription is 166 tokens against 166 with three difference
@@ -155,7 +156,7 @@ _EXPECTED_DIVERGENCES = {
     # claim audit: a number with no stated criterion, and unreconcilable with the hub's "three" and
     # this file's own "eight" (see simtan_dt_taxton) for the same divergence set.  The criterion is
     # now single-sourced in accgram/printed_decalogue_taxton_diff.py -- one site per chanted word,
-    # with a word division counting once -- which derives twelve and decomposes them 4 boundary +
+    # with a maqaf counting once -- which derives twelve and decomposes them 4 boundary +
     # 7 Sabbath + 1 vocalization.  Cite that module, not a fresh count, when a page needs a number.
     #
     # Seven of the twelve sit inside the Shabbat commandment, exactly where simtiq_dt_taxton departs
@@ -198,8 +199,9 @@ _EXPECTED_DIVERGENCES = {
     # of Exodus,
     # where the two ex/taxton strands split ובנך and so corroborated the koren_ex_elyon split; in
     # Deuteronomy no strand splits it, so a split here would have been Koren-alone -- and Koren
-    # makes none.  One token-invisible word-division difference is kept in the .txt but is not a
-    # divergence: לא־תעשה is a maqaf compound on the page (mun-mun, line 12) where the reference
+    # makes none.  One maqaf difference is kept in the .txt but cannot be a divergence here,
+    # the token stream having no maqaf token to differ in: לא־תעשה is a maqaf compound on the
+    # page (mun-mun, line 12) where the reference
     # sets לא and תעשה apart, both munax, so the token stream is identical either way.  Three
     # transcription slips were corrected before this list: line 5 and line 8 each skipped a munax
     # on כי, and line 9 read ינקה as pazer where all eight strands (and the page) have pashta.
@@ -229,7 +231,7 @@ _EXPECTED_DIVERGENCES = {
     # reaches, so what is pinned below is the single place it agrees with NEITHER.
     #
     # This comment said EIGHT until the 2026-07-25 claim audit, glossed as "issue #69 Result 6's
-    # five, plus the word division at לא תעשה, plus the stroke count" -- which is seven, and
+    # five, plus the maqaf at לא תעשה, plus the stroke count" -- which is seven, and
     # double-counts, the stroke on אתה being one of the five.  Both counts are superseded: the
     # criterion and the decomposition are single-sourced in
     # accgram/printed_decalogue_taxton_diff.py, which derives them from the vendored words on every
@@ -354,8 +356,8 @@ _CHANTED_VERSES = {
 # intact.  This was once true of every transcription and the test below said so unconditionally
 # -- until simtiq_dt_taxton, whose Shabbat commandment swaps disjunctive for disjunctive
 # (geresh -> pazer, revia -> telisha gedola, zaqef qatan -> revia).  That is what makes it a
-# TRADITION difference rather than the word-division and conjunctive-marking quirks the other
-# three amount to, so it is pinned as its own claim below rather than excused as an exception.
+# TRADITION difference rather than the maqaf and conjunctive quirks the other three amount to,
+# so it is pinned as its own claim below rather than excused as an exception.
 _SKELETON_UNTOUCHED = {
     "simtiq_ex_elyon",
     "simtiq_ex_taxton",
@@ -363,8 +365,8 @@ _SKELETON_UNTOUCHED = {
     "koren_ex_taxton",
     "koren_dt_taxton",
     # Its two divergences insert a munax each -- a conjunctive -- where Koren splits a maqaf
-    # compound the reference joins, so no disjunctive is added or removed.  A word-division
-    # difference, like simtiq_ex_elyon, not the disjunctive swap simtiq_dt_taxton makes.
+    # compound the reference joins, so no disjunctive is added or removed.  A maqaf difference,
+    # like simtiq_ex_elyon, not the disjunctive swap simtiq_dt_taxton makes.
     "koren_ex_elyon",
     # Zero divergences at all, so nothing touches the skeleton -- the strongest case here.
     "koren_dt_elyon",
@@ -455,8 +457,8 @@ def test_pinned_divergences_leave_the_disjunctive_skeleton_alone(stem: str) -> N
 
     This is what licenses saying SimTiq follows the p-trad's accent STRUCTURE while denying
     that it follows it in every accent -- a distinction the Exodus taxton makes load-bearing,
-    since two of its three divergences really are accent differences rather than word-division
-    ones.  Scoped to _SKELETON_UNTOUCHED: it is not true of the Deuteronomy taxton, and the
+    since two of its three divergences are accent differences rather than maqafs.  Scoped to
+    _SKELETON_UNTOUCHED: it is not true of the Deuteronomy taxton, and the
     test below pins that it is not.
     """
     source = pd.load_source()
@@ -761,7 +763,8 @@ def test_editor_accents_maps_the_typed_maqaf_onto_the_written_joiner() -> None:
     """The editor records the literal maqaf that was typed; the .txt writes it as ``-``.
 
     Both joiners survive the trip, so the .txt keeps saying which of the two was on the page
-    -- the word-division fact every difference has to be read against.
+    -- the maqaf every difference has to be read against, and the only record of one where the
+    token stream cannot show it.
     """
     maqaf = "\N{HEBREW PUNCTUATION MAQAF}"
     assert et.editor_accents(f"מונח{maqaf}מרכא") == [("מונח", ""), ("מרכא", "-")]

@@ -9,10 +9,12 @@ criterion, applied once, with the counts derived from the vendored data instead 
 three prose sites.
 
 **The criterion.**  A difference SITE is one chanted word at which the two strands' text
-differs.  Where the strands divide the text differently -- the m-trad's two words לא and תעשה
+differs.  Where the strands put their maqafs differently -- the m-trad's two words לא and תעשה
 against the p-trad's single maqaf compound לא־תעשה -- the site is the shortest run of words on
-each side whose letter skeletons match, so such a division counts as ONE site rather than as
-two or three coincidental word differences.  ``diff_sites`` does that alignment.
+each side whose letter skeletons match, so a maqaf counts as ONE site rather than as two or
+three coincidental word differences.  ``diff_sites`` does that alignment.  Note that a maqaf
+difference IS a site here and always has been: this module was already counting on the single
+scale that the three pages now state to the reader (``MAQAF_IS_THE_LAST_RUNG``).
 
 **What the criterion yields for Deuteronomy** (``dt_taxton_diff_counts``, pinned in
 ``DT_TAXTON_DECOMPOSITION`` and re-derived on every page generation):
@@ -66,8 +68,10 @@ def diff_sites(m_words: tuple[str, ...], p_words: tuple[str, ...]) -> list[Site]
     The two strands are the same letters throughout -- they differ only in accents, vowels and
     where they put a maqaf -- so a difference is located by walking both sides in step and, on
     any disagreement, growing each side one word at a time until the two skeletons match again.
-    That is what makes a word-division difference one site: לא + תעשה on one side faces the single
-    לא־תעשה on the other, and both sides advance past it together.
+    That is what makes a maqaf difference one site rather than two or three coincidental word
+    differences: לא + תעשה on one side faces the single לא־תעשה on the other, and both sides
+    advance past it together.  This alignment is where the trio's "counted once, at the word whose
+    marking changed" rule is actually implemented.
 
     Raises if the skeletons cannot be reconciled or a side runs out of words -- the strands would
     then no longer be the same text, which is a re-vendoring to look at rather than to render.

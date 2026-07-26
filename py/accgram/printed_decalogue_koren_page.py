@@ -17,14 +17,14 @@ body text is asserted here, not transcribed word-for-word (only shown as scans).
 Since issue #69 the claim rests on more than a spot-check: all FOUR Koren Decalogues have a
 committed hand transcription of every printed accent (``in/accgram/edition_transcriptions/
 koren_*.txt``), diffed against the vendored strand and pinned by
-``tests/test_edition_transcriptions.py``.  All four follow their strand in every accent, and TWO
-of them -- both appendix ones -- divide a chanted word differently from it: the Exodus one splits
-two maqaf compounds the strand joins, the Deuteronomy one joins one the strand leaves apart.  Word
-division is counted apart from accents across the whole trio, and the convention is stated to the
-reader via ``printed_decalogue_strands.WORD_DIVISION_IS_NOT_AN_ACCENT``; a 2026-07-25 claim audit
-found this page using "every accent" both ways at once (see the guardrail comments below), so keep
-the two claims separate in every verdict here.  ``_verdict_table`` renders the four, one row per
-Decalogue -- never one per edition, since the four verdicts differ.
+``tests/test_edition_transcriptions.py``.  TWO of the four match their strand mark for mark; the
+other two -- both appendix ones -- differ from it only at the maqaf, the Exodus one splitting two
+compounds the strand joins and the Deuteronomy one joining one the strand leaves apart.  A maqaf
+difference is an ordinary difference at the bottom of the trio's one scale, stated to the reader
+via ``printed_decalogue_strands.MAQAF_IS_THE_LAST_RUNG``; a 2026-07-25 claim audit found this page
+using "every accent" two ways at once (see the guardrail comments below), so every verdict here
+names the first rung that breaks rather than claiming a bare "every accent".  ``_verdict_table``
+renders the four, one row per Decalogue -- never one per edition, since the four verdicts differ.
 
 The one *note* is the secondary, more-for-fun material -- kept for how aware Koren is of the older,
 printed-tradition choice it makes:
@@ -202,10 +202,13 @@ _ROM_SILLUQ_SOF_PASUQ = rmn(pds.ROM_SILLUQ_SOF_PASUQ)
 # to the companion page's appendix, not repeated here. _ROM_REVIA is already defined above.
 _ROM_GERESH = rmn(pds.ROM_GERESH)
 _ROM_ZAQEF_QATAN = rmn(pds.ROM_ZAQEF_QATAN)
-# Named only in the conclusion's word-division paragraph, for the accent לך carries where the
+# Named only in the conclusion's maqaf paragraph, for the accent לך carries where the
 # תחתון strands leave it standing alone -- the reading that refutes this page's old "no strand at
 # all separates יהיה from לך" (see the guardrail comment there).
 _ROM_TEVIR = rmn(pds.ROM_TEVIR)
+# The accent the Deuteronomy appendix Decalogue keeps on the לא it joins by maqaf: the compound is
+# accented on BOTH atoms, which is why that maqaf is invisible to the token diff.
+_ROM_MUNAX = rmn(pds.ROM_MUNAX)
 
 # The p-trad Decalogue on Hebrew Wikisource sits in the printed-tradition (נוסח הדפוסים) section of
 # the very page these four strands are vendored from -- so its base URL is single-sourced from the
@@ -507,7 +510,8 @@ def _verdict_table(
             "koren_ex_taxton",
             "113–114",
             ("p-trad ", _TAHTON),
-            "Every accent, with no accent difference anywhere — though this Decalogue settles less"
+            "Every accent, and every maqaf with them — no difference anywhere the comparison"
+            " reaches, though this Decalogue settles less"
             " than that suggests. In Exodus the two traditions accent the Shabbat commandment"
             " identically, so the only difference of accent it can adjudicate is the chanted"
             " verse boundary at עבדים. Koren takes the p-trad side of that, and of the"
@@ -519,7 +523,7 @@ def _verdict_table(
             "280–281",
             ("p-trad ", _TAHTON),
             (
-                "Every accent, and ",
+                "Every accent, every maqaf, and ",
                 H.bold("this is the Decalogue that tests the claim"),
                 f": in Deuteronomy the two {_TAHTON} strands part at ",
                 H.bold(str(counts["total"])),
@@ -544,19 +548,26 @@ def _verdict_table(
             "koren_ex_elyon",
             "A38",
             ("p-trad ", _ELYON),
-            "Every accent. Its only two differences are of word division: it prints both"
-            " יהיה־לך and ובנך־ובתך as two separately accented chanted words where the strand"
-            " makes each one.",
+            "Every chanted verse boundary, the whole disjunctive skeleton and every accent. Its"
+            " two differences are both at the maqaf, the last rung: it prints both יהיה־לך and"
+            " ובנך־ובתך as two separately accented chanted words where the strand binds each pair"
+            " into one.",
         ),
         (
             "Deuteronomy appendix",
             "koren_dt_elyon",
             "A39",
             ("p-trad ", _ELYON),
-            "Every accent, with no accent difference anywhere — and it joins both compounds its"
-            " Exodus counterpart splits, so that splitting is a fact about the one page rather"
-            " than a habit of the edition. Its one word division goes the other way: it joins"
-            " לא־תעשה, which the strand leaves as two words.",
+            (
+                "Every accent — and it joins both compounds its Exodus counterpart splits, so"
+                " that splitting is a fact about the one page rather than a habit of the edition."
+                " Its one difference is a maqaf, going the other way: it joins לא־תעשה, which the"
+                " strand leaves as two words, and keeps a ",
+                _ROM_MUNAX,
+                " on the joined לא even so. Both sides therefore have the same two accents, so"
+                " this is a difference no accent can show: it was read off the page rather than"
+                " found by the diff.",
+            ),
         ),
     )
     body = [
@@ -609,16 +620,19 @@ def _conclusion(
         ),
         # Single-sourced in pds and stated verbatim on all three pages of the trio, here because
         # the table's middle column is written in its terms. Splice the constant; don't paraphrase.
-        H.para((pds.WORD_DIVISION_IS_NOT_AN_ACCENT,)),
+        H.para((pds.MAQAF_IS_THE_LAST_RUNG,)),
         _verdict_table(verdicts, counts),
         # GUARDRAIL (2026-07-25 claim audit, findings 2 and 3). This paragraph made two claims that
         # the page's own evidence refuted.
         #
         # (1) "Three of the four follow their strand in every accent, and the fourth differs only
-        # in how it divides two chanted words." TWO of the four have word-division differences, not
-        # one -- besides the Exodus appendix's two splits, the Deuteronomy appendix one joins
-        # לא־תעשה where its strand leaves the words apart -- and under the convention stated just
-        # above, all four do follow their strand in every accent. Say both things separately.
+        # in how it divides two chanted words." The count is wrong: TWO of the four have a maqaf
+        # difference -- besides the Exodus appendix's two splits, the Deuteronomy appendix one
+        # joins לא־תעשה where its strand leaves the words apart. The first fix went further and
+        # declared a maqaf difference to be no accent difference at all, which restored "all four
+        # follow their strand in every accent"; that convention is gone (see the guardrail at
+        # pds.MAQAF_IS_THE_LAST_RUNG). Two of the four match mark for mark, two differ at the
+        # maqaf, and neither claim may be dressed up as the other.
         #
         # (2) "no strand at all, in either tradition, separates יהיה from לך". Flatly false: all
         # four תחתון strands separate those two words, binding לא to יהיה (לא־יהיה, one chanted
@@ -630,18 +644,18 @@ def _conclusion(
         # reader who checks the hub's table finds the two pages agreeing.
         H.para(
             (
-                "All four follow their strand in ",
-                H.bold("every"),
-                " accent. Two of the four divide a chanted word differently from it, which by the"
-                " convention above is not an accent difference: the Exodus appendix Decalogue"
-                " splits both יהיה־לך and ובנך־ובתך, and the Deuteronomy appendix one joins"
-                " לא־תעשה. And not one difference anywhere in the four takes the m-trad's side of"
-                " anything. The יהיה־לך split in particular is Koren's own rather than a"
+                "Two of the four — the main Decalogues — match their strand ",
+                H.bold("mark for mark"),
+                ". The other two follow theirs in every accent and part from it only at the"
+                " maqaf: the Exodus appendix Decalogue splits both יהיה־לך and ובנך־ובתך, and the"
+                " Deuteronomy appendix one joins לא־תעשה. Those are the mildest differences the"
+                " scale has, and not one difference anywhere in the four takes the m-trad's side"
+                " of anything. The יהיה־לך split in particular is Koren's own rather than a"
                 f" tradition's: only the {_ELYON} strands have that compound at all — the ",
                 _TAHTON,
                 " strands instead bind לא to יהיה, leaving לך standing on its own with a ",
                 _ROM_TEVIR,
-                f" — and not one of the four {_ELYON} strands splits it. So that division says"
+                f" — and not one of the four {_ELYON} strands splits it. So that split says"
                 " nothing about which tradition Koren follows.",
             )
         ),

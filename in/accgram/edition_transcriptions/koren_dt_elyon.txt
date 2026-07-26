@@ -30,12 +30,14 @@
 #     (elyon+taxton, manuscript+printed) JOIN ובנך־ובתך, so no strand splits it and a split would
 #     have been Koren-alone and uncorroborated.  Koren joins it -- no divergence either way.
 #
-# ONE token-invisible word-division difference, recorded but not a divergence: at לֹא־תַעֲשֶׂה
+# ONE MAQAF DIFFERENCE, real but invisible to the token comparison: at לֹא־תַעֲשֶׂה
 # (5:8) Koren prints a maqaf compound (line 12, written mun-mun) where ws/dt/elyon/printed sets
 # לא and תעשה as two separate words, each a munax.  Both emit the same two tokens (mun, mun),
 # so the token comparison sees no difference; the maqaf is kept in the line so the .txt still
-# says which the page had.  This is the mirror of the koren_ex_elyon splits -- Koren joining
-# where the reference separates -- and, like them, changes no accent.
+# says which the page had, and this file is the only record of it.  This is the mirror of the
+# koren_ex_elyon splits -- Koren joining where the reference separates -- and unlike them it
+# changes no accent, the joined לא keeping its munax.  It is a difference all the same: the
+# maqaf is the bottom rung of the same scale the accents are on.
 #
 # THREE READINGS were corrected after export, each a transcription slip Ben re-read off the
 # book/editor and agreeing with the reference once fixed -- NOT edition divergences:
@@ -57,7 +59,7 @@
 # every other position sits in the agreeing majority.  The usual caution still applies -- the
 # harness flags only positions where the two disagree, so only the three above were re-read; the
 # ~161 agreeing positions were not.  What this page adds beyond koren_ex_elyon is that the two
-# word-division sites, checked against all eight strands, come out agreeing rather than splitting.
+# maqaf sites, checked against all eight strands, come out agreeing rather than splitting.
 #
 # The chanted verse boundary at עבדים stays p-trad (9 verses): ws/ex/elyon/manuscript closes its
 # own verse there (10) but ws/ex/elyon/printed runs on (9), and this transcription has 9.
