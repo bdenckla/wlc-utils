@@ -58,6 +58,24 @@ in the accents themselves, and an earlier version of this note asserted they cou
 Neither they nor the elyon's pair touch the disjunctive skeleton or the chanted verse
 boundaries, which is the claim that has survived every transcription so far.
 
+HOW RARE THAT IS IN PROSE, AND HOW ORDINARY IN POETRY (Ben, 2026-07-26).  Do not read a second
+accent on a prose compound as unremarkable.  In the PROSE system an accent on a non-final atom of
+a maqaf compound is rare, and with very few -- perhaps zero -- exceptions it is nothing but a
+consequence of the compound being a single chanted word: the accents that turn up there are the
+ones that can be the FIRST OF TWO on an atomic word.  Concretely that means the metigah of
+metigah-zaqef (metigah being in effect a special name for qadma used this way -- hence the
+``METHIGAZAQEF`` scanner token, whose middle span deliberately crosses a maqaf) and perhaps a few
+munax.  The POETIC system is far more willing to put two accents on one chanted word, and that is
+a dramatic difference between the two systems rather than a detail.  Breuer's Chapter 9 gives it
+whole sections -- §§20-21 on a mafsik plus a servant, and on two servants, in one word; §§22-26
+on the secondary mahapakh/merkha -- and states the rule that governs them: two marks "appear in
+one word -- in the same manner in which they are used to appear in two separate words".  He adds
+that the maqaf after a secondary merkha is usually OMITTED, so the compound is written as two
+words although it is chanted as one, with "but a few cases" where it survives (Job 6:10
+ותהי־עוד, Prov 25:20 מעדה־בגד).  So SimTiq's two munax-on-לא are worth the attention this note
+gives them, and Koren's ``mun-mun`` on לא־תעשה more still: whether anything in Tanakh precedes it
+is an open question, not a settled background fact.
+
 WHAT THE TOKEN STREAM CANNOT SEE.  One token per ACCENT means a maqaf leaves no token of its
 own, so a maqaf difference registers only through the accent count it changes.  Where an
 edition joins two words and accents BOTH atoms of the resulting compound -- ``koren_dt_elyon``'s

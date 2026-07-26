@@ -147,8 +147,9 @@ class PunctuationChange:
     relative to WLC's single tangled form.
 
     Each mark tracks an accent -- maqaf the *absence* of an accent (an unaccented atom leans
-    forward on a maqaf), sof pasuq the silluq, legarmeh the munax -- and each reading takes its
-    punctuation from its MAM strand.  So against WLC's one tangled form a reading both
+    forward on a maqaf; that is the normal case and not a definition, since a compound can keep
+    an accent on its joined atom), sof pasuq the silluq, legarmeh the munax -- and each reading
+    takes its punctuation from its MAM strand.  So against WLC's one tangled form a reading both
     *supplies* a mark (it fits this strand's accents but WLC lacks it) and *suppresses* one (WLC
     carries it for the other reading).  WLC's tangle is neither maqaf- nor sof-pasuq-maximalist
     (a mix of both, so those are supplied and suppressed), but it *is* legarmeh-maximalist -- a
