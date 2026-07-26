@@ -58,23 +58,80 @@ in the accents themselves, and an earlier version of this note asserted they cou
 Neither they nor the elyon's pair touch the disjunctive skeleton or the chanted verse
 boundaries, which is the claim that has survived every transcription so far.
 
-HOW RARE THAT IS IN PROSE, AND HOW ORDINARY IN POETRY (Ben, 2026-07-26).  Do not read a second
-accent on a prose compound as unremarkable.  In the PROSE system an accent on a non-final atom of
-a maqaf compound is rare, and with very few -- perhaps zero -- exceptions it is nothing but a
-consequence of the compound being a single chanted word: the accents that turn up there are the
-ones that can be the FIRST OF TWO on an atomic word.  Concretely that means the metigah of
-metigah-zaqef (metigah being in effect a special name for qadma used this way -- hence the
-``METHIGAZAQEF`` scanner token, whose middle span deliberately crosses a maqaf) and perhaps a few
-munax.  The POETIC system is far more willing to put two accents on one chanted word, and that is
+HOW RARE THAT IS IN PROSE, AND HOW ORDINARY IN POETRY (Ben, 2026-07-26; the Yeivin references
+came from the FULL ITM OCR in ``../yeivin-itm/md-export-of-docx``, which a first pass missed by
+searching only the al-hatorah adaptation -- look in both).  Do not read a second accent on a prose
+compound as unremarkable.  Two different things put one there, and they license different lists:
+
+* **A SECONDARY ACCENT the compound simply inherits.**  Ben's rule: what turns up on a non-final
+  atom is what can be the FIRST OF TWO accents on an ATOMIC word, so the second accent is nothing
+  but a consequence of the compound being a single chanted word.  Yeivin's inventory of exactly
+  that, under his own term "secondary accent", is short and prose-specific: munax-zaqef (ITM §221,
+  frequent enough to count as a fourth variant of the zaqef melody), methiga-zaqef (§224 --
+  metigah being in effect a special name for qadma used this way, hence the ``METHIGAZAQEF``
+  scanner token, whose middle span deliberately crosses a maqaf), and the rare merkha and mahapakh
+  on the word of a tevir (§§233, 241, about five cases apiece).  Ben's rule and Yeivin's list
+  agree, which is the useful part; the list is a little longer than "metigah and a few munax".
+  (ITM romanizes several of these differently from this repo, so grep the OCR for ITS spellings,
+  not ours -- the same trap as Breuer's "hyphen" below.)
+* **A MAQAF WRITTEN AFTER A WORD THAT KEEPS ITS OWN CONJUNCTIVE**, which is a manuscript habit and
+  not a grammatical category at all.  Yeivin §293: "In a number of MSS, maqqef is occasionally
+  marked after a word with a conjunctive accent.  This is most common where the word has
+  penultimate stress ... possibly intended to show that the last syllable of the word has no
+  accent."  §21 lists it among the features that TELL manuscripts apart, and L -- WLC's own base
+  -- is named for doing it: L "marks maqqef after words with conjunctive accents, as ועזר־מצריו
+  (Dt 33:7), showing, in this respect, a tradition somewhat different from the standard".  (§357
+  is the neighbouring case, a maqaf after a word bearing a ga'ya that follows the accent.)  So an
+  accented proclitic in prose is neither unheard-of nor evenly distributed, and WHOSE habit it is
+  is part of any question about one.
+
+Two things Yeivin settles for the framing itself, worth not re-deriving.  §291: a maqaf "has no
+musical motif of its own, and is therefore not considered an 'accent', either conjunctive or
+disjunctive" -- the narrow sense the one-scale reading already concedes.  §292: a maqaf "could be
+considered a superfluous sign, since it indicates the absence of any (other) accent sign.  In the
+best MSS, however, maqqef is consistently marked after every word which does not have its own
+accent" -- so the "atom left blank" GLOSS is Yeivin's own and holds as a near-rule for the best
+manuscripts.  It is still not a definition, which is the distinction to keep.
+
+The POETIC system is far more willing to put two accents on one chanted word, and that is
 a dramatic difference between the two systems rather than a detail.  Breuer's Chapter 9 gives it
 whole sections -- §§20-21 on a mafsik plus a servant, and on two servants, in one word; §§22-26
 on the secondary mahapakh/merkha -- and states the rule that governs them: two marks "appear in
 one word -- in the same manner in which they are used to appear in two separate words".  He adds
 that the maqaf after a secondary merkha is usually OMITTED, so the compound is written as two
 words although it is chanted as one, with "but a few cases" where it survives (Job 6:10
-ותהי־עוד, Prov 25:20 מעדה־בגד).  So SimTiq's two munax-on-לא are worth the attention this note
-gives them, and Koren's ``mun-mun`` on לא־תעשה more still: whether anything in Tanakh precedes it
-is an open question, not a settled background fact.
+ותהי־עוד, Prov 25:20 מעדה־בגד).  Those two are Breuer's restoration rather than the manuscript's
+writing -- WLC and UXLC set both without a maqaf, MAM with one -- so a maqaf count cannot measure
+the poetic side at all.  Its 30 poetic compounds against prose's 139 (below) is a floor, not a
+comparison; the asymmetry is real but it lives in Breuer's argument that an unhyphenated word
+still COUNTS as hyphenated, not in anything a scan can see.  So SimTiq's two munax-on-לא are
+worth the attention this note gives them, and Koren's ``mun-mun`` on לא־תעשה more still.
+
+WHAT THE CORPUS SAYS (survey of 2026-07-26 over ``out/wlc422-kq-u``, MAM-simple and the vendored
+UXLC, routed by ``prose_filter`` / ``poetic_filter``; scratch scripts in gitignored ``.novc``).
+The criterion is mechanical: within one whitespace-delimited word, is there an accent both before
+and after a maqaf -- a U+05BD counting as an accent only on the verse's last chanted word, where
+it is silluq.  In WLC's prose corpus 139 of 36,806 maqaf compounds (0.38%) carry an accent on a
+non-final atom.  Sorted by Breuer's Chapter 9 §37: 105 methiga-zaqef, 8 mayela (tipexa before
+etnaxta or silluq -- Breuer's own two examples, Gn 8:18 ויצא־נח and Is 8:17 וקויתי־לו, are both
+in the list), 1 a secondary mark standing where a ga'ya would, and 25 an ordinary servant.  UXLC
+runs 128 / 105 / 8 / 1 / 14; MAM-simple runs 233 / 211 / 9 / 13 / ZERO.  That zero is the finding.
+§37 is the rule behind it: "a cantillation mark and a hyphen are mutually exclusive", so a mark
+that follows the regular order of the accents cancels the maqaf, while the secondary marks --
+which are only there BECAUSE the word is joined -- never do.  Breuer's edition applies that
+without exception; the 25 in WLC and the 14 in UXLC are Yeivin §293's manuscript habit, measured.
+
+KOREN'S ``mun-mun`` IS NOT UNPRECEDENTED, AND ITS PRECEDENT IS A CLOSE ONE.  2 Chr 1:11
+ויאמר־אלהים ׀ לשלמה puts a munax on each atom of one maqaf compound in WLC and UXLC alike, so it
+is L's reading and not a WLC slip; and the environment matches, since MAM tags that stroke
+``lp-paseq`` -- narrow-sense, not legarmeh -- leaving both munaxes plain servants of the pazer on
+the next word, which is exactly what Koren's line 12 reads: rev, ``mun-mun``, paz.  MAM cancels
+the maqaf there, as §37 predicts.  The other prose mun-mun, 1 Chr 27:14 לעשתי־עשר before a zaqef,
+is WLC-only (4.20 and 4.22 alike); MAM and UXLC both set the two words apart.  The Decalogue's own
+Ex 20:10 לא־תעשה shows mun-mun+qad in all three, but that is the dual tangle and not a strand:
+detangled, MAM's elyon cancels the maqaf and sets לא and תעשה as two munax words -- which is
+precisely what Koren joins.  So the reading is rare, and on the wrong side of Breuer's rule, but
+it is the kind of thing L itself does, and Tanakh does precede it.
 
 WHAT THE TOKEN STREAM CANNOT SEE.  One token per ACCENT means a maqaf leaves no token of its
 own, so a maqaf difference registers only through the accent count it changes.  Where an

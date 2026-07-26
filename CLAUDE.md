@@ -29,12 +29,19 @@ strand has a merkha" — never as the absent maqaf alone. Do not define a maqaf 
 blank of an accent": that is only the normal case, and `koren_dt_elyon`'s `mun-mun` on לא־תעשה is
 a maqaf compound whose joined atom keeps its munaḥ — as are the Simanim Tiqqun's two munaḥ-on-לא.
 But do not swing the other way either: in the **prose** system a second accent on a compound is
-rare, and is with very few (perhaps zero) exceptions just a consequence of the compound being one
-chanted word — the accents found there are the ones that can be the first of two on an atomic
-word (the metigah of metigah-zaqef, perhaps a few munaḥ). The **poetic** system is far more
-willing to put two accents on one chanted word; that asymmetry is a major difference between the
-systems, not a detail. `edition_transcription`'s "HOW RARE THAT IS IN PROSE" paragraph has it with
-its Breuer citations. The verbatim reader-facing statement is
+rare, and is largely just a consequence of the compound being one chanted word — the accents found
+there are the ones that can be the first of two on an atomic word, which is also Yeivin's short
+list of prose "secondary accents" (munaḥ-zaqef, metigah-zaqef, rare merkha/mehuppakh on a tevir
+word). The separate case is a maqaf written after a word that keeps its own conjunctive: a
+manuscript habit, and one **L is specifically named for** (Yeivin ITM §293). The **poetic** system
+is far more willing to put two accents on one chanted word; that asymmetry is a major difference
+between the systems, not a detail. `edition_transcription`'s "HOW RARE THAT IS IN PROSE" paragraph
+has it with its Yeivin and Breuer citations.
+
+**Yeivin lives in two places and they are not the same.** `../al-hatorah/py/itm/` is Ben's
+*adaptation* — partial, with sections still untranscribed. `../yeivin-itm/md-export-of-docx/` is
+the *full* OCR of the book. Search the full OCR before concluding Yeivin is silent on something;
+a first pass at #76 searched only the adaptation and wrongly reported the maqaf material absent. The verbatim reader-facing statement is
 `MAQAF_IS_THE_LAST_RUNG`; its guardrail comment records the convention it replaced (a 2026-07-25
 audit fix that made maqaf differences non-differences) and why that one was wrong, so it does not
 get reinstated. Issue #76.
