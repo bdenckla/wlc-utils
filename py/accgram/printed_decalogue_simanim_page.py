@@ -607,7 +607,8 @@ def _p246_mapping_table() -> object:
 def _p246_section() -> tuple[object, ...]:
     return (
         H.heading_level_2(
-            "Footnote on the appendix (תחתון) Decalogue — Simanim Tiqqun p. 246"
+            "Footnote on the appendix (תחתון) Decalogue — Simanim Tiqqun p. 246",
+            {"id": "simanim-p246-note"},
         ),
         H.para(
             (
@@ -1134,8 +1135,8 @@ def _aleppo_codex_section() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "The p. 246 note cites the כתר אר״ץ (Keter Aram Tsova, the Aleppo Codex) for the"
-                " ",
+                link("The p. 246 note", "#simanim-p246-note"),
+                " cites the כתר אר״ץ (Keter Aram Tsova, the Aleppo Codex) for the ",
                 _ROM_PASHTA_ETNAHTA,
                 " cantillation. Two things are worth keeping straight about that citation.",
             )
@@ -1159,12 +1160,15 @@ def _aleppo_codex_section() -> tuple[object, ...]:
                     H.bold("And it is a reconstruction, not an autopsy."),
                     " The Aleppo Codex's Torah survives only from Deut 28:17 onward, so the"
                     " physical Codex contains neither Decalogue; any statement about how “the"
-                    " Keter” points אנכי…עבדים rests on reconstruction or pre-1947 testimony."
-                    " The Simanim Tiqqun, in a passing reference, has no room to say so — but"
-                    " strictly it"
-                    " should read “one of the two cantillations reconstructed for the Aleppo Codex"
-                    " is …”.",
+                    " Keter” points אנכי…עבדים rests on reconstruction or pre-1947 testimony.",
                 ),
+            )
+        ),
+        H.para(
+            (
+                "Perhaps the editors of the Simanim Tiqqun felt there was no room for such details,"
+                " but strictly speaking, they should have said something like"
+                " “one of the two cantillations reconstructed for the Aleppo Codex is …”.",
             )
         ),
     )
