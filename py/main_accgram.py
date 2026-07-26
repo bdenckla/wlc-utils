@@ -62,6 +62,12 @@ Subcommands:
                   * gh-pages/accgram/ps17v14-mam-doc-notes.html and
                     ps17v14-double-tsinnor.html -- the Psalms 17:14 deep dives,
                     generated from their committed htel bodies.
+                  * gh-pages/accgram/maqaf-proclitic-accents.html -- the Tanakh-wide
+                    survey of accents on a maqaf-joined proclitic (issue #76), which
+                    also writes out/accgram/maqaf-proclitic-accents.json.  Splits the
+                    hits into Yeivin's grammatical secondary accents and the scribal
+                    habit of §293, and settles whether Koren's Deuteronomy mun-mun on
+                    לא־תעשה has a precedent.
 
                 Each report runs with its default paths.
     generate-html-<name>
@@ -72,7 +78,8 @@ Subcommands:
                 generate-html-poetic, -goerwitz, -almost-errors, -supplied-marks,
                 -printed-decalogue, -printed-decalogue-simanim, -printed-decalogue-koren,
                 -dual-under-bars-in-leningrad-decalogues, -telg-doc-notes,
-                -ps17v14-mam-doc-notes, -ps17v14-double-tsinnor.
+                -ps17v14-mam-doc-notes, -ps17v14-double-tsinnor,
+                -maqaf-proclitic-accents.
     grammaticality
                 Estimate a PCFG over the committed prose + poetic parse trees
                 (one production per tree node) and score each verse's
@@ -107,6 +114,7 @@ from accgram import dual_cant_run
 from accgram import dual_under_bars_page
 from accgram import fix_tester
 from accgram import grammaticality
+from accgram import maqaf_proclitic_accents_page
 from accgram import poetic_oddballs
 from accgram import ps17v14_double_tsinnor
 from accgram import ps17v14_doc_notes
@@ -174,6 +182,7 @@ _HTML_GENERATORS = (
     ("printed-decalogue-simanim", printed_decalogue_simanim_page),
     ("printed-decalogue-koren", printed_decalogue_koren_page),
     ("dual-under-bars-in-leningrad-decalogues", dual_under_bars_page),
+    ("maqaf-proclitic-accents", maqaf_proclitic_accents_page),
     ("telg-doc-notes", telg_doc_notes),
     ("ps17v14-mam-doc-notes", ps17v14_doc_notes),
     ("ps17v14-double-tsinnor", ps17v14_double_tsinnor),

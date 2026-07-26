@@ -101,37 +101,25 @@ one word -- in the same manner in which they are used to appear in two separate 
 that the maqaf after a secondary merkha is usually OMITTED, so the compound is written as two
 words although it is chanted as one, with "but a few cases" where it survives (Job 6:10
 ותהי־עוד, Prov 25:20 מעדה־בגד).  Those two are Breuer's restoration rather than the manuscript's
-writing -- WLC and UXLC set both without a maqaf, MAM with one -- so a maqaf count cannot measure
-the poetic side at all.  Its 30 poetic compounds against prose's 139 (below) is a floor, not a
-comparison; the asymmetry is real but it lives in Breuer's argument that an unhyphenated word
-still COUNTS as hyphenated, not in anything a scan can see.  So SimTiq's two munax-on-לא are
+writing -- WLC sets both without a maqaf and MAM with one -- so no maqaf count can measure the
+poetic side at all: the asymmetry is real, but it lives in Breuer's argument that an unhyphenated
+word still COUNTS as hyphenated, not in anything a scan can see.  So SimTiq's two munax-on-לא are
 worth the attention this note gives them, and Koren's ``mun-mun`` on לא־תעשה more still.
 
-WHAT THE CORPUS SAYS (survey of 2026-07-26 over ``out/wlc422-kq-u``, MAM-simple and the vendored
-UXLC, routed by ``prose_filter`` / ``poetic_filter``; scratch scripts in gitignored ``.novc``).
-The criterion is mechanical: within one whitespace-delimited word, is there an accent both before
-and after a maqaf -- a U+05BD counting as an accent only on the verse's last chanted word, where
-it is silluq.  In WLC's prose corpus 139 of 36,806 maqaf compounds (0.38%) carry an accent on a
-non-final atom.  Sorted by Breuer's Chapter 9 §37: 105 methiga-zaqef, 8 mayela (tipexa before
-etnaxta or silluq -- Breuer's own two examples, Gn 8:18 ויצא־נח and Is 8:17 וקויתי־לו, are both
-in the list), 1 a secondary mark standing where a ga'ya would, and 25 an ordinary servant.  UXLC
-runs 128 / 105 / 8 / 1 / 14; MAM-simple runs 233 / 211 / 9 / 13 / ZERO.  That zero is the finding.
-§37 is the rule behind it: "a cantillation mark and a hyphen are mutually exclusive", so a mark
-that follows the regular order of the accents cancels the maqaf, while the secondary marks --
-which are only there BECAUSE the word is joined -- never do.  Breuer's edition applies that
-without exception; the 25 in WLC and the 14 in UXLC are Yeivin §293's manuscript habit, measured.
-
-KOREN'S ``mun-mun`` IS NOT UNPRECEDENTED, AND ITS PRECEDENT IS A CLOSE ONE.  2 Chr 1:11
-ויאמר־אלהים ׀ לשלמה puts a munax on each atom of one maqaf compound in WLC and UXLC alike, so it
-is L's reading and not a WLC slip; and the environment matches, since MAM tags that stroke
-``lp-paseq`` -- narrow-sense, not legarmeh -- leaving both munaxes plain servants of the pazer on
-the next word, which is exactly what Koren's line 12 reads: rev, ``mun-mun``, paz.  MAM cancels
-the maqaf there, as §37 predicts.  The other prose mun-mun, 1 Chr 27:14 לעשתי־עשר before a zaqef,
-is WLC-only (4.20 and 4.22 alike); MAM and UXLC both set the two words apart.  The Decalogue's own
-Ex 20:10 לא־תעשה shows mun-mun+qad in all three, but that is the dual tangle and not a strand:
-detangled, MAM's elyon cancels the maqaf and sets לא and תעשה as two munax words -- which is
-precisely what Koren joins.  So the reading is rare, and on the wrong side of Breuer's rule, but
-it is the kind of thing L itself does, and Tanakh does precede it.
+HOW OFTEN IT ACTUALLY HAPPENS is measured, not asserted, and the measurement is NOT here.  The
+Tanakh-wide survey lives in ``maqaf_proclitic_accents`` (+ ``_page``), which writes
+``out/accgram/maqaf-proclitic-accents.json`` and
+``gh-pages/accgram/maqaf-proclitic-accents.html`` from one run, and is where this note's claims
+about rarity get their numbers.  Deliberately NO counts here: a number restated in a second file
+is a number nothing keeps in step, which is the whole reason the survey was moved out of this
+docstring.  What the page settles, qualitatively, is that an accent on a joined atom happens in
+well under one percent of prose maqaf compounds; that those cases split into Yeivin's grammatical
+secondary accents and §293's bare scribal habit, most of them the former; and that Koren's
+``mun-mun`` is NOT unprecedented -- 2 Chr 1:11 ויאמר־אלהים ׀ לשלמה is the same shape doing the
+same job before a pazer -- but that its precedent is a MANUSCRIPT one, no printed edition being
+known to have done it, SimTiq's munax on the joined לא being the nearest printed thing there is.
+Read the page before restating any of that: it carries the corpus caveats that bound every one of
+those findings, and the survey module's docstring carries the method.
 
 WHAT THE TOKEN STREAM CANNOT SEE.  One token per ACCENT means a maqaf leaves no token of its
 own, so a maqaf difference registers only through the accent count it changes.  Where an
