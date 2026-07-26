@@ -55,20 +55,20 @@ def cell(result: tp.TranscriptionResult) -> object:
     if not result.departures:
         bad = [cv.index for cv in result.ungrammatical]
         if not bad:
-            return f"Clean at all {n} chanted verses, as its strand is."
+            return f"Clean at all {n} chanted verses, as its Wikisource strand is."
         return (
-            f"Its strand's own verdicts: {_verses(bad)} ungrammatical,"
+            f"Its Wikisource strand's own verdicts: {_verses(bad)} ungrammatical,"
             f" the other {n - len(bad)} clean."
         )
     return (
-        H.bold("Not as grammatical as its strand"),
+        H.bold("Not as grammatical as its Wikisource strand"),
         ": " + "; ".join(_departure(d) for d in result.departures) + ".",
     )
 
 
 def _departure(departure: tuple[int, str, str]) -> str:
     index, strand_status, status = departure
-    return f"chanted verse {index} is {status} where the strand is {strand_status}"
+    return f"chanted verse {index} is {status} where that strand is {strand_status}"
 
 
 def _verses(indices: list[int]) -> str:

@@ -180,6 +180,10 @@ ROM_QADMA = "qadma"
 # where the same insertion one chanted verse earlier, before a tevir, costs nothing.
 ROM_MUNAX = "munaḥ"
 ROM_TEVIR = "tevir"
+# Named in the verdict cells that state a maqaf difference from both sides: where an edition binds
+# a word its Wikisource strand leaves free, the accent the strand has on that free word is a
+# merkha, and naming it is what keeps the difference from reading as a one-sided absence.
+ROM_MERKHA = "merkha"
 # The two vowels of the pausal alternation (see ``resolve_pausal``), named in the main page's
 # appendix.  Vowels are not accents, but the same single-sourcing rule applies: the appendix's
 # vocalization table and its pausal table both name them, and they must not drift apart.
@@ -325,12 +329,12 @@ MAQAF_IS_THE_LAST_RUNG = (
     " same scale"
     " as the accents, at the bottom of it: it separates the word it sits on from the next one"
     " even less than a conjunctive accent does, binding the two into a single chanted word. So"
-    " where an edition puts a maqaf its strand does not, or leaves one out, that is a difference"
-    " in how the text is marked — counted once, at the word whose marking changed, not twice as"
-    " a regrouping plus an accent. It is, though, the mildest difference there is, and that is"
-    " what these verdicts measure: how far down the scale each Decalogue's agreement with its"
-    " strand reaches — the chanted verse boundaries, then the disjunctive skeleton, then the"
-    " conjunctives, then the maqafs."
+    " where an edition has a maqaf on a word and its Wikisource strand a conjunctive accent, or"
+    " the other way about, that is one difference in how that word is marked — an exchange one"
+    " rung deep, counted once and not twice as a regrouping plus an accent. It is, though, the"
+    " mildest difference there is, and that is what these verdicts measure: how far down the"
+    " scale each Decalogue's agreement with that strand reaches — the chanted verse boundaries,"
+    " then the disjunctive skeleton, then the conjunctives, then the maqafs."
 )
 
 

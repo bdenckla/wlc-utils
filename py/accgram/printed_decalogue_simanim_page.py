@@ -238,6 +238,9 @@ _ROM_QADMA = rmn(pds.ROM_QADMA)
 # the prose checker rejects: an inserted munax makes a third conjunctive before the pashta, where
 # all eight strands have a meteg and no accent, and where a tevir would have allowed it.
 _ROM_MUNAX = rmn(pds.ROM_MUNAX)
+# The accent the Wikisource strand has on the free לא of לא תחמד, where the Tiqqun binds it by
+# maqaf instead -- named so that difference reads as an exchange rather than a missing maqaf.
+_ROM_MERKHA = rmn(pds.ROM_MERKHA)
 _ROM_METEG = rmn(pds.ROM_METEG)
 _ROM_TEVIR = rmn(pds.ROM_TEVIR)
 
@@ -344,16 +347,11 @@ def _intro(source: dict) -> tuple[object, ...]:
                 ". In its Exodus"
                 " (Yitro) Decalogue, the Tiqqun's main Decalogue (p. 83) is the p-trad"
                 f" {_ELYON} and its appendix Decalogue (p. 246) is the p-trad {_TAHTON}"
-                ". Since no digital Simanim edition exists, both steps were taken by hand against ",
+                ". The comparison throughout is against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
-                ": first a visual spot-check of the signal words, which places each Decalogue"
-                " among the four strands, and then a hand transcription of every printed accent"
-                " of all four Decalogues, diffed against the strand each was placed in — which is"
-                " what says how far it follows that strand. The two scans below show enough of"
-                ' the Tiqqun\'s Exodus Decalogues to "diagnose" them both as p-trad by their signal'
-                " words; ",
-                link("the conclusion's verdicts", "#simanim-conclusion"),
-                " are what the transcriptions establish.",
+                ". The two scans below show enough of"
+                ' the Tiqqun\'s Exodus Decalogues to "diagnose" them both as p-trad by their'
+                " signal words.",
             )
         ),
         *_body_scans(),
@@ -771,10 +769,17 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 "simtiq_ex_elyon",
                 "83–84",
                 ("p-trad ", _ELYON),
-                "Every chanted verse boundary, the whole disjunctive skeleton and every accent."
-                " Its two differences are both at the maqaf, the last rung: it separates"
-                " ובנך־ובתך, which the strand joins, and joins the לא of לא תחמד to the word"
-                " after it, which the strand leaves free.",
+                (
+                    "Every chanted verse boundary, the whole disjunctive skeleton, and every"
+                    " chanted word marked as its Wikisource strand marks it but two, each an"
+                    " exchange at the last rung. At ובנך the Wikisource strand has a maqaf where"
+                    " the Tiqqun has a ",
+                    _ROM_MUNAX,
+                    ", separating what the Wikisource strand's maqaf makes one chanted word; at"
+                    " the לא of לא תחמד the Wikisource strand has a ",
+                    _ROM_MERKHA,
+                    " where the Tiqqun has a maqaf, binding what that strand leaves free.",
+                ),
             ),
             (
                 "Exodus appendix",
@@ -785,10 +790,15 @@ def _tiqqun_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
                 # what puts this row a rung above pp. 83-84's maqaf-only pair. The third is the
                 # same maqaf as pp. 83-84's, named as such so this row and the scale above it stay
                 # consistent (2026-07-25 claim audit, finding 3).
-                "Every chanted verse boundary and the whole disjunctive skeleton, but not every"
-                " accent: three differences, none of them in a disjunctive. Two are conjunctive"
-                " accents it adds; the third is the same maqaf as the Exodus main Decalogue's,"
-                " the לא of לא תחמד joined here where the strand leaves it free.",
+                (
+                    "Every chanted verse boundary and the whole disjunctive skeleton, but not"
+                    " every accent: three differences, none of them in a disjunctive. Two are"
+                    " conjunctive accents it adds; the third is the same exchange as the Exodus"
+                    " main Decalogue's, the לא of לא תחמד bound here by maqaf where its"
+                    " Wikisource strand has a ",
+                    _ROM_MERKHA,
+                    ".",
+                ),
             ),
             (
                 "Deuteronomy main",
@@ -880,11 +890,11 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 " which can be read off the accents on the span's two signal words, עבדים and"
                 " על־פני: where a signal word has a ",
                 _ROM_SILLUQ_SOF_PASUQ,
-                " the strand ends a chanted verse there, and where it has an ",
+                " that strand ends a chanted verse there, and where it has an ",
                 _ROM_ETNAHTA,
                 " or a ",
                 _ROM_REVIA,
-                " the strand runs on. The Simanim Tiqqun lands"
+                " it runs on. The Simanim Tiqqun lands"
                 f" on the p-trad side of that divergence on both strands: the p-trad {_ELYON} in"
                 " its Exodus",
                 f" main Decalogue (p. 83), and the p-trad {_TAHTON} in its appendix Decalogue"
@@ -897,13 +907,12 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
         H.para(
             (
                 "How far each of the four Decalogues follows that strand is a separate question"
-                " from which strand it is, and one the signal words cannot answer. Every printed"
-                " accent of all four has been transcribed by hand off the page and diffed against"
-                " the strand it follows; the verdicts are per Decalogue, since they differ. The"
+                " from which strand it is, and one the signal words cannot answer. The verdicts"
+                " are per Decalogue, since they differ. The"
                 " last column adds the question ",
                 link("the companion page", _COMPANION_PAGE_HREF),
                 " asks of the four idealized strands, asked here of what this book actually"
-                " prints: run through the same prose grammar checker, does it parse?",
+                " has: run through the same prose grammar checker, does it parse?",
             )
         ),
         # Single-sourced in pds and stated verbatim on all three pages of the trio (2026-07-25 claim
@@ -932,8 +941,8 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 ", whose opening chanted verse merges the first two commandments — the only chanted"
                 " verse the checker rejects in any of a Decalogue's four strands, in Exodus and"
                 " Deuteronomy alike. Simanim's"
-                " Tiqqun prints that verse in both of them, so pp. 83–84 and pp. 208–209 are"
-                " ungrammatical there exactly as their strand is: the ",
+                " Tiqqun has that verse in both of them, so pp. 83–84 and pp. 208–209 are"
+                " ungrammatical there exactly as their Wikisource strand is: the ",
                 link("companion page's finding", _COMPANION_PAGE_HREF),
                 " in a book, rather than in an idealization of one.",
             )
@@ -941,7 +950,7 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
         H.para(
             (
                 "p. 246 is the only Decalogue here whose verdict is its own rather than its"
-                " strand's, and its last two columns have to be read together. Not one of its"
+                " Wikisource strand's, and its last two columns have to be read together. Not one of its"
                 " three differences reaches a disjunctive — two are conjunctives and the third a"
                 " maqaf — so the disjunctive skeleton it is credited"
                 " with really is intact, and its third chanted verse, the one"
@@ -960,7 +969,8 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 " where the grammar takes two, and the checker cannot build the phrase they"
                 " belong to. Take that one ",
                 _ROM_MUNAX,
-                " away and what is left is the strand's own accents, which parse. So an intact"
+                " away and what is left is the Wikisource strand's own accents, which parse. So"
+                " an intact"
                 " disjunctive skeleton does not carry a parse with it, and this is the Decalogue"
                 " that shows it.",
             )

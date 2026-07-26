@@ -340,15 +340,10 @@ def _intro(source: dict) -> tuple[object, ...]:
                 "Koren follows the p-trad for the Decalogues. In its Exodus"
                 " Decalogue, Koren's main Decalogue (pp. 113–114) is the p-trad"
                 f" {_TAHTON} and its appendix Decalogue (p. A38) is the p-trad {_ELYON}"
-                ". Since no digital Koren exists, both steps were taken by hand against ",
+                ". The comparison throughout is against ",
                 link("Hebrew Wikisource's p-trad", _wikisource_ptrad_href(source)),
-                ": first a visual spot-check of the signal words, which places each Decalogue"
-                " among the four strands, and then a hand transcription of every printed accent"
-                " of all four Decalogues, diffed against the strand each was placed in — which is"
-                " what says how far it follows that strand. The two scans below show enough of"
-                ' Koren\'s Exodus Decalogues to "diagnose" them both as p-trad; ',
-                link("the conclusion's verdicts", "#koren-conclusion"),
-                " are what the transcriptions establish.",
+                ". The two scans below show enough of"
+                ' Koren\'s Exodus Decalogues to "diagnose" them both as p-trad.',
             )
         ),
         *_body_scans(),
@@ -419,7 +414,7 @@ def _pa38_note_section() -> tuple[object, ...]:
             (
                 "The note is the mirror of the ",
                 link("Simanim Tiqqun's p. 83 side-margin note", _SIMANIM_PAGE),
-                ". Koren's appendix prints the ",
+                ". Koren's appendix has the ",
                 _ELYON,
                 " by default — the merged, nine-verse p-trad structure, in which אנכי…עבדים ends"
                 " on a ",
@@ -548,10 +543,14 @@ def _verdict_table(
             "koren_ex_elyon",
             "A38",
             ("p-trad ", _ELYON),
-            "Every chanted verse boundary, the whole disjunctive skeleton and every accent. Its"
-            " two differences are both at the maqaf, the last rung: it prints both יהיה־לך and"
-            " ובנך־ובתך as two separately accented chanted words where the strand binds each pair"
-            " into one.",
+            (
+                "Every chanted verse boundary, the whole disjunctive skeleton, and every chanted"
+                " word marked as its Wikisource strand marks it but two. At יהיה and at ובנך that"
+                " strand has a maqaf where Koren has a ",
+                _ROM_MUNAX,
+                " — one rung up the scale, so Koren separates into two chanted words what the"
+                " Wikisource strand's maqaf makes one.",
+            ),
         ),
         (
             "Deuteronomy appendix",
@@ -559,10 +558,10 @@ def _verdict_table(
             "A39",
             ("p-trad ", _ELYON),
             (
-                "Every accent — and it joins both compounds its Exodus counterpart splits, so"
-                " that splitting is a fact about the one page rather than a habit of the edition."
-                " Its one difference is a maqaf, going the other way: it joins לא־תעשה, which the"
-                " strand leaves as two words, and keeps a ",
+                "Every accent — and it joins both compounds its Exodus counterpart separates, so"
+                " that separation is a fact about the one page rather than a habit of the"
+                " edition. Its one difference is a maqaf, going the other way: Koren has"
+                " לא־תעשה where its Wikisource strand has the two words apart, and keeps a ",
                 _ROM_MUNAX,
                 " on the joined לא even so. Both sides therefore have the same two accents, so"
                 " this is a difference no accent can show: it was read off the page rather than"
@@ -610,11 +609,10 @@ def _conclusion(
         H.para(
             (
                 "How far each of the four Decalogues follows that strand is a separate question"
-                " from which strand it is, and one the signal words cannot answer. Every printed"
-                " accent of all four has been transcribed by hand off the page and diffed against"
-                " the strand it follows. The last column adds the question ",
+                " from which strand it is, and one the signal words cannot answer. The last"
+                " column adds the question ",
                 link("the companion page", _COMPANION_PAGE_HREF),
-                " asks of the four idealized strands, asked here of what Koren actually prints:"
+                " asks of the four idealized strands, asked here of what Koren actually has:"
                 " run through the same prose grammar checker, does it parse?",
             )
         ),
@@ -644,19 +642,20 @@ def _conclusion(
         # reader who checks the hub's table finds the two pages agreeing.
         H.para(
             (
-                "Two of the four — the main Decalogues — match their strand ",
+                "Two of the four — the main Decalogues — match their Wikisource strand ",
                 H.bold("mark for mark"),
-                ". The other two follow theirs in every accent and part from it only at the"
-                " maqaf: the Exodus appendix Decalogue splits both יהיה־לך and ובנך־ובתך, and the"
+                ". The other two part from theirs at the last rung only, each time at a maqaf:"
+                " the Exodus appendix Decalogue separates both יהיה־לך and ובנך־ובתך, and the"
                 " Deuteronomy appendix one joins לא־תעשה. Those are the mildest differences the"
                 " scale has, and not one difference anywhere in the four takes the m-trad's side"
-                " of anything. The יהיה־לך split in particular is Koren's own rather than a"
+                " of anything. The separation of יהיה־לך in particular is Koren's own rather"
+                " than a"
                 f" tradition's: only the {_ELYON} strands have that compound at all — the ",
                 _TAHTON,
                 " strands instead bind לא to יהיה, leaving לך standing on its own with a ",
                 _ROM_TEVIR,
-                f" — and not one of the four {_ELYON} strands splits it. So that split says"
-                " nothing about which tradition Koren follows.",
+                f" — and not one of the four {_ELYON} strands separates it. So that separation"
+                " says nothing about which tradition Koren follows.",
             )
         ),
         # The grammaticality column (issue #52). All four agree with their strand, so what the
@@ -666,14 +665,14 @@ def _conclusion(
         # rather than a grammatical motive -- the note argues from the count of commandments.
         H.para(
             (
-                "Under the checker, too, each of the four is exactly as grammatical as the strand"
-                " it follows — and for the two appendix Decalogues that is worth spelling out,"
-                " because the strand they follow is ungrammatical. The p-trad ",
+                "Under the checker, too, each of the four is exactly as grammatical as its"
+                " Wikisource strand — and for the two appendix Decalogues that is worth spelling"
+                " out, because that strand is ungrammatical. The p-trad ",
                 _ELYON,
                 " merges the first two commandments into one chanted verse, and that verse is the"
                 " one the ",
                 link("companion page's grammar check", _ELYON_FAILS_HREF),
-                " rejects. Koren prints it, in both books. So the companion page's finding is not"
+                " rejects. Koren has it, in both books. So the companion page's finding is not"
                 " a property of an idealized strand: it is on the page of a book in print. It is"
                 " also, as it happens, the very reading the ",
                 link("p. A38 note", f"#{_PA38_NOTE_ID}"),

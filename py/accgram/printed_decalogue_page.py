@@ -292,7 +292,7 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
                 f" in the p-trad: the p-trad {_ELYON} of ",
                 H.bold("each"),
                 " Decalogue has exactly one ungrammatical chanted verse — its opening one. That"
-                " verse is not only an idealized strand's: real editions print it, as ",
+                " verse is not only an idealized strand's: real editions have it, as ",
                 link("the transcription totals below", f"#{_TRANSCRIPTIONS_ID}"),
                 " say.",
             )
@@ -492,7 +492,7 @@ def _four_strands_table(readings: list[pds.Reading]) -> object:
 
 
 _UL_ITEM_1 = (
-    H.bold("The signal pair identifies the strand."),
+    H.bold("The signal pair identifies which strand a text has."),
     " No two strands share the accent pair on the two signal words, so the pair alone says"
     " which strand a text has. Neither word suffices by itself: עבדים cannot tell the m-trad ",
     _ELYON,
@@ -569,14 +569,15 @@ def _transcription_grammar_para(verdicts: list[tp.TranscriptionResult]) -> objec
             " by chanted verse, and what that shows first is that following a strand and parsing"
             " are separate things. ",
             H.bold(f"{len(verdicts) - len(departing)} of the {len(verdicts)}"),
-            " give their strand's verdicts at every chanted verse — which for the ",
+            " give their Wikisource strand's verdicts at every chanted verse — which for the ",
             H.bold(str(len(shared))),
             f" of them that follow a p-trad {_ELYON} means printing that ungrammatical opening"
             " verse. Simanim's Tiqqun does, in both of its main Decalogues, and Koren in both of"
             " its appendix ones: the merged first two commandments are in books in print, not only"
             " in an idealized strand. The remaining"
             " one is the Simanim Tiqqun's Exodus appendix Decalogue, which is ungrammatical at a"
-            " chanted verse where its strand is clean, over a single added conjunctive; the ",
+            " chanted verse where its Wikisource strand is clean, over a single added"
+            " conjunctive; the ",
             link("Simanim page", _SIMANIM_PAGE),
             " has it. Every rejection here is a diagnostic of the checker, which is tuned to the"
             " prose grammar of the Tiberian manuscripts, and not a fault found in an edition.",
@@ -597,11 +598,11 @@ def _four_strands_section(
                 H.bold("signal words"),
                 ", עבדים and על־פני. Where a signal word has a ",
                 _ROM_SILLUQ_SOF_PASUQ,
-                ", the strand ends a chanted verse there; where it instead has an ",
+                ", that strand ends a chanted verse there; where it instead has an ",
                 _ROM_ETNAHTA,
                 " or a ",
                 _ROM_REVIA,
-                ", the strand runs on. The table below lays all four strands over four shared"
+                ", it runs on. The table below lays all four strands over four shared"
                 " words — ",
                 H.bdi("אנכי"),
                 " (the span's shared start), then ",
@@ -613,7 +614,7 @@ def _four_strands_section(
                     "מצותי",
                 ),
                 " (the two signal words and the span's shared end). Each row shows that strand's"
-                " own pointed word at all four; a word is red where it ends one of the strand's"
+                " own pointed word at all four; a word is red where it ends one of that strand's"
                 " chanted verses. So every row starts green at אנכי and ends red at מצותי, and"
                 " the reds between them are the signal accents at work — the strands' differing"
                 " chanted-verse boundaries, read straight down the columns:",
@@ -652,18 +653,19 @@ def _four_strands_section(
         # precisely because neither satellite can tell it alone: it takes both editions.
         H.para(
             (
-                "That departure by the Simanim Tiqqun is checked, not supposed. Every accent of ",
-                H.bold("twelve"),
+                "That departure by the Simanim Tiqqun is checked, not supposed. ",
+                H.bold("Twelve"),
                 " printed Decalogues — four each from Simanim's Tiqqun, Simanim's Tanakh and"
-                " Koren's Classic Tanakh — has been transcribed by hand off the page and diffed"
-                " against the strand it follows; the two satellite pages linked below report the"
+                " Koren's Classic Tanakh — have been checked accent by accent against the"
+                " Wikisource strand each follows; the two satellite pages linked below report the"
                 " verdicts, which are per Decalogue rather than per edition. Two results belong"
                 " here instead, being facts about the strands rather than about one edition. All"
-                " twelve follow their strand's chanted verse boundaries ",
+                " twelve follow their Wikisource strand's chanted verse boundaries ",
                 H.bold("without exception"),
-                f", whatever else they do. And at ובנך־ובתך, Simanim's Tiqqun and Koren each print"
-                f" two separately accented chanted words where the p-trad {_ELYON} has one — two"
-                " editions dropping the same maqaf, and against the strand they otherwise follow.",
+                f", whatever else they do. And at ובנך־ובתך, Simanim's Tiqqun and Koren each have"
+                f" two separately accented chanted words where the Wikisource p-trad {_ELYON} has"
+                " one — two editions exchanging the same maqaf for a conjunctive, and against the"
+                " Wikisource strand they otherwise follow.",
             )
         ),
         # The hub is where a reader of the trio first meets a maqaf difference, so it is where the
@@ -966,8 +968,9 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 ),
                 f" — it has the p-trad {_TAHTON} in its main Decalogues and the p-trad"
                 f" {_ELYON} in its appendix ones, in Exodus and Deuteronomy alike. Two of its four"
-                " Decalogues match their strand mark for mark; the other two differ from it only"
-                " at the maqaf, the last rung of the scale above.",
+                " Decalogues match their Wikisource strand mark for mark; the other two differ"
+                " from theirs at the last rung only, where a maqaf on one side faces a"
+                " conjunctive on the other.",
             )
         ),
     )
@@ -1214,8 +1217,9 @@ def _pausal_paras(results: list[pd.VersionResult]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                "Two other words of the Decalogue alternate the same way, and at both of them it is"
-                " the strand that decides and not the tradition: all eight strands have the pausal"
+                "Two other words of the Decalogue alternate the same way, and at both of them what"
+                f" decides is {_TAHTON} against {_ELYON}, not p-trad against m-trad: all eight"
+                " strands have the pausal"
                 f" {_QAMATS} in the {_TAHTON} and the contextual {_PATAX} in the {_ELYON}. There the"
                 " rule accounts for the vowel, because the two strands accent"
                 f" those words differently. The {_TAHTON} ends a chanted verse at על־פני and puts"
@@ -1231,7 +1235,7 @@ def _pausal_paras(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 _ELYON,
                 " it is the second and last word of the two-word chanted verse ",
                 H.bdi("לא תרצח"),
-                ", so it carries a ",
+                ", so it has a ",
                 _ROM_SILLUQ,
                 f" and both traditions have the pausal {_QAMATS} on it. In the {_TAHTON} it sits"
                 " mid-verse under a ",

@@ -1250,14 +1250,15 @@ def test_the_verdict_column_says_one_of_three_things_and_the_right_one() -> None
     """
     verdicts = tvc.by_stem(tp.check_all(_strand_list()))
     assert _text(tvc.cell(verdicts["koren_ex_taxton"])) == (
-        "Clean at all 13 chanted verses, as its strand is."
+        "Clean at all 13 chanted verses, as its Wikisource strand is."
     )
     assert _text(tvc.cell(verdicts["simtiq_dt_elyon"])) == (
-        "Its strand's own verdicts: chanted verse 1 ungrammatical, the other 8 clean."
+        "Its Wikisource strand's own verdicts: chanted verse 1 ungrammatical,"
+        " the other 8 clean."
     )
     assert _text(tvc.cell(verdicts["simtiq_ex_taxton"])) == (
-        "Not as grammatical as its strand: chanted verse 3 is ungrammatical where the "
-        "strand is clean."
+        "Not as grammatical as its Wikisource strand: chanted verse 3 is ungrammatical"
+        " where that strand is clean."
     )
 
 
