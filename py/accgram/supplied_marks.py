@@ -4,12 +4,12 @@ A *supplied mark* is a third kind of editorial charity, distinct from the two on
 almost-errors page.  Those *reinterpret* a mark the manuscript already has (a prose
 geresh muqdam read as a plain geresh; a poetic plain geresh promoted to revia mugrash).
 A supplied mark instead *adds* a mark WLC lacks: when WLC's dual cantillation drops
-one reading's accent on a word (it committed to the other reading's grouping), the
+one reading's accent on a chanted word (it committed to the other reading's grouping), the
 dual-cantillation detangler supplies that one accent from MAM so the reading's chanted
 verse parses.  Because it is a new kind of charity, it gets its own page rather than a row
 in "Editorial charities".
 
-A supplied-mark word parses clean -- the supply is exactly what lets it parse -- so it is
+A supplied-mark chanted word parses clean -- the supply is exactly what lets it parse -- so it is
 surfaced ONLY here, never counted as a prose ungrammatical verse.  (A genuine WLC dual-cantillation
 *error*, where WLC has an accent neither reading explains, is the opposite case: it is
 not supplied but flagged, and appears in the prose ungrammatical-verse report.)
@@ -153,7 +153,7 @@ def _intro() -> tuple[object, ...]:
         ),
         H.para(
             (
-                "Sometimes WLC leaves a word without an accent in one strand."
+                "Sometimes WLC leaves a chanted word without an accent in one strand."
                 " In these cases, the detangler ",
                 H.bold("supplies"),
                 " that one accent from MAM, making that strand’s chanted verse grammatical."
@@ -170,7 +170,7 @@ def _intro() -> tuple[object, ...]:
                 " so it is listed here since it will not be"
                 " listed among the ungrammatical verses."
                 f" One verse, Deuteronomy 5:8, gets a supplied accent that fixes the {_TAXTON} strand, but the {_ELYON} strand’s accent is ungrammatical."
-                " Therefore, the beleaguered word of that verse is listed both here and among",
+                " Therefore, the beleaguered chanted word of that verse is listed both here and among",
                 *[" ", link("the ungrammatical verses", "goerwitz.html#obdt5v8"), "."],
             )
         ),
@@ -214,7 +214,7 @@ def _case_extra(s) -> tuple[object, ...]:
         extra.append(
             _comment(
                 (
-                    "This word is further discussed",
+                    "This chanted word is further discussed",
                     *[" ", link("here", "goerwitz.html#obdt5v8"), ","],
                     " among the ungrammatical verses.",
                 )

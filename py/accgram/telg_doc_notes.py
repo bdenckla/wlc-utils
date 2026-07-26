@@ -216,12 +216,12 @@ _EN: dict[str, dict[str, object]] = {
             (
                 hbo("ל"),
                 " (Leningrad) carries a doubled geresh — one on the vav and one"
-                " on the alef — where the first (at the word-head) marks that the"
-                " word's reading takes precedence in sequence, and the second"
+                " on the alef — where the first (at the head of the chanted word)"
+                " marks that its reading takes precedence in sequence, and the second"
                 " (on the stressed letter) marks the accent's actual place. This"
                 " is the clearest statement in these notes of why a prepositive"
                 " accent and its impositive partner can land on different letters"
-                " of the same word.",
+                " of the same chanted word.",
             ),
         ],
     },
@@ -255,7 +255,7 @@ _SOURCE_KEY = (
 _TERM_KEY = (
     (
         "תלישא גדולה",
-        "telisha gedola — a prepositive disjunctive, written at the head of its word wherever it is chanted",
+        "telisha gedola — a prepositive disjunctive, written at the head of its chanted word wherever it is chanted",
     ),
     (
         "גרש / גרשיים",
@@ -280,7 +280,7 @@ def _intro_section() -> tuple[object, ...]:
             (
                 "An English rendering of MAM's documentation (",
                 hbo("נוסח"),
-                ", text-variant) notes on the five words that carry both a"
+                ", text-variant) notes on the five chanted words that carry both a"
                 " telisha gedola (“telg”) and a geresh or gershayim (a"
                 " “gerstar”). It is the deep-dive companion to the ",
                 link("telg + gerstar exhibit", "almost-errors.html"),
@@ -296,12 +296,12 @@ def _intro_section() -> tuple[object, ...]:
         ),
         H.para(
             "The telisha gedola is prepositive — written at the very head of its"
-            " word no matter where the word is stressed — while the geresh or"
+            " chanted word no matter where that word is stressed — while the geresh or"
             " gershayim is impositive, written on the stressed letter. So when"
             " the stress is initial the two marks crowd onto the first letter"
             " (the same-letter words: Genesis 5:29, Zephaniah 2:15, 2 Kings"
             " 17:13), and when it is not they land on different letters of the"
-            " one word (the cross-letter words: Leviticus 10:4, Ezekiel 48:10)."
+            " one chanted word (the cross-letter words: Leviticus 10:4, Ezekiel 48:10)."
             " Most of what these notes argue is the relative order of the two"
             " marks on a shared letter — which one “comes first in the reading” —"
             " and which sources have which first. In 2 Kings 17:13 the leading"
@@ -317,7 +317,7 @@ def _intro_section() -> tuple[object, ...]:
                 " instance a transcript or edition that departs from the codex it"
                 " otherwise follows); a bang ending a clause is the same emphasis"
                 " standing on its own. The lemma shown in each heading is the"
-                " word as it appears in MAM-with-doc — the precise reading MAM"
+                " chanted word as it appears in MAM-with-doc — the precise reading MAM"
                 " adopts is the one stated in the note. See the ",
                 link("key", "#key"),
                 " for the sigils and accent terms.",

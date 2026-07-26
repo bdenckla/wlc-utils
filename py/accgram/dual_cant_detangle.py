@@ -1,12 +1,18 @@
 r"""Detangle WLC's dually-cantillated prose passages into two single-cant streams (#36).
 
-WLC 4.22 carries three prose loci where each word can bear *two* accents
+WLC 4.22 carries three prose loci where each chanted word can bear *two* accents
 -- the two readings (תחתון / עליון in the Decalogues, פשוטה / מדרשית in Gen 35:22) merged
 into one ``cant-combined``-style stream.  The prose grammar cannot parse two accents per
-word, so these verses are excluded from the normal run.  This module *detangles* them:
+chanted word, so these verses are excluded from the normal run.  This module *detangles* them:
 guided by MAM-simple's already-separated ``cant-alef`` / ``cant-bet`` strands, it splits
 WLC's accents into a ``wlc-alef`` and a ``wlc-bet`` stream, each ordinary single
 cantillation that the existing prose checker parses.
+
+A NOTE ON "WORD" IN THIS MODULE (issue #81).  Below the docstring, ``word`` always means one
+WLC vel -- that is, one ATOM, since WLC tokenizes a maqaf compound as two vels.  The alignment,
+the accent assignment and the ``SuppliedMark`` / ``Anomaly`` records are all per atom.  Where a
+claim is really about the CHANTED word (an atom or a whole maqaf compound, the unit an accent
+marks), it says so.
 
 Throughout, a *chanted verse* is the cantillation unit delimited by a sof pasuq -- which,
 in these passages, deliberately does NOT line up with the BHS numbered verse: each

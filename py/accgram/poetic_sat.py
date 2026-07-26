@@ -9,7 +9,7 @@ codebase.
 This module reuses the prose enrichment + renderer (rtms_data.build_enriched_row,
 rtmsr_sat.render_sat_table) to reproduce that table on the poetic page, and is
 split out of poetic_oddballs so that module stays focused on ungrammatical collection
-and page assembly. The poetic page localizes the focus to the verse-final word
+and page assembly. The poetic page localizes the focus to the verse-final chanted word
 (the missing-silluq locus); NO_PARSE verses have no single focus word and so get
 no SAT table.
 """
@@ -25,7 +25,7 @@ from accgram import rtmsr_verse
 
 
 def focus_word(*, final_word: str | None, wlc_verse: object) -> str | None:
-    """The verse-final word as the SAT focus, or None if it is absent or occurs
+    """The verse-final chanted word as the SAT focus, or None if it is absent or occurs
     more than once in the verse -- build_enriched_row requires a unique focus, so a
     non-unique final word degrades to no SAT table."""
     if not final_word:

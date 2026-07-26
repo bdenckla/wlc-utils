@@ -26,7 +26,7 @@ def charities_intro() -> tuple[object, ...]:
                 H.bold("supplying"),
                 " a mark, arises only in detangling the dually-cantillated passages (the"
                 " two Decalogues and Genesis 35:22): where WLC drops one reading’s accent"
-                " on a word, that one mark is supplied from MAM so the reading parses."
+                " on a chanted word, that one mark is supplied from MAM so the reading parses."
                 " Because it adds a mark rather than rereading one, it is inventoried"
                 " separately at ",
                 link("Supplied and erased marks", "supplied-marks.html"),
@@ -58,7 +58,7 @@ def geresh_muqdam_section() -> tuple[object, ...]:
             (
                 "The two verses differ in what happens next. In Lev. 1:3 the"
                 " geresh muqdam stands alone, so the charity is the whole story. In 2"
-                " Kings 17:13 the converted geresh then sits on a word that also carries"
+                " Kings 17:13 the converted geresh then sits on a chanted word that also carries"
                 " a telisha gedola — so once the charity has run, what remains is one of"
                 " the telisha gedola + geresh oddities below (the only one of those five"
                 " whose geresh reaches the checker by way of a charity).",

@@ -9,7 +9,7 @@ _MISSING_SOF_PASUQ_TOKENS = {
     "silluq-no_sof_pasuq",
     "silluq-pasoleg",
 }
-# A bare "sof_pasuq" descriptor means the verse-final word carries a sof pasuq but
+# A bare "sof_pasuq" descriptor means the verse-final chanted word carries a sof pasuq but
 # no accent at all (the silluq is missing). This deliberately excludes the case
 # where some other accent stands where a silluq is expected: e.g. a tevir before
 # the sof pasuq yields "tevir-sof_pasuq", which is not in this set.

@@ -21,7 +21,7 @@ BODY = [
         "attr": {"class": "note-lead"},
         "contents": [
             "An English rendering of the four MAM נוסח (text-variant) documentation\n"
-            "notes on this verse, one per word. Manuscript sigils and the technical\n"
+            "notes on this verse, one per chanted word. Manuscript sigils and the technical\n"
             "accent/mark names are left in Hebrew and explained rather than replaced, and the\n"
             "implicit subject “MAM” is supplied wherever a note begins with\n"
             "“=”. Source:\n",

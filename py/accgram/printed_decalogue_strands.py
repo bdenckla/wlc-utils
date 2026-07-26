@@ -19,8 +19,16 @@ generation and in the tests, and must never be softened to a warning.  ``resolve
 ``check_tirtsax`` do the same for the appendix's vowels: the pausal alternation at על־פני and מתחת,
 and the vocalization of תרצח in all eight readings.
 
-Editorial / style conventions for the rendered prose on BOTH pages (agreed with Ben; keep them
-when editing either page):
+Editorial / style conventions for the rendered prose (agreed with Ben; keep them when editing
+any page they govern).  This list is the repo's home for them -- ``CLAUDE.md`` points here.
+
+SCOPE.  The bullets divide into two kinds, and the difference matters when a rule is invoked
+somewhere else.  TRIO-ONLY: the strand names in Hebrew letters, "signal word", the maqaf scale,
+the scoped "no difference anywhere", the ``ROM_*`` single-sourcing and its italic wrapping, the
+two Simanim editions and their determiner, and the attribute exemption -- all of these are about
+the printed-Decalogue pages' own subject matter.  REPO-WIDE, and applied to every accgram page:
+atom vs chanted word, "cantillation" over "accentuation", the real em dash, and never opening an
+English sentence with a Hebrew word.
 
 * **The two chant-strands are named in Hebrew letters -- תחתון / עליון -- NEVER transliterated
   and NEVER translated.**  No "taḥton"/"elyon" and no "upper"/"lower" in the output: the
@@ -33,12 +41,22 @@ when editing either page):
   Verbatim quoted source Hebrew (e.g. ``בלא טעם עליון``) keeps whatever it says.  This is a
   cross-repo rule (cf. MAM-basics ``py/versification_and_cantillation/doc.py``).
 * Prefer "**cantillation**" to "accentuation".
-* **"Signal word" is the trio's ONE term for a word whose accent tells strands apart** -- it
+* **Never a loose "word": say "atom" or "chanted word" where one of them is meant** (issue #81).
+  An ATOM is one written word, the thing a maqaf joins to the next; a CHANTED WORD is either a
+  lone atom or a whole maqaf compound -- the unit cantillation operates on, normally bearing one
+  accent.  Two of the Shabbat commandment's three signal words are compounds, and על־פני is one,
+  so the trio's central claims are about chanted words and saying "word" leaves them uncheckable.
+  Name a compound whole (על־פני, לא־תעשה), never a bare half of one.  ``MAQAF_IS_THE_LAST_RUNG``
+  introduces "atom" to the reader with an appositive gloss, which is what licenses the bare term
+  elsewhere on the pages.  Plain "word" survives only for an ordinary English word ("in other
+  words", "a great many Hebrew words take one vowel where the reading pauses") and inside quoted
+  or translated source material, which keeps whatever it says.
+* **"Signal word" is the trio's ONE term for a chanted word whose accent tells strands apart** -- it
   replaced the older "milestone word", which said only "notable position" and not "this is where
   you look".  It now names TWO distinct sets, and the pages must never collapse them into one
   claim: (a) within the אנכי...מצותי span, עבדים and על־פני, whose accent PAIR uniquely identifies
   which of the four strands a text has (see ``resolve_readings``' pairwise-distinctness check);
-  and (b) at the Deuteronomy Shabbat commandment, the trio of disjunctively accented words that
+  and (b) at the Deuteronomy Shabbat commandment, the trio of disjunctively accented chanted words that
   tells p-trad accents from m-trad ones (see ``SHABBAT_SIGNAL_SHORTHAND``).  Their jobs are
   complementary, not redundant -- the doctrine is spelled out at that constant.  אנכי and מצותי
   are the span's shared frame, NOT signal words: every strand starts at the one and ends a
@@ -47,8 +65,8 @@ when editing either page):
   differences.**  A verdict measures how far down that scale a Decalogue's agreement with its
   strand reaches: chanted verse boundaries, then the disjunctive skeleton, then the conjunctives,
   then the maqafs.  A maqaf an edition adds or drops IS a difference in how the text is marked --
-  the mildest one there is, since a maqaf separates its word from the next even less than a
-  conjunctive does -- and it is counted ONCE, at the word whose marking changed, never as a
+  the mildest one there is, since a maqaf separates its atom from the next even less than a
+  conjunctive does -- and it is counted ONCE, at the atom whose marking changed, never as a
   regrouping plus an accent.  So a verdict cell names the first rung that breaks and what breaks
   it, and "every accent" is never said with a maqaf difference tucked underneath it.  The scale is
   stated to the reader verbatim on all three pages via ``MAQAF_IS_THE_LAST_RUNG``: splice that
@@ -59,7 +77,7 @@ when editing either page):
   printed ACCENTS, so "anywhere" can only ever mean "anywhere the comparison reaches", and an
   unscoped phrasing invites a reader to take it for the whole page.  Two things fall outside.  A
   maqaf, which the .txt line records but the token stream drops: ``koren_dt_elyon`` joins לא־תעשה where its strand sets the two
-  words apart, and since Koren accents BOTH atoms of the compound the two sides emit the same two
+  atoms apart, and since Koren accents BOTH atoms of the compound the two sides emit the same two
   tokens, so a zero-divergence result is not evidence of no difference.  (That blindness is a gap
   now that the scale above counts such a difference; making maqaf a token of its own is issue
   #75.)  And the POINTING: the two תחתון strands part at תרצח in a vowel and nothing
@@ -181,7 +199,7 @@ ROM_QADMA = "qadma"
 ROM_MUNAX = "munaḥ"
 ROM_TEVIR = "tevir"
 # Named in the verdict cells that state a maqaf difference from both sides: where an edition binds
-# a word its Wikisource strand leaves free, the accent the strand has on that free word is a
+# an atom its Wikisource strand leaves free, the accent the strand has on that free atom is a
 # merkha, and naming it is what keeps the difference from reading as a one-sided absence.
 ROM_MERKHA = "merkha"
 # The two vowels of the pausal alternation (see ``resolve_pausal``), named in the main page's
@@ -198,7 +216,7 @@ ROM_TIPEHA_SILLUQ = (
 )
 ROM_SILLUQ_SOF_PASUQ = f"{ROM_SILLUQ} + {ROM_SOF_PASUQ}"  # the standalone-verse close
 
-# The accent codepoints that fall on the words these pages derive an accent for -- the first
+# The accent codepoints that fall on the chanted words these pages derive an accent for -- the first
 # Decalogue span's two boundary words, plus the two pausal words of ``resolve_pausal`` (geresh is
 # there for מתחת in the עליון) -- mapped to the romanizations above.  U+05BD (meteg/silluq) is
 # deliberately absent: it is not a cantillation accent, and is resolved to silluq only in
@@ -219,7 +237,7 @@ _VOWEL_NAMES: dict[str, str] = {
     "\N{HEBREW POINT PATAH}": ROM_PATAX,
 }
 
-# Base-letter skeletons of the four words the אנכי…מצותי span is laid out over, single-sourced
+# Base-letter skeletons of the four chanted words the אנכי…מצותי span is laid out over, single-sourced
 # here for all three pages and located within a strand's span by matching letters.
 #
 # עבדים and על־פני are the span's two SIGNAL WORDS: their accent pair is different in each of the
@@ -227,7 +245,7 @@ _VOWEL_NAMES: dict[str, str] = {
 # pairwise distinctness live).  Each sits mid-verse in some strands and verse-finally in others,
 # and that is exactly what it signals.
 #
-# על־פני is a maqaf compound, and the compound is the whole word here -- which is why its skeleton
+# על־פני is a maqaf compound, and the compound is the whole chanted word here -- which is why its skeleton
 # runs both letter-groups together as עלפני, and why ``_accent_of`` reads the accent off the
 # compound rather than off a half.  Name the signal word על־פני, NEVER a bare פני: no page should
 # name פני and then qualify that it is really part of על־פני (Ben, 2026-07-19).
@@ -295,8 +313,8 @@ MOST_STRIKING = (
 # m-trad accents where an edition can stray from its nominal tradition.  Neither makes the other
 # redundant, and no page may imply that it does.
 SHABBAT_SIGNAL_SHORTHAND = (
-    "three signal words highlighted — not the only words the two traditions accent"
-    " differently, but three disjunctively accented words that make a handy shorthand"
+    "three signal words highlighted — not the only chanted words the two traditions accent"
+    " differently, but three disjunctively accented ones that make a handy shorthand"
     " for telling the p-trad from the m-trad"
 )
 
@@ -311,7 +329,7 @@ SHABBAT_SIGNAL_SHORTHAND = (
 # differences are of word division", while the summary directly under the same table counted that
 # very Decalogue as the one of four that does NOT follow its strand in every accent -- and the
 # Deuteronomy appendix one was credited with "no difference anywhere" although it joins לא־תעשה
-# into a maqaf compound where its strand sets the two words apart.  Both readings were available
+# into a maqaf compound where its strand sets the two atoms apart.  Both readings were available
 # and the page contradicted itself.
 #
 # WHY THIS ANSWER AND NOT THE FIRST ONE (Ben, 2026-07-25).  That contradiction was first settled
@@ -323,14 +341,21 @@ SHABBAT_SIGNAL_SHORTHAND = (
 # already counts a maqaf difference as one ordinary difference SITE.  The real problem the old
 # convention solved was double counting -- reporting a split compound as a division AND as a new
 # accent -- and the honest fix is that those were never two facts.  One atom's marking changed.
-# So: one scale, maqaf at the bottom of it, each difference counted once at the word it sits on.
+# So: one scale, maqaf at the bottom of it, each difference counted once at the atom it sits on.
+#
+# WHY IT NAMES ATOMS AND CHANTED WORDS (issue #81).  A maqaf sits on an ATOM and joins it to the
+# next; what the two of them become is one CHANTED WORD.  An earlier wording called both of those
+# "the word", so the one sentence that exists to draw the distinction used a single noun for both
+# sides of it.  This is also the trio's introduction of "atom" to the reader -- the appositive
+# gloss is why it can be used bare on the pages afterwards.
 MAQAF_IS_THE_LAST_RUNG = (
     "One thing to settle first, since it decides what these verdicts mean. A maqaf belongs on the"
     " same scale"
-    " as the accents, at the bottom of it: it separates the word it sits on from the next one"
-    " even less than a conjunctive accent does, binding the two into a single chanted word. So"
-    " where an edition has a maqaf on a word and its Wikisource strand a conjunctive accent, or"
-    " the other way about, that is one difference in how that word is marked — an exchange one"
+    " as the accents, at the bottom of it: it separates the atom it sits on — one written word —"
+    " from the next even less than a conjunctive accent does, binding the two into a single"
+    " chanted word, the unit an accent marks. So"
+    " where an edition has a maqaf on an atom and its Wikisource strand a conjunctive accent, or"
+    " the other way about, that is one difference in how that atom is marked — an exchange one"
     " rung deep, counted once and not twice as a regrouping plus an accent. It is, though, the"
     " mildest difference there is, and that is what these verdicts measure: how far down the"
     " scale each Decalogue's agreement with that strand reaches — the chanted verse boundaries,"
@@ -369,7 +394,7 @@ def _accent_of(word: str) -> str:
     """The cantillation accent on one pointed word, as a romanized name derived from its marks.
 
     A word carries at most one of the boundary accents we care about.  U+05BD is not a
-    cantillation accent, but the same glyph functions as *silluq* on the verse-final word
+    cantillation accent, but the same glyph functions as *silluq* on the verse-final chanted word
     (the one carrying *sof pasuq*); so a sof-pasuq word whose only accent-like mark is U+05BD
     is reported as silluq.  Never called on a non-verse-final U+05BD (that is an ordinary
     meteg -- see CLAUDE.md)."""

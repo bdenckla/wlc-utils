@@ -41,7 +41,7 @@ def build_intro_contents(
     msp_text = "The issues can be filtered by their category:"
     msp_categories = (
         "“Missing sof pasuq.”",
-        "“Missing silluq,” where a sof pasuq is present but the verse-final word has no accent.",
+        "“Missing silluq,” where a sof pasuq is present but the verse-final chanted word has no accent.",
         "“Zarqa whim,” where WLC turns a scribal zarqa whim into an error.",
         "“Other,” for everything else.",
     )

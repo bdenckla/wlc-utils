@@ -20,7 +20,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "2c 7:5": {
         "st-source": "bhs",
         "wlc_focus": "ז֣בח הבק֗ר",
-        "st-summary": f"BHS accents a word with {MUNAX} rather than segol.",
+        "st-summary": f"BHS accents a chanted word with {MUNAX} rather than segol.",
         "uxlc_change": "2024.04.01/2023.09.16-3",
         "comment": (f"MAM has {MUNAX} segol whereas the LC has segol revia."),
     },
@@ -36,7 +36,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "st-summary": "BHS adds a gershayim out of nowhere.",
         "img": "LC-357B-col-2-line-6-2C-24v27.png",
         "pending_uxlc_change": "2026.10.19/2026.04.10-6",
-        "comment": "Perhaps the darga was accidentally repeated from the previous word, which legitimately has a darga.",
+        "comment": "Perhaps the darga was accidentally repeated from the previous chanted word, which legitimately has a darga.",
     },
     "2c 25:1": {
         "st-source": "bhs",

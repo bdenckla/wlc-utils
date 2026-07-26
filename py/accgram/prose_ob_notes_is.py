@@ -56,7 +56,7 @@ BY_REF: dict[str, dict[str, object]] = {
             " (see MAM’s doc-note)"
             " is independent of the checker’s"
             " problem with this verse."
-            " Giving the word a legarmeh does not clear the error"
+            " Giving the chanted word a legarmeh does not clear the error"
             " (the verse then fails to parse at all)."
             " Only the segol accent resolves it.",
         ],

@@ -324,17 +324,18 @@ def _abbr(letter: str, title: str) -> object:
 
 # ── Letter-equalizing the paired taxton/elyon boundary cells (ported from MAM-basics #201) ──
 # Each column shows one underlying text span read by both strands, so the two cells should share
-# a letter skeleton at each boundary. They can still tokenize a boundary word differently —
-# most visibly the leading לא of a negative commandment, which the taxton maqaf-joins to the next
-# word (one token לא־תעשה) while the elyon leaves it free (לא as its own word). _balanced_sides
-# pulls extra boundary words inward, word by word, until the two sides' skeletons match, so the
+# a letter skeleton at each boundary. They can still divide that span into chanted words
+# differently -- most visibly the leading לא of a negative commandment, which the taxton
+# maqaf-joins to the next atom (one chanted word, לא־תעשה) while the elyon leaves it free (לא its
+# own chanted word). _balanced_sides
+# pulls extra boundary words inward, one chanted word at a time, until the two sides' skeletons match, so the
 # sibling cells align (e.g. taxton לא־תעשה לך … / elyon לא תעשה־לך …) instead of a bare לא sitting
 # under a fuller taxton cell. It asserts equality — a guard that fires loudly on any column it
 # cannot reconcile.
 def _skel(word: str) -> str:
-    """A word's letter skeleton: only the Hebrew letters (alef…tav), dropping points, accents,
-    maqaf, sof pasuq and legarmeh — so a maqaf-joined לא־תעשה and a space-separated לא תעשה compare
-    equal. Uses the same letter bounds as the strip kernel (private today; cf. MAM-basics #198).
+    """A chanted word's letter skeleton: only the Hebrew letters (alef…tav), dropping points,
+    accents, maqaf, sof pasuq and legarmeh — so the one chanted word לא־תעשה and the two chanted
+    words לא תעשה compare equal. Uses the same letter bounds as the strip kernel (private today; cf. MAM-basics #198).
     """
     return "".join(ch for ch in word if has._LETTER_LO <= ord(ch) <= has._LETTER_HI)
 
@@ -387,8 +388,8 @@ def _balanced_sides(t_words, e_words, *, label: str):
 
 def _range_cell(first_words, last_words, *, start: bool, stop: bool) -> object:
     """A ``first … last`` range cell: the (already letter-balanced) boundary word(s) at each end,
-    stripped to letters + accents and joined by an ellipsis. The verse-initial word is green
-    when ``start`` and the verse-final word red when ``stop``; any word pulled in only for
+    stripped to letters + accents and joined by an ellipsis. The verse-initial chanted word is green
+    when ``start`` and the verse-final chanted word red when ``stop``; any word pulled in only for
     letter-alignment renders plain. ``lang="hbo"`` → Taamey font (issue #58)."""
     fw = [_strip_pointing(w) for w in first_words]
     lw = [_strip_pointing(w) for w in last_words]
@@ -494,7 +495,7 @@ def _four_strands_table(readings: list[pds.Reading]) -> object:
 _UL_ITEM_1 = (
     H.bold("The signal pair identifies which strand a text has."),
     " No two strands share the accent pair on the two signal words, so the pair alone says"
-    " which strand a text has. Neither word suffices by itself: עבדים cannot tell the m-trad ",
+    " which strand a text has. Neither one suffices by itself: עבדים cannot tell the m-trad ",
     _ELYON,
     f" from the p-trad {_TAHTON} (both close a chanted verse there), and על־פני cannot tell"
     f" the two {_TAHTON} strands apart, nor the two {_ELYON} strands.",
@@ -510,13 +511,13 @@ _UL_ITEM_2 = (
     _ROM_SILLUQ_SOF_PASUQ,
     f" in all four — the shared end signals nothing. Between the columns nothing new happens:"
     f" the two {_TAHTON} strands end two further chanted verses between על־פני and מצותי, at"
-    " לארץ and at לשנאי — the same two words in both — so strands that agree at a signal word"
-    " agree word for word over the stretch that signal governs.",
+    " לארץ and at לשנאי — the same two chanted words in both — so strands that agree at a signal"
+    " word agree at every chanted word over the stretch that signal governs.",
 )
 
 _UL_ITEM_3 = (
     H.bold(f"P-trad {_TAHTON} = m-trad {_ELYON} — but only through עבדים."),
-    " Over אנכי…עבדים the two are word for word identical, each giving that stretch its own"
+    " Over אנכי…עבדים the two are identical at every chanted word, each giving that stretch its own"
     " chanted verse. They part at על־פני: the p-trad ",
     _TAHTON,
     f" ends another chanted verse there, while the m-trad {_ELYON} has a ",
@@ -594,7 +595,7 @@ def _four_strands_section(
         H.para(
             (
                 "Every p-trad strand accents the Decalogue's אנכי…מצותי span differently from"
-                " every m-trad strand. Two words in the span do all the deciding — its ",
+                " every m-trad strand. Two chanted words in the span do all the deciding — its ",
                 H.bold("signal words"),
                 ", עבדים and על־פני. Where a signal word has a ",
                 _ROM_SILLUQ_SOF_PASUQ,
@@ -603,7 +604,7 @@ def _four_strands_section(
                 " or a ",
                 _ROM_REVIA,
                 ", it runs on. The table below lays all four strands over four shared"
-                " words — ",
+                " chanted words — ",
                 H.bdi("אנכי"),
                 " (the span's shared start), then ",
                 # bdi_multi isolates each RTL item so the LTR list order survives however a viewer
@@ -614,7 +615,7 @@ def _four_strands_section(
                     "מצותי",
                 ),
                 " (the two signal words and the span's shared end). Each row shows that strand's"
-                " own pointed word at all four; a word is red where it ends one of that strand's"
+                " own pointing at all four; a cell is red where its chanted word ends one of that strand's"
                 " chanted verses. So every row starts green at אנכי and ends red at מצותי, and"
                 " the reds between them are the signal accents at work — the strands' differing"
                 " chanted-verse boundaries, read straight down the columns:",
@@ -638,7 +639,7 @@ def _four_strands_section(
                 "'s chanted-verse boundaries throughout, yet has the m-trad accents at the"
                 " Shabbat commandment of its Deuteronomy appendix Decalogue. Catching that"
                 " departure requires giving the Shabbat commandment its own signal words — three"
-                " disjunctively accented words, ",
+                " disjunctively accented chanted words, ",
                 link("catalogued in the appendix below", f"#{_TAHTON_DETAILS_ID}"),
                 ", where the two traditions differ in accents while agreeing on every"
                 " chanted-verse boundary. The two sets of signal words have complementary jobs:"
@@ -872,9 +873,9 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
                 "The cause is the merged ",
                 H.bold("structure"),
                 f", not sheer length: Deuteronomy's p-trad {_ELYON} Sabbath verse runs 55"
-                " words and parses clean, while this merged verse (51 words) does not. Keeping"
+                " chanted words and parses clean, while this merged verse (51) does not. Keeping"
                 " the two commandments as the m-trad's two separate verses (",
-                f"{len(ms_cmd1.words)} and {len(ms_cmd2.words)} words)",
+                f"{len(ms_cmd1.words)} and {len(ms_cmd2.words)})",
                 " is exactly what lets them parse.",
             )
         ),
@@ -883,7 +884,7 @@ def _finding_section(by_key: dict) -> tuple[object, ...]:
             (
                 f"It is tempting to call the p-trad's arrangement the neater one. Its five"
                 f" {_TAHTON} verses nest perfectly inside a single {_ELYON} verse — a clean"
-                " five-in-one — whereas the m-trad divides the very same words into ",
+                " five-in-one — whereas the m-trad divides the very same chanted words into ",
                 H.bold("two"),
                 f" {_ELYON} verses and ",
                 H.bold("four"),
@@ -1217,12 +1218,12 @@ def _pausal_paras(results: list[pd.VersionResult]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                "Two other words of the Decalogue alternate the same way, and at both of them what"
+                "Two other chanted words of the Decalogue alternate the same way, and at both of them what"
                 f" decides is {_TAHTON} against {_ELYON}, not p-trad against m-trad: all eight"
                 " strands have the pausal"
                 f" {_QAMATS} in the {_TAHTON} and the contextual {_PATAX} in the {_ELYON}. There the"
                 " rule accounts for the vowel, because the two strands accent"
-                f" those words differently. The {_TAHTON} ends a chanted verse at על־פני and puts"
+                f" those two differently. The {_TAHTON} ends a chanted verse at על־פני and puts"
                 f" its verse's main break at מתחת; the {_ELYON} runs on through both. In each pair"
                 f" below the {_TAHTON} comes first:",
             )
@@ -1233,7 +1234,7 @@ def _pausal_paras(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 "With תרצח, we have that same alternation, this time splitting the two"
                 " traditions. In the ",
                 _ELYON,
-                " it is the second and last word of the two-word chanted verse ",
+                " it is the second and last chanted word of the chanted verse ",
                 H.bdi("לא תרצח"),
                 ", so it has a ",
                 _ROM_SILLUQ,
@@ -1247,7 +1248,7 @@ def _pausal_paras(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 " or ",
                 _ROM_SILLUQ,
                 " is common enough for Yeivin to catalogue it; what the two traditions differ over"
-                " here is only whether to do it at this word.",
+                " here is only whether to do it at this chanted word.",
             )
         ),
     )
@@ -1283,7 +1284,7 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         ),
         H.para(
             (
-                "In Exodus, those four words aside, the two strands part at exactly one more,"
+                "In Exodus, those four chanted words aside, the two strands part at exactly one more,"
                 " the vocalization of תרצח:",
             )
         ),
@@ -1299,10 +1300,10 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         # GUARDRAIL (2026-07-25 claim audit, finding 1). This paragraph used to open "Deuteronomy
         # differs in more ways. Three are differences of cantillation ... and all three fall within
         # a single stretch of the Sabbath commandment" -- and the table rendered directly beneath it
-        # displays SEVEN word-level differences in that stretch, so the sentence was false as
+        # displays SEVEN chanted-word-level differences in that stretch, so the sentence was false as
         # written. "Three" was never a count of differences: it is the number of DISJUNCTIVELY
-        # ACCENTED words the table's line-pairs end on, the Shabbat signal-word shorthand both
-        # satellite pages correctly describe as "not the only words the two traditions accent
+        # ACCENTED chanted words the table's line-pairs end on, the Shabbat signal-word shorthand both
+        # satellite pages correctly describe as "not the only chanted words the two traditions accent
         # differently". Two rules follow. Never state a bare count here that the table can be read
         # against without saying what it counts; and never let this page's "three" imply the table
         # shows three rows' worth of difference. Every number below is now derived (see the counts
@@ -1328,12 +1329,12 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 " that all fall within a single stretch of the Sabbath commandment. Those"
                 f" {counts['sabbath']} are differences of cantillation, so unlike the Exodus"
                 " vowel-swap they give the two strands genuinely different accent-grammar trees."
-                " Below is that stretch — the run of words the two strands accent differently,"
+                " Below is that stretch — the run of chanted words the two strands accent differently,"
                 " everything"
                 " before and after it being identical — shown in each strand, m-trad above p-trad,"
                 " stripped to letters and accents, each line ending on a disjunctive accent. The ",
                 H.bold(str(len(_SABBATH_LINE_ENDS))),
-                " words those lines end on are the Shabbat commandment's signal words — a"
+                " chanted words those lines end on are the Shabbat commandment's signal words — a"
                 " shorthand for the stretch, not the whole of it:",
             )
         ),
@@ -1428,7 +1429,7 @@ def _chabad_aside() -> tuple[object, ...]:
                 _ELYON,
                 " has no ",
                 _ROM_SILLUQ,
-                ", and neither does CTR: the seven words before those marks carry four ",
+                ", and neither does CTR: the seven chanted words before those marks carry four ",
                 _ROM_REVIA,
                 ", an ",
                 _ROM_ETNAHTA,

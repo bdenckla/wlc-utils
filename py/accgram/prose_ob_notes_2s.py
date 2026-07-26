@@ -19,7 +19,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "2s 23:9": {
         "st-source": "bhs",
         "wlc_focus": "בפלשתים",
-        "st-summary": "BHS does not transcribe a pashta, leaving the word without accent.",
+        "st-summary": "BHS does not transcribe a pashta, leaving the chanted word without accent.",
         "uxlc_change": "2021.10.19/2021.08.07-3",
     },
 }

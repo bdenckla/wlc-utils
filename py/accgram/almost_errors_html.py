@@ -62,7 +62,7 @@ def _intro() -> tuple[object, ...]:
                 "Second, the ",
                 H.bold("masoretically-blessed oddities"),
                 ": features that look error-like — two accents crowding"
-                " one letter or one word, or one divider written twice in a row — but"
+                " one letter or one chanted word, or one divider written twice in a row — but"
                 " that are 100% official masoretic tradition, attested in the standard"
                 " manuscripts, ",
                 H.bold("not"),
@@ -74,7 +74,7 @@ def _intro() -> tuple[object, ...]:
                 " telisha gedola exhibit below shows the alternatives). The headline case"
                 " is Ezekiel 20:31’s mahapakh + qadma (",
                 H.code("mahapakh!qadma"),
-                "), the only word in Tanakh with two conjunctive accents on"
+                "), the only chanted word in Tanakh with two conjunctive accents on"
                 " one letter.",
             )
         ),

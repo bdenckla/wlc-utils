@@ -73,12 +73,12 @@ BY_REF: dict[str, dict[str, object]] = {
                 " any uncertainty in its transcription of the LC."
                 " Yet of course any transcription of the LC is surely fraught with hundreds of serious uncertainties."
                 " Although space constraints are extreme in any single-volume Tanakh like BHS,"
-                " really the only responsible thing to do for a word like this is to acknowledge the uncertainty somehow,"
+                " really the only responsible thing to do for a chanted word like this is to acknowledge the uncertainty somehow,"
                 " and either transcribe no accent at all or use context (grammar) combined with the (faint) evidence"
                 f" to make a good guess, which in this case would be {MUNAX}."
             ],
             [
-                "To transcribe this word as (illegally) accented with merkha"
+                "To transcribe this chanted word as (illegally) accented with merkha"
                 " without any acknowledgment of either illegality or uncertainty is,"
                 " to me, bordering on irresponsible."
             ],

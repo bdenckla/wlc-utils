@@ -195,12 +195,12 @@ _TANAKH_EX_ELYON_IMG = "img/Simanim-Tanakh-p-350-Ex-Dec-elyon-m-trad.png"
 # the two traditions accent differently.
 _P247_DT_IMG = "img/Simanim-Tiqqun-p-247-Deut-Dec-m-trad-taxton-Shabbat.png"
 # Highlight rectangles in the p. 247 crop's pixel space (1474x383, the crop's own resolution = the
-# overlay viewBox). Each Box marks one of three maqaf-joined signal words -- disjunctively
-# accented words that make a handy shorthand for telling the two traditions apart (they are not
-# the only words the traditions accent differently). Each is the disjunctive word ending a row of
-# the companion page's Sabbath-diff table:
+# overlay viewBox). Each Box marks one of three maqaf-compound signal words -- disjunctively
+# accented chanted words that make a handy shorthand for telling the two traditions apart (they
+# are not the only chanted words the traditions accent differently). Each is the disjunctively
+# accented chanted word ending a row of the companion page's Sabbath-diff table:
 # kol-melakha (m-trad pazer, not the p-trad geresh), ve'avdekha-va'amatekha (m-trad telisha
-# gedolah -- one on each half-word -- not the p-trad revia), and vekhol-behemtekha (m-trad revia,
+# gedolah -- one on each atom of the compound -- not the p-trad revia), and vekhol-behemtekha (m-trad revia,
 # not the p-trad zaqef qatan). Coordinates come from
 # py/accgram/gen_highlight_picker.py (drag boxes over the words, export the `px` boxes).
 _P247_BOXES: tuple[mhi.Box, ...] = (
@@ -576,7 +576,7 @@ def _p246_mapping_table() -> object:
             # the page-set does -- "sof pasuq" alone named neither the accent nor the strand.
             H.table_datum(_ROM_SILLUQ_SOF_PASUQ),
             H.table_datum(_ROM_TIPEHA),
-            # "through עבדים": the two strands are word for word identical only as far as עבדים.
+            # "through עבדים": the two strands are identical at every chanted word only as far as עבדים.
             # They part at the span's other signal word, על־פני, where the p-trad תחתון ends
             # another chanted verse and the m-trad עליון runs on -- which is why the companion
             # page's table gives each its own row. Don't drop the qualifier.

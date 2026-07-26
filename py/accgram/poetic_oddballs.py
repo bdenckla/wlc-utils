@@ -52,7 +52,7 @@ of the prose ``ob_notes_*`` modules -- in ``poetic_ob_notes``: a per-ungrammatic
 ``st-summary`` / ``comment`` plus external links (a tanach.us ``uxlc_note_page``,
 a ``github-issue``), shown only for the few cases that warrant it. The SAT
 focus-word table is reproduced for missing-silluq verses (whose locus is the
-verse-final word); NO_PARSE verses, having no single focus word, omit it.
+verse-final chanted word); NO_PARSE verses, having no single focus word, omit it.
 """
 
 from __future__ import annotations
@@ -113,8 +113,8 @@ StructuredTextLookup = Callable[[dict[str, object], str], object]
 #   token_types       full scanned token-type sequence (tuple[str, ...])
 #   wlc_disjunctives  WLC disjunctive skeleton, scanner (tuple[str, ...])
 #   mam_disjunctives  MAM oracle skeleton (tuple[str, ...] | None if absent)
-#   mam_words         MAM per-word (base_letters, disjunctive_or_None), the
-#                     word-aligned counterpart of mam_disjunctives used to derive
+#   mam_words         MAM per-chanted-word (base_letters, disjunctive_or_None), the
+#                     chanted-word-aligned counterpart of mam_disjunctives used to derive
 #                     the summary; None if the verse is absent from MAM-simple.
 #                     Not written to _oddballs.json (the skeletons are the datum).
 #   tree_text         rendered ERROR tree, or the NO_PARSE line
@@ -125,7 +125,7 @@ StructuredTextLookup = Callable[[dict[str, object], str], object]
 #                     sanitized), the shared key the verse-paragraph renderer
 #                     reads; None if the verse is absent from the index. Not
 #                     written to _oddballs.json (the skeletons are the datum).
-#   wlc_focus         the verse-final focus word to highlight (missing-silluq
+#   wlc_focus         the verse-final chanted word to highlight as the focus (missing-silluq
 #                     only, None otherwise), the shared key the verse-paragraph
 #                     renderer reads.
 #   enriched_row      the build_enriched_row payload (WLC/UXLC/MAM focus-word
@@ -456,15 +456,15 @@ def _build_intro(ungrammatical: list[dict[str, object]]) -> tuple[object, ...]:
         ),
         wlc_utils_html.para(
             (
-                "Each verse shows its pointed-Hebrew text (the verse-final word "
+                "Each verse shows its pointed-Hebrew text (the verse-final chanted word "
                 "highlighted for missing-silluq cases) and — for missing-silluq "
                 "verses — a SAT focus-word "
                 "table comparing the WLC focus word against its UXLC and MAM-simple "
                 "readings. The "
-                "per-verse summary is mechanically auto-derived — but from a "
-                "word-by-word alignment of the two verses, not from the "
+                "per-verse summary is mechanically auto-derived — but from an "
+                "alignment of the two verses chanted word by chanted word, not from the "
                 "conjunctive-stripped skeletons above, so a divider that merely "
-                "sits on a different word is reported as such rather than as a "
+                "sits on a different chanted word is reported as such rather than as a "
                 "phantom substitution. It is labelled tentative — not a hand-vetted "
                 "attribution. See ",
                 wlc_utils_html.code("doc/PLAN-poetic-accent-grammar.md"),
@@ -595,9 +595,9 @@ def _render_summary(row: dict[str, object]) -> object:
 def _render_hebrew_verse(row: dict[str, object]) -> object | None:
     """Pointed-Hebrew (RTL) verse paragraph via the shared goerwitz renderer.
 
-    For a missing-silluq verse the locus is the verse-final word (the word that
+    For a missing-silluq verse the locus is the verse-final chanted word (the one that
     arrives with no silluq), so highlight it; NO_PARSE is not localized to one
-    word, so render the plain verse. A non-unique/absent focus degrades to no
+    chanted word, so render the plain verse. A non-unique/absent focus degrades to no
     highlight (the renderer falls back gracefully). The renderer reads the verse
     payload and focus from the row (wlc422_kq_u_verse / wlc_focus)."""
     if not isinstance(row["wlc422_kq_u_verse"], dict):

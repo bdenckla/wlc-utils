@@ -81,7 +81,7 @@ from accgram import accent_marks as am
 from accgram import poetic_accent_names as pan
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
-_TEXT = am.TEXT  # within one maqqef/space-delimited word (as in prose)
+_TEXT = am.TEXT  # within one maqqef/space-delimited atom (as in prose)
 
 # The run of letters after a tsinnorit, up to its partner, in the metsunnar rules:
 # like _TEXT but also excluding every accent (U+0591..U+05AE), so the partner is the

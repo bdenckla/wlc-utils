@@ -1,5 +1,6 @@
 """Generate gh-pages/accgram/ps17v14-mam-doc-notes.html -- an English rendering of
-MAM's four documentation notes on Psalms 17:14 (one per word).
+MAM's four documentation notes on Psalms 17:14 (one per chanted word -- one of the four
+lemmas, מִ֥מְתִֽים־יָדְךָ֨, is a maqaf compound).
 
 Formerly hand-authored; now generated so it shares the look and feel of the other
 accgram pages.  The page body is replayed byte-exactly from the committed

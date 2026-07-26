@@ -470,7 +470,7 @@ def _pa38_note_section() -> tuple[object, ...]:
 # GUARDRAIL on the "how far it follows it" column (2026-07-25 claim audit, finding 3). Two rows
 # said more than they had. The Deuteronomy appendix row claimed "Every accent, with no difference
 # anywhere" although that page JOINS לא־תעשה into a maqaf compound where ws/dt/elyon/printed sets
-# the two words apart -- token-invisible (the streams are identical with the maqaf dropped) but a
+# the two atoms apart -- token-invisible (the streams are identical with the maqaf dropped) but a
 # real difference, so "no difference anywhere" was false and only "no ACCENT difference" is true.
 # And the Deuteronomy main row's "five independent ways" was a count with no stated criterion,
 # unreconcilable with the hub's "three" and the test suite's "eight" for the same divergence set.
@@ -479,7 +479,7 @@ def _pa38_note_section() -> tuple[object, ...]:
 # typing them (``counts`` below is derived and raises on drift).
 #
 # THE ONE VOWEL, and why the two rows may state it (2026-07-25). The twelfth Deuteronomy site and
-# the fifth Exodus one are the same word and are not accent differences at all: the m-trad has
+# the fifth Exodus one are the same chanted word and are not accent differences at all: the m-trad has
 # qamats in תִרְצָ֖ח where the p-trad has patax, on the same tipexa. A transcription of accents
 # cannot carry that, so until now the Deuteronomy row hedged it as "the last one of vowels alone"
 # and claimed nothing about which vowel Koren prints -- nobody had looked. Both were then read off
@@ -565,7 +565,7 @@ def _verdict_table(
                 "Every accent — and it joins both compounds its Exodus counterpart separates, so"
                 " that separation is a fact about the one page rather than a habit of the"
                 " edition. Its one difference is a maqaf, going the other way: Koren has"
-                " לא־תעשה where its Wikisource strand has the two words apart, and keeps a ",
+                " לא־תעשה where its Wikisource strand has the two atoms apart, and keeps a ",
                 _ROM_MUNAX,
                 " on the joined לא even so. Both sides therefore have the same two accents, so"
                 " this is a difference no accent can show: it was read off the page rather than"
@@ -630,14 +630,14 @@ def _conclusion(
         # (1) "Three of the four follow their strand in every accent, and the fourth differs only
         # in how it divides two chanted words." The count is wrong: TWO of the four have a maqaf
         # difference -- besides the Exodus appendix's two splits, the Deuteronomy appendix one
-        # joins לא־תעשה where its strand leaves the words apart. The first fix went further and
+        # joins לא־תעשה where its strand leaves the atoms apart. The first fix went further and
         # declared a maqaf difference to be no accent difference at all, which restored "all four
         # follow their strand in every accent"; that convention is gone (see the guardrail at
         # pds.MAQAF_IS_THE_LAST_RUNG). Two of the four match mark for mark, two differ at the
         # maqaf, and neither claim may be dressed up as the other.
         #
         # (2) "no strand at all, in either tradition, separates יהיה from לך". Flatly false: all
-        # four תחתון strands separate those two words, binding לא to יהיה (לא־יהיה, one chanted
+        # four תחתון strands separate those two atoms, binding לא to יהיה (לא־יהיה, one chanted
         # word, merkha) and leaving לך alone with a tevir -- as the hub's own four-strands table
         # shows in its pT row, so the page a reader is sent to refuted the sentence. What is true,
         # and what the conclusion actually needs, is that no strand SPLITS THE COMPOUND יהיה־לך:

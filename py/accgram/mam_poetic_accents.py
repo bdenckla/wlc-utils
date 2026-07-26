@@ -64,7 +64,7 @@ from cmn.wlc_book_codes import wlc_bb_to_bk39id
 _SOF_PASUQ = "׃"
 
 # Hebrew letter block (alef..tav, final forms included): the alignment key that
-# lets a MAM accent-word be matched word-for-word against its WLC counterpart with
+# lets a MAM chanted word be matched against its WLC counterpart with
 # vowels/accents/punctuation stripped (see ``base_letters``).
 _HEBREW_LETTER_LO = 0x05D0
 _HEBREW_LETTER_HI = 0x05EA
@@ -73,8 +73,8 @@ _HEBREW_LETTER_HI = 0x05EA
 def base_letters(word: str) -> str:
     """The bare letter skeleton of a Hebrew word (vowels/accents/punctuation dropped).
 
-    Used as the per-word alignment key when matching WLC and MAM accent-words: the same
-    word carries different points and accents on the two witnesses, so only the letters
+    Used as the alignment key when matching WLC and MAM chanted words: the same
+    chanted word carries different points and accents on the two, so only the letters
     are a stable equality key.
     """
     return "".join(
@@ -200,11 +200,14 @@ def _word_servus(accents: str) -> str | None:
 def _emit_word_events(text: str, events: list[_Event]) -> None:
     """Append a ('WORD', marker, servus, self_servus) event per whitespace-delimited word.
 
-    The final word of the verse carries SOF PASUQ; its meteg is silluq, so it is
+    Whitespace-delimited means CHANTED word: a maqaf compound has no space in it, so it
+    comes through whole (issue #81).
+
+    The verse's last chanted word carries SOF PASUQ; its meteg is silluq, so it is
     emitted as a ('SOFPASUQ', None, None, None) sentinel the second pass turns into
-    SILLUQ.  A word's plain servus is recorded only when it carries no disjunctive
-    marker; a disjunctive word instead records any same-word conjunctive standing before
-    its divider as self_servus.
+    SILLUQ.  A chanted word's plain servus is recorded only when it carries no disjunctive
+    marker; a disjunctive one instead records any conjunctive standing before
+    its divider within the same chanted word as self_servus.
     """
     for word in text.split():
         letters = base_letters(word)

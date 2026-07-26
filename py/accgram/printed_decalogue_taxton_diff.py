@@ -9,10 +9,10 @@ criterion, applied once, with the counts derived from the vendored data instead 
 three prose sites.
 
 **The criterion.**  A difference SITE is one chanted word at which the two strands' text
-differs.  Where the strands put their maqafs differently -- the m-trad's two words לא and תעשה
-against the p-trad's single maqaf compound לא־תעשה -- the site is the shortest run of words on
-each side whose letter skeletons match, so a maqaf counts as ONE site rather than as two or
-three coincidental word differences.  ``diff_sites`` does that alignment.  Note that a maqaf
+differs.  Where the strands put their maqafs differently -- the m-trad's two chanted words לא and
+תעשה against the p-trad's single chanted word, the maqaf compound לא־תעשה -- the site is the
+shortest run of chanted words on each side whose letter skeletons match, so a maqaf counts as ONE
+site rather than as two or three coincidental differences.  ``diff_sites`` does that alignment.  Note that a maqaf
 difference IS a site here and always has been: this module was already counting on the single
 scale that the three pages now state to the reader (``MAQAF_IS_THE_LAST_RUNG``).
 
@@ -45,11 +45,12 @@ from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
 from mb_cmn import hebrew_accent_strip as has
 
-# One difference site: the run of words each strand shows there, m-trad first.  Either side is
-# usually a single word; a side has two words exactly where the other strand joins them by maqaf.
+# One difference site: the run of chanted words each strand shows there, m-trad first.  Either
+# side is usually a single chanted word; a side has two exactly where the other strand joins the
+# same two atoms by maqaf.
 Site = tuple[tuple[str, ...], tuple[str, ...]]
 
-# The four words the one structural difference drags along: the p-trad closes its first chanted
+# The four chanted words the one structural difference drags along: the p-trad closes its first chanted
 # verse at מבית עבדים where the m-trad runs on to על־פני, and that moves the accents on these
 # four.  Single-sourced here because the hub's appendix both EXCLUDES them from its catalogue (they
 # are the verdict section's own point) and names them in prose, and because the count check below
@@ -57,23 +58,23 @@ Site = tuple[tuple[str, ...], tuple[str, ...]]
 BOUNDARY_SKELETONS: tuple[str, ...] = ("אנכי", "אלהיך", "מבית", "עבדים")
 
 # The letter skeleton that locates the Sabbath commandment's chanted verse: it is the only verse
-# in either dt תחתון strand containing בהמתך.  Matched as a substring of a word's skeleton, since
-# the word itself is the maqaf compound וכל־בהמתך.
+# in either dt תחתון strand containing בהמתך.  Matched as a substring of a chanted word's skeleton,
+# since the chanted word itself is the maqaf compound וכל־בהמתך.
 _SABBATH_SKELETON = "בהמתך"
 
 
 def diff_sites(m_words: tuple[str, ...], p_words: tuple[str, ...]) -> list[Site]:
-    """The sites at which two strands' word sequences part, aligned by letter skeleton.
+    """The sites at which two strands' chanted-word sequences part, aligned by letter skeleton.
 
     The two strands are the same letters throughout -- they differ only in accents, vowels and
     where they put a maqaf -- so a difference is located by walking both sides in step and, on
-    any disagreement, growing each side one word at a time until the two skeletons match again.
-    That is what makes a maqaf difference one site rather than two or three coincidental word
+    any disagreement, growing each side one chanted word at a time until the two skeletons match
+    again.  That is what makes a maqaf difference one site rather than two or three coincidental
     differences: לא + תעשה on one side faces the single לא־תעשה on the other, and both sides
-    advance past it together.  This alignment is where the trio's "counted once, at the word whose
+    advance past it together.  This alignment is where the trio's "counted once, at the atom whose
     marking changed" rule is actually implemented.
 
-    Raises if the skeletons cannot be reconciled or a side runs out of words -- the strands would
+    Raises if the skeletons cannot be reconciled or a side runs out of chanted words -- the strands would
     then no longer be the same text, which is a re-vendoring to look at rather than to render.
     """
     sites: list[Site] = []

@@ -25,7 +25,7 @@ Faithfulness notes (flex semantics reproduced):
   - lex trailing context (`r/s`) is expressed as a regex lookahead `(?=s)`, so
     only `r` is consumed, exactly as flex consumes only the left part;
   - flex's `{TEXT}` (= `[^ \r\n\-]*`) is greedy and stays within one
-    maqqef/space-delimited word; Python `re` greediness reproduces the longest
+    maqqef/space-delimited atom; Python `re` greediness reproduces the longest
     match (backtracking to the rightmost terminator).
 
 Divergence from the goerwitz C oracle (`has_legarmeh`): the C `passages[]` list
@@ -73,7 +73,7 @@ _VERSE_RE = re.compile(r"^([1-9][0-9]*):([1-9][0-9]*)[ \t](.*)$")
 # Trailing context is a lookahead so it is not consumed.  Phase 2 (issue #9) matches
 # over the Unicode mark alphabet (accent_marks); the four trailing-context digit
 # classes are rebuilt onto it by `am.negated_class` (see that function).  TEXT keeps
-# a match within one maqaf/space-delimited word.
+# a match within one maqaf/space-delimited atom.
 _TEXT = am.TEXT
 
 # silluq right context:  35|75|95 / [^ 379\r\n\-?~]* 00

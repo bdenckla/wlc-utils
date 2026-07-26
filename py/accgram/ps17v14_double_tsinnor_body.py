@@ -56,7 +56,7 @@ BODY = [
             {"_htel_tag": "code", "lb1": "", "lb2": "", "contents": ["02"]},
             "\n(tsinnor) codes — not a swallowed ",
             {"_htel_tag": "code", "lb1": "", "lb2": "", "contents": ["82"]},
-            " (tsinnorit) — on adjacent words:\n",
+            " (tsinnorit) — on adjacent chanted words:\n",
             {
                 "_htel_tag": "span",
                 "attr": {"lang": "hbo"},

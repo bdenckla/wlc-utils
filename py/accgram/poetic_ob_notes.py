@@ -46,7 +46,7 @@ _JOB_31_15_NOTE_URL = "https://tanach.us/Notes/Job/Job.31.15.1-t.html"
 BY_REF: dict[str, dict[str, object]] = {
     "ps 56:10": {
         "st-summary": (
-            "On the verse-initial word אָ֥֨ז, WLC transcribes TWO "
+            "On the verse-initial chanted word אָ֥֨ז, WLC transcribes TWO "
             "accents on the one alef — a merkha (below) and a qadma/azla (above). "
             "(This transcription is plausible but uncertain: see the LC image and its "
             "discussion below.) MAM "
@@ -80,7 +80,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "jb 31:15": {
         "uxlc_note_page": _JOB_31_15_NOTE_URL,
         "st-summary": (
-            "On the verse-initial word, WLC transcribes a malformed mark — absent "
+            "On the verse-initial chanted word, WLC transcribes a malformed mark — absent "
             "from MAM (and from BHL) — that the UXLC note page (linked above) flags "
             "with a transcription-uncertainty marker."
         ),

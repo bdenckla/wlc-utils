@@ -21,10 +21,10 @@ WHAT COUNTS AS ONE TOKEN (the conventions the transcriptions are written to):
   the maqaf itself, and contributing two tokens.  SimTiq's Exodus appendix Decalogue has two
   such compounds and they are its most interesting divergences, so this is not hypothetical.
   Contrast ``mun_leg``, where the underscore binds two marks into ONE accent.
-* A postpositive or prepositive accent is written TWICE on a word whose stress is not where
+* A postpositive or prepositive accent is written TWICE on a chanted word whose stress is not where
   the accent's fixed position puts it -- once at the fixed edge and once on the stressed
   syllable.  That is ONE accent.  ``_accent_tokens`` collapses an immediate repeat of the same
-  accent within one word; without this the Exodus elyon alone reports seven phantom
+  accent within one chanted word; without this the Exodus elyon alone reports seven phantom
   differences.
 * meteg (U+05BD) is dropped: it is not an accent.  Verse-finally the same codepoint is silluq,
   which IS an accent -- emitted, with sof pasuq, as the single token ``silsof``.
@@ -39,18 +39,19 @@ WHAT COUNTS AS ONE TOKEN (the conventions the transcriptions are written to):
   rather than only against glyph shape and a cross-tradition nod to MAM-parsed-plus.
 
 WHAT A DIFFERENCE MEANS.  Differences are not all of one weight, but they are all on one
-scale, and maqaf is its bottom rung: a maqaf separates the word it sits on from the next even
+scale, and maqaf is its bottom rung: a maqaf separates the ATOM it sits on from the next even
 less than a conjunctive accent does.  So where the two texts put their maqafs differently, that
 IS a difference in how the text is marked -- the mildest kind -- and it is counted ONCE, at the
-word whose marking changed, never as a regrouping plus a separate accent.  Both confirmed
+atom whose marking changed, never as a regrouping plus a separate accent.  Both confirmed
 differences in the Exodus elyon are of that kind, and so is one of the three in the Exodus
-taxton.  Read a difference list alongside the word it sits on to see which rung it is on: the
+taxton.  Read a difference list alongside the atom it sits on to see which rung it is on: the
 pages' verdicts are graded by that, not split into two ledgers.  (The trio briefly did keep two,
 declaring a maqaf difference to be no accent difference at all; ``printed_decalogue_strands``'
 ``MAQAF_IS_THE_LAST_RUNG`` records why that was wrong.)
 
-A maqaf USUALLY takes the place of the joined word's accent -- a free-standing word must bear
-one, while a maqaf-joined proclitic normally takes at most a meteg -- but usually is not always,
+A maqaf USUALLY takes the place of the joined atom's accent -- an atom standing as its own
+chanted word must bear one, while a maqaf-joined proclitic normally takes at most a meteg --
+but usually is not always,
 and the Exodus taxton is why the weaker word is the right one.  SimTiq prints a munax on the
 joined לא of לא־יהיה and of לא־תעשה, whose second atoms carry merkha and qadma -- two accents on
 one chanted word, where all eight strands have a meteg.  Those differences are two rungs up,
@@ -123,7 +124,7 @@ those findings, and the survey module's docstring carries the method.
 
 WHAT THE TOKEN STREAM CANNOT SEE.  One token per ACCENT means a maqaf leaves no token of its
 own, so a maqaf difference registers only through the accent count it changes.  Where an
-edition joins two words and accents BOTH atoms of the resulting compound -- ``koren_dt_elyon``'s
+edition joins two atoms and accents BOTH of them in the resulting compound -- ``koren_dt_elyon``'s
 mun-mun on לא־תעשה -- the two sides emit identical tokens and the diff sees nothing.  Such a
 difference is recorded by hand in the transcription's ``.txt`` and stated in the page's verdict
 cell.  Making maqaf a token of its own would close the gap; that is issue #75, left undone here
@@ -157,8 +158,8 @@ MAQAF = "\N{HEBREW PUNCTUATION MAQAF}"
 # accent that merely happens to be written with a munax and a pasoleg, and it
 # contributes one token.  Tight binding reads as tighter than a maqaf, which is the point.
 #
-# ``+`` is the SIMPLE-word counterpart of ``-``: two accents on one word that is not a maqaf
-# compound at all.  ``qad+ger`` is the case in hand -- qadma and geresh on a single word,
+# ``+`` is the SIMPLE-word counterpart of ``-``: two accents on one chanted word that is not a
+# maqaf compound at all.  ``qad+ger`` is the case in hand -- qadma and geresh on a single atom,
 # where the qadma is by convention called *metigah* rather than qadma (the same renaming
 # applies in the compound case).  Like a maqaf compound it contributes one token per accent,
 # because the reference side emits one per accent either way; unlike one, there is no maqaf,
@@ -521,7 +522,7 @@ def editor_accents(chunk: str) -> list[tuple[str, str]]:
 def expand_chunk(chunk: str) -> list[str]:
     """One written chunk -> the token(s) it stands for.
 
-    Almost always one.  A word bearing more than one accent is the exception -- a maqaf
+    Almost always one.  A chanted word bearing more than one accent is the exception -- a maqaf
     compound (``mun-mer``) or a simple word (``qad+ger``) -- and it contributes one token per
     accent either way.  Splitting on the ACCENT joiners alone is what makes ``mun_leg`` stay
     whole here.

@@ -13,14 +13,16 @@ A "mark body" is a string of single-character marks, one per structural element:
   upper/lower **puncta** (U+05C4/U+05C5) are likewise their own codepoints;
 * every base letter becomes a single placeholder ``LETTER`` -- opaque
   scanner filler, exactly as in Phase 1 -- and vowels/points are dropped;
-* **maqaf** is ``-`` and inter-word gaps are a space, the two word boundaries the
-  ``TEXT`` class and the lexical layer key on;
+* **maqaf** is ``-`` and the gaps between atoms are a space, the two ATOM boundaries the
+  ``TEXT`` class and the lexical layer key on.  (An *atom* is one written word, between
+  spaces or maqafs; a maqaf joins two of them into one CHANTED WORD, which is the unit an
+  accent marks.  This module's alphabet sees only atoms -- issue #81.)
 * ketiv ``*``/``**`` markers and ``]N`` note markers are kept verbatim.
 
 The five M-C codepoint conflations (pashta ``33``/``03``, telisha qetana ``24``/
 ``04``, telisha gedola ``14``/``44``, gershayim ``12``/``62``, meteg ``35``/``75``/
 ``95``) no longer need distinct codes: the helper/main *merge* is expressed natively
-in the scanner (adjacent same-accent within a word -> one token), and the swallowed
+in the scanner (adjacent same-accent within an atom -> one token), and the swallowed
 secondaries (telisha gedola ``44``, gershayim ``12``) are dropped by ``uni_to_marks``'
 positional/cluster resolution.
 
@@ -87,15 +89,15 @@ SOF_PASUQ = hpu.SOPA  # sof pasuq           (00)
 UPPER_DOT = hpu.UPDOT  # upper punctum       (52)
 LOWER_DOT = hpu.LODOT  # lower punctum       (53)
 
-MAQAF = "-"  # word-internal boundary (joins one accent word)
+MAQAF = "-"  # the boundary inside a chanted word (joins two atoms into one)
 # Placeholder base letter (opaque scanner filler).  Alef -- a real Hebrew base, so a
 # combining accent sits on it legibly and the scan body needs no re-basing for display.
 # (It was a Latin "X" through issue #9; nothing keys on its identity -- every rule treats
 # it as filler consumed by the catch-all -- so the mark bodies now read as Hebrew throughout.)
 LETTER = "א"
 
-# `TEXT` = a run that stays within one maqaf/space-delimited word (as in tnk2acc.l's
-# `{TEXT}` = `[^ \r\n\-]*`): everything except the two word boundaries.
+# `TEXT` = a run that stays within one maqaf/space-delimited ATOM (as in tnk2acc.l's
+# `{TEXT}` = `[^ \r\n\-]*`): everything except the two atom boundaries.
 TEXT = r"[^ \r\n\-]*"
 
 # Each mark -> the digit set of the M-C code it stands for, for `negated_class`.

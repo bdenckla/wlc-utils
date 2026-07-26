@@ -172,11 +172,13 @@ def sof_pasuq_spans(ctr: dict, book: str) -> list[str]:
 
 
 def word_glyphs(word: str) -> tuple[str, ...]:
-    """One pointed word -> its accent GLYPHS in order, lookalike pairs folded, repeats collapsed.
+    """One pointed CHANTED word -> its accent GLYPHS in order, lookalike pairs folded, repeats
+    collapsed.  (Chanted word, not atom: ``_flat`` splits on whitespace, so a maqaf compound
+    arrives whole and both its atoms' accents are counted here -- issue #81.)
 
-    A doubled postpositive (the accent written at the word edge and again on the stressed
+    A doubled postpositive (the accent written at the chanted word's edge and again on the stressed
     syllable) is one glyph, as in ``_accent_tokens``.  A meteg/silluq (U+05BD) is not an accent
-    and contributes no glyph, so a verse-final word contributes its cantillation accent if any
+    and contributes no glyph, so a verse-final chanted word contributes its cantillation accent if any
     and nothing for the silluq -- the chanted-verse boundary is counted separately.
     """
     out: list[str] = []
@@ -244,12 +246,15 @@ def span_silluq_status(ctr: dict, book: str) -> tuple[SpanSilluq, ...]:
 
 
 def _flat(verses: list[str]) -> list[tuple[str, tuple[str, ...]]]:
-    """(consonant skeleton, glyph tuple) per chanted word across a reading's spans."""
+    """(consonant skeleton, glyph tuple) per chanted word across a reading's spans.
+
+    Splitting on whitespace really does give CHANTED words, not atoms: a maqaf compound has
+    no space in it, so it comes through whole (issue #81)."""
     return [(pds.base_skeleton(w), word_glyphs(w)) for v in verses for w in v.split()]
 
 
 def _skeleton_glyphs(glyphs: tuple[str, ...]) -> tuple[str, ...]:
-    """A word's glyphs with the conjunctives dropped: its disjunctive skeleton at glyph level."""
+    """A chanted word's glyphs with the conjunctives dropped: its disjunctive skeleton at glyph level."""
     return tuple(g for g in glyphs if g not in _CONJUNCTIVE_GLYPHS)
 
 
@@ -271,6 +276,7 @@ class WordDiff:
 class Comparison:
     book: str
     reading: str
+    # Counts of CHANTED words (``_flat``'s unit), not of atoms: a maqaf compound counts once.
     ctr_words: int
     strand_words: int
     agree: int

@@ -53,7 +53,7 @@ BY_REF: dict[str, dict[str, object]] = {
             " meteg rather than merkha under the ש,"
             " and would add a qadma over the ש."
             " Admittedly, this is a transcription influenced by the fact that this is the consensus"
-            " pointing of this word."
+            " pointing here."
             " Not surprisingly, this consensus pointing makes"
             f" both the {TAXTON} chanted verse and the elyon chanted verse grammatical, if"
             f" the qadma is taken to belong to the {TAXTON} and the meteg is taken to"
@@ -152,7 +152,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "img": "LC-113A-col-3-line-27-Dt-24v10.png",
         "comment": (
             [
-                f"We could also interpret the LC’s mark under the resh as a {TIPEXA} that comes unexpectedly early in the word."
+                f"We could also interpret the LC’s mark under the resh as a {TIPEXA} that comes unexpectedly early in the chanted word."
             ],
             [
                 "We could also speculate that what seems to be the long descender of the final kaf"
@@ -162,11 +162,11 @@ BY_REF: dict[str, dict[str, object]] = {
                 "Yet, just as I have criticized some transcriptions as aggresively uncharitable,"
                 " there is no doubt such a thing as a transcription that is too aggressively charitable,"
                 " and these suggestions above,"
-                " i.e. these ways of saving the word from violating the accent grammar,"
+                " i.e. these ways of saving the chanted word from violating the accent grammar,"
                 " may be examples of that."
             ],
             [
-                f"The most likely explanation is that the LC simply does not have the expected {TIPEXA} anywhere in the word."
+                f"The most likely explanation is that the LC simply does not have the expected {TIPEXA} anywhere in the chanted word."
             ],
         ),
     },

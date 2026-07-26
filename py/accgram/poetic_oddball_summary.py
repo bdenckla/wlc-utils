@@ -3,18 +3,23 @@
 Split out of ``poetic_oddballs`` (which owns the ungrammatical collection + HTML shell);
 this module is just the per-verse summary line shown under each ungrammatical verse.
 
-The summary is computed by aligning the two verses *word-for-word* -- the
+The summary is computed by aligning the two verses *chanted word by chanted word* -- the
 letter skeleton as the key, via the same ``difflib`` engine ``mb_cmn.my_diffs``
-wraps for the prose page -- and reporting each word whose divider differs.  This
+wraps for the prose page -- and reporting each chanted word whose divider differs.  This
 replaced an earlier diff of the conjunctive-stripped *disjunctive skeletons*, which
 dropped every conjunctive and so conflated a divider that merely shifted to the
-neighbouring word into a phantom like-for-like substitution (Ps 68:20 / Pr 30:15:
-WLC's legarmeh and MAM's oleh-we-yored sit on different words).  The disjunctive
+neighbouring chanted word into a phantom like-for-like substitution (Ps 68:20 / Pr 30:15:
+WLC's legarmeh and MAM's oleh-we-yored sit on different chanted words).  The disjunctive
 skeleton remains the persisted datum and the table on the page; only the human-
-readable summary uses the word alignment.
+readable summary uses the chanted-word alignment.
+
+CHANTED WORD, NOT ATOM (issue #81).  The unit here is the maqaf compound where there is one
+-- Job 31:15's clause names הלא־בבטן whole, never a bare בבטן -- because that is the unit a
+divider sits on.  ``_wlc_chanted_words`` builds it by joining each maqaf-terminated atom to
+the atom after it; this module said "accent-word" for the same thing before #81.
 
 The WLC side pairs the wlc422 Unicode letters (the shared alignment key, grouped
-into accent-words) with the M-C scanner's resolved disjunctives; the MAM side comes
+into chanted words) with the M-C scanner's resolved disjunctives; the MAM side comes
 from ``mam_poetic_accents.load_poetic_word_disj``.  When the two WLC views cannot be
 reconciled 1:1 the summary falls back to the disjunctive-skeleton diff, flagged as
 the weaker comparison.
@@ -46,42 +51,42 @@ def derive_tentative_summary(row: dict[str, object]) -> str:
         )
     clauses = _word_aligned_clauses(row)
     if clauses is None:
-        # Word-level alignment could not be reconciled (e.g. the WLC accent-word and
-        # wlc422 letter-word counts disagree); fall back to the conjunctive-stripped
+        # Chanted-word alignment could not be reconciled (e.g. the WLC chanted-word and
+        # wlc422 atom counts disagree); fall back to the conjunctive-stripped
         # skeleton diff, flagged so the reader knows it is the weaker comparison.
         skeleton = _describe_disjunctive_diff(
             row["wlc_disjunctives"], row["mam_disjunctives"]
         )
         return (
-            "Relative to the MAM-simple oracle (disjunctive skeleton only — words could "
-            "not be aligned), " + "; ".join(skeleton) + "."
+            "Relative to the MAM-simple oracle (disjunctive skeleton only — chanted words "
+            "could not be aligned), " + "; ".join(skeleton) + "."
         )
     if not clauses:
         return (
-            "An aligned word-by-word comparison finds the dividers fall on the same "
-            "words; the skeleton-level difference is an artifact of segmentation, not a "
-            "real divergence in which word each divider sits on."
+            "Aligned chanted word by chanted word, the dividers fall on the same "
+            "ones; the skeleton-level difference is an artifact of segmentation, not a "
+            "real divergence in which chanted word each divider sits on."
         )
-    return "Word-aligned against MAM-simple, " + "; ".join(clauses) + "."
+    return "Chanted-word-aligned against MAM-simple, " + "; ".join(clauses) + "."
 
 
 def _word_aligned_clauses(row: dict[str, object]) -> list[str] | None:
-    """Per-word divider differences between WLC and MAM, or None if unalignable.
+    """Per-chanted-word divider differences between WLC and MAM, or None if unalignable.
 
-    Aligns the two verses *by word* (letter skeleton as the key, the same
+    Aligns the two verses *by chanted word* (letter skeleton as the key, the same
     ``difflib`` engine ``mb_cmn.my_diffs`` wraps for the prose page) and reports each
-    word whose divider differs.  This replaces the old disjunctive-skeleton diff, which
+    chanted word whose divider differs.  This replaces the old disjunctive-skeleton diff, which
     dropped every conjunctive and so conflated a divider that merely *shifted to the
-    neighbouring word* into a phantom like-for-like substitution (see Ps 68:20 / Pr
-    30:15: WLC's legarmeh and MAM's oleh-we-yored sit on different words)."""
+    neighbouring chanted word* into a phantom like-for-like substitution (see Ps 68:20 / Pr
+    30:15: WLC's legarmeh and MAM's oleh-we-yored sit on different chanted words)."""
     if row["mam_words"] is None:
         return None
-    wlc_words = _wlc_accent_words(row)
+    wlc_words = _wlc_chanted_words(row)
     if wlc_words is None:
         return None
     mam_words = [(letters, (d,) if d else ()) for letters, d in row["mam_words"]]
 
-    # The WLC word strings keep their maqaf for display ("הלא־בבטן"); the MAM side's
+    # The WLC chanted-word strings keep their maqaf for display ("הלא־בבטן"); the MAM side's
     # base_letters drops it, so strip it back out for the alignment key only -- the
     # opcode indices below still address the maqaf-bearing wlc_words for phrasing.
     matcher = difflib.SequenceMatcher(
@@ -102,13 +107,13 @@ def _word_aligned_clauses(row: dict[str, object]) -> list[str] | None:
     return clauses
 
 
-def _wlc_accent_words(
+def _wlc_chanted_words(
     row: dict[str, object],
 ) -> list[tuple[str, tuple[str, ...]]] | None:
-    """Per-word ``(base_letters, disjunctives)`` for the WLC verse, accent-word by
-    accent-word: the wlc422 Unicode letters (the shared alignment key) zipped with
+    """``(base_letters, disjunctives)`` for the WLC verse, chanted word by chanted
+    word: the wlc422 Unicode letters (the shared alignment key) zipped with
     the M-C scanner's resolved disjunctives.  None if the two cannot be reconciled
-    1:1 (different accent-word counts)."""
+    1:1 (different chanted-word counts)."""
     letter_words = _wlc_letter_words(row["wlc422_kq_u_verse"])
     if letter_words is None:
         return None
@@ -118,12 +123,15 @@ def _wlc_accent_words(
     return list(zip(letter_words, disj_words))
 
 
+# Named for what it returns (letters), not for its unit: the unit is the CHANTED word, since
+# the loop below joins each maqaf-terminated atom to the atom after it.
 def _wlc_letter_words(wlc_verse: object) -> list[str] | None:
-    """Group the wlc422 ``vels`` into accent-words and return each one's letters.
+    """Group the wlc422 ``vels`` into chanted words and return each one's letters.
 
-    A maqaf-terminated token joins the next sub-word into one accent-word (matching the
-    M-C scanner's whitespace-delimited words); the maqaf itself is kept in the returned
-    string so a joined word displays as "הלא־בבטן" rather than the run-together
+    A maqaf-terminated atom joins the atom after it into one chanted word (matching the
+    M-C scanner's whitespace-delimited words, since a compound has no space in it); the
+    maqaf itself is kept in the returned
+    string so a compound displays as "הלא־בבטן" rather than the run-together
     "הלאבבטן" (the alignment key strips it back out -- see _word_aligned_clauses --
     since the MAM side's base_letters drops the maqaf).  Punctuation-only tokens
     (paseq) drop out.  None if the verse carries no ``vels``."""
@@ -142,7 +150,7 @@ def _wlc_letter_words(wlc_verse: object) -> list[str] | None:
         if not letters:  # punctuation-only token (paseq, etc.)
             continue
         current += letters
-        if hpunc.MAQ in text:  # maqaf joins this to the next sub-word
+        if hpunc.MAQ in text:  # maqaf joins this atom to the next
             current += hpunc.MAQ
             continue
         words.append(current)
@@ -153,11 +161,11 @@ def _wlc_letter_words(wlc_verse: object) -> list[str] | None:
 
 
 def _wlc_disjunctives_per_word(body: str) -> list[tuple[str, ...]]:
-    """The M-C scanner's resolved disjunctives, partitioned per accent-word.
+    """The M-C scanner's resolved disjunctives, partitioned per chanted word.
 
     The scanner runs verse-level passes (unmarked-ole recovery, revia
-    reclassification) that need cross-word context, so we keep the whole-verse
-    resolved stream and slice it by each word's own token count (the passes relabel
+    reclassification) that need context beyond one chanted word, so we keep the whole-verse
+    resolved stream and slice it by each chanted word's own token count (the passes relabel
     tokens but never change their count)."""
     resolved = [t for t, _leaf in scan_accents(body)]
     words: list[tuple[str, ...]] = []

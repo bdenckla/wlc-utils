@@ -114,7 +114,7 @@ def oddities_intro() -> tuple[object, ...]:
         H.heading_level_2("Masoretically-blessed oddities (not charities)"),
         H.para(
             "The features below would make a naïve checker blink — two accents crowding"
-            " one letter or one word, or the same divider written twice in a row — but"
+            " one letter or one chanted word, or the same divider written twice in a row — but"
             " none of them is a quirk of LC, BHS, or WLC to be forgiven. They are"
             " official masoretic tradition, attested in the standard manuscripts. The"
             " checker accepts them; its only real decision is one of representation —"
@@ -142,7 +142,7 @@ _SEE = (
     ".)",
 )
 _TELG_PARA_1_CONTENTS = (
-    "Five WLC words carry both a “telg” (telisha gedola) and a “gerstar” (a geresh or gershayim)."
+    "Five WLC chanted words carry both a “telg” (telisha gedola) and a “gerstar” (a geresh or gershayim)."
     #
     " (In 2K17:13, the geresh results from our charitable interpretation of a geresh muqdam.)"
     #
@@ -183,12 +183,12 @@ _TELG_PARA_3_CONTENTS = (
     " The checker can do this because it allows a telg and a gerstar to appear in either order;"
     " i.e., either order is considered grammatical."
     #
-    " The telg-then-gerstar order appears normally, i.e. across separate words, about 175 times in Tanakh,"
+    " The telg-then-gerstar order appears normally, i.e. across two separate chanted words, about 175 times in Tanakh,"
     " while the gerstar-then-telg order appears only about 18 times."
 )
 _TELG_PARA_3B_CONTENTS = (
     "In the two cross-letter words the telg leads instead — but there, too, that is simply the manuscript order."
-    " The telisha gedola is prepositive and is written at the front of its word wherever it is chanted, ahead of"
+    " The telisha gedola is prepositive and is written at the front of its chanted word wherever it is chanted, ahead of"
     " the later letter that carries the gerstar, so the telg-first order is forced by prepositivity rather than"
     " chosen by the checker. Either way, same-letter or cross, the checker preserves the order it finds."
 )
@@ -219,7 +219,7 @@ _TELG_PARA_5_CONTENTS = (
 
 def telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]:
     items: list[object] = [
-        H.heading_level_3("telisha gedola + geresh/gershayim (five words)"),
+        H.heading_level_3("telisha gedola + geresh/gershayim (five chanted words)"),
         H.para(_TELG_PARA_1_CONTENTS),
         H.para(_TELG_PARA_2_CONTENTS),
         H.para(_TELG_PARA_3_CONTENTS),
@@ -316,7 +316,7 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
                 "In Ezekiel 20:31, ",
                 hbo("נִטְמְאִ֤֨ים"),
                 " carries both a mahapakh and a qadma on its"
-                " alef. It is the only word in"
+                " alef. It is the only chanted word in"
                 " Tanakh with two conjunctive accents on one letter. The"
                 " checker accepts it outright: the scanner fuses the pair into one ",
                 H.code("mahapakh!qadma"),
@@ -384,7 +384,7 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
             (
                 "The instructive contrast is Lev. 25:20, the ",
                 H.bold("only other"),
-                " prose word with two accents on one letter (a mahapakh and a tipeḥa)."
+                " prose chanted word with two accents on one letter (a mahapakh and a tipeḥa)."
                 " There the editions do ",
                 H.bold("not"),
                 " agree — MAM keeps only the tipeḥa and WLC tags the word anomalous —"
@@ -418,10 +418,10 @@ def ek2031_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ..
         H.para(
             (
                 "Why the other three readings fail is worth spelling out, because it is"
-                " not merely that “a word needs an accent.” The pashta here is served by"
-                " three conjunctives: a “telq” (telisha qetanna) on the preceding word ",
+                " not merely that “a chanted word needs an accent.” The pashta here is served by"
+                " three conjunctives: a “telq” (telisha qetanna) on the preceding chanted word ",
                 hbo("אַתֶּם"),
-                ", then the qadma and mahapakh sharing this word’s alef. Once a"
+                ", then the qadma and mahapakh sharing this chanted word’s alef. Once a"
                 " telq heads the chain, the grammar admits only ",
                 H.code("telq qadma mahapakh pashta"),
                 " (or its one-token analogue ",
@@ -470,7 +470,7 @@ def double_tsinnor_section() -> tuple[object, ...]:
             (
                 "Psalms 17:14 carries two ",
                 hbo("צנור"),
-                " (tsinnor) marks in a row — on the adjacent words ",
+                " (tsinnor) marks in a row — on the adjacent chanted words ",
                 hbo("בַּחַיִּים"),
                 " and the qere ",
                 hbo("וּצְפוּנְךָ"),

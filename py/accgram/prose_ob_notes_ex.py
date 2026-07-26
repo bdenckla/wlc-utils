@@ -41,7 +41,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "ex 4:10": {
         "st-source": "lc",
         "wlc_focus": "דברך",
-        "st-summary": "The LC lacks an accent on this word.",
+        "st-summary": "The LC lacks an accent on this chanted word.",
         # The UXLC change here only adds note 'c' (no text change), so we link
         # the note itself rather than the change.
         "uxlc_note_page": "https://tanach.us/Notes/Exodus/Exodus.4.10.17-c.html",

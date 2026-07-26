@@ -42,7 +42,7 @@ from accgram.poetic_ply_grammar import parse_tokens
 from accgram.poetic_accent_names import POETIC_DISJUNCTIVES
 
 # A conjunctive (azla/qadma or mahapakh/mahapakh) followed eventually by a paseq within
-# one whitespace-delimited word -- the legarmeh the scanner emits.  Mirrors the
+# one whitespace-delimited chanted word -- the legarmeh the scanner emits.  Mirrors the
 # scanner's leftmost-longest legarmeh rule, so group(1) is the servus mark the legarmeh
 # sits on (issue #9, Phase 2: matched over the Unicode mark alphabet).
 _LEGARMEH_WORD_RE = re.compile(

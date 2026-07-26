@@ -35,8 +35,8 @@ _LM_0505_03 = (
 
 
 _LM_0505_04 = (
-    "This makes the word הונח locally legal while rendering the second half of the verse illegal"
-    f" by giving the silluq segment two words accented with {TIPEXA}."
+    "This makes the chanted word הונח locally legal while rendering the second half of the verse illegal"
+    f" by giving the silluq segment two chanted words accented with {TIPEXA}."
     f" (This (short) verse has no {ETNAXTA} segment.)"
 )
 
@@ -96,7 +96,7 @@ BY_REF: dict[str, dict[str, object]] = {
             " The defect itself, though, is fundamentally a pashta-vs-qadma confusion on"
             f" the single mark on דברי; the malformed {TIPEXA} phrase"
             " (tipexa_phrase → ERROR) is only a surface artifact of how the LALR parse"
-            f" fails, not a problem with the {TIPEXA} or the words that phrase spans"
+            f" fails, not a problem with the {TIPEXA} or the chanted words that phrase spans"
             " — flipping that one mark (qadma → pashta) clears the error entirely."
         ),
     },

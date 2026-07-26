@@ -48,12 +48,12 @@ _JE_1003_02 = (
 )
 
 
-_JE_1003_03 = "Finally, it should be noted that the mark preceding this word’s yod is assumed to be a spacer."
+_JE_1003_03 = "Finally, it should be noted that the mark preceding this chanted word’s yod is assumed to be a spacer."
 
 
 _JE_4417_01 = (
     "A telisha qetanna is a postpositive accent: it belongs on the final letter of its"
-    " word. Here, though, it sits on the first letter, the kaf of כִּי, with nothing on the"
+    " chanted word. Here, though, it sits on the first letter, the kaf of כִּי, with nothing on the"
     " final yod. Because the grammar checker reads the Unicode-converted source, this"
     " misplacement of the mark is the only defect it can see."
 )
@@ -61,10 +61,10 @@ _JE_4417_01 = (
 
 _JE_4417_02 = (
     "We detect this in the lexical phase, alongside the unpaired zarqa/tsinnorit stress"
-    " helpers, but the violation is really one of intra-word grammar: a rule about where"
-    " within a word a postpositive accent may fall, not about the alphabet of marks."
-    " It is one instance of a broader family of word-level rules we have not yet"
-    " implemented in general — every postpositive accent must fall on its word’s final"
+    " helpers, but the violation is really one of grammar within the chanted word: a rule about where"
+    " inside one a postpositive accent may fall, not about the alphabet of marks."
+    " It is one instance of a broader family of such rules we have not yet"
+    " implemented in general — every postpositive accent must fall on its chanted word’s final"
     " letter, every prepositive on its first."
 )
 
@@ -78,9 +78,9 @@ _JE_4417_03 = (
     " misplacement survives for the checker; but the M-C also carries the additional coding"
     " error of a 24 stress helper with no 04 for it to help. An argument runs the other way,"
     " though: given that the mark is misplaced onto a nonfinal letter, coding it 04 there"
-    " would arguably be worse, since as a 24 the word at least obeys the invariant that 04"
+    " would arguably be worse, since as a 24 the chanted word at least obeys the invariant that 04"
     " falls only on a final letter and 24 only on a nonfinal one. It is not important to rank"
-    " exactly how flawed this word is."
+    " exactly how flawed this chanted word is."
 )
 
 
@@ -97,10 +97,10 @@ _JE_4417_05 = [
     "Compare ",
     wlc_utils_html.anchor("je 26:5", {"href": "#obje26v5"}),
     ", a closely analogous case: there an unpaired pashta stress helper sits on the syllable where the real"
-    " pashta belongs. In both verses the word is finally stressed (and a single-syllable word"
+    " pashta belongs. In both verses the chanted word is finally stressed (and a single-syllable one"
     " like כי counts as finally stressed), so it needs — and should have — no stress helper at"
     " all. The cure is therefore not to supply the helper a “missing partner” accent, but to"
-    " move the mark onto the word’s final letter, where it stops being a stress helper and"
+    " move the mark onto that chanted word’s final letter, where it stops being a stress helper and"
     " simply becomes the real postpositive accent.",
 ]
 
@@ -187,8 +187,8 @@ BY_REF: dict[str, dict[str, object]] = {
                 " Instead, it looks like an unpaired pashta stress helper."
                 " (Some typography centers a pashta stress helper,"
                 " making it indistinguishable from a qadma, but BHS aligns them distinctly.)"
-                " I.e. in BHS, the mark looks like a pashta stress helper with no real (end-of-word) pashta to accompany it."
-                " (Note that that adding a real pashta to this word would not fix it, since a stress helper on a final syllable makes no sense.)"
+                " I.e. in BHS, the mark looks like a pashta stress helper with no real (end-of-chanted-word) pashta to accompany it."
+                " (Note that that adding a real pashta to this chanted word would not fix it, since a stress helper on a final syllable makes no sense.)"
             ],
             [
                 "So, though above I said “BHS transcribes a syllable as having qadma rather than pashta”,"
@@ -210,9 +210,9 @@ BY_REF: dict[str, dict[str, object]] = {
                 wlc_utils_html.anchor("je 44:17", {"href": "#obje44v17"}),
                 ", another unpaired stress helper — there a telisha qetanna helper (M-C 24)"
                 " sitting on the syllable where the real (postpositive) telisha qetanna belongs. There too the"
-                " word is finally stressed (a single-syllable word like כי counts as finally"
+                " chanted word is finally stressed (a single-syllable one like כי counts as finally"
                 " stressed) and so needs no stress helper at all: the cure is to move the mark"
-                " onto the word’s final letter, where it becomes the real postpositive accent,"
+                " onto that chanted word’s final letter, where it becomes the real postpositive accent,"
                 " not to add a separate real accent alongside the helper.",
             ],
         ),
@@ -220,7 +220,7 @@ BY_REF: dict[str, dict[str, object]] = {
     "je 44:17": {
         "st-source": "tbd",
         "st-summary": (
-            "A telisha qetanna is placed on a non-final letter rather than on its word’s"
+            "A telisha qetanna is placed on a non-final letter rather than on its chanted word’s"
             " final letter."
         ),
         "wlc_focus": "כ֩י",
