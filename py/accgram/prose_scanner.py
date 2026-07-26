@@ -104,15 +104,16 @@ _LEGARMEH_LA = (
 _METHIGA_MID = am.negated_class("", "0123468")
 # qadma-before-geresh lookahead: U+05A8 is named AZLA when a geresh is the *next
 # accent token* (cross-letter), QADMA otherwise.  Like METHIGAZAQEF, the span is the
-# cross-letter run between the two -- NOT a literal X/letter separator -- so a
+# cross-letter run between the two -- NOT a literal ``LETTER`` separator -- so a
 # (non-occurring, non-whitelisted) same-letter qadma+geresh adjacency can't accidentally
 # depend on letter-adjacency.  But unlike METHIGAZAQEF (which never crosses a paseq), an
 # azla-geresh pair can be separated by scanner-*swallowed* marks (paseq, meteg, tsinnorit,
-# puncta) and even a word boundary -- e.g. 1Chr 12:19's ``qadma X X paseq SPACE X X geresh``,
-# where the swallowed paseq leaves AZLA and GERESH token-adjacent.  So the intervening class
-# is "anything that is not itself a tokenizing accent": it permits the swallowed marks and the
-# structural filler (letter X, maqaf, space, ``]N`` note, ``*`` ketiv) but stops at any accent
-# -- the geresh that follows, or any other accent that would mean geresh is NOT the next token.
+# puncta) and even a word boundary -- e.g. 1Chr 12:19's ``qadma LETTER LETTER paseq SPACE
+# LETTER LETTER geresh``, where the swallowed paseq leaves AZLA and GERESH token-adjacent.  So
+# the intervening class is "anything that is not itself a tokenizing accent": it permits the
+# swallowed marks and the structural filler (the ``LETTER`` placeholder, maqaf, space, ``]N``
+# note, ``*`` ketiv) but stops at any accent -- the geresh that follows, or any other accent
+# that would mean geresh is NOT the next token.
 # geresh-muqdam edge cases (lv1:3, 2k17:13) normalize to plain geresh and never co-occur with
 # a preceding qadma.
 # The marks the scanner swallows between two accent tokens (see the swallow rule near the
@@ -176,7 +177,7 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # munax+paseq NOT before revia: legarmeh only inside a has_legarmeh passage.
     (re.compile(am.MUNAX + _TEXT + am.PASEQ), "_LEGARMEH_OR_MUNAX"),
     (re.compile(am.MUNAX), "MUNAX"),
-    # mahapakh + qadma on one base letter (adjacent in the mark string, no X
+    # mahapakh + qadma on one base letter (adjacent in the mark string, no ``LETTER``
     # between -> same letter): an impositive above-accent and below-accent share a
     # letter, so the pair has no right-to-left (graphical) order -- one sits above the
     # letter and one below -- even though it has a chanting order (qadma before mahapakh;
@@ -210,7 +211,8 @@ _GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # "**" and "*<non-space>+" -> swallowed
     (re.compile(r"\*\*"), None),
     (re.compile(r"\*[^* \r\n\-]+"), None),
-    # catch-all: any other single char (letter X, maqaf, space, ]N digit) -> swallowed
+    # catch-all: any other single char (``LETTER`` placeholder, maqaf, space, ]N digit)
+    # -> swallowed
     (re.compile(r".", re.DOTALL), None),
 ]
 

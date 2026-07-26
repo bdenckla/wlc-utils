@@ -24,7 +24,7 @@ may legitimately share a letter -- the MAM-confirmed ek20:31 ``mahapakh!qadma`` 
 one token, grammar-accepted) and the telisha gedola + geresh-family pair (gn5:29, zp2:15,
 2k17:13), spared as a two-token *sequence* (the telg and the geresh, in manuscript order --
 gerstar-then-telg for these same-letter words) -- so ANY other two adjacent
-accents (no base-letter ``X`` between -> same letter) is an alphabet error.  The sole
+accents (no base-letter ``LETTER`` between -> same letter) is an alphabet error.  The sole
 attested illicit pair is mahapakh + tipexa (lv25:20); two accents stacked on one letter
 make the fault intrinsic to the letter -- an alphabet error, not an illegal grammatical
 sequence (which the grammar would otherwise flag as ``tipexa_phrase -> ERROR``, the
@@ -198,7 +198,7 @@ def illegal_same_letter_pairs(body: str) -> list[LexicalUngrammaticalMark]:
     """Return every non-whitelisted same-letter accent pair in a prose verse body.
 
     Two accents are on one base letter iff they are *adjacent* in the body (no
-    base-letter ``X`` -- nor any other non-accent -- between them).  Such a stacking is
+    base-letter ``LETTER`` -- nor any other non-accent -- between them).  Such a stacking is
     an alphabet error unless it is a whitelisted cluster: mahapakh + qadma (ek20:31,
     MAM-confirmed; the scanner fuses it to one ``mahapakh!qadma`` token before the grammar
     and it never reaches here) or telisha gedola + a geresh-family mark (gn5:29, zp2:15,
@@ -237,7 +237,7 @@ def nonfinal_telisha_qetannas(body: str) -> list[LexicalUngrammaticalMark]:
     unpaired helper of je 44:17 (כִּי, the mark on the kaf with nothing on the yod) -- an
     intrinsic word-internal error independent of surrounding context.
 
-    "Non-final" is read positionally: a base letter (``X``) follows the mark later in the
+    "Non-final" is read positionally: a base-letter ``LETTER`` follows the mark later in the
     atom.  This is the only checker-visible defect, because in the Unicode source M-C
     ``24`` and ``04`` collapse to one codepoint -- the helper/main distinction is gone and
     only the placement (kaf vs. yod) survives.

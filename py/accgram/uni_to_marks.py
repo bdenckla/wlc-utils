@@ -2,7 +2,7 @@ r"""Extract the Unicode **mark sequence** the scanners consume (issue #9, Phase 
 
 The prose/poetic scanners (`prose_scanner` / `poetic_scanner`) read each verse
 as a stream of single-character *marks* -- one Unicode codepoint per cantillation
-accent (plus meteg/paseq/sof-pasuq/puncta), placeholder ``X`` per base letter, and
+accent (plus meteg/paseq/sof-pasuq/puncta), one ``LETTER`` placeholder per base letter, and
 maqaf (``-``) / space word boundaries -- as defined in `accent_marks`.  This module
 produces that mark body straight from the canonical ``-kq-u`` Unicode verses.
 
@@ -87,7 +87,7 @@ def is_accent(ch: str) -> bool:
 def word_to_marks(word: str) -> str:
     """Transcode one Unicode word/atom into its scanner-ready mark string.
 
-    Letters become ``X`` placeholders, points are dropped, accents pass through as
+    Letters become ``LETTER`` placeholders, points are dropped, accents pass through as
     their codepoints, and maqaf / paseq / sof pasuq / puncta are emitted verbatim.
     Prepositive accents are restored to the front of the mark sequence (see
     `PREPOSITIVE_MARKS`).

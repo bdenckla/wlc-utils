@@ -103,8 +103,8 @@ _VERSE_RE = re.compile(r"^([1-9][0-9]*):([1-9][0-9]*)[ \t](.*)$")
 _POETIC_DISJUNCTIVES = pan.POETIC_DISJUNCTIVES
 
 # Same-letter accent pairs: a WHITELIST, not a blacklist (Plan D).  Only a few accent
-# pairs may legitimately share one base letter; ANY other two adjacent accents (no X
-# between -> same letter) is a lexical anomaly emitted as a bang.  The whitelist:
+# pairs may legitimately share one base letter; ANY other two adjacent accents (no
+# ``LETTER`` between -> same letter) is a lexical anomaly emitted as a bang.  The whitelist:
 #   - revia + geresh muqdam   -> revia mugrash      (fused by the rule above)
 #   - revia + (plain) geresh  -> revia mugrash      (the ps124:4 charity, fused above)
 #   - oleh   + yored (merkha) -> oleh-we-yored      (fused above; cross-letter in WLC
@@ -187,8 +187,8 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     #     between).  This is the ONLY shape WLC 4.22 uses (corpus-wide: 0 same-letter).
     #   - same-letter (MAM, and any edition that stacks the pair): when the stress is on the
     #     word's first syllable the yored merkha and the ole land on ONE base letter, stored
-    #     merkha-THEN-ole (no X between) -> matched by the MERKHA+OLE rule.  13 verses across
-    #     Ps/Prov/Job in MAM-simple (e.g. Ps 30:12 לִ֥֫י), none in WLC 4.22.
+    #     merkha-THEN-ole (no ``LETTER`` between) -> matched by the MERKHA+OLE rule.  13 verses
+    #     across Ps/Prov/Job in MAM-simple (e.g. Ps 30:12 לִ֥֫י), none in WLC 4.22.
     # Both shapes fuse to the one OLEH_WEYORED disjunctive -- the merkha is the yored, not a
     # servus.  Without the same-letter rule MAM's merkha+ole would fall through to the bang
     # guard and be flagged merkha!ole -> NO_PARSE; this keeps the checker faithful to a wider
@@ -210,7 +210,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # = within-letter order-normalize (revia+geresh, the storage order, is equivalent to
     # geresh+revia -- we are liberal about mark order *within* a letter, never across)
     # then promote the geresh to geresh muqdam, which the rule above fuses; expressed
-    # here directly as one REVIA+GERESH fusion.  Adjacency (no X between) keeps it
+    # here directly as one REVIA+GERESH fusion.  Adjacency (no ``LETTER`` between) keeps it
     # same-letter only.  (Failing fast on any *other* stray accent is deferred to the
     # poetic "stop swallowing" work, Plan C; geresh is the only attested case.)
     (re.compile(am.REVIA + am.GERESH), pan.REVIA_MUGRASH),
@@ -256,7 +256,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     ),
     # revia (gadol/qatan) -- reclassified in the second pass.
     (re.compile(am.REVIA), pan.REVIA),
-    # bang guard = any two adjacent accents on one base letter (no X between -> same
+    # bang guard = any two adjacent accents on one base letter (no ``LETTER`` between -> same
     # letter) that are NOT a whitelisted pair: a lexical anomaly, fused into one order-less
     # `a!b` bang (Plan D) rather than emitted as a reorderable sequence.  Type/leaf per
     # pair via _bang_pair_token (merkha+qadma -> MERKHA_AZLA / merkha!azla, the poetic
@@ -285,7 +285,7 @@ _POETIC_GG_RULES: list[tuple[re.Pattern[str], str | None]] = [
     # mark.  Emit STRAY_ACCENT (which the grammar cannot parse -> NO_PARSE) rather than
     # let the catch-all swallow it silently.  Placed above the catch-all so a 1-char
     # accent match beats the equally-long `.`; the catch-all keeps swallowing the
-    # structural junk (X placeholders, spaces, maqaf, `]N` note markers).  Zero live
+    # structural junk (``LETTER`` placeholders, spaces, maqaf, `]N` note markers).  Zero live
     # customers today -- the only attested catch-all accent (the ps124:4 geresh) is
     # consumed by the same-letter revia mugrash charity above.
     (re.compile("[֑-֮]"), pan.STRAY_ACCENT),

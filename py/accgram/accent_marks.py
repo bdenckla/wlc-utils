@@ -11,7 +11,7 @@ A "mark body" is a string of single-character marks, one per structural element:
 * each **accent** is its own Unicode codepoint (U+0591..U+05AE);
 * **meteg/silluq** (U+05BD), **paseq** (U+05C0), **sof pasuq** (U+05C3) and the
   upper/lower **puncta** (U+05C4/U+05C5) are likewise their own codepoints;
-* every base letter becomes a single placeholder ``LETTER`` (``X``) -- opaque
+* every base letter becomes a single placeholder ``LETTER`` -- opaque
   scanner filler, exactly as in Phase 1 -- and vowels/points are dropped;
 * **maqaf** is ``-`` and inter-word gaps are a space, the two word boundaries the
   ``TEXT`` class and the lexical layer key on;
