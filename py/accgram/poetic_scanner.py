@@ -54,7 +54,7 @@ accent -> poetic reading (the accents that matter in the Three Books):
   silently swallowed.  Zero live customers (the lone ps124:4 geresh is consumed by the
   same-letter revia mugrash charity).
 
-Note: "revia mugrash without geresh" (#367 = Breuer Ch 10 §17-18) -- a bare revia
+Note: "revia mugrash without geresh" (#367 = Breuer Ch 10 §14) -- a bare revia
 acting as the main verse divider when the verse has no atnax -- is NOT a gap: it is
 the last disjunctive before silluq, so _reclassify_revia maps it to REVIA_MUGRASH
 (see that function's docstring), and the rich revia_mugrash_clause then carries its

@@ -11,7 +11,7 @@ encoding any of them in the grammar.  It already settled two:
 
   * dexi: Breuer Ch 11 §11 says "always [munax]", but L marks merkha in 16/19 cases and
     MAM agrees (munax in 0) -- REFUTED.
-  * small revia': Breuer §16 says "[merkha]", and L is 125/125 merkha with MAM agreeing and
+  * small revia': Breuer §17 says "[merkha]", and L is 125/125 merkha with MAM agreeing and
     zero servant-type conflicts -- CONFIRMED (encoded, though it then fires on nothing).
 
 Per target it shows: the L adjacent-servant distribution; and, over verses where L and

@@ -315,7 +315,7 @@ def test_tsinnor_subdivides_revia_qatan_before_oleh():
 
 
 def test_revia_qatan_requires_merkha_servant():
-    """Breuer Ch 11 §16, confirmed by both witnesses (servi_before oracle): the
+    """Breuer Ch 11 §17, confirmed by both witnesses (servi_before oracle): the
     servant adjacent to a small revia' is merkha (a mahapakh may precede it).  A
     merkha-served small revia parses; a non-merkha adjacent servant (here munax) does
     not, even though the position is otherwise valid.  This rule is faithful but

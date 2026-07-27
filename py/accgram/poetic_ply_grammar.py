@@ -268,7 +268,7 @@ def p_revia_gadol_phrase(p):
     _phrase(p, "revia_gadol_phrase")
 
 
-# Breuer Ch 11 §16: "the servant next to a small revia' is [merkha], and a [mahapakh]
+# Breuer Ch 11 §17: "the servant next to a small revia' is [merkha], and a [mahapakh]
 # precedes it."  So the servus immediately adjacent to REVIA_QATAN must be MERKHA;
 # any earlier servi (e.g. the preceding mahapakh) are free.  Unlike the refuted
 # dexi<-munax rule, this is CONFIRMED by both witnesses via the servi_before oracle
@@ -291,7 +291,7 @@ def p_revia_qatan_phrase(p):
     _phrase(p, "revia_qatan_phrase")
 
 
-# Permissive servi before REVIA_MUGRASH.  NB: Breuer Ch 11 §35 says the servant is merkha
+# Permissive servi before REVIA_MUGRASH.  NB: Breuer Ch 11 §38 says the servant is merkha
 # (with a mahapakh before it).  Vetted via servi_xcheck (2026-06-17) and REFUTED at the
 # token level: against 1185 merkha, L marks MAHAPAKH in 9 verses (Ps 31:16, 34:8, 68:15,
 # 79:3, 116:19, 135:21, Prov 7:7, 27:1, 27:19) and ILLUY in 1 (Ps 137:9), and MAM agrees in
@@ -731,7 +731,7 @@ def p_legarmeh_clause(p):
 
 # --- shalshelet gedolah clause (#371) ------------------------------------------
 # A disjunctive in the second half before silluq (revia mugrash rank); distinct from the
-# conjunctive shalshelet qetannah.  Its servant is merkha: Breuer Ch 11 §30 (merkha, with a
+# conjunctive shalshelet qetannah.  Its servant is merkha: Breuer Ch 11 §37 (merkha, with a
 # tarxa before it), confirmed by servi_xcheck (2026-06-17) -- all 3 poetic occurrences
 # carry a merkha servant in both L and MAM (uniform, zero conflicts), like small revia'.
 # (This corrects an earlier "as a rule it has no servi" note, which holds for the prose
