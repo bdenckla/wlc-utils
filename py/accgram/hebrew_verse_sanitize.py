@@ -9,7 +9,7 @@ _HEBREW_LETTER_END = ord("\u05ea")
 
 # MAM marks word stress by duplicating a word's disjunctive accent onto the
 # stressed syllable.  The canonical accent sits at one edge of the word and the
-# extra copy (the "stress helper") sits on the stressed syllable; WLC carries
+# extra copy (the "stress helper") sits on the stressed syllable; WLC has
 # only the canonical copy.  To suppress this spurious MAM-vs-WLC difference we
 # keep the canonical-edge copy and drop the helper(s):
 #   - telisha gedola is prepositive (canonical copy at the word start) -> keep first

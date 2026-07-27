@@ -110,8 +110,8 @@ SHALSHELET_QETANNAH = "SHALSHELET_QETANNAH"
 # accents sharing one letter is a lexical anomaly UNLESS the pair is whitelisted (revia +
 # geresh muqdam, ole + yored, dexi + munax), so the bang has no `conj` terminal and the
 # verse dead-ends to NO_PARSE (the poetic lexical-error surface), surfacing ps56:10 as a
-# flagged ungrammatical.  Manuscript rationale: MAM carries azla alone and, according to Breuer,
-# so does the Aleppo Codex, while Sassoon 1053 carries merkha alone -- L's double-marking
+# flagged ungrammatical.  Manuscript rationale: MAM has azla alone and, according to Breuer,
+# so does the Aleppo Codex, while Sassoon 1053 has merkha alone -- L's double-marking
 # looks like a conflation of the two single-accent traditions (see poetic_ob_notes["ps 56:10"]).
 #
 # MERKHA_AZLA is the canonical instance of the general bang guard (poetic_scanner): the

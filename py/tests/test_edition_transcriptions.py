@@ -165,9 +165,10 @@ _EXPECTED_DIVERGENCES = {
     # is the other's rounding error.
     "koren_dt_taxton": [],
     # Koren's Exodus APPENDIX Decalogue (elyon, p. 38) is the FIRST Koren page to diverge:
-    # 142 reference tokens against 144, at TWO points.  Both are WORD-DIVISION differences, not
-    # tradition ones -- at two maqaf compounds the vendored ws/ex/elyon/printed strand writes as a
-    # single chanted word, Koren prints the two atoms as separate accented words:
+    # 142 reference tokens against 144, at TWO points.  Both are MAQAF differences -- the bottom
+    # rung of the one scale, not a second ledger -- rather than tradition ones: at two points
+    # where the vendored ws/ex/elyon/printed strand has a maqaf joining two atoms into one
+    # chanted word, Koren has the two atoms separately accented:
     #   * לֹא יִהְיֶה לְךָ (20:3): Koren gives יהיה its own munax where the reference joins
     #     יהיה־לך (so יהיה carries only a meteg).  The region anchors at the reference word לא,
     #     hence the "לא" skeleton; the inserted accent is the munax on יהיה.
@@ -1331,7 +1332,7 @@ def test_the_scanner_supplies_the_stroke_kinds_koren_declines_to_state(
 ) -> None:
     """What the parser adds that #74 could not: a kind for a kind-agnostic edition.
 
-    Koren prints the vertical without saying which kind it is, so every one of its strokes is
+    Koren has the vertical without saying which kind it is, so every one of its strokes is
     transcribed ``[pasoleg]`` -- kind unspecified, asserting nothing the book does not -- and
     ``test_transcription_pasoleg_kinds_round_trip_against_the_reference`` therefore compares
     ZERO strokes for all four Koren stems.  The scanner's positional rule determines all

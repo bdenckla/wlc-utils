@@ -224,7 +224,7 @@ ROM_SILLUQ_SOF_PASUQ = f"{ROM_SILLUQ} + {ROM_SOF_PASUQ}"  # the standalone-verse
 # The accent codepoints that fall on the chanted words these pages derive an accent for -- the first
 # Decalogue span's two boundary words, plus the two pausal words of ``resolve_pausal`` (geresh is
 # there for מתחת in the עליון) -- mapped to the romanizations above.  U+05BD (meteg/silluq) is
-# deliberately absent: it is not a cantillation accent, and is resolved to silluq only in
+# deliberately absent: it is not an accent, and is resolved to silluq only in
 # verse-final position (see ``_accent_of`` and CLAUDE.md on meteg-vs-silluq).
 _ACCENT_NAMES: dict[str, str] = {
     "\N{HEBREW ACCENT PASHTA}": ROM_PASHTA,
@@ -331,7 +331,7 @@ SHABBAT_SIGNAL_SHORTHAND = (
 #
 # WHY IT IS SAID AT ALL (2026-07-25 claim audit, finding 3).  The trio used "every accent" two
 # ways at once.  Koren's Exodus appendix Decalogue was credited with "Every accent. The only two
-# differences are of word division", while the summary directly under the same table counted that
+# differences are of word division", while the summary directly under the same table counted that  # prose-ok: quotes the replaced convention
 # very Decalogue as the one of four that does NOT follow its strand in every accent -- and the
 # Deuteronomy appendix one was credited with "no difference anywhere" although it joins לא־תעשה
 # into a maqaf compound where its strand sets the two atoms apart.  Both readings were available
@@ -396,10 +396,10 @@ def _accent_index_and_name(word: str) -> tuple[int, str]:
 
 
 def _accent_of(word: str) -> str:
-    """The cantillation accent on one pointed word, as a romanized name derived from its marks.
+    """The accent on one pointed word, as a romanized name derived from its marks.
 
-    A word carries at most one of the boundary accents we care about.  U+05BD is not a
-    cantillation accent, but the same glyph functions as *silluq* on the verse-final chanted word
+    A word has at most one of the boundary accents we care about.  U+05BD is not an
+    accent, but the same glyph functions as *silluq* on the verse-final chanted word
     (the one carrying *sof pasuq*); so a sof-pasuq word whose only accent-like mark is U+05BD
     is reported as silluq.  Never called on a non-verse-final U+05BD (that is an ordinary
     meteg -- see CLAUDE.md)."""

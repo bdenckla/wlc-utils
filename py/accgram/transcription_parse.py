@@ -40,7 +40,7 @@ it.  The scanner's LEGARMEH call is purely POSITIONAL -- a munax + U+05C0 before
 so it is blind to which kind an edition prints, exactly as the pre-#74 vendored data was.
 The converse is what is worth having: BECAUSE the call is positional, the scanner supplies a
 kind where an edition withholds one, which is the whole stroke inventory of the four Koren
-transcriptions (Koren prints the bar without saying which it is, so every one of its strokes
+transcriptions (Koren has the bar without saying which it is, so every one of its strokes
 is transcribed ``[pasoleg]``, kind unspecified, and the round-trip against the reference
 compares none of them).  ``scanner_pasoleg_kinds`` is that determination.
 

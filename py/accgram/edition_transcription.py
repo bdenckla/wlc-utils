@@ -52,8 +52,8 @@ declaring a maqaf difference to be no accent difference at all; ``printed_decalo
 A maqaf USUALLY takes the place of a non-final atom's accent -- an atom standing as its own
 chanted word must have one, while a non-final atom normally takes at most a meteg --
 but usually is not always,
-and the Exodus taxton is why the weaker word is the right one.  SimTiq prints a munax on the
-joined לא of לא־יהיה and of לא־תעשה, whose second atoms carry merkha and qadma -- two accents on
+and the Exodus taxton is why the weaker word is the right one.  SimTiq has a munax on the
+joined לא of לא־יהיה and of לא־תעשה, whose second atoms have merkha and qadma -- two accents on
 one chanted word, where all eight strands have a meteg.  Those differences are two rungs up,
 in the accents themselves, and an earlier version of this note asserted they could not occur.
 Neither they nor the elyon's pair touch the disjunctive skeleton or the chanted verse
@@ -281,7 +281,7 @@ HEBREW_MODIFIERS = {
 # streams; what it adds is the one fact the vendored data cannot hold, since that fetch folds
 # {{מ:לגרמיה}} and {{מ:פסק}} alike onto U+05C0 -- WHICH kind of stroke stands there.
 #
-# Three kinds, not two, because an edition may not draw the distinction at all.  Koren prints
+# Three kinds, not two, because an edition may not draw the distinction at all.  Koren has
 # the stroke without saying which it is, so writing either מונ_לג (asserting legarmeh) or
 # [פסק] (asserting narrow-sense paseq) would claim something the book does not; [פסלג] says
 # "a pasoleg stands here, kind unspecified".  The name is the repo's existing portmanteau for

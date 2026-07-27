@@ -182,8 +182,8 @@ def _phrase_word_diff(
     letters: str, wlc_disj: tuple[str, ...], mam_disj: tuple[str, ...]
 ) -> str:
     return (
-        f"on {letters}, WLC reads {_disj_phrase(wlc_disj)} "
-        f"where MAM reads {_disj_phrase(mam_disj)}"
+        f"on {letters}, WLC has {_disj_phrase(wlc_disj)} "
+        f"where MAM has {_disj_phrase(mam_disj)}"
     )
 
 
@@ -216,7 +216,7 @@ def _disj_phrase(disj: tuple[str, ...]) -> str:
 
 def _describe_disjunctive_diff(wlc: tuple[str, ...], mam: tuple[str, ...]) -> list[str]:
     """Phrase each edit between the WLC and MAM disjunctive skeletons from WLC's
-    side (MAM is the oracle), e.g. "WLC omits silluq that MAM reads".  Fallback only
+    side (MAM is the oracle), e.g. "WLC omits silluq that MAM has".  Fallback only
     (see _word_aligned_clauses); the disjunctive-only skeleton drops conjunctives and
     so cannot tell which word each divider sits on."""
     matcher = difflib.SequenceMatcher(a=wlc, b=mam, autojunk=False)
@@ -229,9 +229,9 @@ def _describe_disjunctive_diff(wlc: tuple[str, ...], mam: tuple[str, ...]) -> li
         if tag == "delete":
             clauses.append(f"WLC has an extra {wlc_part} not in MAM")
         elif tag == "insert":
-            clauses.append(f"WLC omits {mam_part} that MAM reads")
+            clauses.append(f"WLC omits {mam_part} that MAM has")
         else:  # replace
-            clauses.append(f"WLC reads {wlc_part} where MAM reads {mam_part}")
+            clauses.append(f"WLC has {wlc_part} where MAM has {mam_part}")
     return clauses
 
 
