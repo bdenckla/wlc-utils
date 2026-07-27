@@ -147,6 +147,12 @@ def _n(survey: dict, corpus: str, genre: str, field: str) -> int:
     return survey["corpora"][corpus][genre][field]
 
 
+def _gray(survey: dict, kind: str | None = None) -> int:
+    """The gray-maqaf total, or the count of one of its two kinds."""
+    gray = survey["gray_maqaf"]
+    return gray["total"] if kind is None else gray["by_kind"][kind]
+
+
 def _route_count(survey: dict, corpus: str, genre: str, route: str) -> int:
     return survey["corpora"][corpus][genre]["by_route"].get(route, 0)
 
@@ -511,6 +517,12 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
     # merely different, so neither is a detail: the unwritten maqaf (which puts most of the
     # phenomenon out of the scan's reach) and the poetic system's readiness to accent one
     # chanted word twice (which is the asymmetry a prose-trained reader would get wrong).
+    #
+    # The gray maqaf closes the first of those with a figure instead of a hedge (2026-07-27):
+    # the sentence used to call the poetic count "a floor" and stop, which told a reader the
+    # number was wrong without telling them by how much.  It stays inside the one paragraph #83
+    # cut this section down to, and it names no accent -- spelling out what the 47 are would
+    # want oleh-we-yored and tsinnorit in prose, which is the detail that was cut.
     hits = _n(survey, _CORPUS, "poetic", "hits")
     return (
         H.heading_level_2("The poetic verses"),
@@ -523,8 +535,13 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
             " the maqaf after a secondary mark is customarily left unwritten while the atom"
             " still counts as joined, so a survey that finds compounds by looking for a"
             f" written maqaf reaches only part of what is there. MAM's poetic verses have"
-            f" {hits} cases by that measure — a floor, and not a figure to set beside the"
-            " prose one."
+            f" {hits} cases by that measure, and MAM has the other part of the measure too:"
+            f" it supplies {_gray(survey)} gray maqafs, its own mark for a maqaf the"
+            " manuscript leaves unwritten where the chanted word needs one. Of those,"
+            f" {_gray(survey, mpa.GRAY_KIND_SECOND)} join an atom that has an accent"
+            " alongside the compound's own; the other"
+            f" {_gray(survey, mpa.GRAY_KIND_SPREAD)} have one accent written across the two"
+            " atoms. Neither figure belongs beside the prose one."
         ),
     )
 

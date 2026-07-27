@@ -64,6 +64,18 @@ Crown, which he advised on).  There is therefore no second manuscript here at al
 counts measure L as Westminster reads it, and what an edition does with it.  ``CORPUS_KIND``
 records that so the page cannot state a corpus's standing wrongly.
 
+THE GRAY MAQAF IS THE POETIC HALF OF THE ANSWER, and it is a second measure rather than more of
+the first.  The scan above finds a compound by its WRITTEN maqaf, and in poetic verses the maqaf
+after a secondary mark is customarily not written -- so the poetic count is a floor by
+construction and no tightening of the scan can raise it.  MAM's own answer to that is the gray
+maqaf (מקף אפור), its mark for a maqaf the manuscript leaves unwritten where the chanted word
+needs one; ``gray_maqaf_survey`` counts it.  The doctrine is Breuer, Chapter 9 §§18-36, set out in
+MAM's Wikisource introduction (authored at ``../MAM-basics/py/author_misc/
+he_ws_intro_to_mam_gray_maqaf_*.mediawiki``), and the mark is preserved only in MAM-parsed-plus:
+MAM-simple drops it, so this one count reads a different corpus from every other count here.
+Two kinds are separated, because only one of them answers this page's question: an oleh with its
+yored, and a tsinnorit with its partner, are ONE accent written across two atoms.
+
 Run via ``main_accgram.py generate-html-maqaf-nonfinal-accents``.
 """
 
@@ -77,6 +89,9 @@ from pathlib import Path
 from accgram import accent_marks as am
 from accgram import poetic_filter, prose_filter, rtms_data
 from cmn.wlc_book_codes import wlc_bb_codes
+from mb_cmn.hebrew_punctuation import NU_GMAQ
+from mb_cmn.str_defs import DOUB_VERT_LINE
+from mb_diff_mpu.mpplus_flatten import flatten_ep_for_diff
 
 import repo_paths
 import wlc_provenance as provenance
@@ -475,6 +490,123 @@ def classify(hit: dict, oracle: dict[str, Counter], *, routed: bool) -> dict:
     }
 
 
+# --- MAM's gray maqaf ---------------------------------------------------------
+
+# MAM-parsed-plus' three poetic books, keyed by the book code ``bcv`` uses.  There is no prose
+# file to read: the gray maqaf occurs in poetic verses only, which the survey checks rather than
+# assumes -- ``gray_maqaf_survey`` raises if a prose-cantillated verse of Job carries one.
+_GRAY_MAQAF_BOOKS = (
+    ("ps", "D1-Psalms.json"),
+    ("pr", "D2-Proverbs.json"),
+    ("jb", "D3-Job.json"),
+)
+
+# An oleh with its yored, and a tsinnorit with its partner mahapakh or merkha, are ONE accent
+# written across two atoms rather than two accents on one chanted word.  A gray maqaf joining such
+# a pair says nothing about the question this page asks, so the two kinds are counted apart and
+# the prose quotes the kind that answers it.
+_ONE_ACCENT_ACROSS_TWO_ATOMS = frozenset((am.OLE, am.TSINNORIT))
+
+GRAY_KIND_SPREAD = "one accent written across the two atoms (an oleh-we-yored, or a tsinnorit and its partner)"
+GRAY_KIND_SECOND = "a second accent on the joined atom"
+
+# Where a chanted word ends in the flattened MAM-parsed-plus text.  A space is the ordinary
+# boundary; ``flatten_ep_for_diff`` renders מ:פסק as ``DOUB_VERT_LINE`` and legarmeh as a PASEQ
+# with no space around either, so a whitespace split alone would run Ps 5:5's רשע and אתה
+# together into one chanted word and manufacture an accent for the atom after a gray maqaf.
+_CHANTED_WORD_END = frozenset((" ", PASEQ, DOUB_VERT_LINE, SOF_PASUQ))
+
+
+def _around_gray_maqaf(text: str, idx: int) -> tuple[str, str, bool]:
+    """The atom a gray maqaf joins, the rest of the chanted word, and whether that is verse-final.
+
+    ``idx`` indexes the ``NU_GMAQ`` sentinel in a flattened verse.  The far side is the REST of
+    the chanted word rather than one atom, because the atom immediately after a gray maqaf need
+    not be the one with the accent: Ps 5:5 לא~אל־חפץ joins לא to a compound whose accent is on
+    its second atom, so an atom-to-atom reading would report the compound's own accent missing.
+    Verse-finality comes back because a verse-final U+05BD is the silluq, and Ps 18:20's בי has
+    nothing else -- the same rule ``atom_accents`` applies, and applied by it below.
+    """
+    before = text[:idx].replace(NU_GMAQ, " ")
+    end = idx + 1
+    while end < len(text) and text[end] not in _CHANTED_WORD_END:
+        end += 1
+    verse_final = end < len(text) and text[end] == SOF_PASUQ
+    return before.split()[-1].split(MAQAF)[-1], text[idx + 1 : end], verse_final
+
+
+def _gray_maqaf_hits(plus_dir: Path) -> list[dict]:
+    """Every מ:מקף אפור in MAM-parsed-plus, with the atoms it joins and their accents."""
+    hits: list[dict] = []
+    for bb, filename in _GRAY_MAQAF_BOOKS:
+        with (plus_dir / filename).open(encoding="utf-8") as f_in:
+            chapters = json.load(f_in)["book39s"][0]["chapters"]
+        for chnu, chapter in chapters.items():
+            for vrnu, verse in chapter.items():
+                text = flatten_ep_for_diff(verse[2])
+                idx = text.find(NU_GMAQ)
+                while idx >= 0:
+                    joined, rest, verse_final = _around_gray_maqaf(text, idx)
+                    word = joined + MAQAF + rest.replace(NU_GMAQ, MAQAF)
+                    per_atom = atom_accents(word, verse_final)
+                    kind = (
+                        GRAY_KIND_SPREAD
+                        if set(per_atom[0]) & _ONE_ACCENT_ACROSS_TWO_ATOMS
+                        else GRAY_KIND_SECOND
+                    )
+                    hits.append(
+                        {
+                            "bcv": f"{bb}{int(chnu)}:{int(vrnu)}",
+                            "joined_atom": joined,
+                            "rest_of_chanted_word": rest,
+                            "shape": shape_of(per_atom),
+                            "kind": kind,
+                        }
+                    )
+                    idx = text.find(NU_GMAQ, idx + 1)
+    return hits
+
+
+def gray_maqaf_survey() -> dict:
+    """MAM's gray maqafs: the compounds its poetic verses join without a written maqaf.
+
+    Not a fourth corpus beside the three above -- a second MEASURE, of the part of the poetic
+    phenomenon the maqaf scan cannot reach.  See the module docstring on why it has to be, and
+    on why it alone reads MAM-parsed-plus.
+    """
+    hits = _gray_maqaf_hits(repo_paths.require_mam_parsed_plus_dir())
+    # The claims the prose rests on, pinned where the data is rather than in the page: that the
+    # mark is confined to poetic verses, so it can be described as belonging to that system; that
+    # the joined atom always has exactly one accent, which is what makes it worth a gray maqaf at
+    # all; and that another accent always falls later in the same chanted word, without which
+    # "two marks in one chanted word" -- the whole reason the count is worth quoting -- would be
+    # false of some of them.  The atom right after the gray maqaf is NOT pinned: Ps 5:5 is a real
+    # case where it has no accent and the compound's accent is one atom further on.
+    for hit in hits:
+        bb, chnu, vrnu = split_bcv(hit["bcv"])
+        assert poetic_filter.should_keep_line(bb, chnu, vrnu), hit
+        fields = hit["shape"].split("-")
+        assert fields[0] != "0" and "+" not in fields[0], hit
+        assert any(field != "0" for field in fields[1:]), hit
+    return {
+        "what": (
+            "MAM's מקף אפור: a maqaf the manuscript leaves unwritten where the chanted word"
+            " needs one. The doctrine is Breuer, Chapter 9 §§18-36, set out in MAM's Wikisource"
+            " introduction; the two atoms are one chanted word, and the joined one is often"
+            " pointed as though the maqaf were there."
+        ),
+        "source": (
+            "MAM-parsed-plus (the מ:מקף אפור template), NOT the MAM-simple this survey's"
+            " corpora read: MAM-simple drops the mark."
+        ),
+        "total": len(hits),
+        "by_book": dict(Counter(h["bcv"][:2] for h in hits).most_common()),
+        "by_kind": dict(Counter(h["kind"] for h in hits).most_common()),
+        "by_shape": dict(Counter(h["shape"] for h in hits).most_common()),
+        "occurrences": sorted(hits, key=lambda h: (h["kind"], h["shape"], h["bcv"])),
+    }
+
+
 # --- the survey ---------------------------------------------------------------
 
 
@@ -519,15 +651,17 @@ def build_survey() -> dict:
             " verse's last chanted word, where it is silluq."
         ),
         "poetic_caveat": (
-            "The poetic counts are a FLOOR and are not comparable with the prose ones."
-            " Breuer (Chapter 9 §§27, 37) records that in the Three Books the maqaf after a"
-            " secondary mahapakh, merkha or tsinnorit is customarily omitted in writing while"
-            " the atom still counts as joined -- so most of the poetic phenomenon is invisible"
-            " to a maqaf scan by construction. His own 'few cases where the hyphen is not"
-            " omitted' bear this out from the other side: Job 6:10 and Prov 25:20 are written"
-            " WITHOUT a maqaf in WLC and UXLC, and with one only in MAM. The routes are not"
-            " attempted here either; see ``classify``."
+            "The poetic counts under ``corpora`` are a FLOOR and are not comparable with the"
+            " prose ones. Breuer (Chapter 9 §§27, 37) records that in the Three Books the maqaf"
+            " after a secondary mahapakh, merkha or tsinnorit is customarily omitted in writing"
+            " while the atom still counts as joined -- so most of the poetic phenomenon is"
+            " invisible to a maqaf scan by construction. His own 'few cases where the hyphen is"
+            " not omitted' bear this out from the other side: Job 6:10 and Prov 25:20 are"
+            " written WITHOUT a maqaf in WLC and UXLC, and with one only in MAM. ``gray_maqaf``"
+            " is the measure of what the scan misses; take the two together, and neither alone."
+            " The routes are not attempted here either; see ``classify``."
         ),
+        "gray_maqaf": gray_maqaf_survey(),
         "corpora": {},
     }
     for name, words_by_bcv in corpora.items():
