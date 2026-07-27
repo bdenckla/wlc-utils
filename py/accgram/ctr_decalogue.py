@@ -178,7 +178,7 @@ def word_glyphs(word: str) -> tuple[str, ...]:
 
     A doubled postpositive (the accent written at the chanted word's edge and again on the stressed
     syllable) is one glyph, as in ``_accent_tokens``.  A meteg/silluq (U+05BD) is not an accent
-    and contributes no glyph, so a verse-final chanted word contributes its cantillation accent if any
+    and contributes no glyph, so a verse-final chanted word contributes its accent if any
     and nothing for the silluq -- the chanted-verse boundary is counted separately.
     """
     out: list[str] = []
@@ -199,7 +199,7 @@ def _has_silluq(word: str) -> bool:
     """True when this span-final word's U+05BD reads as a silluq rather than an ordinary meteg.
 
     The context rule, at the resolution this data supports: a silluq is the mark that CLOSES the
-    word, so a U+05BD with no cantillation accent after it inside the word is a silluq, and one
+    word, so a U+05BD with no accent after it inside the word is a silluq, and one
     with an accent still to come is a meteg.  CTR's לְשֽׂנְאָ֑י is the case that needs the rule --
     its U+05BD sits two letters in, before an etnaxta, so the word has a meteg and no silluq,
     and mere PRESENCE of U+05BD would have called it verse-final.  (Scoped to span-final words

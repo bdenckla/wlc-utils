@@ -357,9 +357,10 @@ def word_accents_from_verse_node(
 ) -> list[tuple[str | None, str | None, str | None]]:
     """Per-word ``(disjunctive, servus, self_servus)`` for a MAM-simple verse, in order.
 
-    A divider word lists its disjunctive (and, if its own word also bears a conjunctive
+    A divider word lists its disjunctive (and, if its own word also has a conjunctive
     before that divider, a self_servus); a conjunctive word lists its servus in the
-    scanner's vocabulary; a word with neither (proclitic / meteg-only) is
+    scanner's vocabulary; a word with neither (a non-final atom of a compound, or
+    meteg-only) is
     ``(None, None, None)``.  At most one of ``disjunctive``/``servus`` is non-None.  The
     final word is ``(SILLUQ, None, None)``.
     """

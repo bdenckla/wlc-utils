@@ -36,9 +36,9 @@ from py_html import wlc_utils_html as H
 
 import repo_paths
 
-# "Non-final atom of a compound", not "proclitic" and not "maqaf-joined atom".  "Proclitic"
+# "Non-final atom of a compound", not "proclitic" and not "maqaf-joined atom".  "Proclitic"  # prose-ok: names the rejected term
 # asserted a grammatical role the scan never checks -- route (b) is precisely an atom that keeps
-# its own accent, so it is proclitic by position only.  And a lone atom is never "maqaf-joined"
+# its own accent, so it is proclitic by position only.  # prose-ok: names the rejected term  And a lone atom is never "maqaf-joined"
 # full stop: it is joined TO the next one, or else the two of them are joined to each other.
 # Naming the atom by its POSITION in the compound says what the scan measures and nothing more,
 # and it matches the module basenames.  A title is short on space and there is no other kind of

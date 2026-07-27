@@ -304,7 +304,7 @@ def _verdict_section(by_key: dict) -> tuple[object, ...]:
 # Word stripping and the shared range cell
 # --------------------------------------------------------------------------- #
 def _strip_pointing(word: str) -> str:
-    """Reduce a pointed Hebrew word to letters + cantillation accents + accent-coupled
+    """Reduce a pointed Hebrew word to letters + accents + accent-coupled
     punctuation (maqaf, sof pasuq, legarmeh), dropping vowels, dagesh, shin/sin dots, rafe,
     and ordinary meteg. A word's U+05BD is *silluq* (an accent, kept) exactly when the word is
     verse-final, i.e. carries sof pasuq; otherwise every U+05BD is an ordinary meteg (a ga'ya)
@@ -994,10 +994,10 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
 # deliberately NOT repeated here.
 
 # The prose books' conjunctive accents (Yeivin ITM §194, encoded once in mb_cmn.hebrew_accents);
-# every other cantillation accent is disjunctive. Used only to verify, live, that each displayed
+# every other accent is disjunctive. Used only to verify, live, that each displayed
 # line really does end on a disjunctive.
 _PROSE_CONJUNCTIVES = set(ha.CONJUNCTIVES_BCC["cant-sys-prose"])
-_ACCENT_LO = ord("\N{HEBREW ACCENT ETNAHTA}")  # U+0591, first cantillation accent
+_ACCENT_LO = ord("\N{HEBREW ACCENT ETNAHTA}")  # U+0591, first accent
 _ACCENT_HI = ord("\N{HEBREW ACCENT ZINOR}")  # U+05AE, last (meteg U+05BD is excluded)
 
 # The three shared boundaries at which the differing stretch is broken into aligned line-pairs.
@@ -1010,7 +1010,7 @@ _SABBATH_LINE_ENDS: tuple[str, ...] = ("כלמלאכה", "ועבדךואמתך",
 
 
 def _ends_on_disjunctive(word: str) -> bool:
-    """True if a pointed prose word's cantillation accent is disjunctive: it bears an accent in the
+    """True if a pointed prose word's accent is disjunctive: it has an accent in the
     U+0591..U+05AE block that is not one of the prose conjunctives (Yeivin ITM §194)."""
     return any(
         _ACCENT_LO <= ord(ch) <= _ACCENT_HI and ch not in _PROSE_CONJUNCTIVES
@@ -1359,7 +1359,7 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
         # cantillation dissected just above also turns up in CTR, the web edition my CTR review
         # judges the weirdest, and possibly worst, on the web. The aside exists for that quip.
         # Its "on the web" scoping is load-bearing, not incidental: it deliberately makes no claim
-        # about which PRINT editions show the cantillation. Koren prints it too, in its own
+        # about which PRINT editions have the cantillation. Koren has it too, in its own
         # Deuteronomy (issue #66); an earlier draft asserted a "gap in Koren and Simanim" that was
         # simply false for Koren. Keep any rewrite of the aside scoped to the web.
         *_chabad_aside(),

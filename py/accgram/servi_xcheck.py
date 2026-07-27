@@ -53,7 +53,7 @@ _SERVI = frozenset(
 # cross-check byte-identical:
 #   - a mahapakh / merkha metsunnar is its base mahapakh / merkha: the fused tsinnorit
 #     is a secondary the MAM oracle does not catalog as a servus sign
-#     (mam_poetic_accents._SERVUS_SIGNS), so MAM reads the partner word's plain sign;
+#     (mam_poetic_accents._SERVUS_SIGNS), so MAM has the partner word's plain sign;
 #   - a merkha!azla bang (Plan D) is the azla -- the storage-last of its two co-equal
 #     servi, hence the one that was `types[i-1]` (the adjacent servant) before the
 #     pair fused.  Zero live customers: the lone bang (ps56:10) is not adjacent to any

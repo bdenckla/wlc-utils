@@ -1,8 +1,8 @@
 r"""Extract the Unicode **mark sequence** the scanners consume (issue #9, Phase 2).
 
 The prose/poetic scanners (`prose_scanner` / `poetic_scanner`) read each verse
-as a stream of single-character *marks* -- one Unicode codepoint per cantillation
-accent (plus meteg/paseq/sof-pasuq/puncta), one ``LETTER`` placeholder per base letter, and
+as a stream of single-character *marks* -- one Unicode codepoint per accent
+(plus meteg/paseq/sof-pasuq/puncta), one ``LETTER`` placeholder per base letter, and
 maqaf (``-``) / space word boundaries -- as defined in `accent_marks`.  This module
 produces that mark body straight from the canonical ``-kq-u`` Unicode verses.
 

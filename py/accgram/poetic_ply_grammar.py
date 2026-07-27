@@ -258,7 +258,7 @@ def p_atnax_phrase(p):
 # MAM.  The only out-of-set L servant is AZLA in three verses (Ps 72:17, Job 32:11, 34:33),
 # and those are NOT a two-witness azla servant: L has a bare azla (no paseq) where MAM marks
 # azla-LEGARMEH (azla + paseq), i.e. a near-divider, not a servant.  The disjunctive cross-
-# check already flags all three (MAM carries an extra LEGARMEH that L lacks), so a servant-
+# check already flags all three (MAM has an extra LEGARMEH that L lacks), so a servant-
 # set constraint here would be redundant -- and, by requiring the adjacent servant in
 # {mahapakh, merkha, illuy}, would turn three clean parses into NO_PARSE for a paseq-omission
 # divergence already surfaced elsewhere.  Not encoded.  See issue #18.
@@ -327,8 +327,8 @@ def p_dexi_phrase(p):
 #     (secondary) mark + secondary meteg at the tsinnor slot (foi-sec-misc), and it is
 #     CoS-CONTESTED (foi-sec-star-breuer-cos, Breuer 9.31) -- not a settled primary
 #     mahapakh; L merely keeps a sign the scanner did not treat as secondary.
-#   - Ps 79:6 (L AZLA): one-sided -- MAM reads that word as a REVIA_GADOL divider, so the
-#     DISJUNCTIVE cross-check already flags the verse (MAM carries an extra REVIA_GADOL).
+#   - Ps 79:6 (L AZLA): one-sided -- MAM has a REVIA_GADOL divider on that word, so the
+#     DISJUNCTIVE cross-check already flags the verse (MAM has an extra REVIA_GADOL).
 # Encoding MUNAX|MERKHA-only would fire on just these two -- one CoS-contested, one already
 # surfaced by the disjunctive xcheck -- while turning two clean L parses into NO_PARSE.  Not
 # encoded (confirmed-but-inert/redundant, like revia gadol).  See issue #18.
@@ -551,7 +551,7 @@ def p_revia_gadol_clause(p):
 
 # Tsinnor (a second-degree divider, rank with dexi) also subdivides revia gadol
 # directly where L has no oleh-we-yored (e.g. Ps 55:20, TSINNOR REVIA_GADOL ATNAX;
-# MAM reads REVIA_QATAN OLEH_WEYORED there -- an L/MAM divergence the xcheck flags,
+# MAM has REVIA_QATAN OLEH_WEYORED there -- an L/MAM divergence the xcheck flags,
 # parsed faithfully to L here).
 def p_tsinnor_revia_gadol_clause(p):
     """tsinnor_revia_gadol_clause : tsinnor_clause revia_gadol_phrase
@@ -788,8 +788,8 @@ def p_error(p):  # noqa: D401  (PLY callback)
     # preserving the rest of the verse's structure.
     #
     # Every other syntax error is a genuine non-parse -- a disjunctive standing
-    # where the hierarchy forbids it (the handful of L anomalies MAM reads
-    # differently).  There, PLY's generic error-token recovery would pop the stack
+    # where the hierarchy forbids it (the handful of L anomalies where MAM
+    # differs).  There, PLY's generic error-token recovery would pop the stack
     # to the silluq_phrase context and swallow the whole tail into one ERROR leaf,
     # destroying the diagnostic token sequence.  Abort instead, so parse_tokens
     # returns None and the driver records an informative NO_PARSE line.

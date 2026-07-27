@@ -151,7 +151,7 @@ def is_vocalization_only(site: Site) -> bool:
     """True where the site's two sides carry the same marks and differ only in vowel pointing.
 
     Compared through the shared strip kernel under ``METEG_ALL``, which keeps letters, every
-    cantillation accent, maqaf, sof pasuq, the paseq/legarmeh stroke and every meteg -- i.e.
+    accent, maqaf, sof pasuq, the paseq/legarmeh stroke and every meteg -- i.e.
     everything a cantillation difference could live in -- and drops exactly the vowels, dagesh,
     shin/sin dots and rafe.  So the one Decalogue site this is true of, the qamats/patax of
     לא תרצח, is separated from the accent differences by what the marks are rather than by name.

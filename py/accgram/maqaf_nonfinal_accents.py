@@ -182,7 +182,7 @@ _ACCENT_SHORTHAND = {
 
 
 def is_accent(ch: str) -> bool:
-    """A cantillation accent (U+0591..U+05AE); U+05BD (meteg/silluq) excluded."""
+    """An accent (U+0591..U+05AE); U+05BD (meteg/silluq) excluded."""
     return "֑" <= ch <= "֮"
 
 

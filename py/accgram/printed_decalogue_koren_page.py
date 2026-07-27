@@ -37,7 +37,7 @@ printed-tradition choice it makes:
     standalone-verse (ten-commandment) alternative it declines to print.
 
 The verdict table's LAST column is issue #52's question asked of these four: run through accgram's
-prose checker, is what Koren prints grammatical, and as grammatical as the strand it follows?  All
+prose checker, is Koren's accentuation grammatical, and as grammatical as the strand it follows?  All
 four give their strand's verdicts exactly, which for the two APPENDIX (עליון) Decalogues means
 printing the p-trad עליון's merged opening chanted verse -- the one the checker rejects.  So the
 p. A38 note above happens to name the alternative the checker's objection points at: read the
@@ -86,9 +86,9 @@ appendix citations, and don't "normalize" it away.  (The scan *filenames* keep t
 disambiguates them.)
 
 Koren's Deuteronomy (Vaetxanan) Decalogue *has* now been spot-checked (issue #66), so the claim is
-no longer Exodus-scoped: Koren shows the p-trad in both books.  The Deuteronomy check also reaches
+no longer Exodus-scoped: Koren has the p-trad in both books.  The Deuteronomy check also reaches
 a second divergence point the Exodus scans cannot -- the Shabbat commandment -- where Koren again
-shows the p-trad, and where Simanim's Tiqqun does not (an accents-only departure: Simanim's Tiqqun
+has the p-trad, and where Simanim's Tiqqun does not (an accents-only departure: Simanim's Tiqqun
 still follows the p-trad's chanted verse boundaries).  See the conclusion's scope note.
 
 Its Deuteronomy עליון is no longer unchased either.  The page long carried a sentence saying the
@@ -153,7 +153,7 @@ _P113_BODY_IMG = "img/Koren-p-113-Ex-Dec-p-trad-taxton.png"
 _PA38_BODY_IMG = "img/Koren-appendix-p-38-Ex-Dec-p-trad-elyon.png"
 # The Deuteronomy (Vaetxanan) תחתון Decalogue starts on p. 280 and runs onto p. 281; this crop is
 # its Shabbat commandment, on p. 281. It backs the conclusion's scope note (issue #66): unlike
-# Simanim's Tiqqun, Koren shows the p-trad here too.
+# Simanim's Tiqqun, Koren has the p-trad here too.
 _P281_DT_BODY_IMG = "img/Koren-p-281-Dt-Dec-Shabbat-p-trad-taxton.png"
 # The Koren note (a crop of the appendix p. A38 עליון Decalogue): the רוו״ה footnote transcribed and
 # translated below.
@@ -482,7 +482,7 @@ def _pa38_note_section() -> tuple[object, ...]:
 # the fifth Exodus one are the same chanted word and are not accent differences at all: the m-trad has
 # qamats in תִרְצָ֖ח where the p-trad has patax, on the same tipexa. A transcription of accents
 # cannot carry that, so until now the Deuteronomy row hedged it as "the last one of vowels alone"
-# and claimed nothing about which vowel Koren prints -- nobody had looked. Both were then read off
+# and claimed nothing about which vowel Koren has -- nobody had looked. Both were then read off
 # the committed page scans, and both are patax, the p-trad vowel:
 #   * Deuteronomy, A5-D-281.jpg p. 281 printed line 12 (the line the .txt gives as "silsof mer tip
 #     mun", לך׃ לא תרצח ולא);

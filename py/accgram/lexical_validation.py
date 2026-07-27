@@ -79,7 +79,7 @@ _ATOM_SPLIT_RE = re.compile(r"[ \t\r\n\-]+")
 # ``illegal_mark`` report reads identically to the pre-Phase-2 output.
 _STRESS_HELPER_PARTNER: dict[str, tuple[str, str]] = {am.TSINNORIT: (am.TSINNOR, "82")}
 
-# Cantillation accents occupy U+0591..U+05AE; meteg/silluq (U+05BD), paseq, sof pasuq
+# Accents occupy U+0591..U+05AE; meteg/silluq (U+05BD), paseq, sof pasuq
 # and the puncta are NOT accents and so never count toward a same-letter accent pair.
 _ACCENT_LO, _ACCENT_HI = "֑", "֮"  # U+0591, U+05AE
 

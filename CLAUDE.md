@@ -1,5 +1,14 @@
 # CLAUDE.md
 
+## Invoke the `hebrew-prose` skill before writing or editing prose about accentuation
+
+That user-level skill (`~/.claude/skills/hebrew-prose/`, tracked in `github-misc` at
+`dot-claude/skills/`) is now the canonical, single home for the rules the rest of this file and
+`printed_decalogue_strands.py`'s docstring state — atom vs chanted word, the one-scale maqaf rule,
+which corpus a claim takes, the banned verbs and framings, where Yeivin and Breuer live, how to
+verify a page's numbers. It loads on demand rather than every session, so it can hold the full
+statement; the sections below stay as pointers, and **a rule change goes into the skill first**.
+
 ## Read `doc/agent-planning-principles.md` before planning work here
 
 That file holds this repo's planning preferences (phase sizing, new-features-as-new-modules,

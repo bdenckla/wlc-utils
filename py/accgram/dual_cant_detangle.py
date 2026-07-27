@@ -426,7 +426,7 @@ def _punctuation_changes(
     Legarmeh (a munax + a following broad-sense paseq, before a revia) is only ever
     suppressed: WLC's tangle is legarmeh-maximalist -- the broad-sense paseq is always WLC's
     own, never supplied from MAM -- so a strand reading the word's *other* accent suppresses
-    WLC's legarmeh.  The rule (WLC carries munax + paseq, this strand lacks the munax) relies
+    WLC's legarmeh.  The rule (WLC has munax + paseq, this strand lacks the munax) relies
     on a verified property of these three loci: a narrow-sense paseq never reaches a strand
     short the munax here (the two WLC munax+paseq words shared by both strands -- ex 20:10
     אַתָּה, dt 5:16 לְמַעַן -- carry the munax in both, so no row is emitted)."""
@@ -525,8 +525,8 @@ def _assign_word(
     """Decide one equal-aligned word's emitted accents for one strand.
 
     Match the strand's (deduped, helper-free) accents against WLC's accents by identity.
-    A strand accent absent from WLC is either a clean *supply* (WLC carries only the other
-    strand's reading here) or, if WLC carries an accent neither strand explains, an
+    A strand accent absent from WLC is either a clean *supply* (WLC has only the other
+    strand's reading here) or, if WLC has an accent neither strand explains, an
     *anomaly* (emit WLC's mark, flag it).
 
     A WLC accent belonging to *neither* strand (a true leftover) is the candidate WLC bug,
@@ -548,7 +548,7 @@ def _assign_word(
 
     # A leftover that belongs to the OTHER strand's sole-meteg slot is ceded to it (that
     # strand emits it as its stray); this strand then supplies its own omitted accent, which
-    # has some manuscript support -- WLC carries the other reading's mark, not this reading's.
+    # has some manuscript support -- WLC has the other reading's mark, not this reading's.
     ceded = tuple(leftover) if (other_meteg and not other_real and leftover) else ()
     if ceded:
         leftover = []

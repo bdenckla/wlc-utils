@@ -10,7 +10,7 @@ makes a blanket guess that this module corrects before the grammar sees the toke
    narrow-sense paseq (the conjunctive stays a servus and the bar is a bare pause).  The scanner
    emits ``LEGARMEH`` for *every* such sequence.  MAM-simple, by contrast, encodes the
    distinction structurally (``lp-legarmeih`` vs ``lp-paseq`` nodes), so we treat MAM
-   as the oracle: where MAM reads a narrow-sense paseq we demote the scanner's ``LEGARMEH``
+   as the oracle: where MAM has a narrow-sense paseq we demote the scanner's ``LEGARMEH``
    back to its underlying conjunctive servus (the paseq is then swallowed, as such a
    paseq always is).  This is the poetic counterpart of the prose scanner's
    has_legarmeh rule+exception list, but data-driven from MAM rather than hardcoded.
