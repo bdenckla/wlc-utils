@@ -50,12 +50,19 @@ types into the editor, and take the band NUMBERS off it** rather than counting p
 whether the running head and the ornament rule merge into one band or split into two shifts
 every number below them, and which happens turns on `--width`.
 
-Open `.novc/scans/<stem>-editor.html` in the Browser pane. A Decalogue spanning two printed
-pages gets one editor per page.
+Open `.novc/scans/<stem>-editor.html` in **Ben's own default browser**, with
+`Start-Process`. A Decalogue spanning two printed pages gets one editor per page.
 
-**Opening a local file in the Browser pane works, and sessions keep concluding it does not.**
-No dev server and no `.claude/launch.json` are needed or wanted — a `file://` URL with an
-absolute path in forward slashes is enough: `preview_start` with
+**Do not reach for the in-app Browser pane** — Ben, 2026-07-26: it is "too unreliable, and
+has yet to show any advantage over an external browser, for my needs." `Start-Process`
+returns no screenshot, so verify with the **Read** tool on the file, which is better
+evidence than eyeballing anyway.
+
+No dev server and no `.claude/launch.json` are needed or wanted either way.
+
+**If a task genuinely needs the pane's introspection** (console, network, live DOM), a
+`file://` URL with an absolute path in forward slashes *can* work — it is unreliable, not
+impossible, so try once and move on rather than diagnosing it: `preview_start` with
 `file:///C:/.../wlc-utils/.novc/scans/<stem>-editor.html`, then `tabs_context` to see which
 tab actually holds it, then a screenshot **with an explicit `tabId`**. Four things mislead,
 each looking like "the file did not load": `computer` without a `tabId` fails
