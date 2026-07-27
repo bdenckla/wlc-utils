@@ -198,6 +198,11 @@ ROM_QADMA = "qadma"
 # where the same insertion one chanted verse earlier, before a tevir, costs nothing.
 ROM_MUNAX = "munaḥ"
 ROM_TEVIR = "tevir"
+# Named only on the maqaf-nonfinal-accents page: the secondary mahapakh of ITM §241 is the last
+# entry of Yeivin's prose closed list, which that page prints in full.  A ``ROM_OLEH_WEYORED``
+# stood beside it for that page's poetic section and went when the section was cut back to a
+# single paragraph (issue #83) -- add it back if the oleh-we-yored is ever named in prose again.
+ROM_MAHAPAKH = "mahapakh"
 # Named in the verdict cells that state a maqaf difference from both sides: where an edition binds
 # an atom its Wikisource strand leaves free, the accent the strand has on that free atom is a
 # merkha, and naming it is what keeps the difference from reading as a one-sided absence.

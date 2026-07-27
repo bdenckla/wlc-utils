@@ -34,6 +34,11 @@ body.centered-page table {
     src: url("woff2/Taamey_D.woff2");
 }
 span.romanized { font-style: italic; }
+/* Emphasis in running prose, where accgram pages used to shout in ALL CAPS.  Bold rather than
+   the browser's default italic: italic is already spoken for by span.romanized above and by the
+   plain <em> that ps17v14-double-tsinnor.html uses for book titles and for terms like mafsik, so
+   an unclassed <em> must keep its italic and only this one turns bold. */
+em.emphasis { font-style: normal; font-weight: bold; }
 p { max-width: 40em; text-align: justify}
 blockquote { max-width: 40em; }
 td.big-for-amb-early-mtg { font-size: 250%; letter-spacing: 0.1em; text-align: left;}

@@ -266,6 +266,11 @@ def bold(contents, attr=None):
     return htel_mk_inline("b", attr, contents)
 
 
+def em(contents, attr=None):
+    """Make an <em> element."""
+    return htel_mk_inline("em", attr, contents)
+
+
 def small(contents, attr=None):
     """Make a <small> element."""
     return htel_mk_inline("small", attr, contents)
