@@ -430,8 +430,9 @@ def classify(hit: dict, oracle: dict[str, Counter], *, routed: bool) -> dict:
     ``routed`` is false for the poetic corpus, where the route split is NOT attempted: both
     halves of it are prose doctrine.  ``_NAMED_CONFIGURATIONS`` is Yeivin's PROSE inventory,
     and the poetic counterpart is a different list (his §372 tsinnorit -- ITM spells it with
-    an s, this repo with ts; Breuer's Chapter 9 §§22-26 secondary mahapakh/merkha), which is
-    not encoded here.  Running the prose list
+    an s, this repo with ts; Breuer's Chapter 9 §§23-26 secondary mahapakh/merkha, the span he
+    cites for it himself in §27, checkable in ``../breuer-cos/md-export-of-docx/C09-S021.md``),
+    which is not encoded here.  Running the prose list
     over poetic verses would label a poetic secondary as unnamed and read it as §293's habit,
     which is why the poetic side reports shapes and counts only.
     """

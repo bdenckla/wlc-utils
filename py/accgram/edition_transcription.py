@@ -96,16 +96,31 @@ manuscripts.  It is still not a definition, which is the distinction to keep.
 
 The POETIC system is far more willing to put two accents on one chanted word, and that is
 a dramatic difference between the two systems rather than a detail.  Breuer's Chapter 9 gives it
-whole sections -- §§20-21 on a mafsik plus a servant, and on two servants, in one word; §§22-26
-on the secondary mahapakh/merkha -- and states the rule that governs them: two marks "appear in
-one word -- in the same manner in which they are used to appear in two separate words".  He adds
-that the maqaf after a secondary merkha is usually OMITTED, so the compound is written as two
-words although it is chanted as one, with "but a few cases" where it survives (Job 6:10
-ותהי־עוד, Prov 25:20 מעדה־בגד).  Those two are Breuer's restoration rather than the manuscript's
-writing -- WLC sets both without a maqaf and MAM with one -- so no maqaf count can measure the
-poetic side at all: the asymmetry is real, but it lives in Breuer's argument that an unhyphenated
-word still COUNTS as hyphenated, not in anything a scan can see.  So SimTiq's two munax-on-לא are
-worth the attention this note gives them, and Koren's ``mun-mun`` on לא־תעשה more still.
+whole sections -- §§20-21 on a mafsik plus a servant, and on two servants, in one word; §§23-26
+on the secondary mahapakh/merkha, which is the span he cites for it himself, twice, in §27 --
+and §22 states the rule that governs them: two marks "appear in one word -- in the same manner
+in which they are used to appear in two separate words".  He adds that the maqaf after a
+secondary merkha is usually OMITTED, so the compound is written as two atoms although it is
+chanted as one, with "but a few cases" where it survives.  §37 gathers THREE of those and calls
+them all merkha marks: Job 6:10 ותהי־עוד and Prov 25:20 מעדה־בגד from the end of §27, and
+Ps 78:7 מעללי־אל from §36's examples II.
+
+The three do not behave alike in the corpora, which is the useful part.  In Job 6:10 and Prov
+25:20 WLC has no maqaf: ותהי and עוד stand as two chanted words, and so do מעדה and בגד, where
+MAM has each pair as one chanted word.  Ps 78:7 is the other way about -- WLC and MAM both have
+מעללי־אל, and what differs there is the accent, MAM having a merkha on מעללי where WLC has a
+meteg.  So no maqaf count can measure the poetic side: the asymmetry is real, but it lives in
+Breuer's argument that an unhyphenated word still COUNTS as hyphenated, not in anything a scan
+can see.  So SimTiq's two munax-on-לא are worth the attention this note gives them, and Koren's
+``mun-mun`` on לא־תעשה more still.
+
+CoS is greppable now, so CHECK a Breuer claim rather than restating one from here.  Chapter 9 is
+``../breuer-cos/md-export-of-docx/C09-*.md``, and that repo's ``scripts/check_ch9_claims.py`` is
+the differential check that caught the two errors this paragraph used to carry -- a §§22-26 that
+was §22 plus §§23-26, and two surviving cases that were three.  It raises if a re-conversion
+loses the evidence it pins.  Breuer's English says "hyphen", never "maqqef" or "maqaf": grepping
+for either returns ZERO from a chapter that covers the subject at length, and that is the trap
+the ITM note above compares itself to.
 
 HOW OFTEN IT ACTUALLY HAPPENS is measured, not asserted, and the measurement is NOT here.  The
 Tanakh-wide survey lives in ``maqaf_nonfinal_accents`` (+ ``_page``), which writes
