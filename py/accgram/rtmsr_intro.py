@@ -72,7 +72,11 @@ def build_intro_contents(
         " page.",
     )
     printed_decalogue_text = (
-        "Aside: this page runs the checker on WLC; whether the accents in the"
+        "Aside: this page runs the checker on WLC (after ",
+        wlc_utils_html.anchor(
+            "supplying certain marks", {"href": "supplied-marks.html"}
+        ),
+        "); whether the accents in the"
         " Decalogues of the printed tradition are grammatical is examined in ",
         wlc_utils_html.anchor(
             "In the printed tradition, are the accents of the Decalogue grammatical?",
