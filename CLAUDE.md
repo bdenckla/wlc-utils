@@ -96,7 +96,6 @@ committed)"]` fallbacks, which are the failure mechanism and must stay.
 
 ## There is no `wlc-koren-12th` repo
 
-The name still turns up — in this repo's git history, and in `breuer-cos` issue #1 — but
 `~/GitRepos/wlc-koren-12th` was never a repo of its own. It was a **worktree of wlc-utils** on
 branch `claude/koren-12th-site`, which is why it sat flat among the siblings and answered
 `git remote -v` with `bdenckla/wlc-utils`. Its copies of files like
@@ -109,7 +108,10 @@ Deleted 2026-07-27, along with the fully-merged leftover branches `claude/koren-
 and contained in `origin/main`, so the work survives there; `git branch -d` (never `-D`)
 accepting them is the record that nothing was lost. Nothing anywhere referenced the path — a
 sweep of every repo under `~/GitRepos` plus the settings files found zero hits — so no config or
-doc was left pointing at it.
+doc was left pointing at it, and nothing in git history names it either, a directory being the
+one thing git does not record. The only place the name survives is old Claude session
+transcripts under `~/.claude/projects/`, which is exactly where the wrong conclusion kept being
+copied from.
 
 **General lesson:** a directory sitting flat under `~/GitRepos` is not necessarily a repo. Run
 `git -C <dir> rev-parse --git-common-dir` (or `git worktree list` from the repo you suspect)
