@@ -25,8 +25,6 @@ from accgram.printed_decalogue_strands import (
     ROM_ETNAHTA,
     ROM_MERKHA,
     ROM_MUNAX,
-    ROM_PASEQ,
-    ROM_PAZER,
     ROM_QADMA,
     ROM_SILLUQ,
     ROM_TIPEHA,
@@ -70,12 +68,6 @@ def _occurrences(survey: dict, corpus: str, genre: str) -> list[dict]:
     return survey["corpora"][corpus][genre]["occurrences"]
 
 
-def _find(survey: dict, corpus: str, genre: str, bcv: str) -> dict | None:
-    return next(
-        (o for o in _occurrences(survey, corpus, genre) if o["bcv"] == bcv), None
-    )
-
-
 def pin_claims(survey: dict) -> None:
     """Fail the build if the data stops supporting a claim the prose states in words.
 
@@ -86,41 +78,66 @@ def pin_claims(survey: dict) -> None:
     ``printed_decalogue_strands.resolve_readings`` has, and for the same reason: a warning in
     a generator's output is a warning nobody reads.
     """
-    koren_shape = mpa.shape_of([[am.MUNAX], [am.MUNAX]])  # Koren's own ``mun-mun``
-    mun_mun = {
-        corpus: [
-            o
-            for o in _occurrences(survey, corpus, "prose")
-            if o["shape"] == koren_shape
-        ]
-        for corpus, _label in _CORPUS_ROWS
-    }
-    wlc_bcvs = {o["bcv"] for o in mun_mun["wlc422"]}
-    assert wlc_bcvs == {"2c1:11", "1c27:14"}, wlc_bcvs
-    assert all(o["route"] == mpa.ROUTE_HABIT for o in mun_mun["wlc422"]), mun_mun[
-        "wlc422"
-    ]
-    assert {o["bcv"] for o in mun_mun["uxlc"]} == {"2c1:11"}, mun_mun["uxlc"]
-    assert mun_mun["mam_simple"] == [], mun_mun["mam_simple"]
     assert (
         _route_count(survey, "mam_simple", "prose", mpa.ROUTE_HABIT) == 0
     ), "MAM is stated to have no bare-habit case in prose"
 
+    # The intro speaks for MAM, and says of EVERY hit there that its two accents sit on two
+    # atoms and never both on one, the compound having two atoms or occasionally three.  None
+    # of that is spliced, so all of it is pinned: one four-atom hit, one atom carrying a stacked
+    # pair, or one hit with a single accent would leave those words quietly wrong -- and each of
+    # those does occur elsewhere in the survey (WLC's Joshua 20:4 has the single accent, the
+    # poetic corpus has revia mugrash), so none is a hypothetical.  A field of REPEATS is the one
+    # thing allowed: MAM's Ezekiel 16:12 נֶ֙זֶם֙ has ``pash+pash``, one accent written twice.
+    for o in _occurrences(survey, "mam_simple", "prose"):
+        atoms = o["shape"].split("-")
+        assert len(atoms) in (2, 3), o
+        assert len([a for a in atoms if a != "0"]) == 2, o
+        assert all(len(set(a.split("+"))) == 1 for a in atoms), o
+
+    # THE PAGE'S ANSWER, in two claims that only the data can keep true: no MAM compound is
+    # accented alike twice, in either genre, and the single one whose non-final atom has a munax
+    # is Isaiah 40:7.  Both are stated flatly in the intro and again under "Koren's reading".
+    for genre in ("prose", "poetic"):
+        same = [
+            o
+            for o in _occurrences(survey, "mam_simple", genre)
+            if len({a for a in o["shape"].split("-") if a != "0"}) == 1
+        ]
+        assert (
+            not same
+        ), f"MAM {genre} is stated to have no compound accented alike twice: {same}"
+    mam_munax = [
+        o
+        for o in _occurrences(survey, "mam_simple", "prose")
+        if o["shape"].split("-")[0] == mpa.shape_of([[am.MUNAX]])
+    ]
+    assert [o["bcv"] for o in mam_munax] == ["is40:7"], mam_munax
+
 
 def _intro(survey: dict) -> tuple[object, ...]:
-    wlc_prose = survey["corpora"]["wlc422"]["prose"]
-    pct = 100.0 * wlc_prose["hits"] / wlc_prose["maqaf_compounds"]
+    # The headline frequency is MAM's, not WLC's.  A claim about what the accentuation DOES
+    # wants a consensus text; WLC is one manuscript as one transcription reads it, and its
+    # blemishes are visible in this very count (Joshua 20:4 זקני־העיר, whose compound has its
+    # only accent on the non-final atom because the mark on העיר is a mid-verse meteg).  WLC and
+    # UXLC keep their table columns, which are about the texts themselves; what they no longer do
+    # is answer the page's question.  Ben, 2026-07-26: "let's leave WLC (and indeed the LC) out of
+    # this" -- so the two WLC compounds with a munax on each atom (2 Chr 1:11, 1 Chr 27:14), and
+    # the paragraphs that read them as Koren's nearest precedent, are gone rather than demoted.
+    mam_prose = survey["corpora"]["mam_simple"]["prose"]
+    pct = 100.0 * mam_prose["hits"] / mam_prose["maqaf_compounds"]
     return (
         H.heading_level_1(PAGE_TITLE),
         H.para(
             wrap_hebrew_runs(
-                "A maqaf joins one atom — one written word, between spaces or maqafs — to the"
-                " next, and what the two of them become is a single chanted word, the unit an"
-                " accent marks. The non-final atom normally gives up its own accent to do so."
-                f" Normally, but not always: in {wlc_prose['maqaf_compounds']:,} maqaf"
-                f" compounds across the prose books, {wlc_prose['hits']} ({pct:.2f}%) have an"
-                " accent on a non-final atom. This page counts those, sorts them, and asks what"
-                " they mean for one printed reading in particular."
+                "Maqaf marks join two or more atoms into a single chanted word. In the prose"
+                " system a chanted word usually has exactly one accent, and only in a small"
+                f" minority of cases two. Of the {mam_prose['maqaf_compounds']:,} maqaf"
+                f" compounds in the prose verses of MAM, {mam_prose['hits']} ({pct:.2f}%) have"
+                " an accent on a non-final atom. In every one of them the two accents sit on"
+                " two atoms of the compound and never both on one, the compound itself having"
+                " two atoms, or occasionally three. This page counts those cases, sorts them,"
+                " and asks what they mean for one printed reading in particular."
             )
         ),
         H.para(
@@ -137,11 +154,13 @@ def _intro(survey: dict) -> tuple[object, ...]:
         ),
         H.para(
             wrap_hebrew_runs(
-                "There is. The answer, with the counts below behind it: two prose compounds"
-                f" have a {ROM_MUNAX} on each atom, and the closer of them matches Koren not"
-                " only in shape but in its surroundings. The reading is rare, and it is the"
-                " kind of thing the Leningrad Codex itself does — but no printed edition is"
-                " known to have done it before."
+                "There is not. No maqaf compound in MAM has the same accent on both atoms —"
+                " not in prose verses, not in poetic ones, not once. Nearly all of the"
+                f" {mam_prose['hits']} prose cases are a single grammatical category, a"
+                f" {ROM_QADMA} before a {ROM_ZAQEF_QATAN}; and the one case whose non-final"
+                f" atom has a {ROM_MUNAX} — Isaiah 40:7 נבל־ציץ — has a {ROM_ZAQEF_QATAN} as"
+                f" the compound's own accent, not a second {ROM_MUNAX}. Nor is any printed"
+                " edition known to have Koren's reading before it."
             )
         ),
     )
@@ -182,7 +201,8 @@ def _corpus_caveat(survey: dict) -> tuple[object, ...]:
             (
                 (
                     H.bold("WLC"),
-                    " is the Westminster transcription of the Leningrad Codex.",
+                    " is the Westminster transcription of the Leningrad Codex — a diplomatic"
+                    " text, one manuscript as it stands.",
                 ),
                 (
                     H.bold("UXLC"),
@@ -193,15 +213,18 @@ def _corpus_caveat(survey: dict) -> tuple[object, ...]:
                 ),
                 (
                     H.bold("MAM"),
-                    " is Breuer's edition — an edited text, not a manuscript reading.",
+                    " is a consensus text rather than a diplomatic one: no single manuscript's"
+                    " reading, but the accentuation the Masoretic tradition converges on. It"
+                    " largely follows Breuer, but it is not one of Breuer's own editions.",
                 ),
             )
         ),
         H.para(
             wrap_hebrew_runs(
-                "So there is no independent manuscript here at all. Every count below measures"
-                " the Leningrad Codex as Westminster reads it, and what an edition does with"
-                " it. That matters especially for this feature, because two of the three"
+                "So there is no second manuscript here at all. The first two columns are the"
+                " Leningrad Codex as Westminster reads it, and the third is a consensus text"
+                " that has L among its sources. That matters especially for this feature,"
+                " because two of the three"
                 " Leningrad readings Yeivin cites for it do not survive contact with the"
                 " transcription: he reports that the manuscript marks a maqaf in ועזר־מצריו"
                 " (Deuteronomy 33:7) and omits one in כל קדשיו (Deuteronomy 33:3), and WLC has"
@@ -227,7 +250,7 @@ def _two_routes() -> tuple[object, ...]:
                     " The compound is one chanted word, and a mark that belongs to the"
                     " chanted word as a whole lands on the non-final atom. This is a"
                     " grammatical category with a closed list, which Yeivin gives for the"
-                    f" prose books: {ROM_QADMA} before a {ROM_ZAQEF_QATAN} (metigah-zaqef,"
+                    f" prose system: {ROM_QADMA} before a {ROM_ZAQEF_QATAN} (metigah-zaqef,"
                     f" §224), {ROM_MUNAX} before a {ROM_ZAQEF_QATAN} (§221), a secondary"
                     f" {ROM_MERKHA} in the chanted word of a {ROM_TIPEHA} or of a tevir"
                     f" (§§233, 241), and the mayela {ROM_TIPEHA} before an {ROM_ETNAHTA} or"
@@ -324,21 +347,22 @@ def _prose_section(survey: dict) -> tuple[object, ...]:
         key=lambda cn: -cn[1],
     )
     return (
-        H.heading_level_2("The prose books"),
+        H.heading_level_2("The prose verses"),
         _prose_table(survey),
         H.para(
             wrap_hebrew_runs(
-                "The zero is the striking cell. Breuer's edition contains only the named"
-                " grammatical configurations and never the bare habit — consistent with his"
-                " own rule that an accent and a maqaf are mutually exclusive, a mark following"
-                " the regular order of the accents cancelling the maqaf, while the secondary"
+                "The zero is the striking cell. MAM has only the named grammatical"
+                " configurations and never the bare habit — consistent with Breuer's own rule"
+                " that an accent and a maqaf are mutually exclusive, a mark following the"
+                " regular order of the accents cancelling the maqaf, while the secondary"
                 " marks, which are there only BECAUSE the atom is joined, never do."
             )
         ),
         H.para(
             "Its total is nonetheless the largest of the three, and that is not a"
-            " contradiction: Breuer both restores secondary marks the manuscript lacks and"
-            " normalizes the habit away. A single total would have shown neither."
+            " contradiction: MAM has secondary marks in places where the manuscript has none,"
+            " and has none of the habit where the manuscript has it. A single total would have"
+            " shown neither."
         ),
         H.para("WLC's inherited-secondary cases, by configuration:"),
         H.unordered_list(
@@ -347,52 +371,32 @@ def _prose_section(survey: dict) -> tuple[object, ...]:
     )
 
 
-def _koren_section(survey: dict) -> tuple[object, ...]:
-    free_n = _find(survey, "wlc422", "prose", "2c1:11")["oracle"]["free_occurrences"]
+def _koren_section() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Koren's reading, and what precedes it"),
+        H.heading_level_2("Koren's reading"),
         H.para(
             wrap_hebrew_runs(
-                "Both prose compounds with a munaḥ on each atom fall on the habit side, not"
-                " the grammatical one — so neither is a category Koren could be said to be"
-                " following."
+                "Every named configuration above pairs two DIFFERENT accents: the compound's own"
+                " accent, and a secondary mark of a shape that can precede it. Koren's two are"
+                " the same accent twice, and no chanted word in MAM is accented that way — so"
+                " there is no category the reading could be said to be following, and nothing"
+                " in MAM it could be said to be repeating."
             )
         ),
         H.para(
             wrap_hebrew_runs(
-                f"2 Chronicles 1:11 ויאמר־אלהים ׀ לשלמה is the close one. Its {ROM_MUNAX} sits"
-                f" exactly where all {free_n:,} free-standing ויאמר put theirs, so it is not a"
-                " slip of the pointing. And the surroundings match: the stroke after אלהים is"
-                f" a narrow-sense {ROM_PASEQ} rather than a legarmeh, which leaves both"
-                f" {ROM_MUNAX}s plain servants of the {ROM_PAZER} on the next chanted word —"
-                " which"
-                " is precisely what Koren has, a revia, then the two-munaḥ compound, then a"
-                " pazer. Breuer's edition cancels that maqaf."
+                "The Decalogue's own Exodus 20:10 לא־תעשה shows a munaḥ on each atom, but that"
+                " is the two cantillations tangled together rather than either one of them:"
+                " untangled, MAM's עליון has no maqaf, and לא and תעשה are two chanted words,"
+                " each with a munaḥ of its own — the very two atoms Koren has as one maqaf"
+                " compound."
             )
         ),
-        H.para(
-            wrap_hebrew_runs(
-                "1 Chronicles 27:14 לעשתי־עשר, before a zaqef qatan, is the other. It is in WLC"
-                " 4.20 and 4.22 alike but in neither UXLC nor MAM, so it rests on less."
-            )
-        ),
-        H.para(
-            wrap_hebrew_runs(
-                "The Decalogue's own Exodus 20:10 לא־תעשה shows a munaḥ on each atom in all"
-                " three texts, but that is the two cantillations tangled together rather than"
-                " either one of them: untangled, MAM's עליון cancels the maqaf and sets לא and"
-                " תעשה apart as two chanted words, each with a munaḥ of its own — which is"
-                " exactly the pair Koren joins."
-            )
-        ),
-        H.heading_level_3("Ask it of manuscripts and of printed editions separately"),
+        H.heading_level_3("The nearest thing in a printed edition"),
         H.para(
             (
                 *wrap_hebrew_runs(
-                    "The precedent above is a manuscript one, and a thin one: a single"
-                    " Leningrad reading, in a transcription whose fidelity on this very"
-                    " feature the caveat above puts in question. Among printed editions"
-                    " nothing here has the shape at all. The nearest is the "
+                    "No printed edition on these pages has the shape either. The nearest is the "
                 ),
                 link("Simanim Tiqqun", "printed-decalogue-simanim.html"),
                 *wrap_hebrew_runs(
@@ -420,12 +424,14 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
             )
         )
     return (
-        H.heading_level_2("The poetic books, and why the count cannot answer for them"),
+        H.heading_level_2(
+            "The poetic verses, and why the count cannot answer for them"
+        ),
         H.table(tuple(rows), {"class": "goerwitz-tms-table"}),
         H.para(
             wrap_hebrew_runs(
                 "These numbers are a floor, and they are not comparable with the prose ones."
-                " Breuer records that in the three poetic books the maqaf after a secondary"
+                " Breuer records that in poetic verses the maqaf after a secondary"
                 " mark is customarily left unwritten while the atom still counts as joined —"
                 " so most of what would be counted here is invisible to a maqaf test by"
                 " construction."
@@ -440,7 +446,7 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
             )
         ),
         H.para(
-            "The routes are not attempted for these books either. Both halves of the split"
+            "The routes are not attempted for these verses either. Both halves of the split"
             " above are prose doctrine, and the poetic counterpart is a different list; running"
             " the prose one over poetic verses would file a poetic secondary as a scribal"
             " habit."
@@ -457,7 +463,7 @@ def render_body_contents(survey: dict) -> tuple[object, ...]:
         *_two_routes(),
         *_position_is_evidence(),
         *_prose_section(survey),
-        *_koren_section(survey),
+        *_koren_section(),
         *_poetic_section(survey),
     ]
     return (H.div(tuple(sections), {"class": _WIDTH_CLASS}),)

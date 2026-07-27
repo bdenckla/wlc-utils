@@ -58,7 +58,9 @@ WHAT THE SURVEY IS A SURVEY OF, which bounds every number it produces.  ``out/wl
 Westminster transcription of L.  ``in/UXLC-39`` is NOT a second manuscript -- its own header
 records that it was produced from WLC 4.20 by WLC2XML -- so it is the same transcription plus
 Kimball's corrections, and agreement between the two is not corroboration by a second hand.
-MAM-simple is Breuer's EDITION.  There is therefore no independent manuscript here at all: the
+MAM-simple is a CONSENSUS text rather than a diplomatic one -- no single manuscript's reading.
+It largely follows Breuer, but it is not one of Breuer's own editions (Horev; and the Jerusalem
+Crown, which he advised on).  There is therefore no second manuscript here at all: the
 counts measure L as Westminster reads it, and what an edition does with it.  ``CORPUS_KIND``
 records that so the page cannot state a corpus's standing wrongly.
 
@@ -137,9 +139,9 @@ ROUTE_NOT_ATTEMPTED = "(not attempted -- the route split is prose doctrine)"
 
 # Each corpus's standing, which the page must state and must not overstate.
 CORPUS_KIND = {
-    "wlc422": "the Westminster transcription of the Leningrad Codex",
+    "wlc422": "diplomatic: the Westminster transcription of the Leningrad Codex",
     "uxlc": "produced from WLC 4.20 by WLC2XML -- the same transcription, corrected",
-    "mam_simple": "Breuer's edition",
+    "mam_simple": "consensus, not diplomatic; largely follows Breuer, but not an edition of his",
 }
 
 _ACCENT_SHORTHAND = {
