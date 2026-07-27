@@ -298,6 +298,10 @@ def p_revia_qatan_phrase(p):
 # every one -- genuine two-witness constructions of the same phonological servant-type family
 # that refuted DEXI / PAZER / TSINNOR.  A merkha-only constraint would flag 10 correct verses.
 # Not encoded.  See issue #18.
+# Open, 2026-07-27: §38 states the rule of TWO servants -- "The two servants next to revia'
+# mugrash are merkha marks, and a mahpakh precedes them" -- so the singular wording above is
+# that rule read for a lone servant, which §38's own Examples I bear out.  Left singular;
+# whether the plural is worth spelling out here is unresolved.
 def p_revia_mugrash_phrase(p):
     """revia_mugrash_phrase : REVIA_MUGRASH
     | servi REVIA_MUGRASH"""
