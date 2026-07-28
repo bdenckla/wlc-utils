@@ -75,21 +75,39 @@ def hbo(text: str) -> object:
 # words) stays in one hbo span; leading/trailing spaces bordering non-Hebrew text stay out.
 _HEBREW_RUN_RE = re.compile(r"[֐-׿]+(?: +[֐-׿]+)*")
 
+# Any Hebrew combining mark -- vowel, dagesh, accent, meteg.  The ranges are written as
+# numeric escapes because a bare combining mark in a literal renders as a floating diacritic
+# on the quote: U+0591-U+05BD accents through meteg, U+05BF rafe, U+05C1-U+05C2 the shin/sin
+# dots, U+05C4-U+05C5 the upper/lower dots, U+05C7 qamats qatan.  Deliberately NOT here:
+# U+05BE maqaf, U+05C0 paseq, U+05C3 sof pasuq -- spacing punctuation, not pointing.
+_HEBREW_MARK_RE = re.compile("[\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7]")
+
 
 def wrap_hebrew_runs(text: str) -> tuple[object, ...]:
-    """Split ``text`` into a flat (string | hbo-span) sequence, wrapping each Hebrew run.
+    """Split ``text`` into a flat (string | hbo-span) sequence, wrapping each *pointed* run.
 
     Each maximal Hebrew phrase -- consecutive Hebrew words and the spaces between them --
     is kept in a single hbo span rather than one span per word.  Wrapping the Hebrew in
     ``lang="hbo"`` spans gives it the Hebrew font and (via the stylesheet) keeps it upright
-    -- Hebrew is never italicized."""
+    -- Hebrew is never italicized.
+
+    A run carrying no point or accent is left alone, in whatever font the surrounding English
+    prose is set in (Ben, 2026-07-28, of the strand name עליון: "just let it stay in whatever
+    the default font is for surrounding Latin-alphabet (English-language) text").  The hbo
+    font is Taamey D at 140%, chosen so pointing and accents are legible; an unpointed name or
+    term has no pointing to show, so the size and the font switch buy nothing and only make
+    the term shout in the middle of a sentence.  Bare letters plus maqaf or sof pasuq count as
+    unpointed -- those are punctuation, not marks to be read."""
     pieces: list[object] = []
     cursor = 0
     for match in _HEBREW_RUN_RE.finditer(text):
+        run = match.group(0)
+        if not _HEBREW_MARK_RE.search(run):
+            continue
         start, end = match.span()
         if start > cursor:
             pieces.append(text[cursor:start])
-        pieces.append(hbo(match.group(0)))
+        pieces.append(hbo(run))
         cursor = end
     if cursor < len(text):
         pieces.append(text[cursor:])

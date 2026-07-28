@@ -39,7 +39,6 @@ from accgram.printed_decalogue_strands import (
     ROM_ETNAHTA,
     ROM_MAHAPAKH,
     ROM_MERKHA,
-    ROM_METEG,
     ROM_MUNAX,
     ROM_QADMA,
     ROM_SILLUQ,
@@ -391,10 +390,9 @@ def _intro(survey: dict) -> tuple[object, ...]:
                 " an accent on a non-final atom. In every one of them the two accents sit on"
                 " two atoms of the compound and never both on one, the compound itself having"
                 " two atoms, or occasionally three. This page counts those cases, sorts them,"
-                " and asks what they mean for one printed page in particular."
+                " and asks what they mean for the chanted word"
             )
         ),
-        H.para("The motivation for this study is the chanted word"),
         _specimen(f"{lo}\N{HEBREW PUNCTUATION MAQAF}{taase}"),
         H.para(
             (
@@ -421,16 +419,13 @@ def _intro(survey: dict) -> tuple[object, ...]:
             wrap_hebrew_runs(
                 "There is not. No maqaf compound in MAM's prose verses has the same accent on"
                 " both atoms, not once. Nearly all of the"
-                f" {mam_prose['hits']} prose cases are a single grammatical category, a"
-                f" {ROM_QADMA} before a {ROM_ZAQEF_QATAN}; and the one case whose non-final"
-                f" atom has a {ROM_MUNAX} is Isaiah 40:7"
+                f" {mam_prose['hits']} prose cases are a single grammatical category,"
+                f" metigah-zaqef: a {ROM_QADMA} before a {ROM_ZAQEF_QATAN}. The one case whose"
+                f" non-final atom has a {ROM_MUNAX} is Isaiah 40:7"
             )
         ),
         _specimen(isaiah_munax_compound(survey)),
-        H.para(
-            "which is not Koren's pair of accents either. Nor is any printed edition known"
-            " to have Koren's compound before it."
-        ),
+        H.para("which is not Koren's pair of accents either."),
     )
 
 
@@ -441,21 +436,20 @@ def _what_is_counted() -> tuple[object, ...]:
     # nowhere else on the page, the configuration list below going by Yeivin's category names
     # instead; that paragraph is gone, which also frees "shape" for its ordinary English sense
     # in "Koren's reading".
+    #
+    # Gone too (Ben, 2026-07-28): a paragraph saying a meteg and a silluq are one sign and that
+    # it counts as an accent only verse-finally.  "Useless internal implementation explanation.
+    # Also, super obvious.  Basically saying: I'm not an idiot."  The rule still governs the
+    # count -- it lives in atom_accents' docstring, where a reader of the code needs it and a
+    # reader of the page does not.
     return (
         H.heading_level_2("What is counted"),
         H.para(
-            "A maqaf joins an atom to the next, and what it makes is one chanted word."
-            " The question put to every maqaf compound in the Tanakh is whether an atom"
-            " the maqaf joins has an accent of its own, over and above the accent the"
-            " compound has on its last atom. A compound counts once however many of its"
+            "The question put to every prose maqaf compound in the Tanakh is whether the"
+            " compound has an accent other than the one on its last atom."
+            " A compound counts once however many of its"
             " atoms are accented, and it is counted against every maqaf compound in those"
             " verses, accented on one atom or on two."
-        ),
-        H.para(
-            f"A {ROM_METEG} and a {ROM_SILLUQ} are one and the same sign. That sign counts"
-            " here as an accent only on the last chanted word of a verse, where it is a"
-            f" {ROM_SILLUQ}; anywhere else it is a {ROM_METEG}, which is not an accent at"
-            " all."
         ),
     )
 
