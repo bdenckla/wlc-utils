@@ -70,8 +70,8 @@ there is, which is the opposite of being loose, since a maqaf binds its two atom
 (``printed_decalogue_strands``' ``MAQAF_IS_THE_LAST_RUNG`` states this to the reader, and its
 guardrail comment records the second-ledger convention it replaced.)  This comparison already
 works that way and needs no rewording: ``compare`` splits each reading on whitespace, so a maqaf
-compound is ONE word on both sides, and a maqaf CTR placed otherwise than its strand would break
-the skeleton alignment and be reported, not quietly excused.  Re-derived 2026-07-26, it never
+compound is ONE word on both sides, and a maqaf CTR placed otherwise than the Wikisource strand
+would break the skeleton alignment and be reported, not quietly excused.  Re-derived 2026-07-26, it never
 has to be: the two sides segment into the same words (142 against 142 in Exodus, 164 against
 164 in Deuteronomy) and their maqafs match word for word and slot for slot, 27 compounds against
 27 and 24 against 24.  So all four residuals are accent differences and nothing else.

@@ -32,8 +32,8 @@ they agree exactly (issue #68).  The verdict is stable and stark:
 Those are the IDEALIZED strands.  ``transcription_parse`` asks the same question of what a
 real edition prints, feeding the committed hand transcriptions through ``parse_marks_body``
 below -- the same scanner, grammar and status vocabulary, so the two sets of verdicts are
-comparable.  Eleven of the twelve transcribed Decalogues match their strand at every chanted
-verse; the one that does not is SimTiq's Exodus appendix taxton.  ``run`` records those
+comparable.  Eleven of the twelve transcribed Decalogues match their Wikisource strand at
+every chanted verse; the one that does not is SimTiq's Exodus appendix taxton.  ``run`` records those
 verdicts as the output file's ``transcriptions`` section, beside the strands' ``versions``.
 
 Pure computation (no I/O); the driver (``run``) loads the vendored JSON, parses, and writes
@@ -279,7 +279,7 @@ def run(args) -> None:
         f"printed-decalogue: {s['versions']} versions, {s['chanted_verses']} chanted verses, "
         f"{s['ungrammatical']} ungrammatical; {s['transcriptions']} transcriptions, "
         f"{s['transcription_chanted_verses']} chanted verses, "
-        f"{s['transcription_departures']} departing from their strand -> {out_path}"
+        f"{s['transcription_departures']} departing from Wikisource -> {out_path}"
     )
 
 

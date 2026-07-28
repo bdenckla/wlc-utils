@@ -1,17 +1,18 @@
 r"""The grammaticality column both satellite verdict tables carry (issue #52).
 
 ``printed_decalogue_simanim_page`` and ``printed_decalogue_koren_page`` each render a
-per-Decalogue verdict table saying how far a printed Decalogue follows the strand it was diffed
-against (issue #69).  That is a token-IDENTITY claim.  This module supplies those tables' last
-column, which asks the different question this repo's printed-Decalogue work started from: fed
-through accgram's prose checker, is what the page prints GRAMMATICAL -- and is it as grammatical
-as the strand it follows?  ``transcription_parse`` computes the verdicts; here they become a
-table cell.
+per-Decalogue verdict table saying how far a printed Decalogue follows the Wikisource strand it
+was diffed against (issue #69).  That is a token-IDENTITY claim.  This module supplies those
+tables' last column, which asks the different question this repo's printed-Decalogue work started
+from: fed through accgram's prose checker, is what the page prints GRAMMATICAL -- and is it as
+grammatical as the Wikisource strand it follows?  ``transcription_parse`` computes the verdicts;
+here they become a table cell.
 
-WHY THE COLUMN IS AGAINST THE STRAND AND NOT ABSOLUTE.  Four of the twelve transcribed
+WHY THE COLUMN IS AGAINST THE WIKISOURCE STRAND AND NOT ABSOLUTE.  Four of the twelve transcribed
 Decalogues follow the p-trad עליון, whose opening chanted verse merges the first two
 commandments and is ungrammatical -- the companion page's headline finding.  Those four print
-that verse, so each is "ungrammatical somewhere" while departing from its strand nowhere.  A
+that verse, so each is "ungrammatical somewhere" while departing from its Wikisource strand
+nowhere.  A
 column that only counted failures would put them beside the one page that really does depart,
 and the two facts are not the same fact.
 
@@ -48,10 +49,10 @@ def by_stem(results: list[tp.TranscriptionResult]) -> dict[str, tp.Transcription
 def cell(result: tp.TranscriptionResult) -> object:
     """One transcription's grammar verdict, as the table cell for it.
 
-    Three shapes, one per thing that can be true: the page and its strand are clean throughout;
-    the page has its strand's verdicts including a chanted verse both reject; or the page's
-    verdict departs from its strand's somewhere, which is the finding worth having and is
-    therefore the one shape that announces itself.
+    Three shapes, one per thing that can be true: the page and its Wikisource strand are clean
+    throughout; the page has its Wikisource strand's verdicts including a chanted verse both
+    reject; or the page's verdict departs from its Wikisource strand's somewhere, which is the
+    finding worth having and is therefore the one shape that announces itself.
     """
     n = len(result.chanted_verses)
     if not result.departures:

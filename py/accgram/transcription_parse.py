@@ -21,16 +21,17 @@ of the four trailing-context lookaheads the scanner rebuilds over the mark alpha
 ``accent_marks.negated_class``), so its absence cannot change prose tokenization.  The one
 place it is load-bearing is the verse-final silluq, and a transcription records that directly
 as ``silsof``.  The claim is checked rather than asserted: for every transcription that
-diverges from its strand NOWHERE, the body built here reproduces that strand's scanner token
-stream exactly, positional calls included -- azla vs. qadma, methiga-zaqef, mayela, legarmeh,
-and the fused stress-helper pashta and telisha.  See ``test_edition_transcriptions``.
+diverges from its Wikisource strand NOWHERE, the body built here reproduces that strand's scanner
+token stream exactly, positional calls included -- azla vs. qadma, methiga-zaqef, mayela,
+legarmeh, and the fused stress-helper pashta and telisha.  See ``test_edition_transcriptions``.
 
 WHAT THIS ADDS OVER THE TOKEN DIFF.  ``edition_transcription.compare`` scores a divergence
 accent by accent, and the test module pins whether it leaves the disjunctive skeleton intact.
 Both are token-IDENTITY claims; neither says whether the resulting accent sequence is
 GRAMMATICAL, and one divergence shows the two come apart.  SimTiq's Exodus appendix taxton
-(p. 246) diverges from its strand only in conjunctives -- the skeleton is untouched, which is
-correct and pinned -- and its third chanted verse is ungrammatical all the same: the page's
+(p. 246) diverges from its Wikisource strand only in conjunctives -- the skeleton is untouched,
+which is correct and pinned -- and its third chanted verse is ungrammatical all the same: the
+page's
 munax on the joined לא of לא־תעשה makes three servi where the grammar takes two, and the
 pashta phrase fails.  That chanted verse is ungrammatical without qualification -- a fact about
 the accent sequence, not an artifact of this checker.  It is not a verdict that the edition is
@@ -189,8 +190,8 @@ def check(transcription: et.Transcription, parser=None) -> list[pd.ChantedVerseR
     """Every chanted verse of one transcription, fed to the prose grammar.
 
     The records are ``printed_decalogue``'s own, so a transcription's verdicts sit beside its
-    strand's and can be compared field for field.  ``words`` holds the written chunks rather
-    than Hebrew words: a transcription has no Hebrew to carry.
+    Wikisource strand's and can be compared field for field.  ``words`` holds the written chunks
+    rather than Hebrew words: a transcription has no Hebrew to carry.
     """
     parser = parser or build_parser()
     book = transcription.header["book"]
@@ -201,16 +202,16 @@ def check(transcription: et.Transcription, parser=None) -> list[pd.ChantedVerseR
 
 
 # --------------------------------------------------------------------------- #
-# One transcription's verdicts, beside its strand's (issue #52)
+# One transcription's verdicts, beside its Wikisource strand's (issue #52)
 # --------------------------------------------------------------------------- #
 @dataclasses.dataclass(frozen=True)
 class TranscriptionResult:
-    """One hand transcription's grammar verdicts, paired with the strand's own.
+    """One hand transcription's grammar verdicts, paired with its Wikisource strand's own.
 
     The pairing is the point: a page's verdict is only ever interesting against the verdict of
-    the strand it follows, since four of the twelve transcribed Decalogues follow a strand that
-    is itself ungrammatical at its opening chanted verse (the p-trad עליון's merged first two
-    commandments).  So "ungrammatical somewhere" is not the finding; ``departures`` is.
+    the Wikisource strand it follows, since four of the twelve transcribed Decalogues follow a
+    strand that is itself ungrammatical at its opening chanted verse (the p-trad עליון's merged
+    first two commandments).  So "ungrammatical somewhere" is not the finding; ``departures`` is.
     """
 
     stem: str  # the transcription's filename stem, e.g. "simtiq_ex_taxton"
@@ -247,8 +248,8 @@ def check_one(
     A chanted verse count that disagrees with the strand's raises rather than being compared
     position by position: a moved boundary would line the two status lists up by accident and
     make every verdict after it a comparison of different verses.  Every committed
-    transcription has its strand's own count, and ``test_edition_transcriptions`` pins that
-    independently, so this is a drift guard rather than a case to handle.
+    transcription has its Wikisource strand's own count, and ``test_edition_transcriptions``
+    pins that independently, so this is a drift guard rather than a case to handle.
     """
     got = tuple(check(transcription, parser))
     want = tuple(cv.status for cv in strand.chanted_verses)

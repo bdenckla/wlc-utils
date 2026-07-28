@@ -63,8 +63,9 @@ English sentence with a Hebrew word.
   chanted verse at the other, so neither distinguishes anything.
 * **ONE scale, with maqaf at the bottom of it -- there is no second ledger for maqaf
   differences.**  A verdict measures how far down that scale a Decalogue's agreement with its
-  strand reaches: chanted verse boundaries, then the disjunctive skeleton, then the conjunctives,
-  then the maqafs.  A maqaf an edition adds or drops IS a difference in how the text is marked --
+  Wikisource strand reaches: chanted verse boundaries, then the disjunctive skeleton, then the
+  conjunctives, then the maqafs.  A maqaf an edition adds or drops IS a difference in how the
+  text is marked --
   the mildest one there is, since a maqaf separates its atom from the next even less than a
   conjunctive does -- and it is counted ONCE, at the atom whose marking changed, never as a
   regrouping plus an accent.  So a verdict cell names the first rung that breaks and what breaks
@@ -76,9 +77,10 @@ English sentence with a Hebrew word.
   anywhere the comparison reaches".**  What backs these cells is a hand transcription of the
   printed ACCENTS, so "anywhere" can only ever mean "anywhere the comparison reaches", and an
   unscoped phrasing invites a reader to take it for the whole page.  Two things fall outside.  A
-  maqaf, which the .txt line records but the token stream drops: ``koren_dt_elyon`` joins לא־תעשה where its strand sets the two
-  atoms apart, and since Koren accents BOTH atoms of the compound the two sides emit the same two
-  tokens, so a zero-divergence result is not evidence of no difference.  (That blindness is a gap
+  maqaf, which the .txt line records but the token stream drops: ``koren_dt_elyon`` joins לא־תעשה
+  where its Wikisource strand sets the two atoms apart, and since Koren accents BOTH atoms of the
+  compound the two sides emit the same two tokens, so a zero-divergence result is not evidence of
+  no difference.  (That blindness is a gap
   now that the scale above counts such a difference; making maqaf a token of its own is issue
   #75.)  And the POINTING: the two תחתון strands part at תרצח in a vowel and nothing
   else, qamats m-trad against patax p-trad on the same tipexa, which the diff cannot see in either
@@ -332,10 +334,10 @@ SHABBAT_SIGNAL_SHORTHAND = (
 # WHY IT IS SAID AT ALL (2026-07-25 claim audit, finding 3).  The trio used "every accent" two
 # ways at once.  Koren's Exodus appendix Decalogue was credited with "Every accent. The only two
 # differences are of word division", while the summary directly under the same table counted that  # prose-ok: quotes the replaced convention
-# very Decalogue as the one of four that does NOT follow its strand in every accent -- and the
+# very Decalogue as the one of four that "does NOT follow its strand in every accent" -- and the
 # Deuteronomy appendix one was credited with "no difference anywhere" although it joins לא־תעשה
-# into a maqaf compound where its strand sets the two atoms apart.  Both readings were available
-# and the page contradicted itself.
+# into a maqaf compound where its Wikisource strand sets the two atoms apart.  Both readings were
+# available and the page contradicted itself.
 #
 # WHY THIS ANSWER AND NOT THE FIRST ONE (Ben, 2026-07-25).  That contradiction was first settled
 # the other way, by declaring a maqaf difference to be no accent difference at all -- a second

@@ -1,12 +1,14 @@
 """Pin each committed hand transcription against its vendored Wikisource strand.
 
 These tests turn "edition X follows strand Y in every accent" from prose on a page into a
-machine-checked claim.  Each transcription's divergences from its strand are pinned exactly:
+machine-checked claim.  Each transcription's divergences from its Wikisource strand are pinned
+exactly:
 a re-vendoring, an upstream Wikisource revision, or a corrected transcription that changes
 the divergence set fails here instead of quietly falsifying a page.
 
 ``pytest.skip`` in this file means ONE thing, and it is a finding, not an absence: a page that
-diverges from its strand, for which the token-stream control below has no knowable answer.  Five
+diverges from its Wikisource strand, for which the token-stream control below has no knowable
+answer.  Five
 cases skip on a clean run, all of them that.  Nothing here skips on missing data -- the vendored
 strand JSON and all twelve transcriptions and their exports are committed under ``in/accgram``,
 so an absent one is a deleted tracked file and fails.  See ``repo_paths.require_sibling``.
@@ -1105,7 +1107,7 @@ def test_a_trailing_empty_band_is_dropped_per_page_and_an_interior_one_kept() ->
 # whether what the page prints is GRAMMATICAL.  ``transcription_parse`` answers that by
 # building a scanner mark body straight from the transcription and running it through
 # ``printed_decalogue``'s pipeline, so a page's verdicts are directly comparable with its
-# strand's.  See that module's docstring for why the shorthand suffices as input.
+# Wikisource strand's.  See that module's docstring for why the shorthand suffices as input.
 
 
 @functools.lru_cache(maxsize=1)
@@ -1134,7 +1136,8 @@ def test_the_synthesized_mark_body_reproduces_the_scanner_on_an_agreeing_page(
 
     A transcription records accents, a pasoleg stroke and the chanted verse boundaries -- not
     meteg, not the pointing, and not every maqaf.  The claim is that none of what it drops can
-    change PROSE tokenization.  Where a transcription diverges from its strand nowhere, that
+    change PROSE tokenization.  Where a transcription diverges from its Wikisource strand
+    nowhere, that
     claim is checkable outright: the body built from the shorthand must yield the strand's own
     scanner token stream, token for token, positional calls included -- azla vs. qadma,
     methiga-zaqef, mayela, legarmeh, and the stress-helper pashta and telisha the scanner fuses.
@@ -1145,11 +1148,11 @@ def test_the_synthesized_mark_body_reproduces_the_scanner_on_an_agreeing_page(
     """
     if _EXPECTED_DIVERGENCES[stem]:
         # The suite's ONE skip, and it states a finding rather than an absence: this page
-        # disagrees with its strand somewhere, so the token-for-token control has no knowable
-        # answer here.  Five stems land here on a clean run; see the module docstring for why
-        # nothing else in this file is allowed to share the channel.
+        # disagrees with its Wikisource strand somewhere, so the token-for-token control has no
+        # knowable answer here.  Five stems land here on a clean run; see the module docstring
+        # for why nothing else in this file is allowed to share the channel.
         pytest.skip(
-            f"{stem} diverges from its strand; the control needs an agreeing page"
+            f"{stem} diverges from its Wikisource strand; the control needs an agreeing page"
         )
     transcription = _transcription(stem)
     book = transcription.header["book"]
@@ -1161,9 +1164,10 @@ def test_the_synthesized_mark_body_reproduces_the_scanner_on_an_agreeing_page(
     assert got == want
 
 
-# Where a transcription's grammaticality verdict departs from its strand's, chanted verse by
-# chanted verse: stem -> [(1-based index, the strand's status, the page's status)].  Every stem
-# not listed matches its strand at every chanted verse, which eleven of the twelve do.
+# Where a transcription's grammaticality verdict departs from its Wikisource strand's, chanted
+# verse by chanted verse: stem -> [(1-based index, the strand's status, the page's status)].
+# Every stem not listed matches its Wikisource strand at every chanted verse, which eleven of the
+# twelve do.
 #
 # The one departure is the point of doing this at all.  simtiq_ex_taxton's divergences are
 # CONJUNCTIVE-ONLY -- the stem is in _SKELETON_UNTOUCHED above, correctly -- and its third
@@ -1247,7 +1251,8 @@ def test_the_verdict_column_says_one_of_three_things_and_the_right_one() -> None
 
     The column is the rendered form of everything above it in this section, so pin its prose
     where a claim about an edition is actually being made: the departure cell must SAY that it
-    departs and where, a page sharing its strand's ungrammatical opening verse must not be
+    departs and where, a page sharing its Wikisource strand's ungrammatical opening verse must
+    not be
     reported as departing, and a clean page must not be hedged. Text-compared through
     ``py_html``'s renderer, since the departure cell is a node rather than a string.
     """

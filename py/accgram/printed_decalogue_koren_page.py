@@ -17,10 +17,11 @@ body text is asserted here, not transcribed word-for-word (only shown as scans).
 Since issue #69 the claim rests on more than a spot-check: all FOUR Koren Decalogues have a
 committed hand transcription of every printed accent (``in/accgram/edition_transcriptions/
 koren_*.txt``), diffed against the vendored strand and pinned by
-``tests/test_edition_transcriptions.py``.  TWO of the four match their strand mark for mark; the
-other two -- both appendix ones -- differ from it only at the maqaf, the Exodus one splitting two
-compounds the strand joins and the Deuteronomy one joining one the strand leaves apart.  A maqaf
-difference is an ordinary difference at the bottom of the trio's one scale, stated to the reader
+``tests/test_edition_transcriptions.py``.  TWO of the four match their Wikisource strand mark
+for mark; the other two -- both appendix ones -- differ from it only at the maqaf, the Exodus
+one splitting two compounds that strand joins and the Deuteronomy one joining one it leaves
+apart.  A maqaf difference is an ordinary difference at the bottom of the trio's one scale,
+stated to the reader
 via ``printed_decalogue_strands.MAQAF_IS_THE_LAST_RUNG``; a 2026-07-25 claim audit found this page
 using "every accent" two ways at once (see the guardrail comments below), so every verdict here
 names the first rung that breaks rather than claiming a bare "every accent".  ``_verdict_table``
@@ -37,9 +38,10 @@ printed-tradition choice it makes:
     standalone-verse (ten-commandment) alternative it declines to print.
 
 The verdict table's LAST column is issue #52's question asked of these four: run through accgram's
-prose checker, is Koren's accentuation grammatical, and as grammatical as the strand it follows?  All
-four give their strand's verdicts exactly, which for the two APPENDIX (עליון) Decalogues means
-printing the p-trad עליון's merged opening chanted verse -- the one the checker rejects.  So the
+prose checker, is Koren's accentuation grammatical, and as grammatical as the Wikisource strand
+it follows?  All four give their Wikisource strand's verdicts exactly, which for the two
+APPENDIX (עליון) Decalogues means printing the p-trad עליון's merged opening chanted verse --
+the one the checker rejects.  So the
 p. A38 note above happens to name the alternative the checker's objection points at: read the
 First Commandment in the תחתון and the merged verse never arises.  The note argues from the count
 of ten commandments and says nothing about grammar, so the conclusion states that as a coincidence
@@ -450,11 +452,11 @@ def _pa38_note_section() -> tuple[object, ...]:
 # The per-Decalogue verdict table (issue #69)
 # --------------------------------------------------------------------------- #
 # One row per Decalogue, never one per edition -- the rule the Simanim page's own table follows,
-# and for the same reason: how far a Decalogue follows its strand differs between the four, so a
-# single per-edition verdict would have to be either false or vacuous. The class turns OFF the
-# shared odd-row zebra as its sibling printed-Decalogue tables do (issue #65, finding C3): the
-# rows alternate main / appendix, so the stripe would tint exactly the two appendix rows and read
-# as if it encoded that.
+# and for the same reason: how far a Decalogue follows its Wikisource strand differs between the
+# four, so a single per-edition verdict would have to be either false or vacuous. The class turns
+# OFF the shared odd-row zebra as its sibling printed-Decalogue tables do (issue #65, finding
+# C3): the rows alternate main / appendix, so the stripe would tint exactly the two appendix rows
+# and read as if it encoded that.
 #
 # The two readings flagged uncertain during transcription (p. 114's לא of לא תרצח, p. 281's tipexa
 # on את־שמו) are deliberately NOT mentioned here or anywhere on this page -- Ben's call,
@@ -609,7 +611,8 @@ def _conclusion(
             )
         ),
         # The transcription verdicts (issue #69). The signal words place each Decalogue among the
-        # four strands; only this says how far it then follows the strand it was placed in.
+        # four strands; only this says how far it then follows the Wikisource strand it was
+        # placed in.
         H.para(
             (
                 "How far each of the four Decalogues follows that strand is a separate question"
@@ -630,11 +633,11 @@ def _conclusion(
         # (1) "Three of the four follow their strand in every accent, and the fourth differs only
         # in how it divides two chanted words." The count is wrong: TWO of the four have a maqaf
         # difference -- besides the Exodus appendix's two splits, the Deuteronomy appendix one
-        # joins לא־תעשה where its strand leaves the atoms apart. The first fix went further and
-        # declared a maqaf difference to be no accent difference at all, which restored "all four
-        # follow their strand in every accent"; that convention is gone (see the guardrail at
-        # pds.MAQAF_IS_THE_LAST_RUNG). Two of the four match mark for mark, two differ at the
-        # maqaf, and neither claim may be dressed up as the other.
+        # joins לא־תעשה where its Wikisource strand leaves the atoms apart. The first fix went
+        # further and declared a maqaf difference to be no accent difference at all, which
+        # restored "all four follow their strand in every accent"; that convention is gone (see
+        # the guardrail at pds.MAQAF_IS_THE_LAST_RUNG). Two of the four match mark for mark, two
+        # differ at the maqaf, and neither claim may be dressed up as the other.
         #
         # (2) "no strand at all, in either tradition, separates יהיה from לך". Flatly false: all
         # four תחתון strands separate those two atoms, binding לא to יהיה (לא־יהיה, one chanted
@@ -676,11 +679,12 @@ def _conclusion(
                 " and no printed edition is known to have done it.",
             )
         ),
-        # The grammaticality column (issue #52). All four agree with their strand, so what the
-        # column shows here is what following the p-trad elyon COSTS: the merged opening verse the
-        # companion page's finding is about is on Koren's appendix pages, not only in an idealized
-        # strand. The p. A38 note connection is deliberately stated as a coincidence of subject
-        # rather than a grammatical motive -- the note argues from the count of commandments.
+        # The grammaticality column (issue #52). All four agree with their Wikisource strand, so
+        # what the column shows here is what following the p-trad elyon COSTS: the merged opening
+        # verse the companion page's finding is about is on Koren's appendix pages, not only in an
+        # idealized strand. The p. A38 note connection is deliberately stated as a coincidence of
+        # subject rather than a grammatical motive -- the note argues from the count of
+        # commandments.
         H.para(
             (
                 "Under the checker, too, each of the four is exactly as grammatical as its"
@@ -793,8 +797,9 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 def run(args: argparse.Namespace) -> None:
     # The four-strands table lives on the companion page, so this page tabulates none of the
     # strands' own verdicts -- but it does need them, since the verdict table's last column states
-    # each transcription's verdict AGAINST its strand's (issue #52). Both checks together are a
-    # fraction of a second, so nothing here is worth skipping for regeneration speed.
+    # each transcription's verdict AGAINST its Wikisource strand's (issue #52). Both checks
+    # together are a fraction of a second, so nothing here is worth skipping for regeneration
+    # speed.
     source = pd.load_source(args.source)
     results = pd.check_all(source)
     verdicts = tvc.by_stem(tp.check_all(results))

@@ -319,8 +319,9 @@ def _intro(survey: dict) -> tuple[object, ...]:
                 ),
                 _emph("both"),
                 *wrap_hebrew_runs(
-                    f" atoms with a {ROM_MUNAX}, where the strand it otherwise follows in"
-                    " every accent sets the two atoms apart as chanted words of their own."
+                    f" atoms with a {ROM_MUNAX}, where the Wikisource strand it otherwise"
+                    " follows in every accent sets the two atoms apart as chanted words of"
+                    " their own."
                     " Is there anything in Tanakh like it?"
                 ),
             )

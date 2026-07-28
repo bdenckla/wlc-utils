@@ -15,9 +15,10 @@ rather than duplicating it.
 
 The strands are IDEALIZED, and since issue #52's transcription work the page also says, in one
 paragraph, how the twelve hand-transcribed real Decalogues fare under the same checker: eleven
-give their strand's verdicts at every chanted verse -- four of them by printing the p-trad elyon's
-ungrammatical merged opening verse, which is what stops that finding being an artifact of the
-idealization -- and one departs.  Those counts come live from ``transcription_parse.check_all``,
+give their Wikisource strand's verdicts at every chanted verse -- four of them by printing the
+p-trad elyon's ungrammatical merged opening verse, which is what stops that finding being an
+artifact of the idealization -- and one departs.  Those counts come live from
+``transcription_parse.check_all``,
 and the per-Decalogue verdicts stay on the two satellite pages, which is where they are
 documented; the hub must not assert what a satellite does not.
 
@@ -543,12 +544,12 @@ _UL_ITEM_3 = (
 # The hub states only the TOTALS; the per-Decalogue verdicts are the satellite pages', which is
 # where they are documented. Every number below is counted from the checker's own results rather
 # than written out, and the one claim the prose makes about WHICH transcriptions share their
-# strand's failure is checked rather than trusted -- the drift-fails-the-build habit of
+# Wikisource strand's failure is checked rather than trusted -- the drift-fails-the-build habit of
 # printed_decalogue_strands, applied to a sentence instead of a table cell.
 def _strand_ungrammatical(
     verdicts: list[tp.TranscriptionResult],
 ) -> list[tp.TranscriptionResult]:
-    """The transcriptions that agree with their strand AND are ungrammatical somewhere.
+    """The transcriptions that agree with their Wikisource strand AND are ungrammatical somewhere.
 
     Being ungrammatical is then the strand's doing, not the edition's, so the prose says these
     editions PRINT the p-trad עליון's merged opening verse.  That is only worth saying if they
@@ -559,7 +560,7 @@ def _strand_ungrammatical(
     odd = [r.stem for r in shared if r.key[1:] != ("elyon", "printed")]
     if odd:
         raise AssertionError(
-            f"{odd} share their strand's ungrammaticality without following a p-trad"
+            f"{odd} share their Wikisource strand's ungrammaticality without following a p-trad"
             f" {pds.ELYON} -- the prose here no longer describes the data"
         )
     return shared

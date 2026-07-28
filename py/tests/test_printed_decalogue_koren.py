@@ -25,8 +25,8 @@ def test_body_renders() -> None:
     """The full Koren page body builds without error and is non-empty.
 
     Like the Simanim page it needs the grammar-check results, for the verdict table's last column
-    (issue #52): each cell is the checker's verdict for one transcription against its strand's, so
-    a row naming a stem with no committed transcription fails here, on the lookup.
+    (issue #52): each cell is the checker's verdict for one transcription against its Wikisource
+    strand's, so a row naming a stem with no committed transcription fails here, on the lookup.
 
     The results are now passed in their own right rather than only relayed to the transcription
     check: the verdict table states how many ways the two Deuteronomy תחתון strands part, derived

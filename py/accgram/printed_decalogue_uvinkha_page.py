@@ -198,7 +198,8 @@ def _no_stroke_after_atta(transcription: et.Transcription) -> None:
     """Pin that the edition has no vertical stroke between אתה and ובנך (Ben's question,
     2026-07-27).  The accent-token comparison cannot answer this: it drops the bracketed
     stroke asides entirely and folds a legarmeh onto a plain munax, so a stroke the edition
-    has and its strand lacks would leave no trace in ``et.compare``.  Both ways a stroke can
+    has and its Wikisource strand lacks would leave no trace in ``et.compare``.  Both ways a
+    stroke can
     be recorded are checked here -- as its own aside chunk (Koren's habit) and as a ``_leg``
     suffix on the preceding accent (the Simanim Tiqqun's) -- since the editions' row of the
     LAP table shows none.

@@ -90,8 +90,9 @@ def require_sibling(name: str, path: Path) -> Path:
     test suite without the siblings present -- the only CI here is the Pages deploy, which
     runs no tests -- so a cross-repo check that quietly skips on an absent sibling reports
     green having verified nothing, and does it in the same channel this suite uses for
-    SEMANTIC skips ("this page diverges from its strand; the control needs an agreeing
-    page").  Fail instead, and make the failure carry its own fix: the overrides documented
+    SEMANTIC skips ("this page diverges from its Wikisource strand; the control needs an
+    agreeing page").  Fail instead, and make the failure carry its own fix: the overrides
+    documented
     in this module's docstring are the answer, and a bare ``FileNotFoundError`` from deep in
     a loader does not mention them.
 

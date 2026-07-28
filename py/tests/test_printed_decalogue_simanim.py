@@ -70,7 +70,8 @@ def test_body_renders() -> None:
 
     It needs the grammar-check results again, and for a different reason than it once did: not to
     tabulate the strands (that moved to the companion page) but because each verdict table's last
-    column states a transcription's verdict against its strand's (issue #52). A row naming a stem
+    column states a transcription's verdict against its Wikisource strand's (issue #52). A row
+    naming a stem
     with no committed transcription fails here, on the lookup.
     """
     source = pd.load_source()

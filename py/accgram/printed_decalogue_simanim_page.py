@@ -31,15 +31,15 @@ and ``_tanakh_verdict_table`` render them, one row per Decalogue -- never one pe
 p. 247's Shabbat departure and pp. 208-209's exact agreement cannot share a sentence.
 
 Each table's LAST column is issue #52's question asked of these eight: fed through accgram's
-prose checker, is what the page prints grammatical, and as grammatical as the strand it follows?
-The cells come live from ``transcription_verdict_column`` (shared with the Koren page) so no row
-can claim a verdict the checker does not give.  Seven of the eight give their strand's verdicts
-exactly.  p. 246 does not, and the prose after that table has to hold two true things together:
-no divergence of its reaches a disjunctive, so its skeleton is intact, AND one of its
-chanted verses is ungrammatical where the strand is clean.  Say the second without
-qualification: the accent sequence is ungrammatical, not merely rejected by this checker, and
-that much would be visible from the edition alone, whose accentuation is otherwise grammatical
-throughout.  Do NOT write the converse either -- that the edition is in error, or that the
+prose checker, is what the page prints grammatical, and as grammatical as the Wikisource strand
+it follows?  The cells come live from ``transcription_verdict_column`` (shared with the Koren
+page) so no row can claim a verdict the checker does not give.  Seven of the eight give their
+Wikisource strand's verdicts exactly.  p. 246 does not, and the prose after that table has to
+hold two true things together: no divergence of its reaches a disjunctive, so its skeleton is
+intact, AND one of its chanted verses is ungrammatical where its Wikisource strand is clean.
+Say the second without qualification: the accent sequence is ungrammatical, not merely rejected
+by this checker, and that much would be visible from the edition alone, whose accentuation is
+otherwise grammatical throughout.  Do NOT write the converse either -- that the edition is in error, or that the
 passage should not be chanted as printed.  Ungrammatical is not the same as wrong.
 
 TWO SENSES OF "TRANSCRIPTION", KEPT APART (issue #69 decision 3a).  This page had the word first
@@ -730,8 +730,8 @@ def _p246_section() -> tuple[object, ...]:
 # --------------------------------------------------------------------------- #
 # One row per Decalogue, never one per edition: p. 247's Shabbat departure and pp. 208-209's exact
 # agreement cannot share a sentence, which is what killed the older per-edition wording. Each
-# verdict says how far the Decalogue follows the strand it was diffed against -- the claim the
-# signal words alone cannot reach.
+# verdict says how far the Decalogue follows the Wikisource strand it was diffed against -- the
+# claim the signal words alone cannot reach.
 #
 # The class turns OFF the shared odd-row zebra, as its three sibling printed-Decalogue tables do
 # (issue #65, finding C3): the four rows alternate main / appendix, so the stripe would tint
@@ -907,7 +907,7 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
         ),
         # The transcription verdicts (issue #69). This is what the signal words alone could not
         # reach: they place a Decalogue among the four strands, and only an accent-by-accent
-        # comparison says how far it then follows the strand it was placed in.
+        # comparison says how far it then follows the Wikisource strand it was placed in.
         H.para(
             (
                 "How far each of the four Decalogues follows that strand is a separate question"
@@ -921,14 +921,15 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
         ),
         # Single-sourced in pds and stated verbatim on all three pages of the trio (2026-07-25 claim
         # audit, finding 3), since both verdict tables below are written in its terms: pp. 83-84
-        # follow their strand in every accent and part from it at two maqafs, and the reader needs
-        # the scale to see that as one graded verdict rather than two claims at odds. Splice the
-        # constant; don't paraphrase it, and don't scope it to one of the two tables.
+        # follow their Wikisource strand in every accent and part from it at two maqafs, and the
+        # reader needs the scale to see that as one graded verdict rather than two claims at odds.
+        # Splice the constant; don't paraphrase it, and don't scope it to one of the two tables.
         H.para((pds.MAQAF_IS_THE_LAST_RUNG,)),
         _tiqqun_verdict_table(verdicts),
         # The grammaticality column's two findings on this page (issue #52). The four p-trad
-        # elyon Decalogues across this page and the Koren page print the strand's ungrammatical
-        # merged opening verse, and p. 246 departs from its strand. Both paragraphs below have to
+        # elyon Decalogues across this page and the Koren page print their Wikisource strand's
+        # ungrammatical merged opening verse, and p. 246 departs from its Wikisource strand. Both
+        # paragraphs below have to
         # keep the middle column's claim standing while adding the last column's: an intact
         # disjunctive skeleton is a token-identity fact and entails nothing about parsing.
         # GUARDRAIL (2026-07-25 claim audit, finding 5). "the only chanted verse in any of the four
@@ -1201,8 +1202,9 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
 def run(args: argparse.Namespace) -> None:
     # The four-strands table lives on the companion page, so this page tabulates none of the
     # strands' own verdicts -- but it does need them, since the verdict tables' last column
-    # states each transcription's verdict AGAINST its strand's (issue #52). Both checks together
-    # are a fraction of a second, so nothing here is worth skipping for regeneration speed.
+    # states each transcription's verdict AGAINST its Wikisource strand's (issue #52). Both checks
+    # together are a fraction of a second, so nothing here is worth skipping for regeneration
+    # speed.
     source = pd.load_source(args.source)
     verdicts = tvc.by_stem(tp.check_all(pd.check_all(source)))
 

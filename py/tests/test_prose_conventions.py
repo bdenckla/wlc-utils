@@ -38,6 +38,20 @@ BEFORE its rule can be switched on, and a sweep is not a lint's job:
 * ``pasuq`` as a UNIT name (256 hits) -- say "chanted verse".  The count is
   dominated by the MARK name "sof pasuq", which stays; no anchored pattern
   separating the two survived review.
+* the nameless possessive ``its strand`` / ``their strand`` (2026-07-27) --
+  where a printed edition is compared against the vendored reference, NAME the
+  reference: "Koren's Exodus תחתון has no difference from Wikisource", never
+  "from its strand", which reads as though the edition owned a strand or as
+  though which strand is "its" were settled rather than the finding under test.
+  "its **Wikisource** strand" is the established phrasing and is fine.  The
+  printed-Decalogue family has been swept, so a regex would pass today -- but it
+  would pass by luck.  The same two words are RIGHT of the four idealized
+  strands themselves (a reading's own strand, the pair that identifies it, the
+  Hebrew word תחתון / עליון that ``render_reading_name`` returns), and telling an
+  edition-vs-reference sentence from a strands-in-general one is a judgment call
+  per site, exactly as with "prose books" above.  Marking the honest ones
+  ``# prose-ok`` would misuse the pragma, which is for a line CITING a banned
+  phrase in order to reject it.
 """
 
 from __future__ import annotations

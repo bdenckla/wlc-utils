@@ -112,9 +112,10 @@ def test_the_transcriptions_section_records_every_page_against_its_strand() -> N
 
     The strands' verdicts have been in this file all along; the twelve hand-transcribed printed
     Decalogues' were only ever pinned in ``test_edition_transcriptions``. So pin the section that
-    records them: one entry per transcription, its strand named, and both counts. The single
-    departure is pinned exactly -- Simanim's Tiqqun Exodus appendix taḥton, chanted verse 3,
-    ungrammatical where its strand is clean -- and the other eleven must show none, which is the
+    records them: one entry per transcription, its Wikisource strand named, and both counts. The
+    single departure is pinned exactly -- Simanim's Tiqqun Exodus appendix taḥton, chanted verse
+    3, ungrammatical where its Wikisource strand is clean -- and the other eleven must show none,
+    which is the
     half that would fail if a re-vendoring quietly made some other page depart.
     """
     results = _results()
@@ -125,7 +126,8 @@ def test_the_transcriptions_section_records_every_page_against_its_strand() -> N
         {"index": 3, "strand_status": "clean", "status": "ungrammatical"}
     ]
     assert [s for s, e in by_stem.items() if e["departures"]] == ["simtiq_ex_taxton"]
-    # Every entry names the strand it was checked against, and carries one chanted verse record
+    # Every entry names the Wikisource strand it was checked against, and carries one chanted
+    # verse record
     # per chanted verse, each with the strand's own status beside its own.
     for entry in section:
         key = (entry["book"], entry["reading"], entry["tradition"])

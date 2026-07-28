@@ -1,11 +1,11 @@
-"""Check a hand transcription against its vendored strand, before it is committed.
+"""Check a hand transcription against its vendored Wikisource strand, before it is committed.
 
 Usage:
     # a transcription still in progress, from the editor's downloaded exports
     .venv/Scripts/python.exe py/accgram/transcription_check.py \
         ~/Downloads/simtiq_dt_elyon_p208-transcription.json ... --key dt elyon printed
 
-    # one already committed, taking its strand from the .txt header
+    # one already committed, taking its Wikisource strand from the .txt header
     .venv/Scripts/python.exe py/accgram/transcription_check.py --stem simtiq_dt_elyon
 
     # what all eight strands do at one site, located by letter skeleton
