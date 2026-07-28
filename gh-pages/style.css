@@ -257,6 +257,13 @@ table.printed-decalogue-transcription-verdict tr td { background-color: transpar
 table.printed-decalogue-transcription-verdict td:nth-child(n+4) { text-align: left; }
 body.centered-page table.printed-decalogue-transcription-verdict { max-width: 52em; }
 
+/* maqaf-nonfinal-accents.html: a pointed Hebrew form set on a line of its own, between the
+   sentences that lead into and out of it. The page's question is the difference between two such
+   forms -- one maqaf -- which the reader can see for themselves at this size, and which no
+   sentence describing it can show. Centered, and text-align must be set explicitly to beat the
+   global justify on p above; the lang="hbo" rule supplies the font and the 140%. */
+p.hebrew-specimen { text-align: center; margin: 0.6em 0; }
+
 /* The strand tables (printed-decalogue.html, issues #59 / #52): range-divided views of a
    cantillation strand, ported from MAM-simple's TEMBte tables. Two of them share this style:
    the four-strands table (one row per strand, first…last range cells) and the merged-verse

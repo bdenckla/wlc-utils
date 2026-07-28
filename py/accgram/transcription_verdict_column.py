@@ -60,7 +60,7 @@ def cell(result: tp.TranscriptionResult) -> object:
         if not bad:
             return f"Clean at all {n} chanted verses, as its Wikisource strand is."
         return (
-            f"Its Wikisource strand's own verdicts: {_verses(bad)} ungrammatical,"
+            f"Its Wikisource strand's verdicts: {_verses(bad)} ungrammatical,"
             f" the other {n - len(bad)} clean."
         )
     return (

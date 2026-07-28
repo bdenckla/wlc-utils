@@ -252,7 +252,7 @@ _PARA_1 = (
 _PARA_2 = (
     "That page lays out those four strands and grammar-checks the p-trad; this page serves only to"
     " document the claim that Koren follows the p-trad."
-    " Along the way it transcribes one of Koren's own notes.",
+    " Along the way it transcribes one of Koren's notes.",
 )
 
 

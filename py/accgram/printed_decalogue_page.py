@@ -225,8 +225,8 @@ def _intro() -> tuple[object, ...]:
                 " each as single cantillation. Every chanted verse"
                 " (delimited by its own ",
                 _ROM_SOF_PASUQ,
-                ") is grammar-checked on its own. The"
-                " m-trad is the baseline — MAM's own authoritative text, expected"
+                ") is grammar-checked separately. The"
+                " m-trad is the baseline — MAM's authoritative text, expected"
                 " to be grammatical throughout — and the p-trad is the object of study.",
             )
         ),
@@ -619,7 +619,7 @@ def _four_strands_section(
                     "מצותי",
                 ),
                 " (the two signal words and the span's shared end). Each row shows that strand's"
-                " own pointing at all four; a cell is red where its chanted word ends one of that strand's"
+                " pointing at all four; a cell is red where its chanted word ends one of that strand's"
                 " chanted verses. So every row starts green at אנכי and ends red at מצותי, and"
                 " the reds between them are the signal accents at work — the strands' differing"
                 " chanted-verse boundaries, read straight down the columns:",
@@ -1300,7 +1300,7 @@ def _appendix_section(results: list[pd.VersionResult]) -> tuple[object, ...]:
                 # classifies a difference site as "boundary" by matching these skeletons -- so the
                 # words named here and the four excluded from the counts below cannot come apart.
                 *H.bdi_multi(*pdt.BOUNDARY_SKELETONS),
-                " that follow from it — is the verdict's own point and is not repeated here.",
+                " that follow from it — is the verdict's point and is not repeated here.",
             )
         ),
         H.para(

@@ -50,13 +50,16 @@ types into the editor, and take the band NUMBERS off it** rather than counting p
 whether the running head and the ornament rule merge into one band or split into two shifts
 every number below them, and which happens turns on `--width`.
 
-Open `.novc/scans/<stem>-editor.html` in **Ben's own default browser**, with
-`Start-Process`. A Decalogue spanning two printed pages gets one editor per page.
+**Hand Ben a `file:///` link to `.novc/scans/<stem>-editor.html` and open nothing** — a
+markdown link with an absolute path in forward slashes, which he clicks into his own default
+browser. A Decalogue spanning two printed pages gets one editor per page, so one link each.
 
-**Do not reach for the in-app Browser pane** — Ben, 2026-07-26: it is "too unreliable, and
-has yet to show any advantage over an external browser, for my needs." `Start-Process`
-returns no screenshot, so verify with the **Read** tool on the file, which is better
-evidence than eyeballing anyway.
+**Do not launch it** — Ben, 2026-07-28: "in sessions like this, I usually already have the
+document open, so particularly after the first turn, this results in multiple copies up in my
+browser." No `Start-Process`. **And do not reach for the in-app Browser pane** — Ben,
+2026-07-26: it is "too unreliable, and has yet to show any advantage over an external browser,
+for my needs." A link returns no screenshot, so verify with the **Read** tool on the file,
+which is better evidence than eyeballing anyway.
 
 No dev server and no `.claude/launch.json` are needed or wanted either way.
 

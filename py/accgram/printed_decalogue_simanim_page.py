@@ -520,7 +520,7 @@ def _p83_section() -> tuple[object, ...]:
                 " at עבדים) under what merely “some books” do. So the Tiqqun treats the p-trad"
                 " structure as the norm and the m-trad alternative as the deviation — aware of the"
                 " alternative, but not adopting it. ",
-                link("Koren's note on its own appendix Decalogue", _KOREN_PAGE),
+                link("Koren's note on its appendix Decalogue", _KOREN_PAGE),
                 " is the mirror of this one, flagging the same alternative on the authority of"
                 " רוו״ה and likewise declining to print it.",
             )
@@ -974,7 +974,7 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 " where the grammar takes two, and the checker cannot build the phrase they"
                 " belong to. Take that one ",
                 _ROM_MUNAX,
-                " away and what is left is the Wikisource strand's own accents, which parse. So"
+                " away and what is left is the Wikisource strand's accents, which parse. So"
                 " an intact"
                 " disjunctive skeleton does not carry a parse with it, and this is the Decalogue"
                 " that shows it.",

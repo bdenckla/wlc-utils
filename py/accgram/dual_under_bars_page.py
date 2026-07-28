@@ -38,14 +38,14 @@ _IMAGES: tuple[tuple[str, str, str], ...] = (
         "LC-043A-Exod-20v13-tirtsach.png",
         "Exodus 20:13 תרצח",
         "Tipeḥa and silluq under the צ --"
-        " the twin of Deuteronomy 5:17's own תרצח."
+        " the twin of Deuteronomy 5:17's תרצח."
         " The tipeḥa's angle here is weirdly close to horizontal,"
         " probably because of the lack of vertical space.",
     ),
     (
         "LC-102B-Deut-5v17-lo.png",
         "Deuteronomy 5:17 לא",
-        "Merkha and  tipeḥa under the ל, matching Exodus 20:13's own לא above.",
+        "Merkha and  tipeḥa under the ל, matching Exodus 20:13's לא above.",
     ),
 )
 
@@ -85,9 +85,9 @@ def _intro() -> tuple[object, ...]:
             wrap_hebrew_runs(
                 "The three photos below, from elsewhere in the very same two Decalogue"
                 " passages, show the naqdan certainly could and did write two separate"
-                " under-bar marks on one letter when two were meant: Exodus 20:13's own"
-                " לא and תרצח (the latter the direct twin of Deuteronomy 5:17's own תרצח),"
-                " and Deuteronomy 5:17's own לא."
+                " under-bar marks on one letter when two were meant: Exodus 20:13's"
+                " לא and תרצח (that תרצח the direct twin of Deuteronomy 5:17's תרצח),"
+                " and Deuteronomy 5:17's לא."
             )
         ),
         H.para(

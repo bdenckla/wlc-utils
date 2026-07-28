@@ -30,14 +30,20 @@
 #     (elyon+taxton, manuscript+printed) JOIN ובנך־ובתך, so no strand splits it and a split would
 #     have been Koren-alone and uncorroborated.  Koren joins it -- no divergence either way.
 #
-# ONE MAQAF DIFFERENCE, real but invisible to the token comparison: at לֹא־תַעֲשֶׂה
-# (5:8) Koren prints a maqaf compound (line 12, written mun-mun) where ws/dt/elyon/printed sets
-# לא and תעשה as two separate words, each a munax.  Both emit the same two tokens (mun, mun),
-# so the token comparison sees no difference; the maqaf is kept in the line so the .txt still
-# says which the page had, and this file is the only record of it.  This is the mirror of the
-# koren_ex_elyon splits -- Koren joining where the reference separates -- and unlike them it
-# changes no accent, the joined לא keeping its munax.  It is a difference all the same: the
-# maqaf is the bottom rung of the same scale the accents are on.
+# ONE MAQAF DIFFERENCE, real but invisible to the token comparison: at ל֣א־תעש֣ה
+# (5:14, the Sabbath commandment) Koren prints a maqaf compound (line 12, written mun-mun) where
+# ws/dt/elyon/printed has לא and תעשה as two chanted words, each with a munax of its own.
+# Both emit the same two tokens (mun, mun), so the token comparison sees no difference; the maqaf
+# is kept in the line so the .txt still says which the page had, and this file is the only record
+# of it.  This is the mirror of the koren_ex_elyon splits -- Koren joining where the reference
+# separates -- and unlike them it changes no accent, the joined לא keeping its munax.  It is a
+# difference all the same: the maqaf is the bottom rung of the same scale the accents are on.
+#
+# NOT 5:8, which this header said until 2026-07-28.  Line 12's mun-mun is tokens 82-83, and the
+# seven pasoleg positions the RESULT paragraph above names pin that 0-based numbering
+# independently.  At 5:8 ws/dt/elyon/printed already has תעשה joined to לך, and its תעשה
+# carries a meteg rather than an accent, so a compound with a munax on each atom cannot be that
+# site at all.
 #
 # THREE READINGS were corrected after export, each a transcription slip Ben re-read off the
 # book/editor and agreeing with the reference once fixed -- NOT edition divergences:

@@ -26,8 +26,14 @@ from pathlib import Path
 
 from accgram import accent_marks as am
 from accgram import maqaf_nonfinal_accents as mpa
+from accgram import printed_decalogue as pd
 from accgram import rtms_report
-from accgram.almost_errors_html_shared import link, wrap_hebrew_runs
+from accgram.almost_errors_html_shared import (
+    accents_and_letters,
+    hbo,
+    link,
+    wrap_hebrew_runs,
+)
 from accgram.printed_decalogue_strands import (
     ELYON,
     ROM_ETNAHTA,
@@ -41,6 +47,7 @@ from accgram.printed_decalogue_strands import (
     ROM_TIPEHA,
     ROM_ZAQEF_QATAN,
 )
+from accgram.uni_to_marks import is_base_letter
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 from py_html import wlc_utils_html as H
@@ -213,6 +220,82 @@ def _letters_from_end(n: int) -> str:
     return f"{_count(n)} letter{'' if n == 1 else 's'} from the end"
 
 
+def _specimen(text: str) -> object:
+    """A pointed Hebrew form on a line of its own.
+
+    Ben, 2026-07-28: "why would you only describe in words what can be shown in Unicode?"
+    The two forms the intro contrasts differ in one mark, and a reader who can see them
+    side by side needs no sentence telling them so."""
+    return H.para(hbo(text), {"class": "hebrew-specimen"})
+
+
+# The letters of the two atoms, used only to find them.  Bare letters, no marks -- the marks
+# are exactly what must not be retyped here.
+_LO_LETTERS = "לא"
+_TAASE_LETTERS = "תעשה"
+
+
+def _letters(chanted_word: str) -> str:
+    return "".join(ch for ch in chanted_word if is_base_letter(ch))
+
+
+def lo_taase_atoms() -> tuple[str, str]:
+    """ws/dt/elyon/printed's לא and תעשה, lifted from the vendored strand and never retyped.
+
+    An accent typed by hand into a page module is a claim with no oracle behind it, and this
+    one is the page's whole subject.  The strand has the two atoms as two chanted words in the
+    Sabbath commandment (Deuteronomy 5:14); Koren's Deuteronomy appendix page has the same two
+    atoms as one maqaf compound, and the maqaf is the whole of the difference, so ``_intro``
+    builds Koren's form by joining these two with a maqaf and the strand's by a space.
+
+    Letters and accents only -- ``accents_and_letters`` drops the vowels, which these pages do
+    not show: the vowels are not what the two forms differ in, and an accentuation discussion
+    prints the accents.  (Ben, 2026-07-28, on a first pass that kept them: "we almost never use
+    vowels in such discussions.")
+
+    The strand's other תעשה (Deuteronomy 5:8) is already joined to לך, so it is not a two-atom
+    pair and does not match; the assertion below is what keeps that true."""
+    version = next(
+        v
+        for v in pd.load_source()["versions"]
+        if (v["book"], v["reading"], v["tradition"]) == ("dt", "elyon", "printed")
+    )
+    pairs = []
+    for chanted_verse in version["chanted_verses"]:
+        words = chanted_verse.split()
+        for first, second in zip(words, words[1:]):
+            if (_letters(first), _letters(second)) == (_LO_LETTERS, _TAASE_LETTERS):
+                pairs.append((accents_and_letters(first), accents_and_letters(second)))
+    assert len(pairs) == 1, f"ws/dt/elyon/printed לא + תעשה pairs: {pairs}"
+    return pairs[0]
+
+
+def isaiah_munax_compound(survey: dict) -> str:
+    """The one MAM prose compound whose non-final atom has a munax, read out of the survey.
+
+    Same rule as ``lo_taase_atoms``: the accents ARE the claim, so they come from the data and
+    are never retyped.  The intro shows this form instead of describing its two accents in
+    words (Ben, 2026-07-28, on the sentence that did: in English we write "apple", we do not
+    describe a word starting with a, continuing to a double p, and ending in l and e).
+
+    Letters and accents only, and the maqaf re-joined here -- ``accents_and_letters`` drops the
+    maqaf along with the vowels, so each atom is reduced and the compound put back together.
+
+    ``pin_claims`` pins the reference the prose names; the assertion below is the one this
+    function needs on its own, since a second hit would silently put a different word on the
+    page."""
+    hits = [
+        o
+        for o in _occurrences(survey, "mam_simple", "prose")
+        if o["shape"].split("-")[0] == mpa.shape_of([[am.MUNAX]])
+    ]
+    assert (
+        len(hits) == 1
+    ), f"MAM prose compounds with a {am.MUNAX} on a non-final atom: {hits}"
+    atoms = hits[0]["word"].split("\N{HEBREW PUNCTUATION MAQAF}")
+    return "\N{HEBREW PUNCTUATION MAQAF}".join(accents_and_letters(a) for a in atoms)
+
+
 def pin_claims(survey: dict) -> None:
     """Fail the build if the data stops supporting a claim the prose states in words.
 
@@ -260,7 +343,7 @@ def pin_claims(survey: dict) -> None:
 
     # THE PAGE'S ANSWER, in two claims that only the data can keep true: no compound in MAM's
     # PROSE verses is accented alike twice, and the single one whose non-final atom has a munax
-    # is Isaiah 40:7.  Both are stated flatly in the intro and again under "Koren's reading".
+    # is Isaiah 40:7.  Both are stated flatly in the intro and again under "Koren's compound".
     #
     # Prose only, deliberately.  The intro used to say "not in poetic ones" too, and the poetic
     # verses do bear it out -- but only among compounds whose maqaf is WRITTEN, and Breuer has
@@ -296,6 +379,7 @@ def _intro(survey: dict) -> tuple[object, ...]:
     # the paragraphs that read them as Koren's nearest precedent, are gone rather than demoted.
     mam_prose = survey["corpora"]["mam_simple"]["prose"]
     pct = 100.0 * mam_prose["hits"] / mam_prose["maqaf_compounds"]
+    lo, taase = lo_taase_atoms()
     return (
         H.heading_level_1(PAGE_TITLE),
         H.para(
@@ -307,23 +391,30 @@ def _intro(survey: dict) -> tuple[object, ...]:
                 " an accent on a non-final atom. In every one of them the two accents sit on"
                 " two atoms of the compound and never both on one, the compound itself having"
                 " two atoms, or occasionally three. This page counts those cases, sorts them,"
-                " and asks what they mean for one printed reading in particular."
+                " and asks what they mean for one printed page in particular."
             )
         ),
+        H.para("The motivation for this study is the chanted word"),
+        _specimen(f"{lo}\N{HEBREW PUNCTUATION MAQAF}{taase}"),
         H.para(
             (
-                "The reading is Koren's Deuteronomy ",
-                *[link("appendix Decalogue", "printed-decalogue-koren.html"), ", "],
+                "in Koren's Deuteronomy ",
+                link("appendix Decalogue", "printed-decalogue-koren.html"),
                 *wrap_hebrew_runs(
-                    "which sets לא־תעשה as a maqaf compound and accents "
+                    f" (the {ELYON}) — one maqaf compound, with a {ROM_MUNAX} on "
                 ),
                 _emph("both"),
                 *wrap_hebrew_runs(
-                    f" atoms with a {ROM_MUNAX}, where the Wikisource strand it otherwise"
-                    " follows in every accent sets the two atoms apart as chanted words of"
-                    " their own."
-                    " Is there anything in Tanakh like it?"
+                    " of its atoms. The Wikisource strand Koren otherwise follows in every"
+                    " accent has"
                 ),
+            )
+        ),
+        _specimen(f"{lo} {taase}"),
+        H.para(
+            wrap_hebrew_runs(
+                f"instead: two chanted words, each with a {ROM_MUNAX} of its own. Is there"
+                " anything in Tanakh like it?"
             )
         ),
         H.para(
@@ -332,10 +423,13 @@ def _intro(survey: dict) -> tuple[object, ...]:
                 " both atoms, not once. Nearly all of the"
                 f" {mam_prose['hits']} prose cases are a single grammatical category, a"
                 f" {ROM_QADMA} before a {ROM_ZAQEF_QATAN}; and the one case whose non-final"
-                f" atom has a {ROM_MUNAX} — Isaiah 40:7 נבל־ציץ — has a {ROM_ZAQEF_QATAN} as"
-                f" the compound's own accent, not a second {ROM_MUNAX}. Nor is any printed"
-                " edition known to have Koren's reading before it."
+                f" atom has a {ROM_MUNAX} is Isaiah 40:7"
             )
+        ),
+        _specimen(isaiah_munax_compound(survey)),
+        H.para(
+            "which is not Koren's pair of accents either. Nor is any printed edition known"
+            " to have Koren's compound before it."
         ),
     )
 
@@ -466,21 +560,21 @@ def _prose_section(survey: dict) -> tuple[object, ...]:
 
 def _koren_section() -> tuple[object, ...]:
     return (
-        H.heading_level_2("Koren's reading"),
+        H.heading_level_2("Koren's compound"),
         H.para(
             (
                 "Every one of those cases pairs two ",
                 _emph("different"),
-                " accents: the compound's own accent, and a secondary mark of a kind that"
+                " accents: the compound's accent, and a secondary mark of a kind that"
                 " can precede it. Koren's two are the same accent twice, and no chanted"
-                " word in MAM is accented that way — so there is no category the reading"
-                " could be said to be following, and nothing in MAM it could be said to be"
-                " repeating.",
+                " word in MAM is accented that way — so there is no category Koren's"
+                " compound could be said to be following, and nothing in MAM it could be"
+                " said to be repeating.",
             )
         ),
         H.para(
             wrap_hebrew_runs(
-                f"The Decalogue's own Exodus 20:10 לא־תעשה has a {ROM_MUNAX} on each atom, but"
+                f"The Decalogue's Exodus 20:10 לא־תעשה has a {ROM_MUNAX} on each atom, but"
                 " that is the two strands tangled together rather than either one of them:"
                 f" untangled, MAM's טעם {ELYON} has no maqaf, and לא and תעשה are two chanted"
                 f" words, each with a {ROM_MUNAX} of its own — the very two atoms Koren has as"
@@ -540,7 +634,7 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
             f" it supplies {_gray(survey)} gray maqafs, its own mark for a maqaf the"
             " manuscript leaves unwritten where the chanted word needs one. Of those,"
             f" {_gray(survey, mpa.GRAY_KIND_SECOND)} join an atom that has an accent"
-            " alongside the compound's own; the other"
+            " alongside the compound's accent; the other"
             f" {_gray(survey, mpa.GRAY_KIND_SPREAD)} have one accent written across the two"
             " atoms. Neither figure belongs beside the prose one."
         ),

@@ -172,13 +172,13 @@ _TELG_PARA_3_CONTENTS = (
     " The checker reads a telg and a gerstar on a single letter in the order they are written in the manuscript —"
     " gerstar-first in the three same-letter words."
     #
-    " That order is not the checker's own invention; it is inherited from the source data."
+    " That order is not the checker's invention; it is inherited from the source data."
     " In WLC 4.22's original Michigan-Claremont (M-C) encoding, the two accents stand in manuscript order:"
     " gerstar-first in the three same-letter words, telg-first in the two cross-letter words."
     " My conversion of that encoding to Unicode preserves that order, so the “word” column of the table below"
     " shows all five words exactly as the manuscript orders them — gerstar-first in the three same-letter words —"
     " and the checker now reads them in that same order, rather than floating the prepositive telg to the front"
-    " of its own reading."
+    " of the chanted word's reading."
     #
     " The checker can do this because it allows a telg and a gerstar to appear in either order;"
     " i.e., either order is considered grammatical."
@@ -253,7 +253,7 @@ def telg_section(index, parser, has_legarmeh: HasLegarmeh) -> tuple[object, ...]
     items.append(
         H.para(
             (
-                "For MAM's own documentation notes on these five words — what"
+                "For MAM's documentation notes on these five words — what"
                 " each manuscript and edition reads, and in which order the two"
                 " accents are taken — see the ",
                 link("deep-dive translation", "telg-doc-notes.html"),
@@ -493,7 +493,7 @@ def double_tsinnor_section() -> tuple[object, ...]:
                 " divider written twice, and the underlying LALR(1) grammar cannot parse"
                 " that repetition directly. Rather than extend the grammar for this single"
                 " verse, the checker just deletes one of the two tsinnor from the copy it"
-                " feeds the parser, and parses what remains. This is a hack for our own"
+                " feeds the parser, and parses what remains. This is a hack for our"
                 " convenience, not a more faithful reading: collapsing the repeat throws"
                 " away a mark the LC really does write. It is tolerable only because the"
                 " doubled mark is legitimate — so this is not a verse we would want to flag"

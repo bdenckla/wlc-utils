@@ -1261,7 +1261,7 @@ def test_the_verdict_column_says_one_of_three_things_and_the_right_one() -> None
         "Clean at all 13 chanted verses, as its Wikisource strand is."
     )
     assert _text(tvc.cell(verdicts["simtiq_dt_elyon"])) == (
-        "Its Wikisource strand's own verdicts: chanted verse 1 ungrammatical,"
+        "Its Wikisource strand's verdicts: chanted verse 1 ungrammatical,"
         " the other 8 clean."
     )
     assert _text(tvc.cell(verdicts["simtiq_ex_taxton"])) == (
