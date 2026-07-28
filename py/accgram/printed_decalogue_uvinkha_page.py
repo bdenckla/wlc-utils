@@ -5,8 +5,8 @@ p-trad עליון is right to have a meteg and a maqaf on ובנך in the Exodus
 commandment, where Koren's Classic Tanakh and the Simanim Tiqqun each have a munax instead --
 the two editions transcribed for issue #69, whose verdicts the trio's satellite pages carry.
 A reply in that thread answers it by citing eight printed editions plus Minxat Shai, each by an
-archive.org or Al-Hatorah link.  This page holds those links, with a crop of each page where a
-crop has been taken, so a reader can check a citation without opening nine scans.
+archive.org or Al-Hatorah link.  This page holds those links, with a crop of each cited page, so
+a reader can check a citation without opening nine scans.
 
 The argument stays in the issue and is deliberately NOT reproduced here.  The page shows the two
 pointings in letters, accents and the punctuation coupled to them (the LAP table, whose whole
@@ -16,10 +16,13 @@ design -- name the edition and say what part of the page the crop is, and let th
 Do not grow them into readings of the marks; the crops are low-resolution and the issue is where
 a reading belongs.
 
-Five editions (Hahn, Leeser, MG Warsaw, Letteris, MG Venice) have no crop recorded yet, and the
-page says so per edition rather than silently omitting them.  To add one, drop the PNG in
-gh-pages/accgram/img/ under the same ``<Edition>-Ex-Dec-Shabbat-uvinkha`` naming and add a
-``_Crop`` to that edition's tuple.
+Every cited edition has a crop as of 2026-07-27.  An edition with none renders "No crop recorded
+yet" rather than being silently omitted; to add one, drop the PNG in gh-pages/accgram/img/ under
+the same ``<Edition>-Ex-Dec-Shabbat-uvinkha`` naming and add a ``_Crop`` to that edition's tuple.
+
+No edition is identified by chapter and verse (Ben, 2026-07-27): the page had got that far
+without one, and the Decalogue's verse numbering varies by edition, so a number picked from any
+one of them would not locate the place in the others.
 
 Run via ``main_accgram.py generate-html``.
 """
@@ -327,7 +330,7 @@ class _Edition(NamedTuple):
 
 
 class _Group(NamedTuple):
-    """One of the reply's three groups of editions, with the sentence that introduces it.
+    """One group of editions, with the sentence that introduces it.
 
     ``heading`` is a contents tuple rather than a str so a romanized mark name in it goes
     through the same italic ``rmn`` wrapper as one in the prose -- a heading is prose too.
@@ -416,35 +419,60 @@ _MUNAX_AND_MAQAF = (
         "Hahn",
         "Biblia Hebraica",
         "https://archive.org/details/bibliahebraicaad00hahn/page/87/mode/1up",
-        (),
+        (
+            _Crop(
+                "Hahn-Ex-Dec-Shabbat-uvinkha.png",
+                "Hahn: the Shabbat commandment's line at uvinkha uvitekha",
+                "Hahn's line at the Shabbat commandment.",
+            ),
+        ),
     ),
     _Edition(
         "Leeser",
         "Tanakh, Jaquett, Philadelphia, 1878",
         "https://archive.org/details/"
         "tanakh-leeser-jaquett-philadelphia-1878-images/page/n153/mode/1up",
-        (),
+        (
+            _Crop(
+                "Leeser-Ex-Dec-Shabbat-uvinkha.png",
+                "Leeser: the Shabbat commandment's line at uvinkha uvitekha",
+                "Leeser's line at the Shabbat commandment.",
+            ),
+        ),
     ),
     _Edition(
         "MG Warsaw",
         "Mikraot Gedolot, Warsaw, 1874–1885",
         "https://archive.org/details/"
         "mikraot-gedolot-warsaw-1874-1885-full-images/page/n451/mode/1up",
-        (),
+        (
+            _Crop(
+                "MG-Warsaw-Ex-Dec-Shabbat-uvinkha.png",
+                "MG Warsaw: the Shabbat commandment's line at uvinkha uvitekha",
+                "MG Warsaw at the Shabbat commandment.",
+            ),
+        ),
     ),
     _Edition(
         "Letteris",
         "Tanakh",
         "https://archive.org/details/Letteris_Tanakh/page/n127/mode/1up",
-        (),
+        (
+            _Crop(
+                "Letteris-Ex-Dec-Shabbat-uvinkha.png",
+                "Letteris: the Shabbat commandment's line at uvinkha uvitekha",
+                "Letteris's line at the Shabbat commandment.",
+            ),
+        ),
     ),
-)
-
-
-_MINXAT_SHAI_AND_VENICE = (
+    # Minxat Shai and MG Venice are ordinary members of this group (Ben, 2026-07-27), not a
+    # section of their own. They had one when the page followed the reply's own three groups,
+    # which coupled them: Minxat Shai's reading is the one the reply finds in MG Venice. That
+    # coupling is the issue's argument to make, so it came out, and with it the reason to keep
+    # either edition apart from the four that have the same two marks.
     _Edition(
         "Minḥat Shai",
-        "at Exodus 20:13, in the Al-Hatorah rendering",
+        "in the Al-Hatorah rendering",
         "https://mg.alhatorah.org/Parshan/Minchat_Shai/Shemot/20.13#m7e_he_he_n6",
         (
             _Crop(
@@ -464,7 +492,13 @@ _MINXAT_SHAI_AND_VENICE = (
         "the Second Rabbinic Bible, Venice, 1525",
         "https://archive.org/details/"
         "second-rabbinic-bible-venice-1525-color-full-images/page/n182/mode/1up",
-        (),
+        (
+            _Crop(
+                "MG-Venice-Ex-Dec-Shabbat-uvinkha.png",
+                "MG Venice: the Shabbat commandment's line at uvinkha uvitekha",
+                "MG Venice at the Shabbat commandment.",
+            ),
+        ),
     ),
 )
 
@@ -502,34 +536,31 @@ def _groups() -> tuple[_Group, ...]:
         _Group(
             ("A ", _ROM_MUNAX, " and a ", _ROM_MAQAF),
             (
-                "These four have both marks on ובנך, which leaves the ",
+                "These six have both marks on ובנך, which leaves the ",
                 _ROM_MUNAX,
                 " to one strand and the ",
                 _ROM_MAQAF,
                 " to the other — the division Wikisource's pair of strands has.",
-            ),
-            _MUNAX_AND_MAQAF,
-        ),
-        _Group(
-            ("Minḥat Shai, and MG Venice",),
-            (
-                "Minḥat Shai distinguishes the two strands at this word: a ",
-                _ROM_METEG,
-                f" in the {_ELYON}, with the ",
+                # Foregrounded at Ben's asking (2026-07-27): Minxat Shai's maqaf is ours to
+                # infer and not a mark on its page, so the reader is told that before being
+                # shown a crop in which there is no maqaf to find.
+                " In Minḥat Shai the ",
                 _ROM_MAQAF,
-                " implied, against a ",
+                " is implied: neither of its two columns has one. It, like Ginsburg, sets the"
+                " two strands out in columns, under other names than we use here, with a ",
+                _ROM_METEG,
+                f" in the {_ELYON} against a ",
                 _ROM_MUNAX,
-                f" in the {_TAHTON}. In this it follows the reading of MG Venice.",
-                " It, too, sets the two out in columns, under other names than we use here.",
+                f" in the {_TAHTON}.",
                 # Same treatment as the Ginsburg mapping above, and settled the same way: in
-                # the second crop below, the ביחיד column has the vertical bar after אתה and
-                # the בצבור column has none. That bar is a תחתון feature no עליון strand has.
-                # The mapping is also the traditional division of labour the headings name --
-                # the עליון for reading to the congregation, the תחתון for reading alone.
+                # the second Minxat Shai crop, the ביחיד column has the vertical bar after אתה
+                # and the בצבור column has none. That bar is a תחתון feature no עליון strand
+                # has. The mapping is also the traditional division of labour the headings name
+                # -- the עליון for reading to the congregation, the תחתון for reading alone.
                 f" (Its אלה הטעמים לקורא בצבור is our {_ELYON} and its אלה הטעמי׳ לקורא ביחיד"
                 f" is our {_TAHTON}.)",
             ),
-            _MINXAT_SHAI_AND_VENICE,
+            _MUNAX_AND_MAQAF,
         ),
     )
 
@@ -591,6 +622,22 @@ def _intro(rows: tuple[_LapRow, ...]) -> tuple[object, ...]:
                 ", and this page supplements the discussion with images of the editions ",
                 link("the reply there", _REPLY_URL),
                 " cites by link alone.",
+            )
+        ),
+        # Ben, 2026-07-27: note that the editions vary here, and go no further than noting it.
+        # The variation is real and visible in the crops below, and a reader who spots it needs
+        # to be told it is not the question -- but it is a question of its own, and this page
+        # answers one. The stress helper is glossed because "stress helper" is our term, not a
+        # term a reader of the printed editions arrives with.
+        H.para(
+            (
+                "The editions below vary in whether they have the ",
+                _ROM_TELISHA_GEDOLAH,
+                "'s stress helper on the ת of ובתך — a second mark on the stressed syllable,"
+                " the ",
+                _ROM_TELISHA_GEDOLAH,
+                " itself standing at the right edge of the atom wherever the stress falls."
+                " This page notes that variation and does no more with it.",
             )
         ),
     )
