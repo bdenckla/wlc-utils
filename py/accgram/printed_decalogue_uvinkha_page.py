@@ -536,17 +536,24 @@ def _groups() -> tuple[_Group, ...]:
         _Group(
             ("A ", _ROM_MUNAX, " and a ", _ROM_MAQAF),
             (
+                # Name both strands rather than "one strand ... the other" (Ben, 2026-07-27):
+                # leaving the reader to work out which mark went where is the same fault as
+                # "the latter", and the four words it saves are not worth the work it costs.
                 "These six have both marks on ובנך, which leaves the ",
                 _ROM_MUNAX,
-                " to one strand and the ",
+                f" to the {_TAHTON} and the ",
                 _ROM_MAQAF,
-                " to the other — the division Wikisource's pair of strands has.",
+                f" to the {_ELYON} — the division Wikisource's pair of strands has.",
                 # Foregrounded at Ben's asking (2026-07-27): Minxat Shai's maqaf is ours to
                 # infer and not a mark on its page, so the reader is told that before being
                 # shown a crop in which there is no maqaf to find.
                 " In Minḥat Shai the ",
                 _ROM_MAQAF,
-                " is implied: neither of its two columns has one. It, like Ginsburg, sets the"
+                " is implied by an atom with only a ",
+                _ROM_METEG,
+                ": neither of its two columns has a ",
+                _ROM_MAQAF,
+                ". It, like Ginsburg, sets the"
                 " two strands out in columns, under other names than we use here, with a ",
                 _ROM_METEG,
                 f" in the {_ELYON} against a ",
