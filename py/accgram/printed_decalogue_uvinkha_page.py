@@ -321,12 +321,20 @@ class _Crop(NamedTuple):
 
 
 class _Edition(NamedTuple):
-    """One cited edition: its name, how the cited item identifies it, the link, and its crops."""
+    """One cited edition: its name, how the cited item identifies it, the link, and its crops.
+
+    ``note`` is prose about this edition alone, rendered under its heading and above its crops
+    so the reader has it in hand while looking at them.  Anything true of one edition goes here
+    and not in its group's intro (Ben, 2026-07-27): from the intro it would sit several
+    editions above the crop it describes, which is the reader-reconstruction fault the intro's
+    own naming of both strands exists to avoid.
+    """
 
     name: str
     detail: str
     url: str
     crops: tuple[_Crop, ...]
+    note: tuple[object, ...] | None = None
 
 
 class _Group(NamedTuple):
@@ -486,6 +494,31 @@ _MUNAX_AND_MAQAF = (
                 "The two columns' text at the same place.",
             ),
         ),
+        note=(
+            # Name ובנך rather than "an atom" (Ben, 2026-07-27): the reader wants the word
+            # itself at the moment the claim is made, and the generic term reads as coy. And
+            # say outright that the implication is ours -- an earlier draft's "Minxat Shai's
+            # maqaf is implied by ..." let it pass for something on the page.
+            "Minḥat Shai has no explicit ",
+            _ROM_MAQAF,
+            ", but we view it as having a ",
+            _ROM_MAQAF,
+            " implied by ובנך with only a ",
+            _ROM_METEG,
+            ". It, like Ginsburg, sets the two strands out in columns, under other names than"
+            " we use here, with that ",
+            _ROM_METEG,
+            f" on ובנך in the {_ELYON} against a ",
+            _ROM_MUNAX,
+            f" on ובנך in the {_TAHTON}.",
+            # Same treatment as the Ginsburg mapping in the group above, and settled the same
+            # way: in the second crop below, the ביחיד column has the vertical bar after אתה
+            # and the בצבור column has none. That bar is a תחתון feature no עליון strand has.
+            # The mapping is also the traditional division of labour the headings name -- the
+            # עליון for reading to the congregation, the תחתון for reading alone.
+            f" (Its אלה הטעמים לקורא בצבור is our {_ELYON} and its אלה הטעמי׳ לקורא ביחיד"
+            f" is our {_TAHTON}.)",
+        ),
     ),
     _Edition(
         "MG Venice",
@@ -539,33 +572,31 @@ def _groups() -> tuple[_Group, ...]:
                 # Name both strands rather than "one strand ... the other" (Ben, 2026-07-27):
                 # leaving the reader to work out which mark went where is the same fault as
                 # "the latter", and the four words it saves are not worth the work it costs.
-                "These six have both marks on ובנך, which leaves the ",
+                #
+                # The same retreat the group above makes, and for the same reason (Ben,
+                # 2026-07-27). A tangled book has both marks on one set of letters and so can
+                # only be CONSISTENT WITH a division between the strands; agreeing with one
+                # takes untangled strands, which of these six only Minxat Shai has. An earlier
+                # draft said all six "divide the two marks as Wikisource does", which credits
+                # five of them with a division they do not make.
+                #
+                # "Books", not "editions" (Ben's word): Minxat Shai is not an edition of the
+                # Torah or the Tanakh, so the group above can say "editions" and this one
+                # cannot.
+                "The following six books agree with (or are at least consistent with)"
+                " Wikisource, which has the ",
                 _ROM_MUNAX,
-                f" to the {_TAHTON} and the ",
+                f" in the {_TAHTON} and the ",
                 _ROM_MAQAF,
-                f" to the {_ELYON} — the division Wikisource's pair of strands has.",
-                # Foregrounded at Ben's asking (2026-07-27): Minxat Shai's maqaf is ours to
-                # infer and not a mark on its page, so the reader is told that before being
-                # shown a crop in which there is no maqaf to find.
-                " In Minḥat Shai the ",
+                f" in the {_ELYON}: Hahn, Leeser, MG Warsaw, Letteris, Minḥat Shai, and MG"
+                " Venice."
+                ' Of five of them we can say no more than "are at least consistent with",'
+                " because they present tangled cantillation: both marks stand on one set of"
+                " letters, which leaves open which mark belongs to which strand. Only Minḥat"
+                " Shai has untangled strands, so it alone can be said to agree — and even"
+                " there the ",
                 _ROM_MAQAF,
-                " is implied by an atom with only a ",
-                _ROM_METEG,
-                ": neither of its two columns has a ",
-                _ROM_MAQAF,
-                ". It, like Ginsburg, sets the"
-                " two strands out in columns, under other names than we use here, with a ",
-                _ROM_METEG,
-                f" in the {_ELYON} against a ",
-                _ROM_MUNAX,
-                f" in the {_TAHTON}.",
-                # Same treatment as the Ginsburg mapping above, and settled the same way: in
-                # the second Minxat Shai crop, the ביחיד column has the vertical bar after אתה
-                # and the בצבור column has none. That bar is a תחתון feature no עליון strand
-                # has. The mapping is also the traditional division of labour the headings name
-                # -- the עליון for reading to the congregation, the תחתון for reading alone.
-                f" (Its אלה הטעמים לקורא בצבור is our {_ELYON} and its אלה הטעמי׳ לקורא ביחיד"
-                f" is our {_TAHTON}.)",
+                " is one we have to infer.",
             ),
             _MUNAX_AND_MAQAF,
         ),
@@ -671,6 +702,8 @@ def _edition_block(edition: _Edition) -> tuple[object, ...]:
     out: list[object] = [
         H.heading_level_3((link(edition.name, edition.url), f" — {edition.detail}"))
     ]
+    if edition.note is not None:
+        out.append(H.para(edition.note))
     if edition.crops:
         out.extend(_figure(crop) for crop in edition.crops)
     else:
