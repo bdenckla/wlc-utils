@@ -306,11 +306,15 @@ def _lap_table(rows: tuple[_LapRow, ...]) -> object:
 
 
 class _Crop(NamedTuple):
-    """One scan crop: the file in gh-pages/accgram/img/, plus its alt text and caption."""
+    """One scan crop: the file in gh-pages/accgram/img/, plus its alt text and caption.
+
+    ``caption`` is a str for the ordinary case and a contents tuple where a crop needs more --
+    the MG Netter composite, which has to account for its own seam.
+    """
 
     file: str
     alt: str
-    caption: str
+    caption: object
 
 
 class _Edition(NamedTuple):
@@ -354,15 +358,26 @@ _MUNAX_ONLY = (
         "https://archive.org/details/"
         "mikraot-gedolot-vienna-1859-full-images/page/n551/mode/1up",
         (
+            # One strip built from two crops, since the stretch straddles a printed line break
+            # (the two sources are kept beside it as -src-unused-line1/2, as the p. 83 Simanim
+            # composite's own halves are). The seam takes the brown this repo already uses for
+            # a break we REMOVED -- the same #c49a6c as that composite's horizontal page-break
+            # bar -- and not the blue of the p. 246 bars, which mark breaks we ADDED. Colour
+            # carries that contrast; this bar is vertical only because the two pieces sit side
+            # by side, line 1 on the right, which is the seam's own geometry.
             _Crop(
-                "MG-Netter-Ex-Dec-Shabbat-uvinkha-1-of-2.png",
-                "MG Netter: the line ending at uvinkha",
-                "The line ends at ובנך.",
-            ),
-            _Crop(
-                "MG-Netter-Ex-Dec-Shabbat-uvinkha-2-of-2.png",
-                "MG Netter: uvitekha at the start of the next line",
-                "ובתך picks up on the next line.",
+                "MG-Netter-Ex-Dec-Shabbat-uvinkha.png",
+                "MG Netter: the stretch at uvinkha uvitekha, across a printed line break",
+                (
+                    "MG Netter at the Shabbat commandment.",
+                    H.line_break(),
+                    H.small(
+                        (
+                            "The bar marks a removed line break — the printed line ends at"
+                            " ובנך, and ובתך picks up on the next one.",
+                        )
+                    ),
+                ),
             ),
         ),
     ),
@@ -435,7 +450,7 @@ _MINXAT_SHAI_AND_VENICE = (
             _Crop(
                 "Minxat-Shai-Ex-Dec-Shabbat-uvinkha-1-of-2.png",
                 "Minhat Shai: the two column headings",
-                "The two column headings.",
+                "The two column headings: לקורא ביחיד on the right, לקורא בצבור on the left.",
             ),
             _Crop(
                 "Minxat-Shai-Ex-Dec-Shabbat-uvinkha-2-of-2.png",
@@ -505,6 +520,14 @@ def _groups() -> tuple[_Group, ...]:
                 " implied, against a ",
                 _ROM_MUNAX,
                 f" in the {_TAHTON}. In this it follows the reading of MG Venice.",
+                " It, too, sets the two out in columns, under other names than we use here.",
+                # Same treatment as the Ginsburg mapping above, and settled the same way: in
+                # the second crop below, the ביחיד column has the vertical bar after אתה and
+                # the בצבור column has none. That bar is a תחתון feature no עליון strand has.
+                # The mapping is also the traditional division of labour the headings name --
+                # the עליון for reading to the congregation, the תחתון for reading alone.
+                f" (Its אלה הטעמים לקורא בצבור is our {_ELYON} and its אלה הטעמי׳ לקורא ביחיד"
+                f" is our {_TAHTON}.)",
             ),
             _MINXAT_SHAI_AND_VENICE,
         ),
@@ -533,8 +556,9 @@ def _intro(rows: tuple[_LapRow, ...]) -> tuple[object, ...]:
         H.para(
             (
                 f"In the Shabbat commandment of the printed-tradition {_ELYON} of the Exodus"
-                " Decalogue, there are multiple ways to point ובנך ובתך. Here are two such"
-                " ways (dropping vowels and other marks not germane to our investigation):",
+                " Decalogue, there are multiple ways to point the atom ובנך in the phrase"
+                " אתה ובנך ובתך. Here are two such ways (dropping vowels and other marks not"
+                " germane to our investigation):",
             )
         ),
         _lap_table(rows),
