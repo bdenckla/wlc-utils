@@ -73,6 +73,10 @@ _SOURCE_URL = "https://he.wikisource.org/wiki/עשרת_הדברות_בסיס/ט�
 _SIMANIM_PAGE = "printed-decalogue-simanim.html"
 _KOREN_PAGE = "printed-decalogue-koren.html"
 
+# Not a satellite: it reports no verdict of this repo's, only the editions MAM-basics issue #208
+# cites at ובנך, where the two satellites' editions and the Wikisource p-trad עליון disagree.
+_UVINKHA_PAGE = "printed-decalogue-uvinkha.html"
+
 _CTR_REVIEW_URL = (
     "https://bdenckla.github.io/MAM-with-doc/misc/rocc_0_review_of_ctr.html"
 )
@@ -580,8 +584,7 @@ def _transcription_grammar_para(verdicts: list[tp.TranscriptionResult]) -> objec
             " chanted verse where its Wikisource strand is clean, over a single added"
             " conjunctive; the ",
             link("Simanim page", _SIMANIM_PAGE),
-            " has it. Every rejection here is a diagnostic of the checker, which is tuned to the"
-            " prose grammar of the Tiberian manuscripts, and not a fault found in an edition.",
+            " has it.",
         ),
         {"id": _TRANSCRIPTIONS_ID},
     )
@@ -972,6 +975,23 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                 " Decalogues match their Wikisource strand mark for mark; the other two differ"
                 " from theirs at the last rung only, where a maqaf on one side faces a"
                 " conjunctive on the other.",
+            )
+        ),
+        # The ובנך־ובתך sentence above says two editions have a conjunctive where the Wikisource
+        # p-trad עליון has a maqaf, and stops there -- which strand is right is not this page's
+        # question and is not decided here. It is decided, or at least argued, in MAM-basics
+        # issue #208, and the page linked here is only a record of the editions that issue cites.
+        H.para(
+            (
+                "See also ",
+                link(
+                    "this record of the printed editions cited at ובנך",
+                    _UVINKHA_PAGE,
+                ),
+                " — the one word above at which two editions and the Wikisource p-trad"
+                f" {_ELYON} disagree. Whether the strand or the editions have it right is"
+                " asked at MAM-basics issue #208, and that page holds the editions the"
+                " issue's reply cites, with a crop of each page where one has been taken.",
             )
         ),
     )

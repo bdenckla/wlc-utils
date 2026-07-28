@@ -1214,9 +1214,10 @@ def test_the_exodus_appendix_taxton_prints_an_ungrammatical_chanted_verse() -> N
     stretch it sits in.  Its sibling insertion at לא־יהיה (chanted verse 2) is harmless: the
     servi there run into a tevir, which tolerates the longer chain.
 
-    Read as a diagnostic and not as a verdict on the edition.  The checker is tuned to
-    Tiberian-manuscript prose grammar, a clean rate is not the objective, and the natural
-    follow-up is a re-read of the word against the physical book.
+    The chanted verse is ungrammatical without qualification -- a fact about the accent
+    sequence, not an artifact of this checker.  That is not a verdict that the edition is in
+    error; a clean rate is not the objective, and the natural follow-up is a re-read of the word
+    against the physical book.
     """
     transcription = _transcription("simtiq_ex_taxton")
     bodies = tp.chanted_verse_bodies(transcription)

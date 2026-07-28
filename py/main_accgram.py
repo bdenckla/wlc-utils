@@ -68,6 +68,9 @@ Subcommands:
                     hits into Yeivin's grammatical secondary accents and the scribal
                     habit of §293, and settles whether Koren's Deuteronomy mun-mun on
                     לא־תעשה has a precedent.
+                  * gh-pages/accgram/printed-decalogue-uvinkha.html -- the printed
+                    editions cited at ובנך in MAM-basics issue #208, each with its
+                    link and, where one has been taken, a crop of its page.
 
                 Each report runs with its default paths.
     generate-html-<name>
@@ -77,6 +80,7 @@ Subcommands:
                 the same options as its generator (e.g. --html-out). The full set:
                 generate-html-poetic, -goerwitz, -almost-errors, -supplied-marks,
                 -printed-decalogue, -printed-decalogue-simanim, -printed-decalogue-koren,
+                -printed-decalogue-uvinkha,
                 -dual-under-bars-in-leningrad-decalogues, -telg-doc-notes,
                 -ps17v14-mam-doc-notes, -ps17v14-double-tsinnor,
                 -maqaf-nonfinal-accents.
@@ -125,6 +129,7 @@ from accgram import printed_decalogue
 from accgram import printed_decalogue_koren_page
 from accgram import printed_decalogue_page
 from accgram import printed_decalogue_simanim_page
+from accgram import printed_decalogue_uvinkha_page
 from accgram import supplied_marks
 from accgram import servi_xcheck
 from accgram import telg_doc_notes
@@ -181,6 +186,7 @@ _HTML_GENERATORS = (
     ("printed-decalogue", printed_decalogue_page),
     ("printed-decalogue-simanim", printed_decalogue_simanim_page),
     ("printed-decalogue-koren", printed_decalogue_koren_page),
+    ("printed-decalogue-uvinkha", printed_decalogue_uvinkha_page),
     ("dual-under-bars-in-leningrad-decalogues", dual_under_bars_page),
     ("maqaf-nonfinal-accents", maqaf_nonfinal_accents_page),
     ("telg-doc-notes", telg_doc_notes),

@@ -36,8 +36,11 @@ The cells come live from ``transcription_verdict_column`` (shared with the Koren
 can claim a verdict the checker does not give.  Seven of the eight give their strand's verdicts
 exactly.  p. 246 does not, and the prose after that table has to hold two true things together:
 no divergence of its reaches a disjunctive, so its skeleton is intact, AND one of its
-chanted verses is ungrammatical where the strand is clean.  Frame that as a diagnostic of the
-checker -- tuned to Tiberian-manuscript prose grammar -- never as an error in the edition.
+chanted verses is ungrammatical where the strand is clean.  Say the second without
+qualification: the accent sequence is ungrammatical, not merely rejected by this checker, and
+that much would be visible from the edition alone, whose accentuation is otherwise grammatical
+throughout.  Do NOT write the converse either -- that the edition is in error, or that the
+passage should not be chanted as printed.  Ungrammatical is not the same as wrong.
 
 TWO SENSES OF "TRANSCRIPTION", KEPT APART (issue #69 decision 3a).  This page had the word first
 for the two *note* transcriptions -- the hand-set pointed Hebrew of the p. 83 and p. 246 notes,
@@ -978,15 +981,13 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
         ),
         H.para(
             (
-                "Read that as a diagnostic of the checker rather than as a fault in the edition."
-                " The checker is built and tuned on the prose grammar of the Tiberian"
-                " manuscripts, and what it objects to is not the insertion as such: the same ",
+                "What is ungrammatical is not the extra accent as such: the same ",
                 _ROM_MUNAX,
                 " one chanted verse earlier, on the joined לא of לא־יהיה, costs nothing, because"
                 " the conjunctives there run into a ",
                 _ROM_TEVIR,
-                ", which allows the longer chain. What the checker has found is a place where"
-                " this page's cantillation and that grammar do not fit each other.",
+                ", which allows the longer chain. The position, not the mark, is what the"
+                " grammar rejects.",
             )
         ),
         # The p. 247 crop below -- a reduced-resolution, grayscale crop of the pointed taxton

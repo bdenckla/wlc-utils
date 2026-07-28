@@ -21,10 +21,12 @@ shorthand -- and the cell is derived from the checker's own result rather than w
 row, so no row can claim a verdict the checker does not give.  Each page keeps its own table:
 the other four columns are that page's material.
 
-WHAT THE COLUMN DOES NOT SAY, and its pages must not either: that a rejected chanted verse is
-an error in the edition.  The checker is tuned to Tiberian-manuscript prose grammar and a clean
-rate is not the objective (see the two pages' prose, which frame every rejection as a diagnostic
-of the checker, and issue #52).
+WHAT A REJECTION SAYS, AND WHAT IT DOES NOT.  It says the chanted verse is ungrammatical, and
+the pages say that without qualification: it is a fact about the accent sequence, not an
+artifact of this checker, and one an internal study of the edition would reach on its own, since
+the rest of that edition's accentuation is grammatical.  It does NOT say the edition is in
+error, or that the passage should not be chanted as printed; the pages must not say either.  A
+clean rate is not the objective (issue #52).
 """
 
 from __future__ import annotations

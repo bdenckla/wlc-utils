@@ -32,8 +32,9 @@ GRAMMATICAL, and one divergence shows the two come apart.  SimTiq's Exodus appen
 (p. 246) diverges from its strand only in conjunctives -- the skeleton is untouched, which is
 correct and pinned -- and its third chanted verse is ungrammatical all the same: the page's
 munax on the joined לא of לא־תעשה makes three servi where the grammar takes two, and the
-pashta phrase fails.  Read as a diagnostic, not as a verdict on the edition; the checker is
-tuned to Tiberian-manuscript prose grammar, and a clean rate is not the objective.
+pashta phrase fails.  That chanted verse is ungrammatical without qualification -- a fact about
+the accent sequence, not an artifact of this checker.  It is not a verdict that the edition is
+in error, and a clean rate is not the objective.
 
 WHAT IT DOES NOT ADD is the legarmeh-vs-paseq distinction, which was once the reason to want
 it.  The scanner's LEGARMEH call is purely POSITIONAL -- a munax + U+05C0 before a revia --
