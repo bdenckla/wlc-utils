@@ -8,11 +8,13 @@ A reply in that thread answers it by citing eight printed editions plus Minxat S
 archive.org or Al-Hatorah link.  This page holds those links, with a crop of each page where a
 crop has been taken, so a reader can check a citation without opening nine scans.
 
-The argument stays in the issue and is deliberately NOT reproduced here: this page states the
-disagreement in one paragraph, says how the reply reads the editions, and then does nothing but
-cite and show.  Captions are short by design -- name the edition and say what part of the page
-the crop is, and let the reader look.  Do not grow them into readings of the marks; the crops are
-low-resolution and the issue is where a reading belongs.
+The argument stays in the issue and is deliberately NOT reproduced here.  The page shows the two
+pointings in letters, accents and the punctuation coupled to them (the LAP table, whose whole
+derivation is pinned -- see the comment above ``_STRETCH_SKELETONS``), says in one paragraph what
+each has, asks the question, and then does nothing but cite and show.  Captions are short by
+design -- name the edition and say what part of the page the crop is, and let the reader look.
+Do not grow them into readings of the marks; the crops are low-resolution and the issue is where
+a reading belongs.
 
 Five editions (Hahn, Leeser, MG Warsaw, Letteris, MG Venice) have no crop recorded yet, and the
 page says so per edition rather than silently omitting them.  To add one, drop the PNG in
@@ -28,10 +30,15 @@ import argparse
 from pathlib import Path
 from typing import NamedTuple
 
+from accgram import edition_transcription as et
+from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
 from accgram import rtms_report
 from accgram.almost_errors_html_shared import link
+from accgram.uni_to_marks import is_accent
 from cmn.utf8_io import force_utf8_io
+from mb_cmn import hebrew_accent_strip as has
+from mb_cmn import hebrew_punctuation as hpunc
 import wlc_provenance as provenance
 from py_html import wlc_utils_html as H
 from py_html.my_html_span_romanized import rmn
@@ -45,16 +52,9 @@ _WIDTH_CLASS = "goerwitz-tms-width-limited"
 _ISSUE_URL = "https://github.com/bdenckla/MAM-basics/issues/208"
 _REPLY_URL = f"{_ISSUE_URL}#issuecomment-5092090523"
 
-# The Wikisource revision adding the note the reply asked for, linked from the closing paragraph.
-_NOTE_DIFF_URL = (
-    "https://he.wikisource.org/w/index.php"
-    "?title=%D7%A9%D7%9E%D7%95%D7%AA_%D7%9B/%D7%98%D7%A2%D7%9E%D7%99%D7%9D"
-    "&curid=236217&diff=3027539&oldid=2987656"
-)
-
-_HUB_PAGE = "printed-decalogue.html"
-_KOREN_PAGE = "printed-decalogue-koren.html"
-_SIMANIM_PAGE = "printed-decalogue-simanim.html"
+# No links back into this repository's own printed-Decalogue pages: the hub links HERE, and a
+# reciprocal link only restated its navigation one page over. Nothing on this page depends on
+# them, since it cites and shows rather than reporting any verdict of the checker's.
 
 # Strand names in Hebrew letters, single-sourced in pds (see its module docstring).
 _TAHTON = pds.TAHTON
@@ -63,10 +63,245 @@ _ELYON = pds.ELYON
 # Romanized mark names, each pre-wrapped ONCE in <span class="romanized"> (italic), same rule as
 # the rest of the printed-Decalogue pages: splice these into a contents tuple, never into an
 # f-string, and never retype the spellings inline.
+_ROM_LEGARMEH = rmn(pds.ROM_LEGARMEH)
 _ROM_MAQAF = rmn(pds.ROM_MAQAF)
 _ROM_METEG = rmn(pds.ROM_METEG)
 _ROM_MUNAX = rmn(pds.ROM_MUNAX)
+_ROM_PASEQ = rmn(pds.ROM_PASEQ)
+_ROM_REVIA = rmn(pds.ROM_REVIA)
 _ROM_TELISHA_GEDOLAH = rmn(pds.ROM_TELISHA_GEDOLAH)
+
+
+# --------------------------------------------------------------------------- #
+# The LAP table (letters, accents, and accent-coupled punctuation)
+# --------------------------------------------------------------------------- #
+# Ben, 2026-07-27: prose about this disagreement is a welcome supplement to the LAP, not a
+# substitute for it -- so show the marks.  Every glyph in both rows comes out of the vendored
+# strands; nothing here is typed.  The Wikisource row is one strand's own three atoms.  The
+# editions' row has to be ASSEMBLED, because a transcription records which accent stands on
+# which chanted word and not the pointed letters, so there is no pointed Koren or SimTiq text in
+# the repo to quote.  It is assembled only from vendored atoms: the p-trad עליון's own אתה and
+# ובתך (which both transcriptions match) and the p-trad תחתון's own ובנך, which is the very
+# thing the transcriptions record -- a munax on ובנך standing as its own chanted word.  Every
+# step is pinned in _pinned_lap_rows, which raises rather than render a row it cannot justify.
+#
+# Meteg is kept in the strip (METEG_ALL) although it is not an accent: it is the mark at issue
+# on one side of the disagreement, and a strip that dropped it would hide the thing to look at.
+_STRETCH_SKELETONS = ("אתה", "ובנך", "ובתך")
+
+_CP_MUNAX = "\N{HEBREW ACCENT MUNAH}"
+_CP_TELISHA_GEDOLA = "\N{HEBREW ACCENT TELISHA GEDOLA}"
+_CP_METEG = "\N{HEBREW POINT METEG}"
+
+# The token both transcriptions insert at this chanted word, in the accent-token vocabulary the
+# transcriptions and the comparison share (edition_transcription's module docstring).
+_INSERTED_TOKEN = "mun"
+
+# The same stretch in an EDITION's token stream: כל־מלאכה, אתה, ובנך, ובתך. Four tokens because
+# of the inserted munax -- the strand has three, its ובנך־ובתך being one chanted word.
+_STRETCH_TOKEN_RUN = ("paz", _INSERTED_TOKEN, _INSERTED_TOKEN, "tg")
+
+# The two hand transcriptions that raised the question: the p-trad עליון Exodus Decalogues of
+# Koren's Classic Tanakh and of the Simanim Tiqqun. Both are checked, and the row is rendered
+# once because they agree -- pinned, not assumed.
+_EDITION_STEMS = ("koren_ex_elyon", "simtiq_ex_elyon")
+
+
+class _LapRow(NamedTuple):
+    """One row of the LAP table: what to call the text, and its stripped stretch."""
+
+    label: tuple[object, ...]
+    lap: str
+
+
+def _atoms(chanted_verse: str) -> list[str]:
+    """A chanted verse split into atoms, each keeping the maqaf that joins it to the next."""
+    out: list[str] = []
+    for chanted_word in chanted_verse.split():
+        parts = chanted_word.split(hpunc.MAQ)
+        for i, part in enumerate(parts):
+            out.append(part + hpunc.MAQ if i < len(parts) - 1 else part)
+    return out
+
+
+def _version(source: dict, reading: str, tradition: str) -> dict:
+    for version in source["versions"]:
+        if (version["book"], version["reading"], version["tradition"]) == (
+            "ex",
+            reading,
+            tradition,
+        ):
+            return version
+    raise AssertionError(f"no ex/{reading}/{tradition} version in the vendored source")
+
+
+def _stretch(version: dict) -> tuple[str, str, str]:
+    """One strand's אתה / ובנך / ובתך atoms. Raises unless the Exodus Decalogue has exactly one
+    such run -- so a re-vendoring that moves or duplicates the stretch fails the build.
+    """
+    found: list[tuple[str, str, str]] = []
+    for chanted_verse in version["chanted_verses"]:
+        atoms = _atoms(chanted_verse)
+        skels = [pds.base_skeleton(a) for a in atoms]
+        for i in range(len(skels) - 2):
+            if tuple(skels[i : i + 3]) == _STRETCH_SKELETONS:
+                found.append((atoms[i], atoms[i + 1], atoms[i + 2]))
+    if len(found) != 1:
+        raise AssertionError(
+            f"{version['reading']}/{version['tradition']}: expected one"
+            f" {'/'.join(_STRETCH_SKELETONS)} run, found {len(found)}"
+        )
+    return found[0]
+
+
+def _lap(atom: str) -> str:
+    return has.strip_to_accents(atom, keep_meteg=has.METEG_ALL)
+
+
+def _join(atoms: tuple[str, ...]) -> str:
+    """Atoms rejoined as they stand: a space between them, none after a maqaf."""
+    out = ""
+    for atom in atoms:
+        if out and not out.endswith(hpunc.MAQ):
+            out += " "
+        out += atom
+    return out
+
+
+def _transcription(stem: str) -> et.Transcription:
+    return et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
+
+
+def _inserted_munax(
+    source: dict, transcription: et.Transcription, compound: str
+) -> et.Difference:
+    """The one difference each edition's transcription has at this chanted word: an inserted
+    munax. Raises if the transcription no longer says that, or says it somewhere else.
+    """
+    stem = transcription.path.stem
+    here = [d for d in et.compare(source, transcription) if d.word == compound]
+    if len(here) != 1:
+        raise AssertionError(
+            f"{stem}: expected one difference at {compound}, got {len(here)}"
+        )
+    diff = here[0]
+    if (diff.kind, diff.reference, diff.transcribed) != (
+        "insert",
+        (),
+        (_INSERTED_TOKEN,),
+    ):
+        raise AssertionError(f"{stem}: unexpected difference -- {diff.describe()}")
+    return diff
+
+
+def _no_stroke_after_atta(transcription: et.Transcription) -> None:
+    """Pin that the edition has no vertical stroke between אתה and ובנך (Ben's question,
+    2026-07-27).  The accent-token comparison cannot answer this: it drops the bracketed
+    stroke asides entirely and folds a legarmeh onto a plain munax, so a stroke the edition
+    has and its strand lacks would leave no trace in ``et.compare``.  Both ways a stroke can
+    be recorded are checked here -- as its own aside chunk (Koren's habit) and as a ``_leg``
+    suffix on the preceding accent (the Simanim Tiqqun's) -- since the editions' row of the
+    LAP table shows none.
+    """
+    stem = transcription.path.stem
+    # The stretch in this transcription's OWN token stream: כל־מלאכה, אתה, ובנך, ובתך. The
+    # edition's inserted munax is what makes the run four long here and three in the strand,
+    # so the run is what locates אתה without any index arithmetic against the reference.
+    toks = transcription.tokens
+    starts = [
+        i for i in range(len(toks) - 3) if tuple(toks[i : i + 4]) == _STRETCH_TOKEN_RUN
+    ]
+    if len(starts) != 1:
+        raise AssertionError(
+            f"{stem}: expected one {'/'.join(_STRETCH_TOKEN_RUN)} run, found {len(starts)}"
+        )
+    atta_i = starts[0] + 1
+    # Walk the chunks as written, so a stroke aside and a `_leg` suffix are both still visible
+    # (``Transcription.tokens`` has already dropped the one and folded the other).
+    token_i = 0
+    written_at: dict[int, str] = {}
+    aside_before: dict[int, str] = {}
+    for chunk in transcription.chunks:
+        if chunk.startswith("["):
+            if chunk in et.PASOLEG_ASIDES:
+                aside_before[token_i] = chunk
+            continue
+        parts = et.written_accents(chunk)
+        written_at[token_i] = chunk
+        token_i += len(parts)
+    if atta_i + 1 in aside_before:
+        raise AssertionError(
+            f"{stem}: a stroke aside {aside_before[atta_i + 1]} sits after אתה"
+        )
+    if written_at.get(atta_i) != _INSERTED_TOKEN:
+        raise AssertionError(
+            f"{stem}: אתה is written {written_at.get(atta_i)!r}, not a plain"
+            f" {_INSERTED_TOKEN} -- a stroke may be folded into it"
+        )
+
+
+def _pinned_lap_rows(source: dict) -> tuple[_LapRow, _LapRow]:
+    """Both rows of the LAP table, with every claim the page makes about them re-derived here.
+
+    Raises on any drift, so the table can never outlive the data it was written against.
+    """
+    e_atta, e_uvinkha, e_uvitekha = _stretch(_version(source, "elyon", "printed"))
+    _, t_uvinkha, _ = _stretch(_version(source, "taxton", "printed"))
+
+    # What the two sides actually have, checked mark by mark before either row is rendered.
+    if not (_CP_MUNAX in e_atta and not is_accent(e_atta[-1])):
+        raise AssertionError(f"p-trad elyon אתה is not munax-accented: {e_atta!r}")
+    if not e_uvinkha.endswith(hpunc.MAQ):
+        raise AssertionError(f"p-trad elyon ובנך is not maqaf-joined: {e_uvinkha!r}")
+    if _CP_METEG not in e_uvinkha or any(is_accent(ch) for ch in e_uvinkha):
+        raise AssertionError(
+            f"p-trad elyon ובנך is not meteg-and-no-accent: {e_uvinkha!r}"
+        )
+    if _CP_TELISHA_GEDOLA not in e_uvitekha:
+        raise AssertionError(
+            f"p-trad elyon ובתך has no telisha gedolah: {e_uvitekha!r}"
+        )
+    if hpunc.MAQ in t_uvinkha or _CP_MUNAX not in t_uvinkha:
+        raise AssertionError(
+            f"p-trad taxton ובנך is not a free munax word: {t_uvinkha!r}"
+        )
+
+    # Both editions' transcriptions record the same one thing here, which is why one row serves.
+    compound = _join((e_uvinkha, e_uvitekha))
+    transcriptions = [_transcription(stem) for stem in _EDITION_STEMS]
+    diffs = [_inserted_munax(source, t, compound) for t in transcriptions]
+    for transcription in transcriptions:
+        _no_stroke_after_atta(transcription)
+    if diffs[0] != diffs[1]:
+        raise AssertionError(
+            f"{_EDITION_STEMS} disagree at {compound}:"
+            f" {diffs[0].describe()} / {diffs[1].describe()}"
+        )
+
+    editions = _join(tuple(_lap(a) for a in (e_atta, t_uvinkha, e_uvitekha)))
+    wikisource = _join(tuple(_lap(a) for a in (e_atta, e_uvinkha, e_uvitekha)))
+    # Neither label names the strand: all three texts are the p-trad עליון, so saying so in the
+    # cells would repeat the paragraph above and imply the rows differ in which strand they are.
+    # The two edition names are stacked rather than run together, which reads as one title.
+    return (
+        _LapRow(("Koren Tanakh", H.line_break(), "Simanim Tiqqun"), editions),
+        _LapRow(("Hebrew Wikisource",), wikisource),
+    )
+
+
+def _lap_table(rows: tuple[_LapRow, ...]) -> object:
+    return H.table(
+        tuple(
+            H.table_row(
+                (
+                    H.table_header(row.label),
+                    H.table_datum(row.lap, {"lang": "hbo", "dir": "rtl"}),
+                )
+            )
+            for row in rows
+        ),
+        {"class": "strand-table"},
+    )
 
 
 class _Crop(NamedTuple):
@@ -141,15 +376,19 @@ _MUNAX_ONLY = (
                 "Ginsburg: the main text at uvinkha uvitekha",
                 "Ginsburg's main text at the Shabbat commandment.",
             ),
+            # Not a "variant apparatus", which is what these captions called it before the
+            # paragraph above identified the two columns: they are Ginsburg's two untangled
+            # cantillations, headed מערבאי on the right and מדנחאי on the left.
             _Crop(
                 "Ginsburg-Ex-Dec-Shabbat-uvinkha-2-of-3.png",
-                "Ginsburg: the two headings of the variant apparatus",
-                "The two headings of the variant apparatus on the same page.",
+                "Ginsburg: the headings of the two untangled cantillations",
+                "The headings of the two untangled cantillations on the same page:"
+                " מערבאי on the right, מדנחאי on the left.",
             ),
             _Crop(
                 "Ginsburg-Ex-Dec-Shabbat-uvinkha-3-of-3.png",
-                "Ginsburg: the apparatus line covering this stretch, in both columns",
-                "The apparatus line covering this stretch, in both columns.",
+                "Ginsburg: this stretch in both of the untangled cantillations",
+                "This stretch in both of them.",
             ),
         ),
     ),
@@ -219,15 +458,28 @@ def _groups() -> tuple[_Group, ...]:
         _Group(
             ("A ", _ROM_MUNAX, " and no ", _ROM_MAQAF),
             (
-                "These three have a single accent on ובנך, a ",
-                _ROM_MUNAX,
-                ". On the reply's reading that means both strands have the ",
-                _ROM_MUNAX,
-                " there and neither has a ",
-                _ROM_MAQAF,
-                ". Koren, one of the two editions above, follows Heidenheim. Ginsburg's"
-                " apparatus has no entry at this word, which the reply notes as surprising"
-                " in an edition meant to document departures from MG Venice.",
+                "The following three editions agree with (or are at least consistent with)"
+                ' "KorTan/SimTiq" (Koren Tanakh and Simanim Tiqqun): Heidenheim, MG Netter,'
+                " and Ginsburg."
+                ' The reason I retreat to "are at least consistent with" is'
+                ' that Heidenheim and MG Netter present manuscript-style "tangled" cantillation:'
+                " two cantillations on one set of letters."
+                " We interpret the vertical bar after אתה as a ",
+                _ROM_LEGARMEH,
+                " (not a ",
+                _ROM_PASEQ,
+                f") and ignore it since we assume it belongs to the {_TAHTON}."
+                " Similarly we ignore the ",
+                _ROM_REVIA,
+                f" on the ת of ובתך since we assume it belongs to the {_TAHTON}.",
+                " Although Ginsburg, too, presents tangled cantillation, that edition also"
+                " provides untangled (single-strand) cantillations, albeit by slightly"
+                " different names than we use here.",
+                # Which column is which is not taken on trust: the two Ginsburg crops below
+                # settle it twice over. The מערבאי column has לא־תעשה with a maqaf and a
+                # vertical bar after אתה; the מדנחאי column has לא תעשה with neither. Both of
+                # those are תחתון features that no עליון strand has.
+                f" (Its מדנחאי is our {_ELYON} and its מערבאי is our {_TAHTON}.)",
             ),
             _MUNAX_ONLY,
         ),
@@ -251,11 +503,7 @@ def _groups() -> tuple[_Group, ...]:
                 _ROM_MAQAF,
                 " implied, against a ",
                 _ROM_MUNAX,
-                f" in the {_TAHTON}. In this he follows the reading of MG Venice, and that"
-                " reading leaves room for the ",
-                _ROM_METEG,
-                f" in the {_ELYON}. The reply takes this to decide the question in favour of"
-                " Wikisource's present text, while wanting a note alongside it.",
+                f" in the {_TAHTON}. In this it follows the reading of MG Venice.",
             ),
             _MINXAT_SHAI_AND_VENICE,
         ),
@@ -275,63 +523,49 @@ def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
     )
 
 
-def _intro() -> tuple[object, ...]:
+def _intro(rows: tuple[_LapRow, ...]) -> tuple[object, ...]:
     return (
         H.heading_level_1(PAGE_TITLE),
+        # The table leads and the prose follows it (Ben, 2026-07-27): the LAP is the thing to
+        # look at, and the paragraph under it says in words what the two rows already show.
+        # The lead-in names the strand, since neither row's label does any more.
         H.para(
             (
-                "At the Shabbat commandment of the Exodus Decalogue, Hebrew Wikisource's"
-                f" printed-tradition {_ELYON} has a ",
+                f"In the Shabbat commandment of the printed-tradition {_ELYON} of the Exodus"
+                " Decalogue, there are multiple ways to point ובנך ובתך. Here are two such"
+                " ways (dropping vowels and other marks not germane to our investigation):",
+            )
+        ),
+        _lap_table(rows),
+        H.para(
+            (
+                "Hebrew Wikisource has a ",
                 _ROM_METEG,
                 " and no accent on ובנך, joined by ",
                 _ROM_MAQAF,
-                " to ובתך, which has the ",
+                " to ובתך, which has a ",
                 _ROM_TELISHA_GEDOLAH,
                 ": one chanted word. Koren's Classic Tanakh and the Simanim Tiqqun each have"
                 " a ",
                 _ROM_MUNAX,
                 " on ובנך and no ",
                 _ROM_MAQAF,
-                ": two chanted words. So the disagreement is an exchange at the last rung of"
-                " the accents' own scale — a ",
-                _ROM_MAQAF,
-                " on one side against a ",
-                _ROM_MUNAX,
-                " on the other — and since ",
-                _ROM_MUNAX,
-                " is conjunctive, the disjunctive skeleton is the same either way.",
+                ": two chanted words.",
             )
         ),
+        # Ask the question outright. An earlier draft opened "The question is asked, and argued
+        # out, at MAM-basics issue #208" without ever saying what the question was -- Ben,
+        # 2026-07-27: "You can't just leave the reader hanging. Either don't introduce the
+        # notion of a question, or say what the question is." "These two" are the table's two
+        # rows, which is why this paragraph has to stay below it.
         H.para(
             (
-                "The question is asked, and argued out, at ",
+                f"Which of these two cantillations best represents the printed tradition {_ELYON}?"
+                " That question is discussed at ",
                 link("MAM-basics issue #208", _ISSUE_URL),
-                ". This page does not repeat that argument. It records the editions cited"
-                " in ",
-                link("the reply in that thread", _REPLY_URL),
-                ", with a crop of each page where one has been taken, so a citation can be"
-                " checked without opening nine scans.",
-            )
-        ),
-        H.para(
-            (
-                "The reply's premise is that these editions have the Exodus Decalogue with"
-                " the marks of both strands together, so that what stands on ובנך in one of"
-                " them is evidence about both strands at once. It sorts them accordingly,"
-                " and the three sections below follow its sorting.",
-            )
-        ),
-        H.para(
-            (
-                "The two editions the question started from were transcribed accent by"
-                " accent for ",
-                link("this repository's printed-Decalogue pages", _HUB_PAGE),
-                ", which carry the per-Decalogue verdicts for ",
-                link("Koren", _KOREN_PAGE),
-                " and for ",
-                link("the Simanim Tiqqun", _SIMANIM_PAGE),
-                ", and where the scale this page's opening paragraph invokes is stated in"
-                " full.",
+                ", and this page supplements the discussion with images of the editions ",
+                link("the reply there", _REPLY_URL),
+                " cites by link alone.",
             )
         ),
     )
@@ -372,24 +606,10 @@ def _group_block(group: _Group) -> tuple[object, ...]:
     return tuple(out)
 
 
-def _closing() -> tuple[object, ...]:
-    return (
-        H.heading_level_2("Since then"),
-        H.para(
-            (
-                "The note the reply asked for has been added at Wikisource: see ",
-                link("the revision that adds it", _NOTE_DIFF_URL),
-                ".",
-            )
-        ),
-    )
-
-
 def render_body_contents() -> tuple[object, ...]:
-    sections: list[object] = [*_intro()]
+    sections: list[object] = [*_intro(_pinned_lap_rows(pd.load_source()))]
     for group in _groups():
         sections.extend(_group_block(group))
-    sections.extend(_closing())
     return (H.div(tuple(sections), {"class": _WIDTH_CLASS}),)
 
 

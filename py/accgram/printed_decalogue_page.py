@@ -989,7 +989,7 @@ def _provenance_section(source: dict) -> tuple[object, ...]:
                     _UVINKHA_PAGE,
                 ),
                 " — the one word above at which two editions and the Wikisource p-trad"
-                f" {_ELYON} disagree. Whether the strand or the editions have it right is"
+                f" {_ELYON} disagree. Whether Wikisource or the editions have it right is"
                 " asked at MAM-basics issue #208, and that page holds the editions the"
                 " issue's reply cites, with a crop of each page where one has been taken.",
             )
