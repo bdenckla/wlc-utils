@@ -1296,6 +1296,12 @@ def _geresh_or_azla_note(rows: list[dict]) -> object:
     only geresh flavors are plain geresh (which INCLUDES azla), geresh muqdam, and gershayim.
     MAM's prose verses have no ``qad-germ`` at all, so this row is entirely plain geresh -- and
     that settles the codepoint, never the name.
+
+    OFFERED, NOT ANSWERED, NOT ADOPTED: one further clause, that in some traditions a qadma azla
+    is sung to a different melody from a qadma geresh (Jacobson, CHB p. 187 again -- the same
+    page as the naming above).  It was put to Ben on 2026-07-29 and he did not answer either
+    way, so the note stands without it.  Recorded here so the offer is neither lost nor silently
+    taken up: DO NOT add it unasked, and do not re-offer it as though it were new.
     """
     (row,) = [r for r in rows if r["second"] == _GERESH_OR_AZLA]
     return H.para(

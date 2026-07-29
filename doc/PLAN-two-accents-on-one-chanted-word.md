@@ -5,13 +5,38 @@ word with two unless the pair matches a known, very restrictive pattern. The sam
 an **atomic** chanted word as to a **maqaf compound**; this is a chanted-word rule, not a maqaf
 feature.
 
-Planning session 2026-07-28. **Phase 1 is implemented** — see §7 at the foot of this file for
+Planning session 2026-07-28. **Phases 1 and 2 are implemented** — see §7 at the foot of this file for
 what changed, what was verified, and what Phase 2 starts from.
 
 Every number below marked *(probe)* came from a scratch script run during planning, **not** from
 a regenerated tracked artifact. Phase 1 re-derived all of them in
 `py/accgram/chanted_word_accents.py`; the tables below are now annotated with what the real
 module measures, and §7 lists every place the probe was wrong.
+
+---
+
+## 0. Where to resume (updated 2026-07-29, main at `7aeeeb0`)
+
+**Next phase: Phase 3**, exactly as `§8`'s closing "The exact next phase" states it, including
+the two things to settle with Ben before writing the page. Nothing else in this file is a
+pending instruction.
+
+**Two corrections to `§8`, which was written against `957113f` and has been overtaken.** Main has
+since moved six commits, so read `§8`'s opening subsection as history, not as current state:
+
+- **The work `§8` calls "Ben's uncommitted work" in `maqaf_nonfinal_accents.py`,
+  `maqaf_nonfinal_accents_page.py`, `printed_decalogue_strands.py` and `wlc_utils_html.py` is
+  all committed.** Nothing is pending in the working tree. Do not try to finish or reconcile it.
+- **`maqaf-nonfinal-accents.html` has been through several rounds of editing since**, on a track
+  this plan does not cover. Its account is in the commit messages of `829d1f6..7aeeeb0`, which
+  are written to be read that way; `0ab2c6a` is the fullest. In short: the intro now asks of all
+  three printed compounds whether MAM has anything like them, the pair table is down to the
+  eight pairs a compound has, and two appendices carry the rest.
+
+**Open, and belonging to that other track rather than to any phase here:** the mark-vs-token
+count reconciliation, which is `§8`'s first open-question bullet and item (a) of its next-phase
+paragraph. A separate session of Ben's was looking at it. The `135` half of it is closed --
+issue #85 -- and must not be reopened.
 
 ---
 
