@@ -34,25 +34,25 @@ the rendered page; that page was built on 2026-07-29 and withdrawn the same day.
 Phase 3 entry has the reasoning and `§9` has the state. Both of the two things `§8` told Phase 3
 to settle with Ben were settled before it ran, and both answers are recorded there.
 
-**Two corrections to `§8`, which was written against `957113f` and has been overtaken.** Main has
-moved a good deal since, so read `§8`'s opening subsection as history, not as current state:
+**`§8`'s opening subsection is stale, and reads as work to finish.** Written against `957113f`,
+it describes edits to `maqaf_nonfinal_accents.py`, `maqaf_nonfinal_accents_page.py`,
+`printed_decalogue_strands.py` and `wlc_utils_html.py` as sitting uncommitted in Ben's working
+tree; all of it is committed, through `7aeeeb0`, as is the further `maqaf_nonfinal_accents.py`
+edit that `§9` reports uncommitted. Read that subsection as history, and finish or reconcile
+nothing it names.
 
-- **The work `§8` calls "Ben's uncommitted work" in `maqaf_nonfinal_accents.py`,
-  `maqaf_nonfinal_accents_page.py`, `printed_decalogue_strands.py` and `wlc_utils_html.py` is
-  all committed** (through `7aeeeb0`). Do not try to finish or reconcile it. The same goes for
-  the further uncommitted `maqaf_nonfinal_accents.py` edit that `§9` reports: it landed as
-  `7aeeeb0`, "Finish the zarqa-stress-helper sweep in the maqaf-nonfinal survey".
-- **`maqaf-nonfinal-accents.html` has been through several rounds of editing since**, on a track
-  this plan does not cover. Its account is in the commit messages of `829d1f6..7aeeeb0`, which
-  are written to be read that way; `0ab2c6a` is the fullest. In short: the intro now asks of all
-  three printed compounds whether MAM has anything like them, the pair table is down to the
-  eight pairs a compound has, and two appendices carry the rest. **That track is also why Phase 3
-  was withdrawn** — it had widened onto the page's question.
+**`§8`'s first open-question bullet, the mark-versus-token count reconciliation, is settled for
+this plan's purposes.** Ben ruled it off the rendered page on 2026-07-29, and it is recorded in
+issue #86. The `135` half of it is closed by issue #85 and must not be reopened.
 
-**Open, and belonging to that other track rather than to any phase here:** the mark-vs-token
-count reconciliation, which is `§8`'s first open-question bullet and item (a) of its next-phase
-paragraph. Ben ruled it off the page on 2026-07-29 and it is now recorded in issue #86. The `135`
-half of it is closed — issue #85 — and must not be reopened.
+**THIS PLAN DOES NOT COVER THE EDITING OF `maqaf-nonfinal-accents.html`.** That is a separate,
+free-form track — Ben requesting edits interactively, not a plan — and it keeps its own
+persistent state in its own file. It is named here only because its widening onto the same
+question is half of why Phase 3 went. **Do not read that track's state out of this file, and do
+not record that track's state in this file.** A round of it was written into `§0` on 2026-07-29
+(`b57f8b9`) and taken back out: a summary of what that page currently looks like, and a pointer
+to `829d1f6..7aeeeb0` for its account. Both are that track's to keep, and both survive in that
+commit for whoever moves them to where they belong.
 
 ---
 
