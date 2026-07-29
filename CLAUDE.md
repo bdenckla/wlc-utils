@@ -42,9 +42,13 @@ Two of those conventions are claims about Hebrew accentuation rather than about 
 **Never a loose "word"** (#81). An **atom** is one written word, between spaces or maqafs — the
 thing a maqaf joins to the next. A **chanted word** is a lone atom *or* a whole maqaf compound:
 the unit cantillation operates on, normally bearing one accent. Say which you mean, and name a
-compound whole (על־פני, לא־תעשה), never a bare half of one. Plain "word" survives only for an
-ordinary English word, and inside quoted or translated source material, which keeps whatever it
-says. `MAQAF_IS_THE_LAST_RUNG` is where "atom" is glossed for the reader; that gloss is what
+compound whole (על־פני, לא־תעשה), never a bare half of one. Plain "word" survives for an ordinary
+English word, inside quoted or translated source material (which keeps whatever it says), **and
+wherever the context already settles which sense is meant** — what #81 bans is a loose "word" the
+reader must resolve from nothing, so the qualifier is owed where the sense is in doubt and is noise
+where it is not. A table heading is read with its column, so `Word` over a column of Hebrew forms
+is right whether they are simple, compound or mixed (Ben, 2026-07-29); the sense can still go in
+the heading's hover text, as the one-letter appendix's does. `MAQAF_IS_THE_LAST_RUNG` is where "atom" is glossed for the reader; that gloss is what
 licenses the bare term on the pages. Note that the two senses come apart exactly where the rung
 below matters, so the two rules are best read together.
 

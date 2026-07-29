@@ -338,6 +338,37 @@ def _pair_of(shape: str) -> tuple[str, str]:
 
 # The pair columns, single-sourced so the three tables cannot come to head them differently.
 # Written order is the only thing the split-off "before" used to say, so the hover text says it.
+# Every column of Hebrew forms carries its verse on hover, and says so in its heading (Ben,
+# 2026-07-29: "advertise book-chapter-verse hoverability in the hover-text of the header of all
+# columns whose data cells have book-chapter-verse hover-text").  The heading is the only place
+# that CAN advertise it: the forms themselves deliberately take no dotted underline, since it
+# would be drawn right where a mark under the last letter sits (see ``_example_cell``), so
+# nothing in the column's own appearance invites the hover.  The headings do carry the dotted
+# rule, being ``abbr[title]``, so this is a hover a reader is already invited to make.  One
+# string, spliced into all four titles, so they cannot come to promise different things.
+_BCV_ON_HOVER = "hover one for its book, chapter and verse"
+
+
+def _example_header(short: str, on_what: str) -> object:
+    """One "Example" heading, named for the count column it exemplifies.
+
+    Ben, 2026-07-29: "why not qualify the 'Example' header cells of the table with 'C' and 'S'
+    counts as 'C-Example' and 'S-Example'?"  Two columns both headed "Example" left a reader to
+    infer from position which count each one draws its example from, and position is exactly what
+    a wide table makes hard to hold.  The prefix is the neighbouring column's own heading, so the
+    pairing is stated rather than implied, and the hover text expands the letter as that column's
+    does.  ``_simple_only_table`` takes it too: it has only one example column and so nothing to
+    disambiguate, but "S-Example" over an S count reads the same in both tables, and an unprefixed
+    one there would suggest a distinction that is not there.
+    """
+    return H.table_header(
+        H.abbr(
+            f"{short}-Example",
+            f"An example of the pair on a {on_what}; {_BCV_ON_HOVER}",
+        )
+    )
+
+
 _ACC_HEADERS = (
     H.table_header(
         H.abbr("Acc1", "The first of the two accents, in the written order")
@@ -481,13 +512,9 @@ def _pair_table(rows: list[dict], hits: int) -> object:
                 H.table_header(
                     H.abbr("C", "On a compound chanted word"), _NUMERIC_CELL
                 ),
-                H.table_header(
-                    H.abbr("Example", "An example of the pair on a compound")
-                ),
+                _example_header("C", "compound chanted word"),
                 H.table_header(H.abbr("S", "On a simple chanted word"), _NUMERIC_CELL),
-                H.table_header(
-                    H.abbr("Example", "An example of the pair on a simple chanted word")
-                ),
+                _example_header("S", "simple chanted word"),
             )
         )
     ]
@@ -534,7 +561,7 @@ def _simple_only_table(rows: list[dict]) -> object:
             (
                 *_ACC_HEADERS,
                 H.table_header(H.abbr("S", "On a simple chanted word"), _NUMERIC_CELL),
-                H.table_header("Example"),
+                _example_header("S", "simple chanted word"),
             )
         )
     ]
@@ -1473,6 +1500,22 @@ def _one_letter_appendix_section(survey: dict) -> tuple[object, ...]:
     and gershayim being one thing for this purpose, and it separates out Ezekiel 20:31, whose
     mahapakh with a qadma is on no list.  See ``_ONE_LETTER_TYPE_GERSTAR_TG`` and its
     neighbours.  The rows are sorted by it, so the five stand together and the odd one last.
+
+    "WORD", NOT "CHANTED WORD", IS RIGHT IN THIS HEADING, and is not the loose "word" #81 bans.
+    Ben, 2026-07-29: it "can just say 'word' since there are no compounds so by any/either
+    definition of 'word', these are words".  Not one of the six is a maqaf compound, so atom and
+    chanted word name the same six things and the reader has nothing to disambiguate.
+
+    AND THE RULE IS WIDER THAN THAT, lest a later pass read this heading as licensed only by the
+    absence of compounds.  Ben, same day, correcting a first version of this paragraph that said
+    so: "even a column having only compound words, or simple and compound words, might still be
+    labelled word since what definition of 'word' is active is clear from the contents of the
+    column!  Also in many contexts it is unnecessary to qualify a word as chanted because it is
+    clear from context."  So a column of compounds may say "word" too -- the forms in it show
+    which sense is meant, and a heading is read with its column, not alone.  What #81 bans is a
+    loose "word" the reader must resolve from nothing; the qualifier is owed where the sense is
+    genuinely in doubt, and is noise where the context settles it.  The hover text here says
+    "chanted word" anyway, which costs nothing.
     """
     genre = survey["corpora"][_CORPUS]["prose"]
     words = sorted(
@@ -1486,7 +1529,7 @@ def _one_letter_appendix_section(survey: dict) -> tuple[object, ...]:
             (
                 *_ACC_HEADERS,
                 H.table_header(H.abbr("Type", "Which kind of pair the two marks are")),
-                H.table_header("Chanted word"),
+                H.table_header(H.abbr("Word", f"The chanted word; {_BCV_ON_HOVER}")),
                 H.table_header(H.abbr("Mwd", "The verse in the MAM-with-doc edition")),
             )
         )
