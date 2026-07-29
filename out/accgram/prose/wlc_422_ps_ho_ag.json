@@ -412,6 +412,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֨אאא֜א",
+"sequence": "azla geresh",
+"kind": "an atomic chanted word",
+"itm_section": "§268"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -2551,6 +2559,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -5500,6 +5516,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -6562,6 +6586,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "א֣אאאאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -9067,6 +9099,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -12638,6 +12678,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -15556,6 +15604,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אֽאאא֖אאאאֽא׃",
+"sequence": "mayela silluq",
+"kind": "an atomic chanted word",
+"itm_section": "§210"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -18376,6 +18432,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -19419,6 +19483,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",

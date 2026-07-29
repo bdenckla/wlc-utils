@@ -303,6 +303,7 @@ def _chanted_verse_obj(
         "tokens": list(cv.tokens),
         "status": cv.status,
         "strand_status": strand_status,
+        **cv.chanted_word_accents_obj(),
         "tree": cv.tree,
     }
 

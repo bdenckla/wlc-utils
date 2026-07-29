@@ -48,6 +48,10 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from accgram import uni_to_marks
+
+# Aliased because ``ChantedVerseResult`` has a field of the module's own name, and an
+# unaliased import would sit one scope away from it for no gain.
+from accgram import chanted_word_accents as cwa
 from accgram.dual_cant_detangle import _tree_has_error
 from accgram.prose_ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.prose_scanner import HasLegarmeh, Token, scan_accents
@@ -84,6 +88,21 @@ class ChantedVerseResult:
     tokens: tuple[str, ...]  # token-type stream
     status: str  # clean / ungrammatical / no_parse / location_only
     tree: dict | None
+    # This chanted verse's chanted words with two or more accent tokens, each with the ITM
+    # section that names its token sequence or a null where none does.  A diagnostic channel
+    # beside the verdict, never part of it: ``status`` and ``tree`` are as the grammar left
+    # them.  See ``accgram.chanted_word_accents``.
+    chanted_word_accents: tuple[dict, ...] = ()
+
+    def chanted_word_accents_obj(self) -> dict[str, object]:
+        """The field as it goes into the output, omitted where there is nothing to report.
+
+        Shared with ``transcription_parse``, which shapes a transcription's chanted verse the
+        same way a strand's is shaped and must place this field in the same position.
+        """
+        if not self.chanted_word_accents:
+            return {}
+        return {"chanted_word_accents": list(self.chanted_word_accents)}
 
 
 @dataclass(frozen=True)
@@ -129,6 +148,11 @@ def parse_marks_body(
     transcription's accent shorthand, and must run through this exact path -- same scanner,
     same grammar, same status vocabulary -- for its verdicts to be comparable with the
     strands' own.  ``words`` is carried only for the record; nothing keys on it.
+
+    Every Wikisource strand and every hand transcription reaches the grammar here, which is why
+    the chanted-word-accent channel is fed here too: it covers all twenty in one stroke, and it
+    covers the case that motivated the check, Koren's Deuteronomy appendix עליון, which has a
+    munax on each atom of the one chanted word לא־תעשה.
     """
     # None of the Decalogue readings is a HasLegarmeh corpus; a fresh per-verse instance is
     # immaterial. Chapter/verse are only for scanner diagnostics, unused on this path.
@@ -148,6 +172,7 @@ def parse_marks_body(
         tokens=tuple(t.type for t in tokens),
         status=status,
         tree=tree_obj,
+        chanted_word_accents=tuple(cwa.classify_verse(body, tokens)),
     )
 
 
@@ -203,6 +228,7 @@ def _version_obj(vr: VersionResult) -> dict[str, object]:
                 "marks": cv.body,
                 "tokens": list(cv.tokens),
                 "status": cv.status,
+                **cv.chanted_word_accents_obj(),
                 "tree": cv.tree,
             }
             for cv in vr.chanted_verses

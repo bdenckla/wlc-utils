@@ -1243,6 +1243,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא֣אאא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -3805,6 +3813,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -4024,6 +4040,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -5020,6 +5044,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -5827,6 +5859,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -6524,6 +6564,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -7544,6 +7592,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -7933,6 +7989,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -8398,6 +8462,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -8624,6 +8696,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -9194,6 +9274,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -9727,6 +9815,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -10357,6 +10453,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -13953,6 +14057,20 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "א֞֠א",
+"sequence": "gershayim telishagedola",
+"kind": "an atomic chanted word",
+"itm_section": null
+},
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -18819,6 +18937,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -20992,6 +21118,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֖אא-א֑א",
+"sequence": "mayela atnax",
+"kind": "a maqaf compound, its accents split across atoms",
+"itm_section": "§216"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -21066,6 +21200,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאאאא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -22680,6 +22822,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -22988,6 +23138,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -23761,6 +23919,20 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+},
+{
+"marks": "אא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -23929,6 +24101,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא-א֥אא-א֖א",
+"sequence": "merkha tipexa",
+"kind": "a maqaf compound, its accents split across atoms",
+"itm_section": "§233"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -25248,6 +25428,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -25605,6 +25793,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -26923,6 +27119,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -29971,6 +30175,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא֣אאא֔",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -30068,6 +30280,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -31313,6 +31533,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -33065,6 +33293,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -34549,6 +34785,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -36975,6 +37219,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -41165,6 +41417,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -43415,6 +43675,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -49824,6 +50092,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -54481,6 +54757,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -56259,6 +56543,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -57063,6 +57355,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -61237,6 +61537,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאאא֣אאא֔",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -65527,6 +65835,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -66680,6 +66996,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -75355,6 +75679,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא-א֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -82279,6 +82611,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -83572,6 +83912,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -83949,6 +84297,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔אא",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -87857,6 +88213,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "**א֣א-א֑א",
+"sequence": "munax atnax",
+"kind": "a maqaf compound, its accents split across atoms",
+"itm_section": "§215"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -89245,6 +89609,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -98353,6 +98725,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאאא-א֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -99361,6 +99741,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-אא-אא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -105631,6 +106019,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔אא",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -106680,6 +107076,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאאא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -107932,6 +108336,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -109149,6 +109561,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -110075,6 +110495,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "א֣א֣א]U",
+"sequence": "munax munax",
+"kind": "an atomic chanted word",
+"itm_section": null
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -113425,6 +113853,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -118873,6 +119309,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -122422,6 +122866,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -123864,6 +124316,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -130743,6 +131203,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא-א֣אאא֔אא",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -131787,6 +132255,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -132657,6 +133133,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -137784,6 +138268,20 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֨אאא֜א",
+"sequence": "azla geresh",
+"kind": "an atomic chanted word",
+"itm_section": "§268"
+},
+{
+"marks": "אאאאא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -138912,6 +139410,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -143291,6 +143797,20 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-אא֣אא֗א",
+"sequence": "munax revia",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§236"
+},
+{
+"marks": "אא֣אאאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -144624,6 +145144,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -144962,6 +145490,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -145698,6 +146234,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-א֣אאא֔אא",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -153211,6 +153755,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֨אא֜א",
+"sequence": "azla geresh",
+"kind": "an atomic chanted word",
+"itm_section": "§268"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -155072,6 +155624,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא֨אא֜א",
+"sequence": "azla geresh",
+"kind": "an atomic chanted word",
+"itm_section": "§268"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -157482,6 +158042,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אאא֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -158555,6 +159123,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא-אא֣אא֔אא",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -158764,6 +159340,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -159609,6 +160193,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -160085,6 +160677,20 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+},
+{
+"marks": "אא-א֣אא֔א",
+"sequence": "munax zaqef",
+"kind": "a maqaf compound, its accents all on the final atom",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -160327,6 +160933,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "א֣א֡א",
+"sequence": "munax pazer",
+"kind": "an atomic chanted word",
+"itm_section": "§276"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",
@@ -160476,6 +161090,14 @@
 "SOFPASUQ"
 ]
 },
+"chanted_word_accents": [
+{
+"marks": "אא֣אאא֔א",
+"sequence": "munax zaqef",
+"kind": "an atomic chanted word",
+"itm_section": "§219"
+}
+],
 "status": "clean",
 "tree": {
 "label": "silluq_clause",

@@ -6305,6 +6305,14 @@
             "SOFPASUQ"
           ],
           "status": "clean",
+          "chanted_word_accents": [
+            {
+              "marks": "אאא֨אא֜",
+              "sequence": "azla geresh",
+              "kind": "an atomic chanted word",
+              "itm_section": "§268"
+            }
+          ],
           "tree": {
             "label": "silluq_clause",
             "children": [
@@ -9359,6 +9367,14 @@
             "SOFPASUQ"
           ],
           "status": "clean",
+          "chanted_word_accents": [
+            {
+              "marks": "אאא֨אא֜",
+              "sequence": "azla geresh",
+              "kind": "an atomic chanted word",
+              "itm_section": "§268"
+            }
+          ],
           "tree": {
             "label": "silluq_clause",
             "children": [
@@ -11963,6 +11979,14 @@
           ],
           "status": "clean",
           "strand_status": "clean",
+          "chanted_word_accents": [
+            {
+              "marks": "א֣-א֣",
+              "sequence": "munax munax",
+              "kind": "a maqaf compound, its accents split across atoms",
+              "itm_section": null
+            }
+          ],
           "tree": {
             "label": "silluq_clause",
             "children": [
@@ -13805,6 +13829,14 @@
           ],
           "status": "clean",
           "strand_status": "clean",
+          "chanted_word_accents": [
+            {
+              "marks": "א֨א֜",
+              "sequence": "azla geresh",
+              "kind": "an atomic chanted word",
+              "itm_section": "§268"
+            }
+          ],
           "tree": {
             "label": "silluq_clause",
             "children": [
@@ -19513,6 +19545,14 @@
           ],
           "status": "clean",
           "strand_status": "clean",
+          "chanted_word_accents": [
+            {
+              "marks": "א֨א֜",
+              "sequence": "azla geresh",
+              "kind": "an atomic chanted word",
+              "itm_section": "§268"
+            }
+          ],
           "tree": {
             "label": "silluq_clause",
             "children": [
@@ -25227,6 +25267,14 @@
           ],
           "status": "clean",
           "strand_status": "clean",
+          "chanted_word_accents": [
+            {
+              "marks": "א֨א֜",
+              "sequence": "azla geresh",
+              "kind": "an atomic chanted word",
+              "itm_section": "§268"
+            }
+          ],
           "tree": {
             "label": "silluq_clause",
             "children": [
@@ -27171,6 +27219,14 @@
           ],
           "status": "clean",
           "strand_status": "clean",
+          "chanted_word_accents": [
+            {
+              "marks": "א֣-א֥",
+              "sequence": "munax merkha",
+              "kind": "a maqaf compound, its accents split across atoms",
+              "itm_section": null
+            }
+          ],
           "tree": {
             "label": "silluq_clause",
             "children": [
@@ -27243,6 +27299,14 @@
           ],
           "status": "ungrammatical",
           "strand_status": "clean",
+          "chanted_word_accents": [
+            {
+              "marks": "א֣-א֨",
+              "sequence": "munax qadma",
+              "kind": "a maqaf compound, its accents split across atoms",
+              "itm_section": null
+            }
+          ],
           "tree": {
             "label": "silluq_clause",
             "children": [

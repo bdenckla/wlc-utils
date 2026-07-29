@@ -23,6 +23,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from accgram import chanted_word_accents
 from accgram import dual_cant_detangle
 from accgram import lexical_validation
 from accgram import mam_simple_verse
@@ -135,6 +136,13 @@ def _verse_record(
     pointed-Hebrew ``unicode`` (from the -kq-u source), the ``marks`` body (the scan
     body, whose base-letter placeholder is alef -- see ``accent_marks.LETTER``), and the
     ``tokens`` stream, for every verse -- not just the illegal-mark cases.
+
+    ``chanted_word_accents`` is a diagnostic channel beside the verdict, not part of it: the
+    chanted words of this verse carrying two or more accent tokens, each with the ITM section
+    that names its token sequence or a null where none does.  It is recorded for every verse,
+    whatever its status, and omitted where there is nothing to report -- as ``errors`` is.  The
+    verdict itself is untouched, and whether an unnamed pair should be ungrammatical is a
+    separate decision (see ``accgram.chanted_word_accents``).
     """
     tail = verse.reference.rpartition(" ")[2]
     chnu_str, _, vrnu_str = tail.partition(":")
@@ -154,6 +162,10 @@ def _verse_record(
             "tokens": [token.type for token in verse.tokens],
         },
     }
+
+    two_accents = chanted_word_accents.classify_verse(verse.body, verse.tokens)
+    if two_accents:
+        record["chanted_word_accents"] = two_accents
 
     # Prose lexical layer (divergence from the goerwitz C oracle): an alphabet /
     # word-placement error -- an unpaired stress-helper, a same-letter accent pair, or

@@ -9,6 +9,17 @@ own inventory of the phenomenon beside the measurement so each checks the other.
 Pure computation and a JSON writer -- no HTML.  Run via
 ``main_accgram.py survey-chanted-word-accents``.
 
+THE SURVEY AND THE FLAGGING PATH are both here.  ``build_survey`` measures the three corpora and
+sets Yeivin's inventory beside MAM; ``classify_verse`` asks the same question of one verse at a
+time, for the two paths that write verdicts -- ``prose_run._verse_record`` and
+``printed_decalogue.parse_marks_body``, the second of which carries the eight Wikisource strands
+and all twelve hand transcriptions.  It reads its whitelist straight off the entries the survey
+checks, keyed on the TOKEN SEQUENCE and never on a verse reference: Yeivin's closed lists are the
+differential check the survey runs against him, and a checker that consulted them would name a
+chanted word by where it stands rather than by what it has.  What ``classify_verse`` feeds is an
+additive field; ``status`` and ``tree`` are left alone, and whether a chanted word no section of
+his inventory names should be ungrammatical is a later, separate decision.
+
 TOKENS, NOT MARKS, and that choice is the design.  The prose scanner already fuses several
 written pairs into one token: a doubled stress helper (pashta, telisha qetana), a tsinnorit with
 its tsinnor, the same-letter ``mahapakh!qadma`` cluster, munax + U+05C0 as legarmeh, and
@@ -386,6 +397,72 @@ def _unit_at(units: list[Unit], offset: int) -> Unit | None:
     return None
 
 
+def _by_chanted_word(
+    units: list[Unit], tokens: list[Token]
+) -> list[tuple[Unit, list[Token], str | None]]:
+    """Each chanted word of one verse, with the accent tokens that fall inside it.
+
+    The shared core of the survey and the flagging path, so the two cannot come to different
+    answers about the same verse.  Each entry is the unit, its tokens after
+    ``_fold_repeated_geresh``, and the unfolded sequence where a fold fired.  The tokens the
+    callers construct positionally carry ``start`` -1 and the verse terminators stand outside
+    any chanted word, so both simply find no unit and drop out.
+    """
+    accents = [t for t in tokens if t.type not in _NOT_AN_ACCENT_TOKEN]
+    by_unit: dict[int, list[Token]] = defaultdict(list)
+    for token in accents:
+        unit = _unit_at(units, token.start)
+        if unit is not None and unit.is_word:
+            by_unit[unit.start].append(token)
+    out: list[tuple[Unit, list[Token], str | None]] = []
+    for unit in units:
+        if not unit.is_word:
+            continue
+        folded, unfolded = _fold_repeated_geresh(by_unit.get(unit.start, []))
+        out.append((unit, folded, unfolded))
+    return out
+
+
+# The runs of a mark body that are not chanted words.  ``uni_to_marks`` has a petuhah or setumah
+# as a lone ``P`` or ``S`` and a nun inversum as ``N]8``, and a ketiv as ``*`` followed by its
+# letters (or ``*kk`` where the ketiv side is empty); the qere after it opens with ``**`` and IS
+# a chanted word.  The only other ASCII in a mark body is the ``]N`` note suffix, which never
+# stands alone, so neither test can collide with a real chanted word.
+_SAM_PE_INUN_MARKS = frozenset(("P", "S", "N]8"))
+
+
+def _run_is_a_chanted_word(marks: str) -> bool:
+    if marks in _SAM_PE_INUN_MARKS:
+        return False
+    return marks.startswith("**") or not marks.startswith("*")
+
+
+def units_from_body(body: str) -> list[Unit]:
+    """One verse's chanted words, read off the mark body alone.
+
+    ``scan_corpus`` builds its units from the fragments it transcodes, which is what lets it keep
+    each chanted word's Unicode beside its marks.  A caller on a verdict path has only the body
+    the scanner read -- and that is enough for the boundaries, because ``uni_to_marks`` puts a
+    space between two chanted words and nowhere else, so a space-delimited run of a mark body is
+    a chanted word.  These units carry no ``text``, so ``_display`` is not available here;
+    ``scan_corpus`` asserts on every verse of all three corpora that the two derivations agree.
+    """
+    units: list[Unit] = []
+    pos = 0
+    for run in body.split(" "):
+        if run:
+            units.append(
+                Unit(
+                    text="",
+                    marks=run,
+                    start=pos,
+                    is_word=_run_is_a_chanted_word(run),
+                )
+            )
+        pos += len(run) + 1
+    return units
+
+
 def _bb_order() -> dict[str, int]:
     return {bb: i for i, bb in enumerate(wlc_bb_codes())}
 
@@ -419,25 +496,23 @@ def scan_corpus(frags_by_bcv: dict[str, list[Frag]]) -> dict:
             has_legarmeh, current_bb = HasLegarmeh(), bb
         n_verses += 1
         body, units = _verse_units(frags_by_bcv[bcv])
+        # The flagging path has only the body, and reads the chanted words off it.  Assert here
+        # that the two derivations agree, so the field ``classify_verse`` feeds the verdict
+        # paths cannot drift from the survey the whitelist is closed against.
+        assert units_from_body(body) == [
+            Unit(text="", marks=u.marks, start=u.start, is_word=u.is_word)
+            for u in units
+        ], bcv
         tokens = scan_accents(body, bb, chnu, vrnu, has_legarmeh)
-        accents = [t for t in tokens if t.type not in _NOT_AN_ACCENT_TOKEN]
         n_methigazaqef += sum(1 for t in tokens if t.type == "METHIGAZAQEF")
         crossings.extend(
             {"bcv": bcv, **c} for c in _methigazaqef_crossings(body, tokens, units)
         )
-        by_unit: dict[int, list[Token]] = defaultdict(list)
-        for token in accents:
-            unit = _unit_at(units, token.start)
-            if unit is not None and unit.is_word:
-                by_unit[unit.start].append(token)
-        for unit in units:
-            if not unit.is_word:
-                continue
+        for unit, folded, unfolded in _by_chanted_word(units, tokens):
             if unit.is_compound:
                 n_compound += 1
             else:
                 n_atomic += 1
-            folded, unfolded = _fold_repeated_geresh(by_unit.get(unit.start, []))
             if unfolded is not None:
                 geresh_folds.append(
                     {
@@ -481,8 +556,9 @@ def scan_corpus(frags_by_bcv: dict[str, list[Frag]]) -> dict:
 #
 # Transcribed from the FULL OCR of the book at ``../yeivin-itm/md-export-of-docx/`` -- not from
 # the partial adaptation at ``../al-hatorah/py/itm/``, which does not carry all of these sections.
-# Each ``quote`` is Yeivin's own wording, so it keeps his romanizations (tifxa as ``ṭifḥa``,
-# munax as ``munaḥ``) where the rest of this repo spells xet with an x.
+# Each ``quote`` is Yeivin's own wording, so it keeps his romanizations: he spells tifxa and
+# munax with a dotted h, where the rest of this repo spells xet with an x.  The spellings
+# themselves stand in the quote strings below, which are values and not comments.
 #
 # ``sequences`` are the scanner's own leaf names, which is what makes an entry checkable: the
 # measured hits with that token sequence are the entry's measured set.  ``verses`` is Yeivin's
@@ -832,6 +908,61 @@ def mam_residue(mam: dict) -> dict:
         ),
         "occurrences": left,
     }
+
+
+# --- the flagging path --------------------------------------------------------
+
+
+def _build_named_token_sequences() -> dict[str, str]:
+    out: dict[str, str] = {}
+    for entry in YEIVIN_ENTRIES:
+        for sequence in entry.sequences:
+            if sequence in out:
+                raise AssertionError(
+                    f"two ITM sections claim the token sequence {sequence!r}:"
+                    f" {out[sequence]} and {entry.section}"
+                )
+            out[sequence] = entry.section
+    return out
+
+
+# The whitelist, read straight off the inventory above so the two cannot part company: a token
+# sequence, and the ITM section that names it.  Configuration-level, as decision 1 of the plan
+# settled -- munax with revia is named wherever it stands, not only at §236's five places.  The
+# closed lists stay where they are useful, as the survey's differential check against Yeivin;
+# they are not consulted here, so nothing on a verdict path turns on a verse reference.
+NAMED_TOKEN_SEQUENCES: dict[str, str] = _build_named_token_sequences()
+
+
+def classify_verse(body: str, tokens: list[Token]) -> list[dict]:
+    """One verse's chanted words with two or more accent tokens, each named or left unnamed.
+
+    ``body`` is the mark body the scanner read and ``tokens`` the stream it emitted, so a caller
+    passes what it already has.  Each hit carries the chanted word's own run of the body, its
+    token sequence, whether it is an atom or a maqaf compound, and the ITM section that names
+    the sequence -- ``None`` where no section of Yeivin's prose inventory does.  A ``None`` is
+    the finding: it is the pair for which the inventory, closed against MAM in the survey above,
+    offers no precedent.
+
+    Nothing here reads a verdict or writes one.  The caller records the result beside
+    ``status`` and ``tree``, which stay as the grammar left them.
+    """
+    hits: list[dict] = []
+    units = units_from_body(body)
+    for unit, folded, _unfolded in _by_chanted_word(units, tokens):
+        if len(folded) < 2:
+            continue
+        sequence = " ".join(t.leaf for t in folded)
+        atom_indices = [_atom_index(unit, t.start) for t in folded]
+        hits.append(
+            {
+                "marks": unit.marks,
+                "sequence": sequence,
+                "kind": _kind_of(unit, atom_indices),
+                "itm_section": NAMED_TOKEN_SEQUENCES.get(sequence),
+            }
+        )
+    return hits
 
 
 def merkha_tipexa_discrepancy(mam: dict) -> dict:

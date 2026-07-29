@@ -461,3 +461,125 @@ made every one of those edits unnecessary.
 - **Verification**: regenerate `out/accgram/prose/*_ag.json` and
   `out/accgram/printed-decalogue/_printed_decalogue.json`; every existing `status`, `errors` and
   `tree` must be byte-identical, the new field the only diff anywhere.
+
+---
+
+## 8. Phase 2 state (executed 2026-07-29)
+
+### Main had not moved, but Ben's working tree had
+
+Phase 2 ran against `957113f`, which is still main's tip. Ben's uncommitted work — the
+mechanical rules for telling two marks from two accents on a simple chanted word — sits in
+`maqaf_nonfinal_accents.py`, `maqaf_nonfinal_accents_page.py`, `printed_decalogue_strands.py`,
+`wlc_utils_html.py` and their two artifacts. **Phase 2 touches none of those five files**, and
+neither `maqaf-nonfinal-accents.json` nor its page is among its outputs, so the two sets of
+changes do not overlap at all. The convergence §7 called for is **not** done — see the open
+question below.
+
+### What changed
+
+**`chanted_word_accents` gained the flagging path**, and the survey was refactored onto its
+shared core rather than left as a second implementation:
+
+- `NAMED_TOKEN_SEQUENCES` — the whitelist, built at import from the `sequences` of
+  `YEIVIN_ENTRIES` and raising if two sections ever claim one sequence. Keyed on the token
+  sequence alone (decision 1); Yeivin's closed verse lists stay where they were, as the
+  survey's differential check, and nothing on a verdict path reads them.
+- `classify_verse(body, tokens)` — one verse's chanted words with two or more accent tokens,
+  each as `{marks, sequence, kind, itm_section}`, with `itm_section` null where no section of
+  the inventory names the sequence. A null is the finding.
+- `units_from_body(body)` — the chanted words read off the mark body alone, which is all a
+  verdict path has. `uni_to_marks` puts a space between two chanted words and nowhere else, so
+  a space-delimited run of a body is a chanted word; the non-words are the lone `P` / `S` /
+  `N]8` markers and a `*`-prefixed ketiv, and a `**`-prefixed qere is a chanted word.
+- `_by_chanted_word(units, tokens)` — the token-attribution and geresh-fold core, now called by
+  both `scan_corpus` and `classify_verse`, so the survey and the flag cannot answer the same
+  verse differently.
+- `scan_corpus` asserts on **every** verse of all three corpora that `units_from_body`'s
+  derivation equals its own fragment-by-fragment one. That is the guarantee Phase 2 needs and
+  it is checked, not assumed.
+
+**Wired into both consumer paths, as an additive field named `chanted_word_accents`:**
+
+- `prose_run._verse_record` — recorded for every verse whatever its status, and omitted where
+  there is nothing to report, as `errors` already is. It is set before the lexical layer's
+  early return, so an `illegal_mark` verse carries it too.
+- `printed_decalogue.parse_marks_body` — a new `ChantedVerseResult` field, emitted through a
+  `chanted_word_accents_obj()` method that `transcription_parse._chanted_verse_obj` shares, so
+  a transcription's chanted verse and a strand's put the field in the same position. This one
+  wiring covers the eight Wikisource strands and all twelve hand transcriptions.
+- `lexical_validation` was **not** touched, per §4.2.
+
+**One pre-existing failure fixed.** `test_h_dot_below_nfc.py::test_comments_use_ascii_not_h_dot_below`
+was already failing at `957113f`: Phase 1's comment above `YEIVIN_ENTRIES` named Yeivin's
+romanizations by embedding the character, and comments must be ASCII. Reworded; the spellings
+themselves stay in the quote strings, which are values, not comments. §7's "487 passed" was
+therefore recorded against a tree that did not have that comment in its final form.
+
+### What was verified
+
+1. **`out/accgram/prose/*_ag.json`: zero deleted lines.** Every `status`, `errors` and `tree` is
+   byte-identical; the diff is 12,638 inserted lines across 37 book files and nothing else, and
+   every distinct added line belongs to the new field. 18,724/18,724 verses.
+2. **`out/accgram/printed-decalogue/_printed_decalogue.json`: zero deleted lines**, 64 inserted.
+   Same summary line as before — 8 versions, 88 chanted verses, 2 ungrammatical; 12
+   transcriptions, 132 chanted verses, 1 departing from Wikisource.
+3. **`out/accgram/chanted-word-accents.json` is byte-identical** after the refactor, which is
+   the check that moving the survey onto the shared core changed nothing.
+4. **The two derivations agree independently.** Read back out of the regenerated prose corpus:
+   1,602 hits over 1,513 verses in 33 distinct token sequences — exactly the WLC prose figures
+   the survey reports, reached by a different route (the body alone, verse by verse, through
+   `classify_verse`) from the survey's (fragments, corpus-wide, through `_verse_units`).
+5. **The motivating case fires.** `koren_dt_elyon` chanted verse 3 carries one hit: `munax
+   munax`, a maqaf compound with its accents split across atoms, `itm_section` null. Its
+   `status` stays `clean`, and `simtiq_ex_taxton`'s existing verdict is likewise untouched
+   while it picks up two hits of its own (`munax merkha`, `munax qadma`, both null).
+6. **Thirty-four unnamed hits in WLC prose**, where MAM's residue is 18. The two are not the
+   same set and neither contains the other: WLC's includes its own shapes, `munax munax` at
+   1c27:14, 2c1:11, ek8:6 and gn36:13 among them, which MAM has nowhere.
+7. **`.venv/Scripts/pytest.exe py/tests`: 487 passed, 5 skipped.**
+8. **black** run on the four touched files; `--check` clean.
+
+### Generated outputs: what moved and what deliberately did not
+
+| file | moved? |
+| --- | --- |
+| `out/accgram/prose/*_ag.json` | yes — the new field, inserted only; no line deleted anywhere |
+| `out/accgram/printed-decalogue/_printed_decalogue.json` | yes — the new field, inserted only |
+| `out/accgram/chanted-word-accents.json` | **no**, byte-identical, and that is the check on the refactor |
+| `out/accgram/maqaf-nonfinal-accents.json` and its page | **no** — Phase 2 touches neither that survey nor its page |
+| everything else under `out/` and `gh-pages/` | not regenerated and not touched |
+
+### Unresolved risks and open questions
+
+- **The convergence with Ben's simple-chanted-word count is still open**, and deliberately so:
+  the handoff said to confirm with him whether reconciling the two measures belongs in Phase 2
+  or later before widening scope. It is not in Phase 2. The two measures answer different
+  questions — his scan counts two written marks on a simple chanted word, `classify_verse`
+  counts two accent tokens, so the 135 tsinnorit-beside-tsinnor places are in his count and
+  not in this one — and they should be stated against each other rather than left to look like
+  a disagreement.
+- **`ne8:7` is `merkha legarmeh`**, unnamed, and it is one of the seventeen `has_legarmeh`
+  passages. Whether a legarmeh's own conjunctive standing in the same chanted word is a case
+  Yeivin's inventory ought to name is not settled here.
+- **Four Job hits are `qadma darga` in the prose frame** (jb1:15, 1:16, 1:17, 1:19), unnamed in
+  both corpora. Job's prose frame is prose-cantillated, so they are correctly in scope; they
+  are simply not in Yeivin's list.
+- **The §233/§241 surplus and the `(MERKHA, SILLUQ)` citation carry over from §7 unchanged.**
+  Issue #82. Neither affects the flagging path, which is keyed on the sequence and names
+  `merkha tipexa` wherever it stands; it does affect what a Phase 3 page may say those hits are.
+- **The METHIGAZAQEF boundary crossings carry over too.** `classify_verse` inherits the fuse,
+  so at gn18:18, je37:10, je49:19, mi2:7 and ne9:20 one token stands for two chanted words. The
+  five are named in the survey's `methigazaqef.crossings`; the flag simply does not fire there,
+  which is the conservative direction.
+
+### The exact next phase
+
+**Phase 3 as written in §5** — `chanted_word_accents_page.py` →
+`gh-pages/accgram/chanted-word-accents.html`, wired into `generate-html` and
+`generate-html-chanted-word-accents`, one run writing both the JSON and the page, with a
+`pin_claims` that re-derives every stated number from the data and raises on drift. One page,
+one question: does a chanted word with two accents that Yeivin's inventory does not name have a
+precedent in the prose Tanakh? Before it is written, settle with Ben (a) whether the
+reconciliation above belongs on that page or in an issue, and (b) how much of §7's and §8's
+open-question material goes to issue #82 rather than onto the page.
