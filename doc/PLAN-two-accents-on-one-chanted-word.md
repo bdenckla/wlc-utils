@@ -340,6 +340,10 @@ scanner's tokenization rather than this scan." That is exactly what `chanted_wor
 the scanner fuses tsinnorit + tsinnor into one `ZARQA` token, so its atomic counts have the 135
 already removed. The two measures should be reconciled rather than left to disagree.
 
+**Superseded — read §8's first open-question bullet before acting on this paragraph.** The 135 are
+not a case the two measures decide differently: in a prose verse U+0598 is the zarqa's stress
+helper and U+05AE is the zarqa, so the pair is one accent and its helper. Issue #85.
+
 ### What changed
 
 **New: `py/accgram/chanted_word_accents.py`** — pure computation plus a JSON writer, modelled on
@@ -552,13 +556,23 @@ therefore recorded against a tree that did not have that comment in its final fo
 
 ### Unresolved risks and open questions
 
-- **The convergence with Ben's simple-chanted-word count is still open**, and deliberately so:
-  the handoff said to confirm with him whether reconciling the two measures belongs in Phase 2
-  or later before widening scope. It is not in Phase 2. The two measures answer different
-  questions — his scan counts two written marks on a simple chanted word, `classify_verse`
-  counts two accent tokens, so the 135 tsinnorit-beside-tsinnor places are in his count and
-  not in this one — and they should be stated against each other rather than left to look like
-  a disagreement.
+- **The convergence with Ben's simple-chanted-word count: settled 2026-07-29, and mostly by
+  dissolving.** §7 framed the 135 U+0598-before-U+05AE places as a case the two measures counted
+  differently. **They are not a case at all.** In a prose verse U+0598 is the zarqa's stress
+  helper and U+05AE is the zarqa — Unicode's two names are, in effect, swapped — so those 135
+  chanted words have one accent and its helper, exactly as a doubled pashta does, and belong in
+  no table of accent pairs. Ben: "they are absolutely not two separate accents; this is just a
+  result of unicode naming and annotation confusion." The rule now lives in the `hebrew-prose`
+  skill and in this repo's auto-memory, and **issue #85** records why it kept being re-derived.
+  **Do not reopen this**, and do not have a Phase 3 page adjudicate it.
+
+  What genuinely differs is small, and only on MAM prose: Ben's scan counts **1,353** simple
+  chanted words with two accents (`maqaf-nonfinal-accents.json`, as of `829d1f6`) against
+  `chanted_word_accents`' **1,160** atomic hits. All sixteen shared pairs agree exactly, case for
+  case; the whole gap is 1,353 − **198** + **5** = 1,160, where the 198 are qadma before zaqef
+  qatan, one `METHIGAZAQEF` token here and two marks there, and the 5 are the geresh-or-gershayim
+  with telisha gedolah that his scan sets aside as two marks on one letter. Whether even that
+  belongs on the Phase 3 page is Ben's to say and is not yet answered.
 - **`ne8:7` is `merkha legarmeh`**, unnamed, and it is one of the seventeen `has_legarmeh`
   passages. Whether a legarmeh's own conjunctive standing in the same chanted word is a case
   Yeivin's inventory ought to name is not settled here.
@@ -580,6 +594,10 @@ therefore recorded against a tree that did not have that comment in its final fo
 `generate-html-chanted-word-accents`, one run writing both the JSON and the page, with a
 `pin_claims` that re-derives every stated number from the data and raises on drift. One page,
 one question: does a chanted word with two accents that Yeivin's inventory does not name have a
-precedent in the prose Tanakh? Before it is written, settle with Ben (a) whether the
-reconciliation above belongs on that page or in an issue, and (b) how much of §7's and §8's
-open-question material goes to issue #82 rather than onto the page.
+precedent in the prose Tanakh? Before it is written, settle with Ben (a) whether the residual
+198-and-5 arithmetic above belongs on that page at all — the 135 half of that question is closed,
+see #85 — and (b) how much of §7's and §8's open-question material goes to an issue rather than
+onto the page. On (b), note that **#82 is the wrong issue**: its subject is Yeivin's two Deut 33
+maqaf readings for the LC, so §7's and §8's citations of it for the §233/§241 surplus look
+misfiled. #83, which holds the material cut from the maqaf-nonfinal-accents page, is the closer
+fit; a new issue is the other option.
