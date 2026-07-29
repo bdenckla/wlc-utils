@@ -26,7 +26,10 @@ matters, so every hit is sorted into one of two routes:
 * **(a) A secondary accent the compound inherits.**  Yeivin's own term, and his prose inventory
   is a CLOSED LIST of configurations -- which accent sits on the non-final atom and which the
   compound has: metigah-zaqef (ITM §224), munax-zaqef (§221), a secondary merkha in the chanted word of a
-  tipexa (§233) or of a tevir (§§233/241), and the mayela tipexa before an etnaxta or a silluq.
+  tipexa (§233) or of a tevir (§§233/241), and the mayela before an etnaxta or a silluq.  ("The
+  mayela", never "the mayela tipexa": mayela is the name for what would otherwise be a tipexa
+  there, so the pair reads as a kind of tipexa rather than as the accent's own name.  Mayela is
+  to tipexa as metigah is to qadma, and nobody writes "metigah qadma".)
   ``_NAMED_CONFIGURATIONS`` is that list.
 * **(b) A maqaf written after an atom that keeps its own conjunctive.**  ITM §293: a manuscript
   habit with no grammatical trigger, "most common where the word has penultimate stress", and L
@@ -351,9 +354,22 @@ def shape_of(per_atom: list[list[str]]) -> str:
     )
 
 
-def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int]:
-    """(hits, verses scanned, maqaf compounds seen) for one corpus and one genre filter."""
+def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int, list]:
+    """(hits, verses, maqaf compounds, simple two-accent words) for one corpus and genre.
+
+    The fourth return is what a chanted word that is a LONE atom does with two accents, which
+    the first three know nothing about: they are the compound survey, and a compound is what
+    the maqaf makes.  A page saying two accents can appear on a chanted word whether it is
+    compound or simple was making half that claim with nothing behind it (Ben, 2026-07-28: "it
+    would be useful to know how many of these pairs appear on a compound chanted word, and how
+    many appear on a simple chanted word"), so the same pass counts the simple ones.
+
+    A field of REPEATS is one accent written twice, not two accents -- the same rule the
+    compound side applies -- so an atom counts here only when its accents are two DIFFERENT
+    marks.  Order is the written order, which is the order the shapes are read in throughout.
+    """
     hits: list[dict] = []
+    simple: list[dict] = []
     n_verses = n_compounds = 0
     for bcv, words in words_by_bcv.items():
         if not keep(*split_bcv(bcv)):
@@ -362,13 +378,34 @@ def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int
         last = len(words) - 1
         for i, word in enumerate(words):
             if MAQAF not in word:
+                accents = atom_accents(word, i == last)[0]
+                if len(set(accents)) > 1:
+                    simple.append(
+                        {
+                            "bcv": bcv,
+                            "word": word,
+                            "shape": shape_of([accents]),
+                            "pair": [
+                                _ACCENT_SHORTHAND.get(a, a) for a in _distinct(accents)
+                            ],
+                        }
+                    )
                 continue
             n_compounds += 1
             per_atom = atom_accents(word, i == last)
             if not any(per_atom[:-1]):
                 continue
             hits.append({"bcv": bcv, "word": word, "atoms": per_atom})
-    return hits, n_verses, n_compounds
+    return hits, n_verses, n_compounds, simple
+
+
+def _distinct(accents: list[str]) -> list[str]:
+    """The accents in written order, a run of the same mark collapsed to one occurrence."""
+    out: list[str] = []
+    for accent in accents:
+        if accent not in out:
+            out.append(accent)
+    return out
 
 
 # --- the free-standing oracle -------------------------------------------------
@@ -611,12 +648,19 @@ def gray_maqaf_survey() -> dict:
 
 
 def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool) -> dict:
-    hits, n_verses, n_compounds = scan(words_by_bcv, keep)
+    hits, n_verses, n_compounds, simple = scan(words_by_bcv, keep)
     classified = [classify(h, oracle, routed=routed) for h in hits]
     return {
         "verses": n_verses,
         "maqaf_compounds": n_compounds,
         "hits": len(classified),
+        # Simple chanted words with two accents: the other half of "compound or simple".  Only
+        # the counts per pair are kept, not the occurrences -- there are far more of these than
+        # of the compound hits, and no page asks which verses they are.
+        "simple_two_accent_words": len(simple),
+        "simple_by_pair": dict(
+            Counter("-".join(s["pair"]) for s in simple).most_common()
+        ),
         "by_route": dict(Counter(c["route"] for c in classified).most_common()),
         "by_configuration": dict(
             Counter(c["configuration"] for c in classified).most_common()

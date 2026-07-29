@@ -40,11 +40,13 @@ from accgram.printed_decalogue_strands import (
     ROM_MAHAPAKH,
     ROM_MERKHA,
     ROM_MUNAX,
+    ROM_PASHTA,
     ROM_QADMA,
     ROM_SILLUQ,
     ROM_TEVIR,
     ROM_TIPEHA,
     ROM_ZAQEF_QATAN,
+    TAHTON,
 )
 from accgram.uni_to_marks import is_base_letter
 from cmn.utf8_io import force_utf8_io
@@ -75,39 +77,57 @@ _WIDTH_CLASS = "goerwitz-tms-width-limited"
 _CORPUS = "mam_simple"
 
 
-# The survey's configuration strings are code identifiers -- they spell ח with an x, as the
-# transliteration standard requires of code and of the tracked JSON alike.  Rendered prose takes
-# the ROM_* romanizations instead, so the bullet list below cannot print "etnaxta" at a reader.
-# Keys are ``maqaf_nonfinal_accents._NAMED_CONFIGURATIONS``' values verbatim; ``_config_label``
-# raises on any key not here, so a new configuration cannot reach the page unrendered.
-_CONFIG_DISPLAY = {
-    "metigah-zaqef (ITM §224)": (
-        f"metigah-zaqef: a {ROM_QADMA} before a {ROM_ZAQEF_QATAN} (§224)"
-    ),
-    "munax-zaqef (ITM §221)": f"a {ROM_MUNAX} before a {ROM_ZAQEF_QATAN} (§221)",
-    "mayela before an etnaxta": f"the mayela {ROM_TIPEHA} before an {ROM_ETNAHTA}",
-    "mayela before a silluq": f"the mayela {ROM_TIPEHA} before a {ROM_SILLUQ}",
-    "secondary merkha in the tipexa's chanted word (ITM §233)": (
-        f"a secondary {ROM_MERKHA} in the {ROM_TIPEHA}'s chanted word (§233)"
-    ),
-    "secondary merkha in the silluq's chanted word (ITM §233)": (
-        f"a secondary {ROM_MERKHA} in the {ROM_SILLUQ}'s chanted word (§233)"
-    ),
-    "secondary merkha in the tevir's chanted word (ITM §§233, 241)": (
-        f"a secondary {ROM_MERKHA} in the {ROM_TEVIR}'s chanted word (§§233, 241)"
-    ),
-    "secondary mahapakh in the tevir's chanted word (ITM §241)": (
-        f"a secondary {ROM_MAHAPAKH} in the {ROM_TEVIR}'s chanted word (§241)"
-    ),
+# Accent names for the shorthand the survey's shapes are written in -- ``qad-zaq``, ``mer-sil``.
+# The shapes are code identifiers and spell ח with an x, as the transliteration standard requires
+# of code and of the tracked JSON alike; rendered prose takes the ROM_* romanizations instead.
+# ``_pair_of`` raises on a shorthand not here, so a corpus bump that produces a new pair fails
+# the build rather than printing a code identifier at a reader.
+_ACCENT_DISPLAY = {
+    "qad": ROM_QADMA,
+    "zaq": ROM_ZAQEF_QATAN,
+    "tip": ROM_TIPEHA,
+    "etn": ROM_ETNAHTA,
+    "mer": ROM_MERKHA,
+    "sil": ROM_SILLUQ,
+    "mah": ROM_MAHAPAKH,
+    "pash": ROM_PASHTA,
+    "mun": ROM_MUNAX,
+    "tev": ROM_TEVIR,
 }
 
-# A route-(a) hit that matches no named configuration: the survey put it there because the mark
-# is not where that atom's own accent falls, which rules out the habit without naming a category.
-# No em dash inside the label -- the bullets end in " — <count>", and a second one reads as a
-# second clause rather than as the count it introduces.
-_UNNAMED_LABEL = (
-    "no named configuration: the mark is simply not at that atom's own accent position"
-)
+# GONE with the classification (Ben, 2026-07-28): _CONFIG_DISPLAY, which rendered Yeivin's
+# category names, and the two labels for the rows that held the cases the categories could not
+# name or could not reach.  The unnamed one read "no named configuration: the mark is simply not
+# at that atom's own accent position" -- "too long for a cell, and anyway I have no idea what
+# [it means], and it features your favorite, usually meaningless word: own".  Both faults are
+# moot now: with the rows gone there is no cell, and a table of observed pairs has nothing to
+# say about where an accent would otherwise have fallen.
+#
+# The naming rules those labels carried are worth keeping even though the labels are not:
+#   * "the mayela", never "the mayela tipexa" -- mayela IS the name for what would otherwise be
+#     a tipexa there, so the pair reads as a kind of tipexa.  Mayela is to tipexa as metigah is
+#     to qadma, and nobody writes "metigah qadma".
+#   * No "secondary" in a rendered label: unexplained, the page never saying what a secondary
+#     accent is, and arguably unwarranted, Yeivin calling every mark on his list secondary where
+#     Breuer (CoS ch. 9 §§21-23) reserves the word for pairs that cannot stand in that order
+#     across two separate words.  Naming the two marks asserts neither view, which is the point.
+
+# Where an accent has a name of its own in the position the pair puts it in, the row uses that
+# name.  A tipexa in the chanted word of an etnaxta or of a silluq is the MAYELA; a qadma in the
+# chanted word of a zaqef qatan is the METIGAH.  Ben's own analogy -- mayela is to tipexa as
+# metigah is to qadma -- and he asked the same question of both rows in turn: "what happened to
+# the terminology of mayela?", then the same of metigah.  The intro still glosses metigah-zaqef
+# as a qadma before a zaqef qatan, which is what tells a reader which mark the row means.
+_PAIR_FIRST_NAME = {
+    ("tip", "etn"): "mayela",
+    ("tip", "sil"): "mayela",
+    ("qad", "zaq"): "metigah",
+}
+
+# A cell holding a number is right-justified, so the digits line up on the units column.  The
+# rule is in gh-pages/style.css; the class goes on the count column's header too, or the heading
+# sits over nothing.
+_NUMERIC_CELL = {"class": "numeric"}
 
 _SMALL_NUMBERS = (
     "no",
@@ -182,32 +202,94 @@ def _occurrence(survey: dict, corpus: str, genre: str, bcv: str) -> dict:
     return found[0]
 
 
-def _is_unnamed(configuration: str | None) -> bool:
-    return configuration is None or configuration.startswith("unnamed")
+def _pair_of(shape: str) -> tuple[str, str]:
+    """The two accents a shape holds, as romanized names, non-final atom's first.
 
-
-def _secondary_by_configuration(survey: dict, corpus: str, genre: str) -> list:
-    """(configuration, count) over route-(a) hits only, commonest first.
-
-    Counting the route rather than filtering the configuration name is what makes the bullet
-    list sum to the table's "secondary (inherited)" cell: the unnamed route-(a) case belongs in
-    the list, and the undecided ones do not.  Among equal counts the unnamed one sorts last --
-    it is the residue of the named ones, so it reads wrongly above any of them.
+    A shape is one field per atom -- ``qad-zaq``, ``0-mer-sil`` -- and every hit has exactly
+    two accented atoms, which ``pin_claims`` also asserts.  A field of repeats is one accent
+    written twice (MAM's Ezekiel 16:12 נֶ֙זֶם֙ has ``pash+pash``), so it collapses to one name.
     """
-    counts = Counter(
-        o["configuration"]
-        for o in _occurrences(survey, corpus, genre)
-        if o["route"] == mpa.ROUTE_SECONDARY
+    accented = []
+    for atom in shape.split("-"):
+        if atom == "0":
+            continue
+        marks = set(atom.split("+"))
+        assert len(marks) == 1, f"more than one accent on an atom of {shape}"
+        accented.append(marks.pop())
+    assert len(accented) == 2, f"not two accented atoms in {shape}"
+    first, second = accented
+    return first, second
+
+
+def _pair_table(occurrences: list, hits: int, simple_by_pair: dict) -> object:
+    """The accent pairs that occur, commonest first, on a compound and on a simple word.
+
+    Rows are what the compound data holds, not a list from anywhere: the page reports the
+    pairs that occur and no longer says which of Yeivin's categories each case falls under
+    (Ben, 2026-07-28).  So every compound hit lands in exactly one row, which the total
+    asserts.
+
+    THE SIMPLE COLUMN IS RESTRICTED TO THOSE ROWS, deliberately.  MAM's prose verses have
+    1,494 simple chanted words carrying two different accent marks, but two marks are not
+    always two ACCENTS: a postpositive or prepositive accent is often written twice, once at
+    its fixed edge and once on the stress syllable, and the second copy is sometimes a
+    different codepoint -- 135 of the 1,494 are a tsinnorit beside a tsinnor, which in a prose
+    verse is the zarqa written twice and no pair at all (``accent_marks`` names that codepoint
+    "zarqa stress-helper / tsinnorit").  Telling those apart wants the scanner's tokenization,
+    not this scan.  Showing only the pairs the compound side already has sidesteps the
+    question: each of those is two genuinely different accents, so both columns mean what they
+    say.  The simple total is therefore the total OF THESE PAIRS, not of the 1,494.
+
+    ONLY the column headings are ``th``.  The pair column is data, so it is ``td``: a ``th``
+    there is bold and centered by browser default, which is what Ben asked about -- a bold
+    centered first column claims the pair names are headings for their counts, and they are
+    not.  Its rows are also then striped like any other data row."""
+    counts = Counter(_pair_of(o["shape"]) for o in occurrences)
+    rows = [
+        H.table_row(
+            (
+                H.table_header("Accent pair"),
+                H.table_header("On a compound", _NUMERIC_CELL),
+                H.table_header("On a simple word", _NUMERIC_CELL),
+            )
+        )
+    ]
+    # Pairs sharing a first accent stay together rather than scattering by count (Ben,
+    # 2026-07-28, of the two mayela rows: "these should be listed together instead of strictly
+    # ordering by # of occurrences").  Groups run commonest-group-first, rows within a group
+    # commonest-first, so the biggest number is still at the top and the two mayela rows -- and
+    # the three merkha rows -- read as the families they are.
+    group_max = Counter()
+    for (first, _second), n in counts.items():
+        group_max[first] = max(group_max[first], n)
+    simple_total = 0
+    for pair, n in sorted(
+        counts.items(),
+        key=lambda kn: (-group_max[kn[0][0]], kn[0][0], -kn[1], kn[0][1]),
+    ):
+        first, second = pair
+        simple = simple_by_pair.get("-".join(pair), 0)
+        simple_total += simple
+        first_name = _PAIR_FIRST_NAME.get(pair, _ACCENT_DISPLAY[first])
+        rows.append(
+            H.table_row_of_data(
+                (
+                    f"{first_name} before {_ACCENT_DISPLAY[second]}",
+                    str(n),
+                    str(simple),
+                ),
+                (None, _NUMERIC_CELL, _NUMERIC_CELL),
+            )
+        )
+    total = sum(counts.values())
+    assert total == hits, f"table rows sum to {total}, not the {hits} hits"
+    rows.append(
+        H.table_row_of_data(
+            ("Total", str(hits), str(simple_total)),
+            (None, _NUMERIC_CELL, _NUMERIC_CELL),
+        )
     )
-    return sorted(counts.items(), key=lambda cn: (-cn[1], _is_unnamed(cn[0]), cn[0]))
-
-
-def _config_label(configuration: str | None) -> str:
-    if configuration in _CONFIG_DISPLAY:
-        return _CONFIG_DISPLAY[configuration]
-    if _is_unnamed(configuration):
-        return _UNNAMED_LABEL
-    raise KeyError(f"no rendered label for configuration {configuration!r}")
+    return H.table(tuple(rows), {"class": "limited-width"})
 
 
 def _count(n: int) -> str:
@@ -215,8 +297,10 @@ def _count(n: int) -> str:
     return _SMALL_NUMBERS[n] if n < len(_SMALL_NUMBERS) else f"{n:,}"
 
 
-def _letters_from_end(n: int) -> str:
-    return f"{_count(n)} letter{'' if n == 1 else 's'} from the end"
+# GONE with the classification: _case_parts and _case_table, which listed the four cases the
+# categories could not name or reach, verse by verse.  With the rows themselves gone there is
+# nothing to list.  They are the only thing that ever needed a book name out of a bcv, so the
+# leading-numeral fix for mb_cmn's "2Samuel" went with them.
 
 
 def _specimen(text: str) -> object:
@@ -232,6 +316,8 @@ def _specimen(text: str) -> object:
 # are exactly what must not be retyped here.
 _LO_LETTERS = "לא"
 _TAASE_LETTERS = "תעשה"
+# What follows the Sabbath commandment's לא־תעשה, and tells it from the one at Deuteronomy 5:8.
+_KOL_MELAKHA_LETTERS = "כלמלאכה"
 
 
 def _letters(chanted_word: str) -> str:
@@ -267,6 +353,47 @@ def lo_taase_atoms() -> tuple[str, str]:
                 pairs.append((accents_and_letters(first), accents_and_letters(second)))
     assert len(pairs) == 1, f"ws/dt/elyon/printed לא + תעשה pairs: {pairs}"
     return pairs[0]
+
+
+def lo_taase_taxton_compound() -> str:
+    """ws/dt/taxton/printed's לא־תעשה at the Sabbath commandment, lifted and never retyped.
+
+    The p-trad תחתון has the two atoms as a maqaf compound at the same commandment where the
+    עליון has them as two chanted words, which is the whole reason the intro can raise a
+    carry-over.  Same rule as ``lo_taase_atoms``: the marks ARE the claim, so they come from
+    the vendored strand, letters and accents only, with the maqaf put back between the atoms
+    that ``accents_and_letters`` drops it from.
+
+    The strand has TWO לא־תעשה compounds, this one and Deuteronomy 5:8; they are told apart by
+    what follows, כל־מלאכה here and לך at 5:8.  Both assertions below fail the build rather than
+    put the wrong compound on the page.
+
+    The intro shows this compound and says nothing about its marks, so the shape assertion is
+    all there is to keep the contrast honest: the specimen makes its point only while the
+    compound has a single accent, a qadma on its final atom, against Koren's two.  A
+    re-vendoring that moved either mark fails here instead of putting a specimen on the page
+    that no longer contrasts with anything.
+    """
+    version = next(
+        v
+        for v in pd.load_source()["versions"]
+        if (v["book"], v["reading"], v["tradition"]) == ("dt", "taxton", "printed")
+    )
+    hits = []
+    for chanted_verse in version["chanted_verses"]:
+        words = chanted_verse.split()
+        for word, following in zip(words, words[1:]):
+            atoms = word.split("\N{HEBREW PUNCTUATION MAQAF}")
+            if [_letters(a) for a in atoms] != [_LO_LETTERS, _TAASE_LETTERS]:
+                continue
+            if _letters(following) == _KOL_MELAKHA_LETTERS:
+                hits.append(word)
+    assert len(hits) == 1, f"ws/dt/taxton/printed לא־תעשה before כל־מלאכה: {hits}"
+    shape = mpa.shape_of(mpa.atom_accents(hits[0], verse_final=False))
+    assert shape == f"0-{mpa.shape_of([[am.QADMA]])}", shape
+    return "\N{HEBREW PUNCTUATION MAQAF}".join(
+        accents_and_letters(a) for a in hits[0].split("\N{HEBREW PUNCTUATION MAQAF}")
+    )
 
 
 def isaiah_munax_compound(survey: dict) -> str:
@@ -305,22 +432,12 @@ def pin_claims(survey: dict) -> None:
     ``printed_decalogue_strands.resolve_readings`` has, and for the same reason: a warning in
     a generator's output is a warning nobody reads.
     """
-    assert (
-        _route_count(survey, "mam_simple", "prose", mpa.ROUTE_HABIT) == 0
-    ), "MAM is stated to have no bare-habit case in prose"
-
-    # "all but one fall under a named grammatical configuration", under "The prose verses".
-    # The count of named ones is spliced; the ONE is not, and it is the sort of thing a
-    # re-vendoring moves either way -- to zero (and the sentence understates) or to several
-    # (and it is simply false).
-    unnamed = [
-        c
-        for c, _n in _secondary_by_configuration(survey, "mam_simple", "prose")
-        if c is None or c.startswith("unnamed")
-    ]
-    assert (
-        len(unnamed) == 1
-    ), f"MAM prose: expected one unnamed secondary kind, got {unnamed}"
+    # GONE with the classification (2026-07-28): two assertions that pinned sentences the page
+    # no longer makes -- that MAM's prose has no bare-habit (route (b)) case, and that exactly
+    # one route-(a) case falls under no named configuration.  Both were about which of Yeivin's
+    # categories a case belongs to, and the page now reports the pairs that occur without
+    # placing any case in a category.  The survey still computes the routes; nothing on the page
+    # depends on them, so nothing here defends them.
 
     # The oleh-we-yored assertions that stood here went with the poetic section's detail (#83).
     # They defended a sentence counting how many poetic hits were one oleh-we-yored spread across
@@ -334,6 +451,11 @@ def pin_claims(survey: dict) -> None:
     # those does occur elsewhere in the survey (WLC's Joshua 20:4 has the single accent, the
     # poetic corpus has revia mugrash), so none is a hypothetical.  A field of REPEATS is the one
     # thing allowed: MAM's Ezekiel 16:12 נֶ֙זֶם֙ has ``pash+pash``, one accent written twice.
+    #
+    # The same loop is what pins "but never more than two" (Ben's wording, 2026-07-28), since
+    # exactly two accented atoms and no stacked pair is what "never more than two" amounts to
+    # here.  MIND THE SCOPE: the survey scans maqaf compounds, so the pin covers compounds only.
+    # A chanted word that is a lone atom is never scanned, and the sentence speaks for those too.
     for o in _occurrences(survey, "mam_simple", "prose"):
         atoms = o["shape"].split("-")
         assert len(atoms) in (2, 3), o
@@ -342,7 +464,8 @@ def pin_claims(survey: dict) -> None:
 
     # THE PAGE'S ANSWER, in two claims that only the data can keep true: no compound in MAM's
     # PROSE verses is accented alike twice, and the single one whose non-final atom has a munax
-    # is Isaiah 40:7.  Both are stated flatly in the intro and again under "Koren's compound".
+    # is Isaiah 40:7.  The first is the intro's flat answer; the second moved out of the intro
+    # to "Koren's compound" (Ben, 2026-07-28), which is the only place it is stated now.
     #
     # Prose only, deliberately.  The intro used to say "not in poetic ones" too, and the poetic
     # verses do bear it out -- but only among compounds whose maqaf is WRITTEN, and Breuer has
@@ -365,6 +488,11 @@ def pin_claims(survey: dict) -> None:
         if o["shape"].split("-")[0] == mpa.shape_of([[am.MUNAX]])
     ]
     assert [o["bcv"] for o in mam_munax] == ["is40:7"], mam_munax
+    # And what it pairs that munax WITH, which "Koren's compound" now names: the zaqef qatan of
+    # munax-zaqef, ITM §221.  Named in prose, so pinned like everything else the prose names.
+    assert mam_munax[0]["shape"] == mpa.shape_of(
+        [[am.MUNAX], [am.ZAQEF_QATAN]]
+    ), mam_munax
 
 
 def _intro(survey: dict) -> tuple[object, ...]:
@@ -379,13 +507,22 @@ def _intro(survey: dict) -> tuple[object, ...]:
     mam_prose = survey["corpora"]["mam_simple"]["prose"]
     pct = 100.0 * mam_prose["hits"] / mam_prose["maqaf_compounds"]
     lo, taase = lo_taase_atoms()
+    # The metigah-zaqef count, spliced rather than hedged as "nearly all" (Ben, 2026-07-28:
+    # "why be coy, why not just say the number").  Counted the same way the pair table counts,
+    # so the sentence and the table's top row cannot disagree.
+    metigah = sum(
+        1
+        for o in _occurrences(survey, _CORPUS, "prose")
+        if _pair_of(o["shape"]) == ("qad", "zaq")
+    )
     return (
         H.heading_level_1(PAGE_TITLE),
         H.para(
             wrap_hebrew_runs(
                 "Maqaf marks join two or more atoms into a single chanted word. In the prose"
-                " system a chanted word usually has exactly one accent, and only in a small"
-                f" minority of cases two. Of the {mam_prose['maqaf_compounds']:,} maqaf"
+                " system a chanted word usually has exactly one accent. In a small minority of"
+                " cases, a chanted word has two accents, but never more than two. Of the"
+                f" {mam_prose['maqaf_compounds']:,} maqaf"
                 f" compounds in the prose verses of MAM, {mam_prose['hits']} ({pct:.2f}%) have"
                 " an accent on a non-final atom. In every one of them the two accents sit on"
                 " two atoms of the compound and never both on one, the compound itself having"
@@ -399,7 +536,7 @@ def _intro(survey: dict) -> tuple[object, ...]:
                 "in Koren's Deuteronomy ",
                 link("appendix Decalogue", "printed-decalogue-koren.html"),
                 *wrap_hebrew_runs(
-                    f" (the {ELYON}) — one maqaf compound, with a {ROM_MUNAX} on "
+                    f" (the {ELYON}) — a maqaf compound with a {ROM_MUNAX} on "
                 ),
                 _emph("both"),
                 *wrap_hebrew_runs(
@@ -411,69 +548,80 @@ def _intro(survey: dict) -> tuple[object, ...]:
         _specimen(f"{lo} {taase}"),
         H.para(
             wrap_hebrew_runs(
-                f"instead: two chanted words, each with a {ROM_MUNAX} of its own. Is there"
-                " anything in Tanakh like it?"
+                f"instead: two chanted words, each with a {ROM_MUNAX} of its own."
+            )
+        ),
+        # WHERE THE MAQAF DOES LIVE, added at Ben's request 2026-07-28.  ONE SENTENCE AND THE
+        # SPECIMEN, in his own words: a first pass spread the same suggestion over two
+        # paragraphs, naming the strand, the compositor and what the page could not settle, and
+        # was "way too belabored regarding speculation about the source of the error".  The
+        # specimen carries what those sentences said -- one accent, and it is not Koren's pair.
+        #
+        # "the p-trad תחתון", not a bare "the תחתון" and not "Koren's own תחתון pages".  The two
+        # תחתון strands part at exactly this compound -- the m-trad one has the two atoms
+        # separate, as the עליון does -- so a bare "the תחתון" would be false of one of them.
+        # Naming the strand fixes that without the possessive: a page is not accented, a chanted
+        # word is, and "own" is a word Ben has struck from this repo's prose more than once.
+        #
+        # IT COMES BEFORE THE QUESTION, not after the answer (Ben, 2026-07-28).  The cheap
+        # explanation is disposed of first, and the question is then asked of a maqaf taken
+        # seriously -- which is what the rest of the page does.  Put after the answer, it read as
+        # an afterthought undercutting the count it followed.
+        H.para(
+            wrap_hebrew_runs(
+                "The odd maqaf in Koren might simply be accidentally carried over from the"
+                f" p-trad {TAHTON}:"
+            )
+        ),
+        _specimen(lo_taase_taxton_compound()),
+        H.para(
+            wrap_hebrew_runs(
+                "But if we take the maqaf seriously, is there anything in Tanakh like Koren's"
+                f" two-{ROM_MUNAX} compound?"
             )
         ),
         H.para(
             wrap_hebrew_runs(
                 "There is not. No maqaf compound in MAM's prose verses has the same accent on"
-                " both atoms, not once. Nearly all of the"
-                f" {mam_prose['hits']} prose cases are a single grammatical category,"
-                f" metigah-zaqef: a {ROM_QADMA} before a {ROM_ZAQEF_QATAN}. The one case whose"
-                f" non-final atom has a {ROM_MUNAX} is Isaiah 40:7"
+                f" both atoms, not once. Of the {mam_prose['hits']} prose cases, {metigah} are"
+                " a single grammatical category, metigah-zaqef: a"
+                f" {ROM_QADMA} before a {ROM_ZAQEF_QATAN}."
             )
         ),
-        _specimen(isaiah_munax_compound(survey)),
-        H.para("which is not Koren's pair of accents either."),
     )
 
 
-def _what_is_counted() -> tuple[object, ...]:
-    # The old version of this section opened by calling the space-delimited unit a chanted word
-    # and then argued that splitting on spaces gives chanted words -- assuming the premise and
-    # then proving it.  It also taught a shape notation (qad-zaq, 0-mer-sil) that appeared
-    # nowhere else on the page, the configuration list below going by Yeivin's category names
-    # instead; that paragraph is gone, which also frees "shape" for its ordinary English sense
-    # in "Koren's reading".
-    #
-    # Gone too (Ben, 2026-07-28): a paragraph saying a meteg and a silluq are one sign and that
-    # it counts as an accent only verse-finally.  "Useless internal implementation explanation.
-    # Also, super obvious.  Basically saying: I'm not an idiot."  The rule still governs the
-    # count -- it lives in atom_accents' docstring, where a reader of the code needs it and a
-    # reader of the page does not.
-    return (
-        H.heading_level_2("What is counted"),
-        H.para(
-            "The question put to every prose maqaf compound in the Tanakh is whether the"
-            " compound has an accent other than the one on its last atom."
-            " A compound counts once however many of its"
-            " atoms are accented, and it is counted against every maqaf compound in those"
-            " verses, accented on one atom or on two."
-        ),
-    )
+# GONE: "What is counted", whittled to one sentence over two days and then cut outright (Ben,
+# 2026-07-28: "I question the value of this whole, small section").  What that last sentence
+# said -- the question is whether a compound has an accent other than the one on its last atom
+# -- the intro already says, in the same words, as the thing the page counts.  A section that
+# restates the intro is not a definition, it is an echo.
+#
+# What went before it, each cut for a reason worth keeping:
+#   * A paragraph calling the space-delimited unit a chanted word and then arguing that
+#     splitting on spaces gives chanted words -- assuming the premise and proving it.  It also
+#     taught a shape notation (qad-zaq, 0-mer-sil) used nowhere else on the page.
+#   * A paragraph saying a meteg and a silluq are one sign and that it counts as an accent only
+#     verse-finally.  "Useless internal implementation explanation.  Also, super obvious.
+#     Basically saying: I'm not an idiot."  The rule lives in atom_accents' docstring, where a
+#     reader of the code needs it and a reader of the page does not.
+#   * A sentence saying a compound counts once however many of its atoms are accented, and is
+#     counted against every maqaf compound in those verses.  "Nitty-gritty details of counting
+#     at a level of detail not of concern to my model of who the reader is."  It lives in
+#     ``scan``.
+# Every rule they stated still governs the count; none of them was ever page text's job.
 
 
-def _corpus_caveat() -> tuple[object, ...]:
-    # What is left of "What these three columns are, and are not" once there is one column.  Its
-    # WLC and UXLC bullets went with them; so did the paragraph reporting that two of the three
-    # Leningrad readings Yeivin cites for this feature are contradicted by the transcription,
-    # which was there to stop a reader treating WLC as a second manuscript and has nothing to
-    # stop once WLC is off the page.  That observation is issue #82 now, not page text -- and it
-    # is sharper there, since UXLC and MAM turn out to contradict him at both verses as well.
-    # The MAM bullet is what had to survive: every claim here takes MAM, so the reader is owed a
-    # sentence on what MAM is.  A second paragraph justifying the choice of a consensus text was
-    # drafted and cut (Ben, 2026-07-27) -- with no comparison left on the page, it defended a
-    # decision no reader is in a position to question.
-    return (
-        H.heading_level_2("Which text this page counts"),
-        H.para(
-            "Every count on this page is MAM's. MAM is a consensus text rather than a"
-            " diplomatic one: not a single manuscript's reading, but the accentuation the"
-            " Masoretic tradition converges on. It largely follows Breuer, but it is not one"
-            " of Breuer's own editions."
-        ),
-    )
+# GONE: "Which text this page counts", the last remnant of a section that once compared three
+# corpora (Ben, 2026-07-28).  Its final paragraph told the reader that MAM is a consensus text
+# rather than a diplomatic one and is not one of Breuer's editions -- true, and every word of it
+# an answer to something that happened in the drafting rather than to anything on the page.  Ben:
+# "I had to explain all that to you because you kept saying wacky stuff about MAM being a Breuer
+# edition, and initially framing this whole page against WLC, but that's dirty laundry/internal
+# history the reader doesn't need to know about.  Elsewhere it is clear that MAM is the
+# reference."  The rule it stands for: a paragraph that exists because a discussion went a
+# certain way is internal history, not page text, however accurate it is.  The corpus is named
+# where the counts are, which is where a reader meets it.
 
 
 def _prose_section(survey: dict) -> tuple[object, ...]:
@@ -499,67 +647,77 @@ def _prose_section(survey: dict) -> tuple[object, ...]:
     #
     # The one-row table went too.  Its two surviving columns restated the intro's own sentence,
     # and the other three were route counts.
-    configs = _secondary_by_configuration(survey, _CORPUS, "prose")
     hits = _n(survey, _CORPUS, "prose", "hits")
-    secondary = _route_count(survey, _CORPUS, "prose", mpa.ROUTE_SECONDARY)
-    undecided = _route_count(survey, _CORPUS, "prose", mpa.ROUTE_UNDECIDED)
-    example = _occurrence(survey, _CORPUS, "prose", "ju7:13")
+    occurrences = _occurrences(survey, _CORPUS, "prose")
     return (
         H.heading_level_2("The prose verses"),
+        # THE OPENING SENTENCE, rewritten 2026-07-28.  It used to read "A mark on a non-final
+        # atom is there because the compound is one chanted word, and a mark belonging to that
+        # chanted word as a whole has landed short of its last atom" -- Ben: "one of the least
+        # comprehensible things you've ever written, while of course sounding erudite and
+        # certain."  Three faults, kept here so none of them comes back:
+        #   * The "because" ran backwards.  Being one chanted word is why a compound normally
+        #     has exactly ONE accent -- the reason these cases are rare (233 of 36,786), not the
+        #     reason the mark is there.
+        #   * "landed short of its last atom" pictured a mark that missed.  A secondary accent
+        #     has its own position, in front of the main accent; nothing aimed at the last atom
+        #     and fell short.  Transformative framing of exactly the banned kind.
+        #   * It asserted of all 233 what holds of the 230 routed ones; the three undecided are
+        #     undecided precisely because this cannot be checked for them.
+        # What replaces it is the point MAQAF_IS_THE_LAST_RUNG stands for: these marks are not a
+        # phenomenon of compounds.  The list is Yeivin's list of accents that can come first of
+        # two on an ordinary word, which is why Koren's two identical accents are not on it.
+        # JUST THE PAIRS THAT OCCUR (Ben, 2026-07-28).  The table used to be Yeivin's closed
+        # list, with each case placed in one of his categories, plus two rows for the cases the
+        # placement could not name or could not reach.  All of that machinery exists to answer
+        # a question this page does not need: whether the maqaf is optional -- a manuscript
+        # joining two atoms that each keep their own accent -- or whether the pair is one only
+        # a single chanted word can carry.  Ben: "this is an interesting research question, and
+        # gets to the more restricted definition of secondary that I think Breuer uses, but can
+        # we just avoid the whole thing and say these are the pairs that are known to occur?"
+        # So the rows are now observed pairs, every case lands in one, and the undecided and
+        # unnamed rows and their four-case table are gone with the question they belonged to.
+        #
+        # Gone with them (same day, same reason -- "I'm really trying to narrow the scope of
+        # this document, and get out alive"): a closing paragraph reporting Yeivin §§293, 357 on
+        # manuscripts that have a maqaf after an atom keeping its own conjunctive, and MAM
+        # having no case of it.  That paragraph WAS the optional-maqaf question, stated as an
+        # aside; with the classification gone the page can no longer support its "no case of
+        # it", which was a route count.  Issue #83 holds the material.
         H.para(
-            "A mark on a non-final atom is there because the compound is one chanted word,"
-            " and a mark belonging to that chanted word as a whole has landed short of its"
-            " last atom. The marks that can do this are a closed list, which Yeivin gives"
-            f" for the prose system: {ROM_QADMA} before a {ROM_ZAQEF_QATAN} (metigah-zaqef,"
-            f" §224), {ROM_MUNAX} before a {ROM_ZAQEF_QATAN} (§221), a secondary"
-            f" {ROM_MERKHA} in the chanted word of a {ROM_TIPEHA}, of a {ROM_SILLUQ} or of a"
-            f" {ROM_TEVIR} (§§233, 241), a secondary {ROM_MAHAPAKH} in the chanted word of a"
-            f" {ROM_TEVIR} (§241), and the mayela {ROM_TIPEHA} before an {ROM_ETNAHTA} or a"
-            f" {ROM_SILLUQ}."
+            "Two accents can appear on a chanted word, whether it is compound or simple."
+            " These are the pairs that occur, in the prose verses of MAM, on a compound with"
+            " an accent on a non-final atom, and how often each of them occurs on a simple"
+            " chanted word:"
         ),
+        _pair_table(occurrences, hits, _n(survey, _CORPUS, "prose", "simple_by_pair")),
+        # Yeivin in one sentence after the table, not a column in it (Ben, 2026-07-28: "no need
+        # to put Yeivin section numbers in the table, just mention most of these pairs are
+        # covered in Yeivin ITM sections blah").  "Most", not all: the two pairs ending in a
+        # pashta are on no list of his.  §§210 and 216 are the two mayela sections, which the
+        # survey's own configuration names never carried; the other four are the ones
+        # ``_NAMED_CONFIGURATIONS`` cites.
         H.para(
-            (
-                f"Of MAM's {hits} cases, {secondary} are marks that are not the atom's own"
-                " accent — all but one of them under a named category from that list — and"
-                f" {_count(undecided)} are undecided, their non-final atom never standing"
-                " free elsewhere in the text for its mark's position to be checked."
-                " Deciding one is a matter of position, and needs no"
-                " phonology: the atom is looked up elsewhere standing free, a chanted word"
-                " by itself with an accent of its own, and the letters following the accent"
-                " are counted in each. ",
-                *wrap_hebrew_runs(
-                    f"Judges 7:13 והנה־איש has its {ROM_QADMA}"
-                    f" {_letters_from_end(example['oracle']['joined_letters_after_accent'])},"
-                    " where among the"
-                    f" {_count(example['oracle']['free_occurrences'])} free-standing והנה the"
-                    " accent's usual place is"
-                    f" {_letters_from_end(example['oracle']['free_letters_after_accent'])} —"
-                    " so the mark is not that atom's own accent, and it is the metigah of"
-                    " §224."
-                ),
-            )
-        ),
-        H.para("The cases, by configuration:"),
-        H.unordered_list(
-            tuple(f"{_config_label(config)} — {n}" for config, n in configs),
-        ),
-        H.para(
-            "Things are less tidy in a manuscript. Yeivin (§§293, 357) reports that some"
-            " manuscripts have a maqaf even after an atom that keeps its own conjunctive,"
-            " with no grammatical trigger at all, and names the Leningrad Codex for the"
-            " habit. MAM, which is not a manuscript, has no case of it."
+            "Most of these pairs are covered in Yeivin's Introduction to the Tiberian"
+            " Masorah, §§210, 216, 221, 224, 233 and 241."
         ),
     )
 
 
-def _koren_section() -> tuple[object, ...]:
+def _koren_section(survey: dict) -> tuple[object, ...]:
+    # ISAIAH 40:7 SITS HERE, not in the intro (Ben, 2026-07-28): "just because it has a munax
+    # doesn't make it even close to Koren's two-munax compound."  The intro's answer is that no
+    # MAM prose compound is accented alike twice, and one that merely shares ONE of Koren's two
+    # accents is not a qualification of that answer -- put beside it, it read as a near miss.
+    # What it is good for is this section's own point: the pairing is what matters, and the one
+    # compound with a munax on its non-final atom pairs it the ordinary way.
     return (
         H.heading_level_2("Koren's compound"),
         H.para(
             (
                 "Every one of those cases pairs two ",
                 _emph("different"),
-                " accents: the compound's accent, and a secondary mark of a kind that"
+                " accents: the compound's accent, and a mark of a kind that"
                 " can precede it. Koren's two are the same accent twice, and no chanted"
                 " word in MAM is accented that way — so there is no category Koren's"
                 " compound could be said to be following, and nothing in MAM it could be"
@@ -567,14 +725,20 @@ def _koren_section() -> tuple[object, ...]:
             )
         ),
         H.para(
-            wrap_hebrew_runs(
-                f"The Decalogue's Exodus 20:10 לא־תעשה has a {ROM_MUNAX} on each atom, but"
-                " that is the two strands tangled together rather than either one of them:"
-                f" untangled, MAM's טעם {ELYON} has no maqaf, and לא and תעשה are two chanted"
-                f" words, each with a {ROM_MUNAX} of its own — the very two atoms Koren has as"
-                " one maqaf compound."
-            )
+            f"Sharing one of the two accents is no help. The one case whose non-final atom"
+            f" has a {ROM_MUNAX}, Isaiah 40:7"
         ),
+        _specimen(isaiah_munax_compound(survey)),
+        H.para(
+            f"pairs that {ROM_MUNAX} with a {ROM_ZAQEF_QATAN}, a pair the table above has."
+        ),
+        # GONE (Ben, 2026-07-28: "don't even get into the accents on a tangled presentation"):
+        # a paragraph reporting that MAM's Exodus 20:10 לא־תעשה has a munax on each atom, and
+        # then taking it back -- that being the two strands tangled together in one printing
+        # rather than either strand, which untangled has no maqaf there.  A specimen the reader
+        # must be told not to count is worse than no specimen: it puts Koren's own shape in
+        # front of them under the heading that says nothing in MAM has it.  Whatever the tangle
+        # is worth belongs on the pages about the tangle, not here.
         H.heading_level_3("The nearest thing in a printed edition"),
         H.para(
             (
@@ -619,7 +783,7 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
             "The poetic system is a different matter, and different enough that the same"
             " count would not mean the same thing there. It puts two marks on one chanted"
             " word readily and systematically (Breuer, Chapter 9 §§20–26), where the prose"
-            " system does so rarely and only within the closed list above. And many of its"
+            " system does so rarely, and in the few pairs above. And many of its"
             " maqafs are not written at all: Breuer (§§27, 37) records that in poetic verses"
             " the maqaf after a secondary mark is customarily left unwritten while the atom"
             " still counts as joined, so a survey that finds compounds by looking for a"
@@ -639,10 +803,8 @@ def render_body_contents(survey: dict) -> tuple[object, ...]:
     pin_claims(survey)
     sections: list[object] = [
         *_intro(survey),
-        *_what_is_counted(),
-        *_corpus_caveat(),
         *_prose_section(survey),
-        *_koren_section(),
+        *_koren_section(survey),
         *_poetic_section(survey),
     ]
     return (H.div(tuple(sections), {"class": _WIDTH_CLASS}),)
