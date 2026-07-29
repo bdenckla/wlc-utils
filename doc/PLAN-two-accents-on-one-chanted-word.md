@@ -5,8 +5,17 @@ word with two unless the pair matches a known, very restrictive pattern. The sam
 an **atomic** chanted word as to a **maqaf compound**; this is a chanted-word rule, not a maqaf
 feature.
 
-Planning session 2026-07-28. **Phases 1 and 2 are implemented** — see §7 at the foot of this file for
-what changed, what was verified, and what Phase 2 starts from.
+Planning session 2026-07-28. **Phases 1 and 2 are implemented; Phase 3 was built and withdrawn.**
+§7, §8 and §9 at the foot of this file are the three phase states, each saying what changed, what
+was verified, which generated outputs moved and which deliberately did not. §9 is the current
+one, and it is where **Phase 4 — promotion, the plan's actual goal —** starts from. (The pointer
+here said "Phase 1" through the whole of Phase 2; a phase-end write-back has to update it or the
+reader lands two phases back.)
+
+**The deliverable of this plan is a rule in the checker, not a page.** Phase 3 rendered the
+survey and was dropped for exactly that reason, along with a neighbouring page having widened
+onto the same ground. §5's struck Phase 3 entry has the full account; read it before proposing
+another rendering.
 
 Every number below marked *(probe)* came from a scratch script run during planning, **not** from
 a regenerated tracked artifact. Phase 1 re-derived all of them in
@@ -293,19 +302,36 @@ Regenerate `out/accgram/maqaf-nonfinal-accents.json` and its page with
 `status`, `errors` and `tree` must be **byte-identical**; the only diff anywhere is the new field.
 That invariant is the phase's test, and it is checkable by eye in the diff.
 
-### Phase 3 — The rendered page
+### ~~Phase 3 — The rendered page~~ — WITHDRAWN 2026-07-29, after being built
 
-`chanted_word_accents_page.py` → `gh-pages/accgram/chanted-word-accents.html`, wired into
-`generate-html` and `generate-html-chanted-word-accents`, one run writing both the JSON and the
-page, with a `pin_claims` that re-derives every stated number from the data and raises on drift.
+`chanted_word_accents_page.py` → `gh-pages/accgram/chanted-word-accents.html`, one page one
+question: does a chanted word with two accents that Yeivin's inventory does not name have a
+precedent in the prose Tanakh?
 
-One page, one question: **does a chanted word with two accents that Yeivin's inventory does not
-name have a precedent in the prose Tanakh?** Koren's Deuteronomy appendix עליון sets לא־תעשה with
-a munaḥ on each atom; the answer the data gives is that WLC has three such chanted words and MAM
-none. Everything else — the route split, the §233 discrepancy, the METHIGAZAQEF boundary cases —
-goes to a linked GitHub issue rather than onto the page.
+**Built, shown to Ben, and dropped the same day.** Two reasons, and the second is the one that
+matters for the rest of this plan:
 
-### Phase 4 — Promotion (gated on the answers in §6)
+- `0ab2c6a`, "Ask the page's question of all three printed compounds, not Koren's alone", had
+  meanwhile widened `maqaf-nonfinal-accents.html` onto the same ground, adding an
+  `unprecedented_pairs()` derivation and a simple-chanted-word appendix. Ben: "mostly now
+  redundant".
+- **A page was never this plan's thrust.** §§1–4 are about teaching the checker a chanted-word
+  rule; §4.2 sequences it as a diagnostic channel first and an ERROR leaf later. Ben, 2026-07-29:
+  "the production of such an HTML page was at best a waypoint along the way, right? I don't even
+  remember asking for it". A phase whose deliverable is a rendering does not advance the checker.
+
+**Nothing was lost by dropping it.** The Yeivin cross-check — his sections, his stated counts, his
+closed verse lists, and the assertion that raises where a list and the measurement disagree —
+lives in `out/accgram/chanted-word-accents.json`, written by `survey-chanted-word-accents`, and
+that is the form Ben wanted it in: "if needed it can be recorded in some way other than HTML."
+
+**The lesson for whoever plans the next one of these.** A phase that renders is a phase that does
+not advance the plan's own goal, so it needs a reason of its own to exist. This one had a real
+one when it was written — the survey had no reader-facing form at all — and lost it to a commit
+on a neighbouring page. Check the neighbours before writing a page, and prefer folding a finding
+into an existing page over standing up a new one.
+
+### Phase 4 — Promotion (gated on the answers in §6), and now the next phase
 
 If the flag becomes an ERROR, `classify.py` and the goerwitz page pick it up with no further
 wiring. Verification is the ungrammatical-set diff, read against the existing verdicts: SimTiq's
@@ -626,3 +652,114 @@ onto the page. On (b), note that **#82 is the wrong issue**: its subject is Yeiv
 maqaf readings for the LC, so §7's and §8's citations of it for the §233/§241 surplus look
 misfiled. #83, which holds the material cut from the maqaf-nonfinal-accents page, is the closer
 fit; a new issue is the other option.
+
+---
+
+
+## 9. Phase 3 state (executed and then WITHDRAWN, 2026-07-29)
+
+**Phase 3 built the rendered page, Ben looked at it, and it was dropped the same day.** The
+reasoning is in §5's struck Phase 3 entry; in short, `0ab2c6a` had widened
+`maqaf-nonfinal-accents.html` onto the same ground, and a page was never this plan's thrust.
+So the phase's net contribution to the tree is small and deliberate, and the plan resumes at
+Phase 4.
+
+### Main moved under this phase, twice
+
+Phase 3 started against `f0dbbc0` in the worktree `.claude/worktrees/great-easley-34eee3`, with
+the primary checkout clean. By the time the page was ready, **main was at `0ab2c6a`** — "Ask the
+page's question of all three printed compounds, not Koren's alone", 6,744 insertions across the
+sibling survey, its page, its two artifacts and `printed_decalogue_strands.py` — and the primary
+also had **21 insertions and 7 deletions uncommitted in `py/accgram/maqaf_nonfinal_accents.py`**,
+the session "Continue editing maqaf-nonfinal-accents page" (worktree `sleepy-bell-ad6a3e`,
+branch `claude/mystifying-hopper-c2f1f9`) finishing #85's stress-helper sweep into the one prose
+module `fb3e5cc` had missed.
+
+**That is the concrete hazard for the next phase, and it is not hypothetical: it is what killed
+this one.** This plan's work sits next door to a page under active parallel edit. Check
+`git log --oneline -3` and `git status` in the primary before starting, not only at the end.
+
+### What actually landed
+
+- **`chanted_word_accents.merkha_tipexa_discrepancy`'s `open_question` cites #86, not #82.**
+  Phase 1 filed the §233/§241 surplus under #82, whose subject is Yeivin's two Deuteronomy 33
+  maqaf readings for the LC. This is the **one line** `out/accgram/chanted-word-accents.json`
+  moves, and it is a correction worth having whatever happens to the page.
+- **Issue [#86](https://github.com/bdenckla/wlc-utils/issues/86)**, "Yeivin-inventory questions
+  the chanted-word-accents survey raises (not #82)" — the §233/§241 surplus, the
+  `(MERKHA, SILLUQ)` and `(QADMA, ZAQEF_QATAN)` citations, the METHIGAZAQEF boundary crossings,
+  `ne8:7`'s merkha with legarmeh, Job's four prose-frame `qadma darga`, and the
+  1,353-vs-1,160 reconciliation between the two surveys (198 metigah-zaqef + 5 two-marks-on-one-
+  letter), which Ben had already ruled off the page before the page itself went.
+- **A docstring note in `chanted_word_accents`** recording that a page was built and dropped, so
+  the absence of one reads as a decision rather than an omission.
+
+### What was reverted
+
+`py/accgram/chanted_word_accents_page.py` and `gh-pages/accgram/chanted-word-accents.html` are
+deleted; `main_accgram.py` and `printed_decalogue_strands.py` are back at their committed state,
+which takes with them the `generate-html-chanted-word-accents` subcommand, the `_HTML_GENERATORS`
+entry and the `ROM_MAYELA` / `ROM_AZLA` constants the pair table needed.
+**`survey-chanted-word-accents` is restored** and is again the only way to write the survey JSON.
+
+### What was verified, before and after the withdrawal
+
+Before: the page rendered, its `pin_claims` passed (including a re-derivation of
+`koren_dt_elyon`'s compound through `transcription_parse.check`), `run-prose` and
+`run-printed-decalogue` were byte-identical, and the whole `generate-html` batch was
+byte-identical against `f0dbbc0`. That verification is now moot except for the one JSON line.
+
+After the revert, and this is what stands:
+
+1. **`survey-chanted-word-accents` re-run: `out/accgram/chanted-word-accents.json` differs from
+   the committed file by the single `open_question` line.**
+2. **`.venv/Scripts/pytest.exe py/tests`: 487 passed, 5 skipped.** Run with `WLC_SIBLINGS_ROOT`
+   set — without it an agent worktree cannot reach `../MAM-simple` and thirteen tests fail with
+   twenty-three errors that have nothing to do with this plan.
+3. **black** clean on `chanted_word_accents.py`, the only Python file still changed.
+4. **No test was added**, and none should be: the survey's Yeivin assertions already are the
+   differential check against an independent oracle.
+
+### Generated outputs: what moved and what deliberately did not
+
+| file | moved? |
+| --- | --- |
+| `out/accgram/chanted-word-accents.json` | yes — one line, the #82 → #86 citation |
+| `gh-pages/accgram/chanted-word-accents.html` | built and **deleted**; never committed |
+| `out/accgram/prose/*_ag.json` | **no** |
+| `out/accgram/printed-decalogue/_printed_decalogue.json` | **no** |
+| `out/accgram/maqaf-nonfinal-accents.json` and its page | **no** — and they are `0ab2c6a`'s and Ben's, not this plan's |
+| everything else under `out/` and `gh-pages/` | not touched |
+
+### The exact next phase
+
+**Phase 4 — promotion — which is the plan's actual goal and was always the phase after the
+channel.** The question it answers: should a chanted word whose accent pair no section of
+Yeivin's prose inventory names be **ungrammatical**? §6 decision 4 deferred that until the
+whitelist was closed and the residue visible, and Phases 1 and 2 have now closed and made both.
+
+If the flag becomes an ERROR, `classify.py` and the goerwitz page pick it up with no further
+wiring. What the phase must show is which verdicts are **newly** ungrammatical, not a total:
+`simtiq_ex_taxton`'s third chanted verse is already ungrammatical for an unrelated reason (three
+servi where the pashta phrase takes two) and would otherwise be double-counted.
+
+What it starts from, all of it in tracked artifacts today:
+
+- **MAM's residue is 18**, and after the five telisha-gedolah words that `lexical_validation`
+  already whitelists, **13 chanted words in the consensus text would newly become
+  ungrammatical**: `qadma darga` ×6 (four of them Job's prose frame), `merkha silluq` ×5,
+  `merkha munax` ×1 (ne8:7, which is also a legarmeh passage), `merkha pashta` ×1. That is the
+  strongest argument for settling #86 first — flagging MAM is flagging the corpus a grammatical
+  claim takes.
+- **WLC's residue is 34**, a different set that neither contains nor is contained by MAM's. Its
+  own shapes — `munax munax` at gn36:13, ek8:6, 1c27:14 and 2c1:11 among them — are facts about
+  the Westminster transcription rather than about the accentuation, which is the argument for
+  flagging WLC even where MAM is clean.
+- **Three printed-Decalogue chanted verses carry a null `itm_section` today**:
+  `koren_dt_elyon` verse 3 (`munax munax`, `clean`), and `simtiq_ex_taxton` verses 2
+  (`munax merkha`, `clean`) and 3 (`munax qadma`, already `ungrammatical`). That is the whole
+  blast radius on that path, and `koren_dt_elyon` is the case that motivated the plan.
+
+**Before starting: read §6, read #86, and re-check main and the primary's working tree.** A
+promotion that lands while the whitelist's own citations are known to be wrong would be flagging
+on a rule this plan has already recorded as unsettled.

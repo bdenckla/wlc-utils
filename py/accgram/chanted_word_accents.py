@@ -6,8 +6,12 @@ unmeasured, because a chanted word can also have two accents while being a singl
 have both of them on a compound's final atom.  This module measures all of it, and sets Yeivin's
 own inventory of the phenomenon beside the measurement so each checks the other.
 
-Pure computation and a JSON writer -- no HTML.  Run via
-``main_accgram.py survey-chanted-word-accents``.
+Pure computation and a JSON writer -- no HTML, and DELIBERATELY none.  Run via
+``main_accgram.py survey-chanted-word-accents``.  A rendered page of this was built and then
+dropped (2026-07-29): ``maqaf-nonfinal-accents.html`` had meanwhile widened to ask the same
+question of all three printed compounds, and the plan's own thrust is a chanted-word rule in the
+checker rather than a page.  The Yeivin cross-check is recorded here, in the JSON, which is the
+form it wanted.  Issue #86 holds the questions the survey raises and does not settle.
 
 THE SURVEY AND THE FLAGGING PATH are both here.  ``build_survey`` measures the three corpora and
 sets Yeivin's inventory beside MAM; ``classify_verse`` asks the same question of one verse at a
@@ -1009,7 +1013,9 @@ def merkha_tipexa_discrepancy(mam: dict) -> dict:
             " not settled here, and the two surveys currently answer differently:"
             " ``maqaf_nonfinal_accents._NAMED_CONFIGURATIONS`` labels a merkha on a"
             " non-final atom with a tipexa on the compound as §233's secondary merkha,"
-            " which is precisely these four. Issue #82 holds the citation question."
+            " which is precisely these four. Issue #86 holds the citation question."
+            " (Phase 1 filed it under #82, whose subject is instead Yeivin's two"
+            " Deuteronomy 33 maqaf readings for the LC.)"
         ),
     }
 
