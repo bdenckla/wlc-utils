@@ -4085,7 +4085,7 @@
           "accent_name": "merkha",
           "reason": "WLC has a reasonable transcription of the LC here, having only the elyon strand: יהיֽה־ (meteg + maqaf, with no accent of its own), so the detangler supplies the taxton’s merkha from MAM: יהי֥ה.",
           "source": "mam",
-          "aside": "(Aside: though WLC’s transcription of the LC’s vertical under-bar as meteg is reasonable, since the elyon and taxton both have under-bar marks, it would also be reasonable to transcribe the LC’s vertical under-bar as merkha. Indeed, perhaps the naqdan (pointing-scribe) of the LC intended a single under-bar to serve both purposes!)"
+          "aside": "(Aside: though WLC’s transcription of the LC’s vertical under-bar as the elyon’s meteg is reasonable, it would also be reasonable to transcribe it as the taxton’s merkha. Indeed, perhaps the naqdan (pointing-scribe) of the LC intended a single under-bar to serve both purposes! Then again, we do have examples of the naqdan explicitly writing two under-bar marks: see"
         }
       ],
       "anomalies": [],
@@ -8314,7 +8314,7 @@
           "accent_name": "tipexa",
           "reason": "WLC has a reasonable transcription of the LC here, having only the elyon strand: תרצֽח׃ (silluq + sof pasuq), so the detangler supplies the taxton’s tipexa from MAM: תרצ֖ח.",
           "source": "mam",
-          "aside": "(Aside: though WLC’s transcription of the LC’s vertical under-bar as silluq is reasonable, since the elyon and taxton both have under-bar marks, it would also be reasonable to transcribe the LC’s vertical under-bar as tipexa. Indeed, perhaps the naqdan (pointing-scribe) of the LC intended a single under-bar to serve both purposes!)"
+          "aside": "(Aside: though WLC’s transcription of the LC’s vertical under-bar as the elyon’s silluq is reasonable, it would also be reasonable to transcribe it as the taxton’s tipexa. Indeed, perhaps the naqdan (pointing-scribe) of the LC intended a single under-bar to serve both purposes! Then again, we do have examples of the naqdan explicitly writing two under-bar marks: see"
         },
         {
           "bcv": "dt5:6",
