@@ -556,9 +556,10 @@ def scan_corpus(frags_by_bcv: dict[str, list[Frag]]) -> dict:
 #
 # Transcribed from the FULL OCR of the book at ``../yeivin-itm/md-export-of-docx/`` -- not from
 # the partial adaptation at ``../al-hatorah/py/itm/``, which does not carry all of these sections.
-# Each ``quote`` is Yeivin's own wording, so it keeps his romanizations: he spells tifxa and
-# munax with a dotted h, where the rest of this repo spells xet with an x.  The spellings
-# themselves stand in the quote strings below, which are values and not comments.
+# Each ``quote`` is Yeivin's own wording, so it keeps his romanizations: he spells tifxa with a
+# dotted t and a dotted h, and munax with a dotted h, where the rest of this repo spells xet with
+# an x.  The spellings themselves stand in the quote strings below, which are values and not
+# comments.
 #
 # ``sequences`` are the scanner's own leaf names, which is what makes an entry checkable: the
 # measured hits with that token sequence are the entry's measured set.  ``verses`` is Yeivin's
