@@ -24,28 +24,35 @@ module measures, and §7 lists every place the probe was wrong.
 
 ---
 
-## 0. Where to resume (updated 2026-07-29, main at `7aeeeb0`)
+## 0. Where to resume (updated 2026-07-29, after Phase 3's withdrawal)
 
-**Next phase: Phase 3**, exactly as `§8`'s closing "The exact next phase" states it, including
-the two things to settle with Ben before writing the page. Nothing else in this file is a
-pending instruction.
+**Next phase: Phase 4 — promotion**, as `§9`'s closing "The exact next phase" states it. Nothing
+else in this file is a pending instruction.
+
+**`§8`'s closing "The exact next phase" is spent, and must not be actioned.** It named Phase 3,
+the rendered page; that page was built on 2026-07-29 and withdrawn the same day. `§5`'s struck
+Phase 3 entry has the reasoning and `§9` has the state. Both of the two things `§8` told Phase 3
+to settle with Ben were settled before it ran, and both answers are recorded there.
 
 **Two corrections to `§8`, which was written against `957113f` and has been overtaken.** Main has
-since moved six commits, so read `§8`'s opening subsection as history, not as current state:
+moved a good deal since, so read `§8`'s opening subsection as history, not as current state:
 
 - **The work `§8` calls "Ben's uncommitted work" in `maqaf_nonfinal_accents.py`,
   `maqaf_nonfinal_accents_page.py`, `printed_decalogue_strands.py` and `wlc_utils_html.py` is
-  all committed.** Nothing is pending in the working tree. Do not try to finish or reconcile it.
+  all committed** (through `7aeeeb0`). Do not try to finish or reconcile it. The same goes for
+  the further uncommitted `maqaf_nonfinal_accents.py` edit that `§9` reports: it landed as
+  `7aeeeb0`, "Finish the zarqa-stress-helper sweep in the maqaf-nonfinal survey".
 - **`maqaf-nonfinal-accents.html` has been through several rounds of editing since**, on a track
   this plan does not cover. Its account is in the commit messages of `829d1f6..7aeeeb0`, which
   are written to be read that way; `0ab2c6a` is the fullest. In short: the intro now asks of all
   three printed compounds whether MAM has anything like them, the pair table is down to the
-  eight pairs a compound has, and two appendices carry the rest.
+  eight pairs a compound has, and two appendices carry the rest. **That track is also why Phase 3
+  was withdrawn** — it had widened onto the page's question.
 
 **Open, and belonging to that other track rather than to any phase here:** the mark-vs-token
 count reconciliation, which is `§8`'s first open-question bullet and item (a) of its next-phase
-paragraph. A separate session of Ben's was looking at it. The `135` half of it is closed --
-issue #85 -- and must not be reopened.
+paragraph. Ben ruled it off the page on 2026-07-29 and it is now recorded in issue #86. The `135`
+half of it is closed — issue #85 — and must not be reopened.
 
 ---
 
