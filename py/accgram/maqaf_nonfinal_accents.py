@@ -713,11 +713,17 @@ def gray_maqaf_survey() -> dict:
 # --- the survey ---------------------------------------------------------------
 
 
-def _examples(simple: list[dict]) -> dict[str, str]:
-    """One chanted word per pair -- the first in corpus order, so a run cannot shuffle them."""
-    out: dict[str, str] = {}
+def _examples(simple: list[dict]) -> dict[str, dict]:
+    """One chanted word per pair -- the first in corpus order, so a run cannot shuffle them.
+
+    The reference comes with the word (2026-07-29): a page showing an example is showing one
+    place out of many, and a reader who wants to look it up should not have to go find it.
+    """
+    out: dict[str, dict] = {}
     for record in simple:
-        out.setdefault("-".join(record["pair"]), record["word"])
+        out.setdefault(
+            "-".join(record["pair"]), {"word": record["word"], "bcv": record["bcv"]}
+        )
     return out
 
 
@@ -752,6 +758,24 @@ def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool) -> dict:
             )
             for reason in sorted({s["excluded"] for s in simple if s["excluded"]})
         },
+        # The excluded words THEMSELVES, which the counts above cannot show (Ben, 2026-07-29,
+        # asking the page to link the sentence that reports them to "an appendix that shows
+        # these in a table").  Kept where the counted simple words' occurrences are not,
+        # because these are the ones a reader is invited to check: a count of what a page
+        # leaves out is a claim about six particular chanted words, and MAM's prose has six of
+        # them.  The poetic genres are far longer -- revia mugrash is a geresh and a revia on
+        # one letter, 145 of them -- so this list is written for the prose page and is not a
+        # promise that every genre's is short.
+        "simple_excluded_words": [
+            {
+                "bcv": s["bcv"],
+                "word": s["word"],
+                "pair": s["pair"],
+                "reason": s["excluded"],
+            }
+            for s in simple
+            if s["excluded"]
+        ],
         "by_route": dict(Counter(c["route"] for c in classified).most_common()),
         "by_configuration": dict(
             Counter(c["configuration"] for c in classified).most_common()

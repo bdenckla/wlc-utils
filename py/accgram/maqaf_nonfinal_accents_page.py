@@ -32,11 +32,13 @@ from accgram.almost_errors_html_shared import (
     accents_and_letters,
     hbo,
     link,
+    ref_display,
     wrap_hebrew_runs,
 )
 from accgram.printed_decalogue_strands import (
     ELYON,
     ROM_DARGA,
+    ROM_AZLA,
     ROM_ETNAHTA,
     ROM_GERESH,
     ROM_GERSHAYIM,
@@ -106,6 +108,10 @@ _ACCENT_DISPLAY = {
     "dar": ROM_DARGA,
     "rev": ROM_REVIA,
     "paz": ROM_PAZER,
+    # Reached only by the one-letter appendix, which shows the chanted words the simple counts
+    # set aside rather than counting them, and so names marks no pair row does.
+    "ger2": ROM_GERSHAYIM,
+    "telg": ROM_TELISHA_GEDOLAH,
 }
 
 # GONE with the classification (Ben, 2026-07-28): _CONFIG_DISPLAY, which rendered Yeivin's
@@ -135,6 +141,56 @@ _PAIR_FIRST_NAME = {
     ("tip", "etn"): "mayela",
     ("tip", "sil"): "mayela",
     ("qad", "zaq"): "metigah",
+}
+
+# The SECOND accent's cell, where one mark goes by two names and the row cannot choose between
+# them (Ben, 2026-07-29: 'name the cell "ger./az." and explain either right before or right after
+# the table what that means').  A geresh on a chanted word stressed on its last syllable is
+# called an azla, so the qadma-geresh row's 99 may be of both kinds -- and unlike metigah and
+# mayela above, which are conditioned on the neighbouring ACCENT and so are decidable from what
+# the survey records, this one is conditioned on STRESS, which it does not record.  Hence both
+# names in the cell rather than a choice, and ``_geresh_or_azla_note`` under the table.
+#
+# WHAT THE THREE BOOKS ACTUALLY SAY, settled 2026-07-29 over two passes of the full OCR corpora
+# and recorded here rather than left in a session transcript.  The question was Ben's: is the
+# qadma of a qadma-geresh chanted word "usually called azla", narrowly, in that context?  He then
+# corrected himself from his own copy of Jacobson -- it is the GERESH that is sometimes called
+# azla -- and the search bore that out:
+#
+#   * JACOBSON, "Chanting the Hebrew Bible" (2nd expanded ed.), is the ONLY one of the three that
+#     conditions the name on stress.  Glossary: azla is (1) another name for geresh, when the word
+#     it is on is stressed on the last syllable, and (2) another name for kadma.  Body, p. 187:
+#     strictly only mille'el words take a geresh, so some call the combination "kadma azla" when
+#     the second word is millera'; and in some traditions kadma azla is sung to a different melody
+#     from kadma geresh.  His own footnotes cite Binder, Abraham W., "Biblical Chant", New York:
+#     Sacred Music Press, 1959, 52-53; and once, for Esther, Zeitlin, Shneur Zalman, and Haim
+#     Bar-Dayan, "Miqraey qodesh: The Megillah of Esther and Its Cantillation" (in Hebrew),
+#     Jerusalem: Kiryat Sefer, 1974, 88-91.  NOTE his worked example is the
+#     combination across TWO words (Numbers 7:11); the glossary sense is stated of the mark
+#     generally, which is what covers this row.
+#   * YEIVIN, ITM, draws a stress distinction but names its two sides GERESH and GERSHAYIM, not
+#     azla (§265): geresh on a word with penultimate stress, or on any word preceded by azla
+#     (Genesis 11:31 penultimate, Genesis 22:6 final); gershayim on a final-stress word preceded
+#     by no servus or by munax.  His standing name for the conjunctive is azla throughout, and he
+#     never uses "qadma" as an English name.
+#   * BREUER, CoS, states no stress condition on azla at all.  His geresh entry (§26.d) says some
+#     call it azla, on shape grounds; §39.e explains azla against pashta by shape and by tune, and
+#     kadma as the servant that "precedes" the azla.  His own stress-conditioned rule in this area
+#     is geresh vs gershayim (ch. 5 §9), where "azla" does not appear.  His standing name is kadma.
+#
+# So the three do not CONFLICT: Jacobson adds a distinction the other two do not make, which is
+# why "in some traditions" is in the rendered note and why the note cites him alone.  Ben:
+# "I'm comfortable resting on Jacobson's terminology; to me it doesn't contradict Yeivin or
+# Breuer; it just adds a distinction that they don't make."
+#
+# AND NO SURVEY OF MARKS CAN DECIDE IT.  Unicode has no geresh-versus-azla distinction: its only
+# geresh flavors are plain geresh (U+059B, which INCLUDES azla), geresh muqdam (U+059D, poetic --
+# in MAM the revia mugrash component), and gershayim (U+059C).  Neither Yeivin nor Breuer uses
+# the term "geresh muqdam" anywhere.  MAM's prose verses have no ``qad-germ``, so this row is
+# entirely plain geresh -- which settles the codepoint and never the name.
+_GERESH_OR_AZLA = "ger./az."
+_PAIR_SECOND_NAME = {
+    ("qad", "ger"): _GERESH_OR_AZLA,
 }
 
 # A cell holding a number is right-justified, so the digits line up on the units column.  The
@@ -234,21 +290,126 @@ def _pair_of(shape: str) -> tuple[str, str]:
     return first, second
 
 
-def _pair_table(genre: dict, occurrences: list, hits: int) -> object:
-    """The accent pairs that occur on a chanted word of MAM's prose verses, with an example
-    of each on a compound and on a simple chanted word.
+# The pair columns, single-sourced so the three tables cannot come to head them differently.
+# Written order is the only thing the split-off "before" used to say, so the hover text says it.
+_ACC_HEADERS = (
+    H.table_header(
+        H.abbr("Acc1", "The first of the two accents, in the written order")
+    ),
+    H.table_header(
+        H.abbr("Acc2", "The second of the two accents, in the written order")
+    ),
+)
+
+# In-page anchor for the appendix listing the chanted words whose two marks sit on one letter,
+# single-sourced as both the note's link target and the appendix heading's id.
+_ONE_LETTER_ID = "one-letter"
+
+# MAM's own features-of-interest lists, generated in MAM-basics and published from MAM-with-doc,
+# linked where each one is about the very thing the paragraph beside it reports (Ben, 2026-07-29:
+# "yes please do that linking").  Same URL shape ``prose_ob_notes_is`` already uses for
+# foi-pasoleg-1.  NO COUNTS ARE QUOTED from them: they are another repo's numbers, regenerated on
+# another schedule, and this page splices only its own survey.
+_FOI = "https://bdenckla.github.io/MAM-with-doc/foi/foi-{}.html"
+
+# sec-merk and sec-misc are the two that catalogue this page's phenomenon per instance -- a
+# merkha, and a mahapakh, standing beside the chanted word's other accent.  Their sibling
+# sec-star-breuer-cos regroups the same examples by the CoS section cited for each, which is a
+# level of detail this page has no room for.  What they do NOT cover is metigah-zaqef,
+# munax-zaqef, mayela and azla-geresh -- the four prose pairs the table's own rows are mostly
+# made of; ``foiz_wt_sec_merk_and_friends.py`` carries that as an explicit TODO at its top, and
+# for metigah and mayela it could hardly do otherwise, each sharing a codepoint with the accent
+# it is a positional name for.  So the sentence claims coverage of two accents, not of the table.
+_FOI_SEC_MERK = _FOI.format("sec-merk")
+_FOI_SEC_MISC = _FOI.format("sec-misc")
+# The ``unicode`` list has "geresh plus telisha gedolah" and the gershayim counterpart as two of
+# its rare-sequence sections -- the very words the one-letter appendix shows.
+_FOI_UNICODE = _FOI.format("unicode")
+# The gray maqaf is the ``implicit-maqaf`` section of ``rare-tmpls``.
+_FOI_RARE_TMPLS = _FOI.format("rare-tmpls")
+
+
+def _pair_rows(genre: dict, occurrences: list) -> list[dict]:
+    """Every accent pair that occurs on a chanted word of MAM's prose verses, in the order both
+    tables below use, each with its two counts and an example of each.
 
     Rows are what the data holds, not a list from anywhere: the page reports the pairs that
     occur and no longer says which of Yeivin's categories each case falls under (Ben,
-    2026-07-28).  Every compound hit lands in exactly one row, which the total asserts.
+    2026-07-28).  Every compound hit lands in exactly one row, which ``_pair_table``'s total
+    asserts.
 
-    THE SIMPLE COLUMN COVERS EVERY PAIR, since 2026-07-28.  It used to be restricted to the
+    THE SIMPLE COUNT COVERS EVERY PAIR, since 2026-07-28.  It used to be restricted to the
     eight pairs the compound side has, because two marks on a chanted word are not always two
     accents and this scan has no accent tokenization to tell them apart.  ``simple_exclusion``
-    now does tell them apart, mechanically and in the survey rather than here, so the column
-    can be honest and complete at once: what it leaves out is counted, and the note under the
-    table says what and how much.  Ben's rule for the widening: leave out the pairs that are
-    not meaningful -- a stress helper is not a second accent -- and disclose the exclusions.
+    now does tell them apart, mechanically and in the survey rather than here, so the count
+    can be honest and complete at once: what it leaves out is counted, and ``_exclusion_note``
+    says what and how much.  Ben's rule for the widening: leave out the pairs that are not
+    meaningful -- a stress helper is not a second accent -- and disclose the exclusions.
+
+    ONE ORDER FOR BOTH TABLES, settled here so the split cannot make them disagree.  Pairs
+    sharing a first accent stay together rather than scattering by count (Ben, 2026-07-28, of
+    the two mayela rows: "these should be listed together instead of strictly ordering by # of
+    occurrences").  Groups run commonest-group-first, rows within a group commonest-first.  The
+    count that orders them is the ROW TOTAL, compound and simple together: ordering by the
+    compound count alone would put the commonest pair on a chanted word -- munax before zaqef
+    qatan, 960 of them -- last, on the strength of its single compound.
+    """
+    simple_by_pair = genre["simple_by_pair"]
+    simple_examples = genre["simple_example_by_pair"]
+    counts = Counter(_pair_of(o["shape"]) for o in occurrences)
+    compound_examples: dict[tuple[str, str], dict] = {}
+    for occurrence in occurrences:
+        compound_examples.setdefault(
+            _pair_of(occurrence["shape"]),
+            {"word": occurrence["word"], "bcv": occurrence["bcv"]},
+        )
+    pairs = set(counts) | {
+        (pair.split("-")[0], pair.split("-")[1]) for pair in simple_by_pair
+    }
+
+    def total_of(pair: tuple[str, str]) -> int:
+        return counts.get(pair, 0) + simple_by_pair.get("-".join(pair), 0)
+
+    group_max = Counter()
+    for pair in pairs:
+        group_max[pair[0]] = max(group_max[pair[0]], total_of(pair))
+    rows = []
+    for pair in sorted(
+        pairs,
+        key=lambda p: (-group_max[p[0]], p[0], -total_of(p), p[1]),
+    ):
+        first, second = pair
+        rows.append(
+            {
+                # TWO COLUMNS, not one reading "metigah before zaqef" (Ben, 2026-07-29: "let's
+                # split this whole column into two: Acc1 and Acc2 (and hence 'before' is
+                # dropped)").  The order is still the written order, which is what the headings'
+                # hover text says; nothing but the word "before" carried that, and a column
+                # named Acc1 beside one named Acc2 carries it without spending the width.
+                "first": _PAIR_FIRST_NAME.get(pair, _ACCENT_DISPLAY[first]),
+                "second": _PAIR_SECOND_NAME.get(pair, _ACCENT_DISPLAY[second]),
+                "compound": counts.get(pair, 0),
+                "compound_example": _example_cell(compound_examples.get(pair), pair),
+                "simple": simple_by_pair.get("-".join(pair), 0),
+                "simple_example": _example_cell(
+                    simple_examples.get("-".join(pair)), pair
+                ),
+            }
+        )
+    return rows
+
+
+def _pair_table(rows: list[dict], hits: int) -> object:
+    """The accent pairs that occur on a compound, with an example of each and how often each
+    occurs on a simple chanted word as well.
+
+    ONLY THE PAIRS A COMPOUND HAS (Ben, 2026-07-29: "make the big ... table less big by
+    banishing, to an appendix, rows with compound count equal to zero").  Widening the simple
+    column to every pair had taken the table from eight rows to eighteen, and ten of those
+    eighteen were an empty compound cell beside an empty example cell.  Those ten are
+    ``_simple_only_table``, at the foot of the page.  The eight that stay are the ones the
+    page's question is about, and every compound hit is still in one of them, which the total
+    asserts.
 
     ONLY the column headings are ``th``.  The pair column is data, so it is ``td``: a ``th``
     there is bold and centered by browser default, which is what Ben asked about -- a bold
@@ -256,93 +417,115 @@ def _pair_table(genre: dict, occurrences: list, hits: int) -> object:
     not.  Its rows are also then striped like any other data row.
 
     THE HEADINGS ARE ABBREVIATED, with the full wording on hover (Ben, 2026-07-28: "Use
-    shorter headings ... because they are making the columns too wide").  Five columns of
-    prose headings pushed the counts apart; "Compound" and "Simple" are the words the page
-    body uses anyway.
+    shorter headings ... because they are making the columns too wide", and 2026-07-29:
+    "shorten 'Compound' and 'Simple' to 'C' and 'S' or something that doesn't artificially
+    inflate the width of the row").  A count column is as wide as its heading when the heading
+    is the longest thing in it, and three digits under the word "Compound" left the counts
+    spread across the page; a single letter costs the column nothing, and the hover text says
+    what it stands for.
     """
-    simple_by_pair = genre["simple_by_pair"]
-    simple_examples = genre["simple_example_by_pair"]
-    counts = Counter(_pair_of(o["shape"]) for o in occurrences)
-    compound_examples: dict[tuple[str, str], str] = {}
-    for occurrence in occurrences:
-        compound_examples.setdefault(_pair_of(occurrence["shape"]), occurrence["word"])
-    pairs = set(counts) | {
-        (pair.split("-")[0], pair.split("-")[1]) for pair in simple_by_pair
-    }
-    rows = [
+    body = [
         H.table_row(
             (
-                H.table_header("Accent pair"),
+                *_ACC_HEADERS,
                 H.table_header(
-                    H.abbr("Compound", "On a compound chanted word"), _NUMERIC_CELL
+                    H.abbr("C", "On a compound chanted word"), _NUMERIC_CELL
                 ),
                 H.table_header(
                     H.abbr("Example", "An example of the pair on a compound")
                 ),
-                H.table_header(
-                    H.abbr("Simple", "On a simple chanted word"), _NUMERIC_CELL
-                ),
+                H.table_header(H.abbr("S", "On a simple chanted word"), _NUMERIC_CELL),
                 H.table_header(
                     H.abbr("Example", "An example of the pair on a simple chanted word")
                 ),
             )
         )
     ]
-
-    # Pairs sharing a first accent stay together rather than scattering by count (Ben,
-    # 2026-07-28, of the two mayela rows: "these should be listed together instead of strictly
-    # ordering by # of occurrences").  Groups run commonest-group-first, rows within a group
-    # commonest-first.  The count that orders them is the ROW TOTAL, compound and simple
-    # together: with the simple column widened to every pair, ordering by the compound column
-    # alone would put the commonest pair on a chanted word -- munax before zaqef qatan, 960 of
-    # them -- near the bottom, on the strength of its single compound.
-    def total_of(pair: tuple[str, str]) -> int:
-        return counts.get(pair, 0) + simple_by_pair.get("-".join(pair), 0)
-
-    group_max = Counter()
-    for pair in pairs:
-        group_max[pair[0]] = max(group_max[pair[0]], total_of(pair))
     compound_total = simple_total = 0
-    for pair in sorted(
-        pairs,
-        key=lambda p: (-group_max[p[0]], p[0], -total_of(p), p[1]),
-    ):
-        first, second = pair
-        compound = counts.get(pair, 0)
-        simple = simple_by_pair.get("-".join(pair), 0)
-        compound_total += compound
-        simple_total += simple
-        first_name = _PAIR_FIRST_NAME.get(pair, _ACCENT_DISPLAY[first])
-        rows.append(
+    for row in rows:
+        if not row["compound"]:
+            continue
+        compound_total += row["compound"]
+        simple_total += row["simple"]
+        body.append(
             H.table_row_of_data(
                 (
-                    f"{first_name} before {_ACCENT_DISPLAY[second]}",
-                    str(compound),
-                    _example_cell(compound_examples.get(pair), pair),
-                    str(simple),
-                    _example_cell(simple_examples.get("-".join(pair)), pair),
+                    row["first"],
+                    row["second"],
+                    str(row["compound"]),
+                    row["compound_example"],
+                    str(row["simple"]),
+                    row["simple_example"],
                 ),
-                (None, _NUMERIC_CELL, None, _NUMERIC_CELL, None),
+                (None, None, _NUMERIC_CELL, None, _NUMERIC_CELL, None),
             )
         )
     assert (
         compound_total == hits
     ), f"table rows sum to {compound_total}, not the {hits} hits"
-    rows.append(
+    body.append(
         H.table_row_of_data(
-            ("Total", str(hits), "", str(simple_total), ""),
-            (None, _NUMERIC_CELL, None, _NUMERIC_CELL, None),
+            ("Total", "", str(hits), "", str(simple_total), ""),
+            (None, None, _NUMERIC_CELL, None, _NUMERIC_CELL, None),
         )
     )
-    return H.table(tuple(rows), {"class": "centered-table accent-pair-table"})
+    return H.table(tuple(body), {"class": "centered-table accent-pair-table"})
 
 
-def _example_cell(chanted_word: str | None, pair: tuple[str, str]) -> object:
+def _simple_only_table(rows: list[dict]) -> object:
+    """The pairs no compound has, which occur on a simple chanted word only.
+
+    FOUR COLUMNS, not six with two of them empty.  A compound column of zeros beside an
+    example column of blanks is what got these rows banished; carrying the columns down here
+    would carry the width down with them.
+    """
+    body = [
+        H.table_row(
+            (
+                *_ACC_HEADERS,
+                H.table_header(H.abbr("S", "On a simple chanted word"), _NUMERIC_CELL),
+                H.table_header("Example"),
+            )
+        )
+    ]
+    simple_total = 0
+    for row in rows:
+        if row["compound"]:
+            continue
+        simple_total += row["simple"]
+        body.append(
+            H.table_row_of_data(
+                (
+                    row["first"],
+                    row["second"],
+                    str(row["simple"]),
+                    row["simple_example"],
+                ),
+                (None, None, _NUMERIC_CELL, None),
+            )
+        )
+    body.append(
+        H.table_row_of_data(
+            ("Total", "", str(simple_total), ""),
+            (None, None, _NUMERIC_CELL, None),
+        )
+    )
+    return H.table(tuple(body), {"class": "centered-table accent-pair-table"})
+
+
+def _example_cell(example: dict | None, pair: tuple[str, str]) -> object:
     """One example form for a table cell, or an empty cell where the pair does not occur.
 
     Letters and accents only, as everywhere on these pages, and lifted from the survey rather
     than retyped.  The maqaf ``accents_and_letters`` drops is put back, so a compound example
     reads as the one chanted word it is.
+
+    WHERE THE FORM IS FROM, on hover, and with NO dotted underline (Ben, 2026-07-29: "provide
+    biblical locations (book-chapter-verse) as hover text but avoid dotted-underline styling
+    since I think it will likely interfere with seeing the word properly (in particular ... the
+    word's under-accents (if any)").  So the title goes on the ``hbo`` span itself rather than
+    on an ``abbr``: the dotted rule in gh-pages/style.css is scoped to ``th abbr[title]``, and
+    a mark under the last letter would sit right where that underline is drawn.
 
     ONE U+05BD SURVIVES IN THE SILLUQ ROWS, and none anywhere else.  ``accents_and_letters``
     drops the codepoint, rightly: it is not an accent, and in any other row it would be a meteg
@@ -352,11 +535,15 @@ def _example_cell(chanted_word: str | None, pair: tuple[str, str]) -> object:
     an earlier one is an ordinary meteg, and ש֥לֽף־חֽרב showed both until this narrowed.  Same
     rule ``atom_accents`` applies, and the pair is what says the rule applies at all.
     """
-    if not chanted_word:
+    if not example:
         return ""
-    silluq_at = (
-        chanted_word.rfind(mpa.METEG) if _ACCENT_DISPLAY[pair[1]] == ROM_SILLUQ else -1
-    )
+    return _hebrew_at(example, silluq_second=_ACCENT_DISPLAY[pair[1]] == ROM_SILLUQ)
+
+
+def _hebrew_at(example: dict, *, silluq_second: bool = False) -> object:
+    """The example's letters and accents, titled with the verse it is from."""
+    chanted_word = example["word"]
+    silluq_at = chanted_word.rfind(mpa.METEG) if silluq_second else -1
     kept = "".join(
         ch
         for i, ch in enumerate(chanted_word)
@@ -365,7 +552,7 @@ def _example_cell(chanted_word: str | None, pair: tuple[str, str]) -> object:
         or i == silluq_at
         or ch == "\N{HEBREW PUNCTUATION MAQAF}"
     )
-    return hbo(kept)
+    return H.span(kept, {"lang": "hbo", "title": ref_display(example["bcv"])})
 
 
 def _exclusion_note(genre: dict) -> object:
@@ -395,14 +582,35 @@ def _exclusion_note(genre: dict) -> object:
     detail Ben cut.
     """
     one_letter = genre["simple_excluded"][mpa.SIMPLE_EXCL_ONE_LETTER]
+    words = _one_letter_words(genre)
     telisha = one_letter["ger-telg"] + one_letter["ger2-telg"]
     mahapakh = one_letter["mah-qad"]
+    assert telisha + mahapakh == len(words), (one_letter, len(words))
     return H.para(
-        f"Two marks are not always two accents. The simple column above leaves out"
-        f" {_count(telisha + mahapakh)} chanted words whose two marks sit on one letter:"
-        f" {_count(telisha)} of them a {ROM_GERESH} or {ROM_GERSHAYIM} with a"
-        f" {ROM_TELISHA_GEDOLAH}, and {_count(mahapakh)} a {ROM_MAHAPAKH} with a {ROM_QADMA}."
+        (
+            f"Two marks are not always two accents. The simple counts on this page leave out"
+            f" {_count(telisha + mahapakh)} chanted words whose two marks sit on one letter:"
+            f" {_count(telisha)} of them a {ROM_GERESH} or {ROM_GERSHAYIM} with a"
+            f" {ROM_TELISHA_GEDOLAH}, and {_count(mahapakh)} a {ROM_MAHAPAKH} with a"
+            f" {ROM_QADMA} — ",
+            link("all of them listed in an appendix below", f"#{_ONE_LETTER_ID}"),
+            ".",
+        )
     )
+
+
+def _one_letter_words(genre: dict) -> list[dict]:
+    """The chanted words the one-letter rule sets aside, in corpus order.
+
+    The counts beside them in ``simple_excluded`` are by pair, so they cannot say WHICH words
+    these are; ``_exclusion_note`` asserts the two derivations agree in number, which is what
+    stops the appendix and the sentence above it from drifting apart.
+    """
+    return [
+        w
+        for w in genre["simple_excluded_words"]
+        if w["reason"] == mpa.SIMPLE_EXCL_ONE_LETTER
+    ]
 
 
 def _count(n: int) -> str:
@@ -558,6 +766,38 @@ def simtiq_lo_compounds() -> tuple[str, str]:
     return out[0], out[1]
 
 
+def _sole_accent(atom: str) -> str:
+    """The one accent on an atom the page shows, or a build failure."""
+    accents = [c for c in atom if mpa.is_accent(c)]
+    assert len(accents) == 1, atom
+    return accents[0]
+
+
+def unprecedented_pairs() -> tuple[tuple[str, str], ...]:
+    """The accent pair of each of the three printed compounds the page asks about.
+
+    Derived from the very forms the intro shows -- Koren's from the two atoms it joins, the
+    Simanim Tiqqun's from the munaḥ that construction puts on the joined לא and the accent
+    ``_SIMTIQ_LO_COMPOUNDS`` names on the second atom.  So a re-vendoring that changed any of
+    the three would change what ``pin_claims`` looks for, rather than leaving the page asserting
+    the absence of a pair it no longer shows.
+    """
+    lo, taase = lo_taase_atoms()
+    koren = (_sole_accent(lo), _sole_accent(taase))
+    return (koren, *((am.MUNAX, second) for _, second in _SIMTIQ_LO_COMPOUNDS))
+
+
+def _pair_key(pair: tuple[str, str]) -> str:
+    """A pair of accent codepoints as the survey writes it -- ``mun-mer``."""
+    return "-".join(mpa.shape_of([[accent]]) for accent in pair)
+
+
+def _pair_in_words(pair: tuple[str, str]) -> str:
+    """A pair of accent codepoints in the page's own romanizations."""
+    first, second = (_ACCENT_DISPLAY[mpa.shape_of([[a]])] for a in pair)
+    return f"a {first} before a {second}"
+
+
 def pin_claims(survey: dict) -> None:
     """Fail the build if the data stops supporting a claim the prose states in words.
 
@@ -625,6 +865,24 @@ def pin_claims(survey: dict) -> None:
         not same
     ), f"MAM prose is stated to have no compound accented alike twice: {same}"
 
+    # THE OTHER TWO PRINTED COMPOUNDS, pinned the same way (Ben, 2026-07-29, on being told that
+    # the Simanim Tiqqun's two are unprecedented by the same test: "please reframe the page like
+    # that").  The claim is wider than the one above, and so is the check: each pair occurs on no
+    # chanted word of MAM's prose verses at all -- not on a compound, not on a simple chanted
+    # word, and not among the words the one-letter rule sets aside.  Koren's own pair goes
+    # through the same loop, which is where the two halves of the intro's answer meet.
+    genre = survey["corpora"][_CORPUS]["prose"]
+    for pair in unprecedented_pairs():
+        key = _pair_key(pair)
+        assert key not in genre["simple_by_pair"], key
+        for by_pair in genre["simple_excluded"].values():
+            assert key not in by_pair, key
+        assert not [
+            o
+            for o in _occurrences(survey, _CORPUS, "prose")
+            if "-".join(_pair_of(o["shape"])) == key
+        ], key
+
 
 def _intro(survey: dict) -> tuple[object, ...]:
     # The headline frequency is MAM's, not WLC's.  A claim about what the accentuation DOES
@@ -638,6 +896,10 @@ def _intro(survey: dict) -> tuple[object, ...]:
     mam_prose = survey["corpora"]["mam_simple"]["prose"]
     pct = 100.0 * mam_prose["hits"] / mam_prose["maqaf_compounds"]
     lo, taase = lo_taase_atoms()
+    # The Simanim Tiqqun's two pairs, named in the answer from the same derivation pin_claims
+    # checks the absence of.  Koren's is the first of the three and is answered by the
+    # accented-alike sentence, so only the other two are spelled out.
+    _, *simtiq = unprecedented_pairs()
     # The metigah-zaqef count, spliced rather than hedged as "nearly all" (Ben, 2026-07-28:
     # "why be coy, why not just say the number").  Counted the same way the pair table counts,
     # so the sentence and the table's top row cannot disagree.
@@ -705,18 +967,68 @@ def _intro(survey: dict) -> tuple[object, ...]:
             )
         ),
         _specimen(lo_taase_taxton_compound()),
+        # THE OTHER TWO COMPOUNDS, moved up here from a section of their own (Ben, 2026-07-29:
+        # "why not phrase this whole page in terms of not just Koren's weird dual-munax but also
+        # these two? aren't these two 'just as weird (unprecedented in Tanakh (where Tanakh is
+        # represented by MAM))?"  They are, by the same test and with the same answer, so the
+        # page now asks its question of all three at once.  What this replaces is a section
+        # headed "The nearest thing in a printed edition", which had these two as a near miss --
+        # "one step short of the same shape" -- when the shape they are short of is Koren's
+        # rather than anything MAM has.
+        *_simtiq_paragraphs(),
         H.para(
             wrap_hebrew_runs(
-                "But if we take the maqaf seriously, is there anything in Tanakh like Koren's"
-                f" two-{ROM_MUNAX} compound?"
+                "But if we take these maqafs seriously, is there anything in Tanakh like any of"
+                " the three?"
             )
         ),
         H.para(
             wrap_hebrew_runs(
                 "There is not. No maqaf compound in MAM's prose verses has the same accent on"
-                f" both atoms, not once. Of the {mam_prose['hits']} prose cases, {metigah} are"
-                " a single grammatical category, metigah-zaqef: a"
-                f" {ROM_QADMA} before a {ROM_ZAQEF_QATAN}."
+                " both atoms, not once, which disposes of Koren's; and the Simanim Tiqqun's two"
+                f" pairs, {_pair_in_words(simtiq[0])} and {_pair_in_words(simtiq[1])}, occur on"
+                " no chanted word of those verses at all, compound or simple. Of the"
+                f" {mam_prose['hits']} prose cases, {metigah} are a single grammatical"
+                f" category, metigah-zaqef: a {ROM_QADMA} before a {ROM_ZAQEF_QATAN}."
+            )
+        ),
+    )
+
+
+def _simtiq_paragraphs() -> tuple[object, ...]:
+    """The Simanim Tiqqun's two compounds, shown and with both accents of each named.
+
+    NAME AND SHOW BOTH ACCENTS (Ben, 2026-07-28: "don't be coy, show me the actual accents. you
+    are being REALLY coy here, not even describing in prose what the non-munax accent is"): the
+    two compounds differ from each other in the second accent, which is the whole reason there
+    are two of them.
+
+    GONE from what this used to be, when it was a section: "None of the printed editions
+    transcribed for these pages has Koren's shape either", and the "one step short of the same
+    shape" that followed the two specimens.  Both measured these two against Koren rather than
+    against MAM, which is exactly the framing the reframe drops.
+    """
+    lo_yihye, lo_taase = simtiq_lo_compounds()
+    return (
+        H.para(
+            (
+                *wrap_hebrew_runs(
+                    "Koren's is not the only such compound in print. The "
+                ),
+                link("Simanim Tiqqun", "printed-decalogue-simanim.html"),
+                *wrap_hebrew_runs(
+                    f" has a {ROM_MUNAX} on the joined לא of two compounds, where every strand"
+                    f" has a {ROM_METEG}:"
+                ),
+            )
+        ),
+        _specimen(lo_yihye),
+        _specimen(lo_taase),
+        H.para(
+            wrap_hebrew_runs(
+                f"The second accent is a {ROM_MERKHA} in the first of those and a {ROM_QADMA}"
+                f" in the second, so neither is Koren's {ROM_MUNAX} twice; but each of the three"
+                " is one maqaf compound with an accent on both of its atoms."
             )
         ),
     )
@@ -755,7 +1067,7 @@ def _intro(survey: dict) -> tuple[object, ...]:
 # where the counts are, which is where a reader meets it.
 
 
-def _prose_section(survey: dict) -> tuple[object, ...]:
+def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
     # This section absorbed two that used to precede it, "Two routes, and why they must be
     # counted apart" and "How a hit is assigned to a route" (Ben, 2026-07-27: keep the page to
     # one weird thing in Koren and whether it ever happens in MAM, "with at most one passing
@@ -780,7 +1092,6 @@ def _prose_section(survey: dict) -> tuple[object, ...]:
     # and the other three were route counts.
     genre = survey["corpora"][_CORPUS]["prose"]
     hits = _n(survey, _CORPUS, "prose", "hits")
-    occurrences = _occurrences(survey, _CORPUS, "prose")
     return (
         H.heading_level_2("The prose verses"),
         # THE OPENING SENTENCE, rewritten 2026-07-28.  It used to read "A mark on a non-final
@@ -816,12 +1127,18 @@ def _prose_section(survey: dict) -> tuple[object, ...]:
         # having no case of it.  That paragraph WAS the optional-maqaf question, stated as an
         # aside; with the classification gone the page can no longer support its "no case of
         # it", which was a route count.  Issue #83 holds the material.
+        #
+        # The sentence says "on a compound" since 2026-07-29, the pairs no compound has having
+        # gone to the appendix.  It used to say "the pairs that occur", full stop, which the
+        # table no longer is.  It does NOT cue the appendix: a rendered section that previews a
+        # later one is the hub sentence Ben has cut from these pages before, and an appendix
+        # heading announces itself.
         H.para(
             "Two accents can appear on a chanted word, whether it is compound or simple."
-            " These are the pairs that occur, in the prose verses of MAM, with an example"
-            " of each:"
+            " These are the pairs that occur on a compound, in the prose verses of MAM, with"
+            " an example of each and how often each occurs on a simple chanted word as well:"
         ),
-        _pair_table(genre, occurrences, hits),
+        _pair_table(rows, hits),
         _exclusion_note(genre),
         # Yeivin in one sentence after the table, not a column in it (Ben, 2026-07-28: "no need
         # to put Yeivin section numbers in the table, just mention most of these pairs are
@@ -829,16 +1146,29 @@ def _prose_section(survey: dict) -> tuple[object, ...]:
         # pashta are on no list of his.  §§210 and 216 are the two mayela sections, which the
         # survey's own configuration names never carried; the other four are the ones
         # ``_NAMED_CONFIGURATIONS`` cites.
-        # "Several", not "Most" (2026-07-28).  It read "Most of these pairs" while the table's
-        # rows were the eight the compound side has, seven of which those sections cover.  With
-        # the simple column widened to every pair the rows are eighteen, and the same sections
-        # cover seven of them -- most of the CASES still, the pairs they cover being the common
-        # ones, but no longer most of the pairs, which is what the sentence said.
+        # "Most" again (2026-07-29), the word having gone to "Several" for one day.  The count
+        # follows the rows the sentence stands under: eight, of which those six sections cover
+        # seven -- every one but merkha before pashta, which is on no list of his.  It was
+        # "Several" only while the table also held the ten pairs no compound has, five of which
+        # Yeivin covers in sections this sentence does not cite (§§215, 236, 253, 268, 276); the
+        # appendix those ten went to says nothing about him.
         H.para(
             (
-                "Several of these pairs are covered in Yeivin's ",
+                "Most of these pairs are covered in Yeivin's ",
                 _itm(),
                 " §§210, 216, 221, 224, 233 and 241.",
+            )
+        ),
+        # MAM's own lists, named for the reader rather than by their stems, and claimed for the
+        # two accents they actually cover rather than for the table.
+        H.para(
+            (
+                "MAM catalogues two of these accents place by place, in its features-of-interest"
+                " lists: every ",
+                link(f"{ROM_MERKHA} of this kind", _FOI_SEC_MERK),
+                " and every ",
+                link(ROM_MAHAPAKH, _FOI_SEC_MISC),
+                ".",
             )
         ),
     )
@@ -850,6 +1180,13 @@ def _prose_section(survey: dict) -> tuple[object, ...]:
 # sections cannot come to cite them differently.
 _ITM_TITLE = "Introduction to the Tiberian Masorah"
 _COS_TITLE = "The Cantillation of Scripture"
+# The third book, cited once, for the one distinction on this page that neither of the other two
+# makes: the geresh/azla naming.  Ben, 2026-07-29, having read all three: "I'm comfortable
+# resting on Jacobson's terminology; to me it doesn't contradict Yeivin or Breuer; it just adds a
+# distinction that they don't make."  Jacobson's own footnote there leans on Binder, Biblical
+# Chant 52-53, and his own wording is hedged -- "In some traditions" -- which the note keeps,
+# that hedge being exactly what makes the other two books' silence not a contradiction.
+_CHB_TITLE = "Chanting the Hebrew Bible"
 
 
 def _itm() -> object:
@@ -860,50 +1197,8 @@ def _cos() -> object:
     return H.abbr("CoS", _COS_TITLE)
 
 
-def _koren_section() -> tuple[object, ...]:
-    # GONE (Ben, 2026-07-28): the whole "Koren's compound" opening -- that every case in the
-    # table pairs two DIFFERENT accents where Koren's two are the same accent twice, and then
-    # Isaiah 40:7 as the one case sharing one of Koren's two.  With it went ``isaiah_munax_
-    # compound`` and the two pin_claims assertions that defended those sentences; the table now
-    # shows Isaiah 40:7 itself, in the munax-before-zaqef-qatan row's compound example.
-    #
-    # GONE with them (Ben, 2026-07-28: "don't even get into the accents on a tangled
-    # presentation"): a paragraph reporting that MAM's Exodus 20:10 לא־תעשה has a munax on each
-    # atom, and then taking it back -- that being the two strands tangled together in one
-    # printing rather than either strand, which untangled has no maqaf there.
-    #
-    # What survives is the printed-edition comparison, promoted from an h3 to a section of its
-    # own now that the heading above it is gone.  It NAMES BOTH ACCENTS AND SHOWS THEM (Ben,
-    # 2026-07-28: "don't be coy, show me the actual accents. you are being REALLY coy here, not
-    # even describing in prose what the non-munax accent is"): the two compounds differ from
-    # each other in the second accent, which is the whole reason there are two of them.
-    lo_yihye, lo_taase = simtiq_lo_compounds()
-    return (
-        H.heading_level_2("The nearest thing in a printed edition"),
-        H.para(
-            (
-                *wrap_hebrew_runs(
-                    "None of the printed editions transcribed for these pages has Koren's"
-                    " shape either. The nearest is the "
-                ),
-                link("Simanim Tiqqun", "printed-decalogue-simanim.html"),
-                *wrap_hebrew_runs(
-                    f"'s {ROM_MUNAX} on the joined לא of two compounds, where every strand has"
-                    f" a {ROM_METEG}:"
-                ),
-            )
-        ),
-        _specimen(lo_yihye),
-        _specimen(lo_taase),
-        H.para(
-            wrap_hebrew_runs(
-                f"The second accent is a {ROM_MERKHA} in the first of those and a {ROM_QADMA}"
-                f" in the second, so neither is Koren's {ROM_MUNAX} twice — but each is the"
-                " same phenomenon, a non-final atom with an accent, one step short of the same"
-                " shape, and in this very passage."
-            )
-        ),
-    )
+def _chb() -> object:
+    return H.abbr("CHB", _CHB_TITLE)
 
 
 def _poetic_section(survey: dict) -> tuple[object, ...]:
@@ -940,7 +1235,9 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
                 " left unwritten while the atom still counts as joined, so a survey that finds"
                 " compounds by looking for a written maqaf reaches only part of what is there."
                 f" MAM's poetic verses have {hits} cases by that measure, and MAM has the other"
-                f" part of the measure too: it supplies {_gray(survey)} gray maqafs, its mark"
+                " part of the measure too: it supplies ",
+                link(f"{_gray(survey)} gray maqafs", _FOI_RARE_TMPLS),
+                ", its mark"
                 " for a maqaf the manuscript leaves unwritten where the chanted word needs one."
                 f" Of those, {_gray(survey, mpa.GRAY_KIND_SECOND)} join an atom that has an"
                 " accent alongside the compound's accent; the other"
@@ -951,13 +1248,120 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
     )
 
 
+def _appendix_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
+    """The pairs banished from the prose section's table (Ben, 2026-07-29), at the page's foot.
+
+    They are here rather than gone because the simple count was widened to every pair on
+    purpose, one day earlier, and dropping ten of the eighteen would take back most of that.
+    The prose section keeps the pairs its question is about; a reader who wants the whole
+    census of two-accent chanted words in MAM's prose verses reads on.
+
+    THE EXCLUSION NOTE STAYS UP WITH THE FIRST TABLE, and speaks of "the simple counts on this
+    page" rather than the column above it, both tables' simple counts leaving the same words
+    out.  It links down to ``_one_letter_appendix_section``, which is where those words are.
+    """
+    return (
+        H.heading_level_2(
+            "Appendix: the pairs that occur on a simple chanted word only"
+        ),
+        H.para(
+            "These pairs occur in MAM's prose verses too, but on a simple chanted word only:"
+            " no compound has one of them with its first accent on a non-final atom."
+        ),
+        _simple_only_table(rows),
+        _geresh_or_azla_note(rows),
+    )
+
+
+def _geresh_or_azla_note(rows: list[dict]) -> object:
+    """What the ``ger./az.`` cell means, under the table that has it.
+
+    Ben, 2026-07-29, having established the naming across Jacobson, Breuer and Yeivin: azla "is
+    not a synonym for geresh, it is the name for geresh when geresh is used on the last
+    syllable, i.e. when geresh is used on a chanted word with final stress".  So the row cannot
+    pick one name without asserting a stress fact of all of its cases, and the count is spliced
+    here to say plainly that both kinds are in it.
+
+    The count is looked up rather than passed, so the sentence and the row it explains cannot
+    come to disagree; a missing row fails the build rather than printing a sentence about
+    nothing.
+
+    WHAT IT MUST NOT SAY: that both kinds are among the 99.  A first pass said exactly that, and
+    the survey cannot support it -- stress is what decides the name, and this survey records no
+    stress at all, only marks.  So the sentence names the condition and says the table does not
+    record it, which is the whole of what is known here.
+
+    NOR COULD ANY SURVEY OF MARKS support it, which is why the sentence is built this way rather
+    than waiting on better data.  Unicode has no geresh-versus-azla distinction to record: its
+    only geresh flavors are plain geresh (which INCLUDES azla), geresh muqdam, and gershayim.
+    MAM's prose verses have no ``qad-germ`` at all, so this row is entirely plain geresh -- and
+    that settles the codepoint, never the name.
+    """
+    (row,) = [r for r in rows if r["second"] == _GERESH_OR_AZLA]
+    return H.para(
+        (
+            f"One row is written {_GERESH_OR_AZLA} because its second accent goes by two names:"
+            f" in some traditions a {ROM_GERESH} on a chanted word stressed on its last syllable"
+            f" is called an {ROM_AZLA} (Jacobson, ",
+            _chb(),
+            f" p. 187). Which name each of the {row['simple']} takes turns on that stress, which"
+            " this table does not record.",
+        )
+    )
+
+
+def _one_letter_appendix_section(survey: dict) -> tuple[object, ...]:
+    """The chanted words whose two marks sit on one letter, shown rather than counted.
+
+    Ben, 2026-07-29, of the sentence that reports them: "provide a link to an appendix that
+    shows these in a table".  A count of what a page leaves out is a claim about particular
+    chanted words, and six is few enough to print, so a reader can see what was set aside and
+    judge it -- which a count alone never lets them do.
+
+    The forms are lifted from the survey, letters and accents only, with the verse on hover, as
+    the pair tables' examples are.  Where one row reads geresh then telisha gedolah and another
+    reads gershayim then telisha gedolah, that is the written order of the two marks on the
+    letter and the two marks themselves; the rows are not a classification of anything.
+    """
+    genre = survey["corpora"][_CORPUS]["prose"]
+    body = [H.table_row((*_ACC_HEADERS, H.table_header("Chanted word")))]
+    for word in _one_letter_words(genre):
+        first, second = word["pair"]
+        body.append(
+            H.table_row_of_data(
+                (_ACCENT_DISPLAY[first], _ACCENT_DISPLAY[second], _hebrew_at(word))
+            )
+        )
+    return (
+        H.heading_level_2(
+            "Appendix: the chanted words whose two marks sit on one letter",
+            {"id": _ONE_LETTER_ID},
+        ),
+        H.para(
+            (
+                "Two marks on one letter are not two accents on two syllables, whatever else"
+                " they are, so these chanted words are in none of the counts above. MAM's"
+                " features-of-interest lists have the five with a ",
+                link(f"{ROM_TELISHA_GEDOLAH} among them", _FOI_UNICODE),
+                ", as two of its rare Unicode sequences.",
+            )
+        ),
+        H.table(tuple(body), {"class": "centered-table accent-pair-table"}),
+    )
+
+
 def render_body_contents(survey: dict) -> tuple[object, ...]:
     pin_claims(survey)
+    # Both tables are cut from one ordered list, so the split cannot reorder or double-count.
+    rows = _pair_rows(
+        survey["corpora"][_CORPUS]["prose"], _occurrences(survey, _CORPUS, "prose")
+    )
     sections: list[object] = [
         *_intro(survey),
-        *_prose_section(survey),
-        *_koren_section(),
+        *_prose_section(survey, rows),
         *_poetic_section(survey),
+        *_appendix_section(survey, rows),
+        *_one_letter_appendix_section(survey),
     ]
     return (H.div(tuple(sections), {"class": _WIDTH_CLASS}),)
 

@@ -889,28 +889,94 @@
      "mer-mun": 1
     },
     "simple_example_by_pair": {
-     "mun-zaq": "וּלְמ֣וֹעֲדִ֔ים",
-     "qad-zaq": "לְזַ֨רְעֲךָ֔",
-     "qad-ger": "אֱלֹ֨הֵיכֶ֜ם",
-     "mun-paz": "אָ֣נָּ֡א",
-     "mun-rev": "אָ֣נָּ֗א",
-     "telg-ger2": "קִ֠רְב֞וּ",
-     "tip-sil": "לְהֵ֖חַלּֽוֹ׃",
-     "qad-mah": "וּבְאַ֨חֵיכֶ֤ם",
-     "tip-etn": "בְּשָׁבֻעֹ֖תֵיכֶ֑ם",
-     "qad-mer": "הַמַּֽאֲכִ֨לְךָ֥",
-     "mer-tev": "נֹ֥שְׂאֵ֛י",
-     "mun-etn": "יְדִ֣ידְיָ֑הּ",
-     "mer-tip": "מַבְלִ֥יגִיתִ֖י",
-     "telg-rev": "וַ֠יִּשְׁמַ֗ע",
-     "mer-etn": "בְּכ֥וֹבָעִ֑ים",
-     "telg-ger": "וּ֠לְאֵ֜לֶּה",
-     "qad-dar": "וַאֲדֹ֨נִיָּ֧הוּ",
-     "dar-ger2": "יִ֧רֶ֞ב",
-     "mah-pash": "שֶׁ֤אָהֲבָה֙",
-     "mer-sil": "שַׁלְהֶ֥בֶתְיָֽה׃",
-     "mun-mah": "שֶׁ֣הֵ֤ם",
-     "mer-mun": "וְשֵׁרֵ֥בְיָ֣ה׀"
+     "mun-zaq": {
+      "word": "וּלְמ֣וֹעֲדִ֔ים",
+      "bcv": "gn1:14"
+     },
+     "qad-zaq": {
+      "word": "לְזַ֨רְעֲךָ֔",
+      "bcv": "gn12:7"
+     },
+     "qad-ger": {
+      "word": "אֱלֹ֨הֵיכֶ֜ם",
+      "bcv": "gn43:23"
+     },
+     "mun-paz": {
+      "word": "אָ֣נָּ֡א",
+      "bcv": "gn50:17"
+     },
+     "mun-rev": {
+      "word": "אָ֣נָּ֗א",
+      "bcv": "ex32:31"
+     },
+     "telg-ger2": {
+      "word": "קִ֠רְב֞וּ",
+      "bcv": "lv10:4"
+     },
+     "tip-sil": {
+      "word": "לְהֵ֖חַלּֽוֹ׃",
+      "bcv": "lv21:4"
+     },
+     "qad-mah": {
+      "word": "וּבְאַ֨חֵיכֶ֤ם",
+      "bcv": "lv25:46"
+     },
+     "tip-etn": {
+      "word": "בְּשָׁבֻעֹ֖תֵיכֶ֑ם",
+      "bcv": "nu28:26"
+     },
+     "qad-mer": {
+      "word": "הַמַּֽאֲכִ֨לְךָ֥",
+      "bcv": "dt8:16"
+     },
+     "mer-tev": {
+      "word": "נֹ֥שְׂאֵ֛י",
+      "bcv": "dt31:25"
+     },
+     "mun-etn": {
+      "word": "יְדִ֣ידְיָ֑הּ",
+      "bcv": "2s12:25"
+     },
+     "mer-tip": {
+      "word": "מַבְלִ֥יגִיתִ֖י",
+      "bcv": "je8:18"
+     },
+     "telg-rev": {
+      "word": "וַ֠יִּשְׁמַ֗ע",
+      "bcv": "je36:11"
+     },
+     "mer-etn": {
+      "word": "בְּכ֥וֹבָעִ֑ים",
+      "bcv": "je46:4"
+     },
+     "telg-ger": {
+      "word": "וּ֠לְאֵ֜לֶּה",
+      "bcv": "ek48:10"
+     },
+     "qad-dar": {
+      "word": "וַאֲדֹ֨נִיָּ֧הוּ",
+      "bcv": "2c17:8"
+     },
+     "dar-ger2": {
+      "word": "יִ֧רֶ֞ב",
+      "bcv": "2c24:27"
+     },
+     "mah-pash": {
+      "word": "שֶׁ֤אָהֲבָה֙",
+      "bcv": "ca1:7"
+     },
+     "mer-sil": {
+      "word": "שַׁלְהֶ֥בֶתְיָֽה׃",
+      "bcv": "ca8:6"
+     },
+     "mun-mah": {
+      "word": "שֶׁ֣הֵ֤ם",
+      "bcv": "lm4:9"
+     },
+     "mer-mun": {
+      "word": "וְשֵׁרֵ֥בְיָ֣ה׀",
+      "bcv": "ne8:7"
+     }
     },
     "simple_excluded": {
      "a stress-helper pair: one accent written twice": {
@@ -922,6 +988,53 @@
       "mah-qad": 1
      }
     },
+    "simple_excluded_words": [
+     {
+      "bcv": "gn5:29",
+      "word": "זֶ֞֠ה",
+      "pair": [
+       "ger2",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "2s3:8",
+      "word": "אָנֹ֘כִי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k17:13",
+      "word": "שֻׁ֝֠בוּ",
+      "pair": [
+       "germ",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ek20:31",
+      "word": "נִטְמְאִ֤֨ים",
+      "pair": [
+       "mah",
+       "qad"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "zp2:15",
+      "word": "זֹ֞֠את",
+      "pair": [
+       "ger2",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     }
+    ],
     "by_route": {
      "a: a secondary accent the compound inherits": 132,
      "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)": 7
@@ -2664,29 +2777,98 @@
      "mun-mer": 1
     },
     "simple_example_by_pair": {
-     "ole-mer": "רְשָׁ֫עִ֥ים",
-     "germ-rev": "לֵ֝צִ֗ים",
-     "mer-qad": "יִ֥תְיַצְּב֨וּ׀",
-     "tsit-mah": "ק֘וּמָ֤ה",
-     "tsit-mer": "יְתָ֘עֵ֥ב׀",
-     "yby-ole-mer": "מִֽמֹּעֲצ֪וֹתֵ֫יהֶ֥ם",
-     "dex-rev": "לִ֭בּ֗וֹת",
-     "yby-ole": "יִסַּ֪דְתָּ֫",
-     "mah-qad": "נ֤וֹדַ֨ע׀",
-     "mah-mer": "יָ֤גֵ֥ל",
-     "tsit-mah-rev": "בִּ֘ישׁ֤וּעָתֶ֗ךָ",
-     "germ-mer-rev": "וּ֝בִישׁ֥וּעָתְךָ֗",
-     "mer-rev": "מֵ֥אִתְּךָ֗",
-     "mun-etn": "דֹּ֣רְשָׁ֑יו",
-     "tip-mun": "אֹ֖רְחוֹתֶ֣יךָ",
-     "yby-paz": "אוֹדִ֪יעֲךָ֡",
-     "ilu-qad": "וַהֲדָ֬רְךָ֨׀",
-     "mah-ole": "פֹּ֤עֲלֵ֫י",
-     "mun-mer": "תְּשׁ֣וֹבֵ֥ב",
-     "mah-mun": "בָּ֤ר֣וּךְ",
-     "dex-mun": "מִ֭גַּעֲרָ֣תְךָ",
-     "dex-mer": "צָ֭רָתִ֥י",
-     "mer-sil": "לִגְאֵ֥יוֹנִֽים׃"
+     "ole-mer": {
+      "word": "רְשָׁ֫עִ֥ים",
+      "bcv": "ps1:1"
+     },
+     "germ-rev": {
+      "word": "לֵ֝צִ֗ים",
+      "bcv": "ps1:1"
+     },
+     "mer-qad": {
+      "word": "יִ֥תְיַצְּב֨וּ׀",
+      "bcv": "ps2:2"
+     },
+     "tsit-mah": {
+      "word": "ק֘וּמָ֤ה",
+      "bcv": "ps3:8"
+     },
+     "tsit-mer": {
+      "word": "יְתָ֘עֵ֥ב׀",
+      "bcv": "ps5:7"
+     },
+     "yby-ole-mer": {
+      "word": "מִֽמֹּעֲצ֪וֹתֵ֫יהֶ֥ם",
+      "bcv": "ps5:11"
+     },
+     "dex-rev": {
+      "word": "לִ֭בּ֗וֹת",
+      "bcv": "ps7:10"
+     },
+     "yby-ole": {
+      "word": "יִסַּ֪דְתָּ֫",
+      "bcv": "ps8:3"
+     },
+     "mah-qad": {
+      "word": "נ֤וֹדַ֨ע׀",
+      "bcv": "ps9:17"
+     },
+     "mah-mer": {
+      "word": "יָ֤גֵ֥ל",
+      "bcv": "ps13:6"
+     },
+     "tsit-mah-rev": {
+      "word": "בִּ֘ישׁ֤וּעָתֶ֗ךָ",
+      "bcv": "ps20:6"
+     },
+     "germ-mer-rev": {
+      "word": "וּ֝בִישׁ֥וּעָתְךָ֗",
+      "bcv": "ps21:2"
+     },
+     "mer-rev": {
+      "word": "מֵ֥אִתְּךָ֗",
+      "bcv": "ps22:26"
+     },
+     "mun-etn": {
+      "word": "דֹּ֣רְשָׁ֑יו",
+      "bcv": "ps22:27"
+     },
+     "tip-mun": {
+      "word": "אֹ֖רְחוֹתֶ֣יךָ",
+      "bcv": "ps25:4"
+     },
+     "yby-paz": {
+      "word": "אוֹדִ֪יעֲךָ֡",
+      "bcv": "ps32:5"
+     },
+     "ilu-qad": {
+      "word": "וַהֲדָ֬רְךָ֨׀",
+      "bcv": "ps45:5"
+     },
+     "mah-ole": {
+      "word": "פֹּ֤עֲלֵ֫י",
+      "bcv": "ps53:5"
+     },
+     "mun-mer": {
+      "word": "תְּשׁ֣וֹבֵ֥ב",
+      "bcv": "ps60:3"
+     },
+     "mah-mun": {
+      "word": "בָּ֤ר֣וּךְ",
+      "bcv": "ps68:20"
+     },
+     "dex-mun": {
+      "word": "מִ֭גַּעֲרָ֣תְךָ",
+      "bcv": "ps76:7"
+     },
+     "dex-mer": {
+      "word": "צָ֭רָתִ֥י",
+      "bcv": "ps86:7"
+     },
+     "mer-sil": {
+      "word": "לִגְאֵ֥יוֹנִֽים׃",
+      "bcv": "ps123:4"
+     }
     },
     "simple_excluded": {
      "the two marks are on one letter": {
@@ -2696,6 +2878,1340 @@
       "mun-dex": 1
      }
     },
+    "simple_excluded_words": [
+     {
+      "bcv": "ps11:1",
+      "word": "נ֝֗וּדִי",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps14:3",
+      "word": "אֵ֝֗ין",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps16:1",
+      "word": "אֵ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps17:6",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps17:10",
+      "word": "פִּ֝֗ימוֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps18:31",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps18:32",
+      "word": "צ֝֗וּר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps20:9",
+      "word": "קַּ֝֗מְנוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps25:21",
+      "word": "כִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps31:20",
+      "word": "נֶ֝֗גֶד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps31:22",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps32:9",
+      "word": "בַּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps32:10",
+      "word": "חֶ֝֗סֶד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps33:6",
+      "word": "פִּ֝֗יו",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps36:5",
+      "word": "רָ֝֗ע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps37:2",
+      "word": "דֶּ֝֗שֶׁא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps40:16",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps45:9",
+      "word": "שֵׁ֝֗ן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps48:7",
+      "word": "חִ֝֗יל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps48:11",
+      "word": "צֶ֝֗דֶק",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps49:3",
+      "word": "יַ֝֗חַד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps52:3",
+      "word": "אֵ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps53:2",
+      "word": "עָ֝֗וֶל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps53:4",
+      "word": "אֵ֝֗ין",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps55:4",
+      "word": "אָ֝֗וֶן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps55:5",
+      "word": "מָ֝֗וֶת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps56:10",
+      "word": "אָ֥֨ז",
+      "pair": [
+       "mer",
+       "qad"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps57:2",
+      "word": "עַ֝֗ד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps58:9",
+      "word": "אֵ֝֗שֶׁת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps62:10",
+      "word": "הֵ֝֗מָּה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps62:12",
+      "word": "עֹ֝֗ז",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps63:9",
+      "word": "בִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps64:7",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps66:6",
+      "word": "שָׁ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps68:13",
+      "word": "בַּ֝֗יִת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps68:18",
+      "word": "בָ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps68:29",
+      "word": "ז֝֗וּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps69:36",
+      "word": "שָׁ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps73:19",
+      "word": "תַ֝֗מּוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps75:9",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps76:12",
+      "word": "שַׁ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps77:9",
+      "word": "אֹ֝֗מֶר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps77:17",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps78:30",
+      "word": "ע֝֗וֹד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps78:42",
+      "word": "י֝֗וֹם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps78:60",
+      "word": "אֹ֝֗הֶל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps83:11",
+      "word": "דֹּ֝֗מֶן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps83:13",
+      "word": "אֵ֝֗ת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps84:5",
+      "word": "ע֝֗וֹד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps85:2",
+      "word": "שַׁ֝֗בְתָּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps87:4",
+      "word": "זֶ֝֗ה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps90:10",
+      "word": "חִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps94:9",
+      "word": "עַ֝֗יִן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps96:4",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps98:3",
+      "word": "אֵ֝֗ת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps98:8",
+      "word": "יַ֝֗חַד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps99:2",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps101:4",
+      "word": "רָ֝֗ע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps101:6",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps104:14",
+      "word": "לֶ֝֗חֶם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps104:19",
+      "word": "שֶׁ֝֗מֶשׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps105:2",
+      "word": "שִׂ֝֗יחוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps105:11",
+      "word": "חֶ֝֗בֶל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps106:20",
+      "word": "שׁ֝֗וֹר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps107:33",
+      "word": "מַ֝֗יִם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps109:20",
+      "word": "רָ֝֗ע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps110:6",
+      "word": "רֹ֝֗אשׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps113:8",
+      "word": "עִ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:13",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:49",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:62",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:90",
+      "word": "אֶ֝֗רֶץ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:92",
+      "word": "אָ֝֗ז",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:93",
+      "word": "בָ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:136",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:164",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps120:4",
+      "word": "עִ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps120:6",
+      "word": "עִ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps120:7",
+      "word": "הֵ֝֗מָּה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps123:2",
+      "word": "עַ֝֗ד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps124:4",
+      "word": "נַ֗֜חְלָה",
+      "pair": [
+       "rev",
+       "ger"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps124:6",
+      "word": "טֶ֝֗רֶף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps127:4",
+      "word": "כֵּ֝֗ן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps128:5",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps129:5",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps132:17",
+      "word": "נֵ֝֗ר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps135:2",
+      "word": "שֶׁ֣֭עֹֽמְדִים",
+      "pair": [
+       "mun",
+       "dex"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps135:17",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:3",
+      "word": "לָ֝֗נוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:4",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:6",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:7",
+      "word": "עַ֝֗ד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps143:12",
+      "word": "כִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps148:10",
+      "word": "רֶ֝֗מֶשׂ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb6:7",
+      "word": "הֵ֝֗מָּה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb7:15",
+      "word": "מָ֝֗וֶת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb8:15",
+      "word": "בּ֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb8:18",
+      "word": "בּ֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb11:12",
+      "word": "פֶּ֝֗רֶא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb12:13",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb12:16",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb16:10",
+      "word": "יַ֝֗חַד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb16:12",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb17:3",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb17:12",
+      "word": "א֝֗וֹר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb18:17",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb24:5",
+      "word": "לֶ֝֗חֶם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb26:5",
+      "word": "מַ֝֗יִם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb26:7",
+      "word": "אֶ֝֗רֶץ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb27:20",
+      "word": "לַ֝֗יְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb28:20",
+      "word": "זֶ֝֗ה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb30:3",
+      "word": "אֶ֝֗מֶשׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb31:40",
+      "word": "תַּ֝֗מּוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:11",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:13",
+      "word": "שָׂ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:22",
+      "word": "שָׁ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:25",
+      "word": "לַ֝֗יְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb37:17",
+      "word": "אֶ֝֗רֶץ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb37:20",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb39:17",
+      "word": "לָ֝֗הּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:2",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:11",
+      "word": "אֵ֝֗שׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:23",
+      "word": "יָ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:26",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr1:1",
+      "word": "מֶ֝֗לֶךְ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr7:9",
+      "word": "לַ֝֗יְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr8:27",
+      "word": "ח֝֗וּג",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr9:2",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr11:31",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:4",
+      "word": "בָּ֝֗הּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:11",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:16",
+      "word": "רָ֝֗ב",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:24",
+      "word": "ס֝֗וּר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr17:7",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr18:2",
+      "word": "כִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr18:9",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr19:10",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr19:26",
+      "word": "בֵּ֝֗ן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr20:1",
+      "word": "בּ֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr20:14",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr21:27",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr24:8",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr25:28",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr28:16",
+      "word": "בֶ֝֗צַע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr28:24",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr29:5",
+      "word": "רֶ֝֗שֶׁת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr30:5",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr31:12",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     }
+    ],
     "by_route": {
      "(not attempted -- the route split is prose doctrine)": 30
     },
@@ -3114,29 +4630,98 @@
      "mer-sil": 1
     },
     "simple_example_by_pair": {
-     "qad-ger": "וְאָ֨נֹכִ֜י",
-     "mun-zaq": "מִמְּעֹ֣נָת֔וֹ",
-     "qad-zaq": "וְיִ֨שְׂרָאֵ֔ל",
-     "tip-sil": "וְהָאֶשְׁתָּ֖אֻֽלִֽי׃",
-     "mun-etn": "שֶׁ֣עִמָּהֶ֑ם",
-     "mer-tip": "לְמַבָּרִ֥אשׁוֹנָ֖ה",
-     "qad-dar": "וַאֲדֹ֨נִיָּ֧הוּ",
-     "dar-ger2": "יִ֧רֶ֞ב",
-     "qad-mah": "בְּקִינ֨וֹתֵיהֶ֤ם",
-     "mun-rev": "בֵּ֣לְטְשַׁאצַּ֗ר",
-     "qad-mer": "הַמּֽ͏ַאֲכִ֨לְךָ֥",
-     "mer-tev": "יָ֥דְךָ֛",
-     "mah-pash": "שֶׁ֤הַנְּחָלִים֙",
-     "tip-etn": "לָא֖וֹפַנִּ֑ים",
-     "telg-ger": "וּ֠לְאֵ֜לֶּה",
-     "mun-paz": "אָ֣נָּ֡א",
-     "telg-rev": "וַ֠יִּשְׁמַ֗ע",
-     "mer-etn": "בְּכ֥וֹבָעִ֑ים",
-     "qad-pash": "אֲרִיצֶ֨נּוּ֙",
-     "mun-mah": "שֶׁ֣הֵ֤ם",
-     "telg-ger2": "קִ֠רְב֞וּ",
-     "mer-mun": "וְשֵׁרֵ֥בְיָ֣ה ׀",
-     "mer-sil": "שַׁלְהֶ֥בֶתְיָֽה׃"
+     "qad-ger": {
+      "word": "וְאָ֨נֹכִ֜י",
+      "bcv": "am2:9"
+     },
+     "mun-zaq": {
+      "word": "מִמְּעֹ֣נָת֔וֹ",
+      "bcv": "am3:4"
+     },
+     "qad-zaq": {
+      "word": "וְיִ֨שְׂרָאֵ֔ל",
+      "bcv": "am7:11"
+     },
+     "tip-sil": {
+      "word": "וְהָאֶשְׁתָּ֖אֻֽלִֽי׃",
+      "bcv": "1c2:53"
+     },
+     "mun-etn": {
+      "word": "שֶׁ֣עִמָּהֶ֑ם",
+      "bcv": "1c5:20"
+     },
+     "mer-tip": {
+      "word": "לְמַבָּרִ֥אשׁוֹנָ֖ה",
+      "bcv": "1c15:13"
+     },
+     "qad-dar": {
+      "word": "וַאֲדֹ֨נִיָּ֧הוּ",
+      "bcv": "2c17:8"
+     },
+     "dar-ger2": {
+      "word": "יִ֧רֶ֞ב",
+      "bcv": "2c24:27"
+     },
+     "qad-mah": {
+      "word": "בְּקִינ֨וֹתֵיהֶ֤ם",
+      "bcv": "2c35:25"
+     },
+     "mun-rev": {
+      "word": "בֵּ֣לְטְשַׁאצַּ֗ר",
+      "bcv": "da1:7"
+     },
+     "qad-mer": {
+      "word": "הַמּֽ͏ַאֲכִ֨לְךָ֥",
+      "bcv": "dt8:16"
+     },
+     "mer-tev": {
+      "word": "יָ֥דְךָ֛",
+      "bcv": "dt13:10"
+     },
+     "mah-pash": {
+      "word": "שֶׁ֤הַנְּחָלִים֙",
+      "bcv": "ec1:7"
+     },
+     "tip-etn": {
+      "word": "לָא֖וֹפַנִּ֑ים",
+      "bcv": "ek10:13"
+     },
+     "telg-ger": {
+      "word": "וּ֠לְאֵ֜לֶּה",
+      "bcv": "ek48:10"
+     },
+     "mun-paz": {
+      "word": "אָ֣נָּ֡א",
+      "bcv": "gn50:17"
+     },
+     "telg-rev": {
+      "word": "וַ֠יִּשְׁמַ֗ע",
+      "bcv": "je36:11"
+     },
+     "mer-etn": {
+      "word": "בְּכ֥וֹבָעִ֑ים",
+      "bcv": "je46:4"
+     },
+     "qad-pash": {
+      "word": "אֲרִיצֶ֨נּוּ֙",
+      "bcv": "je49:19"
+     },
+     "mun-mah": {
+      "word": "שֶׁ֣הֵ֤ם",
+      "bcv": "lm4:9"
+     },
+     "telg-ger2": {
+      "word": "קִ֠רְב֞וּ",
+      "bcv": "lv10:4"
+     },
+     "mer-mun": {
+      "word": "וְשֵׁרֵ֥בְיָ֣ה ׀",
+      "bcv": "ne8:7"
+     },
+     "mer-sil": {
+      "word": "שַׁלְהֶ֥בֶתְיָֽה׃",
+      "bcv": "ca8:6"
+     }
     },
     "simple_excluded": {
      "a stress-helper pair: one accent written twice": {
@@ -3148,6 +4733,53 @@
       "ger-telg": 1
      }
     },
+    "simple_excluded_words": [
+     {
+      "bcv": "ek20:31",
+      "word": "נִטְמְאִ֤֨ים",
+      "pair": [
+       "mah",
+       "qad"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "gn5:29",
+      "word": "זֶ֞֠ה",
+      "pair": [
+       "ger2",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "2k17:13",
+      "word": "שֻׁ֜֠בוּ",
+      "pair": [
+       "ger",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "2s3:8",
+      "word": "אָנֹ֘כִי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "zp2:15",
+      "word": "זֹ֞֠את",
+      "pair": [
+       "ger2",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     }
+    ],
     "by_route": {
      "a: a secondary accent the compound inherits": 124,
      "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)": 4
@@ -4754,32 +6386,110 @@
      "mun-mer": 1
     },
     "simple_example_by_pair": {
-     "germ-rev": "אָ֝מַ֗ר",
-     "֢-ole": "יִקָּחֵ֢ה֫וּ",
-     "ole-mer": "נִ֫שְׁפּ֥וֹ",
-     "tsit-mah": "רָ֘עֵ֤ב",
-     "tsit-mah-rev": "נֶ֘חָ֤מָתִ֗י",
-     "dex-mun": "יִ֭לָּ֣פְתוּ",
-     "tip-mun": "וְשִׁ֖חֲרְתַּ֣נִי",
-     "dex-mer": "יֹ֭נַקְתּ֥וֹ",
-     "mer-rev": "לְשֹׁ֥דְדִ֗ים",
-     "germ-mer-rev": "וְ֝אֵ֥מָתְךָ֗",
-     "tsit-mer": "מִתְקוֹמָ֘מָ֥ה",
-     "mer-sil": "תַּנְח֥וּמֹֽתֵיכֶֽם׃",
-     "mun-etn": "אֹ֣יְבִ֑י",
-     "germ-ger": "וְ֝יָדַעְתָּ֜",
-     "mah-mer": "ה֤וֹלֵ֥ךְ",
-     "mah-qad": "יֹ֤סֵ֨ר ׀",
-     "mer-qad": "רֵ֥עֲךָ֨",
-     "֢-ole-mer": "מִֽמֹּעֲצ֢וֹתֵ֫יהֶ֥ם",
-     "dex-rev": "לִ֭בּ֗וֹת",
-     "yby-paz": "אוֹדִ֪יעֲךָ֡",
-     "tip-sil": "מֵ֖חַטָּאתִֽי׃",
-     "ilu-qad": "וַהֲדָ֬רְךָ֨ ׀",
-     "mah-ole": "פֹּ֤עֲלֵ֫י",
-     "mun-mer": "תְּשׁ֣וֹבֵ֥ב",
-     "mer-mun": "תְּה֥וֹתְת֣וּ",
-     "mah-mun": "בָּ֤ר֣וּךְ"
+     "germ-rev": {
+      "word": "אָ֝מַ֗ר",
+      "bcv": "jb3:3"
+     },
+     "֢-ole": {
+      "word": "יִקָּחֵ֢ה֫וּ",
+      "bcv": "jb3:6"
+     },
+     "ole-mer": {
+      "word": "נִ֫שְׁפּ֥וֹ",
+      "bcv": "jb3:9"
+     },
+     "tsit-mah": {
+      "word": "רָ֘עֵ֤ב",
+      "bcv": "jb5:5"
+     },
+     "tsit-mah-rev": {
+      "word": "נֶ֘חָ֤מָתִ֗י",
+      "bcv": "jb6:10"
+     },
+     "dex-mun": {
+      "word": "יִ֭לָּ֣פְתוּ",
+      "bcv": "jb6:18"
+     },
+     "tip-mun": {
+      "word": "וְשִׁ֖חֲרְתַּ֣נִי",
+      "bcv": "jb7:21"
+     },
+     "dex-mer": {
+      "word": "יֹ֭נַקְתּ֥וֹ",
+      "bcv": "jb8:16"
+     },
+     "mer-rev": {
+      "word": "לְשֹׁ֥דְדִ֗ים",
+      "bcv": "jb12:6"
+     },
+     "germ-mer-rev": {
+      "word": "וְ֝אֵ֥מָתְךָ֗",
+      "bcv": "jb13:21"
+     },
+     "tsit-mer": {
+      "word": "מִתְקוֹמָ֘מָ֥ה",
+      "bcv": "jb20:27"
+     },
+     "mer-sil": {
+      "word": "תַּנְח֥וּמֹֽתֵיכֶֽם׃",
+      "bcv": "jb21:2"
+     },
+     "mun-etn": {
+      "word": "אֹ֣יְבִ֑י",
+      "bcv": "jb27:7"
+     },
+     "germ-ger": {
+      "word": "וְ֝יָדַעְתָּ֜",
+      "bcv": "jb39:2"
+     },
+     "mah-mer": {
+      "word": "ה֤וֹלֵ֥ךְ",
+      "bcv": "pr7:22"
+     },
+     "mah-qad": {
+      "word": "יֹ֤סֵ֨ר ׀",
+      "bcv": "pr9:7"
+     },
+     "mer-qad": {
+      "word": "רֵ֥עֲךָ֨",
+      "bcv": "pr27:10"
+     },
+     "֢-ole-mer": {
+      "word": "מִֽמֹּעֲצ֢וֹתֵ֫יהֶ֥ם",
+      "bcv": "ps5:11"
+     },
+     "dex-rev": {
+      "word": "לִ֭בּ֗וֹת",
+      "bcv": "ps7:10"
+     },
+     "yby-paz": {
+      "word": "אוֹדִ֪יעֲךָ֡",
+      "bcv": "ps32:5"
+     },
+     "tip-sil": {
+      "word": "מֵ֖חַטָּאתִֽי׃",
+      "bcv": "ps38:19"
+     },
+     "ilu-qad": {
+      "word": "וַהֲדָ֬רְךָ֨ ׀",
+      "bcv": "ps45:5"
+     },
+     "mah-ole": {
+      "word": "פֹּ֤עֲלֵ֫י",
+      "bcv": "ps53:5"
+     },
+     "mun-mer": {
+      "word": "תְּשׁ֣וֹבֵ֥ב",
+      "bcv": "ps60:3"
+     },
+     "mer-mun": {
+      "word": "תְּה֥וֹתְת֣וּ",
+      "bcv": "ps62:4"
+     },
+     "mah-mun": {
+      "word": "בָּ֤ר֣וּךְ",
+      "bcv": "ps68:20"
+     }
     },
     "simple_excluded": {
      "the two marks are on one letter": {
@@ -4790,6 +6500,1340 @@
       "mun-dex": 1
      }
     },
+    "simple_excluded_words": [
+     {
+      "bcv": "jb6:7",
+      "word": "הֵ֝֗מָּה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb7:1",
+      "word": "וְכִימֵ֖֗י",
+      "pair": [
+       "tip",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb7:15",
+      "word": "מָ֝֗וֶת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb8:15",
+      "word": "בּ֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb8:18",
+      "word": "בּ֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb11:12",
+      "word": "פֶּ֝֗רֶא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb12:13",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb12:16",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb16:10",
+      "word": "יַ֝֗חַד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb16:12",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb17:3",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb17:12",
+      "word": "א֝֗וֹר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb18:17",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb24:5",
+      "word": "לֶ֝֗חֶם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb26:5",
+      "word": "מַ֝֗יִם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb26:7",
+      "word": "אֶ֝֗רֶץ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb27:20",
+      "word": "לַ֝֗יְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb28:20",
+      "word": "זֶ֝֗ה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb30:3",
+      "word": "אֶ֝֗מֶשׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb31:40",
+      "word": "תַּ֝֗מּוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:11",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:13",
+      "word": "שָׂ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:22",
+      "word": "שָׁ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:25",
+      "word": "לַ֝֗יְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb37:17",
+      "word": "אֶ֝֗רֶץ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb37:20",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb39:17",
+      "word": "לָ֝֗הּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:2",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:11",
+      "word": "אֵ֝֗שׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:23",
+      "word": "יָ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:26",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr1:1",
+      "word": "מֶ֝֗לֶךְ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr7:9",
+      "word": "לַ֝֗יְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr8:27",
+      "word": "ח֝֗וּג",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr9:2",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr11:31",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:4",
+      "word": "בָּ֝֗הּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:11",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:16",
+      "word": "רָ֝֗ב",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:24",
+      "word": "ס֝֗וּר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr17:7",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr18:2",
+      "word": "כִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr18:9",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr19:26",
+      "word": "בֵּ֝֗ן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr20:1",
+      "word": "בּ֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr20:14",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr21:27",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr24:8",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr25:28",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr28:16",
+      "word": "בֶ֝֗צַע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr28:24",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr29:5",
+      "word": "רֶ֝֗שֶׁת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr30:5",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr31:12",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr31:26",
+      "word": "חֶ֝֗סֶד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps11:1",
+      "word": "נ֝֗וּדִי",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps14:3",
+      "word": "אֵ֝֗ין",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps16:1",
+      "word": "אֵ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps17:6",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps17:10",
+      "word": "פִּ֝֗ימוֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps18:31",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps18:32",
+      "word": "צ֝֗וּר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps20:9",
+      "word": "קַּ֝֗מְנוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps25:21",
+      "word": "כִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps31:20",
+      "word": "נֶ֝֗גֶד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps31:22",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps32:9",
+      "word": "בַּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps32:10",
+      "word": "חֶ֝֗סֶד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps33:6",
+      "word": "פִּ֝֗יו",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps36:5",
+      "word": "רָ֝֗ע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps37:2",
+      "word": "דֶּ֝֗שֶׁא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps40:16",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps45:9",
+      "word": "שֵׁ֝֗ן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps48:7",
+      "word": "חִ֝֗יל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps48:11",
+      "word": "צֶ֝֗דֶק",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps49:3",
+      "word": "יַ֝֗חַד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps52:3",
+      "word": "אֵ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps53:2",
+      "word": "עָ֝֗וֶל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps53:4",
+      "word": "אֵ֝֗ין",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps55:4",
+      "word": "אָ֝֗וֶן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps55:5",
+      "word": "מָ֝֗וֶת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps56:10",
+      "word": "אָ֥֨ז",
+      "pair": [
+       "mer",
+       "qad"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps57:2",
+      "word": "עַ֝֗ד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps58:9",
+      "word": "אֵ֝֗שֶׁת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps62:10",
+      "word": "הֵ֝֗מָּה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps62:12",
+      "word": "עֹ֝֗ז",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps63:9",
+      "word": "בִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps64:7",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps66:6",
+      "word": "שָׁ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps68:18",
+      "word": "בָ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps68:29",
+      "word": "ז֝֗וּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps69:36",
+      "word": "שָׁ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps73:19",
+      "word": "תַ֝֗מּוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps75:9",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps76:12",
+      "word": "שַׁ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps77:9",
+      "word": "אֹ֝֗מֶר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps77:17",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps78:30",
+      "word": "ע֝֗וֹד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps78:42",
+      "word": "י֝֗וֹם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps78:60",
+      "word": "אֹ֝֗הֶל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps83:11",
+      "word": "דֹ֝֗מֶן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps83:13",
+      "word": "אֵ֝֗ת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps84:5",
+      "word": "ע֝֗וֹד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps85:2",
+      "word": "שַׁ֝֗בְתָּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps87:4",
+      "word": "זֶ֝֗ה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps90:10",
+      "word": "חִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps94:9",
+      "word": "עַ֝֗יִן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps96:4",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps98:3",
+      "word": "אֵ֝֗ת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps98:8",
+      "word": "יַ֝֗חַד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps99:2",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps101:4",
+      "word": "רָ֝֗ע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps101:6",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps104:14",
+      "word": "לֶ֝֗חֶם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps104:19",
+      "word": "שֶׁ֝֗מֶשׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps105:2",
+      "word": "שִׂ֝֗יחוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps105:11",
+      "word": "חֶ֝֗בֶל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps106:20",
+      "word": "שׁ֝֗וֹר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps107:33",
+      "word": "מַ֝֗יִם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps109:20",
+      "word": "רָ֝֗ע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps110:6",
+      "word": "רֹ֝֗אשׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps113:8",
+      "word": "עִ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:13",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:49",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:62",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:90",
+      "word": "אֶ֝֗רֶץ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:92",
+      "word": "אָ֝֗ז",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:93",
+      "word": "בָ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:136",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:164",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps120:4",
+      "word": "עִ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps120:6",
+      "word": "עִ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps120:7",
+      "word": "הֵ֝֗מָּה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps123:2",
+      "word": "עַ֝֗ד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps124:4",
+      "word": "נַ֗֜חְלָה",
+      "pair": [
+       "rev",
+       "ger"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps124:6",
+      "word": "טֶ֝֗רֶף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps127:4",
+      "word": "כֵּ֝֗ן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps128:5",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps129:5",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps132:17",
+      "word": "נֵ֝֗ר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps135:2",
+      "word": "שֶׁ֣֭עֹֽמְדִים",
+      "pair": [
+       "mun",
+       "dex"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps135:17",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:3",
+      "word": "לָ֝֗נוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:4",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:6",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:7",
+      "word": "עָ֝֗ד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps143:12",
+      "word": "כִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps148:10",
+      "word": "רֶ֝֗מֶשׂ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     }
+    ],
     "by_route": {
      "(not attempted -- the route split is prose doctrine)": 29
     },
@@ -5191,23 +8235,74 @@
      "mer-mun": 1
     },
     "simple_example_by_pair": {
-     "mun-zaq": "וּלְמ֣וֹעֲדִ֔ים",
-     "mer-tev": "גָּ֥בְר֛וּ",
-     "qad-zaq": "לְזַ֨רְעֲךָ֔",
-     "qad-ger": "אֱלֹ֨הֵיכֶ֜ם",
-     "mun-paz": "אָ֣נָּ֡א",
-     "mun-rev": "אָ֣נָּ֗א",
-     "tip-sil": "לְהֵ֖חַלּֽוֹ׃",
-     "qad-mah": "וּבְאַ֨חֵיכֶ֤ם",
-     "tip-etn": "בְּשָׁבֻעֹ֖תֵיכֶ֑ם",
-     "qad-mer": "הַמַּאֲכִ֨לְךָ֥",
-     "mun-etn": "יְדִ֣ידְיָ֑הּ",
-     "mer-tip": "מַבְלִ֥יגִיתִ֖י",
-     "qad-dar": "וַאֲדֹ֨נִיָּ֧הוּ",
-     "mah-pash": "שֶׁ֤אָֽהֲבָה֙",
-     "mer-sil": "שַׁלְהֶ֥בֶתְיָֽה׃",
-     "mun-mah": "שֶׁ֣הֵ֤ם",
-     "mer-mun": "וְשֵׁרֵ֥בְיָ֣ה"
+     "mun-zaq": {
+      "word": "וּלְמ֣וֹעֲדִ֔ים",
+      "bcv": "gn1:14"
+     },
+     "mer-tev": {
+      "word": "גָּ֥בְר֛וּ",
+      "bcv": "gn7:19"
+     },
+     "qad-zaq": {
+      "word": "לְזַ֨רְעֲךָ֔",
+      "bcv": "gn12:7"
+     },
+     "qad-ger": {
+      "word": "אֱלֹ֨הֵיכֶ֜ם",
+      "bcv": "gn43:23"
+     },
+     "mun-paz": {
+      "word": "אָ֣נָּ֡א",
+      "bcv": "gn50:17"
+     },
+     "mun-rev": {
+      "word": "אָ֣נָּ֗א",
+      "bcv": "ex32:31"
+     },
+     "tip-sil": {
+      "word": "לְהֵ֖חַלּֽוֹ׃",
+      "bcv": "lv21:4"
+     },
+     "qad-mah": {
+      "word": "וּבְאַ֨חֵיכֶ֤ם",
+      "bcv": "lv25:46"
+     },
+     "tip-etn": {
+      "word": "בְּשָׁבֻעֹ֖תֵיכֶ֑ם",
+      "bcv": "nu28:26"
+     },
+     "qad-mer": {
+      "word": "הַמַּאֲכִ֨לְךָ֥",
+      "bcv": "dt8:16"
+     },
+     "mun-etn": {
+      "word": "יְדִ֣ידְיָ֑הּ",
+      "bcv": "2s12:25"
+     },
+     "mer-tip": {
+      "word": "מַבְלִ֥יגִיתִ֖י",
+      "bcv": "je8:18"
+     },
+     "qad-dar": {
+      "word": "וַאֲדֹ֨נִיָּ֧הוּ",
+      "bcv": "2c17:8"
+     },
+     "mah-pash": {
+      "word": "שֶׁ֤אָֽהֲבָה֙",
+      "bcv": "ca1:7"
+     },
+     "mer-sil": {
+      "word": "שַׁלְהֶ֥בֶתְיָֽה׃",
+      "bcv": "ca8:6"
+     },
+     "mun-mah": {
+      "word": "שֶׁ֣הֵ֤ם",
+      "bcv": "lm4:9"
+     },
+     "mer-mun": {
+      "word": "וְשֵׁרֵ֥בְיָ֣ה",
+      "bcv": "ne8:7"
+     }
     },
     "simple_excluded": {
      "a stress-helper pair: one accent written twice": {
@@ -5219,6 +8314,1277 @@
       "mah-qad": 1
      }
     },
+    "simple_excluded_words": [
+     {
+      "bcv": "gn2:23",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn5:29",
+      "word": "זֶ֞֠ה",
+      "pair": [
+       "ger2",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "gn6:4",
+      "word": "בָאָ֘רֶץ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn19:4",
+      "word": "טֶ֘רֶם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn24:15",
+      "word": "טֶ֘רֶם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn26:28",
+      "word": "רָאִ֘ינוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn32:10",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn36:39",
+      "word": "וַיָּ֘מׇת֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn42:21",
+      "word": "אֲנַ֘חְנוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn44:18",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn47:4",
+      "word": "בָּאָ֘רֶץ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "gn47:15",
+      "word": "מִצְרַ֘יִם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ex12:4",
+      "word": "הַבַּ֘יִת֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ex12:11",
+      "word": "וְכָ֘כָה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ex12:48",
+      "word": "פֶ֘סַח֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ex18:10",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ex19:9",
+      "word": "אֵלֶ֘יךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ex28:27",
+      "word": "וְעָשִׂ֘יתָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ex30:36",
+      "word": "מִמֶּ֘נָּה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "lv4:31",
+      "word": "חֵ֘לֶב֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "lv10:4",
+      "word": "קִ֞֠רְב֞֠וּ",
+      "pair": [
+       "ger2",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "lv22:13",
+      "word": "וְזֶ֘רַע֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "lv23:43",
+      "word": "לְמַ֘עַן֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "nu3:36",
+      "word": "מִשְׁמֶ֘רֶת֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "nu4:15",
+      "word": "הַקֹּ֘דֶשׁ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "nu11:21",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "nu13:22",
+      "word": "בַנֶּ֘גֶב֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "nu16:28",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "nu19:18",
+      "word": "בַּמַּ֘יִם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "nu27:3",
+      "word": "אָבִ֘ינוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "nu33:55",
+      "word": "הָאָ֘רֶץ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt1:41",
+      "word": "חָטָ֘אנוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt4:10",
+      "word": "אֱלֹהֶ֘יךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt9:4",
+      "word": "מִלְּפָנֶ֘יךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt9:21",
+      "word": "לָקַ֘חְתִּי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt9:28",
+      "word": "הָאָ֘רֶץ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt12:18",
+      "word": "אֱלֹהֶ֘יךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt12:21",
+      "word": "אֱלֹהֶ֘יךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt16:11",
+      "word": "וּבִתֶּ֘ךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt19:5",
+      "word": "בַיַּ֘עַר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt28:68",
+      "word": "מִצְרַ֘יִם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt29:22",
+      "word": "וָמֶ֘לַח֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt31:14",
+      "word": "יָמֶ֘יךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "dt31:23",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "js4:9",
+      "word": "יְהוֹשֻׁ֘עַ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "js5:13",
+      "word": "יְהוֹשֻׁ֘עַ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "js6:8",
+      "word": "יְהוֹשֻׁ֘עַ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "js10:24",
+      "word": "הָאֵ֘לֶּה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "js15:7",
+      "word": "דְּבִ֘רָה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "js19:27",
+      "word": "הַשֶּׁ֘מֶשׁ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "js22:27",
+      "word": "דֹּרוֹתֵ֘ינוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "js24:32",
+      "word": "מִמִּצְרַ֘יִם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ju9:37",
+      "word": "גַּ֘עַל֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ju16:31",
+      "word": "אָבִ֘יהוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ju19:22",
+      "word": "הֵ֘מָּה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1s2:15",
+      "word": "בְּטֶ֘רֶם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1s5:4",
+      "word": "בַבֹּ֘קֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1s20:2",
+      "word": "חָלִ֘ילָה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1s20:41",
+      "word": "הַנַּ֘עַר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1s21:3",
+      "word": "הַמֶּ֘לֶךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1s23:10",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1s31:12",
+      "word": "חַ֘יִל֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2s3:8",
+      "word": "אָנֹ֘כִי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2s12:4",
+      "word": "הֵ֘לֶךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2s13:20",
+      "word": "אָחִ֘יךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2s19:44",
+      "word": "בַמֶּ֘לֶךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2s24:16",
+      "word": "יְֽרוּשָׁלַ֘͏ִם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1k1:24",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1k3:26",
+      "word": "רַחֲמֶ֘יהָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1k8:8",
+      "word": "וַֽיַּאֲרִ֘כוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1k10:2",
+      "word": "בְּחַ֘יִל֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1k11:33",
+      "word": "לְעַשְׁתֹּ֘רֶת֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1k12:16",
+      "word": "הַמֶּ֘לֶךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1k20:28",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1k20:30",
+      "word": "אֲפֵ֘קָה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k1:6",
+      "word": "אֵלֵ֘ינוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k1:6",
+      "word": "שׁ֘וּבוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k3:24",
+      "word": "וַיָּבֹ֘אוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k4:13",
+      "word": "אֵלֶ֘יהָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k4:13",
+      "word": "אֵלֵ֘ינוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k5:17",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k5:20",
+      "word": "נַ֘עַר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k6:19",
+      "word": "הַדֶּ֘רֶךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k7:7",
+      "word": "וַיָּק֘וּמוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k8:5",
+      "word": "לַמֶּ֘לֶךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k15:29",
+      "word": "פִּלְאֶ֘סֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k16:14",
+      "word": "הַנְּחֹ֘שֶׁת֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k17:13",
+      "word": "שֻׁ֜֠בוּ",
+      "pair": [
+       "ger",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "2k19:23",
+      "word": "מַלְאָכֶ֘יךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k25:17",
+      "word": "נְחֹ֘שֶׁת֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2k25:17",
+      "word": "הַכֹּתֶ֘רֶת֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "is37:24",
+      "word": "עֲבָדֶ֘יךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "is50:2",
+      "word": "קָרָ֘אתִי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "is51:13",
+      "word": "שָׁמַ֘יִם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "je3:25",
+      "word": "וּֽתְכַסֵּ֘נוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "je5:3",
+      "word": "עֵינֶ֘יךָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "je24:1",
+      "word": "הִרְאַ֘נִי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "je29:6",
+      "word": "וְהוֹלִ֘ידוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "je31:12",
+      "word": "וּבָ֘אוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "je44:17",
+      "word": "הַשָּׁמַ֘יִם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "je49:3",
+      "word": "צְעַ֘קְנָה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek14:18",
+      "word": "הָאֵ֘לֶּה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek16:57",
+      "word": "בְּטֶ֘רֶם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek20:31",
+      "word": "נִטְמְאִ֤֨ים",
+      "pair": [
+       "mah",
+       "qad"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ek20:41",
+      "word": "נִיחֹ֘חַ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek23:10",
+      "word": "הֵ֘מָּה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek28:26",
+      "word": "עָלֶ֘יהָ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek37:11",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek40:48",
+      "word": "וַיְבִאֵ֘נִי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek41:2",
+      "word": "הַפֶּ֘תַח֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek45:1",
+      "word": "קֹ֘דֶשׁ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek47:1",
+      "word": "וַיְשִׁבֵ֘נִי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek47:2",
+      "word": "וַיּוֹצִאֵ֘נִי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ek48:10",
+      "word": "וּ֜֠לְאֵ֜֠לֶּה",
+      "pair": [
+       "ger",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ek48:16",
+      "word": "וְאֵ֘לֶּה֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ho9:4",
+      "word": "יַ֘יִן֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "zp2:15",
+      "word": "זֹ֞֠את",
+      "pair": [
+       "ger2",
+       "telg"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "zc14:4",
+      "word": "יְרֽוּשָׁלַ֘͏ִם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1c10:12",
+      "word": "וַיָּק֘וּמוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "1c21:15",
+      "word": "לִֽירוּשָׁלַ֘͏ִם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c2:11",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c5:9",
+      "word": "וַֽיַּאֲרִ֘יכוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c6:13",
+      "word": "וַֽיִּתְּנֵ֘הוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c10:16",
+      "word": "הַמֶּ֘לֶךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c14:7",
+      "word": "חַ֘יִל֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c20:9",
+      "word": "חֶ֘רֶב֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c24:6",
+      "word": "הַמֶּ֘לֶךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c24:11",
+      "word": "הַמֶּ֘לֶךְ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c28:18",
+      "word": "וְהַנֶּ֘גֶב֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c28:23",
+      "word": "דַרְמֶ֘שֶׂק֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c32:33",
+      "word": "וַֽיִּקְבְּרֻ֘הוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c35:24",
+      "word": "וַֽיַּרְכִּיבֻ֘הוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "2c35:25",
+      "word": "יִרְמְיָ֘הוּ֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "jb1:5",
+      "word": "בַּבֹּ֘קֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "jb42:11",
+      "word": "לֶ֘חֶם֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ru4:1",
+      "word": "הַשַּׁ֘עַר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "ec8:17",
+      "word": "וְרָאִ֘יתִי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "es4:14",
+      "word": "תַּחֲרִ֘ישִׁי֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "es5:12",
+      "word": "וַיֹּ֘אמֶר֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "da11:25",
+      "word": "הַנֶּ֘גֶב֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     },
+     {
+      "bcv": "da12:7",
+      "word": "מִמַּ֘עַל֮",
+      "pair": [
+       "tsit",
+       "tsor"
+      ],
+      "reason": "a stress-helper pair: one accent written twice"
+     }
+    ],
     "by_route": {
      "a: a secondary accent the compound inherits": 233
     },
@@ -8077,32 +12443,110 @@
      "mer-paz": 1
     },
     "simple_example_by_pair": {
-     "ole-mer": "רְשָׁ֫עִ֥ים",
-     "germ-rev": "לֵ֝צִ֗ים",
-     "mer-qad": "יִ֥תְיַצְּב֨וּ",
-     "tsit-mah": "ק֘וּמָ֤ה",
-     "tsit-mer": "יְתָ֘עֵ֥ב",
-     "֢-ole-mer": "מִֽמֹּעֲצ֢וֹתֵ֫יהֶ֥ם",
-     "֢-ole": "יִסַּ֢דְתָּ֫",
-     "mah-qad": "נ֤וֹדַ֨ע",
-     "mer-mun": "אִ֥מְר֣וֹת",
-     "mah-mer": "יָ֤גֵ֥ל",
-     "tsit-mah-rev": "בִּ֘ישׁ֤וּעָתֶ֗ךָ",
-     "germ-mer-rev": "וּ֝בִישׁ֥וּעָתְךָ֗",
-     "mer-rev": "מֵ֥אִתְּךָ֗",
-     "mun-etn": "דֹּ֣רְשָׁ֑יו",
-     "tip-mun": "אֹ֖רְחוֹתֶ֣יךָ",
-     "yby-paz": "אוֹדִ֪יעֲךָ֡",
-     "tip-sil": "מֵ֖חַטָּאתִֽי׃",
-     "ilu-qad": "וַהֲדָ֬רְךָ֨",
-     "mer-etn": "נ֥וֹעֲד֑וּ",
-     "mah-ole": "פֹּ֤עֲלֵ֫י",
-     "mah-mun": "בָּ֤ר֣וּךְ",
-     "dex-mun": "מִ֭גַּעֲרָ֣תְךָ",
-     "mer-tsor": "וֶ֥אֱֽמוּנָתוֹ֮",
-     "mer-sil": "בְּמַ֥עַלְלֵיהֶֽם׃",
-     "mah-tip": "שֶׁ֤אֵ֖ין",
-     "mer-paz": "בַּ֥מַּכְתֵּ֡שׁ"
+     "ole-mer": {
+      "word": "רְשָׁ֫עִ֥ים",
+      "bcv": "ps1:1"
+     },
+     "germ-rev": {
+      "word": "לֵ֝צִ֗ים",
+      "bcv": "ps1:1"
+     },
+     "mer-qad": {
+      "word": "יִ֥תְיַצְּב֨וּ",
+      "bcv": "ps2:2"
+     },
+     "tsit-mah": {
+      "word": "ק֘וּמָ֤ה",
+      "bcv": "ps3:8"
+     },
+     "tsit-mer": {
+      "word": "יְתָ֘עֵ֥ב",
+      "bcv": "ps5:7"
+     },
+     "֢-ole-mer": {
+      "word": "מִֽמֹּעֲצ֢וֹתֵ֫יהֶ֥ם",
+      "bcv": "ps5:11"
+     },
+     "֢-ole": {
+      "word": "יִסַּ֢דְתָּ֫",
+      "bcv": "ps8:3"
+     },
+     "mah-qad": {
+      "word": "נ֤וֹדַ֨ע",
+      "bcv": "ps9:17"
+     },
+     "mer-mun": {
+      "word": "אִ֥מְר֣וֹת",
+      "bcv": "ps12:7"
+     },
+     "mah-mer": {
+      "word": "יָ֤גֵ֥ל",
+      "bcv": "ps13:6"
+     },
+     "tsit-mah-rev": {
+      "word": "בִּ֘ישׁ֤וּעָתֶ֗ךָ",
+      "bcv": "ps20:6"
+     },
+     "germ-mer-rev": {
+      "word": "וּ֝בִישׁ֥וּעָתְךָ֗",
+      "bcv": "ps21:2"
+     },
+     "mer-rev": {
+      "word": "מֵ֥אִתְּךָ֗",
+      "bcv": "ps22:26"
+     },
+     "mun-etn": {
+      "word": "דֹּ֣רְשָׁ֑יו",
+      "bcv": "ps22:27"
+     },
+     "tip-mun": {
+      "word": "אֹ֖רְחוֹתֶ֣יךָ",
+      "bcv": "ps25:4"
+     },
+     "yby-paz": {
+      "word": "אוֹדִ֪יעֲךָ֡",
+      "bcv": "ps32:5"
+     },
+     "tip-sil": {
+      "word": "מֵ֖חַטָּאתִֽי׃",
+      "bcv": "ps38:19"
+     },
+     "ilu-qad": {
+      "word": "וַהֲדָ֬רְךָ֨",
+      "bcv": "ps45:5"
+     },
+     "mer-etn": {
+      "word": "נ֥וֹעֲד֑וּ",
+      "bcv": "ps48:5"
+     },
+     "mah-ole": {
+      "word": "פֹּ֤עֲלֵ֫י",
+      "bcv": "ps53:5"
+     },
+     "mah-mun": {
+      "word": "בָּ֤ר֣וּךְ",
+      "bcv": "ps68:20"
+     },
+     "dex-mun": {
+      "word": "מִ֭גַּעֲרָ֣תְךָ",
+      "bcv": "ps76:7"
+     },
+     "mer-tsor": {
+      "word": "וֶ֥אֱֽמוּנָתוֹ֮",
+      "bcv": "ps98:3"
+     },
+     "mer-sil": {
+      "word": "בְּמַ֥עַלְלֵיהֶֽם׃",
+      "bcv": "ps106:39"
+     },
+     "mah-tip": {
+      "word": "שֶׁ֤אֵ֖ין",
+      "bcv": "ps146:3"
+     },
+     "mer-paz": {
+      "word": "בַּ֥מַּכְתֵּ֡שׁ",
+      "bcv": "pr27:22"
+     }
     },
     "simple_excluded": {
      "the two marks are on one letter": {
@@ -8112,6 +12556,1539 @@
       "mun-dex": 1
      }
     },
+    "simple_excluded_words": [
+     {
+      "bcv": "ps8:7",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps11:1",
+      "word": "נ֝֗וּדִי",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps14:3",
+      "word": "אֵ֝֗ין",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps16:1",
+      "word": "אֵ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps17:6",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps17:10",
+      "word": "פִּ֝֗ימוֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps18:15",
+      "word": "רָ֝֗ב",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps18:31",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps18:32",
+      "word": "צ֝֗וּר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps20:9",
+      "word": "קַּ֝֗מְנוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps25:21",
+      "word": "כִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps30:12",
+      "word": "לִ֥֫י",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps31:20",
+      "word": "נֶ֝֗גֶד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps31:22",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps32:9",
+      "word": "בַּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps32:10",
+      "word": "חֶ֝֗סֶד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps33:6",
+      "word": "פִּ֝֗יו",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps36:5",
+      "word": "רָ֝֗ע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps37:2",
+      "word": "דֶּ֝֗שֶׁא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps40:16",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps42:3",
+      "word": "חָ֥֫י",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps45:9",
+      "word": "שֵׁ֝֗ן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps48:7",
+      "word": "חִ֝֗יל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps48:11",
+      "word": "צֶ֝֗דֶק",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps49:3",
+      "word": "יַ֝֗חַד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps52:3",
+      "word": "אֵ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps53:2",
+      "word": "עָ֝֗וֶל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps53:4",
+      "word": "אֵ֝֗ין",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps55:4",
+      "word": "אָ֝֗וֶן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps55:5",
+      "word": "מָ֝֗וֶת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps55:20",
+      "word": "סֶ֥֫לָה",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps57:2",
+      "word": "עַ֝֗ד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps58:9",
+      "word": "אֵ֝֗שֶׁת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps62:10",
+      "word": "הֵ֝֗מָּה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps62:12",
+      "word": "עֹ֝֗ז",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps63:9",
+      "word": "בִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps64:7",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps66:6",
+      "word": "שָׁ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps68:18",
+      "word": "בָֿ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps68:20",
+      "word": "י֥֫וֹם",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps68:29",
+      "word": "ז֝֗וּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps69:36",
+      "word": "שָׁ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps73:19",
+      "word": "תַ֝֗מּוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps75:9",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps76:12",
+      "word": "שַׁ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps77:9",
+      "word": "אֹ֝֗מֶר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps77:17",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps78:30",
+      "word": "ע֝֗וֹד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps78:42",
+      "word": "י֝֗וֹם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps78:60",
+      "word": "אֹ֝֗הֶל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps83:11",
+      "word": "דֹ֝֗מֶן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps83:13",
+      "word": "אֵ֝֗ת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps84:5",
+      "word": "ע֝֗וֹד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps85:2",
+      "word": "שַׁ֝֗בְתָּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps86:2",
+      "word": "אָ֥֫נִי",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps87:4",
+      "word": "זֶ֝֗ה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps90:10",
+      "word": "חִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps94:9",
+      "word": "עַ֝֗יִן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps94:16",
+      "word": "לִ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps96:4",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps98:3",
+      "word": "אֵ֝֗ת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps98:8",
+      "word": "יַ֝֗חַד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps99:2",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps101:4",
+      "word": "רָ֝֗ע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps101:6",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps104:14",
+      "word": "לֶ֝֗חֶם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps104:19",
+      "word": "שֶׁ֝֗מֶשׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps105:2",
+      "word": "שִׂ֝֗יחוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps105:11",
+      "word": "חֶ֝֗בֶל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps106:20",
+      "word": "שׁ֝֗וֹר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps107:33",
+      "word": "מַ֝֗יִם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps109:16",
+      "word": "חָ֥֫סֶד",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps109:20",
+      "word": "רָ֝֗ע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps110:6",
+      "word": "רֹ֝֗אשׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps113:8",
+      "word": "עִ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:13",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:49",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:61",
+      "word": "תּ֥֝וֹרָתְךָ֗",
+      "pair": [
+       "mer",
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:62",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:90",
+      "word": "אֶ֝֗רֶץ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:92",
+      "word": "אָ֝֗ז",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:93",
+      "word": "בָ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:136",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps119:164",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps120:4",
+      "word": "עִ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps120:6",
+      "word": "עִ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps120:7",
+      "word": "הֵ֝֗מָּה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps123:2",
+      "word": "עַ֝֗ד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps124:4",
+      "word": "נַ֝֗חְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps124:6",
+      "word": "טֶ֝֗רֶף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps125:2",
+      "word": "לָ֥֫הּ",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps127:4",
+      "word": "כֵּ֝֗ן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps128:5",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps129:2",
+      "word": "גַּ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps129:5",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps132:1",
+      "word": "אֵ֝֗ת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps132:17",
+      "word": "נֵ֝֗ר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps135:2",
+      "word": "שֶׁ֣֭עֹמְדִים",
+      "pair": [
+       "mun",
+       "dex"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps135:17",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:3",
+      "word": "לָ֝֗נוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:4",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:6",
+      "word": "עַ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps137:7",
+      "word": "עַ֝֗ד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps143:12",
+      "word": "כִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "ps148:10",
+      "word": "רֶ֝֗מֶשׂ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb5:10",
+      "word": "מַ֝֗יִם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb6:7",
+      "word": "הֵ֝֗מָּה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb6:29",
+      "word": "ע֝֗וֹד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb7:15",
+      "word": "מָ֝֗וֶת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb8:6",
+      "word": "אָ֥֫תָּה",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb8:15",
+      "word": "בּ֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb8:18",
+      "word": "בּ֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb9:22",
+      "word": "הִ֥֫יא",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb11:12",
+      "word": "פֶּ֝֗רֶא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb12:13",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb12:16",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb16:10",
+      "word": "יַ֝֗חַד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb16:12",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb17:3",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb17:12",
+      "word": "א֝֗וֹר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb18:17",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb24:5",
+      "word": "לֶ֝֗חֶם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb26:5",
+      "word": "מַ֝֗יִם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb26:7",
+      "word": "אֶ֝֗רֶץ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb27:20",
+      "word": "לַ֝֗יְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb28:12",
+      "word": "זֶ֝֗ה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb28:20",
+      "word": "זֶ֝֗ה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb29:25",
+      "word": "רֹ֥֫אשׁ",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb30:3",
+      "word": "אֶ֝֗מֶשׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb31:40",
+      "word": "תַּ֝֗מּוּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:11",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:13",
+      "word": "שָׂ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:20",
+      "word": "לָ֥֫יְלָה",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:22",
+      "word": "שָׁ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb34:25",
+      "word": "לַ֝֗יְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb37:17",
+      "word": "אֶ֝֗רֶץ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb37:20",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb39:17",
+      "word": "לָ֝֗הּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:2",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:11",
+      "word": "אֵ֝֗שׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:23",
+      "word": "יָ֝֗ם",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "jb41:26",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr1:1",
+      "word": "מֶ֝֗לֶךְ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr7:9",
+      "word": "לַ֝֗יְלָה",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr8:27",
+      "word": "ח֝֗וּג",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr9:2",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr11:31",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:4",
+      "word": "בָּ֝֗הּ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:11",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:16",
+      "word": "רָ֝֗ב",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr15:24",
+      "word": "ס֝֗וּר",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr17:7",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr18:2",
+      "word": "כִּ֝֗י",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr18:9",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr19:10",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr19:26",
+      "word": "בֵּ֝֗ן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr20:1",
+      "word": "בּ֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr20:14",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr21:27",
+      "word": "אַ֝֗ף",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr24:8",
+      "word": "ל֝֗וֹ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr24:24",
+      "word": "אָ֥֫תָּה",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr25:28",
+      "word": "אִ֝֗ישׁ",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr26:27",
+      "word": "אֶ֝֗בֶן",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr28:16",
+      "word": "בֶ֝֗צַע",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr28:24",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr29:5",
+      "word": "רֶ֝֗שֶׁת",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr30:5",
+      "word": "ה֝֗וּא",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr30:15",
+      "word": "הַ֥֫ב",
+      "pair": [
+       "mer",
+       "ole"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr31:12",
+      "word": "כֹּ֝֗ל",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     },
+     {
+      "bcv": "pr31:26",
+      "word": "חֶ֝֗סֶד",
+      "pair": [
+       "germ",
+       "rev"
+      ],
+      "reason": "the two marks are on one letter"
+     }
+    ],
     "by_route": {
      "(not attempted -- the route split is prose doctrine)": 17
     },

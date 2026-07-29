@@ -188,7 +188,12 @@ ROM_PASEQ = "paseq"
 # Shabbat scope note, where the p-trad/m-trad also diverge -- on the three signal words, p-trad
 # geresh/revia/zaqef qatan against m-trad pazer/telisha gedolah/revia.
 ROM_GERESH = "geresh"
-ROM_ZAQEF_QATAN = "zaqef qatan"
+# "zaqef", not "zaqef qatan" (Ben, 2026-07-29): "it is widely understood to be 'qatan by
+# default', somewhat analogously to the way that qamats is widely understood to be gadol by
+# default".  The constant keeps its full name, since that is the accent it stands for; only what
+# a reader sees is shortened.  No page these strands feed names the zaqef gadol, so nothing here
+# is left ambiguous by the shortening.
+ROM_ZAQEF_QATAN = "zaqef"
 ROM_PAZER = "pazer"
 ROM_TELISHA_GEDOLAH = "telisha gedolah"
 # Named only on the maqaf-nonfinal-accents page, whose accent-pair table reaches every pair that
@@ -196,6 +201,10 @@ ROM_TELISHA_GEDOLAH = "telisha gedolah"
 # meets.  The gershayim is named there in the note saying which words the table leaves out.
 ROM_DARGA = "darga"
 ROM_GERSHAYIM = "gershayim"
+# The other name a geresh goes by when the chanted word it is on is stressed on its last
+# syllable.  Named only where that page explains the abbreviated cell; the trio never needs it,
+# and it is NOT a synonym to reach for -- see that explanation for why.
+ROM_AZLA = "azla"
 # Named only in the Simanim page's Simanim *Tanakh* verdict table (issue #69, Result 8), for the
 # one divergence that agrees with neither תחתון strand: a qadma on ויום where every תחתון strand
 # has a pashta.
