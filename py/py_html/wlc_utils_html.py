@@ -276,6 +276,11 @@ def small(contents, attr=None):
     return htel_mk_inline("small", attr, contents)
 
 
+def abbr(contents, title):
+    """Make an <abbr> element: a short form, with the full one revealed on hover."""
+    return htel_mk_inline("abbr", {"title": title}, contents)
+
+
 def big(contents, attr=None):
     """Make a <big> element."""
     return htel_mk_inline("big", attr, contents)

@@ -191,6 +191,11 @@ ROM_GERESH = "geresh"
 ROM_ZAQEF_QATAN = "zaqef qatan"
 ROM_PAZER = "pazer"
 ROM_TELISHA_GEDOLAH = "telisha gedolah"
+# Named only on the maqaf-nonfinal-accents page, whose accent-pair table reaches every pair that
+# occurs on a chanted word of MAM's prose verses and so needs a name for marks the trio never
+# meets.  The gershayim is named there in the note saying which words the table leaves out.
+ROM_DARGA = "darga"
+ROM_GERSHAYIM = "gershayim"
 # Named only in the Simanim page's Simanim *Tanakh* verdict table (issue #69, Result 8), for the
 # one divergence that agrees with neither תחתון strand: a qadma on ויום where every תחתון strand
 # has a pashta.

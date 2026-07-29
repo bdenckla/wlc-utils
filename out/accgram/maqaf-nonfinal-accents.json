@@ -876,21 +876,51 @@
      "tip-etn": 3,
      "qad-mer": 3,
      "mah-pash": 3,
-     "ger2-telg": 2,
      "mun-etn": 2,
      "mun-paz": 1,
      "telg-ger2": 1,
      "mer-tev": 1,
-     "tsit-tsor": 1,
-     "germ-telg": 1,
      "telg-rev": 1,
      "mer-etn": 1,
-     "mah-qad": 1,
      "telg-ger": 1,
      "dar-ger2": 1,
      "mer-sil": 1,
      "mun-mah": 1,
      "mer-mun": 1
+    },
+    "simple_example_by_pair": {
+     "mun-zaq": "וּלְמ֣וֹעֲדִ֔ים",
+     "qad-zaq": "לְזַ֨רְעֲךָ֔",
+     "qad-ger": "אֱלֹ֨הֵיכֶ֜ם",
+     "mun-paz": "אָ֣נָּ֡א",
+     "mun-rev": "אָ֣נָּ֗א",
+     "telg-ger2": "קִ֠רְב֞וּ",
+     "tip-sil": "לְהֵ֖חַלּֽוֹ׃",
+     "qad-mah": "וּבְאַ֨חֵיכֶ֤ם",
+     "tip-etn": "בְּשָׁבֻעֹ֖תֵיכֶ֑ם",
+     "qad-mer": "הַמַּֽאֲכִ֨לְךָ֥",
+     "mer-tev": "נֹ֥שְׂאֵ֛י",
+     "mun-etn": "יְדִ֣ידְיָ֑הּ",
+     "mer-tip": "מַבְלִ֥יגִיתִ֖י",
+     "telg-rev": "וַ֠יִּשְׁמַ֗ע",
+     "mer-etn": "בְּכ֥וֹבָעִ֑ים",
+     "telg-ger": "וּ֠לְאֵ֜לֶּה",
+     "qad-dar": "וַאֲדֹ֨נִיָּ֧הוּ",
+     "dar-ger2": "יִ֧רֶ֞ב",
+     "mah-pash": "שֶׁ֤אָהֲבָה֙",
+     "mer-sil": "שַׁלְהֶ֥בֶתְיָֽה׃",
+     "mun-mah": "שֶׁ֣הֵ֤ם",
+     "mer-mun": "וְשֵׁרֵ֥בְיָ֣ה׀"
+    },
+    "simple_excluded": {
+     "a stress-helper pair: one accent written twice": {
+      "tsit-tsor": 1
+     },
+     "the two marks are on one letter": {
+      "ger2-telg": 2,
+      "germ-telg": 1,
+      "mah-qad": 1
+     }
     },
     "by_route": {
      "a: a secondary accent the compound inherits": 132,
@@ -2609,7 +2639,7 @@
     "hits": 30,
     "simple_two_accent_words": 3073,
     "simple_by_pair": {
-     "germ-rev": 2489,
+     "germ-rev": 2344,
      "ole-mer": 311,
      "tsit-mah": 163,
      "tip-mun": 23,
@@ -2623,17 +2653,48 @@
      "mer-rev": 3,
      "mun-etn": 3,
      "dex-mer": 3,
-     "mer-qad": 2,
      "dex-rev": 2,
      "tsit-mah-rev": 2,
      "yby-paz": 2,
      "mer-sil": 2,
+     "mer-qad": 1,
      "yby-ole-mer": 1,
      "ilu-qad": 1,
      "mah-ole": 1,
-     "mun-mer": 1,
-     "rev-ger": 1,
-     "mun-dex": 1
+     "mun-mer": 1
+    },
+    "simple_example_by_pair": {
+     "ole-mer": "רְשָׁ֫עִ֥ים",
+     "germ-rev": "לֵ֝צִ֗ים",
+     "mer-qad": "יִ֥תְיַצְּב֨וּ׀",
+     "tsit-mah": "ק֘וּמָ֤ה",
+     "tsit-mer": "יְתָ֘עֵ֥ב׀",
+     "yby-ole-mer": "מִֽמֹּעֲצ֪וֹתֵ֫יהֶ֥ם",
+     "dex-rev": "לִ֭בּ֗וֹת",
+     "yby-ole": "יִסַּ֪דְתָּ֫",
+     "mah-qad": "נ֤וֹדַ֨ע׀",
+     "mah-mer": "יָ֤גֵ֥ל",
+     "tsit-mah-rev": "בִּ֘ישׁ֤וּעָתֶ֗ךָ",
+     "germ-mer-rev": "וּ֝בִישׁ֥וּעָתְךָ֗",
+     "mer-rev": "מֵ֥אִתְּךָ֗",
+     "mun-etn": "דֹּ֣רְשָׁ֑יו",
+     "tip-mun": "אֹ֖רְחוֹתֶ֣יךָ",
+     "yby-paz": "אוֹדִ֪יעֲךָ֡",
+     "ilu-qad": "וַהֲדָ֬רְךָ֨׀",
+     "mah-ole": "פֹּ֤עֲלֵ֫י",
+     "mun-mer": "תְּשׁ֣וֹבֵ֥ב",
+     "mah-mun": "בָּ֤ר֣וּךְ",
+     "dex-mun": "מִ֭גַּעֲרָ֣תְךָ",
+     "dex-mer": "צָ֭רָתִ֥י",
+     "mer-sil": "לִגְאֵ֥יוֹנִֽים׃"
+    },
+    "simple_excluded": {
+     "the two marks are on one letter": {
+      "germ-rev": 145,
+      "mer-qad": 1,
+      "rev-ger": 1,
+      "mun-dex": 1
+     }
     },
     "by_route": {
      "(not attempted -- the route split is prose doctrine)": 30
@@ -3041,20 +3102,51 @@
      "mah-pash": 3,
      "tip-etn": 3,
      "mun-etn": 2,
-     "ger2-telg": 2,
      "dar-ger2": 1,
-     "mah-qad": 1,
      "telg-ger": 1,
      "mun-paz": 1,
      "telg-rev": 1,
      "mer-etn": 1,
      "qad-pash": 1,
-     "ger-telg": 1,
      "mun-mah": 1,
      "telg-ger2": 1,
      "mer-mun": 1,
-     "tsit-tsor": 1,
      "mer-sil": 1
+    },
+    "simple_example_by_pair": {
+     "qad-ger": "וְאָ֨נֹכִ֜י",
+     "mun-zaq": "מִמְּעֹ֣נָת֔וֹ",
+     "qad-zaq": "וְיִ֨שְׂרָאֵ֔ל",
+     "tip-sil": "וְהָאֶשְׁתָּ֖אֻֽלִֽי׃",
+     "mun-etn": "שֶׁ֣עִמָּהֶ֑ם",
+     "mer-tip": "לְמַבָּרִ֥אשׁוֹנָ֖ה",
+     "qad-dar": "וַאֲדֹ֨נִיָּ֧הוּ",
+     "dar-ger2": "יִ֧רֶ֞ב",
+     "qad-mah": "בְּקִינ֨וֹתֵיהֶ֤ם",
+     "mun-rev": "בֵּ֣לְטְשַׁאצַּ֗ר",
+     "qad-mer": "הַמּֽ͏ַאֲכִ֨לְךָ֥",
+     "mer-tev": "יָ֥דְךָ֛",
+     "mah-pash": "שֶׁ֤הַנְּחָלִים֙",
+     "tip-etn": "לָא֖וֹפַנִּ֑ים",
+     "telg-ger": "וּ֠לְאֵ֜לֶּה",
+     "mun-paz": "אָ֣נָּ֡א",
+     "telg-rev": "וַ֠יִּשְׁמַ֗ע",
+     "mer-etn": "בְּכ֥וֹבָעִ֑ים",
+     "qad-pash": "אֲרִיצֶ֨נּוּ֙",
+     "mun-mah": "שֶׁ֣הֵ֤ם",
+     "telg-ger2": "קִ֠רְב֞וּ",
+     "mer-mun": "וְשֵׁרֵ֥בְיָ֣ה ׀",
+     "mer-sil": "שַׁלְהֶ֥בֶתְיָֽה׃"
+    },
+    "simple_excluded": {
+     "a stress-helper pair: one accent written twice": {
+      "tsit-tsor": 1
+     },
+     "the two marks are on one letter": {
+      "ger2-telg": 2,
+      "mah-qad": 1,
+      "ger-telg": 1
+     }
     },
     "by_route": {
      "a: a secondary accent the compound inherits": 124,
@@ -4634,7 +4726,7 @@
     "hits": 29,
     "simple_two_accent_words": 3090,
     "simple_by_pair": {
-     "germ-rev": 2486,
+     "germ-rev": 2342,
      "ole-mer": 312,
      "tsit-mah": 163,
      "tip-mun": 25,
@@ -4646,23 +4738,57 @@
      "mah-qad": 7,
      "dex-mer": 5,
      "mer-sil": 5,
-     "mer-qad": 5,
      "mer-rev": 4,
+     "mer-qad": 4,
      "mah-mun": 4,
      "mun-etn": 3,
      "tsit-mah-rev": 2,
      "dex-rev": 2,
      "yby-paz": 2,
      "mer-mun": 2,
-     "tip-rev": 1,
      "germ-ger": 1,
      "֢-ole-mer": 1,
      "tip-sil": 1,
      "ilu-qad": 1,
      "mah-ole": 1,
-     "mun-mer": 1,
-     "rev-ger": 1,
-     "mun-dex": 1
+     "mun-mer": 1
+    },
+    "simple_example_by_pair": {
+     "germ-rev": "אָ֝מַ֗ר",
+     "֢-ole": "יִקָּחֵ֢ה֫וּ",
+     "ole-mer": "נִ֫שְׁפּ֥וֹ",
+     "tsit-mah": "רָ֘עֵ֤ב",
+     "tsit-mah-rev": "נֶ֘חָ֤מָתִ֗י",
+     "dex-mun": "יִ֭לָּ֣פְתוּ",
+     "tip-mun": "וְשִׁ֖חֲרְתַּ֣נִי",
+     "dex-mer": "יֹ֭נַקְתּ֥וֹ",
+     "mer-rev": "לְשֹׁ֥דְדִ֗ים",
+     "germ-mer-rev": "וְ֝אֵ֥מָתְךָ֗",
+     "tsit-mer": "מִתְקוֹמָ֘מָ֥ה",
+     "mer-sil": "תַּנְח֥וּמֹֽתֵיכֶֽם׃",
+     "mun-etn": "אֹ֣יְבִ֑י",
+     "germ-ger": "וְ֝יָדַעְתָּ֜",
+     "mah-mer": "ה֤וֹלֵ֥ךְ",
+     "mah-qad": "יֹ֤סֵ֨ר ׀",
+     "mer-qad": "רֵ֥עֲךָ֨",
+     "֢-ole-mer": "מִֽמֹּעֲצ֢וֹתֵ֫יהֶ֥ם",
+     "dex-rev": "לִ֭בּ֗וֹת",
+     "yby-paz": "אוֹדִ֪יעֲךָ֡",
+     "tip-sil": "מֵ֖חַטָּאתִֽי׃",
+     "ilu-qad": "וַהֲדָ֬רְךָ֨ ׀",
+     "mah-ole": "פֹּ֤עֲלֵ֫י",
+     "mun-mer": "תְּשׁ֣וֹבֵ֥ב",
+     "mer-mun": "תְּה֥וֹתְת֣וּ",
+     "mah-mun": "בָּ֤ר֣וּךְ"
+    },
+    "simple_excluded": {
+     "the two marks are on one letter": {
+      "germ-rev": 144,
+      "tip-rev": 1,
+      "mer-qad": 1,
+      "rev-ger": 1,
+      "mun-dex": 1
+     }
     },
     "by_route": {
      "(not attempted -- the route split is prose doctrine)": 29
@@ -5048,7 +5174,6 @@
     "simple_by_pair": {
      "mun-zaq": 959,
      "qad-zaq": 198,
-     "tsit-tsor": 135,
      "qad-ger": 99,
      "mer-tev": 61,
      "qad-dar": 5,
@@ -5056,17 +5181,43 @@
      "tip-sil": 4,
      "qad-mah": 4,
      "mer-tip": 4,
-     "ger2-telg": 3,
      "tip-etn": 3,
      "qad-mer": 3,
      "mah-pash": 3,
      "mun-etn": 2,
-     "ger-telg": 2,
      "mun-paz": 1,
-     "mah-qad": 1,
      "mer-sil": 1,
      "mun-mah": 1,
      "mer-mun": 1
+    },
+    "simple_example_by_pair": {
+     "mun-zaq": "וּלְמ֣וֹעֲדִ֔ים",
+     "mer-tev": "גָּ֥בְר֛וּ",
+     "qad-zaq": "לְזַ֨רְעֲךָ֔",
+     "qad-ger": "אֱלֹ֨הֵיכֶ֜ם",
+     "mun-paz": "אָ֣נָּ֡א",
+     "mun-rev": "אָ֣נָּ֗א",
+     "tip-sil": "לְהֵ֖חַלּֽוֹ׃",
+     "qad-mah": "וּבְאַ֨חֵיכֶ֤ם",
+     "tip-etn": "בְּשָׁבֻעֹ֖תֵיכֶ֑ם",
+     "qad-mer": "הַמַּאֲכִ֨לְךָ֥",
+     "mun-etn": "יְדִ֣ידְיָ֑הּ",
+     "mer-tip": "מַבְלִ֥יגִיתִ֖י",
+     "qad-dar": "וַאֲדֹ֨נִיָּ֧הוּ",
+     "mah-pash": "שֶׁ֤אָֽהֲבָה֙",
+     "mer-sil": "שַׁלְהֶ֥בֶתְיָֽה׃",
+     "mun-mah": "שֶׁ֣הֵ֤ם",
+     "mer-mun": "וְשֵׁרֵ֥בְיָ֣ה"
+    },
+    "simple_excluded": {
+     "a stress-helper pair: one accent written twice": {
+      "tsit-tsor": 135
+     },
+     "the two marks are on one letter": {
+      "ger2-telg": 3,
+      "ger-telg": 2,
+      "mah-qad": 1
+     }
     },
     "by_route": {
      "a: a secondary accent the compound inherits": 233
@@ -7898,14 +8049,13 @@
     "hits": 17,
     "simple_two_accent_words": 3168,
     "simple_by_pair": {
-     "germ-rev": 2530,
+     "germ-rev": 2375,
      "ole-mer": 308,
      "tsit-mah": 159,
      "tip-mun": 31,
      "mer-mun": 20,
      "germ-mer-rev": 18,
      "dex-mun": 14,
-     "mer-ole": 13,
      "tsit-mer": 12,
      "mer-qad": 10,
      "֢-ole": 9,
@@ -7923,10 +8073,44 @@
      "ilu-qad": 1,
      "mah-ole": 1,
      "mer-tsor": 1,
-     "mer-germ-rev": 1,
-     "mun-dex": 1,
      "mah-tip": 1,
      "mer-paz": 1
+    },
+    "simple_example_by_pair": {
+     "ole-mer": "רְשָׁ֫עִ֥ים",
+     "germ-rev": "לֵ֝צִ֗ים",
+     "mer-qad": "יִ֥תְיַצְּב֨וּ",
+     "tsit-mah": "ק֘וּמָ֤ה",
+     "tsit-mer": "יְתָ֘עֵ֥ב",
+     "֢-ole-mer": "מִֽמֹּעֲצ֢וֹתֵ֫יהֶ֥ם",
+     "֢-ole": "יִסַּ֢דְתָּ֫",
+     "mah-qad": "נ֤וֹדַ֨ע",
+     "mer-mun": "אִ֥מְר֣וֹת",
+     "mah-mer": "יָ֤גֵ֥ל",
+     "tsit-mah-rev": "בִּ֘ישׁ֤וּעָתֶ֗ךָ",
+     "germ-mer-rev": "וּ֝בִישׁ֥וּעָתְךָ֗",
+     "mer-rev": "מֵ֥אִתְּךָ֗",
+     "mun-etn": "דֹּ֣רְשָׁ֑יו",
+     "tip-mun": "אֹ֖רְחוֹתֶ֣יךָ",
+     "yby-paz": "אוֹדִ֪יעֲךָ֡",
+     "tip-sil": "מֵ֖חַטָּאתִֽי׃",
+     "ilu-qad": "וַהֲדָ֬רְךָ֨",
+     "mer-etn": "נ֥וֹעֲד֑וּ",
+     "mah-ole": "פֹּ֤עֲלֵ֫י",
+     "mah-mun": "בָּ֤ר֣וּךְ",
+     "dex-mun": "מִ֭גַּעֲרָ֣תְךָ",
+     "mer-tsor": "וֶ֥אֱֽמוּנָתוֹ֮",
+     "mer-sil": "בְּמַ֥עַלְלֵיהֶֽם׃",
+     "mah-tip": "שֶׁ֤אֵ֖ין",
+     "mer-paz": "בַּ֥מַּכְתֵּ֡שׁ"
+    },
+    "simple_excluded": {
+     "the two marks are on one letter": {
+      "germ-rev": 155,
+      "mer-ole": 13,
+      "mer-germ-rev": 1,
+      "mun-dex": 1
+     }
     },
     "by_route": {
      "(not attempted -- the route split is prose doctrine)": 17

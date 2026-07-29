@@ -161,6 +161,28 @@ _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
     (am.MUNAX, am.PAZER): "secondary munax in the pazer's chanted word (ITM §276)",
 }
 
+# TWO MARKS ARE NOT ALWAYS TWO ACCENTS, and on a SIMPLE chanted word the difference has to be
+# made mechanically, this scan having no accent tokenization to lean on.  Two kinds of pair are
+# set aside, each by a rule that reads the word rather than a list of references:
+#
+# * A stress-helper pair, where one accent is written twice under two codepoints.  In a prose
+#   verse a tsinnorit beside a tsinnor is the zarqa, written at the chanted word's edge and
+#   again on the stressed syllable; ``accent_marks`` names that codepoint "zarqa stress-helper /
+#   tsinnorit" for exactly this reason.  A helper written under the SAME codepoint as its accent
+#   never reaches here: a repeated mark is one accent already, the same rule the compound side
+#   applies.
+# * Two marks on ONE LETTER.  Whatever such a pair is, it is not two accents on two syllables,
+#   and the six in MAM's prose verses are of two kinds that a reader would want kept apart from
+#   the rest either way -- five a geresh or gershayim with a telisha gedola, one (Ezekiel 20:31)
+#   a mahapakh with a qadma.  MAM-basics' own sec-merk FOI profiles mark the same configuration,
+#   with a ``+`` for two accents sharing a letter.
+#
+# The counts of each land in the survey, so a page can say what it leaves out and how much.
+SIMPLE_EXCL_ONE_LETTER = "the two marks are on one letter"
+SIMPLE_EXCL_STRESS_HELPER = "a stress-helper pair: one accent written twice"
+
+_ONE_ACCENT_WRITTEN_TWICE = frozenset((frozenset((am.TSINNORIT, am.TSINNOR)),))
+
 ROUTE_SECONDARY = "a: a secondary accent the compound inherits"
 ROUTE_HABIT = "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)"
 ROUTE_UNDECIDED = "?: undecided -- the non-final atom never stands free"
@@ -382,6 +404,8 @@ def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int
     A field of REPEATS is one accent written twice, not two accents -- the same rule the
     compound side applies -- so an atom counts here only when its accents are two DIFFERENT
     marks.  Order is the written order, which is the order the shapes are read in throughout.
+    Two different marks are still not always two accents, so each simple record carries an
+    ``excluded`` reason or ``None``; see ``SIMPLE_EXCL_ONE_LETTER`` above for the two rules.
     """
     hits: list[dict] = []
     simple: list[dict] = []
@@ -403,6 +427,7 @@ def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int
                             "pair": [
                                 _ACCENT_SHORTHAND.get(a, a) for a in _distinct(accents)
                             ],
+                            "excluded": simple_exclusion(word, accents),
                         }
                     )
                 continue
@@ -412,6 +437,32 @@ def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int
                 continue
             hits.append({"bcv": bcv, "word": word, "atoms": per_atom})
     return hits, n_verses, n_compounds, simple
+
+
+def simple_exclusion(word: str, accents: list[str]) -> str | None:
+    """Why this simple chanted word's two marks are not two accents, or None if they are.
+
+    Both rules read the word itself rather than a list of references; see the two
+    ``SIMPLE_EXCL_*`` constants above for what each is and why it is set aside.  The one-letter
+    rule is applied first, so a word that is both keeps the sharper reason.
+    """
+    if _accents_share_a_letter(word):
+        return SIMPLE_EXCL_ONE_LETTER
+    if frozenset(accents) in _ONE_ACCENT_WRITTEN_TWICE:
+        return SIMPLE_EXCL_STRESS_HELPER
+    return None
+
+
+def _accents_share_a_letter(word: str) -> bool:
+    """True when one base letter of the word has two DIFFERENT accents on it."""
+    on_letter: dict[int, set[str]] = defaultdict(set)
+    seen = 0
+    for ch in word:
+        if is_base_letter(ch):
+            seen += 1
+        elif is_accent(ch):
+            on_letter[seen].add(ch)
+    return any(len(accents) > 1 for accents in on_letter.values())
 
 
 def _distinct(accents: list[str]) -> list[str]:
@@ -662,8 +713,17 @@ def gray_maqaf_survey() -> dict:
 # --- the survey ---------------------------------------------------------------
 
 
+def _examples(simple: list[dict]) -> dict[str, str]:
+    """One chanted word per pair -- the first in corpus order, so a run cannot shuffle them."""
+    out: dict[str, str] = {}
+    for record in simple:
+        out.setdefault("-".join(record["pair"]), record["word"])
+    return out
+
+
 def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool) -> dict:
     hits, n_verses, n_compounds, simple = scan(words_by_bcv, keep)
+    counted = [s for s in simple if s["excluded"] is None]
     classified = [classify(h, oracle, routed=routed) for h in hits]
     return {
         "verses": n_verses,
@@ -671,11 +731,27 @@ def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool) -> dict:
         "hits": len(classified),
         # Simple chanted words with two accents: the other half of "compound or simple".  Only
         # the counts per pair are kept, not the occurrences -- there are far more of these than
-        # of the compound hits, and no page asks which verses they are.
+        # of the compound hits, and no page asks which verses they are.  One EXAMPLE per pair is
+        # kept, though, since a table of pairs is much easier to read with a form beside each,
+        # and a page must never retype an accent.  The example is the first in corpus order, so
+        # it is stable across runs.
+        #
+        # ``simple_two_accent_words`` counts every word with two different marks; the pair counts
+        # cover the ones whose two marks are two ACCENTS, and ``simple_excluded`` holds the rest,
+        # by reason and then by pair, so a page can say what it left out and how much.
         "simple_two_accent_words": len(simple),
         "simple_by_pair": dict(
-            Counter("-".join(s["pair"]) for s in simple).most_common()
+            Counter("-".join(s["pair"]) for s in counted).most_common()
         ),
+        "simple_example_by_pair": _examples(counted),
+        "simple_excluded": {
+            reason: dict(
+                Counter(
+                    "-".join(s["pair"]) for s in simple if s["excluded"] == reason
+                ).most_common()
+            )
+            for reason in sorted({s["excluded"] for s in simple if s["excluded"]})
+        },
         "by_route": dict(Counter(c["route"] for c in classified).most_common()),
         "by_configuration": dict(
             Counter(c["configuration"] for c in classified).most_common()

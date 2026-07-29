@@ -47,6 +47,11 @@ table.limited-width { max-width: 40em; }
 /* Counts and other numbers: right-justified, so digits line up on the units column. */
 th.numeric, td.numeric { text-align: right; }
 table.centered-table { margin-left: auto; margin-right: auto; }
+/* maqaf-nonfinal-accents.html: the accent-pair table's headings are abbreviated so five columns
+   fit without the counts drifting apart, with the full wording on hover.  Same affordance as
+   table.strand-table's abbr headings below. */
+table.accent-pair-table th abbr[title] { text-decoration: underline dotted; cursor: help; }
+table.accent-pair-table td, table.accent-pair-table th { padding: 0 0.5em; }
 div.goerwitz-tms-width-limited {
     max-width: 40em;
     width: 90%;
