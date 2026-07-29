@@ -69,13 +69,15 @@ from dataclasses import dataclass
 from accgram import accent_marks as am
 
 # Atoms are delimited by spaces and maqaf (``-``), mirroring the scanner's TEXT
-# class ``[^ \r\n\-]*`` which keeps a fused tsinnorit...tsinnor pair inside one atom.
+# class ``[^ \r\n\-]*`` which keeps a fused helper...zarqa pair inside one atom.
 _ATOM_SPLIT_RE = re.compile(r"[ \t\r\n\-]+")
 
 # stress-helper mark -> (fusion-partner mark, M-C code label) where the partner must
 # follow the helper later in the same atom for the helper to be well-formed.  Only the
-# zarqa stress-helper (tsinnorit, U+0598, M-C 82) -- whose partner is the tsinnor (U+05AE,
-# M-C 02) -- is active today.  The label is the original M-C code, kept so the
+# zarqa's stress helper (U+0598, M-C 82) -- whose partner is the zarqa itself (U+05AE,
+# M-C 02) -- is active today.  These verses are prose, so U+0598 and U+05AE can only be the
+# zarqa's helper and the zarqa; the ``am`` constants spell them TSINNORIT and TSINNOR after
+# the separate poetic accents that share the two codepoints (wlc-utils#85).  The label is the original M-C code, kept so the
 # ``illegal_mark`` report reads identically to the pre-Phase-2 output.
 _STRESS_HELPER_PARTNER: dict[str, tuple[str, str]] = {am.TSINNORIT: (am.TSINNOR, "82")}
 

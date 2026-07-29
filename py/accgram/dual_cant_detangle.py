@@ -45,9 +45,9 @@ Design (all four points verified against the data, see issue #36):
   one Deut 5:8 merkha is thus the taxton's qadma substitute and the elyon's stray, so it
   surfaces as an ungrammatical verse in *both* readings (two anomalies, one underlying WLC mark).
 
-MAM stress-helpers (zarqa/tsinnorit U+0598, and the doubled telisha / segol / pashta
-helpers) are never imposed on the WLC streams: ``_emit_word`` drops the tsinnorit and the
-second of any doubled accent.  MAM's metegs are likewise stripped from the emitted
+MAM stress-helpers (the zarqa's, U+0598, and the doubled telisha / segol / pashta helpers)
+are never imposed on the WLC streams: ``_emit_word`` drops the zarqa helper and the second
+of any doubled accent.  MAM's metegs are likewise stripped from the emitted
 stream (``_strip_nonfinal_meteg``), keeping only the verse-final meteg the scanner reads
 as silluq -- the rest are swallowed by the scanner, so dropping them is parse-neutral.
 
@@ -68,7 +68,11 @@ from accgram.prose_scanner import HasLegarmeh, Token, scan_accents
 from accgram.tree import TN, tree_to_obj
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
-_TSINNORIT = am.TSINNORIT
+# U+0598, the mark Unicode misnames ZARQA.  The Decalogue is prose, so here it can only be the
+# ZARQA'S STRESS HELPER -- not an accent of its own, and not a tsinnorit, which is the separate
+# poetic accent that happens to share the codepoint.  ``accent_marks`` still spells the constant
+# TSINNORIT, after that poetic sense; renaming it there is wlc-utils#85.
+_ZARQA_HELPER = am.TSINNORIT
 _METEG = am.METEG
 _SOF_PASUQ = am.SOF_PASUQ
 _PASEQ = am.PASEQ
@@ -228,10 +232,10 @@ def _accents(word: str) -> list[str]:
 
 def _real_accents_ordered(word: str) -> list[str]:
     """A MAM strand word's genuine accents: dedup (collapse a doubled stress-helper)
-    and drop the tsinnorit helper, preserving first-appearance order."""
+    and drop the zarqa's stress helper, preserving first-appearance order."""
     out: list[str] = []
     for c in word:
-        if uni_to_marks.is_accent(c) and c != _TSINNORIT and c not in out:
+        if uni_to_marks.is_accent(c) and c != _ZARQA_HELPER and c not in out:
             out.append(c)
     return out
 
@@ -659,14 +663,14 @@ def display_real_marks(strand_word: str, wlc_word: str) -> str:
     inventory shows what the detangler did to WLC, not MAM's own marking conventions.
 
     MAM doubles an accent -- once at the word's grammatical edge (the real mark) and once as an
-    inner stress-helper -- and adds a tsinnorit helper; neither belongs to WLC.  So drop the
-    tsinnorit (U+0598) and collapse each doubled accent to its real edge occurrence (first for a
+    inner stress-helper -- and adds a helper for the zarqa; neither belongs to WLC.  So drop the
+    zarqa helper (U+0598) and collapse each doubled accent to its real edge occurrence (first for a
     prepositive accent, last otherwise -- e.g. a postpositive segol/pashta).  But a stress helper
     WLC *itself* carries (then doubled in ``wlc_word`` too, most often a pashta) is genuine and is
     left intact.  The kept-character set matches ``display_form``."""
     drop_idx: set[int] = set()
     accents = {
-        ch for ch in strand_word if uni_to_marks.is_accent(ch) and ch != _TSINNORIT
+        ch for ch in strand_word if uni_to_marks.is_accent(ch) and ch != _ZARQA_HELPER
     }
     for accent in accents:
         occ = [j for j, ch in enumerate(strand_word) if ch == accent]
@@ -679,7 +683,7 @@ def display_real_marks(strand_word: str, wlc_word: str) -> str:
         ch
         for i, ch in enumerate(strand_word)
         if i not in drop_idx
-        and ch != _TSINNORIT
+        and ch != _ZARQA_HELPER
         and (
             uni_to_marks.is_base_letter(ch) or uni_to_marks.is_accent(ch) or ch in keep
         )
@@ -805,7 +809,7 @@ def _emit_word(
     """Build one WLC-stream word on the MAM strand word's spine.
 
     Keep base letters and the spine marks (maqaf / paseq / sof pasuq / meteg); drop the
-    tsinnorit stress-helper and the second of any doubled accent (a stress-helper); apply
+    zarqa's stress helper and the second of any doubled accent (a stress-helper); apply
     anomaly substitutions (MAM accent -> WLC's actual accent); drop points/dagesh/CGJ.
 
     Any ``strays`` (WLC accents this strand has no slot for) are spliced in at the strand
@@ -819,7 +823,7 @@ def _emit_word(
     meteg_idx = -1
     for ch in text:
         if uni_to_marks.is_accent(ch):
-            if ch == _TSINNORIT or ch in seen:
+            if ch == _ZARQA_HELPER or ch in seen:
                 continue
             seen.add(ch)
             out.append(substitutions.get(ch, ch))

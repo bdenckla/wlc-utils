@@ -21,8 +21,8 @@ additive field; ``status`` and ``tree`` are left alone, and whether a chanted wo
 his inventory names should be ungrammatical is a later, separate decision.
 
 TOKENS, NOT MARKS, and that choice is the design.  The prose scanner already fuses several
-written pairs into one token: a doubled stress helper (pashta, telisha qetana), a tsinnorit with
-its tsinnor, the same-letter ``mahapakh!qadma`` cluster, munax + U+05C0 as legarmeh, and
+written pairs into one token: a doubled stress helper (pashta, telisha qetana), the zarqa's own
+helper with its zarqa, the same-letter ``mahapakh!qadma`` cluster, munax + U+05C0 as legarmeh, and
 qadma...zaqef as ``METHIGAZAQEF``.  It also swallows meteg, emitting ``SILLUQ`` only for a
 verse-final U+05BD before sof pasuq.  Counting tokens therefore disposes of every confound that
 would otherwise have to be special-cased -- a stress helper written twice is not two accents, and
@@ -1038,8 +1038,8 @@ def build_survey() -> dict:
         "criterion": (
             "A chanted word -- an atom, or a whole maqaf compound -- carrying two or more"
             " accent TOKENS as the prose scanner emits them. Tokens rather than marks: the"
-            " scanner already fuses a doubled stress helper, a tsinnorit with its tsinnor,"
-            " the same-letter mahapakh!qadma cluster, munax with a following U+05C0 as"
+            " scanner already fuses a doubled stress helper, the zarqa's own helper with"
+            " its zarqa, the same-letter mahapakh!qadma cluster, munax with a following U+05C0 as"
             " legarmeh, and qadma...zaqef as metigah-zaqef, and it swallows meteg. A geresh"
             " or gershayim written twice on one chanted word is folded here, since that is"
             " one accent written twice and the scanner does not fuse it."
