@@ -198,6 +198,52 @@ _PAIR_SECOND_NAME = {
 # sits over nothing.
 _NUMERIC_CELL = {"class": "numeric"}
 
+# A cell holding Hebrew is declared right-to-left, which right-justifies it as a consequence of
+# saying what the cell holds.  Ben, 2026-07-29: "probably declaring the cells dir='rtl' would do
+# it, arguably at a better, more semantic level than a literal setting of the text-align
+# property".  It works because table.centered-table centers the TABLE and not its cells, so a
+# cell's text still starts at its start edge -- which dir="rtl" moves to the right.  No
+# stylesheet rule is needed, and none is added: a class here would be a second place to look.
+#
+# EVERY Hebrew cell on the page gets it, not just the one Ben happened to be looking at.  He had
+# asked only about the one-letter appendix's "Chanted word" column, then: "this problem afflicts
+# the other tables in the document as well, and indeed is something I find myself telling you
+# about frequently ... this should just be sort of obvious, that (unless the whole table is
+# dir=rtl) Hebrew cells should be dir=rtl".  So it is a standing rule, now written into the
+# ``hebrew-prose`` skill's rendered-prose reference rather than left to be re-noticed per table.
+_HEBREW_CELL = {"dir": "rtl"}
+
+# One attributes tuple per table, so a table's body rows and its Total row cannot come to align
+# their columns differently -- each was spelled out twice before the Hebrew cells were declared.
+# The Total row's example cells are empty, and are declared right-to-left all the same: the
+# declaration says what the COLUMN holds, and an exception for the blank one would be a second
+# rule to keep in step.
+_PAIR_CELL_ATTRS = (
+    None,
+    None,
+    _NUMERIC_CELL,
+    _HEBREW_CELL,
+    _NUMERIC_CELL,
+    _HEBREW_CELL,
+)
+_SIMPLE_ONLY_CELL_ATTRS = (None, None, _NUMERIC_CELL, _HEBREW_CELL)
+
+# Accent names too long for a cell, abbreviated there with the romanization on hover (Ben,
+# 2026-07-29: "In the 'Acc2' column, abbreviate 'telisha gedolah' to 'TG' and expand it with
+# hover-text").  Same trade the C/S/Acc1/Acc2 headings make: a fifteen-character name sets the
+# column's width and pushes the rest of the row apart.  The hover text is the ROM_* constant
+# itself, never a retyped copy, so the abbreviation cannot come to expand to something the page
+# does not otherwise say.  Keyed by DISPLAY NAME, so it reaches all three tables; only the
+# one-letter appendix has a telisha gedolah today, and the other two are unchanged by it.
+_ACCENT_CELL_ABBR = {ROM_TELISHA_GEDOLAH: "TG"}
+
+
+def _accent_cell(name: str) -> object:
+    """One accent name for a table cell, abbreviated if it is one of the long ones."""
+    short = _ACCENT_CELL_ABBR.get(name)
+    return H.abbr(short, name) if short else name
+
+
 _SMALL_NUMBERS = (
     "no",
     "one",
@@ -304,6 +350,10 @@ _ACC_HEADERS = (
 # In-page anchor for the appendix listing the chanted words whose two marks sit on one letter,
 # single-sourced as both the note's link target and the appendix heading's id.
 _ONE_LETTER_ID = "one-letter"
+# The same anchor as an href, so the note's splice line stays one line: with the ``f"#{...}"``
+# spelled inline it ran past 88 and black broke the group across four lines, which is the
+# opposite of what the idiom is for.
+_ONE_LETTER_HREF = f"#{_ONE_LETTER_ID}"
 
 # MAM's own features-of-interest lists, generated in MAM-basics and published from MAM-with-doc,
 # linked where each one is about the very thing the paragraph beside it reports (Ben, 2026-07-29:
@@ -450,14 +500,14 @@ def _pair_table(rows: list[dict], hits: int) -> object:
         body.append(
             H.table_row_of_data(
                 (
-                    row["first"],
-                    row["second"],
+                    _accent_cell(row["first"]),
+                    _accent_cell(row["second"]),
                     str(row["compound"]),
                     row["compound_example"],
                     str(row["simple"]),
                     row["simple_example"],
                 ),
-                (None, None, _NUMERIC_CELL, None, _NUMERIC_CELL, None),
+                _PAIR_CELL_ATTRS,
             )
         )
     assert (
@@ -466,7 +516,7 @@ def _pair_table(rows: list[dict], hits: int) -> object:
     body.append(
         H.table_row_of_data(
             ("Total", "", str(hits), "", str(simple_total), ""),
-            (None, None, _NUMERIC_CELL, None, _NUMERIC_CELL, None),
+            _PAIR_CELL_ATTRS,
         )
     )
     return H.table(tuple(body), {"class": "centered-table accent-pair-table"})
@@ -496,18 +546,18 @@ def _simple_only_table(rows: list[dict]) -> object:
         body.append(
             H.table_row_of_data(
                 (
-                    row["first"],
-                    row["second"],
+                    _accent_cell(row["first"]),
+                    _accent_cell(row["second"]),
                     str(row["simple"]),
                     row["simple_example"],
                 ),
-                (None, None, _NUMERIC_CELL, None),
+                _SIMPLE_ONLY_CELL_ATTRS,
             )
         )
     body.append(
         H.table_row_of_data(
             ("Total", "", str(simple_total), ""),
-            (None, None, _NUMERIC_CELL, None),
+            _SIMPLE_ONLY_CELL_ATTRS,
         )
     )
     return H.table(tuple(body), {"class": "centered-table accent-pair-table"})
@@ -561,8 +611,15 @@ def _exclusion_note(genre: dict) -> object:
 
     Ben, 2026-07-28, asking for the widened column: "perhaps put a sort of footnote (not
     literally a footnote) listing these exclusions, for transparency".  So it is an ordinary
-    paragraph under the table, in the page's own voice, naming the marks rather than the
-    survey's reason strings, and each count comes out of the survey.
+    paragraph under a table, in the page's voice, and each count comes out of the survey.
+
+    WHICH TABLE it goes under is ``_appendix_section``'s docstring; it stopped being the prose
+    section's on 2026-07-29.
+
+    IT NO LONGER NAMES THE MARKS, since the same day.  It used to spell out how many of the
+    words were a geresh or gershayim with a telisha gedolah and how many a mahapakh with a
+    qadma, which is now the appendix's Acc1/Acc2 columns and its Type column; a sentence that
+    itemizes a table two sections down is a sentence a reader has to hold in their head.
 
     THE STRESS-HELPER EXCLUSION IS NOT MENTIONED, though ``simple_exclusion`` applies it and
     the survey counts it.  A first pass opened this paragraph with it -- so many words in which
@@ -588,13 +645,10 @@ def _exclusion_note(genre: dict) -> object:
     assert telisha + mahapakh == len(words), (one_letter, len(words))
     return H.para(
         (
-            f"Two marks are not always two accents. The simple counts on this page leave out"
-            f" {_count(telisha + mahapakh)} chanted words whose two marks sit on one letter:"
-            f" {_count(telisha)} of them a {ROM_GERESH} or {ROM_GERSHAYIM} with a"
-            f" {ROM_TELISHA_GEDOLAH}, and {_count(mahapakh)} a {ROM_MAHAPAKH} with a"
-            f" {ROM_QADMA} — ",
-            link("all of them listed in an appendix below", f"#{_ONE_LETTER_ID}"),
-            ".",
+            f"The simple counts on this page leave out {_count(telisha + mahapakh)} chanted"
+            " words that have two accents graphically, but whose two accents likely belong to"
+            " one syllable.",
+            *[" ", link("They are listed in an appendix below", _ONE_LETTER_HREF), "."],
         )
     )
 
@@ -1090,7 +1144,6 @@ def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
     #
     # The one-row table went too.  Its two surviving columns restated the intro's own sentence,
     # and the other three were route counts.
-    genre = survey["corpora"][_CORPUS]["prose"]
     hits = _n(survey, _CORPUS, "prose", "hits")
     return (
         H.heading_level_2("The prose verses"),
@@ -1139,7 +1192,6 @@ def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
             " an example of each and how often each occurs on a simple chanted word as well:"
         ),
         _pair_table(rows, hits),
-        _exclusion_note(genre),
         # Yeivin in one sentence after the table, not a column in it (Ben, 2026-07-28: "no need
         # to put Yeivin section numbers in the table, just mention most of these pairs are
         # covered in Yeivin ITM sections blah").  "Most", not all: the two pairs ending in a
@@ -1256,9 +1308,16 @@ def _appendix_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
     The prose section keeps the pairs its question is about; a reader who wants the whole
     census of two-accent chanted words in MAM's prose verses reads on.
 
-    THE EXCLUSION NOTE STAYS UP WITH THE FIRST TABLE, and speaks of "the simple counts on this
-    page" rather than the column above it, both tables' simple counts leaving the same words
-    out.  It links down to ``_one_letter_appendix_section``, which is where those words are.
+    THE EXCLUSION NOTE BELONGS HERE, under this table, and it used to sit under the prose
+    section's instead.  Ben, 2026-07-29: "it seems we should put this where these words would
+    have been included, which would have been in the 'simple alone section'".  That is what the
+    data says too: the pairs those words carry are geresh-or-gershayim with a telisha gedolah and
+    Ezekiel 20:31's mahapakh with a qadma, and no compound has any of the three -- so had they
+    been counted, they would have added their rows to THIS table and to no other.  The note
+    speaks of "the simple counts on this page" all the same, both tables' simple counts leaving
+    the same words out, and it links down to ``_one_letter_appendix_section``, the next section,
+    which is where those words are.  (The earlier docstring here argued the opposite, from the
+    same fact about both tables; Ben overruled it.)
     """
     return (
         H.heading_level_2(
@@ -1270,6 +1329,7 @@ def _appendix_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
         ),
         _simple_only_table(rows),
         _geresh_or_azla_note(rows),
+        _exclusion_note(survey["corpora"][_CORPUS]["prose"]),
     )
 
 
@@ -1316,6 +1376,73 @@ def _geresh_or_azla_note(rows: list[dict]) -> object:
     )
 
 
+# The type column's values, as Ben named them (2026-07-29: "'type' takes value 'gerstar-tg' for
+# 'the five' and takes value '?' (literally, question mark) for Ezekiel 20:31").  ``gerstar`` is
+# a glob: ``ger*`` covers geresh and gershayim alike, which is what lets one type name cover rows
+# whose Acc1 column differs.
+#
+# THERE IS EXACTLY ONE NAMED KIND, so the question mark's hover text cannot speak of "the named
+# kinds" -- a first pass had it read "Neither of the named kinds" and Ben asked which two those
+# were.  What the question mark means is that Ezekiel 20:31 is alone, and nothing more is known
+# of it than that it is not a gerstar-tg.  It is also the RESIDUE: any pair that is not a
+# gerstar-tg takes it, so a corpus bump producing a second odd kind lands here and is visible in
+# the table rather than mislabelled -- and the hover text would then be wrong about "one of a
+# kind", which is the signal to name the new kind rather than to soften the wording.
+_ONE_LETTER_TYPE_GERSTAR_TG = "gerstar-tg"
+_ONE_LETTER_TYPE_UNNAMED = "?"
+_ONE_LETTER_TYPE_TITLE = {
+    _ONE_LETTER_TYPE_GERSTAR_TG: (
+        f"A {ROM_GERESH} or {ROM_GERSHAYIM} with a {ROM_TELISHA_GEDOLAH}"
+    ),
+    _ONE_LETTER_TYPE_UNNAMED: (
+        f"A one-of-a-kind case, hard to classify except to say that it is not a"
+        f" {_ONE_LETTER_TYPE_GERSTAR_TG}"
+    ),
+}
+# The named kind first, the residue last.  Sorting on the strings themselves would put the
+# question mark first, "?" being below "g" in codepoint order, which is backwards for a residue.
+_ONE_LETTER_TYPE_ORDER = (_ONE_LETTER_TYPE_GERSTAR_TG, _ONE_LETTER_TYPE_UNNAMED)
+
+
+def _one_letter_type(word: dict) -> str:
+    first, second = word["pair"]
+    if first in ("ger", "ger2") and second == "telg":
+        return _ONE_LETTER_TYPE_GERSTAR_TG
+    return _ONE_LETTER_TYPE_UNNAMED
+
+
+def _accented_letters(chanted_word: str) -> int:
+    """How many base letters of the chanted word have a mark on them.
+
+    Two of the one-letter words have each of their two marks written twice, on two letters, so
+    they show four marks; the paragraph says so, and this is what derives the "two" rather than
+    letting the page state a count it does not compute.  Same keying as
+    ``maqaf_nonfinal_accents._accents_share_a_letter``: a mark counts against the letter it
+    follows.
+    """
+    letters: set[int] = set()
+    seen = 0
+    for ch in chanted_word:
+        if is_base_letter(ch):
+            seen += 1
+        elif mpa.is_accent(ch):
+            letters.add(seen)
+    return len(letters)
+
+
+def _mwd_link(bcv: str) -> object:
+    """An anchor to the chanted word's verse in the MAM-with-doc edition, where MAM's notes are.
+
+    Ben, 2026-07-29: "add a column with a link to the MAM with doc edition, (text 'Mwd') where
+    the reader can see the notes for each of these words".  The URL comes from
+    ``rtms_report.mam_with_doc_url``, which the poetic ungrammatical-verse report already labels
+    "Mwd" too, and which carries the one-time Numbers 25:19 -> 26:1 remap; building the URL here
+    would get that wrong.
+    """
+    bb, chnu, vrnu = mpa.split_bcv(bcv)
+    return link("Mwd", rtms_report.mam_with_doc_url(bb=bb, chnu=chnu, vrnu=vrnu))
+
+
 def _one_letter_appendix_section(survey: dict) -> tuple[object, ...]:
     """The chanted words whose two marks sit on one letter, shown rather than counted.
 
@@ -1327,15 +1454,59 @@ def _one_letter_appendix_section(survey: dict) -> tuple[object, ...]:
     The forms are lifted from the survey, letters and accents only, with the verse on hover, as
     the pair tables' examples are.  Where one row reads geresh then telisha gedolah and another
     reads gershayim then telisha gedolah, that is the written order of the two marks on the
-    letter and the two marks themselves; the rows are not a classification of anything.
+    letter and the two marks themselves.
+
+    WHY "THE LATER PAIR" IS THE STRESS HELPER, which the paragraph asserts flatly and which a
+    first pass hedged to "one of its two copies", on the ground that telisha gedolah is
+    prepositive but geresh and gershayim are not, so nothing said which copy helped.  Ben,
+    2026-07-29, settling it -- and it is a claim about MAM's treatment, not about the truth of
+    the matter: "In MAM we treat gerstar-telg as a single accent, much in the way we treat
+    merkha kefulah or gershayim as a single accent despite consisting of two discontiguous
+    glyphs.  (So gershayim-tg is a single accent consisting of 3 discontiguous glyphs.)  So I
+    stand by the assertion ... that the later pair is considered to be a stress helper, despite
+    geresh and gershayim, when they appear elsewhere, in normal, alone cases, not being
+    prepositive.  It is as if the conglomerate inherits the prepositivity of telg."  None of
+    that reasoning goes on the page -- he said so in the same breath -- so it lives here, and
+    the page carries the assertion alone, attributed to MAM rather than left agentless.
+
+    THE TYPE COLUMN is the one thing here that groups: it puts those two rows together, geresh
+    and gershayim being one thing for this purpose, and it separates out Ezekiel 20:31, whose
+    mahapakh with a qadma is on no list.  See ``_ONE_LETTER_TYPE_GERSTAR_TG`` and its
+    neighbours.  The rows are sorted by it, so the five stand together and the odd one last.
     """
     genre = survey["corpora"][_CORPUS]["prose"]
-    body = [H.table_row((*_ACC_HEADERS, H.table_header("Chanted word")))]
-    for word in _one_letter_words(genre):
+    words = sorted(
+        _one_letter_words(genre),
+        key=lambda w: _ONE_LETTER_TYPE_ORDER.index(_one_letter_type(w)),
+    )
+    gerstar = [w for w in words if _one_letter_type(w) == _ONE_LETTER_TYPE_GERSTAR_TG]
+    doubled = [w for w in words if _accented_letters(w["word"]) == 2]
+    body = [
+        H.table_row(
+            (
+                *_ACC_HEADERS,
+                H.table_header(H.abbr("Type", "Which kind of pair the two marks are")),
+                H.table_header("Chanted word"),
+                H.table_header(H.abbr("Mwd", "The verse in the MAM-with-doc edition")),
+            )
+        )
+    ]
+    for word in words:
         first, second = word["pair"]
+        kind = _one_letter_type(word)
         body.append(
             H.table_row_of_data(
-                (_ACCENT_DISPLAY[first], _ACCENT_DISPLAY[second], _hebrew_at(word))
+                (
+                    _accent_cell(_ACCENT_DISPLAY[first]),
+                    _accent_cell(_ACCENT_DISPLAY[second]),
+                    H.abbr(kind, _ONE_LETTER_TYPE_TITLE[kind]),
+                    _hebrew_at(word),
+                    _mwd_link(word["bcv"]),
+                ),
+                # Only the chanted word is Hebrew; the heading over it stays as it is, Ben
+                # having asked for the VALUES to be right-justified and "Chanted word" being
+                # English, which an rtl declaration would misdescribe.
+                (None, None, None, _HEBREW_CELL, None),
             )
         )
     return (
@@ -1345,11 +1516,15 @@ def _one_letter_appendix_section(survey: dict) -> tuple[object, ...]:
         ),
         H.para(
             (
-                "Two marks on one letter are not two accents on two syllables, whatever else"
-                " they are, so these chanted words are in none of the counts above. MAM's"
-                " features-of-interest lists have the five with a ",
-                link(f"{ROM_TELISHA_GEDOLAH} among them", _FOI_UNICODE),
-                ", as two of its rare Unicode sequences.",
+                f"These {_count(len(words))} chanted words are in none of the tables above."
+                " Each has its two accents on one letter, so it is not clear that the two"
+                " belong to different syllables. MAM's features-of-interest lists have the"
+                f" {_count(len(gerstar))} with a",
+                *[" ", link(f"{ROM_TELISHA_GEDOLAH} among them", _FOI_UNICODE), "."],
+                f" {_count(len(doubled)).capitalize()} of them have each of their two marks"
+                " written twice, so they look at first like four accents rather than two; MAM"
+                " treats the later pair as a stress helper. The Mwd column links each chanted"
+                " word to MAM's notes on it.",
             )
         ),
         H.table(tuple(body), {"class": "centered-table accent-pair-table"}),

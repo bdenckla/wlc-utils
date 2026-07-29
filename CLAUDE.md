@@ -26,6 +26,17 @@ are not all trio-specific — its SCOPE paragraph says which are which: read it 
 editing prose on **any** accgram page. Same problem as the pointer above — nothing referenced it,
 so it was discoverable only by already editing the file it governs.
 
+**A table cell holding Hebrew is declared `dir="rtl"`.** Every such cell of every table on a page,
+unless the whole table already is, and without waiting to be asked — right-justification then
+follows from having said what the cell holds, which is why the declaration beats a literal
+`text-align`. Blank cells in the column included; the English heading left alone; no class and no
+stylesheet rule. `maqaf_nonfinal_accents_page`'s `_HEBREW_CELL`, spliced through each table's one
+`*_CELL_ATTRS` tuple, is the pattern. This is here as well as in the skill because Ben has had to
+say it repeatedly (2026-07-29: "something I find myself telling you about frequently … this should
+just be sort of obvious"), and `CLAUDE.md` loads whether or not the skill fires. The fuller
+statement, with the companion rule about abbreviating a long accent name in a cell, is the
+`hebrew-prose` skill's `references/rendered-prose.md`.
+
 Two of those conventions are claims about Hebrew accentuation rather than about this repo:
 
 **Never a loose "word"** (#81). An **atom** is one written word, between spaces or maqafs — the
