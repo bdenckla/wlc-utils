@@ -1005,12 +1005,19 @@ def _intro(survey: dict) -> tuple[object, ...]:
             )
         ),
         _specimen(f"{lo}\N{HEBREW PUNCTUATION MAQAF}{taase}"),
+        # "THE P-TRAD עליון", qualified at Ben's request 2026-07-29: "up in the Koren, where the
+        # strand is identified as elyon, it wouldn't hurt to qualify it with 'p-trad'".  His
+        # "wouldn't hurt" is the right strength, and the reason is not the תחתון's: the two עליון
+        # strands agree at this compound, both having לא תעשה as two chanted words, so a bare
+        # "the עליון" would have been true.  It is named in full because the page names the other
+        # two strands in full a few paragraphs on, and a reader who meets a qualified strand and
+        # an unqualified one has to wonder what the difference is meant to signify.
         H.para(
             (
                 "in Koren's Deuteronomy ",
                 link("appendix Decalogue", "printed-decalogue-koren.html"),
                 *wrap_hebrew_runs(
-                    f" (the {ELYON}) — a maqaf compound with a {ROM_MUNAX} on "
+                    f" (the p-trad {ELYON}) — a maqaf compound with a {ROM_MUNAX} on "
                 ),
                 _emph("both"),
                 *wrap_hebrew_runs(
@@ -1088,6 +1095,24 @@ def _simtiq_paragraphs() -> tuple[object, ...]:
     transcribed for these pages has Koren's shape either", and the "one step short of the same
     shape" that followed the two specimens.  Both measured these two against Koren rather than
     against MAM, which is exactly the framing the reframe drops.
+
+    "ITS WIKISOURCE STRAND", NOT "EVERY STRAND", and the correction is substantive rather than
+    just a scoping one.  Ben, 2026-07-29: "Really? 'Every strand' from what 'universe' of
+    strands?"  Two things were wrong.  The universe was undefined: this page is not about the
+    printed Decalogues, so unlike the trio it has no established set for "every" to range over,
+    and the only strand read here is the ws/ex/taxton/printed one ``simtiq_lo_compounds``
+    constructs from.  And the claim was FALSE on the wider reading it invited -- of the eight
+    transcribed versions, the Deuteronomy תחתון pair has לא־יהיה with no meteg on the joined לא at
+    all.  ("Every strand" does happen to hold for לא־תעשה: every version that has that compound
+    has the meteg.)  Named as the one strand, the sentence is backed by the ``assert mpa.METEG in
+    atoms[0]`` that construction already makes for both compounds, so it fails the build rather
+    than drifts.
+
+    AND THE STRAND IS THEN NAMED OUTRIGHT, "its Wikisource strand" having still been coy about
+    which one (Ben, 2026-07-29, correctly guessing it: "p-trad taxton, right?").  It is the
+    Exodus p-trad תחתון, ws/ex/taxton/printed.  The book is worth saying here even though the
+    strand names alone would identify it: the paragraph just above this one is about Koren's
+    DEUTERONOMY, so a reader carries that book forward unless told otherwise.
     """
     lo_yihye, lo_taase = simtiq_lo_compounds()
     return (
@@ -1098,8 +1123,8 @@ def _simtiq_paragraphs() -> tuple[object, ...]:
                 ),
                 link("Simanim Tiqqun", "printed-decalogue-simanim.html"),
                 *wrap_hebrew_runs(
-                    f" has a {ROM_MUNAX} on the joined לא of two compounds, where every strand"
-                    f" has a {ROM_METEG}:"
+                    f" has a {ROM_MUNAX} on the joined לא of two compounds, where its Wikisource"
+                    f" strand, the Exodus p-trad {TAHTON}, has a {ROM_METEG}:"
                 ),
             )
         ),
