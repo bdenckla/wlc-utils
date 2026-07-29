@@ -165,12 +165,17 @@ _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
 # made mechanically, this scan having no accent tokenization to lean on.  Two kinds of pair are
 # set aside, each by a rule that reads the word rather than a list of references:
 #
-# * A stress-helper pair, where one accent is written twice under two codepoints.  In a prose
-#   verse a tsinnorit beside a tsinnor is the zarqa, written at the chanted word's edge and
-#   again on the stressed syllable; ``accent_marks`` names that codepoint "zarqa stress-helper /
-#   tsinnorit" for exactly this reason.  A helper written under the SAME codepoint as its accent
-#   never reaches here: a repeated mark is one accent already, the same rule the compound side
-#   applies.
+# * A stress-helper pair, where one accent is written twice under two codepoints.  Six accents
+#   can need a stress helper, and for five of them the helper shares its accent's codepoint, so
+#   a repeated mark never reaches here: that is one accent already, the same rule the compound
+#   side applies.  The zarqa is the sole exception, and only because Unicode's two names are in
+#   effect swapped -- U+0598 "HEBREW ACCENT ZARQA" is the HELPER and U+05AE "HEBREW ACCENT
+#   ZINOR" is the zarqa.  So in a prose verse U+0598 before U+05AE is the zarqa written at the
+#   chanted word's edge and again on the stressed syllable: one accent and its helper.  In a
+#   POETIC verse the same two codepoints are the genuine and distinct tsinnorit and tsinnor,
+#   which is why this rule is stated of prose -- and no poetic chanted word in any of the three
+#   corpora carries the pair, so the exclusion has never had to decide a poetic case.  See
+#   ``_ZARQA_HELPER`` below for why ``accent_marks`` still spells them after the poetic sense.
 # * Two marks on ONE LETTER.  Whatever such a pair is, it is not two accents on two syllables,
 #   and the six in MAM's prose verses are of two kinds that a reader would want kept apart from
 #   the rest either way -- five a geresh or gershayim with a telisha gedola, one (Ezekiel 20:31)
@@ -181,7 +186,16 @@ _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
 SIMPLE_EXCL_ONE_LETTER = "the two marks are on one letter"
 SIMPLE_EXCL_STRESS_HELPER = "a stress-helper pair: one accent written twice"
 
-_ONE_ACCENT_WRITTEN_TWICE = frozenset((frozenset((am.TSINNORIT, am.TSINNOR)),))
+# ``accent_marks`` spells these two constants after the poetic sense, where the tsinnorit and
+# the tsinnor are distinct accents; ``mb_cmn`` has the honest names, ZSH_OR_TSIT and Z_OR_TSOR.
+# Renaming them in ``accent_marks`` would reach the poetic scanner and its tests, so it is left
+# to issue #85 and aliased here, at the one place in this module that reads them as prose.  The
+# ``_ACCENT_SHORTHAND`` table below deliberately does NOT follow: its "tsit" and "tsor" label
+# poetic rows too, where the poetic names are the right ones.
+_ZARQA_HELPER = am.TSINNORIT  # U+0598
+_ZARQA = am.TSINNOR  # U+05AE
+
+_ONE_ACCENT_WRITTEN_TWICE = frozenset((frozenset((_ZARQA_HELPER, _ZARQA)),))
 
 ROUTE_SECONDARY = "a: a secondary accent the compound inherits"
 ROUTE_HABIT = "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)"
