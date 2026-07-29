@@ -22,6 +22,12 @@ Subcommands:
                 anomalies).  The oddity chanted verses are separately folded into
                 the prose ungrammatical-verse report by run-prose; supplied-marks.html is
                 rendered by generate-html.  Run after run-prose (issue #36).
+    survey-chanted-word-accents
+                Measure every chanted word carrying two or more accent TOKENS across
+                WLC 4.22, UXLC and MAM-simple, prose verses only, and write
+                out/accgram/chanted-word-accents.json.  Transcribes Yeivin's prose
+                inventory of the phenomenon beside the measurement and raises where
+                one of his closed verse lists and the data disagree.
     xcheck-poetic
                 Cross-check the poetic scanner's disjunctive segmentation against
                 MAM-simple and write out/accgram/poetic/_mam_xcheck.txt (a
@@ -114,6 +120,7 @@ import argparse
 from pathlib import Path
 
 from accgram import almost_errors
+from accgram import chanted_word_accents
 from accgram import dual_cant_run
 from accgram import dual_under_bars_page
 from accgram import fix_tester
@@ -157,6 +164,10 @@ def _run_run_dual_cant(args: argparse.Namespace) -> None:
 
 def _run_run_printed_decalogue(args: argparse.Namespace) -> None:
     printed_decalogue.run(args)
+
+
+def _run_survey_chanted_word_accents(args: argparse.Namespace) -> None:
+    chanted_word_accents.run(args)
 
 
 def _run_xcheck_poetic(args: argparse.Namespace) -> None:
@@ -270,6 +281,17 @@ def main() -> None:
     )
     printed_decalogue.add_args(run_printed_decalogue_parser, repo_root=_repo_root())
     run_printed_decalogue_parser.set_defaults(func=_run_run_printed_decalogue)
+
+    chanted_word_parser = subparsers.add_parser(
+        "survey-chanted-word-accents",
+        help=(
+            "Measure every prose chanted word with two or more accent tokens across WLC "
+            "4.22, UXLC and MAM-simple, with Yeivin's own prose inventory beside it, and "
+            "write out/accgram/chanted-word-accents.json."
+        ),
+    )
+    chanted_word_accents.add_args(chanted_word_parser, repo_root=_repo_root())
+    chanted_word_parser.set_defaults(func=_run_survey_chanted_word_accents)
 
     xcheck_poetic_parser = subparsers.add_parser(
         "xcheck-poetic",

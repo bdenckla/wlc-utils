@@ -43,7 +43,7 @@ all 17 passages fire as intended.  See doc/PLAN-fix-has-legarmeh-booknames.md.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from accgram import accent_marks as am
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
@@ -51,10 +51,20 @@ from cmn.wlc_book_codes import wlc_bb_to_bk39id
 
 @dataclass(frozen=True)
 class Token:
-    """A grammar token: parser token type plus the leaf-name string (yylval.leaf)."""
+    """A grammar token: parser token type plus the leaf-name string (yylval.leaf).
+
+    ``start`` is where the token's marks begin in the body ``scan_accents`` read, which is what
+    lets a caller attribute a token to a chanted word: the grammar consumes accent types alone
+    and can see no boundary at all (``chanted_word_accents``).  It is deliberately outside
+    ``__eq__``, ``__hash__`` and ``__repr__``, so two tokens of the same type and leaf stay equal
+    and interchangeable wherever this repo already treats them so; nothing but the position layer
+    should ever read it.  The default is ``-1`` for the tokens built positionally by callers
+    (``Token("TILDE", "")``), which stand outside the body.
+    """
 
     type: str
     leaf: str
+    start: int = field(default=-1, compare=False, repr=False)
 
 
 # --- verse-structure line patterns (new format), from tnk2acc.l ----------------
@@ -333,7 +343,7 @@ def scan_accents(
     # out to be missing its sof pasuq (see the post-loop block below).  Set when a
     # meteg/silluq code (35|75|95) is swallowed; reset whenever any later accent is
     # emitted, so only a trailing (verse-final) silluq survives.
-    pending_silluq: int | None = None
+    pending_silluq: tuple[int, int] | None = None
     while pos < n:
         best_len = 0
         best_type: str | None = None
@@ -353,15 +363,16 @@ def scan_accents(
         if best_type == "_LEGARMEH_OR_MUNAX":
             best_type = "LEGARMEH" if has_legarmeh(bb, chnu, vrnu) else "MUNAX"
         if best_type is not None:
-            tokens.append(Token(best_type, _LEAF[best_type]))
+            tokens.append(Token(best_type, _LEAF[best_type], pos))
             pending_silluq = None
             if best_type == "SOFPASUQ":
                 saw_sofpasuq = True
                 break
         elif body[pos] == am.METEG:
             # A swallowed meteg/silluq mark; remember where its SILLUQ token would
-            # go if it proves to be the verse-final silluq of a sof-pasuq-less verse.
-            pending_silluq = len(tokens)
+            # go if it proves to be the verse-final silluq of a sof-pasuq-less verse,
+            # and where in the body that mark stands.
+            pending_silluq = (len(tokens), pos)
         pos += advance
 
     # Extension beyond tnk2acc.l: tolerate a verse missing its sof pasuq (Unicode
@@ -373,8 +384,9 @@ def scan_accents(
     # MISSING_SOFPASUQ terminator that the grammar flags as a sof_pasuq ERROR.
     if not saw_sofpasuq:
         if pending_silluq is not None:
-            tokens.insert(pending_silluq, Token("SILLUQ", _LEAF["SILLUQ"]))
-        tokens.append(Token("MISSING_SOFPASUQ", _LEAF["MISSING_SOFPASUQ"]))
+            at, mark_pos = pending_silluq
+            tokens.insert(at, Token("SILLUQ", _LEAF["SILLUQ"], mark_pos))
+        tokens.append(Token("MISSING_SOFPASUQ", _LEAF["MISSING_SOFPASUQ"], n))
     return tokens
 
 

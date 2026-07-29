@@ -26,11 +26,16 @@ matters, so every hit is sorted into one of two routes:
 * **(a) A secondary accent the compound inherits.**  Yeivin's own term, and his prose inventory
   is a CLOSED LIST of configurations -- which accent sits on the non-final atom and which the
   compound has: metigah-zaqef (ITM §224), munax-zaqef (§221), a secondary merkha in the chanted word of a
-  tipexa (§233) or of a tevir (§§233/241), and the mayela before an etnaxta or a silluq.  ("The
+  tipexa (§233) or of a tevir (§253), a secondary azla in that of a geresh (§268), a secondary
+  munax in that of an etnaxta (§215), a revia (§236) or a pazer (§276), a secondary mahapakh in
+  that of a pashta (§241), and the mayela before an etnaxta (§216) or a silluq (§210).  ("The
   mayela", never "the mayela tipexa": mayela is the name for what would otherwise be a tipexa
   there, so the pair reads as a kind of tipexa rather than as the accent's own name.  Mayela is
   to tipexa as metigah is to qadma, and nobody writes "metigah qadma".)
-  ``_NAMED_CONFIGURATIONS`` is that list.
+  ``_NAMED_CONFIGURATIONS`` is that list.  ``chanted_word_accents`` transcribes the same sections
+  in full, with Yeivin's own wording and his closed verse lists, and checks them against a wider
+  measurement that counts atomic chanted words too; the table here is the subset this survey's
+  shape can express, which is a pair of marks with a maqaf between them.
 * **(b) A maqaf written after an atom that keeps its own conjunctive.**  ITM §293: a manuscript
   habit with no grammatical trigger, "most common where the word has penultimate stress", and L
   -- WLC's own base -- is named for it (§21, §293).
@@ -132,21 +137,28 @@ _NOT_IMPOSITIVE = frozenset(
 # Route (a): Yeivin's closed prose list, keyed by (accent on the non-final atom, accent the
 # compound has).  Membership is a fact about the configuration, not about the mark's position -- see the
 # module docstring on why position cannot be the criterion.
+#
+# Two citations were wrong until 2026-07-28, both settled by reading the full OCR at
+# ``../yeivin-itm/md-export-of-docx/`` (issue #82).  Merkha-tevir is §253, ``Merka-tevir and the
+# Servi of Tevir``, not §§233/241.  And §241 pairs a secondary mahapakh with PASHTA, not with
+# tevir -- which is why the ``(MAHAPAKH, TEVIR)`` entry it licensed had never fired in any corpus,
+# in either genre, since the survey was written.
 _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
     (am.QADMA, am.ZAQEF_QATAN): "metigah-zaqef (ITM §224)",
     (am.MUNAX, am.ZAQEF_QATAN): "munax-zaqef (ITM §221)",
-    (am.TIPEXA, am.ATNAX): "mayela before an etnaxta",
-    (am.TIPEXA, SILLUQ): "mayela before a silluq",
+    (am.TIPEXA, am.ATNAX): "mayela before an etnaxta (ITM §216)",
+    (am.TIPEXA, SILLUQ): "mayela before a silluq (ITM §210)",
     (am.MERKHA, am.TIPEXA): "secondary merkha in the tipexa's chanted word (ITM §233)",
     (am.MERKHA, SILLUQ): "secondary merkha in the silluq's chanted word (ITM §233)",
-    (
-        am.MERKHA,
-        am.TEVIR,
-    ): "secondary merkha in the tevir's chanted word (ITM §§233, 241)",
+    (am.MERKHA, am.TEVIR): "secondary merkha in the tevir's chanted word (ITM §253)",
     (
         am.MAHAPAKH,
-        am.TEVIR,
-    ): "secondary mahapakh in the tevir's chanted word (ITM §241)",
+        am.PASHTA,
+    ): "secondary mahapakh in the pashta's chanted word (ITM §241)",
+    (am.QADMA, am.GERESH): "secondary azla in the geresh's chanted word (ITM §268)",
+    (am.MUNAX, am.ATNAX): "secondary munax in the etnaxta's chanted word (ITM §215)",
+    (am.MUNAX, am.REVIA): "secondary munax in the revia's chanted word (ITM §236)",
+    (am.MUNAX, am.PAZER): "secondary munax in the pazer's chanted word (ITM §276)",
 }
 
 ROUTE_SECONDARY = "a: a secondary accent the compound inherits"
@@ -279,8 +291,11 @@ def mam_words(refs_by_book: dict[str, set[tuple[int, int]]]) -> dict[str, list[s
 
 
 # UXLC ships one XML per book under its own English filename; map those onto the WLC 2-char
-# book codes the genre filters and the bcv keys use.
-_UXLC_FILE_TO_BB = dict(
+# book codes the genre filters and the bcv keys use.  Public, with ``uxlc_text`` below, because
+# ``chanted_word_accents`` reads the same files a different way -- it needs the ATOMS, where this
+# module needs them already folded into chanted words -- and a second copy of the filename map
+# would be a second thing to keep right.
+UXLC_FILE_TO_BB = dict(
     zip(
         (
             "Genesis Exodus Leviticus Numbers Deuteronomy Joshua Judges Samuel_1 Samuel_2"
@@ -297,19 +312,19 @@ _UXLC_FILE_TO_BB = dict(
 def uxlc_words(uxlc_dir: Path) -> dict[str, list[str]]:
     out: dict[str, list[str]] = {}
     for path in sorted(uxlc_dir.glob("*.xml")):
-        bb = _UXLC_FILE_TO_BB.get(path.stem)
+        bb = UXLC_FILE_TO_BB.get(path.stem)
         if bb is None:
             raise ValueError(f"unmapped UXLC book file: {path.name}")
         for chapter in ET.parse(path).getroot().iter("c"):
             chnu = int(chapter.get("n"))
             for verse in chapter.iter("v"):
                 vrnu = int(verse.get("n"))
-                atoms = [_uxlc_text(el) for el in verse if el.tag in ("w", "q")]
+                atoms = [uxlc_text(el) for el in verse if el.tag in ("w", "q")]
                 out[f"{bb}{chnu}:{vrnu}"] = _join_on_maqaf(atoms)
     return out
 
 
-def _uxlc_text(el) -> str:
+def uxlc_text(el) -> str:
     """The Hebrew of one UXLC ``<w>``/``<q>``, with ``<x>`` note markers dropped.
 
     An ``<x>`` holds a Latin note letter, not text; left in, it lands mid-word and splits an
@@ -318,7 +333,7 @@ def _uxlc_text(el) -> str:
     parts = [el.text or ""]
     for child in el:
         if child.tag != "x":
-            parts.append(_uxlc_text(child))
+            parts.append(uxlc_text(child))
         parts.append(child.tail or "")
     return "".join(parts)
 
