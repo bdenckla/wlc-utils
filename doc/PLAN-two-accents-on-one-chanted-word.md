@@ -47,7 +47,8 @@ issue #86. The `135` half of it is closed by issue #85 and must not be reopened.
 
 **THIS PLAN DOES NOT COVER THE EDITING OF `maqaf-nonfinal-accents.html`.** That is a separate,
 free-form track — Ben requesting edits interactively, not a plan — and it keeps its own
-persistent state in its own file. It is named here only because its widening onto the same
+persistent state in `doc/maqaf-nonfinal-accents-page-editing.md`. It is named here only because
+its widening onto the same
 question is half of why Phase 3 went. **Do not read that track's state out of this file, and do
 not record that track's state in this file.** A round of it was written into `§0` on 2026-07-29
 (`b57f8b9`) and taken back out: a summary of what that page currently looks like, and a pointer
