@@ -103,6 +103,7 @@ from pathlib import Path
 from accgram import accent_marks as am
 from accgram import poetic_filter, prose_filter, rtms_data
 from cmn.wlc_book_codes import wlc_bb_codes
+from mb_cmn import file_io
 from mb_cmn.hebrew_accents import ATN_H
 from mb_cmn.hebrew_punctuation import NU_GMAQ
 from mb_cmn.str_defs import DOUB_VERT_LINE
@@ -971,11 +972,11 @@ def default_json_out_path() -> Path:
 
 
 def write_json(survey: dict, path: Path) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
     payload = provenance.with_json_provenance(survey, __file__)
-    # ``newline="\n"`` as dual_cant_run does: the repo's line-ending policy is LF in the
-    # workdir as well as in git (.gitattributes, issue #50), and Python would otherwise
-    # translate to CRLF on Windows and leave every regeneration looking like a whole-file diff.
-    with path.open("w", encoding="utf-8", newline="\n") as f_out:
-        json.dump(payload, f_out, ensure_ascii=False, indent=1)
-        f_out.write("\n")
+    # Through file_io for the temp-file write and the PermissionError retry; it makes
+    # the directory too. LF survives the move: the repo's line-ending policy is LF in
+    # the workdir as well as in git (.gitattributes, issue #50), and a plain text-mode
+    # write would translate to CRLF on Windows and leave every regeneration looking
+    # like a whole-file diff. file_io's default newline="" translates nothing, so it
+    # holds the line the old explicit newline="\n" held.
+    file_io.json_dump_to_file_path(payload, str(path), indent=1)

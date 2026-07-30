@@ -67,7 +67,6 @@ systematically (Breuer, Chapter 9 §§20-26), so a merged count would say nothin
 
 from __future__ import annotations
 
-import json
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -79,6 +78,7 @@ from accgram import prose_filter, rtms_data, uni_to_marks
 from accgram.almost_errors_html_shared import accents_and_letters
 from accgram.prose_scanner import HasLegarmeh, Token, scan_accents
 from cmn.wlc_book_codes import wlc_bb_codes
+from mb_cmn import file_io
 
 import repo_paths
 import wlc_provenance as provenance
@@ -1090,14 +1090,14 @@ def default_json_out_path() -> Path:
 
 
 def write_json(survey: dict, path: Path) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
     payload = provenance.with_json_provenance(survey, __file__)
-    # ``newline="\n"`` as maqaf_nonfinal_accents does: the repo's line-ending policy is LF in
-    # the workdir as well as in git, and Python would otherwise translate to CRLF on Windows
-    # and leave every regeneration looking like a whole-file diff.
-    with path.open("w", encoding="utf-8", newline="\n") as f_out:
-        json.dump(payload, f_out, ensure_ascii=False, indent=1)
-        f_out.write("\n")
+    # Through file_io for the temp-file write and the PermissionError retry; it makes
+    # the directory too. LF is preserved as maqaf_nonfinal_accents preserves it -- the
+    # repo's line-ending policy is LF in the workdir as well as in git, and a plain
+    # text-mode write would translate to CRLF on Windows and leave every regeneration
+    # looking like a whole-file diff. file_io's default newline="" translates nothing,
+    # so it holds the line the old explicit newline="\n" held.
+    file_io.json_dump_to_file_path(payload, str(path), indent=1)
 
 
 def add_args(parser, *, repo_root: Path) -> None:

@@ -14,12 +14,12 @@ input), and ``output_file`` (the ``*_ag.json`` holding its parse tree).
 
 from __future__ import annotations
 
-import json
 import re
 from pathlib import Path
 
 from accgram import prose_oddballs
 from accgram import rtms_data
+from mb_cmn import file_io
 import wlc_provenance as provenance
 
 _OUTPUT_FILE_BB_RE = re.compile(r"^wlc_422_ps_([A-Za-z0-9]+)_ag\.json$")
@@ -88,7 +88,8 @@ def write_ungrammatical(
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8", newline="\n") as f_out:
-        json.dump(payload, f_out, ensure_ascii=False, indent=2)
-        f_out.write("\n")
+    # Through file_io for the temp-file write and the PermissionError retry; it
+    # makes the directory too. Provenance is already on the payload, from
+    # wlc_provenance, which names the repo where file_io's generator_file= would
+    # not -- so do not pass that.
+    file_io.json_dump_to_file_path(payload, str(path))

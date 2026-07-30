@@ -63,6 +63,7 @@ import urllib.request
 from pathlib import Path
 
 from cmn.utf8_io import force_utf8_io
+from mb_cmn import file_io
 
 import repo_paths
 
@@ -260,10 +261,9 @@ def run(args: argparse.Namespace) -> None:
     wikitext, provenance = fetch_wikitext_and_revision(args.oldid)
     payload = build_payload(wikitext, provenance)
     out_path: Path = args.out
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    with out_path.open("w", encoding="utf-8", newline="\n") as f_out:
-        json.dump(payload, f_out, ensure_ascii=False, indent=2)
-        f_out.write("\n")
+    # file_io: temp-file write, PermissionError retry, and it makes the directory.
+    # build_payload records the Wikisource revision itself, so no generator_file=.
+    file_io.json_dump_to_file_path(payload, str(out_path))
     n_cv = sum(len(v["chanted_verses"]) for v in payload["versions"])
     n_strokes = sum(
         fv.count("{{מ:לגרמיה}}") + fv.count("{{מ:פסק}}")

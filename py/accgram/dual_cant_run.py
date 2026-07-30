@@ -20,7 +20,6 @@ Run via ``main_accgram.py run-dual-cant`` (after run-prose).
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 
 from accgram import dual_cant_detangle as dcd
@@ -28,6 +27,7 @@ from accgram import rtms_data
 from accgram.mam_simple_verse import default_mam_simple_dir, load_mam_simple_for_refs
 from accgram.prose_ply_grammar import build_parser
 from cmn.utf8_io import force_utf8_io
+from mb_cmn import file_io
 import wlc_provenance as provenance
 
 import repo_paths
@@ -74,10 +74,9 @@ def run(args: argparse.Namespace) -> None:
     payload = provenance.with_json_provenance(payload, __file__)
 
     out_path: Path = args.out
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    with out_path.open("w", encoding="utf-8", newline="\n") as f_out:
-        json.dump(payload, f_out, ensure_ascii=False, indent=2)
-        f_out.write("\n")
+    # file_io: temp-file write, PermissionError retry, and it makes the directory.
+    # Provenance is already on the payload, so no generator_file= here.
+    file_io.json_dump_to_file_path(payload, str(out_path))
 
     s = payload["summary"]
     print(
