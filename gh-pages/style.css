@@ -46,6 +46,11 @@ td.big { font-size: 250%; }
 table.limited-width { max-width: 40em; }
 /* Counts and other numbers: right-justified, so digits line up on the units column. */
 th.numeric, td.numeric { text-align: right; }
+/* Short labels under a row label rather than in a column of prose -- an edition name, a book
+   name, a strand name, a "+maqaf". Centered so the three cells of a transposed table read as
+   three parallel answers to the row's question rather than as a ragged line of text. Same shape
+   as the numeric rule above: a class on the cell, no per-table selector. */
+th.centered, td.centered { text-align: center; }
 table.centered-table { margin-left: auto; margin-right: auto; }
 /* maqaf-nonfinal-accents.html: the accent-pair table's headings are abbreviated so five columns
    fit without the counts drifting apart, with the full wording on hover.  Same affordance as

@@ -43,6 +43,7 @@ from accgram.printed_decalogue_strands import (
     ROM_GERESH,
     ROM_GERSHAYIM,
     ROM_MAHAPAKH,
+    ROM_MAQAF,
     ROM_MERKHA,
     ROM_MUNAX,
     ROM_PASHTA,
@@ -215,6 +216,19 @@ _NUMERIC_CELL = {"class": "numeric"}
 # ``hebrew-prose`` skill's rendered-prose reference rather than left to be re-noticed per table.
 _HEBREW_CELL = {"dir": "rtl"}
 
+# The printed-case table's short-label rows, centered under their row label (Ben, 2026-07-30).
+# A transposed table's data cells are three parallel answers to one row's question -- three
+# edition names, three book names, three added marks -- and a short answer left-aligned in a wide
+# cell reads as the start of a line of text rather than as one of three things being compared.
+# The class is in gh-pages/style.css beside th.numeric/td.numeric, and centering is the one
+# alignment that has no semantic attribute to declare it with: dir="rtl" says what a cell HOLDS
+# and right-justifies as a consequence, which is why _HEBREW_CELL above needs no class at all.
+_CENTERED_CELL = {"class": "centered"}
+# The strand row holds Hebrew AND is centered, so it carries both -- the declaration of what the
+# cell holds, and the explicit alignment that overrides the right-justification that declaration
+# would otherwise give it.
+_CENTERED_HEBREW_CELL = _HEBREW_CELL | _CENTERED_CELL
+
 # One attributes tuple per table, so a table's body rows and its Total row cannot come to align
 # their columns differently -- each was spelled out twice before the Hebrew cells were declared.
 # The Total row's example cells are empty, and are declared right-to-left all the same: the
@@ -226,9 +240,10 @@ _PAIR_CELL_ATTRS = (
     _NUMERIC_CELL,
     _HEBREW_CELL,
     _NUMERIC_CELL,
+    _NUMERIC_CELL,
     _HEBREW_CELL,
 )
-_SIMPLE_ONLY_CELL_ATTRS = (None, None, _NUMERIC_CELL, _HEBREW_CELL)
+_SIMPLE_ONLY_CELL_ATTRS = (None, None, _NUMERIC_CELL, _NUMERIC_CELL, _HEBREW_CELL)
 
 # Accent names too long for a cell, abbreviated there with the romanization on hover (Ben,
 # 2026-07-29: "In the 'Acc2' column, abbreviate 'telisha gedolah' to 'TG' and expand it with
@@ -239,11 +254,23 @@ _SIMPLE_ONLY_CELL_ATTRS = (None, None, _NUMERIC_CELL, _HEBREW_CELL)
 # one-letter appendix has a telisha gedolah today, and the other two are unchanged by it.
 _ACCENT_CELL_ABBR = {ROM_TELISHA_GEDOLAH: "TG"}
 
+# The same trade for a book name in the printed-case table's Decalogue row (Ben, 2026-07-30:
+# 'abbreviate "Deuteronomy" as "Deut."').  Only the long one: "Exodus" is shorter than the row
+# label above it and abbreviating it would buy the table nothing.  The short form is the OSIS
+# abbreviation ``_ref_abbrev`` already writes for that book, so the page names Deuteronomy the
+# same way in a cell as it does in a verse reference.
+_BOOK_CELL_ABBR = {"Deuteronomy": "Deut."}
+
+
+def _cell_abbr(name: str, table: dict[str, str]) -> object:
+    """One name for a table cell, abbreviated with the full form on hover if it is a long one."""
+    short = table.get(name)
+    return H.abbr(short, name) if short else name
+
 
 def _accent_cell(name: str) -> object:
     """One accent name for a table cell, abbreviated if it is one of the long ones."""
-    short = _ACCENT_CELL_ABBR.get(name)
-    return H.abbr(short, name) if short else name
+    return _cell_abbr(name, _ACCENT_CELL_ABBR)
 
 
 _SMALL_NUMBERS = (
@@ -378,6 +405,29 @@ _ACC_HEADERS = (
     ),
 )
 
+# The three kinds a two-accent chanted word of MAM's prose verses can be, each glossed once and
+# spliced into every heading and hover text that names it -- the count columns, the example
+# columns, and both tables at that.  Three columns whose headings are one letter apiece were
+# fine while there were two of them and "C" could stand for the compound side outright; with a
+# second kind of compound counted (Ben, 2026-07-30) a single letter would have to be read off
+# the hover text every time, so the headings are the first three letters of the page's own three
+# nouns instead.  All three are the same width, which keeps the counts from drifting apart --
+# the width complaint that got the headings abbreviated in the first place.
+_SPR, _CNC, _SIM = "Spr", "Cnc", "Sim"
+_SPREADER_GLOSS = (
+    "spreader — a compound chanted word with an accent on a non-final atom"
+)
+_CONC_GLOSS = (
+    "concentrator — a compound chanted word with both of its accents on its last atom"
+)
+_SIMPLE_GLOSS = "simple chanted word"
+
+
+def _count_header(short: str, gloss: str) -> object:
+    """One count column's heading: the short form, with what it counts on hover."""
+    return H.table_header(H.abbr(short, f"On a {gloss}"), _NUMERIC_CELL)
+
+
 # In-page anchor for the appendix listing the chanted words whose two marks sit on one letter,
 # single-sourced as both the note's link target and the appendix heading's id.
 _ONE_LETTER_ID = "one-letter"
@@ -425,10 +475,19 @@ def _split_pair(pair: str) -> tuple[str, str]:
 
 
 def _pair_rows(genre: dict, occurrences: list) -> list[dict]:
-    """Every accent pair that occurs on a spreader or on a simple chanted word of MAM's prose
-    verses, in the order both tables below use, each with its two counts and an example of
-    each.  (Not "every pair that occurs on a chanted word": a pair occurring only on a
-    CONCENTRATOR would have no row, the two counts being the spreader and simple ones.)
+    """Every accent pair that occurs on a spreader, a concentrator or a simple chanted word of
+    MAM's prose verses, in the order both tables below use, each with its three counts and an
+    example of the spreader and simple ones.
+
+    A CONCENTRATOR COUNT, NOT A THIRD TABLE (Ben, 2026-07-30: "the concentrators seem to belong
+    to neither of these tables ... Which table would they fit into most seamlessly ... Or should
+    they have their own table?").  A column, and in BOTH tables, because it costs neither of them
+    a single row: all nine pairs a concentrator has already had one, three of them in the
+    spreader table and six in the appendix.  A table of their own would have restated nine rows
+    that are already on the page and split one pair's three counts across two places.  The
+    ``concentrator_by_pair`` keys are in the row set all the same, so a corpus bump that produced
+    a pair NO spreader and NO simple chanted word has gets a row of its own rather than vanishing
+    from a total -- which the two tables' concentrator totals then assert.
 
     Rows are what the data holds, not a list from anywhere: the page reports the pairs that
     occur and no longer says which of Yeivin's categories each case falls under (Ben,
@@ -447,12 +506,15 @@ def _pair_rows(genre: dict, occurrences: list) -> list[dict]:
     sharing a first accent stay together rather than scattering by count (Ben, 2026-07-28, of
     the two mayela rows: "these should be listed together instead of strictly ordering by # of
     occurrences").  Groups run commonest-group-first, rows within a group commonest-first.  The
-    count that orders them is the ROW TOTAL, compound and simple together: ordering by the
-    compound count alone would put the commonest pair on a chanted word -- munax before zaqef
-    qatan, 960 of them -- last, on the strength of its single compound.
+    count that orders them is the ROW TOTAL, all three counts together: ordering by the spreader
+    count alone would put the commonest pair on a chanted word -- munax before zaqef qatan, 1,374
+    of them -- last, on the strength of its single spreader.  The concentrator count joined that
+    total when it joined the rows: a row now shows three counts, and ordering by two of them
+    would be a rule nothing on the page states.
     """
     simple_by_pair = genre["simple_by_pair"]
     simple_examples = genre["simple_example_by_pair"]
+    conc_by_pair = genre["concentrator_by_pair"]
     counts = Counter(_pair_of(o["shape"]) for o in occurrences)
     compound_examples: dict[tuple[str, str], dict] = {}
     for occurrence in occurrences:
@@ -460,10 +522,18 @@ def _pair_rows(genre: dict, occurrences: list) -> list[dict]:
             _pair_of(occurrence["shape"]),
             {"word": occurrence["word"], "bcv": occurrence["bcv"]},
         )
-    pairs = set(counts) | {_split_pair(pair) for pair in simple_by_pair}
+    pairs = (
+        set(counts)
+        | {_split_pair(pair) for pair in simple_by_pair}
+        | {_split_pair(pair) for pair in conc_by_pair}
+    )
 
     def total_of(pair: tuple[str, str]) -> int:
-        return counts.get(pair, 0) + simple_by_pair.get("-".join(pair), 0)
+        return (
+            counts.get(pair, 0)
+            + conc_by_pair.get("-".join(pair), 0)
+            + simple_by_pair.get("-".join(pair), 0)
+        )
 
     group_max = Counter()
     for pair in pairs:
@@ -485,12 +555,24 @@ def _pair_rows(genre: dict, occurrences: list) -> list[dict]:
                 "second": _PAIR_SECOND_NAME.get(pair, _ACCENT_DISPLAY[second]),
                 "compound": counts.get(pair, 0),
                 "compound_example": _example_cell(compound_examples.get(pair), pair),
+                "conc": conc_by_pair.get("-".join(pair), 0),
                 "simple": simple_by_pair.get("-".join(pair), 0),
                 "simple_example": _example_cell(
                     simple_examples.get("-".join(pair)), pair
                 ),
             }
         )
+    # EVERY CONCENTRATOR IS IN ONE OF THE TWO TABLES.  The two split these rows on the spreader
+    # count, so a row is in exactly one of them, and this says the rows between them account for
+    # every concentrator the survey counted -- both that no ``concentrator_by_pair`` key fell out
+    # of the row set and that the by-pair breakdown adds up to the whole.  It is the concentrator
+    # counterpart of ``_pair_table``'s "rows sum to the hits", and it is here rather than in
+    # either table because neither table can see the other's half.
+    conc_total = sum(row["conc"] for row in rows)
+    assert conc_total == genre["concentrators"], (
+        f"rows sum to {conc_total} concentrators,"
+        f" not the {genre['concentrators']} counted"
+    )
     return rows
 
 
@@ -523,33 +605,32 @@ def _pair_table(rows: list[dict], hits: int) -> object:
         H.table_row(
             (
                 *_ACC_HEADERS,
-                # "with an accent on a non-final atom", not a bare "compound": the survey
-                # counts a compound only when an accent sits on a NON-FINAL atom, so a pair
-                # whose two accents both sit on the final atom -- a concentrator -- is
-                # invisible to this column, and ``concentrator_by_pair`` has hundreds of
-                # those (item 2 of ``doc/review-findings-2026-07-29.md``).  A bare "On a
-                # compound chanted word" claimed a corpus-level count the column does not
-                # measure.
-                H.table_header(
-                    H.abbr(
-                        "C",
-                        "On a compound chanted word with an accent on a non-final atom",
-                    ),
-                    _NUMERIC_CELL,
-                ),
-                _example_header(
-                    "C", "compound chanted word with an accent on a non-final atom"
-                ),
-                H.table_header(H.abbr("S", "On a simple chanted word"), _NUMERIC_CELL),
-                _example_header("S", "simple chanted word"),
+                # The spreader column is glossed "with an accent on a non-final atom" and never
+                # as a bare "compound": the survey counts a compound here only when an accent
+                # sits on a NON-FINAL atom, so a pair whose two accents both sit on the final
+                # atom is invisible to it (item 2 of ``doc/review-findings-2026-07-29.md``).
+                # That is what the Cnc column beside it now counts, so the two together do
+                # cover the compounds -- which is why the gloss has to keep saying which one
+                # each is.
+                _count_header(_SPR, _SPREADER_GLOSS),
+                _example_header(_SPR, _SPREADER_GLOSS),
+                # THE CONCENTRATOR COLUMN TAKES NO EXAMPLE COLUMN.  Two more columns is the one
+                # thing this table cannot afford -- its headings were abbreviated, twice, for
+                # width alone -- and the page is not short of a concentrator to look at: the
+                # intro shows one as a specimen, drawn from the commonest concentrator pair,
+                # which is this column's own top row.
+                _count_header(_CNC, _CONC_GLOSS),
+                _count_header(_SIM, _SIMPLE_GLOSS),
+                _example_header(_SIM, _SIMPLE_GLOSS),
             )
         )
     ]
-    compound_total = simple_total = 0
+    compound_total = conc_total = simple_total = 0
     for row in rows:
         if not row["compound"]:
             continue
         compound_total += row["compound"]
+        conc_total += row["conc"]
         simple_total += row["simple"]
         body.append(
             H.table_row_of_data(
@@ -558,6 +639,7 @@ def _pair_table(rows: list[dict], hits: int) -> object:
                     _accent_cell(row["second"]),
                     str(row["compound"]),
                     row["compound_example"],
+                    str(row["conc"]),
                     str(row["simple"]),
                     row["simple_example"],
                 ),
@@ -569,7 +651,7 @@ def _pair_table(rows: list[dict], hits: int) -> object:
     ), f"table rows sum to {compound_total}, not the {hits} hits"
     body.append(
         H.table_row_of_data(
-            ("Total", "", str(hits), "", str(simple_total), ""),
+            ("Total", "", str(hits), "", str(conc_total), str(simple_total), ""),
             _PAIR_CELL_ATTRS,
         )
     )
@@ -577,7 +659,7 @@ def _pair_table(rows: list[dict], hits: int) -> object:
 
 
 def _simple_only_table(rows: list[dict]) -> object:
-    """The pairs no spreader has, counted on simple chanted words.
+    """The pairs no spreader has, counted on concentrators and on simple chanted words.
 
     NOT "the pairs that occur on a simple chanted word only", which this docstring and the
     appendix's heading and sentence all said until 2026-07-30 (item 2 of
@@ -586,29 +668,37 @@ def _simple_only_table(rows: list[dict]) -> object:
     criterion cannot see.  What is true of all ten is that no compound has one with its first
     accent on a non-final atom, and that is what the appendix now claims.
 
-    FOUR COLUMNS, not six with two of them empty.  A compound column of zeros beside an
-    example column of blanks is what got these rows banished; carrying the columns down here
-    would carry the width down with them.
+    NO SPREADER COLUMN AND NO SPREADER EXAMPLE COLUMN.  A spreader column of zeros beside an
+    example column of blanks is what got these rows banished; carrying the two columns down
+    here would carry the width down with them.
+
+    A CONCENTRATOR COLUMN, THOUGH (Ben, 2026-07-30), and it is the column that makes the
+    appendix's own claim readable: six of these ten pairs do occur on a maqaf compound, with
+    both accents on its last atom, and until this column there was nothing on the page a reader
+    could see that in.  It costs no row, every concentrator pair already having one.
     """
     body = [
         H.table_row(
             (
                 *_ACC_HEADERS,
-                H.table_header(H.abbr("S", "On a simple chanted word"), _NUMERIC_CELL),
-                _example_header("S", "simple chanted word"),
+                _count_header(_CNC, _CONC_GLOSS),
+                _count_header(_SIM, _SIMPLE_GLOSS),
+                _example_header(_SIM, _SIMPLE_GLOSS),
             )
         )
     ]
-    simple_total = 0
+    conc_total = simple_total = 0
     for row in rows:
         if row["compound"]:
             continue
+        conc_total += row["conc"]
         simple_total += row["simple"]
         body.append(
             H.table_row_of_data(
                 (
                     _accent_cell(row["first"]),
                     _accent_cell(row["second"]),
+                    str(row["conc"]),
                     str(row["simple"]),
                     row["simple_example"],
                 ),
@@ -617,7 +707,7 @@ def _simple_only_table(rows: list[dict]) -> object:
         )
     body.append(
         H.table_row_of_data(
-            ("Total", "", str(simple_total), ""),
+            ("Total", "", str(conc_total), str(simple_total), ""),
             _SIMPLE_ONLY_CELL_ATTRS,
         )
     )
@@ -891,7 +981,14 @@ def _sole_accent(atom: str) -> str:
 
 _KOREN = "Koren"
 _KOREN_HREF = "printed-decalogue-koren.html"
-_SIMTIQ = "the Simanim Tiqqun"
+# NO DETERMINER IN THE TABLE CELL (Ben, 2026-07-30: 'In the "Edition" row, drop "the" from "the
+# Simanim Tiqqun"').  This is not the bare "Simanim" the standing rule bans -- both words are
+# here, so the cell still names which of Feldheim's two editions it is.  What it drops is the
+# article, and the rule that asks for one is a rule about PROSE: a cell in an Edition row is a
+# label beside "Koren", not a sentence, and "the Simanim Tiqqun" in a column of names reads as
+# though the article were part of the name.  Running prose on this page still writes "the
+# Simanim Tiqqun", which is why this constant is not simply reused there.
+_SIMTIQ = "Simanim Tiqqun"
 _SIMTIQ_HREF = "printed-decalogue-simanim.html"
 
 
@@ -1026,15 +1123,71 @@ def unprecedented_pairs() -> tuple[tuple[str, str], ...]:
     return tuple(case["pair"] for case in printed_cases())
 
 
+def _mark_display(mark: str) -> str:
+    """One mark codepoint as the page's own romanization -- ``maqaf``, ``munaḥ``.
+
+    An accent goes through ``_ACCENT_DISPLAY``, the same route ``_pair_in_words`` takes, so a
+    re-vendoring that changed which accent an edition adds renders that accent's real name
+    rather than a name typed in beside it -- and an accent the page has no romanization for
+    raises rather than reaching a reader as a code identifier.  The maqaf is not an accent and
+    so is not in that table; ``ROM_MAQAF`` is its single source, as ``ROM_*`` is for the rest.
+    """
+    if mark == _MAQAF:
+        return ROM_MAQAF
+    return _ACCENT_DISPLAY[mpa.shape_of([[mark]])]
+
+
+def _added_mark(case: dict) -> str:
+    """The one mark the printed compound has that its Wikisource strand of the same name lacks.
+
+    Ben, 2026-07-30, asking for the row: “+maqaf” (meaning, “maqaf added”) and “+munaḥ”
+    (meaning “munaḥ added”) as appropriate.  Which of the two a case takes is DERIVED from the
+    two forms the table already shows rather than typed in per case: the Strange row's cell and
+    the Reference row's cell, differenced as multisets of characters.  So the row cannot come to
+    disagree with the two rows it summarizes, and a re-vendoring that changed either form fails
+    the build here rather than leaving a “+maqaf” standing over a column that no longer has one.
+
+    SPACES ARE DROPPED BEFORE DIFFERENCING, which is what makes Koren's case come out as an
+    addition at all: its Wikisource עליון has לא and תעשה as two chanted words, Koren has them as
+    one compound, and the maqaf is exactly the mark that difference consists of.  Adding a maqaf
+    IS replacing the space with one, so the space is not a mark the row would want to name.
+
+    THE DIFFERENCE IS OVER THE FORMS THE READER SEES -- letters and accents, no vowels and no
+    meteg, ``_render_span``'s reduction.  For the Simanim Tiqqun's two that is the whole of the
+    honesty of “+munaḥ”: the strand's joined לא has a meteg there, which is not an accent and is
+    not shown in either cell, so what the column adds to what the reader can see is the munaḥ and
+    nothing else.  ``_simtiq_case``'s docstring is where the meteg it stands in place of is
+    recorded.
+
+    The assertions are the point.  Nothing removed, and exactly one thing added, is what lets the
+    row say “+X” at all; a case that differed in two marks, or that dropped one, would need a
+    cell this row has no way to write, and the build stops instead.
+    """
+    printed = Counter(case["printed"].replace(" ", ""))
+    same = Counter(case["same"].replace(" ", ""))
+    added, removed = printed - same, same - printed
+    assert not removed, (case["edition"], case["book"], removed)
+    assert sum(added.values()) == 1, (case["edition"], case["book"], added)
+    return f"+{_mark_display(next(iter(added)))}"
+
+
 def _pair_key(pair: tuple[str, str]) -> str:
     """A pair of accent codepoints as the survey writes it -- ``mun-mer``."""
     return "-".join(mpa.shape_of([[accent]]) for accent in pair)
 
 
 def _pair_in_words(pair: tuple[str, str]) -> str:
-    """A pair of accent codepoints in the page's own romanizations."""
+    """A pair of accent codepoints in the page's own romanizations, dash-joined.
+
+    ``munaḥ–munaḥ``, not "a munaḥ before a munaḥ", which is what this returned until
+    2026-07-30.  The answer paragraph now names three pairs in one sentence instead of two,
+    and three of the longer form is a sentence a reader has to parse rather than read.  Ben's
+    own sketch of the rewrite writes them dash-joined, and the page has the form already --
+    ``printed_decalogue_strands``' ``ROM_TIPEHA_ETNAHTA`` joins an accent pair with the same
+    en dash.  The order is the written order, as everywhere else on this page.
+    """
     first, second = (_ACCENT_DISPLAY[mpa.shape_of([[a]])] for a in pair)
-    return f"a {first} before a {second}"
+    return f"{first}–{second}"
 
 
 def pin_claims(survey: dict) -> None:
@@ -1124,40 +1277,35 @@ def pin_claims(survey: dict) -> None:
     ):
         assert len(key.split("-")) == 2, f"not a two-accent pair key: {key!r}"
 
-    # THE PAGE'S ANSWER, the one claim about the data that only the data can keep true: no
-    # compound in MAM's PROSE verses is accented alike twice.  That is the intro's flat answer
-    # to whether anything in Tanakh looks like Koren's compound.
+    # GONE with the answer's Koren half (Ben, 2026-07-30): the assertion that no compound in
+    # MAM's prose verses is accented alike twice.  It pinned a sentence the page no longer makes
+    # -- "No maqaf compound in MAM's prose verses has the same accent on both atoms, not once,
+    # which disposes of Koren's" -- and Ben dropped that sentence in favor of answering Koren's
+    # munax-munax as one pair among the three, "even though it is a stronger claim, and arguably
+    # more interesting".  Koren's own pair is still pinned, by the loop below, which is where all
+    # three are now defended alike; what is no longer defended is the wider sameness claim,
+    # because nothing on the page states it.  The module's rule holds either way: an assertion
+    # here exists to defend a sentence, and outlives it only as a trap for a later reader.
     #
-    # Two assertions about Isaiah 40:7 stood beside it -- that it is the single compound whose
-    # non-final atom has a munax, and that it pairs that munax with a zaqef qatan.  They
-    # defended the "Koren's compound" section's sentences, which went with the section (Ben,
-    # 2026-07-28).  The verse is still on the page, as the compound example in the table's
-    # munax-before-zaqef-qatan row, but it is spliced there rather than named in prose, so the
-    # table's own row is what it now depends on.
-    #
-    # Prose only, deliberately.  The intro used to say "not in poetic ones" too, and the poetic
-    # verses do bear it out -- but only among compounds whose maqaf is WRITTEN, and Breuer has
-    # the poetic maqaf after a secondary mark customarily left unwritten.  A compound accented
-    # alike twice with an unwritten maqaf is invisible to this scan, so the claim could not be
-    # made flatly there.  Ben, 2026-07-27: drop the clause rather than qualify it, this page
-    # being about the prose system.  Pinning the poetic half anyway would re-assert in code a
-    # claim the page had to withdraw in prose.
-    same = [
-        o
-        for o in _occurrences(survey, "mam_simple", "prose")
-        if len({a for a in o["shape"].split("-") if a != "0"}) == 1
-    ]
-    assert (
-        not same
-    ), f"MAM prose is stated to have no compound accented alike twice: {same}"
+    # Two facts it carried are worth keeping even though the assertion is not:
+    #   * It was PROSE ONLY, deliberately.  The intro once said "not in poetic ones" too, and
+    #     the poetic verses do bear it out -- but only among compounds whose maqaf is WRITTEN,
+    #     and Breuer has the poetic maqaf after a secondary mark customarily left unwritten, so
+    #     a compound accented alike twice with an unwritten maqaf is invisible to this scan.
+    #     Ben, 2026-07-27: drop the clause rather than qualify it.
+    #   * Two assertions about Isaiah 40:7 had stood beside it, that it is the single compound
+    #     whose non-final atom has a munax and that it pairs that munax with a zaqef qatan.  The
+    #     verse is still on the page, as the compound example in the table's munax-before-zaqef
+    #     row, spliced rather than named in prose, so the row is what defends it now.
 
-    # THE OTHER TWO PRINTED COMPOUNDS, pinned the same way (Ben, 2026-07-29, on being told that
-    # the Simanim Tiqqun's two are unprecedented by the same test: "please reframe the page like
-    # that").  The claim is wider than the one above, and so is the check: each pair occurs on no
+    # THE THREE PRINTED COMPOUNDS, all pinned alike (Ben, 2026-07-29, on being told that the
+    # Simanim Tiqqun's two are unprecedented by the same test: "please reframe the page like
+    # that"; and 2026-07-30, folding Koren's into the same frame).  Each pair occurs on no
     # chanted word of MAM's prose verses at all -- not on a spreader, not on a concentrator (a
     # place this check could not look before the survey recorded them, 2026-07-29), not on a
-    # simple chanted word, and not among the words the exclusion rules set aside.  Koren's own
-    # pair goes through the same loop, which is where the two halves of the intro's answer meet.
+    # simple chanted word, and not among the words the exclusion rules set aside.  Since the
+    # intro stopped answering Koren's separately this loop IS the answer, all of it, for all
+    # three -- there is no longer a second half for it to meet.
     for pair in unprecedented_pairs():
         key = _pair_key(pair)
         assert key not in genre["simple_by_pair"], key
@@ -1218,20 +1366,20 @@ def _intro(survey: dict) -> tuple[object, ...]:
     assert first_atom and middle_atom, three_atom
     assert len(first_atom) + len(middle_atom) == len(three_atom), three_atom
     spreader_examples = (spreader_qad_zaq[0], first_atom[0], middle_atom[0])
-    # The three printed cases, derived once and used both for the table and for the answer's
-    # naming of the Simanim Tiqqun's two pairs -- the same derivation pin_claims checks the
-    # absence of, through ``unprecedented_pairs``.  Koren's is the first of the three and is
-    # answered by the accented-alike sentence, so only the other two are spelled out.
+    # The three printed cases, derived once and used both for the table and for the answer,
+    # which now names ALL THREE pairs -- the same derivation ``pin_claims`` checks the absence
+    # of, through ``unprecedented_pairs``.  Koren's used to be answered separately, so only the
+    # Simanim Tiqqun's two were spelled out here.
     cases = printed_cases()
-    simtiq = [case["pair"] for case in cases[1:]]
-    # The metigah-zaqef count, spliced rather than hedged as "nearly all" (Ben, 2026-07-28:
-    # "why be coy, why not just say the number").  Counted the same way the pair table counts,
-    # so the sentence and the table's top row cannot disagree.
-    metigah = sum(
-        1
-        for o in _occurrences(survey, _CORPUS, "prose")
-        if _pair_of(o["shape"]) == ("qad", "zaq")
-    )
+    koren_pair, *simtiq_pairs = [case["pair"] for case in cases]
+    # GONE (Ben, 2026-07-30): the metigah-zaqef count, and the sentence it was spliced into --
+    # "Of the 233 prose cases, 211 are a single grammatical category, metigah-zaqef: a qadma
+    # before a zaqef."  It closed the intro's answer, and the answer is about the three printed
+    # compounds having no precedent; a tally of what the OTHER 233 mostly are answers a question
+    # nobody has been asked yet at that point.  Ben: "This sentence seems out of place, and I
+    # don't think it has a place any longer."  It is no loss: the prose section's own table has
+    # the 211 in its top row, under the heading that says what those rows count, which is where a
+    # reader meets the figure with something to do with it.
     return (
         H.heading_level_1(PAGE_TITLE),
         text_para(
@@ -1313,11 +1461,16 @@ def _intro(survey: dict) -> tuple[object, ...]:
         # earlier the same day.  ``_p_trad_strand`` is where the tradition is fixed for every
         # strand this page reads, so the one sentence is the whole of the qualification and
         # cannot come to disagree with the derivations.
+        # BOTH SENTENCES PARENTHESIZED (Ben, 2026-07-30).  Each is an aside about how to read
+        # the table rather than a step in the page's argument -- one saying which tradition every
+        # strand named here is, the other heading off the confusion of meeting לא־תעשה in two of
+        # the three columns -- and the parens say so, leaving the argument to run from the count
+        # paragraph above the table straight into the carry-over paragraph below.
         text_para(
             "(Every strand named on this page is a p-trad one.)"
-            " Both Koren and the Tiqqun have strange spreaders on לא־תעשה,"
+            " (Both Koren and the Tiqqun have strange spreaders on לא־תעשה,"
             " so there are only two distinct compounds among these three cases:"
-            " לא־תעשה and לא־יהיה."
+            " לא־תעשה and לא־יהיה.)"
         ),
         # THE CARRY-OVER, STILL BEFORE THE QUESTION (Ben, 2026-07-28), and now for all three
         # rather than for Koren alone.  The cheap explanation is disposed of first, and the
@@ -1335,24 +1488,39 @@ def _intro(survey: dict) -> tuple[object, ...]:
         # asks whether it "may have its source in cross-height 'contamination'".  So the page
         # shows the correspondence and offers the carry-over, and names no fault in either
         # edition.
+        #
+        # ONE SENTENCE, THE TABLE CARRYING THE REST (Ben, 2026-07-30, supplying the wording).
+        # What it replaces named each edition's mark in prose -- Koren's maqaf, and the munax on
+        # the joined לא of the Simanim Tiqqun's two -- which is now the Diff. fr. Ref. row, cell
+        # by cell and derived from the forms rather than typed out.  A sentence that itemizes the
+        # row directly above it is a sentence a reader has already read.
         text_para(
-            "In each of the three, the printed compound differs from its Wikisource strand in"
-            f" a single mark — Koren's maqaf, and the {ROM_MUNAX} on the joined לא of the"
-            " Simanim Tiqqun's two — and that mark is one the other strand of the same book"
-            " has. So each of the three might simply be accidentally carried over from the"
-            " other strand."
+            "Each strange spreader differs from the Wikisource reference by the"
+            f" addition of a mark (either {ROM_MAQAF} or {ROM_MUNAX}) that might have been"
+            " accidentally carried over from the other strand."
         ),
         text_para(
             "But if we take the three as they stand, is there anything in Tanakh like any of"
             " them?"
         ),
+        # ONE CLAIM FOR ALL THREE (Ben, 2026-07-30): none of the three pairs occurs on any
+        # chanted word of MAM's prose verses.  What went is the sentence's Koren half -- that no
+        # maqaf compound has the same accent on both atoms -- and Ben cut it knowing what it
+        # cost: "even though it is a stronger claim, and arguably more interesting".  The fault
+        # was that it framed Koren's case and the Simanim Tiqqun's two in two different ways in
+        # one sentence, so a reader met a claim about SAMENESS beside a claim about two named
+        # PAIRS and had to work out that the two halves answered the same question.  Koren's
+        # munax-munax is a pair like the other two, and answering it as one costs a clause and
+        # buys a sentence that says one thing.
+        #
+        # ``pin_claims`` already checked exactly this, for all three pairs, through
+        # ``unprecedented_pairs`` -- the wider accented-alike assertion it also carried has gone
+        # with the wider claim.
         text_para(
-            "There is not. No maqaf compound in MAM's prose verses has the same accent on"
-            " both atoms, not once, which disposes of Koren's; and the Simanim Tiqqun's two"
-            f" pairs, {_pair_in_words(simtiq[0])} and {_pair_in_words(simtiq[1])}, occur on"
-            " no chanted word of those verses at all, compound or simple. Of the"
-            f" {mam_prose['hits']} prose cases, {metigah} are a single grammatical"
-            f" category, metigah-zaqef: a {ROM_QADMA} before a {ROM_ZAQEF_QATAN}."
+            "There is not. None of the three pairs occurs on any chanted word of MAM's prose"
+            f" verses, compound or simple: not Koren's {_pair_in_words(koren_pair)}, and not"
+            f" the Simanim Tiqqun's {_pair_in_words(simtiq_pairs[0])} or"
+            f" {_pair_in_words(simtiq_pairs[1])}."
         ),
     )
 
@@ -1365,15 +1533,33 @@ def _intro(survey: dict) -> tuple[object, ...]:
 # short labels say which strand a row is without also saying where the strand is from three
 # times over.  The strand name and the three forms are Hebrew, so those four rows' data cells
 # are declared right-to-left, blank cells included if a case ever lacks one.
+#
+# THE SHORT-LABEL ROWS ARE CENTERED and the form rows are not (Ben, 2026-07-30, of the first
+# three; the Diff. fr. Ref. row he asked for is a fourth of the same kind).  A row whose cells
+# are an edition name, a book name, a strand name or a "+maqaf" is three short parallel answers,
+# and centering is what makes them read as three answers to one question.  The three form rows
+# stay right-to-left alone: they are the comparison itself, read down a column, and a Hebrew
+# form left to start at its own start edge is where a reader's eye already is.
 _PRINTED_CASE_ROWS = (
-    (H.table_header("Edition"), lambda case: link(case["edition"], case["href"]), None),
-    (H.table_header("Book"), lambda case: case["book"], None),
+    (
+        H.table_header("Edition"),
+        lambda case: link(case["edition"], case["href"]),
+        _CENTERED_CELL,
+    ),
+    # "Decalogue", not "Book" (Ben, 2026-07-30).  Every case is a Decalogue, and what the cell
+    # names is which of the two -- Exodus' or Deuteronomy's.  "Book" was true of the value and
+    # said nothing about why a page on MAM's spreaders is showing two of them.
+    (
+        H.table_header("Decalogue"),
+        lambda case: _cell_abbr(case["book"], _BOOK_CELL_ABBR),
+        _CENTERED_CELL,
+    ),
     (
         H.table_header(
             H.abbr("Strand", "The strand of that book the edition's page is")
         ),
         lambda case: case["strand"],
-        _HEBREW_CELL,
+        _CENTERED_HEBREW_CELL,
     ),
     (
         H.table_header(H.abbr("Strange", "What the printed edition has")),
@@ -1389,6 +1575,22 @@ _PRINTED_CASE_ROWS = (
         ),
         lambda case: hbo(case["same"]),
         _HEBREW_CELL,
+    ),
+    # RIGHT UNDER THE TWO ROWS IT DIFFERENCES, so a reader who has just compared the Strange and
+    # Reference cells of a column meets the one-mark answer in the next cell down rather than
+    # having to carry the comparison to the end of the table.  The cell says what was ADDED and
+    # nothing about where the mark then turns up; the Other strand row below is what answers
+    # that, and the paragraph after the table is what joins the two.
+    (
+        H.table_header(
+            H.abbr(
+                "Diff. fr. Ref.",
+                "The one mark the printed edition has that its Wikisource strand of the"
+                " same name does not",
+            )
+        ),
+        _added_mark,
+        _CENTERED_CELL,
     ),
     (
         H.table_header(
@@ -1442,6 +1644,9 @@ def _printed_case_table(cases: tuple[dict, ...]) -> object:
     mark the printed cell has and the same-strand cell lacks is in the other-strand cell.  For
     Koren that mark is the maqaf, and for the Simanim Tiqqun's two the munaḥ on the joined לא, so
     the correspondence runs in opposite directions in the two editions and the row holds both.
+    Since 2026-07-30 the Diff. fr. Ref. row NAMES that mark, so the reading-down is stated rather
+    than left to be performed: "+maqaf" or "+munaḥ" in one cell, and the cell below it is where
+    that mark already is.  ``_added_mark`` derives it from the two form rows above it.
 
     A COLUMN PER (EDITION, COMPOUND) CASE -- a row per case until Ben's transpose ask the same
     day ("rows become columns") -- and ``printed_cases`` says why there are three of them.
@@ -1515,7 +1720,14 @@ def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
     # and the other three were route counts.
     hits = _n(survey, _CORPUS, "prose", "hits")
     return (
-        H.heading_level_2("The prose verses"),
+        # "Spreader-pair prevalence", Ben's own wording, 2026-07-30 ("These headings are all
+        # poor").  "The prose verses" named the section's SCOPE and left its subject to the
+        # paragraph under it, which is the fault: every section of the page is about MAM's prose
+        # verses, so the one heading that said so said nothing that distinguished it.  What this
+        # section holds is how common each accent pair is, which is what the heading now says.
+        # It gives up the parallel with "The poetic verses" below, and that parallel was part of
+        # what made it uninformative.
+        H.heading_level_2("Spreader-pair prevalence"),
         # THE OPENING SENTENCE, rewritten 2026-07-28.  It used to read "A mark on a non-final
         # atom is there because the compound is one chanted word, and a mark belonging to that
         # chanted word as a whole has landed short of its last atom" -- Ben: "one of the least
@@ -1563,11 +1775,35 @@ def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
         # and ``concentrator_by_pair`` has such compounds for six of the appendix's ten pairs
         # and hundreds for munax before zaqef qatan.  "The pairs that occur on a compound"
         # claimed a corpus-level fact the table does not measure.
+        # A LEAD-IN AND THREE BULLETS, not a sentence carrying all three counts and both glosses
+        # (Ben, 2026-07-30, supplying the shape: "because a lot of this is covered at the start
+        # of the document, we can (and should) simplify").  What the paragraph before it did was
+        # re-teach the intro -- that a chanted word can have two accents, what a spreader is,
+        # what a concentrator is -- inside the sentence that introduces the table, so a reader
+        # who had just read all three met them again as parentheses in a sentence they were
+        # trying to get to the end of.  The intro defines both terms, with a specimen apiece and
+        # the two percentages; a bullet per count column is then all this needs.
+        #
+        # The lead-in still says the rows are the SPREADERS' pairs, which is the one thing the
+        # bullets cannot say: a bare "the pairs that occur ... on a spreader, on a concentrator,
+        # on a simple chanted word" would claim the ten in the appendix below as rows too.  And
+        # it does not cue that appendix -- a section that previews a later one is the hub
+        # sentence Ben has cut from these pages before, and an appendix heading announces itself.
+        #
+        # "Simple chanted word", where Ben's sketch has "simple word": the bullets contrast
+        # three kinds of chanted word, and #81 asks for the qualifier exactly where the sense is
+        # in doubt.  Beside two bullets that are compounds, a bare "word" invites the atom
+        # reading.
         H.para(
-            "Two accents can appear on a chanted word, whether it is compound or simple."
-            " These are the pairs that occur on a “spreader” (a compound with an accent"
-            " on a non-final atom), in the prose verses of MAM, with an example of each"
-            " and how often each occurs on a simple chanted word as well:"
+            "The table below shows the accent pairs that occur on a spreader, in the prose"
+            " verses of MAM, and how often each of them occurs:"
+        ),
+        H.unordered_list(
+            (
+                "on a spreader",
+                "on a concentrator",
+                "on a simple chanted word",
+            )
         ),
         _pair_table(rows, hits),
         # Yeivin in one sentence after the table, not a column in it (Ben, 2026-07-28: "no need
@@ -1656,7 +1892,11 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
     # want oleh-we-yored and tsinnorit in prose, which is the detail that was cut.
     hits = _n(survey, _CORPUS, "poetic", "hits")
     return (
-        H.heading_level_2("The poetic verses"),
+        # Ben's own word, 2026-07-30: "call it an Appendix".  The scope-naming that made "The
+        # prose verses" a poor heading is no fault here -- an appendix IS material set apart by
+        # its scope, and this one's scope, the poetic system, is the whole of what it has to
+        # say.  So the heading gains "Appendix:" and nothing else changes.
+        H.heading_level_2("Appendix: the poetic verses"),
         H.para(
             (
                 "The poetic system is a different matter, and different enough that the same"
@@ -1702,23 +1942,47 @@ def _appendix_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
     same fact about both tables; Ben overruled it.)
     """
     return (
-        # "Never on a non-final atom", NOT "on a simple chanted word only" -- the heading and
-        # the sentence both said the latter until 2026-07-30, and the survey's own
-        # ``concentrator_by_pair`` refutes it: six of these ten pairs do occur on a maqaf
-        # compound, both accents on the final atom, which the spreader criterion cannot see
-        # (item 2 of ``doc/review-findings-2026-07-29.md``).  What is true of all ten is the
-        # non-final-atom clause, so that clause is now the claim, and the counts shown are
-        # the simple ones without "only".
-        H.heading_level_2(
-            "Appendix: the pairs whose first accent is never on a non-final atom"
-        ),
-        H.para(
-            "These pairs occur in MAM's prose verses too, on simple chanted words, but no"
-            " compound has one of them with its first accent on a non-final atom."
-        ),
+        # "NON-SPREADER-PAIR PREVALENCE", parallel to "Spreader-pair prevalence" above, which
+        # is the parallel the section wants: these are the pairs that table has not got.  Ben,
+        # 2026-07-30, proposed "Appendix: Simple-only pair prevalence" for the unwieldy
+        # "Appendix: the pairs whose first accent is never on a non-final atom" -- "or similar",
+        # and "simple-only" is the one word of it that cannot stand.  It is what the heading
+        # said until earlier that day, and the survey's own ``concentrator_by_pair`` refutes it:
+        # six of these ten pairs occur on a maqaf compound, both accents on its last atom (item
+        # 2 of ``doc/review-findings-2026-07-29.md``).  With those six now visible in the table's
+        # own Cnc column, a heading calling them simple-only would be contradicted three columns
+        # below it.  What IS true of all ten is that no spreader has them, so that is the name.
+        H.heading_level_2("Appendix: non-spreader-pair prevalence"),
+        # And the sentence says what the Cnc column shows rather than leaving a reader to notice
+        # it: the count is spliced, so a corpus bump that gave a seventh pair a concentrator
+        # moves the word with the column.
+        _appendix_para(rows),
         _simple_only_table(rows),
         _geresh_or_azla_note(rows),
         _exclusion_note(survey["corpora"][_CORPUS]["prose"]),
+    )
+
+
+def _appendix_para(rows: list[dict]) -> object:
+    """What the appendix's rows are, with both of its figures spliced from those rows.
+
+    Every count in the sentence comes off the very rows the table below is built from, so the
+    two cannot come to disagree -- the idiom the rest of the page's spliced sentences use.
+
+    THE ASSERTION IS WHAT LETS IT SAY "ALL".  These pairs are here because no spreader has
+    them, which leaves a concentrator or a simple chanted word as the only places a pair can
+    have been seen at all; a pair seen ONLY on a concentrator would falsify the sentence's
+    "all", and would be a genuinely new thing on the page rather than a wording problem, so the
+    build stops instead of quietly counting it in.
+    """
+    appendix_rows = [row for row in rows if not row["compound"]]
+    simple_less = [row for row in appendix_rows if not row["simple"]]
+    assert not simple_less, simple_less
+    on_conc = [row for row in appendix_rows if row["conc"]]
+    return H.para(
+        f"No spreader has any of these pairs. All {_count(len(appendix_rows))} of them occur"
+        " in MAM's prose verses on simple chanted words, and"
+        f" {_count(len(on_conc))} of them on concentrators as well."
     )
 
 
@@ -1915,8 +2179,13 @@ def _one_letter_appendix_section(survey: dict) -> tuple[object, ...]:
             )
         )
     return (
+        # Ben's wording, verbatim, 2026-07-30.  It says "accents" where the old heading said
+        # "marks" and "words" where it said "chanted words" -- both fine here, and neither a
+        # slip: the two marks of one of these words ARE accents (that they may belong to one
+        # syllable is the paragraph's point, not a doubt about what they are), and the context
+        # settles the sense of "words", which is exactly when #81 leaves plain "word" standing.
         H.heading_level_2(
-            "Appendix: the chanted words whose two marks sit on one letter",
+            "Appendix: words with two accents on the same letter",
             {"id": _ONE_LETTER_ID},
         ),
         H.para(
@@ -1945,9 +2214,16 @@ def render_body_contents(survey: dict) -> tuple[object, ...]:
     sections: list[object] = [
         *_intro(survey),
         *_prose_section(survey, rows),
-        *_poetic_section(survey),
         *_appendix_section(survey, rows),
         *_one_letter_appendix_section(survey),
+        # THE POETIC SECTION IS LAST, and an appendix (Ben, 2026-07-30: "float 'poetic verses'
+        # down to the bottom and call it an Appendix").  It sat between the prose section and
+        # the first appendix, where a heading naming a whole other system interrupted the run
+        # of prose-verse tables that answer the page's question -- and, once the two around it
+        # were renamed to "…prevalence", it was the odd heading in the middle rather than at
+        # the edge.  Nothing in it points forward, and the appendix above it links to the
+        # one-letter appendix still below it, so the move breaks no reference.
+        *_poetic_section(survey),
     ]
     return (H.div(tuple(sections), {"class": _WIDTH_CLASS}),)
 
