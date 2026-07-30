@@ -16,7 +16,7 @@ import argparse
 from pathlib import Path
 
 from accgram import rtms_report
-from accgram.almost_errors_html_shared import link, wrap_hebrew_runs
+from accgram.almost_errors_html_shared import link, text_para
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 from py_html import my_html_for_img
@@ -81,14 +81,12 @@ def _intro() -> tuple[object, ...]:
                 " strand.",
             )
         ),
-        H.para(
-            wrap_hebrew_runs(
-                "The three photos below, from elsewhere in the very same two Decalogue"
-                " passages, show the naqdan certainly could and did write two separate"
-                " under-bar marks on one letter when two were meant: Exodus 20:13's"
-                " לא and תרצח (that תרצח the direct twin of Deuteronomy 5:17's תרצח),"
-                " and Deuteronomy 5:17's לא."
-            )
+        text_para(
+            "The three photos below, from elsewhere in the very same two Decalogue"
+            " passages, show the naqdan certainly could and did write two separate"
+            " under-bar marks on one letter when two were meant: Exodus 20:13's"
+            " לא and תרצח (that תרצח the direct twin of Deuteronomy 5:17's תרצח),"
+            " and Deuteronomy 5:17's לא."
         ),
         H.para(
             "Whether that argues for or against the Asides' “one stroke, two purposes”"

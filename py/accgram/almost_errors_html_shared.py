@@ -114,6 +114,14 @@ def wrap_hebrew_runs(text: str) -> tuple[object, ...]:
     return tuple(pieces)
 
 
+def text_para(text: str) -> object:
+    """``H.para(wrap_hebrew_runs(text))`` -- the shape nearly every prose paragraph takes.
+
+    One string in, one paragraph out, its pointed Hebrew runs wrapped.  A paragraph built
+    from non-text pieces (links, splices) still composes ``H.para`` directly."""
+    return H.para(wrap_hebrew_runs(text))
+
+
 def link(text: str, href: str) -> object:
     return H.anchor(text, {"href": href})
 

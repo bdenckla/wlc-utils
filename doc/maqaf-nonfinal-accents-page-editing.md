@@ -58,7 +58,7 @@ Then black every touched `.py`, and `.venv/Scripts/pytest.exe py/tests` from the
 
 ## Where the page stands
 
-`h1` "Accents on a Non-Final Atom of a Compound", then an intro, then `The prose verses`,
+`h1` "Accents on a Non-Final Atom", then an intro, then `The prose verses`,
 `The poetic verses`, and two appendices — `the pairs that occur on a simple chanted word only`
 and `the chanted words whose two marks sit on one letter`.
 
@@ -67,14 +67,14 @@ appendix compound, and the Simanim Tiqqun's two Exodus ones — and asks whether
 like any of them. It does not, and `pin_claims` fails the build if any of the three pairs ever
 turns up in the data, via `unprecedented_pairs()`.
 
-Since 2026-07-29 those three are a **table**, one row per (edition, compound) case, with three
-form columns: the printed edition, that book's Wikisource strand of the same name, and that book's
-other strand. The third column is there because the mark each printed form has and its own strand
+Since 2026-07-29 those three are a **table**, one column per (edition, compound) case, with three
+form rows: the printed edition, that book's Wikisource strand of the same name, and that book's
+other strand. The third form row is there because the mark each printed form has and its own strand
 lacks is a mark the other strand has — Koren's maqaf, the Simanim Tiqqun's munaḥ on the joined לא —
 so the page can offer a cross-strand carry-over. It must **not** call either an error: Ben assumes
 the Simanim Tiqqun's is one but "I'd prefer not to state that in the document". Every strand the
-page reads is p-trad, said once in the sentence above the table and dropped from the individual
-mentions; `_p_trad_strand` is where that is fixed in code.
+page reads is p-trad, said once, in a parenthetical opening the paragraph below the table, and
+dropped from the individual mentions; `_p_trad_strand` is where that is fixed in code.
 
 **Do not restate the page's numbers here.** They live in the JSON and in `pin_claims`, which
 re-derives every stated claim and raises on drift; a copy in this file would be stale from the day

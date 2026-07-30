@@ -33,7 +33,7 @@ from accgram.almost_errors_html_shared import (
     accents_and_letters,
     hbo,
     link,
-    wrap_hebrew_runs,
+    text_para,
 )
 from accgram.printed_decalogue_strands import (
     ELYON,
@@ -70,10 +70,11 @@ import repo_paths
 # its own conjunctive, so it is proclitic by position only.  And a lone atom is never "maqaf-joined"  # prose-ok: names the rejected term
 # full stop: it is joined TO the next one, or else the two of them are joined to each other.
 # Naming the atom by its POSITION in the compound says what the scan measures and nothing more,
-# and it matches the module basenames.  A title is short on space and there is no other kind of
-# compound here, so "maqaf" is dropped from "maqaf compound" in this one place; the body says it
-# in full.  (#81's sweep settled "atom" as a reader-facing term, which is what lets it stand bare.)
-PAGE_TITLE = "Accents on a Non-Final Atom of a Compound"
+# and it matches the module basenames.  A title is short on space, and an atom is non-final only
+# within a compound, so the title drops "of a maqaf compound" altogether (Ben, 2026-07-30); the
+# body says it in full.  (#81's sweep settled "atom" as a reader-facing term, which is what lets
+# it stand bare.)
+PAGE_TITLE = "Accents on a Non-Final Atom"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 # The one text this page counts.  It used to count three, WLC and UXLC beside MAM, and carry a
@@ -1198,36 +1199,34 @@ def _intro(survey: dict) -> tuple[object, ...]:
     )
     return (
         H.heading_level_1(PAGE_TITLE),
-        H.para(
-            wrap_hebrew_runs(
-                "In the prose system a chanted word usually has exactly one accent. In a"
-                " small minority of cases, a chanted word has two accents, but never more"
-                " than two. Some of these two-accent chanted words are simple and some are"
-                " maqaf compounds. Among those two-accent maqaf compounds, some spread"
-                " those two accents across two atoms, e.g."
-                f" ({_ref_abbrev(spreader_qad_zaq[0]['bcv'])}):"
-            )
+        text_para(
+            "In the prose system a chanted word always has at least one accent,"
+            " and usually only one."
+            " In a small minority of cases, a chanted word has two accents,"
+            " but never more than two."
+            " Some of the two-accent words are simple and some are compounds."
+            " Among the two-accent compounds,"
+            " some spread those two accents across two atoms, e.g."
+            f" ({_ref_abbrev(spreader_qad_zaq[0]['bcv'])}):"
         ),
         _specimen(spreader_qad_zaq[0]),
-        H.para(
-            wrap_hebrew_runs(
-                "In contrast, some concentrate both of those two accents on the last"
-                f" atom, e.g. ({_ref_abbrev(conc_example['bcv'])}):"
-            )
+        text_para(
+            "In contrast, some concentrate both of those two accents on the last"
+            f" atom, e.g. ({_ref_abbrev(conc_example['bcv'])}):"
         ),
         _specimen(
             conc_example,
             silluq_second=_ACCENT_DISPLAY[_split_pair(conc_pair)[1]] == ROM_SILLUQ,
         ),
-        H.para(
-            wrap_hebrew_runs(
-                f"Of the {mam_prose['maqaf_compounds']:,} maqaf compounds in the prose"
-                f" verses of MAM, {mam_prose['hits']} ({pct:.2f}%) are “spreaders” and"
-                f" {mam_prose['concentrators']} ({conc_pct:.2f}%) are “concentrators.”"
-                " Here we are primarily interested in “spreaders”, i.e. two-accent maqaf"
-                " compounds where one of those accents is on a non-final atom. This page"
-                " counts those cases and sorts them."
-            )
+        text_para(
+            f"Of the {mam_prose['maqaf_compounds']:,} maqaf compounds in the prose"
+            f" verses of MAM, {mam_prose['hits']} ({pct:.2f}%) are “spreaders” and"
+            f" {mam_prose['concentrators']} ({conc_pct:.2f}%) are “concentrators.”"
+            " Here we are primarily interested in “spreaders”, i.e. two-accent maqaf"
+            " compounds where one of those accents is on a non-final atom. This page"
+            " studies MAM's spreaders"
+            " to see if they shed any light on some strange spreaders"
+            " in the Decalogues of two editions:"
         ),
         # THE THREE PRINTED CASES, AS A TABLE (Ben, 2026-07-29).  What stood here was running
         # prose for Koren -- a sentence flowing through two specimens -- and then a shorter
@@ -1238,27 +1237,26 @@ def _intro(survey: dict) -> tuple[object, ...]:
         # has, and what the other-height wikisource reference has".  A table does both at once,
         # every cell a form rather than a description of one.
         #
-        # P-TRAD SAID ONCE, in the sentence below, and dropped from the individual mentions --
-        # which UNDOES the per-mention "the p-trad עליון" and "the p-trad תחתון" of earlier the
-        # same day.  ``_p_trad_strand`` is where the tradition is fixed for every strand this
-        # page reads, so the one sentence is the whole of the qualification and cannot come to
-        # disagree with the derivations.
-        H.para(
-            (
-                "Two printed editions have such a compound where the Wikisource strand they"
-                " otherwise follow does not. ",
-                link("Koren's Deuteronomy appendix Decalogue", _KOREN_HREF),
-                " has one, and the ",
-                link("Simanim Tiqqun's Exodus appendix Decalogue", _SIMTIQ_HREF),
-                *wrap_hebrew_runs(
-                    " two. That is three cases across two compounds, לא־יהיה and לא־תעשה, the two"
-                    " לא־תעשה cases being in different books. Beside each below are the two"
-                    " Wikisource strands of its book: the strand of the same name, and the other."
-                    " Every strand named on this page is a p-trad one."
-                ),
-            )
-        ),
+        # TABLE FIRST, PARAGRAPH AFTER (Ben, 2026-07-30).  The count paragraph ends on a colon
+        # and the table follows it directly; the paragraph that had introduced the table now
+        # stands after it.  Trimmed the same day to what the table does not already say: the
+        # sentence naming the two editions (locating the cases in the appendices was its only
+        # addition) and the below-each-spreader tour of the rows are gone, and the links to the
+        # two edition pages live in the table's Edition row.  What survives is the p-trad
+        # qualification, parenthesized and first, and the two-distinct-compounds sentence,
+        # since לא־תעשה appearing in two of the three cases may confuse.
         _printed_case_table(cases),
+        # P-TRAD SAID ONCE, in the parenthetical below, and dropped from the individual
+        # mentions -- which UNDOES the per-mention "the p-trad עליון" and "the p-trad תחתון" of
+        # earlier the same day.  ``_p_trad_strand`` is where the tradition is fixed for every
+        # strand this page reads, so the one sentence is the whole of the qualification and
+        # cannot come to disagree with the derivations.
+        text_para(
+            "(Every strand named on this page is a p-trad one.)"
+            " Both Koren and the Tiqqun have strange spreaders on לא־תעשה,"
+            " so there are only two distinct compounds among these three cases:"
+            " לא־תעשה and לא־יהיה."
+        ),
         # THE CARRY-OVER, STILL BEFORE THE QUESTION (Ben, 2026-07-28), and now for all three
         # rather than for Koren alone.  The cheap explanation is disposed of first, and the
         # question is then asked of marks taken as they stand -- which is what the rest of the
@@ -1275,38 +1273,33 @@ def _intro(survey: dict) -> tuple[object, ...]:
         # asks whether it "may have its source in cross-height 'contamination'".  So the page
         # shows the correspondence and offers the carry-over, and names no fault in either
         # edition.
-        H.para(
-            wrap_hebrew_runs(
-                "In each of the three, the printed compound differs from its Wikisource strand in"
-                f" a single mark — Koren's maqaf, and the {ROM_MUNAX} on the joined לא of the"
-                " Simanim Tiqqun's two — and that mark is one the other strand of the same book"
-                " has. So each of the three might simply be accidentally carried over from the"
-                " other strand."
-            )
+        text_para(
+            "In each of the three, the printed compound differs from its Wikisource strand in"
+            f" a single mark — Koren's maqaf, and the {ROM_MUNAX} on the joined לא of the"
+            " Simanim Tiqqun's two — and that mark is one the other strand of the same book"
+            " has. So each of the three might simply be accidentally carried over from the"
+            " other strand."
         ),
-        H.para(
-            wrap_hebrew_runs(
-                "But if we take the three as they stand, is there anything in Tanakh like any of"
-                " them?"
-            )
+        text_para(
+            "But if we take the three as they stand, is there anything in Tanakh like any of"
+            " them?"
         ),
-        H.para(
-            wrap_hebrew_runs(
-                "There is not. No maqaf compound in MAM's prose verses has the same accent on"
-                " both atoms, not once, which disposes of Koren's; and the Simanim Tiqqun's two"
-                f" pairs, {_pair_in_words(simtiq[0])} and {_pair_in_words(simtiq[1])}, occur on"
-                " no chanted word of those verses at all, compound or simple. Of the"
-                f" {mam_prose['hits']} prose cases, {metigah} are a single grammatical"
-                f" category, metigah-zaqef: a {ROM_QADMA} before a {ROM_ZAQEF_QATAN}."
-            )
+        text_para(
+            "There is not. No maqaf compound in MAM's prose verses has the same accent on"
+            " both atoms, not once, which disposes of Koren's; and the Simanim Tiqqun's two"
+            f" pairs, {_pair_in_words(simtiq[0])} and {_pair_in_words(simtiq[1])}, occur on"
+            " no chanted word of those verses at all, compound or simple. Of the"
+            f" {mam_prose['hits']} prose cases, {metigah} are a single grammatical"
+            f" category, metigah-zaqef: a {ROM_QADMA} before a {ROM_ZAQEF_QATAN}."
         ),
     )
 
 
 # One tuple per ROW of the transposed table: the row's label cell, the function fetching its
 # value from a case, and its data cells' attributes -- together, so a label and its values
-# cannot come to disagree.  The labels keep the short forms and hover texts they had as column
-# headings; "Wikisource" is in the two hover texts and in the sentence above the table, so the
+# cannot come to disagree.  "Strange" and "Reference" are Ben's 2026-07-30 relabels of
+# "Printed" ("a poor choice BTW") and "Same strand"; the hover texts still say what each row
+# holds.  "Wikisource" is in the two hover texts and in the carry-over paragraph, so the
 # short labels say which strand a row is without also saying where the strand is from three
 # times over.  The strand name and the three forms are Hebrew, so those four rows' data cells
 # are declared right-to-left, blank cells included if a case ever lacks one.
@@ -1321,14 +1314,14 @@ _PRINTED_CASE_ROWS = (
         _HEBREW_CELL,
     ),
     (
-        H.table_header(H.abbr("Printed", "What the printed edition has")),
+        H.table_header(H.abbr("Strange", "What the printed edition has")),
         lambda case: hbo(case["printed"]),
         _HEBREW_CELL,
     ),
     (
         H.table_header(
             H.abbr(
-                "Same strand",
+                "Reference",
                 "What that book's Wikisource strand of the same name has",
             )
         ),
@@ -1346,7 +1339,7 @@ _PRINTED_CASE_ROWS = (
 
 
 def _printed_case_table(cases: tuple[dict, ...]) -> object:
-    """The three printed cases, each beside the two Wikisource strands of its book.
+    """The three printed cases, each above the two Wikisource strands of its book.
 
     SHOW IT IN UNICODE (Ben, 2026-07-29: "I can't process all the verbosity, I need to just see
     this using actual unicode. You've fallen into the trap of not giving me Unicode").  Every
