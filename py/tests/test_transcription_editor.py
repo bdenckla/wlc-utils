@@ -3,6 +3,14 @@
 ``crop_warnings`` exists because both ways of misplacing a vertical crop are SILENT: the debug
 overlay draws a plausible band for a clipped line and for a merged one alike.  The numbers
 below are the real ones from Koren A5-D-281, where both mistakes were made in one sitting.
+
+BLESSED EXAMPLE-BASED FILE (issue #88).  The hand-picked band geometries, the synthesized row
+profiles and the drawn pages are all the shape ``doc/agent-planning-principles.md`` otherwise
+forbids.  Kept, because these diagnostics have no oracle to differ against and produce no
+tracked output to diff: the input is a scan, the failure is silent by construction, and the only
+statable check is that a page shaped like the one that broke yields the warning it should.  The
+synthetic profiles are scaled versions of that real page precisely so the numbers stay readable
+as the page, not as magic constants.
 """
 
 import sys

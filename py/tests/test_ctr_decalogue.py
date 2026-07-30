@@ -22,6 +22,12 @@ be missing, and a tracked file having been deleted is the last moment to go quie
 and ``load_source`` already raise naming the file, which is the whole of what a guard could say.
 See ``repo_paths.require_sibling`` for the argument.
 
+ONE BLESSED EXAMPLE-BASED TEST (issue #88): ``clean_verse`` against a hand-built HTML string,
+the shape ``doc/agent-planning-principles.md`` otherwise forbids.  Kept, because the vendored
+JSON is already cleaned, so every differential check above runs downstream of the stripper and
+none of them would notice it regressing on markup that a re-fetch reintroduced -- the raw HTML
+is exactly the input no committed artifact holds.
+
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_ctr_decalogue.py -v
 """

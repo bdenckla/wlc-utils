@@ -2,6 +2,15 @@
 
 These exercise the resolution precedence and env-var name mapping without
 requiring any real sibling directory to exist on disk.
+
+BLESSED EXAMPLE-BASED BAND (issue #88).  ``doc/agent-planning-principles.md`` admits only
+differential and lint-shaped tests, and the ``require_*`` failure-message tests below are
+neither: they pin a hand-picked absent path and read the words of the exception it raises.
+Kept, because that message IS the mechanism the whole skip policy rests on -- this suite
+reserves ``pytest.skip`` for a finding, so a cross-repo check with a missing sibling has to
+FAIL, and fail naming both overrides and the root it searched.  Nothing else in the tree
+checks that it does, and the only identifiers pinned are the env-var names, which are the
+contract rather than an implementation detail.
 """
 
 from __future__ import annotations

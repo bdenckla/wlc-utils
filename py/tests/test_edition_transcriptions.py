@@ -13,6 +13,16 @@ cases skip on a clean run, all of them that.  Nothing here skips on missing data
 strand JSON and all twelve transcriptions and their exports are committed under ``in/accgram``,
 so an absent one is a deleted tracked file and fails.  See ``repo_paths.require_sibling``.
 
+TWO BLESSED EXAMPLE-BASED BANDS (issue #88).  Everything above is differential, but two bands
+are not, and ``doc/agent-planning-principles.md`` otherwise forbids the shape: the shorthand
+adapter (``hebrew_token``, ``aside_kind``, ``txt_lines``) and the chunk splitter
+(``written_accents``, ``editor_accents``, ``rejoin_editor_chunks``, ``_to_reference``).  Kept,
+because they pin the NOTATION a page is transcribed in, which is the one thing the strand
+comparison cannot reach: a prefix resolving to the wrong accent, an unknown aside becoming a
+narrow-sense-paseq claim, or a maqaf compound failing to rejoin across an aside changes what
+the .txt SAYS, so the comparison would go on agreeing with a transcription that no longer means
+what was typed.  Each case pinned is one that was once wrong.
+
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_edition_transcriptions.py -v
 """
