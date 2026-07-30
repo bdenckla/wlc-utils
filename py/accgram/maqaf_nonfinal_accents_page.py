@@ -703,13 +703,22 @@ def _count(n: int) -> str:
 # leading-numeral fix for mb_cmn's "2Samuel" went with them.
 
 
-# GONE with the specimens (2026-07-29): ``_specimen``, which put one pointed form on a centered
-# line of its own, and the running sentence that flowed through three of them.  The intro's three
-# printed cases are a table now (Ben: "tables showing, for each word/word-pair ... what the
-# edition has/editions have, what the Wikisource reference has, and what the other-height
-# wikisource reference has"), so a form is a cell rather than a paragraph.  What the specimens
-# stood for is unchanged and is now ``_render_span``'s job: show it in Unicode, never in words
-# alone.  ``p.hebrew-specimen`` stays in the stylesheet, other pages using it.
+def _specimen(example: dict, *, silluq_second: bool = False) -> object:
+    """A pointed Hebrew form on a centered line of its own, titled with its verse.
+
+    Ben, 2026-07-28: "why would you only describe in words what can be shown in Unicode?";
+    and 2026-07-29, of the intro's two e.g. forms: "lately I'm preferring to show pointed
+    hebrew specimens as a separately displayed element (centered, with line breaks)".
+
+    A first ``_specimen`` went with the three printed cases when they became a table -- a
+    form is a cell there, ``_render_span``'s job -- along with the running sentence that
+    flowed through three of them.  This one differs from that one in taking a survey record
+    rather than a string: the form and its verse-on-hover come through ``_hebrew_at``, like
+    every other example the page lifts.
+    """
+    return H.para(
+        _hebrew_at(example, silluq_second=silluq_second), {"class": "hebrew-specimen"}
+    )
 
 
 # The letters the three printed cases are found by -- bare letters, no marks, the marks being
@@ -981,23 +990,38 @@ def pin_claims(survey: dict) -> None:
     # a compound rather than two accents; the section now says only that the poetic system is a
     # different matter, and pins nothing beyond the spliced hit count.
 
-    # The intro speaks for MAM, and says of EVERY hit there that its two accents sit on two
-    # atoms and never both on one, the compound having two atoms or occasionally three.  None
-    # of that is spliced, so all of it is pinned: one four-atom hit, one atom carrying a stacked
-    # pair, or one hit with a single accent would leave those words quietly wrong -- and each of
-    # those does occur elsewhere in the survey (WLC's Joshua 20:4 has the single accent, the
-    # poetic corpus has revia mugrash), so none is a hypothetical.  A field of REPEATS is the one
-    # thing allowed: MAM's Ezekiel 16:12 נֶ֙זֶם֙ has ``pash+pash``, one accent written twice.
+    # The intro speaks for MAM, and its spreader sentence says the two accents of a spreader
+    # sit on two atoms -- one accent each, never a stacked pair.  That is also the spreader
+    # half of "but never more than two" (Ben's wording, 2026-07-28): exactly two accented
+    # atoms and no stacked pair is what "never more than two" amounts to for a spreader.  None
+    # of that is spliced, so it is pinned: one atom with a stacked pair, or one hit with a
+    # single accent, would leave those words quietly wrong -- and each of those does occur
+    # elsewhere in the survey (WLC's Joshua 20:4 has the single accent, the poetic corpus has
+    # revia mugrash), so neither is a hypothetical.  A field of REPEATS is the one thing
+    # allowed: MAM's Ezekiel 16:12 נֶ֙זֶם֙ has ``pash+pash``, one accent written twice.
     #
-    # The same loop is what pins "but never more than two" (Ben's wording, 2026-07-28), since
-    # exactly two accented atoms and no stacked pair is what "never more than two" amounts to
-    # here.  MIND THE SCOPE: the survey scans maqaf compounds, so the pin covers compounds only.
-    # A chanted word that is a lone atom is never scanned, and the sentence speaks for those too.
+    # GONE with the spreaders-vs-concentrators rewrite (2026-07-29): ``len(atoms) in (2, 3)``,
+    # which pinned "the compound itself having two atoms, or occasionally three" -- a sentence
+    # the intro no longer has.  MIND THE SCOPE: the survey scans maqaf compounds, so the pins
+    # here cover compounds only.  A chanted word that is a lone atom is never scanned, and
+    # "never more than two" speaks for those too.
     for o in _occurrences(survey, "mam_simple", "prose"):
         atoms = o["shape"].split("-")
-        assert len(atoms) in (2, 3), o
         assert len([a for a in atoms if a != "0"]) == 2, o
         assert all(len(set(a.split("+"))) == 1 for a in atoms), o
+
+    # THE CONCENTRATOR HALF of the same sentence pair (2026-07-29): "some concentrate both of
+    # those two accents on the last atom", and with it that kind's half of "but never more
+    # than two".  Re-derived from the shapes rather than trusted to the scan: every counted
+    # concentrator shape has all of its non-final fields empty and exactly two different
+    # accents in its final field.  The scan's own criterion is merely "more than one", so a
+    # compound whose final atom had three different accents would land here and stop the
+    # build, as it should: it would falsify both sentences.
+    genre = survey["corpora"][_CORPUS]["prose"]
+    for shape in genre["concentrator_by_shape"]:
+        fields = shape.split("-")
+        assert all(field == "0" for field in fields[:-1]), shape
+        assert len(set(fields[-1].split("+"))) == 2, shape
 
     # THE PAGE'S ANSWER, the one claim about the data that only the data can keep true: no
     # compound in MAM's PROSE verses is accented alike twice.  That is the intro's flat answer
@@ -1029,15 +1053,17 @@ def pin_claims(survey: dict) -> None:
     # THE OTHER TWO PRINTED COMPOUNDS, pinned the same way (Ben, 2026-07-29, on being told that
     # the Simanim Tiqqun's two are unprecedented by the same test: "please reframe the page like
     # that").  The claim is wider than the one above, and so is the check: each pair occurs on no
-    # chanted word of MAM's prose verses at all -- not on a compound, not on a simple chanted
-    # word, and not among the words the one-letter rule sets aside.  Koren's own pair goes
-    # through the same loop, which is where the two halves of the intro's answer meet.
-    genre = survey["corpora"][_CORPUS]["prose"]
+    # chanted word of MAM's prose verses at all -- not on a spreader, not on a concentrator (a
+    # place this check could not look before the survey recorded them, 2026-07-29), not on a
+    # simple chanted word, and not among the words the exclusion rules set aside.  Koren's own
+    # pair goes through the same loop, which is where the two halves of the intro's answer meet.
     for pair in unprecedented_pairs():
         key = _pair_key(pair)
         assert key not in genre["simple_by_pair"], key
-        for by_pair in genre["simple_excluded"].values():
-            assert key not in by_pair, key
+        assert key not in genre["concentrator_by_pair"], key
+        for excluded in (genre["simple_excluded"], genre["concentrator_excluded"]):
+            for by_pair in excluded.values():
+                assert key not in by_pair, key
         assert not [
             o
             for o in _occurrences(survey, _CORPUS, "prose")
@@ -1056,6 +1082,21 @@ def _intro(survey: dict) -> tuple[object, ...]:
     # the paragraphs that read them as Koren's nearest precedent, are gone rather than demoted.
     mam_prose = survey["corpora"]["mam_simple"]["prose"]
     pct = 100.0 * mam_prose["hits"] / mam_prose["maqaf_compounds"]
+    conc_pct = 100.0 * mam_prose["concentrators"] / mam_prose["maqaf_compounds"]
+    # The two lifted examples, one per kind the intro names (Ben, 2026-07-29, asking for the
+    # spreaders-vs-concentrators framing "e.g." each).  The spreader is the first two-atom
+    # metigah-zaqef in the survey's order -- the commonest spreader kind in its plainest
+    # shape -- and the concentrator is the stored example of the commonest concentrator pair.
+    # Both lookups stop the build rather than let a sentence stand beside a form that is no
+    # longer there.
+    spreader_qad_zaq = [
+        o for o in _occurrences(survey, _CORPUS, "prose") if o["shape"] == "qad-zaq"
+    ]
+    assert spreader_qad_zaq, "no two-atom metigah-zaqef spreader to show"
+    conc_by_pair = mam_prose["concentrator_by_pair"]
+    assert conc_by_pair, "no concentrator pair to show"
+    conc_pair = next(iter(conc_by_pair))  # the commonest: the survey orders by count
+    conc_example = mam_prose["concentrator_example_by_pair"][conc_pair]
     # The three printed cases, derived once and used both for the table and for the answer's
     # naming of the Simanim Tiqqun's two pairs -- the same derivation pin_claims checks the
     # absence of, through ``unprecedented_pairs``.  Koren's is the first of the three and is
@@ -1074,14 +1115,32 @@ def _intro(survey: dict) -> tuple[object, ...]:
         H.heading_level_1(PAGE_TITLE),
         H.para(
             wrap_hebrew_runs(
-                "Maqaf marks join two or more atoms into a single chanted word. In the prose"
-                " system a chanted word usually has exactly one accent. In a small minority of"
-                " cases, a chanted word has two accents, but never more than two. Of the"
-                f" {mam_prose['maqaf_compounds']:,} maqaf"
-                f" compounds in the prose verses of MAM, {mam_prose['hits']} ({pct:.2f}%) have"
-                " an accent on a non-final atom. In every one of them the two accents sit on"
-                " two atoms of the compound and never both on one, the compound itself having"
-                " two atoms, or occasionally three. This page counts those cases and sorts them."
+                "In the prose system a chanted word usually has exactly one accent. In a"
+                " small minority of cases, a chanted word has two accents, but never more"
+                " than two. Some of these two-accent chanted words are simple and some are"
+                " maqaf compounds. Among those two-accent maqaf compounds, some spread"
+                " those two accents across two atoms, e.g."
+            )
+        ),
+        _specimen(spreader_qad_zaq[0]),
+        H.para(
+            wrap_hebrew_runs(
+                "In contrast, some concentrate both of those two accents on the last"
+                " atom, e.g."
+            )
+        ),
+        _specimen(
+            conc_example,
+            silluq_second=_ACCENT_DISPLAY[conc_pair.split("-")[1]] == ROM_SILLUQ,
+        ),
+        H.para(
+            wrap_hebrew_runs(
+                f"Of the {mam_prose['maqaf_compounds']:,} maqaf compounds in the prose"
+                f" verses of MAM, {mam_prose['hits']} ({pct:.2f}%) are “spreaders” and"
+                f" {mam_prose['concentrators']} ({conc_pct:.2f}%) are “concentrators.”"
+                " Here we are primarily interested in “spreaders”, i.e. two-accent maqaf"
+                " compounds where one of those accents is on a non-final atom. This page"
+                " counts those cases and sorts them."
             )
         ),
         # THE THREE PRINTED CASES, AS A TABLE (Ben, 2026-07-29).  What stood here was running

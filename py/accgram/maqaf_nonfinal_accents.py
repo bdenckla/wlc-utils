@@ -405,8 +405,11 @@ def shape_of(per_atom: list[list[str]]) -> str:
     )
 
 
-def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int, list]:
-    """(hits, verses, maqaf compounds, simple two-accent words) for one corpus and genre.
+def scan(
+    words_by_bcv: dict[str, list[str]], keep
+) -> tuple[list[dict], int, int, list, list]:
+    """(hits, verses, maqaf compounds, simple two-accent words, concentrators) for one corpus
+    and genre.
 
     The fourth return is what a chanted word that is a LONE atom does with two accents, which
     the first three know nothing about: they are the compound survey, and a compound is what
@@ -415,14 +418,23 @@ def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int
     would be useful to know how many of these pairs appear on a compound chanted word, and how
     many appear on a simple chanted word"), so the same pass counts the simple ones.
 
+    The fifth return is the two-accent compounds the hits criterion excludes: both accents on
+    the FINAL atom, none on a non-final one.  The scan used to drop these silently, so the
+    page could count the compounds that spread their two accents across two atoms but not the
+    ones that concentrate both on the last atom (Ben, 2026-07-29, naming the two kinds
+    "spreaders" and "concentrators").  Each record mirrors a simple one -- a lone final atom
+    holds its two marks just as a simple chanted word does, so the same rules read them.
+
     A field of REPEATS is one accent written twice, not two accents -- the same rule the
     compound side applies -- so an atom counts here only when its accents are two DIFFERENT
     marks.  Order is the written order, which is the order the shapes are read in throughout.
-    Two different marks are still not always two accents, so each simple record carries an
-    ``excluded`` reason or ``None``; see ``SIMPLE_EXCL_ONE_LETTER`` above for the two rules.
+    Two different marks are still not always two accents, so each simple and each concentrator
+    record carries an ``excluded`` reason or ``None``; see ``SIMPLE_EXCL_ONE_LETTER`` above
+    for the two rules.
     """
     hits: list[dict] = []
     simple: list[dict] = []
+    concentrators: list[dict] = []
     n_verses = n_compounds = 0
     for bcv, words in words_by_bcv.items():
         if not keep(*split_bcv(bcv)):
@@ -448,17 +460,35 @@ def scan(words_by_bcv: dict[str, list[str]], keep) -> tuple[list[dict], int, int
             n_compounds += 1
             per_atom = atom_accents(word, i == last)
             if not any(per_atom[:-1]):
+                final = per_atom[-1]
+                if len(set(final)) > 1:
+                    concentrators.append(
+                        {
+                            "bcv": bcv,
+                            "word": word,
+                            "shape": shape_of(per_atom),
+                            "pair": [
+                                _ACCENT_SHORTHAND.get(a, a) for a in _distinct(final)
+                            ],
+                            "excluded": simple_exclusion(word, final),
+                        }
+                    )
                 continue
             hits.append({"bcv": bcv, "word": word, "atoms": per_atom})
-    return hits, n_verses, n_compounds, simple
+    return hits, n_verses, n_compounds, simple, concentrators
 
 
 def simple_exclusion(word: str, accents: list[str]) -> str | None:
-    """Why this simple chanted word's two marks are not two accents, or None if they are.
+    """Why this chanted word's two marks are not two accents, or None if they are.
 
     Both rules read the word itself rather than a list of references; see the two
     ``SIMPLE_EXCL_*`` constants above for what each is and why it is set aside.  The one-letter
     rule is applied first, so a word that is both keeps the sharper reason.
+
+    Named for the simple records, which were its only callers first, but the concentrator
+    records take their reason here too: ``accents`` is then the final atom's, and ``word``
+    stays the whole compound, which the one-letter rule may rightly read whole -- every accent
+    of a concentrator is in its final atom.
     """
     if _accents_share_a_letter(word):
         return SIMPLE_EXCL_ONE_LETTER
@@ -742,8 +772,9 @@ def _examples(simple: list[dict]) -> dict[str, dict]:
 
 
 def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool) -> dict:
-    hits, n_verses, n_compounds, simple = scan(words_by_bcv, keep)
+    hits, n_verses, n_compounds, simple, concentrators = scan(words_by_bcv, keep)
     counted = [s for s in simple if s["excluded"] is None]
+    conc_counted = [c for c in concentrators if c["excluded"] is None]
     classified = [classify(h, oracle, routed=routed) for h in hits]
     return {
         "verses": n_verses,
@@ -790,6 +821,34 @@ def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool) -> dict:
             for s in simple
             if s["excluded"]
         ],
+        # Concentrators: the two-accent compounds ``hits`` excludes, both accents on the final
+        # atom.  Aggregates only, as for the simple words and for the same reason -- no page
+        # asks which verses they are, and one example per pair, first in corpus order, is what
+        # a page shows.  ``concentrator_by_shape`` is kept where the simple side has no
+        # analogue because a page pin re-derives from it that every counted concentrator has
+        # exactly two distinct accents and all of them on the final atom.  ``concentrators``
+        # counts the pairs that are two ACCENTS; ``concentrator_excluded`` holds the rest, by
+        # reason and then by pair, exactly as ``simple_excluded`` does.
+        "concentrators": len(conc_counted),
+        "concentrator_by_shape": dict(
+            Counter(c["shape"] for c in conc_counted).most_common()
+        ),
+        "concentrator_by_pair": dict(
+            Counter("-".join(c["pair"]) for c in conc_counted).most_common()
+        ),
+        "concentrator_example_by_pair": _examples(conc_counted),
+        "concentrator_excluded": {
+            reason: dict(
+                Counter(
+                    "-".join(c["pair"])
+                    for c in concentrators
+                    if c["excluded"] == reason
+                ).most_common()
+            )
+            for reason in sorted(
+                {c["excluded"] for c in concentrators if c["excluded"]}
+            )
+        },
         "by_route": dict(Counter(c["route"] for c in classified).most_common()),
         "by_configuration": dict(
             Counter(c["configuration"] for c in classified).most_common()
@@ -821,7 +880,9 @@ def build_survey() -> dict:
             "Within one whitespace-delimited chanted word, an accent both before and after a"
             " maqaf -- that is, on an atom the maqaf joins to the next as well as on the atom"
             " that has the compound's own accent. A U+05BD counts as an accent only on the"
-            " verse's last chanted word, where it is silluq."
+            " verse's last chanted word, where it is silluq. The concentrator_* fields count"
+            " the two-accent compounds this criterion excludes: two different accents both on"
+            " the final atom, none on a non-final one."
         ),
         "poetic_caveat": (
             "The poetic counts under ``corpora`` are a FLOOR and are not comparable with the"
