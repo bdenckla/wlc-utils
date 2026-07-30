@@ -50,7 +50,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "The LC has a munaḥ where a merkha is expected."
+      "st_summary": "The LC has a munaḥ where a merkha is expected."
     },
     {
       "ref": "1k 6:2",
@@ -102,7 +102,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a munaḥ as a mahapakh."
+      "st_summary": "BHS transcribes a munaḥ as a mahapakh."
     },
     {
       "ref": "1k 6:3",
@@ -408,7 +408,7 @@
       "synthesized": false,
       "claimed_outcome": "unclear",
       "agreement": "n/a",
-      "st_summary": "The checker may prefer merkha to LC’s munaḥ. Or it may not like either."
+      "st_summary": "The checker may prefer merkha to LC’s munaḥ. Or it may not like either."
     },
     {
       "ref": "1k 20:29",
@@ -469,7 +469,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a meteg as a merkha and ignores a maqaf."
+      "st_summary": "BHS transcribes a meteg as a merkha, dropping the maqaf that went with it."
     },
     {
       "ref": "1s 6:19",
@@ -597,7 +597,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS accents a word with munaḥ rather than segol."
+      "st_summary": "BHS accents a chanted word with munaḥ rather than segol."
     },
     {
       "ref": "2c 8:10",
@@ -687,7 +687,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes an etnaḥta as a tipeḥa."
+      "st_summary": "BHS transcribes an etnaḥta as a tipeḥa."
     },
     {
       "ref": "2c 24:27",
@@ -1065,7 +1065,7 @@
       "synthesized": false,
       "claimed_outcome": "unclear",
       "agreement": "n/a",
-      "st_summary": "BHS does not transcribe a pashta, leaving the word without accent."
+      "st_summary": "BHS does not transcribe a pashta, leaving the chanted word without accent."
     },
     {
       "ref": "am 1:14",
@@ -1376,7 +1376,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "disagree",
-      "st_summary": "WLC’s “tangled” form for תעשה carries only a merkha on the ש, but a better LC transcription would be a meteg (elyon) and a qadma (taḥton)."
+      "st_summary": "WLC’s “tangled” form for תעשה carries only a merkha on the ש, but a better LC transcription would be a meteg (elyon) and a qadma (taḥton)."
     },
     {
       "ref": "dt 9:20",
@@ -1731,7 +1731,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "The LC has only meteg where meteg-tipeḥa is expected."
+      "st_summary": "The LC has only meteg where meteg-tipeḥa is expected."
     },
     {
       "ref": "dt 25:9",
@@ -1962,7 +1962,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "WLC transcribes a tipeḥa as a merkha."
+      "st_summary": "WLC transcribes a tipeḥa as a merkha."
     },
     {
       "ref": "ec 12:14",
@@ -2080,7 +2080,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a merkha as a tipeḥa."
+      "st_summary": "BHS transcribes a merkha as a tipeḥa."
     },
     {
       "ref": "ek 14:11",
@@ -2314,7 +2314,7 @@
       "synthesized": false,
       "claimed_outcome": "unclear",
       "agreement": "n/a",
-      "st_summary": "The LC lacks an accent on this word."
+      "st_summary": "The LC lacks an accent on this chanted word."
     },
     {
       "ref": "ex 6:6",
@@ -2773,7 +2773,7 @@
       "synthesized": false,
       "claimed_outcome": "unclear",
       "agreement": "n/a",
-      "st_summary": "The LC has something like a merkha where a munaḥ is expected."
+      "st_summary": "The LC has something like a merkha where a munaḥ is expected."
     },
     {
       "ref": "gn 17:20",
@@ -3156,7 +3156,7 @@
       "synthesized": false,
       "claimed_outcome": "unclear",
       "agreement": "n/a",
-      "st_summary": "The checker rejects munaḥ serving munaḥ legarmeh; the servus must be merkha."
+      "st_summary": "The checker rejects munaḥ serving munaḥ legarmeh; the servus must be merkha."
     },
     {
       "ref": "is 45:1",
@@ -3216,7 +3216,7 @@
       "synthesized": true,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "The checker requires a segol accent rather than a munaḥ."
+      "st_summary": "The checker requires a segol accent rather than a munaḥ."
     },
     {
       "ref": "je 9:10",
@@ -3264,7 +3264,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a merkha as a tipeḥa."
+      "st_summary": "BHS transcribes a merkha as a tipeḥa."
     },
     {
       "ref": "je 9:11",
@@ -3322,7 +3322,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a merkha as a tipeḥa."
+      "st_summary": "BHS transcribes a merkha as a tipeḥa."
     },
     {
       "ref": "je 10:3",
@@ -3527,7 +3527,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a munaḥ as a tipeḥa."
+      "st_summary": "BHS transcribes a munaḥ as a tipeḥa."
     },
     {
       "ref": "je 44:17",
@@ -3607,7 +3607,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "A telisha qetanna is placed on a non-final letter rather than on its word’s final letter."
+      "st_summary": "A telisha qetanna is placed on a non-final letter rather than on its chanted word’s final letter."
     },
     {
       "ref": "je 46:4",
@@ -3706,7 +3706,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a meteg as a tipeḥa."
+      "st_summary": "BHS transcribes a meteg as a tipeḥa."
     },
     {
       "ref": "je 49:19",
@@ -4053,7 +4053,7 @@
       "synthesized": false,
       "claimed_outcome": "unclear",
       "agreement": "n/a",
-      "st_summary": "The LC has munaḥ where a merkha is expected."
+      "st_summary": "The LC has munaḥ where a merkha is expected."
     },
     {
       "ref": "ju 11:24",
@@ -4111,7 +4111,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHS transcribes a faded, ambiguous mark as merkha rather than munaḥ."
+      "st_summary": "BHS transcribes a faded, ambiguous mark as merkha rather than munaḥ."
     },
     {
       "ref": "ju 13:18",
@@ -4238,7 +4238,7 @@
       "synthesized": false,
       "claimed_outcome": "expects_fix",
       "agreement": "agree",
-      "st_summary": "BHQ transcribes a meteg as a tipeḥa due to the LC’s missing maqaf."
+      "st_summary": "BHQ transcribes a meteg as a tipeḥa due to the LC’s missing maqaf."
     },
     {
       "ref": "lv 4:2",
@@ -4499,7 +4499,7 @@
       "synthesized": false,
       "claimed_outcome": "unclear",
       "agreement": "n/a",
-      "st_summary": "The LC has something like a mahapakh in addition to the expected tipeḥa."
+      "st_summary": "The LC has something like a mahapakh in addition to the expected tipeḥa."
     },
     {
       "ref": "lv 26:7",
