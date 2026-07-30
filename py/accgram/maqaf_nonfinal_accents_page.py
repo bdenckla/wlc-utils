@@ -71,11 +71,28 @@ import repo_paths
 # its own conjunctive, so it is proclitic by position only.  And a lone atom is never "maqaf-joined"  # prose-ok: names the rejected term
 # full stop: it is joined TO the next one, or else the two of them are joined to each other.
 # Naming the atom by its POSITION in the compound says what the scan measures and nothing more,
-# and it matches the module basenames.  A title is short on space, and an atom is non-final only
-# within a compound, so the title drops "of a maqaf compound" altogether (Ben, 2026-07-30); the
-# body says it in full.  (#81's sweep settled "atom" as a reader-facing term, which is what lets
-# it stand bare.)
-PAGE_TITLE = "Accents on a Non-Final Atom"
+# and it matches the module basenames.  (#81's sweep settled "atom" as a reader-facing term,
+# which is what lets it stand bare in the body.)
+#
+# THE TITLE NAMES THE QUESTION, NOT THE SCAN (Ben, 2026-07-30).  It was "Accents on a Non-Final
+# Atom" -- the survey's own subject, the thing the tables count.  But the survey is the means:
+# the intro asks whether Tanakh has anything like the three strange spreaders of Koren's
+# Deuteronomy and the Simanim Tiqqun's Exodus, and every table under it is answering that.  So
+# the title says what the page is FOR.  ("Accents on a Non-Final Atom" had itself dropped "of a
+# maqaf compound" for space earlier the same day, an atom being non-final only within one.)
+# The basenames -- this module, the survey, the HTML, the JSON -- keep the scan's name, which is
+# what they are named for.
+#
+# THE BARE "SIMANIM" IS DELIBERATE; DO NOT "FIX" IT TO "the Simanim Tiqqun".  Raising it was
+# right and Ben settled it, 2026-07-30: "I consider it an acceptable breaking of the rule on the
+# basis of the need for brevity in a title", and then, more exactly, "it is a strange spreader in
+# a simanim edition" -- the word is the PUBLISHER here, one of the senses that survive bare.  He
+# also stated the governing test: distinguishing the Tiqqun from the Tanakh "is only critical ...
+# where there would be possibility of confusion, e.g. in a document discussing both", and this
+# page's Simanim material is the Tiqqun's alone.  Even a document that DID discuss both would
+# keep the exception "where from context it is clear or, as in a title, where context *will* make
+# it clear" -- a title is read with the page under it.  The body prose still names it in full.
+PAGE_TITLE = "Strange Spreaders in Koren and Simanim"
 _WIDTH_CLASS = "goerwitz-tms-width-limited"
 
 # The one text this page counts.  It used to count three, WLC and UXLC beside MAM, and carry a
@@ -779,6 +796,14 @@ def _exclusion_note(genre: dict) -> object:
     WHICH TABLE it goes under is ``_appendix_section``'s docstring; it stopped being the prose
     section's on 2026-07-29.
 
+    IT IS SYNCHRONIZED WITH THE APPENDIX'S OWN OPENING, Ben having merged the two wordings on
+    2026-07-30 -- "two accents on the same letter" (which is what the exclusion is keyed on,
+    where "two accents graphically" left the reader to guess what the graphical fact was) and
+    "both accents likely belong to the same syllable" (which is why, stated once rather than as
+    a doubt about what is not clear).  ``_one_letter_appendix_section`` says the same in the
+    shorter form the appendix can afford, having just named the words.  Reword one and reword
+    the other.
+
     IT NO LONGER NAMES THE MARKS, since the same day.  It used to spell out how many of the
     words were a geresh or gershayim with a telisha gedolah and how many a mahapakh with a
     qadma, which is now the appendix's Acc1/Acc2 columns and its Type column; a sentence that
@@ -809,8 +834,8 @@ def _exclusion_note(genre: dict) -> object:
     return H.para(
         (
             f"The simple counts on this page leave out {_count(telisha + mahapakh)} chanted"
-            " words that have two accents graphically, but whose two accents likely belong to"
-            " one syllable.",
+            " words that have two accents on the same letter, because both accents likely"
+            " belong to the same syllable.",
             *[" ", link("They are listed in an appendix below", _ONE_LETTER_HREF), "."],
         )
     )
@@ -1829,14 +1854,21 @@ def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
                 " §§210, 216, 221, 224, 233 and 241.",
             )
         ),
-        # MAM's own lists, named for the reader rather than by their stems, and claimed for the
-        # two accents they actually cover rather than for the table.
+        # Ben's own lists, in his own voice (2026-07-30) -- they are generated in MAM-basics and
+        # published from MAM-with-doc, so "MAM catalogues ... in its lists" attributed them to
+        # the text rather than to their author.  Claimed for the two accents they cover, not for
+        # the table, and stated as the pairs each one selects: ``foiz_wt_sec_merk_and_friends``
+        # puts a chanted word in sec-merk when a merkha stands before the word's other accent
+        # (rejecting the word whose merkha is its only accent, and the one whose merkha follows a
+        # mahapakh), and in sec-misc on the same footing for a mahapakh.  "Include", not "are",
+        # because sec-misc also holds the poetic tipexa pairs, which this page's prose verses
+        # cannot reach.
         H.para(
             (
-                "MAM catalogues two of these accents place by place, in its features-of-interest"
-                " lists: every ",
-                link(f"{ROM_MERKHA} of this kind", _FOI_SEC_MERK),
-                " and every ",
+                "My “features of interest” lists include all cases of accent pairs starting"
+                " with ",
+                link(ROM_MERKHA, _FOI_SEC_MERK),
+                " and starting with ",
                 link(ROM_MAHAPAKH, _FOI_SEC_MISC),
                 ".",
             )
@@ -2188,11 +2220,16 @@ def _one_letter_appendix_section(survey: dict) -> tuple[object, ...]:
             "Appendix: words with two accents on the same letter",
             {"id": _ONE_LETTER_ID},
         ),
+        # ITS SECOND SENTENCE IS THE SHORT FORM of the one ``_exclusion_note`` opens with, the
+        # two having been synchronized on 2026-07-30 -- that docstring holds the reasoning, and
+        # a reword here is a reword there.  The lists are named in Ben's own voice for the same
+        # reason as the merkha/mahapakh sentence above: they are generated in MAM-basics and
+        # published from MAM-with-doc, so "MAM's lists" attributed them to the text.
         H.para(
             (
                 f"These {_count(len(words))} chanted words are in none of the tables above."
-                " Each has its two accents on one letter, so it is not clear that the two"
-                " belong to different syllables. MAM's features-of-interest lists have the"
+                " Each has two accents on one letter, so both accents likely belong to the"
+                " same syllable. My “features of interest” lists include the"
                 f" {_count(len(gerstar))} with a",
                 *[" ", link(f"{ROM_TELISHA_GEDOLAH} among them", _FOI_UNICODE), "."],
                 f" {_count(len(doubled)).capitalize()} of them have each of their two marks"

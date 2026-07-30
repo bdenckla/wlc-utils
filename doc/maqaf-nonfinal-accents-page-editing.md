@@ -58,7 +58,9 @@ Then black every touched `.py`, and `.venv/Scripts/pytest.exe py/tests` from the
 
 ## Where the page stands
 
-`h1` "Accents on a Non-Final Atom", then an intro, then `The prose verses`,
+`h1` "Strange Spreaders in Koren and Simanim" (Ben, 2026-07-30, retitling from "Accents on a
+Non-Final Atom": the title now names the question the intro asks, not the scan that answers it —
+the file, module and JSON basenames still name the scan), then an intro, then `The prose verses`,
 `The poetic verses`, and two appendices — `the pairs that occur on a simple chanted word only`
 and `the chanted words whose two marks sit on one letter`.
 
