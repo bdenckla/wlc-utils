@@ -1069,23 +1069,20 @@ def pin_claims(survey: dict) -> None:
     # revia mugrash), so neither is a hypothetical.  A field of REPEATS is the one thing
     # allowed: MAM's Ezekiel 16:12 נֶ֙זֶם֙ has ``pash+pash``, one accent written twice.
     #
-    # THE SECOND ASSERT ALSO DEFENDS the negative paragraph's closing sentence, "when a
-    # compound has both of its two accents on one atom, that atom is always the last": a
-    # non-final atom carrying a stacked pair of DIFFERENT accents would be a counterexample,
-    # and it would be a hit, so it would fail right here.  The first assert covers the rest of
-    # that sentence's ground -- a compound with a stacked pair and no other accent is a
-    # concentrator rather than a hit, and the ``concentrator_by_shape`` pin below is where its
-    # atom is checked to be the last one.
+    # ``atoms[-1] != "0"`` pins the intro's parenthetical, "(One of the two is always on the
+    # last atom.)".  An accented final atom is nothing the scan requires -- a non-final accent
+    # alone is enough to count a compound -- and other corpora do have hits with a blank final
+    # field, WLC's Joshua 20:4 among them, so this is the one claim on the page that only the
+    # data can keep true and it is not a hypothetical.
     #
-    # BACK with the negative-claims paragraph (2026-07-30): ``len(atoms) in (2, 3)``, which had
-    # GONE with the spreaders-vs-concentrators rewrite the day before, its sentence ("the
-    # compound itself having two atoms, or occasionally three") having gone with it.  The new
-    # paragraph needs it again, and more sharply: it treats the three-atom compounds as the
-    # whole of the more-than-two-atom kind and counts them, so a four-atom hit would leave that
-    # count describing part of a larger set.  Its companion, ``atoms[-1] != "0"``, is the pin
-    # for "one of the two is always on its last atom" -- an accented final atom is nothing the
-    # scan requires, a non-final accent alone being enough to count a compound, and other
-    # corpora do have hits with a blank final field (WLC's Joshua 20:4).
+    # BACK with the spreader table (2026-07-30): ``len(atoms) in (2, 3)``, which had GONE with
+    # the spreaders-vs-concentrators rewrite the day before, its sentence ("the compound itself
+    # having two atoms, or occasionally three") having gone with it.  What needs it now is a
+    # claim made in Unicode rather than in words: the table's three rows are one per KIND of
+    # spreader -- two atoms, three with the first accented, three with the middle accented --
+    # and a four-atom compound would leave those three a tour of part of the field, with
+    # nothing on the page saying so.  A table is as much a claim as a sentence, and is pinned
+    # like one.
     #
     # MIND THE SCOPE: the survey scans maqaf compounds, so the pins here cover compounds only.
     # A chanted word that is a lone atom is never scanned, and "never more than two" speaks for
@@ -1104,14 +1101,6 @@ def pin_claims(survey: dict) -> None:
     # accents in its final field.  The scan's own criterion is merely "more than one", so a
     # compound whose final atom had three different accents would land here and stop the
     # build, as it should: it would falsify both sentences.
-    #
-    # AND IT DEFENDS the negative paragraph's closing sentence too (2026-07-30) -- "when a
-    # compound has both of its two accents on one atom, that atom is always the last".  The
-    # all-non-final-fields-empty assert IS that sentence for a concentrator, which is the only
-    # place a compound's two accents can sit on one atom without the compound also being a hit;
-    # the hit loop above covers the other place.  Between the two, the sentence has no room
-    # left to be false in, and neither pin was written for it, which is why they are annotated
-    # rather than duplicated.
     genre = survey["corpora"][_CORPUS]["prose"]
     for shape in genre["concentrator_by_shape"]:
         fields = shape.split("-")
@@ -1195,12 +1184,12 @@ def _intro(survey: dict) -> tuple[object, ...]:
     mam_prose = survey["corpora"]["mam_simple"]["prose"]
     pct = 100.0 * mam_prose["hits"] / mam_prose["maqaf_compounds"]
     conc_pct = 100.0 * mam_prose["concentrators"] / mam_prose["maqaf_compounds"]
-    # The two lifted examples, one per kind the intro names (Ben, 2026-07-29, asking for the
-    # spreaders-vs-concentrators framing "e.g." each).  The spreader is the first two-atom
-    # metigah-zaqef in the survey's order -- the commonest spreader kind in its plainest
-    # shape -- and the concentrator is the stored example of the commonest concentrator pair.
-    # Both lookups stop the build rather than let a sentence stand beside a form that is no
-    # longer there.
+    # THE LIFTED EXAMPLES, one kind of spreader per row of the table below and one concentrator
+    # beside it (Ben, 2026-07-29, asking for the spreaders-vs-concentrators framing "e.g."
+    # each).  The first spreader is the first two-atom metigah-zaqef in the survey's order --
+    # the commonest spreader kind in its plainest shape -- and the concentrator is the stored
+    # example of the commonest concentrator pair.  Every lookup stops the build rather than let
+    # a sentence stand beside a form that is no longer there.
     spreader_qad_zaq = [
         o for o in _occurrences(survey, _CORPUS, "prose") if o["shape"] == "qad-zaq"
     ]
@@ -1209,13 +1198,14 @@ def _intro(survey: dict) -> tuple[object, ...]:
     assert conc_by_pair, "no concentrator pair to show"
     conc_pair = next(iter(conc_by_pair))  # the commonest: the survey orders by count
     conc_example = mam_prose["concentrator_example_by_pair"][conc_pair]
-    # THE THREE-ATOM SPREADERS, for the negative-claims paragraph (Ben, 2026-07-30, asking the
-    # intro to say where the two accents may NOT fall).  There is one "always" to be had --
-    # every hit's LAST field is accented -- and no second one: which non-final atom takes the
-    # other accent is the first in nine cases and the middle in two, so the paragraph gives
-    # both, with a specimen each.  The split is asserted rather than assumed, and the sum is
-    # the assertion that matters: a compound accented on TWO non-final atoms would land in both
-    # lists, make the two counts sum to more than the whole, and falsify the sentence.  Each
+    # THE OTHER TWO ROWS: the three-atom spreaders, which come in two kinds and so take a row
+    # each.  Where the accent that is not on the last atom falls has no single answer -- it is
+    # the first atom in nine of the eleven three-atom compounds and the middle atom in the other
+    # two -- and the table shows that in Unicode rather than counting it in prose (Ben,
+    # 2026-07-30: "just fold this all together as a table of 3 examples of spreaders").  The
+    # split is asserted rather than assumed, and the sum is the assertion that matters: a
+    # compound accented on TWO non-final atoms would land in both lists and make the two counts
+    # sum to more than the whole, leaving the table a tour of two kinds out of three.  Each
     # example is the first of its list in the survey's own order, the idiom
     # ``spreader_qad_zaq`` above already uses.
     three_atom = [
@@ -1227,6 +1217,7 @@ def _intro(survey: dict) -> tuple[object, ...]:
     middle_atom = [o for o in three_atom if o["shape"].split("-")[1] != "0"]
     assert first_atom and middle_atom, three_atom
     assert len(first_atom) + len(middle_atom) == len(three_atom), three_atom
+    spreader_examples = (spreader_qad_zaq[0], first_atom[0], middle_atom[0])
     # The three printed cases, derived once and used both for the table and for the answer's
     # naming of the Simanim Tiqqun's two pairs -- the same derivation pin_claims checks the
     # absence of, through ``unprecedented_pairs``.  Koren's is the first of the three and is
@@ -1250,45 +1241,44 @@ def _intro(survey: dict) -> tuple[object, ...]:
             " but never more than two."
             " Some of the two-accent words are simple and some are compounds."
             " Among the two-accent compounds,"
-            " some spread those two accents across two atoms, e.g."
-            f" ({_ref_abbrev(spreader_qad_zaq[0]['bcv'])}):"
+            " some spread those two accents across two atoms, e.g.:"
         ),
-        _specimen(spreader_qad_zaq[0]),
+        # THREE SPREADERS AS A TABLE (Ben, 2026-07-30: "just fold this all together as a table
+        # of 3 examples of spreaders", with the shape drawn out -- form, then verse, no heading
+        # row).  What it folds together is a specimen and, from earlier the same day, a
+        # negative-claims paragraph with two more specimens under it: three sentences that
+        # counted the three-atom compounds and said which atom each kind accents.  The rows say
+        # it instead, which is this page's own doctrine (show it in Unicode, not only in words)
+        # and leaves one parenthetical of prose where a paragraph had been.
+        #
+        # THE PARENTHETICAL IS THE CLAIM THAT SURVIVED, and it is the one with content.  Its
+        # companion -- that a compound with both accents on one atom always has them on the
+        # last -- went with the paragraph: it is nearly the tautology it is easy to mistake it
+        # for, the scan defining a concentrator as a compound with no accent on any non-final
+        # atom, so the sentence just above it already tells a reader where those two accents
+        # are.  ``pin_claims`` keeps the surviving one honest.
+        _spreader_example_table(spreader_examples),
+        # "THE REMAINING", NOT A SECOND "SOME" (Ben, 2026-07-30: "instead of just hedging with
+        # another 'some' ... can't we say the stronger claim").  We can: the two kinds are
+        # exhaustive of the two-accent compounds, and saying so is what tells a reader there is
+        # no third kind waiting.  A compound with no accent on any non-final atom has both of
+        # them on its final atom, there being nowhere else left, so what the sentence rests on
+        # is that a two-accent compound is a spreader or a concentrator and nothing else --
+        # pinned above by the hit loop's "exactly two accented atoms" and by
+        # ``concentrator_by_shape``'s "every non-final field empty".
+        #
+        # The 45 MAM prose compounds ``concentrator_excluded`` sets aside are no exception to
+        # it.  Their two marks are a zarqa's stress helper and the zarqa, one accent written
+        # twice, so they are not two-accent compounds at all -- and their marks are on the last
+        # atom in any case, which is where the sentence would put them.
         text_para(
-            "In contrast, some concentrate both of those two accents on the last"
-            f" atom, e.g. ({_ref_abbrev(conc_example['bcv'])}):"
+            "(One of the two is always on the last atom.)"
+            " The remaining two-accent compounds instead concentrate both of those two"
+            f" accents on the last atom, e.g. ({_ref_abbrev(conc_example['bcv'])}):"
         ),
         _specimen(
             conc_example,
             silluq_second=_ACCENT_DISPLAY[_split_pair(conc_pair)[1]] == ROM_SILLUQ,
-        ),
-        # WHERE THE TWO ACCENTS MAY NOT FALL (Ben, 2026-07-30).  Two negative claims about the
-        # two kinds the paragraphs above have just shown, stated before the page names those
-        # kinds, which is why these sentences keep to the verbs and use neither noun.
-        #
-        # The second claim is NOT the tautology it is easy to write.  "A compound that
-        # concentrates its two accents concentrates them on its last atom" would be true by the
-        # scan's own definition of a concentrator -- no accent on any non-final atom -- and so
-        # would say nothing.  The claim with content is about compounds generally: wherever a
-        # compound has both accents on ONE atom, that atom is the last, and it is the survey
-        # rather than a definition that bears it out.
-        text_para(
-            "When a compound spreads its two accents, one of the two is always on its"
-            " last atom: no compound has both accents on non-final atoms."
-            f" {_count(len(three_atom)).capitalize()} of the spreading compounds have"
-            f" three atoms, and in {_count(len(first_atom))} of the"
-            f" {_count(len(three_atom))}, the accent on a non-final atom is on the"
-            f" first atom, e.g. ({_ref_abbrev(first_atom[0]['bcv'])}):"
-        ),
-        _specimen(first_atom[0]),
-        text_para(
-            f"In the other {_count(len(middle_atom))}, the accent on a non-final atom"
-            f" is on the middle atom, e.g. ({_ref_abbrev(middle_atom[0]['bcv'])}):"
-        ),
-        _specimen(middle_atom[0]),
-        text_para(
-            "And when a compound has both of its two accents on one atom, that atom is"
-            " always the last."
         ),
         text_para(
             f"Of the {mam_prose['maqaf_compounds']:,} maqaf compounds in the prose"
@@ -1408,6 +1398,33 @@ _PRINTED_CASE_ROWS = (
         _HEBREW_CELL,
     ),
 )
+
+
+def _spreader_example_table(examples: tuple[dict, ...]) -> object:
+    """One spreader per row -- its form, then its verse -- and no heading row.
+
+    Ben's own sketch, 2026-07-30, is the shape: two columns, the form first and the verse
+    beside it, nothing above them.  The sentence that ends on the table's colon says what the
+    rows are, so a heading would label a two-column table whose columns a reader has already
+    been told about.
+
+    THE ROWS ARE ONE PER KIND, not three arbitrary examples: a two-atom compound, a three-atom
+    one accented on its first atom, and a three-atom one accented on its middle atom.  That is
+    a claim, made in Unicode rather than in words, and ``pin_claims`` defends it the same way
+    it defends a sentence -- ``len(atoms) in (2, 3)`` there is what stops a four-atom compound
+    from leaving these three a tour of part of the field.  ``_intro`` picks them, and asserts
+    the split its middle two rows rest on.
+    """
+    return H.table(
+        tuple(
+            H.table_row_of_data(
+                (hbo(_form_at(o)), _ref_abbrev(o["bcv"])),
+                (_HEBREW_CELL, None),
+            )
+            for o in examples
+        ),
+        {"class": "centered-table"},
+    )
 
 
 def _printed_case_table(cases: tuple[dict, ...]) -> object:
