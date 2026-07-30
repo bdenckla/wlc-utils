@@ -1069,15 +1069,33 @@ def pin_claims(survey: dict) -> None:
     # revia mugrash), so neither is a hypothetical.  A field of REPEATS is the one thing
     # allowed: MAM's Ezekiel 16:12 נֶ֙זֶם֙ has ``pash+pash``, one accent written twice.
     #
-    # GONE with the spreaders-vs-concentrators rewrite (2026-07-29): ``len(atoms) in (2, 3)``,
-    # which pinned "the compound itself having two atoms, or occasionally three" -- a sentence
-    # the intro no longer has.  MIND THE SCOPE: the survey scans maqaf compounds, so the pins
-    # here cover compounds only.  A chanted word that is a lone atom is never scanned, and
-    # "never more than two" speaks for those too.
+    # THE SECOND ASSERT ALSO DEFENDS the negative paragraph's closing sentence, "when a
+    # compound has both of its two accents on one atom, that atom is always the last": a
+    # non-final atom carrying a stacked pair of DIFFERENT accents would be a counterexample,
+    # and it would be a hit, so it would fail right here.  The first assert covers the rest of
+    # that sentence's ground -- a compound with a stacked pair and no other accent is a
+    # concentrator rather than a hit, and the ``concentrator_by_shape`` pin below is where its
+    # atom is checked to be the last one.
+    #
+    # BACK with the negative-claims paragraph (2026-07-30): ``len(atoms) in (2, 3)``, which had
+    # GONE with the spreaders-vs-concentrators rewrite the day before, its sentence ("the
+    # compound itself having two atoms, or occasionally three") having gone with it.  The new
+    # paragraph needs it again, and more sharply: it treats the three-atom compounds as the
+    # whole of the more-than-two-atom kind and counts them, so a four-atom hit would leave that
+    # count describing part of a larger set.  Its companion, ``atoms[-1] != "0"``, is the pin
+    # for "one of the two is always on its last atom" -- an accented final atom is nothing the
+    # scan requires, a non-final accent alone being enough to count a compound, and other
+    # corpora do have hits with a blank final field (WLC's Joshua 20:4).
+    #
+    # MIND THE SCOPE: the survey scans maqaf compounds, so the pins here cover compounds only.
+    # A chanted word that is a lone atom is never scanned, and "never more than two" speaks for
+    # those too.
     for o in _occurrences(survey, "mam_simple", "prose"):
         atoms = o["shape"].split("-")
         assert len([a for a in atoms if a != "0"]) == 2, o
         assert all(len(set(a.split("+"))) == 1 for a in atoms), o
+        assert atoms[-1] != "0", o
+        assert len(atoms) in (2, 3), o
 
     # THE CONCENTRATOR HALF of the same sentence pair (2026-07-29): "some concentrate both of
     # those two accents on the last atom", and with it that kind's half of "but never more
@@ -1086,6 +1104,14 @@ def pin_claims(survey: dict) -> None:
     # accents in its final field.  The scan's own criterion is merely "more than one", so a
     # compound whose final atom had three different accents would land here and stop the
     # build, as it should: it would falsify both sentences.
+    #
+    # AND IT DEFENDS the negative paragraph's closing sentence too (2026-07-30) -- "when a
+    # compound has both of its two accents on one atom, that atom is always the last".  The
+    # all-non-final-fields-empty assert IS that sentence for a concentrator, which is the only
+    # place a compound's two accents can sit on one atom without the compound also being a hit;
+    # the hit loop above covers the other place.  Between the two, the sentence has no room
+    # left to be false in, and neither pin was written for it, which is why they are annotated
+    # rather than duplicated.
     genre = survey["corpora"][_CORPUS]["prose"]
     for shape in genre["concentrator_by_shape"]:
         fields = shape.split("-")
@@ -1183,6 +1209,24 @@ def _intro(survey: dict) -> tuple[object, ...]:
     assert conc_by_pair, "no concentrator pair to show"
     conc_pair = next(iter(conc_by_pair))  # the commonest: the survey orders by count
     conc_example = mam_prose["concentrator_example_by_pair"][conc_pair]
+    # THE THREE-ATOM SPREADERS, for the negative-claims paragraph (Ben, 2026-07-30, asking the
+    # intro to say where the two accents may NOT fall).  There is one "always" to be had --
+    # every hit's LAST field is accented -- and no second one: which non-final atom takes the
+    # other accent is the first in nine cases and the middle in two, so the paragraph gives
+    # both, with a specimen each.  The split is asserted rather than assumed, and the sum is
+    # the assertion that matters: a compound accented on TWO non-final atoms would land in both
+    # lists, make the two counts sum to more than the whole, and falsify the sentence.  Each
+    # example is the first of its list in the survey's own order, the idiom
+    # ``spreader_qad_zaq`` above already uses.
+    three_atom = [
+        o
+        for o in _occurrences(survey, _CORPUS, "prose")
+        if len(o["shape"].split("-")) == 3
+    ]
+    first_atom = [o for o in three_atom if o["shape"].split("-")[0] != "0"]
+    middle_atom = [o for o in three_atom if o["shape"].split("-")[1] != "0"]
+    assert first_atom and middle_atom, three_atom
+    assert len(first_atom) + len(middle_atom) == len(three_atom), three_atom
     # The three printed cases, derived once and used both for the table and for the answer's
     # naming of the Simanim Tiqqun's two pairs -- the same derivation pin_claims checks the
     # absence of, through ``unprecedented_pairs``.  Koren's is the first of the three and is
@@ -1217,6 +1261,34 @@ def _intro(survey: dict) -> tuple[object, ...]:
         _specimen(
             conc_example,
             silluq_second=_ACCENT_DISPLAY[_split_pair(conc_pair)[1]] == ROM_SILLUQ,
+        ),
+        # WHERE THE TWO ACCENTS MAY NOT FALL (Ben, 2026-07-30).  Two negative claims about the
+        # two kinds the paragraphs above have just shown, stated before the page names those
+        # kinds, which is why these sentences keep to the verbs and use neither noun.
+        #
+        # The second claim is NOT the tautology it is easy to write.  "A compound that
+        # concentrates its two accents concentrates them on its last atom" would be true by the
+        # scan's own definition of a concentrator -- no accent on any non-final atom -- and so
+        # would say nothing.  The claim with content is about compounds generally: wherever a
+        # compound has both accents on ONE atom, that atom is the last, and it is the survey
+        # rather than a definition that bears it out.
+        text_para(
+            "When a compound spreads its two accents, one of the two is always on its"
+            " last atom: no compound has both accents on non-final atoms."
+            f" {_count(len(three_atom)).capitalize()} of the spreading compounds have"
+            f" three atoms, and in {_count(len(first_atom))} of the"
+            f" {_count(len(three_atom))}, the accent on a non-final atom is on the"
+            f" first atom, e.g. ({_ref_abbrev(first_atom[0]['bcv'])}):"
+        ),
+        _specimen(first_atom[0]),
+        text_para(
+            f"In the other {_count(len(middle_atom))}, the accent on a non-final atom"
+            f" is on the middle atom, e.g. ({_ref_abbrev(middle_atom[0]['bcv'])}):"
+        ),
+        _specimen(middle_atom[0]),
+        text_para(
+            "And when a compound has both of its two accents on one atom, that atom is"
+            " always the last."
         ),
         text_para(
             f"Of the {mam_prose['maqaf_compounds']:,} maqaf compounds in the prose"
