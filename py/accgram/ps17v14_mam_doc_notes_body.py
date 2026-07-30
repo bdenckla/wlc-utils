@@ -5,6 +5,13 @@ the generator/this data, not the generated HTML.
 Migrated from the former hand-authored JSON sidecar ps17v14_mam_doc_notes_body.json (issue #33):
 read via import, not a file open.  Edit this module / the generator, not the
 generated HTML.
+
+The BYTE-EXACTNESS above is a claim about THIS DATA, not about the page any more.  The
+htels here are literal dicts that pin lb1/lb2 on inline tags only, so h1/p and friends
+used to take the serializer's old lb1="\\n" default; since the move to tag-keyed break
+tables in ``py_html/wlc_utils_html.py`` they take lb1="", and the page no longer carries
+a newline straight after those block-level open tags.  No browser renders the difference,
+and it is what makes this page break like the other 151.  See that module's table comment.
 """
 
 TITLE = "MAM documentation notes on Psalms 17:14 — translation"

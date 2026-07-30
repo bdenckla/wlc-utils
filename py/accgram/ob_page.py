@@ -145,7 +145,7 @@ def _tristate_fieldset(
 
 
 def _checkbox(css_class: str, value: str, label_text: str, count: int) -> object:
-    input_el = wlc_utils_html.htel_mk_inline_nc(
+    input_el = wlc_utils_html.htel_mk(
         "input",
         {
             "type": "checkbox",
@@ -154,14 +154,14 @@ def _checkbox(css_class: str, value: str, label_text: str, count: int) -> object
             "checked": "checked",
         },
     )
-    return wlc_utils_html.htel_mk_inline(
+    return wlc_utils_html.htel_mk(
         "label", None, (input_el, f" {label_text}", _count_span(count))
     )
 
 
 def _radio(group_name: str, value: str, label_text: str, *, checked: bool) -> object:
     input_el = _radio_input(group_name, value, checked=checked)
-    return wlc_utils_html.htel_mk_inline("label", None, (input_el, f" {label_text}"))
+    return wlc_utils_html.htel_mk("label", None, (input_el, f" {label_text}"))
 
 
 def _radio_with_count(
@@ -169,7 +169,7 @@ def _radio_with_count(
 ) -> object:
     """A radio whose label ends in a "(N)" count the filter script keeps live."""
     input_el = _radio_input(group_name, value, checked=False)
-    return wlc_utils_html.htel_mk_inline(
+    return wlc_utils_html.htel_mk(
         "label", None, (input_el, f" {prefix_text}", _count_span(count))
     )
 
@@ -183,7 +183,7 @@ def _radio_input(group_name: str, value: str, *, checked: bool) -> object:
     }
     if checked:
         attrs["checked"] = "checked"
-    return wlc_utils_html.htel_mk_inline_nc("input", attrs)
+    return wlc_utils_html.htel_mk("input", attrs)
 
 
 def _count_span(count: int) -> object:

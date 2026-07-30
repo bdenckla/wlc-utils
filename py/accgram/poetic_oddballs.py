@@ -670,7 +670,7 @@ def _render_tree(row: dict[str, object]) -> object:
         )
     # Last-resort fallback: show the raw tree/NO_PARSE line verbatim.
     return wlc_utils_html.div(
-        (wlc_utils_html.htel_mk_inline("pre", None, str(row["tree_text"])),),
+        (wlc_utils_html.htel_mk("pre", None, str(row["tree_text"])),),
         {"class": "goerwitz-obs-tree-wrap"},
     )
 

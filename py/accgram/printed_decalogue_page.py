@@ -324,7 +324,7 @@ def _strip_pointing(word: str) -> str:
 # settled -- see the "Attribute contexts are EXEMPT" bullet in printed_decalogue_strands' module
 # docstring before "correcting" any title/alt string on this page or its two satellites.
 def _abbr(letter: str, title: str) -> object:
-    return H.htel_mk_inline("abbr", {"title": title}, letter)
+    return H.htel_mk("abbr", {"title": title}, letter)
 
 
 # ── Letter-equalizing the paired taxton/elyon boundary cells (ported from MAM-basics #201) ──

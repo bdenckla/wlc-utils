@@ -59,7 +59,7 @@ def render_tree(tree_text: str) -> object:
             {"class": "goerwitz-obs-tree-wrap"},
         )
     return H.div(
-        (H.htel_mk_inline("pre", None, tree_text),),
+        (H.htel_mk("pre", None, tree_text),),
         {"class": "goerwitz-obs-tree-wrap"},
     )
 

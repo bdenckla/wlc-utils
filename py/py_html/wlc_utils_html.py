@@ -1,14 +1,11 @@
 """Exports various HTMl utilities."""
 
-import html
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from typing import Union
 
 import mb_cmn.file_io as file_io
-import mb_cmn.hebrew_punctuation as hpu
-import mb_cmn.my_utils as my_utils
-import mb_cmn.str_defs as sd
+from mb_misc import mb_html_get_lines
 
 
 @dataclass
@@ -49,43 +46,36 @@ def write_html_to_file(body_contents, write_ctx: WriteCtx, path_to_style):
     )
 
 
-_SSTT = str.maketrans(
-    {
-        "\N{EM SPACE}": "&emsp;",
-        sd.THSP: "&thinsp;",
-        sd.NBSP: "&nbsp;",
-    }
-)
-
-
 def el_to_str_no_wbr(html_el):
     """Call el_to_str with add_wbr=False."""
     return el_to_str(add_wbr=False, html_el=html_el)
 
 
 def el_to_str(add_wbr, html_el):
-    """Convert an HTML element to a string."""
-    if isinstance(html_el, str):
-        outstr = html_el
-        outstr = html.escape(html_el, quote=False)
-        outstr = outstr.translate(_SSTT)
-        if add_wbr:
-            outstr = outstr.replace(hpu.MAQ, hpu.MAQ + "<wbr>")
-        return outstr
-    contents_str = ""
-    if contents := html_el.get("contents"):
-        assert isinstance(contents, (tuple, list))
-        contents_str = "".join(my_utils.sl_map((el_to_str, add_wbr), contents))
-    eltag = htel_get_tag(html_el)
-    fields = {
-        "tag_name": eltag,
-        "attr": _attr_str(html_el.get("attr")),
-        "contents": contents_str,
-        "close": "" if html_el.get("noclose") else f"</{eltag}>",
-        "lb1": html_el.get("lb1", "\n"),
-        "lb2": html_el.get("lb2", "\n"),
+    """Convert an HTML element to a string, unwrapped however long its lines run.
+
+    ONE SERIALIZER, NOT TWO.  This is the same ``mb_html_get_lines`` machinery that
+    writes the pages, just with wrapping switched off (``-1``), so an in-memory fragment
+    and a written page can never drift apart in how they break or escape.  With wrapping
+    off the paragraph model reproduces the ``lb1``/``lb2`` newlines exactly, trailing one
+    included.  Callers that render fragments to compare against expected text -- the
+    edition-transcription and detangle checks -- rely on that.
+    """
+    lines = mb_html_get_lines.get_lines_from_html_el(_hgl_opts(add_wbr, -1), html_el)
+    return "\n".join(lines)
+
+
+def _hgl_opts(add_wbr, max_line_len):
+    """Options for the shared serializer: THIS repo's break policy, plus the width."""
+    return {
+        "hgl-add-wbr": add_wbr,
+        "hgl-max-line-len": max_line_len,
+        "hgl-line-breaks-allowed": True,
+        "hgl-lb1": _LB1,
+        "hgl-lb2": _LB2,
+        "hgl-noclose": _NOCLOSE,
+        "hgl-verbatim-tags": _VERBATIM_TAGS,
     }
-    return "<{tag_name}{attr}>{lb1}{contents}{close}{lb2}".format(**fields)
 
 
 def add_htel_to_etxml(etxml_parent, htel):
@@ -112,8 +102,8 @@ def add_htel_to_etxml(etxml_parent, htel):
 
 def html_el2(title_text, body_contents, flex_css_hrefs, centered=False):
     """Make an <html> element."""
-    meta = htel_mk_nlb2_nc("meta", attr={"charset": "utf-8"})
-    title = htel_mk_nlb1("title", contents=(title_text,))
+    meta = htel_mk("meta", attr={"charset": "utf-8"})
+    title = htel_mk("title", flex_contents=(title_text,))
     strict_css_hrefs = _strictify(flex_css_hrefs)
     links_to_css = tuple(map(_link_to_css, strict_css_hrefs))
     head_cont = meta, title, *links_to_css
@@ -132,27 +122,27 @@ def _strictify(str_or_tuple):
 
 def para(contents, attr=None):
     """Make a <p> element."""
-    return htel_mk_nlb1("p", attr, contents)
+    return htel_mk("p", attr, contents)
 
 
 def blockquote(contents, attr=None):
     """Make a <blockquote> element."""
-    return htel_mk_nlb1("blockquote", attr, contents)
+    return htel_mk("blockquote", attr, contents)
 
 
 def figure(contents, attr=None):
     """Make a <figure> element."""
-    return htel_mk_nlb1("figure", attr, contents)
+    return htel_mk("figure", attr, contents)
 
 
 def figcaption(contents, attr=None):
     """Make a <figcaption> element."""
-    return htel_mk_nlb1("figcaption", attr, contents)
+    return htel_mk("figcaption", attr, contents)
 
 
 def img(attr=None):
     """Make an <img> element."""
-    return htel_mk_nlb1_nc("img", attr)
+    return htel_mk("img", attr)
 
 
 def svg(contents, attr=None):
@@ -171,12 +161,12 @@ def rect(attr=None):
 
 def caption(contents):
     """Make a <caption> element."""
-    return htel_mk_nlb1("caption", contents=contents)
+    return htel_mk("caption", flex_contents=contents)
 
 
 def table_row(contents):
     """Make a <tr> element."""
-    return htel_mk_nlb1("tr", contents=contents)
+    return htel_mk("tr", flex_contents=contents)
 
 
 def table_row_of_data(tdconts, tdattrs=None):
@@ -193,12 +183,12 @@ def table_row_of_headers(thconts):
 
 def table_datum(contents, attr=None):
     """Make a <td> (table datum cell) element."""
-    return htel_mk_inline("td", attr, contents)
+    return htel_mk("td", attr, contents)
 
 
 def table_header(contents, attr=None):
     """Make a <th> (table header cell) element."""
-    return htel_mk_inline("th", attr, contents)
+    return htel_mk("th", attr, contents)
 
 
 def div(contents, attr=None):
@@ -218,7 +208,7 @@ def unordered_list(liconts, attr=None):
 
 def heading_level_1(contents, attr=None):
     """Make an <h1> element."""
-    return htel_mk_nlb1("h1", attr, contents)
+    return htel_mk("h1", attr, contents)
 
 
 def heading_level_2(contents, attr=None):
@@ -233,7 +223,7 @@ def heading_level_3(contents, attr=None):
 
 def anchor(contents, attr=None):
     """Make an <a> element."""
-    return htel_mk_inline("a", attr, contents)
+    return htel_mk("a", attr, contents)
 
 
 def colgroup(contents, attr=None):
@@ -243,17 +233,17 @@ def colgroup(contents, attr=None):
 
 def col(attr=None):
     """Make a <col> element."""
-    return htel_mk_nlb2_nc("col", attr)
+    return htel_mk("col", attr)
 
 
 def span(contents, attr=None):
     """Make a <span> element."""
-    return htel_mk_inline("span", attr, contents)
+    return htel_mk("span", attr, contents)
 
 
 def code(contents, attr=None):
     """Make a <code> element."""
-    return htel_mk_inline("code", attr, contents)
+    return htel_mk("code", attr, contents)
 
 
 def span_c(contents, the_class=None):
@@ -263,34 +253,34 @@ def span_c(contents, the_class=None):
 
 def bold(contents, attr=None):
     """Make a <bold> element."""
-    return htel_mk_inline("b", attr, contents)
+    return htel_mk("b", attr, contents)
 
 
 def em(contents, attr=None):
     """Make an <em> element."""
-    return htel_mk_inline("em", attr, contents)
+    return htel_mk("em", attr, contents)
 
 
 def small(contents, attr=None):
     """Make a <small> element."""
-    return htel_mk_inline("small", attr, contents)
+    return htel_mk("small", attr, contents)
 
 
 def abbr(contents, title):
     """Make an <abbr> element: a short form, with the full one revealed on hover."""
-    return htel_mk_inline("abbr", {"title": title}, contents)
+    return htel_mk("abbr", {"title": title}, contents)
 
 
 def big(contents, attr=None):
     """Make a <big> element."""
-    return htel_mk_inline("big", attr, contents)
+    return htel_mk("big", attr, contents)
 
 
 def bdi(contents, attr=None):
     """Make a <bdi> element (bidirectional isolate: keeps a run of opposite-direction text,
     e.g. Hebrew embedded in an English sentence, from disturbing the surrounding order).
     """
-    return htel_mk_inline("bdi", attr, contents)
+    return htel_mk("bdi", attr, contents)
 
 
 def bdi_multi(*items, conj="and"):
@@ -318,46 +308,36 @@ def bdi_multi(*items, conj="and"):
 
 def sup(contents, attr=None):
     """Make a <sup> (superscript) element."""
-    return htel_mk_inline("sup", attr, contents)
+    return htel_mk("sup", attr, contents)
 
 
 def horizontal_rule(attr=None):
     """Make a <hr> element."""
-    return htel_mk_inline_nc("hr", attr)
+    return htel_mk("hr", attr)
 
 
 def line_break(attr=None):
-    """
-    Make a <br> element
-    that is NOT followed by a newline in the source code.
-    """
-    return htel_mk_inline_nc("br", attr)
-
-
-def line_break2(attr=None):
-    """
-    Make <br> element
-    that is followed by a newline in the source code.
-    """
-    return htel_mk_nlb1_nc("br", attr)
+    """Make a <br> element."""
+    return htel_mk("br", attr)
 
 
 def word_break_opportunity(attr=None):
     """Make a <wbr> element (a permitted line-break point, no visible glyph)."""
-    return htel_mk_inline_nc("wbr", attr)
+    return htel_mk("wbr", attr)
 
 
-@dataclass
-class HelDetails:
-    """Details about how to make an HTML element."""
+def htel_mk(tag: str, attr=None, flex_contents=None):
+    """Make an HTML element.
 
-    lb1: Union[str, None] = None
-    lb2: Union[str, None] = None
-    noclose: Union[bool, None] = None
-
-
-def htel_mk(tag: str, attr=None, flex_contents=None, details=None):
-    """Make an HTML element"""
+    ONE CONSTRUCTOR.  There used to be six: this one plus ``_inline``, ``_inline_nc``,
+    ``_nlb1``, ``_nlb1_nc`` and ``_nlb2_nc``, each stamping ``lb1``/``lb2``/``noclose``
+    onto the element to tell the serializer how to break around it and whether to close
+    it.  All three are now properties of the TAG, read from this module's
+    ``_LB1``/``_LB2``/``_NOCLOSE`` tables, so an element carries no break policy at all
+    and the variants said nothing this one does not.  Picking a constructor was also the
+    only way one tag could end up breaking two different ways in two places -- which is
+    exactly what happened; see the table comment below.
+    """
     assert isinstance(tag, str)
     assert isinstance(attr, (type(None), dict))
     strict_contents = (
@@ -368,45 +348,9 @@ def htel_mk(tag: str, attr=None, flex_contents=None, details=None):
             assert _is_str_or_htel(seq_el)
     else:
         assert strict_contents is None
-    opts1 = {
-        "attr": attr,
-        "contents": strict_contents,
-        "lb1": details.lb1 if details else None,
-        "lb2": details.lb2 if details else None,
-        "noclose": details.noclose if details else None,
-    }
+    opts1 = {"attr": attr, "contents": strict_contents}
     opts2 = {k: v for k, v in opts1.items() if v is not None}
     return {"_htel_tag": tag, **opts2}
-
-
-def htel_mk_inline(tag: str, attr=None, contents=None):
-    """htel_mk with lb1='', lb2=''"""
-    details = HelDetails(lb1="", lb2="")
-    return htel_mk(tag, attr, contents, details)
-
-
-def htel_mk_inline_nc(tag: str, attr=None, contents=None):
-    """htel_mk with lb1='', lb2='', noclose=True"""
-    details = HelDetails(lb1="", lb2="", noclose=True)
-    return htel_mk(tag, attr, contents, details)
-
-
-def htel_mk_nlb1_nc(tag: str, attr=None, contents=None):
-    """htel_mk with lb1='', noclose=True"""
-    details = HelDetails(lb1="", noclose=True)
-    return htel_mk(tag, attr, contents, details)
-
-
-def htel_mk_nlb1(tag: str, attr=None, contents=None):
-    """htel_mk with lb1=''"""
-    details = HelDetails(lb1="")
-    return htel_mk(tag, attr, contents, details)
-
-
-def htel_mk_nlb2_nc(tag: str, attr=None, contents=None):
-    """htel_mk with lb2='', noclose=True"""
-    details = HelDetails(lb2="", noclose=True)
-    return htel_mk(tag, attr, contents, details)
 
 
 def htel_get_tag(html_el):
@@ -423,10 +367,14 @@ def _is_str_or_htel(obj):
 
 
 def _write_callback(html_el, add_wbr, html_comment, out_fp):
+    """Write one page.  THE ONLY PLACE WRAPPING IS TURNED ON."""
     out_fp.write("<!doctype html>\n")
     if html_comment:
         out_fp.write(f"<!-- {html_comment} -->\n")
-    out_fp.write(el_to_str(add_wbr, html_el))
+    lines = mb_html_get_lines.get_lines_from_html_el(
+        _hgl_opts(add_wbr, _MAX_LINE_LEN), html_el
+    )
+    out_fp.write("\n".join(lines))
 
 
 def _is_text_singleton(sequence):
@@ -439,20 +387,131 @@ def _list_item(contents, attr=None):
 
 def _link_to_css(css_href):
     link_to_css_attr = {"rel": "stylesheet", "href": css_href}
-    return htel_mk_nlb2_nc("link", attr=link_to_css_attr)
+    return htel_mk("link", attr=link_to_css_attr)
 
 
 def _html_el1(attr, contents):
     return htel_mk("html", attr, contents)
 
 
-def _attr_str(attr_dict):
-    if not attr_dict:
-        return ""
-    return " " + " ".join(map(_kv_str, attr_dict.items()))
+# Width the written pages wrap to.  Only _write_callback uses it: el_to_str passes -1,
+# leaving in-memory fragments unwrapped.
+#
+# The point of wrapping is DIFFS.  Unwrapped, a page put each paragraph on one line -- up
+# to 1,782 characters -- so changing one word reported the whole paragraph as changed.  100
+# matches what MAM-basics, al-hatorah and book-of-job already use.  Wrapping can only ever
+# replace a space that was already in the text with a newline: prose reaches the serializer
+# HTML-escaped, and an authored newline is kept as a hard break, so no break point is
+# invented and no entity is touched.
+_MAX_LINE_LEN = 100
 
+# THIS REPO'S OWN LINE-BREAK POLICY, handed to the shared serializer by _hgl_opts.
+#
+# BY TAG, deliberately, and that is a real (small) change from what came before.  Each row
+# below was read off the six now-deleted htel_mk* variants its tags used to be built with,
+# and an AST scan of every such call in py/ found no tag built two ways.  (The one that
+# was, `br`, took its inline row from `line_break`; the other constructor, `line_break2`,
+# had no callers at all and is gone.)
+#
+# BUT that scan does not see every htel.  The two replayed Psalms-17:14 bodies
+# (ps17v14_mam_doc_notes_body, ps17v14_double_tsinnor_body), migrated byte-exactly from
+# hand-authored HTML, write their htels as LITERAL dicts.  Those pin lb1/lb2 on inline
+# tags but leave block tags unpinned, so h1/p/blockquote/figure/figcaption/img there used
+# to take the old el_to_str default of lb1="\n" -- disagreeing with the rows below, which
+# give those tags lb1="".  So a tag table cannot reproduce those two pages byte-for-byte,
+# and it does not: they lose a newline after those block-level open tags, which no browser
+# renders and which brings them into line with the other 151 pages.  Ben took that trade
+# knowingly (2026-07-30) rather than keep a per-element override alive for two pages; the
+# alternative would have kept the per-element lb1/lb2 fields (the former `HelDetails`)
+# load-bearing forever instead of letting them be deleted.  Do not "restore" it.
+#
+# Also do NOT "harmonize" these with MAM-basics' tables next to its own writer -- they
+# genuinely disagree on h2, h3, li, tr and pre, and adopting those values would rewrap all
+# 153 tracked pages for no reason.  Two repos sharing one algorithm is the point; sharing a
+# break structure was never part of it.
+#
+# lb1 is the newline (or lack of one) after the OPEN tag, lb2 the one after the CLOSE
+# tag.  Both are indexed strictly: a tag missing here raises KeyError at generation time,
+# which is how a newly-introduced tag announces that it needs a row.  `strong` is here
+# only because one of those literal-dict bodies uses it.
+_BOTH_BREAK = (  # <tag>\n contents </tag>\n -- block elements
+    "body",
+    "colgroup",
+    "div",
+    "fieldset",
+    "h2",
+    "h3",
+    "h4",
+    "head",
+    "html",
+    "legend",
+    "li",
+    "rect",
+    "script",
+    "section",
+    "svg",
+    "table",
+    "ul",
+)
+_BREAK_AFTER_CLOSE = (  # <tag>contents</tag>\n -- contents kept on the open tag's line
+    "blockquote",
+    "caption",
+    "figcaption",
+    "figure",
+    "h1",
+    "p",
+    "title",
+    "tr",
+)
+_INLINE = (  # <tag>contents</tag> -- no newline of its own at all
+    "a",
+    "abbr",
+    "b",
+    "bdi",
+    "big",
+    "code",
+    "em",
+    "label",
+    "pre",
+    "small",
+    "span",
+    "strong",
+    "sup",
+    "td",
+    "th",
+)
+_INLINE_NOCLOSE = ("br", "hr", "input", "wbr")  # <tag> -- void, no newline
+# Void tags followed by a newline.  `img` takes its newline as lb2 and col/link/meta as
+# lb1, matching the constructors each is built with -- but a void tag has no close tag
+# between the two, so BOTH spellings emit exactly `<tag>\n`.  They are kept apart here
+# only so this transcription is faithful and Phase 1's zero-diff gate is testing the
+# tables rather than a simplification; Phase 3 can collapse them into one row.
+_NOCLOSE_BREAK_AS_LB2 = ("img",)
+_NOCLOSE_BREAK_AS_LB1 = ("col", "link", "meta")
 
-def _kv_str(key_and_val):
-    key = key_and_val[0]
-    value = html.escape(key_and_val[1], quote=True)
-    return f'{key}="{value}"'
+_NOCLOSE = {*_INLINE_NOCLOSE, *_NOCLOSE_BREAK_AS_LB2, *_NOCLOSE_BREAK_AS_LB1}
+
+# Emitted raw -- neither escaped nor split for wrapping.  Entities are not decoded inside
+# <style> or <script>, so escaping their CSS/JS would break it.  <pre> is here for a
+# different reason: its whitespace is significant, so the RUNS OF SPACES in the parse-tree
+# text that almost_errors_html_shared and poetic_oddballs fall back to must survive intact
+# -- and wrapping would otherwise reflow those lines.  (Its newlines alone would not need
+# this: the serializer keeps an authored newline as a hard break wherever it appears.)
+_VERBATIM_TAGS = {"pre", "script", "style"}
+
+_LB1 = {
+    **{tag: "\n" for tag in _BOTH_BREAK},
+    **{tag: "" for tag in _BREAK_AFTER_CLOSE},
+    **{tag: "" for tag in _INLINE},
+    **{tag: "" for tag in _INLINE_NOCLOSE},
+    **{tag: "" for tag in _NOCLOSE_BREAK_AS_LB2},
+    **{tag: "\n" for tag in _NOCLOSE_BREAK_AS_LB1},
+}
+_LB2 = {
+    **{tag: "\n" for tag in _BOTH_BREAK},
+    **{tag: "\n" for tag in _BREAK_AFTER_CLOSE},
+    **{tag: "" for tag in _INLINE},
+    **{tag: "" for tag in _INLINE_NOCLOSE},
+    **{tag: "\n" for tag in _NOCLOSE_BREAK_AS_LB2},
+    **{tag: "" for tag in _NOCLOSE_BREAK_AS_LB1},
+}
