@@ -23,7 +23,6 @@ continues.  This output is the verification surface later phases diff against.
 from __future__ import annotations
 
 import argparse
-import json
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -40,6 +39,7 @@ from accgram.poetic_ply_grammar import (
 from accgram.poetic_scanner import scan_book
 from accgram.tree import TN, tree_to_obj
 from accgram.poetic_reconcile import reconcile_tokens
+from mb_cmn import file_io
 import wlc_provenance as provenance
 
 import repo_paths
@@ -247,12 +247,11 @@ def _write_book_json(out_path: Path, records: list[dict[str, object]]) -> None:
         "verses": records,
     }
     payload = provenance.with_json_provenance(payload, __file__)
-    with out_path.open("w", encoding="utf-8", newline="\n") as f_out:
-        # Dedented (indent=0): drop the indentation to keep the committed
-        # corpus small, but keep newlines (one element per line) so git diffs
-        # stay per-line rather than collapsing to one giant line.
-        json.dump(payload, f_out, ensure_ascii=False, indent=0)
-        f_out.write("\n")
+    # Dedented (indent=0): drop the indentation to keep the committed corpus
+    # small, but keep newlines (one element per line) so git diffs stay per-line
+    # rather than collapsing to one giant line. Through file_io for the temp-file
+    # write and the PermissionError retry, as prose_run does.
+    file_io.json_dump_to_file_path(payload, str(out_path), indent=0)
 
 
 def run(args: argparse.Namespace) -> None:

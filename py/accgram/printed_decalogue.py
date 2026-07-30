@@ -59,6 +59,7 @@ from accgram.dual_cant_detangle import _tree_has_error
 from accgram.prose_ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.prose_scanner import HasLegarmeh, Token, scan_accents
 from accgram.tree import tree_to_obj
+from mb_cmn import file_io
 
 import repo_paths
 
@@ -298,10 +299,9 @@ def run(args) -> None:
     )
 
     out_path: Path = args.out
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    with out_path.open("w", encoding="utf-8", newline="\n") as f_out:
-        json.dump(payload, f_out, ensure_ascii=False, indent=2)
-        f_out.write("\n")
+    # file_io: temp-file write, PermissionError retry, and it makes the directory.
+    # Provenance is already on the payload, so no generator_file= here.
+    file_io.json_dump_to_file_path(payload, str(out_path))
 
     s = payload["summary"]
     print(

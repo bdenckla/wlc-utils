@@ -38,7 +38,6 @@ from __future__ import annotations
 
 import argparse
 import datetime
-import json
 import re
 import time
 import urllib.request
@@ -46,6 +45,7 @@ from html import unescape
 from pathlib import Path
 
 from cmn.utf8_io import force_utf8_io
+from mb_cmn import file_io
 
 import repo_paths
 
@@ -188,10 +188,9 @@ def add_args(parser: argparse.ArgumentParser) -> None:
 def run(args: argparse.Namespace) -> None:
     payload = build_payload(args.cache, args.retrieved)
     out_path: Path = args.out
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    with out_path.open("w", encoding="utf-8", newline="\n") as f_out:
-        json.dump(payload, f_out, ensure_ascii=False, indent=2)
-        f_out.write("\n")
+    # file_io: temp-file write, PermissionError retry, and it makes the directory.
+    # build_payload records the retrieval date itself, so no generator_file=.
+    file_io.json_dump_to_file_path(payload, str(out_path))
     n = sum(len(c["decalogue_verses"]) for c in payload["chapters"].values())
     print(
         f"ctr-decalogue: {len(payload['chapters'])} chapters, {n} verses -> {out_path}"

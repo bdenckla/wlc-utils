@@ -34,7 +34,6 @@ Depends on ``out/accgram/prose/`` -- run ``run-prose`` first.
 from __future__ import annotations
 
 import argparse
-import json
 import threading
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -52,6 +51,7 @@ from accgram.prose_ply_grammar import LOCATION_ONLY, build_parser, parse_tokens
 from accgram.prose_scanner import HasLegarmeh, Token, scan_accents
 from accgram.tree import TN
 from accgram.prose_ob_notes import get_structured_text
+from mb_cmn import file_io
 import wlc_provenance as provenance
 
 import repo_paths
@@ -747,11 +747,12 @@ def run(args: argparse.Namespace) -> None:
 
     text_path: Path = args.report_txt
     json_path: Path = args.report_json
+    # The mkdir still serves the text report, which stays a plain write_text.
     text_path.parent.mkdir(parents=True, exist_ok=True)
     text_path.write_text(render_text_report(results), encoding="utf-8", newline="\n")
-    with json_path.open("w", encoding="utf-8", newline="\n") as f_out:
-        json.dump(build_json_report(results), f_out, ensure_ascii=False, indent=2)
-        f_out.write("\n")
+    # file_io: temp-file write, PermissionError retry, and it makes the directory.
+    # build_json_report stamps provenance itself, so no generator_file= here.
+    file_io.json_dump_to_file_path(build_json_report(results), str(json_path))
 
     counts = _summary_counts(results)
     print(

@@ -479,5 +479,5 @@ claim-vs-result: 83 agree, 1 disagree
 ## UNTESTABLE -- fix could not be applied mechanically  (0)
 
 ## Review queue: speculative claims whose result disagrees  (1)
-  dt 5:8  [DENIED] claim: 'WLC’s “tangled” form for תעשה carries only a merkha on the ש, but a better LC transcription would be a meteg (elyon) and a qadma (taḥton).'
+  dt 5:8  [DENIED] claim: 'WLC’s “tangled” form for תעשה carries only a merkha on the ש, but a better LC transcription would be a meteg (elyon) and a qadma (taḥton).'
 

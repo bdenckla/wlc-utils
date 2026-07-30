@@ -58,7 +58,6 @@ verse-final chanted word); NO_PARSE verses, having no single focus word, omit it
 from __future__ import annotations
 
 import argparse
-import json
 from collections.abc import Callable
 from pathlib import Path
 
@@ -90,6 +89,7 @@ from accgram.poetic_reconcile import reconcile_tokens
 from accgram.poetic_oddball_summary import derive_tentative_summary
 from accgram.tree import print_tree
 from accgram.poetic_run import has_error_leaf, no_parse_line
+from mb_cmn import file_io
 import wlc_provenance as provenance
 from py_html import wlc_utils_html
 from py_wlc import my_wlc_bcv_str
@@ -792,10 +792,9 @@ def run(args: argparse.Namespace) -> None:
 
     payload = build_payload(ungrammatical, __file__)
     ungrammatical_out: Path = args.ungrammatical_out
-    ungrammatical_out.parent.mkdir(parents=True, exist_ok=True)
-    with ungrammatical_out.open("w", encoding="utf-8", newline="\n") as f_out:
-        json.dump(payload, f_out, ensure_ascii=False, indent=2)
-        f_out.write("\n")
+    # file_io: temp-file write, PermissionError retry, and it makes the directory.
+    # build_payload already stamped provenance, so no generator_file= here.
+    file_io.json_dump_to_file_path(payload, str(ungrammatical_out))
 
     html_out: Path = args.html_out
     html_out.parent.mkdir(parents=True, exist_ok=True)
