@@ -1,6 +1,5 @@
 """Exports various HTMl utilities."""
 
-import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from typing import Union
 
@@ -76,28 +75,6 @@ def _hgl_opts(add_wbr, max_line_len):
         "hgl-noclose": _NOCLOSE,
         "hgl-verbatim-tags": _VERBATIM_TAGS,
     }
-
-
-def add_htel_to_etxml(etxml_parent, htel):
-    """
-    Add our proprietary-format HTML/XML element "htel"
-    to the ElementTree-format element xml_parent.
-    """
-    if isinstance(htel, str):
-        ET.SubElement(etxml_parent, "text", {"text": htel})
-        return
-    attr = htel.get("attr") or {}
-    tmp_attr = attr
-    if contents := htel.get("contents"):
-        assert isinstance(contents, (tuple, list))
-        if _is_text_singleton(contents):
-            assert "text" not in attr
-            tmp_attr = dict(attr, text=contents[0])
-            contents = None
-    xml_elem = ET.SubElement(etxml_parent, htel_get_tag(htel), tmp_attr)
-    if contents:
-        for contents_el in contents:
-            add_htel_to_etxml(xml_elem, contents_el)
 
 
 def html_el2(title_text, body_contents, flex_css_hrefs, centered=False):
@@ -375,10 +352,6 @@ def _write_callback(html_el, add_wbr, html_comment, out_fp):
         _hgl_opts(add_wbr, _MAX_LINE_LEN), html_el
     )
     out_fp.write("\n".join(lines))
-
-
-def _is_text_singleton(sequence):
-    return len(sequence) == 1 and isinstance(sequence[0], str)
 
 
 def _list_item(contents, attr=None):
