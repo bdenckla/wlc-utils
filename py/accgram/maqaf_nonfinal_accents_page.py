@@ -59,6 +59,8 @@ from accgram.printed_decalogue_strands import (
 )
 from accgram.uni_to_marks import is_base_letter
 from cmn.utf8_io import force_utf8_io
+from cmn.wlc_book_codes import wlc_bb_to_bk39id
+from mb_misc import osis_book_abbrevs as oba
 import wlc_provenance as provenance
 from py_html import wlc_utils_html as H
 
@@ -617,9 +619,17 @@ def _example_cell(example: dict | None, pair: tuple[str, str]) -> object:
 
 def _hebrew_at(example: dict, *, silluq_second: bool = False) -> object:
     """The example's letters and accents, titled with the verse it is from."""
+    return H.span(
+        _form_at(example, silluq_second=silluq_second),
+        {"lang": "hbo", "title": ref_display(example["bcv"])},
+    )
+
+
+def _form_at(example: dict, *, silluq_second: bool = False) -> str:
+    """The example's letters, accents and maqafs -- and one U+05BD when it is a silluq."""
     chanted_word = example["word"]
     silluq_at = chanted_word.rfind(mpa.METEG) if silluq_second else -1
-    kept = "".join(
+    return "".join(
         ch
         for i, ch in enumerate(chanted_word)
         if is_base_letter(ch)
@@ -627,7 +637,6 @@ def _hebrew_at(example: dict, *, silluq_second: bool = False) -> object:
         or i == silluq_at
         or ch == "\N{HEBREW PUNCTUATION MAQAF}"
     )
-    return H.span(kept, {"lang": "hbo", "title": ref_display(example["bcv"])})
 
 
 def _exclusion_note(genre: dict) -> object:
@@ -699,26 +708,44 @@ def _count(n: int) -> str:
 
 # GONE with the classification: _case_parts and _case_table, which listed the four cases the
 # categories could not name or reach, verse by verse.  With the rows themselves gone there is
-# nothing to list.  They are the only thing that ever needed a book name out of a bcv, so the
-# leading-numeral fix for mb_cmn's "2Samuel" went with them.
+# nothing to list.  Their leading-numeral fix for mb_cmn's "2Samuel" went with them and is back
+# inside ``_ref_abbrev``: the intro's e.g. sentences again put a book name out of a bcv before
+# a reader, visibly this time.
 
 
 def _specimen(example: dict, *, silluq_second: bool = False) -> object:
-    """A pointed Hebrew form on a centered line of its own, titled with its verse.
+    """A pointed Hebrew form on a centered line of its own, nothing beside it.
 
     Ben, 2026-07-28: "why would you only describe in words what can be shown in Unicode?";
-    and 2026-07-29, of the intro's two e.g. forms: "lately I'm preferring to show pointed
-    hebrew specimens as a separately displayed element (centered, with line breaks)".
+    2026-07-29, of the intro's two e.g. forms: "lately I'm preferring to show pointed hebrew
+    specimens as a separately displayed element (centered, with line breaks)".  The verse is
+    neither hover text ("rather than hidden as hover-text", same day) nor in parens on the
+    specimen's own line: it is in the sentence above, in parens right after the "e.g." (his
+    third form of the same day, superseding the other two) -- so unlike the table cells'
+    forms, a specimen has no hover title, and the sentence is what names its verse.
 
     A first ``_specimen`` went with the three printed cases when they became a table -- a
     form is a cell there, ``_render_span``'s job -- along with the running sentence that
     flowed through three of them.  This one differs from that one in taking a survey record
-    rather than a string: the form and its verse-on-hover come through ``_hebrew_at``, like
-    every other example the page lifts.
+    rather than a string: the form is lifted, like every other example the page shows.
     """
     return H.para(
-        _hebrew_at(example, silluq_second=silluq_second), {"class": "hebrew-specimen"}
+        hbo(_form_at(example, silluq_second=silluq_second)),
+        {"class": "hebrew-specimen"},
     )
+
+
+def _ref_abbrev(bcv: str) -> str:
+    """The bcv as visible prose names a verse -- "Gen. 2:7", "1 Chr. 15:17".
+
+    The book is its OSIS abbreviation, with a period when the abbreviation truncates the
+    book's name (so Job, Ruth, Ezra, Joel, Amos and Jonah take none) and a space after a
+    leading numeral ("1Chr" being fine in a filename and jarring as prose)."""
+    bk39 = wlc_bb_to_bk39id(bcv[:2])
+    abbrev = oba.BOOK_ABBREVS[bk39]
+    dot = "" if abbrev == bk39 else "."
+    spaced = f"{abbrev[0]} {abbrev[1:]}" if abbrev[0].isdigit() else abbrev
+    return f"{spaced}{dot} {bcv[2:]}"
 
 
 # The letters the three printed cases are found by -- bare letters, no marks, the marks being
@@ -1120,13 +1147,14 @@ def _intro(survey: dict) -> tuple[object, ...]:
                 " than two. Some of these two-accent chanted words are simple and some are"
                 " maqaf compounds. Among those two-accent maqaf compounds, some spread"
                 " those two accents across two atoms, e.g."
+                f" ({_ref_abbrev(spreader_qad_zaq[0]['bcv'])}):"
             )
         ),
         _specimen(spreader_qad_zaq[0]),
         H.para(
             wrap_hebrew_runs(
                 "In contrast, some concentrate both of those two accents on the last"
-                " atom, e.g."
+                f" atom, e.g. ({_ref_abbrev(conc_example['bcv'])}):"
             )
         ),
         _specimen(
@@ -1217,36 +1245,44 @@ def _intro(survey: dict) -> tuple[object, ...]:
     )
 
 
-# The three lead columns are English and the four right-hand ones Hebrew -- the strand name and
-# the three forms -- so all four are declared right-to-left, blank cells included if a row ever
-# lacks one.  One tuple for the table, as everywhere else here.
-_PRINTED_CASE_CELL_ATTRS = (
-    None,
-    None,
-    _HEBREW_CELL,
-    _HEBREW_CELL,
-    _HEBREW_CELL,
-    _HEBREW_CELL,
-)
-
-# The three form columns' headings, abbreviated with the full wording on hover the way the pair
-# table's C/S/Acc1/Acc2 are: a heading longer than anything in its column sets that column's
-# width and pushes the row apart.  "Wikisource" is in the two hover texts and in the sentence
-# above the table, so the short headings say which strand a column is without also saying where
-# the strand is from three times over.
-_PRINTED_CASE_HEADERS = (
-    H.table_header("Edition"),
-    H.table_header("Book"),
-    H.table_header(H.abbr("Strand", "The strand of that book the edition's page is")),
-    H.table_header(H.abbr("Printed", "What the printed edition has")),
-    H.table_header(
-        H.abbr(
-            "Same strand",
-            "What that book's Wikisource strand of the same name has",
-        )
+# One tuple per ROW of the transposed table: the row's label cell, the function fetching its
+# value from a case, and its data cells' attributes -- together, so a label and its values
+# cannot come to disagree.  The labels keep the short forms and hover texts they had as column
+# headings; "Wikisource" is in the two hover texts and in the sentence above the table, so the
+# short labels say which strand a row is without also saying where the strand is from three
+# times over.  The strand name and the three forms are Hebrew, so those four rows' data cells
+# are declared right-to-left, blank cells included if a case ever lacks one.
+_PRINTED_CASE_ROWS = (
+    (H.table_header("Edition"), lambda case: link(case["edition"], case["href"]), None),
+    (H.table_header("Book"), lambda case: case["book"], None),
+    (
+        H.table_header(
+            H.abbr("Strand", "The strand of that book the edition's page is")
+        ),
+        lambda case: case["strand"],
+        _HEBREW_CELL,
     ),
-    H.table_header(
-        H.abbr("Other strand", "What that book's other Wikisource strand has")
+    (
+        H.table_header(H.abbr("Printed", "What the printed edition has")),
+        lambda case: hbo(case["printed"]),
+        _HEBREW_CELL,
+    ),
+    (
+        H.table_header(
+            H.abbr(
+                "Same strand",
+                "What that book's Wikisource strand of the same name has",
+            )
+        ),
+        lambda case: hbo(case["same"]),
+        _HEBREW_CELL,
+    ),
+    (
+        H.table_header(
+            H.abbr("Other strand", "What that book's other Wikisource strand has")
+        ),
+        lambda case: hbo(case["other"]),
+        _HEBREW_CELL,
     ),
 )
 
@@ -1256,35 +1292,29 @@ def _printed_case_table(cases: tuple[dict, ...]) -> object:
 
     SHOW IT IN UNICODE (Ben, 2026-07-29: "I can't process all the verbosity, I need to just see
     this using actual unicode. You've fallen into the trap of not giving me Unicode").  Every
-    cell of the three right-hand columns is a form lifted or constructed from a vendored strand,
+    cell of the three form rows is a form lifted or constructed from a vendored strand,
     letters and accents only; naming an accent in prose is not a substitute for showing the form,
     which is why the paragraphs this replaced are down to two sentences.
 
-    WHAT THE THIRD COLUMN IS FOR.  Ben's ask names it as "what the other-height wikisource
+    WHAT THE OTHER-STRAND ROW IS FOR.  Ben's ask names it as "what the other-height wikisource
     reference has (which is probably what the editions have)" -- that is, the suggestion that a
-    printed oddity came across from the other strand of the same book.  Read across a row: the
+    printed oddity came across from the other strand of the same book.  Read down a column: the
     mark the printed cell has and the same-strand cell lacks is in the other-strand cell.  For
     Koren that mark is the maqaf, and for the Simanim Tiqqun's two the munaḥ on the joined לא, so
-    the correspondence runs in opposite directions in the two editions and the column holds both.
+    the correspondence runs in opposite directions in the two editions and the row holds both.
 
-    A ROW PER (EDITION, COMPOUND) CASE, and ``printed_cases`` says why there are three of them.
+    A COLUMN PER (EDITION, COMPOUND) CASE -- a row per case until Ben's transpose ask the same
+    day ("rows become columns") -- and ``printed_cases`` says why there are three of them.
     """
-    body = [H.table_row(_PRINTED_CASE_HEADERS)]
-    for case in cases:
-        body.append(
-            H.table_row_of_data(
-                (
-                    link(case["edition"], case["href"]),
-                    case["book"],
-                    case["strand"],
-                    hbo(case["printed"]),
-                    hbo(case["same"]),
-                    hbo(case["other"]),
-                ),
-                _PRINTED_CASE_CELL_ATTRS,
+    return H.table(
+        tuple(
+            H.table_row(
+                (label, *(H.table_datum(value_of(case), attr) for case in cases))
             )
-        )
-    return H.table(tuple(body), {"class": "centered-table"})
+            for label, value_of, attr in _PRINTED_CASE_ROWS
+        ),
+        {"class": "centered-table"},
+    )
 
 
 # GONE: "What is counted", whittled to one sentence over two days and then cut outright (Ben,
