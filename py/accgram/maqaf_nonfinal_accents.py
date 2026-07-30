@@ -32,7 +32,9 @@ matters, so every hit is sorted into one of two routes:
   mayela", never "the mayela tipexa": mayela is the name for what would otherwise be a tipexa
   there, so the pair reads as a kind of tipexa rather than as the accent's own name.  Mayela is
   to tipexa as metigah is to qadma, and nobody writes "metigah qadma".)
-  ``_NAMED_CONFIGURATIONS`` is that list.  ``chanted_word_accents`` transcribes the same sections
+  ``_NAMED_CONFIGURATIONS`` is that list, plus one pair no section of his names --
+  ``(MERKHA, SILLUQ)``, whose own label records that (issue #86).
+  ``chanted_word_accents`` transcribes the same sections
   in full, with Yeivin's own wording and his closed verse lists, and checks them against a wider
   measurement that counts atomic chanted words too; the table here is the subset this survey's
   shape can express, which is a pair of marks with a maqaf between them.
@@ -46,12 +48,16 @@ standing FREE elsewhere in the same corpus -- an atom that is a whole chanted wo
 it has its own accent (``build_oracle``).  Key each atom by its letters and points with accents
 stripped, and compare base letters after the accent.
 
-* A **no** is decisive.  Nu 9:17 ואחרי־כן has its munax three letters from the end where 21 free
-  ואחרי put theirs one from the end, so it cannot be that atom's own accent.
+* A **no** is decisive.  WLC's Nu 9:17 ואחרי־כן has its munax three letters from the end where
+  the free ואחרי usually put theirs one from the end, so it cannot be that atom's own accent.
 * A **yes is not decisive**, which is the trap.  A secondary accent can land on the atom's own
-  stress anyway: MAM's שלף־חרב matches all six free שלף, because nasog axor has retracted the
-  stress before חרב, and it is still §233's secondary merkha.  So the CONFIGURATION decides the
-  route and the oracle corroborates -- never the other way round.
+  stress anyway: MAM's שלף־חרב has its merkha where the free שלף usually have theirs, because
+  nasog axor has retracted the stress before חרב, and it is still routed as a secondary merkha
+  by its ``(MERKHA, SILLUQ)`` configuration.  So the CONFIGURATION decides the route and the
+  oracle corroborates -- never the other way round.  Neither example states a figure here: the
+  counts live in each occurrence's own ``oracle`` fields in the tracked JSON
+  (``joined_letters_after_accent``, ``free_letters_after_accent``, ``free_occurrences``), and
+  they regenerate with the survey.
 
 Two refinements the oracle needs, both of which silently inverted verdicts before they were made:
 the free side takes the LAST IMPOSITIVE accent, because a secondary accent always precedes the
@@ -97,6 +103,7 @@ from pathlib import Path
 from accgram import accent_marks as am
 from accgram import poetic_filter, prose_filter, rtms_data
 from cmn.wlc_book_codes import wlc_bb_codes
+from mb_cmn.hebrew_accents import ATN_H
 from mb_cmn.hebrew_punctuation import NU_GMAQ
 from mb_cmn.str_defs import DOUB_VERT_LINE
 from mb_diff_mpu.mpplus_flatten import flatten_ep_for_diff
@@ -139,17 +146,25 @@ _NOT_IMPOSITIVE = frozenset(
 # module docstring on why position cannot be the criterion.
 #
 # Two citations were wrong until 2026-07-28, both settled by reading the full OCR at
-# ``../yeivin-itm/md-export-of-docx/`` (issue #82).  Merkha-tevir is §253, ``Merka-tevir and the
+# ``../yeivin-itm/md-export-of-docx/`` (issue #86, which holds the Yeivin-inventory questions;
+# #82, cited here at first, is about his two Deuteronomy 33 maqaf readings instead).
+# Merkha-tevir is §253, ``Merka-tevir and the
 # Servi of Tevir``, not §§233/241.  And §241 pairs a secondary mahapakh with PASHTA, not with
 # tevir -- which is why the ``(MAHAPAKH, TEVIR)`` entry it licensed had never fired in any corpus,
-# in either genre, since the survey was written.
+# in either genre, since the survey was written.  A third citation fell on 2026-07-30:
+# ``(MERKHA, SILLUQ)`` borrowed §233 too, and §233 is tipexa-only -- no section of ITM names a
+# secondary merkha in the silluq's chanted word (§209 gives the silluq one conjunctive and no
+# secondary), so that entry's label now says so rather than citing a section (issue #86 again).
 _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
     (am.QADMA, am.ZAQEF_QATAN): "metigah-zaqef (ITM §224)",
     (am.MUNAX, am.ZAQEF_QATAN): "munax-zaqef (ITM §221)",
     (am.TIPEXA, am.ATNAX): "mayela before an etnaxta (ITM §216)",
     (am.TIPEXA, SILLUQ): "mayela before a silluq (ITM §210)",
     (am.MERKHA, am.TIPEXA): "secondary merkha in the tipexa's chanted word (ITM §233)",
-    (am.MERKHA, SILLUQ): "secondary merkha in the silluq's chanted word (ITM §233)",
+    (
+        am.MERKHA,
+        SILLUQ,
+    ): "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
     (am.MERKHA, am.TEVIR): "secondary merkha in the tevir's chanted word (ITM §253)",
     (
         am.MAHAPAKH,
@@ -174,7 +189,9 @@ _NAMED_CONFIGURATIONS: dict[tuple[str, str], str] = {
 #   chanted word's edge and again on the stressed syllable: one accent and its helper.  In a
 #   POETIC verse the same two codepoints are the genuine and distinct tsinnorit and tsinnor,
 #   which is why this rule is stated of prose -- and no poetic chanted word in any of the three
-#   corpora carries the pair, so the exclusion has never had to decide a poetic case.  See
+#   corpora carries the pair, so the exclusion has never had to decide a poetic case.
+#   ``simple_exclusion`` asserts as much, so that stays true by construction rather than by
+#   luck (item 15 of ``doc/review-findings-2026-07-29.md``).  See
 #   ``_ZARQA_HELPER`` below for why ``accent_marks`` still spells them after the poetic sense.
 # * Two marks on ONE LETTER.  Whatever such a pair is, it is not two accents on two syllables,
 #   and the six in MAM's prose verses are of two kinds that a reader would want kept apart from
@@ -228,6 +245,13 @@ _ACCENT_SHORTHAND = {
     am.QARNEY_PARA: "qar",
     am.TELISHA_GEDOLA: "telg",
     am.PAZER: "paz",
+    # U+05A2 (mb_cmn's ``ATN_H``) has no ``accent_marks`` alias: the mark is poetic-only, and
+    # the WLC scanners never meet it -- the LC has galgal (U+05AA) where MAM and UXLC have
+    # atnax-hafukh as the oleh-weyored servus (see ``mam_poetic_accents``).  Poetic keys in
+    # ``simple_by_pair`` reach it all the same; without this entry, ``shape_of``'s fallback
+    # leaked the bare combining mark itself into the tracked JSON keys, against the repo's
+    # no-orphan-combining-marks rule (item 11 of ``doc/review-findings-2026-07-29.md``).
+    ATN_H: "atnh",
     am.MUNAX: "mun",
     am.MAHAPAKH: "mah",
     am.MERKHA: "mer",
@@ -391,9 +415,31 @@ def atom_accents(word: str, verse_final: bool) -> list[list[str]]:
     """
     atoms = word.split(MAQAF)
     per_atom = [[c for c in atom if is_accent(c)] for atom in atoms]
-    if verse_final and METEG in atoms[-1]:
+    if verse_final and _last_atom_has_silluq(atoms[-1]):
         per_atom[-1].append(SILLUQ)
     return per_atom
+
+
+def _last_atom_has_silluq(atom: str) -> bool:
+    """Whether the verse-final chanted word's last atom has a silluq: a U+05BD with no accent
+    after it, before the atom's own sof pasuq if it has one.
+
+    The same immediately-before-sof-pasuq rule the scanners apply (``prose_scanner``'s SILLUQ
+    lookahead; ``meteg_silluq_context.u05bd_is_silluq``); the chanted-word survey inherits it
+    by counting tokens.  A bare ``METEG in atom`` containment stood here until 2026-07-30 and
+    would have counted a hypothetical early meteg followed by an accent as the silluq (item 16
+    of ``doc/review-findings-2026-07-29.md``).  No corpus has such an atom today, which the
+    regeneration diff is the check on: this change moves no classification.
+    """
+    last_mark_is_u05bd = False
+    for ch in atom:
+        if ch == SOF_PASUQ:
+            break
+        if ch == METEG:
+            last_mark_is_u05bd = True
+        elif is_accent(ch):
+            last_mark_is_u05bd = False
+    return last_mark_is_u05bd
 
 
 def shape_of(per_atom: list[list[str]]) -> str:
@@ -406,10 +452,10 @@ def shape_of(per_atom: list[list[str]]) -> str:
 
 
 def scan(
-    words_by_bcv: dict[str, list[str]], keep
+    words_by_bcv: dict[str, list[str]], keep, *, prose: bool
 ) -> tuple[list[dict], int, int, list, list]:
     """(hits, verses, maqaf compounds, simple two-accent words, concentrators) for one corpus
-    and genre.
+    and genre.  ``prose`` says which genre ``keep`` selects; ``simple_exclusion`` needs it.
 
     The fourth return is what a chanted word that is a LONE atom does with two accents, which
     the first three know nothing about: they are the compound survey, and a compound is what
@@ -453,7 +499,7 @@ def scan(
                             "pair": [
                                 _ACCENT_SHORTHAND.get(a, a) for a in _distinct(accents)
                             ],
-                            "excluded": simple_exclusion(word, accents),
+                            "excluded": simple_exclusion(word, accents, prose=prose),
                         }
                     )
                 continue
@@ -470,7 +516,7 @@ def scan(
                             "pair": [
                                 _ACCENT_SHORTHAND.get(a, a) for a in _distinct(final)
                             ],
-                            "excluded": simple_exclusion(word, final),
+                            "excluded": simple_exclusion(word, final, prose=prose),
                         }
                     )
                 continue
@@ -478,12 +524,19 @@ def scan(
     return hits, n_verses, n_compounds, simple, concentrators
 
 
-def simple_exclusion(word: str, accents: list[str]) -> str | None:
+def simple_exclusion(word: str, accents: list[str], *, prose: bool) -> str | None:
     """Why this chanted word's two marks are not two accents, or None if they are.
 
     Both rules read the word itself rather than a list of references; see the two
     ``SIMPLE_EXCL_*`` constants above for what each is and why it is set aside.  The one-letter
     rule is applied first, so a word that is both keeps the sharper reason.
+
+    ``prose`` is the stress-helper rule's genre guard: in a poetic verse U+0598 and U+05AE are
+    the genuine and distinct tsinnorit and tsinnor -- two accents, not one written twice -- so
+    the label would be wrong there.  No poetic chanted word in any of the three corpora has
+    the pair; the assert keeps that a checked fact (item 15 of
+    ``doc/review-findings-2026-07-29.md``), so a corpus bump that produced one stops the build
+    for a decision instead of inheriting a prose-only label.
 
     Named for the simple records, which were its only callers first, but the concentrator
     records take their reason here too: ``accents`` is then the final atom's, and ``word``
@@ -493,6 +546,7 @@ def simple_exclusion(word: str, accents: list[str]) -> str | None:
     if _accents_share_a_letter(word):
         return SIMPLE_EXCL_ONE_LETTER
     if frozenset(accents) in _ONE_ACCENT_WRITTEN_TWICE:
+        assert prose, f"U+0598 with U+05AE on a poetic chanted word: {word!r}"
         return SIMPLE_EXCL_STRESS_HELPER
     return None
 
@@ -771,8 +825,10 @@ def _examples(simple: list[dict]) -> dict[str, dict]:
     return out
 
 
-def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool) -> dict:
-    hits, n_verses, n_compounds, simple, concentrators = scan(words_by_bcv, keep)
+def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool, prose: bool) -> dict:
+    hits, n_verses, n_compounds, simple, concentrators = scan(
+        words_by_bcv, keep, prose=prose
+    )
     counted = [s for s in simple if s["excluded"] is None]
     conc_counted = [c for c in concentrators if c["excluded"] is None]
     classified = [classify(h, oracle, routed=routed) for h in hits]
@@ -903,7 +959,9 @@ def build_survey() -> dict:
         for genre, module, routed in genres:
             keep = module.should_keep_line
             oracle = build_oracle(words_by_bcv, keep)
-            per_genre[genre] = _genre_survey(words_by_bcv, keep, oracle, routed=routed)
+            per_genre[genre] = _genre_survey(
+                words_by_bcv, keep, oracle, routed=routed, prose=genre == "prose"
+            )
         survey["corpora"][name] = {"kind": CORPUS_KIND[name], **per_genre}
     return survey
 

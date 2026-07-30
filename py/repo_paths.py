@@ -102,9 +102,13 @@ def require_sibling(name: str, path: Path) -> Path:
     """
     if path.is_dir():
         return path
+    # Name the siblings root the lookup actually searches, NOT repo_root(): in
+    # the worktree case this module exists for, repo_root() is the worktree
+    # root, and "clone beside that" is precisely the wrong advice.
     raise FileNotFoundError(
         f"sibling repo {name} not found: no directory at {path}.\n"
-        f"Clone {name} beside {repo_root()}, or point at it explicitly:\n"
+        f"Clone {name} under the siblings root, {siblings_root()}, or point at it"
+        f" explicitly:\n"
         f"  {_env_name(name)}=<path to the {name} clone>\n"
         f"  WLC_SIBLINGS_ROOT=<directory holding all the sibling clones>"
     )

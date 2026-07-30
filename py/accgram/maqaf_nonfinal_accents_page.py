@@ -33,7 +33,6 @@ from accgram.almost_errors_html_shared import (
     accents_and_letters,
     hbo,
     link,
-    ref_display,
     wrap_hebrew_runs,
 )
 from accgram.printed_decalogue_strands import (
@@ -410,9 +409,25 @@ _FOI_UNICODE = _FOI.format("unicode")
 _FOI_RARE_TMPLS = _FOI.format("rare-tmpls")
 
 
+def _split_pair(pair: str) -> tuple[str, str]:
+    """A survey pair key as its two accents, or a build failure on any other shape.
+
+    The poetic simple data has three-accent keys (``germ-mer-rev``, ``tsit-mah-rev``), so a
+    bare ``pair.split("-")[0], pair.split("-")[1]`` would render such a key truncated rather
+    than raise (item 12 of ``doc/review-findings-2026-07-29.md``).  This page reads MAM's
+    prose data, which has none -- ``pin_claims`` asserts that too -- and a corpus bump that
+    produced one must stop the build rather than show two accents of a three-accent key.
+    """
+    parts = pair.split("-")
+    assert len(parts) == 2, f"not a two-accent pair key: {pair!r}"
+    return parts[0], parts[1]
+
+
 def _pair_rows(genre: dict, occurrences: list) -> list[dict]:
-    """Every accent pair that occurs on a chanted word of MAM's prose verses, in the order both
-    tables below use, each with its two counts and an example of each.
+    """Every accent pair that occurs on a spreader or on a simple chanted word of MAM's prose
+    verses, in the order both tables below use, each with its two counts and an example of
+    each.  (Not "every pair that occurs on a chanted word": a pair occurring only on a
+    CONCENTRATOR would have no row, the two counts being the spreader and simple ones.)
 
     Rows are what the data holds, not a list from anywhere: the page reports the pairs that
     occur and no longer says which of Yeivin's categories each case falls under (Ben,
@@ -444,9 +459,7 @@ def _pair_rows(genre: dict, occurrences: list) -> list[dict]:
             _pair_of(occurrence["shape"]),
             {"word": occurrence["word"], "bcv": occurrence["bcv"]},
         )
-    pairs = set(counts) | {
-        (pair.split("-")[0], pair.split("-")[1]) for pair in simple_by_pair
-    }
+    pairs = set(counts) | {_split_pair(pair) for pair in simple_by_pair}
 
     def total_of(pair: tuple[str, str]) -> int:
         return counts.get(pair, 0) + simple_by_pair.get("-".join(pair), 0)
@@ -481,10 +494,10 @@ def _pair_rows(genre: dict, occurrences: list) -> list[dict]:
 
 
 def _pair_table(rows: list[dict], hits: int) -> object:
-    """The accent pairs that occur on a compound, with an example of each and how often each
-    occurs on a simple chanted word as well.
+    """The accent pairs that occur on a spreader -- a compound with an accent on a non-final
+    atom -- with an example of each and how often each occurs on a simple chanted word as well.
 
-    ONLY THE PAIRS A COMPOUND HAS (Ben, 2026-07-29: "make the big ... table less big by
+    ONLY THE PAIRS A SPREADER HAS (Ben, 2026-07-29: "make the big ... table less big by
     banishing, to an appendix, rows with compound count equal to zero").  Widening the simple
     column to every pair had taken the table from eight rows to eighteen, and ten of those
     eighteen were an empty compound cell beside an empty example cell.  Those ten are
@@ -509,10 +522,23 @@ def _pair_table(rows: list[dict], hits: int) -> object:
         H.table_row(
             (
                 *_ACC_HEADERS,
+                # "with an accent on a non-final atom", not a bare "compound": the survey
+                # counts a compound only when an accent sits on a NON-FINAL atom, so a pair
+                # whose two accents both sit on the final atom -- a concentrator -- is
+                # invisible to this column, and ``concentrator_by_pair`` has hundreds of
+                # those (item 2 of ``doc/review-findings-2026-07-29.md``).  A bare "On a
+                # compound chanted word" claimed a corpus-level count the column does not
+                # measure.
                 H.table_header(
-                    H.abbr("C", "On a compound chanted word"), _NUMERIC_CELL
+                    H.abbr(
+                        "C",
+                        "On a compound chanted word with an accent on a non-final atom",
+                    ),
+                    _NUMERIC_CELL,
                 ),
-                _example_header("C", "compound chanted word"),
+                _example_header(
+                    "C", "compound chanted word with an accent on a non-final atom"
+                ),
                 H.table_header(H.abbr("S", "On a simple chanted word"), _NUMERIC_CELL),
                 _example_header("S", "simple chanted word"),
             )
@@ -550,7 +576,14 @@ def _pair_table(rows: list[dict], hits: int) -> object:
 
 
 def _simple_only_table(rows: list[dict]) -> object:
-    """The pairs no compound has, which occur on a simple chanted word only.
+    """The pairs no spreader has, counted on simple chanted words.
+
+    NOT "the pairs that occur on a simple chanted word only", which this docstring and the
+    appendix's heading and sentence all said until 2026-07-30 (item 2 of
+    ``doc/review-findings-2026-07-29.md``): six of these ten pairs do occur on maqaf
+    compounds -- as concentrators, both accents on the final atom -- which the spreader
+    criterion cannot see.  What is true of all ten is that no compound has one with its first
+    accent on a non-final atom, and that is what the appendix now claims.
 
     FOUR COLUMNS, not six with two of them empty.  A compound column of zeros beside an
     example column of blanks is what got these rows banished; carrying the columns down here
@@ -618,10 +651,15 @@ def _example_cell(example: dict | None, pair: tuple[str, str]) -> object:
 
 
 def _hebrew_at(example: dict, *, silluq_second: bool = False) -> object:
-    """The example's letters and accents, titled with the verse it is from."""
+    """The example's letters and accents, titled with the verse it is from.
+
+    The title goes through ``_ref_abbrev``, as the intro's e.g. sentences do: hover text is
+    prose, and ``ref_display``'s raw mb_cmn book names ("Levit 21:4", "2Chronicles 8:11") are
+    not how prose names a verse (item 7 of ``doc/review-findings-2026-07-29.md``).
+    """
     return H.span(
         _form_at(example, silluq_second=silluq_second),
-        {"lang": "hbo", "title": ref_display(example["bcv"])},
+        {"lang": "hbo", "title": _ref_abbrev(example["bcv"])},
     )
 
 
@@ -709,8 +747,11 @@ def _count(n: int) -> str:
 # GONE with the classification: _case_parts and _case_table, which listed the four cases the
 # categories could not name or reach, verse by verse.  With the rows themselves gone there is
 # nothing to list.  Their leading-numeral fix for mb_cmn's "2Samuel" went with them and is back
-# inside ``_ref_abbrev``: the intro's e.g. sentences again put a book name out of a bcv before
-# a reader, visibly this time.
+# inside ``_ref_abbrev`` -- which every book name out of a bcv now goes through.  The intro's
+# e.g. sentences are one consumer; ``_hebrew_at``'s hover titles are the other, and they were
+# left on the raw mb_cmn names ("Levit 21:4", "2Chronicles 8:11") while an earlier version of
+# this comment called the case tables "the only thing that ever needed a book name out of a
+# bcv" (item 7 of ``doc/review-findings-2026-07-29.md``).
 
 
 def _specimen(example: dict, *, silluq_second: bool = False) -> object:
@@ -1050,6 +1091,23 @@ def pin_claims(survey: dict) -> None:
         assert all(field == "0" for field in fields[:-1]), shape
         assert len(set(fields[-1].split("+"))) == 2, shape
 
+    # THE SIMPLE HALF of the same "but never more than two" (item 12 of
+    # ``doc/review-findings-2026-07-29.md``).  The intro's sentence speaks of the prose
+    # system's chanted words whether compound or simple; the spreader and concentrator pins
+    # above cover the compounds, and this covers the rest: every pair the survey records for
+    # MAM's prose verses -- counted or excluded, simple or concentrator -- is exactly two
+    # accents.  PROSE ONLY, deliberately, matching the sentence's own scope: the poetic
+    # simple data has three-accent keys (``germ-mer-rev``, ``tsit-mah-rev``), and the
+    # sentence says nothing of the poetic system, so those keys falsify nothing --
+    # ``_split_pair`` is what keeps them off the page.
+    for key in (
+        *genre["simple_by_pair"],
+        *genre["concentrator_by_pair"],
+        *(k for by_pair in genre["simple_excluded"].values() for k in by_pair),
+        *(k for by_pair in genre["concentrator_excluded"].values() for k in by_pair),
+    ):
+        assert len(key.split("-")) == 2, f"not a two-accent pair key: {key!r}"
+
     # THE PAGE'S ANSWER, the one claim about the data that only the data can keep true: no
     # compound in MAM's PROSE verses is accented alike twice.  That is the intro's flat answer
     # to whether anything in Tanakh looks like Koren's compound.
@@ -1159,7 +1217,7 @@ def _intro(survey: dict) -> tuple[object, ...]:
         ),
         _specimen(
             conc_example,
-            silluq_second=_ACCENT_DISPLAY[conc_pair.split("-")[1]] == ROM_SILLUQ,
+            silluq_second=_ACCENT_DISPLAY[_split_pair(conc_pair)[1]] == ROM_SILLUQ,
         ),
         H.para(
             wrap_hebrew_runs(
@@ -1415,24 +1473,37 @@ def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
         # table no longer is.  It does NOT cue the appendix: a rendered section that previews a
         # later one is the hub sentence Ben has cut from these pages before, and an appendix
         # heading announces itself.
+        #
+        # And since 2026-07-30 it says "on a spreader", with the intro's gloss repeated, rather
+        # than "on a compound" (item 2 of ``doc/review-findings-2026-07-29.md``): the survey
+        # counts a compound only when an accent sits on a NON-FINAL atom, so a pair whose two
+        # accents both sit on the final atom -- a concentrator -- is invisible to the table,
+        # and ``concentrator_by_pair`` has such compounds for six of the appendix's ten pairs
+        # and hundreds for munax before zaqef qatan.  "The pairs that occur on a compound"
+        # claimed a corpus-level fact the table does not measure.
         H.para(
             "Two accents can appear on a chanted word, whether it is compound or simple."
-            " These are the pairs that occur on a compound, in the prose verses of MAM, with"
-            " an example of each and how often each occurs on a simple chanted word as well:"
+            " These are the pairs that occur on a “spreader” (a compound with an accent"
+            " on a non-final atom), in the prose verses of MAM, with an example of each"
+            " and how often each occurs on a simple chanted word as well:"
         ),
         _pair_table(rows, hits),
         # Yeivin in one sentence after the table, not a column in it (Ben, 2026-07-28: "no need
         # to put Yeivin section numbers in the table, just mention most of these pairs are
-        # covered in Yeivin ITM sections blah").  "Most", not all: the two pairs ending in a
-        # pashta are on no list of his.  §§210 and 216 are the two mayela sections, which the
-        # survey's own configuration names never carried; the other four are the ones
-        # ``_NAMED_CONFIGURATIONS`` cites.
-        # "Most" again (2026-07-29), the word having gone to "Several" for one day.  The count
-        # follows the rows the sentence stands under: eight, of which those six sections cover
-        # seven -- every one but merkha before pashta, which is on no list of his.  It was
-        # "Several" only while the table also held the ten pairs no compound has, five of which
-        # Yeivin covers in sections this sentence does not cite (§§215, 236, 253, 268, 276); the
-        # appendix those ten went to says nothing about him.
+        # covered in Yeivin ITM sections blah").  "Most", not all.  The count follows the rows
+        # the sentence stands under: eight, of which the six cited sections cover six -- §210
+        # the mayela before a silluq, §216 the mayela before an etnaxta, §221 munax-zaqef, §224
+        # metigah-zaqef, §233 the merkha before a tipexa, §241 the mahapakh before a pashta.
+        # The two rows left over, merkha before pashta and merkha before silluq, are on no list
+        # of his: §233 is tipexa-only, and §209 gives the silluq one conjunctive and no
+        # secondary (issue #86).  Until 2026-07-30 this comment leaned on the wrong
+        # §233-names-the-silluq-row citation and counted "every one but merkha before pashta";
+        # six of eight still holds "Most" up, so the sentence itself stands (item 3 of
+        # ``doc/review-findings-2026-07-29.md``).
+        # "Most" was "Several" for one day (2026-07-29), while the table also held the ten
+        # pairs no spreader has, five of which Yeivin covers in sections this sentence does not
+        # cite (§§215, 236, 253, 268, 276); the appendix those ten went to says nothing about
+        # him.
         H.para(
             (
                 "Most of these pairs are covered in Yeivin's ",
@@ -1534,8 +1605,8 @@ def _appendix_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
 
     They are here rather than gone because the simple count was widened to every pair on
     purpose, one day earlier, and dropping ten of the eighteen would take back most of that.
-    The prose section keeps the pairs its question is about; a reader who wants the whole
-    census of two-accent chanted words in MAM's prose verses reads on.
+    The prose section keeps the pairs its question is about; a reader who wants every pair
+    counted on a spreader or a simple chanted word of MAM's prose verses reads on.
 
     THE EXCLUSION NOTE BELONGS HERE, under this table, and it used to sit under the prose
     section's instead.  Ben, 2026-07-29: "it seems we should put this where these words would
@@ -1549,12 +1620,19 @@ def _appendix_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
     same fact about both tables; Ben overruled it.)
     """
     return (
+        # "Never on a non-final atom", NOT "on a simple chanted word only" -- the heading and
+        # the sentence both said the latter until 2026-07-30, and the survey's own
+        # ``concentrator_by_pair`` refutes it: six of these ten pairs do occur on a maqaf
+        # compound, both accents on the final atom, which the spreader criterion cannot see
+        # (item 2 of ``doc/review-findings-2026-07-29.md``).  What is true of all ten is the
+        # non-final-atom clause, so that clause is now the claim, and the counts shown are
+        # the simple ones without "only".
         H.heading_level_2(
-            "Appendix: the pairs that occur on a simple chanted word only"
+            "Appendix: the pairs whose first accent is never on a non-final atom"
         ),
         H.para(
-            "These pairs occur in MAM's prose verses too, but on a simple chanted word only:"
-            " no compound has one of them with its first accent on a non-final atom."
+            "These pairs occur in MAM's prose verses too, on simple chanted words, but no"
+            " compound has one of them with its first accent on a non-final atom."
         ),
         _simple_only_table(rows),
         _geresh_or_azla_note(rows),

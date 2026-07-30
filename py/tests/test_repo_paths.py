@@ -101,7 +101,9 @@ def test_require_sibling_failure_advertises_both_overrides(tmp_path) -> None:
     assert str(missing) in message  # the path actually looked for
     assert "WLC_MAM_PARSED_DIR" in message  # the per-repo override, correctly derived
     assert "WLC_SIBLINGS_ROOT" in message  # the all-siblings override
-    assert str(repo_paths.repo_root()) in message  # where a sibling clone belongs
+    # The clone-here advice names the siblings root the lookup searches -- not
+    # repo_root(), which in a worktree checkout is exactly the wrong "beside".
+    assert str(repo_paths.siblings_root()) in message
 
 
 def test_require_mam_parsed_plus_dir_checks_the_resolved_path(

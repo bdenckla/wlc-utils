@@ -26,11 +26,14 @@ Six independent steps, in order:
    finds the citations worth honouring.
 2. Remove finished agent worktrees under ``.claude/worktrees/`` and the merged
    ``claude/*`` branches they leave behind (``cmn.git_worktree_cleanup``).
-   Unlike step 1 this one cannot destroy work: a worktree with any uncommitted
-   change or any commit not yet in the default branch is spared and reported,
-   never forced. This step is a repo-maintenance STANDARD, not a wlc-utils
-   quirk -- see ``check_repo_standards.py``'s ``worktree_hygiene`` check in
-   MAM-basics, which measures every repo against it.
+   Unlike step 1 this one spares anything it could destroy: a worktree with
+   any uncommitted change, any commit not yet in the default branch, or any
+   gitignored content (the class of file step 1 wipes on purpose and this
+   step must not wipe by accident -- ``git worktree remove`` alone would) is
+   kept and reported, never forced. This step is a repo-maintenance STANDARD,
+   not a wlc-utils quirk -- see ``check_repo_standards.py``'s
+   ``worktree_hygiene`` check in MAM-basics, which measures every repo
+   against it.
 3. Run ``black --check py``. Check-only: drift is reported, never
    auto-reformatted -- repo-wide reformatting is its own deliberate commit.
    Like lint, failures set the overall exit status but do not block the

@@ -54,7 +54,10 @@ chanted word must have one, while a non-final atom normally takes at most a mete
 but usually is not always,
 and the Exodus taxton is why the weaker word is the right one.  SimTiq has a munax on the
 joined לא of לא־יהיה and of לא־תעשה, whose second atoms have merkha and qadma -- two accents on
-one chanted word, where all eight strands have a meteg.  Those differences are two rungs up,
+one chanted word, where its own Wikisource strand, ws/ex/taxton/printed, has a meteg on the
+joined לא and no accent.  (That one strand only: the eight do not agree at these sites -- the
+four elyon strands have לא as a free chanted word with a munax, for one -- so read what another
+strand has off the vendored data, not off this note.)  Those differences are two rungs up,
 in the accents themselves, and an earlier version of this note asserted they could not occur.
 Neither they nor the elyon's pair touch the disjunctive skeleton or the chanted verse
 boundaries, which is the claim that has survived every transcription so far.
@@ -189,7 +192,7 @@ SIMPLE_JOINER = "+"
 #
 # The .txt writes a maqaf compound with MAQAF_JOINER; the line editor records the literal
 # maqaf that was typed.  Otherwise the two agree, and both map onto the .txt's spelling, so
-# one splitter serves both -- ``_split_on_joiners`` below is the single place that knows a
+# one splitter serves both -- ``split_on_joiners`` below is the single place that knows a
 # chunk can hold more than one accent.  It used to be three places, and when SIMPLE_JOINER
 # was added to two of them the third went on rejecting ``qad+ger`` as an unknown abbreviation.
 WRITTEN_ACCENT_JOINERS = {MAQAF_JOINER: MAQAF_JOINER, SIMPLE_JOINER: SIMPLE_JOINER}
@@ -223,7 +226,7 @@ ACCENT_ABBREV = {
 }
 
 # Spellings a transcriber may reasonably write, normalized onto the shorthand above.
-_ALIASES = {
+ALIASES = {
     "pashta": "pash",
     "zaqef": "zaq",
     "zarq": "zar",
@@ -493,12 +496,17 @@ class Difference:
         return f"at token {self.ref_index} ({self.word}): reference {ref} / transcribed {got}"
 
 
-def _normalize(token: str) -> str:
-    token = _ALIASES.get(token, token)
+def normalize_token(token: str) -> str:
+    """One written token as the comparison scores it: aliases resolved, legarmeh folded.
+
+    Folding legarmeh onto a plain munax belongs to the COMPARISON, not to a transcription
+    (see ``hebrew_chunks``): both sides of the diff pass through here, and only here.
+    """
+    token = ALIASES.get(token, token)
     return "mun" if token in _LEGARMEH_TOKENS else token
 
 
-def _split_on_joiners(chunk: str, joiners: dict[str, str]) -> list[tuple[str, str]]:
+def split_on_joiners(chunk: str, joiners: dict[str, str]) -> list[tuple[str, str]]:
     """Split a chunk into ``(part, the WRITTEN joiner before it)``, in order.
 
     The first part's joiner is ``""``.  ``joiners`` maps each joiner as the chunk spells it
@@ -520,7 +528,7 @@ def _split_on_joiners(chunk: str, joiners: dict[str, str]) -> list[tuple[str, st
 
 def written_accents(chunk: str) -> list[str]:
     """One chunk as the .txt writes it -> its per-accent parts."""
-    return [part for part, _ in _split_on_joiners(chunk, WRITTEN_ACCENT_JOINERS)]
+    return [part for part, _ in split_on_joiners(chunk, WRITTEN_ACCENT_JOINERS)]
 
 
 def editor_accents(chunk: str) -> list[tuple[str, str]]:
@@ -531,7 +539,7 @@ def editor_accents(chunk: str) -> list[tuple[str, str]]:
     origin and to count how many tokens a chunk contributes; ``_hebrew_chunk`` needs the
     joiners too, to write the .txt.  Both take them from here.
     """
-    return _split_on_joiners(chunk, EDITOR_ACCENT_JOINERS)
+    return split_on_joiners(chunk, EDITOR_ACCENT_JOINERS)
 
 
 def expand_chunk(chunk: str) -> list[str]:
@@ -542,7 +550,7 @@ def expand_chunk(chunk: str) -> list[str]:
     accent either way.  Splitting on the ACCENT joiners alone is what makes ``mun_leg`` stay
     whole here.
     """
-    return [_normalize(part) for part in written_accents(chunk)]
+    return [normalize_token(part) for part in written_accents(chunk)]
 
 
 def rejoin_editor_chunks(items: list[tuple[str, object]]) -> list[tuple[str, object]]:
@@ -750,7 +758,7 @@ def load_all_transcriptions() -> list[Transcription]:
 def compare(source: dict, transcription: Transcription) -> list[Difference]:
     """Every region where ``transcription`` disagrees with its vendored strand."""
     ref, words, _ = reference_tokens(source, transcription.key)
-    got = [_normalize(t) for t in transcription.tokens]
+    got = [normalize_token(t) for t in transcription.tokens]
     matcher = difflib.SequenceMatcher(a=ref, b=got, autojunk=False)
     out: list[Difference] = []
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():

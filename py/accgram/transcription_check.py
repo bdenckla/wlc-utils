@@ -55,18 +55,13 @@ sys.path.insert(
     0, str(Path(__file__).resolve().parent.parent)
 )  # run directly as a script
 
-sys.stdout.reconfigure(encoding="utf-8")
-
 from accgram import edition_transcription as et  # noqa: E402
 from accgram import printed_decalogue as pd  # noqa: E402
 from accgram import printed_decalogue_strands as pds  # noqa: E402
+from accgram import transcription_build as tb  # noqa: E402
+from cmn.utf8_io import force_utf8_io  # noqa: E402
 
 UNRESOLVED = "???"
-
-
-def _pages_of(record: dict) -> list[dict]:
-    """A multi-page audit trail holds one export per page; a single-page one is its own page."""
-    return record.get("pages", [record])
 
 
 def _chunks_with_origin(pages: list[dict]) -> list[tuple[str, str, int]]:
@@ -78,7 +73,7 @@ def _chunks_with_origin(pages: list[dict]) -> list[tuple[str, str, int]]:
     re-read.
     """
     items = [
-        (written, (page.get("stem", "?").split("_")[-1], line["n"]))
+        (written, (tb.page_label(page), line["n"]))
         for page in pages
         for line in page["lines"]
         for written in line["text"].split()
@@ -139,8 +134,8 @@ def _pasolegs(pages: list[dict]) -> list[tuple[int, str]]:
 
 def _opcodes(ref: list[str], got: list[str]) -> list[tuple[str, int, int, int, int]]:
     """The diff between the two NORMALIZED token streams, as difflib opcodes."""
-    a = [et._normalize(t) for t in ref]
-    b = [et._normalize(t) for t in got]
+    a = [et.normalize_token(t) for t in ref]
+    b = [et.normalize_token(t) for t in got]
     return difflib.SequenceMatcher(a=a, b=b, autojunk=False).get_opcodes()
 
 
@@ -279,6 +274,7 @@ def site_report(skeleton: str, next_skeleton: str) -> None:
 
 
 def main() -> None:
+    force_utf8_io()
     args = sys.argv[1:]
     if "--site" in args:
         i = args.index("--site")
@@ -290,13 +286,13 @@ def main() -> None:
         record = json.loads(
             (et.transcriptions_dir() / f"{stem}.json").read_text(encoding="utf-8")
         )
-        report(_pages_of(record), transcription.key)
+        report(tb.pages_of(record), transcription.key)
         return
     key_at = args.index("--key")
     key = (args[key_at + 1], args[key_at + 2], args[key_at + 3])
     pages = []
     for path in args[:key_at]:
-        pages.extend(_pages_of(json.loads(Path(path).read_text(encoding="utf-8"))))
+        pages.extend(tb.pages_of(json.loads(Path(path).read_text(encoding="utf-8"))))
     report(pages, key)
 
 

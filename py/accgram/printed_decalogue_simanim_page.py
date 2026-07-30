@@ -98,12 +98,14 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from accgram import accent_marks as am
 from accgram import printed_decalogue as pd
 from accgram import printed_decalogue_strands as pds
 from accgram import rtms_report
 from accgram import transcription_parse as tp
 from accgram import transcription_verdict_column as tvc
 from accgram.almost_errors_html_shared import hbo, link
+from accgram.uni_to_marks import is_accent, is_base_letter
 from cmn.utf8_io import force_utf8_io
 import wlc_provenance as provenance
 
@@ -238,8 +240,12 @@ _ROM_TELISHA_GEDOLAH = rmn(pds.ROM_TELISHA_GEDOLAH)
 # Named only in the Simanim Tanakh verdict table, for its one divergence (issue #69, Result 8).
 _ROM_QADMA = rmn(pds.ROM_QADMA)
 # Named only in the conclusion's grammaticality prose (issue #52), for the p. 246 chanted verse
-# the prose checker rejects: an inserted munax makes a third conjunctive before the pashta, where
-# all eight strands have a meteg and no accent, and where a tevir would have allowed it.
+# the prose checker rejects: the munax on the joined לא of לא־תעשה makes a third conjunctive
+# before the pashta, where a tevir would have allowed it.  Every taxton strand has a meteg and no
+# accent on that joined לא, and every elyon strand has לא as a free chanted word with a munax --
+# _pin_lo_taase_strand_facts re-derives both facts from the vendored strands.  ("Where all eight
+# strands have a meteg and no accent" stood here until 2026-07-29, and the עליון half of it is
+# false; item 1 of doc/review-findings-2026-07-29.md.)
 _ROM_MUNAX = rmn(pds.ROM_MUNAX)
 # The accent the Wikisource strand has on the free לא of לא תחמד, where the Tiqqun binds it by
 # maqaf instead -- named so that difference reads as an exchange rather than a missing maqaf.
@@ -881,7 +887,74 @@ def _tanakh_verdict_table(verdicts: dict[str, tp.TranscriptionResult]) -> object
     )
 
 
-def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ...]:
+# --------------------------------------------------------------------------- #
+# The strand facts behind the p. 246 grammaticality paragraph
+# --------------------------------------------------------------------------- #
+# The letters the pin below finds the לא־תעשה site by -- bare letters, no marks, the marks being
+# exactly what must not be retyped here (``maqaf_nonfinal_accents_page._find_span`` is this
+# pattern style's fuller home).  One tuple per chanted word, so a pattern fixes the grouping as
+# well as the letters; לך is in each pattern only to tell Exodus 20:4 / Deuteronomy 5:8 from the
+# Sabbath commandment's לא תעשה, which כל־מלאכה follows instead.
+_MAQAF = "\N{HEBREW PUNCTUATION MAQAF}"
+_LO_TAASE_TAXTON = (("לא", "תעשה"), ("לך",))
+_LO_TAASE_ELYON = (("לא",), ("תעשה", "לך"))
+
+
+def _atom_letters(chanted_word: str) -> tuple[str, ...]:
+    return tuple(
+        "".join(ch for ch in atom if is_base_letter(ch))
+        for atom in chanted_word.split(_MAQAF)
+    )
+
+
+def _lo_at(version: dict, pattern: tuple[tuple[str, ...], ...]) -> str:
+    """The pointed לא of the one run of chanted words in a strand whose atoms are ``pattern``.
+
+    Raising on anything but one match is the point: the pattern is how the pin knows it is
+    still looking at the place the prose talks about.  Matches go into a list, never a set
+    (item 14 of ``doc/review-findings-2026-07-29.md``: byte-identical sites dedup away).
+    """
+    hits = []
+    for chanted_verse in version["chanted_verses"]:
+        words = chanted_verse.split()
+        for start in range(len(words) - len(pattern) + 1):
+            run = words[start : start + len(pattern)]
+            if tuple(_atom_letters(word) for word in run) == pattern:
+                hits.append(run[0].split(_MAQAF)[0])
+    assert len(hits) == 1, (version["reading"], version["tradition"], pattern, hits)
+    return hits[0]
+
+
+def _pin_lo_taase_strand_facts(source: dict) -> None:
+    """Fail the build if the strands stop supporting the p. 246 paragraph's two quantifiers.
+
+    The paragraph on p. 246's third chanted verse says every תחתון strand has a meteg and no
+    accent on the joined לא of לא־תעשה, and every עליון strand has לא as a free chanted word
+    with a munax.  Until 2026-07-29 the sentence said "all eight strands have a meteg and no
+    accent", which the vendored strands refute: the four עליון strands have no joined לא there
+    at all (item 1 of ``doc/review-findings-2026-07-29.md``).  Both quantifiers are re-derived
+    here from ``in/accgram/printed_decalogue_teamim.json`` at build time, raising rather than
+    warning, like ``maqaf_nonfinal_accents_page.pin_claims`` and for the same reason: a warning
+    in a generator's output is a warning nobody reads.
+    """
+    by_reading: dict[str, list[dict]] = {"taxton": [], "elyon": []}
+    for version in source["versions"]:
+        by_reading[version["reading"]].append(version)
+    assert {k: len(v) for k, v in by_reading.items()} == {"taxton": 4, "elyon": 4}
+    for version in by_reading["taxton"]:
+        joined_lo = _lo_at(version, _LO_TAASE_TAXTON)
+        accents = [ch for ch in joined_lo if is_accent(ch)]
+        assert am.METEG in joined_lo and not accents, (version["section"], joined_lo)
+    for version in by_reading["elyon"]:
+        free_lo = _lo_at(version, _LO_TAASE_ELYON)
+        accents = [ch for ch in free_lo if is_accent(ch)]
+        assert accents == [am.MUNAX], (version["section"], free_lo)
+
+
+def _conclusion(
+    source: dict, verdicts: dict[str, tp.TranscriptionResult]
+) -> tuple[object, ...]:
+    _pin_lo_taase_strand_facts(source)
     return (
         H.heading_level_2("Conclusion", {"id": "simanim-conclusion"}),
         H.para(
@@ -952,6 +1025,12 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 " in a book, rather than in an idealization of one.",
             )
         ),
+        # GUARDRAIL (item 1 of doc/review-findings-2026-07-29.md). "Where all eight strands have
+        # a meteg and no accent" stood in this paragraph until 2026-07-29, and the vendored
+        # strands refute it: only the four תחתון strands have that. The four עליון strands have
+        # לא as a free chanted word with a munax -- the very mark p. 246 has on its joined לא.
+        # Both quantifiers below are re-derived from the vendored strands by
+        # _pin_lo_taase_strand_facts, which raises on drift.
         H.para(
             (
                 "p. 246 is the only Decalogue here whose verdict is its own rather than its"
@@ -961,15 +1040,20 @@ def _conclusion(verdicts: dict[str, tp.TranscriptionResult]) -> tuple[object, ..
                 " with really is intact, and its third chanted verse, the one"
                 " beginning לא־תעשה, is ungrammatical all the same, where the p-trad ",
                 _TAHTON,
-                " is grammatical. The page accents ",
+                " is grammatical. The page has accents on ",
                 H.bold("both"),
                 " atoms of that לא־תעשה, a ",
                 _ROM_MUNAX,
-                " on the joined לא against the ",
+                " on the joined לא beside the ",
                 _ROM_QADMA,
-                " on תעשה, where all eight strands have a ",
+                f" on תעשה. Every {_TAHTON} strand has a ",
                 _ROM_METEG,
-                " and no accent. That makes three conjunctives before the ",
+                f" and no accent on that joined לא; every {_ELYON} strand has לא as a free"
+                " chanted word, with a ",
+                _ROM_MUNAX,
+                " of its own. The extra ",
+                _ROM_MUNAX,
+                " makes three conjunctives before the ",
                 _ROM_PASHTA,
                 " where the grammar takes two, and the checker cannot build the phrase they"
                 " belong to. Take that one ",
@@ -1183,7 +1267,7 @@ def render_body_contents(
         *_intro(source),
         *_p83_section(),
         *_p246_section(),
-        *_conclusion(verdicts),
+        *_conclusion(source, verdicts),
         *_aleppo_codex_section(),
     )
 

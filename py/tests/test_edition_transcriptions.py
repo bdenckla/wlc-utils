@@ -717,7 +717,7 @@ def test_editor_export_and_txt_agree(stem: str) -> None:
     from_check, origin = tc._tokens_with_origin(exports)
     # The check side resolves but does not normalize -- normalization belongs to the
     # comparison -- so fold legarmeh onto a plain munax before comparing with the .txt.
-    assert [et._normalize(t) for t in from_check] == list(from_txt)
+    assert [et.normalize_token(t) for t in from_check] == list(from_txt)
     assert tc.UNRESOLVED not in from_check
     assert len(origin) == len(
         from_check
@@ -1247,27 +1247,37 @@ def test_the_exodus_appendix_taxton_prints_an_ungrammatical_chanted_verse() -> N
 
 
 def test_the_verdict_column_says_one_of_three_things_and_the_right_one() -> None:
-    """The cell each satellite page renders, for one transcription of each of the three kinds.
+    """The cell each satellite page renders: the right one of its three shapes, per stem.
 
-    The column is the rendered form of everything above it in this section, so pin its prose
-    where a claim about an edition is actually being made: the departure cell must SAY that it
-    departs and where, a page sharing its Wikisource strand's ungrammatical opening verse must
-    not be
-    reported as departing, and a clean page must not be hedged. Text-compared through
-    ``py_html``'s renderer, since the departure cell is a node rather than a string.
+    The column is the rendered form of everything above it in this section, so pin the
+    DECISION it renders, never its wording: an earlier version of this test pinned the three
+    sentences byte-exactly, and a wording sweep (ac432df) had to rewrite them within the week
+    the test was written.  What must hold whatever the words are: only a page whose verdicts
+    depart from its Wikisource strand's is announced as departing (``tvc.cell`` builds that one
+    shape as a node rather than a plain string, which is how a departure announces itself), so
+    a page sharing its Wikisource strand's ungrammatical opening verse is not so announced, and
+    neither is a clean page.  The announcing cell must also say where and how, so its text is
+    checked for the chanted verse index and both statuses -- each taken from the checker's own
+    departure record rather than retyped.  Text is read through ``py_html``'s renderer.
     """
     verdicts = tvc.by_stem(tp.check_all(_strand_list()))
-    assert _text(tvc.cell(verdicts["koren_ex_taxton"])) == (
-        "Clean at all 13 chanted verses, as its Wikisource strand is."
-    )
-    assert _text(tvc.cell(verdicts["simtiq_dt_elyon"])) == (
-        "Its Wikisource strand's verdicts: chanted verse 1 ungrammatical,"
-        " the other 8 clean."
-    )
-    assert _text(tvc.cell(verdicts["simtiq_ex_taxton"])) == (
-        "Not as grammatical as its Wikisource strand: chanted verse 3 is ungrammatical"
-        " where that strand is clean."
-    )
+    for stem, result in verdicts.items():
+        announced = not isinstance(tvc.cell(result), str)
+        assert announced == bool(result.departures), stem
+    # The three shapes are all exercised: clean throughout, sharing the Wikisource strand's
+    # ungrammatical verse, and departing.  (Which stem is which is pinned above, by
+    # _GRAMMATICALITY_DEPARTURES and the strand results; this keeps the coverage honest.)
+    assert not verdicts["koren_ex_taxton"].ungrammatical
+    assert not verdicts["koren_ex_taxton"].departures
+    assert verdicts["simtiq_dt_elyon"].ungrammatical
+    assert not verdicts["simtiq_dt_elyon"].departures
+    departures = verdicts["simtiq_ex_taxton"].departures
+    assert departures
+    text = _text(tvc.cell(verdicts["simtiq_ex_taxton"]))
+    for index, strand_status, status in departures:
+        assert str(index) in text
+        assert strand_status in text
+        assert status in text
 
 
 def _strand_list() -> list:

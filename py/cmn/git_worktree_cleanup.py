@@ -41,6 +41,14 @@ passed over in silence:
   and in a repo whose real deliverables are generated files, an unexpected
   untracked file is exactly the kind of thing worth looking at before it is
   destroyed.
+- A worktree holding gitignored content is left alone too, with the found
+  entries named in the reason.  Ignored files are the one class a plain
+  ``git status --porcelain`` does not list AND ``git worktree remove`` does
+  not check for -- so without this condition a clean, merged, idle worktree
+  would be removed together with, say, a ``.novc/`` report that exists
+  nowhere else, silently.  This is the same class of file whose loss step 1
+  of ``main_repo_maintenance`` warns about at length; step 1 wipes it on
+  purpose and announces itself, and this step must not wipe it by accident.
 
 Branch deletion is likewise narrow.  Only branches under ``claude/`` are
 considered -- the prefix the agent harness uses -- so a topic branch created by
@@ -62,9 +70,14 @@ it was spared.  What that leaves is a narrow window -- a live session momentaril
 between commits, with a clean tree -- which is what ``_seconds_since_activity``
 closes.
 
-Be exact about the stakes rather than alarmed: a clean, fully-merged worktree
-holds nothing that does not also exist in the repo, so what a wrong removal
-costs is the session's workspace, never its work.
+Be exact about the stakes rather than alarmed: once every condition above has
+passed, the worktree holds nothing git can see that does not also exist in the
+repo -- no uncommitted change, no unmerged commit, no gitignored content -- so
+what a removal costs is the session's workspace, never its work.  The
+gitignored-content condition is load-bearing in that sentence: "clean and
+fully merged" alone still leaves room for an ignored file that exists nowhere
+else, which is exactly what an earlier version of this module would have
+removed without a word.
 
 Do NOT count the operating system as a further line of defence.  An earlier
 version of this docstring did, on the grounds that a held file handle makes the
@@ -76,6 +89,7 @@ a silent removal into a noisy one; it does not prevent it.
 
 from __future__ import annotations
 
+import os
 import subprocess
 import time
 from dataclasses import dataclass, field
@@ -212,8 +226,10 @@ def _seconds_since_activity(worktree: Path) -> float | None:
     a session does. One ``stat``, no directory walk, so it stays cheap on a
     checkout of this size.
 
-    MUST BE READ BEFORE ``_is_dirty``, whose own ``git status`` refreshes the
-    very index being timed and would therefore report every worktree as active.
+    MUST BE READ BEFORE ``_worktree_status``, whose own ``git status``
+    refreshes the very index being timed and would therefore report every
+    worktree as active.  That probe restores the mtime it perturbs, but only
+    best-effort, so the ordering stays load-bearing.
 
     ``HEAD`` is the fallback for a worktree with no index yet, which is what a
     just-created one looks like for the moment before anything stages.
@@ -230,12 +246,61 @@ def _seconds_since_activity(worktree: Path) -> float | None:
     return None
 
 
-def _is_dirty(worktree: Path) -> bool:
-    """True if the worktree has any uncommitted change, untracked files included."""
-    result = _git(worktree, "status", "--porcelain")
+def _worktree_status(worktree: Path) -> tuple[bool, list[str]]:
+    """One ``git status --porcelain --ignored`` probe: ``(dirty, ignored)``.
+
+    ``dirty`` is True on any uncommitted change, tracked or untracked -- and on
+    a status failure, since unreadable state is not a state to delete on.
+    ``ignored`` holds the ``!!``-prefixed entries: gitignored files, plus each
+    wholly-ignored directory as one ``dir/`` entry, worktree-relative with the
+    forward slashes porcelain output uses on every platform, Windows included.
+    ``--ignored`` matters because a plain ``git status --porcelain`` omits
+    ignored files and ``git worktree remove`` does not check for them either
+    (verified: it removes them without complaint), so this probe is the only
+    thing standing between a gitignored report and silent deletion.
+
+    The probe restores the index mtime it refreshes.  ``git status`` rewrites
+    the per-worktree index, the very file ``_seconds_since_activity`` times,
+    so without the restore the NEXT maintenance run inside the grace hour
+    would report every worktree this run probed as "git activity N min ago;
+    may be in use" -- conservative direction, misleading reason.  Setting an
+    mtime backward only makes git treat index entries as racily clean and
+    re-verify their contents, so the restore cannot make git wrong, and it is
+    best-effort: a worktree only reaches this probe after the grace hour of
+    idleness, so a concurrent git command racing the restore is already the
+    residual case the activity check bounds.
+    """
+    admin = _admin_dir(worktree)
+    index = None if admin is None else admin / "index"
+    try:
+        before = None if index is None else index.stat()
+    except OSError:
+        before = None
+    result = _git(worktree, "status", "--porcelain", "--ignored")
+    if before is not None:
+        try:
+            os.utime(index, ns=(before.st_atime_ns, before.st_mtime_ns))
+        except OSError:
+            pass  # restore is best-effort; failing leaves the conservative side
     if result.returncode != 0:
-        return True  # unreadable state is not a state to delete on
-    return bool(result.stdout.strip())
+        return True, []
+    dirty = False
+    ignored: list[str] = []
+    for line in result.stdout.splitlines():
+        if not line.strip():
+            continue
+        if line.startswith("!!"):
+            ignored.append(line[3:])
+        else:
+            dirty = True
+    return dirty, ignored
+
+
+def _ignored_summary(entries: list[str]) -> str:
+    """Name what was found, capped so one worktree cannot flood the report."""
+    shown = ", ".join(entries[:3])
+    extra = len(entries) - 3
+    return shown if extra <= 0 else f"{shown}, and {extra} more"
 
 
 def _agent_branches(repo_dir: Path) -> list[str]:
@@ -262,8 +327,15 @@ def _self_worktree(worktrees: list[_Worktree]) -> Path | None:
     return None
 
 
-def _sweep_empty_dirs(repo_dir: Path, report: CleanupReport) -> None:
+def _sweep_empty_dirs(checkout_root: Path, report: CleanupReport) -> None:
     """Delete empty directories left under ``.claude/worktrees/``, then the parent.
+
+    ``checkout_root`` is the root of a checkout whose ``.claude/worktrees/`` is
+    to be swept.  The caller passes the MAIN worktree's root (the first record
+    of ``git worktree list``), not merely the checkout the tool happens to be
+    running from: run from a linked worktree, the running checkout's own
+    ``.claude/worktrees/`` is not where the main repo's husks live, and they
+    would otherwise never be swept.
 
     Git never removes these, and two ordinary paths produce them, both seen on
     the first real run of this module: ``worktree prune`` drops the admin record
@@ -283,7 +355,7 @@ def _sweep_empty_dirs(repo_dir: Path, report: CleanupReport) -> None:
     folder.  ``report.errors`` stays reserved for failing to remove a real
     worktree or a real branch.
     """
-    parent = repo_dir / _WORKTREE_PARENT
+    parent = checkout_root / _WORKTREE_PARENT
     if not parent.is_dir():
         return
     for child in sorted(parent.iterdir()):
@@ -333,8 +405,8 @@ def clean_worktrees(
         if worktree.locked:
             report.kept_worktrees.append((name, "locked via `git worktree lock`"))
             continue
-        # Before _is_dirty, which would refresh the index this reads. See
-        # _seconds_since_activity.
+        # Before _worktree_status, whose probe refreshes the index this reads
+        # (its mtime restore is only best-effort). See _seconds_since_activity.
         idle = _seconds_since_activity(worktree.path)
         if idle is None:
             report.kept_worktrees.append((name, "cannot read its git activity stamp"))
@@ -344,8 +416,14 @@ def clean_worktrees(
                 (name, f"git activity {int(idle // 60)} min ago; may be in use")
             )
             continue
-        if _is_dirty(worktree.path):
+        dirty, ignored = _worktree_status(worktree.path)
+        if dirty:
             report.kept_worktrees.append((name, "has uncommitted or untracked changes"))
+            continue
+        if ignored:
+            report.kept_worktrees.append(
+                (name, f"holds gitignored content ({_ignored_summary(ignored)})")
+            )
             continue
         if default is None:
             report.kept_worktrees.append((name, "no default branch to compare against"))
@@ -359,7 +437,12 @@ def clean_worktrees(
         else:
             report.errors.append(f"worktree remove {name}: {result.stderr.strip()}")
 
-    _sweep_empty_dirs(repo_dir, report)
+    # Sweep the MAIN worktree's husks (worktrees[0] -- see _list_worktrees),
+    # wherever the tool is running from; keep sweeping the running checkout's
+    # own .claude/worktrees/ too when that is a different place.
+    _sweep_empty_dirs(worktrees[0].path, report)
+    if repo_dir.resolve() != worktrees[0].path.resolve():
+        _sweep_empty_dirs(repo_dir, report)
 
     # Re-list: a branch held by a worktree removed above is only now deletable.
     still_checked_out = {

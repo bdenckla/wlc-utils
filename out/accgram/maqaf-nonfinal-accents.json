@@ -1115,7 +1115,7 @@
      "mayela before an etnaxta (ITM §216)": 7,
      "unnamed": 7,
      "secondary merkha in the tipexa's chanted word (ITM §233)": 5,
-     "secondary merkha in the silluq's chanted word (ITM §233)": 4,
+     "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)": 4,
      "secondary mahapakh in the pashta's chanted word (ITM §241)": 4,
      "munax-zaqef (ITM §221)": 3,
      "mayela before a silluq (ITM §210)": 1,
@@ -1152,7 +1152,7 @@
       "word": "לֹא־יֹ֥אכַל־בּֽוֹ׃",
       "shape": "0-mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -1248,7 +1248,7 @@
       "word": "מֶ֥לֶךְ־יִשְׂרָאֵֽל׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -1260,7 +1260,7 @@
       "word": "בְּלֵ֥ב־יַמִּֽים׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1272,7 +1272,7 @@
       "word": "לְבַ֥ת־יְרוּשָׁלִָֽם׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5014,7 +5014,7 @@
      "secondary mahapakh in the pashta's chanted word (ITM §241)": 3,
      "secondary merkha in the tipexa's chanted word (ITM §233)": 3,
      "munax-zaqef (ITM §221)": 2,
-     "secondary merkha in the silluq's chanted word (ITM §233)": 2,
+     "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)": 2,
      "mayela before a silluq (ITM §210)": 1,
      "secondary munax in the revia's chanted word (ITM §236)": 1
     },
@@ -5042,7 +5042,7 @@
       "word": "לֹא־יֹ֥אכַל־בּֽוֹ׃",
       "shape": "0-mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5150,7 +5150,7 @@
       "word": "בְּלֵ֥ב־יַמִּֽים׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6579,7 +6579,7 @@
     "verses": 4465,
     "maqaf_compounds": 4274,
     "hits": 29,
-    "simple_two_accent_words": 3090,
+    "simple_two_accent_words": 3088,
     "simple_by_pair": {
      "germ-rev": 2342,
      "ole-mer": 312,
@@ -6587,22 +6587,22 @@
      "tip-mun": 25,
      "dex-mun": 16,
      "tsit-mer": 12,
-     "֢-ole": 9,
+     "atnh-ole": 9,
      "mah-mer": 9,
      "germ-mer-rev": 8,
      "mah-qad": 7,
      "dex-mer": 5,
-     "mer-sil": 5,
      "mer-rev": 4,
      "mer-qad": 4,
      "mah-mun": 4,
+     "mer-sil": 3,
      "mun-etn": 3,
      "tsit-mah-rev": 2,
      "dex-rev": 2,
      "yby-paz": 2,
      "mer-mun": 2,
      "germ-ger": 1,
-     "֢-ole-mer": 1,
+     "atnh-ole-mer": 1,
      "tip-sil": 1,
      "ilu-qad": 1,
      "mah-ole": 1,
@@ -6613,7 +6613,7 @@
       "word": "אָ֝מַ֗ר",
       "bcv": "jb3:3"
      },
-     "֢-ole": {
+     "atnh-ole": {
       "word": "יִקָּחֵ֢ה֫וּ",
       "bcv": "jb3:6"
      },
@@ -6677,7 +6677,7 @@
       "word": "רֵ֥עֲךָ֨",
       "bcv": "pr27:10"
      },
-     "֢-ole-mer": {
+     "atnh-ole-mer": {
       "word": "מִֽמֹּעֲצ֢וֹתֵ֫יהֶ֥ם",
       "bcv": "ps5:11"
      },
@@ -8057,16 +8057,15 @@
       "reason": "the two marks are on one letter"
      }
     ],
-    "concentrators": 352,
+    "concentrators": 350,
     "concentrator_by_shape": {
      "0-germ+rev": 283,
      "0-ole+mer": 37,
-     "0-֢+ole": 7,
+     "0-atnh+ole": 7,
      "0-tsit+mah": 6,
      "0-0-germ+rev": 6,
      "0-tip+mun": 4,
      "0-ilu+qad": 3,
-     "0-mer+sil": 2,
      "0-dex+rev": 1,
      "0-mer+etn": 1,
      "0-mah+qad": 1,
@@ -8075,11 +8074,10 @@
     "concentrator_by_pair": {
      "germ-rev": 289,
      "ole-mer": 37,
-     "֢-ole": 7,
+     "atnh-ole": 7,
      "tsit-mah": 6,
      "tip-mun": 4,
      "ilu-qad": 3,
-     "mer-sil": 2,
      "dex-rev": 1,
      "mer-etn": 1,
      "mah-qad": 1,
@@ -8089,10 +8087,6 @@
      "germ-rev": {
       "word": "וְאַל־יִ֝רְאֶ֗ה",
       "bcv": "jb3:9"
-     },
-     "mer-sil": {
-      "word": "עַל־רֵֽיעֲכֶ֥ם׃",
-      "bcv": "jb6:27"
      },
      "ole-mer": {
       "word": "אֶת־עֲוֺ֫נִ֥י",
@@ -8114,7 +8108,7 @@
       "word": "עַד־תְּב֥וּנֹֽתֵיכֶ֑ם",
       "bcv": "jb32:11"
      },
-     "֢-ole": {
+     "atnh-ole": {
       "word": "לֹא־יָדַ֢עְנ֫וּ",
       "bcv": "pr24:12"
      },
@@ -9963,7 +9957,7 @@
     "by_configuration": {
      "metigah-zaqef (ITM §224)": 211,
      "mayela before an etnaxta (ITM §216)": 8,
-     "secondary merkha in the silluq's chanted word (ITM §233)": 4,
+     "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)": 4,
      "secondary merkha in the tipexa's chanted word (ITM §233)": 4,
      "secondary mahapakh in the pashta's chanted word (ITM §241)": 3,
      "mayela before a silluq (ITM §210)": 1,
@@ -10060,7 +10054,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10072,7 +10066,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10084,7 +10078,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10096,7 +10090,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -12796,7 +12790,7 @@
      "dex-mun": 14,
      "tsit-mer": 12,
      "mer-qad": 10,
-     "֢-ole": 9,
+     "atnh-ole": 9,
      "mah-qad": 7,
      "mah-mer": 7,
      "mer-rev": 5,
@@ -12807,7 +12801,7 @@
      "tip-sil": 2,
      "mer-etn": 2,
      "mer-sil": 2,
-     "֢-ole-mer": 1,
+     "atnh-ole-mer": 1,
      "ilu-qad": 1,
      "mah-ole": 1,
      "mer-tsor": 1,
@@ -12835,11 +12829,11 @@
       "word": "יְתָ֘עֵ֥ב",
       "bcv": "ps5:7"
      },
-     "֢-ole-mer": {
+     "atnh-ole-mer": {
       "word": "מִֽמֹּעֲצ֢וֹתֵ֫יהֶ֥ם",
       "bcv": "ps5:11"
      },
-     "֢-ole": {
+     "atnh-ole": {
       "word": "יִסַּ֢דְתָּ֫",
       "bcv": "ps8:3"
      },
@@ -14466,7 +14460,7 @@
      "0-germ+rev": 299,
      "0-ole+mer": 44,
      "0-tsit+mah": 10,
-     "0-֢+ole": 7,
+     "0-atnh+ole": 7,
      "0-0-germ+rev": 6,
      "0-tip+mun": 4,
      "0-ilu+qad": 3,
@@ -14479,7 +14473,7 @@
      "germ-rev": 305,
      "ole-mer": 46,
      "tsit-mah": 10,
-     "֢-ole": 7,
+     "atnh-ole": 7,
      "tip-mun": 4,
      "ilu-qad": 3,
      "germ-mer-rev": 1,
@@ -14495,7 +14489,7 @@
       "word": "וְֽאַל־תֶּ֫חֱטָ֥אוּ",
       "bcv": "ps4:5"
      },
-     "֢-ole": {
+     "atnh-ole": {
       "word": "מִֽי־יַרְאֵ֢נ֫וּ",
       "bcv": "ps4:7"
      },

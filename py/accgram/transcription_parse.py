@@ -104,7 +104,7 @@ SILSOF_MARKS = am.METEG + am.SOF_PASUQ
 def _accent_marks(accent: str) -> str:
     """One written accent (an alias resolved, ``mun_leg`` included) -> its mark(s)."""
     head, _, tail = accent.partition(et.UNIT_JOINER)
-    head = et._ALIASES.get(head, head)
+    head = et.ALIASES.get(head, head)
     if head == "silsof":
         if tail:
             raise ValueError(f"silsof takes no modifier: {accent!r}")
@@ -138,7 +138,7 @@ def chunk_to_marks(chunk: str) -> str:
     ``+`` -- but a page that printed one would need a notation before it could be parsed.
     """
     frag = ""
-    for accent, joiner in et._split_on_joiners(chunk, et.WRITTEN_ACCENT_JOINERS):
+    for accent, joiner in et.split_on_joiners(chunk, et.WRITTEN_ACCENT_JOINERS):
         if joiner == et.MAQAF_JOINER:
             frag += am.MAQAF
         frag += am.LETTER + _accent_marks(accent)

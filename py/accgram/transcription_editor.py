@@ -44,9 +44,9 @@ for ``render["crop"]``, which answers the old question for old exports and the n
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -54,18 +54,15 @@ sys.path.insert(
     0, str(Path(__file__).resolve().parent.parent)
 )  # run directly as a script
 
-import repo_paths  # noqa: E402
 from PIL import Image, ImageDraw  # noqa: E402
 
-# The scans are a personal archive outside any repo, so this is the one machine-specific path
-# here; WLC_SCANS_DIR overrides it, in the style of repo_paths' sibling-repo overrides.
-SCANS = Path(
-    os.environ.get("WLC_SCANS_DIR", Path.home() / "OneDrive/Documents/ScansOfBooks")
-)
-# The editor and its rendering are disposable -- rebuilt from the scan whenever the crop
-# changes -- so they go to gitignored scratch.  What is meant to be kept is the JSON the Save
-# button exports, which is committed beside the transcription it records.
-OUT = repo_paths.repo_root() / ".novc" / "scans"
+# The scans archive and the .novc/scans scratch directory are ``scan_page``'s constants,
+# imported rather than repeated: the two tools read the same archive and write beside each
+# other, and the last two copies of this block had already begun as verbatim twins.  The
+# editor and its rendering are disposable -- rebuilt from the scan whenever the crop changes
+# -- which is why scratch is the right home; what is meant to be KEPT is the JSON the Save
+# button exports, committed beside the transcription it records.
+from accgram.scan_page import OUT, SCANS  # noqa: E402
 
 # A row is text when its ink rises this far from the page's own baseline toward a full line's
 # density.  Relative, not absolute, because a crop that clips the page's vertical border rule
@@ -101,15 +98,6 @@ DETECT_MARGIN_PITCHES = 1.0
 # The grow when a single requested line offers no pitch to measure: a fraction of page height
 # safely over one line on every edition transcribed so far.
 DETECT_MARGIN_FALLBACK = 0.04
-
-
-def _take(args: list[str], flag: str, count: int) -> list[str] | None:
-    if flag not in args:
-        return None
-    i = args.index(flag)
-    values = args[i + 1 : i + 1 + count]
-    del args[i : i + 1 + count]
-    return values
 
 
 def crop_and_resize(
@@ -324,7 +312,10 @@ def _recover_trailing_line(
     * inky enough -- a word-like fraction of a full line's ink -- so a speck or a faint smudge is
       not, even one that happens to span half a line;
     * clear of the crop's bottom edge, so a real next line the crop clipped to a stub at the very
-      bottom is left to ``crop_warnings`` rather than recovered as though it were a whole line.
+      bottom is not recovered as though it were a whole line.  Declining is ALL this gate does:
+      ``crop_warnings`` sees only kept bands, so a stub the min-height filter dropped never
+      reaches its band list and the smallest stubs stay silent -- the gate keeps this function
+      from compounding that, it does not hand the stub off to anyone.
     """
     if not bands:
         return bands
@@ -587,8 +578,16 @@ const hits = [], entries = [], inputs = [];
 // -- which is what the LAST line needs, having no successor to measure.  Median rather than
 // mean because a band that merged two printed lines, or one holding a heading, would drag a
 // mean upward; there is at least one such band on a typical page.
+//
+// With exactly ONE transcribable row there is no spacing to measure at all, and a PITCH of 0
+// would drop the entry field ON the very line being transcribed -- the failure the placement
+// comment below exists to avoid, met every time on the single-line crop ``detect_margin``
+// explicitly supports.  Estimate a pitch from the lone row's own height instead: half a line
+// of clearance past its bottom keeps its descenders and below-marks visible, the same reason
+// the band's own bottom was rejected as a placement.
 const PITCHES = ROWS.slice(1).map((r, i) => r.top - ROWS[i].top).sort((a, b) => a - b);
-const PITCH = PITCHES.length ? PITCHES[Math.floor(PITCHES.length / 2)] : 0;
+const PITCH = PITCHES.length ? PITCHES[Math.floor(PITCHES.length / 2)]
+            : ROWS.length ? 1.5 * ROWS[0].height : 0;
 
 ROWS.forEach((r, idx) => {
   const hit = document.createElement("div");
@@ -728,21 +727,37 @@ save();
 
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
-    args = sys.argv[1:]
-    debug = "--debug" in args
-    args = [a for a in args if a != "--debug"]
-    width_arg = _take(args, "--width", 1)
-    width = int(width_arg[0]) if width_arg else 1200
-    crop_arg = _take(args, "--crop", 4)
-    name_arg = _take(args, "--name", 1)
-    book, name = args[0], args[1]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("book", help="book directory under the scans archive")
+    parser.add_argument("name", help="scan filename, with or without the .jpg")
+    parser.add_argument(
+        "--width", type=int, default=1200, help="rendered image width in pixels"
+    )
+    parser.add_argument(
+        "--crop",
+        type=float,
+        nargs=4,
+        metavar=("L", "T", "R", "B"),
+        help="fractions of the page in 0..1; L and R bound the text column, T and B name"
+        " the lines to transcribe (see the module docstring)",
+    )
+    parser.add_argument(
+        "--name",
+        dest="stem",
+        help="output stem, defaulting to the scan filename's own",
+    )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="also write <stem>-lines.png with the detected line bands drawn on the page",
+    )
+    args = parser.parse_args()
+    debug, width, crop = args.debug, args.width, args.crop
 
-    stem = name_arg[0] if name_arg else name.removesuffix(".jpg")
-    src = SCANS / book / f"{name.removesuffix('.jpg')}.jpg"
+    stem = args.stem if args.stem else args.name.removesuffix(".jpg")
+    src = SCANS / args.book / f"{args.name.removesuffix('.jpg')}.jpg"
     src_img = Image.open(src)
     source_height = src_img.height
-
-    crop = [float(v) for v in crop_arg] if crop_arg else None
     # A crop that reaches INTO the page vertically (not the full 0..1 height) names the lines to
     # transcribe; detection then runs over a grown region so those lines never sit at an edge.  A
     # horizontal-only crop -- the two-column case -- leaves detection over the whole height as

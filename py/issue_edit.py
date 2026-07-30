@@ -37,7 +37,13 @@ from pathlib import Path
 
 import repo_paths
 
-_OUT_DIR = repo_paths.repo_root() / ".novc"
+# Everything here is anchored to the repo root, never the process cwd -- the
+# paths below, and (via ``cwd=``) the ``gh`` subprocesses too.  ``gh`` resolves
+# which repo "issue <number>" names from the git checkout it runs in, so an
+# unanchored call made from another repo's directory would edit THAT repo's
+# same-numbered issue.
+_REPO_ROOT = repo_paths.repo_root()
+_OUT_DIR = _REPO_ROOT / ".novc"
 
 
 class IssueEditError(RuntimeError):
@@ -70,6 +76,7 @@ def _fetch_field(number: int, field: str) -> str:
         text=True,
         encoding="utf-8",
         check=True,
+        cwd=_REPO_ROOT,
     )
     return json.loads(result.stdout)[field]
 
@@ -105,5 +112,6 @@ def write_and_edit(number: int, body: str, *, dry_run: bool = False) -> Path:
             check=True,
             text=True,
             encoding="utf-8",
+            cwd=_REPO_ROOT,
         )
     return path

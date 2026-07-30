@@ -13,11 +13,11 @@ conventions differ per book: the Simanim Tiqqun's main body is an identity map f
 page to C<page:03d>.jpg, while the Koren Classic Tanakh numbers the Torah continuously as
 A<n>-<letter>-<page:03d>.jpg and gives its appendix a separate V-<page:03d>.jpg sequence.
 
-This only WRITES the PNG.  Two ways to view one, both fine: open its file:// URL in Claude's
-Browser pane, or PowerShell `Start-Process <path>` for the desktop viewer.  Use Start-Process
-rather than Invoke-Item -- Invoke-Item launched Photos with no window at all.  Either way the
-desktop window will not come to the foreground (Windows denies SetForegroundWindow to a
-background process), so it waits in the taskbar.
+This only WRITES the PNG.  To put one in front of the reader, hand over a ``file:///`` link
+to it -- absolute path, forward slashes, three slashes after ``file:`` -- and open NOTHING:
+no Start-Process, no browser pane, no desktop viewer.  The reader often has the page open
+already, so a launched copy is a duplicate window (house rule, 2026-07-28).  To verify the
+output yourself, Read the PNG rather than opening it anywhere.
 
 The raw scans are ~5100x7100 and 4-13 MB, too big to open comfortably or to hand to the Read
 tool, which is the whole reason this exists.
@@ -29,11 +29,17 @@ shows the disjunctive skeleton and the maqafs, but merkha vs. meteg needs the zo
 Right-hand (accented) column of a SimTiq two-column page is roughly --crop 0.5 0 1 1.
 
 --name sets the output stem, so successive crops of one page do not overwrite each other
-(a crop otherwise lands on <name>-crop.png regardless of which region it is).
+(a crop otherwise lands on <name>-crop.png regardless of which region it is).  It names ONE
+stem, so it refuses to run with more than one page: every page would land on the same file,
+the last one silently winning.
+
+The SCANS/OUT constants here are also ``transcription_editor``'s, which imports them from
+here: the two tools read the same archive and write to the same scratch directory.
 """
 
 from __future__ import annotations
 
+import argparse
 import os
 import sys
 from pathlib import Path
@@ -54,31 +60,42 @@ SCANS = Path(
 OUT = repo_paths.repo_root() / ".novc" / "scans"
 
 
-def _take(args: list[str], flag: str, count: int) -> list[str] | None:
-    """Pull `count` values following `flag` out of `args`, or None if absent."""
-    if flag not in args:
-        return None
-    i = args.index(flag)
-    values = args[i + 1 : i + 1 + count]
-    del args[i : i + 1 + count]
-    return values
-
-
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
-    args = sys.argv[1:]
-    width_arg = _take(args, "--width", 1)
-    width = int(width_arg[0]) if width_arg else 1400
-    crop = _take(args, "--crop", 4)
-    name_arg = _take(args, "--name", 1)
-    book, names = args[0], args[1:]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("book", help="book directory under the scans archive")
+    parser.add_argument(
+        "names", nargs="+", help="scan filename(s), with or without the .jpg"
+    )
+    parser.add_argument(
+        "--width", type=int, default=1400, help="output width in pixels"
+    )
+    parser.add_argument(
+        "--crop",
+        type=float,
+        nargs=4,
+        metavar=("L", "T", "R", "B"),
+        help="fractions of the page in 0..1, applied before the resize",
+    )
+    parser.add_argument(
+        "--name",
+        dest="stem",
+        help="output stem, so successive crops of one page do not overwrite each other",
+    )
+    args = parser.parse_args()
+    if args.stem and len(args.names) > 1:
+        parser.error(
+            "--name sets ONE output stem, so with more than one page every page would be"
+            " written to the same file, the last one silently winning -- the very overwrite"
+            " the flag exists to prevent.  Run once per page."
+        )
     OUT.mkdir(parents=True, exist_ok=True)
-    for name in names:
+    for name in args.names:
         stem = name.removesuffix(".jpg")
-        src = SCANS / book / f"{stem}.jpg"
+        src = SCANS / args.book / f"{stem}.jpg"
         img = Image.open(src)
-        if crop:
-            left, top, right, bottom = (float(v) for v in crop)
+        if args.crop:
+            left, top, right, bottom = args.crop
             img = img.crop(
                 (
                     round(left * img.width),
@@ -88,10 +105,10 @@ def main() -> None:
                 )
             )
             stem = f"{stem}-crop"
-        if name_arg:
-            stem = name_arg[0]
-        scale = width / img.width
-        small = img.resize((width, round(img.height * scale)), Image.LANCZOS)
+        if args.stem:
+            stem = args.stem
+        scale = args.width / img.width
+        small = img.resize((args.width, round(img.height * scale)), Image.LANCZOS)
         dst = OUT / f"{stem}.png"
         small.save(dst)
         print(f"{src.name} -> {dst}  ({small.width}x{small.height})")

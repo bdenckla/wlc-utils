@@ -541,8 +541,12 @@ def _groups() -> tuple[_Group, ...]:
         _Group(
             ("A ", _ROM_MUNAX, " and no ", _ROM_MAQAF),
             (
+                # Full names in rendered prose (item 8 of doc/review-findings-2026-07-29.md):
+                # the "KorTan/SimTiq" shorthand that stood here is code vocabulary --
+                # transcription stems and comments -- and the page's own intro already says
+                # "Koren's Classic Tanakh and the Simanim Tiqqun".
                 "The following three editions agree with (or are at least consistent with)"
-                ' "KorTan/SimTiq" (Koren Tanakh and Simanim Tiqqun): Heidenheim, MG Netter,'
+                " Koren's Classic Tanakh and the Simanim Tiqqun: Heidenheim, MG Netter,"
                 " and Ginsburg."
                 ' The reason I retreat to "are at least consistent with" is'
                 ' that Heidenheim and MG Netter present manuscript-style "tangled" cantillation:'

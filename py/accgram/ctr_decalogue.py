@@ -292,7 +292,10 @@ def compare(ctr: dict, source: dict, book: str, reading: str) -> Comparison:
 
     Aligns by consonant skeleton (difflib), so a differently placed maqaf shows up as an aligned
     region rather than shifting every accent after it, then compares the glyph tuples of the
-    words that line up.
+    words that line up.  Chanted words that do NOT line up are recorded from both sides: a
+    CTR-side chanted word against a placeholder strand tuple, and a strand-side chanted word
+    against a placeholder CTR tuple.  A placeholder never equals a real glyph tuple, so an
+    unaligned chanted word is a diff that also fails ``conjunctive_only`` -- loud, never silent.
     """
     ctr_flat = _flat(sof_pasuq_spans(ctr, book))
     version = next(
@@ -317,9 +320,19 @@ def compare(ctr: dict, source: dict, book: str, reading: str) -> Comparison:
                 else:
                     diffs.append(WordDiff(cs, cg, sg))
         else:
+            # An unaligned region has two sides, and both are recorded: a "delete" or
+            # "replace" opcode has CTR-side chanted words (``i1..i2``), an "insert" or
+            # "replace" strand-side ones (``j1..j2``).  Recording only the CTR side, as this
+            # loop once did, would leave a chanted word the strand has and CTR lacks out of
+            # ``diffs`` -- and out of the pinned counts -- entirely.  Moot at HEAD (the two
+            # sides align word for word, so no opcode reaches here), and kept honest for the
+            # re-vendor that would change that.
             for x in range(i1, i2):
                 cs, cg = ctr_flat[x]
                 diffs.append(WordDiff(cs, cg, ("<no aligned strand word>",)))
+            for y in range(j1, j2):
+                ss, sg = strand_flat[y]
+                diffs.append(WordDiff(ss, ("<no aligned CTR word>",), sg))
     return Comparison(
         book=book,
         reading=reading,

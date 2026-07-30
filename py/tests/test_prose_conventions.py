@@ -18,6 +18,37 @@ phrase in order to reject it needs -- the guardrail comments that record a
 replaced convention are exactly that, and there is no way to write one without
 naming the thing.
 
+WHAT IS SCANNED.  Every non-vendored ``py/**/*.py``, plus the committed
+renderings the page modules generate: ``gh-pages/accgram/*.html`` and
+``out/accgram/**/*.json``, scanned as plain text (#87 item 19 -- the #80 sweep
+of 2026-07-27 fixed the module sources but left
+``out/accgram/dual-cant/_dual_cant.json`` holding the swept wording for two
+days, because nothing linted the artifacts).  A hit in an artifact never means
+"edit the artifact": either the generating module still produces the phrase
+(fix it there) or the artifact is stale (regenerate it; the artifact then
+clears on its own).  ``doc/*.md`` is deliberately NOT scanned: the
+review-findings and plan docs quote banned phrasings in order to discuss and
+reject them, so linting them would flag the quotations.
+
+KNOWN, DELIBERATE LIMITATIONS (#87 item 20), recorded here so they are a
+choice and not an unknown:
+
+* ``_SUBJECTS`` hardcodes the edition names, so a rename (as the
+  simanim -> simtiq/simtan rename did, in the very week this lint was new)
+  silently NARROWS the lint instead of breaking it: the old name stops
+  matching and nothing fails.  No existing constant holds these rendered
+  short names -- ``printed_decalogue_strands.py`` has transcription stems and
+  Hebrew words, not "Koren"/"SimTiq"/"SimTan" -- so there is nothing to derive
+  the tuple from without building a constant just for this lint.  Whoever
+  renames an edition must update ``_SUBJECTS`` by hand.
+* The subject-anchored agentive pattern requires the verb to follow its
+  subject directly and in the singular.  A plural subject with an interposed
+  phrase -- "the seven chanted words before those marks carry ..." (#87 item
+  6) -- escapes, and loosening the anchor enough to catch it would flag the
+  honest uses the anchor exists to spare.  (Item 6's OTHER escape, subject
+  and verb split across two source lines, IS caught: every scan below runs
+  over adjacent line pairs.)
+
 Run:
     .venv/Scripts/python.exe -m pytest py/tests/test_prose_conventions.py -v
 
@@ -76,6 +107,8 @@ _PRAGMA = re.compile(r"#\s*prose-ok")
 #
 # Anchored on the SUBJECT, so the many honest uses survive untouched: a function
 # that writes JSON, a reader that reads a file, a scanner that carries state.
+# Hardcoded by necessity; see KNOWN, DELIBERATE LIMITATIONS in the module
+# docstring for what a rename does to this tuple.
 _SUBJECTS = (
     "WLC",
     "UXLC",
@@ -130,40 +163,60 @@ _DENYLIST: list[tuple[re.Pattern[str], str, str]] = [
     ),
 ]
 
-# Checked over ADJACENT LINE PAIRS, not single lines, on quote- and
-# whitespace-normalized text: the phrase splits across two source lines inside
-# an implicitly concatenated string literal, so a line-based grep misses
-# `no cantillation\n" "accent` -- and that is exactly how it has hidden before.
-# Pairing (rather than scanning the whole file as one string) keeps a real line
-# number in the message and keeps the `# prose-ok` pragma usable.
+# EVERY scan below runs over ADJACENT LINE PAIRS, not single lines, on quote-
+# and whitespace-normalized text: a phrase splits across two source lines
+# inside an implicitly concatenated string literal (`no cantillation\n"
+# "accent`), and a subject parts from its verb at a line break ("There too
+# Koren\nshows ..." -- #87 item 6), so a line-based grep misses both, and that
+# is exactly how each has hidden before.  Pairing (rather than scanning the
+# whole file as one string) keeps a real line number in the message and keeps
+# the `# prose-ok` pragma usable.
 _CANTILLATION_ACCENT = re.compile(r"\bcantillation\s+accents?\b", re.IGNORECASE)
 _NOISE = re.compile(r"[\"'\s]+")
 
 
 def _scan_targets():
-    py_root = repo_paths.repo_root() / "py"
+    """Yield (root, path) pairs; offender paths are shown relative to root."""
+    repo_root = repo_paths.repo_root()
+    py_root = repo_root / "py"
     this_file = pathlib.Path(__file__).resolve()
-    for path in py_root.rglob("*.py"):
+    for path in sorted(py_root.rglob("*.py")):
         parts = set(path.relative_to(py_root).parts)
         if parts & _VENDORED or "__pycache__" in parts:
             continue
         if path.resolve() == this_file:  # names every banned phrase by necessity
             continue
-        yield py_root, path
+        yield repo_root, path
+    # The committed artifacts (module docstring, WHAT IS SCANNED).  Missing
+    # inputs FAIL rather than silently narrowing the scan (cf. the skip
+    # policy: a missing input must never report green).
+    html = sorted((repo_root / "gh-pages" / "accgram").glob("*.html"))
+    json_files = sorted((repo_root / "out" / "accgram").rglob("*.json"))
+    assert html, "no gh-pages/accgram/*.html found -- artifact scan would be empty"
+    assert json_files, "no out/accgram/**/*.json found -- artifact scan would be empty"
+    for path in html + json_files:
+        yield repo_root, path
 
 
 def test_no_banned_prose_wording() -> None:
     offenders: list[str] = []
-    for py_root, path in _scan_targets():
-        rel = path.relative_to(py_root).as_posix()
-        for lineno, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-            if _PRAGMA.search(line):
+    for root, path in _scan_targets():
+        rel = path.relative_to(root).as_posix()
+        lines = path.read_text(encoding="utf-8").splitlines()
+        for i, line in enumerate(lines):
+            nxt = lines[i + 1] if i + 1 < len(lines) else ""
+            if _PRAGMA.search(line) or _PRAGMA.search(nxt):
                 continue
+            head = _NOISE.sub(" ", line)
+            pair = _NOISE.sub(" ", f"{line} {nxt}")
             for pattern, preferred, label in _DENYLIST:
-                found = pattern.search(line)
-                if found:
+                found = pattern.search(pair)
+                # A match lying wholly inside ``nxt`` belongs to the NEXT pair,
+                # which will report it -- otherwise every same-line hit is
+                # reported twice.
+                if found and found.start() <= len(head):
                     offenders.append(
-                        f"{rel}:{lineno}  {label} ({found.group(0).strip()})"
+                        f"{rel}:{i + 1}  {label} ({found.group(0).strip()})"
                         f" -> {preferred}"
                     )
     assert not offenders, (
@@ -179,8 +232,8 @@ def test_no_cantillation_accent_phrase() -> None:
     from -- and compatible with -- preferring the NOUN "cantillation" to
     "accentuation", which is Ben's other standing choice and is not linted."""
     offenders: list[str] = []
-    for py_root, path in _scan_targets():
-        rel = path.relative_to(py_root).as_posix()
+    for root, path in _scan_targets():
+        rel = path.relative_to(root).as_posix()
         lines = path.read_text(encoding="utf-8").splitlines()
         for i, line in enumerate(lines):
             nxt = lines[i + 1] if i + 1 < len(lines) else ""

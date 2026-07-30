@@ -1450,7 +1450,7 @@ def _chabad_aside() -> tuple[object, ...]:
                 _ELYON,
                 " has no ",
                 _ROM_SILLUQ,
-                ", and neither does CTR: the seven chanted words before those marks carry four ",
+                ", and neither does CTR: the seven chanted words before those marks have four ",
                 _ROM_REVIA,
                 ", an ",
                 _ROM_ETNAHTA,

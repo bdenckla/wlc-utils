@@ -94,6 +94,13 @@ _NOT_AN_ACCENT_TOKEN = frozenset(("TILDE", "SOFPASUQ", "MISSING_SOFPASUQ"))
 # and every fold recorded, so the fold can be audited rather than taken on trust.
 _FOLDED_WHEN_REPEATED = frozenset(("GERESH", "GERSHAYIM"))
 
+# The mark-body placeholder an empty qere side leaves: a ketiv with no qere (ketiv velo qere).
+# The ketiv atoms are written but nothing is chanted in their place, so the placeholder is NOT a
+# chanted word, though its ``**`` marker otherwise opens one.  Both unit derivations exclude it
+# -- ``_kq_side_frag`` on the fragment path and ``_run_is_a_chanted_word`` on the body-only path
+# -- so it stands outside every count, like the swallowed ketiv beside it.
+_EMPTY_QERE_PLACEHOLDER = "**qq"
+
 KIND_ATOMIC = "an atomic chanted word"
 KIND_COMPOUND_SPLIT = "a maqaf compound, its accents split across atoms"
 KIND_COMPOUND_FINAL = "a maqaf compound, its accents all on the final atom"
@@ -106,8 +113,9 @@ CORPUS_KIND = mna.CORPUS_KIND
 class Unit:
     """One space-delimited unit of a verse's mark body, with the Unicode it was built from.
 
-    ``is_word`` is false for the units that are not chanted words at all: a swallowed ketiv, and
-    a petuhah/setumah/nun-inversum marker.  They stay in the body because the scanner's lookaheads
+    ``is_word`` is false for the units that are not chanted words at all: a swallowed ketiv, an
+    empty-qere placeholder (``_EMPTY_QERE_PLACEHOLDER`` -- a ketiv with no qere), and a
+    petuhah/setumah/nun-inversum marker.  They stay in the body because the scanner's lookaheads
     read the characters between two accents, and dropping them could change a token; they are left
     out of every count.
     """
@@ -164,7 +172,10 @@ def _kq_side_frag(side: object, marker: str, *, is_word: bool) -> Frag:
     starts = marker == "**"
     words = [w for w in (_kq_word(v) for v in (side or ())) if w[1]]
     if not words:
-        return Frag("", marker + ("qq" if starts else "kk"), is_word, starts)
+        # An empty side is a placeholder, not a chanted word, so ``is_word`` is False even on
+        # the qere side: ``**qq`` stands for a ketiv with no qere, where nothing is chanted
+        # (see ``_EMPTY_QERE_PLACEHOLDER``).
+        return Frag("", _EMPTY_QERE_PLACEHOLDER if starts else "*kk", False, starts)
     return Frag(
         UNI_MAQAF.join(w[0] for w in words),
         marker + "-".join(w[1] for w in words),
@@ -430,13 +441,17 @@ def _by_chanted_word(
 # The runs of a mark body that are not chanted words.  ``uni_to_marks`` has a petuhah or setumah
 # as a lone ``P`` or ``S`` and a nun inversum as ``N]8``, and a ketiv as ``*`` followed by its
 # letters (or ``*kk`` where the ketiv side is empty); the qere after it opens with ``**`` and IS
-# a chanted word.  The only other ASCII in a mark body is the ``]N`` note suffix, which never
-# stands alone, so neither test can collide with a real chanted word.
+# a chanted word -- unless it is the ``**qq`` placeholder of a ketiv with no qere, where nothing
+# is chanted (see ``_EMPTY_QERE_PLACEHOLDER``).  The only other ASCII in a mark body is the
+# ``]N`` note suffix, which never stands alone, so none of these tests can collide with a real
+# chanted word.
 _SAM_PE_INUN_MARKS = frozenset(("P", "S", "N]8"))
 
 
 def _run_is_a_chanted_word(marks: str) -> bool:
     if marks in _SAM_PE_INUN_MARKS:
+        return False
+    if marks == _EMPTY_QERE_PLACEHOLDER:
         return False
     return marks.startswith("**") or not marks.startswith("*")
 

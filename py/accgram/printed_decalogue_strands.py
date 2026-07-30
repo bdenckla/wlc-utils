@@ -209,9 +209,14 @@ ROM_AZLA = "azla"
 # one divergence that agrees with neither תחתון strand: a qadma on ויום where every תחתון strand
 # has a pashta.
 ROM_QADMA = "qadma"
-# Named in the Simanim page's grammaticality prose (issue #52): p. 246 accents both atoms of
-# לא־תעשה, and the munax on the joined לא makes one conjunctive too many before the pashta --
-# where the same insertion one chanted verse earlier, before a tevir, costs nothing.
+# Named in the Simanim page's grammaticality prose (issue #52): p. 246 has accents on both atoms
+# of לא־תעשה, and its munax on the joined לא -- where every taxton strand has a meteg and no
+# accent, and every elyon strand has לא as a free chanted word with a munax of its own -- makes
+# one conjunctive too many before the pashta.  The same munax one chanted verse earlier, before a
+# tevir, costs nothing.  The per-strand facts are re-derived from the vendored strands by that
+# page's _pin_lo_taase_strand_facts; the sentence this comment echoes said "all eight strands
+# have a meteg and no accent" until 2026-07-29, which is false of the four elyon strands (item 1
+# of doc/review-findings-2026-07-29.md).
 ROM_MUNAX = "munaḥ"
 ROM_TEVIR = "tevir"
 # Named only on the maqaf-nonfinal-accents page: the secondary mahapakh of ITM §241 is the last

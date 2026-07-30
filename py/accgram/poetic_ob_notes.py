@@ -50,7 +50,7 @@ BY_REF: dict[str, dict[str, object]] = {
             "accents on the one alef — a merkha (below) and a qadma/azla (above). "
             "(This transcription is plausible but uncertain: see the LC image and its "
             "discussion below.) MAM "
-            "carries the azla alone; according to Breuer, the Aleppo Codex likewise has "
+            "has the azla alone; according to Breuer, the Aleppo Codex likewise has "
             "azla and Sassoon 1053 has merkha. The checker fuses the pair into one "
             "order-less merkha!azla bang-pair and flags the verse as a lexical anomaly: "
             f"only a few accent pairs (revia + geresh muqdam, {DEXI} + {MUNAX}, oleh + yored) "
@@ -61,7 +61,7 @@ BY_REF: dict[str, dict[str, object]] = {
         "comment": (
             "Across the sources the two marks split cleanly one-each: MAM has azla; "
             "according to Breuer, the Aleppo Codex likewise has azla and Sassoon 1053 has "
-            "merkha. The LC's carrying of BOTH, on a single letter, could be an attempt to "
+            "merkha. That the LC has BOTH, on a single letter, could be an attempt to "
             "preserve two single-accent traditions — recording the two options rather than "
             "choosing.",
             "The upper mark (transcribed as the qadma/azla) is in any case oddly placed "

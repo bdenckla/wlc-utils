@@ -1,6 +1,6 @@
 r"""Detangle WLC's dually-cantillated prose passages into two single-cant streams (#36).
 
-WLC 4.22 carries three prose loci where each chanted word can bear *two* accents
+WLC 4.22 has three prose loci where each chanted word can have *two* accents
 -- the two readings (תחתון / עליון in the Decalogues, פשוטה / מדרשית in Gen 35:22) merged
 into one ``cant-combined``-style stream.  The prose grammar cannot parse two accents per
 chanted word, so these verses are excluded from the normal run.  This module *detangles* them:
@@ -25,7 +25,7 @@ Design (all four points verified against the data, see issue #36):
 * **Accents come from WLC; MAM is only the oracle** for which accent belongs to which
   strand and where each strand's chanted verses break.  The emitted accent on a word is WLC's
   own codepoint -- so a WLC-specific accent bug still surfaces -- *matched by identity*
-  against the accent MAM's strand carries there, never by stored order.
+  against the accent MAM's strand has there, never by stored order.
 * **Punctuation (maqaf, paseq, sof pasuq) comes from each MAM strand**, which is why
   the loader (``mam_simple_verse``) exposes the strands as their own token streams.  WLC's
   one compromise maqaf pattern fits neither strand; the grammar is boundary-sensitive.
@@ -33,10 +33,10 @@ Design (all four points verified against the data, see issue #36):
   / mater / ketiv-qere differences don't derail it.  Because the loader tokenizes paseq
   and ketiv-qere correctly, the would-be maqaf-join divergences (Exod 20:4 / Deut 5:8)
   collapse to clean 1:1 alignment.
-* **Charity, two kinds.**  Where WLC genuinely lacks one strand's accent (it wrote only
+* **Charity, two kinds.**  Where WLC genuinely lacks one strand's accent (it has only
   the other reading, e.g. a maqaf-join compaction), that one mark is *supplied* from MAM
   and inventoried (``SuppliedMark``) -- a supplied-mark word parses clean and is NOT an
-  ungrammatical verse.  Where WLC instead carries an accent *neither* strand explains (Deut 5:8
+  ungrammatical verse.  Where WLC instead has an accent *neither* strand explains (Deut 5:8
   ``תעשה``: a merkha where qadma is due), that is a candidate WLC error: WLC's actual mark
   is emitted (so the grammar reacts) and the discrepancy is flagged (``Anomaly``), never
   silently supplied.  Because WLC's single tangled mark serves *both* readings, such a
@@ -125,7 +125,7 @@ class SuppliedMark:
     bcv: str
     strand: str  # "alef" / "bet"
     strand_label: str  # pashut / taxton / ...
-    mam_word: str  # the MAM strand word carrying the supplied accent
+    mam_word: str  # the MAM strand word with the supplied accent
     wlc_word: str  # WLC's word, which lacks it
     accent: str  # supplied accent codepoint
     accent_name: str
@@ -147,7 +147,7 @@ class Anomaly:
     wlc_word: str
     expected: str  # accent MAM's strand is due here
     expected_name: str
-    found: str  # accent WLC actually wrote
+    found: str  # accent WLC actually has
     found_name: str
 
 
@@ -161,7 +161,7 @@ class PunctuationChange:
     an accent on a non-final atom), sof pasuq the silluq, legarmeh the munax -- and each reading
     takes its punctuation from its MAM strand.  So against WLC's one tangled form a reading both
     *supplies* a mark (it fits this strand's accents but WLC lacks it) and *suppresses* one (WLC
-    carries it for the other reading).  WLC's tangle is neither maqaf- nor sof-pasuq-maximalist
+    has it for the other reading).  WLC's tangle is neither maqaf- nor sof-pasuq-maximalist
     (a mix of both, so those are supplied and suppressed), but it *is* legarmeh-maximalist -- a
     legarmeh's broad-sense paseq is always WLC's own, never supplied from MAM -- so legarmeh is
     only ever suppressed.  A narrow-sense paseq is not part of the accent grammar, not tracked.
@@ -271,7 +271,7 @@ def _accent_name(ch: str) -> str:
 
 def _no_accent_due_name(mam_word: str) -> str:
     """The ``expected`` description for a stray anomaly: this strand is due no
-    accent here (it carries only a meteg, where MAM's word has one)."""
+    accent here (it has only a meteg, where MAM's word has one)."""
     if _METEG in mam_word:
         return "no accent (only a meteg is due)"
     return "no accent"
@@ -288,9 +288,9 @@ class _Tok:
 
 
 def _wlc_words(wlc_index: dict[str, dict], passage: Passage) -> list[_Tok]:
-    """WLC's accent-bearing words across the passage, in order, tagged by bcv.
+    """WLC's words across the passage, in order, tagged by bcv.
 
-    Qere words are taken from a ketiv-qere element (matching the strands, which carry the
+    Qere words are taken from a ketiv-qere element (matching the strands, which have the
     qere); ``sam_pe_inun`` and other non-words are skipped."""
     out: list[_Tok] = []
     for chnu, vrnu in passage.refs:
@@ -398,12 +398,12 @@ _PUNCT_MARKS: tuple[tuple[str, str], ...] = (
 
 
 def _trailing_punct(word: str) -> set[str]:
-    """The maqaf / sof pasuq a word itself carries."""
+    """The maqaf / sof pasuq a word itself has."""
     return {ch for ch, _ in _PUNCT_MARKS if ch in word}
 
 
 def _strand_punct_after(strand: list[_Tok], i: int) -> set[str]:
-    """The punctuation marks the strand carries after word-token ``i``: trailing marks on the
+    """The punctuation marks the strand has after word-token ``i``: trailing marks on the
     word plus any immediately following non-word tokens (a standalone sof pasuq)."""
     marks = _trailing_punct(strand[i].text)
     j = i + 1
@@ -429,11 +429,11 @@ def _punctuation_changes(
 
     Legarmeh (a munax + a following broad-sense paseq, before a revia) is only ever
     suppressed: WLC's tangle is legarmeh-maximalist -- the broad-sense paseq is always WLC's
-    own, never supplied from MAM -- so a strand reading the word's *other* accent suppresses
+    own, never supplied from MAM -- so a strand with the word's *other* accent suppresses
     WLC's legarmeh.  The rule (WLC has munax + paseq, this strand lacks the munax) relies
     on a verified property of these three loci: a narrow-sense paseq never reaches a strand
     short the munax here (the two WLC munax+paseq words shared by both strands -- ex 20:10
-    אַתָּה, dt 5:16 לְמַעַן -- carry the munax in both, so no row is emitted)."""
+    אַתָּה, dt 5:16 לְמַעַן -- have the munax in both, so no row is emitted)."""
     changes: list[PunctuationChange] = []
     for block in blocks:
         if block.tag != "equal":
@@ -461,12 +461,12 @@ def _punctuation_changes(
                     )
                 )
             if (
-                _MUNAX in wlc[wi].text  # WLC's tangle carries a munax …
+                _MUNAX in wlc[wi].text  # WLC's tangle has a munax …
                 and _PASEQ in wlc[wi].text  # … + a broad-sense paseq (a legarmeh) …
                 and _MUNAX
                 not in _real_accents_ordered(
                     strand_toks[ti].text
-                )  # this strand reads the other accent
+                )  # this strand has the other accent
             ):
                 changes.append(
                     PunctuationChange(
@@ -485,11 +485,11 @@ def _punctuation_changes(
 def _equal_meteg_by_wlc(
     wlc: list[_Tok], strand: list[_Tok], blocks: list[_Block]
 ) -> dict[int, bool]:
-    """Map each 1:1-aligned WLC word index to whether that strand's word carries a *medial*
+    """Map each 1:1-aligned WLC word index to whether that strand's word has a *medial*
     meteg (U+05BD not before a sof pasuq, i.e. not a verse-final silluq).
 
     A medial meteg is a transcription-ambiguous mark -- it ``half-includes`` as an accent,
-    and WLC may have written a real accent (merkha/tipexa) where it is due, or vice versa.
+    and WLC may have a real accent (merkha/tipexa) where it is due, or vice versa.
     So the strand whose mark here is a sole meteg is the ambiguous slot that absorbs WLC's
     actual mark; the other strand's distinct accent is the omitted one, supplied from MAM.
     """
@@ -539,7 +539,7 @@ def _assign_word(
     (``other_meteg`` and it is due no real accent), the leftover is ceded to it, and this
     strand instead *supplies* its own omitted accent (clean, with some manuscript support).
     When THIS strand is the meteg slot, the leftover has no real-accent slot here yet WLC
-    wrote it, so this reading must confront the rogue mark: it is emitted as a *stray* (the
+    has it, so this reading must confront the rogue mark: it is emitted as a *stray* (the
     grammar reacts) and flagged as a no-accent-due anomaly.  dt 5:8's merkha thus *supplies*
     the omitted qadma in the taxton (clean) AND is the elyon's *stray* (ungrammatical) -- one WLC
     mark, charitably read in the taxton and flagged in the elyon."""
@@ -547,7 +547,7 @@ def _assign_word(
     have = set(_accents(wlc_word))
     missing = [a for a in need if a not in have]
 
-    # WLC accents this word carries that belong to neither strand's reading here.
+    # WLC accents this word has that belong to neither strand's reading here.
     leftover = sorted(have - set(need) - other_real, key=ord)
 
     # A leftover that belongs to the OTHER strand's sole-meteg slot is ceded to it (that
@@ -635,7 +635,7 @@ def _assign_word(
 
 def _display_keep(word: str) -> tuple[str, ...]:
     """The non-accent marks the display helpers keep: maqaf and sof pasuq always, plus the
-    meteg -- but only on an accent-less atom.  On an atom that carries a real accent the meteg
+    meteg -- but only on an accent-less atom.  On an atom that has a real accent the meteg
     is MAM's secondary-stress mark, not WLC's own grammar, so it is dropped (cf.
     ``_strip_nonfinal_meteg``); a verse-final silluq survives because its word has no real
     accent of its own, as does the meteg on a maqaf-ending word with no accent."""
@@ -662,12 +662,13 @@ def display_real_marks(strand_word: str, wlc_word: str) -> str:
     """``display_form`` for a *strand* word, with MAM's notational stress helpers removed so the
     inventory shows what the detangler did to WLC, not MAM's own marking conventions.
 
-    MAM doubles an accent -- once at the word's grammatical edge (the real mark) and once as an
-    inner stress-helper -- and adds a helper for the zarqa; neither belongs to WLC.  So drop the
-    zarqa helper (U+0598) and collapse each doubled accent to its real edge occurrence (first for a
-    prepositive accent, last otherwise -- e.g. a postpositive segol/pashta).  But a stress helper
-    WLC *itself* carries (then doubled in ``wlc_word`` too, most often a pashta) is genuine and is
-    left intact.  The kept-character set matches ``display_form``."""
+    MAM has some accents doubled -- once at the word's grammatical edge (the real mark) and
+    once as an inner stress-helper -- and has a helper for the zarqa; neither belongs to WLC.
+    So drop the zarqa helper (U+0598) and collapse each doubled accent to its real edge
+    occurrence (first for a prepositive accent, last otherwise -- e.g. a postpositive
+    segol/pashta).  But a stress helper WLC *itself* has (then doubled in ``wlc_word`` too,
+    most often a pashta) is genuine and is left intact.  The kept-character set matches
+    ``display_form``."""
     drop_idx: set[int] = set()
     accents = {
         ch for ch in strand_word if uni_to_marks.is_accent(ch) and ch != _ZARQA_HELPER
@@ -860,7 +861,7 @@ def _emit_stream(strand: list[_Tok], assigns: dict[int, _Assign]) -> list[_Tok]:
 
 
 def _segment(vels: list[_Tok]) -> list[list[_Tok]]:
-    """Split the stream into chanted verses at every sof pasuq the strand carries."""
+    """Split the stream into chanted verses at every sof pasuq the strand has."""
     chanted_verses: list[list[_Tok]] = []
     cur: list[_Tok] = []
     for vel in vels:
@@ -877,9 +878,9 @@ def _strip_nonfinal_meteg(chanted_verse: list[_Tok]) -> list[_Tok]:
     """Drop metegs from a chanted verse, keeping only the verse-final silluq.
 
     The scanner swallows every meteg except the one adjacent to the sof pasuq, which it
-    promotes to SILLUQ; that meteg lives in the chanted verse's last word (the sof-pasuq
-    bearer).  Stripping the others is therefore parse-neutral, and it keeps WLC's emitted
-    strand from carrying MAM's metegs -- marks that are not WLC's own here and bear
+    promotes to SILLUQ; that meteg lives in the chanted verse's last word (the word with
+    the sof pasuq).  Stripping the others is therefore parse-neutral, and it keeps WLC's
+    emitted strand free of MAM's metegs -- marks that are not WLC's own here and bear
     on no accent grammar (e.g. dt 5:8's elyon תעשה, where MAM's swallowed meteg would
     otherwise mask WLC's actual merkha)."""
     if len(chanted_verse) <= 1:
@@ -1107,7 +1108,7 @@ def passage_for_book(bb: str) -> Passage | None:
 
 def _join_for_display(words: tuple[str, ...]) -> str:
     """Join chanted-verse words for display: a space between words, except none after a
-    maqaf (the joined word already carries it)."""
+    maqaf (the joined word already has it)."""
     out = ""
     for word in words:
         if out and not out.endswith(_SRC_MAQAF):

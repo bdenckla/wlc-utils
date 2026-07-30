@@ -29,12 +29,15 @@ they agree exactly (issue #68).  The verdict is stable and stark:
     (a ``pashta_phrase`` ERROR), where the manuscript -- keeping the two commandments as two
     separate chanted verses -- parses both clean.
 
-Those are the IDEALIZED strands.  ``transcription_parse`` asks the same question of what a
-real edition prints, feeding the committed hand transcriptions through ``parse_marks_body``
+Those are the IDEALIZED strands.  ``transcription_parse`` asks the same question of the
+editions' own pages, feeding the committed hand transcriptions through ``parse_marks_body``
 below -- the same scanner, grammar and status vocabulary, so the two sets of verdicts are
-comparable.  Eleven of the twelve transcribed Decalogues match their Wikisource strand at
-every chanted verse; the one that does not is SimTiq's Exodus appendix taxton.  ``run`` records those
-verdicts as the output file's ``transcriptions`` section, beside the strands' ``versions``.
+comparable.  For how the transcribed Decalogues fare, see the hub page's own tally --
+``printed_decalogue_page._transcription_grammar_para``, derived live from
+``transcription_parse.check_all`` -- rather than a restatement here: the one this docstring
+used to make conflated verdict agreement with token identity (item 9 of
+``doc/review-findings-2026-07-29.md``).  ``run`` records the transcription verdicts as the
+output file's ``transcriptions`` section, beside the strands' ``versions``.
 
 Pure computation (no I/O); the driver (``run``) loads the vendored JSON, parses, and writes
 ``out/accgram/printed-decalogue/_printed_decalogue.json``.  The gh-pages report is rendered
