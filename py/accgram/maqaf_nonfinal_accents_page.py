@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from functools import lru_cache
 from pathlib import Path
 
 from accgram import accent_marks as am
@@ -44,7 +45,6 @@ from accgram.printed_decalogue_strands import (
     ROM_GERSHAYIM,
     ROM_MAHAPAKH,
     ROM_MERKHA,
-    ROM_METEG,
     ROM_MUNAX,
     ROM_PASHTA,
     ROM_PAZER,
@@ -275,13 +275,11 @@ _SMALL_NUMBERS = (
 # on the page, it was a methodological remark about a bucket the reader cannot see into.
 
 
-def _emph(text: str) -> object:
-    """Emphasis in running prose, rendered bold -- see ``em.emphasis`` in the stylesheet.
-
-    Replaces the ALL-CAPS emphasis these pages used to carry.  Italic is not available for it:
-    ``span.romanized`` has that for accent names.
-    """
-    return H.em(text, {"class": "emphasis"})
+# GONE with the intro's running prose (2026-07-29): ``_emph``, a bold ``em.emphasis`` wrapper --
+# the page's one use of it was the "both" of "a munax on both of its atoms", and the table shows
+# both accents instead of insisting on them.  ``em.emphasis`` stays in the stylesheet, and the
+# rule it stood for is worth keeping if emphasis is ever wanted again: bold, never italic, italic
+# being ``span.romanized``'s for accent names.
 
 
 def _n(survey: dict, corpus: str, genre: str, field: str) -> int:
@@ -705,167 +703,249 @@ def _count(n: int) -> str:
 # leading-numeral fix for mb_cmn's "2Samuel" went with them.
 
 
-def _specimen(text: str) -> object:
-    """A pointed Hebrew form on a line of its own.
+# GONE with the specimens (2026-07-29): ``_specimen``, which put one pointed form on a centered
+# line of its own, and the running sentence that flowed through three of them.  The intro's three
+# printed cases are a table now (Ben: "tables showing, for each word/word-pair ... what the
+# edition has/editions have, what the Wikisource reference has, and what the other-height
+# wikisource reference has"), so a form is a cell rather than a paragraph.  What the specimens
+# stood for is unchanged and is now ``_render_span``'s job: show it in Unicode, never in words
+# alone.  ``p.hebrew-specimen`` stays in the stylesheet, other pages using it.
 
-    Ben, 2026-07-28: "why would you only describe in words what can be shown in Unicode?"
-    The two forms the intro contrasts differ in one mark, and a reader who can see them
-    side by side needs no sentence telling them so."""
-    return H.para(hbo(text), {"class": "hebrew-specimen"})
 
-
-# The letters of the two atoms, used only to find them.  Bare letters, no marks -- the marks
-# are exactly what must not be retyped here.
-_LO_LETTERS = "לא"
-_TAASE_LETTERS = "תעשה"
+# The letters the three printed cases are found by -- bare letters, no marks, the marks being
+# exactly what must not be retyped here.  A search PATTERN is one tuple per chanted word, holding
+# that word's atoms in order, so it fixes the grouping as well as the letters.
+_LO = "לא"
+_TAASE = "תעשה"
+_YIHYE = "יהיה"
+_LEKHA = "לך"
 # What follows the Sabbath commandment's לא־תעשה, and tells it from the one at Deuteronomy 5:8.
-_KOL_MELAKHA_LETTERS = "כלמלאכה"
+_KOL_MELAKHA = ("כל", "מלאכה")
+_MAQAF = "\N{HEBREW PUNCTUATION MAQAF}"
 
 
 def _letters(chanted_word: str) -> str:
     return "".join(ch for ch in chanted_word if is_base_letter(ch))
 
 
-def lo_taase_atoms() -> tuple[str, str]:
-    """ws/dt/elyon/printed's לא and תעשה, lifted from the vendored strand and never retyped.
-
-    An accent typed by hand into a page module is a claim with no oracle behind it, and this
-    one is the page's whole subject.  The strand has the two atoms as two chanted words in the
-    Sabbath commandment (Deuteronomy 5:14); Koren's Deuteronomy appendix page has the same two
-    atoms as one maqaf compound, and the maqaf is the whole of the difference, so ``_intro``
-    builds Koren's form by joining these two with a maqaf and the strand's by a space.
-
-    Letters and accents only -- ``accents_and_letters`` drops the vowels, which these pages do
-    not show: the vowels are not what the two forms differ in, and an accentuation discussion
-    prints the accents.  (Ben, 2026-07-28, on a first pass that kept them: "we almost never use
-    vowels in such discussions.")
-
-    The strand's other תעשה (Deuteronomy 5:8) is already joined to לך, so it is not a two-atom
-    pair and does not match; the assertion below is what keeps that true."""
-    version = next(
-        v
-        for v in pd.load_source()["versions"]
-        if (v["book"], v["reading"], v["tradition"]) == ("dt", "elyon", "printed")
-    )
-    pairs = []
-    for chanted_verse in version["chanted_verses"]:
-        words = chanted_verse.split()
-        for first, second in zip(words, words[1:]):
-            if (_letters(first), _letters(second)) == (_LO_LETTERS, _TAASE_LETTERS):
-                pairs.append((accents_and_letters(first), accents_and_letters(second)))
-    assert len(pairs) == 1, f"ws/dt/elyon/printed לא + תעשה pairs: {pairs}"
-    return pairs[0]
+def _atom_letters(chanted_word: str) -> tuple[str, ...]:
+    return tuple(_letters(atom) for atom in chanted_word.split(_MAQAF))
 
 
-def lo_taase_taxton_compound() -> str:
-    """ws/dt/taxton/printed's לא־תעשה at the Sabbath commandment, lifted and never retyped.
+def _accents(atom: str) -> list[str]:
+    return [ch for ch in atom if mpa.is_accent(ch)]
 
-    The p-trad תחתון has the two atoms as a maqaf compound at the same commandment where the
-    עליון has them as two chanted words, which is the whole reason the intro can raise a
-    carry-over.  Same rule as ``lo_taase_atoms``: the marks ARE the claim, so they come from
-    the vendored strand, letters and accents only, with the maqaf put back between the atoms
-    that ``accents_and_letters`` drops it from.
 
-    The strand has TWO לא־תעשה compounds, this one and Deuteronomy 5:8; they are told apart by
-    what follows, כל־מלאכה here and לך at 5:8.  Both assertions below fail the build rather than
-    put the wrong compound on the page.
+@lru_cache(maxsize=None)
+def _p_trad_strand(book: str, reading: str) -> dict:
+    """The one vendored p-trad strand for a book and a strand name.
 
-    The intro shows this compound and says nothing about its marks, so the shape assertion is
-    all there is to keep the contrast honest: the specimen makes its point only while the
-    compound has a single accent, a qadma on its final atom, against Koren's two.  A
-    re-vendoring that moved either mark fails here instead of putting a specimen on the page
-    that no longer contrasts with anything.
+    Cached because ``load_source`` re-reads and re-parses the whole vendored file every call, and
+    the four strands here are asked for once per case and once per claim pinned.
+
+    EVERY strand this page reads is the p-trad one, which is why the tradition is fixed here
+    rather than passed in.  The intro says that once, and the individual mentions then carry the
+    book and the strand name alone (Ben, 2026-07-29: "noting, in introducing the whole thing,
+    that everything is p-trad (no need to redundantly qualify everything as p-trad)").  That
+    supersedes the per-mention "the p-trad עליון" of earlier the same day.
     """
-    version = next(
+    return next(
         v
         for v in pd.load_source()["versions"]
-        if (v["book"], v["reading"], v["tradition"]) == ("dt", "taxton", "printed")
+        if (v["book"], v["reading"], v["tradition"]) == (book, reading, "printed")
     )
+
+
+def _find_span(
+    version: dict, pattern: tuple[tuple[str, ...], ...], show: int
+) -> list[str]:
+    """The one run of chanted words in a strand whose atoms are ``pattern``, less its context.
+
+    ``pattern`` fixes the GROUPING as well as the letters: ``((_LO,), (_TAASE, _LEKHA))`` is לא
+    standing by itself before the compound תעשה־לך, and matches neither a strand that has
+    לא־תעשה as one compound nor one that has תעשה by itself.  ``show`` is how many of the matched
+    words the caller displays; any beyond that are in the pattern only to tell two sites apart.
+    A strand's two לא־תעשה compounds are byte-identical, so what tells them apart is what
+    follows -- לך at Exodus 20:4 and Deuteronomy 5:8, כל־מלאכה at the Sabbath commandment.
+
+    Raising on anything but one match is the whole point.  The matches were collected into a SET
+    until 2026-07-29, which deduped those two byte-identical sites away and let the assertion
+    pass without distinguishing them (item 14 of ``doc/review-findings-2026-07-29.md``).
+    """
     hits = []
     for chanted_verse in version["chanted_verses"]:
         words = chanted_verse.split()
-        for word, following in zip(words, words[1:]):
-            atoms = word.split("\N{HEBREW PUNCTUATION MAQAF}")
-            if [_letters(a) for a in atoms] != [_LO_LETTERS, _TAASE_LETTERS]:
-                continue
-            if _letters(following) == _KOL_MELAKHA_LETTERS:
-                hits.append(word)
-    assert len(hits) == 1, f"ws/dt/taxton/printed לא־תעשה before כל־מלאכה: {hits}"
-    shape = mpa.shape_of(mpa.atom_accents(hits[0], verse_final=False))
-    assert shape == f"0-{mpa.shape_of([[am.QADMA]])}", shape
-    return "\N{HEBREW PUNCTUATION MAQAF}".join(
-        accents_and_letters(a) for a in hits[0].split("\N{HEBREW PUNCTUATION MAQAF}")
-    )
+        for start in range(len(words) - len(pattern) + 1):
+            run = words[start : start + len(pattern)]
+            if tuple(_atom_letters(word) for word in run) == pattern:
+                hits.append(run[:show])
+    assert len(hits) == 1, (pattern, hits)
+    return hits[0]
 
 
-# The second atom of each of the two compounds the Simanim Tiqqun accents on both atoms, used
-# only to find them; and the accent each of those atoms has, which is what makes the two
-# compounds different cases and is the thing the prose must not leave unsaid.
-_SIMTIQ_LO_COMPOUNDS = (("יהיה", am.MERKHA), ("תעשה", am.QADMA))
+def _render_span(words: list[str]) -> str:
+    """A run of chanted words as a table cell shows it: letters and accents, maqafs kept.
 
+    The cells ARE the comparison, so nothing is described in words that can be shown (Ben,
+    2026-07-28: "why would you only describe in words what can be shown in Unicode?", and
+    2026-07-29: "I need to just see this using actual unicode").  ``accents_and_letters`` reduces
+    each atom to its letters and accents -- no vowels, and no meteg, which is not an accent --
+    and the maqafs it drops go back between the atoms they joined, so a compound reads as the one
+    chanted word it is.
 
-def simtiq_lo_compounds() -> tuple[str, str]:
-    """The Simanim Tiqqun's לא־יהיה and לא־תעשה, built from ws/ex/taxton/printed.
-
-    THIS ONE FORM IS CONSTRUCTED rather than lifted whole, and the construction is the page's
-    own claim about the edition, so it is worth stating exactly.  A hand transcription records
-    the printed ACCENTS and nothing else (``edition_transcription``), so there is no Unicode
-    anywhere in the repo for what the Simanim Tiqqun's page has; what there is, is the strand
-    it is compared against and a transcription that differs from it in one mark per compound --
-    a munaḥ on the joined לא where the strand has a meteg.  So the strand's compound is read,
-    the meteg is replaced by that munaḥ where it stands, and everything else -- the letters, the
-    accent on the second atom -- is the strand's.
-
-    The assertions are what keep the construction honest, and each would fail the build rather
-    than put a form on the page that the transcription does not say: the first atom is לא with a
-    meteg and no accent, and the second atom's sole accent is the one ``_SIMTIQ_LO_COMPOUNDS``
-    names.  Letters and accents only, as everywhere on these pages, with the maqaf put back.
+    A span runs to whatever length keeps every chanted word in it WHOLE in all three columns.
+    The two Exodus cases therefore carry לך: the עליון joins it to the second atom, and half of
+    a compound is not a thing this page shows.  The Deuteronomy case ends at תעשה, no column
+    joining that atom to anything further on.
     """
-    version = next(
-        v
-        for v in pd.load_source()["versions"]
-        if (v["book"], v["reading"], v["tradition"]) == ("ex", "taxton", "printed")
+    return " ".join(
+        _MAQAF.join(accents_and_letters(atom) for atom in word.split(_MAQAF))
+        for word in words
     )
-    out = []
-    for second_letters, second_accent in _SIMTIQ_LO_COMPOUNDS:
-        found = set()
-        for chanted_verse in version["chanted_verses"]:
-            for word in chanted_verse.split():
-                atoms = word.split("\N{HEBREW PUNCTUATION MAQAF}")
-                if [_letters(a) for a in atoms] != [_LO_LETTERS, second_letters]:
-                    continue
-                found.add(word)
-        assert len(found) == 1, f"ws/ex/taxton/printed לא־{second_letters}: {found}"
-        atoms = found.pop().split("\N{HEBREW PUNCTUATION MAQAF}")
-        assert mpa.METEG in atoms[0], atoms
-        assert not [c for c in atoms[0] if mpa.is_accent(c)], atoms
-        assert [c for c in atoms[1] if mpa.is_accent(c)] == [second_accent], atoms
-        joined = accents_and_letters(atoms[0].replace(mpa.METEG, am.MUNAX))
-        out.append(
-            f"{joined}\N{HEBREW PUNCTUATION MAQAF}{accents_and_letters(atoms[1])}"
-        )
-    return out[0], out[1]
 
 
 def _sole_accent(atom: str) -> str:
     """The one accent on an atom the page shows, or a build failure."""
-    accents = [c for c in atom if mpa.is_accent(c)]
+    accents = _accents(atom)
     assert len(accents) == 1, atom
     return accents[0]
+
+
+_KOREN = "Koren"
+_KOREN_HREF = "printed-decalogue-koren.html"
+_SIMTIQ = "the Simanim Tiqqun"
+_SIMTIQ_HREF = "printed-decalogue-simanim.html"
+
+
+def _koren_case() -> dict:
+    """Koren's לא־תעשה, beside both Deuteronomy strands.
+
+    An accent typed by hand into a page module is a claim with no oracle behind it, and this one
+    is the page's whole subject, so every form here is lifted from a vendored strand.  Koren's
+    own cell is CONSTRUCTED: the עליון has the two atoms as two chanted words at the Sabbath
+    commandment (Deuteronomy 5:14), Koren's appendix page has the same two atoms with the same
+    two accents as one maqaf compound, and the maqaf is the whole of the difference -- so the
+    two words are joined with a maqaf, and nothing else is touched.
+
+    The תחתון has those atoms as one compound at that same commandment, which is what lets the
+    prose raise a carry-over, and its own accent is asserted here: the compound's joined לא has
+    no accent and its תעשה a qadma.  A re-vendoring that moved either mark fails the build rather
+    than put a cell on the page that no longer contrasts with the cells beside it.
+
+    The accented-alike answer the intro gives rests on Koren's two accents being ONE accent
+    twice, so that is asserted too rather than left to the reader of ``unprecedented_pairs``.
+    """
+    elyon = _find_span(_p_trad_strand("dt", "elyon"), ((_LO,), (_TAASE,)), 2)
+    lo, taase = (accents_and_letters(word) for word in elyon)
+    pair = (_sole_accent(lo), _sole_accent(taase))
+    assert pair[0] == pair[1], pair
+    taxton = _find_span(
+        _p_trad_strand("dt", "taxton"), ((_LO, _TAASE), _KOL_MELAKHA), 1
+    )
+    joined_lo, joined_taase = taxton[0].split(_MAQAF)
+    assert not _accents(joined_lo), taxton
+    assert _accents(joined_taase) == [am.QADMA], taxton
+    return {
+        "edition": _KOREN,
+        "href": _KOREN_HREF,
+        "book": "Deuteronomy",
+        "strand": ELYON,
+        "printed": f"{lo}{_MAQAF}{taase}",
+        "same": _render_span(elyon),
+        "other": _render_span(taxton),
+        "pair": pair,
+    }
+
+
+# The Simanim Tiqqun's two cases: the second atom of each compound, and the accent that atom has.
+# The two accents differ, which is what makes these two cases rather than one.
+_SIMTIQ_CASES = ((_YIHYE, am.MERKHA), (_TAASE, am.QADMA))
+
+
+def _simtiq_case(second_letters: str, second_accent: str) -> dict:
+    """One of the Simanim Tiqqun's two compounds, beside both Exodus strands.
+
+    THE EDITION'S CELL IS CONSTRUCTED, and the construction is the page's own claim about the
+    edition, so it is worth stating exactly.  A hand transcription records the printed ACCENTS
+    and nothing else (``edition_transcription``), so there is no Unicode anywhere in the repo for
+    what the Simanim Tiqqun's page has; what there is, is the strand it is compared against and a
+    transcription that differs from it in one mark per compound -- a munaḥ on the joined לא where
+    the strand has a meteg.  So the strand's compound is read, the meteg is replaced by that
+    munaḥ where it stands, and everything else -- the letters, the accent on the second atom -- is
+    the strand's.  The transcription's own tokens for these two compounds are ``mun-mer`` and
+    ``mun-qad``, on printed line 14 of ``simtiq_ex_taxton``, and the ``mun-qad`` is Exodus 20:4's
+    לא־תעשה: the Sabbath commandment's is ``qad`` alone, with no munaḥ.  That is why the pattern
+    below runs on to לך.
+
+    ONE STRAND, NAMED, not "every strand".  Ben, 2026-07-29: "Really? 'Every strand' from what
+    'universe' of strands?"  Two things were wrong with the sentence that stood here.  The
+    universe was undefined -- this page is not about the printed Decalogues, so unlike the trio it
+    has no established set for "every" to range over.  And the claim was FALSE on the wider
+    reading it invited: of the eight transcribed versions, the Deuteronomy תחתון pair has לא־יהיה
+    with no meteg on the joined לא at all.  The table names the two strands each case is set
+    beside, and the assertions below cover exactly those two.
+
+    THE OTHER STRAND IS WHERE THE MUNAḤ ALREADY IS, which is the observation the whole reframe
+    turns on and the reason the עליון is asserted rather than merely displayed: the Exodus עליון
+    has לא as a chanted word by itself with a munaḥ on it, the very mark the Simanim Tiqqun has
+    on its joined לא.  Same shape as Koren's carry-over, running the other way -- Koren's maqaf
+    is what the other Deuteronomy strand has, and this munaḥ is what the other Exodus strand has.
+    """
+    taxton = _find_span(
+        _p_trad_strand("ex", "taxton"), ((_LO, second_letters), (_LEKHA,)), 2
+    )
+    lo, second = taxton[0].split(_MAQAF)
+    assert mpa.METEG in lo, taxton
+    assert not _accents(lo), taxton
+    assert _accents(second) == [second_accent], taxton
+    printed = [f"{lo.replace(mpa.METEG, am.MUNAX)}{_MAQAF}{second}", *taxton[1:]]
+    elyon = _find_span(
+        _p_trad_strand("ex", "elyon"), ((_LO,), (second_letters, _LEKHA)), 2
+    )
+    assert _sole_accent(elyon[0]) == am.MUNAX, elyon
+    return {
+        "edition": _SIMTIQ,
+        "href": _SIMTIQ_HREF,
+        "book": "Exodus",
+        "strand": TAHTON,
+        "printed": _render_span(printed),
+        "same": _render_span(taxton),
+        "other": _render_span(elyon),
+        "pair": (am.MUNAX, second_accent),
+    }
+
+
+def printed_cases() -> tuple[dict, ...]:
+    """The three printed cases the intro is about, one row each.
+
+    THREE CASES, TWO COMPOUNDS, TWO BOOKS -- Ben's own question, 2026-07-29: "are there really
+    three words/word-pairs, since לא־תעשה has issues in both Koren and SimTiq".  There are three
+    rows: לא־תעשה is one compound but two cases, Koren's in Deuteronomy and the Simanim Tiqqun's
+    in Exodus, and a row is what one edition has at one place in one book.  Merging the two
+    לא־תעשה cases into a row would have to merge two editions, two books and two strands with
+    them.
+
+    KOREN AND THE SIMANIM TIQQUN ARE ON A PAR (Ben, same day: the Simanim Tiqqun "really on a par
+    with Koren, i.e. the document isn't primarily Koren with SimTiq as an afterthought").  What
+    that replaced was a Koren paragraph in running prose followed by a shorter one opening "Koren's
+    is not the only such compound in print" -- the afterthought framing in one clause.  Same
+    columns, same derivations, one table: neither edition is the other's footnote.  Koren stays
+    the first row only because the prose above names it first and the answer below answers it
+    first.
+    """
+    return (_koren_case(), *(_simtiq_case(*case) for case in _SIMTIQ_CASES))
 
 
 def unprecedented_pairs() -> tuple[tuple[str, str], ...]:
     """The accent pair of each of the three printed compounds the page asks about.
 
-    Derived from the very forms the intro shows -- Koren's from the two atoms it joins, the
+    Derived from the very forms the table shows -- Koren's from the two atoms it joins, the
     Simanim Tiqqun's from the munaḥ that construction puts on the joined לא and the accent
-    ``_SIMTIQ_LO_COMPOUNDS`` names on the second atom.  So a re-vendoring that changed any of
-    the three would change what ``pin_claims`` looks for, rather than leaving the page asserting
-    the absence of a pair it no longer shows.
+    ``_SIMTIQ_CASES`` names on the second atom.  So a re-vendoring that changed any of the three
+    would change what ``pin_claims`` looks for, rather than leaving the page asserting the absence
+    of a pair it no longer shows.
     """
-    lo, taase = lo_taase_atoms()
-    koren = (_sole_accent(lo), _sole_accent(taase))
-    return (koren, *((am.MUNAX, second) for _, second in _SIMTIQ_LO_COMPOUNDS))
+    return tuple(case["pair"] for case in printed_cases())
 
 
 def _pair_key(pair: tuple[str, str]) -> str:
@@ -976,11 +1056,12 @@ def _intro(survey: dict) -> tuple[object, ...]:
     # the paragraphs that read them as Koren's nearest precedent, are gone rather than demoted.
     mam_prose = survey["corpora"]["mam_simple"]["prose"]
     pct = 100.0 * mam_prose["hits"] / mam_prose["maqaf_compounds"]
-    lo, taase = lo_taase_atoms()
-    # The Simanim Tiqqun's two pairs, named in the answer from the same derivation pin_claims
-    # checks the absence of.  Koren's is the first of the three and is answered by the
-    # accented-alike sentence, so only the other two are spelled out.
-    _, *simtiq = unprecedented_pairs()
+    # The three printed cases, derived once and used both for the table and for the answer's
+    # naming of the Simanim Tiqqun's two pairs -- the same derivation pin_claims checks the
+    # absence of, through ``unprecedented_pairs``.  Koren's is the first of the three and is
+    # answered by the accented-alike sentence, so only the other two are spelled out.
+    cases = printed_cases()
+    simtiq = [case["pair"] for case in cases[1:]]
     # The metigah-zaqef count, spliced rather than hedged as "nearly all" (Ben, 2026-07-28:
     # "why be coy, why not just say the number").  Counted the same way the pair table counts,
     # so the sentence and the table's top row cannot disagree.
@@ -1000,74 +1081,68 @@ def _intro(survey: dict) -> tuple[object, ...]:
                 f" compounds in the prose verses of MAM, {mam_prose['hits']} ({pct:.2f}%) have"
                 " an accent on a non-final atom. In every one of them the two accents sit on"
                 " two atoms of the compound and never both on one, the compound itself having"
-                " two atoms, or occasionally three. This page counts those cases, sorts them,"
-                " and asks what they mean for the chanted word"
+                " two atoms, or occasionally three. This page counts those cases and sorts them."
             )
         ),
-        _specimen(f"{lo}\N{HEBREW PUNCTUATION MAQAF}{taase}"),
-        # "THE P-TRAD עליון", qualified at Ben's request 2026-07-29: "up in the Koren, where the
-        # strand is identified as elyon, it wouldn't hurt to qualify it with 'p-trad'".  His
-        # "wouldn't hurt" is the right strength, and the reason is not the תחתון's: the two עליון
-        # strands agree at this compound, both having לא תעשה as two chanted words, so a bare
-        # "the עליון" would have been true.  It is named in full because the page names the other
-        # two strands in full a few paragraphs on, and a reader who meets a qualified strand and
-        # an unqualified one has to wonder what the difference is meant to signify.
+        # THE THREE PRINTED CASES, AS A TABLE (Ben, 2026-07-29).  What stood here was running
+        # prose for Koren -- a sentence flowing through two specimens -- and then a shorter
+        # paragraph for the Simanim Tiqqun opening "Koren's is not the only such compound in
+        # print", which is the afterthought framing in one clause.  His two asks: put the two
+        # editions on a par, and show the comparison as "tables showing, for each
+        # word/word-pair ... what the edition has/editions have, what the Wikisource reference
+        # has, and what the other-height wikisource reference has".  A table does both at once,
+        # every cell a form rather than a description of one.
+        #
+        # P-TRAD SAID ONCE, in the sentence below, and dropped from the individual mentions --
+        # which UNDOES the per-mention "the p-trad עליון" and "the p-trad תחתון" of earlier the
+        # same day.  ``_p_trad_strand`` is where the tradition is fixed for every strand this
+        # page reads, so the one sentence is the whole of the qualification and cannot come to
+        # disagree with the derivations.
         H.para(
             (
-                "in Koren's Deuteronomy ",
-                link("appendix Decalogue", "printed-decalogue-koren.html"),
+                "Two printed editions have such a compound where the Wikisource strand they"
+                " otherwise follow does not. ",
+                link("Koren's Deuteronomy appendix Decalogue", _KOREN_HREF),
+                " has one, and the ",
+                link("Simanim Tiqqun's Exodus appendix Decalogue", _SIMTIQ_HREF),
                 *wrap_hebrew_runs(
-                    f" (the p-trad {ELYON}) — a maqaf compound with a {ROM_MUNAX} on "
-                ),
-                _emph("both"),
-                *wrap_hebrew_runs(
-                    " of its atoms. The Wikisource strand Koren otherwise follows in every"
-                    " accent has"
+                    " two. That is three cases across two compounds, לא־יהיה and לא־תעשה, the two"
+                    " לא־תעשה cases being in different books. Beside each below are the two"
+                    " Wikisource strands of its book: the strand of the same name, and the other."
+                    " Every strand named on this page is a p-trad one."
                 ),
             )
         ),
-        _specimen(f"{lo} {taase}"),
+        _printed_case_table(cases),
+        # THE CARRY-OVER, STILL BEFORE THE QUESTION (Ben, 2026-07-28), and now for all three
+        # rather than for Koren alone.  The cheap explanation is disposed of first, and the
+        # question is then asked of marks taken as they stand -- which is what the rest of the
+        # page does.  Put after the answer, it read as an afterthought undercutting the count it
+        # followed.
+        #
+        # TWO SENTENCES, THE TABLE CARRYING THE REST.  A first pass at the Koren half spread the
+        # same suggestion over two paragraphs and was "way too belabored regarding speculation
+        # about the source of the error"; the columns now show which mark is where, so the prose
+        # says only what a reader cannot read off them.
+        #
+        # NEITHER IS CALLED AN ERROR.  Ben's own framing, 2026-07-29, is that he assumes the
+        # Simanim Tiqqun's is one -- "though I'd prefer not to state that in the document" -- and
+        # asks whether it "may have its source in cross-height 'contamination'".  So the page
+        # shows the correspondence and offers the carry-over, and names no fault in either
+        # edition.
         H.para(
             wrap_hebrew_runs(
-                f"instead: two chanted words, each with a {ROM_MUNAX} of its own."
+                "In each of the three, the printed compound differs from its Wikisource strand in"
+                f" a single mark — Koren's maqaf, and the {ROM_MUNAX} on the joined לא of the"
+                " Simanim Tiqqun's two — and that mark is one the other strand of the same book"
+                " has. So each of the three might simply be accidentally carried over from the"
+                " other strand."
             )
         ),
-        # WHERE THE MAQAF DOES LIVE, added at Ben's request 2026-07-28.  ONE SENTENCE AND THE
-        # SPECIMEN, in his own words: a first pass spread the same suggestion over two
-        # paragraphs, naming the strand, the compositor and what the page could not settle, and
-        # was "way too belabored regarding speculation about the source of the error".  The
-        # specimen carries what those sentences said -- one accent, and it is not Koren's pair.
-        #
-        # "the p-trad תחתון", not a bare "the תחתון" and not "Koren's own תחתון pages".  The two
-        # תחתון strands part at exactly this compound -- the m-trad one has the two atoms
-        # separate, as the עליון does -- so a bare "the תחתון" would be false of one of them.
-        # Naming the strand fixes that without the possessive: a page is not accented, a chanted
-        # word is, and "own" is a word Ben has struck from this repo's prose more than once.
-        #
-        # IT COMES BEFORE THE QUESTION, not after the answer (Ben, 2026-07-28).  The cheap
-        # explanation is disposed of first, and the question is then asked of a maqaf taken
-        # seriously -- which is what the rest of the page does.  Put after the answer, it read as
-        # an afterthought undercutting the count it followed.
         H.para(
             wrap_hebrew_runs(
-                "The odd maqaf in Koren might simply be accidentally carried over from the"
-                f" p-trad {TAHTON}:"
-            )
-        ),
-        _specimen(lo_taase_taxton_compound()),
-        # THE OTHER TWO COMPOUNDS, moved up here from a section of their own (Ben, 2026-07-29:
-        # "why not phrase this whole page in terms of not just Koren's weird dual-munax but also
-        # these two? aren't these two 'just as weird (unprecedented in Tanakh (where Tanakh is
-        # represented by MAM))?"  They are, by the same test and with the same answer, so the
-        # page now asks its question of all three at once.  What this replaces is a section
-        # headed "The nearest thing in a printed edition", which had these two as a near miss --
-        # "one step short of the same shape" -- when the shape they are short of is Koren's
-        # rather than anything MAM has.
-        *_simtiq_paragraphs(),
-        H.para(
-            wrap_hebrew_runs(
-                "But if we take these maqafs seriously, is there anything in Tanakh like any of"
-                " the three?"
+                "But if we take the three as they stand, is there anything in Tanakh like any of"
+                " them?"
             )
         ),
         H.para(
@@ -1083,61 +1158,74 @@ def _intro(survey: dict) -> tuple[object, ...]:
     )
 
 
-def _simtiq_paragraphs() -> tuple[object, ...]:
-    """The Simanim Tiqqun's two compounds, shown and with both accents of each named.
+# The three lead columns are English and the four right-hand ones Hebrew -- the strand name and
+# the three forms -- so all four are declared right-to-left, blank cells included if a row ever
+# lacks one.  One tuple for the table, as everywhere else here.
+_PRINTED_CASE_CELL_ATTRS = (
+    None,
+    None,
+    _HEBREW_CELL,
+    _HEBREW_CELL,
+    _HEBREW_CELL,
+    _HEBREW_CELL,
+)
 
-    NAME AND SHOW BOTH ACCENTS (Ben, 2026-07-28: "don't be coy, show me the actual accents. you
-    are being REALLY coy here, not even describing in prose what the non-munax accent is"): the
-    two compounds differ from each other in the second accent, which is the whole reason there
-    are two of them.
+# The three form columns' headings, abbreviated with the full wording on hover the way the pair
+# table's C/S/Acc1/Acc2 are: a heading longer than anything in its column sets that column's
+# width and pushes the row apart.  "Wikisource" is in the two hover texts and in the sentence
+# above the table, so the short headings say which strand a column is without also saying where
+# the strand is from three times over.
+_PRINTED_CASE_HEADERS = (
+    H.table_header("Edition"),
+    H.table_header("Book"),
+    H.table_header(H.abbr("Strand", "The strand of that book the edition's page is")),
+    H.table_header(H.abbr("Printed", "What the printed edition has")),
+    H.table_header(
+        H.abbr(
+            "Same strand",
+            "What that book's Wikisource strand of the same name has",
+        )
+    ),
+    H.table_header(
+        H.abbr("Other strand", "What that book's other Wikisource strand has")
+    ),
+)
 
-    GONE from what this used to be, when it was a section: "None of the printed editions
-    transcribed for these pages has Koren's shape either", and the "one step short of the same
-    shape" that followed the two specimens.  Both measured these two against Koren rather than
-    against MAM, which is exactly the framing the reframe drops.
 
-    "ITS WIKISOURCE STRAND", NOT "EVERY STRAND", and the correction is substantive rather than
-    just a scoping one.  Ben, 2026-07-29: "Really? 'Every strand' from what 'universe' of
-    strands?"  Two things were wrong.  The universe was undefined: this page is not about the
-    printed Decalogues, so unlike the trio it has no established set for "every" to range over,
-    and the only strand read here is the ws/ex/taxton/printed one ``simtiq_lo_compounds``
-    constructs from.  And the claim was FALSE on the wider reading it invited -- of the eight
-    transcribed versions, the Deuteronomy תחתון pair has לא־יהיה with no meteg on the joined לא at
-    all.  ("Every strand" does happen to hold for לא־תעשה: every version that has that compound
-    has the meteg.)  Named as the one strand, the sentence is backed by the ``assert mpa.METEG in
-    atoms[0]`` that construction already makes for both compounds, so it fails the build rather
-    than drifts.
+def _printed_case_table(cases: tuple[dict, ...]) -> object:
+    """The three printed cases, each beside the two Wikisource strands of its book.
 
-    AND THE STRAND IS THEN NAMED OUTRIGHT, "its Wikisource strand" having still been coy about
-    which one (Ben, 2026-07-29, correctly guessing it: "p-trad taxton, right?").  It is the
-    Exodus p-trad תחתון, ws/ex/taxton/printed.  The book is worth saying here even though the
-    strand names alone would identify it: the paragraph just above this one is about Koren's
-    DEUTERONOMY, so a reader carries that book forward unless told otherwise.
+    SHOW IT IN UNICODE (Ben, 2026-07-29: "I can't process all the verbosity, I need to just see
+    this using actual unicode. You've fallen into the trap of not giving me Unicode").  Every
+    cell of the three right-hand columns is a form lifted or constructed from a vendored strand,
+    letters and accents only; naming an accent in prose is not a substitute for showing the form,
+    which is why the paragraphs this replaced are down to two sentences.
+
+    WHAT THE THIRD COLUMN IS FOR.  Ben's ask names it as "what the other-height wikisource
+    reference has (which is probably what the editions have)" -- that is, the suggestion that a
+    printed oddity came across from the other strand of the same book.  Read across a row: the
+    mark the printed cell has and the same-strand cell lacks is in the other-strand cell.  For
+    Koren that mark is the maqaf, and for the Simanim Tiqqun's two the munaḥ on the joined לא, so
+    the correspondence runs in opposite directions in the two editions and the column holds both.
+
+    A ROW PER (EDITION, COMPOUND) CASE, and ``printed_cases`` says why there are three of them.
     """
-    lo_yihye, lo_taase = simtiq_lo_compounds()
-    return (
-        H.para(
-            (
-                *wrap_hebrew_runs(
-                    "Koren's is not the only such compound in print. The "
+    body = [H.table_row(_PRINTED_CASE_HEADERS)]
+    for case in cases:
+        body.append(
+            H.table_row_of_data(
+                (
+                    link(case["edition"], case["href"]),
+                    case["book"],
+                    case["strand"],
+                    hbo(case["printed"]),
+                    hbo(case["same"]),
+                    hbo(case["other"]),
                 ),
-                link("Simanim Tiqqun", "printed-decalogue-simanim.html"),
-                *wrap_hebrew_runs(
-                    f" has a {ROM_MUNAX} on the joined לא of two compounds, where its Wikisource"
-                    f" strand, the Exodus p-trad {TAHTON}, has a {ROM_METEG}:"
-                ),
+                _PRINTED_CASE_CELL_ATTRS,
             )
-        ),
-        _specimen(lo_yihye),
-        _specimen(lo_taase),
-        H.para(
-            wrap_hebrew_runs(
-                f"The second accent is a {ROM_MERKHA} in the first of those and a {ROM_QADMA}"
-                f" in the second, so neither is Koren's {ROM_MUNAX} twice; but each of the three"
-                " is one maqaf compound with an accent on both of its atoms."
-            )
-        ),
-    )
+        )
+    return H.table(tuple(body), {"class": "centered-table"})
 
 
 # GONE: "What is counted", whittled to one sentence over two days and then cut outright (Ben,

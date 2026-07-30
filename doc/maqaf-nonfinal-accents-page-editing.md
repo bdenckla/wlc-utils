@@ -42,8 +42,14 @@ Then black every touched `.py`, and `.venv/Scripts/pytest.exe py/tests` from the
   page, one question; narrow the *rendering*, not the data.
 - **File cut material as a GitHub issue** rather than deleting it. #83 holds this page's cuts.
 - **Never retype an accent.** Lift the Hebrew from the vendored data at generation time, letters
-  and accents only, no vowels (`accents_and_letters`). `lo_taase_atoms()` is the pattern, with an
-  assertion that the lookup still finds exactly one match.
+  and accents only, no vowels (`accents_and_letters`). `_find_span()` plus `_render_span()` is the
+  pattern: a search pattern of atom letters per chanted word, an assertion that it matches exactly
+  one place, and the maqafs put back. It replaced `lo_taase_atoms()` / `simtiq_lo_compounds()` on
+  2026-07-29.
+- **Show it in Unicode, not in words.** Ben, 2026-07-29: "I can't process all the verbosity, I
+  need to just see this using actual unicode. You've fallen into the trap of not giving me
+  Unicode." Naming an accent in prose is not a substitute for showing the form; where two or three
+  texts are being compared, the shape that works is a table whose cells are the forms.
 - **Struck from this page**, each its own cleanup: "own" as filler; "secondary" in a rendered
   label; "witness"; any agentive verb where "has" will do. Treat a new synonym the same way.
 - The standing rules for the prose itself are the `hebrew-prose` skill's, and the rendered-prose
@@ -57,9 +63,18 @@ Then black every touched `.py`, and `.venv/Scripts/pytest.exe py/tests` from the
 and `the chanted words whose two marks sit on one letter`.
 
 The intro shows the three printed maqaf compounds accented on both atoms — Koren's Deuteronomy
-appendix compound, and the Simanim Tiqqun's two — and asks whether MAM has anything like any of
-them. It does not, and `pin_claims` fails the build if any of the three pairs ever turns up in the
-data, via `unprecedented_pairs()`.
+appendix compound, and the Simanim Tiqqun's two Exodus ones — and asks whether MAM has anything
+like any of them. It does not, and `pin_claims` fails the build if any of the three pairs ever
+turns up in the data, via `unprecedented_pairs()`.
+
+Since 2026-07-29 those three are a **table**, one row per (edition, compound) case, with three
+form columns: the printed edition, that book's Wikisource strand of the same name, and that book's
+other strand. The third column is there because the mark each printed form has and its own strand
+lacks is a mark the other strand has — Koren's maqaf, the Simanim Tiqqun's munaḥ on the joined לא —
+so the page can offer a cross-strand carry-over. It must **not** call either an error: Ben assumes
+the Simanim Tiqqun's is one but "I'd prefer not to state that in the document". Every strand the
+page reads is p-trad, said once in the sentence above the table and dropped from the individual
+mentions; `_p_trad_strand` is where that is fixed in code.
 
 **Do not restate the page's numbers here.** They live in the JSON and in `pin_claims`, which
 re-derives every stated claim and raises on drift; a copy in this file would be stale from the day
