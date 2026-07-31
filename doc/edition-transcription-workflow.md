@@ -191,8 +191,8 @@ a test rather than surfacing as a puzzling runtime message.
 
 ```bash
 .venv/Scripts/python.exe py/main_edition_transcription.py check \
-    ~/Downloads/simtiq_dt_elyon_p208-transcription.json \
-    ~/Downloads/simtiq_dt_elyon_p209-transcription.json --key dt elyon printed
+    $HOME/Downloads/simtiq_dt_elyon_p208-transcription.json \
+    $HOME/Downloads/simtiq_dt_elyon_p209-transcription.json --key dt elyon printed
 ```
 
 It reports token and chanted-verse counts, every difference region with the reference word and

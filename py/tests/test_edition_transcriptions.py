@@ -1060,7 +1060,7 @@ def test_the_derived_txt_body_holds_the_same_accents_as_the_export(stem: str) ->
 
 @pytest.mark.parametrize("stem", _stems_with_exports() or ["(none committed)"])
 def test_the_committed_txt_is_byte_for_byte_its_own_derived_body(stem: str) -> None:
-    """``transcription_build --check``, graduated into the suite.
+    """The entry point's ``build --check``, graduated into the suite.
 
     The workflow doc calls the derive step mandatory -- "derive the .txt from the corrected
     export rather than typing it, so the two cannot drift" -- and the tests above enforce that
