@@ -118,12 +118,13 @@ can see.  So SimTiq's two munax-on-לא are worth the attention this note gives 
 ``mun-mun`` on לא־תעשה more still.
 
 CoS is greppable now, so CHECK a Breuer claim rather than restating one from here.  Chapter 9 is
-``../breuer-cos/md-export-of-docx/C09-*.md``, and that repo's ``scripts/check_ch9_claims.py`` is
+``../breuer-cos/md-export-of-docx/C09-*.md``, and that repo's ``scripts/check_cos_claims.py`` is
 the differential check that caught the two errors this paragraph used to carry -- a §§22-26 that
 was §22 plus §§23-26, and two surviving cases that were three.  It raises if a re-conversion
-loses the evidence it pins.  Breuer's English says "hyphen", never "maqqef" or "maqaf": grepping
-for either returns ZERO from a chapter that covers the subject at length, and that is the trap
-the ITM note above compares itself to.
+loses the evidence it pins.  Breuer's English mostly says "hyphen": "maqqef" and "maqaf" return
+ZERO from a chapter that covers the subject at length, and that is the trap the ITM note above
+compares itself to -- but a third spelling, "makaf", is the translator's and DOES occur, 27
+times across nine files (2026-07-31), so grep "hyphen", "makaf" and מקף rather than two of them.
 
 HOW OFTEN IT ACTUALLY HAPPENS is measured, not asserted, and the measurement is NOT here.  The
 Tanakh-wide survey lives in ``maqaf_nonfinal_accents`` (+ ``_page``), which writes

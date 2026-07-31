@@ -158,10 +158,17 @@ _ACCENT_DISPLAY = {
 # metigah is to qadma -- and he asked the same question of both rows in turn: "what happened to
 # the terminology of mayela?", then the same of metigah.  The intro still glosses metigah-zaqef
 # as a qadma before a zaqef qatan, which is what tells a reader which mark the row means.
+#
+# Single-sourced, because the prose under the table names them too, in the sentence that gives
+# Breuer's rule for which pairs a maqaf can stand after: a cell and a sentence spelling the same
+# position differently is the drift the ROM_* constants exist to stop, and these two names are
+# not among them (they are positions a mark takes, not marks).
+_MAYELA = "mayela"
+_METIGAH = "metigah"
 _PAIR_FIRST_NAME = {
-    ("tip", "etn"): "mayela",
-    ("tip", "sil"): "mayela",
-    ("qad", "zaq"): "metigah",
+    ("tip", "etn"): _MAYELA,
+    ("tip", "sil"): _MAYELA,
+    ("qad", "zaq"): _METIGAH,
 }
 
 # The SECOND accent's cell, where one mark goes by two names and the row cannot choose between
@@ -1280,6 +1287,21 @@ def pin_claims(survey: dict) -> None:
     # accents in its final field.  The scan's own criterion is merely "more than one", so a
     # compound whose final atom had three different accents would land here and stop the
     # build, as it should: it would falsify both sentences.
+    # THE BREUER SENTENCE under the spreader table (2026-07-31), which says that the three rows
+    # CoS ch. 9 §37 licenses on a compound -- the metigah, and the mayela under each of the two
+    # emperors it serves -- are N of the M spreaders.  Both numbers are spliced, so neither can
+    # drift; what cannot be spliced is that all THREE rows are still there to be summed, and that
+    # the sum is a part rather than the whole.  A corpus bump that emptied one of them would
+    # leave the sentence naming a pair the table no longer has, and one that emptied the other
+    # thirteen would leave "those three pairs are 233 of the 233" reading as a rule with no
+    # exceptions -- which is exactly what Breuer's §37 claims and this page does not.
+    spreaders = _spreaders_by_pair(survey)
+    for pair in _BREUER_MAQAF_SURVIVING:
+        assert spreaders[pair], f"no spreader left with the pair {pair}"
+    maqaf_surviving = sum(spreaders[pair] for pair in _BREUER_MAQAF_SURVIVING)
+    hits = _n(survey, _CORPUS, "prose", "hits")
+    assert 0 < maqaf_surviving < hits, f"{maqaf_surviving} of {hits} is not a part"
+
     genre = survey["corpora"][_CORPUS]["prose"]
     for shape in genre["concentrator_by_shape"]:
         fields = shape.split("-")
@@ -1838,6 +1860,20 @@ def _scans_appendix_section() -> tuple[object, ...]:
 # where the counts are, which is where a reader meets it.
 
 
+# The three rows Breuer's CoS ch. 9 §37 licenses on a compound: the metigah in the chanted word
+# of a small zaqef, and the mayela in that of an etnaxta or of a silluq.  Those are the two marks
+# his §37 names -- the only ones of the 21 books, he says, that a maqaf stands after -- and the
+# table has each of them under whichever mafsik it serves, so the rule reaches three rows and not
+# two.  Keyed by the survey's shape shorthand, so a pair that stopped occurring would drop out
+# of the sum silently; ``pin_claims`` is what stops that.
+_BREUER_MAQAF_SURVIVING = (("qad", "zaq"), ("tip", "etn"), ("tip", "sil"))
+
+
+def _spreaders_by_pair(survey: dict) -> Counter:
+    """Spreader counts per accent pair, the same tally ``_pair_rows`` builds its rows from."""
+    return Counter(_pair_of(o["shape"]) for o in _occurrences(survey, _CORPUS, "prose"))
+
+
 def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
     # This section absorbed two that used to precede it, "Two routes, and why they must be
     # counted apart" and "How a hit is assigned to a route" (Ben, 2026-07-27: keep the page to
@@ -1862,6 +1898,8 @@ def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
     # The one-row table went too.  Its two surviving columns restated the intro's own sentence,
     # and the other three were route counts.
     hits = _n(survey, _CORPUS, "prose", "hits")
+    spreaders = _spreaders_by_pair(survey)
+    maqaf_surviving = sum(spreaders[pair] for pair in _BREUER_MAQAF_SURVIVING)
     return (
         # "Spreader-pair prevalence", Ben's own wording, 2026-07-30 ("These headings are all
         # poor").  "The prose verses" named the section's SCOPE and left its subject to the
@@ -1965,11 +2003,69 @@ def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
         # pairs no spreader has, five of which Yeivin covers in sections this sentence does not
         # cite (§§215, 236, 253, 268, 276); the appendix those ten went to says nothing about
         # him.
+        #
+        # BREUER BESIDE HIM since 2026-07-31 (Ben: "find the relevant sections of Breuer CoS, to
+        # complement the listing of Yeivin ITM sections"), read off ``../breuer-cos/
+        # md-export-of-docx/`` rather than recalled, and pinned in that repo's
+        # ``scripts/check_cos_claims.py``.  CoS organizes the same ground per mafsik, under a
+        # heading that recurs through its Chapter 3 -- "Two cantillation marks in the same word",
+        # before §2, §6, §10, §20, §25, §28, §30, §37 and §40 -- with the metigah held back to
+        # Chapter 5, where the zaqef alternates are.  Row by row:
+        #   * munax-zaqef -- ch. 3 §30, "The servant of zakef appears in its word".
+        #   * metigah-zaqef -- ch. 5 §§4-6, the span ch. 3's note 130 cites for the methiga.
+        #     §5 is the one that reaches a compound: the metigah goes at the beginning of the
+        #     chanted word "provided there is there a hyphenated tiny word".
+        #   * the merkha before a tipexa -- ch. 3 §28, "In eight places, the servant of
+        #     tipekha appears with it in its word".  # translit-ok: quotes CoS's spelling
+        #   * the mahapakh before a pashta -- ch. 3 §20, whose servant "is
+        #     mahpakh".  # translit-ok: quotes CoS's spelling
+        #   * the mayela before an etnaxta -- ch. 3 §38, "In eleven places".
+        #   * the mayela before a silluq -- ch. 3 §40, "In five places".
+        # THE SAME SIX, AND THE SAME TWO LEFT OVER, which is why one sentence can carry both
+        # books and the second sentence is worth its space: ch. 3 §20 gives the pashta's same-word
+        # servant as a mahapakh only, and ch. 3 §39 gives the silluq's servant as a merkha across
+        # two words with no same-word section for it, §40 being the mayela's.  So Breuer is silent
+        # exactly where Yeivin is, which is a second book agreeing with issue #86's suspicion
+        # rather than a failed search -- and the negative is guarded in ``check_cos_claims.py`` by
+        # pinning what those two sections DO say.
+        #
+        # Two of his counts fall out of this survey exactly -- eleven for the mayela in the
+        # etnaxta's chanted word (8 spreaders + 3 simple), five for the mayela in the silluq's
+        # (1 + 4) -- and one does not: his eight for the merkha in the tipexa's against this
+        # survey's twelve, and his ch. 3 §30 examples of munax-zaqef are all concentrators where
+        # this survey has one spreader.  NONE of that is on the page; it is comment on issue #86,
+        # where the same kind of Yeivin question already lives.  A count of Breuer's that the
+        # survey cannot re-derive is not a claim a generated page may make.
         H.para(
             (
                 "Most of these pairs are covered in Yeivin's ",
                 _itm(),
-                " §§210, 216, 221, 224, 233 and 241.",
+                " §§210, 216, 221, 224, 233 and 241, and in Breuer's ",
+                _cos(),
+                " ch. 3 §§20, 28, 30, 38 and 40 and ch. 5 §§4–6. The two that neither"
+                f" of them covers are the same two: a {ROM_MERKHA} before a"
+                f" {ROM_PASHTA}, and a {ROM_MERKHA} before a {ROM_SILLUQ}.",
+            )
+        ),
+        # The rule, in the section the poetic appendix below already cites for the other half of
+        # it: ch. 9 §37 states the 21 books' side before turning to the Three Books, and it names
+        # the same two marks whichever mafsik they serve.  Its two examples are this page's
+        # material -- Isaiah 8:17 וקויתי־לו is the mayela-silluq spreader in the table above.
+        # No "secondary" in the rendered sentence, for the reason the labels above give: the page
+        # never says what a secondary accent is, and Yeivin and Breuer do not mean the same thing
+        # by it.  Naming the two positions says what §37 says without taking either view.
+        # "Cancels" is Breuer's term and is marked as his, transformative framing being
+        # otherwise banned; the quotation marks are the page's usual curly ones.
+        # The two numbers are spliced, never typed -- ``pin_claims`` defends the three rows they
+        # are summed from.
+        H.para(
+            (
+                "Breuer's ",
+                _cos(),
+                " ch. 9 §37 says which of these pairs a maqaf can stand after at"
+                f" all: after the {_METIGAH} and after the {_MAYELA}, while a mark of"
+                " the ordinary order “cancels” it — Breuer's word. Those three pairs"
+                f" are {maqaf_surviving} of the {hits} spreaders above.",
             )
         ),
         # Ben's own lists, in his own voice (2026-07-30) -- they are generated in MAM-basics and
