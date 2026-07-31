@@ -1735,11 +1735,13 @@ _SIMTIQ_P246_BOXES: tuple[mhi.Box, ...] = (
 
 
 def _scans_appendix_section() -> tuple[object, ...]:
-    """The two printed pages themselves, as an appendix at the page's foot.
+    """The scans behind the intro's table, as an appendix at the page's foot.
 
-    Every cell of the intro's table is lifted or constructed from a vendored Wikisource strand, so
-    the table states the page's claim about each edition without ever showing the edition.  These
-    two figures are the scans those claims are read off.
+    Every cell of that table is lifted or constructed from a vendored Wikisource strand, so the
+    table states the page's claim about each edition without ever showing the printing.  These two
+    figures are the printing those claims are read off -- each a crop of one or two printed lines,
+    with the strange spreaders boxed.  The heading says "cropped, highlighted scans" for that
+    reason: it was "the printed pages" (Ben, 2026-07-31), which promised whole pages.
 
     AN APPENDIX, not part of the intro (Ben, 2026-07-31: "let's banish these two new images to an
     appendix").  They sat directly under the printed-case table when they were first rendered.
@@ -1754,25 +1756,34 @@ def _scans_appendix_section() -> tuple[object, ...]:
 
     ``img_class="ink-on-white"`` on both: each is black ink on white paper and wants the
     stylesheet's dark-mode inversion.
+
+    ONE CLAUSE PER CAPTION (Ben, 2026-07-31): which edition, which Decalogue, which strand, which
+    page, and what is highlighted.  Each caption used to splice the forms themselves out of the
+    vendored strands and then say in prose that each has an accent on both atoms, and the Tiqqun's
+    added a sentence about the printed line break falling inside its לא־תעשה.  All of that is
+    already in front of the reader: the intro's printed-case table shows the same forms, derived
+    the same way, and the boxes on the scan show where they are and that one of them is in two
+    pieces.  So this is NOT a place to reinstate the "show it in Unicode, not only in words" rule
+    -- the Unicode is shown, one section up and in the image, and the captions are the labels on
+    the evidence.  Nothing here derives anything, which is why ``printed_cases()`` is no longer
+    called: the "re-derived rather than handed down" guard the call carried belongs to the table,
+    which still has it.
+
+    THE TWO PAGE CITATIONS ARE DELIBERATELY NOT PARALLEL, and "appendix p. 246" would be wrong.
+    Koren's appendix restarts its own page numbering, so "p. 39" names nothing unless "appendix"
+    qualifies it.  The Simanim Tiqqun's p. 246 is an ordinary number in the book's one overall
+    sequence, and its appendix is merely where in the book that page falls -- hence the aside.
     """
-    # Re-derived rather than handed down from ``_intro``: ``_p_trad_strand`` is lru_cached, so the
-    # second call re-runs only the span searches, and each of those raises unless it still matches
-    # exactly one place.  A figure and the table it backs therefore cannot come to show different
-    # forms.
-    koren, simtiq_yihye, simtiq_taase = printed_cases()
-    lo_taase = f"{_LO}{_MAQAF}{_TAASE}"
     return (
-        H.heading_level_2("Appendix: the printed pages"),
+        H.heading_level_2("Appendix: cropped, highlighted scans"),
         mhi.scan_figure(
             _KOREN_P39_IMG,
             "Koren appendix p. 39: the Deuteronomy Decalogue's לא־תעשה in the p-trad"
             " elyon, with an accent on each atom",
             (
-                "Koren's Deuteronomy appendix Decalogue (p. 39), in the ",
+                "Koren's Deuteronomy Decalogue ",
                 ELYON,
-                ". The highlighted ",
-                hbo(koren["printed"]),
-                " has an accent on each of its two atoms.",
+                " (appendix p. 39), with its strange spreader highlighted.",
             ),
             img_class="ink-on-white",
             boxes=_KOREN_P39_BOXES,
@@ -1782,20 +1793,10 @@ def _scans_appendix_section() -> tuple[object, ...]:
             _SIMTIQ_P246_IMG,
             "Simanim Tiqqun p. 246: the Exodus appendix Decalogue's לא־יהיה and"
             " לא־תעשה in the p-trad taḥton, each with an accent on both atoms",
-            # The forms spliced here run on to the free לך, since that is what the Simanim
-            # Tiqqun case dicts carry and what tells the two sites apart -- so the caption says
-            # what each highlight covers rather than letting "compound" name the whole span.
             (
-                "The Simanim Tiqqun's Exodus appendix Decalogue (p. 246), in the ",
+                "The Simanim Tiqqun's Exodus Decalogue ",
                 TAHTON,
-                ": ",
-                hbo(simtiq_yihye["printed"]),
-                " and ",
-                hbo(simtiq_taase["printed"]),
-                ". Each highlight covers the maqaf compound alone, and each compound"
-                " has an accent on both of its atoms. The printed line break falls"
-                f" inside {lo_taase} — its {_LO} ends one line and its {_TAASE} opens"
-                " the next — so that one chanted word is highlighted in two pieces.",
+                " (p. 246, in an appendix), with its two strange spreaders highlighted.",
             ),
             img_class="ink-on-white",
             boxes=_SIMTIQ_P246_BOXES,
