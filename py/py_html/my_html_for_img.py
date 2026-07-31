@@ -123,6 +123,13 @@ def scan_figure(
     # word-highlight overlay (annotated_img above). The overlay is a sibling of the img, so the
     # img's dark-mode invert never touches it -- see the .scan-annot rules and the ink-on-white
     # comment in style.css. The caller's img_class stays on the img either way.
+    #
+    # `viewbox` must equal the committed image's OWN natural size, since the boxes are in that
+    # pixel space. Getting it wrong is silent -- the page still builds and the highlights just
+    # land elsewhere -- so py/tests/test_scan_overlay_viewboxes.py lints every rendered figure's
+    # viewBox against Image.open(scan).size. It reads the pair off the HTML, where the img and
+    # the overlay sit side by side, so a page that grows an overlay later is covered without
+    # being registered anywhere.
     if boxes:
         assert viewbox is not None, "boxes require a viewbox=(w, h)"
         img_node = annotated_img(
