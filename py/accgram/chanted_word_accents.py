@@ -573,7 +573,9 @@ def scan_corpus(frags_by_bcv: dict[str, list[Frag]]) -> dict:
 
 # --- Yeivin's prose inventory -------------------------------------------------
 #
-# Transcribed from the FULL OCR of the book at ``../yeivin-itm/md-export-of-docx/`` -- not from
+# Transcribed from the FULL OCR of the book at
+# ``../masorah-books/books/itm/md-export-of-docx/`` -- that repo was ``yeivin-itm`` until it was
+# renamed on 2026-07-31 -- not from
 # the partial adaptation at ``../al-hatorah/py/itm/``, which does not carry all of these sections.
 # Each ``quote`` is Yeivin's own wording, so it keeps his romanizations: he spells tifxa with a
 # dotted t and a dotted h, and munax with a dotted h, where the rest of this repo spells xet with

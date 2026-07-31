@@ -144,7 +144,8 @@ _STRIPPED_FOR_KEY = frozenset((METEG, PASEQ, SOF_PASUQ, NUN_HAFUKHA))
 # module docstring on why position cannot be the criterion.
 #
 # Two citations were wrong until 2026-07-28, both settled by reading the full OCR at
-# ``../yeivin-itm/md-export-of-docx/`` (issue #86, which holds the Yeivin-inventory questions;
+# ``../masorah-books/books/itm/md-export-of-docx/`` -- that repo was ``yeivin-itm`` until it was
+# renamed on 2026-07-31 (issue #86, which holds the Yeivin-inventory questions;
 # #82, cited here at first, is about his two Deuteronomy 33 maqaf readings instead).
 # Merkha-tevir is §253, ``Merka-tevir and the
 # Servi of Tevir``, not §§233/241.  And §241 pairs a secondary mahapakh with PASHTA, not with
@@ -690,7 +691,8 @@ def classify(hit: dict, oracle: dict[str, Counter], *, routed: bool) -> dict:
     halves of it are prose doctrine.  ``_NAMED_CONFIGURATIONS`` is Yeivin's PROSE inventory,
     and the poetic counterpart is a different list (his §372 tsinnorit -- ITM spells it with
     an s, this repo with ts; Breuer's Chapter 9 §§23-26 secondary mahapakh/merkha, the span he
-    cites for it himself in §27, checkable in ``../breuer-cos/md-export-of-docx/C09-S021.md``),
+    cites for it himself in §27, checkable in
+    ``../masorah-books/books/cos/md-export-of-docx/C09-S021.md``),
     which is not encoded here.  Running the prose list
     over poetic verses would label a poetic secondary as unnamed and read it as §293's habit,
     which is why the poetic side reports shapes and counts only.

@@ -63,9 +63,11 @@ Neither they nor the elyon's pair touch the disjunctive skeleton or the chanted 
 boundaries, which is the claim that has survived every transcription so far.
 
 HOW RARE THAT IS IN PROSE, AND HOW ORDINARY IN POETRY (Ben, 2026-07-26; the Yeivin references
-came from the FULL ITM OCR in ``../yeivin-itm/md-export-of-docx``, which a first pass missed by
-searching only the al-hatorah adaptation -- look in both).  Do not read a second accent on a prose
-compound as unremarkable.  Two different things put one there, and they license different lists:
+came from the FULL ITM OCR in ``../masorah-books/books/itm/md-export-of-docx``, which a first
+pass missed by searching only the al-hatorah adaptation -- look in both).  That repo was
+``yeivin-itm`` until 2026-07-31, when it was renamed and Breuer's CoS was merged into it.
+Do not read a second accent on a prose compound as unremarkable.  Two different things put one
+there, and they license different lists:
 
 * **A SECONDARY ACCENT the compound simply inherits.**  Ben's rule: what turns up on a non-final
   atom is what can be the FIRST OF TWO accents on an ATOMIC word, so the second accent is nothing
@@ -118,7 +120,9 @@ can see.  So SimTiq's two munax-on-לא are worth the attention this note gives 
 ``mun-mun`` on לא־תעשה more still.
 
 CoS is greppable now, so CHECK a Breuer claim rather than restating one from here.  Chapter 9 is
-``../breuer-cos/md-export-of-docx/C09-*.md``, and that repo's ``scripts/check_cos_claims.py`` is
+``../masorah-books/books/cos/md-export-of-docx/C09-*.md`` -- the two books share one repo since
+2026-07-31, so ITM above and CoS here are one clone apart, not two.  That repo's
+``py/cos/check_cos_claims.py`` is
 the differential check that caught the two errors this paragraph used to carry -- a §§22-26 that
 was §22 plus §§23-26, and two surviving cases that were three.  It raises if a re-conversion
 loses the evidence it pins.  Breuer's English mostly says "hyphen": "maqqef" and "maqaf" return

@@ -167,7 +167,8 @@ is then a statement about the Westminster transcription of L rather than about t
 
 ## 3. Yeivin's inventory is larger than the whitelist as stated, and most of it is closed lists
 
-Grepping the full OCR at `../yeivin-itm/md-export-of-docx/` turns up a **named section for each
+Grepping the full OCR at `../masorah-books/books/itm/md-export-of-docx/` (`../yeivin-itm/` when
+this plan was written) turns up a **named section for each
 of these**, and the closed ones match the measured MAM counts case for case. This is the plan's
 central finding: the whitelist is not something to invent, it is something to transcribe, and
 transcribing it yields a differential check against an independent oracle — the one test shape
@@ -279,7 +280,8 @@ New `py/accgram/chanted_word_accents.py`: pure computation plus a JSON writer, t
   (`almost_errors_html_shared.accents_and_letters`, lifted from the corpus, never retyped), the
   token sequence, and the kind (atomic / compound with the accents split across atoms / compound
   with both on the final atom).
-- A `yeivin_inventory` table transcribed from `../yeivin-itm/md-export-of-docx/`: section number,
+- A `yeivin_inventory` table transcribed from
+  `../masorah-books/books/itm/md-export-of-docx/`: section number,
   what it names, Yeivin's stated count, his listed verses where he lists them, and the measured
   count beside it. Where his list is closed, assert set equality and **raise** on drift.
 - Correct `maqaf_nonfinal_accents._NAMED_CONFIGURATIONS`: §253 for merkha-tevir; replace the

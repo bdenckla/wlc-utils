@@ -72,8 +72,12 @@ between the systems, not a detail. `edition_transcription`'s "HOW RARE THAT IS I
 has it with its Yeivin and Breuer citations.
 
 **Yeivin lives in two places and they are not the same.** `../al-hatorah/py/itm/` is Ben's
-*adaptation* — partial, with sections still untranscribed. `../yeivin-itm/md-export-of-docx/` is
-the *full* OCR of the book. Search the full OCR before concluding Yeivin is silent on something;
+*adaptation* — partial, with sections still untranscribed.
+`../masorah-books/books/itm/md-export-of-docx/` is
+the *full* OCR of the book. That repo was `yeivin-itm` until 2026-07-31, when it was renamed and
+Breuer's *Cantillation of Scripture* was merged into it from `breuer-cos`; CoS is the sibling
+`../masorah-books/books/cos/md-export-of-docx/`, so both books are now one clone away.
+Search the full OCR before concluding Yeivin is silent on something;
 a first pass at #76 searched only the adaptation and wrongly reported the maqaf material absent. The verbatim reader-facing statement is
 `MAQAF_IS_THE_LAST_RUNG`; its guardrail comment records the convention it replaced (a 2026-07-25
 audit fix that made maqaf differences non-differences) and why that one was wrong, so it does not

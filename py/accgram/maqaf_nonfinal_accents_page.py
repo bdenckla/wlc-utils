@@ -2006,9 +2006,11 @@ def _prose_section(survey: dict, rows: list[dict]) -> tuple[object, ...]:
         # him.
         #
         # BREUER BESIDE HIM since 2026-07-31 (Ben: "find the relevant sections of Breuer CoS, to
-        # complement the listing of Yeivin ITM sections"), read off ``../breuer-cos/
-        # md-export-of-docx/`` rather than recalled, and pinned in that repo's
-        # ``scripts/check_cos_claims.py``.  CoS organizes the same ground per mafsik, under a
+        # complement the listing of Yeivin ITM sections"), read off
+        # ``../masorah-books/books/cos/md-export-of-docx/`` rather than recalled, and pinned in
+        # that repo's ``py/cos/check_cos_claims.py``.  That one repo holds both books, so the ITM
+        # sections above and the CoS ones here are one clone apart, not two.
+        # CoS organizes the same ground per mafsik, under a
         # heading that recurs through its Chapter 3 -- "Two cantillation marks in the same word",
         # before §2, §6, §10, §20, §25, §28, §30, §37 and §40 -- with the metigah held back to
         # Chapter 5, where the zaqef alternates are.  Row by row:
