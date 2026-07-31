@@ -175,9 +175,10 @@ _PAIR_FIRST_NAME = {
 # them (Ben, 2026-07-29: 'name the cell "ger./az." and explain either right before or right after
 # the table what that means').  A geresh on a chanted word stressed on its last syllable is
 # called an azla, so the qadma-geresh row's 99 may be of both kinds -- and unlike metigah and
-# mayela above, which are conditioned on the neighbouring ACCENT and so are decidable from what
-# the survey records, this one is conditioned on STRESS, which it does not record.  Hence both
-# names in the cell rather than a choice, and ``_geresh_or_azla_note`` under the table.
+# mayela above, which are conditioned on the neighbouring ACCENT, this one is conditioned on
+# STRESS.  Hence both names in the cell rather than a choice, and ``_geresh_or_azla_note`` under
+# the table.  The stress is now known, and the cell still names both: see that note's docstring
+# for the count and for why the page says nothing about it.
 #
 # WHAT THE THREE BOOKS ACTUALLY SAY, settled 2026-07-29 over two passes of the full OCR corpora
 # and recorded here rather than left in a session transcript.  The question was Ben's: is the
@@ -2245,16 +2246,27 @@ def _geresh_or_azla_note(rows: list[dict]) -> object:
     come to disagree; a missing row fails the build rather than printing a sentence about
     nothing.
 
-    WHAT IT MUST NOT SAY: that both kinds are among the 99.  A first pass said exactly that, and
-    the survey cannot support it -- stress is what decides the name, and this survey records no
-    stress at all, only marks.  So the sentence names the condition and says the table does not
-    record it, which is the whole of what is known here.
+    WHAT IT MUST NOT SAY: that both kinds are among the 99.  A first pass said exactly that with
+    nothing behind it.  The stress has since been measured, and both kinds ARE among them -- but
+    the sentence still must not say so, for the reason below.
 
-    NOR COULD ANY SURVEY OF MARKS support it, which is why the sentence is built this way rather
-    than waiting on better data.  Unicode has no geresh-versus-azla distinction to record: its
-    only geresh flavors are plain geresh (which INCLUDES azla), geresh muqdam, and gershayim.
-    MAM's prose verses have no ``qad-germ`` at all, so this row is entirely plain geresh -- and
-    that settles the codepoint, never the name.
+    ASKED AND ANSWERED, AND DELIBERATELY NOT RENDERED (2026-07-31).  Ben reversed an earlier
+    decision to leave stress alone, expecting every one of these to be stressed on its last
+    syllable and so to be an azla in the traditions that use the name.  ``final_stress`` settles
+    it from the pointing, and the survey's ``*_final_stress_by_pair`` fields carry the answer:
+    122 of the row's 126, 96 of the 99 simple chanted words and 26 of the 27 concentrators.  The
+    four that are not are 1 Kings 18:42 and 2 Kings 2:9 ואליהו, 1 Chronicles 15:18 ואליפלהו, and
+    Deuteronomy 25:19 מכל־איביך.  Ben, seeing them: "although the exceptions ... are few, they
+    are not weird or interesting and therefore not worth noting."  So the page is unchanged and
+    the cell still names both -- DO NOT publish the count, and do not re-derive it and conclude
+    that it wants publishing.
+
+    WHAT NO SURVEY OF MARKS COULD HAVE DECIDED is narrower than a first pass here claimed, and
+    the correction is worth keeping because it is what made the question look closed.  The
+    CODEPOINT settles nothing: Unicode has no geresh-versus-azla distinction, its only geresh
+    flavors being plain geresh (which INCLUDES azla), geresh muqdam and gershayim, and MAM's
+    prose verses have no ``qad-germ`` at all, so this row is entirely plain geresh.  But where
+    the mark SITS is also a fact about marks, and that is what decides the name.
 
     OFFERED, NOT ANSWERED, NOT ADOPTED: one further clause, that in some traditions a qadma azla
     is sung to a different melody from a qadma geresh (Jacobson, CHB p. 187 again -- the same

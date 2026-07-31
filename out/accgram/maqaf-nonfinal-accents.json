@@ -978,6 +978,29 @@
       "bcv": "ne8:7"
      }
     },
+    "simple_final_stress_by_pair": {
+     "mun-zaq": 826,
+     "qad-zaq": 160,
+     "qad-ger": 96,
+     "mun-rev": 4,
+     "tip-sil": 4,
+     "qad-mah": 4,
+     "mer-tip": 4,
+     "qad-dar": 4,
+     "tip-etn": 3,
+     "qad-mer": 3,
+     "mun-etn": 2,
+     "mun-paz": 1,
+     "telg-ger2": 1,
+     "mer-tev": 1,
+     "telg-rev": 1,
+     "mer-etn": 1,
+     "dar-ger2": 1,
+     "mer-sil": 1,
+     "mun-mah": 1,
+     "mer-mun": 1,
+     "telg-ger": 0
+    },
     "simple_excluded": {
      "a stress-helper pair: one accent written twice": {
       "tsit-tsor": 1
@@ -1097,6 +1120,16 @@
       "word": "בֶן־ק֨וֹלָיָ֧ה",
       "bcv": "ne11:7"
      }
+    },
+    "concentrator_final_stress_by_pair": {
+     "mun-zaq": 369,
+     "qad-zaq": 40,
+     "qad-ger": 26,
+     "qad-mer": 3,
+     "mer-tip": 2,
+     "qad-mah": 2,
+     "mun-rev": 1,
+     "qad-dar": 1
     },
     "concentrator_excluded": {
      "a stress-helper pair: one accent written twice": {
@@ -2941,6 +2974,31 @@
       "bcv": "ps123:4"
      }
     },
+    "simple_final_stress_by_pair": {
+     "germ-rev": 1875,
+     "ole-mer": 230,
+     "tsit-mah": 126,
+     "tip-mun": 14,
+     "tsit-mer": 12,
+     "mah-mer": 10,
+     "yby-ole": 8,
+     "mah-qad": 7,
+     "mah-mun": 4,
+     "germ-mer-rev": 3,
+     "mun-etn": 3,
+     "dex-mer": 3,
+     "dex-rev": 2,
+     "mer-rev": 2,
+     "mer-sil": 2,
+     "mer-qad": 1,
+     "yby-ole-mer": 1,
+     "tsit-mah-rev": 1,
+     "yby-paz": 1,
+     "ilu-qad": 1,
+     "mah-ole": 1,
+     "mun-mer": 1,
+     "dex-mun": 0
+    },
     "simple_excluded": {
      "the two marks are on one letter": {
       "germ-rev": 145,
@@ -4352,6 +4410,18 @@
       "bcv": "jb32:11"
      }
     },
+    "concentrator_final_stress_by_pair": {
+     "germ-rev": 239,
+     "ole-mer": 22,
+     "yby-ole": 7,
+     "tsit-mah": 5,
+     "ilu-qad": 3,
+     "tip-mun": 3,
+     "mah-qad": 1,
+     "dex-mer": 1,
+     "dex-rev": 1,
+     "mer-etn": 1
+    },
     "concentrator_excluded": {
      "the two marks are on one letter": {
       "germ-rev": 96,
@@ -4869,6 +4939,29 @@
       "bcv": "ca8:6"
      }
     },
+    "simple_final_stress_by_pair": {
+     "mun-zaq": 826,
+     "qad-zaq": 162,
+     "qad-ger": 95,
+     "mer-tev": 9,
+     "tip-sil": 4,
+     "mer-tip": 4,
+     "qad-dar": 4,
+     "qad-mah": 4,
+     "mun-rev": 4,
+     "qad-mer": 3,
+     "tip-etn": 3,
+     "mun-etn": 2,
+     "dar-ger2": 1,
+     "mun-paz": 1,
+     "telg-rev": 1,
+     "mer-etn": 1,
+     "mun-mah": 1,
+     "telg-ger2": 1,
+     "mer-mun": 1,
+     "mer-sil": 1,
+     "telg-ger": 0
+    },
     "simple_excluded": {
      "a stress-helper pair: one accent written twice": {
       "tsit-tsor": 1
@@ -4994,6 +5087,17 @@
       "word": "עַד־שֶׁ֤הַמֶּ֙לֶךְ֙",
       "bcv": "ca1:12"
      }
+    },
+    "concentrator_final_stress_by_pair": {
+     "mun-zaq": 369,
+     "qad-zaq": 40,
+     "qad-ger": 26,
+     "qad-mer": 3,
+     "mer-tip": 2,
+     "qad-mah": 2,
+     "mer-tev": 1,
+     "mun-rev": 1,
+     "qad-dar": 1
     },
     "concentrator_excluded": {
      "a stress-helper pair: one accent written twice": {
@@ -6714,6 +6818,34 @@
       "bcv": "ps68:20"
      }
     },
+    "simple_final_stress_by_pair": {
+     "germ-rev": 1874,
+     "ole-mer": 230,
+     "tsit-mah": 126,
+     "tip-mun": 15,
+     "tsit-mer": 12,
+     "atnh-ole": 9,
+     "germ-mer-rev": 8,
+     "mah-mer": 8,
+     "mah-qad": 7,
+     "dex-mer": 5,
+     "mer-qad": 4,
+     "mah-mun": 4,
+     "mer-rev": 3,
+     "mer-sil": 3,
+     "mun-etn": 3,
+     "dex-rev": 2,
+     "mer-mun": 2,
+     "tsit-mah-rev": 1,
+     "germ-ger": 1,
+     "atnh-ole-mer": 1,
+     "yby-paz": 1,
+     "tip-sil": 1,
+     "ilu-qad": 1,
+     "mah-ole": 1,
+     "mun-mer": 1,
+     "dex-mun": 0
+    },
     "simple_excluded": {
      "the two marks are on one letter": {
       "germ-rev": 144,
@@ -8125,6 +8257,18 @@
       "bcv": "ps118:5"
      }
     },
+    "concentrator_final_stress_by_pair": {
+     "germ-rev": 238,
+     "ole-mer": 20,
+     "atnh-ole": 7,
+     "tsit-mah": 5,
+     "tip-mun": 3,
+     "ilu-qad": 3,
+     "dex-rev": 1,
+     "mer-etn": 1,
+     "mah-qad": 1,
+     "dex-mer": 1
+    },
     "concentrator_excluded": {
      "the two marks are on one letter": {
       "germ-rev": 94,
@@ -8601,6 +8745,24 @@
       "word": "וְשֵׁרֵ֥בְיָ֣ה",
       "bcv": "ne8:7"
      }
+    },
+    "simple_final_stress_by_pair": {
+     "mun-zaq": 827,
+     "qad-zaq": 181,
+     "qad-ger": 96,
+     "mer-tev": 61,
+     "mun-rev": 4,
+     "tip-sil": 4,
+     "qad-mah": 4,
+     "mer-tip": 4,
+     "qad-dar": 4,
+     "tip-etn": 3,
+     "qad-mer": 3,
+     "mun-etn": 2,
+     "mun-paz": 1,
+     "mer-sil": 1,
+     "mun-mah": 1,
+     "mer-mun": 1
     },
     "simple_excluded": {
      "a stress-helper pair: one accent written twice": {
@@ -9945,6 +10107,16 @@
       "word": "בֶן־ק֨וֹלָיָ֧ה",
       "bcv": "ne11:7"
      }
+    },
+    "concentrator_final_stress_by_pair": {
+     "mun-zaq": 370,
+     "qad-ger": 26,
+     "mer-tev": 8,
+     "qad-mer": 3,
+     "mer-tip": 3,
+     "qad-mah": 2,
+     "mun-rev": 1,
+     "qad-dar": 1
     },
     "concentrator_excluded": {
      "a stress-helper pair: one accent written twice": {
@@ -12914,6 +13086,33 @@
       "bcv": "pr27:22"
      }
     },
+    "simple_final_stress_by_pair": {
+     "germ-rev": 1903,
+     "ole-mer": 228,
+     "tsit-mah": 122,
+     "mer-mun": 20,
+     "tip-mun": 19,
+     "germ-mer-rev": 18,
+     "tsit-mer": 12,
+     "mer-qad": 9,
+     "atnh-ole": 9,
+     "mah-qad": 7,
+     "mah-mer": 6,
+     "mer-rev": 4,
+     "mah-mun": 4,
+     "mun-etn": 3,
+     "tip-sil": 2,
+     "mer-etn": 2,
+     "mer-sil": 2,
+     "atnh-ole-mer": 1,
+     "tsit-mah-rev": 1,
+     "yby-paz": 1,
+     "ilu-qad": 1,
+     "mah-ole": 1,
+     "mah-tip": 1,
+     "mer-paz": 1,
+     "dex-mun": 0
+    },
     "simple_excluded": {
      "the two marks are on one letter": {
       "germ-rev": 155,
@@ -14517,6 +14716,17 @@
       "word": "עַד־תְּב֥וּנֹֽתֵיכֶ֑ם",
       "bcv": "jb32:11"
      }
+    },
+    "concentrator_final_stress_by_pair": {
+     "germ-rev": 250,
+     "ole-mer": 27,
+     "tsit-mah": 9,
+     "atnh-ole": 7,
+     "ilu-qad": 3,
+     "tip-mun": 3,
+     "germ-mer-rev": 1,
+     "mah-qad": 1,
+     "mer-etn": 1
     },
     "concentrator_excluded": {
      "the two marks are on one letter": {

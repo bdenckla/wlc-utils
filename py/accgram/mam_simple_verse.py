@@ -7,7 +7,7 @@ from mb_cmn import bib_locales as tbn
 from mb_cmn import hebrew_punctuation as hpunc
 from mb_misc import osis_book_abbrevs as oba
 
-from cmn.wlc_book_codes import wlc_bb_to_bk39id
+from cmn.wlc_book_codes import wlc_bb_codes, wlc_bb_to_bk39id
 
 import repo_paths
 
@@ -84,6 +84,39 @@ def load_mam_simple_for_refs(
             }
 
     return by_bcv
+
+
+def mam_simple_refs(mam_simple_dir: Path) -> dict[str, set[tuple[int, int]]]:
+    """Every verse the tree at ``mam_simple_dir`` has, in the shape ``load_mam_simple_for_refs``
+    takes.
+
+    Reading MAM-simple otherwise means knowing its verse list in advance, which is exactly what a
+    caller working in a versification other than the one it came for does not have: this repo's
+    surveys are keyed to WLC's refs and so read ``json-vtrad-bhs``, and a caller reaching for
+    ``json-vtrad-mam`` has no WLC refs to ask it with.
+    """
+    if not mam_simple_dir.is_dir():
+        raise FileNotFoundError(f"MAM-simple directory not found: {mam_simple_dir}")
+
+    refs: dict[str, set[tuple[int, int]]] = {}
+    for bb in wlc_bb_codes():
+        bk39id = wlc_bb_to_bk39id(bb)
+        json_path = _mam_simple_json_path(mam_simple_dir, bk39id)
+        if json_path is None:
+            continue
+        osis_prefix = oba.BOOK_ABBREVS.get(bk39id)
+        if osis_prefix is None:
+            continue
+        for verse_node in _iter_dict_nodes(_read_json(json_path)):
+            if verse_node.get("type") != "verse":
+                continue
+            osis_id = verse_node.get("osisID")
+            if not isinstance(osis_id, str) or not osis_id.startswith(
+                f"{osis_prefix}."
+            ):
+                continue
+            refs.setdefault(bb, set()).add(_parse_osis_id(osis_id))
+    return refs
 
 
 def _mam_simple_json_path(mam_simple_dir: Path, bk39id: str) -> Path | None:

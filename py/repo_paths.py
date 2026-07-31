@@ -124,6 +124,23 @@ def require_mam_simple_dir() -> Path:
     return require_sibling("MAM-simple", mam_simple_dir())
 
 
+def mam_simple_vtrad_mam_dir() -> Path:
+    """MAM-simple's ``json-vtrad-mam``: the same text in MAM's native versification.
+
+    ``mam_simple_dir`` above is the BHS versification, which is what this repo's surveys read
+    because they are keyed to WLC's refs.  A cross-check against another MAM-derived text numbers
+    its verses MAM's way, so it wants this flavour and no remap table.  MAM-simple ships three --
+    BHS, Sefaria and MAM native -- and picking the wrong one is what makes versification look like
+    a difference between two texts rather than between two numberings of one.
+    """
+    return sibling("MAM-simple") / "json-vtrad-mam"
+
+
+def require_mam_simple_vtrad_mam_dir() -> Path:
+    """``mam_simple_vtrad_mam_dir``, checked -- see ``require_sibling`` for why this is not a skip."""
+    return require_sibling("MAM-simple", mam_simple_vtrad_mam_dir())
+
+
 def mam_parsed_plus_dir() -> Path:
     """MAM-parsed's ``plus`` subtree: one JSON per book24, minirow cells C/D/E."""
     return sibling("MAM-parsed") / "plus"
@@ -145,6 +162,22 @@ def mam_basics_dir() -> Path:
 def require_mam_basics_dir() -> Path:
     """``mam_basics_dir``, checked -- see ``require_sibling`` for why this is not a skip."""
     return require_sibling("MAM-basics", mam_basics_dir())
+
+
+def al_hatorah_phonetic_dir() -> Path:
+    """al-hatorah's ``io/a01-phonetic-std-set``: Phonetic MAM, one JSON per book.
+
+    Each chanted word has a ``jta`` field whose ``!`` immediately precedes the stressed
+    syllable, which is what makes this an independent oracle for ``accgram.final_stress``.  The
+    engine behind it is al-hatorah's ``py/aht_phon``, which cannot be imported here -- issue #48
+    calls consuming these outputs its second path, and this is that path.
+    """
+    return sibling("al-hatorah") / "io" / "a01-phonetic-std-set"
+
+
+def require_al_hatorah_phonetic_dir() -> Path:
+    """``al_hatorah_phonetic_dir``, checked -- see ``require_sibling`` for why this is not a skip."""
+    return require_sibling("al-hatorah", al_hatorah_phonetic_dir())
 
 
 def uxlc_utils_dir() -> Path:

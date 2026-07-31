@@ -66,7 +66,14 @@ postpositive/prepositive accents are skipped entirely, since their position is a
 chanted word's edge rather than about any atom's stress.
 
 §293's further claim -- that the habit correlates with penultimate stress -- is NOT tested here.
-That needs a real stress model; ``../al-hatorah/py/aht_phon/stress.py`` is the prior art.
+That needs a real stress model; ``../al-hatorah/py/aht_phon/stress.py`` is the prior art.  Nothing
+below changes that: ``final_stress`` answers one question about one syllable, and MAM has no
+route-(b) hit for §293's claim to be tested on either way.
+
+WHERE THE STRESS FALLS is a second measurement, and a narrow one.  The ``*_final_stress_by_pair``
+fields say, of each pair whose accent written last is written on the stress, how many of its
+chanted words are stressed on their last syllable.  ``final_stress`` is the rule, and its docstring
+says why counting nuclei answers this without any of the phonology issue #48 is about.
 
 WHAT THE SURVEY IS A SURVEY OF, which bounds every number it produces.  ``out/wlc422-kq-u`` is the
 Westminster transcription of L.  ``in/UXLC-39`` is NOT a second manuscript -- its own header
@@ -101,6 +108,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from accgram import accent_marks as am
+from accgram import final_stress as fs
 from accgram import poetic_filter, prose_filter, rtms_data
 from cmn.wlc_book_codes import wlc_bb_codes
 from mb_cmn import file_io
@@ -127,20 +135,9 @@ SILLUQ = "silluq"
 _STRIPPED_FOR_KEY = frozenset((METEG, PASEQ, SOF_PASUQ, NUN_HAFUKHA))
 
 # Accents written at a fixed EDGE of the chanted word rather than on its stress.  Their position
-# says nothing about where an atom's own accent falls, so the oracle ignores them.
-_NOT_IMPOSITIVE = frozenset(
-    (
-        am.PASHTA,
-        am.TELISHA_QETANA,
-        am.SEGOLTA,
-        am.TSINNOR,
-        am.TSINNORIT,
-        am.YETIV,
-        am.DEXI,
-        am.TELISHA_GEDOLA,
-        am.GERESH_MUQDAM,
-    )
-)
+# says nothing about where an atom's own accent falls, so the oracle ignores them.  The set itself
+# now lives in ``final_stress``, which asks the same thing of the same accents for the other
+# measurement here and is the module about stress; this module had the only copy of it.
 
 # Route (a): Yeivin's closed prose list, keyed by (accent on the non-final atom, accent the
 # compound has).  Membership is a fact about the configuration, not about the mark's position -- see the
@@ -337,11 +334,19 @@ def _wlc_vel_atoms(vel: object) -> list[str]:
     return [word] if isinstance(word, str) else []
 
 
-def mam_words(refs_by_book: dict[str, set[tuple[int, int]]]) -> dict[str, list[str]]:
+def mam_words(
+    refs_by_book: dict[str, set[tuple[int, int]]], mam_simple_dir: Path | None = None
+) -> dict[str, list[str]]:
+    """MAM-simple's chanted words for the given refs.
+
+    ``mam_simple_dir`` defaults to the BHS versification, which is the one this survey wants:
+    every corpus here is keyed to WLC's refs, so all three read alike.  A caller comparing against
+    another MAM-derived text passes MAM's native versification instead.
+    """
     from accgram import mam_simple_verse
 
     loaded = mam_simple_verse.load_mam_simple_for_refs(
-        repo_paths.require_mam_simple_dir(), refs_by_book
+        mam_simple_dir or repo_paths.require_mam_simple_dir(), refs_by_book
     )
     return {
         bcv: _join_on_maqaf(
@@ -443,6 +448,41 @@ def _last_atom_has_silluq(atom: str) -> bool:
     return last_mark_is_u05bd
 
 
+def stress_mark_letter(word: str, verse_final: bool) -> int | None:
+    """Ordinal of the base letter bearing the chanted word's main accent, counting base letters
+    from 1 across the whole chanted word; None when the mark written last is not one that marks
+    the stress.
+
+    ``final_stress`` needs the letter and deliberately declines to find it, two things this
+    module knows and it does not standing between the mark and the letter.  A U+05BD is the
+    silluq only on the verse's last chanted word, by the same ``_last_atom_has_silluq`` rule
+    ``atom_accents`` applies, and it marks the stress where it is; elsewhere it is a meteg, which
+    the shapes do not count and neither does this.  And where the last mark is a
+    postpositive or a prepositive one, its position is a fact about the chanted word's edge, so
+    there is no answer to give rather than a wrong one.
+    """
+    silluq = verse_final and _last_atom_has_silluq(word.split(MAQAF)[-1])
+    last_mark = None
+    last_letter = 0
+    seen = 0
+    for ch in word:
+        if is_base_letter(ch):
+            seen += 1
+        elif is_accent(ch) or (silluq and ch == METEG):
+            last_mark, last_letter = ch, seen
+    if last_mark is None or last_mark in fs.NOT_IMPOSITIVE:
+        return None
+    return last_letter
+
+
+def final_stress(word: str, verse_final: bool) -> bool | None:
+    """Whether this chanted word is stressed on its last syllable; None when no mark says."""
+    letter = stress_mark_letter(word, verse_final)
+    if letter is None:
+        return None
+    return fs.is_final_stress(word, letter)
+
+
 def shape_of(per_atom: list[list[str]]) -> str:
     """``mun-mun``, ``qad-zaq``, ``0-mer-sil`` -- one field per atom, ``0`` for an unaccented
     one, the dash standing for the maqaf, as in the edition transcriptions' own notation.
@@ -501,6 +541,7 @@ def scan(
                                 _ACCENT_SHORTHAND.get(a, a) for a in _distinct(accents)
                             ],
                             "excluded": simple_exclusion(word, accents, prose=prose),
+                            "final_stress": final_stress(word, i == last),
                         }
                     )
                 continue
@@ -518,6 +559,7 @@ def scan(
                                 _ACCENT_SHORTHAND.get(a, a) for a in _distinct(final)
                             ],
                             "excluded": simple_exclusion(word, final, prose=prose),
+                            "final_stress": final_stress(word, i == last),
                         }
                     )
                 continue
@@ -595,7 +637,7 @@ def letters_after_accent(atom: str, *, main_only: bool = False) -> int | None:
     for ch in atom:
         if is_base_letter(ch):
             seen += 1
-        elif is_accent(ch) and not (main_only and ch in _NOT_IMPOSITIVE):
+        elif is_accent(ch) and not (main_only and ch in fs.NOT_IMPOSITIVE):
             letters_before.append(seen)
     if not letters_before:
         return None
@@ -826,6 +868,28 @@ def _examples(simple: list[dict]) -> dict[str, dict]:
     return out
 
 
+def _final_stress_counts(records: list[dict]) -> dict[str, int]:
+    """pair -> how many of its chanted words are stressed on their last syllable.
+
+    A pair appears here only when the last accent of the pair is one that marks the stress, so an
+    absent pair is one no mark answers for rather than one whose answer is zero -- and a pair
+    that IS here has every one of its chanted words measured, the accent written last being the
+    same accent throughout the pair.  Read a count against the pair's own entry in
+    ``simple_by_pair`` or ``concentrator_by_pair``: equal counts mean every one of them is
+    stressed on its last syllable.
+
+    A pashta's or a telisha qetana's position is a fact about the chanted word's edge rather than
+    about its stress, which is why those pairs are left out instead of counted at zero; see
+    ``final_stress.NOT_IMPOSITIVE``.
+    """
+    counts: Counter = Counter()
+    for record in records:
+        if record["final_stress"] is None:
+            continue
+        counts["-".join(record["pair"])] += 1 if record["final_stress"] else 0
+    return dict(counts.most_common())
+
+
 def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool, prose: bool) -> dict:
     hits, n_verses, n_compounds, simple, concentrators = scan(
         words_by_bcv, keep, prose=prose
@@ -852,6 +916,21 @@ def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool, prose: bool) -> d
             Counter("-".join(s["pair"]) for s in counted).most_common()
         ),
         "simple_example_by_pair": _examples(counted),
+        # Whether each pair's chanted words are stressed on their last syllable, which the marks
+        # answer wherever the accent written last is written on the stress rather than at the
+        # chanted word's edge.  Ben, 2026-07-31, reversing an earlier decision to leave stress
+        # alone: whether the geresh of a qadma-geresh chanted word is one some traditions would
+        # call an azla turns on it, azla being the name a geresh takes on a chanted word stressed
+        # on its last syllable.  ``final_stress`` is the rule, and its docstring is why the rule
+        # is a narrow one rather than issue #48's phonology.
+        #
+        # COUNTS AND NOT THE WORDS, unlike ``simple_excluded_words`` below.  Listing every chanted
+        # word that is NOT stressed on its last syllable ran to 2423 records across the three
+        # corpora and doubled this file, and nothing reads them: no page states the exceptions,
+        # since the qadma-geresh ones turned out to be ordinary penultimately-stressed forms
+        # (``maqaf_nonfinal_accents_page._geresh_or_azla_note`` records that decision).  Rerun the
+        # scan to name them.
+        "simple_final_stress_by_pair": _final_stress_counts(counted),
         "simple_excluded": {
             reason: dict(
                 Counter(
@@ -894,6 +973,7 @@ def _genre_survey(words_by_bcv, keep, oracle, *, routed: bool, prose: bool) -> d
             Counter("-".join(c["pair"]) for c in conc_counted).most_common()
         ),
         "concentrator_example_by_pair": _examples(conc_counted),
+        "concentrator_final_stress_by_pair": _final_stress_counts(conc_counted),
         "concentrator_excluded": {
             reason: dict(
                 Counter(
