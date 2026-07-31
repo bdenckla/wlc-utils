@@ -107,6 +107,23 @@ Subcommands:
                 CHANGED / UNTESTABLE.  Cross-checks each verdict against the
                 prose_ob_notes claim and writes out/accgram/fix-tester/_fix_tester.{txt,json}.
                 Run run-prose first.
+    vendor-printed-decalogue
+                NETWORK AUTHOR TOOL, run by hand.  Refresh the vendored snapshot of the
+                eight Wikisource Decalogue accentuations ({Exodus, Deuteronomy} × {taxton,
+                elyon} × {manuscript, printed}) from he.wikisource's
+                עשרת הדברות בסיס/טעמים, and overwrite
+                in/accgram/printed_decalogue_teamim.json.  Each version is stored twice:
+                the folded scanner-ready chanted verses, and the faithful ones that keep
+                the legarmeh/paseq, ketiv/qere and setumah/petuxah templates (issue #74).
+                --oldid pins a revision; the committed snapshot is 3025606.
+    vendor-ctr-decalogue
+                NETWORK AUTHOR TOOL, run by hand.  Refresh the vendored snapshot of CTR's
+                two Decalogues -- Exodus 20:2-14 and Deuteronomy 5:6-18 of the Complete
+                Tanach with Rashi at chabad.org -- and overwrite
+                in/accgram/ctr_decalogue.json (issue #73).  The verse text is kept
+                accent-exact, with CTR's own encoding intact; normalizing it is
+                ctr_decalogue.py's job, not the vendoring's.  --cache reads pre-fetched
+                chapter HTML from a directory instead of hitting the server.
 
 Examples:
     .venv/Scripts/python.exe py/main_accgram.py run-prose
@@ -121,6 +138,7 @@ from pathlib import Path
 
 from accgram import almost_errors
 from accgram import chanted_word_accents
+from accgram import ctr_decalogue_fetch
 from accgram import dual_cant_run
 from accgram import dual_under_bars_page
 from accgram import fix_tester
@@ -133,6 +151,7 @@ from accgram import research_tao
 from accgram import prose_run
 from accgram import poetic_run
 from accgram import printed_decalogue
+from accgram import printed_decalogue_fetch
 from accgram import printed_decalogue_koren_page
 from accgram import printed_decalogue_page
 from accgram import printed_decalogue_simanim_page
@@ -184,6 +203,14 @@ def _run_fix_tester(args: argparse.Namespace) -> None:
 
 def _run_grammaticality(args: argparse.Namespace) -> None:
     grammaticality.run(args)
+
+
+def _run_vendor_printed_decalogue(args: argparse.Namespace) -> None:
+    printed_decalogue_fetch.run(args)
+
+
+def _run_vendor_ctr_decalogue(args: argparse.Namespace) -> None:
+    ctr_decalogue_fetch.run(args)
 
 
 # HTML report generators, as (name, module) pairs.  Each name is the basename of the file the
@@ -361,6 +388,34 @@ def main() -> None:
         one_parser.set_defaults(
             func=lambda a, m=module: _generate_one_html_from_args(m, a)
         )
+
+    # The two network author-tools, kept last because they are the only subcommands that
+    # reach off the machine and the only ones that overwrite a vendored input under in/.
+    vendor_printed_decalogue_parser = subparsers.add_parser(
+        "vendor-printed-decalogue",
+        help=(
+            "NETWORK AUTHOR TOOL, run by hand: re-fetch the eight Wikisource Decalogue "
+            "accentuations (both books, taxton and elyon, manuscript and printed) and "
+            "overwrite the vendored in/accgram/printed_decalogue_teamim.json. --oldid pins "
+            "a revision; the committed snapshot is 3025606."
+        ),
+    )
+    printed_decalogue_fetch.add_args(
+        vendor_printed_decalogue_parser, repo_root=_repo_root()
+    )
+    vendor_printed_decalogue_parser.set_defaults(func=_run_vendor_printed_decalogue)
+
+    vendor_ctr_decalogue_parser = subparsers.add_parser(
+        "vendor-ctr-decalogue",
+        help=(
+            "NETWORK AUTHOR TOOL, run by hand: re-fetch CTR's two Decalogues (Exodus "
+            "20:2-14 and Deuteronomy 5:6-18 from chabad.org) accent-exact and overwrite "
+            "the vendored in/accgram/ctr_decalogue.json (issue #73). --cache reads "
+            "pre-fetched chapter HTML instead of hitting the server."
+        ),
+    )
+    ctr_decalogue_fetch.add_args(vendor_ctr_decalogue_parser, repo_root=_repo_root())
+    vendor_ctr_decalogue_parser.set_defaults(func=_run_vendor_ctr_decalogue)
 
     args = parser.parse_args()
     args.func(args)

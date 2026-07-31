@@ -48,9 +48,9 @@ This is a network tool run by hand to refresh the vendored snapshot; the committ
 records the source page's revision id and retrieval date for provenance.  ``--oldid`` pins a
 specific revision -- the issue-#74 re-vendoring pins 3025606, the revision already vendored, so
 that this contract change carries no upstream content drift and stays independently reviewable
-from any later content refresh.  Run (pinned):
+from any later content refresh.  Run from the repo root (pinned):
 
-    PYTHONUTF8=1 PYTHONPATH=. ../.venv/Scripts/python.exe accgram/printed_decalogue_fetch.py --oldid 3025606
+    PYTHONUTF8=1 .venv/Scripts/python.exe py/main_accgram.py vendor-printed-decalogue --oldid 3025606
 """
 
 from __future__ import annotations
@@ -62,7 +62,6 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from cmn.utf8_io import force_utf8_io
 from mb_cmn import file_io
 
 import repo_paths
@@ -247,6 +246,10 @@ def build_payload(wikitext: str, provenance: dict[str, object]) -> dict[str, obj
 
 
 def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
+    # repo_root is unused: the vendored snapshot's location comes from
+    # ``default_out_path``, which asks ``repo_paths`` itself.  The parameter is here so the
+    # entry point wires every subcommand the same way.
+    del repo_root
     parser.add_argument("--out", type=Path, default=default_out_path())
     parser.add_argument(
         "--oldid",
@@ -274,14 +277,3 @@ def run(args: argparse.Namespace) -> None:
         f"printed-decalogue: {len(payload['versions'])} versions, {n_cv} chanted verses, "
         f"{n_strokes} legarmeh/paseq strokes preserved (oldid {provenance['oldid']}) -> {out_path}"
     )
-
-
-def main() -> None:
-    force_utf8_io()
-    parser = argparse.ArgumentParser(description=__doc__)
-    add_args(parser, repo_root=repo_paths.repo_root())
-    run(parser.parse_args())
-
-
-if __name__ == "__main__":
-    main()

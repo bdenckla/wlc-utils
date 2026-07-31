@@ -25,9 +25,9 @@ markers Chabad shows between verses.  Normalizing CTR's encoding is the comparis
 not the vendoring's, so the snapshot stays faithful to what the page serves.
 
 This is a network tool run by hand.  The committed JSON records the source URLs, the aids,
-and the retrieval date for provenance.  Run from ``py/``:
+and the retrieval date for provenance.  Run from the repo root:
 
-    PYTHONUTF8=1 PYTHONPATH=. ../.venv/Scripts/python.exe accgram/ctr_decalogue_fetch.py
+    PYTHONUTF8=1 .venv/Scripts/python.exe py/main_accgram.py vendor-ctr-decalogue
 
 ``--cache <dir>`` reads pre-fetched ``ctr_cache_<name>.html`` from a directory instead of
 the network, so the exact snapshot already retrieved can be re-vendored without hitting the
@@ -44,7 +44,6 @@ import urllib.request
 from html import unescape
 from pathlib import Path
 
-from cmn.utf8_io import force_utf8_io
 from mb_cmn import file_io
 
 import repo_paths
@@ -170,7 +169,11 @@ def build_payload(cache: Path | None, retrieved: str) -> dict[str, object]:
     return {"provenance": provenance, "chapters": chapters}
 
 
-def add_args(parser: argparse.ArgumentParser) -> None:
+def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
+    # repo_root is unused: the vendored snapshot's location comes from
+    # ``default_out_path``, which asks ``repo_paths`` itself.  The parameter is here so the
+    # entry point wires every subcommand the same way.
+    del repo_root
     parser.add_argument("--out", type=Path, default=default_out_path())
     parser.add_argument(
         "--cache",
@@ -195,14 +198,3 @@ def run(args: argparse.Namespace) -> None:
     print(
         f"ctr-decalogue: {len(payload['chapters'])} chapters, {n} verses -> {out_path}"
     )
-
-
-def main() -> None:
-    force_utf8_io()
-    parser = argparse.ArgumentParser(description=__doc__)
-    add_args(parser)
-    run(parser.parse_args())
-
-
-if __name__ == "__main__":
-    main()
