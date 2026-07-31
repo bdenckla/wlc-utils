@@ -1,7 +1,7 @@
 """Build a per-line transcription editor for a page of a book scan.
 
 Usage:
-    .venv/Scripts/python.exe py/accgram/transcription_editor.py <book-dir> <name> \
+    .venv/Scripts/python.exe py/main_edition_transcription.py editor <book-dir> <name> \
         [--crop L T R B] [--width N] [--name STEM] [--debug]
 
 Writes .novc/scans/<stem>-editor.html: the page image with a text field that sits directly
@@ -47,14 +47,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import sys
 from pathlib import Path
 
-sys.path.insert(
-    0, str(Path(__file__).resolve().parent.parent)
-)  # run directly as a script
-
-from PIL import Image, ImageDraw  # noqa: E402
+from PIL import Image, ImageDraw
 
 # The scans archive and the .novc/scans scratch directory are ``scan_page``'s constants,
 # imported rather than repeated: the two tools read the same archive and write beside each
@@ -62,7 +57,7 @@ from PIL import Image, ImageDraw  # noqa: E402
 # editor and its rendering are disposable -- rebuilt from the scan whenever the crop changes
 # -- which is why scratch is the right home; what is meant to be KEPT is the JSON the Save
 # button exports, committed beside the transcription it records.
-from accgram.scan_page import OUT, SCANS  # noqa: E402
+from accgram.scan_page import OUT, SCANS
 
 # A row is text when its ink rises this far from the page's own baseline toward a full line's
 # density.  Relative, not absolute, because a crop that clips the page's vertical border rule
@@ -725,9 +720,10 @@ save();
 """
 
 
-def main() -> None:
-    sys.stdout.reconfigure(encoding="utf-8")
-    parser = argparse.ArgumentParser(description=__doc__)
+def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
+    # repo_root is unused: OUT and SCANS are ``scan_page``'s module constants, imported above.
+    # The parameter is here so the entry point wires every subcommand the same way.
+    del repo_root
     parser.add_argument("book", help="book directory under the scans archive")
     parser.add_argument("name", help="scan filename, with or without the .jpg")
     parser.add_argument(
@@ -751,7 +747,9 @@ def main() -> None:
         action="store_true",
         help="also write <stem>-lines.png with the detected line bands drawn on the page",
     )
-    args = parser.parse_args()
+
+
+def run(args: argparse.Namespace) -> None:
     debug, width, crop = args.debug, args.width, args.crop
 
     stem = args.stem if args.stem else args.name.removesuffix(".jpg")
@@ -838,7 +836,3 @@ def main() -> None:
     for level, message in crop_warnings([tuple(r["px"]) for r in rows], img.height):
         print(f"  {level}: {message}")
     print(f"editor -> {html}")
-
-
-if __name__ == "__main__":
-    main()
