@@ -37,8 +37,12 @@ Subcommands:
                 --site SKELETON NEXT_SKELETON asks a different question -- what every
                 strand does at one site, located by the letter skeleton of a word and of
                 the word after it.
-
-    (build joins them here as the rest of the toolchain converts.)
+    build
+                Wrap the editor's export(s) into the committed JSON and derive the .txt
+                body beneath its hand-written header, which this never rewrites.
+                --derive-only re-derives that body from the already-committed JSON, and
+                --check writes nothing at all: it re-derives every committed stem and
+                exits non-zero if any .txt is not its own derived body.
 
 The output is only ever written.  To put a rendering in front of the reader, hand over a
 ``file:///`` link to it and open nothing -- no Start-Process, no browser pane.
@@ -54,6 +58,7 @@ Examples:
         in/accgram/edition_transcriptions/simtiq_ex_taxton.json 12 13
     .venv/Scripts/python.exe py/main_edition_transcription.py check \
         --stem simtiq_dt_elyon
+    .venv/Scripts/python.exe py/main_edition_transcription.py build --check
 """
 
 from __future__ import annotations
@@ -62,6 +67,7 @@ import argparse
 from pathlib import Path
 
 from accgram import scan_page
+from accgram import transcription_build
 from accgram import transcription_check
 from accgram import transcription_editor
 from accgram import zoom_line
@@ -88,6 +94,11 @@ def _run_zoom_line(args: argparse.Namespace) -> None:
 
 def _run_check(args: argparse.Namespace) -> None:
     transcription_check.run(args)
+
+
+def _run_build(args: argparse.Namespace) -> int:
+    # The one subcommand with an exit code to return: --check is an idempotence gate.
+    return transcription_build.run(args)
 
 
 def main() -> None:
@@ -143,6 +154,18 @@ def main() -> None:
     )
     transcription_check.add_args(check_parser, repo_root=_repo_root())
     check_parser.set_defaults(func=_run_check)
+
+    build_parser = subparsers.add_parser(
+        "build",
+        help=(
+            "Wrap the editor's export(s) into the committed JSON and derive the .txt "
+            "body under its hand-written header. --derive-only re-derives that body "
+            "from the committed JSON; --check writes nothing and exits non-zero if any "
+            "committed .txt is not its own derived body."
+        ),
+    )
+    transcription_build.add_args(build_parser, repo_root=_repo_root())
+    build_parser.set_defaults(func=_run_build)
 
     args = parser.parse_args()
     # `or 0` because a subcommand that returns None succeeded; the non-None case is a gate

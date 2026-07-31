@@ -1,15 +1,16 @@
 """Wrap the line editor's export(s) into the committed JSON, and derive the .txt body.
 
     # a new transcription: both jobs at once
-    .venv/Scripts/python.exe py/accgram/transcription_build.py simtan_ex_elyon \
+    .venv/Scripts/python.exe py/main_edition_transcription.py build simtan_ex_elyon \
         --export ~/Downloads/simtan_ex_elyon_p350-transcription.json \
         --corrections .novc/ex_elyon_corrections.json
 
     # after a post-export correction or a header edit: re-derive from the committed JSON
-    .venv/Scripts/python.exe py/accgram/transcription_build.py simtan_ex_elyon --derive-only
+    .venv/Scripts/python.exe py/main_edition_transcription.py build simtan_ex_elyon \
+        --derive-only
 
     # idempotence: re-derive every committed stem and report any that would change
-    .venv/Scripts/python.exe py/accgram/transcription_build.py --check
+    .venv/Scripts/python.exe py/main_edition_transcription.py build --check
 
 The two jobs of ``doc/edition-transcription-workflow.md`` section 4, which had been done by a
 throwaway script rewritten once per transcription -- thirteen of them by the time this was
@@ -47,16 +48,10 @@ import argparse
 import difflib
 import json
 import re
-import sys
 from pathlib import Path
 
-sys.path.insert(
-    0, str(Path(__file__).resolve().parent.parent)
-)  # run directly as a script
-
-import repo_paths  # noqa: E402
-from accgram import edition_transcription as et  # noqa: E402
-from cmn.utf8_io import force_utf8_io  # noqa: E402
+import repo_paths
+from accgram import edition_transcription as et
 
 # A page label is the export stem's last underscore-separated part -- "p298" for
 # simtan_dt_taxton_p298 -- which is what transcription_check reports a difference's
@@ -292,9 +287,11 @@ def _committed_stems() -> list[str]:
     return sorted(p.stem for p in et.transcriptions_dir().glob("*.json"))
 
 
-def main() -> int:
-    force_utf8_io()
-    parser = argparse.ArgumentParser(description=__doc__)
+def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
+    # repo_root is unused: the committed transcriptions are located through
+    # ``edition_transcription.transcriptions_dir``, and an export is named on the command
+    # line.  The parameter is here so the entry point wires every subcommand the same way.
+    del repo_root
     parser.add_argument(
         "stem",
         nargs="?",
@@ -327,17 +324,29 @@ def main() -> int:
         action="store_true",
         help="write nothing: report whether each committed .txt is its own derived body",
     )
-    args = parser.parse_args()
 
+
+def run(args: argparse.Namespace) -> int:
+    """The subcommand, returning the exit code ``--check`` gates on.
+
+    The return value is an int, not None: ``--check`` is an idempotence gate, and the entry
+    point's ``raise SystemExit(args.func(args) or 0)`` is what carries a stale stem's 1 out
+    to the shell.
+    """
     if args.check:
         return check([args.stem] if args.stem else _committed_stems())
     if not args.stem:
-        parser.error("a stem is required unless --check is asking about all of them")
+        # The two completeness rules were ``parser.error`` calls while this module owned its
+        # own parser; as a subcommand it cannot reach the parser, so they are raised the way
+        # ``scan_page`` and ``transcription_check`` raise theirs.
+        raise SystemExit(
+            "build: error: a stem is required unless --check is asking about all of them"
+        )
     if args.derive_only:
         record = json.loads(json_path(args.stem).read_text(encoding="utf-8"))
     else:
         if not args.export:
-            parser.error("--export is required unless --derive-only")
+            raise SystemExit("build: error: --export is required unless --derive-only")
         record = wrap(args.export, args.corrections, args.uncertain)
         _warn_dropped_keys(json_path(args.stem), record)
         _write(
@@ -356,7 +365,3 @@ def main() -> int:
     _write(txt, rendered(header, record))
     _report_uncertain(record)
     return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
