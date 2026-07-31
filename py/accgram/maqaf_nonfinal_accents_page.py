@@ -2216,9 +2216,9 @@ def _one_letter_type(word: dict) -> str:
 def _accented_letters(chanted_word: str) -> int:
     """How many base letters of the chanted word have a mark on them.
 
-    Two of the one-letter words have each of their two marks written twice, on two letters, so
-    they show four marks; the paragraph says so, and this is what derives the "two" rather than
-    letting the page state a count it does not compute.  Same keying as
+    Two of the one-letter words have each of their two accents written twice, on two letters, so
+    four accents are visible; the paragraph BELOW the table says so, and this is what derives the
+    "two" rather than letting the page state a count it does not compute.  Same keying as
     ``maqaf_nonfinal_accents._accents_share_a_letter``: a mark counts against the letter it
     follows.
     """
@@ -2349,13 +2349,42 @@ def _one_letter_appendix_section(survey: dict) -> tuple[object, ...]:
                 " same syllable. My “features of interest” lists include the"
                 f" {_count(len(gerstar))} with a",
                 *[" ", link(f"{ROM_TELISHA_GEDOLAH} among them", _FOI_UNICODE), "."],
-                f" {_count(len(doubled)).capitalize()} of them have each of their two marks"
-                " written twice, so they look at first like four accents rather than two; MAM"
-                " treats the later pair as a stress helper. The Mwd column links each chanted"
-                " word to MAM's notes on it.",
             )
         ),
         H.table(tuple(body), {"class": "centered-table accent-pair-table"}),
+        # BELOW THE TABLE ON PURPOSE (Ben, 2026-07-31: "let's move that discussion to after the
+        # table, and let's fill that discussion out"), and his wording verbatim.  What used to be
+        # the tail of the paragraph above pointed at rows nobody had looked at yet -- a reader met
+        # "they look at first like four accents" before meeting the four accents.  The paragraph
+        # above keeps the section's before-the-table job, saying what these chanted words are and
+        # why no earlier table has them; this one has the after-the-table job, reading the rows.
+        #
+        # "THE TABLE ABOVE" STANDS, deliberately.  Put to Ben that his opener doubles the earlier
+        # paragraph's "in none of the tables above", each of a different table, he chose verbatim
+        # over naming the referent: this paragraph sits directly under the table it means.
+        #
+        # "ALL WORDS" AND "OF THEM" ARE THE WIDE READING OF #81 the docstring's `"WORD", NOT
+        # "CHANTED WORD"` paragraph already argues -- the column's own forms settle the sense, and
+        # not one of these six is a maqaf compound anyway.  Not a slip to be tightened later.
+        #
+        # TWO CLAIMS HERE ARE BEN'S OWN and have no oracle in the survey behind them: that this
+        # presentation is unique to MAM, and what MAM's notes on the doubled words cover.  Do not
+        # go hunting for data to pin them, and do not drop the "as far as I know" -- it is the
+        # scope of the uniqueness claim, not a hedge over a bounded doubt.  The stress-helper
+        # sentence is the same kind of claim, attributed to MAM; the docstring's WHY "THE LATER
+        # PAIR" IS THE STRESS HELPER paragraph holds the reasoning that stays off the page.
+        #
+        # The count is spliced from ``doubled`` as it was before, mid-sentence now, so no
+        # ``.capitalize()``.
+        H.para(
+            f"In the table above, all words are shown as they appear in MAM. In particular,"
+            f" {_count(len(doubled))} of them have each of their two accents written twice, so"
+            " they look at first like they have four accents rather than two. But, MAM intends"
+            " the later pair of accents to be interpreted as a stress helper. This presentation"
+            " is, as far as I know, unique to MAM. The Mwd column links each chanted word to"
+            " MAM's notes on it. For the words with stress helpers, MAM's notes discuss the wide"
+            " variety of ways these words appear in important manuscripts and printed editions."
+        ),
     )
 
 
