@@ -204,6 +204,13 @@ drift class ebc3ac5 was killing. `scan_page.py:50-64` and `transcription_editor.
 share verbatim `SCANS`/`OUT` constant blocks and a copied `_take`, and both hand-roll argv
 parsing while `transcription_build` uses argparse. Consolidate.
 
+**RESOLVED, in two unrelated passes.** The `_pages_of` and stem-label half went in `2aa40c8`,
+before and independently of the entry-point work. The argv-vs-argparse half went with the move
+to a single entry point (`33b850d` and the phases around it): all five modules now expose
+`add_args`/`run` and are subcommands of `py/main_edition_transcription.py`, so there is one
+argparse and no hand-rolled `sys.argv` scanning left. `SCANS`/`OUT` are now `scan_page`'s alone
+and `transcription_editor` imports them; the copied `_take` is gone.
+
 **24. `scan_page --name` with multiple page arguments silently overwrites.** Every page is
 written to the same `<STEM>.png`, last one wins (`py/accgram/scan_page.py:91-92`) —
 contradicting the flag's stated purpose of preventing overwrites. Error out on the combination.
@@ -230,6 +237,11 @@ a linked worktree. Both cosmetic.
 **28. `transcription_check.py:58` reconfigures stdout at module import time** — a side effect
 `test_edition_transcriptions` now inherits by importing it. Pre-existing, not introduced this
 week; move it into `main()` per the repo's own convention.
+
+**RESOLVED.** The equivalent import-time `stdout.reconfigure` in `zoom_line` went in
+`aa09ede`, and all five transcription modules now leave stream setup to
+`py/main_edition_transcription.py`'s `force_utf8_io()`, called from its `if __name__` block.
+Importing any of them has no stream side effect.
 
 **29. Cross-module use of private members.** `transcription_parse.py:107,141` reaches
 `et._ALIASES` and `et._split_on_joiners`; `transcription_check.py:143-144` reaches

@@ -245,7 +245,7 @@ def _page(width, height, pitch, band_h, top0, n_lines):
 
 
 def _grow_and_classify(img, lines, lo_idx, hi_idx, width=1200):
-    """Run the editor's grow-then-classify pipeline exactly as ``main`` composes it, over a crop
+    """Run the editor's grow-then-classify pipeline exactly as ``run`` composes it, over a crop
     set tight to lines ``lo_idx..hi_idx`` -- the new 'the lines I want' meaning."""
     height = img.height
     crop = [0.05, lines[lo_idx][0] / height, 0.95, lines[hi_idx][1] / height]

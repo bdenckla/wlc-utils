@@ -18,17 +18,22 @@ at the end.
 
 ## 1. Find the page and build the editor
 
+**Every tool this procedure uses is a subcommand of one entry point,
+`py/main_edition_transcription.py`** — `scan-page`, `editor`, `zoom-line`, `check`, `build`.
+None of the five modules under `py/accgram/` is runnable on its own; `--help` on the entry
+point lists them, and `--help` on a subcommand gives its flags.
+
 Scans live outside the repo (see the `book-scan-page-naming` note; `WLC_SCANS_DIR` overrides
 the root). Render a whole page first to locate the Decalogue:
 
 ```bash
-.venv/Scripts/python.exe py/accgram/scan_page.py "Feldheim Simanim Tiqqun" C208 --width 1100
+.venv/Scripts/python.exe py/main_edition_transcription.py scan-page "Feldheim Simanim Tiqqun" C208 --width 1100
 ```
 
 Then build the per-line editor. **Default to the whole page — pass no `--crop` at all:**
 
 ```bash
-.venv/Scripts/python.exe py/accgram/transcription_editor.py "Feldheim Simanim Tanakh" A5-D-0297 \
+.venv/Scripts/python.exe py/main_edition_transcription.py editor "Feldheim Simanim Tanakh" A5-D-0297 \
     --name simtan_dt_taxton_p297 --width 2000 --debug
 ```
 
@@ -185,7 +190,7 @@ a test rather than surfacing as a puzzling runtime message.
 ## 3. Check before committing
 
 ```bash
-.venv/Scripts/python.exe py/accgram/transcription_check.py \
+.venv/Scripts/python.exe py/main_edition_transcription.py check \
     ~/Downloads/simtiq_dt_elyon_p208-transcription.json \
     ~/Downloads/simtiq_dt_elyon_p209-transcription.json --key dt elyon printed
 ```
@@ -215,7 +220,7 @@ For any difference, before calling it an accent difference:
   `mun-mer`; p. 246 has two.
 - **Zoom the printed line** and let Ben re-read it. Never crop at the band edge:
   ```bash
-  .venv/Scripts/python.exe py/accgram/zoom_line.py <export.json> 12
+  .venv/Scripts/python.exe py/main_edition_transcription.py zoom-line <export.json> 12
   ```
   `zoom_line` pads a full band height above, because a tight crop once cut the upper dot off a
   zaqef qatan and left something that reads exactly like a revia. It also pads *sideways* past
@@ -224,7 +229,7 @@ For any difference, before calling it an accent difference:
   the **lower** one.
 - **Check all eight strands** before concluding whose divergence it is:
   ```bash
-  .venv/Scripts/python.exe py/accgram/transcription_check.py --site השבת לקדשו
+  .venv/Scripts/python.exe py/main_edition_transcription.py check --site השבת לקדשו
   ```
   The site is located by the skeleton of the word *and* of the word after it. Confirm all eight
   strands are **listed**, and that every zero-hit row has an explanation — the word is absent
@@ -243,14 +248,14 @@ corrected export rather than typing it, so the two cannot drift; a correction ma
 goes into the JSON with the superseded reading kept in `corrected_from`, and into the `.txt`
 header.
 
-**Both of those are one tool now — `py/accgram/transcription_build.py`. Do not write a script
-per transcription.** Thirteen near-duplicate ones had accumulated in `.novc/` before it existed
+**Both of those are one tool now — the `build` subcommand. Do not write a script per
+transcription.** Thirteen near-duplicate ones had accumulated in `.novc/` before it existed
 ([#72](https://github.com/bdenckla/wlc-utils/issues/72)), and the last two had already diverged
 on whether a page's trailing empty lines are dropped — which is a difference in what gets
 committed, not in style.
 
 ```bash
-.venv/Scripts/python.exe py/accgram/transcription_build.py <stem> --export <path>... --corrections <path>
+.venv/Scripts/python.exe py/main_edition_transcription.py build <stem> --export <path>... --corrections <path>
 ```
 
 - `--export` takes one downloaded export per page, **in page order**; more than one gets the
