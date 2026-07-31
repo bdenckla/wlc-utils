@@ -2135,8 +2135,16 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
     # The gray maqaf closes the first of those with a figure instead of a hedge (2026-07-27):
     # the sentence used to call the poetic count "a floor" and stop, which told a reader the
     # number was wrong without telling them by how much.  It stays inside the one paragraph #83
-    # cut this section down to, and it names no accent -- spelling out what the 47 are would
-    # want oleh-we-yored and tsinnorit in prose, which is the detail that was cut.
+    # cut this section down to, and it names no accent -- spelling out what the spread ones are
+    # would want oleh-we-yored and tsinnorit in prose, which is the detail that was cut.
+    #
+    # The two figures are no longer two disjoint parts, and the sentence that made them so had
+    # to go (issue #91): MAM-simple has every gray maqaf as an ``implicit-maqaf`` node, the
+    # loader puts each on the atom before it, and Ben settled on 2026-07-31 that the survey
+    # counts one as a maqaf.  So the hits figure ALREADY includes the gray-maqaf compounds, and
+    # a paragraph offering the gray total as "the other part of the measure" would count them
+    # twice.  What the gray count adds beside the hits is its split by kind, which is what it is
+    # quoted for here.
     hits = _n(survey, _CORPUS, "poetic", "hits")
     return (
         # Ben's own word, 2026-07-30: "call it an Appendix".  The scope-naming that made "The
@@ -2153,17 +2161,17 @@ def _poetic_section(survey: dict) -> tuple[object, ...]:
                 " ch. 9 §§20–26), where the prose system does so rarely, and in the few pairs"
                 " above. And many of its maqafs are not written at all: Breuer (§§27, 37)"
                 " records that in poetic verses the maqaf after a secondary mark is customarily"
-                " left unwritten while the atom still counts as joined, so a survey that finds"
-                " compounds by looking for a written maqaf reaches only part of what is there."
-                f" MAM's poetic verses have {hits} cases by that measure, and MAM has the other"
-                " part of the measure too: it supplies ",
+                " left unwritten while the atom still counts as joined, so a survey that looks"
+                " for a written maqaf reaches only part of what is there. MAM supplies the"
+                " rest: it has ",
                 link(f"{_gray(survey)} gray maqafs", _FOI_RARE_TMPLS),
-                ", its mark"
-                " for a maqaf the manuscript leaves unwritten where the chanted word needs one."
-                f" Of those, {_gray(survey, mpa.GRAY_KIND_SECOND)} join an atom that has an"
-                " accent alongside the compound's accent; the other"
+                ", its mark for a maqaf the manuscript leaves unwritten where the chanted word"
+                " needs one, and this survey reads a gray maqaf as a maqaf. On that reckoning"
+                f" MAM's poetic verses have {hits} cases. Of the gray maqafs,"
+                f" {_gray(survey, mpa.GRAY_KIND_SECOND)} join an atom that has an accent"
+                " alongside the compound's accent; the other"
                 f" {_gray(survey, mpa.GRAY_KIND_SPREAD)} have one accent written across the"
-                " two atoms. Neither figure belongs beside the prose one.",
+                " two atoms. No figure here belongs beside a prose one.",
             )
         ),
     )

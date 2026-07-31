@@ -85,17 +85,31 @@ Crown, which he advised on).  There is therefore no second manuscript here at al
 counts measure L as Westminster reads it, and what an edition does with it.  ``CORPUS_KIND``
 records that so the page cannot state a corpus's standing wrongly.
 
-THE GRAY MAQAF IS THE POETIC HALF OF THE ANSWER, and it is a second measure rather than more of
-the first.  The scan above finds a compound by its WRITTEN maqaf, and in poetic verses the maqaf
-after a secondary mark is customarily not written -- so the poetic count is a floor by
-construction and no tightening of the scan can raise it.  MAM's own answer to that is the gray
-maqaf (מקף אפור), its mark for a maqaf the manuscript leaves unwritten where the chanted word
-needs one; ``gray_maqaf_survey`` counts it.  The doctrine is Breuer, Chapter 9 §§18-36, set out in
-MAM's Wikisource introduction (authored at ``../MAM-basics/py/author_misc/
-he_ws_intro_to_mam_gray_maqaf_*.mediawiki``), and the mark is preserved only in MAM-parsed-plus:
-MAM-simple drops it, so this one count reads a different corpus from every other count here.
-Two kinds are separated, because only one of them answers this page's question: an oleh with its
-yored, and a tsinnorit with its partner, are ONE accent written across two atoms.
+THE GRAY MAQAF COUNTS AS A MAQAF, and only MAM has one.  A compound is found here by its maqaf,
+and in poetic verses the maqaf after a secondary mark is customarily left unwritten while the atom
+still counts as joined -- so a scan of written maqafs alone reaches only part of the poetic
+phenomenon.  MAM's answer to that is the gray maqaf (מקף אפור), its mark for a maqaf the
+manuscript leaves unwritten where the chanted word needs one, and MAM-simple has all 116 of them
+as ``implicit-maqaf`` nodes, which ``mam_simple_verse`` puts on the atom before (issue #91).  Ben,
+2026-07-31, on what the survey then counts: a gray maqaf is a maqaf.  That took MAM's poetic hits
+from 17 to 130, while WLC's and UXLC's, those texts having no such mark, stay floors -- so MAM's
+poetic figure is incomparable with theirs on top of no poetic figure being comparable with a prose
+one.
+
+``gray_maqaf_survey`` counts the mark separately all the same, and reads MAM-parsed-plus for it.
+NOT because MAM-simple lacks it: the two agree exactly, 116 occurrences in the same verses, none
+outside Psalms, Proverbs and Job, and MAM-basics maps the ``מ:מקף אפור`` template to the
+``implicit-maqaf`` node (``../MAM-basics/py/foi/foiz_wt_rare_tmpls.py``).  Two wrong claims fell at
+issue #91 and neither should come back.  This docstring and the tracked JSON's ``source`` string
+both said MAM-simple DROPS the mark, which is what sent the survey to a second corpus for it.  And
+the replacement #91 itself proposed -- that what MAM-simple drops is a seven-way kind distinction
+MAM-parsed-plus keeps -- is wrong the same way: the ``מ:מקף אפור`` template carries no parameters
+at all, so the doctrine's seven types (Breuer, Chapter 9 §§18-36, set out in MAM's Wikisource
+introduction, authored at ``../MAM-basics/py/author_misc/
+he_ws_intro_to_mam_gray_maqaf_*.mediawiki``) are in the prose and in neither data file.  What the
+separate count is FOR is the TWO-kind split this module derives itself, only one kind of which
+answers this page's question: an oleh with its yored, and a tsinnorit with its partner, are ONE
+accent written across two atoms.
 
 Run via ``main_accgram.py generate-html-maqaf-nonfinal-accents``.
 """
@@ -840,8 +854,10 @@ def gray_maqaf_survey() -> dict:
             " pointed as though the maqaf were there."
         ),
         "source": (
-            "MAM-parsed-plus (the מ:מקף אפור template), NOT the MAM-simple this survey's"
-            " corpora read: MAM-simple drops the mark."
+            "MAM-parsed-plus (the מ:מקף אפור template). MAM-simple has the same 116, in the"
+            " same verses, as its implicit-maqaf node, and the corpus counts above read them"
+            " as maqafs; this count is here for the two-kind split beside them, not because"
+            " one of the two texts has the mark and the other has not."
         ),
         "total": len(hits),
         "by_book": dict(Counter(h["bcv"][:2] for h in hits).most_common()),
@@ -1022,15 +1038,19 @@ def build_survey() -> dict:
             " the final atom, none on a non-final one."
         ),
         "poetic_caveat": (
-            "The poetic counts under ``corpora`` are a FLOOR and are not comparable with the"
-            " prose ones. Breuer (Chapter 9 §§27, 37) records that in the Three Books the maqaf"
-            " after a secondary mahapakh, merkha or tsinnorit is customarily omitted in writing"
-            " while the atom still counts as joined -- so most of the poetic phenomenon is"
-            " invisible to a maqaf scan by construction. His own 'few cases where the hyphen is"
-            " not omitted' bear this out from the other side: Job 6:10 and Prov 25:20 are"
-            " written WITHOUT a maqaf in WLC and UXLC, and with one only in MAM. ``gray_maqaf``"
-            " is the measure of what the scan misses; take the two together, and neither alone."
-            " The routes are not attempted here either; see ``classify``."
+            "No poetic count under ``corpora`` is comparable with a prose one, and MAM's is"
+            " not comparable with WLC's or UXLC's either. Breuer (Chapter 9 §§27, 37) records"
+            " that in the Three Books the maqaf after a secondary mahapakh, merkha or"
+            " tsinnorit is customarily omitted in writing while the atom still counts as"
+            " joined -- so a scan that finds compounds by a written maqaf misses most of the"
+            " poetic phenomenon. His own 'few cases where the hyphen is not omitted' bear this"
+            " out from the other side: Job 6:10 and Prov 25:20 are written WITHOUT a maqaf in"
+            " WLC and UXLC, and with one only in MAM. MAM supplies the rest as its gray maqaf,"
+            " and the counts here read those as maqafs -- so MAM's poetic hits below count"
+            " gray-maqaf compounds alongside written-maqaf ones, while WLC and UXLC, having no"
+            " such mark, keep poetic counts that are floors. ``gray_maqaf`` counts the mark on"
+            " its own and splits it by kind. The routes are not attempted here either; see"
+            " ``classify``."
         ),
         "gray_maqaf": gray_maqaf_survey(),
         "corpora": {},
