@@ -2,14 +2,14 @@
 
 Usage:
     # a transcription still in progress, from the editor's downloaded exports
-    .venv/Scripts/python.exe py/accgram/transcription_check.py \
+    .venv/Scripts/python.exe py/main_edition_transcription.py check \
         ~/Downloads/simtiq_dt_elyon_p208-transcription.json ... --key dt elyon printed
 
     # one already committed, taking its Wikisource strand from the .txt header
-    .venv/Scripts/python.exe py/accgram/transcription_check.py --stem simtiq_dt_elyon
+    .venv/Scripts/python.exe py/main_edition_transcription.py check --stem simtiq_dt_elyon
 
     # what all eight strands do at one site, located by letter skeleton
-    .venv/Scripts/python.exe py/accgram/transcription_check.py --site השבת לקדשו
+    .venv/Scripts/python.exe py/main_edition_transcription.py check --site השבת לקדשו
 
 This is the loop that runs between the transcriber typing a page and the transcription being
 committed: resolve what was typed, align it against the strand, and report every difference
@@ -46,20 +46,15 @@ this material -- see the Exodus elyon's two cancelling divergences in wlc-utils#
 
 from __future__ import annotations
 
+import argparse
 import difflib
 import json
-import sys
 from pathlib import Path
 
-sys.path.insert(
-    0, str(Path(__file__).resolve().parent.parent)
-)  # run directly as a script
-
-from accgram import edition_transcription as et  # noqa: E402
-from accgram import printed_decalogue as pd  # noqa: E402
-from accgram import printed_decalogue_strands as pds  # noqa: E402
-from accgram import transcription_build as tb  # noqa: E402
-from cmn.utf8_io import force_utf8_io  # noqa: E402
+from accgram import edition_transcription as et
+from accgram import printed_decalogue as pd
+from accgram import printed_decalogue_strands as pds
+from accgram import transcription_build as tb
 
 UNRESOLVED = "???"
 
@@ -273,28 +268,58 @@ def site_report(skeleton: str, next_skeleton: str) -> None:
         print(f"  {et.strand_name(key):28s} {len(hits)} hit(s): {', '.join(hits)}")
 
 
-def main() -> None:
-    force_utf8_io()
-    args = sys.argv[1:]
-    if "--site" in args:
-        i = args.index("--site")
-        site_report(args[i + 1], args[i + 2])
+def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
+    # repo_root is unused: the committed transcriptions are located through
+    # ``edition_transcription.transcriptions_dir``, and an export is named on the command
+    # line.  The parameter is here so the entry point wires every subcommand the same way.
+    del repo_root
+    parser.add_argument(
+        "paths",
+        nargs="*",
+        type=Path,
+        help="the line editor's downloaded export(s), checked against the strand --key names",
+    )
+    # The three ways of saying WHAT to check are alternatives, so argparse rejects a
+    # combination of them rather than the old hand-rolled scan silently preferring one.
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument(
+        "--key",
+        nargs=3,
+        metavar=("BOOK", "STRAND", "KIND"),
+        help="the strand the exports given as paths are checked against",
+    )
+    mode.add_argument(
+        "--stem",
+        help="check a committed transcription instead, taking its strand from the .txt header",
+    )
+    mode.add_argument(
+        "--site",
+        nargs=2,
+        metavar=("SKELETON", "NEXT_SKELETON"),
+        help="report what every strand does at one site instead, located by letter skeleton",
+    )
+
+
+def run(args: argparse.Namespace) -> None:
+    if args.site:
+        site_report(*args.site)
         return
-    if "--stem" in args:
-        stem = args[args.index("--stem") + 1]
-        transcription = et.load_transcription(et.transcriptions_dir() / f"{stem}.txt")
+    if args.stem:
+        txt = et.transcriptions_dir() / f"{args.stem}.txt"
+        transcription = et.load_transcription(txt)
         record = json.loads(
-            (et.transcriptions_dir() / f"{stem}.json").read_text(encoding="utf-8")
+            (et.transcriptions_dir() / f"{args.stem}.json").read_text(encoding="utf-8")
         )
         report(tb.pages_of(record), transcription.key)
         return
-    key_at = args.index("--key")
-    key = (args[key_at + 1], args[key_at + 2], args[key_at + 3])
-    pages = []
-    for path in args[:key_at]:
-        pages.extend(tb.pages_of(json.loads(Path(path).read_text(encoding="utf-8"))))
-    report(pages, key)
-
-
-if __name__ == "__main__":
-    main()
+    if not args.paths:
+        raise SystemExit(
+            "check: error: --key names the strand to check the exports against, so at least"
+            " one export path is required with it.  To check an already committed"
+            " transcription instead, name it with --stem."
+        )
+    pages: list[dict] = []
+    for path in args.paths:
+        pages.extend(tb.pages_of(json.loads(path.read_text(encoding="utf-8"))))
+    # A tuple, not the list argparse collects: a key is a dict key downstream.
+    report(pages, tuple(args.key))

@@ -29,8 +29,16 @@ Subcommands:
                 no accent can be clipped, and echo that line's transcribed text.  The
                 band comes from the export's own px_source coordinates, so the zoom is
                 anchored to what was transcribed.
+    check
+                Check a hand transcription against its vendored Wikisource strand, before
+                it is committed: name the editor's downloaded export(s) as paths and the
+                strand with --key BOOK STRAND KIND, or name an already committed
+                transcription with --stem, which takes its strand from the .txt header.
+                --site SKELETON NEXT_SKELETON asks a different question -- what every
+                strand does at one site, located by the letter skeleton of a word and of
+                the word after it.
 
-    (check and build join them here as the rest of the toolchain converts.)
+    (build joins them here as the rest of the toolchain converts.)
 
 The output is only ever written.  To put a rendering in front of the reader, hand over a
 ``file:///`` link to it and open nothing -- no Start-Process, no browser pane.
@@ -44,6 +52,8 @@ Examples:
         "Feldheim Simanim Tiqqun" C246 --crop 0.5 0.30 1 0.45 --name C246-v --debug
     .venv/Scripts/python.exe py/main_edition_transcription.py zoom-line \
         in/accgram/edition_transcriptions/simtiq_ex_taxton.json 12 13
+    .venv/Scripts/python.exe py/main_edition_transcription.py check \
+        --stem simtiq_dt_elyon
 """
 
 from __future__ import annotations
@@ -52,6 +62,7 @@ import argparse
 from pathlib import Path
 
 from accgram import scan_page
+from accgram import transcription_check
 from accgram import transcription_editor
 from accgram import zoom_line
 from cmn.utf8_io import force_utf8_io
@@ -73,6 +84,10 @@ def _run_editor(args: argparse.Namespace) -> None:
 
 def _run_zoom_line(args: argparse.Namespace) -> None:
     zoom_line.run(args)
+
+
+def _run_check(args: argparse.Namespace) -> None:
+    transcription_check.run(args)
 
 
 def main() -> None:
@@ -116,6 +131,18 @@ def main() -> None:
     )
     zoom_line.add_args(zoom_line_parser, repo_root=_repo_root())
     zoom_line_parser.set_defaults(func=_run_zoom_line)
+
+    check_parser = subparsers.add_parser(
+        "check",
+        help=(
+            "Check a hand transcription against its vendored Wikisource strand. Name the "
+            "editor's export(s) as paths with --key BOOK STRAND KIND, or a committed "
+            "transcription with --stem; --site SKELETON NEXT_SKELETON instead reports "
+            "what every strand does at one site."
+        ),
+    )
+    transcription_check.add_args(check_parser, repo_root=_repo_root())
+    check_parser.set_defaults(func=_run_check)
 
     args = parser.parse_args()
     # `or 0` because a subcommand that returns None succeeded; the non-None case is a gate
