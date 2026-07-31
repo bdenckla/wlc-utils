@@ -43,28 +43,24 @@ out/accgram/uxlc_grammar_test.txt.  Console output is ASCII only.
 from __future__ import annotations
 
 import json
-import sys
 from collections import Counter
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-
-from accgram import accent_marks as am  # noqa: E402
-from accgram import rtms_data  # noqa: E402
-from accgram import rtms_rows  # noqa: E402
-from accgram import uni_to_marks  # noqa: E402
+from accgram import accent_marks as am
+from accgram import rtms_data
+from accgram import rtms_rows
+from accgram import uni_to_marks
 from accgram.prose_ply_grammar import (
     LOCATION_ONLY,
     build_parser,
     parse_tokens,
-)  # noqa: E402
-from accgram.prose_scanner import HasLegarmeh, Token, scan_accents  # noqa: E402
-from accgram.tree import print_tree  # noqa: E402
-from accgram import prose_filter  # noqa: E402
-from cmn.wlc_book_codes import bk39id_to_wlc_bb  # noqa: E402
-from py_uxlc import my_uxlc  # noqa: E402
-from py_uxlc.my_uxlc_book_abbreviations import expand_citation  # noqa: E402
-import repo_paths  # noqa: E402
+)
+from accgram.prose_scanner import HasLegarmeh, Token, scan_accents
+from accgram.tree import print_tree
+from accgram import prose_filter
+from cmn.wlc_book_codes import bk39id_to_wlc_bb
+from py_uxlc import my_uxlc
+from py_uxlc.my_uxlc_book_abbreviations import expand_citation
+import repo_paths
 
 WLC_KQ_U = repo_paths.out_dir() / "wlc422-kq-u"
 SRC = repo_paths.in_dir() / "accgram" / "uxlc_accent_changes.json"

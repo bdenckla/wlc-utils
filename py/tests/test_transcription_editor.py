@@ -13,14 +13,9 @@ synthetic profiles are scaled versions of that real page precisely so the number
 as the page, not as magic constants.
 """
 
-import sys
-from pathlib import Path
+from PIL import Image, ImageDraw
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-
-from PIL import Image, ImageDraw  # noqa: E402
-
-from accgram.transcription_editor import (  # noqa: E402
+from accgram.transcription_editor import (
     DETECT_MARGIN_FALLBACK,
     SMOOTH_RADIUS,
     band_context,

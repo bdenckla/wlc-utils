@@ -34,11 +34,8 @@ Notes / deliberate scope decisions:
 import json
 import collections
 import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-
-from accgram import prose_ob_notes  # noqa: E402
+from accgram import prose_ob_notes
 
 ACC = {
     "etnachta",  # translit-ok: UXLC accent names
