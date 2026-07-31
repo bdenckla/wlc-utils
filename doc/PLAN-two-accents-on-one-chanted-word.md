@@ -46,9 +46,12 @@ this plan's purposes.** Ben ruled it off the rendered page on 2026-07-29, and it
 issue #86. The `135` half of it is closed by issue #85 and must not be reopened.
 
 **THIS PLAN DOES NOT COVER THE EDITING OF `maqaf-nonfinal-accents.html`.** That is a separate,
-free-form track — Ben requesting edits interactively, not a plan — and it keeps its own
-persistent state in `doc/maqaf-nonfinal-accents-page-editing.md`. It is named here only because
-its widening onto the same
+free-form track — Ben requesting edits interactively, not a plan — whose state is its own commit
+messages, `829d1f6..` on `main`. (It kept a `doc/maqaf-nonfinal-accents-page-editing.md` until
+2026-07-31, when that file was deleted as spent: everything durable in it had migrated to the
+`hebrew-prose` skill, to this repo's `CLAUDE.md`, or to the docstrings of the page module it
+governed, and its structural description of the page had gone stale.) It is named here only
+because its widening onto the same
 question is half of why Phase 3 went. **Do not read that track's state out of this file, and do
 not record that track's state in this file.** A round of it was written into `§0` on 2026-07-29
 (`b57f8b9`) and taken back out: a summary of what that page currently looks like, and a pointer
