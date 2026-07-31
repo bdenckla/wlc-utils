@@ -101,7 +101,8 @@ def _run_build(args: argparse.Namespace) -> int:
     return transcription_build.run(args)
 
 
-def main() -> None:
+def build_parser() -> argparse.ArgumentParser:
+    """The fully-configured parser, so a test can read the subcommands off it."""
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -155,7 +156,8 @@ def main() -> None:
     transcription_check.add_args(check_parser, repo_root=_repo_root())
     check_parser.set_defaults(func=_run_check)
 
-    build_parser = subparsers.add_parser(
+    # Named build_subparser, not build_parser: this function is build_parser().
+    build_subparser = subparsers.add_parser(
         "build",
         help=(
             "Wrap the editor's export(s) into the committed JSON and derive the .txt "
@@ -164,10 +166,14 @@ def main() -> None:
             "committed .txt is not its own derived body."
         ),
     )
-    transcription_build.add_args(build_parser, repo_root=_repo_root())
-    build_parser.set_defaults(func=_run_build)
+    transcription_build.add_args(build_subparser, repo_root=_repo_root())
+    build_subparser.set_defaults(func=_run_build)
 
-    args = parser.parse_args()
+    return parser
+
+
+def main() -> None:
+    args = build_parser().parse_args()
     # `or 0` because a subcommand that returns None succeeded; the non-None case is a gate
     # such as transcription_build --check, whose non-zero return has to reach the shell.
     raise SystemExit(args.func(args) or 0)

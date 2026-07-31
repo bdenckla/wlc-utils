@@ -261,7 +261,8 @@ def _run_generate_html(_args: argparse.Namespace) -> None:
         _generate_one_html(module)
 
 
-def main() -> None:
+def build_parser() -> argparse.ArgumentParser:
+    """The fully-configured parser, so a test can read the subcommands off it."""
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -427,7 +428,11 @@ def main() -> None:
     ctr_decalogue_fetch.add_args(vendor_ctr_decalogue_parser, repo_root=_repo_root())
     vendor_ctr_decalogue_parser.set_defaults(func=_run_vendor_ctr_decalogue)
 
-    args = parser.parse_args()
+    return parser
+
+
+def main() -> None:
+    args = build_parser().parse_args()
     args.func(args)
 
 
