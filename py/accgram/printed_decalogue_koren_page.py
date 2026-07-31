@@ -259,40 +259,11 @@ _PARA_2 = (
 )
 
 
-# Every ``alt`` passed here names the strands in ROMANIZED form ("taxton"/"elyon") while the
-# figcaption beside it uses Hebrew letters. That is deliberate, not drift: attribute contexts are
-# exempt by design (issue #65, finding T1) -- see printed_decalogue_strands' module docstring.
-def _figure(
-    src: str,
-    alt: str,
-    caption: object,
-    *,
-    width: str | None,
-    boxes: tuple[mhi.Box, ...] | None = None,
-    viewbox: tuple[int, int] | None = None,
-) -> object:
-    # No inline style here: gh-pages/style.css already declares `img { max-width: 100% }` and
-    # `figure img { height: auto }`, so an inline copy only duplicated the stylesheet and
-    # outranked it (issue #65, finding C4b). Don't reintroduce it.
-    # class="ink-on-white" opts the scan into the stylesheet's dark-mode CSS inversion. It is
-    # unconditional here because every image on this page is a Koren scan -- black ink, white
-    # paper. Don't hoist it into a shared img helper: the manuscript photos elsewhere in the
-    # tree are ink on parchment and must NOT invert (see the rule's comment in style.css).
-    img_attr = {"src": src, "alt": alt, "class": "ink-on-white"}
-    if width:
-        img_attr["width"] = width
-    # When boxes are given, the <img> is wrapped in a positioned <div> alongside an inline-SVG
-    # word-highlight overlay (my_html_for_img.annotated_img). The overlay is a sibling of the
-    # img, so the img's dark-mode invert never touches it -- see the .scan-annot rules and the
-    # ink-on-white comment in style.css. class="ink-on-white" stays on the img either way.
-    if boxes:
-        assert viewbox is not None, "boxes require a viewbox=(w, h)"
-        img_node = mhi.annotated_img(
-            img_attr, boxes, viewbox_w=viewbox[0], viewbox_h=viewbox[1]
-        )
-    else:
-        img_node = H.img(img_attr)
-    return H.figure((img_node, H.figcaption(caption)))
+# The figure helper is mhi.scan_figure. Every image on this page is a Koren scan -- black ink,
+# white paper -- so every call passes img_class="ink-on-white", the class that opts a scan into
+# the stylesheet's dark-mode inversion. scan_figure requires that class by name rather than
+# defaulting it, so the manuscript photos elsewhere in the tree (ink on parchment, which must NOT
+# invert) cannot pick it up silently.
 
 
 def _lines_with_breaks(lines: tuple[str, ...]) -> tuple[object, ...]:
@@ -310,7 +281,7 @@ def _body_scans() -> tuple[object, ...]:
     asserts Koren's body text, here it is shown.  (The captions below name the strands and pages.)
     """
     return (
-        _figure(
+        mhi.scan_figure(
             _P113_BODY_IMG,
             "Koren p. 113: the Exodus main Decalogue in the p-trad taḥton",
             (
@@ -319,11 +290,12 @@ def _body_scans() -> tuple[object, ...]:
                 " עבדים closes it with a",
                 *[" ", _ROM_SILLUQ_SOF_PASUQ, "."],
             ),
+            img_class="ink-on-white",
             width=None,
             boxes=_P113_BOXES,
             viewbox=(936, 262),
         ),
-        _figure(
+        mhi.scan_figure(
             _PA38_BODY_IMG,
             "Koren appendix p. A38: the Exodus appendix Decalogue in the elyon",
             (
@@ -332,6 +304,7 @@ def _body_scans() -> tuple[object, ...]:
                 *[" ", _ROM_REVIA, " — the p-trad ", _ELYON, "'s pair."],
                 " The verse runs on to the highlighted מצותי, the אנכי…מצותי span's shared end.",
             ),
+            img_class="ink-on-white",
             width=None,
             boxes=_PA38_BOXES,
             viewbox=(850, 472),
@@ -380,13 +353,14 @@ def _pa38_note_section() -> tuple[object, ...]:
                 " citing רוו״ה.",
             )
         ),
-        _figure(
+        mhi.scan_figure(
             _PA38_NOTE_IMG,
             "Koren appendix p. A38: note on the elyon Decalogue's אנכי…עבדים span",
             (
                 "Koren, appendix p. A38 — the note on the",
                 f" {_ELYON} Decalogue, citing רוו״ה.",
             ),
+            img_class="ink-on-white",
             width=None,
         ),
         H.heading_level_3("Transcription"),
@@ -824,7 +798,7 @@ def _conclusion(
                 " p-trad in every accent.",
             )
         ),
-        _figure(
+        mhi.scan_figure(
             _P281_DT_BODY_IMG,
             "Koren p. 281: the Shabbat commandment of the Deuteronomy Decalogue, in the p-trad"
             " taḥton",
@@ -832,6 +806,7 @@ def _conclusion(
                 "The Shabbat commandment of Koren's Deuteronomy (Vaetḥanan) main Decalogue"
                 f" (p. 281), in the p-trad {_TAHTON}. The three signal words are highlighted.",
             ),
+            img_class="ink-on-white",
             width=None,
             boxes=_P281_BOXES,
             viewbox=(913, 186),

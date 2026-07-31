@@ -302,7 +302,7 @@ def _body_scans() -> tuple[object, ...]:
     the page used to only assert -- showing them is what replaced the old apology.
     """
     return (
-        _figure(
+        mhi.scan_figure(
             _P83_BODY_IMG,
             "Simanim Tiqqun p. 83: the Exodus main Decalogue in the elyon",
             (
@@ -321,11 +321,12 @@ def _body_scans() -> tuple[object, ...]:
                     )
                 ),
             ),
+            img_class="ink-on-white",
             width=None,
             boxes=_P83_BOXES,
             viewbox=(961, 664),
         ),
-        _figure(
+        mhi.scan_figure(
             _P246_BODY_IMG,
             "Simanim Tiqqun p. 246: the Exodus appendix Decalogue in the taḥton",
             (
@@ -335,6 +336,7 @@ def _body_scans() -> tuple[object, ...]:
                 *[" ", _ROM_SILLUQ_SOF_PASUQ, f" — the p-trad {_TAHTON}'s pair."],
                 " The asterisk is a callout to the footnote transcribed below.",
             ),
+            img_class="ink-on-white",
             width=None,
             boxes=_P246_BOXES,
             viewbox=(1149, 327),
@@ -367,41 +369,11 @@ def _intro(source: dict) -> tuple[object, ...]:
     )
 
 
-# Every ``alt`` passed here names the strands in ROMANIZED form ("taxton"/"elyon") while the
-# figcaption beside it uses Hebrew letters. That is deliberate, not drift: attribute contexts are
-# exempt by design (issue #65, finding T1) -- see printed_decalogue_strands' module docstring.
-def _figure(
-    src: str,
-    alt: str,
-    caption: object,
-    *,
-    width: str | None,
-    boxes: tuple[mhi.Box, ...] | None = None,
-    viewbox: tuple[int, int] | None = None,
-) -> object:
-    # No inline style here: gh-pages/style.css already declares `img { max-width: 100% }` and
-    # `figure img { height: auto }`, so an inline copy only duplicated the stylesheet and
-    # outranked it (issue #65, finding C4b). Don't reintroduce it.
-    # class="ink-on-white" opts the scan into the stylesheet's dark-mode CSS inversion. It is
-    # unconditional here because every image on this page is a printed-book scan (SimTiq,
-    # SimTan) -- black ink, white paper. Don't hoist it into a
-    # shared img helper: the manuscript photos elsewhere in the tree are ink on parchment and
-    # must NOT invert (see the rule's comment in style.css).
-    img_attr = {"src": src, "alt": alt, "class": "ink-on-white"}
-    if width:
-        img_attr["width"] = width
-    # When boxes are given, the <img> is wrapped in a positioned <div> alongside an inline-SVG
-    # word-highlight overlay (my_html_for_img.annotated_img). The overlay is a sibling of the
-    # img, so the img's dark-mode invert never touches it -- see the .scan-annot rules and the
-    # ink-on-white comment in style.css. class="ink-on-white" stays on the img either way.
-    if boxes:
-        assert viewbox is not None, "boxes require a viewbox=(w, h)"
-        img_node = mhi.annotated_img(
-            img_attr, boxes, viewbox_w=viewbox[0], viewbox_h=viewbox[1]
-        )
-    else:
-        img_node = H.img(img_attr)
-    return H.figure((img_node, H.figcaption(caption)))
+# The figure helper is mhi.scan_figure. Every image on this page is a printed-book scan (SimTiq,
+# SimTan) -- black ink, white paper -- so every call passes img_class="ink-on-white", the class
+# that opts a scan into the stylesheet's dark-mode inversion. scan_figure requires that class by
+# name rather than defaulting it, so the manuscript photos elsewhere in the tree (ink on
+# parchment, which must NOT invert) cannot pick it up silently.
 
 
 def _lines_with_breaks(lines: tuple[str, ...]) -> tuple[object, ...]:
@@ -627,7 +599,7 @@ def _p246_section() -> tuple[object, ...]:
                 " אנכי.",
             )
         ),
-        _figure(
+        mhi.scan_figure(
             _P246_IMG,
             "Simanim Tiqqun p. 246: appendix footnote on the taḥton Decalogue's אנכי…עבדים span",
             # The blue vertical bars are deliberately a different colour AND orientation from
@@ -646,6 +618,7 @@ def _p246_section() -> tuple[object, ...]:
                     )
                 ),
             ),
+            img_class="ink-on-white",
             width=None,
         ),
         H.heading_level_3("Transcription"),
@@ -1118,7 +1091,7 @@ def _conclusion(
                 " commandment in opposite directions.",
             )
         ),
-        _figure(
+        mhi.scan_figure(
             _P247_DT_IMG,
             "Simanim Tiqqun p. 247: the Shabbat commandment of the Deuteronomy appendix Decalogue,"
             " in the m-trad taḥton",
@@ -1127,6 +1100,7 @@ def _conclusion(
                 f" Decalogue (p. 247), in the m-trad {_TAHTON} — the one place the Tiqqun departs"
                 " from the p-trad. The three signal words are highlighted.",
             ),
+            img_class="ink-on-white",
             width=None,
             boxes=_P247_BOXES,
             viewbox=(1474, 383),
@@ -1163,7 +1137,7 @@ def _conclusion(
             )
         ),
         _tanakh_verdict_table(verdicts),
-        _figure(
+        mhi.scan_figure(
             _TANAKH_EX_TAHTON_IMG,
             "Simanim Tanakh p. 119: the Exodus main Decalogue, in the m-trad taḥton",
             (
@@ -1177,11 +1151,12 @@ def _conclusion(
                 _ROM_SILLUQ_SOF_PASUQ,
                 ".",
             ),
+            img_class="ink-on-white",
             width=None,
             boxes=_P119_BOXES,
             viewbox=(972, 259),
         ),
-        _figure(
+        mhi.scan_figure(
             _TANAKH_EX_ELYON_IMG,
             "Simanim Tanakh p. 350: the Exodus Decalogue in the appendix to the Torah section, in the m-trad elyon",
             (
@@ -1195,6 +1170,7 @@ def _conclusion(
                 _ROM_REVIA,
                 ".",
             ),
+            img_class="ink-on-white",
             width=None,
             boxes=_P350_BOXES,
             viewbox=(970, 138),

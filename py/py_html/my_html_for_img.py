@@ -87,3 +87,47 @@ def annotated_img(img_attr, boxes, *, viewbox_w, viewbox_h):
     return wlc_utils_html.div(
         (wlc_utils_html.img(img_attr), overlay), {"class": "scan-annot"}
     )
+
+
+def scan_figure(
+    src: str,
+    alt: str,
+    caption: object,
+    *,
+    img_class: str,
+    width: str | None = None,
+    boxes: tuple[Box, ...] | None = None,
+    viewbox: tuple[int, int] | None = None,
+) -> object:
+    """<figure> holding a page scan, optionally with a highlight overlay, plus its caption.
+
+    ``img_class`` is keyword-only and has NO default, deliberately. The class that
+    matters here is ``ink-on-white``, which opts a scan into the stylesheet's
+    dark-mode CSS inversion -- right for black ink on white paper, and wrong for
+    the manuscript photos elsewhere in the tree, which are ink on parchment and
+    must NOT invert (see the rule's comment in style.css). Every caller therefore
+    names the class it wants, so no page can inherit inversion silently.
+
+    Every ``alt`` passed here names the strands in ROMANIZED form ("taxton"/"elyon")
+    while the figcaption beside it uses Hebrew letters. That is deliberate, not
+    drift: attribute contexts are exempt by design (issue #65, finding T1) -- see
+    printed_decalogue_strands' module docstring.
+    """
+    # No inline style here: gh-pages/style.css already declares `img { max-width: 100% }` and
+    # `figure img { height: auto }`, so an inline copy only duplicated the stylesheet and
+    # outranked it (issue #65, finding C4b). Don't reintroduce it.
+    img_attr = {"src": src, "alt": alt, "class": img_class}
+    if width:
+        img_attr["width"] = width
+    # When boxes are given, the <img> is wrapped in a positioned <div> alongside an inline-SVG
+    # word-highlight overlay (annotated_img above). The overlay is a sibling of the img, so the
+    # img's dark-mode invert never touches it -- see the .scan-annot rules and the ink-on-white
+    # comment in style.css. The caller's img_class stays on the img either way.
+    if boxes:
+        assert viewbox is not None, "boxes require a viewbox=(w, h)"
+        img_node = annotated_img(
+            img_attr, boxes, viewbox_w=viewbox[0], viewbox_h=viewbox[1]
+        )
+    else:
+        img_node = wlc_utils_html.img(img_attr)
+    return wlc_utils_html.figure((img_node, wlc_utils_html.figcaption(caption)))
