@@ -26,6 +26,21 @@ So do not "fix" that collection failure by reintroducing a path shim.  A root
 a ``.pth`` file, an exported ``PYTHONPATH``, a ``sitecustomize.py`` -- all the same
 mistake in different spellings, and the count of them in this repo is zero, not one.
 Run the tests through this entry point instead.
+
+WHY THIS ONE WRAPS pytest WHERE MAM-basics' AND holman-ketiv-qere's RUN unittest
+
+Those two repos' ``py/main_test.py`` is a ``TEST_MODULE_SPECS`` tuple plus a ``unittest``
+loader, and the standard came from them, so the difference is deliberate rather than
+drift.  Matching their shape here would have meant rewriting 299 module-level ``def
+test_`` functions across 33 files (this suite has exactly one ``unittest.TestCase``),
+plus the ``@parametrize`` sites, the fixtures, the ``pytest.raises`` calls and the two
+SEMANTIC ``pytest.skip`` sites -- on a suite whose worth is that it passes.  What the
+standard actually forbids is path configuration, which this file has none of either way.
+
+And a hand-maintained registry has a failure mode this has not: an unlisted test file
+does not skip, it reports nothing at all.  Both repos using that pattern were found with
+unregistered files on 2026-07-30.  pytest discovers files itself, so there is no registry
+to fall out of sync here.  Revisit only if cross-repo uniformity comes to outweigh that.
 """
 
 from __future__ import annotations
