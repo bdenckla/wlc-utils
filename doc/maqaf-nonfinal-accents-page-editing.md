@@ -27,7 +27,8 @@ One run writes both the JSON and the page, so the two cannot drift:
 cd py && ../.venv/Scripts/python.exe main_accgram.py generate-html-maqaf-nonfinal-accents
 ```
 
-Then black every touched `.py`, and `.venv/Scripts/pytest.exe py/tests` from the repo root.
+Then black every touched `.py`, and `.venv/Scripts/python.exe py/main_test.py` from the repo
+root.
 
 ## How Ben works this track
 
