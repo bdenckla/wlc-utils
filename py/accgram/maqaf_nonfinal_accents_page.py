@@ -1482,7 +1482,6 @@ def _intro(survey: dict) -> tuple[object, ...]:
         # qualification, parenthesized and first, and the two-distinct-compounds sentence,
         # since לא־תעשה appearing in two of the three cases may confuse.
         _printed_case_table(cases),
-        *_case_scans(cases),
         # P-TRAD SAID ONCE, in the parenthetical below, and dropped from the individual
         # mentions -- which UNDOES the per-mention "the p-trad עליון" and "the p-trad תחתון" of
         # earlier the same day.  ``_p_trad_strand`` is where the tradition is fixed for every
@@ -1698,13 +1697,24 @@ _KOREN_P39_IMG = "img/Koren-appendix-p-39-Dt-Dec-p-trad-elyon-lo-taase.png"
 _SIMTIQ_P246_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton-spreaders.png"
 
 # The viewBox literals must equal each committed PNG's own natural size, since mhi.Box coordinates
-# are in that pixel space; nothing tests the equality, so these are the sizes `scan-page` reported
-# when it wrote the two files (1600x160 and 1600x293), not sizes derived by eye.
-_KOREN_P39_VIEWBOX = (1600, 160)
-_SIMTIQ_P246_VIEWBOX = (1600, 293)
+# are in that pixel space, so these are the sizes `scan-page` reported when it wrote the two
+# files, not sizes derived by eye.  Getting one wrong is silent at build time -- the page still
+# renders and the highlights just land elsewhere -- so `tests/test_scan_overlay_viewboxes.py`
+# lints every rendered figure's viewBox against its scan's real size.  Take the pair from what
+# `scan-page` prints all the same: the lint tells you the numbers disagree, not which one is right.
+#
+# BOTH CROPS WERE RE-CUT to leave equal margins either side of the ink (Ben, 2026-07-31: "both of
+# their crops are a little lopsided").  The first pair left 303px of margin against 93px on
+# Koren's strip and 72px against 172px on the Tiqqun's.  The re-cut trims only the fat side, at a
+# scale chosen to leave pixels-per-source-unit unchanged, so every box below moved by a pure
+# translation -- Koren's by -210 in x, the Tiqqun's by nothing at all -- rather than needing to be
+# picked again.  Each box was then cropped back out of its new PNG and checked to be on the same
+# word.
+_KOREN_P39_VIEWBOX = (1390, 160)
+_SIMTIQ_P246_VIEWBOX = (1500, 293)
 
 # One box, on the לא־תעשה compound of the middle printed line.
-_KOREN_P39_BOXES: tuple[mhi.Box, ...] = (mhi.Box(x=1099, y=39, w=249, h=96),)
+_KOREN_P39_BOXES: tuple[mhi.Box, ...] = (mhi.Box(x=889, y=39, w=249, h=96),)
 
 # THREE boxes for TWO compounds: לא־יהיה whole on the first line, and then the לא־תעשה compound in
 # two pieces, its לא ending the first line and its תעשה opening the second.  Two boxes for one
@@ -1724,19 +1734,35 @@ _SIMTIQ_P246_BOXES: tuple[mhi.Box, ...] = (
 )
 
 
-def _case_scans(cases: tuple[dict, ...]) -> tuple[object, ...]:
-    """The two printed pages themselves, under the table that says what they have.
+def _scans_appendix_section() -> tuple[object, ...]:
+    """The two printed pages themselves, as an appendix at the page's foot.
 
-    Until now every cell above was lifted or constructed from a vendored Wikisource strand, so the
-    table stated the page's claim about each edition without ever showing the edition.  These two
-    figures are the scans those claims are read off.
+    Every cell of the intro's table is lifted or constructed from a vendored Wikisource strand, so
+    the table states the page's claim about each edition without ever showing the edition.  These
+    two figures are the scans those claims are read off.
+
+    AN APPENDIX, not part of the intro (Ben, 2026-07-31: "let's banish these two new images to an
+    appendix").  They sat directly under the printed-case table when they were first rendered.
+    The table is the intro's answer and the scans are its evidence, and evidence set apart from
+    the argument it supports is what an appendix is for.
+
+    NOTHING CUES IT.  The intro does not link down to this section, matching the two prevalence
+    sections, whose comments say why: a rendered section that previews a later one is the hub
+    sentence Ben has cut from these pages before, and an appendix heading announces itself.  The
+    one link that does run down the page, from the prose section to the one-letter appendix, is
+    the exception rather than the pattern.
 
     ``img_class="ink-on-white"`` on both: each is black ink on white paper and wants the
     stylesheet's dark-mode inversion.
     """
-    koren, simtiq_yihye, simtiq_taase = cases
+    # Re-derived rather than handed down from ``_intro``: ``_p_trad_strand`` is lru_cached, so the
+    # second call re-runs only the span searches, and each of those raises unless it still matches
+    # exactly one place.  A figure and the table it backs therefore cannot come to show different
+    # forms.
+    koren, simtiq_yihye, simtiq_taase = printed_cases()
     lo_taase = f"{_LO}{_MAQAF}{_TAASE}"
     return (
+        H.heading_level_2("Appendix: the printed pages"),
         mhi.scan_figure(
             _KOREN_P39_IMG,
             "Koren appendix p. 39: the Deuteronomy Decalogue's לא־תעשה in the p-trad"
@@ -2344,6 +2370,11 @@ def render_body_contents(survey: dict) -> tuple[object, ...]:
         *_prose_section(survey, rows),
         *_appendix_section(survey, rows),
         *_one_letter_appendix_section(survey),
+        # THE SCANS SIT HERE, and the slot is forced rather than chosen.  Two constraints already
+        # bind: "Spreader-pair prevalence" and "Appendix: non-spreader-pair prevalence" are a
+        # named pair and must stay adjacent, and the poetic appendix is last by Ben's own ask.
+        # That leaves exactly this place.
+        *_scans_appendix_section(),
         # THE POETIC SECTION IS LAST, and an appendix (Ben, 2026-07-30: "float 'poetic verses'
         # down to the bottom and call it an Appendix").  It sat between the prose section and
         # the first appendix, where a heading naming a whole other system interrupted the run
