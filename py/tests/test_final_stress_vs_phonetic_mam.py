@@ -14,8 +14,14 @@ a final-stress verdict for -- the simple two-accent chanted words and the concen
 ones the survey excludes, minus the ones whose last mark is written at the chanted word's edge and
 so says nothing about stress.  MAM, because Phonetic MAM is MAM; prose, because the page the
 measurement is for is about prose verses and because a poetic chanted word's atoms really are
-grouped differently on the two sides -- MAM has a gray maqaf in 113 places where Phonetic MAM has
-two chanted words, which is every grouping difference the two texts have (issue #91).  The
+grouped differently on the two sides -- MAM has a gray maqaf in 113 places where Phonetic MAM keeps
+two chanted words, and those 113 are nearly the whole of what will not join anywhere in MAM's
+Tanakh.  The rest of it, 11 more (issue #91), is outside this test's reach for reasons of its own:
+8 dually-cantillated chanted words in the two Decalogues, whose ``cant-combined`` projection is
+neither strand; Deuteronomy 32:6, where MAM's large ה stands apart from לְיְהֹוָה֙ and Phonetic MAM
+has one entry for the two atoms; and 2 Chronicles 25:17, where Phonetic MAM has לְךָ֖ against the
+qere לְכָ֖ה that MAM-simple and WLC 4.22 both have, which is a difference in the text rather than
+in the grouping.  The
 scan is rerun here rather than read out of the survey's JSON, which keeps counts and not words --
 and rerun over MAM's own versification, for which see ``_measured``.
 
@@ -30,8 +36,9 @@ A DUAL-CANTILLATION chanted word has one entry per strand and the two can disagr
 lo-yihye is stressed differently in each -- so a verdict matching either strand is agreement.  The
 survey reads one strand of MAM-simple, and which one is not a fact this test is about.
 
-A word Phonetic MAM has no entry for FAILS, bar the single pinned exception at
-``_DIVIDED_DIFFERENTLY``.  A skip is this suite's semantic channel and an environment skip mixed
+A word Phonetic MAM has no entry for FAILS, and none does: the join over the prose measured set is
+exceptionless since issue #91, whose fix is why -- see the test's own docstring for the one word
+that used to be pinned here.  A skip is this suite's semantic channel and an environment skip mixed
 into it reports green having verified nothing; the same is why the sibling clone is required rather
 than skipped around.
 
@@ -183,43 +190,21 @@ def _cases() -> tuple[tuple[str, str, bool], ...]:
     )
 
 
-# The one measured chanted word Phonetic MAM has no entry for, and NOT because the two texts
-# divide it differently: issue #91.  MAM's running text at Exodus 17:16 is kes yah, two chanted
-# words, exactly as Phonetic MAM and WLC 4.22 and UXLC all have it.  The one-atom kesyah the survey
-# measures is a SPECIMEN QUOTED IN A MAM EDITORIAL NOTE -- of what the Aleppo Codex had -- which
-# ``mam_simple_verse`` emits as verse text because it has no case for MAM-simple's ``sdt-note``.
-# Phonetic MAM is not behind MAM-simple here; there is nothing there to be behind on.
-#
-# It is alone because it is the only note specimen with TWO accents: 31 notes put 162 tokens into
-# the stream and 22 of those have an accent, but the other 21 have one apiece, so only this one
-# reaches a survey whose measured set is two-accent chanted words.  #91 has the whole-Tanakh sweep
-# behind that, and the pin comes out when the loader stops emitting note text.
-#
-# Keyed by verse, so a SECOND word there would go unnoticed; Exodus 17:16 has no other the survey
-# measures.
-_DIVIDED_DIFFERENTLY = frozenset(("ex17:16",))
-
-
 def test_every_measured_chanted_word_has_a_phonetic_mam_entry():
-    """The join itself, checked before the verdicts, so a text mismatch reads as one."""
+    """The join itself, checked before the verdicts, so a text mismatch reads as one.
+
+    EXCEPTIONLESS, and it took issue #91 to make it so.  One chanted word was pinned here
+    until then -- Exodus 17:16's one-atom כֵּ֣סְיָ֔הּ, read as the two texts dividing two atoms
+    differently.  They do not.  MAM's running text there is the two-atom כֵּ֣ס יָ֔הּ that
+    Phonetic MAM and WLC 4.22 and UXLC all have, and the one-atom form is a SPECIMEN QUOTED
+    IN A MAM EDITORIAL NOTE, of what the Aleppo Codex had, which ``mam_simple_verse`` put
+    into the stream as verse text for want of a case for MAM-simple's ``sdt-note``.  It was
+    alone there because it was the only note specimen with TWO accents, and so the only one
+    a survey of two-accent chanted words could reach.
+    """
     assert _cases(), "no chanted word was measured at all"
-    pinned = [bcv for bcv, word, _ours in _cases() if bcv in _DIVIDED_DIFFERENTLY]
-    assert set(pinned) == _DIVIDED_DIFFERENTLY, (
-        "the pinned exception is not among the measured chanted words any more: "
-        f"{sorted(_DIVIDED_DIFFERENTLY - set(pinned))}"
-    )
-    still_missing = [
-        bcv
-        for bcv, word, _ours in _cases()
-        if bcv in _DIVIDED_DIFFERENTLY and _oracle(bcv, word)
-    ]
-    assert (
-        not still_missing
-    ), f"Phonetic MAM now has {still_missing}, so the pin at _DIVIDED_DIFFERENTLY is stale"
     unjoinable = [
-        f"{bcv} {word}"
-        for bcv, word, _ours in _cases()
-        if bcv not in _DIVIDED_DIFFERENTLY and not _oracle(bcv, word)
+        f"{bcv} {word}" for bcv, word, _ours in _cases() if not _oracle(bcv, word)
     ]
     assert not unjoinable, (
         f"{len(unjoinable)} of {len(_cases())} chanted words have no Phonetic MAM entry: "

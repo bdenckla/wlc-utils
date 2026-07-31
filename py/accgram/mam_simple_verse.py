@@ -196,26 +196,102 @@ def _normalize_mam_simple_verse(
     return verse
 
 
+class _Boundary:
+    """A node that separates the text either side of it without contributing any.
+
+    Dropping such a node by returning an empty string would FUSE the atoms either side
+    into one, because a MAM-simple ``text`` run carries its own spaces and a structural
+    node standing between two runs is often the only thing between them: Exodus 15:1 has
+    ``...לֵאמֹ֑ר``, a ``shirah-space``, then ``אָשִׁ֤ירָה``, with no space in either run.
+    So a dropped node yields one of these instead, and ``_tokens_from_fragments`` splits
+    there.
+    """
+
+    def __repr__(self) -> str:  # pragma: no cover - debugging aid only
+        return "<boundary>"
+
+
+_BOUNDARY = _Boundary()
+
+# Nodes that stand BETWEEN atoms and contribute no text of their own.  Each yields a
+# boundary rather than nothing at all -- see ``_Boundary``.
+_DROPPED_NODE_TYPES = frozenset(
+    (
+        "good-ending",
+        "spi-pe2",
+        "spi-pe3",
+        "spi-samekh2",
+        "spi-samekh3",
+        "spi-invnun",
+        "shirah-space",
+    )
+)
+
+
 def _normalize_mam_simple_node(
     node: object, cant_strand: str = CANT_COMBINED
 ) -> list[object]:
+    """The ATOMS of one node's subtree -- one written word each, between spaces or maqafs
+    -- with every maqaf kept on the atom it follows, plus a lone PASOLEG token for each
+    paseq/legarmeh.
+
+    Atoms and not chanted words: ``maqaf_nonfinal_accents._join_on_maqaf`` and the
+    scanners fold a maqaf compound into one chanted word downstream, an atom that ends in
+    a maqaf continuing into the next.
+    """
+    return _tokens_from_fragments(_mam_simple_fragments(node, cant_strand))
+
+
+def _mam_simple_fragments(
+    node: object, cant_strand: str = CANT_COMBINED
+) -> list[object]:
+    """One node's subtree as text fragments and ``_BOUNDARY`` separators.
+
+    Tokenizing each node's text separately would be simpler, and is what this loader did
+    until issue #91.  It cannot be right, because several of MAM-simple's node types sit
+    INSIDE an atom rather than between atoms, and per-node tokenization splits the atom
+    at each of them:
+
+    * ``letter-large`` / ``letter-small`` / ``letter-hung`` -- a letter written large,
+      small or suspended, wrapped with the rest of its atom in an ``slh-word``.  Genesis
+      1:1 came out as בְּ and רֵאשִׁ֖ית, Leviticus 13:33 as וְהִ֨תְ, גַּ and לָּ֔ח.  These
+      need no case below: the fall-through concatenates their text, which is what
+      MAM-simple's own reference handlers do with them (``py-examples/osis/
+      osis_handlers.py`` passes each straight into the surrounding run).
+    * ``implicit-maqaf`` -- MAM's gray maqaf, which belongs on the END of the atom before
+      it.  Emitted as a token of its own it reached ``_join_on_maqaf`` after that atom had
+      been closed, and so attached FORWARD: Psalms 106:1 came out as הַ֥לְלוּ and ־יָ֨הּ,
+      two chanted words with the maqaf at the front of the second, where MAM has the one
+      chanted word הַ֥לְלוּ־יָ֨הּ.
+
+    And ``sdt-note`` is not verse text at all -- it is the note half of a ``scrdfftar``, a
+    targeted scroll-difference note, whose unpointed commentary and pointed specimen both
+    reached the stream as tokens.  Exodus 17:16's one-atom כֵּ֣סְיָ֔הּ is a specimen quoted
+    from the Aleppo Codex inside such a note, and it read as a chanted word of the verse;
+    the running text there is the two-atom כֵּ֣ס יָ֔הּ every other corpus has.  The
+    reference handlers map ``sdt-note`` to empty as well.
+    """
     if not isinstance(node, dict):
         return []
 
     node_type = node.get("type")
     if isinstance(node_type, str):
-        if node_type in {
-            "good-ending",
-            "spi-pe2",
-            "spi-pe3",
-            "spi-samekh2",
-            "spi-samekh3",
-            "spi-invnun",
-        }:
+        if node_type in _DROPPED_NODE_TYPES:
+            return [_BOUNDARY]
+        if node_type == "sdt-note":
+            # Nothing, and NOT a boundary: a scroll-difference note is an editorial
+            # aside written inside the running text rather than between two atoms, and
+            # at Genesis 4:13, Numbers 1:17, Numbers 25:12 and Deuteronomy 11:21 the
+            # ``text`` run right after it holds that verse's sof pasuq alone -- which
+            # belongs to the atom the note interrupted.  Every other note is followed by
+            # a run that opens with a space, so dropping it outright fuses nothing.
             return []
         if node_type in {"lp-paseq", "lp-legarmeih"}:
-            return [hpunc.PASOLEG]
+            # A token of its own, as it has always been: the mark stands between two
+            # atoms rather than inside either.
+            return [_BOUNDARY, hpunc.PASOLEG, _BOUNDARY]
         if node_type == "implicit-maqaf":
+            # No boundary before it, so it lands on the atom it follows.
             return [hpunc.MAQ]
         if node_type == _CANT_ALL_THREE:
             # A dual-cantillation span: descend into the requested strand only, so each
@@ -225,51 +301,81 @@ def _normalize_mam_simple_node(
             if isinstance(contents, list):
                 for child in contents:
                     if isinstance(child, dict) and child.get("type") == cant_strand:
-                        return _normalize_mam_simple_node(child, cant_strand)
+                        return _mam_simple_fragments(child, cant_strand)
             return []
         if node_type in {"kq", "kq-trivial", "kq-q-velo-k"}:
-            return _normalize_mam_simple_kq_qere(node, cant_strand)
+            return _mam_simple_kq_qere_fragments(node, cant_strand)
         if node_type in {"kq-k", "ketiv", "kq-k-velo-q"}:
-            return []
+            return [_BOUNDARY]
 
     contents = node.get("contents")
     if isinstance(contents, list):
-        out_tokens: list[object] = []
+        out_fragments: list[object] = []
         for child in contents:
-            out_tokens.extend(_normalize_mam_simple_node(child, cant_strand))
-        return out_tokens
+            out_fragments.extend(_mam_simple_fragments(child, cant_strand))
+        return out_fragments
 
     text = node.get("text")
     if isinstance(text, str):
-        return _split_mam_simple_text(text)
+        return [text]
 
     return []
 
 
-def _normalize_mam_simple_kq_qere(
+def _mam_simple_kq_qere_fragments(
     node: dict[str, object], cant_strand: str = CANT_COMBINED
 ) -> list[object]:
+    """A ketiv/qere node's QERE side, spliced into the run around it.
+
+    The qere is the side that has the marks the scanners read; a ketiv is unpointed and
+    never accented, so it can only add spurious unaccented atoms.
+
+    No boundary either side, because the runs around a qere carry their own spacing, and in
+    two shapes there is nothing at all between a qere and the rest of its atom.  Proverbs 23:5
+    has an ``implicit-maqaf`` right after one, and MAM has הֲתָ֤עִיף־עֵינֶ֥יךָ as a single
+    chanted word; a boundary would strand that maqaf as a token of its own and hand it to
+    the atom after it.  And a verse-final qere is followed by a ``text`` run holding the
+    sof pasuq alone -- 101 verses of it, ``וַיִּֽשְׁתַּחֲוֽוּ׃`` at Genesis 43:28 among them -- so
+    a boundary made the sof pasuq a chanted word in its own right and left the verse's
+    real last chanted word looking mid-verse, where a U+05BD is a meteg and not silluq.
+    """
     contents = node.get("contents")
     if not isinstance(contents, list):
         text = node.get("text")
-        if isinstance(text, str):
-            return _split_mam_simple_text(text)
-        return []
+        return [text] if isinstance(text, str) else []
 
     qere_nodes = [
         child for child in contents if isinstance(child, dict) and _is_qere_node(child)
     ]
-    if qere_nodes:
-        out_tokens: list[object] = []
-        for qere_node in qere_nodes:
-            out_tokens.extend(_normalize_mam_simple_node(qere_node, cant_strand))
-        return out_tokens
+    chosen = qere_nodes or [
+        child
+        for child in contents
+        if not (isinstance(child, dict) and _is_ketiv_node(child))
+    ]
+    out_fragments: list[object] = []
+    for child in chosen:
+        out_fragments.extend(_mam_simple_fragments(child, cant_strand))
+    return out_fragments
 
+
+def _tokens_from_fragments(fragments: list[object]) -> list[object]:
+    """Concatenate the text fragments between boundaries, then split each run into atoms.
+
+    Splitting a RUN rather than a node is the whole point: a run is however much of the
+    verse no structural node interrupts, so a special letter and a gray maqaf are inside
+    the atom they belong to by the time the split happens.
+    """
     out_tokens: list[object] = []
-    for child in contents:
-        if isinstance(child, dict) and _is_ketiv_node(child):
-            continue
-        out_tokens.extend(_normalize_mam_simple_node(child, cant_strand))
+    run: list[str] = []
+    for fragment in fragments:
+        if fragment is _BOUNDARY:
+            if run:
+                out_tokens.extend(_split_mam_simple_text("".join(run)))
+                run = []
+        else:
+            run.append(fragment)
+    if run:
+        out_tokens.extend(_split_mam_simple_text("".join(run)))
     return out_tokens
 
 

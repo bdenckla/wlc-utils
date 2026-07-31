@@ -79,7 +79,7 @@
    "token_sequences": [
     "munax zaqef"
    ],
-   "mam_measured": 1374
+   "mam_measured": 1373
   },
   {
    "section": "§223",
@@ -19784,17 +19784,17 @@
   "mam_simple": {
    "kind": "consensus, not diplomatic; largely follows Breuer, but not an edition of his",
    "verses": 18724,
-   "chanted_words": 234985,
-   "atomic_chanted_words": 198199,
+   "chanted_words": 234676,
+   "atomic_chanted_words": 197890,
    "maqaf_compounds": 36786,
-   "hits": 1644,
+   "hits": 1643,
    "by_kind": {
-    "an atomic chanted word": 1160,
+    "an atomic chanted word": 1159,
     "a maqaf compound, its accents all on the final atom": 462,
     "a maqaf compound, its accents split across atoms": 22
    },
    "by_sequence": {
-    "munax zaqef": 1374,
+    "munax zaqef": 1373,
     "azla geresh": 126,
     "merkha tevir": 69,
     "merkha tipexa": 12,
@@ -19830,14 +19830,8 @@
    ],
    "methigazaqef": {
     "tokens": 410,
-    "crossing_a_chanted_word_boundary": 1,
-    "crossings": [
-     {
-      "bcv": "lv13:33",
-      "qadma_on": "וה֨ת",
-      "zaqef_on": "ל֔ח"
-     }
-    ]
+    "crossing_a_chanted_word_boundary": 0,
+    "crossings": []
    },
    "occurrences": [
     {
@@ -21973,12 +21967,6 @@
     {
      "bcv": "ex17:2",
      "chanted_word": "וי֣אמר֔ו",
-     "sequence": "munax zaqef",
-     "kind": "an atomic chanted word"
-    },
-    {
-     "bcv": "ex17:16",
-     "chanted_word": "כ֣סי֔ה",
      "sequence": "munax zaqef",
      "kind": "an atomic chanted word"
     },
