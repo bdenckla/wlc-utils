@@ -22,6 +22,16 @@ Subcommands:
                 anomalies).  The oddity chanted verses are separately folded into
                 the prose ungrammatical-verse report by run-prose; supplied-marks.html is
                 rendered by generate-html.  Run after run-prose (issue #36).
+    run-printed-decalogue
+                Grammar-check the printed-tradition (דפוסים) Decalogue
+                accentuations against the manuscript baseline -- both books,
+                taxton and elyon -- and write
+                out/accgram/printed-decalogue/_printed_decalogue.json (issue #52).
+                Reads the vendored in/accgram/printed_decalogue_teamim.json that
+                vendor-printed-decalogue refreshes, plus the committed hand
+                transcriptions under in/accgram/edition_transcriptions, whose own
+                verdicts against the strand each follows go in the file's
+                transcriptions section.
     survey-chanted-word-accents
                 Measure every chanted word carrying two or more accent TOKENS across
                 WLC 4.22, UXLC and MAM-simple, prose verses only, and write
