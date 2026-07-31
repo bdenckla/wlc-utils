@@ -85,8 +85,18 @@ From the **repo root**, with the venv's own interpreter (the system Python has n
 nor PLY):
 
 ```bash
-.venv/Scripts/pytest.exe py/tests
+.venv/Scripts/python.exe py/main_test.py
 ```
+
+With no arguments that runs everything under `py/tests`; any arguments go straight through to
+pytest, so `-k <expr>`, `-x`, `-q`, `--lf` and a named test file all work as usual.
+
+**A bare `.venv/Scripts/pytest.exe py/tests` fails to collect, and that is the designed state
+— do not "fix" it with a `conftest.py`.** Import path here comes from the entry point: CPython
+puts `py/` on `sys.path` when it runs `py/main_test.py`, and the in-process `pytest.main()`
+call inherits it. A root `conftest.py`, a `pytest.ini` `pythonpath`, a `.pth` file and an
+exported `PYTHONPATH` are the same path shim in four spellings, and the count of them in this
+repo is zero. `py/main_test.py`'s docstring says the same at greater length.
 
 ## Writing tests — differential and lint-shaped only
 
