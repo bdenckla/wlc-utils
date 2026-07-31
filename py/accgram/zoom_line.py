@@ -1,12 +1,14 @@
 """Crop one printed line out of a scan, padded so no accent can be clipped.
 
 Usage:
-    .venv/Scripts/python.exe py/accgram/zoom_line.py <export.json> <line> [<line> ...]
+    .venv/Scripts/python.exe py/main_edition_transcription.py zoom-line <export.json> \
+        [<line> ...]
 
-``export.json`` is a line editor export (``transcription_editor.py``), committed or freshly
-downloaded.  The crop comes from the line's own ``px_source`` band, so it is anchored to the
-same coordinates the transcription was read at, and the printed text of that line is echoed
-alongside the filename.  Output goes to ``.novc/scans/``.
+``export.json`` is a line editor export (``transcription_editor``), committed or freshly
+downloaded.  With no line numbers, every line of the export is zoomed.  The crop comes from
+the line's own ``px_source`` band, so it is anchored to the same coordinates the transcription
+was read at, and the printed text of that line is echoed alongside the filename.  Output goes
+to ``.novc/scans/``.
 
 WHY THE PADDING IS LARGE, AND ASYMMETRIC.  A band is a horizontal INK-FRACTION band, not a
 glyph bounding box: a faint mark near its edge falls below the line-finder's ink cutoff and
@@ -19,16 +21,11 @@ the headroom is the point; the bottom needs only enough for descenders and lower
 
 from __future__ import annotations
 
+import argparse
 import json
-import subprocess
-import sys
 from pathlib import Path
 
-sys.path.insert(
-    0, str(Path(__file__).resolve().parent.parent)
-)  # run directly as a script
-
-sys.stdout.reconfigure(encoding="utf-8")
+from accgram.scan_page import render_page
 
 PAD_ABOVE = 1.0  # band heights above the line
 PAD_BELOW = 0.5  # and below
@@ -36,10 +33,22 @@ PAD_SIDES = 0.012  # page widths beyond the transcription crop, left and right
 WIDTH = 2400  # wide, because the point is to magnify one line
 
 
-def main() -> None:
-    export = Path(sys.argv[1])
-    wanted = {int(n) for n in sys.argv[2:]}
-    record = json.loads(export.read_text(encoding="utf-8"))
+def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
+    # repo_root is unused: every path comes from the export itself and from scan_page's OUT.
+    # The parameter is here so the entry point wires every subcommand the same way.
+    del repo_root
+    parser.add_argument("export", type=Path, help="a line editor export JSON")
+    parser.add_argument(
+        "lines",
+        nargs="*",
+        type=int,
+        help="line number(s) to zoom; with none, every line of the export",
+    )
+
+
+def run(args: argparse.Namespace) -> None:
+    wanted = set(args.lines)
+    record = json.loads(args.export.read_text(encoding="utf-8"))
     # A two-page Decalogue keeps one export per page under "pages"; a one-page one is its own
     # only page.  Line numbers restart per page, so a wanted number may match in both.
     for page in record.get("pages", [record]):
@@ -60,41 +69,20 @@ def _zoom_page(page: dict, wanted: set[int]) -> None:
     left, _, right, _ = page["render"]["crop"] or (0.0, 0.0, 1.0, 1.0)
     left = max(0.0, left - PAD_SIDES)
     right = min(1.0, right + PAD_SIDES)
-    repo = Path(__file__).resolve().parent.parent.parent
     for line in page["lines"]:
         if wanted and line["n"] not in wanted:
             continue
         top, bottom = line["px_source"]
         height = bottom - top
-        lo = max(0, top - PAD_ABOVE * height) / page_height
-        hi = min(page_height, bottom + PAD_BELOW * height) / page_height
+        # The vertical pair is rounded to four decimals.  That rounding used to be incidental
+        # -- it was how the fractions were spelled on the command line of a subprocess -- but
+        # a ten-thousandth of a 7100-row page is most of a source pixel, enough to move the
+        # crop by a row, so keep it rather than have the direct call render differently.
+        lo = round(max(0, top - PAD_ABOVE * height) / page_height, 4)
+        hi = round(min(page_height, bottom + PAD_BELOW * height) / page_height, 4)
         stem = f"zoom-{page['stem'].split('_')[-1]}-line{line['n']:02d}"
-        # Output is captured so scan_page's own line does not repeat under every zoom, which
-        # means a failure's stderr has to be surfaced here or it is silently swallowed.
-        proc = subprocess.run(
-            [
-                sys.executable,
-                str(repo / "py" / "accgram" / "scan_page.py"),
-                book,
-                name,
-                "--crop",
-                f"{left}",
-                f"{lo:.4f}",
-                f"{right}",
-                f"{hi:.4f}",
-                "--name",
-                stem,
-                "--width",
-                str(WIDTH),
-            ],
-            capture_output=True,
-            text=True,
-        )
-        if proc.returncode:
-            sys.exit(f"scan_page failed on line {line['n']}:\n{proc.stderr}")
+        # render_page prints nothing, so scan-page's own report line does not repeat under
+        # every zoom; a failure raises here rather than needing its stderr surfaced by hand.
+        render_page(book, name, width=WIDTH, crop=(left, lo, right, hi), stem=stem)
         print(f"line {line['n']:2d}  source rows {top}-{bottom}  -> {stem}.png")
         print(f"          {line['text']}")
-
-
-if __name__ == "__main__":
-    main()
