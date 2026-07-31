@@ -62,6 +62,7 @@ from cmn.utf8_io import force_utf8_io
 from cmn.wlc_book_codes import wlc_bb_to_bk39id
 from mb_misc import osis_book_abbrevs as oba
 import wlc_provenance as provenance
+from py_html import my_html_for_img as mhi
 from py_html import wlc_utils_html as H
 
 import repo_paths
@@ -1481,6 +1482,7 @@ def _intro(survey: dict) -> tuple[object, ...]:
         # qualification, parenthesized and first, and the two-distinct-compounds sentence,
         # since לא־תעשה appearing in two of the three cases may confuse.
         _printed_case_table(cases),
+        *_case_scans(cases),
         # P-TRAD SAID ONCE, in the parenthetical below, and dropped from the individual
         # mentions -- which UNDOES the per-mention "the p-trad עליון" and "the p-trad תחתון" of
         # earlier the same day.  ``_p_trad_strand`` is where the tradition is fixed for every
@@ -1684,6 +1686,95 @@ def _printed_case_table(cases: tuple[dict, ...]) -> object:
             for label, value_of, attr in _PRINTED_CASE_ROWS
         ),
         {"class": "centered-table"},
+    )
+
+
+# The scans behind the table above: TWO figures for the three cases, because the Simanim Tiqqun's
+# two compounds sit on the same two printed lines (line 14 of its transcription holds לא־יהיה לך
+# whole, and the לא־ that opens the לא־תעשה compound).  Each crop is one whole printed line, or
+# two where the compound spans a line break, cut by ``main_edition_transcription.py scan-page``
+# from the same source scans the transcriptions are pinned to.
+_KOREN_P39_IMG = "img/Koren-appendix-p-39-Dt-Dec-p-trad-elyon-lo-taase.png"
+_SIMTIQ_P246_IMG = "img/Simanim-Tiqqun-p-246-Ex-Dec-p-trad-taxton-spreaders.png"
+
+# The viewBox literals must equal each committed PNG's own natural size, since mhi.Box coordinates
+# are in that pixel space; nothing tests the equality, so these are the sizes `scan-page` reported
+# when it wrote the two files (1600x160 and 1600x293), not sizes derived by eye.
+_KOREN_P39_VIEWBOX = (1600, 160)
+_SIMTIQ_P246_VIEWBOX = (1600, 293)
+
+# One box, on the לא־תעשה compound of the middle printed line.
+_KOREN_P39_BOXES: tuple[mhi.Box, ...] = (mhi.Box(x=1099, y=39, w=249, h=96),)
+
+# THREE boxes for TWO compounds: לא־יהיה whole on the first line, and then the לא־תעשה compound in
+# two pieces, its לא ending the first line and its תעשה opening the second.  Two boxes for one
+# chanted word is new here.  The Koren page's _P281_BOXES and _PA38_BOXES box only the
+# accent-bearing half of a word the printing wrapped; here both halves are accent-bearing, which
+# is the very thing this page is about, so boxing one of them would hide the finding.
+# Listed in READING order, which is not the order the picker emitted them in.  The rects are
+# siblings in one overlay and are drawn independently, so their order changes nothing on the page;
+# reading order is for whoever next has to match a literal here against a mark on the scan.
+_SIMTIQ_P246_BOXES: tuple[mhi.Box, ...] = (
+    # לא־יהיה, whole, on the upper printed line -- munax on לא, merkha on יהיה.
+    mhi.Box(x=926, y=66, w=290, h=96),
+    # The לא־ that ends that same upper line, with its munax: the first atom of לא־תעשה.
+    mhi.Box(x=52, y=63, w=148, h=100),
+    # The תעשה that opens the lower line, with its qadma: the second atom of that לא־תעשה.
+    mhi.Box(x=1230, y=166, w=226, h=102),
+)
+
+
+def _case_scans(cases: tuple[dict, ...]) -> tuple[object, ...]:
+    """The two printed pages themselves, under the table that says what they have.
+
+    Until now every cell above was lifted or constructed from a vendored Wikisource strand, so the
+    table stated the page's claim about each edition without ever showing the edition.  These two
+    figures are the scans those claims are read off.
+
+    ``img_class="ink-on-white"`` on both: each is black ink on white paper and wants the
+    stylesheet's dark-mode inversion.
+    """
+    koren, simtiq_yihye, simtiq_taase = cases
+    lo_taase = f"{_LO}{_MAQAF}{_TAASE}"
+    return (
+        mhi.scan_figure(
+            _KOREN_P39_IMG,
+            "Koren appendix p. 39: the Deuteronomy Decalogue's לא־תעשה in the p-trad"
+            " elyon, with an accent on each atom",
+            (
+                "Koren's Deuteronomy appendix Decalogue (p. 39), in the ",
+                ELYON,
+                ". The highlighted ",
+                hbo(koren["printed"]),
+                " has an accent on each of its two atoms.",
+            ),
+            img_class="ink-on-white",
+            boxes=_KOREN_P39_BOXES,
+            viewbox=_KOREN_P39_VIEWBOX,
+        ),
+        mhi.scan_figure(
+            _SIMTIQ_P246_IMG,
+            "Simanim Tiqqun p. 246: the Exodus appendix Decalogue's לא־יהיה and"
+            " לא־תעשה in the p-trad taḥton, each with an accent on both atoms",
+            # The forms spliced here run on to the free לך, since that is what the Simanim
+            # Tiqqun case dicts carry and what tells the two sites apart -- so the caption says
+            # what each highlight covers rather than letting "compound" name the whole span.
+            (
+                "The Simanim Tiqqun's Exodus appendix Decalogue (p. 246), in the ",
+                TAHTON,
+                ": ",
+                hbo(simtiq_yihye["printed"]),
+                " and ",
+                hbo(simtiq_taase["printed"]),
+                ". Each highlight covers the maqaf compound alone, and each compound"
+                " has an accent on both of its atoms. The printed line break falls"
+                f" inside {lo_taase} — its {_LO} ends one line and its {_TAASE} opens"
+                " the next — so that one chanted word is highlighted in two pieces.",
+            ),
+            img_class="ink-on-white",
+            boxes=_SIMTIQ_P246_BOXES,
+            viewbox=_SIMTIQ_P246_VIEWBOX,
+        ),
     )
 
 
