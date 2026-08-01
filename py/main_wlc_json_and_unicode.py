@@ -48,12 +48,16 @@ def main():
 
 # The dated 2025-03-21-* sources and their outputs stay in the private repo; the
 # wlc420/wlc422 trees, the UXLC source, and their diffs live in the public repo
-# (this repo, the run cwd). _root_for picks the right one per in/out item by name,
-# mirroring how the artifacts were partitioned between the repos.
-_PUBLIC = "."
+# (this one). _root_for picks the right one per in/out item by name, mirroring how
+# the artifacts were partitioned between the repos.
+#
+# BOTH roots are absolute, and neither is the cwd.  _PUBLIC was "." until 2026-08-01,
+# which made every path below relative to wherever the process happened to be started;
+# run from another repo that also has in/ and out/, it wrote there instead of failing.
+_PUBLIC = str(repo_paths.repo_root())
 # The private repo is a cross-repo sibling; route it through the repo-anchored,
 # env-overridable resolver (fixes worktree breakage and the old cwd-relative
-# fragility).  _PUBLIC / the local in/ dirs are in-repo and deliberately left as-is.
+# fragility).
 _PRIVATE = str(repo_paths.wlc_utils_private_dir())
 
 

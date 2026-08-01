@@ -1103,10 +1103,15 @@ def write_json(survey: dict, path: Path) -> None:
 
 
 def add_args(parser, *, repo_root: Path) -> None:
+    # repo_root is unused: the default comes from ``default_json_out_path``, which composes
+    # off ``repo_paths.out_dir()`` -- the same value ``run`` falls back to, so the flag's
+    # default and its absence can no longer answer differently.  The parameter is kept
+    # because the entry point wires every subcommand the same way.
+    del repo_root
     parser.add_argument(
         "--json-out",
         type=Path,
-        default=repo_root / "out" / "accgram" / "chanted-word-accents.json",
+        default=default_json_out_path(),
         help="Where to write the survey JSON.",
     )
 

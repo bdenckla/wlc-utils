@@ -5,11 +5,16 @@ import xml.etree.ElementTree
 import mb_cmn.bib_locales as tbn
 
 
-def read_all_books(books_dir="in/UXLC"):
+# books_dir is REQUIRED, and was a "in/UXLC" default until 2026-08-01.  That default named
+# a directory this repo has never had -- the UXLC source lives in in/UXLC-39 and in
+# in/Tanach-26.0--UXLC-1.0--2020-04-01/Books -- so it could only ever have resolved against
+# some other cwd.  The sole caller, wlc_compare_mdc_with_uxlc.compare, passes the directory
+# explicitly, so requiring it costs nothing and removes a path that cannot be right.
+def read_all_books(books_dir):
     return {bkid: read(bkid, books_dir) for bkid in tbn.ALL_BK39_IDS}
 
 
-def read(book_id, books_dir="in/UXLC"):
+def read(book_id, books_dir):
     """Read book with id book_id into a list of chapters."""
     basename = _UXLC_BOOK_FILE_NAMES[book_id]
     xml_path = f"{books_dir}/{basename}.xml"

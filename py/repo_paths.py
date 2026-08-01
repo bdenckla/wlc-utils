@@ -56,6 +56,32 @@ def gh_pages_dir() -> Path:
     return repo_root() / "gh-pages"
 
 
+def data_dir() -> Path:
+    """This repo's hand-curated data tree (``<repo_root>/data``)."""
+    return repo_root() / "data"
+
+
+def novc_dir() -> Path:
+    """This repo's gitignored scratch tree (``<repo_root>/.novc``).
+
+    Named for the ``.gitignore`` entry rather than for what it holds, because what it holds
+    is deliberately unclassified: whatever a run wants to write and nobody wants to commit.
+    An accessor rather than each caller composing ``repo_root() / ".novc"`` -- four did,
+    one of them off its own ``Path(__file__)`` walk -- so the string appears once.
+    """
+    return repo_root() / ".novc"
+
+
+def scans_dir() -> Path:
+    """Where page renderings from the scan archive are written (``<novc_dir>/scans``).
+
+    NOT the scan archive itself, which is a personal collection outside every repo and is
+    resolved by ``accgram.scan_page.SCANS`` off ``WLC_SCANS_DIR``.  These are the
+    downscaled, cropped derivatives, which are disposable and can be large.
+    """
+    return novc_dir() / "scans"
+
+
 def siblings_root() -> Path:
     """Base directory under which sibling repos are looked up.
 

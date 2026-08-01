@@ -65,9 +65,6 @@ import repo_paths
 WLC_KQ_U = repo_paths.out_dir() / "wlc422-kq-u"
 SRC = repo_paths.in_dir() / "accgram" / "uxlc_accent_changes.json"
 OUT = repo_paths.out_dir() / "accgram" / "uxlc_grammar_test.txt"
-# `my_uxlc.read` resolves its book XML relative to `UXLC_CANONICAL_DIR`; anchor it
-# at this repo so the cross-check (below) works regardless of the process cwd.
-my_uxlc.UXLC_CANONICAL_DIR = str(repo_paths.in_dir() / "UXLC-39")
 
 MAQAF_CP = "־"  # HEBREW PUNCTUATION MAQAF
 PASEQ_CP = "׀"  # HEBREW PUNCTUATION PASEQ

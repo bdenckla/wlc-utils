@@ -2,6 +2,7 @@
 
 import py_html.wlc_utils_html as wlc_utils_html
 import py_html.my_html_for_img as img
+import repo_paths
 
 
 def write_to_html(native, record):
@@ -17,7 +18,7 @@ def write_to_html(native, record):
     title = f"UXLC change proposal {ucp_n}"
     path = f"ucp/uxlc_change_proposal_{ucp_n_str_02}.html"
     write_ctx = wlc_utils_html.WriteCtx(
-        title, f"gh-pages/wlc-a-notes/{path}", centered=True
+        title, str(repo_paths.gh_pages_dir() / "wlc-a-notes" / path), centered=True
     )
     wlc_utils_html.write_html_to_file(body_contents, write_ctx, "../../")
     return path

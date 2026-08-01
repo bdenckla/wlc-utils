@@ -56,7 +56,7 @@ SCANS = Path(
     os.environ.get("WLC_SCANS_DIR", Path.home() / "OneDrive/Documents/ScansOfBooks")
 )
 # Renderings are disposable and can be large, so they go to gitignored scratch, not out/.
-OUT = repo_paths.repo_root() / ".novc" / "scans"
+OUT = repo_paths.scans_dir()
 
 
 def render_page(

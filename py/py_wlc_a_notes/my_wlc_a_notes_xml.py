@@ -11,6 +11,7 @@ import py_wlc_a_notes.my_wlc_a_notes_native as native
 import py_wlc_a_notes.my_wlc_a_notes_etan as etan
 import py_wlc_a_notes.my_wlc_a_notes_utils as my_wlc_a_notes_utils
 import py_wlc_a_notes.my_wlc_a_notes as my_wlc_a_notes
+import repo_paths
 
 
 def write(io_records):
@@ -34,7 +35,10 @@ def write(io_records):
     #
     path = "all_uxlc_change_proposals.xml"
     file_io.with_tmp_openw(
-        f"gh-pages/wlc-a-notes/{path}", {}, _etree_write_callback, dated_change_set_tree
+        str(repo_paths.gh_pages_dir() / "wlc-a-notes" / path),
+        {},
+        _etree_write_callback,
+        dated_change_set_tree,
     )
     return path
 

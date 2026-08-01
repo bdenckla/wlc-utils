@@ -43,6 +43,12 @@ Subcommands:
                 --derive-only re-derives that body from the already-committed JSON, and
                 --check writes nothing at all: it re-derives every committed stem and
                 exits non-zero if any .txt is not its own derived body.
+    highlight-picker
+                Build a page for dragging highlight rectangles over a committed scan
+                under gh-pages/accgram/img/, to .novc/highlight-picker-<image>.html, and
+                export their coordinates for pasting into a page generator.  Authoring
+                only: nothing it makes ships, and the page generators hold its output as
+                ``mhi.Box`` px boxes.  --boxes-file seeds it with boxes to tweak.
 
 The output is only ever written.  To put a rendering in front of the reader, hand over a
 ``file:///`` link to it and open nothing -- no Start-Process, no browser pane.
@@ -66,6 +72,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from accgram import gen_highlight_picker
 from accgram import scan_page
 from accgram import transcription_build
 from accgram import transcription_check
@@ -94,6 +101,10 @@ def _run_zoom_line(args: argparse.Namespace) -> None:
 
 def _run_check(args: argparse.Namespace) -> None:
     transcription_check.run(args)
+
+
+def _run_highlight_picker(args: argparse.Namespace) -> None:
+    gen_highlight_picker.run(args)
 
 
 def _run_build(args: argparse.Namespace) -> int:
@@ -168,6 +179,18 @@ def build_parser() -> argparse.ArgumentParser:
     )
     transcription_build.add_args(build_subparser, repo_root=_repo_root())
     build_subparser.set_defaults(func=_run_build)
+
+    highlight_picker_parser = subparsers.add_parser(
+        "highlight-picker",
+        help=(
+            "Build a box-dragging page over a committed scan under gh-pages/accgram/img/, "
+            "to .novc/highlight-picker-<image>.html, and export the boxes' coordinates. "
+            "--serve runs a local http server; --no-open prints the URL and launches "
+            "nothing; --boxes-file seeds the editor with boxes to tweak."
+        ),
+    )
+    gen_highlight_picker.add_args(highlight_picker_parser, repo_root=_repo_root())
+    highlight_picker_parser.set_defaults(func=_run_highlight_picker)
 
     return parser
 

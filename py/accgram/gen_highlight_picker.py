@@ -18,12 +18,16 @@ naturalWidth/naturalHeight (read in the browser -- so no Pillow dependency), whi
 maps 1:1 onto the scan-pixel-space overlay used at render time and onto
 ``mhi.Box(x, y, w, h)``.
 
-Usage (from the repo root; PowerShell):
-    .venv\\Scripts\\python.exe py\\accgram\\gen_highlight_picker.py \\
+Run via ``main_edition_transcription.py highlight-picker`` (from the repo root; PowerShell):
+    .venv\\Scripts\\python.exe py\\main_edition_transcription.py highlight-picker \\
         Simanim-Tiqqun-p-083-Ex-Dec-elyon.png
 The .png suffix is optional. The image is resolved under gh-pages/accgram/img/.
 Add --serve to run a local http server (then Ctrl+C to stop it) instead of the
 default file:// open. Add --no-open to print the URL without launching anything.
+This module is not independently runnable, and had its own hand-rolled ``sys.argv``
+scanning and ``main()`` until 2026-08-01 -- the last of the six such modules
+``doc/PLAN-sys-path-insert.md`` retired, which escaped that pass only because it never
+had a ``sys.path`` prelude to find it by.
 
 Priming (start from existing boxes instead of blank): pass ``--boxes-file <path>``,
 a JSON file holding either a bare list of px boxes ``[{"x":..,"y":..,"w":..,"h":..}]``
@@ -34,6 +38,7 @@ to nudge; export as usual when done. Without it, the editor opens blank as befor
 
 from __future__ import annotations
 
+import argparse
 import functools
 import http.server
 import json
@@ -43,10 +48,13 @@ import threading
 import webbrowser
 from pathlib import Path
 
-# Anchored to this file, not the cwd: py/accgram/gen_highlight_picker.py -> repo root.
-_REPO_ROOT = Path(__file__).resolve().parents[2]
-_IMG_DIR = _REPO_ROOT / "gh-pages" / "accgram" / "img"
-_OUT_DIR = _REPO_ROOT / ".novc"
+import repo_paths
+
+# Off repo_paths like every other module here, never the cwd.  This file computed its own
+# ``Path(__file__).resolve().parents[2]`` until 2026-08-01 -- the one module in the tree that
+# bypassed repo_paths entirely, so a change to how the repo locates itself would have missed it.
+_IMG_DIR = repo_paths.gh_pages_dir() / "accgram" / "img"
+_OUT_DIR = repo_paths.novc_dir()
 
 
 def serve_and_open(directory: Path, rel_url: str, *, open_browser: bool = True) -> None:
@@ -141,7 +149,9 @@ def generate(
     print(f"Picker written to: {out_path}")
     if serve:
         # Serve from the repo root so both .novc/ HTML and gh-pages/accgram/img/ resolve.
-        serve_and_open(_REPO_ROOT, f".novc/{out_path.name}", open_browser=open_browser)
+        serve_and_open(
+            repo_paths.repo_root(), f".novc/{out_path.name}", open_browser=open_browser
+        )
     else:
         # No server needed: the img path is relative, so file:// works directly.
         file_url = out_path.as_uri()
@@ -567,46 +577,44 @@ updateStatus();
 """
 
 
-def main() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        reconfigure = getattr(stream, "reconfigure", None)
-        if reconfigure is not None:
-            reconfigure(encoding="utf-8")
-    args = sys.argv[1:]
-    serve = "--serve" in args
-    open_browser = "--no-open" not in args
-    args = [a for a in args if a not in ("--serve", "--no-open")]
-    init_boxes_px = None
-    if "--boxes-file" in args:
-        i = args.index("--boxes-file")
-        if i + 1 >= len(args):
-            print("Error: --boxes-file needs a path argument")
-            sys.exit(1)
-        boxes_path = Path(args[i + 1])
-        init_boxes_px = _px_boxes_from_arg(
-            json.loads(boxes_path.read_text(encoding="utf-8"))
-        )
-        args = args[:i] + args[i + 2 :]
-    if len(args) != 1:
-        print(
-            "Usage: python py/accgram/gen_highlight_picker.py [--serve] [--no-open]"
-            " [--boxes-file <path>] <image-name>"
-        )
-        print(
-            "  e.g.: python py/accgram/gen_highlight_picker.py "
-            "Simanim-Tiqqun-p-083-Ex-Dec-elyon.png"
-        )
-        print("  --serve            run a local http server instead of a file:// URL")
-        print("  --no-open          print the URL only; launch no browser")
-        print(
-            "  --boxes-file PATH   seed the editor with boxes to tweak (JSON: a list of"
-            " {x,y,w,h} px boxes, or a prior highlight-boxes-*.json export)"
-        )
-        sys.exit(1)
-    generate(
-        args[0], serve=serve, open_browser=open_browser, init_boxes_px=init_boxes_px
+def add_args(parser: argparse.ArgumentParser, repo_root: Path) -> None:
+    # repo_root is unused: _IMG_DIR and _OUT_DIR are module constants off repo_paths.  The
+    # parameter is here so the entry point wires every subcommand the same way.
+    del repo_root
+    parser.add_argument(
+        "image",
+        help="scan filename under gh-pages/accgram/img/, with or without the .png",
+    )
+    parser.add_argument(
+        "--serve",
+        action="store_true",
+        help="run a local http server instead of opening a file:// URL",
+    )
+    parser.add_argument(
+        "--no-open",
+        dest="open_browser",
+        action="store_false",
+        help="print the URL only; launch no browser",
+    )
+    parser.add_argument(
+        "--boxes-file",
+        type=Path,
+        help=(
+            "seed the editor with boxes to tweak, rather than opening blank: JSON holding"
+            " a list of {x,y,w,h} px boxes, or a prior highlight-boxes-*.json export"
+        ),
     )
 
 
-if __name__ == "__main__":
-    main()
+def run(args: argparse.Namespace) -> None:
+    init_boxes_px = None
+    if args.boxes_file:
+        init_boxes_px = _px_boxes_from_arg(
+            json.loads(args.boxes_file.read_text(encoding="utf-8"))
+        )
+    generate(
+        args.image,
+        serve=args.serve,
+        open_browser=args.open_browser,
+        init_boxes_px=init_boxes_px,
+    )

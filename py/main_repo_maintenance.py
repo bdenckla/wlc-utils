@@ -60,7 +60,7 @@ from cmn.utf8_io import force_utf8_io
 import repo_paths
 
 _REPO = repo_paths.repo_root()
-_NOVC = _REPO / ".novc"
+_NOVC = repo_paths.novc_dir()
 
 
 def _parse_args() -> argparse.Namespace:

@@ -43,7 +43,7 @@ import repo_paths
 # unanchored call made from another repo's directory would edit THAT repo's
 # same-numbered issue.
 _REPO_ROOT = repo_paths.repo_root()
-_OUT_DIR = _REPO_ROOT / ".novc"
+_OUT_DIR = repo_paths.novc_dir()
 
 
 class IssueEditError(RuntimeError):

@@ -4,6 +4,7 @@ import py_html.wlc_utils_html as wlc_utils_html
 import py_html.my_html_for_img as img
 import py_wlc.my_url_generator as urlg
 import py_wlc_diffs_420422.my_word_diffs_420422_utils as wd_utils
+import repo_paths
 
 
 def write(io_records):
@@ -44,7 +45,9 @@ def _write_record(record):
     title = f"WLC 4.20 to 4.22 diff {orord}"
     filename = _filename(orord)
     path = f"full-record/{filename}"
-    write_ctx = wlc_utils_html.WriteCtx(title, f"gh-pages/420422/{path}", centered=True)
+    write_ctx = wlc_utils_html.WriteCtx(
+        title, str(repo_paths.gh_pages_dir() / "420422" / path), centered=True
+    )
     wlc_utils_html.write_html_to_file(body_contents, write_ctx, "../../")
     return path
 
