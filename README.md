@@ -1,74 +1,46 @@
 # wlc-utils
-Westminster Leningrad Codex utilities
 
-All tracked Python now lives under `py/`.
+Data and documentation derived from the Westminster Leningrad Codex (WLC), together with the
+accent-grammar (`accgram`) study built on it. **This repository contains no code.** As of
+2026-08-01 all of its Python lives in the sibling repository
+[MAM-basics](https://github.com/bdenckla/MAM-basics), under `py/`, and generates into this one.
 
-Current top-level Python buckets are:
+## What is here
 
-- `py/py_wlc_json_and_unicode/` for the WLC JSON/Unicode processing modules
-- `py/mb_cmn/` for modules that match or nearly match the shared `mb_cmn` layer used in sibling repos
-- `py/py_hebrew/` for Hebrew/Unicode helpers built on top of `mb_cmn`
-- `py/py_html/` for shared HTML/presentation helpers split out of `py_misc`
-- `py/py_uxlc/` for UXLC-specific parsing, location, and metadata helpers
-- `py/py_wlc/` for shared WLC/Tanakh helpers used across multiple WLC-specific packages
-- `py/py_wlc_a_notes/` for the WLC a-notes family
-- `py/py_wlc_diffs_420422/` for the WLC 4.20/4.22 word-diffs family
+- `in/` — inputs: the WLC 4.20 and 4.22 source XML, the vendored UXLC XML and change lists, and
+  the hand-authored printed-Decalogue transcriptions under `in/accgram/`.
+- `out/` — generated JSON and text: the WLC in JSON and in Unicode, the 4.20/4.22 and
+  WLC/UXLC diffs, and the accent-grammar parse records under `out/accgram/`.
+- `gh-pages/` — the generated static site (below).
+- `data/` — a hand-maintained lookup table, `data/lci_recs.json`.
+- `doc/` — design notes and plans, including `doc/agent-planning-principles.md`.
 
-The old transitional `py/py_misc/` compatibility layer has been removed.
+`in/accgram/uxlc_accent_changes.json` is the exception to the usual reading of those directory
+names: it lives under `in/` but is written by a program, not by hand.
 
-## Setup
+## Regenerating it
 
-This repository uses a Python virtual environment (`.venv`). Do **not** rely on
-globally-installed packages — the entry scripts and test commands below all invoke
-`.venv\Scripts\python.exe`.
-
-One-time setup from the repo root (Python 3.11+):
+From a clone of MAM-basics sitting beside this one, with that repo's own interpreter:
 
 ```powershell
-python -m venv .venv
-.venv\Scripts\python.exe -m pip install -r requirements.txt
+C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_0_mega.py
 ```
 
-Third-party dependencies are listed in `requirements.txt`.
+That covers all of `gh-pages/` and most of `out/`. A handful of generators sit outside it and
+have to be run by hand — `main_uxlc_grammar_test.py`, `main_find_uxlc_accent_changes.py`, and
+several `py\main_accgram.py` subcommands. `CLAUDE.md` lists each of them and says what it writes.
 
-Run the WLC JSON/Unicode workflow from the repo root with:
-
-```powershell
-.venv\Scripts\python.exe py\main_wlc_json_and_unicode.py
-```
-
-Additional WLC-focused entry scripts now live here as well:
-
-```powershell
-.venv\Scripts\python.exe py\main_0_mega.py
-.venv\Scripts\python.exe py\main_wlc_a_notes.py
-.venv\Scripts\python.exe py\main_wlc_diffs_420422.py
-```
-
-Run repository tests from the repo root with:
-
-```powershell
-.venv\Scripts\python.exe -m pytest py/tests
-```
-
-Routine repo hygiene -- wipe the gitignored `.novc/` scratch dir, run the
-pytest suite, then run `py\main_0_mega.py` -- is bundled in one script:
-
-```powershell
-.venv\Scripts\python.exe py\main_repo_maintenance.py
-```
-
-`--skip-novc`, `--skip-tests`, `--skip-rebuild`, and `--continue-on-test-failure`
-narrow it; see the script's module docstring for details.
+Regenerating should produce **no diff**. An unexplained one is a bug, in this repo's data or in
+MAM-basics' code; that is how the real defects here have actually been found.
 
 ## GitHub Pages
 
-The static site content for this repository lives under `gh-pages/` and is deployed by the GitHub Actions workflow in `.github/workflows/pages.yml`.
+The static site under `gh-pages/` is deployed by `.github/workflows/pages.yml`, which involves no
+Python and is unaffected by the move. Published sections:
 
-Once GitHub Pages is enabled for this repository with the GitHub Actions source, the expected published URLs are:
+- `https://bdenckla.github.io/wlc-utils/` — site root, `gh-pages/index.html`
+- `https://bdenckla.github.io/wlc-utils/accgram/` — the accent-grammar pages
+- `https://bdenckla.github.io/wlc-utils/420422/` — the WLC 4.20 / 4.22 word diffs
+- `https://bdenckla.github.io/wlc-utils/wlc-a-notes/` — the WLC a-notes family
 
-- `https://bdenckla.github.io/wlc-utils/`
-- `https://bdenckla.github.io/wlc-utils/420422/`
-- `https://bdenckla.github.io/wlc-utils/wlc-a-notes/`
-
-The site root is `gh-pages/index.html`, which links to the two current published sections under `gh-pages/420422/` and `gh-pages/wlc-a-notes/`.
+`gh-pages/` deliberately stays in this repository: moving it would break published links.

@@ -1,127 +1,63 @@
 # CLAUDE.md
 
-## Invoke the `hebrew-prose` skill before writing or editing prose about accentuation
+## This repo contains no Python. Its generators live in `../MAM-basics/py/`
 
-That user-level skill (`~/.claude/skills/hebrew-prose/`, tracked in `github-misc` at
-`dot-claude/skills/`) is now the canonical, single home for the rules the rest of this file and
-`printed_decalogue_strands.py`'s docstring state — atom vs chanted word, the one-scale maqaf rule,
-which corpus a claim takes, the banned verbs and framings, where Yeivin and Breuer live, how to
-verify a page's numbers. It loads on demand rather than every session, so it can hold the full
-statement; the sections below stay as pointers, and **a rule change goes into the skill first**.
+wlc-utils is data and documentation: `in/`, `out/`, `gh-pages/`, `data/`, `doc/`. Everything
+under `out/` and `gh-pages/` is generated, and **every generator lives in the sibling repo
+`../MAM-basics`**, which writes back into this one. All 267 tracked `.py` files left this repo on
+2026-08-01; do not add one back, and do not go looking here for the code that produced a file you
+are reading. Run everything below from `C:\Users\BenDe\GitRepos\MAM-basics`, with that repo's own
+interpreter — this repo's `requirements.txt` went with the code, and whatever `.venv` is left
+here has nothing to run.
+
+Almost all of it regenerates in one command:
+
+```powershell
+C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_0_mega.py
+```
+
+Its last seven steps are the wlc-utils ones, in the order they must run: `wlc-vendor-uxlc`,
+`wlc-json-and-unicode`, `accgram-run-prose`, `accgram-run-poetic`, `accgram-generate-html`,
+`wlc-diffs-420422`, `wlc-a-notes`. The individual entry points behind them, all under
+`MAM-basics/py/`:
+
+- `main_accgram.py` — the accent-grammar work, and everything under `out/accgram/` and
+  `gh-pages/accgram/`. Many subcommands; `--help` lists them. Only `run-prose`, `run-poetic`
+  and `generate-html` are in the mega, so `run-dual-cant`, `run-printed-decalogue`,
+  `survey-chanted-word-accents`, `xcheck-poetic`, `servi-xcheck`, `test-fixes` and
+  `grammaticality` have to be run by hand — as do `vendor-printed-decalogue` and
+  `vendor-ctr-decalogue`, which refresh vendored strands rather than regenerate anything.
+- `main_edition_transcription.py` — the printed-Decalogue transcriptions under `in/accgram/`,
+  including the `highlight-picker` subcommand. `build --check` re-derives every committed
+  transcription body and is the cheapest check that they are still consistent.
+- `main_wlc_json_and_unicode.py` — `out/wlc420.json`, `out/wlc422-kq-u` and friends.
+- `main_wlc_a_notes.py` — `gh-pages/wlc-a-notes/`.
+- `main_wlc_diffs_420422.py` — `gh-pages/420422/`.
+- `main_wlc_vendor_uxlc.py` — refreshes `in/UXLC-39` and `in/UXLC-misc` from UXLC-utils.
+- `main_find_uxlc_accent_changes.py` — writes the tracked `in/accgram/uxlc_accent_changes.json`.
+  **Not in the mega**, so nothing rewrites it routinely.
+- `main_uxlc_grammar_test.py` — `out/accgram/uxlc_grammar_test.txt`. **Also not in the mega**,
+  which is exactly how it once sat stale in the tree for two days short of a month.
+
+Not everything under those two directories is generated at all: 73 static assets under
+`gh-pages/accgram/` (three `.js`, seventy `.png`/`.jpg`) and the 38 files under
+`out/accgram/goerwitz-stderr/`, which is captured stderr from the original C `accents` checker.
+Deleting and regenerating will not bring those back.
+
+`.novc/` stays here — it is this repo's gitignored scratch directory, and the highlight picker and
+`scan_page.py`'s renderings still write into it. MAM-basics' `py/main_repo_maintenance.py` wipes
+it along with its own.
+
+**Prose, terminology and testing rules moved to `../MAM-basics/CLAUDE.md`** along with the code
+they govern. Read that file before editing anything that generates text here.
 
 ## Read `doc/agent-planning-principles.md` before planning work here
 
 That file holds this repo's planning preferences (phase sizing, new-features-as-new-modules,
 writing state back between phases, keeping verification close to the real workflow). Nothing
 in the tree referenced it, so for a long time no agent ever loaded it — hence this pointer.
-
-## Rendered-prose conventions: `py/accgram/printed_decalogue_strands.py`'s module docstring
-
-That docstring is where the editorial conventions for accgram's **rendered prose** are recorded
-— strand names in Hebrew letters and never transliterated, the two signal-word sets, atom vs
-chanted word, the single-sourced `ROM_*` romanizations and their italic wrapper, "the Simanim
-Tiqqun" and never a bare "Simanim", real em dashes, no English sentence opening on a Hebrew word.
-It lives in the printed-Decalogue trio because that is where each rule was settled, but the rules
-are not all trio-specific — its SCOPE paragraph says which are which: read it before writing or
-editing prose on **any** accgram page. Same problem as the pointer above — nothing referenced it,
-so it was discoverable only by already editing the file it governs.
-
-**A table cell holding Hebrew is declared `dir="rtl"`.** Every such cell of every table on a page,
-unless the whole table already is, and without waiting to be asked — right-justification then
-follows from having said what the cell holds, which is why the declaration beats a literal
-`text-align`. Blank cells in the column included; the English heading left alone; no class and no
-stylesheet rule. `maqaf_nonfinal_accents_page`'s `_HEBREW_CELL`, spliced through each table's one
-`*_CELL_ATTRS` tuple, is the pattern. This is here as well as in the skill because Ben has had to
-say it repeatedly (2026-07-29: "something I find myself telling you about frequently … this should
-just be sort of obvious"), and `CLAUDE.md` loads whether or not the skill fires. The fuller
-statement, with the companion rule about abbreviating a long accent name in a cell, is the
-`hebrew-prose` skill's `references/rendered-prose.md`.
-
-Two of those conventions are claims about Hebrew accentuation rather than about this repo:
-
-**Never a loose "word"** (#81). An **atom** is one written word, between spaces or maqafs — the
-thing a maqaf joins to the next. A **chanted word** is a lone atom *or* a whole maqaf compound:
-the unit cantillation operates on, normally bearing one accent. Say which you mean, and name a
-compound whole (על־פני, לא־תעשה), never a bare half of one. Plain "word" survives for an ordinary
-English word, inside quoted or translated source material (which keeps whatever it says), **and
-wherever the context already settles which sense is meant** — what #81 bans is a loose "word" the
-reader must resolve from nothing, so the qualifier is owed where the sense is in doubt and is noise
-where it is not. A table heading is read with its column, so `Word` over a column of Hebrew forms
-is right whether they are simple, compound or mixed (Ben, 2026-07-29); the sense can still go in
-the heading's hover text, as the one-letter appendix's does. `MAQAF_IS_THE_LAST_RUNG` is where "atom" is glossed for the reader; that gloss is what
-licenses the bare term on the pages. Note that the two senses come apart exactly where the rung
-below matters, so the two rules are best read together.
-
-**Maqaf is the last rung of one scale.** Disjunctives, then conjunctives, then maqaf — a maqaf
-separates the atom it sits on from the next even less than a conjunctive does, so it carries the
-weakest *separating* force on the scale. (Never write a bare "weakest": a maqaf *binds* tightest,
-so unqualified it reads as backwards.) There is no second ledger for "word division". A maqaf
-difference is counted **once**, at the atom whose marking changed, never as a regrouping plus an
-accent; and it is stated as an **exchange with both marks named** — "a maqaf where its Wikisource
-strand has a merkha" — never as the absent maqaf alone. Do not define a maqaf as "the atom left
-blank of an accent": that is only the normal case, and `koren_dt_elyon`'s `mun-mun` on לא־תעשה is
-a maqaf compound whose joined atom keeps its munaḥ — as are the Simanim Tiqqun's two munaḥ-on-לא.
-But do not swing the other way either: in the **prose** system a second accent on a compound is
-rare, and is largely just a consequence of the compound being one chanted word — the accents found
-there are the ones that can be the first of two on an atomic word, which is also Yeivin's short
-list of prose "secondary accents" (munaḥ-zaqef, metigah-zaqef, rare merkha/mehuppakh on a tevir
-word). The separate case is a maqaf written after a word that keeps its own conjunctive: a
-manuscript habit, and one **L is specifically named for** (Yeivin ITM §293). The **poetic** system
-is far more willing to put two accents on one chanted word; that asymmetry is a major difference
-between the systems, not a detail. `edition_transcription`'s "HOW RARE THAT IS IN PROSE" paragraph
-has it with its Yeivin and Breuer citations.
-
-**Yeivin lives in two places and they are not the same.** `../al-hatorah/py/itm/` is Ben's
-*adaptation* — partial, with sections still untranscribed.
-`../masorah-books/books/itm/md-export-of-docx/` is
-the *full* OCR of the book. That repo was `yeivin-itm` until 2026-07-31, when it was renamed and
-Breuer's *Cantillation of Scripture* was merged into it from `breuer-cos`; CoS is the sibling
-`../masorah-books/books/cos/md-export-of-docx/`, so both books are now one clone away.
-Search the full OCR before concluding Yeivin is silent on something;
-a first pass at #76 searched only the adaptation and wrongly reported the maqaf material absent. The verbatim reader-facing statement is
-`MAQAF_IS_THE_LAST_RUNG`; its guardrail comment records the convention it replaced (a 2026-07-25
-audit fix that made maqaf differences non-differences) and why that one was wrong, so it does not
-get reinstated. Issue #76.
-
-## Running tests
-
-From the **repo root**, with the venv's own interpreter (the system Python has neither pytest
-nor PLY):
-
-```bash
-.venv/Scripts/python.exe py/main_test.py
-```
-
-With no arguments that runs everything under `py/tests`; any arguments go straight through to
-pytest, so `-k <expr>`, `-x`, `-q`, `--lf` and a named test file all work as usual.
-
-**A bare `.venv/Scripts/pytest.exe py/tests` fails to collect, and that is the designed state
-— do not "fix" it with a `conftest.py`.** Import path here comes from the entry point: CPython
-puts `py/` on `sys.path` when it runs `py/main_test.py`, and the in-process `pytest.main()`
-call inherits it. A root `conftest.py`, a `pytest.ini` `pythonpath`, a `.pth` file and an
-exported `PYTHONPATH` are the same path shim in four spellings, and the count of them in this
-repo is zero. `py/main_test.py`'s docstring says the same at greater length.
-
-## Writing tests — differential and lint-shaped only
-
-`doc/agent-planning-principles.md` §"Generated Outputs Are the Tests" is the full rule with
-its evidence. In short: **do not add a test file or test case unless it is one of the two
-shapes that have actually found things here**, or I ask for it.
-
-- **Differential check against an independent oracle** — the PLY parity comparator against the
-  frozen C checker, the Decalogue transcriptions against their vendored strands.
-- **Mechanical lint over the tree** — `py/tests/test_transliterations.py` (#26).
-
-Everything else: regenerate the tracked JSON/HTML with the real CLI command and read the diff.
-That is the test. Do not write an example-based unit test that pins one hand-picked case, a
-string, or a name — no such test is recorded as ever having caught anything in this repo, and
-they all have to be dragged through every terminology rename.
-
-**A missing input must FAIL, never skip.** `25a7800` removed twenty-one skip guards that
-reported green having verified nothing. Skips are a *semantic* channel in this suite (a skip
-reports that a page diverges from its strand), so an environment skip mixed in corrupts the
-signal. An empty `@parametrize` list also reports as a skip — hence the `or ["(none
-committed)"]` fallbacks, which are the failure mechanism and must stay.
+It is still the fullest statement of the "Generated Outputs Are the Tests" rule, and
+`MAM-basics/CLAUDE.md` cites it from there.
 
 ## There is no `wlc-koren-12th` repo
 

@@ -2,53 +2,6 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"path": "../wlc-utils-private"
 		}
-	],
-	"settings": {
-		"chat.tools.terminal.autoApprove": {
-			"/^\\.\\\\\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_test\\.py --accgram-research-troublemakers -v$/": {
-				"approve": true,
-				"matchCommandLine": true
-			},
-			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_test\\.py -v py/tests/test_accgram_research_tms\\.py$/": {
-				"approve": true,
-				"matchCommandLine": true
-			},
-			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_test\\.py -v --accgram-research-troublemakers$/": {
-				"approve": true,
-				"matchCommandLine": true
-			},
-			"/^python -m py_compile py/accgram/troublemaker_structured_text_data\\.py$/": {
-				"approve": true,
-				"matchCommandLine": true
-			},
-			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_accgram\\.py --help$/": {
-				"approve": true,
-				"matchCommandLine": true
-			},
-			"/^c:/Users/BenDe/GitRepos/wlc-utils/\\.venv/Scripts/python\\.exe py/main_accgram\\.py research-tms-and-oddballs$/": {
-				"approve": true,
-				"matchCommandLine": true
-			},
-			"/^c:/Users/BenDe/GitRepos/wlc-utils/\\.venv/Scripts/python\\.exe py/main_test\\.py -v --accgram-research-troublemakers$/": {
-				"approve": true,
-				"matchCommandLine": true
-			},
-			"/^c:/Users/BenDe/GitRepos/wlc-utils/\\.venv/Scripts/python\\.exe py/main_test\\.py --accgram-research-troublemakers$/": {
-				"approve": true,
-				"matchCommandLine": true
-			},
-			"/^\\.venv\\\\Scripts\\\\python\\.exe py\\\\main_accgram\\.py research-tms-and-oddballs$/": {
-				"approve": true,
-				"matchCommandLine": true
-			},
-			"/^\\.venv/Scripts/python\\.exe py/main_accgram\\.py research-tms-and-oddballs 2>&1 \\| tail -20$/": {
-				"approve": true,
-				"matchCommandLine": true
-			}
-		}
-	}
+	]
 }
