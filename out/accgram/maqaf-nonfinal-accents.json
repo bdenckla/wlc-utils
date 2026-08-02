@@ -1148,7 +1148,7 @@
      "mayela before an etnaxta (ITM §216)": 7,
      "unnamed": 7,
      "secondary merkha in the tipexa's chanted word (ITM §233)": 5,
-     "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)": 4,
+     "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)": 4,
      "secondary mahapakh in the pashta's chanted word (ITM §241)": 4,
      "munax-zaqef (ITM §221)": 3,
      "mayela before a silluq (ITM §210)": 1,
@@ -1185,7 +1185,7 @@
       "word": "לֹא־יֹ֥אכַל־בּֽוֹ׃",
       "shape": "0-mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -1281,7 +1281,7 @@
       "word": "מֶ֥לֶךְ־יִשְׂרָאֵֽל׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -1293,7 +1293,7 @@
       "word": "בְּלֵ֥ב־יַמִּֽים׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1305,7 +1305,7 @@
       "word": "לְבַ֥ת־יְרוּשָׁלִָֽם׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5118,7 +5118,7 @@
      "secondary mahapakh in the pashta's chanted word (ITM §241)": 3,
      "secondary merkha in the tipexa's chanted word (ITM §233)": 3,
      "munax-zaqef (ITM §221)": 2,
-     "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)": 2,
+     "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)": 2,
      "mayela before a silluq (ITM §210)": 1,
      "secondary munax in the revia's chanted word (ITM §236)": 1
     },
@@ -5146,7 +5146,7 @@
       "word": "לֹא־יֹ֥אכַל־בּֽוֹ׃",
       "shape": "0-mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5254,7 +5254,7 @@
       "word": "בְּלֵ֥ב־יַמִּֽים׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10129,7 +10129,7 @@
     "by_configuration": {
      "metigah-zaqef (ITM §224)": 211,
      "mayela before an etnaxta (ITM §216)": 8,
-     "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)": 4,
+     "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)": 4,
      "secondary merkha in the tipexa's chanted word (ITM §233)": 4,
      "secondary mahapakh in the pashta's chanted word (ITM §241)": 3,
      "mayela before a silluq (ITM §210)": 1,
@@ -10226,7 +10226,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10238,7 +10238,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10250,7 +10250,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10262,7 +10262,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue #86)",
+      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,

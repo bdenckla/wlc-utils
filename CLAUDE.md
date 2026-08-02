@@ -51,6 +51,19 @@ it along with its own.
 **Prose, terminology and testing rules moved to `../MAM-basics/CLAUDE.md`** along with the code
 they govern. Read that file before editing anything that generates text here.
 
+## This repo's issues stay here; new ones are filed in MAM-basics
+
+The 88 issues were **not** transferred when the Python left on 2026-08-01. They keep their numbers
+and stay in `bdenckla/wlc-utils`, and this is still where they are read, commented on and closed.
+So **a bare `#NN` in this repo's `doc/`, `in/` and this file still means a wlc-utils issue**; not
+one of those references was requalified, because qualifying them would imply they had been
+ambiguous.
+
+New issues, including new work on the generators now in `../MAM-basics/py/`, are filed in
+**MAM-basics**. There a bare `#NN` means a MAM-basics issue, and the moved code cites this repo's
+as `wlc-utils#NN` — both trackers hold issues in the 1-88 range, and the prefix is the only thing
+keeping wlc-utils#52 (the printed Decalogue) apart from MAM-basics #52 (a meteg in Ezekiel).
+
 ## Read `doc/agent-planning-principles.md` before planning work here
 
 That file holds this repo's planning preferences (phase sizing, new-features-as-new-modules,
