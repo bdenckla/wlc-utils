@@ -701,7 +701,13 @@ made every one of those edits unnecessary.
   that holds it there. What surfaced: gn18:18, je37:10 and ne9:20 go clean→error, je49:19 and
   mi2:7 were already errors and their `ERROR` node moves to `zaqef_phrase` where it belongs, and
   the Simanim Tanakh's p. 298 transcription (`simtan_dt_taxton`) goes clean→ungrammatical, which
-  is now a pinned departure. The control that settled it: WLC's 1k19:11 has a `]1` note marker
+  is now a pinned departure. **Follow-ups are open, and `generate-html` is broken until the first
+  is done — MAM-basics#218**: the three newly-ungrammatical verses need research notes
+  (`rtmsr_overview` requires an `st-source` for each and raises without one), and the existing
+  notes for je49:19 and mi2:7 both explain that the ERROR lands one phrase out from the defect,
+  which is exactly what this change fixed, so both now describe a parse the checker no longer
+  produces. The corpus-wide oddball count is 93→96.
+  The control that settled it: WLC's 1k19:11 has a `]1` note marker
   between הרוח and רעש, whose digit already blocked the fuse, so the grammar already called that
   configuration an error — while the identical configuration at gn18:18 parsed clean, on nothing
   but an unrelated note marker.
