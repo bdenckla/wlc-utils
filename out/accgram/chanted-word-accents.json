@@ -95,7 +95,7 @@
    "yeivin_count": "(no count given)",
    "quote": "If the zaqef is not preceded by pashṭa, and if the word bearing zaqef contains a closed syllable which is separated from the stress syllable by a full vowel--or at least by a vocal shewa, and if this closed syllable is not the first in the word, the methigah-zaqef is used.",
    "source": "Yeivin, Introduction to the Tiberian Masorah",
-   "note": "Invisible to this survey by construction: the scanner fuses qadma...zaqef into one METHIGAZAQEF token, so a metigah-zaqef chanted word has one accent token, not two. The token count and the boundary-crossing cases are under ``methigazaqef`` in each corpus."
+   "note": "Invisible to this survey by construction: the scanner fuses qadma...zaqef into one METHIGAZAQEF token, so a metigah-zaqef chanted word has one accent token, not two. The fuse crosses a maqaf, as this section's leading example Ex 35:9 ואבני־שהם requires, and stops at a space, on this section's 'the word bearing zaqef' and CoS Ch. 5 §4's 'A methiga will appear in the word of the small zakef'. So a fused pair is always one chanted word, and ``crossing_a_chanted_word_boundary`` is 0 in all three corpora -- a lint on the scanner rather than a measurement of the corpus. The token count is under ``methigazaqef`` in each corpus."
   },
   {
    "section": "§233",
@@ -855,35 +855,9 @@
    },
    "geresh_folds": [],
    "methigazaqef": {
-    "tokens": 324,
-    "crossing_a_chanted_word_boundary": 5,
-    "crossings": [
-     {
-      "bcv": "gn18:18",
-      "qadma_on": "ונ֨ברכו",
-      "zaqef_on": "ב֔ו"
-     },
-     {
-      "bcv": "je37:10",
-      "qadma_on": "ונ֨שארו",
-      "zaqef_on": "ב֔ם"
-     },
-     {
-      "bcv": "je49:19",
-      "qadma_on": "אריצ֨נו",
-      "zaqef_on": "מעל֔יה"
-     },
-     {
-      "bcv": "mi2:7",
-      "qadma_on": "דבר֨י",
-      "zaqef_on": "ייט֔יבו"
-     },
-     {
-      "bcv": "ne9:20",
-      "qadma_on": "ורוחך֨",
-      "zaqef_on": "הטוב֔ה"
-     }
-    ]
+    "tokens": 319,
+    "crossing_a_chanted_word_boundary": 0,
+    "crossings": []
    },
    "occurrences": [
     {
@@ -10591,25 +10565,9 @@
    },
    "geresh_folds": [],
    "methigazaqef": {
-    "tokens": 324,
-    "crossing_a_chanted_word_boundary": 3,
-    "crossings": [
-     {
-      "bcv": "gn18:18",
-      "qadma_on": "ונ֨ברכו",
-      "zaqef_on": "ב֔ו"
-     },
-     {
-      "bcv": "1k19:11",
-      "qadma_on": "הר֨וח",
-      "zaqef_on": "ר֔עש"
-     },
-     {
-      "bcv": "je37:10",
-      "qadma_on": "ונ֨שארו",
-      "zaqef_on": "ב֔ם"
-     }
-    ]
+    "tokens": 321,
+    "crossing_a_chanted_word_boundary": 0,
+    "crossings": []
    },
    "occurrences": [
     {

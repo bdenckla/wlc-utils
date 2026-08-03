@@ -23,13 +23,20 @@
 #   * The site is a taxton/elyon discriminator, not a tradition one: all four taxton strands
 #     have pashta on ויום and all four elyon have qadma.  But this is NOT simply the elyon's
 #     reading imported: the elyon's qadma pairs with GERESH on השביעי, and this page keeps the
-#     taxton's zaqef qatan there.  So the page has an elyon-shaped accent inside a taxton phrase
-#     rather than an elyon phrase.
-#   * The resulting pair, qadma immediately before zaqef qatan, is not an impossible sequence:
-#     it is what accgram's prose scanner tokenizes as METHIGAZAQEF, methiga-zaqef
-#     (prose_scanner.py, "Methiga zaqef looks just like QADMA ZAQEF"), the same convention that
-#     makes the first accent of ויצאך a metigah rather than a qadma.  So the divergence replaces
-#     one attested zaqef phrase (pashta + zaqef) with another (methiga + zaqef).
+#     taxton's zaqef qatan there.  So what the page has is one elyon accent inside an otherwise
+#     taxton-conforming Decalogue.
+#   * The resulting pair, qadma immediately before zaqef qatan, is NOT a metigah-zaqef, and is
+#     no well-formed zaqef phrase at all.  וְי֨וֹם is one chanted word and הַשְּׁבִיעִ֔י another, with a
+#     space and not a maqaf between them, and both primaries restrict the metigah to the chanted
+#     word of the zaqef: ITM §223 "the word bearing zaqef", CoS Ch. 5 §4 "A methiga will appear in
+#     the word of the small zakef".  §223's leading example, Ex 35:9 ואבני־שהם, is a maqaf
+#     compound, which is why the fuse crosses a maqaf; nothing in either book puts the metigah a
+#     chanted word earlier.  accgram's prose scanner fused this pair into one METHIGAZAQEF token
+#     across the space until 2026-08-03 and so read the page as clean; with the fuse stopped at a
+#     space it does not, and this chanted verse parses ungrammatical.
+#     THE RE-READ STANDS -- the mark is on the page, confirmed off the zoom.  What changed is
+#     that the checker no longer excuses it, so the first reading recorded above, "a probable
+#     error in the edition", is what the evidence now supports.
 #
 # IT TOUCHES THE DISJUNCTIVE SKELETON, and is only the SECOND transcription that does, after
 # simtiq_dt_taxton (issue #69 Result 4).  Pashta is a disjunctive and qadma a conjunctive, so

@@ -2473,7 +2473,8 @@
 "TIPEXA",
 "ATNAX",
 "MAHAPAKH",
-"METHIGAZAQEF",
+"QADMA",
+"ZAQEF",
 "TIPEXA",
 "MERKHA",
 "SILLUQ",
@@ -2540,9 +2541,18 @@
 "label": "silluq_clause",
 "children": [
 {
-"label": "tipexa_phrase",
+"label": "zaqef_phrase",
 "leaves": [
 "ERROR"
+]
+},
+{
+"label": "silluq_clause",
+"children": [
+{
+"label": "tipexa_phrase",
+"leaves": [
+"tipexa"
 ]
 },
 {
@@ -2550,6 +2560,8 @@
 "leaves": [
 "merkha",
 "silluq"
+]
+}
 ]
 }
 ]

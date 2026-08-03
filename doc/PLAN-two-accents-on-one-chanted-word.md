@@ -132,7 +132,7 @@ work because each **fuses two written marks into one token**:
 
 | rule | what it fuses | crosses a maqaf? |
 | --- | --- | --- |
-| `METHIGAZAQEF` | qadma … zaqef qatan | yes, deliberately |
+| `METHIGAZAQEF` | qadma … zaqef qatan | yes, deliberately — and it stops at a space (2026-08-03) |
 | `PASHTA` | stress-helper pashta + main pashta | no (`TEXT` stays in one atom) |
 | `ZARQA` | tsinnorit + tsinnor | no |
 | `TELISHAQETANNA` | helper telisha + main telisha | no |
@@ -149,7 +149,8 @@ five confounds for free:
 4. legarmeh is one token, and a narrow-sense paseq is swallowed.
 
 It also disposes of metigah-zaqef, which is *already* one `METHIGAZAQEF` token and so never
-presents as two accents on one chanted word — 324 of them in WLC prose *(probe)*.
+presents as two accents on one chanted word — 324 of them in WLC prose *(probe)*, 319 since the
+fuse was stopped at a space on 2026-08-03 (§7's bullet).
 
 The fifth confound survives and must be handled by hand: **a repeated geresh or gershayim is one
 accent written twice, and the scanner does not fuse it.** MAM's Lev 10:4 and Ezek 48:10 come out
@@ -349,7 +350,9 @@ New `py/accgram/chanted_word_accents.py`: pure computation plus a JSON writer, t
   §236, §210's silluq mayela and the §pazer case as far as that survey's shape allows.
 - Note as data, not as prose: 5 of 324 `METHIGAZAQEF` tokens span a chanted-word boundary
   *(probe)* — the fusion the design leans on is not perfectly word-internal, and the five cases
-  should be named.
+  should be named. **Done, and then settled: on 2026-08-03 the fuse was stopped at a space, so
+  the count is 0 in all three corpora and `_methigazaqef_crossings` is now a lint that must read
+  0 rather than a record of exceptions. See §7's bullet.**
 
 **Verification.** `out/accgram/chanted-word-accents.json` is written and read; the closed-list
 assertions pass (§210's five, §215's two, §236's five, §244's eight, the one §pazer case); the
@@ -683,11 +686,25 @@ made every one of those edits unnecessary.
   ("Already in L gaʿya occurs in most of the cases where merka is expected"), and a meteg emits no
   token, so a manuscript that has one there shows a single accent token. The WLC-to-UXLC gap is
   Kimball's corrections. Worth a sentence somewhere; it is a finding, not a defect.
-- **The METHIGAZAQEF fuse is not perfectly word-internal**, as the plan suspected: 5 of WLC's 324
-  prose tokens span a chanted-word boundary (gn18:18, je37:10, je49:19, mi2:7, ne9:20), 3 of
-  UXLC's 324, and 1 of MAM's 410 (lv13:33). Named in each corpus's `methigazaqef.crossings`. The
-  design leans on the fuse, so Phase 2's whitelist should not assume it stays inside one chanted
-  word.
+- **The METHIGAZAQEF fuse was not perfectly word-internal, and now is. RESOLVED 2026-08-03.**
+  As first measured: 5 of WLC's 324 prose tokens spanned a chanted-word boundary (gn18:18,
+  je37:10, je49:19, mi2:7, ne9:20) and 3 of UXLC's 324 (gn18:18, je37:10, 1k19:11). MAM's 410 had
+  **none** — this bullet said "1 of MAM's 410 (lv13:33)" until 2026-08-03, which had been stale
+  since `b5145ea`.
+  The crossings were the fuse reaching across a space, which no source licenses: ITM §223 and CoS
+  Ch. 5 §§4-6 both restrict the metigah to the chanted word of the zaqef, while §223's leading example
+  Ex 35:9 ואבני־שהם is a compound and CoS Ch. 5 §5 allows a word-initial metigah where "there is
+  there a hyphenated tiny word", so crossing a **maqaf** is right and crossing a **space** is not.
+  `prose_scanner._METHIGA_MID` now excludes the space, and the counts are WLC 324→319 tokens with
+  crossings 5→0, UXLC 324→321 with 3→0, MAM unchanged at 410 with 0. So Phase 2's whitelist **may**
+  assume the fuse stays inside one chanted word; `_methigazaqef_crossings` is retained as the lint
+  that holds it there. What surfaced: gn18:18, je37:10 and ne9:20 go clean→error, je49:19 and
+  mi2:7 were already errors and their `ERROR` node moves to `zaqef_phrase` where it belongs, and
+  the Simanim Tanakh's p. 298 transcription (`simtan_dt_taxton`) goes clean→ungrammatical, which
+  is now a pinned departure. The control that settled it: WLC's 1k19:11 has a `]1` note marker
+  between הרוח and רעש, whose digit already blocked the fuse, so the grammar already called that
+  configuration an error — while the identical configuration at gn18:18 parsed clean, on nothing
+  but an unrelated note marker.
 - **Two `geresh_folds` fired, both in MAM** (lv10:4 קרבו, ek48:10 ולאלה), exactly as the plan
   predicted; WLC and UXLC need no fold. Each is recorded with its scanned and its counted
   sequence.
@@ -824,10 +841,10 @@ therefore recorded against a tree that did not have that comment in its final fo
 - **The §233/§241 surplus and the `(MERKHA, SILLUQ)` citation carry over from §7 unchanged.**
   Issue #82. Neither affects the flagging path, which is keyed on the sequence and names
   `merkha tipexa` wherever it stands; it does affect what a Phase 3 page may say those hits are.
-- **The METHIGAZAQEF boundary crossings carry over too.** `classify_verse` inherits the fuse,
-  so at gn18:18, je37:10, je49:19, mi2:7 and ne9:20 one token stands for two chanted words. The
-  five are named in the survey's `methigazaqef.crossings`; the flag simply does not fire there,
-  which is the conservative direction.
+- **The METHIGAZAQEF boundary crossings no longer carry over. RESOLVED 2026-08-03**, by §7's
+  bullet: the fuse stops at a space, so `classify_verse` inherits a fuse that cannot reach across
+  a chanted-word boundary, and there is no longer any place where one token stands for two chanted
+  words. `methigazaqef.crossings` is empty in all three corpora and is kept as a lint.
 
 ### The exact next phase
 
@@ -888,6 +905,9 @@ here writes into both, so the check is two checks — and the page next door,
   `ne8:7`'s merkha with legarmeh, Job's four prose-frame `qadma darga`, and the
   1,353-vs-1,160 reconciliation between the two surveys (198 metigah-zaqef + 5 two-marks-on-one-
   letter), which Ben had already ruled off the page before the page itself went.
+  **The boundary crossings were answered on 2026-08-03** and the answer is a comment on that
+  issue; §7's bullet has it. The 1,353-vs-1,160 arithmetic is untouched by that answer, MAM having
+  had no space crossing to lose. The issue's other items stand.
 - **A docstring note in `chanted_word_accents`** recording that a page was built and dropped, so
   the absence of one reads as a decision rather than an omission.
 
