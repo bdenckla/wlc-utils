@@ -53,6 +53,14 @@ being, so the 13 chanted words a promotion would have flagged become whitelist e
 the same day** — WLC's residue of 34 as an unlinked page — which neither depends on Phase 4 nor is
 depended on by it. Nothing else in this file is a pending instruction.
 
+**`§10` was added later the same day and Phase 4 must not be started without it.** It settles how a
+per-verse exception is spelled — on the chanted word's mark run plus its token sequence, never on a
+verse reference — and it takes Phase 4's list of 13 down to **two chanted words, of which neither is
+writable yet**: ne8:7 ושר֥בי֣ה is held on MAM-basics#215, a defect that leaves MAM with no legarmeh
+token anywhere and 1,610 lone bars counted as chanted words, and ca8:6 שלה֥בתיה has not been
+examined at all. `§5`'s Phase 4 entry and `§6` decision 1 both carry the correction; the lists they
+were first written with are superseded, not merely narrowed.
+
 **`§8`'s closing "The exact next phase" is spent, and must not be actioned.** It named Phase 3,
 the rendered page; that page was built on 2026-07-29 and withdrawn the same day. `§5`'s struck
 Phase 3 entry has the reasoning and `§9` has the state. Both of the two things `§8` told Phase 3
@@ -415,14 +423,21 @@ because the verdict changed.
 
 The whitelist grows two ways, along the line Ben's ruling draws:
 
-- **As policy, for a sequence that occurs more than once**: `qadma darga` ×6 (four of them Job's
-  prose frame) and `merkha silluq` ×5 become configuration-level entries beside Yeivin's sections,
-  marked as MAM-attested rather than ITM-named so that a reader can see which entries are
-  transcribed from Yeivin and which are Ben's ruling.
-- **As a per-verse exception, for a one-timer**: MAM's `merkha munax` at ne8:7 (ושר֥בי֣ה) and its
-  `merkha pashta` at ek16:12 (ו֥אתן־נ֙זם֙). **The mechanism for these two is being settled in a
-  separate task.** Do not invent a second one here; take the shape that task lands, and see §6
-  decision 1, which this qualifies.
+- **As policy, for a sequence that occurs more than once**: configuration-level entries beside
+  Yeivin's sections, marked as MAM-attested rather than ITM-named so that a reader can see which
+  entries are transcribed from Yeivin and which are Ben's ruling.
+- **As a per-verse exception, for a one-timer**, by the mechanism §10 records: keyed on the chanted
+  word's mark run plus the token sequence, with the verse reference in a comment. Do not invent a
+  second one, and see §6 decision 1, which this qualifies.
+
+**Which chanted words those are is no longer what this entry first said, and §10 is the correction
+to read.** It named `qadma darga` ×6 and `merkha silluq` ×5 as the policy entries and ne8:7's
+`merkha munax` and ek16:12's `merkha pashta` as the two exceptions. Of those, the six `qadma darga`
+went to **ITM §256** rather than to a whitelist, and ek16:12 together with four of the five `merkha
+silluq` are **§357 maqaf-after-gaʿya compounds**, whose two atoms each have an accent — so neither
+is a chanted word with two accents and neither is owed an entry. What is left is **ne8:7 ושר֥בי֣ה**,
+held on MAM-basics#215 until MAM tokenizes its legarmeh as one, and **ca8:6 שלה֥בתיה**, which
+nobody has yet examined.
 
 Also to settle here: whether the five telisha-gedolah words `lexical_validation` already
 whitelists should be named the same way, so that the whole whitelist reads out of one place.
@@ -473,14 +488,20 @@ onto Phase 3's ground once already.
    wherever it occurs, not only at §236's five. This keeps verse references out of the flagging
    path while keeping the sharpness where it earns its keep.
 
-   **Qualified 2026-08-03 by decision 5, and the qualification is real.** The whitelist is
-   configuration-level for a sequence that repeats and **per-verse for a one-timer**, so verse
-   references do now reach the flagging path — MAM's `merkha munax` at ne8:7 and its `merkha
-   pashta` at ek16:12 are what force it. The mechanism those two get is being settled in a separate
-   task. What survives of decision 1 unqualified: **Yeivin's closed lists still stay out of the
-   flagging path**, as the survey's differential check and nothing else. A per-verse exception here
-   is Ben's ruling about two MAM chanted words, not a transcription of ITM, and the two must not be
-   fed from one table.
+   **Qualified 2026-08-03 by decision 5, and the qualification is real** — but it costs decision 1
+   less than it first looked. The whitelist is configuration-level for a sequence that repeats and
+   **per-verse for a one-timer**; what §10 settles is that "per-verse" is spelled **as the chanted
+   word's mark run plus its token sequence, with the verse reference in a comment**, so no verse
+   reference reaches the flagging path after all and `classify_verse(body, tokens)` keeps its
+   signature. That honours decision 1's actual reason, which was that a chanted word be named by
+   what it has and not by where it stands: a mark run is what it has. What survives unqualified:
+   **Yeivin's closed lists still stay out of the flagging path**, as the survey's differential check
+   and nothing else. An exception here is Ben's ruling about a MAM chanted word, not a transcription
+   of ITM, and the two must not be fed from one table.
+
+   **The two chanted words this was written for have since come apart** — ek16:12 is a §357
+   maqaf-after-gaʿya compound and is owed no entry, and ne8:7 is held on MAM-basics#215. §10 has
+   both.
 2. **Survey WLC, UXLC and MAM; flag WLC (and the Decalogue paths) only.** The whitelist is closed
    against MAM, as a grammatical claim requires, but the per-verse field lands in
    `out/accgram/prose` and `_printed_decalogue.json`, which is where verdicts live today. Record
@@ -950,3 +971,89 @@ primaries** — `C:\Users\BenDe\GitRepos\MAM-basics` for the code (`py/accgram/.
 and `C:\Users\BenDe\GitRepos\wlc-utils` for the artifacts (`out/`, `gh-pages/`). A phase here
 touches both, and the parallel-edit collision this section records is what killed Phase 3.
 **#86 no longer gates the work**; decision 5 says what changed about it and what did not.
+
+---
+
+## 10. The two one-timers: mechanism settled, ek16:12 dissolved, ne8:7 held (2026-08-03)
+
+This is the "separate task" §5's Phase 4 entry and §6 decision 1's qualification both defer the
+per-verse mechanism to. It took up MAM's two one-timers — `merkha munax` at ne8:7 and `merkha
+pashta` at ek16:12 — and **neither ends as a per-verse exception written today.** One dissolved
+while the task ran; the other is held on a defect the task found.
+
+### ek16:12 is not a one-timer at all — `007e708` had already answered it
+
+Ezekiel 16:12's ו֥אתן־נ֙זם֙ is one of the five compounds `mam_residue.accounted_for_by_maqaf_after_gaya`
+sets aside: ITM §357's and CoS Ch. 1 §43's maqaf written after an atom that has its own accent and
+a gaʿya after that accent, which is not the maqaf that joins two atoms into one chanted word. MAM
+has וָ֥אֶתֵּֽן־נֶ֙זֶם֙ — a merkha, then a meteg, then the maqaf — and that meteg between the accent
+and the maqaf is Breuer's test. So וָ֥אֶתֵּֽן has a merkha as its accent and נֶ֙זֶם֙ has the pashta,
+which is also how WLC and UXLC mark the pair, as the two chanted words וָאֶתֵּ֥ן  נֶ֙זֶם֙ with no
+maqaf between them. The merkha stands on a different syllable in each — the opening וָ֥ in MAM, the
+stressed תֵּ֥ן in WLC and UXLC — but all three have one on that atom. **No exception is owed, and
+none should be written.**
+
+**The reading this replaces, recorded so it is not reinstated.** Before `007e708` was read, the
+same marks were taken for ITM §241's phenomenon with a merkha where Yeivin's five have a mahapakh:
+the merkha in gaʿya position on the opening syllable וָ֥, the meteg marking the stress of תֵּֽן, and
+the pashta the compound's one accent. It fits the marks, and §241's "an open syllable suitable for
+gaʿya" fits וָ. What defeats it is that §357 explains the same marks **and** explains why WLC and
+UXLC have a merkha on that atom too, which the §241 reading leaves as a coincidence.
+
+**A configuration-level `merkha pashta` allowance would have been wrong either way**, and the
+reason is worth keeping. The pair occurs once more anywhere in this survey, at **Ex 10:13 in WLC**:
+רוּ֥חַ־קָדִים֙, where UXLC and MAM both instead have a meteg — רֽוּחַ־קָדִים֙. WLC's is a
+Westminster reading that both the correction of WLC and the consensus text reject, and decision 2
+wants the WLC flag to keep exactly that visible. A whitelist keyed on the bare token pair cannot
+tell the two apart.
+
+### ne8:7 is held on MAM-basics#215, because MAM does not have the pair the survey names
+
+`mam_residue.left_over_after_both` reports ne8:7 ושר֥בי֣ה as `merkha munax`. **WLC and UXLC report
+the same chanted word as `merkha legarmeh`**, and the disagreement is an artifact, not a reading:
+MAM-simple sets the Unicode PASEQ (U+05C0) as its own space-delimited element where WLC and UXLC
+attach it to the word, and `prose_scanner`'s two legarmeh rules are `munax {TEXT} paseq` with
+`{TEXT}` = `[^ \r\n-]*`, which cannot cross a space. Measured over the code path `scan_corpus`
+uses, prose verses only:
+
+| corpus | `LEGARMEH` tokens | lone U+05C0 runs counted as chanted words |
+| --- | --- | --- |
+| WLC 4.22 | 1,167 | 0 |
+| UXLC | 1,169 | 0 |
+| MAM-simple | **0** | **1,610**, in 1,461 verses |
+
+So no MAM legarmeh can ever tokenize as one, and MAM's tracked `chanted_words` of 234,676 is 1,610
+high (`atomic_chanted_words` 197,890 likewise) — a lone bar satisfies `_run_is_a_chanted_word`.
+Nothing on a verdict path reads this, since `prose_run` scans WLC, so it is contained to the
+survey — but the survey is the thing whose whole design is that a claim about what the accentuation
+does takes MAM. **MAM-basics#215** has it. Ben, 2026-08-03: fix it before Phase 4, and write ne8:7's
+exception afterwards, against the sequence MAM actually has.
+
+**The merkha itself is a secondary accent, and is not an artifact of the legarmeh.** MAM has
+וְשֵׁרֵ֥בְיָ֣ה ׀: the merkha sits on רֵ֥, an open syllable suitable for gaʿya, and the chanted
+word's accent is the munaḥ-legarmeh on the stressed יָ֣ה — the position §221, §253 and §268 all
+give for a secondary accent. **MAM-basics#185 is a different question about the same mark**, not
+this one: it asks whether the mark is a merkha or a meteg. BHS, BHQ and Koren have a meteg there;
+WLC, the Jerusalem Crown, the Simanim Tiqqun and BHL have a merkha; skadish1's S1, C13, L-A,
+EVR-II-B-92 and S2 support the merkha. The two meet at one point — if #185 settles on a meteg, this
+residue entry disappears on its own, a meteg emitting no token.
+
+### The mechanism, for whoever writes the exception
+
+**Key it on the chanted word's mark run plus the token sequence, and leave the verse reference in a
+comment** (Ben, 2026-08-03), as `lexical_validation._WHITELISTED_SAME_LETTER` already does with its
+`gn5:29, zp2:15`. `classify_verse(body, tokens)` has no verse reference and must not grow one:
+threading a bcv in would change both consumer call sites and would be the thing §6 decision 1
+refused, which was naming a chanted word by where it stands rather than by what it has. A mark run
+says what the chanted word **has**, and it is far tighter than the sequence alone — Ezekiel 16:12's
+`א֥אאֽא-א֙אא֙` cannot match Exodus 10:13's `א֥אא-אאא֙`. The survey then asserts that each exception
+matches exactly the expected places in MAM and raises on drift, which is the shape Yeivin's closed
+lists already have.
+
+### What is left
+
+MAM's unexplained residue is **two atomic chanted words**, ne8:7 ושר֥בי֣ה (`merkha munax`, held on
+#215) and ca8:6 שלה֥בתיה (`merkha silluq`), and ca8:6 has had none of the scrutiny ne8:7 has. It is
+not a one-timer by sequence — `merkha silluq` is five — but the other four are the שלף־חרב
+compounds §357 accounts for, so it stands alone in kind. **Settle ca8:6 before writing either
+entry**, or Phase 4 whitelists a sequence on the strength of one chanted word nobody has looked at.
