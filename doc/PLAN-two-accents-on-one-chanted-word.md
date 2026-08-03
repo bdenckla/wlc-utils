@@ -55,11 +55,13 @@ depended on by it. Nothing else in this file is a pending instruction.
 
 **`§10` was added later the same day and Phase 4 must not be started without it.** It settles how a
 per-verse exception is spelled — on the chanted word's mark run plus its token sequence, never on a
-verse reference — and it takes Phase 4's list of 13 down to **two chanted words, of which neither is
-writable yet**: ne8:7 ושר֥בי֣ה is held on MAM-basics#215, a defect that leaves MAM with no legarmeh
-token anywhere and 1,610 lone bars counted as chanted words, and ca8:6 שלה֥בתיה has not been
-examined at all. `§5`'s Phase 4 entry and `§6` decision 1 both carry the correction; the lists they
-were first written with are superseded, not merely narrowed.
+verse reference — and it takes Phase 4's list of 13 down to **two chanted words, both taking a
+per-verse exception and neither writable yet**: ne8:7 ושר֥בי֣ה is held on MAM-basics#215, a defect
+that leaves MAM with no legarmeh token anywhere and 1,610 lone bars counted as chanted words, and
+ca8:6 שלה֥בתיה is held on an **outstanding search of Yeivin's ITM and Breuer's CoS for a secondary
+merkha with silluq**, which nobody has yet run. `§5`'s Phase 4 entry and `§6` decision 1 both carry
+the correction; the lists they were first written with are superseded, not merely narrowed, and
+decision 5's parenthesis calling `merkha silluq` a multiple-timer is corrected there too.
 
 **`§8`'s closing "The exact next phase" is spent, and must not be actioned.** It named Phase 3,
 the rendered page; that page was built on 2026-07-29 and withdrawn the same day. `§5`'s struck
@@ -434,10 +436,20 @@ The whitelist grows two ways, along the line Ben's ruling draws:
 to read.** It named `qadma darga` ×6 and `merkha silluq` ×5 as the policy entries and ne8:7's
 `merkha munax` and ek16:12's `merkha pashta` as the two exceptions. Of those, the six `qadma darga`
 went to **ITM §256** rather than to a whitelist, and ek16:12 together with four of the five `merkha
-silluq` are **§357 maqaf-after-gaʿya compounds**, whose two atoms each have an accent — so neither
-is a chanted word with two accents and neither is owed an entry. What is left is **ne8:7 ושר֥בי֣ה**,
-held on MAM-basics#215 until MAM tokenizes its legarmeh as one, and **ca8:6 שלה֥בתיה**, which
-nobody has yet examined.
+silluq` are **§357 maqaf-after-gaʿya compounds** — chanted words, with two accent tokens, whose
+second token is the non-final atom's retained accent rather than a secondary accent, so no whitelist
+entry is owed. What is left is **ne8:7 ושר֥בי֣ה**, held on MAM-basics#215 until MAM tokenizes its
+legarmeh as one, and **ca8:6 שלה֥בתיה**.
+
+**And `merkha silluq` is a one-timer, not the multiple-timer decision 5's sentence names it as**
+(Ben, 2026-08-03). Its count of five is four שלף־חרב compounds that §357 accounts for plus ca8:6,
+which is the only atomic `merkha silluq` in any of the three corpora. So it takes a per-verse
+exception, not the configuration-level entry the ruling's parenthesis assigns it — a
+configuration-level entry would name a pair on the strength of one chanted word, which is the thing
+the per-verse mechanism exists to avoid. The same test disposes of the parenthesis's other example:
+`qadma darga` ×6 went to ITM §256 and needs no entry at all. **Read "one-timer" as counting the
+chanted words a sequence still has after the inventory has taken what it names, not the raw
+`by_sequence` figure.**
 
 Also to settle here: whether the five telisha-gedolah words `lexical_validation` already
 whitelists should be named the same way, so that the whole whitelist reads out of one place.
@@ -985,7 +997,12 @@ while the task ran; the other is held on a defect the task found.
 
 Ezekiel 16:12's ו֥אתן־נ֙זם֙ is one of the five compounds `mam_residue.accounted_for_by_maqaf_after_gaya`
 sets aside: ITM §357's and CoS Ch. 1 §43's maqaf written after an atom that has its own accent and
-a gaʿya after that accent, which is not the maqaf that joins two atoms into one chanted word. MAM
+a gaʿya after that accent. **That maqaf joins**, which is the whole reason for writing it — §357's
+wording is that the word "must be joined to the following word, and no break should be made between
+them" despite the slowed syllable — so ואתן־נזם is a chanted word like any other and does have two
+accent tokens. What §357 settles is where the second token comes from: וָ֥אֶתֵּֽן keeps the accent
+it has, the gaʿya after that accent having had to be marked, so the merkha is not a secondary accent
+of the kind §§233 and 241 describe. MAM
 has וָ֥אֶתֵּֽן־נֶ֙זֶם֙ — a merkha, then a meteg, then the maqaf — and that meteg between the accent
 and the maqaf is Breuer's test. So וָ֥אֶתֵּֽן has a merkha as its accent and נֶ֙זֶם֙ has the pashta,
 which is also how WLC and UXLC mark the pair, as the two chanted words וָאֶתֵּ֥ן  נֶ֙זֶם֙ with no
@@ -1052,8 +1069,22 @@ lists already have.
 
 ### What is left
 
-MAM's unexplained residue is **two atomic chanted words**, ne8:7 ושר֥בי֣ה (`merkha munax`, held on
-#215) and ca8:6 שלה֥בתיה (`merkha silluq`), and ca8:6 has had none of the scrutiny ne8:7 has. It is
-not a one-timer by sequence — `merkha silluq` is five — but the other four are the שלף־חרב
-compounds §357 accounts for, so it stands alone in kind. **Settle ca8:6 before writing either
-entry**, or Phase 4 whitelists a sequence on the strength of one chanted word nobody has looked at.
+MAM's unexplained residue is **two atomic chanted words**: ne8:7 ושר֥בי֣ה (`merkha munax`, held on
+MAM-basics#215) and ca8:6 שלה֥בתיה (`merkha silluq`). Both take a per-verse exception, by the
+mechanism above.
+
+**ca8:6 is the same in all three corpora, byte for byte** — שַׁלְהֶ֥בֶתְיָֽה׃, one atomic chanted
+word, a merkha on the open הֶ֥ and a U+05BD on יָֽ immediately before sof pasuq, so that one is
+silluq. A secondary merkha in a silluq's chanted word.
+
+**OUTSTANDING TASK, and Phase 4 should not write ca8:6's entry before it is done: search both books
+for a secondary merkha with silluq.** §7's open-question list already recorded that Yeivin appears
+to have no section for it — §209 gives silluq one conjunctive, merkha, and names no secondary, and
+§210's mayela-with-silluq is a mayela and not a merkha — but that was a by-the-way observation and
+not a search. `007e708` then re-pointed `(MERKHA, SILLUQ)` from §233 to §357, which is right for the
+four שלף־חרב compounds and **cannot reach ca8:6, which has no maqaf at all**; that commit answered
+the compounds and left the atomic case where it stood. So the search is still owed, over the full
+ITM OCR at `../masorah-books/books/itm/md-export-of-docx/` and the CoS export at
+`../masorah-books/books/cos/md-export-of-docx/`, remembering that both romanize the accent names
+differently from this repo and that Breuer's English says "hyphen" and "makaf" far more often than
+"maqaf". A silence found by searching is worth recording; the silence assumed here is not yet one.
