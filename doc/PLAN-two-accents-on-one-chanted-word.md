@@ -1114,9 +1114,10 @@ corpus ca8:6 is the lone atomic one while every other is a compound. So the entr
 rests on a reading a diplomatic transcription and a consensus text agree on, which is firmer ground
 than a MAM-only case would be.
 
-Still owed in the code: a `§209` entry in `chanted_word_accents.YEIVIN_ENTRIES`, a rule and not a
-count, shaped like `§223` and `§302`, so the pinning pair above lives beside the inventory it
-bounds. Held on 2026-08-03 only because another session had that tuple open.
+The pinning pair is in the code as well: `chanted_word_accents.YEIVIN_ENTRIES` gained a `§209`
+entry the same day, a rule and not a count, shaped like `§223` and `§302`, carrying the search
+above so the silence sits beside the inventory it bounds. It names no token sequence, so
+`NAMED_TOKEN_SEQUENCES` and `mam_residue` are untouched by it.
 
 The task as it stood, kept for what it says about why an assumed silence is not one:
 
