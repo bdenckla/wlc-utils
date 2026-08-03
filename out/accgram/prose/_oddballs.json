@@ -3,7 +3,7 @@
   "artifacts_description": "ungrammatical verses with ERROR leaves in *_ag.json outputs",
   "payload_provenance_note": "These verses are parsed by the Python port into a tree containing at least one ERROR leaf (status ungrammatical or illegal_mark), drawn from out/accgram/prose/. The output_file field on each row names which book JSON file holds that verse's parse tree.",
   "summary": {
-    "oddballs": 93,
+    "oddballs": 96,
     "books_with_oddballs": 24
   },
   "oddballs": [
@@ -253,6 +253,11 @@
       "output_file": "wlc_422_ps_gn_ag.json"
     },
     {
+      "ref": "gn 18:18",
+      "content": "וא֨ברה֔ם הי֧ו יהי֛ה לג֥וי גד֖ול ועצ֑ום ונ֨ברכו ב֔ו כ֖ל גוי֥י האֽרץ׃",
+      "output_file": "wlc_422_ps_gn_ag.json"
+    },
+    {
       "ref": "gn 32:24",
       "content": "ויקח֔ם ויעבר֖ם את־ הנ֑חל ויעב֖ר את־ אשר־ לו׃",
       "output_file": "wlc_422_ps_gn_ag.json"
@@ -320,6 +325,11 @@
     {
       "ref": "je 31:32",
       "content": "ל֣א כבר֗ית אש֤ר כר֙תי֙ את־ אבות֔ם ביום֙ החזיק֣י ביד֔ם להוציא֖ם מא֖רץ מצר֑ים אשר־ ה֜מה הפ֣רו את־ ברית֗י ואנכ֛י בע֥לתי ב֖ם נאם־ יהוֽה׃",
+      "output_file": "wlc_422_ps_je_ag.json"
+    },
+    {
+      "ref": "je 37:10",
+      "content": "כ֣י אם־ הכית֞ם כל־ ח֤יל כשדים֙ הנלחמ֣ים אתכ֔ם ונ֨שארו ב֔ם אנש֖ים מדקר֑ים א֤יש באהלו֙ יק֔ומו ושרפ֛ו את־ הע֥יר הז֖את באֽש׃",
       "output_file": "wlc_422_ps_je_ag.json"
     },
     {
@@ -430,6 +440,11 @@
     {
       "ref": "ne 2:10",
       "content": "וישמ֞ע סנבל֣ט החרנ֗י וטוביה֙ הע֣בד העמנ֔י וי֥רע לה֖ם רע֣ה גדל֑ה אשר־ ב֥א אד֔ם לבק֥ש טוב֖ה לבנ֥י ישראֽל׃",
+      "output_file": "wlc_422_ps_ne_ag.json"
+    },
+    {
+      "ref": "ne 9:20",
+      "content": "ורוחך֨ הטוב֔ה נת֖ת להשכיל֑ם ומנך֙ לא־ מנ֣עת מפיה֔ם ומ֛ים נת֥תה לה֖ם לצמאֽם׃",
       "output_file": "wlc_422_ps_ne_ag.json"
     },
     {
