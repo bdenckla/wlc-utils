@@ -22,12 +22,36 @@ a regenerated tracked artifact. Phase 1 re-derived all of them in
 `py/accgram/chanted_word_accents.py`; the tables below are now annotated with what the real
 module measures, and §7 lists every place the probe was wrong.
 
+**The code this plan changes is in `../MAM-basics`, not in the repo this file sits in.** On
+2026-08-01 the whole of `py/accgram/` moved to `~/GitRepos/MAM-basics/py/accgram/`, and wlc-utils
+kept `in/`, `out/`, `gh-pages/`, `data/` and `doc/`. So **every `py/...` path below names a file in
+MAM-basics** — the modules, `prose_scanner`, `lexical_validation`, `classify.py`, the PLY grammar
+file, `main_accgram.py`, `py/tests/` — while every `in/`, `out/`, `gh-pages/` and `data/` path still
+names one here. `MAM-basics/py/wlc_paths.py` is the resolver, and it is deliberately two-rooted:
+the code root is `mb_cmn.paths.repo_root()` (MAM-basics), the data root is `wlc_data_root()`
+(wlc-utils). The move has a plan of its own,
+`MAM-basics/doc/PLAN-evacuate-python-from-wlc-utils.md`. **§0's resume instructions and §9's
+closing "The exact next phase" are rewritten to say `MAM-basics/py/...`**, those being the parts a
+reader actions; the hundred paths elsewhere are left as they were written, since rewriting history
+to a spelling it never had buys no reader anything.
+
+**A bare `#NN` in this file means a wlc-utils issue** — #82, #85, #86 and #87 all do. MAM-basics
+has a tracker of its own now, with numbers overlapping wlc-utils' 1–88, and this plan is read by
+people working in MAM-basics, so the citations are ambiguous where they were not. They are
+deliberately not mass-prefixed: MAM-basics' `CLAUDE.md` records that wlc-utils' `doc/` was left
+alone on purpose.
+
 ---
 
-## 0. Where to resume (updated 2026-07-29, after Phase 3's withdrawal)
+## 0. Where to resume (updated 2026-08-03; before that 2026-07-29, after Phase 3's withdrawal)
 
-**Next phase: Phase 4 — promotion**, as `§9`'s closing "The exact next phase" states it. Nothing
-else in this file is a pending instruction.
+**Next phase: Phase 4**, as `§9`'s closing "The exact next phase" states it — but **Phase 4 is no
+longer promotion.** Ben settled the promotion question on 2026-08-03 (`§6` decision 5): MAM's
+divergences from Yeivin's and Breuer's rules keep being recorded, and are grammatical for the time
+being, so the 13 chanted words a promotion would have flagged become whitelist entries instead.
+`§5`'s Phase 4 entry and `§9`'s closing section are both rewritten to that. **A Phase 5 was added
+the same day** — WLC's residue of 34 as an unlinked page — which neither depends on Phase 4 nor is
+depended on by it. Nothing else in this file is a pending instruction.
 
 **`§8`'s closing "The exact next phase" is spent, and must not be actioned.** It named Phase 3,
 the rendered page; that page was built on 2026-07-29 and withdrawn the same day. `§5`'s struck
@@ -57,6 +81,32 @@ not record that track's state in this file.** A round of it was written into `§
 (`b57f8b9`) and taken back out: a summary of what that page currently looks like, and a pointer
 to `829d1f6..7aeeeb0` for its account. Both are that track's to keep, and both survive in that
 commit for whoever moves them to where they belong.
+
+### Before starting: two primaries, and the current commands
+
+**A phase here touches two repos, so check both.** The code primary is
+`C:\Users\BenDe\GitRepos\MAM-basics` (`py/accgram/...`, `py/tests/`) and the artifact primary is
+`C:\Users\BenDe\GitRepos\wlc-utils` (`out/`, `gh-pages/`). Run `git log --oneline -3` and
+`git status` in **both** before starting, not only at the end. `§9` states that guardrail against a
+single primary because on 2026-07-29 there was only one, and a parallel edit in it is what killed
+Phase 3.
+
+Regenerate from the MAM-basics root, with MAM-basics' interpreter — whatever `.venv` is left in
+wlc-utils has nothing to run:
+
+```powershell
+C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_accgram.py --help
+```
+
+Tests are one entry point, run from the MAM-basics root:
+
+```powershell
+C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_test.py
+```
+
+`§9` records `.venv/Scripts/pytest.exe py/tests` with a `WLC_SIBLINGS_ROOT` in the environment.
+That is how Phase 3 was verified in July, and it stays there as history; it is not the command to
+run now.
 
 ---
 
@@ -344,17 +394,77 @@ one when it was written — the survey had no reader-facing form at all — and 
 on a neighbouring page. Check the neighbours before writing a page, and prefer folding a finding
 into an existing page over standing up a new one.
 
-### Phase 4 — Promotion (gated on the answers in §6), and now the next phase
+### Phase 4 — Whitelist MAM's residue, and go on recording it — REWRITTEN 2026-08-03
 
-If the flag becomes an ERROR, `classify.py` and the goerwitz page pick it up with no further
-wiring. Verification is the ungrammatical-set diff, read against the existing verdicts: SimTiq's
-Exodus appendix taḥton third chanted verse is already ungrammatical for an unrelated reason
-(three servi where the pashta phrase takes two), so what the phase must show is which verdicts are
-**newly** ungrammatical, not a total.
+**What this entry said until then, under the title "Promotion (gated on the answers in §6)".** If
+the flag became an ERROR, `classify.py` and the goerwitz page
+would pick it up with no further wiring, and the phase's job was to show which verdicts were
+**newly** ungrammatical rather than a total — SimTiq's Exodus appendix taḥton third chanted verse
+being already ungrammatical for an unrelated reason (three servi where the pashta phrase takes
+two). That question — should a chanted word whose accent pair no section of Yeivin's inventory
+names be ungrammatical? — **Ben answered on 2026-08-03, and the answer for MAM is no, for the time
+being.** §6 decision 5 has his words. The 13 MAM chanted words a promotion would have made newly
+ungrammatical become **whitelist entries**.
+
+**This decides verdicts; it does not retire the measurement.** "All divergences … should continue
+to be recorded, for possible future return to (for further research)" is half of Ben's ruling, and
+it binds this phase: every one of them stays in `out/accgram/chanted-word-accents.json` — the
+residue lists, the sequences, the ITM cross-check and its assertions — so that the research Ben
+means to return to has its data waiting. Nothing in the survey is dropped, narrowed or folded away
+because the verdict changed.
+
+The whitelist grows two ways, along the line Ben's ruling draws:
+
+- **As policy, for a sequence that occurs more than once**: `qadma darga` ×6 (four of them Job's
+  prose frame) and `merkha silluq` ×5 become configuration-level entries beside Yeivin's sections,
+  marked as MAM-attested rather than ITM-named so that a reader can see which entries are
+  transcribed from Yeivin and which are Ben's ruling.
+- **As a per-verse exception, for a one-timer**: MAM's `merkha munax` at ne8:7 (ושר֥בי֣ה) and its
+  `merkha pashta` at ek16:12 (ו֥אתן־נ֙זם֙). **The mechanism for these two is being settled in a
+  separate task.** Do not invent a second one here; take the shape that task lands, and see §6
+  decision 1, which this qualifies.
+
+Also to settle here: whether the five telisha-gedolah words `lexical_validation` already
+whitelists should be named the same way, so that the whole whitelist reads out of one place.
+
+**Verification.** Regenerate `out/accgram/prose/*_ag.json` and
+`out/accgram/printed-decalogue/_printed_decalogue.json` and read the diff. **No `status` may move,
+in any corpus** — the phase adds no error, so a moved verdict is a bug and not a finding. What
+changes is the `chanted_word_accents` field's null `itm_section`s, into whatever the whitelist
+records. Regenerate `out/accgram/chanted-word-accents.json` too, and check that `mam_residue` and
+its WLC counterpart are **unchanged**: a residue that shrank as the whitelist grew would be the
+measurement quietly following the verdict, which is the one thing Ben's ruling forbids.
+
+### Phase 5 — WLC's residue as an unlinked page (added 2026-08-03)
+
+**Ben's ruling is about MAM, and WLC's residue of 34 is a different set** — §8 item 6 records that
+neither contains the other. Nothing in §6 decision 5 reaches it, and this plan should not extend it
+there. What Ben asked for on the same day, instead, is a **"sneak peek"**: a page under
+`gh-pages/accgram/` holding WLC's unnamed chanted-word accent pairs, **unlinked** from the site,
+**deliberately not folded into `goerwitz.html` or `almost-errors.html`**, and possibly never folded
+in — though the goerwitz page may eventually link it.
+
+**Why this rendering is not the one §5's struck Phase 3 entry warns against.** That entry rules
+that a phase whose deliverable is a rendering needs a reason of its own, and that the neighbouring
+pages must be checked first. This one has the reason: Ben asked for the page directly, and asked
+for it standing apart rather than folded in, which is the opposite of the fold Phase 3 lost to. The
+neighbour check still applies before a line of it is written — `maqaf-nonfinal-accents.html` widened
+onto Phase 3's ground once already.
+
+- One page, one question: where does the Westminster transcription of the LC have a chanted word
+  with two accents that no section of Yeivin's inventory names?
+- The data is already tracked, as `mam_residue`'s WLC counterpart in
+  `out/accgram/chanted-word-accents.json`. The page derives every number it states from that file
+  and pins it, `maqaf_nonfinal_accents_page.pin_claims`-style.
+- WLC's own shapes are the half worth showing — `munax munax` at gn36:13, ek8:6, 1c27:14 and
+  2c1:11, which MAM has nowhere. §2 already frames those as facts about the Westminster
+  transcription rather than about the accentuation, and that framing belongs on the page.
+- **Unlinked means unlinked**: no index entry, no cross-reference from a neighbouring page. Whether
+  the goerwitz page comes to link it is Ben's to say later, not this phase's to anticipate.
 
 ---
 
-## 6. Decisions (settled with Ben, 2026-07-28)
+## 6. Decisions (settled with Ben, 2026-07-28; decision 5 and decision 1's qualification, 2026-08-03)
 
 1. **Pin Yeivin's lists as DATA, allow the configuration as the RULE.** Where he gives a closed
    list, the `yeivin_inventory` section of the JSON carries his verses and the module asserts set
@@ -362,6 +472,15 @@ Exodus appendix taḥton third chanted verse is already ungrammatical for an unr
    The checker's own whitelist is nonetheless **configuration-level**: `munax+revia` is named
    wherever it occurs, not only at §236's five. This keeps verse references out of the flagging
    path while keeping the sharpness where it earns its keep.
+
+   **Qualified 2026-08-03 by decision 5, and the qualification is real.** The whitelist is
+   configuration-level for a sequence that repeats and **per-verse for a one-timer**, so verse
+   references do now reach the flagging path — MAM's `merkha munax` at ne8:7 and its `merkha
+   pashta` at ek16:12 are what force it. The mechanism those two get is being settled in a separate
+   task. What survives of decision 1 unqualified: **Yeivin's closed lists still stay out of the
+   flagging path**, as the survey's differential check and nothing else. A per-verse exception here
+   is Ben's ruling about two MAM chanted words, not a transcription of ITM, and the two must not be
+   fed from one table.
 2. **Survey WLC, UXLC and MAM; flag WLC (and the Decalogue paths) only.** The whitelist is closed
    against MAM, as a grammatical claim requires, but the per-verse field lands in
    `out/accgram/prose` and `_printed_decalogue.json`, which is where verdicts live today. Record
@@ -372,6 +491,32 @@ Exodus appendix taḥton third chanted verse is already ungrammatical for an unr
    not.
 4. **Channel first, promotion decided later** — §4.2 as written. Phases 1–3 add a diagnostic field
    only; Phase 4 revisits it once the whitelist is closed and the residue is visible.
+5. **MAM's divergences from Yeivin's and Breuer's rules are recorded, and grammatical** (settled
+   2026-08-03). This is the answer decision 4 deferred. Ben, in his words:
+
+   > For the time being at least, all divergences of MAM from Yeivin and/or Breuer rules should
+   > continue to be recorded, for possible future return to (for further research), but they should
+   > be considered grammatical, either as policy, for multiple-timers (qadma darga x6, merkha
+   > silluq x5), or as per-verse exceptions (merkha munax x1 (ne8:7), merkha pashta x1) for
+   > one-timers.
+
+   **It rules on verdicts only.** "Continue to be recorded" is the other half of it and is not a
+   courtesy: the survey keeps every divergence, so that the future research Ben names has its data.
+   A phase that whitelisted a sequence and dropped it from `mam_residue` in the same stroke would
+   have obeyed half the sentence.
+
+   **It covers MAM.** WLC's residue of 34 is a different set, and Phase 5 is what Ben asked for
+   there instead — an unlinked page, not a verdict. Do not read this decision onto WLC.
+
+   **What it does to #86.** §9 made the 13 the strongest argument for settling #86 before anything
+   else, because a promotion would have flagged MAM — the corpus a grammatical claim takes — on a
+   whitelist whose Yeivin citations this plan already records as unsettled. With MAM no longer
+   flagged, that argument is spent. **#86's contents are unchanged**: the §233/§241 surplus, the
+   `(MERKHA, SILLUQ)` citation to a section about tipeḥa, the `(QADMA, ZAQEF_QATAN)` citation to
+   §224 rather than to §223 where metigah-zaqef is defined, the METHIGAZAQEF boundary crossings and
+   the rest all stand exactly as §7 and §8 leave them. What changed is why they matter: they are
+   now research into Yeivin's inventory, worth doing for its own sake, rather than a precondition
+   for avoiding a bad verdict. **#86 does not gate Phase 4.**
 
 ---
 
@@ -692,6 +837,12 @@ module `fb3e5cc` had missed.
 this one.** This plan's work sits next door to a page under active parallel edit. Check
 `git log --oneline -3` and `git status` in the primary before starting, not only at the end.
 
+**"The primary" was one repo when that was written, and is two now** (2026-08-03). The code
+primary is `C:\Users\BenDe\GitRepos\MAM-basics`, holding `py/accgram/...` and `py/tests/`; the
+artifact primary is `C:\Users\BenDe\GitRepos\wlc-utils`, holding `out/` and `gh-pages/`. A phase
+here writes into both, so the check is two checks — and the page next door,
+`maqaf_nonfinal_accents_page.py`, is in MAM-basics while `maqaf-nonfinal-accents.html` is here.
+
 ### What actually landed
 
 - **`chanted_word_accents.merkha_tipexa_discrepancy`'s `open_question` cites #86, not #82.**
@@ -746,33 +897,42 @@ After the revert, and this is what stands:
 
 ### The exact next phase
 
-**Phase 4 — promotion — which is the plan's actual goal and was always the phase after the
-channel.** The question it answers: should a chanted word whose accent pair no section of
-Yeivin's prose inventory names be **ungrammatical**? §6 decision 4 deferred that until the
-whitelist was closed and the residue visible, and Phases 1 and 2 have now closed and made both.
+**Rewritten 2026-08-03.** Until then this section put the promotion question — should a chanted
+word whose accent pair no section of Yeivin's prose inventory names be **ungrammatical**? — and
+made the 13 newly-ungrammatical MAM chanted words listed below into the argument for settling #86
+before anything else. **Ben answered the question on 2026-08-03**, and §6 decision 5 has his words: for
+MAM, not ungrammatical, for the time being, with every divergence still recorded. What follows
+replaces the ask. The figures it stood on did not move, and are kept below.
 
-If the flag becomes an ERROR, `classify.py` and the goerwitz page pick it up with no further
-wiring. What the phase must show is which verdicts are **newly** ungrammatical, not a total:
-`simtiq_ex_taxton`'s third chanted verse is already ungrammatical for an unrelated reason (three
-servi where the pashta phrase takes two) and would otherwise be double-counted.
+**Phase 4, as §5 now states it — whitelist MAM's residue and go on recording it.** The 13 become
+whitelist entries: `qadma darga` ×6 and `merkha silluq` ×5 as policy, at configuration level;
+ne8:7's `merkha munax` and ek16:12's `merkha pashta` as per-verse exceptions, whose mechanism a
+separate task is settling. **No `status` may move in any corpus** — that is the phase's test, and
+`mam_residue` must not shrink either.
 
-What it starts from, all of it in tracked artifacts today:
+**Phase 5, which neither waits on Phase 4 nor holds it up — WLC's residue of 34 as an unlinked
+page** under `gh-pages/accgram/`, deliberately outside `goerwitz.html` and `almost-errors.html`.
+Ben's ruling reaches MAM and not WLC's different set, and this is what he asked for there instead.
+
+What both start from, all of it in tracked artifacts today:
 
 - **MAM's residue is 18**, and after the five telisha-gedolah words that `lexical_validation`
-  already whitelists, **13 chanted words in the consensus text would newly become
-  ungrammatical**: `qadma darga` ×6 (four of them Job's prose frame), `merkha silluq` ×5,
-  `merkha munax` ×1 (ne8:7, which is also a legarmeh passage), `merkha pashta` ×1. That is the
-  strongest argument for settling #86 first — flagging MAM is flagging the corpus a grammatical
-  claim takes.
+  already whitelists, **13 chanted words in the consensus text are what a promotion would have
+  made newly ungrammatical**: `qadma darga` ×6 (four of them Job's prose frame), `merkha silluq`
+  ×5, `merkha munax` ×1 (ne8:7, which is also a legarmeh passage), `merkha pashta` ×1 (ek16:12).
+  Those 13 are now Phase 4's whitelist entries.
 - **WLC's residue is 34**, a different set that neither contains nor is contained by MAM's. Its
   own shapes — `munax munax` at gn36:13, ek8:6, 1c27:14 and 2c1:11 among them — are facts about
-  the Westminster transcription rather than about the accentuation, which is the argument for
-  flagging WLC even where MAM is clean.
+  the Westminster transcription rather than about the accentuation. That is what Phase 5's page
+  shows, and it is why WLC's residue is worth a page where MAM's is worth a whitelist.
 - **Three printed-Decalogue chanted verses carry a null `itm_section` today**:
   `koren_dt_elyon` verse 3 (`munax munax`, `clean`), and `simtiq_ex_taxton` verses 2
   (`munax merkha`, `clean`) and 3 (`munax qadma`, already `ungrammatical`). That is the whole
-  blast radius on that path, and `koren_dt_elyon` is the case that motivated the plan.
+  blast radius on that path, and `koren_dt_elyon` is the case that motivated the plan. All three
+  stay as they are: Phase 4 moves no verdict.
 
-**Before starting: read §6, read #86, and re-check main and the primary's working tree.** A
-promotion that lands while the whitelist's own citations are known to be wrong would be flagging
-on a rule this plan has already recorded as unsettled.
+**Before starting: read §6, decision 5 above all, and check main and the working tree in BOTH
+primaries** — `C:\Users\BenDe\GitRepos\MAM-basics` for the code (`py/accgram/...`, `py/tests/`)
+and `C:\Users\BenDe\GitRepos\wlc-utils` for the artifacts (`out/`, `gh-pages/`). A phase here
+touches both, and the parallel-edit collision this section records is what killed Phase 3.
+**#86 no longer gates the work**; decision 5 says what changed about it and what did not.
