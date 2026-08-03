@@ -997,12 +997,21 @@ while the task ran; the other is held on a defect the task found.
 
 Ezekiel 16:12's ו֥אתן־נ֙זם֙ is one of the five compounds `mam_residue.accounted_for_by_maqaf_after_gaya`
 sets aside: ITM §357's and CoS Ch. 1 §43's maqaf written after an atom that has its own accent and
-a gaʿya after that accent. **That maqaf joins**, which is the whole reason for writing it — §357's
-wording is that the word "must be joined to the following word, and no break should be made between
-them" despite the slowed syllable — so ואתן־נזם is a chanted word like any other and does have two
-accent tokens. What §357 settles is where the second token comes from: וָ֥אֶתֵּֽן keeps the accent
-it has, the gaʿya after that accent having had to be marked, so the merkha is not a secondary accent
-of the kind §§233 and 241 describe. MAM
+a gaʿya after that accent. **ואתן־נזם is a chanted word** on the only test there is — a maqaf is
+written in it — and it does have two accent tokens. What §357 settles is where the second token
+comes from: וָ֥אֶתֵּֽן keeps the accent it has, the gaʿya after that accent having had to be marked,
+so the merkha is not a secondary accent of the kind §§233 and 241 describe.
+
+**What that maqaf signifies is unsettled in both books, and the name does not wait on it.** Yeivin's
+"the word must be joined to the following word" reads as denying a pause rather than as making one
+accented unit: he writes these very compounds with a **space** at §354 — Ezekiel 1:4 ונגה לו, Ruth
+1:21 הרע לי, 1 Kings 2:8 ואשבע לו — where a servant on one chanted word before its mafsik on the
+next is the ordinary relation. Breuer CoS Ch. 1 §43 records that "different views have been
+expressed" about this maqaf, calls the mark a *mesharet* and leaves the maqaf out of the book, while
+Ch. 9 §37 points the other way, that an ordinary-order mark cannot stand in a hyphenated word. The
+two are not squared by either book. **An earlier draft of this section argued the opposite way, from
+§357's "joined", and that argument is withdrawn**: it settled the name on an interpretation, which
+is exactly what the terminology rule forbids. MAM
 has וָ֥אֶתֵּֽן־נֶ֙זֶם֙ — a merkha, then a meteg, then the maqaf — and that meteg between the accent
 and the maqaf is Breuer's test. So וָ֥אֶתֵּֽן has a merkha as its accent and נֶ֙זֶם֙ has the pashta,
 which is also how WLC and UXLC mark the pair, as the two chanted words וָאֶתֵּ֥ן  נֶ֙זֶם֙ with no
