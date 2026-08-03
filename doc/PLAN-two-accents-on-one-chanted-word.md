@@ -1086,6 +1086,40 @@ mechanism above.
 word, a merkha on the open הֶ֥ and a U+05BD on יָֽ immediately before sof pasuq, so that one is
 silluq. A secondary merkha in a silluq's chanted word.
 
+**THE SEARCH BELOW WAS RUN, 2026-08-03, and both books are silent. Phase 4 may write ca8:6's
+entry.** The silence is checkable on both sides now rather than observed in passing:
+
+- **ITM.** §209 is the whole statement of silluq's conjunctives — *"Silluq can only be preceded by
+  one conjunctive, and this is merka"* — and adds no secondary. §210 is the only "in addition"
+  section silluq has: *"In five places, the word bearing silluq has, in addition, a secondary
+  accent like ṭifḥa in form"*, which is the mayela. Its stated condition excludes ca8:6 on its own
+  terms — *"In these cases silluq has neither ṭifḥa nor a conjunctive before it"* — and Song 8:6
+  has the tipeḥa one chanted word earlier, on אֵ֖שׁ. Every section of the form "X as a secondary
+  accent on the same word as Y" was enumerated over the full OCR — §§210, 215, 216, 219/221, 223,
+  233, 236, 241, 244, 253, 256, 268, 276 — and silluq is in exactly one of them, §210, with the
+  mayela. Two near misses are not it: §212's exceptional Mic 6:3, where a merkha is the only accent
+  between etnaḥta and silluq but stands on a chanted word of its own; and §373's poetic metigah,
+  where the metigah is the secondary mark and the merkha an ordinary servus, which cannot reach
+  Song of Songs in any case, that being prose cantillated, and which Yeivin says is in neither A
+  nor L nor S.
+- **CoS.** Already pinned, and by an entry written for something else. `check_cos_claims.py`'s
+  "confirmed as a negative" claim carries Ch. 3 §39, the silluq's servant as a merkha across two
+  separate words, and §40, the same-word section, which is the mayela's alone.
+- **Neither book discusses Song 8:6's accentuation.** ITM cites the verse once, at §286, and it is
+  Rashi on the zaqef gadol of רִשְׁפֵּי; CoS does not cite it.
+
+**And ca8:6 is not a MAM case — it is the one atomic merkha-with-silluq chanted word in any of the
+three corpora, and all three have it.** WLC measures 5 of that pair, UXLC 3, MAM 5, and in each
+corpus ca8:6 is the lone atomic one while every other is a compound. So the entry Phase 4 writes
+rests on a reading a diplomatic transcription and a consensus text agree on, which is firmer ground
+than a MAM-only case would be.
+
+Still owed in the code: a `§209` entry in `chanted_word_accents.YEIVIN_ENTRIES`, a rule and not a
+count, shaped like `§223` and `§302`, so the pinning pair above lives beside the inventory it
+bounds. Held on 2026-08-03 only because another session had that tuple open.
+
+The task as it stood, kept for what it says about why an assumed silence is not one:
+
 **OUTSTANDING TASK, and Phase 4 should not write ca8:6's entry before it is done: search both books
 for a secondary merkha with silluq.** §7's open-question list already recorded that Yeivin appears
 to have no section for it — §209 gives silluq one conjunctive, merkha, and names no secondary, and
