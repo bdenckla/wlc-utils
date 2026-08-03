@@ -1140,20 +1140,22 @@
      }
     },
     "by_anfa_reason": {
-     "a: a secondary accent the compound inherits": 132,
-     "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)": 7
+     "a: a secondary accent the compound inherits": 128,
+     "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)": 10,
+     "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)": 1
     },
     "by_configuration": {
      "metigah-zaqef (ITM §223)": 105,
+     "unnamed": 10,
      "mayela before an etnaxta (ITM §216)": 7,
-     "unnamed": 7,
-     "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya": 5,
-     "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)": 4,
-     "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya": 4,
+     "secondary merkha in the tipexa's chanted word (ITM §233)": 5,
      "munax-zaqef (ITM §221)": 3,
+     "secondary mahapakh in the pashta's chanted word (ITM §241)": 3,
+     "unnamed -- not at the atom's own accent position": 1,
      "mayela before a silluq (ITM §210)": 1,
      "secondary munax in the revia's chanted word (ITM §236)": 1,
      "secondary merkha in the tevir's chanted word (ITM §253)": 1,
+     "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)": 1,
      "secondary munax in the etnaxta's chanted word (ITM §215)": 1
     },
     "by_shape": {
@@ -1185,7 +1187,7 @@
       "word": "לֹא־יֹ֥אכַל־בּֽוֹ׃",
       "shape": "0-mer-sil",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
+      "configuration": "unnamed -- not at the atom's own accent position",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -1197,7 +1199,7 @@
       "word": "אֲשֶׁר־עָ֥שָׂה־ל֖וֹ",
       "shape": "0-mer-tip",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -1233,7 +1235,7 @@
       "word": "וְעַ֤ל־שַׂר־שָׂרִים֙",
       "shape": "mah-0-pash",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1241,23 +1243,11 @@
       }
      },
      {
-      "bcv": "ek25:7",
-      "word": "וּנְתַתִּ֤יךָֽ־לְבַז֙",
-      "shape": "mah-pash",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 7
-      }
-     },
-     {
       "bcv": "je16:5",
       "word": "הָעָ֤ם־הַזֶּה֙",
       "shape": "mah-pash",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1269,47 +1259,11 @@
       "word": "פָּצִ֤יתִי־פִי֙",
       "shape": "mah-pash",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
        "free_occurrences": 0
-      }
-     },
-     {
-      "bcv": "2c21:2",
-      "word": "מֶ֥לֶךְ־יִשְׂרָאֵֽל׃",
-      "shape": "mer-sil",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 393
-      }
-     },
-     {
-      "bcv": "ek27:25",
-      "word": "בְּלֵ֥ב־יַמִּֽים׃",
-      "shape": "mer-sil",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
-      "oracle": {
-       "joined_letters_after_accent": 1,
-       "free_letters_after_accent": 1,
-       "free_occurrences": 11
-      }
-     },
-     {
-      "bcv": "mi4:8",
-      "word": "לְבַ֥ת־יְרוּשָׁלִָֽם׃",
-      "shape": "mer-sil",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
-      "oracle": {
-       "joined_letters_after_accent": 1,
-       "free_letters_after_accent": 1,
-       "free_occurrences": 1
       }
      },
      {
@@ -1329,7 +1283,7 @@
       "word": "לְבֵ֥ית־הָאֹ֖הֶל",
       "shape": "mer-tip",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -1341,7 +1295,7 @@
       "word": "שְׁלֹ֥שׁ־הַשִּׁנַּ֖יִם",
       "shape": "mer-tip",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1353,7 +1307,7 @@
       "word": "יְדֵ֥י־חָרָ֖שׁ",
       "shape": "mer-tip",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1365,7 +1319,7 @@
       "word": "וְעֹ֥שֶׂה־זֶּ֖בַח",
       "shape": "mer-tip",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -2801,6 +2755,42 @@
       }
      },
      {
+      "bcv": "2c21:2",
+      "word": "מֶ֥לֶךְ־יִשְׂרָאֵֽל׃",
+      "shape": "mer-sil",
+      "anfa_reason": "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)",
+      "configuration": "unnamed",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 393
+      }
+     },
+     {
+      "bcv": "ek27:25",
+      "word": "בְּלֵ֥ב־יַמִּֽים׃",
+      "shape": "mer-sil",
+      "anfa_reason": "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)",
+      "configuration": "unnamed",
+      "oracle": {
+       "joined_letters_after_accent": 1,
+       "free_letters_after_accent": 1,
+       "free_occurrences": 11
+      }
+     },
+     {
+      "bcv": "mi4:8",
+      "word": "לְבַ֥ת־יְרוּשָׁלִָֽם׃",
+      "shape": "mer-sil",
+      "anfa_reason": "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)",
+      "configuration": "unnamed",
+      "oracle": {
+       "joined_letters_after_accent": 1,
+       "free_letters_after_accent": 1,
+       "free_occurrences": 1
+      }
+     },
+     {
       "bcv": "js2:1",
       "word": "יְהוֹשֻׁ֣עַ־בִּן־נ֠וּן",
       "shape": "mun-0-telg",
@@ -2846,6 +2836,18 @@
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
        "free_occurrences": 283
+      }
+     },
+     {
+      "bcv": "ek25:7",
+      "word": "וּנְתַתִּ֤יךָֽ־לְבַז֙",
+      "shape": "mah-pash",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 7
       }
      }
     ]
@@ -5108,17 +5110,19 @@
      }
     },
     "by_anfa_reason": {
-     "a: a secondary accent the compound inherits": 124,
-     "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)": 4
+     "a: a secondary accent the compound inherits": 122,
+     "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)": 5,
+     "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)": 1
     },
     "by_configuration": {
      "metigah-zaqef (ITM §223)": 105,
      "mayela before an etnaxta (ITM §216)": 7,
-     "unnamed": 4,
-     "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya": 3,
-     "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya": 3,
+     "unnamed": 5,
+     "secondary merkha in the tipexa's chanted word (ITM §233)": 3,
+     "secondary mahapakh in the pashta's chanted word (ITM §241)": 2,
      "munax-zaqef (ITM §221)": 2,
-     "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)": 2,
+     "unnamed -- not at the atom's own accent position": 1,
+     "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)": 1,
      "mayela before a silluq (ITM §210)": 1,
      "secondary munax in the revia's chanted word (ITM §236)": 1
     },
@@ -5146,7 +5150,7 @@
       "word": "לֹא־יֹ֥אכַל־בּֽוֹ׃",
       "shape": "0-mer-sil",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
+      "configuration": "unnamed -- not at the atom's own accent position",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5158,7 +5162,7 @@
       "word": "אֲשֶׁר־עָ֥שָׂה־ל֖וֹ",
       "shape": "0-mer-tip",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -5218,23 +5222,11 @@
       "word": "וְרָ֤בְצָה־בּוֹ֙",
       "shape": "mah-pash",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
        "free_occurrences": 0
-      }
-     },
-     {
-      "bcv": "ek25:7",
-      "word": "וּנְתַתִּ֤יךָֽ־לְבַז֙",
-      "shape": "mah-pash",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 7
       }
      },
      {
@@ -5242,7 +5234,7 @@
       "word": "פָּצִ֤יתִי־פִי֙",
       "shape": "mah-pash",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -5250,23 +5242,11 @@
       }
      },
      {
-      "bcv": "ek27:25",
-      "word": "בְּלֵ֥ב־יַמִּֽים׃",
-      "shape": "mer-sil",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
-      "oracle": {
-       "joined_letters_after_accent": 1,
-       "free_letters_after_accent": 1,
-       "free_occurrences": 11
-      }
-     },
-     {
       "bcv": "1s2:13",
       "word": "שְׁלֹ֥שׁ־הַשִּׁנַּ֖יִם",
       "shape": "mer-tip",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5278,7 +5258,7 @@
       "word": "יְדֵ֥י־חָרָ֖שׁ",
       "shape": "mer-tip",
       "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6642,6 +6622,18 @@
       }
      },
      {
+      "bcv": "ek27:25",
+      "word": "בְּלֵ֥ב־יַמִּֽים׃",
+      "shape": "mer-sil",
+      "anfa_reason": "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)",
+      "configuration": "unnamed",
+      "oracle": {
+       "joined_letters_after_accent": 1,
+       "free_letters_after_accent": 1,
+       "free_occurrences": 11
+      }
+     },
+     {
       "bcv": "2c1:11",
       "word": "וַיֹּ֣אמֶר־אֱלֹהִ֣ים ׀",
       "shape": "mun-mun",
@@ -6675,6 +6667,18 @@
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
        "free_occurrences": 271
+      }
+     },
+     {
+      "bcv": "ek25:7",
+      "word": "וּנְתַתִּ֤יךָֽ־לְבַז֙",
+      "shape": "mah-pash",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 7
       }
      }
     ]
@@ -10124,17 +10128,14 @@
      }
     },
     "by_anfa_reason": {
-     "a: a secondary accent the compound inherits": 233
+     "a: a secondary accent the compound inherits": 220,
+     "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)": 13
     },
     "by_configuration": {
      "metigah-zaqef (ITM §223)": 211,
+     "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)": 13,
      "mayela before an etnaxta (ITM §216)": 8,
-     "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)": 4,
-     "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya": 4,
-     "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya": 3,
-     "mayela before a silluq (ITM §210)": 1,
-     "munax-zaqef (ITM §221)": 1,
-     "unnamed -- not at the atom's own accent position": 1
+     "mayela before a silluq (ITM §210)": 1
     },
     "by_shape": {
      "qad-zaq": 202,
@@ -10149,162 +10150,6 @@
      "mer-pash+pash": 1
     },
     "occurrences": [
-     {
-      "bcv": "2c8:11",
-      "word": "אֲשֶׁר־בָּ֥אָֽה־אֲלֵיהֶ֖ם",
-      "shape": "0-mer-tip",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 1,
-       "free_occurrences": 24
-      }
-     },
-     {
-      "bcv": "is66:8",
-      "word": "אִם־יִוָּ֥לֵֽד־גּ֖וֹי",
-      "shape": "0-mer-tip",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 1,
-       "free_occurrences": 3
-      }
-     },
-     {
-      "bcv": "2s7:9",
-      "word": "וְעָשִׂ֤תִֽי־לְךָ֙",
-      "shape": "mah-pash",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": null,
-       "free_occurrences": 0
-      }
-     },
-     {
-      "bcv": "is59:16",
-      "word": "וַתּ֤וֹשַֽׁע־לוֹ֙",
-      "shape": "mah-pash",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
-      "oracle": {
-       "joined_letters_after_accent": 3,
-       "free_letters_after_accent": null,
-       "free_occurrences": 0
-      }
-     },
-     {
-      "bcv": "is63:5",
-      "word": "וַתּ֤וֹשַֽׁע־לִי֙",
-      "shape": "mah-pash",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
-      "oracle": {
-       "joined_letters_after_accent": 3,
-       "free_letters_after_accent": null,
-       "free_occurrences": 0
-      }
-     },
-     {
-      "bcv": "ek16:12",
-      "word": "וָ֥אֶתֵּֽן־נֶ֙זֶם֙",
-      "shape": "mer-pash+pash",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "unnamed -- not at the atom's own accent position",
-      "oracle": {
-       "joined_letters_after_accent": 3,
-       "free_letters_after_accent": 1,
-       "free_occurrences": 14
-      }
-     },
-     {
-      "bcv": "1c21:5",
-      "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
-      "shape": "mer-sil",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 6
-      }
-     },
-     {
-      "bcv": "ju20:2",
-      "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
-      "shape": "mer-sil",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 6
-      }
-     },
-     {
-      "bcv": "ju20:35",
-      "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
-      "shape": "mer-sil",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 6
-      }
-     },
-     {
-      "bcv": "ju8:10",
-      "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
-      "shape": "mer-sil",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 6
-      }
-     },
-     {
-      "bcv": "2c14:6",
-      "word": "וַיָּ֥נַֽח־לָ֖נוּ",
-      "shape": "mer-tip",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 5
-      }
-     },
-     {
-      "bcv": "ek1:4",
-      "word": "וְנֹ֥גַֽהּ־ל֖וֹ",
-      "shape": "mer-tip",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 5
-      }
-     },
-     {
-      "bcv": "is40:7",
-      "word": "נָ֣בֵֽל־צִ֔יץ",
-      "shape": "mun-zaq",
-      "anfa_reason": "a: a secondary accent the compound inherits",
-      "configuration": "munax-zaqef (ITM §221)",
-      "oracle": {
-       "joined_letters_after_accent": 2,
-       "free_letters_after_accent": 2,
-       "free_occurrences": 2
-      }
-     },
      {
       "bcv": "da1:15",
       "word": "מִ֨ן־כׇּל־הַיְלָדִ֔ים",
@@ -12943,6 +12788,162 @@
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
        "free_occurrences": 0
+      }
+     },
+     {
+      "bcv": "2c8:11",
+      "word": "אֲשֶׁר־בָּ֥אָֽה־אֲלֵיהֶ֖ם",
+      "shape": "0-mer-tip",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 1,
+       "free_occurrences": 24
+      }
+     },
+     {
+      "bcv": "is66:8",
+      "word": "אִם־יִוָּ֥לֵֽד־גּ֖וֹי",
+      "shape": "0-mer-tip",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 1,
+       "free_occurrences": 3
+      }
+     },
+     {
+      "bcv": "2s7:9",
+      "word": "וְעָשִׂ֤תִֽי־לְךָ֙",
+      "shape": "mah-pash",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": null,
+       "free_occurrences": 0
+      }
+     },
+     {
+      "bcv": "is59:16",
+      "word": "וַתּ֤וֹשַֽׁע־לוֹ֙",
+      "shape": "mah-pash",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 3,
+       "free_letters_after_accent": null,
+       "free_occurrences": 0
+      }
+     },
+     {
+      "bcv": "is63:5",
+      "word": "וַתּ֤וֹשַֽׁע־לִי֙",
+      "shape": "mah-pash",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 3,
+       "free_letters_after_accent": null,
+       "free_occurrences": 0
+      }
+     },
+     {
+      "bcv": "ek16:12",
+      "word": "וָ֥אֶתֵּֽן־נֶ֙זֶם֙",
+      "shape": "mer-pash+pash",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 3,
+       "free_letters_after_accent": 1,
+       "free_occurrences": 14
+      }
+     },
+     {
+      "bcv": "1c21:5",
+      "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
+      "shape": "mer-sil",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 6
+      }
+     },
+     {
+      "bcv": "ju20:2",
+      "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
+      "shape": "mer-sil",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 6
+      }
+     },
+     {
+      "bcv": "ju20:35",
+      "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
+      "shape": "mer-sil",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 6
+      }
+     },
+     {
+      "bcv": "ju8:10",
+      "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
+      "shape": "mer-sil",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 6
+      }
+     },
+     {
+      "bcv": "2c14:6",
+      "word": "וַיָּ֥נַֽח־לָ֖נוּ",
+      "shape": "mer-tip",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 5
+      }
+     },
+     {
+      "bcv": "ek1:4",
+      "word": "וְנֹ֥גַֽהּ־ל֖וֹ",
+      "shape": "mer-tip",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 5
+      }
+     },
+     {
+      "bcv": "is40:7",
+      "word": "נָ֣בֵֽל־צִ֔יץ",
+      "shape": "mun-zaq",
+      "anfa_reason": "c: a maqaf after a gaʿya that follows the atom's accent (ITM §357)",
+      "configuration": "ITM §357's maqaf after gaʿya (Breuer CoS Ch. 1 §43)",
+      "oracle": {
+       "joined_letters_after_accent": 2,
+       "free_letters_after_accent": 2,
+       "free_occurrences": 2
       }
      }
     ]
