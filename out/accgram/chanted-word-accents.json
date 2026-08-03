@@ -95,7 +95,7 @@
    "yeivin_count": "in 8 cases",
    "quote": "In 8 cases merka occurs as a secondary accent on the same word as ṭifḥa, generally on an open syllable suitable for gaʿya.",
    "source": "Yeivin, Introduction to the Tiberian Masorah",
-   "note": "Yeivin's eight are the cases where the merkha is a SECONDARY accent. The measurement is wider, because it counts any chanted word with both marks -- including a compound whose non-final atom keeps a merkha of its own, which is ITM §293's scribal habit rather than a secondary accent. See ``merkha_tipexa_discrepancy``.",
+   "note": "Yeivin's eight are the cases where the merkha is a SECONDARY accent, and all eight have both marks on ONE atom. The measurement is wider, because it counts any chanted word with both marks -- including four compounds whose non-final atom has a merkha of its own, a gaʿya after it and then §357's maqaf. Those four are not §233 cases and are not §293's habit either; see ``maqaf_after_gaya``.",
    "token_sequences": [
     "merkha tipexa"
    ],
@@ -117,25 +117,29 @@
      "bcv": "is66:8",
      "chanted_word": "אם־יו֥לד־ג֖וי",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ek1:4",
      "chanted_word": "ונ֥גה־ל֖ו",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "2c8:11",
      "chanted_word": "אשר־ב֥אה־אליה֖ם",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "2c14:6",
      "chanted_word": "וי֥נח־ל֖נו",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     }
    ]
   },
@@ -165,7 +169,7 @@
    "yeivin_count": "in five cases",
    "quote": "In five cases mehuppak appears as a secondary accent on the same word as pashṭa. It is marked on an open syllable suitable for gaʿya, which happens to be formed, in all cases, by the prefixed particle -ש.",
    "source": "Yeivin, Introduction to the Tiberian Masorah",
-   "note": "This is the section ``maqaf_nonfinal_accents`` used to cite for a secondary mahapakh in a TEVIR's chanted word; the pairing is with pashta, and the tevir entry never fired in any corpus. The three MAM chanted words beyond Yeivin's five all have the mahapakh on a non-final atom and the pashta on the last -- the same shape as §233's surplus, and not the prefixed ־ש his five are about.",
+   "note": "This is the section ``maqaf_nonfinal_accents`` used to cite for a secondary mahapakh in a TEVIR's chanted word; the pairing is with pashta, and the tevir entry never fired in any corpus. The three MAM chanted words beyond Yeivin's five all have the mahapakh on a non-final atom and the pashta on the last -- the same shape as §233's surplus, and not the prefixed ־ש his five are about. All three have a gaʿya after that mahapakh and then §357's maqaf, and Yeivin names one of them, Isaiah 59:16, at §357 itself; Breuer names another, Isaiah 63:5, at CoS Ch. 1 §43. See ``maqaf_after_gaya``.",
    "token_sequences": [
     "mahapakh pashta"
    ],
@@ -184,19 +188,22 @@
      "bcv": "2s7:9",
      "chanted_word": "ועש֤תי־לך֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "is59:16",
      "chanted_word": "ות֤ושע־לו֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "is63:5",
      "chanted_word": "ות֤ושע־לי֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     }
    ]
   },
@@ -271,6 +278,28 @@
    "mam_measured": 69
   },
   {
+   "section": "§256",
+   "names": "both servi of tevir on one chanted word",
+   "yeivin_count": "in eight cases",
+   "quote": "In eight cases the two servi of tevir are marked on the same word, with the azla on an open syllable suitable for gaʿya.",
+   "source": "Yeivin, Introduction to the Tiberian Masorah",
+   "note": "The tevir's counterpart of §244, and the section that names Job's four prose-frame ואמלטה -- his own example, cited as 'Job 1:15, 16, 17, 19'. Six of his eight are listed here. The other two, Isaiah 30:16 ותאמרו and Isaiah 32:15 יערה, have a merkha as the second servus rather than a darga, so they measure as ``qadma merkha``, a sequence §244 already claims; a token sequence is claimed by one section only, so they are recorded in this note instead of in the list. The six listed are the whole of MAM's ``qadma darga``.",
+   "token_sequences": [
+    "qadma darga"
+   ],
+   "mam_measured": 6,
+   "yeivin_verses": [
+    "jb1:15",
+    "jb1:16",
+    "jb1:17",
+    "jb1:19",
+    "ne11:7",
+    "2c17:8"
+   ],
+   "yeivin_verses_all_measured": true,
+   "yeivin_list_is_closed_and_matches_exactly": true
+  },
+  {
    "section": "§268",
    "names": "azla-geresh on one chanted word",
    "yeivin_count": "often",
@@ -305,54 +334,323 @@
    "quote": "From the point of view of the accentuation, words joined by maqqef are considered as a single unit, and are treated so in the marking of conjunctives, secondary accents, and gaʿya.",
    "source": "Yeivin, Introduction to the Tiberian Masorah",
    "note": "The warrant for measuring atomic chanted words and maqaf compounds together rather than as two phenomena. Yeivin's own illustration is אל־האשה taking munax-zaqef precisely because the maqaf makes the two atoms one unit."
+  },
+  {
+   "section": "§354",
+   "names": "gaʿya after the accent, on a word with penultimate stress",
+   "yeivin_count": "(a rule, not a count)",
+   "quote": "Gaʿya is similarly sometimes used on the last syllable of a word with penultimate stress if it ends with a guttural and the following word begins with lamed or nun.",
+   "source": "Yeivin, Introduction to the Tiberian Masorah",
+   "note": "Yeivin's three examples are Ruth 1:21, 1 Kings 2:8 and Ezekiel 1:4 ונגה לו, and he writes all three with a SPACE. MAM has a maqaf after the gaʿya at Ezekiel 1:4, which is the only reason that compound reaches this survey. See ``maqaf_after_gaya``."
+  },
+  {
+   "section": "§357",
+   "names": "maqqef after gaʿya",
+   "yeivin_count": "(a rule, not a count)",
+   "quote": "In some MSS maqqef is marked -- sometimes consistently, sometimes sporadically -- after a word marked with gaʿya after the accent. ... The purpose of this maqqef is to indicate that, even though gaʿya is marked after the accent, so that the reading of that syllable must be slowed down, the word must be joined to the following word, and no break should be made between them.",
+   "source": "Yeivin, Introduction to the Tiberian Masorah",
+   "note": "The section that says what thirteen of MAM's twenty-two compounds with their accents split across atoms are. Yeivin's four examples carry a manuscript apiece -- Jeremiah 49:23 in C, Numbers 24:22 in S, Isaiah 59:16 in A and C, Lamentations 5:6 in L3 -- and Isaiah 59:16 is one of the thirteen. This maqaf is not the maqaf that joins two atoms into one chanted word, so a hit of that kind is not a chanted word with two accents in the sense §§233 and 241 are about. See ``maqaf_after_gaya``."
   }
  ],
- "merkha_tipexa_discrepancy": {
-  "question": "ITM §233 states eight cases of merkha with tipexa on one chanted word; MAM measures 12.",
-  "yeivin_listed": 8,
-  "mam_measured": 12,
-  "yeivin_verses_all_measured": true,
-  "yeivin_verses_by_kind": {
-   "a maqaf compound, its accents all on the final atom": 4,
-   "an atomic chanted word": 4
+ "breuer_notes": [
+  {
+   "section": "Ch. 1 §43",
+   "names": "the maqaf written after a servant that has a gaʿya on its last syllable",
+   "quote": "In ancient manuscripts there sometimes appears a makaf in other circumstances. A makaf of this type appears sometimes after a word cantillated with a mesharet, which is accentuated mile'eil, and a ga'aya usually appears on its last syllable; e.g.: ותושע־לי (Isa. 63:5). About the significance of this makaf different views have been expressed. But since this makaf does not appear in a regular manner in most of the manuscripts, and it is apparently left to the discretion of every nakdan, and since there is no trace of it in the accepted editions of Scripture, we shall not discuss it in this book.",
+   "source": "Breuer, The Cantillation of Scripture",
+   "note": "Breuer defines the configuration exactly as the measurement finds it -- an ordinary SERVANT, a word accented on its penultimate syllable, a gaʿya on its last -- names Isaiah 63:5, which is one of the thirteen, and then puts the whole class outside his book. Yeivin's ITM §357 is the same maqaf. Two things follow: neither book's inventory of secondary accents is where these belong, and Breuer's 'no trace of it in the accepted editions' is a divergence from MAM, which has thirteen of them."
   },
-  "beyond_yeivin_by_kind": {
-   "a maqaf compound, its accents split across atoms": 4
+  {
+   "section": "Ch. 3 §28",
+   "names": "the tipexa's servant in its own chanted word",
+   "quote": "In eight places, the servant of tipekha appears with it in its word. ... The servant is merkha - according to the ordinary order of the cantillation marks (above, §26); and it appears in a syllable fit for a light ga'aya or in a syllable fit for the ga'aya of the big vowel.",
+   "source": "Breuer, The Cantillation of Scripture",
+   "note": "Breuer's eight are Yeivin's eight at ITM §233, and his criterion says why the four beyond them are not of this kind: his servant stands on a syllable fit for a gaʿya, where each of the four instead has its accent on the atom's own stress with the gaʿya after it."
   },
-  "beyond_yeivin": [
-   {
-    "bcv": "is66:8",
-    "chanted_word": "אם־יו֥לד־ג֖וי",
-    "sequence": "merkha tipexa",
-    "kind": "a maqaf compound, its accents split across atoms"
+  {
+   "section": "Ch. 9 §37",
+   "names": "a secondary mark does not cancel the maqaf; an ordinary one does",
+   "quote": "A cantillation mark, which follows the regular order of the cantillation marks, cannot appear in a word joined by hyphen to the next one; therefore, if a hyphenated word receives a cantillation mark, the hyphenation is immediately cancelled. ... Therefore, we find that all the secondary cantillation marks in the 21 books appear even in a hyphenated word, and the hyphen is never cancelled after them. So with the me'ayla that serves before a siluk or ethnakhta; e.g.: וקויתי־לו (Isa. 8:17), ויצא־נח (Gen. 8:18); and so, too, with the methiga that appears in the word of the small zakef.",
+   "source": "Breuer, The Cantillation of Scripture",
+   "note": "The rule that partitions the split compounds, and the two examples Breuer gives are two of the nine MAM compounds that have no gaʿya after the non-final accent. His rule and Ch. 1 §43 do not collide at the other thirteen: the maqaf there is Ch. 1 §43's, not the joining maqaf this rule is about."
+  }
+ ],
+ "maqaf_after_gaya": {
+  "what": "A maqaf written after a word that has its own accent and a gaʿya after that accent. ITM §357 gives its purpose -- the slowed syllable makes no break -- and CoS Ch. 1 §43 gives its conditions: after a servant, on a word accented on its penultimate syllable, with the gaʿya on its last. It is not the maqaf that joins two atoms into one chanted word, so a compound found by it has an accent on each atom rather than two accents on one chanted word.",
+  "how_it_is_told_apart": "Mechanically, off the mark body: the accented non-final atom also has a meteg between that accent and the maqaf. Nothing here reads a verse reference. On MAM the signature partitions the compounds exactly, the nine without it being the mayela ones and nothing else. It is a signature and not a definition, though, and Isaiah 8:17 וקויתי־לו is where that shows: WLC and UXLC have a meteg after the mayela there and MAM has none, so the same compound answers differently by corpus while staying the mayela case CoS Ch. 9 §37 names by verse.",
+  "verses_the_books_name_that_this_survey_measures": {
+   "ITM §354": [
+    "ek1:4"
+   ],
+   "ITM §357": [
+    "is59:16"
+   ],
+   "CoS Ch. 1 §43": [
+    "is63:5"
+   ]
+  },
+  "which_corpus_has_it": "MAM's, and hardly L's -- which is what both books' manuscript labels predict. Yeivin's §357 examples are in C, in S, in A and C, and in L3; Breuer's is ancient manuscripts generally. The counts below are the check on that.",
+  "by_corpus": {
+   "wlc422": {
+    "accents_split_across_atoms": 45,
+    "of_them_with_a_gaya_after_the_nonfinal_accent": 1,
+    "with_a_gaya_by_sequence": {
+     "mayela silluq": 1
+    },
+    "without_a_gaya_by_sequence": {
+     "merkha tipexa": 8,
+     "mayela atnax": 7,
+     "munax zaqef": 5,
+     "merkha silluq": 4,
+     "mahapakh pashta": 3,
+     "munax atnax": 3,
+     "munax munax": 3,
+     "tipexa munax": 2,
+     "darga tevir": 1,
+     "merkha pashta": 1,
+     "merkha tevir": 1,
+     "munax revia": 1,
+     "munax telishagedola": 1,
+     "pashta zaqef": 1,
+     "tipexa mahapakh": 1,
+     "tipexa merkha": 1,
+     "zaqef tipexa": 1
+    },
+    "with_a_gaya": [
+     {
+      "bcv": "is8:17",
+      "chanted_word": "וקו֖יתי־לו",
+      "sequence": "mayela silluq",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     }
+    ]
    },
-   {
-    "bcv": "ek1:4",
-    "chanted_word": "ונ֥גה־ל֖ו",
-    "sequence": "merkha tipexa",
-    "kind": "a maqaf compound, its accents split across atoms"
+   "uxlc": {
+    "accents_split_across_atoms": 22,
+    "of_them_with_a_gaya_after_the_nonfinal_accent": 2,
+    "with_a_gaya_by_sequence": {
+     "mahapakh pashta": 1,
+     "mayela silluq": 1
+    },
+    "without_a_gaya_by_sequence": {
+     "mayela atnax": 7,
+     "merkha tipexa": 3,
+     "mahapakh pashta": 2,
+     "merkha silluq": 2,
+     "munax zaqef": 2,
+     "munax munax": 1,
+     "munax revia": 1,
+     "tipexa mahapakh": 1,
+     "tipexa munax": 1
+    },
+    "with_a_gaya": [
+     {
+      "bcv": "ek25:7",
+      "chanted_word": "ונתת֤יך־לבז֙",
+      "sequence": "mahapakh pashta",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "is8:17",
+      "chanted_word": "וקו֖יתי־לו",
+      "sequence": "mayela silluq",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     }
+    ]
    },
-   {
-    "bcv": "2c8:11",
-    "chanted_word": "אשר־ב֥אה־אליה֖ם",
-    "sequence": "merkha tipexa",
-    "kind": "a maqaf compound, its accents split across atoms"
-   },
-   {
-    "bcv": "2c14:6",
-    "chanted_word": "וי֥נח־ל֖נו",
-    "sequence": "merkha tipexa",
-    "kind": "a maqaf compound, its accents split across atoms"
+   "mam_simple": {
+    "accents_split_across_atoms": 22,
+    "of_them_with_a_gaya_after_the_nonfinal_accent": 13,
+    "with_a_gaya_by_sequence": {
+     "merkha silluq": 4,
+     "merkha tipexa": 4,
+     "mahapakh pashta": 3,
+     "merkha pashta": 1,
+     "munax zaqef": 1
+    },
+    "without_a_gaya_by_sequence": {
+     "mayela atnax": 8,
+     "mayela silluq": 1
+    },
+    "with_a_gaya": [
+     {
+      "bcv": "2s7:9",
+      "chanted_word": "ועש֤תי־לך֙",
+      "sequence": "mahapakh pashta",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "is59:16",
+      "chanted_word": "ות֤ושע־לו֙",
+      "sequence": "mahapakh pashta",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "is63:5",
+      "chanted_word": "ות֤ושע־לי֙",
+      "sequence": "mahapakh pashta",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "ek16:12",
+      "chanted_word": "ו֥אתן־נ֙זם֙",
+      "sequence": "merkha pashta",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "ju8:10",
+      "chanted_word": "ש֥לף־חרב",
+      "sequence": "merkha silluq",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "ju20:2",
+      "chanted_word": "ש֥לף־חרב",
+      "sequence": "merkha silluq",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "ju20:35",
+      "chanted_word": "ש֥לף־חרב",
+      "sequence": "merkha silluq",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "1c21:5",
+      "chanted_word": "ש֥לף־חרב",
+      "sequence": "merkha silluq",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "is66:8",
+      "chanted_word": "אם־יו֥לד־ג֖וי",
+      "sequence": "merkha tipexa",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "ek1:4",
+      "chanted_word": "ונ֥גה־ל֖ו",
+      "sequence": "merkha tipexa",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "2c8:11",
+      "chanted_word": "אשר־ב֥אה־אליה֖ם",
+      "sequence": "merkha tipexa",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "2c14:6",
+      "chanted_word": "וי֥נח־ל֖נו",
+      "sequence": "merkha tipexa",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     },
+     {
+      "bcv": "is40:7",
+      "chanted_word": "נ֣בל־צ֔יץ",
+      "sequence": "munax zaqef",
+      "kind": "a maqaf compound, its accents split across atoms",
+      "gaya_after_the_nonfinal_accent": true
+     }
+    ]
    }
-  ],
-  "answer": "The two counts do not measure the same thing, and the kinds say so exactly. Every one of Yeivin's eight has both marks on ONE atom -- four of them atomic chanted words, four of them maqaf compounds with the merkha on the same atom as the tipexa. Every one of the four beyond his list instead has the merkha on a non-final atom and the tipexa on the last. Yeivin is counting a secondary accent, a mark the chanted word acquires because it is long enough to carry one; this survey's criterion is mechanical and wider, two accent tokens on one chanted word however they got there, and it therefore also catches a merkha standing where an atom's own conjunctive stands with a maqaf written after it (ITM §293).",
-  "open_question": "Whether those four are §233 cases Yeivin left out or §293's scribal habit is not settled here, and the two surveys currently answer differently: ``maqaf_nonfinal_accents._NAMED_CONFIGURATIONS`` labels a merkha on a non-final atom with a tipexa on the compound as §233's secondary merkha, which is precisely these four. Issue wlc-utils#86 holds the citation question. (Phase 1 filed it under wlc-utils#82, whose subject is instead Yeivin's two Deuteronomy 33 maqaf readings for the LC.)"
+  },
+  "what_the_others_are": "The compounds with no gaʿya after the non-final accent are the mayela ones, which both books name outright: ITM §§210 and 216, and CoS Ch. 9 §37, whose two examples -- Isaiah 8:17 וקויתי־לו and Genesis 8:18 ויצא־נח -- are two of MAM's nine. There a secondary mark stands in a hyphenated atom and the maqaf is the joining one, which is Breuer's rule for why it is not cancelled.",
+  "itm_233_arithmetic": {
+   "yeivin_stated": "in 8 cases",
+   "yeivin_listed": 8,
+   "mam_measured": 12,
+   "yeivin_verses_by_kind": {
+    "a maqaf compound, its accents all on the final atom": 4,
+    "an atomic chanted word": 4
+   },
+   "beyond_yeivin": [
+    {
+     "bcv": "is66:8",
+     "chanted_word": "אם־יו֥לד־ג֖וי",
+     "sequence": "merkha tipexa",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    },
+    {
+     "bcv": "ek1:4",
+     "chanted_word": "ונ֥גה־ל֖ו",
+     "sequence": "merkha tipexa",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    },
+    {
+     "bcv": "2c8:11",
+     "chanted_word": "אשר־ב֥אה־אליה֖ם",
+     "sequence": "merkha tipexa",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    },
+    {
+     "bcv": "2c14:6",
+     "chanted_word": "וי֥נח־ל֖נו",
+     "sequence": "merkha tipexa",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    }
+   ],
+   "beyond_yeivin_all_have_a_gaya_after_the_nonfinal_accent": true
+  },
+  "itm_241_arithmetic": {
+   "yeivin_stated": "in five cases",
+   "yeivin_listed": 5,
+   "mam_measured": 8,
+   "yeivin_verses_by_kind": {
+    "an atomic chanted word": 3,
+    "a maqaf compound, its accents all on the final atom": 2
+   },
+   "beyond_yeivin": [
+    {
+     "bcv": "2s7:9",
+     "chanted_word": "ועש֤תי־לך֙",
+     "sequence": "mahapakh pashta",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    },
+    {
+     "bcv": "is59:16",
+     "chanted_word": "ות֤ושע־לו֙",
+     "sequence": "mahapakh pashta",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    },
+    {
+     "bcv": "is63:5",
+     "chanted_word": "ות֤ושע־לי֙",
+     "sequence": "mahapakh pashta",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    }
+   ],
+   "beyond_yeivin_all_have_a_gaya_after_the_nonfinal_accent": true
+  },
+  "answer": "The four chanted words beyond ITM §233's eight, and the three beyond §241's five, are neither cases those sections left out nor ITM §293's habit of a maqaf written after an atom that keeps its own conjunctive. They are §357's maqaf after gaʿya, and so are the four merkha-with-silluq שלף־חרב and the one munax-with-zaqef Isaiah 40:7 נבל־ציץ. Both books put the class outside their inventories of secondary accents -- Yeivin under gaʿya, Breuer by declining to discuss it -- and between them they name three of the thirteen by verse. §233's own eight and §241's own five all have both marks on ONE atom, on a syllable fit for a gaʿya, which is Breuer's stated criterion for a same-word servant at Ch. 3 §28.",
+  "recorded_not_flagged": "Breuer says of this maqaf that 'there is no trace of it in the accepted editions of Scripture', and MAM has thirteen. That divergence is recorded here for future research and is not a verdict; nothing in this survey promotes it to a finding about MAM's accentuation. Issue wlc-utils#86."
  },
  "mam_residue": {
   "what": "MAM prose chanted words with two accent tokens whose token sequence is named by no section of Yeivin's prose inventory above.",
-  "total": 18,
+  "total": 12,
   "by_sequence": {
-   "qadma darga": 6,
    "merkha silluq": 5,
    "gershayim telishagedola": 3,
    "geresh telishagedola": 2,
@@ -360,6 +658,65 @@
    "merkha pashta": 1
   },
   "already_documented_elsewhere": "The geresh-family-with-telisha-gedola words are not unaccounted for: they are the five words ``uni_to_marks.word_to_marks`` keeps both marks on, whitelisted by ``lexical_validation`` and set out in the telisha gedola exhibit of gh-pages/accgram/almost-errors.html. A geresh or gershayim written twice on one of them is folded above, so each counts as two accents, not three.",
+  "accounted_for_by_maqaf_after_gaya": {
+   "what": "These are compounds found by ITM §357's maqaf after gaʿya rather than by the maqaf that joins two atoms, so each atom has an accent of its own and the pair is not a chanted word with two accents. See ``maqaf_after_gaya``.",
+   "total": 5,
+   "occurrences": [
+    {
+     "bcv": "ek16:12",
+     "chanted_word": "ו֥אתן־נ֙זם֙",
+     "sequence": "merkha pashta",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    },
+    {
+     "bcv": "ju8:10",
+     "chanted_word": "ש֥לף־חרב",
+     "sequence": "merkha silluq",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    },
+    {
+     "bcv": "ju20:2",
+     "chanted_word": "ש֥לף־חרב",
+     "sequence": "merkha silluq",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    },
+    {
+     "bcv": "ju20:35",
+     "chanted_word": "ש֥לף־חרב",
+     "sequence": "merkha silluq",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    },
+    {
+     "bcv": "1c21:5",
+     "chanted_word": "ש֥לף־חרב",
+     "sequence": "merkha silluq",
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
+    }
+   ]
+  },
+  "left_over_after_both": {
+   "what": "What is left when the telisha gedola words and the maqaf-after-gaʿya compounds are set aside: the atomic chanted words of MAM's prose verses that have two accents no section of either book names.",
+   "total": 2,
+   "occurrences": [
+    {
+     "bcv": "ne8:7",
+     "chanted_word": "ושר֥בי֣ה",
+     "sequence": "merkha munax",
+     "kind": "an atomic chanted word"
+    },
+    {
+     "bcv": "ca8:6",
+     "chanted_word": "שלה֥בתיה",
+     "sequence": "merkha silluq",
+     "kind": "an atomic chanted word"
+    }
+   ]
+  },
   "occurrences": [
    {
     "bcv": "2k17:13",
@@ -401,25 +758,29 @@
     "bcv": "ek16:12",
     "chanted_word": "ו֥אתן־נ֙זם֙",
     "sequence": "merkha pashta",
-    "kind": "a maqaf compound, its accents split across atoms"
+    "kind": "a maqaf compound, its accents split across atoms",
+    "gaya_after_the_nonfinal_accent": true
    },
    {
     "bcv": "ju8:10",
     "chanted_word": "ש֥לף־חרב",
     "sequence": "merkha silluq",
-    "kind": "a maqaf compound, its accents split across atoms"
+    "kind": "a maqaf compound, its accents split across atoms",
+    "gaya_after_the_nonfinal_accent": true
    },
    {
     "bcv": "ju20:2",
     "chanted_word": "ש֥לף־חרב",
     "sequence": "merkha silluq",
-    "kind": "a maqaf compound, its accents split across atoms"
+    "kind": "a maqaf compound, its accents split across atoms",
+    "gaya_after_the_nonfinal_accent": true
    },
    {
     "bcv": "ju20:35",
     "chanted_word": "ש֥לף־חרב",
     "sequence": "merkha silluq",
-    "kind": "a maqaf compound, its accents split across atoms"
+    "kind": "a maqaf compound, its accents split across atoms",
+    "gaya_after_the_nonfinal_accent": true
    },
    {
     "bcv": "ca8:6",
@@ -431,43 +792,8 @@
     "bcv": "1c21:5",
     "chanted_word": "ש֥לף־חרב",
     "sequence": "merkha silluq",
-    "kind": "a maqaf compound, its accents split across atoms"
-   },
-   {
-    "bcv": "jb1:15",
-    "chanted_word": "ואמ֨לט֧ה",
-    "sequence": "qadma darga",
-    "kind": "an atomic chanted word"
-   },
-   {
-    "bcv": "jb1:16",
-    "chanted_word": "ואמ֨לט֧ה",
-    "sequence": "qadma darga",
-    "kind": "an atomic chanted word"
-   },
-   {
-    "bcv": "jb1:17",
-    "chanted_word": "ואמ֨לט֧ה",
-    "sequence": "qadma darga",
-    "kind": "an atomic chanted word"
-   },
-   {
-    "bcv": "jb1:19",
-    "chanted_word": "ואמ֨לט֧ה",
-    "sequence": "qadma darga",
-    "kind": "an atomic chanted word"
-   },
-   {
-    "bcv": "ne11:7",
-    "chanted_word": "בן־ק֨ולי֧ה",
-    "sequence": "qadma darga",
-    "kind": "a maqaf compound, its accents all on the final atom"
-   },
-   {
-    "bcv": "2c17:8",
-    "chanted_word": "ואד֨ני֧הו",
-    "sequence": "qadma darga",
-    "kind": "an atomic chanted word"
+    "kind": "a maqaf compound, its accents split across atoms",
+    "gaya_after_the_nonfinal_accent": true
    }
   ]
  },
@@ -1318,7 +1644,8 @@
      "bcv": "ek41:1",
      "chanted_word": "ר֧חב־מפ֛ו",
      "sequence": "darga tevir",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "2k17:13",
@@ -1342,13 +1669,15 @@
      "bcv": "ju11:35",
      "chanted_word": "פצ֤יתי־פי֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "je16:5",
      "chanted_word": "הע֤ם־הזה֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ca1:7",
@@ -1384,7 +1713,8 @@
      "bcv": "da8:25",
      "chanted_word": "וע֤ל־שר־שרים֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "lv25:20",
@@ -1396,7 +1726,8 @@
      "bcv": "gn8:18",
      "chanted_word": "וי֖צא־נ֑ח",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "nu28:26",
@@ -1414,7 +1745,8 @@
      "bcv": "ek7:25",
      "chanted_word": "קפ֖דה־ב֑א",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek10:13",
@@ -1426,31 +1758,36 @@
      "bcv": "ek11:18",
      "chanted_word": "וב֖או־ש֑מה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ru1:10",
      "chanted_word": "ותאמ֖רנה־ל֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "da4:9",
      "chanted_word": "לכ֖לא־ב֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "da4:18",
      "chanted_word": "לכ֖לא־ב֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "2c20:8",
      "chanted_word": "וישב֖ו־ב֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "lv21:4",
@@ -1468,7 +1805,8 @@
      "bcv": "is8:17",
      "chanted_word": "וקו֖יתי־לו",
      "sequence": "mayela silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ho11:6",
@@ -1498,25 +1836,29 @@
      "bcv": "ex10:13",
      "chanted_word": "ר֥וח־קדים֙",
      "sequence": "merkha pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ex12:45",
      "chanted_word": "לא־י֥אכל־בו",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek27:25",
      "chanted_word": "בל֥ב־ימים",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "mi4:8",
      "chanted_word": "לב֥ת־ירושלם",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ca8:6",
@@ -1528,7 +1870,8 @@
      "bcv": "2c21:2",
      "chanted_word": "מ֥לך־ישראל",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "dt31:25",
@@ -1540,13 +1883,15 @@
      "bcv": "je15:11",
      "chanted_word": "בע֥ת־רע֛ה",
      "sequence": "merkha tevir",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "gn9:24",
      "chanted_word": "אשר־ע֥שה־ל֖ו",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "lv23:21",
@@ -1558,13 +1903,15 @@
      "bcv": "dt33:2",
      "chanted_word": "א֥ש־ד֖ת",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "1s2:13",
      "chanted_word": "של֥ש־השנ֖ים",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "2k15:16",
@@ -1576,13 +1923,15 @@
      "bcv": "2k18:27",
      "chanted_word": "מימ֥י־רגליה֖ם",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "is36:12",
      "chanted_word": "מימ֥י־רגליה֖ם",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "je8:18",
@@ -1594,13 +1943,15 @@
      "bcv": "je10:3",
      "chanted_word": "יד֥י־חר֖ש",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "je33:18",
      "chanted_word": "וע֥שה־ז֖בח",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek36:25",
@@ -1624,7 +1975,8 @@
      "bcv": "1c9:23",
      "chanted_word": "לב֥ית־הא֖הל",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "1c15:13",
@@ -1636,7 +1988,8 @@
      "bcv": "gn30:11",
      "chanted_word": "ב֣א־ג֑ד",
      "sequence": "munax atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "2s12:25",
@@ -1648,7 +2001,8 @@
      "bcv": "da2:20",
      "chanted_word": "וע֣ד־עלמ֑א",
      "sequence": "munax atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "1c5:20",
@@ -1660,7 +2014,8 @@
      "bcv": "1c27:12",
      "chanted_word": "לב֣ן־ימינ֑י",
      "sequence": "munax atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "lm4:9",
@@ -1678,19 +2033,22 @@
      "bcv": "ek8:6",
      "chanted_word": "מ֣ה־ה֣ם",
      "sequence": "munax munax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "1c27:14",
      "chanted_word": "לעשת֣י־עש֣ר",
      "sequence": "munax munax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "2c1:11",
      "chanted_word": "וי֣אמר־אלה֣ים",
      "sequence": "munax munax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "gn50:17",
@@ -1714,7 +2072,8 @@
      "bcv": "je5:31",
      "chanted_word": "נבא֣ו־בש֗קר",
      "sequence": "munax revia",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "zc7:14",
@@ -1738,7 +2097,8 @@
      "bcv": "js2:1",
      "chanted_word": "יהוש֣ע־בן־נ֠ון",
      "sequence": "munax telishagedola",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "gn1:14",
@@ -2986,7 +3346,8 @@
      "bcv": "nu9:17",
      "chanted_word": "וא֣חרי־כ֔ן",
      "sequence": "munax zaqef",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "nu10:3",
@@ -8122,7 +8483,8 @@
      "bcv": "zc8:3",
      "chanted_word": "ע֣יר־האמ֔ת",
      "sequence": "munax zaqef",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "zc8:5",
@@ -8482,7 +8844,8 @@
      "bcv": "es7:6",
      "chanted_word": "ות֣אמר־אסת֔ר",
      "sequence": "munax zaqef",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "es9:5",
@@ -8830,7 +9193,8 @@
      "bcv": "er4:12",
      "chanted_word": "ושורי֣א־שכל֔ילו",
      "sequence": "munax zaqef",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "er4:17",
@@ -8914,7 +9278,8 @@
      "bcv": "ne2:13",
      "chanted_word": "ה֣ם־פרוצ֔ים",
      "sequence": "munax zaqef",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ne3:7",
@@ -10006,7 +10371,8 @@
      "bcv": "2s21:12",
      "chanted_word": "ש֙מה֙־פלשת֔ים",
      "sequence": "pashta zaqef",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "jb1:15",
@@ -10138,31 +10504,36 @@
      "bcv": "je48:12",
      "chanted_word": "הנ֖ה־ימ֤ים",
      "sequence": "tipexa mahapakh",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek9:11",
      "chanted_word": "ככ֖ל־אש֥ר",
      "sequence": "tipexa merkha",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "je6:29",
      "chanted_word": "מא֖ש־ת֣ם",
      "sequence": "tipexa munax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek42:9",
      "chanted_word": "ומת֖חת־הלשכ֣ות",
      "sequence": "tipexa munax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "1c9:4",
      "chanted_word": "בנ֔י־מן־בני־פ֖רץ",
      "sequence": "zaqef tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     }
    ]
   },
@@ -11011,19 +11382,22 @@
      "bcv": "dt29:19",
      "chanted_word": "ור֤בצה־בו֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ju11:35",
      "chanted_word": "פצ֤יתי־פי֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek25:7",
      "chanted_word": "ונתת֤יך־לבז֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ca1:7",
@@ -11065,7 +11439,8 @@
      "bcv": "gn8:18",
      "chanted_word": "וי֖צא־נ֑ח",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "nu28:26",
@@ -11083,7 +11458,8 @@
      "bcv": "ek7:25",
      "chanted_word": "קפ֖דה־ב֑א",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek10:13",
@@ -11095,31 +11471,36 @@
      "bcv": "ek11:18",
      "chanted_word": "וב֖או־ש֑מה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ru1:10",
      "chanted_word": "ותאמ֖רנה־ל֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "da4:9",
      "chanted_word": "לכ֖לא־ב֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "da4:18",
      "chanted_word": "לכ֖לא־ב֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "2c20:8",
      "chanted_word": "וישב֖ו־ב֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "lv21:4",
@@ -11137,7 +11518,8 @@
      "bcv": "is8:17",
      "chanted_word": "וקו֖יתי־לו",
      "sequence": "mayela silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ho11:6",
@@ -11179,13 +11561,15 @@
      "bcv": "ex12:45",
      "chanted_word": "לא־י֥אכל־בו",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek27:25",
      "chanted_word": "בל֥ב־ימים",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ca8:6",
@@ -11257,7 +11641,8 @@
      "bcv": "gn9:24",
      "chanted_word": "אשר־ע֥שה־ל֖ו",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "lv23:21",
@@ -11269,7 +11654,8 @@
      "bcv": "1s2:13",
      "chanted_word": "של֥ש־השנ֖ים",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "2k15:16",
@@ -11287,7 +11673,8 @@
      "bcv": "je10:3",
      "chanted_word": "יד֥י־חר֖ש",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek36:25",
@@ -11341,7 +11728,8 @@
      "bcv": "2c1:11",
      "chanted_word": "וי֣אמר־אלה֣ים",
      "sequence": "munax munax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "gn50:17",
@@ -11365,7 +11753,8 @@
      "bcv": "je5:31",
      "chanted_word": "נבא֣ו־בש֗קר",
      "sequence": "munax revia",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "zc7:14",
@@ -17761,7 +18150,8 @@
      "bcv": "zc8:3",
      "chanted_word": "ע֣יר־האמ֔ת",
      "sequence": "munax zaqef",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "zc8:5",
@@ -18121,7 +18511,8 @@
      "bcv": "es7:6",
      "chanted_word": "ות֣אמר־אסת֔ר",
      "sequence": "munax zaqef",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "es9:5",
@@ -19765,13 +20156,15 @@
      "bcv": "je48:12",
      "chanted_word": "הנ֖ה־ימ֤ים",
      "sequence": "tipexa mahapakh",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek16:37",
      "chanted_word": "ע֖ל־כל־אש֣ר",
      "sequence": "tipexa munax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "2s18:26",
@@ -20624,19 +21017,22 @@
      "bcv": "2s7:9",
      "chanted_word": "ועש֤תי־לך֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "is59:16",
      "chanted_word": "ות֤ושע־לו֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "is63:5",
      "chanted_word": "ות֤ושע־לי֙",
      "sequence": "mahapakh pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ca1:7",
@@ -20672,7 +21068,8 @@
      "bcv": "gn8:18",
      "chanted_word": "וי֖צא־נ֑ח",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "nu28:26",
@@ -20684,7 +21081,8 @@
      "bcv": "2k9:2",
      "chanted_word": "וב֖את־ש֑מה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "je2:31",
@@ -20696,7 +21094,8 @@
      "bcv": "ek7:25",
      "chanted_word": "קפ֖דה־ב֑א",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ek10:13",
@@ -20708,31 +21107,36 @@
      "bcv": "ek11:18",
      "chanted_word": "וב֖או־ש֑מה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ru1:10",
      "chanted_word": "ותאמ֖רנה־ל֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "da4:9",
      "chanted_word": "לכ֖לא־ב֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "da4:18",
      "chanted_word": "לכ֖לא־ב֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "2c20:8",
      "chanted_word": "וישב֖ו־ב֑ה",
      "sequence": "mayela atnax",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "lv21:4",
@@ -20750,7 +21154,8 @@
      "bcv": "is8:17",
      "chanted_word": "וקו֖יתי־לו",
      "sequence": "mayela silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": false
     },
     {
      "bcv": "ho11:6",
@@ -20774,25 +21179,29 @@
      "bcv": "ek16:12",
      "chanted_word": "ו֥אתן־נ֙זם֙",
      "sequence": "merkha pashta",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ju8:10",
      "chanted_word": "ש֥לף־חרב",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ju20:2",
      "chanted_word": "ש֥לף־חרב",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ju20:35",
      "chanted_word": "ש֥לף־חרב",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ca8:6",
@@ -20804,7 +21213,8 @@
      "bcv": "1c21:5",
      "chanted_word": "ש֥לף־חרב",
      "sequence": "merkha silluq",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "gn7:19",
@@ -21236,7 +21646,8 @@
      "bcv": "is66:8",
      "chanted_word": "אם־יו֥לד־ג֖וי",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "je8:18",
@@ -21248,7 +21659,8 @@
      "bcv": "ek1:4",
      "chanted_word": "ונ֥גה־ל֖ו",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "ek36:25",
@@ -21284,13 +21696,15 @@
      "bcv": "2c8:11",
      "chanted_word": "אשר־ב֥אה־אליה֖ם",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "2c14:6",
      "chanted_word": "וי֥נח־ל֖נו",
      "sequence": "merkha tipexa",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "2s12:25",
@@ -25778,7 +26192,8 @@
      "bcv": "is40:7",
      "chanted_word": "נ֣בל־צ֔יץ",
      "sequence": "munax zaqef",
-     "kind": "a maqaf compound, its accents split across atoms"
+     "kind": "a maqaf compound, its accents split across atoms",
+     "gaya_after_the_nonfinal_accent": true
     },
     {
      "bcv": "is40:21",

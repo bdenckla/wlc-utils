@@ -1144,12 +1144,12 @@
      "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)": 7
     },
     "by_configuration": {
-     "metigah-zaqef (ITM §224)": 105,
+     "metigah-zaqef (ITM §223)": 105,
      "mayela before an etnaxta (ITM §216)": 7,
      "unnamed": 7,
-     "secondary merkha in the tipexa's chanted word (ITM §233)": 5,
-     "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)": 4,
-     "secondary mahapakh in the pashta's chanted word (ITM §241)": 4,
+     "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya": 5,
+     "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)": 4,
+     "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya": 4,
      "munax-zaqef (ITM §221)": 3,
      "mayela before a silluq (ITM §210)": 1,
      "secondary munax in the revia's chanted word (ITM §236)": 1,
@@ -1185,7 +1185,7 @@
       "word": "לֹא־יֹ֥אכַל־בּֽוֹ׃",
       "shape": "0-mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -1197,7 +1197,7 @@
       "word": "אֲשֶׁר־עָ֥שָׂה־ל֖וֹ",
       "shape": "0-mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -1209,7 +1209,7 @@
       "word": "וְאִם־שְׁלָ֨שׁ־אֵ֔לֶּה",
       "shape": "0-qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1221,7 +1221,7 @@
       "word": "כָּל־מַ֨כֵּה־נֶ֔פֶשׁ",
       "shape": "0-qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -1233,7 +1233,7 @@
       "word": "וְעַ֤ל־שַׂר־שָׂרִים֙",
       "shape": "mah-0-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1245,7 +1245,7 @@
       "word": "וּנְתַתִּ֤יךָֽ־לְבַז֙",
       "shape": "mah-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -1257,7 +1257,7 @@
       "word": "הָעָ֤ם־הַזֶּה֙",
       "shape": "mah-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1269,7 +1269,7 @@
       "word": "פָּצִ֤יתִי־פִי֙",
       "shape": "mah-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -1281,7 +1281,7 @@
       "word": "מֶ֥לֶךְ־יִשְׂרָאֵֽל׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -1293,7 +1293,7 @@
       "word": "בְּלֵ֥ב־יַמִּֽים׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1305,7 +1305,7 @@
       "word": "לְבַ֥ת־יְרוּשָׁלִָֽם׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1329,7 +1329,7 @@
       "word": "לְבֵ֥ית־הָאֹ֖הֶל",
       "shape": "mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -1341,7 +1341,7 @@
       "word": "שְׁלֹ֥שׁ־הַשִּׁנַּ֖יִם",
       "shape": "mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1353,7 +1353,7 @@
       "word": "יְדֵ֥י־חָרָ֖שׁ",
       "shape": "mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1365,7 +1365,7 @@
       "word": "וְעֹ֥שֶׂה־זֶּ֖בַח",
       "shape": "mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -1437,7 +1437,7 @@
       "word": "וְאִ֨ם־עַד־אֵ֔לֶּה",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1449,7 +1449,7 @@
       "word": "וּמִ֨ן־אֶחָ֔יו",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1461,7 +1461,7 @@
       "word": "אֶ֨ת־הַלְוִיִּ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1473,7 +1473,7 @@
       "word": "וּמִכָּ֨ל־בָּנַ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1485,7 +1485,7 @@
       "word": "וַיִּ֨מְלָךְ־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -1497,7 +1497,7 @@
       "word": "לְכָ֨ל־עֲבוֹדַ֔ת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1509,7 +1509,7 @@
       "word": "וּמִ֨מַּטֵּה־גָ֔ד",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -1521,7 +1521,7 @@
       "word": "וְכָ֨ל־הָאָ֔רֶץ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1533,7 +1533,7 @@
       "word": "לְבִ֨לְתִּי־לֶ֔כֶת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -1545,7 +1545,7 @@
       "word": "וְכָ֨ל־הַפֶּ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1557,7 +1557,7 @@
       "word": "וְגַ֨ם־לְאִיזֶ֔בֶל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1569,7 +1569,7 @@
       "word": "וְכָ֨ל־הַנְּבִיאִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1581,7 +1581,7 @@
       "word": "וְגַ֨ם־שָׁא֔וּל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1593,7 +1593,7 @@
       "word": "וַיְסַ֨פְּרוּ־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -1605,7 +1605,7 @@
       "word": "וַיַּ֨גֶּד־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -1617,7 +1617,7 @@
       "word": "וְקַ֨ח־לְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1629,7 +1629,7 @@
       "word": "וְאֶ֨ת־גְּבוּלָ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1641,7 +1641,7 @@
       "word": "וַיִּ֨קְחוּ־שֹׁ֔חַד",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -1653,7 +1653,7 @@
       "word": "וַיִּ֨שָּׂא־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -1665,7 +1665,7 @@
       "word": "וּמִ֨ן־בִּנְיָמִ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1677,7 +1677,7 @@
       "word": "וַיִּ֨תֶּן־חַ֔יִל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -1689,7 +1689,7 @@
       "word": "וְהִ֨נֵּה־הֵ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -1701,7 +1701,7 @@
       "word": "וְכָ֨ל־יְהוּדָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1713,7 +1713,7 @@
       "word": "וַיַּ֨כּוּ־ב֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -1725,7 +1725,7 @@
       "word": "וְעַ֨ל־יְדֵ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1737,7 +1737,7 @@
       "word": "כְּכָ֨ל־הַתּוֹרָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1749,7 +1749,7 @@
       "word": "וְאִ֨ם־מְעָ֔ט",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1761,7 +1761,7 @@
       "word": "וְאֶ֨ת־אִשְׁתּ֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1773,7 +1773,7 @@
       "word": "וְהִ֨נֵּה־לֶ֔קֶשׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -1785,7 +1785,7 @@
       "word": "חַ֨ד־שִׁבְעָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1797,7 +1797,7 @@
       "word": "וַיִּ֨גַּע־בִּ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -1809,7 +1809,7 @@
       "word": "וְאֶ֨ת־הָאִ֔ישׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1821,7 +1821,7 @@
       "word": "בְּכָ֨ל־אַרְצְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1833,7 +1833,7 @@
       "word": "אֶ֨ת־גָּדְלְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1845,7 +1845,7 @@
       "word": "פֶּ֨ן־תַּשְׁחִת֔וּן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1857,7 +1857,7 @@
       "word": "וְאֶ֨ל־מְקוֹמ֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1869,7 +1869,7 @@
       "word": "וְעַ֨ל־דָּמֵ֔ךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1881,7 +1881,7 @@
       "word": "וַתִּ֨טְמָא־בָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -1893,7 +1893,7 @@
       "word": "דְּבַ֨ר־יְהוָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1905,7 +1905,7 @@
       "word": "אַ֨תְּ־כְּר֔וּב",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1917,7 +1917,7 @@
       "word": "וְעַ֨ל־מְזוּזַ֔ת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1929,7 +1929,7 @@
       "word": "וְאֶ֨ת־חֻקּוֹתַ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1941,7 +1941,7 @@
       "word": "וְהִ֨נֵּה־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -1953,7 +1953,7 @@
       "word": "וְגַ֨ם־אֲנִ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -1965,7 +1965,7 @@
       "word": "כָּ֨ל־הַנְּתִינִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -1977,7 +1977,7 @@
       "word": "וַיִּ֨תְּנוּ־כֶ֔סֶף",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -1989,7 +1989,7 @@
       "word": "עַ֨ל־דְּנָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2001,7 +2001,7 @@
       "word": "עַ֨ל־דְּנָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2013,7 +2013,7 @@
       "word": "וְאֶ֨ת־יְקָ֔ר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2025,7 +2025,7 @@
       "word": "וְאֶ֨ל־הַיְּהוּדִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2037,7 +2037,7 @@
       "word": "וְאֶ֨ת־הָאַ֔יִל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2049,7 +2049,7 @@
       "word": "וְאֶ֨ת־הַפָּ֔ר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2061,7 +2061,7 @@
       "word": "מִכָּ֨ל־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2073,7 +2073,7 @@
       "word": "שְׁמָ֨ר־לְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2085,7 +2085,7 @@
       "word": "וְאַ֨בְנֵי־שֹׁ֔הַם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -2097,7 +2097,7 @@
       "word": "פֶּ֨ן־יִפְגָּעֵ֔נוּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2109,7 +2109,7 @@
       "word": "וְאִ֨ם־שָׂרָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2121,7 +2121,7 @@
       "word": "וַיִּ֨קְרָא־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -2133,7 +2133,7 @@
       "word": "וַיִּ֨מְצְאוּ־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": 1,
@@ -2145,7 +2145,7 @@
       "word": "וַיִּ֨קְרָא־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -2157,7 +2157,7 @@
       "word": "וַנְּ֨סַפֶּר־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -2169,7 +2169,7 @@
       "word": "וַנַ֨גֶּד־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -2181,7 +2181,7 @@
       "word": "וַנַּ֨גֶּד־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -2193,7 +2193,7 @@
       "word": "וְאֶ֨ת־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2205,7 +2205,7 @@
       "word": "וַיִּ֨סְפְּדוּ־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": 1,
@@ -2217,7 +2217,7 @@
       "word": "וּמִ֨ן־הָע֔וֹף",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2229,7 +2229,7 @@
       "word": "אֶ֨כְתָּב־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -2241,7 +2241,7 @@
       "word": "וַיִּ֨בְקַע־צ֔וּר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -2253,7 +2253,7 @@
       "word": "וּ֨נְקַוֶּה־לָּ֔ךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": null,
@@ -2265,7 +2265,7 @@
       "word": "אִ֨ם־כְּלִ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2277,7 +2277,7 @@
       "word": "לְבִ֨לְתִּי־שָׁ֔בוּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -2289,7 +2289,7 @@
       "word": "וְהִ֨נֵּה־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -2301,7 +2301,7 @@
       "word": "וְאֶ֨ת־בָּר֔וּךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2313,7 +2313,7 @@
       "word": "וַיִּ֨מְלָךְ־מֶ֔לֶךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -2325,7 +2325,7 @@
       "word": "אֶ֨ת־הַדְּבָרִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2337,7 +2337,7 @@
       "word": "וּלְכָ֨ל־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2349,7 +2349,7 @@
       "word": "וְעַ֨ל־פַּרְעֹ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2361,7 +2361,7 @@
       "word": "נְאֻ֨ם־הַמֶּ֔לֶךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2373,7 +2373,7 @@
       "word": "נְאֻ֨ם־הַמֶּ֔לֶךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2385,7 +2385,7 @@
       "word": "אַ֨ל־יִרְע֔וּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2397,7 +2397,7 @@
       "word": "וּמִמַּ֨טֵּה־דָ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -2409,7 +2409,7 @@
       "word": "וַיְסַ֨פְּרוּ־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -2421,7 +2421,7 @@
       "word": "וְהִ֨נֵּה־אִ֔ישׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -2433,7 +2433,7 @@
       "word": "וּבְיַ֨ד־יְמִינָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2445,7 +2445,7 @@
       "word": "וְאֶ֨ת־זָכָ֔ר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2457,7 +2457,7 @@
       "word": "אֶ֨ת־כַּסְפְּךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2469,7 +2469,7 @@
       "word": "וְאִ֨ם־בְּאֵ֔לֶּה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2481,7 +2481,7 @@
       "word": "וְאִ֨ם־בְּזֹ֔את",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2493,7 +2493,7 @@
       "word": "וְאִ֨ם־הַמַּקְדִּ֔ישׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2505,7 +2505,7 @@
       "word": "וְאֶ֨ת־הַלֶּ֔חֶם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2517,7 +2517,7 @@
       "word": "כָּ֨ל־מִבְצָרַ֔יִךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2529,7 +2529,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2541,7 +2541,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2553,7 +2553,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2565,7 +2565,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2577,7 +2577,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2589,7 +2589,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2601,7 +2601,7 @@
       "word": "וַתִּ֨תֶּן־לָ֔נוּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -2613,7 +2613,7 @@
       "word": "וְאֶ֨ת־מָסַ֔ךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -2625,7 +2625,7 @@
       "word": "וְכִ֨סּוּ־בָ֔הּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -2637,7 +2637,7 @@
       "word": "וַתַּ֨גֶּד־לָ֔הּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -2649,7 +2649,7 @@
       "word": "וְגַ֨ם־יְהוּדָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -2661,7 +2661,7 @@
       "word": "וְכָ֨ל־הַבְּהֵמָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5112,13 +5112,13 @@
      "b: a maqaf after an atom that keeps its own conjunctive (ITM §293)": 4
     },
     "by_configuration": {
-     "metigah-zaqef (ITM §224)": 105,
+     "metigah-zaqef (ITM §223)": 105,
      "mayela before an etnaxta (ITM §216)": 7,
      "unnamed": 4,
-     "secondary mahapakh in the pashta's chanted word (ITM §241)": 3,
-     "secondary merkha in the tipexa's chanted word (ITM §233)": 3,
+     "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya": 3,
+     "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya": 3,
      "munax-zaqef (ITM §221)": 2,
-     "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)": 2,
+     "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)": 2,
      "mayela before a silluq (ITM §210)": 1,
      "secondary munax in the revia's chanted word (ITM §236)": 1
     },
@@ -5146,7 +5146,7 @@
       "word": "לֹא־יֹ֥אכַל־בּֽוֹ׃",
       "shape": "0-mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5158,7 +5158,7 @@
       "word": "אֲשֶׁר־עָ֥שָׂה־ל֖וֹ",
       "shape": "0-mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -5170,7 +5170,7 @@
       "word": "אֶת־כָּ֨ל־חֶפְצְךָ֔",
       "shape": "0-qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5182,7 +5182,7 @@
       "word": "וְאִם־שְׁלָ֨שׁ־אֵ֔לֶּה",
       "shape": "0-qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5194,7 +5194,7 @@
       "word": "אֶת־כָּ֨ל־הָאָ֔רֶץ",
       "shape": "0-qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5206,7 +5206,7 @@
       "word": "כָּל־מַ֨כֵּה־נֶ֔פֶשׁ",
       "shape": "0-qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -5218,7 +5218,7 @@
       "word": "וְרָ֤בְצָה־בּוֹ֙",
       "shape": "mah-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -5230,7 +5230,7 @@
       "word": "וּנְתַתִּ֤יךָֽ־לְבַז֙",
       "shape": "mah-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -5242,7 +5242,7 @@
       "word": "פָּצִ֤יתִי־פִי֙",
       "shape": "mah-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -5254,7 +5254,7 @@
       "word": "בְּלֵ֥ב־יַמִּֽים׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5266,7 +5266,7 @@
       "word": "שְׁלֹ֥שׁ־הַשִּׁנַּ֖יִם",
       "shape": "mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5278,7 +5278,7 @@
       "word": "יְדֵ֥י־חָרָ֖שׁ",
       "shape": "mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5326,7 +5326,7 @@
       "word": "וְאִ֨ם־עַד־אֵ֔לֶּה",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5338,7 +5338,7 @@
       "word": "וּמִ֨ן־אֶחָ֔יו",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5350,7 +5350,7 @@
       "word": "אֶ֨ת־הַלְוִיִּ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5362,7 +5362,7 @@
       "word": "וּמִכָּ֨ל־בָּנַ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5374,7 +5374,7 @@
       "word": "וַיִּ֨מְלָךְ־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -5386,7 +5386,7 @@
       "word": "לְכָ֨ל־עֲבוֹדַ֔ת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5398,7 +5398,7 @@
       "word": "וּמִ֨מַּטֵּה־גָ֔ד",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5410,7 +5410,7 @@
       "word": "וְכָ֨ל־הָאָ֔רֶץ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5422,7 +5422,7 @@
       "word": "לְבִ֨לְתִּי־לֶ֔כֶת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5434,7 +5434,7 @@
       "word": "וְכָ֨ל־הַפֶּ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5446,7 +5446,7 @@
       "word": "וְגַ֨ם־לְאִיזֶ֔בֶל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5458,7 +5458,7 @@
       "word": "וְכָ֨ל־הַנְּבִיאִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5470,7 +5470,7 @@
       "word": "וְגַ֨ם־שָׁא֔וּל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5482,7 +5482,7 @@
       "word": "וַיְסַ֨פְּרוּ־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -5494,7 +5494,7 @@
       "word": "וַיַּ֨גֶּד־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -5506,7 +5506,7 @@
       "word": "וְקַ֨ח־לְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5518,7 +5518,7 @@
       "word": "וְאֶ֨ת־גְּבוּלָ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5530,7 +5530,7 @@
       "word": "וַיִּ֨קְחוּ־שֹׁ֔חַד",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5542,7 +5542,7 @@
       "word": "וַיִּ֨שָּׂא־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -5554,7 +5554,7 @@
       "word": "וּמִ֨ן־בִּנְיָמִ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5566,7 +5566,7 @@
       "word": "וַיִּ֨תֶּן־חַ֔יִל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -5578,7 +5578,7 @@
       "word": "וְהִ֨נֵּה־הֵ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -5590,7 +5590,7 @@
       "word": "וְכָ֨ל־יְהוּדָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5602,7 +5602,7 @@
       "word": "וַיַּ֨כּוּ־ב֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -5614,7 +5614,7 @@
       "word": "וְעַ֨ל־יְדֵ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5626,7 +5626,7 @@
       "word": "כְּכָ֨ל־הַתּוֹרָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5638,7 +5638,7 @@
       "word": "וְאִ֨ם־מְעָ֔ט",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5650,7 +5650,7 @@
       "word": "וְאֶ֨ת־אִשְׁתּ֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5662,7 +5662,7 @@
       "word": "וְהִ֨נֵּה־לֶ֔קֶשׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -5674,7 +5674,7 @@
       "word": "חַ֨ד־שִׁבְעָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5686,7 +5686,7 @@
       "word": "וַיִּ֨גַּע־בִּ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -5698,7 +5698,7 @@
       "word": "וְאֶ֨ת־הָאִ֔ישׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5710,7 +5710,7 @@
       "word": "אֶ֨ת־גָּדְלְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5722,7 +5722,7 @@
       "word": "פֶּ֨ן־תַּשְׁחִת֔וּן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5734,7 +5734,7 @@
       "word": "וְאֶ֨ל־מְקוֹמ֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5746,7 +5746,7 @@
       "word": "וַתִּ֨טְמָא־בָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5758,7 +5758,7 @@
       "word": "דְּבַ֨ר־יְהוָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5770,7 +5770,7 @@
       "word": "אַ֨תְּ־כְּר֔וּב",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5782,7 +5782,7 @@
       "word": "וְעַ֨ל־מְזוּזַ֔ת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5794,7 +5794,7 @@
       "word": "וְאֶ֨ת־חֻקּוֹתַ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5806,7 +5806,7 @@
       "word": "וְהִ֨נֵּה־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -5818,7 +5818,7 @@
       "word": "וְגַ֨ם־אֲנִ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5830,7 +5830,7 @@
       "word": "כָּ֨ל־הַנְּתִינִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5842,7 +5842,7 @@
       "word": "וַיִּ֨תְּנוּ־כֶ֔סֶף",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5854,7 +5854,7 @@
       "word": "עַ֨ל־דְּנָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5866,7 +5866,7 @@
       "word": "עַ֨ל־דְּנָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5878,7 +5878,7 @@
       "word": "וְאֶ֨ת־יְקָ֔ר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5890,7 +5890,7 @@
       "word": "וְאֶ֨ל־הַיְּהוּדִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5902,7 +5902,7 @@
       "word": "וְאֶ֨ת־הָאַ֔יִל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5914,7 +5914,7 @@
       "word": "וְאֶ֨ת־הַפָּ֔ר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5926,7 +5926,7 @@
       "word": "מִכָּ֨ל־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5938,7 +5938,7 @@
       "word": "שְׁמָ֨ר־לְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -5950,7 +5950,7 @@
       "word": "וְאַ֨בְנֵי־שֹׁ֔הַם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5962,7 +5962,7 @@
       "word": "פֶּ֨ן־יִפְגָּעֵ֔נוּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5974,7 +5974,7 @@
       "word": "וְאִ֨ם־שָׂרָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -5986,7 +5986,7 @@
       "word": "וַיִּ֨קְרָא־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -5998,7 +5998,7 @@
       "word": "וַיִּ֨מְצְאוּ־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": 1,
@@ -6010,7 +6010,7 @@
       "word": "וַיִּ֨קְרָא־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -6022,7 +6022,7 @@
       "word": "וַנְּ֨סַפֶּר־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -6034,7 +6034,7 @@
       "word": "וַנַ֨גֶּד־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -6046,7 +6046,7 @@
       "word": "וַנַּ֨גֶּד־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -6058,7 +6058,7 @@
       "word": "וְאֶ֨ת־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6070,7 +6070,7 @@
       "word": "וַיִּ֨סְפְּדוּ־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": 1,
@@ -6082,7 +6082,7 @@
       "word": "וּמִ֨ן־הָע֔וֹף",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6094,7 +6094,7 @@
       "word": "אֶ֨כְתָּב־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -6106,7 +6106,7 @@
       "word": "וַיִּ֨בְקַע־צ֔וּר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -6118,7 +6118,7 @@
       "word": "וּ֨נְקַוֶּה־לָּ֔ךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": null,
@@ -6130,7 +6130,7 @@
       "word": "אִ֨ם־כְּלִ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6142,7 +6142,7 @@
       "word": "לְבִ֨לְתִּי־שָׁ֔בוּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -6154,7 +6154,7 @@
       "word": "וְהִ֨נֵּה־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -6166,7 +6166,7 @@
       "word": "וְאֶ֨ת־בָּר֔וּךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6178,7 +6178,7 @@
       "word": "וַיִּ֨מְלָךְ־מֶ֔לֶךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -6190,7 +6190,7 @@
       "word": "אֶ֨ת־הַדְּבָרִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6202,7 +6202,7 @@
       "word": "וּלְכָ֨ל־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6214,7 +6214,7 @@
       "word": "וְעַ֨ל־פַּרְעֹ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6226,7 +6226,7 @@
       "word": "נְאֻ֨ם־הַמֶּ֔לֶךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6238,7 +6238,7 @@
       "word": "נְאֻ֨ם־הַמֶּ֔לֶךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6250,7 +6250,7 @@
       "word": "אַ֨ל־יִרְע֔וּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6262,7 +6262,7 @@
       "word": "וּמִמַּ֨טֵּה־דָ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -6274,7 +6274,7 @@
       "word": "וַיְסַ֨פְּרוּ־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -6286,7 +6286,7 @@
       "word": "וְהִ֨נֵּה־אִ֔ישׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -6298,7 +6298,7 @@
       "word": "וּבְיַ֨ד־יְמִינָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6310,7 +6310,7 @@
       "word": "וְאֶ֨ת־זָכָ֔ר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6322,7 +6322,7 @@
       "word": "אֶ֨ת־כַּסְפְּךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6334,7 +6334,7 @@
       "word": "וְאִ֨ם־בְּאֵ֔לֶּה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6346,7 +6346,7 @@
       "word": "וְאִ֨ם־בְּזֹ֔את",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6358,7 +6358,7 @@
       "word": "וְאִ֨ם־הַמַּקְדִּ֔ישׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6370,7 +6370,7 @@
       "word": "וְאֶ֨ת־הַלֶּ֔חֶם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6382,7 +6382,7 @@
       "word": "כָּ֨ל־מִבְצָרַ֔יִךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6394,7 +6394,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6406,7 +6406,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6418,7 +6418,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6430,7 +6430,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6442,7 +6442,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6454,7 +6454,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6466,7 +6466,7 @@
       "word": "וַתִּ֨תֶּן־לָ֔נוּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -6478,7 +6478,7 @@
       "word": "וְאֶ֨ת־מָסַ֔ךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -6490,7 +6490,7 @@
       "word": "וְכִ֨סּוּ־בָ֔הּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -6502,7 +6502,7 @@
       "word": "וַתַּ֨גֶּד־לָ֔הּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -6514,7 +6514,7 @@
       "word": "וְגַ֨ם־יְהוּדָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -6526,7 +6526,7 @@
       "word": "וְכָ֨ל־הַבְּהֵמָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10127,11 +10127,11 @@
      "a: a secondary accent the compound inherits": 233
     },
     "by_configuration": {
-     "metigah-zaqef (ITM §224)": 211,
+     "metigah-zaqef (ITM §223)": 211,
      "mayela before an etnaxta (ITM §216)": 8,
-     "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)": 4,
-     "secondary merkha in the tipexa's chanted word (ITM §233)": 4,
-     "secondary mahapakh in the pashta's chanted word (ITM §241)": 3,
+     "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)": 4,
+     "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya": 4,
+     "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya": 3,
      "mayela before a silluq (ITM §210)": 1,
      "munax-zaqef (ITM §221)": 1,
      "unnamed -- not at the atom's own accent position": 1
@@ -10154,7 +10154,7 @@
       "word": "אֲשֶׁר־בָּ֥אָֽה־אֲלֵיהֶ֖ם",
       "shape": "0-mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -10166,7 +10166,7 @@
       "word": "אִם־יִוָּ֥לֵֽד־גּ֖וֹי",
       "shape": "0-mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -10178,7 +10178,7 @@
       "word": "וְעָשִׂ֤תִֽי־לְךָ֙",
       "shape": "mah-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -10190,7 +10190,7 @@
       "word": "וַתּ֤וֹשַֽׁע־לוֹ֙",
       "shape": "mah-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -10202,7 +10202,7 @@
       "word": "וַתּ֤וֹשַֽׁע־לִי֙",
       "shape": "mah-pash",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241)",
+      "configuration": "secondary mahapakh in the pashta's chanted word (ITM §241), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -10226,7 +10226,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10238,7 +10238,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10250,7 +10250,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10262,7 +10262,7 @@
       "word": "שֹׁ֥לֵֽף־חָֽרֶב׃",
       "shape": "mer-sil",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the silluq's chanted word (no ITM section names it; issue wlc-utils#86)",
+      "configuration": "ITM §357's maqaf after gaʿya (no section names a secondary merkha with silluq)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10274,7 +10274,7 @@
       "word": "וַיָּ֥נַֽח־לָ֖נוּ",
       "shape": "mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10286,7 +10286,7 @@
       "word": "וְנֹ֥גַֽהּ־ל֖וֹ",
       "shape": "mer-tip",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233)",
+      "configuration": "secondary merkha in the tipexa's chanted word (ITM §233), or ITM §357's maqaf after gaʿya",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -10310,7 +10310,7 @@
       "word": "מִ֨ן־כׇּל־הַיְלָדִ֔ים",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10322,7 +10322,7 @@
       "word": "לְכׇ֨ל־בֶּן־נֵכָ֔ר",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10334,7 +10334,7 @@
       "word": "וְאִ֨ם־שְׁלׇשׁ־אֵ֔לֶּה",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10346,7 +10346,7 @@
       "word": "וְאֶ֨ל־כׇּל־הָעָ֔ם",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10358,7 +10358,7 @@
       "word": "אֶ֨ת־כׇּל־הָאָ֔רֶץ",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10370,7 +10370,7 @@
       "word": "וְכׇ֨ל־כְּלִי־חֶ֔רֶשׂ",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10382,7 +10382,7 @@
       "word": "וְכׇ֨ל־כְּלִי־עֵ֔ץ",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10394,7 +10394,7 @@
       "word": "וְאִ֨ם־עַד־אֵ֔לֶּה",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10406,7 +10406,7 @@
       "word": "כׇּ֨ל־מַכֵּה־נֶ֔פֶשׁ",
       "shape": "qad-0-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10418,7 +10418,7 @@
       "word": "וּמִ֨ן־אֶחָ֔יו",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10430,7 +10430,7 @@
       "word": "אֶ֨ת־הַלְוִיִּ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10442,7 +10442,7 @@
       "word": "כׇּ֨ל־הַמֵּבִ֔ין",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10454,7 +10454,7 @@
       "word": "וְעַ֨ל־הַכְּרָמִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10466,7 +10466,7 @@
       "word": "וְעַ֨ל־הַגְּמַלִּ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10478,7 +10478,7 @@
       "word": "וּמִ֨כׇּל־בָּנַ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -10490,7 +10490,7 @@
       "word": "וַיִּ֨מְלׇךְ־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -10502,7 +10502,7 @@
       "word": "וּבֶ֨ן־עֶזְרָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10514,7 +10514,7 @@
       "word": "לְכׇ֨ל־עֲבוֹדַ֔ת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10526,7 +10526,7 @@
       "word": "וּמִ֨מַּטֵּה־גָ֔ד",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -10538,7 +10538,7 @@
       "word": "וְכׇ֨ל־הָאָ֔רֶץ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10550,7 +10550,7 @@
       "word": "לְבִ֨לְתִּי־לֶ֔כֶת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -10562,7 +10562,7 @@
       "word": "וְכׇ֨ל־הַפֶּ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10574,7 +10574,7 @@
       "word": "כׇּ֨ל־הַקְּרֻאִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10586,7 +10586,7 @@
       "word": "וְגַ֨ם־לְאִיזֶ֔בֶל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10598,7 +10598,7 @@
       "word": "וְכׇ֨ל־הַנְּבִיאִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10610,7 +10610,7 @@
       "word": "וְכׇ֨ל־הַנְּבִאִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10622,7 +10622,7 @@
       "word": "אֶ֨ת־הַכִּיֹּר֔וֹת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10634,7 +10634,7 @@
       "word": "אֶ֨ל־הַמָּק֔וֹם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10646,7 +10646,7 @@
       "word": "כׇּ֨ל־הַיָּמִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10658,7 +10658,7 @@
       "word": "וְגַ֨ם־שָׁא֔וּל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10670,7 +10670,7 @@
       "word": "וַ֨יְסַפְּרוּ־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 5,
        "free_letters_after_accent": null,
@@ -10682,7 +10682,7 @@
       "word": "וַיַּ֨גֶּד־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -10694,7 +10694,7 @@
       "word": "כׇּ֨ל־הַיָּמִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10706,7 +10706,7 @@
       "word": "וְקַ֨ח־לְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10718,7 +10718,7 @@
       "word": "וְאֶ֨ת־הַפָּר֔וֹת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10730,7 +10730,7 @@
       "word": "וְאֶ֨ת־גְּבוּלָ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10742,7 +10742,7 @@
       "word": "וַיִּ֨קְחוּ־שֹׁ֔חַד",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -10754,7 +10754,7 @@
       "word": "וְאֶ֨ת־חֶבְר֔וֹן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10766,7 +10766,7 @@
       "word": "וַיִּ֨שָּׂא־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -10778,7 +10778,7 @@
       "word": "וּמִ֨ן־בִּנְיָמִ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10790,7 +10790,7 @@
       "word": "וַיִּ֨תֶּן־חַ֔יִל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -10802,7 +10802,7 @@
       "word": "וְכׇ֨ל־הַנְּבִאִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10814,7 +10814,7 @@
       "word": "וְכׇ֨ל־הַנְּבִיאִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10826,7 +10826,7 @@
       "word": "וְהִ֨נֵּה־הֵ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -10838,7 +10838,7 @@
       "word": "וְכׇ֨ל־יְהוּדָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10850,7 +10850,7 @@
       "word": "וְכׇ֨ל־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10862,7 +10862,7 @@
       "word": "וְכׇ֨ל־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10874,7 +10874,7 @@
       "word": "וַיַּ֨כּוּ־ב֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -10886,7 +10886,7 @@
       "word": "וְעַ֨ל־יְדֵ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10898,7 +10898,7 @@
       "word": "מִ֨ן־הַגּוֹיִ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10910,7 +10910,7 @@
       "word": "אֶ֨ת־הַסִּיר֔וֹת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10922,7 +10922,7 @@
       "word": "וְאֶ֨ת־הַשֻּׁלְחָנ֔וֹת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10934,7 +10934,7 @@
       "word": "אֶ֨ל־הַמָּק֔וֹם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -10946,7 +10946,7 @@
       "word": "כׇּ֨ל־הַיָּמִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10958,7 +10958,7 @@
       "word": "וַיַּ֨כּוּ־כָ֔ף",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -10970,7 +10970,7 @@
       "word": "כְּכׇ֨ל־הַתּוֹרָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -10982,7 +10982,7 @@
       "word": "וְאַ֨נְשֵׁי־כ֔וּת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -10994,7 +10994,7 @@
       "word": "וּ֨דְבַר־יְהֹוָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11006,7 +11006,7 @@
       "word": "וּלְכׇ֨ל־הַתּוֹרָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11018,7 +11018,7 @@
       "word": "מִ֨ן־הַגּוֹיִ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11030,7 +11030,7 @@
       "word": "וְאֶ֨ת־הַבַּ֔יִת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11042,7 +11042,7 @@
       "word": "וְכׇ֨ל־חֵיל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11054,7 +11054,7 @@
       "word": "וַיַּ֨כּוּ־בָ֔הּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -11066,7 +11066,7 @@
       "word": "וַיִּ֨קְרָא־לָ֔הּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11078,7 +11078,7 @@
       "word": "וַיִּ֨קְרָא־לָ֔הּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11090,7 +11090,7 @@
       "word": "אֶ֨ת־הַדְּבָרִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11102,7 +11102,7 @@
       "word": "וְאִ֨ם־מְעָ֔ט",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11114,7 +11114,7 @@
       "word": "וְאֶ֨ת־אִשְׁתּ֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11126,7 +11126,7 @@
       "word": "וְכׇ֨ל־יִשְׂרָאֵ֔ל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11138,7 +11138,7 @@
       "word": "וְהִ֨נֵּה־לֶ֔קֶשׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -11150,7 +11150,7 @@
       "word": "אַ֨נְתְּ־ה֔וּא",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 2,
@@ -11162,7 +11162,7 @@
       "word": "וְרַ֨ב־סִגְנִ֔ין",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11174,7 +11174,7 @@
       "word": "חַ֨ד־שִׁבְעָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11186,7 +11186,7 @@
       "word": "וַיִּ֨גַּע־בִּ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -11198,7 +11198,7 @@
       "word": "אֶ֨ת־הַדְּבָרִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11210,7 +11210,7 @@
       "word": "כׇּ֨ל־הַיָּמִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11222,7 +11222,7 @@
       "word": "וְכׇ֨ל־יִשְׂרָאֵ֔ל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11234,7 +11234,7 @@
       "word": "אֶ֨ל־הַמָּק֔וֹם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11246,7 +11246,7 @@
       "word": "וְאֶ֨ל־הַשֹּׁפֵ֔ט",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11258,7 +11258,7 @@
       "word": "וְאֶ֨ת־הָאִ֔ישׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11270,7 +11270,7 @@
       "word": "בְּכׇ֨ל־אַרְצְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11282,7 +11282,7 @@
       "word": "בְּכׇ֨ל־הַגּוֹיִ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11294,7 +11294,7 @@
       "word": "כְּכׇ֨ל־הַמִּצְוָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11306,7 +11306,7 @@
       "word": "לְכׇ֨ל־הַדְּבָרִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11318,7 +11318,7 @@
       "word": "אֶ֨ת־גׇּדְלְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11330,7 +11330,7 @@
       "word": "פֶּ֨ן־תַּשְׁחִת֔וּן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11342,7 +11342,7 @@
       "word": "בְּכׇ֨ל־עֲמָל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11354,7 +11354,7 @@
       "word": "וְאֶ֨ל־מְקוֹמ֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11366,7 +11366,7 @@
       "word": "וְעַ֨ל־דָּמֵ֔ךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11378,7 +11378,7 @@
       "word": "וְאֶ֨ת־תַּזְנוּתֶ֔יהָ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11390,7 +11390,7 @@
       "word": "וַתִּ֨טְמָא־בָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11402,7 +11402,7 @@
       "word": "דְּבַ֨ר־יְהֹוָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11414,7 +11414,7 @@
       "word": "אַ֨תְּ־כְּר֔וּב",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11426,7 +11426,7 @@
       "word": "וְעַ֨ל־מְזוּזַ֔ת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11438,7 +11438,7 @@
       "word": "וְאֶ֨ת־חֻקּוֹתַ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11450,7 +11450,7 @@
       "word": "וְהִ֨נֵּה־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -11462,7 +11462,7 @@
       "word": "וְגַ֨ם־אֲנִ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11474,7 +11474,7 @@
       "word": "עִ֨ם־הַנְּדָבָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11486,7 +11486,7 @@
       "word": "כׇּ֨ל־הַנְּתִינִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11498,7 +11498,7 @@
       "word": "וַיִּ֨תְּנוּ־כֶ֔סֶף",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11510,7 +11510,7 @@
       "word": "עַ֨ל־דְּנָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11522,7 +11522,7 @@
       "word": "עַ֨ל־דְּנָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11534,7 +11534,7 @@
       "word": "וְאֶ֨ת־חֲשַׁבְיָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11546,7 +11546,7 @@
       "word": "וְאֶ֨ת־יְקָ֔ר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11558,7 +11558,7 @@
       "word": "וְאֶ֨ל־הַיְּהוּדִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11570,7 +11570,7 @@
       "word": "אֶ֨ל־הַכַּפֹּ֔רֶת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11582,7 +11582,7 @@
       "word": "וְאֶ֨ת־הָאַ֔יִל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11594,7 +11594,7 @@
       "word": "וְאֶ֨ת־הַפָּ֔ר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11606,7 +11606,7 @@
       "word": "מִכׇּ֨ל־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11618,7 +11618,7 @@
       "word": "אֶ֨ת־הַדְּבָרִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11630,7 +11630,7 @@
       "word": "שְׁמׇ֨ר־לְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11642,7 +11642,7 @@
       "word": "אֶ֨ת־הַמִּשְׁכָּ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11654,7 +11654,7 @@
       "word": "וְכׇ֨ל־הַנָּשִׁ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11666,7 +11666,7 @@
       "word": "וְאַ֨בְנֵי־שֹׁ֔הַם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11678,7 +11678,7 @@
       "word": "וְאֶ֨ת־הַקְּשָׂוֺ֔ת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11690,7 +11690,7 @@
       "word": "אֶ֨ל־הַכַּפֹּ֔רֶת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11702,7 +11702,7 @@
       "word": "וַיְמַ֨לְאוּ־ב֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11714,7 +11714,7 @@
       "word": "פֶּ֨ן־יִפְגָּעֵ֔נוּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11726,7 +11726,7 @@
       "word": "עַ֨ל־הַנְּהָרֹ֔ת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11738,7 +11738,7 @@
       "word": "וְגַ֨ם־לְל֔וֹט",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11750,7 +11750,7 @@
       "word": "וְאִ֨ם־שָׂרָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11762,7 +11762,7 @@
       "word": "וְנִ֨בְרְכוּ־ב֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": 1,
@@ -11774,7 +11774,7 @@
       "word": "אֶ֨ל־הַמָּק֔וֹם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11786,7 +11786,7 @@
       "word": "וַיִּ֨קְרָא־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11798,7 +11798,7 @@
       "word": "וְלֶ֨ךְ־לְךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11810,7 +11810,7 @@
       "word": "וַיִּ֨מְצְאוּ־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": 1,
@@ -11822,7 +11822,7 @@
       "word": "עַ֨ל־הַבְּרָכָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11834,7 +11834,7 @@
       "word": "וַיִּ֨קְרָא־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11846,7 +11846,7 @@
       "word": "וַ֨נְּסַפֶּר־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": null,
@@ -11858,7 +11858,7 @@
       "word": "וַנַּ֨גֶּד־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -11870,7 +11870,7 @@
       "word": "וַנַּ֨גֶּד־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -11882,7 +11882,7 @@
       "word": "וְאֶ֨ת־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11894,7 +11894,7 @@
       "word": "אֶ֨ל־הַמְּעָרָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11906,7 +11906,7 @@
       "word": "וַיִּ֨סְפְּדוּ־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": 1,
@@ -11918,7 +11918,7 @@
       "word": "וּמִ֨ן־הַבְּהֵמָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11930,7 +11930,7 @@
       "word": "וּמִ֨ן־הָע֔וֹף",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -11942,7 +11942,7 @@
       "word": "אֶ֨כְתׇּב־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -11954,7 +11954,7 @@
       "word": "וְעַ֨ל־מִשְׁמַרְתִּ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11966,7 +11966,7 @@
       "word": "וַיִּ֨בְקַע־צ֔וּר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -11978,7 +11978,7 @@
       "word": "אִ֨ם־כְּלִ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -11990,7 +11990,7 @@
       "word": "לְבִ֨לְתִּי־שָׁ֔בוּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -12002,7 +12002,7 @@
       "word": "אֶ֨ל־הַמָּק֔וֹם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12014,7 +12014,7 @@
       "word": "כׇּ֨ל־הַגּוֹלָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12026,7 +12026,7 @@
       "word": "לְכׇ֨ל־הַגּוֹלָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12038,7 +12038,7 @@
       "word": "וְהִ֨נֵּה־שָׁ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -12050,7 +12050,7 @@
       "word": "וְאֶ֨ת־בָּר֔וּךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12062,7 +12062,7 @@
       "word": "וַיִּ֨מְלׇךְ־מֶ֔לֶךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -12074,7 +12074,7 @@
       "word": "וְנִ֨שְׁאֲרוּ־בָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 4,
        "free_letters_after_accent": null,
@@ -12086,7 +12086,7 @@
       "word": "אֶ֨ת־הַדְּבָרִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12098,7 +12098,7 @@
       "word": "וְכׇ֨ל־שְׁאֵרִ֔ית",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12110,7 +12110,7 @@
       "word": "וּ֨לְכׇל־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": null,
@@ -12122,7 +12122,7 @@
       "word": "וְעַ֨ל־פַּרְעֹ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12134,7 +12134,7 @@
       "word": "נְאֻ֨ם־הַמֶּ֔לֶךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12146,7 +12146,7 @@
       "word": "נְאֻ֨ם־הַמֶּ֔לֶךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12158,7 +12158,7 @@
       "word": "וְכׇ֨ל־חֵיל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12170,7 +12170,7 @@
       "word": "מִ֨ן־הַמָּק֔וֹם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12182,7 +12182,7 @@
       "word": "אַ֨ל־יִרְע֔וּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12194,7 +12194,7 @@
       "word": "וּמִ֨מַּטֵּה־דָ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -12206,7 +12206,7 @@
       "word": "אֶ֨ת־הַדְּבָרִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12218,7 +12218,7 @@
       "word": "וַ֨יְסַפְּרוּ־ל֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 5,
        "free_letters_after_accent": null,
@@ -12230,7 +12230,7 @@
       "word": "כְּכׇ֨ל־הַנְּבָלָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12242,7 +12242,7 @@
       "word": "וְהִ֨נֵּה־אִ֔ישׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -12254,7 +12254,7 @@
       "word": "וּ֨בְיַד־יְמִינָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 3,
        "free_letters_after_accent": 1,
@@ -12266,7 +12266,7 @@
       "word": "וְכׇ֨ל־הָעָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12278,7 +12278,7 @@
       "word": "כְּכׇ֨ל־הַטּוֹבָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12290,7 +12290,7 @@
       "word": "וְאֶ֨ת־הַדָּאָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12302,7 +12302,7 @@
       "word": "וְכׇ֨ל־הַנֹּגֵ֔עַ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12314,7 +12314,7 @@
       "word": "וְאֶ֨ת־זָכָ֔ר",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12326,7 +12326,7 @@
       "word": "וּבַ֨ת־כֹּהֵ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12338,7 +12338,7 @@
       "word": "מִ֨ן־הַשָּׂדֶ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12350,7 +12350,7 @@
       "word": "אֶ֨ת־כַּסְפְּךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12362,7 +12362,7 @@
       "word": "וְאִ֨ם־בְּאֵ֔לֶּה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12374,7 +12374,7 @@
       "word": "וְאִ֨ם־בְּזֹ֔את",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12386,7 +12386,7 @@
       "word": "וְאִ֨ם־הַמַּקְדִּ֔ישׁ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12398,7 +12398,7 @@
       "word": "וְכׇ֨ל־עֶרְכְּךָ֔",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12410,7 +12410,7 @@
       "word": "וְאִ֨ם־בְּהֵמָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12422,7 +12422,7 @@
       "word": "מִ֨ן־הַבְּהֵמָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12434,7 +12434,7 @@
       "word": "וְאֶ֨ת־הָאַ֔יִל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12446,7 +12446,7 @@
       "word": "וְאֶ֨ת־הַלֶּ֔חֶם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12458,7 +12458,7 @@
       "word": "וּמִ֨ן־הָאַ֔יִל",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12470,7 +12470,7 @@
       "word": "כׇּ֨ל־מִבְצָרַ֔יִךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12482,7 +12482,7 @@
       "word": "וּמִ֨ן־הַלְוִיִּ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12494,7 +12494,7 @@
       "word": "וְעַ֨ל־יָדָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12506,7 +12506,7 @@
       "word": "מִ֨ן־הַמִּקְצ֔וֹעַ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12518,7 +12518,7 @@
       "word": "וְכׇ֨ל־נְעָרַ֔י",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12530,7 +12530,7 @@
       "word": "כׇּ֨ל־הַנְּתִינִ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12542,7 +12542,7 @@
       "word": "וְעַ֨ל־צְבָא֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12554,7 +12554,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12566,7 +12566,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12578,7 +12578,7 @@
       "word": "וְעַ֨ל־צְבָא֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12590,7 +12590,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12602,7 +12602,7 @@
       "word": "וְעַ֨ל־צְבָא֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12614,7 +12614,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12626,7 +12626,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12638,7 +12638,7 @@
       "word": "וְעַ֨ל־צְבָא֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12650,7 +12650,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12662,7 +12662,7 @@
       "word": "וְעַ֨ל־צְבָ֔א",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12674,7 +12674,7 @@
       "word": "וַתִּ֨תֶּן־לָ֔נוּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -12686,7 +12686,7 @@
       "word": "מִכׇּ֨ל־חֶלְבּ֔וֹ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12698,7 +12698,7 @@
       "word": "מִ֨ן־הַנָּשִׁ֔ים",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12710,7 +12710,7 @@
       "word": "וְאֶ֨ת־מַמְלֶ֔כֶת",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12722,7 +12722,7 @@
       "word": "וְכׇ֨ל־כֵּלָ֔יו",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12734,7 +12734,7 @@
       "word": "וְאֶ֨ת־מָסַ֔ךְ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12746,7 +12746,7 @@
       "word": "לְכׇ֨ל־מַשָּׂאָ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12758,7 +12758,7 @@
       "word": "לְכׇ֨ל־כְּלֵיהֶ֔ם",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12770,7 +12770,7 @@
       "word": "וְכִ֨סּוּ־בָ֔הּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": 1,
@@ -12782,7 +12782,7 @@
       "word": "אֶ֨ל־הַכֹּהֵ֔ן",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12794,7 +12794,7 @@
       "word": "וַתַּ֨גֶּד־לָ֔הּ",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 2,
        "free_letters_after_accent": null,
@@ -12806,7 +12806,7 @@
       "word": "וְגַ֨ם־יְהוּדָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": 1,
@@ -12818,7 +12818,7 @@
       "word": "וְכׇ֨ל־הַבְּהֵמָ֔ה",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
@@ -12830,7 +12830,7 @@
       "word": "וְכׇ֨ל־הַנִּשְׁבָּ֔ע",
       "shape": "qad-zaq",
       "route": "a: a secondary accent the compound inherits",
-      "configuration": "metigah-zaqef (ITM §224)",
+      "configuration": "metigah-zaqef (ITM §223)",
       "oracle": {
        "joined_letters_after_accent": 1,
        "free_letters_after_accent": null,
