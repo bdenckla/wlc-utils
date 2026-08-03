@@ -921,6 +921,20 @@ What both start from, all of it in tracked artifacts today:
   made newly ungrammatical**: `qadma darga` ×6 (four of them Job's prose frame), `merkha silluq`
   ×5, `merkha munax` ×1 (ne8:7, which is also a legarmeh passage), `merkha pashta` ×1 (ek16:12).
   Those 13 are now Phase 4's whitelist entries.
+
+  **#86 was settled later the same day, and it takes those 13 down to 2 — read this before
+  writing a whitelist.** The residue is **12**, and six of the eighteen went not to a whitelist
+  but to Yeivin: **ITM §256** names the six `qadma darga`, and Job's four prose-frame ואמלטה are
+  his own example, so the entry was simply missing from `YEIVIN_ENTRIES` and is now there as a
+  closed list that matches exactly. Five more of the twelve are compounds found by a maqaf that
+  does **not** join two atoms into one chanted word — ITM §357's and CoS Ch. 1 §43's maqaf
+  written after an atom that has its own accent and a gaʿya after that accent, measured by
+  `chanted_word_accents.maqaf_after_gaya` at 13 of MAM's 22 compounds with their accents split
+  across atoms. The four `merkha silluq` שלף־חרב and ek16:12's `merkha pashta` are among them.
+  So Phase 4's list is **ne8:7 ושרביה and ca8:6 שלהבתיה**, both atomic, and its first question is
+  now whether a maqaf-after-gaʿya compound belongs on a whitelist at all rather than in the
+  `kind` that says what it is. `mam_residue` shrank from 18 to 12 in `d3d656e`, which is the
+  measurement moving under a source correction, not the whitelist eroding it.
 - **WLC's residue is 34**, a different set that neither contains nor is contained by MAM's. Its
   own shapes — `munax munax` at gn36:13, ek8:6, 1c27:14 and 2c1:11 among them — are facts about
   the Westminster transcription rather than about the accentuation. That is what Phase 5's page
