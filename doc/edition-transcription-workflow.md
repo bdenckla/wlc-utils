@@ -4,6 +4,12 @@ The procedure behind `in/accgram/edition_transcriptions/`, tracked by
 [#69](https://github.com/bdenckla/wlc-utils/issues/69). Written down so a session can pick the
 work up from here rather than from a long handoff.
 
+**The Python behind this procedure lives in the sibling repo since 2026-08-01** (`6180f8d` took
+it out of wlc-utils with the rest of the code): every `py/...` path in this doc names a file
+under `C:\Users\BenDe\GitRepos\MAM-basics\py\`, which is why every command below runs from
+`C:\Users\BenDe\GitRepos\MAM-basics`, with that repo's interpreter. The `in/`, `out/`,
+`gh-pages/` and `.novc/` paths still name this repo, which the code writes back into.
+
 **Division of labour: the assistant displays, aligns and reports; Ben reads the accents.** A
 transcription's header claims primary observation read off the book, and the tests pin its
 divergences as established — so a machine-read token would be recorded as an edition's real
@@ -26,15 +32,14 @@ point lists them, and `--help` on a subcommand gives its flags.
 Scans live outside the repo (see the `book-scan-page-naming` note; `WLC_SCANS_DIR` overrides
 the root). Render a whole page first to locate the Decalogue:
 
-```bash
-.venv/Scripts/python.exe py/main_edition_transcription.py scan-page "Feldheim Simanim Tiqqun" C208 --width 1100
+```powershell
+C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_edition_transcription.py scan-page "Feldheim Simanim Tiqqun" C208 --width 1100
 ```
 
 Then build the per-line editor. **Default to the whole page — pass no `--crop` at all:**
 
-```bash
-.venv/Scripts/python.exe py/main_edition_transcription.py editor "Feldheim Simanim Tanakh" A5-D-0297 \
-    --name simtan_dt_taxton_p297 --width 2000 --debug
+```powershell
+C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_edition_transcription.py editor "Feldheim Simanim Tanakh" A5-D-0297 --name simtan_dt_taxton_p297 --width 2000 --debug
 ```
 
 **A crop is worth measuring only when a foreign column has to be excluded.** That is the
@@ -189,10 +194,8 @@ a test rather than surfacing as a puzzling runtime message.
 
 ## 3. Check before committing
 
-```bash
-.venv/Scripts/python.exe py/main_edition_transcription.py check \
-    $HOME/Downloads/simtiq_dt_elyon_p208-transcription.json \
-    $HOME/Downloads/simtiq_dt_elyon_p209-transcription.json --key dt elyon printed
+```powershell
+C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_edition_transcription.py check $HOME\Downloads\simtiq_dt_elyon_p208-transcription.json $HOME\Downloads\simtiq_dt_elyon_p209-transcription.json --key dt elyon printed
 ```
 
 It reports token and chanted-verse counts, every difference region with the reference word and
@@ -219,8 +222,8 @@ For any difference, before calling it an accent difference:
   usually follows mechanically. "Usually" — a maqaf compound *can* bear two accents, written
   `mun-mer`; p. 246 has two.
 - **Zoom the printed line** and let Ben re-read it. Never crop at the band edge:
-  ```bash
-  .venv/Scripts/python.exe py/main_edition_transcription.py zoom-line <export.json> 12
+  ```powershell
+  C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_edition_transcription.py zoom-line <export.json> 12
   ```
   `zoom_line` pads a full band height above, because a tight crop once cut the upper dot off a
   zaqef qatan and left something that reads exactly like a revia. It also pads *sideways* past
@@ -228,8 +231,8 @@ For any difference, before calling it an accent difference:
   A zoom shows the padding band above as a second line of text — the line being adjudicated is
   the **lower** one.
 - **Check all eight strands** before concluding whose divergence it is:
-  ```bash
-  .venv/Scripts/python.exe py/main_edition_transcription.py check --site השבת לקדשו
+  ```powershell
+  C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_edition_transcription.py check --site השבת לקדשו
   ```
   The site is located by the skeleton of the word *and* of the word after it. Confirm all eight
   strands are **listed**, and that every zero-hit row has an explanation — the word is absent
@@ -254,8 +257,8 @@ transcription.** Thirteen near-duplicate ones had accumulated in `.novc/` before
 on whether a page's trailing empty lines are dropped — which is a difference in what gets
 committed, not in style.
 
-```bash
-.venv/Scripts/python.exe py/main_edition_transcription.py build <stem> --export <path>... --corrections <path>
+```powershell
+C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_edition_transcription.py build <stem> --export <path>... --corrections <path>
 ```
 
 - `--export` takes one downloaded export per page, **in page order**; more than one gets the
@@ -284,8 +287,8 @@ for it to be recorded** ([#52](https://github.com/bdenckla/wlc-utils/issues/52))
 `transcription_parse` runs every committed transcription through the prose checker against the
 strand its header names, so:
 
-```bash
-.venv/Scripts/python.exe py/main_accgram.py run-printed-decalogue
+```powershell
+C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_accgram.py run-printed-decalogue
 ```
 
 writes it into the `transcriptions` section of
