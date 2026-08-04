@@ -8,7 +8,18 @@ work up from here rather than from a long handoff.
 it out of wlc-utils with the rest of the code): every `py/...` path in this doc names a file
 under `C:\Users\BenDe\GitRepos\MAM-basics\py\`, which is why every command below runs from
 `C:\Users\BenDe\GitRepos\MAM-basics`, with that repo's interpreter. The `in/`, `out/`,
-`gh-pages/` and `.novc/` paths still name this repo, which the code writes back into.
+`gh-pages/` and `.novc/` paths still name this repo, which the code writes back into. The same
+mapping covers the module names inside the committed transcription headers under
+`in/accgram/edition_transcriptions/`: all twelve name `accgram/transcription_editor.py`, four of
+the twelve name a further module — `zoom_line.py`, `printed_decalogue_taxton_diff.py`,
+`printed_decalogue_simanim_page.py`, `test_edition_transcriptions.py` — and all five of those are
+files under `MAM-basics\py\`. The headers themselves are left exactly as written: they are the
+provenance record of how each transcription was read, not live pointers, so a module changing
+repos is no reason to edit one (Ben's decision of 2026-08-04,
+[#90](https://github.com/bdenckla/wlc-utils/issues/90)). `col_profile.py` and `row_profile.py`,
+named in `simtiq_ex_elyon.txt`, have nothing to resolve to at either end: they were untracked
+`.novc` scratch, tracked in neither repo, and were unfollowable already on the day that header
+was written.
 
 **Division of labour: the assistant displays, aligns and reports; Ben reads the accents.** A
 transcription's header claims primary observation read off the book, and the tests pin its
