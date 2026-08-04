@@ -380,11 +380,11 @@
    "names": "a secondary mark does not cancel the maqaf; an ordinary one does",
    "quote": "A cantillation mark, which follows the regular order of the cantillation marks, cannot appear in a word joined by hyphen to the next one; therefore, if a hyphenated word receives a cantillation mark, the hyphenation is immediately cancelled. ... Therefore, we find that all the secondary cantillation marks in the 21 books appear even in a hyphenated word, and the hyphen is never cancelled after them. So with the me'ayla that serves before a siluk or ethnakhta; e.g.: וקויתי־לו (Isa. 8:17), ויצא־נח (Gen. 8:18); and so, too, with the methiga that appears in the word of the small zakef.",
    "source": "Breuer, The Cantillation of Scripture",
-   "note": "The rule that partitions the split compounds, and the two examples Breuer gives are two of the nine MAM compounds that have no gaʿya after the non-final accent. His rule and Ch. 1 §43 do not collide at the other thirteen: the maqaf there is Ch. 1 §43's, not the joining maqaf this rule is about."
+   "note": "The rule that partitions the split compounds, and the two examples Breuer gives are two of the nine MAM compounds that have no gaʿya after the non-final accent. At the other thirteen this rule and Ch. 1 §43 pull against each other, and Breuer does not square them: §37 would make the mark secondary and the compound one chanted word, where §43 declines to say what the mark is. ``maqaf_after_gaya`` reports that as a dispute and settles nothing by it -- the partition there is by the writing, a gaʿya between the non-final atom's accent and the maqaf."
   }
  ],
  "maqaf_after_gaya": {
-  "what": "A maqaf written after a word that has its own accent and a gaʿya after that accent. ITM §357 gives its purpose -- the slowed syllable makes no break -- and CoS Ch. 1 §43 gives its conditions: after a servant, on a word accented on its penultimate syllable, with the gaʿya on its last. It is not the maqaf that joins two atoms into one chanted word, so a compound found by it has an accent on each atom rather than two accents on one chanted word.",
+  "what": "A maqaf written after a word that has its own accent and a gaʿya after that accent. ITM §357 gives its purpose -- the slowed syllable makes no break -- and CoS Ch. 1 §43 gives its conditions: after a servant, on a word accented on its penultimate syllable, with the gaʿya on its last. A compound found by it IS a chanted word, on the only test there is for one -- a maqaf is written in it -- and it does have two accent tokens. What §357 settles is that the second token is the non-final atom's retained accent rather than a secondary accent of the kind §§233 and 241 describe. What the maqaf SIGNIFIES is unsettled in both books and nothing here turns on it: Yeivin writes the same compounds with a space at §354, CoS Ch. 1 §43 records that 'different views have been expressed' and leaves it out of the book, and Ch. 9 §37 points the other way.",
   "how_it_is_told_apart": "Mechanically, off the mark body: the accented non-final atom also has a meteg between that accent and the maqaf. Nothing here reads a verse reference. On MAM the signature partitions the compounds exactly, the nine without it being the mayela ones and nothing else. It is a signature and not a definition, though, and Isaiah 8:17 וקויתי־לו is where that shows: WLC and UXLC have a meteg after the mayela there and MAM has none, so the same compound answers differently by corpus while staying the mayela case CoS Ch. 9 §37 names by verse.",
   "verses_the_books_name_that_this_survey_measures": {
    "ITM §354": [
@@ -578,7 +578,7 @@
     ]
    }
   },
-  "what_the_others_are": "The compounds with no gaʿya after the non-final accent are the mayela ones, which both books name outright: ITM §§210 and 216, and CoS Ch. 9 §37, whose two examples -- Isaiah 8:17 וקויתי־לו and Genesis 8:18 ויצא־נח -- are two of MAM's nine. There a secondary mark stands in a hyphenated atom and the maqaf is the joining one, which is Breuer's rule for why it is not cancelled.",
+  "what_the_others_are": "The compounds with no gaʿya after the non-final accent are the mayela ones, which both books name outright: ITM §§210 and 216, and CoS Ch. 9 §37, whose two examples -- Isaiah 8:17 וקויתי־לו and Genesis 8:18 ויצא־נח -- are two of MAM's nine. There a secondary mark stands in a hyphenated atom, and Breuer's rule at Ch. 9 §37 is that the hyphenation is not cancelled after such a mark.",
   "itm_233_arithmetic": {
    "yeivin_stated": "in 8 cases",
    "yeivin_listed": 8,
