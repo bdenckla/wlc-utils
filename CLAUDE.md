@@ -16,17 +16,20 @@ Almost all of it regenerates in one command:
 C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRepos\MAM-basics\py\main_0_mega.py
 ```
 
-Its last seven steps are the wlc-utils ones, in the order they must run: `wlc-vendor-uxlc`,
-`wlc-json-and-unicode`, `accgram-run-prose`, `accgram-run-poetic`, `accgram-generate-html`,
-`wlc-diffs-420422`, `wlc-a-notes`. The individual entry points behind them, all under
+Its wlc-utils steps, in the order they must run: `wlc-vendor-uxlc`, `wlc-json-and-unicode`,
+`accgram-run-prose`, `accgram-test-fixes`, `accgram-run-poetic`, `accgram-generate-html`,
+`wlc-diffs-420422`, `wlc-a-notes`. (They are no longer the mega's *last* steps: a repo-wide
+vendoring audit closes the run.) The individual entry points behind them, all under
 `MAM-basics/py/`:
 
 - `main_accgram.py` — the accent-grammar work, and everything under `out/accgram/` and
-  `gh-pages/accgram/`. Many subcommands; `--help` lists them. Only `run-prose`, `run-poetic`
-  and `generate-html` are in the mega, so `run-dual-cant`, `run-printed-decalogue`,
-  `survey-chanted-word-accents`, `xcheck-poetic`, `servi-xcheck`, `test-fixes` and
-  `grammaticality` have to be run by hand — as do `vendor-printed-decalogue` and
-  `vendor-ctr-decalogue`, which refresh vendored strands rather than regenerate anything.
+  `gh-pages/accgram/`. Many subcommands; `--help` lists them. Only `run-prose`, `test-fixes`,
+  `run-poetic` and `generate-html` are in the mega (`test-fixes` since 2026-08-04 —
+  MAM-basics#219 — its tracked `out/accgram/fix-tester/` having twice gone stale outside it),
+  so `run-dual-cant`, `run-printed-decalogue`, `survey-chanted-word-accents`, `xcheck-poetic`,
+  `servi-xcheck` and `grammaticality` have to be run by hand — as do
+  `vendor-printed-decalogue` and `vendor-ctr-decalogue`, which refresh vendored strands rather
+  than regenerate anything.
 - `main_edition_transcription.py` — the printed-Decalogue transcriptions under `in/accgram/`,
   including the `highlight-picker` subcommand. `build --check` re-derives every committed
   transcription body and is the cheapest check that they are still consistent.

@@ -3718,7 +3718,7 @@
       "transformation": "word \"אריצ֨נו\" -> \"אריצ֙נו֙\" ((qom) -> (pash) (pash))",
       "before_status": "ERROR",
       "before_labels": [
-        "tipexa_phrase"
+        "zaqef_phrase"
       ],
       "after_status": "CLEAN",
       "after_labels": [],
@@ -3731,7 +3731,8 @@
         "MUNAX",
         "SEGOLTA",
         "MAHAPAKH",
-        "METHIGAZAQEF",
+        "QADMA",
+        "ZAQEF",
         "MERKHA",
         "TIPEXA",
         "MUNAX",
@@ -4588,7 +4589,7 @@
       "transformation": "word \"דבר֨י\" -> \"דברי֙\" ((qom) -> (pash))",
       "before_status": "ERROR",
       "before_labels": [
-        "tipexa_phrase"
+        "zaqef_phrase"
       ],
       "after_status": "CLEAN",
       "after_labels": [],
@@ -4601,7 +4602,8 @@
         "TIPEXA",
         "ATNAX",
         "MAHAPAKH",
-        "METHIGAZAQEF",
+        "QADMA",
+        "ZAQEF",
         "TIPEXA",
         "MERKHA",
         "SILLUQ",
