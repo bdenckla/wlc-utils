@@ -17,19 +17,26 @@ C:\Users\BenDe\GitRepos\MAM-basics\.venv\Scripts\python.exe C:\Users\BenDe\GitRe
 ```
 
 Its wlc-utils steps, in the order they must run: `wlc-vendor-uxlc`, `wlc-json-and-unicode`,
-`accgram-run-prose`, `accgram-test-fixes`, `accgram-run-poetic`, `accgram-generate-html`,
-`wlc-diffs-420422`, `wlc-a-notes`. (They are no longer the mega's *last* steps: a repo-wide
-vendoring audit closes the run.) The individual entry points behind them, all under
-`MAM-basics/py/`:
+`accgram-run-prose`, `accgram-test-fixes`, `accgram-run-dual-cant`, `accgram-run-poetic`,
+`accgram-xcheck-poetic`, `accgram-servi-xcheck`, `accgram-grammaticality`,
+`accgram-run-printed-decalogue`, `accgram-survey-chanted-word-accents`,
+`accgram-generate-html`, `find-uxlc-accent-changes`, `uxlc-grammar-test`, `wlc-diffs-420422`,
+`wlc-a-notes`. (They are no longer the mega's *last* steps: a repo-wide vendoring audit closes
+the run.) Nine of those joined on 2026-08-04 — `accgram-test-fixes` that morning and the other
+eight later the same day, when MAM-basics#219 closed the whole staleness channel rather than the
+one artifact that opened it. So **every by-hand generator that writes a git-tracked file here is
+now a step**, and drift surfaces the way everything else does: as an unexplained diff after a
+rebuild. The individual entry points behind them, all under `MAM-basics/py/`:
 
 - `main_accgram.py` — the accent-grammar work, and everything under `out/accgram/` and
-  `gh-pages/accgram/`. Many subcommands; `--help` lists them. Only `run-prose`, `test-fixes`,
-  `run-poetic` and `generate-html` are in the mega (`test-fixes` since 2026-08-04 —
-  MAM-basics#219 — its tracked `out/accgram/fix-tester/` having twice gone stale outside it),
-  so `run-dual-cant`, `run-printed-decalogue`, `survey-chanted-word-accents`, `xcheck-poetic`,
-  `servi-xcheck` and `grammaticality` have to be run by hand — as do
-  `vendor-printed-decalogue` and `vendor-ctr-decalogue`, which refresh vendored strands rather
-  than regenerate anything.
+  `gh-pages/accgram/`. Many subcommands; `--help` lists them. What is left to run by hand is
+  `vendor-printed-decalogue` and `vendor-ctr-decalogue`, which reach off the machine to refresh
+  vendored strands rather than regenerate anything, and the `generate-html-<name>` singles,
+  which the `generate-html` batch covers. The mega passes `generate-html --trust-survey`, which
+  lets the `wlc-chanted-word-residue` report read the `chanted-word-accents.json` that
+  `accgram-survey-chanted-word-accents` wrote a step earlier instead of spending another minute
+  rebuilding that survey; by hand the flag is off and the page derives from the code, so the two
+  ways of generating it cannot answer differently.
 - `main_edition_transcription.py` — the printed-Decalogue transcriptions under `in/accgram/`,
   including the `highlight-picker` subcommand. `build --check` re-derives every committed
   transcription body and is the cheapest check that they are still consistent.
@@ -38,9 +45,11 @@ vendoring audit closes the run.) The individual entry points behind them, all un
 - `main_wlc_diffs_420422.py` — `gh-pages/420422/`.
 - `main_wlc_vendor_uxlc.py` — refreshes `in/UXLC-39` and `in/UXLC-misc` from UXLC-utils.
 - `main_find_uxlc_accent_changes.py` — writes the tracked `in/accgram/uxlc_accent_changes.json`.
-  **Not in the mega**, so nothing rewrites it routinely.
-- `main_uxlc_grammar_test.py` — `out/accgram/uxlc_grammar_test.txt`. **Also not in the mega**,
-  which is exactly how it once sat stale in the tree for two days short of a month.
+  In the mega since 2026-08-04, after `wlc-vendor-uxlc`, whose `in/UXLC-misc/all_changes.json`
+  it filters.
+- `main_uxlc_grammar_test.py` — `out/accgram/uxlc_grammar_test.txt`. In the mega since
+  2026-08-04, after `find-uxlc-accent-changes`, whose JSON it reads. It had already sat stale in
+  the tree for two days short of a month once, and was stale again the day the step was added.
 
 Not everything under those two directories is generated at all: 73 static assets under
 `gh-pages/accgram/` (three `.js`, seventy `.png`/`.jpg`) and the 38 files under
