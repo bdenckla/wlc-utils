@@ -13860,8 +13860,8 @@
     "changeuni_erbs": false,
     "bhla": false,
     "accent_change_reason": "accent",
-    "prose_st_ref": null,
-    "prose_st_pending": null
+    "prose_st_ref": "ne 9:20",
+    "prose_st_pending": false
   },
   {
     "release": "2024.04.01",

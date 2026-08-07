@@ -1,21 +1,21 @@
 === OUT set: WLC-4.22 vs UXLC grammaticality (changes NOT in prose output) ===
 
-prose-corpus verses          : 202  (219 changes)
-  validated                  : 188 verses (204 changes)
+prose-corpus verses          : 201  (218 changes)
+  validated                  : 187 verses (203 changes)
   excluded                   : 14 verses (15 changes)
 
-  of validated: scanner-VISIBLE change 100, no-op 88
+  of validated: scanner-VISIBLE change 99, no-op 88
 
 2x2 over validated VERSES (all):
   WLC-gram    -> UXLC-gram   : 176
   WLC-gram    -> UXLC-ungram : 10
-  WLC-ungram  -> UXLC-gram   : 1
+  WLC-ungram  -> UXLC-gram   : 0
   WLC-ungram  -> UXLC-ungram : 1
 
 2x2 over scanner-VISIBLE verses (the meaningful denominator):
   WLC-gram    -> UXLC-gram   : 88
   WLC-gram    -> UXLC-ungram : 10
-  WLC-ungram  -> UXLC-gram   : 1
+  WLC-ungram  -> UXLC-gram   : 0
   WLC-ungram  -> UXLC-ungram : 1
 
 WLC-gram -> UXLC-ungram (degradation): 10 verses
@@ -30,8 +30,7 @@ WLC-gram -> UXLC-ungram (degradation): 10 verses
     Jer 52:18.10     [accent/substitution] Change revia on pe to zaqef qatan.
     Josh 14:10.4     [accent/substitution] Change munah under vav to meteg. Add note 'm'.
 
-WLC-ungram -> UXLC-gram (fix): 1 verses
-    Neh 9:20.1       [accent/substitution] Change qadma to pashta on kaf.
+WLC-ungram -> UXLC-gram (fix): 0 verses
 
 Excluded verses (synth could not be validated):
     1Chr 10:1.4                  ref-mismatch: synth WLC word != real M-C word
@@ -52,32 +51,32 @@ Excluded verses (synth could not be validated):
 By-kind breakdown of solo-change verses (confidence buckets):
   add_accent        : WLC-gram->[g  13 / u   2]   WLC-ungram->[g   0 / u   0]
   remove_terminator : WLC-gram->[g   0 / u   2]   WLC-ungram->[g   0 / u   0]
-  substitution      : WLC-gram->[g 148 / u   6]   WLC-ungram->[g   1 / u   1]
+  substitution      : WLC-gram->[g 148 / u   6]   WLC-ungram->[g   0 / u   1]
 
 
 === IN set: WLC-4.22 vs UXLC grammaticality (changes IN prose output) ===
 
-prose-corpus verses          : 44  (45 changes)
-  validated                  : 31 verses (31 changes)
+prose-corpus verses          : 45  (46 changes)
+  validated                  : 32 verses (32 changes)
   excluded                   : 13 verses (14 changes)
 
-  of validated: scanner-VISIBLE change 30, no-op 1
+  of validated: scanner-VISIBLE change 31, no-op 1
 
 2x2 over validated VERSES (all):
   WLC-gram    -> UXLC-gram   : 1
   WLC-gram    -> UXLC-ungram : 0
-  WLC-ungram  -> UXLC-gram   : 28
+  WLC-ungram  -> UXLC-gram   : 29
   WLC-ungram  -> UXLC-ungram : 2
 
 2x2 over scanner-VISIBLE verses (the meaningful denominator):
   WLC-gram    -> UXLC-gram   : 0
   WLC-gram    -> UXLC-ungram : 0
-  WLC-ungram  -> UXLC-gram   : 28
+  WLC-ungram  -> UXLC-gram   : 29
   WLC-ungram  -> UXLC-ungram : 2
 
 WLC-gram -> UXLC-ungram (degradation): 0 verses
 
-WLC-ungram -> UXLC-gram (fix): 28 verses
+WLC-ungram -> UXLC-gram (fix): 29 verses
     1Kings 6:2.10    [accent/substitution] Change mahapakh under resh to munah.
     1Kings 6:3.6     [accent/substitution] Change munah under resh to mahapakh.
     1Kings 8:11.6    [accent/substitution] Change merkha to munah.
@@ -106,6 +105,7 @@ WLC-ungram -> UXLC-gram (fix): 28 verses
     Judg 21:16.1     [accent/substitution] Remove qadma on resh; place a pashta on the final vav.
     Mic 2:7.11       [accent/substitution] Remove qadma on the resh, add pashta to yod.
     Neh 2:10.12      [accent/substitution] Change merkha to munah under the bet.
+    Neh 9:20.1       [accent/substitution] Change qadma to pashta on kaf.
 
 Excluded verses (synth could not be validated):
     Deut 14:24.7                 ref-mismatch: synth WLC word != real M-C word
@@ -124,13 +124,14 @@ Excluded verses (synth could not be validated):
 
 By-kind breakdown of solo-change verses (confidence buckets):
   add_accent        : WLC-gram->[g   0 / u   0]   WLC-ungram->[g   1 / u   0]
-  substitution      : WLC-gram->[g   1 / u   0]   WLC-ungram->[g  27 / u   2]
+  substitution      : WLC-gram->[g   1 / u   0]   WLC-ungram->[g  28 / u   2]
 
 
 === Directional asymmetry across the grammaticality boundary ===
 
-  OUT set: WLC-gram->UXLC-ungram 10, WLC-ungram->UXLC-gram 1.
-  IN  set: WLC-ungram->UXLC-gram 28, WLC-gram->UXLC-ungram 0.
+  OUT set: WLC-gram->UXLC-ungram 10, WLC-ungram->UXLC-gram 0.
+  IN  set: WLC-ungram->UXLC-gram 29, WLC-gram->UXLC-ungram 0.
 
-  The asymmetry does NOT hold as stated. Crossing the wrong way:
-    OUT set: ne 9:20 (Neh 9:20.1) -- WLC-ungram->UXLC-gram, a fix
+  The changes the prose ungrammatical notes flagged (IN set) only ever repair
+  ungrammaticality; the changes they did not flag (OUT set) only ever
+  introduce it.  No fix leaks into OUT and no degradation leaks into IN.

@@ -1,11 +1,11 @@
 # Fix-tester: do MAM-simple values resolve annotated prose ungrammatical?
 
-confirmed: 92  denied: 1  changed: 0  untestable: 0  (93 annotated ungrammatical tested)
+confirmed: 93  denied: 1  changed: 0  untestable: 2  (96 annotated ungrammatical tested)
 speculations: 16 total; 15 confirmed, 1 denied/changed, 0 untestable
 synthesized fixes (no MAM diff; tested the note's synth_fix): 1
-claim-vs-result: 83 agree, 1 disagree
+claim-vs-result: 84 agree, 1 disagree
 
-## CONFIRMED -- MAM fix clears the error  (92)
+## CONFIRMED -- MAM fix clears the error  (93)
   1c 1:53 [claim: expects_fix] [AGREE]
     fix: אל֣וף -> אל֥וף
     transform: word "אל֣וף" -> "אל֥וף" ((mun) -> (mer))
@@ -426,6 +426,11 @@ claim-vs-result: 83 agree, 1 disagree
     transform: word "ב֥א" -> "ב֣א" ((mer) -> (mun))
     before: GERSHAYIM MUNAX REVIA PASHTA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX MERKHA ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [ERROR: zaqef_phrase]
     after:  GERSHAYIM MUNAX REVIA PASHTA MUNAX ZAQEF MERKHA TIPEXA MUNAX ATNAX MUNAX ZAQEF MERKHA TIPEXA MERKHA SILLUQ SOFPASUQ  [CLEAN]
+  ne 9:20 [claim: expects_fix] [AGREE]
+    fix: ורוחך֨ -> ורוחך֙
+    transform: word "ורוחך֨" -> "ורוחך֙" ((qom) -> (pash))
+    before: QADMA ZAQEF TIPEXA ATNAX PASHTA MUNAX ZAQEF TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [ERROR: zaqef_phrase]
+    after:  PASHTA ZAQEF TIPEXA ATNAX PASHTA MUNAX ZAQEF TEVIR MERKHA TIPEXA SILLUQ SOFPASUQ  [CLEAN]
   nu 7:32 [claim: expects_fix] [AGREE]
     fix: קטֽרת -> קטֽרת׃
     transform: word "קטֽרת" -> "קטֽרת׃" ((none) -> (sof pasuq))
@@ -476,7 +481,14 @@ claim-vs-result: 83 agree, 1 disagree
 
 ## CHANGED -- a different error appears after the fix  (0)
 
-## UNTESTABLE -- fix could not be applied mechanically  (0)
+## UNTESTABLE -- fix could not be applied mechanically  (2)
+  (note: a *medial* 'vowel_only'/'meteg_only' mark is grammar-inert, the scanner swallowing it; 'merge_target_missing' means the named merge_next verse was not found in the source.  None is a verdict on the ungrammatical verse.)
+  gn 18:18 [claim: expects_fix]
+    fix: ונ֨ברכו -> ונ֨ברכו־
+    reason: vowel_only (no accent/punctuation difference -- invisible to the grammar)
+  je 37:10 [claim: expects_fix]
+    fix: ונ֨שארו -> ונ֨שארו־
+    reason: vowel_only (no accent/punctuation difference -- invisible to the grammar)
 
 ## Review queue: speculative claims whose result disagrees  (1)
   dt 5:8  [DENIED] claim: 'WLC’s “tangled” form for תעשה carries only a merkha on the ש, but a better LC transcription would be a meteg (elyon) and a qadma (taḥton).'
